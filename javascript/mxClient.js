@@ -391,7 +391,7 @@ if (typeof(mxLoadResources) == 'undefined')
  *
  * (code)
  * <script type="text/javascript">
- * 		var mxLoadResources = true;
+ * 		var mxForceIncludes = false;
  * </script>
  * <script type="text/javascript" src="/path/to/core/directory/js/mxClient.js"></script>
  * (end)
