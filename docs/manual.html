@@ -355,7 +355,7 @@ directories in the installation root.</p>
 	<code>mxBasePath</code> must be provided to the factory function, rather
 	than specified as global variables.</p>
 
-<pre>var mxgraph = require("mxgraph")({
+<pre>let mxgraph = require("mxgraph")({
   mxImageBasePath: "./src/images",
   mxBasePath: "./src"
 })</pre>
@@ -364,7 +364,7 @@ directories in the installation root.</p>
 	all objects of the mxGraph package. For example, the <code>mxEvent</code>
 	object is available at <code>mxgraph.mxEvent</code>.</p>
 
-<pre>var mxEvent = mxgraph.mxEvent;
+<pre>let mxEvent = mxgraph.mxEvent;
 mxEvent.disableContextMenu(container);</pre>
 
 <h2><a id="web_applications"></a>JavaScript and Web Applications</h2>
@@ -512,7 +512,7 @@ at class loading time and makes sure the same codec is used to encode
 instances of mxGraph and MyGraph.</p>
 
 <pre>
-var codec = mxCodecRegistry.getCodec(mxGraph);
+let codec = mxCodecRegistry.getCodec(mxGraph);
 codec.template = new MyGraph();
 mxCodecRegistry.register(codec);
 </pre>
@@ -524,8 +524,8 @@ extended as follows.</p>
 <pre>
 MyGraph.prototype.isSelectable = function(cell)
 {
-   var selectable = mxGraph.prototype.isSelectable.apply(this, arguments);
-   var geo = this.model.getGeometry(cell);
+   let selectable = mxGraph.prototype.isSelectable.apply(this, arguments);
+   let geo = this.model.getGeometry(cell);
    return selectable &amp;&amp;(geo == null || !geo.relative);
 }
 </pre>
@@ -540,7 +540,7 @@ which is another way of &ldquo;subclassing&rdquo; in JavaScript.</p>
 <pre>
 mxGraph.prototype.isSelectable = function(cell)
 {
-   var geo = this.model.getGeometry(cell);
+   let geo = this.model.getGeometry(cell);
    return selectable &amp;&amp; (geo == null || !geo.relative);
 }
 </pre>
@@ -553,7 +553,7 @@ the XML representation of the graph model:</p>
 <pre>
 MyGraph.prototype.getXml = function()
 {
-   var enc = new mxCodec();
+   let enc = new mxCodec();
    return enc.encode(this.getModel());
 }
 </pre>
@@ -578,7 +578,7 @@ function MyGraph(container)
 code, where container is a DOM node that acts as a container for the
 graph view:</p>
 <pre>
-var graph = new MyGraph(container);
+let graph = new MyGraph(container);
 </pre>
 <br/>
 
@@ -697,14 +697,14 @@ can consider a template for building a basic mxGraph application:</p>
          else
          {
             // Creates the graph inside the given container
-            var graph = new mxGraph(container);
+            let graph = new mxGraph(container);
 
             // Enables rubberband selection
             new mxRubberband(graph);
 
             // Gets the default parent for inserting new cells. This
             // is normally the first child of the root (ie. layer 0).
-            var parent = graph.getDefaultParent();
+            let parent = graph.getDefaultParent();
 
             // Adds cells to the model in a single step
             graph.getModel().beginUpdate();
@@ -1141,7 +1141,7 @@ follow this template to create a style and register it with
 mxStyleSheet:</p>
 
 <pre>
-var style = new Object();
+let style = {};
 style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
 style[mxConstants.STYLE_OPACITY] = 50;
 style[mxConstants.STYLE_FONTCOLOR]= '#774400';

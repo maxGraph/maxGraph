@@ -1,0 +1,21 @@
+{
+  "name": "@maxgraph/core",
+  "version": "1.0.0",
+  "description": "",
+  "module": "./src/index.ts",
+  "main": "./dist/maxgraph.js",
+  "types": "./dist/maxgraph.d.ts",
+  "files": [
+    "./dist"
+  ],
+  "scripts": {
+    "dev": "webpack --watch --mode=development",
+    "build": "NODE_ENV=production webpack --mode=production",
+    "postinstall": "webpack --mode=development"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "circular-dependency-plugin": "^5.2.2"
+  }
+}

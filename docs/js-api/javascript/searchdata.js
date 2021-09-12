@@ -1,4 +1,4 @@
-var indexSectionsWithContent = {
+let indexSectionsWithContent = {
    "Events": {
       "Symbols": false,
       "Numbers": false,

@@ -1,5 +1,5 @@
 
-// This code comes from the December 2009 release of Google Prettify, which is Copyright © 2006 Google Inc.
+// This code comes from the December 2009 release of Google Prettify, which is Copyright ï¿½ 2006 Google Inc.
 // Minor modifications are marked with "ND Change" comments.
 // As part of Natural Docs, this code is licensed under version 3 of the GNU Affero General Public License (AGPL.)
 // However, it may also be obtained separately under version 2.0 of the Apache License.
@@ -102,89 +102,89 @@ window['PR_normalizedHtml']
   = window['prettyPrint'] = void 0;
 
 /** browser detection. @extern @returns false if not IE, otherwise the major version. */
-window['_pr_isIE6'] = function () {
-  var ieVersion = navigator && navigator.userAgent &&
+window['_pr_isIE6'] = () => {
+  let ieVersion = navigator && navigator.userAgent &&
       navigator.userAgent.match(/\bMSIE ([678])\./);
   ieVersion = ieVersion ? +ieVersion[1] : false;
-  window['_pr_isIE6'] = function () { return ieVersion; };
+  window['_pr_isIE6'] = () => { return ieVersion; };
   return ieVersion;
 };
 
 
 (function () {
   // Keyword lists for various languages.
-  var FLOW_CONTROL_KEYWORDS =
+  let FLOW_CONTROL_KEYWORDS =
       "break continue do else for if return while ";
-  var C_KEYWORDS = FLOW_CONTROL_KEYWORDS + "auto case char const default " +
+  let C_KEYWORDS = FLOW_CONTROL_KEYWORDS + "auto case char const default " +
       "double enum extern float goto int long register short signed sizeof " +
       "static struct switch typedef union unsigned void volatile ";
-  var COMMON_KEYWORDS = C_KEYWORDS + "catch class delete false import " +
+  let COMMON_KEYWORDS = C_KEYWORDS + "catch class delete false import " +
       "new operator private protected public this throw true try typeof ";
-  var CPP_KEYWORDS = COMMON_KEYWORDS + "alignof align_union asm axiom bool " +
+  let CPP_KEYWORDS = COMMON_KEYWORDS + "alignof align_union asm axiom bool " +
       "concept concept_map const_cast constexpr decltype " +
       "dynamic_cast explicit export friend inline late_check " +
       "mutable namespace nullptr reinterpret_cast static_assert static_cast " +
       "template typeid typename using virtual wchar_t where ";
-  var JAVA_KEYWORDS = COMMON_KEYWORDS +
+  let JAVA_KEYWORDS = COMMON_KEYWORDS +
       "abstract boolean byte extends final finally implements import " +
       "instanceof null native package strictfp super synchronized throws " +
       "transient ";
-  var CSHARP_KEYWORDS = JAVA_KEYWORDS +
+  let CSHARP_KEYWORDS = JAVA_KEYWORDS +
       "as base by checked decimal delegate descending event " +
       "fixed foreach from group implicit in interface internal into is lock " +
       "object out override orderby params partial readonly ref sbyte sealed " +
       "stackalloc string select uint ulong unchecked unsafe ushort var ";
-  var JSCRIPT_KEYWORDS = COMMON_KEYWORDS +
+  let JSCRIPT_KEYWORDS = COMMON_KEYWORDS +
       "debugger eval export function get null set undefined var with " +
       "Infinity NaN ";
-  var PERL_KEYWORDS = "caller delete die do dump elsif eval exit foreach for " +
+  let PERL_KEYWORDS = "caller delete die do dump elsif eval exit foreach for " +
       "goto if import last local my next no our print package redo require " +
       "sub undef unless until use wantarray while BEGIN END ";
-  var PYTHON_KEYWORDS = FLOW_CONTROL_KEYWORDS + "and as assert class def del " +
+  let PYTHON_KEYWORDS = FLOW_CONTROL_KEYWORDS + "and as assert class def del " +
       "elif except exec finally from global import in is lambda " +
       "nonlocal not or pass print raise try with yield " +
       "False True None ";
-  var RUBY_KEYWORDS = FLOW_CONTROL_KEYWORDS + "alias and begin case class def" +
+  let RUBY_KEYWORDS = FLOW_CONTROL_KEYWORDS + "alias and begin case class def" +
       " defined elsif end ensure false in module next nil not or redo rescue " +
       "retry self super then true undef unless until when yield BEGIN END ";
-  var SH_KEYWORDS = FLOW_CONTROL_KEYWORDS + "case done elif esac eval fi " +
+  let SH_KEYWORDS = FLOW_CONTROL_KEYWORDS + "case done elif esac eval fi " +
       "function in local set then until ";
-  var ALL_KEYWORDS = (
+  let ALL_KEYWORDS = (
       CPP_KEYWORDS + CSHARP_KEYWORDS + JSCRIPT_KEYWORDS + PERL_KEYWORDS +
       PYTHON_KEYWORDS + RUBY_KEYWORDS + SH_KEYWORDS);
 
   // token style names.  correspond to css classes
   /** token style for a string literal */
-  var PR_STRING = 'str';
+  let PR_STRING = 'str';
   /** token style for a keyword */
-  var PR_KEYWORD = 'kwd';
+  let PR_KEYWORD = 'kwd';
   /** token style for a comment */
-  var PR_COMMENT = 'com';
+  let PR_COMMENT = 'com';
   /** token style for a type */
-  var PR_TYPE = 'typ';
+  let PR_TYPE = 'typ';
   /** token style for a literal value.  e.g. 1, null, true. */
-  var PR_LITERAL = 'lit';
+  let PR_LITERAL = 'lit';
   /** token style for a punctuation string. */
-  var PR_PUNCTUATION = 'pun';
+  let PR_PUNCTUATION = 'pun';
   /** token style for a punctuation string. */
-  var PR_PLAIN = 'pln';
+  let PR_PLAIN = 'pln';
 
   /** token style for an sgml tag. */
-  var PR_TAG = 'tag';
+  let PR_TAG = 'tag';
   /** token style for a markup declaration such as a DOCTYPE. */
-  var PR_DECLARATION = 'dec';
+  let PR_DECLARATION = 'dec';
   /** token style for embedded source. */
-  var PR_SOURCE = 'src';
+  let PR_SOURCE = 'src';
   /** token style for an sgml attribute name. */
-  var PR_ATTRIB_NAME = 'atn';
+  let PR_ATTRIB_NAME = 'atn';
   /** token style for an sgml attribute value. */
-  var PR_ATTRIB_VALUE = 'atv';
+  let PR_ATTRIB_VALUE = 'atv';
 
   /**
    * A class that indicates a section of markup that is not code, e.g. to allow
    * embedding of line numbers within code listings.
    */
-  var PR_NOCODE = 'nocode';
+  let PR_NOCODE = 'nocode';
 
   /** A set of tokens that can precede a regular expression literal in
     * javascript.
@@ -203,8 +203,8 @@ window['_pr_isIE6'] = function () {
     *
     * @private
     */
-  var REGEXP_PRECEDER_PATTERN = function () {
-      var preceders = [
+  let REGEXP_PRECEDER_PATTERN = () => {
+      let preceders = [
           "!", "!=", "!==", "#", "%", "%=", "&", "&&", "&&=",
           "&=", "(", "*", "*=", /* "+", */ "+=", ",", /* "-", */ "-=",
           "->", /*".", "..", "...", handled below */ "/", "/=", ":", "::", ";",
@@ -216,8 +216,8 @@ window['_pr_isIE6'] = function () {
           "do", "else", "finally", "instanceof",
           "return", "throw", "try", "typeof"
           ];
-      var pattern = '(?:^^|[+-]';
-      for (var i = 0; i < preceders.length; ++i) {
+      let pattern = '(?:^^|[+-]';
+      for (let i = 0; i < preceders.length; ++i) {
         pattern += '|' + preceders[i].replace(/([^=<>:&a-z])/g, '\\$1');
       }
       pattern += ')\\s*';  // matches at end, and matches empty string
@@ -233,10 +233,10 @@ window['_pr_isIE6'] = function () {
   // object each time the function containing them is called.
   // The language spec requires a new object created even if you don't access
   // the $1 members.
-  var pr_amp = /&/g;
-  var pr_lt = /</g;
-  var pr_gt = />/g;
-  var pr_quot = /\"/g;
+  let pr_amp = /&/g;
+  let pr_lt = /</g;
+  let pr_gt = />/g;
+  let pr_quot = /\"/g;
   /** like textToHtml but escapes double quotes to be attribute safe. */
   function attribToHtml(str) {
     return str.replace(pr_amp, '&amp;')
@@ -253,29 +253,29 @@ window['_pr_isIE6'] = function () {
   }
 
 
-  var pr_ltEnt = /&lt;/g;
-  var pr_gtEnt = /&gt;/g;
-  var pr_aposEnt = /&apos;/g;
-  var pr_quotEnt = /&quot;/g;
-  var pr_ampEnt = /&amp;/g;
-  var pr_nbspEnt = /&nbsp;/g;
+  let pr_ltEnt = /&lt;/g;
+  let pr_gtEnt = /&gt;/g;
+  let pr_aposEnt = /&apos;/g;
+  let pr_quotEnt = /&quot;/g;
+  let pr_ampEnt = /&amp;/g;
+  let pr_nbspEnt = /&nbsp;/g;
   /** unescapes html to plain text. */
   function htmlToText(html) {
-    var pos = html.indexOf('&');
+    let pos = html.indexOf('&');
     if (pos < 0) { return html; }
     // Handle numeric entities specially.  We can't use functional substitution
     // since that doesn't work in older versions of Safari.
     // These should be rare since most browsers convert them to normal chars.
     for (--pos; (pos = html.indexOf('&#', pos + 1)) >= 0;) {
-      var end = html.indexOf(';', pos);
+      let end = html.indexOf(';', pos);
       if (end >= 0) {
-        var num = html.substring(pos + 3, end);
-        var radix = 10;
+        let num = html.substring(pos + 3, end);
+        let radix = 10;
         if (num && num.charAt(0) === 'x') {
           num = num.substring(1);
           radix = 16;
         }
-        var codePoint = parseInt(num, radix);
+        let codePoint = parseInt(num, radix);
         if (!isNaN(codePoint)) {
           html = (html.substring(0, pos) + String.fromCharCode(codePoint) +
                   html.substring(end + 1));
@@ -296,7 +296,7 @@ window['_pr_isIE6'] = function () {
     return 'XMP' === node.tagName;
   }
 
-  var newlineRe = /[\r\n]/g;
+  let newlineRe = /[\r\n]/g;
   /**
    * Are newlines and adjacent spaces significant in the given node's innerHTML?
    */
@@ -305,7 +305,7 @@ window['_pr_isIE6'] = function () {
     // unnecessary computed style objects.
     if ('PRE' === node.tagName) { return true; }
     if (!newlineRe.test(content)) { return true; }  // Don't care
-    var whitespace = '';
+    let whitespace = '';
     // For disconnected nodes, IE has no currentStyle.
     if (node.currentStyle) {
       whitespace = node.currentStyle.whiteSpace;
@@ -320,16 +320,16 @@ window['_pr_isIE6'] = function () {
   function normalizedHtml(node, out) {
     switch (node.nodeType) {
       case 1:  // an element
-        var name = node.tagName.toLowerCase();
+        let name = node.tagName.toLowerCase();
         out.push('<', name);
-        for (var i = 0; i < node.attributes.length; ++i) {
-          var attr = node.attributes[i];
+        for (let i = 0; i < node.attributes.length; ++i) {
+          let attr = node.attributes[i];
           if (!attr.specified) { continue; }
           out.push(' ');
           normalizedHtml(attr, out);
         }
         out.push('>');
-        for (var child = node.firstChild; child; child = child.nextSibling) {
+        for (let child = node.firstChild; child; child = child.nextSibling) {
           normalizedHtml(child, out);
         }
         if (node.firstChild || !/^(?:br|link|img)$/.test(name)) {
@@ -354,12 +354,12 @@ window['_pr_isIE6'] = function () {
    * @return {RegExp} a global regex.
    */
   function combinePrefixPatterns(regexs) {
-    var capturedGroupIndex = 0;
+    let capturedGroupIndex = 0;
 
-    var needToFoldCase = false;
-    var ignoreCase = false;
-    for (var i = 0, n = regexs.length; i < n; ++i) {
-      var regex = regexs[i];
+    let needToFoldCase = false;
+    let ignoreCase = false;
+    for (let i = 0, n = regexs.length; i < n; ++i) {
+      let regex = regexs[i];
       if (regex.ignoreCase) {
         ignoreCase = true;
       } else if (/[a-z]/i.test(regex.source.replace(
@@ -393,7 +393,7 @@ window['_pr_isIE6'] = function () {
       if (charCode < 0x20) {
         return (charCode < 0x10 ? '\\x0' : '\\x') + charCode.toString(16);
       }
-      var ch = String.fromCharCode(charCode);
+      let ch = String.fromCharCode(charCode);
       if (ch === '\\' || ch === '-' || ch === '[' || ch === ']') {
         ch = '\\' + ch;
       }
@@ -401,7 +401,7 @@ window['_pr_isIE6'] = function () {
     }
 
     function caseFoldCharset(charSet) {
-      var charsetParts = charSet.substring(1, charSet.length - 1).match(
+      let charsetParts = charSet.substring(1, charSet.length - 1).match(
           new RegExp(
               '\\\\u[0-9A-Fa-f]{4}'
               + '|\\\\x[0-9A-Fa-f]{2}'
@@ -411,11 +411,11 @@ window['_pr_isIE6'] = function () {
               + '|-'
               + '|[^-\\\\]',
               'g'));
-      var groups = [];
-      var ranges = [];
-      var inverse = charsetParts[0] === '^';
-      for (var i = inverse ? 1 : 0, n = charsetParts.length; i < n; ++i) {
-        var p = charsetParts[i];
+      let groups = [];
+      let ranges = [];
+      let inverse = charsetParts[0] === '^';
+      for (let i = inverse ? 1 : 0, n = charsetParts.length; i < n; ++i) {
+        let p = charsetParts[i];
         switch (p) {
           case '\\B': case '\\b':
           case '\\D': case '\\d':
@@ -424,7 +424,7 @@ window['_pr_isIE6'] = function () {
             groups.push(p);
             continue;
         }
-        var start = decodeEscape(p);
+        let start = decodeEscape(p);
         var end;
         if (i + 2 < n && '-' === charsetParts[i + 1]) {
           end = decodeEscape(charsetParts[i + 2]);
@@ -447,10 +447,10 @@ window['_pr_isIE6'] = function () {
       // [[1, 10], [3, 4], [8, 12], [14, 14], [16, 16], [17, 17]]
       // -> [[1, 12], [14, 14], [16, 17]]
       ranges.sort(function (a, b) { return (a[0] - b[0]) || (b[1]  - a[1]); });
-      var consolidatedRanges = [];
-      var lastRange = [NaN, NaN];
-      for (var i = 0; i < ranges.length; ++i) {
-        var range = ranges[i];
+      let consolidatedRanges = [];
+      let lastRange = [NaN, NaN];
+      for (let i = 0; i < ranges.length; ++i) {
+        let range = ranges[i];
         if (range[0] <= lastRange[1] + 1) {
           lastRange[1] = Math.max(lastRange[1], range[1]);
         } else {
@@ -458,11 +458,11 @@ window['_pr_isIE6'] = function () {
         }
       }
 
-      var out = ['['];
+      let out = ['['];
       if (inverse) { out.push('^'); }
       out.push.apply(out, groups);
-      for (var i = 0; i < consolidatedRanges.length; ++i) {
-        var range = consolidatedRanges[i];
+      for (let i = 0; i < consolidatedRanges.length; ++i) {
+        let range = consolidatedRanges[i];
         out.push(encodeEscape(range[0]));
         if (range[1] > range[0]) {
           if (range[1] + 1 > range[0]) { out.push('-'); }
@@ -477,7 +477,7 @@ window['_pr_isIE6'] = function () {
       // Split into character sets, escape sequences, punctuation strings
       // like ('(', '(?:', ')', '^'), and runs of characters that do not
       // include any of the above.
-      var parts = regex.source.match(
+      let parts = regex.source.match(
           new RegExp(
               '(?:'
               + '\\[(?:[^\\x5C\\x5D]|\\\\[\\s\\S])*\\]'  // a character set
@@ -490,22 +490,22 @@ window['_pr_isIE6'] = function () {
               + '|[^\\x5B\\x5C\\(\\)\\^]+'  // run of other characters
               + ')',
               'g'));
-      var n = parts.length;
+      let n = parts.length;
 
       // Maps captured group numbers to the number they will occupy in
       // the output or to -1 if that has not been determined, or to
       // undefined if they need not be capturing in the output.
-      var capturedGroups = [];
+      let capturedGroups = [];
 
       // Walk over and identify back references to build the capturedGroups
       // mapping.
-      for (var i = 0, groupIndex = 0; i < n; ++i) {
-        var p = parts[i];
+      for (let i = 0, groupIndex = 0; i < n; ++i) {
+        let p = parts[i];
         if (p === '(') {
           // groups are 1-indexed, so max group index is count of '('
           ++groupIndex;
         } else if ('\\' === p.charAt(0)) {
-          var decimalValue = +p.substring(1);
+          let decimalValue = +p.substring(1);
           if (decimalValue && decimalValue <= groupIndex) {
             capturedGroups[decimalValue] = -1;
           }
@@ -514,20 +514,20 @@ window['_pr_isIE6'] = function () {
 
       // Renumber groups and reduce capturing groups to non-capturing groups
       // where possible.
-      for (var i = 1; i < capturedGroups.length; ++i) {
+      for (let i = 1; i < capturedGroups.length; ++i) {
         if (-1 === capturedGroups[i]) {
           capturedGroups[i] = ++capturedGroupIndex;
         }
       }
-      for (var i = 0, groupIndex = 0; i < n; ++i) {
-        var p = parts[i];
+      for (let i = 0, groupIndex = 0; i < n; ++i) {
+        let p = parts[i];
         if (p === '(') {
           ++groupIndex;
           if (capturedGroups[groupIndex] === undefined) {
             parts[i] = '(?:';
           }
         } else if ('\\' === p.charAt(0)) {
-          var decimalValue = +p.substring(1);
+          let decimalValue = +p.substring(1);
           if (decimalValue && decimalValue <= groupIndex) {
             parts[i] = '\\' + capturedGroups[groupIndex];
           }
@@ -536,15 +536,15 @@ window['_pr_isIE6'] = function () {
 
       // Remove any prefix anchors so that the output will match anywhere.
       // ^^ really does mean an anchored match though.
-      for (var i = 0, groupIndex = 0; i < n; ++i) {
+      for (let i = 0, groupIndex = 0; i < n; ++i) {
         if ('^' === parts[i] && '^' !== parts[i + 1]) { parts[i] = ''; }
       }
 
       // Expand letters to groupts to handle mixing of case-sensitive and
       // case-insensitive patterns if necessary.
       if (regex.ignoreCase && needToFoldCase) {
-        for (var i = 0; i < n; ++i) {
-          var p = parts[i];
+        for (let i = 0; i < n; ++i) {
+          let p = parts[i];
           var ch0 = p.charAt(0);
           if (p.length >= 2 && ch0 === '[') {
             parts[i] = caseFoldCharset(p);
@@ -553,7 +553,7 @@ window['_pr_isIE6'] = function () {
             parts[i] = p.replace(
                 /[a-zA-Z]/g,
                 function (ch) {
-                  var cc = ch.charCodeAt(0);
+                  let cc = ch.charCodeAt(0);
                   return '[' + String.fromCharCode(cc & ~32, cc | 32) + ']';
                 });
           }
@@ -563,9 +563,9 @@ window['_pr_isIE6'] = function () {
       return parts.join('');
     }
 
-    var rewritten = [];
-    for (var i = 0, n = regexs.length; i < n; ++i) {
-      var regex = regexs[i];
+    let rewritten = [];
+    for (let i = 0, n = regexs.length; i < n; ++i) {
+      let regex = regexs[i];
       if (regex.global || regex.multiline) { throw new Error('' + regex); }
       rewritten.push(
           '(?:' + allowAnywhereFoldCaseAndRenumberGroups(regex) + ')');
@@ -574,20 +574,20 @@ window['_pr_isIE6'] = function () {
     return new RegExp(rewritten.join('|'), ignoreCase ? 'gi' : 'g');
   }
 
-  var PR_innerHtmlWorks = null;
+  let PR_innerHtmlWorks = null;
   function getInnerHtml(node) {
     // inner html is hopelessly broken in Safari 2.0.4 when the content is
     // an html description of well formed XML and the containing tag is a PRE
     // tag, so we detect that case and emulate innerHTML.
     if (null === PR_innerHtmlWorks) {
-      var testNode = document.createElement('PRE');
+      let testNode = document.createElement('PRE');
       testNode.appendChild(
           document.createTextNode('<!DOCTYPE foo PUBLIC "foo bar">\n<foo />'));
       PR_innerHtmlWorks = !/</.test(testNode.innerHTML);
     }
 
     if (PR_innerHtmlWorks) {
-      var content = node.innerHTML;
+      let content = node.innerHTML;
       // XMP tags contain unescaped entities so require special handling.
       if (isRawContent(node)) {
         content = textToHtml(content);
@@ -598,8 +598,8 @@ window['_pr_isIE6'] = function () {
       return content;
     }
 
-    var out = [];
-    for (var child = node.firstChild; child; child = child.nextSibling) {
+    let out = [];
+    for (let child = node.firstChild; child; child = child.nextSibling) {
       normalizedHtml(child, out);
     }
     return out.join('');
@@ -613,17 +613,17 @@ window['_pr_isIE6'] = function () {
     * @private
     */
   function makeTabExpander(tabWidth) {
-    var SPACES = '                ';
-    var charInLine = 0;
+    let SPACES = '                ';
+    let charInLine = 0;
 
     return function (plainText) {
       // walk over each character looking for tabs and newlines.
       // On tabs, expand them.  On newlines, reset charInLine.
       // Otherwise increment charInLine
-      var out = null;
-      var pos = 0;
-      for (var i = 0, n = plainText.length; i < n; ++i) {
-        var ch = plainText.charAt(i);
+      let out = null;
+      let pos = 0;
+      for (let i = 0, n = plainText.length; i < n; ++i) {
+        let ch = plainText.charAt(i);
 
         switch (ch) {
           case '\t':
@@ -633,7 +633,7 @@ window['_pr_isIE6'] = function () {
             // nSpaces is the amount of padding -- the number of spaces needed
             // to move us to the next column, where columns occur at factors of
             // tabWidth.
-            var nSpaces = tabWidth - (charInLine % tabWidth);
+            let nSpaces = tabWidth - (charInLine % tabWidth);
             charInLine += nSpaces;
             for (; nSpaces >= 0; nSpaces -= SPACES.length) {
               out.push(SPACES.substring(0, nSpaces));
@@ -653,7 +653,7 @@ window['_pr_isIE6'] = function () {
     };
   }
 
-  var pr_chunkPattern = new RegExp(
+  let pr_chunkPattern = new RegExp(
       '[^<]+'  // A run of characters other than '<'
       + '|<\!--[\\s\\S]*?--\>'  // an HTML comment
       + '|<!\\[CDATA\\[[\\s\\S]*?\\]\\]>'  // a CDATA section
@@ -661,10 +661,10 @@ window['_pr_isIE6'] = function () {
       + '|<\/?[a-zA-Z](?:[^>\"\']|\'[^\']*\'|\"[^\"]*\")*>'
       + '|<',  // A '<' that does not begin a larger chunk
       'g');
-  var pr_commentPrefix = /^<\!--/;
-  var pr_cdataPrefix = /^<!\[CDATA\[/;
-  var pr_brPrefix = /^<br\b/i;
-  var pr_tagNameRe = /^<(\/?)([a-zA-Z][a-zA-Z0-9]*)/;
+  let pr_commentPrefix = /^<\!--/;
+  let pr_cdataPrefix = /^<!\[CDATA\[/;
+  let pr_brPrefix = /^<br\b/i;
+  let pr_tagNameRe = /^<(\/?)([a-zA-Z][a-zA-Z0-9]*)/;
 
   /** split markup into chunks of html tags (style null) and
     * plain text (style {@link #PR_PLAIN}), converting tags which are
@@ -678,13 +678,13 @@ window['_pr_isIE6'] = function () {
     // since the pattern has the 'g' modifier and defines no capturing groups,
     // this will return a list of all chunks which we then classify and wrap as
     // PR_Tokens
-    var matches = s.match(pr_chunkPattern);
-    var sourceBuf = [];
-    var sourceBufLen = 0;
-    var extractedTags = [];
+    let matches = s.match(pr_chunkPattern);
+    let sourceBuf = [];
+    let sourceBufLen = 0;
+    let extractedTags = [];
     if (matches) {
-      for (var i = 0, n = matches.length; i < n; ++i) {
-        var match = matches[i];
+      for (let i = 0, n = matches.length; i < n; ++i) {
+        let match = matches[i];
         if (match.length > 1 && match.charAt(0) === '<') {
           if (pr_commentPrefix.test(match)) { continue; }
           if (pr_cdataPrefix.test(match)) {
@@ -701,8 +701,8 @@ window['_pr_isIE6'] = function () {
               // A <span class="nocode"> will start a section that should be
               // ignored.  Continue walking the list until we see a matching end
               // tag.
-              var name = match.match(pr_tagNameRe)[2];
-              var depth = 1;
+              let name = match.match(pr_tagNameRe)[2];
+              let depth = 1;
               var j;
               end_tag_loop:
               for (j = i + 1; j < n; ++j) {
@@ -727,7 +727,7 @@ window['_pr_isIE6'] = function () {
             }
           }
         } else {
-          var literalText = htmlToText(match);
+          let literalText = htmlToText(match);
           sourceBuf.push(literalText);
           sourceBufLen += literalText.length;
         }
@@ -754,7 +754,7 @@ window['_pr_isIE6'] = function () {
    */
   function appendDecorations(basePos, sourceCode, langHandler, out) {
     if (!sourceCode) { return; }
-    var job = {
+    let job = {
       source: sourceCode,
       basePos: basePos
     };
@@ -809,22 +809,22 @@ window['_pr_isIE6'] = function () {
     *   function that takes source code and returns a list of decorations.
     */
   function createSimpleLexer(shortcutStylePatterns, fallthroughStylePatterns) {
-    var shortcuts = {};
+    let shortcuts = {};
     var tokenizer;
     (function () {
-      var allPatterns = shortcutStylePatterns.concat(fallthroughStylePatterns);
-      var allRegexs = [];
-      var regexKeys = {};
-      for (var i = 0, n = allPatterns.length; i < n; ++i) {
-        var patternParts = allPatterns[i];
-        var shortcutChars = patternParts[3];
+      let allPatterns = shortcutStylePatterns.concat(fallthroughStylePatterns);
+      let allRegexs = [];
+      let regexKeys = {};
+      for (let i = 0, n = allPatterns.length; i < n; ++i) {
+        let patternParts = allPatterns[i];
+        let shortcutChars = patternParts[3];
         if (shortcutChars) {
-          for (var c = shortcutChars.length; --c >= 0;) {
+          for (let c = shortcutChars.length; --c >= 0;) {
             shortcuts[shortcutChars.charAt(c)] = patternParts;
           }
         }
-        var regex = patternParts[1];
-        var k = '' + regex;
+        let regex = patternParts[1];
+        let k = '' + regex;
         if (!regexKeys.hasOwnProperty(k)) {
           allRegexs.push(regex);
           regexKeys[k] = null;
@@ -834,8 +834,8 @@ window['_pr_isIE6'] = function () {
       tokenizer = combinePrefixPatterns(allRegexs);
     })();
 
-    var nPatterns = fallthroughStylePatterns.length;
-    var notWs = /\S/;
+    let nPatterns = fallthroughStylePatterns.length;
+    let notWs = /\S/;
 
     /**
      * Lexes job.source and produces an output array job.decorations of style
@@ -848,33 +848,33 @@ window['_pr_isIE6'] = function () {
      *        sourceCode.
      * }
      */
-    var decorate = function (job) {
-      var sourceCode = job.source, basePos = job.basePos;
+    let decorate = (job) => {
+      let sourceCode = job.source, basePos = job.basePos;
       /** Even entries are positions in source in ascending order.  Odd enties
         * are style markers (e.g., PR_COMMENT) that run from that position until
         * the end.
         * @type {Array.<number|string>}
         */
-      var decorations = [basePos, PR_PLAIN];
-      var pos = 0;  // index into sourceCode
-      var tokens = sourceCode.match(tokenizer) || [];
-      var styleCache = {};
+      let decorations = [basePos, PR_PLAIN];
+      let pos = 0;  // index into sourceCode
+      let tokens = sourceCode.match(tokenizer) || [];
+      let styleCache = {};
 
-      for (var ti = 0, nTokens = tokens.length; ti < nTokens; ++ti) {
-        var token = tokens[ti];
-        var style = styleCache[token];
-        var match = void 0;
+      for (let ti = 0, nTokens = tokens.length; ti < nTokens; ++ti) {
+        let token = tokens[ti];
+        let style = styleCache[token];
+        let match = void 0;
 
         var isEmbedded;
         if (typeof style === 'string') {
           isEmbedded = false;
         } else {
-          var patternParts = shortcuts[token.charAt(0)];
+          let patternParts = shortcuts[token.charAt(0)];
           if (patternParts) {
             match = token.match(patternParts[1]);
             style = patternParts[0];
           } else {
-            for (var i = 0; i < nPatterns; ++i) {
+            for (let i = 0; i < nPatterns; ++i) {
               patternParts = fallthroughStylePatterns[i];
               match = token.match(patternParts[1]);
               if (match) {
@@ -897,15 +897,15 @@ window['_pr_isIE6'] = function () {
           if (!isEmbedded) { styleCache[token] = style; }
         }
 
-        var tokenStart = pos;
+        let tokenStart = pos;
         pos += token.length;
 
         if (!isEmbedded) {
           decorations.push(basePos + tokenStart, style);
         } else {  // Treat group 1 as an embedded block of source code.
-          var embeddedSource = match[1];
-          var embeddedSourceStart = token.indexOf(embeddedSource);
-          var embeddedSourceEnd = embeddedSourceStart + embeddedSource.length;
+          let embeddedSource = match[1];
+          let embeddedSourceStart = token.indexOf(embeddedSource);
+          let embeddedSourceEnd = embeddedSourceStart + embeddedSource.length;
           if (match[2]) {
             // If embeddedSource can be blank, then it would match at the
             // beginning which would cause us to infinitely recurse on the
@@ -913,7 +913,7 @@ window['_pr_isIE6'] = function () {
             embeddedSourceEnd = token.length - match[2].length;
             embeddedSourceStart = embeddedSourceEnd - embeddedSource.length;
           }
-          var lang = style.substring(5);
+          let lang = style.substring(5);
           // Decorate the left of the embedded source
           appendDecorations(
               basePos + tokenStart,
@@ -953,7 +953,7 @@ window['_pr_isIE6'] = function () {
     *     in the input job and builds the decoration list.
     */
   function sourceDecorator(options) {
-    var shortcutStylePatterns = [], fallthroughStylePatterns = [];
+    let shortcutStylePatterns = [], fallthroughStylePatterns = [];
     if (options['tripleQuotedStrings']) {
       // '''multi-line-string''', 'single-line-string', and double-quoted
       shortcutStylePatterns.push(
@@ -996,7 +996,7 @@ window['_pr_isIE6'] = function () {
           [PR_COMMENT, /^\/\*[\s\S]*?(?:\*\/|$)/, null]);
     }
     if (options['regexLiterals']) {
-      var REGEX_LITERAL = (
+      let REGEX_LITERAL = (
           // A regular expression literal starts with a slash that is
           // not followed by * or / so that it is not confused with
           // comments.
@@ -1015,7 +1015,7 @@ window['_pr_isIE6'] = function () {
            ]);
     }
 
-    var keywords = options['keywords'].replace(/^\s+|\s+$/g, '');
+    let keywords = options['keywords'].replace(/^\s+|\s+$/g, '');
     if (keywords.length) {
       fallthroughStylePatterns.push(
           [PR_KEYWORD,
@@ -1046,7 +1046,7 @@ window['_pr_isIE6'] = function () {
     return createSimpleLexer(shortcutStylePatterns, fallthroughStylePatterns);
   }
 
-  var decorateSource = sourceDecorator({
+  let decorateSource = sourceDecorator({
         'keywords': ALL_KEYWORDS,
         'hashComments': true,
         'cStyleComments': true,
@@ -1068,25 +1068,25 @@ window['_pr_isIE6'] = function () {
     * @private
     */
   function recombineTagsAndDecorations(job) {
-    var sourceText = job.source;
-    var extractedTags = job.extractedTags;
-    var decorations = job.decorations;
+    let sourceText = job.source;
+    let extractedTags = job.extractedTags;
+    let decorations = job.decorations;
 
-    var html = [];
+    let html = [];
     // index past the last char in sourceText written to html
-    var outputIdx = 0;
+    let outputIdx = 0;
 
-    var openDecoration = null;
-    var currentDecoration = null;
-    var tagPos = 0;  // index into extractedTags
-    var decPos = 0;  // index into decorations
-    var tabExpander = makeTabExpander(window['PR_TAB_WIDTH']);
+    let openDecoration = null;
+    let currentDecoration = null;
+    let tagPos = 0;  // index into extractedTags
+    let decPos = 0;  // index into decorations
+    let tabExpander = makeTabExpander(window['PR_TAB_WIDTH']);
 
-    var adjacentSpaceRe = /([\r\n ]) /g;
-    var startOrSpaceRe = /(^| ) /gm;
-    var newlineRe = /\r\n?|\n/g;
-    var trailingSpaceRe = /[ \r\n]$/;
-    var lastWasSpace = true;  // the last text chunk emitted ended with a space.
+    let adjacentSpaceRe = /([\r\n ]) /g;
+    let startOrSpaceRe = /(^| ) /gm;
+    let newlineRe = /\r\n?|\n/g;
+    let trailingSpaceRe = /[ \r\n]$/;
+    let lastWasSpace = true;  // the last text chunk emitted ended with a space.
 
     // A helper function that is responsible for opening sections of decoration
     // and outputing properly escaped chunks of source
@@ -1108,7 +1108,7 @@ window['_pr_isIE6'] = function () {
         // http://stud3.tuwien.ac.at/~e0226430/innerHtmlQuirk.html
         // and it serves to undo the conversion of <br>s to newlines done in
         // chunkify.
-        var htmlChunk = textToHtml(
+        let htmlChunk = textToHtml(
             tabExpander(sourceText.substring(outputIdx, sourceIdx)))
             .replace(lastWasSpace
                      ? startOrSpaceRe
@@ -1118,7 +1118,7 @@ window['_pr_isIE6'] = function () {
         lastWasSpace = trailingSpaceRe.test(htmlChunk);
         // IE collapses multiple adjacient <br>s into 1 line break.
         // Prefix every <br> with '&nbsp;' can prevent such IE's behavior.
-        var lineBreakHtml = window['_pr_isIE6']() ? '&nbsp;<br />' : '<br />';
+        let lineBreakHtml = window['_pr_isIE6']() ? '&nbsp;<br />' : '<br />';
         html.push(htmlChunk.replace(newlineRe, lineBreakHtml));
         outputIdx = sourceIdx;
       }
@@ -1166,7 +1166,7 @@ window['_pr_isIE6'] = function () {
   }
 
   /** Maps language-specific file extensions to handlers. */
-  var langHandlerRegistry = {};
+  let langHandlerRegistry = {};
   /** Register a language handler for the given file extensions.
     * @param {function (Object)} handler a function from source code to a list
     *      of decorations.  Takes a single argument job which describes the
@@ -1184,8 +1184,8 @@ window['_pr_isIE6'] = function () {
     * @param {Array.<string>} fileExtensions
     */
   function registerLangHandler(handler, fileExtensions) {
-    for (var i = fileExtensions.length; --i >= 0;) {
-      var ext = fileExtensions[i];
+    for (let i = fileExtensions.length; --i >= 0;) {
+      let ext = fileExtensions[i];
       if (!langHandlerRegistry.hasOwnProperty(ext)) {
         langHandlerRegistry[ext] = handler;
       } else if ('console' in window) {
@@ -1294,17 +1294,17 @@ window['_pr_isIE6'] = function () {
       createSimpleLexer([], [[PR_STRING, /^[\s\S]+/]]), ['regex']);
 
   function applyDecorator(job) {
-    var sourceCodeHtml = job.sourceCodeHtml;
-    var opt_langExtension = job.langExtension;
+    let sourceCodeHtml = job.sourceCodeHtml;
+    let opt_langExtension = job.langExtension;
 
     // Prepopulate output in case processing fails with an exception.
     job.prettyPrintedHtml = sourceCodeHtml;
 
     try {
       // Extract tags, and convert the source code to plain text.
-      var sourceAndExtractedTags = extractTags(sourceCodeHtml);
+      let sourceAndExtractedTags = extractTags(sourceCodeHtml);
       /** Plain text. @type {string} */
-      var source = sourceAndExtractedTags.source;
+      let source = sourceAndExtractedTags.source;
       job.source = source;
       job.basePos = 0;
 
@@ -1328,7 +1328,7 @@ window['_pr_isIE6'] = function () {
   }
 
   function prettyPrintOne(sourceCodeHtml, opt_langExtension) {
-    var job = {
+    let job = {
       sourceCodeHtml: sourceCodeHtml,
       langExtension: opt_langExtension
     };
@@ -1338,51 +1338,51 @@ window['_pr_isIE6'] = function () {
 
   function prettyPrint(opt_whenDone) {
     var isIE678 = window['_pr_isIE6']();
-    var ieNewline = isIE678 === 6 ? '\r\n' : '\r';
+    let ieNewline = isIE678 === 6 ? '\r\n' : '\r';
     // See bug 71 and http://stackoverflow.com/questions/136443/why-doesnt-ie7-
 
     // fetch a list of nodes to rewrite
-    var codeSegments = [
+    let codeSegments = [
         document.getElementsByTagName('pre'),
         document.getElementsByTagName('code'),
         document.getElementsByTagName('td'),  /* ND Change: Add tables to support prototypes. */
         document.getElementsByTagName('xmp') ];
-    var elements = [];
-    for (var i = 0; i < codeSegments.length; ++i) {
-      for (var j = 0, n = codeSegments[i].length; j < n; ++j) {
+    let elements = [];
+    for (let i = 0; i < codeSegments.length; ++i) {
+      for (let j = 0, n = codeSegments[i].length; j < n; ++j) {
         elements.push(codeSegments[i][j]);
       }
     }
     codeSegments = null;
 
-    var clock = Date;
+    let clock = Date;
     if (!clock['now']) {
       clock = { 'now': function () { return (new Date).getTime(); } };
     }
 
     // The loop is broken into a series of continuations to make sure that we
     // don't make the browser unresponsive when rewriting a large page.
-    var k = 0;
+    let k = 0;
     var prettyPrintingJob;
 
     function doWork() {
-      var endTime = (window['PR_SHOULD_USE_CONTINUATION'] ?
+      let endTime = (window['PR_SHOULD_USE_CONTINUATION'] ?
                      clock.now() + 250 /* ms */ :
                      Infinity);
       for (; k < elements.length && clock.now() < endTime; k++) {
-        var cs = elements[k];
+        let cs = elements[k];
         if (cs.className && cs.className.indexOf('prettyprint') >= 0) {
           // If the classes includes a language extensions, use it.
           // Language extensions can be specified like
           //     <pre class="prettyprint lang-cpp">
           // the language extension "cpp" is used to find a language handler as
           // passed to PR_registerLangHandler.
-          var langExtension = cs.className.match(/\blang-(\w+)\b/);
+          let langExtension = cs.className.match(/\blang-(\w+)\b/);
           if (langExtension) { langExtension = langExtension[1]; }
 
           // make sure this is not nested in an already prettified element
-          var nested = false;
-          for (var p = cs.parentNode; p; p = p.parentNode) {
+          let nested = false;
+          for (let p = cs.parentNode; p; p = p.parentNode) {
             if ((p.tagName === 'pre' || p.tagName === 'code' ||
                  p.tagName === 'xmp' || p.tagName === 'td') &&  /* ND Change: Add tables to support prototypes */
                 p.className && p.className.indexOf('prettyprint') >= 0) {
@@ -1393,7 +1393,7 @@ window['_pr_isIE6'] = function () {
           if (!nested) {
             // fetch the content as a snippet of properly escaped HTML.
             // Firefox adds newlines at the end.
-            var content = getInnerHtml(cs);
+            let content = getInnerHtml(cs);
             content = content.replace(/(?:\r\n?|\n)$/, '');
 
 	  		/* ND Change: we need to preserve &nbsp;s so change them to a special character instead of a space. */
@@ -1419,13 +1419,13 @@ window['_pr_isIE6'] = function () {
     }
 
     function replaceWithPrettyPrintedHtml() {
-      var newContent = prettyPrintingJob.prettyPrintedHtml;
+      let newContent = prettyPrintingJob.prettyPrintedHtml;
       if (!newContent) { return; }
 
       /* ND Change: Restore the preserved &nbsp;s.  */
 	  newContent = newContent.replace(/\x11/g, '&nbsp;');
 
-      var cs = prettyPrintingJob.sourceNode;
+      let cs = prettyPrintingJob.sourceNode;
 
       // push the prettified html back into the tag.
       if (!isRawContent(cs)) {
@@ -1435,11 +1435,11 @@ window['_pr_isIE6'] = function () {
         // we need to change the tag to a <pre> since <xmp>s do not allow
         // embedded tags such as the span tags used to attach styles to
         // sections of source code.
-        var pre = document.createElement('PRE');
-        for (var i = 0; i < cs.attributes.length; ++i) {
-          var a = cs.attributes[i];
+        let pre = document.createElement('PRE');
+        for (let i = 0; i < cs.attributes.length; ++i) {
+          let a = cs.attributes[i];
           if (a.specified) {
-            var aname = a.name.toLowerCase();
+            let aname = a.name.toLowerCase();
             if (aname === 'class') {
               pre.className = a.value;  // For IE 6
             } else {
@@ -1460,9 +1460,9 @@ window['_pr_isIE6'] = function () {
       // treated as two newlines on Firefox, and doing this also slows
       // down rendering.
       if (isIE678 && cs.tagName === 'PRE') {
-        var lineBreaks = cs.getElementsByTagName('br');
-        for (var j = lineBreaks.length; --j >= 0;) {
-          var lineBreak = lineBreaks[j];
+        let lineBreaks = cs.getElementsByTagName('br');
+        for (let j = lineBreaks.length; --j >= 0;) {
+          let lineBreak = lineBreaks[j];
           lineBreak.parentNode.replaceChild(
               document.createTextNode(ieNewline), lineBreak);
         }

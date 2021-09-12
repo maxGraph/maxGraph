@@ -126,8 +126,8 @@ function main(container)
   all default event handling is disabled in the last line.
 </p>
 <pre>
-var model = new mxGraphModel();
-var graph = new mxGraph(container, model);
+let model = new mxGraphModel();
+let graph = new mxGraph(container, model);
 </pre>
 <p>
 	If you want the graph to be read-only you can use <code>graph.setEnabled(false)</code>.
@@ -152,7 +152,7 @@ var graph = new mxGraph(container, model);
 <pre>
 // Gets the default parent for inserting new cells. This
 // is normally the first child of the root (ie. layer 0).
-var parent = graph.getDefaultParent();
+let parent = graph.getDefaultParent();
 
 // Adds cells to the model in a single step
 model.beginUpdate();
@@ -185,8 +185,8 @@ finally
   required:
 </p>
 <pre>
-var node = document.getElementById('id-of-graph-container');
-var graph = new mxGraph(node);
+let node = document.getElementById('id-of-graph-container');
+let graph = new mxGraph(node);
 </pre>
 <h2><a id="Model"></a>Model</h2>
 <p>
@@ -221,9 +221,9 @@ var graph = new mxGraph(node);
   To create a new graph model with a root cell and a default layer (first child):
 </p>
 <pre>
-var root = new mxCell();
+let root = new mxCell();
 root.insert(new mxCell());
-var model = new mxGraphModel(root);
+let model = new mxGraphModel(root);
 </pre>
 <h2><a id="Stylesheet"></a>Stylesheet</h2>
 <p>
@@ -242,10 +242,10 @@ var model = new mxGraphModel(root);
   To modify the default styles for vertices and edges in an existing graph:
 </p>
 <pre>
-var vertexStyle = graph.getStylesheet().getDefaultVertexStyle();
+let vertexStyle = graph.getStylesheet().getDefaultVertexStyle();
 vertexStyle[mxConstants.STYLE_ROUNDED] = true;
 
-var edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
+let edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
 edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.TopToBottom;
 </pre>
 <h2><a id="Styles"></a>Styles</h2>
@@ -324,8 +324,8 @@ mxGraph.prototype.getImage = function(state)
   To create a new editor instance and configure it, the following code is used:
 </p>
 <pre>
-var config = mxUtils.load('editors/config/keyhandler-commons.xml').getDocumentElement();
-var editor = new mxEditor(config);
+let config = mxUtils.load('editors/config/keyhandler-commons.xml').getDocumentElement();
+let editor = new mxEditor(config);
 </pre>
 <p>
   The configuration file is an XML file that is passed to
@@ -424,9 +424,9 @@ var editor = new mxEditor(config);
   For example, consider the following JavaScript object definition:
 </p>
 <pre>
-var object = new Object();
+let object = {};
 object.myBool = true;
-object.myObject = new Object();
+object.myObject = {};
 object.myObject.name = 'Test';
 object.myArray = ['a', ['b', 'c'], 'd'];
 </pre>
@@ -435,8 +435,8 @@ object.myArray = ['a', ['b', 'c'], 'd'];
   the following code is used:
 </p>
 <pre>
-var encoder = new mxCodec();
-var node = encoder.encode(object);
+let encoder = new mxCodec();
+let node = encoder.encode(object);
 mxUtils.popup(mxUtils.getXml(node));
 </pre>
 <p>
@@ -511,7 +511,7 @@ if ($xml != null) {
   following methods:
 </p>
 <pre>
-var data = editor.writeGraphModel();
+let data = editor.writeGraphModel();
 editor.readGraphModel(mxUtils.parseXml(data));
 </pre>
 <h2><a id="Codecs"></a>Codecs</h2>

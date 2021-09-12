@@ -4,7 +4,7 @@
 function maketoc(element, enableSections)
 {
 	enableSections = (enableSections != null) ? enableSections : true;
-	var tmp = crawlDom(document.body, 2, 4, [], 30, enableSections);
+	let tmp = crawlDom(document.body, 2, 4, [], 30, enableSections);
 	
 	if (tmp.childNodes.length > 0)
 	{
@@ -14,20 +14,20 @@ function maketoc(element, enableSections)
 
 function crawlDom(parent, ignore, depth, chapters, indent, enableSections)
 {
-	var doc = parent.ownerDocument;
-	var toc = doc.createElement('ul');
+	let doc = parent.ownerDocument;
+	let toc = doc.createElement('ul');
 	toc.style.listStyleType = 'none';
-	var child = parent.firstChild;
-	var lastLevel = 0;
+	let child = parent.firstChild;
+	let lastLevel = 0;
 	
 	while (child != null)
 	{
-		var name = child.nodeName.toLowerCase();
+		let name = child.nodeName.toLowerCase();
 
 		if (name.substring(0, 1) == 'h')
 		{
-			var tmp = name.substring(1, name.length);
-			var currentLevel = parseInt(tmp);
+			let tmp = name.substring(1, name.length);
+			let currentLevel = parseInt(tmp);
 			
 			// Checks if rest of string is numeric and
 			// header level is not beyond depth
@@ -49,9 +49,9 @@ function crawlDom(parent, ignore, depth, chapters, indent, enableSections)
 					}
 
 					chapters[currentLevel]++;
-					var sect = '';
+					let sect = '';
 					
-					for (var i = 0; i < chapters.length; i++)
+					for (let i = 0; i < chapters.length; i++)
 					{
 						if (chapters[i] != null)
 						{
@@ -59,7 +59,7 @@ function crawlDom(parent, ignore, depth, chapters, indent, enableSections)
 						}
 					}
 
-					var tmp = child.firstChild;
+					let tmp = child.firstChild;
 					
 					while (tmp != null &&
 						tmp.nodeType != 3)
@@ -70,8 +70,8 @@ function crawlDom(parent, ignore, depth, chapters, indent, enableSections)
 					if (tmp != null)
 					{
 						sect = sect.substring(0, sect.length - 1);
-						var title = tmp.nodeValue;
-						var anchor = null; 
+						let title = tmp.nodeValue;
+						let anchor = null;
 						
 						if (navigator.userAgent.indexOf('MSIE') >= 0)
 						{
@@ -93,7 +93,7 @@ function crawlDom(parent, ignore, depth, chapters, indent, enableSections)
 						child.insertBefore(anchor, tmp);
 						
 						// Adds entry in the table of contents
-						var listItem = doc.createElement('li');
+						let listItem = doc.createElement('li');
 						listItem.style.paddingLeft = ((currentLevel - 1) * indent) + 'px';
 						var anchor2 = doc.createElement('a');
 						anchor2.setAttribute('href', '#'+sect);
@@ -118,7 +118,7 @@ function crawlDom(parent, ignore, depth, chapters, indent, enableSections)
 			}
 		}
 
-		var tmp = crawlDom(child, 0, depth, chapters, indent);
+		let tmp = crawlDom(child, 0, depth, chapters, indent);
 		
 		if (tmp.childNodes.length > 0)
 		{

@@ -1,4 +1,4 @@
-// This file is part of Natural Docs, which is Copyright © 2003-2010 Greg Valure
+// This file is part of Natural Docs, which is Copyright ï¿½ 2003-2010 Greg Valure
 // Natural Docs is licensed under version 3 of the GNU Affero General Public License (AGPL)
 // Refer to License.txt for the complete details
 
@@ -72,7 +72,7 @@ else if (agt.indexOf("gecko") != -1)
 
 function GetXPosition(item)
     {
-    var position = 0;
+    let position = 0;
 
     if (item.offsetWidth != null)
         {
@@ -89,7 +89,7 @@ function GetXPosition(item)
 
 function GetYPosition(item)
     {
-    var position = 0;
+    let position = 0;
 
     if (item.offsetWidth != null)
         {
@@ -131,7 +131,7 @@ function ToggleMenu(id)
     if (!window.document.getElementById)
         {  return;  };
 
-    var display = window.document.getElementById(id).style.display;
+    let display = window.document.getElementById(id).style.display;
 
     if (display == "none")
         {  display = "block";  }
@@ -146,7 +146,7 @@ function HideAllBut(ids, max)
     if (document.getElementById)
         {
         ids.sort( function(a,b) { return a - b; } );
-        var number = 1;
+        let number = 1;
 
         while (number < max)
             {
@@ -168,17 +168,17 @@ function HideAllBut(ids, max)
 // ____________________________________________________________________________
 
 
-var tooltipTimer = 0;
+let tooltipTimer = 0;
 
 function ShowTip(event, tooltipID, linkID)
     {
     if (tooltipTimer)
         {  clearTimeout(tooltipTimer);  };
 
-    var docX = event.clientX + window.pageXOffset;
-    var docY = event.clientY + window.pageYOffset;
+    let docX = event.clientX + window.pageXOffset;
+    let docY = event.clientY + window.pageYOffset;
 
-    var showCommand = "ReallyShowTip('" + tooltipID + "', '" + linkID + "', " + docX + ", " + docY + ")";
+    let showCommand = "ReallyShowTip('" + tooltipID + "', '" + linkID + "', " + docX + ", " + docY + ")";
 
     tooltipTimer = setTimeout(showCommand, 1000);
     }
@@ -203,8 +203,8 @@ function ReallyShowTip(tooltipID, linkID, docX, docY)
 */
     if (tooltip)
         {
-        var left = GetXPosition(link);
-        var top = GetYPosition(link);
+        let left = GetXPosition(link);
+        let top = GetYPosition(link);
         top += link.offsetHeight;
 
 
@@ -226,8 +226,8 @@ function ReallyShowTip(tooltipID, linkID, docX, docY)
 
         if (tooltip.offsetWidth != null)
             {
-            var width = tooltip.offsetWidth;
-            var docWidth = document.body.clientWidth;
+            let width = tooltip.offsetWidth;
+            let docWidth = document.body.clientWidth;
 
             if (left + width > docWidth)
                 {  left = docWidth - width - 1;  }
@@ -271,7 +271,7 @@ function NDOnLoad()
     {
     if (browserVer == "IE6")
         {
-        var scrollboxes = document.getElementsByTagName('blockquote');
+        let scrollboxes = document.getElementsByTagName('blockquote');
 
         if (scrollboxes.item(0))
             {
@@ -282,7 +282,7 @@ function NDOnLoad()
     };
 
 
-var resizeTimer = 0;
+let resizeTimer = 0;
 
 function NDOnResize()
     {
@@ -295,7 +295,7 @@ function NDOnResize()
 
 function NDDoResize()
     {
-    var scrollboxes = document.getElementsByTagName('blockquote');
+    let scrollboxes = document.getElementsByTagName('blockquote');
 
     var i;
     var item;
@@ -459,7 +459,7 @@ function SearchPanel(name, mode, resultsPath)
             this.keyTimeout = 0;
             };
 
-        var searchValue = this.DOMSearchField().value.replace(/ +/g, "");
+        let searchValue = this.DOMSearchField().value.replace(/ +/g, "");
 
         if (searchValue != this.lastSearchValue)
             {
@@ -493,7 +493,7 @@ function SearchPanel(name, mode, resultsPath)
     */
     this.OnSearchTypeChange = function()
         {
-        var searchValue = this.DOMSearchField().value.replace(/ +/g, "");
+        let searchValue = this.DOMSearchField().value.replace(/ +/g, "");
 
         if (searchValue != "")
             {
@@ -526,10 +526,10 @@ function SearchPanel(name, mode, resultsPath)
         {
         this.keyTimeout = 0;
 
-        var searchValue = this.DOMSearchField().value.replace(/^ +/, "");
-        var searchTopic = this.DOMSearchType().value;
+        let searchValue = this.DOMSearchField().value.replace(/^ +/, "");
+        let searchTopic = this.DOMSearchType().value;
 
-        var pageExtension = searchValue.substr(0,1);
+        let pageExtension = searchValue.substr(0,1);
 
         if (pageExtension.match(/^[a-z]/i))
             {  pageExtension = pageExtension.toUpperCase();  }
@@ -591,14 +591,14 @@ function SearchPanel(name, mode, resultsPath)
             };
 
 
-        var domPopupSearchResultsWindow = this.DOMPopupSearchResultsWindow();
+        let domPopupSearchResultsWindow = this.DOMPopupSearchResultsWindow();
 
         if (this.mode == "HTML" && domPopupSearchResultsWindow.style.display != "block")
             {
-            var domSearchType = this.DOMSearchType();
+            let domSearchType = this.DOMSearchType();
 
-            var left = GetXPosition(domSearchType);
-            var top = GetYPosition(domSearchType) + domSearchType.offsetHeight;
+            let left = GetXPosition(domSearchType);
+            let top = GetYPosition(domSearchType) + domSearchType.offsetHeight;
 
             MoveToPosition(domPopupSearchResultsWindow, left, top);
             domPopupSearchResultsWindow.style.display = 'block';
@@ -640,7 +640,7 @@ function SearchPanel(name, mode, resultsPath)
 
             this.DOMSearchPanel().className = 'MSearchPanelActive';
 
-            var searchField = this.DOMSearchField();
+            let searchField = this.DOMSearchField();
 
             if (searchField.value == 'Search')
                  {  searchField.value = "";  }
@@ -713,9 +713,9 @@ function SearchResults(name, mode)
         if (this.mode == "FramedHTML")
             {  return;  };
 
-        var parentElement = document.getElementById(id);
+        let parentElement = document.getElementById(id);
 
-        var element = parentElement.firstChild;
+        let element = parentElement.firstChild;
 
         while (element && element != parentElement)
             {
@@ -801,17 +801,17 @@ function SearchResults(name, mode)
             search = search.replace(/[^a-z0-9\_]i/gi, "_zzz");
             };
 
-        var resultRows = document.getElementsByTagName("div");
-        var matches = 0;
+        let resultRows = document.getElementsByTagName("div");
+        let matches = 0;
 
-        var i = 0;
+        let i = 0;
         while (i < resultRows.length)
             {
-            var row = resultRows.item(i);
+            let row = resultRows.item(i);
 
             if (row.className == "SRResult")
                 {
-                var rowMatchName = row.id.toLowerCase();
+                let rowMatchName = row.id.toLowerCase();
                 rowMatchName = rowMatchName.replace(/^sr\d*_/, '');
 
                 if (search.length <= rowMatchName.length && rowMatchName.substr(0, search.length) == search)

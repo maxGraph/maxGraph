@@ -1,30 +1,43 @@
 {
-  "name": "mxgraph",
-  "description": "mxGraph is a fully client side JavaScript diagramming library that uses SVG and HTML for rendering.",
-  "version": "4.2.2",
-  "homepage": "https://github.com/jsgraph/mxgraph",
+  "name": "maxgraph",
+  "description": "max-graph is a fully client side JavaScript diagramming library that uses SVG and HTML for rendering.",
+  "version": "1.0.0",
+  "homepage": "https://github.com/maxGraph/maxGraph",
   "author": {
-    "name": "JGraph Ltd",
-    "email": "support@jgraph.com"
+    "name": "",
+    "email": ""
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jsgraph/mxgraph.git"
+    "url": "git+https://github.com/maxGraph/maxGraph"
   },
   "bugs": {
-    "url": "https://github.com/jsgraph/mxgraph/issues"
+    "url": "https://github.com/maxGraph/maxGraph/issues"
   },
   "main": "./javascript/dist/build.js",
   "scripts": {
-    "prepare": "grunt build --base ./ --gruntfile etc/build/Gruntfile.js"
+    "dev": "node ./scripts/dev",
+    "bootstrap": "lerna bootstrap",
+    "postinstall": "lerna bootstrap"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-webpack": "^2.0.1",
-    "load-grunt-tasks": "^3.5.2",
-    "webpack": "^2.2.1"
+    "@babel/core": "^7.13.15",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@lerna/filter-options": "4.0.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.2.1",
+    "file-loader": "^6.2.0",
+    "lerna": "^4.0.0",
+    "prettier": "^2.2.1",
+    "style-loader": "^2.0.0",
+    "typescript": "^4.2.4",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.32.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-merge": "^5.7.3"
   }
 }
