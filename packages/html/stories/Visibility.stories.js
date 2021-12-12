@@ -1,4 +1,4 @@
-import { Graph, RubberBand, mxDomHelpers } from '@maxgraph/core';
+import { Graph, RubberBand, DomHelpers } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -86,19 +86,19 @@ const Template = ({ label, ...args }) => {
 
   // Dynamic conditions (requires refresh)
   buttons.appendChild(
-    mxDomHelpers.button('Cond 1', function () {
+    DomHelpers.button('Cond 1', function () {
       showOne = !showOne;
       graph.refresh();
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('Cond 2', function () {
+    DomHelpers.button('Cond 2', function () {
       showTwo = !showTwo;
       graph.refresh();
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('Cond 3', function () {
+    DomHelpers.button('Cond 3', function () {
       showThree = !showThree;
       graph.refresh();
     })
@@ -106,7 +106,7 @@ const Template = ({ label, ...args }) => {
 
   // Explicit show/hide
   buttons.appendChild(
-    mxDomHelpers.button('Toggle cell', function () {
+    DomHelpers.button('Toggle cell', function () {
       graph.toggleCells(!v1.isVisible(), [v1], true);
     })
   );
@@ -115,7 +115,7 @@ const Template = ({ label, ...args }) => {
   let removed = null;
 
   buttons.appendChild(
-    mxDomHelpers.button('Add/remove cell', function () {
+    DomHelpers.button('Add/remove cell', function () {
       if (removed != null) {
         graph.addCells(removed);
         removed = null;

@@ -2,10 +2,10 @@ import {
   Graph,
   InternalEvent,
   RubberBand,
-  mxLog,
+  MaxLog,
   GraphView,
   Point,
-  mxDomHelpers,
+  DomHelpers,
   EventUtils,
 } from '@maxgraph/core';
 
@@ -156,8 +156,8 @@ const Template = ({ label, ...args }) => {
         }
       };
     } catch (e) {
-      mxLog.show();
-      mxLog.debug('Using background image');
+      MaxLog.show();
+      MaxLog.debug('Using background image');
 
       container.style.backgroundImage = "url('editors/images/grid.gif')";
     }
@@ -190,13 +190,13 @@ const Template = ({ label, ...args }) => {
   div.appendChild(controller);
 
   controller.appendChild(
-    mxDomHelpers.button('+', function () {
+    DomHelpers.button('+', function () {
       graph.zoomIn();
     })
   );
 
   controller.appendChild(
-    mxDomHelpers.button('-', function () {
+    DomHelpers.button('-', function () {
       graph.zoomOut();
     })
   );

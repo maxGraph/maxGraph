@@ -5,13 +5,13 @@
  * Type definitions from the typed-mxgraph project
  */
 import EventSource from '../../view/event/EventSource';
-import { fit, getDocumentScrollOrigin } from '../Utils';
+import { fit, getDocumentScrollOrigin } from '../utils';
 import EventObject from '../../view/event/EventObject';
-import mxClient from '../../mxClient';
+import Client from '../../Client';
 import InternalEvent from '../../view/event/InternalEvent';
-import { write } from '../DomUtils';
-import { isLeftMouseButton } from '../EventUtils';
-import Cell from '../../view/cell/datatypes/Cell';
+import { write } from '../domUtils';
+import { isLeftMouseButton } from '../eventUtils';
+import Cell from '../../view/cell/Cell';
 import InternalMouseEvent from '../../view/event/InternalMouseEvent';
 import { PopupMenuItem } from '../../types';
 
@@ -78,7 +78,7 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
    *
    * URL of the image to be used for the submenu icon.
    */
-  submenuImage = `${mxClient.imageBasePath}/submenu.gif`;
+  submenuImage = `${Client.imageBasePath}/submenu.gif`;
 
   /**
    * Variable: zIndex

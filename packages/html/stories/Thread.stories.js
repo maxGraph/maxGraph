@@ -1,4 +1,4 @@
-import { Graph, mxClient } from '@maxgraph/core';
+import { Graph, Client } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -10,7 +10,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   const container = document.createElement('div');
   container.style.position = 'relative';

@@ -1,11 +1,11 @@
 import {
   Graph,
   TextShape,
-  mxEffects,
+  Effects,
   InternalEvent,
   Constants,
   Perimeter,
-  mxCodec,
+  Codec,
   utils,
   XmlUtils,
 } from '@maxgraph/core';
@@ -66,7 +66,7 @@ const Template = ({ label, ...args }) => {
   // Animates the changes in the graph model
   graph.getModel().addListener(InternalEvent.CHANGE, function (sender, evt) {
     const { changes } = evt.getProperty('edit');
-    mxEffects.animateChanges(graph, changes);
+    Effects.animateChanges(graph, changes);
   });
 
   // Loads the links for the given cell into the given graph
@@ -86,7 +86,7 @@ const Template = ({ label, ...args }) => {
       try {
         const xml = server(cell.id);
         const doc = XmlUtils.parseXml(xml);
-        const dec = new mxCodec(doc);
+        const dec = new Codec(doc);
         const model = dec.decode(doc.documentElement);
 
         // Removes all cells which are not in the response
@@ -193,7 +193,7 @@ const Template = ({ label, ...args }) => {
       graph.getModel().endUpdate();
     }
 
-    const enc = new mxCodec();
+    const enc = new Codec();
     const node = enc.encode(graph.getModel());
 
     return utils.getXml(node);

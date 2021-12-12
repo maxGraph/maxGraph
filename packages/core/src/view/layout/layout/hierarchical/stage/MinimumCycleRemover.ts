@@ -5,10 +5,10 @@
  * Type definitions from the typed-mxgraph project
  */
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import { remove } from '../../../../../util/Utils';
-import { clone } from '../../../../../util/CloneUtils';
+import { remove } from '../../../../../util/utils';
+import { clone } from '../../../../../util/cloneUtils';
 import GraphLayout from '../../GraphLayout';
-import Cell from '../../../../cell/datatypes/Cell';
+import Cell from '../../../../cell/Cell';
 
 /**
  * Class: mxMinimumCycleRemover
@@ -29,7 +29,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
   /**
    * Variable: layout
    *
-   * Reference to the enclosing <mxHierarchicalLayout>.
+   * Reference to the enclosing <HierarchicalLayout>.
    */
   layout: GraphLayout;
 

@@ -12,16 +12,16 @@ import {
   MAX_HOTSPOT_SIZE,
   MIN_HOTSPOT_SIZE,
   NONE,
-} from '../../util/Constants';
-import CellHighlight from '../selection/CellHighlight';
+} from '../../util/constants';
+import CellHighlight from './CellHighlight';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import { intersectsHotspot, isNumeric } from '../../util/Utils';
+import { intersectsHotspot, isNumeric } from '../../util/utils';
 import { Graph } from '../Graph';
 import { ColorValue } from '../../types';
-import CellState from './datatypes/CellState';
+import CellState from './CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import Cell from './datatypes/Cell';
+import Cell from './Cell';
 
 /**
  * Class: mxCellMarker

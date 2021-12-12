@@ -8,9 +8,9 @@ import React from 'react';
 import mxEvent from '../mxgraph/util/mxEvent';
 import mxGraph from '../mxgraph/view/mxGraph';
 import mxRubberband from '../mxgraph/handler/mxRubberband';
-import { error } from '../../packages/core/src/util/gui/mxWindow';
+import { error } from '../../packages/core/src/util/gui/MaxWindow';
 import { createXmlDocument } from '../../packages/core/src/util/XmlUtils';
-import { button } from '../../packages/core/src/util/dom/mxDomHelpers';
+import { button } from '../../packages/core/src/util/dom/DomHelpers';
 import { isNode } from '../../packages/core/src/util/DomUtils';
 
 class Scrollbars extends React.Component {
@@ -84,7 +84,7 @@ export default Scrollbars;
     function main(container)
     {
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is not supported.
         error('Browser is not supported!', 200, false);
@@ -103,7 +103,7 @@ export default Scrollbars;
         ConnectionHandler.prototype.movePreviewAway = false;
 
         // Disables foreignObjects
-        mxClient.NO_FO = true;
+        Client.NO_FO = true;
 
         // Enables move preview in HTML to appear on top
         GraphHandler.prototype.htmlPreview = true;

@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import mxClient from '../../../../mxClient';
+import Client from '../../../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
   ALIGN_BOTTOM,
@@ -28,8 +28,8 @@ import {
   TEXT_DIRECTION_LTR,
   TEXT_DIRECTION_RTL,
   WORD_WRAP,
-} from '../../../../util/Constants';
-import { getAlignmentAsPoint, getBoundingBox } from '../../../../util/Utils';
+} from '../../../../util/constants';
+import { getAlignmentAsPoint, getBoundingBox } from '../../../../util/utils';
 import Point from '../../Point';
 import AbstractCanvas2D from '../../../../util/canvas/AbstractCanvas2D';
 import Shape from '../Shape';
@@ -39,8 +39,8 @@ import {
   htmlEntities,
   replaceTrailingNewlines,
   trim,
-} from '../../../../util/StringUtils';
-import { isNode } from '../../../../util/DomUtils';
+} from '../../../../util/stringUtils';
+import { isNode } from '../../../../util/domUtils';
 import {
   AlignValue,
   ColorValue,
@@ -731,7 +731,7 @@ class TextShape extends Shape {
         } else {
           item += tr;
 
-          if (mxClient.IS_SF) {
+          if (Client.IS_SF) {
             item += '-webkit-clip-path: content-box;';
           }
         }

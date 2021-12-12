@@ -6,7 +6,7 @@
  */
 
 import { Graph } from '../../view/Graph';
-import CellArray from '../../view/cell/datatypes/CellArray';
+import CellArray from '../../view/cell/CellArray';
 
 /**
  * @class

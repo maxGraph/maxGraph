@@ -574,7 +574,7 @@ let mxJSColor = {
 
 			// controls interaction
 			p.box.onmouseup =
-			p.box.onmouseout = function() { if (!mxClient.IS_TOUCH) { target.focus(); } };
+			p.box.onmouseout = function() { if (!Client.IS_TOUCH) { target.focus(); } };
 			p.box.onmousedown = function() { abortBlur=true; };
 			p.box.onmousemove = function(e) {
 				if (holdPad || holdSld) {

@@ -1,13 +1,13 @@
 import {
   Graph,
   EdgeStyle,
-  mxDomHelpers,
+  DomHelpers,
   XmlUtils,
   Perimeter,
   utils,
   Constants,
   CloneUtils,
-  mxCodec,
+  Codec,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -78,7 +78,7 @@ const Template = ({ label, ...args }) => {
     '<Cell id="33" value="" edge="1" parent="2" source="6" target="EnterAccountingData"><Geometry relative="1" as="geometry"><Array as="points"><Point x="255" y="200"/></Array></Geometry></Cell>' +
     '</root></Transactions>';
   const doc = XmlUtils.parseXml(xml);
-  const codec = new mxCodec(doc);
+  const codec = new Codec(doc);
   codec.decode(doc.documentElement, graph.getModel());
 
   const buttons = document.createElement('div');
@@ -86,7 +86,7 @@ const Template = ({ label, ...args }) => {
 
   // Creates a button to invoke the refresh function
   buttons.appendChild(
-    mxDomHelpers.button('Update', function (evt) {
+    DomHelpers.button('Update', function (evt) {
       // XML is normally fetched from URL at server using utils.get - this is a client-side
       // string with randomized states to demonstrate the idea of the workflow monitor
       const xml =

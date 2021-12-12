@@ -7,10 +7,10 @@
 
 import Point from '../geometry/Point';
 import Dictionary from '../../util/Dictionary';
-import CellState from './datatypes/CellState';
-import Cell from './datatypes/Cell';
+import CellState from './CellState';
+import Cell from './Cell';
 import { Graph } from '../Graph';
-import GraphView from '../view/GraphView';
+import GraphView from '../GraphView';
 
 /**
  *

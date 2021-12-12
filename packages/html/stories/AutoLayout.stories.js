@@ -4,12 +4,12 @@ import {
   InternalEvent,
   CellRenderer,
   EdgeHandler,
-  mxHierarchicalLayout,
+  HierarchicalLayout,
   Constants,
   CellOverlay,
   ImageBox,
-  mxClient,
-  mxMorphing,
+  Client,
+  Morphing,
   EventObject,
   EventUtils,
 } from '@maxgraph/core';
@@ -48,13 +48,13 @@ const Template = ({ label, ...args }) => {
 
       InternalEvent.addListener(
         shape.node,
-        mxClient.IS_POINTER ? 'pointerdown' : 'mousedown',
+        Client.IS_POINTER ? 'pointerdown' : 'mousedown',
         (evt) => {
           overlay.fireEvent(new EventObject('pointerdown', 'event', evt, 'state', state));
         }
       );
 
-      if (!mxClient.IS_POINTER && mxClient.IS_TOUCH) {
+      if (!Client.IS_POINTER && Client.IS_TOUCH) {
         InternalEvent.addListener(shape.node, 'touchstart', (evt) => {
           overlay.fireEvent(new EventObject('pointerdown', 'event', evt, 'state', state));
         });
@@ -100,7 +100,7 @@ const Template = ({ label, ...args }) => {
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
-  const layout = new mxHierarchicalLayout(graph, Constants.DIRECTION_WEST);
+  const layout = new HierarchicalLayout(graph, Constants.DIRECTION_WEST);
 
   let v1;
   const executeLayout = (change, post) => {
@@ -114,7 +114,7 @@ const Template = ({ label, ...args }) => {
       throw e;
     } finally {
       // New API for animating graph layout results asynchronously
-      const morph = new mxMorphing(graph);
+      const morph = new Morphing(graph);
       morph.addListener(InternalEvent.DONE, () => {
         graph.getModel().endUpdate();
         if (post != null) {

@@ -4,10 +4,10 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import MxGraphAbstractHierarchyCell from './GraphAbstractHierarchyCell';
+import GraphAbstractHierarchyCell from './GraphAbstractHierarchyCell';
 import ObjectIdentity from '../../../../../util/ObjectIdentity';
 import CellArray from '../../../../cell/datatypes/CellArray';
-import Cell from '../../../../cell/datatypes/Cell';
+import Cell from '../../../../cell/Cell';
 
 /**
  * Class: mxGraphHierarchyNode
@@ -22,7 +22,7 @@ import Cell from '../../../../cell/datatypes/Cell';
  *
  * cell - the real graph cell this node represents
  */
-class GraphHierarchyNode extends MxGraphAbstractHierarchyCell {
+class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   constructor(cell) {
     super(cell);
     this.cell = cell;

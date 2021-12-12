@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { arcToCurves, getRotatedPoint } from '../Utils';
+import { arcToCurves, getRotatedPoint } from '../utils';
 import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
@@ -14,10 +14,10 @@ import {
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
   SHADOW_OPACITY,
-} from '../Constants';
-import mxUrlConverter from '../network/mxUrlConverter';
+} from '../constants';
+import UrlConverter from '../network/UrlConverter';
 import Point from '../../view/geometry/Point';
-import { clone } from '../CloneUtils';
+import { clone } from '../cloneUtils';
 
 import type {
   AlignValue,
@@ -44,13 +44,13 @@ class AbstractCanvas2D {
     /**
      * Variable: converter
      *
-     * Holds the <mxUrlConverter> to convert image URLs.
+     * Holds the <UrlConverter> to convert image URLs.
      */
     this.converter = this.createUrlConverter();
     this.reset();
   }
 
-  converter: mxUrlConverter;
+  converter: UrlConverter;
 
   /**
    * Variable: state
@@ -142,10 +142,10 @@ class AbstractCanvas2D {
   /**
    * Function: createUrlConverter
    *
-   * Create a new <mxUrlConverter> and returns it.
+   * Create a new <UrlConverter> and returns it.
    */
   createUrlConverter() {
-    return new mxUrlConverter();
+    return new UrlConverter();
   }
 
   /**

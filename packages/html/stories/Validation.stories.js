@@ -98,7 +98,7 @@ const Template = ({ label, ...args }) => {
   });
 
   // Installs automatic validation (use editor.validation = true
-  // if you are using an mxEditor instance)
+  // if you are using an Editor instance)
   const listener = function (sender, evt) {
     graph.validateGraph();
   };

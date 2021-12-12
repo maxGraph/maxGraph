@@ -1,8 +1,8 @@
 import Point from '../view/geometry/Point';
 import TemporaryCellStates from '../view/cell/TemporaryCellStates';
-import mxCodec from './serialization/mxCodec';
-import { DIALECT_SVG, NS_SVG } from './Constants';
-import { htmlEntities } from './StringUtils';
+import Codec from './serialization/Codec';
+import { DIALECT_SVG, NS_SVG } from './constants';
+import { htmlEntities } from './stringUtils';
 
 /**
  * Function: createXmlDocument
@@ -71,7 +71,7 @@ export const getViewXml = (graph, scale, cells, x0, y0) => {
   const temp = new TemporaryCellStates(graph.getView(), scale, cells);
 
   try {
-    const enc = new mxCodec();
+    const enc = new Codec();
     result = enc.encode(graph.getView());
   } finally {
     temp.destroy();

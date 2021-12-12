@@ -4,7 +4,7 @@ import {
   ImageBox,
   RubberBand,
   mxKeyHandler,
-  mxDomHelpers,
+  DomHelpers,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -76,37 +76,37 @@ const Template = ({ label, ...args }) => {
   const buttons = document.createElement('div');
   div.appendChild(buttons);
 
-  let button = mxDomHelpers.button('Allow All', function (evt) {
+  let button = DomHelpers.button('Allow All', function (evt) {
     apply(new Permission());
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Connect Only', function (evt) {
+  button = DomHelpers.button('Connect Only', function (evt) {
     apply(new Permission(false, true, false, false, true));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Edges Only', function (evt) {
+  button = DomHelpers.button('Edges Only', function (evt) {
     apply(new Permission(false, false, true, false, false));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Vertices Only', function (evt) {
+  button = DomHelpers.button('Vertices Only', function (evt) {
     apply(new Permission(false, false, false, true, false));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Select Only', function (evt) {
+  button = DomHelpers.button('Select Only', function (evt) {
     apply(new Permission(false, false, false, false, false));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Locked', function (evt) {
+  button = DomHelpers.button('Locked', function (evt) {
     apply(new Permission(true, false));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Disabled', function (evt) {
+  button = DomHelpers.button('Disabled', function (evt) {
     graph.clearSelection();
     graph.setEnabled(false);
     graph.setTooltips(false);

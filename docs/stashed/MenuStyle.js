@@ -90,7 +90,7 @@ export default MenuStyle;
   </script>
 
   <!-- Loads and initializes the library -->
-  <script type="text/javascript" src="../src/js/mxClient.js"></script>
+  <script type="text/javascript" src="../src/js/Client.js"></script>
 
   <!-- Example code -->
   <script type="text/javascript">
@@ -100,7 +100,7 @@ export default MenuStyle;
     function main(container)
     {
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is not supported.
         mxUtils.error('Browser is not supported!', 200, false);
@@ -141,7 +141,7 @@ export default MenuStyle;
         }
 
         // Creates a new overlay with an image and a tooltip and makes it "transparent" to events
-        let overlay = new mxCellOverlay(new mxImage('editors/images/overlays/check.png', 16, 16), 'Overlay tooltip');
+        let overlay = new CellOverlay(new mxImage('editors/images/overlays/check.png', 16, 16), 'Overlay tooltip');
 
         let mxCellRendererInstallCellOverlayListeners = mxCellRenderer.prototype.installCellOverlayListeners;
         mxCellRenderer.prototype.installCellOverlayListeners = function(state, overlay, shape)
@@ -162,7 +162,7 @@ export default MenuStyle;
             {
             });
 
-          if (!mxClient.IS_TOUCH)
+          if (!Client.IS_TOUCH)
           {
             mxEvent.addListener(shape.node, 'mouseup', function (evt)
             {

@@ -2,9 +2,9 @@
  * Copyright (c) 2006-2016, JGraph Ltd
  * Copyright (c) 2006-2016, Gaudenz Alder
  */
-import mxClient from '../mxClient';
-import { NONE } from './Constants';
-import { get, load } from './network/mxXmlRequest';
+import Client from '../Client';
+import { NONE } from './constants';
+import { get, load } from './network/MaxXmlRequest';
 
 /**
  * Class: mxResources
@@ -26,7 +26,7 @@ import { get, load } from './network/mxXmlRequest';
  * editor configuration file, eg:
  *
  * (code)
- * <mxEditor>
+ * <Editor>
  *   <ui>
  *     <resource basename="examples/resources/mxWorkflow"/>
  * (end)
@@ -39,7 +39,7 @@ import { get, load } from './network/mxXmlRequest';
  * argument passed to <mxResources.get>. The placeholder {1} maps to the first
  * element in the array (at index 0).
  *
- * See <mxClient.language> for more information on specifying the default
+ * See <Client.language> for more information on specifying the default
  * language or disabling all loading of resources.
  *
  * Lines that start with a # sign will be ignored.
@@ -57,7 +57,7 @@ import { get, load } from './network/mxXmlRequest';
  *
  * By default, the core adds two resource files synchronously at load time.
  * To load these files asynchronously, set <mxLoadResources> to false
- * before loading mxClient.js and use <mxResources.loadResources> instead.
+ * before loading Client.js and use <mxResources.loadResources> instead.
  */
 const Resources = {
   /*
@@ -102,15 +102,15 @@ const Resources = {
    * Function: isLanguageSupported
    *
    * Hook for subclassers to disable support for a given language. This
-   * implementation returns true if lan is in <mxClient.languages>.
+   * implementation returns true if lan is in <Client.languages>.
    *
    * Parameters:
    *
    * lan - The current language.
    */
   isLanguageSupported: (lan) => {
-    if (mxClient.languages != null) {
-      return mxClient.languages.indexOf(lan) >= 0;
+    if (Client.languages != null) {
+      return Client.languages.indexOf(lan) >= 0;
     }
 
     return true;
@@ -133,7 +133,7 @@ const Resources = {
       Resources.loadDefaultBundle ||
       !Resources.isLanguageSupported(lan)
     ) {
-      return basename + (Resources.extension ?? mxClient.mxResourceExtension);
+      return basename + (Resources.extension ?? Client.mxResourceExtension);
     }
     return null;
   },
@@ -143,9 +143,9 @@ const Resources = {
    *
    * Hook for subclassers to return the URL for the special bundle. This
    * implementation returns basename + '_' + lan + <extension> or null if
-   * <loadSpecialBundle> is false or lan equals <mxClient.defaultLanguage>.
+   * <loadSpecialBundle> is false or lan equals <Client.defaultLanguage>.
    *
-   * If <mxResources.languages> is not null and <mxClient.language> contains
+   * If <mxResources.languages> is not null and <Client.language> contains
    * a dash, then this method checks if <isLanguageSupported> returns true
    * for the full language (including the dash). If that returns false the
    * first part of the language (up to the dash) will be tried as an extension.
@@ -159,7 +159,7 @@ const Resources = {
    * lan - The language for which the file should be loaded.
    */
   getSpecialBundle: (basename, lan) => {
-    if (mxClient.languages == null || !this.isLanguageSupported(lan)) {
+    if (Client.languages == null || !this.isLanguageSupported(lan)) {
       const dash = lan.indexOf('-');
 
       if (dash > 0) {
@@ -170,10 +170,10 @@ const Resources = {
     if (
       Resources.loadSpecialBundle &&
       Resources.isLanguageSupported(lan) &&
-      lan != mxClient.defaultLanguage
+      lan != Client.defaultLanguage
     ) {
       return `${basename}_${lan}${
-        Resources.extension ?? mxClient.mxResourceExtension
+        Resources.extension ?? Client.mxResourceExtension
       }`;
     }
     return null;
@@ -205,8 +205,8 @@ const Resources = {
     lan =
       lan != null
         ? lan
-        : mxClient.language != null
-        ? mxClient.language.toLowerCase()
+        : Client.language != null
+        ? Client.language.toLowerCase()
         : NONE;
 
     if (lan !== NONE) {
@@ -402,8 +402,8 @@ const Resources = {
    * callback - Callback function for asynchronous loading.
    */
   loadResources: (callback) => {
-    Resources.add(`${mxClient.basePath}/resources/editor`, null, () => {
-      Resources.add(`${mxClient.basePath}/resources/graph`, null, callback);
+    Resources.add(`${Client.basePath}/resources/editor`, null, () => {
+      Resources.add(`${Client.basePath}/resources/graph`, null, callback);
     });
   },
 };

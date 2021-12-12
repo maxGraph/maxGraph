@@ -1,14 +1,14 @@
 import {
   Graph,
-  mxObjectCodec,
-  mxDomHelpers,
-  mxCodecRegistry,
+  ObjectCodec,
+  DomHelpers,
+  CodecRegistry,
   InternalEvent,
-  mxClient,
-  mxCodec,
+  Client,
+  Codec,
   DomUtils,
   utils,
-  mxWindow,
+  MaxWindow,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -21,7 +21,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   const div = document.createElement('div');
 
@@ -38,7 +38,7 @@ const Template = ({ label, ...args }) => {
   function CustomData(value) {
     this.value = value;
   }
-  const codec = new mxObjectCodec(new CustomData());
+  const codec = new ObjectCodec(new CustomData());
   codec.encode = function (enc, obj) {
     const node = enc.document.createElement('CustomData');
     DomUtils.setTextContent(node, JSON.stringify(obj));
@@ -50,7 +50,7 @@ const Template = ({ label, ...args }) => {
 
     return obj;
   };
-  mxCodecRegistry.register(codec);
+  CodecRegistry.register(codec);
 
   // Disables the built-in context menu
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
@@ -82,10 +82,10 @@ const Template = ({ label, ...args }) => {
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('Show JSON', function () {
-      const encoder = new mxCodec();
+    DomHelpers.button('Show JSON', function () {
+      const encoder = new Codec();
       const node = encoder.encode(graph.getModel());
-      mxWindow.popup(utils.getXml(node), true);
+      MaxWindow.popup(utils.getXml(node), true);
     })
   );
 

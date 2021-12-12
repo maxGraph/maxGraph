@@ -1,7 +1,7 @@
 import {
   Graph,
   ConnectionHandler,
-  mxDomHelpers,
+  DomHelpers,
   EdgeHandler,
   InternalEvent,
   Point,
@@ -241,13 +241,13 @@ const Template = ({ label, ...args }) => {
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('FlipH', function () {
+    DomHelpers.button('FlipH', function () {
       graph.toggleCellStyles('flipH');
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('FlipV', function () {
+    DomHelpers.button('FlipV', function () {
       graph.toggleCellStyles('flipV');
     })
   );
@@ -258,7 +258,7 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(document.createTextNode('\u00a0'));
 
   buttons.appendChild(
-    mxDomHelpers.button('Rotate', function () {
+    DomHelpers.button('Rotate', function () {
       const cell = graph.getSelectionCell();
 
       if (cell != null) {
@@ -308,17 +308,17 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(document.createTextNode('\u00a0'));
 
   buttons.appendChild(
-    mxDomHelpers.button('And', function () {
+    DomHelpers.button('And', function () {
       graph.setCellStyles('shape', 'and');
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('Or', function () {
+    DomHelpers.button('Or', function () {
       graph.setCellStyles('shape', 'or');
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('Xor', function () {
+    DomHelpers.button('Xor', function () {
       graph.setCellStyles('shape', 'xor');
     })
   );
@@ -329,7 +329,7 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(document.createTextNode('\u00a0'));
 
   buttons.appendChild(
-    mxDomHelpers.button('Style', function () {
+    DomHelpers.button('Style', function () {
       const cell = graph.getSelectionCell();
 
       if (cell != null) {
@@ -343,12 +343,12 @@ const Template = ({ label, ...args }) => {
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('+', function () {
+    DomHelpers.button('+', function () {
       graph.zoomIn();
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('-', function () {
+    DomHelpers.button('-', function () {
       graph.zoomOut();
     })
   );

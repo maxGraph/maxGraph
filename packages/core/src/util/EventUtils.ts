@@ -2,7 +2,7 @@
  * Returns the touch or mouse event that contains the mouse coordinates.
  */
 
-import mxClient from '../mxClient';
+import Client from '../Client';
 
 export const getMainEvent = (evt: MouseEvent) => {
   let t = evt as any;
@@ -152,7 +152,7 @@ export const isRightMouseButton = (evt: MouseEvent) => {
 export const isPopupTrigger = (evt: MouseEvent) => {
   return (
     isRightMouseButton(evt) ||
-    (mxClient.IS_MAC &&
+    (Client.IS_MAC &&
       isControlDown(evt) &&
       !isShiftDown(evt) &&
       !isMetaDown(evt) &&

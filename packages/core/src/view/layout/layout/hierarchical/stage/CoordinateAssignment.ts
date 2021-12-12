@@ -4,14 +4,14 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import MxHierarchicalLayoutStage from './HierarchicalLayoutStage';
+import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import {
   DIRECTION_EAST,
   DIRECTION_NORTH,
   DIRECTION_SOUTH,
   DIRECTION_WEST,
-} from '../../../../../util/Constants';
-import mxLog from '../../../../../util/gui/mxLog';
+} from '../../../../../util/constants';
+import MaxLog from '../../../../../util/gui/MaxLog';
 import WeightedCellSorter from '../../WeightedCellSorter';
 import Dictionary from '../../../../../util/Dictionary';
 import Point from '../../../../geometry/Point';
@@ -35,7 +35,7 @@ import HierarchicalEdgeStyle from '../HierarchicalEdgeStyle';
  * orientation - the position of the root node(s) relative to the graph
  * initialX - the leftmost coordinate node placement starts at
  */
-class CoordinateAssignment extends MxHierarchicalLayoutStage {
+class CoordinateAssignment extends HierarchicalLayoutStage {
   constructor(
     layout,
     intraCellSpacing,
@@ -57,7 +57,7 @@ class CoordinateAssignment extends MxHierarchicalLayoutStage {
   /**
    * Variable: layout
    *
-   * Reference to the enclosing <mxHierarchicalLayout>.
+   * Reference to the enclosing <HierarchicalLayout>.
    */
   layout = null;
 
@@ -237,23 +237,23 @@ class CoordinateAssignment extends MxHierarchicalLayoutStage {
    */
   printStatus() {
     const model = this.layout.getModel();
-    mxLog.show();
+    MaxLog.show();
 
-    mxLog.writeln('======Coord assignment debug=======');
+    MaxLog.writeln('======Coord assignment debug=======');
 
     for (let j = 0; j < model.ranks.length; j++) {
-      mxLog.write('Rank ', j, ' : ');
+      MaxLog.write('Rank ', j, ' : ');
       const rank = model.ranks[j];
 
       for (let k = 0; k < rank.length; k++) {
         const cell = rank[k];
 
-        mxLog.write(cell.getGeneralPurposeVariable(j), '  ');
+        MaxLog.write(cell.getGeneralPurposeVariable(j), '  ');
       }
-      mxLog.writeln();
+      MaxLog.writeln();
     }
 
-    mxLog.writeln('====================================');
+    MaxLog.writeln('====================================');
   }
 
   /**
@@ -818,7 +818,7 @@ class CoordinateAssignment extends MxHierarchicalLayoutStage {
         if (node.edges != null) {
           numEdges = node.edges.length;
         } else {
-          mxLog.warn('edge.edges is null');
+          MaxLog.warn('edge.edges is null');
         }
 
         node.width = (numEdges - 1) * this.parallelEdgeSpacing;
@@ -833,7 +833,7 @@ class CoordinateAssignment extends MxHierarchicalLayoutStage {
     }
 
     if (boundsWarning == true) {
-      mxLog.warn('At least one cell has no bounds');
+      MaxLog.warn('At least one cell has no bounds');
     }
   }
 
@@ -898,7 +898,7 @@ class CoordinateAssignment extends MxHierarchicalLayoutStage {
           if (node.edges != null) {
             numEdges = node.edges.length;
           } else {
-            mxLog.warn('edge.edges is null');
+            MaxLog.warn('edge.edges is null');
           }
 
           node.width = (numEdges - 1) * this.parallelEdgeSpacing;
@@ -920,7 +920,7 @@ class CoordinateAssignment extends MxHierarchicalLayoutStage {
       }
 
       if (boundsWarning == true) {
-        mxLog.warn('At least one cell has no bounds');
+        MaxLog.warn('At least one cell has no bounds');
       }
 
       this.rankY[rankValue] = y;

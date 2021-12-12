@@ -1,7 +1,7 @@
 import {
   Graph,
   CylinderShape,
-  mxDomHelpers,
+  DomHelpers,
   CellRenderer,
   Point,
   Rectangle,
@@ -233,12 +233,12 @@ const Template = ({ label, ...args }) => {
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('+', function () {
+    DomHelpers.button('+', function () {
       graph.zoomIn();
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('-', function () {
+    DomHelpers.button('-', function () {
       graph.zoomOut();
     })
   );

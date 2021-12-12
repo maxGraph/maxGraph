@@ -10,36 +10,36 @@ import EventObject from './event/EventObject';
 import EventSource from './event/EventSource';
 import InternalEvent from './event/InternalEvent';
 import Rectangle from './geometry/Rectangle';
-import TooltipHandler from './tooltip/TooltipHandler';
-import mxClient from '../mxClient';
-import SelectionCellsHandler from './selection/SelectionCellsHandler';
-import ConnectionHandler from './connection/ConnectionHandler';
+import TooltipHandler from './handlers/TooltipHandler';
+import Client from '../Client';
+import SelectionCellsHandler from './handlers/SelectionCellsHandler';
+import ConnectionHandler from './handlers/ConnectionHandler';
 import GraphHandler from './GraphHandler';
-import PanningHandler from './panning/PanningHandler';
-import PopupMenuHandler from './popups_menus/PopupMenuHandler';
-import GraphView from './view/GraphView';
+import PanningHandler from './handlers/PanningHandler';
+import PopupMenuHandler from './handlers/PopupMenuHandler';
+import GraphView from './GraphView';
 import CellRenderer from './cell/CellRenderer';
-import CellEditor from './editing/CellEditor';
+import CellEditor from './handlers/CellEditor';
 import Point from './geometry/Point';
-import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/Utils';
-import Cell from './cell/datatypes/Cell';
-import Model from './model/Model';
+import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/utils';
+import Cell from './cell/Cell';
+import Model from './other/Model';
 import Stylesheet from './style/Stylesheet';
-import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants';
+import { PAGE_FORMAT_A4_PORTRAIT } from '../util/constants';
 
-import ChildChange from './model/ChildChange';
-import GeometryChange from './geometry/GeometryChange';
-import RootChange from './model/RootChange';
-import StyleChange from './style/StyleChange';
-import TerminalChange from './cell/edge/TerminalChange';
-import ValueChange from './cell/ValueChange';
-import CellState from './cell/datatypes/CellState';
-import { isNode } from '../util/DomUtils';
+import ChildChange from './undoable_changes/ChildChange';
+import GeometryChange from './undoable_changes/GeometryChange';
+import RootChange from './undoable_changes/RootChange';
+import StyleChange from './undoable_changes/StyleChange';
+import TerminalChange from './undoable_changes/TerminalChange';
+import ValueChange from './undoable_changes/ValueChange';
+import CellState from './cell/CellState';
+import { isNode } from '../util/domUtils';
 import EdgeStyle from './style/EdgeStyle';
-import EdgeHandler from './cell/edge/EdgeHandler';
-import VertexHandler from './cell/vertex/VertexHandler';
-import EdgeSegmentHandler from './cell/edge/EdgeSegmentHandler';
-import ElbowEdgeHandler from './cell/edge/ElbowEdgeHandler';
+import EdgeHandler from './handlers/EdgeHandler';
+import VertexHandler from './handlers/VertexHandler';
+import EdgeSegmentHandler from './handlers/EdgeSegmentHandler';
+import ElbowEdgeHandler from './handlers/ElbowEdgeHandler';
 
 import type { GraphPlugin, GraphPluginConstructor } from '../types';
 
@@ -104,7 +104,7 @@ class Graph extends EventSource {
    * ```javascript
    * var req = mxUtils.load('stylesheet.xml');
    * var root = req.getDocumentElement();
-   * var dec = new mxCodec(root.ownerDocument);
+   * var dec = new Codec(root.ownerDocument);
    * dec.decode(root, graph.stylesheet);
    * ```
    */
@@ -347,12 +347,12 @@ class Graph extends EventSource {
 
   /**
    * Specifies the {@link Image} for the image to be used to display a warning
-   * overlay. See {@link setCellWarning}. Default value is mxClient.imageBasePath +
+   * overlay. See {@link setCellWarning}. Default value is Client.imageBasePath +
    * '/warning'.  The extension for the image depends on the platform. It is
    * '.png' on the Mac and '.gif' on all other platforms.
    */
   warningImage: Image = new Image(
-    `${mxClient.imageBasePath}/warning${mxClient.IS_MAC ? '.png' : '.gif'}`,
+    `${Client.imageBasePath}/warning${Client.IS_MAC ? '.png' : '.gif'}`,
     16,
     16
   );
@@ -364,7 +364,7 @@ class Graph extends EventSource {
    * @default 'alreadyConnected'
    */
   alreadyConnectedResource: string =
-    mxClient.language != 'none' ? 'alreadyConnected' : '';
+    Client.language != 'none' ? 'alreadyConnected' : '';
 
   /**
    * Specifies the resource key for the warning message to be displayed when
@@ -373,7 +373,7 @@ class Graph extends EventSource {
    * @default 'containsValidationErrors'
    */
   containsValidationErrorsResource: string =
-    mxClient.language != 'none' ? 'containsValidationErrors' : '';
+    Client.language != 'none' ? 'containsValidationErrors' : '';
 
   constructor(
     container: HTMLElement,

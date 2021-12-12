@@ -16,7 +16,7 @@
  *
  * Constructs a new hierarchical layout stage.
  */
-class MxHierarchicalLayoutStage {
+class HierarchicalLayoutStage {
   constructor() {}
 
   /**
@@ -29,4 +29,4 @@ class MxHierarchicalLayoutStage {
   execute(parent) {}
 }
 
-export default MxHierarchicalLayoutStage;
+export default HierarchicalLayoutStage;

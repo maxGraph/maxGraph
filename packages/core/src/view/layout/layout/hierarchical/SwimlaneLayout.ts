@@ -6,17 +6,17 @@
  */
 
 import GraphLayout from '../GraphLayout';
-import { DIRECTION_NORTH } from '../../../../util/Constants';
+import { DIRECTION_NORTH } from '../../../../util/constants';
 import HierarchicalEdgeStyle from './HierarchicalEdgeStyle';
 import Dictionary from '../../../../util/Dictionary';
 import Rectangle from '../../../geometry/Rectangle';
 import SwimlaneModel from './model/SwimlaneModel';
 import ObjectIdentity from '../../../../util/ObjectIdentity';
-import mxSwimlaneOrdering from './stage/mxSwimlaneOrdering';
+import SwimlaneOrdering from './stage/SwimlaneOrdering';
 import MedianHybridCrossingReduction from './stage/MedianHybridCrossingReduction';
 import CoordinateAssignment from './stage/CoordinateAssignment';
 import { Graph } from '../../../Graph';
-import Cell from '../../../cell/datatypes/Cell';
+import Cell from '../../../cell/Cell';
 import CellArray from '../../../cell/datatypes/CellArray';
 
 /**
@@ -878,7 +878,7 @@ class SwimlaneLayout extends GraphLayout {
    * Executes the cycle stage using mxMinimumCycleRemover.
    */
   cycleStage(parent: Cell) {
-    const cycleStage = new mxSwimlaneOrdering(this);
+    const cycleStage = new SwimlaneOrdering(this);
     cycleStage.execute(parent);
   }
 

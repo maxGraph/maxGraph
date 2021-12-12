@@ -12,7 +12,7 @@ import {
   getPortConstraints,
   getValue,
   reversePortConstraints,
-} from '../../util/Utils';
+} from '../../util/utils';
 import Point from '../geometry/Point';
 import CellState from '../cell/datatypes/CellState';
 import {
@@ -30,7 +30,7 @@ import {
   ELBOW_VERTICAL,
   ENTITY_SEGMENT,
   NONE,
-} from '../../util/Constants';
+} from '../../util/constants';
 import Rectangle from '../geometry/Rectangle';
 
 /**
@@ -692,8 +692,8 @@ class EdgeStyle {
         horizontal = !horizontal;
         hint = hints[i];
 
-        //        mxLog.show();
-        //        mxLog.debug('hint', i, hint.x, hint.y);
+        //        MaxLog.show();
+        //        MaxLog.debug('hint', i, hint.x, hint.y);
 
         if (horizontal) {
           pt.y = hint.y;

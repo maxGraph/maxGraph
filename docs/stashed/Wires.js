@@ -75,7 +75,7 @@ export default MYNAMEHERE;
   </script>
 
   <!-- Loads and initializes the library -->
-  <script type="text/javascript" src="../src/js/mxClient.js"></script>
+  <script type="text/javascript" src="../src/js/Client.js"></script>
   <script type="text/javascript">
     // If connect preview is not moved away then getCellAt is used to detect the cell under
     // the mouse if the mouse is over the preview shape in IE (no event transparency), ie.
@@ -392,7 +392,7 @@ export default MYNAMEHERE;
       }));
 
       // Undo/redo
-      let undoManager = new mxUndoManager();
+      let undoManager = new UndoManager();
       let listener = function(sender, evt)
       {
         undoManager.undoableEditHappened(evt.getProperty('edit'));
@@ -873,13 +873,13 @@ export default MYNAMEHERE;
     {
       // FIXME: First segment not movable
       /*hint = state.view.transformControlPoint(state, hints[0]);
-      mxLog.show();
-      mxLog.debug(hints.length,'hints0.y='+hint.y, pt.y)
+      MaxLog.show();
+      MaxLog.debug(hints.length,'hints0.y='+hint.y, pt.y)
 
       if (horizontal && Math.floor(hint.y) != Math.floor(pt.y))
       {
-        mxLog.show();
-        mxLog.debug('add waypoint');
+        MaxLog.show();
+        MaxLog.debug('add waypoint');
 
         pt = new mxPoint(pt.x, hint.y);
         result.push(pt);

@@ -7,12 +7,12 @@ const { setOpacity } = require('../../../../../packages/core/src/util/Utils');
 const { createImage } = require('../../../../../packages/core/src/util/Utils');
 const { createXmlDocument } = require('../../../../../packages/core/src/util/XmlUtils');
 const { isNode } = require('../../../../../packages/core/src/util/DomUtils');
-const { popup } = require('../../../../../packages/core/src/util/gui/mxWindow');
+const { popup } = require('../../../../../packages/core/src/util/gui/MaxWindow');
 const { parseXml } = require('../../../../../packages/core/src/util/XmlUtils');
 const { getPrettyXml } = require('../../../../../packages/core/src/util/XmlUtils');
 const { write } = require('../../../../../packages/core/src/util/DomUtils');
 const { remove } = require('../../../../../packages/core/src/util/Utils');
-const { button } = require('../../../../../packages/core/src/util/dom/mxDomHelpers');
+const { button } = require('../../../../../packages/core/src/util/dom/DomHelpers');
 const { br } = require('../../../../../packages/core/src/util/DomUtils');
 /**
  * Constructs a new open dialog.
@@ -74,7 +74,7 @@ let ColorDialog = function(editorUi, color, apply, cancelFn)
 	
 	this.init = function()
 	{
-		if (!mxClient.IS_TOUCH)
+		if (!Client.IS_TOUCH)
 		{
 			input.focus();
 		}
@@ -361,7 +361,7 @@ let AboutDialog = function(editorUi)
 	img.setAttribute('src', IMAGE_PATH + '/logo.png');
 	div.appendChild(img);
 	br(div);
-	write(div, 'Powered by mxGraph ' + mxClient.VERSION);
+	write(div, 'Powered by mxGraph ' + Client.VERSION);
 	br(div);
 	let link = document.createElement('a');
 	link.setAttribute('href', 'http://www.jgraph.com/');
@@ -661,7 +661,7 @@ let EditDiagramDialog = function(editorUi)
 			{
 				let doc = parseXml(data);
 				let model = new Model();
-				let codec = new mxCodec(doc);
+				let codec = new Codec(doc);
 				codec.decode(doc.documentElement, model);
 				
 				let children = model.getRoot().getChildAt(0).getChildren();
@@ -717,7 +717,7 @@ let ExportDialog = function(editorUi)
 	
 	let table = document.createElement('table');
 	let tbody = document.createElement('tbody');
-	table.setAttribute('cellpadding', (mxClient.IS_SF) ? '0' : '2');
+	table.setAttribute('cellpadding', (Client.IS_SF) ? '0' : '2');
 	
 	row = document.createElement('tr');
 	
@@ -1231,7 +1231,7 @@ ExportDialog.exportFile = function(editorUi, name, format, bg, s, b, dpi)
 		if (param.length <= MAX_REQUEST_SIZE && w * h < MAX_AREA)
 		{
 			editorUi.hideDialog();
-			let req = new mxXmlRequest(EXPORT_URL, 'format=' + format +
+			let req = new MaxXmlRequest(EXPORT_URL, 'format=' + format +
 				'&filename=' + encodeURIComponent(name) +
 				'&bg=' + ((bg != null) ? bg : 'none') +
 				'&w=' + w + '&h=' + h + '&' + param +
@@ -1256,7 +1256,7 @@ ExportDialog.saveLocalFile = function(editorUi, data, filename, format)
 	if (data.length < MAX_REQUEST_SIZE)
 	{
 		editorUi.hideDialog();
-		let req = new mxXmlRequest(SAVE_URL, 'xml=' + encodeURIComponent(data) + '&filename=' +
+		let req = new MaxXmlRequest(SAVE_URL, 'xml=' + encodeURIComponent(data) + '&filename=' +
 			encodeURIComponent(filename) + '&format=' + format);
 		req.simulate(document, '_blank');
 	}
@@ -1303,7 +1303,7 @@ let EditDataDialog = function(ui, cell)
 	}
 	
 	// Creates the dialog contents
-	let form = new mxForm('properties');
+	let form = new MaxForm('properties');
 	form.table.style.width = '100%';
 
 	let attrs = value.attributes;
@@ -1741,7 +1741,7 @@ let LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 	{
 		linkInput.focus();
 		
-		if (mxClient.IS_GC || mxClient.IS_FF)
+		if (Client.IS_GC || Client.IS_FF)
 		{
 			linkInput.select();
 		}
@@ -1807,7 +1807,7 @@ let OutlineWindow = function(editorUi, x, y, w, h)
 	div.style.border = '1px solid whiteSmoke';
 	div.style.overflow = 'hidden';
 
-	this.window = new mxWindow(Resources.get('outline'), div, x, y, w, h, true, true);
+	this.window = new MaxWindow(Resources.get('outline'), div, x, y, w, h, true, true);
 	this.window.minimumSize = new Rectangle(0, 0, 80, 80);
 	this.window.destroyOnClose = false;
 	this.window.setMaximizable(false);
@@ -1825,7 +1825,7 @@ let OutlineWindow = function(editorUi, x, y, w, h)
 
 		if (this.getX() != x || this.getY() != y)
 		{
-			mxWindow.prototype.setLocation.apply(this, arguments);
+			MaxWindow.prototype.setLocation.apply(this, arguments);
 		}
 	};
 	
@@ -2253,7 +2253,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 				dragSource = ldiv;
 				
 				// Workaround for no DnD on DIV in FF
-				if (mxClient.IS_FF)
+				if (Client.IS_FF)
 				{
 					// LATER: Check what triggers a parse as XML on this in FF after drop
 					evt.dataTransfer.setData('Text', '<layer/>');
@@ -2350,7 +2350,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 			if (graph.isEnabled())
 			{
 				// Fallback if no drag and drop is available
-				if (mxClient.IS_TOUCH || mxClient.IS_POINTER)
+				if (Client.IS_TOUCH || Client.IS_POINTER)
 				{
 					let right = document.createElement('div');
 					right.style.display = 'block';
@@ -2418,7 +2418,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 					ldiv.appendChild(right);
 				}
 				
-				if (mxClient.IS_SVG)
+				if (Client.IS_SVG)
 				{
 					ldiv.setAttribute('draggable', 'true');
 					ldiv.style.cursor = 'move';
@@ -2494,7 +2494,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 		}
 	});
 
-	this.window = new mxWindow(Resources.get('layers'), div, x, y, w, h, true, true);
+	this.window = new MaxWindow(Resources.get('layers'), div, x, y, w, h, true, true);
 	this.window.minimumSize = new Rectangle(0, 0, 120, 120);
 	this.window.destroyOnClose = false;
 	this.window.setMaximizable(false);
@@ -2525,7 +2525,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 
 		if (this.getX() != x || this.getY() != y)
 		{
-			mxWindow.prototype.setLocation.apply(this, arguments);
+			MaxWindow.prototype.setLocation.apply(this, arguments);
 		}
 	};
 	

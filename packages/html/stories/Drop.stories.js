@@ -4,7 +4,7 @@ import {
   utils,
   EventUtils,
   InternalEvent,
-  mxClient,
+  Client,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -42,7 +42,7 @@ const Template = ({ label, ...args }) => {
   const fileSupport =
     window.File != null && window.FileReader != null && window.FileList != null;
 
-  if (!fileSupport || !mxClient.isBrowserSupported()) {
+  if (!fileSupport || !Client.isBrowserSupported()) {
     // Displays an error message if the browser is not supported.
     utils.error('Browser is not supported!', 200, false);
   } else {

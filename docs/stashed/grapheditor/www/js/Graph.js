@@ -124,7 +124,7 @@ TextShape.prototype.baseSpacingBottom = 1;
 Model.prototype.ignoreRelativeEdgeParent = false;
 
 // Defines grid properties
-mxGraphView.prototype.gridImage = (mxClient.IS_SVG) ? 'data:image/gif;base64,R0lGODlhCgAKAJEAAAAAAP///8zMzP///yH5BAEAAAMALAAAAAAKAAoAAAIJ1I6py+0Po2wFADs=' :
+mxGraphView.prototype.gridImage = (Client.IS_SVG) ? 'data:image/gif;base64,R0lGODlhCgAKAJEAAAAAAP///8zMzP///yH5BAEAAAMALAAAAAAKAAoAAAIJ1I6py+0Po2wFADs=' :
 	IMAGE_PATH + '/grid.gif';
 mxGraphView.prototype.gridSteps = 4;
 mxGraphView.prototype.minGridSize = 4;
@@ -845,7 +845,7 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 	    let isToggleEvent = this.isToggleEvent;
 	    this.isToggleEvent = function(evt)
 	    {
-	    	return isToggleEvent.apply(this, arguments) || (!mxClient.IS_CHROMEOS && mxEvent.isShiftDown(evt));
+	    	return isToggleEvent.apply(this, arguments) || (!Client.IS_CHROMEOS && mxEvent.isShiftDown(evt));
 	    };
 	    
 	    // Workaround for Firefox where first mouse down is received
@@ -855,9 +855,9 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 	    rubberband.isForceRubberbandEvent = function(me)
 	    {
 	    	return (isForceRubberBandEvent.apply(this, arguments) && !mxEvent.isShiftDown(me.getEvent()) &&
-	    		!mxEvent.isControlDown(me.getEvent())) || (mxClient.IS_CHROMEOS && mxEvent.isShiftDown(me.getEvent())) ||
-	    		(mxUtils.hasScrollbars(this.graph.container) && mxClient.IS_FF &&
-	    		mxClient.IS_WIN && me.getState() == null && mxEvent.isTouchEvent(me.getEvent()));
+	    		!mxEvent.isControlDown(me.getEvent())) || (Client.IS_CHROMEOS && mxEvent.isShiftDown(me.getEvent())) ||
+	    		(mxUtils.hasScrollbars(this.graph.container) && Client.IS_FF &&
+	    		Client.IS_WIN && me.getState() == null && mxEvent.isTouchEvent(me.getEvent()));
 	    };
 	    
 	    // Shows hand cursor while panning
@@ -1144,7 +1144,7 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 /**
  * Specifies if the touch UI should be used (cannot detect touch in FF so always on for Windows/Linux)
  */
-Graph.touchStyle = mxClient.IS_TOUCH || (mxClient.IS_FF && mxClient.IS_WIN) || navigator.maxTouchPoints > 0 ||
+Graph.touchStyle = Client.IS_TOUCH || (Client.IS_FF && Client.IS_WIN) || navigator.maxTouchPoints > 0 ||
 	navigator.msMaxTouchPoints > 0 || window.urlParams == null || urlParams['touch'] == '1';
 
 /**
@@ -1161,7 +1161,7 @@ Graph.translateDiagram = urlParams['translate-diagram'] == '1';
 /**
  * Shortcut for capability check.
  */
-Graph.diagramLanguage = (urlParams['diagram-language'] != null) ? urlParams['diagram-language'] : mxClient.language;
+Graph.diagramLanguage = (urlParams['diagram-language'] != null) ? urlParams['diagram-language'] : Client.language;
 
 /**
  * Default size for line jumps.
@@ -1484,7 +1484,7 @@ Graph.prototype.linkRelation = 'nofollow noopener noreferrer';
  * Scrollbars are enabled on non-touch devices (not including Firefox because touch events
  * cannot be detected in Firefox, see above).
  */
-Graph.prototype.defaultScrollbars = !mxClient.IS_IOS;
+Graph.prototype.defaultScrollbars = !Client.IS_IOS;
 
 /**
  * Specifies if the page should be visible for new files. Default is true.
@@ -1797,7 +1797,7 @@ Graph.prototype.init = function(container)
 	 */
 	Graph.prototype.isFastZoomEnabled = function()
 	{
-		return urlParams['zoom'] != 'nocss' && !mxClient.NO_FO && !mxClient.IS_EDGE &&
+		return urlParams['zoom'] != 'nocss' && !Client.NO_FO && !Client.IS_EDGE &&
 			!this.useCssTransforms && this.isCssTransformsSupported();
 	};
 
@@ -1809,8 +1809,8 @@ Graph.prototype.init = function(container)
 	 */
 	Graph.prototype.isCssTransformsSupported = function()
 	{
-		return this.dialect == mxConstants.DIALECT_SVG && !mxClient.NO_FO &&
-			(!this.lightbox || !mxClient.IS_SF);
+		return this.dialect == mxConstants.DIALECT_SVG && !Client.NO_FO &&
+			(!this.lightbox || !Client.IS_SF);
 	};
 
 	/**
@@ -2085,7 +2085,7 @@ Graph.prototype.init = function(container)
 					{
 						// Applies transform to labels outside of the SVG DOM
 						// Excluded via isCssTransformsSupported
-	//					if (mxClient.NO_FO)
+	//					if (Client.NO_FO)
 	//					{
 	//						let transform = 'scale(' + this.currentScale + ')' + 'translate(' +
 	//							this.currentTranslate.x + 'px,' + this.currentTranslate.y + 'px)';
@@ -2105,7 +2105,7 @@ Graph.prototype.init = function(container)
 	//						}));
 	//					}
 						// Workaround for https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/4320441/
-						if (mxClient.IS_EDGE)
+						if (Client.IS_EDGE)
 						{
 							// Recommended workaround is to do this on all
 							// foreignObjects, but this seems to be faster
@@ -2396,7 +2396,7 @@ Graph.prototype.initLayoutManager = function()
 			}
 			else if (style.childLayout == 'flowLayout')
 			{
-				let flowLayout = new mxHierarchicalLayout(this.graph, mxUtils.getValue(style,
+				let flowLayout = new HierarchicalLayout(this.graph, mxUtils.getValue(style,
 					'flowOrientation', mxConstants.DIRECTION_EAST));
 				flowLayout.resizeParent = mxUtils.getValue(style, 'resizeParent', '1') == '1';
 				flowLayout.parentBorder = mxUtils.getValue(style, 'parentPadding', 20);
@@ -2404,13 +2404,13 @@ Graph.prototype.initLayoutManager = function()
 				
 				// Special undocumented styles for changing the hierarchical
 				flowLayout.intraCellSpacing = mxUtils.getValue(style, 'intraCellSpacing',
-					mxHierarchicalLayout.prototype.intraCellSpacing);
+					HierarchicalLayout.prototype.intraCellSpacing);
 				flowLayout.interRankCellSpacing = mxUtils.getValue(style, 'interRankCellSpacing',
-					mxHierarchicalLayout.prototype.interRankCellSpacing);
+					HierarchicalLayout.prototype.interRankCellSpacing);
 				flowLayout.interHierarchySpacing = mxUtils.getValue(style, 'interHierarchySpacing',
-					mxHierarchicalLayout.prototype.interHierarchySpacing);
+					HierarchicalLayout.prototype.interHierarchySpacing);
 				flowLayout.parallelEdgeSpacing = mxUtils.getValue(style, 'parallelEdgeSpacing',
-					mxHierarchicalLayout.prototype.parallelEdgeSpacing);
+					HierarchicalLayout.prototype.parallelEdgeSpacing);
 				
 				return flowLayout;
 			}
@@ -2520,7 +2520,7 @@ Graph.prototype.isReplacePlaceholders = function(cell)
  */
 Graph.prototype.isZoomWheelEvent = function(evt)
 {
-	return mxEvent.isAltDown(evt) || (mxEvent.isMetaDown(evt) && mxClient.IS_MAC) ||
+	return mxEvent.isAltDown(evt) || (mxEvent.isMetaDown(evt) && Client.IS_MAC) ||
 		mxEvent.isControlDown(evt);
 };
 
@@ -2537,7 +2537,7 @@ Graph.prototype.isScrollWheelEvent = function(evt)
  */
 Graph.prototype.isTransparentClickEvent = function(evt)
 {
-	return mxEvent.isAltDown(evt) || (mxClient.IS_CHROMEOS && mxEvent.isShiftDown(evt));
+	return mxEvent.isAltDown(evt) || (Client.IS_CHROMEOS && mxEvent.isShiftDown(evt));
 };
 
 /**
@@ -3889,7 +3889,7 @@ Graph.prototype.getTooltipForCell = function(cell)
 			{
 				tip = tip.substring(0, tip.length - 1);
 				
-				if (mxClient.IS_SVG)
+				if (Client.IS_SVG)
 				{
 					tip = '<div style="max-width:360px;">' + tip + '</div>';
 				}
@@ -4006,48 +4006,48 @@ HoverIcons.prototype.arrowFill = '#29b6f2';
 /**
  * Up arrow.
  */
-HoverIcons.prototype.triangleUp = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/triangle-up.png', 26, 14) :
+HoverIcons.prototype.triangleUp = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/triangle-up.png', 26, 14) :
 	Graph.createSvgImage(18, 28, '<path d="m 6 26 L 12 26 L 12 12 L 18 12 L 9 1 L 1 12 L 6 12 z" ' +
 	'stroke="#fff" fill="' + HoverIcons.prototype.arrowFill + '"/>');
 
 /**
  * Right arrow.
  */
-HoverIcons.prototype.triangleRight = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/triangle-right.png', 14, 26) :
+HoverIcons.prototype.triangleRight = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/triangle-right.png', 14, 26) :
 	Graph.createSvgImage(26, 18, '<path d="m 1 6 L 14 6 L 14 1 L 26 9 L 14 18 L 14 12 L 1 12 z" ' +
 	'stroke="#fff" fill="' + HoverIcons.prototype.arrowFill + '"/>');
 
 /**
  * Down arrow.
  */
-HoverIcons.prototype.triangleDown = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/triangle-down.png', 26, 14) :
+HoverIcons.prototype.triangleDown = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/triangle-down.png', 26, 14) :
 	Graph.createSvgImage(18, 26, '<path d="m 6 1 L 6 14 L 1 14 L 9 26 L 18 14 L 12 14 L 12 1 z" ' +
 	'stroke="#fff" fill="' + HoverIcons.prototype.arrowFill + '"/>');
 
 /**
  * Left arrow.
  */
-HoverIcons.prototype.triangleLeft = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/triangle-left.png', 14, 26) :
+HoverIcons.prototype.triangleLeft = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/triangle-left.png', 14, 26) :
 	Graph.createSvgImage(28, 18, '<path d="m 1 9 L 12 1 L 12 6 L 26 6 L 26 12 L 12 12 L 12 18 z" ' +
 	'stroke="#fff" fill="' + HoverIcons.prototype.arrowFill + '"/>');
 
 /**
  * Round target.
  */
-HoverIcons.prototype.roundDrop = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/round-drop.png', 26, 26) :
+HoverIcons.prototype.roundDrop = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/round-drop.png', 26, 26) :
 	Graph.createSvgImage(26, 26, '<circle cx="13" cy="13" r="12" ' +
 	'stroke="#fff" fill="' + HoverIcons.prototype.arrowFill + '"/>');
 
 /**
  * Refresh target.
  */
-HoverIcons.prototype.refreshTarget = new Image((mxClient.IS_SVG) ? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2cHgiIGhlaWdodD0iMzZweCI+PGVsbGlwc2UgZmlsbD0iIzI5YjZmMiIgY3g9IjEyIiBjeT0iMTIiIHJ4PSIxMiIgcnk9IjEyIi8+PHBhdGggdHJhbnNmb3JtPSJzY2FsZSgwLjgpIHRyYW5zbGF0ZSgyLjQsIDIuNCkiIHN0cm9rZT0iI2ZmZiIgZmlsbD0iI2ZmZiIgZD0iTTEyIDZ2M2w0LTQtNC00djNjLTQuNDIgMC04IDMuNTgtOCA4IDAgMS41Ny40NiAzLjAzIDEuMjQgNC4yNkw2LjcgMTQuOGMtLjQ1LS44My0uNy0xLjc5LS43LTIuOCAwLTMuMzEgMi42OS02IDYtNnptNi43NiAxLjc0TDE3LjMgOS4yYy40NC44NC43IDEuNzkuNyAyLjggMCAzLjMxLTIuNjkgNi02IDZ2LTNsLTQgNCA0IDR2LTNjNC40MiAwIDgtMy41OCA4LTggMC0xLjU3LS40Ni0zLjAzLTEuMjQtNC4yNnoiLz48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PC9zdmc+Cg==' :
+HoverIcons.prototype.refreshTarget = new Image((Client.IS_SVG) ? 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjM2cHgiIGhlaWdodD0iMzZweCI+PGVsbGlwc2UgZmlsbD0iIzI5YjZmMiIgY3g9IjEyIiBjeT0iMTIiIHJ4PSIxMiIgcnk9IjEyIi8+PHBhdGggdHJhbnNmb3JtPSJzY2FsZSgwLjgpIHRyYW5zbGF0ZSgyLjQsIDIuNCkiIHN0cm9rZT0iI2ZmZiIgZmlsbD0iI2ZmZiIgZD0iTTEyIDZ2M2w0LTQtNC00djNjLTQuNDIgMC04IDMuNTgtOCA4IDAgMS41Ny40NiAzLjAzIDEuMjQgNC4yNkw2LjcgMTQuOGMtLjQ1LS44My0uNy0xLjc5LS43LTIuOCAwLTMuMzEgMi42OS02IDYtNnptNi43NiAxLjc0TDE3LjMgOS4yYy40NC44NC43IDEuNzkuNyAyLjggMCAzLjMxLTIuNjkgNi02IDZ2LTNsLTQgNCA0IDR2LTNjNC40MiAwIDgtMy41OCA4LTggMC0xLjU3LS40Ni0zLjAzLTEuMjQtNC4yNnoiLz48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PC9zdmc+Cg==' :
 	IMAGE_PATH + '/refresh.png', 38, 38);
 
 /**
  * Tolerance for hover icon clicks.
  */
-HoverIcons.prototype.tolerance = (mxClient.IS_TOUCH) ? 6 : 0;
+HoverIcons.prototype.tolerance = (Client.IS_TOUCH) ? 6 : 0;
 
 /**
  * 
@@ -6346,7 +6346,7 @@ if (typeof VertexHandler != 'undefined')
 			
 			if (node != null)
 			{
-				let dec = new mxCodec(node.ownerDocument);
+				let dec = new Codec(node.ownerDocument);
 				dec.decode(node, this.getStylesheet());
 			}
 		};
@@ -6405,7 +6405,7 @@ if (typeof VertexHandler != 'undefined')
 			dx = (dx != null) ? dx : 0;
 			dy = (dy != null) ? dy : 0;
 			
-			let codec = new mxCodec(node.ownerDocument);
+			let codec = new Codec(node.ownerDocument);
 			let tempModel = new Model();
 			codec.decode(node, tempModel);
 			let cells = []
@@ -6507,7 +6507,7 @@ if (typeof VertexHandler != 'undefined')
 				dict.put(cells[i], true);
 			}
 			
-			let codec = new mxCodec();
+			let codec = new Codec();
 			let model = new Model();
 			let parent = model.getRoot().getChildAt(0);
 			
@@ -7667,7 +7667,7 @@ if (typeof VertexHandler != 'undefined')
 					pt.x, pt.y) && !mxUtils.isAncestorNode(state.text.node, mxEvent.getSource(evt))))) &&
 					((state == null && !this.isCellLocked(this.getDefaultParent())) ||
 					(state != null && !this.isCellLocked(state.cell))) &&
-					(state != null || (mxClient.IS_SVG && src == this.view.getCanvas().ownerSVGElement)))
+					(state != null || (Client.IS_SVG && src == this.view.getCanvas().ownerSVGElement)))
 				{
 					if (state == null)
 					{
@@ -8170,7 +8170,7 @@ if (typeof VertexHandler != 'undefined')
 				{
 					document.execCommand('unlink', false);
 				}
-				else if (mxClient.IS_FF)
+				else if (Client.IS_FF)
 				{
 					// Workaround for Firefox that adds a new link and removes
 					// the href from the inner link if its parent is a span is
@@ -8339,7 +8339,7 @@ if (typeof VertexHandler != 'undefined')
 		 */
 		Graph.prototype.isCloneEvent = function(evt)
 		{
-			return (mxClient.IS_MAC && mxEvent.isMetaDown(evt)) || mxEvent.isControlDown(evt);
+			return (Client.IS_MAC && mxEvent.isMetaDown(evt)) || mxEvent.isControlDown(evt);
 		};
 
 		/**
@@ -9623,7 +9623,7 @@ if (typeof VertexHandler != 'undefined')
 				cell.isEdge(cell))
 			{
 				// FF on Windows uses outline default of none
-				if (mxClient.IS_FF && mxClient.IS_WIN)
+				if (Client.IS_FF && Client.IS_WIN)
 				{
 					this.textarea.style.outline = 'gray dotted 1px';
 				}
@@ -10874,21 +10874,21 @@ if (typeof VertexHandler != 'undefined')
 		 * Defines the handles for the UI. Uses data-URIs to speed-up loading time where supported.
 		 */
 		// TODO: Increase handle padding
-		HoverIcons.prototype.mainHandle = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/handle-main.png', 17, 17) :
+		HoverIcons.prototype.mainHandle = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/handle-main.png', 17, 17) :
 			Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="' + HoverIcons.prototype.arrowFill + '" stroke-width="1"/>');
-		HoverIcons.prototype.secondaryHandle = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/handle-secondary.png', 17, 17) :
+		HoverIcons.prototype.secondaryHandle = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/handle-secondary.png', 17, 17) :
 			Graph.createSvgImage(16, 16, '<path d="m 8 3 L 13 8 L 8 13 L 3 8 z" stroke="#fff" fill="#fca000"/>');
-		HoverIcons.prototype.fixedHandle = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/handle-fixed.png', 17, 17) :
+		HoverIcons.prototype.fixedHandle = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/handle-fixed.png', 17, 17) :
 			Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="' + HoverIcons.prototype.arrowFill + '" stroke-width="1"/><path d="m 7 7 L 11 11 M 7 11 L 11 7" stroke="#fff"/>');
-		HoverIcons.prototype.terminalHandle = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/handle-terminal.png', 17, 17) :
+		HoverIcons.prototype.terminalHandle = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/handle-terminal.png', 17, 17) :
 			Graph.createSvgImage(18, 18, '<circle cx="9" cy="9" r="5" stroke="#fff" fill="' + HoverIcons.prototype.arrowFill + '" stroke-width="1"/><circle cx="9" cy="9" r="2" stroke="#fff" fill="transparent"/>');
-		HoverIcons.prototype.rotationHandle = (!mxClient.IS_SVG) ? new Image(IMAGE_PATH + '/handle-rotate.png', 16, 16) :
+		HoverIcons.prototype.rotationHandle = (!Client.IS_SVG) ? new Image(IMAGE_PATH + '/handle-rotate.png', 16, 16) :
 			Graph.createSvgImage(16, 16, '<path stroke="' + HoverIcons.prototype.arrowFill +
 				'" fill="' + HoverIcons.prototype.arrowFill +
 				'" d="M15.55 5.55L11 1v3.07C7.06 4.56 4 7.92 4 12s3.05 7.44 7 7.93v-2.02c-2.84-.48-5-2.94-5-5.91s2.16-5.43 5-5.91V10l4.55-4.45zM19.93 11c-.17-1.39-.72-2.73-1.62-3.89l-1.42 1.42c.54.75.88 1.6 1.02 2.47h2.02zM13 17.9v2.02c1.39-.17 2.74-.71 3.9-1.61l-1.44-1.44c-.75.54-1.59.89-2.46 1.03zm3.89-2.42l1.42 1.41c.9-1.16 1.45-2.5 1.62-3.89h-2.02c-.14.87-.48 1.72-1.02 2.48z"/>',
 				24, 24);
 		
-		if (mxClient.IS_SVG)
+		if (Client.IS_SVG)
 		{
 			mxConstraintHandler.prototype.pointImage = Graph.createSvgImage(5, 5, '<path d="m 0 0 L 5 5 M 0 5 L 5 0" stroke="' + HoverIcons.prototype.arrowFill + '"/>');
 		}
@@ -10913,7 +10913,7 @@ if (typeof VertexHandler != 'undefined')
 		}
 
 		// Pre-fetches images (only needed for non data-uris)
-		if (!mxClient.IS_SVG)
+		if (!Client.IS_SVG)
 		{
 			new Image().src = HoverIcons.prototype.mainHandle.src;
 			new Image().src = HoverIcons.prototype.fixedHandle.src;
@@ -10969,7 +10969,7 @@ if (typeof VertexHandler != 'undefined')
 		if (Graph.touchStyle)
 		{
 			// Larger tolerance for real touch devices
-			if (mxClient.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
+			if (Client.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
 			{
 				Shape.prototype.svgStrokeTolerance = 18;
 				VertexHandler.prototype.tolerance = 12;

@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import mxClient from '../mxClient';
+import Client from '../Client';
 import {
   ALIGN_BOTTOM,
   ALIGN_LEFT,
@@ -29,16 +29,16 @@ import {
   NODETYPE_ELEMENT,
   NONE,
   PAGE_FORMAT_A4_PORTRAIT,
-} from './Constants';
+} from './constants';
 import Point from '../view/geometry/Point';
 import Dictionary from './Dictionary';
 import CellPath from '../view/cell/datatypes/CellPath';
 import Rectangle from '../view/geometry/Rectangle';
-import { getFunctionName } from './StringUtils';
-import { getOuterHtml } from './DomUtils';
+import { getFunctionName } from './stringUtils';
+import { getOuterHtml } from './domUtils';
 import CellState from '../view/cell/datatypes/CellState';
-import Cell from '../view/cell/datatypes/Cell';
-import Model from '../view/model/Model';
+import Cell from '../view/cell/Cell';
+import Model from '../view/other/Model';
 import CellArray from '../view/cell/datatypes/CellArray';
 import { Graph } from 'src/view/Graph';
 
@@ -83,7 +83,7 @@ const utils = {
    *
    * Defines the image used for error dialogs.
    */
-  errorImage: '/error.gif', // mxClient.imageBasePath + '/error.gif',
+  errorImage: '/error.gif', // Client.imageBasePath + '/error.gif',
 };
 
 /**
@@ -166,9 +166,9 @@ export const setPrefixedStyle = (
 ) => {
   let prefix = null;
 
-  if (mxClient.IS_SF || mxClient.IS_GC) {
+  if (Client.IS_SF || Client.IS_GC) {
     prefix = 'Webkit';
-  } else if (mxClient.IS_MT) {
+  } else if (Client.IS_MT) {
     prefix = 'Moz';
   }
 
@@ -2341,7 +2341,7 @@ export const printScreen = (graph: Graph) => {
 
   // Workaround for Google Chrome which needs a bit of a
   // delay in order to render the SVG contents
-  if (mxClient.IS_GC) {
+  if (Client.IS_GC) {
     wnd.setTimeout(print, 500);
   } else {
     print();

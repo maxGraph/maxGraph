@@ -27,8 +27,8 @@ type EventListenerObject = {
  *
  * Known Subclasses:
  *
- * <Transactions>, <mxGraph>, <mxGraphView>, <mxEditor>, <mxCellOverlay>,
- * <mxToolbar>, <mxWindow>
+ * <Transactions>, <mxGraph>, <mxGraphView>, <Editor>, <CellOverlay>,
+ * <MaxToolbar>, <MaxWindow>
  *
  * Constructor: mxEventSource
  *

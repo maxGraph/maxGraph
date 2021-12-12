@@ -2,7 +2,7 @@ import {
   Graph,
   InternalEvent,
   RubberBand,
-  mxDomHelpers,
+  DomHelpers,
   ImageShape,
   Rectangle,
   CellRenderer,
@@ -165,13 +165,13 @@ const Template = ({ label, ...args }) => {
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('Zoom In', () => {
+    DomHelpers.button('Zoom In', () => {
       graph.zoomIn();
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Zoom Out', () => {
+    DomHelpers.button('Zoom Out', () => {
       graph.zoomOut();
     })
   );

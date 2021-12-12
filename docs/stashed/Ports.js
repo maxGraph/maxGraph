@@ -6,8 +6,8 @@ import React from 'react';
 import mxEvent from '../mxgraph/util/mxEvent';
 import mxGraph from '../mxgraph/view/mxGraph';
 import mxRubberband from '../mxgraph/handler/mxRubberband';
-import { error } from '../../packages/core/src/util/gui/mxWindow';
-import { load } from '../../packages/core/src/util/network/mxXmlRequest';
+import { error } from '../../packages/core/src/util/gui/MaxWindow';
+import { load } from '../../packages/core/src/util/network/MaxXmlRequest';
 import { setOpacity } from '../../packages/core/src/util/Utils';
 import { write, writeln } from '../../packages/core/src/util/DomUtils';
 import { createXmlDocument, getPrettyXml } from '../../packages/core/src/util/XmlUtils';
@@ -64,7 +64,7 @@ export default Ports;
     function main(container, outline, toolbar, sidebar, status)
     {
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is not supported.
         error('Browser is not supported!', 200, false);
@@ -95,7 +95,7 @@ export default Ports;
         // The editor is used to create certain functionality for the
         // graph, such as the rubberband selection, but most parts
         // of the UI are custom in this example.
-        let editor = new mxEditor();
+        let editor = new Editor();
         let graph = editor.graph;
         let model = graph.getModel();
 
@@ -122,7 +122,7 @@ export default Ports;
         editor.configure(config);
 
         // Defines the default group to be used for grouping. The
-        // default group is a field in the mxEditor instance that
+        // default group is a field in the Editor instance that
         // is supposed to be a cell which is cloned for new cells.
         // The groupBorderSize is used to define the spacing between
         // the children of a group and the group bounds.
@@ -200,7 +200,7 @@ export default Ports;
         // Shows a "modal" window when double clicking a vertex.
         graph.dblClick = function(evt, cell)
         {
-          // Do not fire a DOUBLE_CLICK event here as mxEditor will
+          // Do not fire a DOUBLE_CLICK event here as Editor will
           // consume the event and start the in-place editor.
           if (this.isEnabled() &&
             !mxEvent.isConsumed(evt) &&
@@ -338,7 +338,7 @@ export default Ports;
           let textarea = document.createElement('textarea');
           textarea.style.width = '400px';
           textarea.style.height = '400px';
-          let enc = new mxCodec(createXmlDocument());
+          let enc = new Codec(createXmlDocument());
           let node = enc.encode(editor.graph.getModel());
           textarea.value = getPrettyXml(node);
           showModalWindow(graph, 'XML', textarea, 410, 440);
@@ -380,7 +380,7 @@ export default Ports;
           try
           {
             mxEvent.release(splash);
-            mxEffects.fadeOut(splash, 100, true);
+            Effects.fadeOut(splash, 100, true);
           }
           catch (e)
           {
@@ -435,14 +435,14 @@ export default Ports;
       let x = Math.max(0, document.body.scrollWidth/2-width/2);
       let y = Math.max(10, (document.body.scrollHeight ||
             document.documentElement.scrollHeight)/2-height*2/3);
-      let wnd = new mxWindow(title, content, x, y, width, height, false, true);
+      let wnd = new MaxWindow(title, content, x, y, width, height, false, true);
       wnd.setClosable(true);
 
       // Fades the background out after after the window has been closed
       wnd.addListener(mxEvent.DESTROY, function(evt)
       {
         graph.setEnabled(true);
-        mxEffects.fadeOut(background, 50, true,
+        Effects.fadeOut(background, 50, true,
           10, 30, true);
       });
 

@@ -5,7 +5,7 @@
 import React from 'react';
 import mxEvent from '../mxgraph/util/mxEvent';
 import mxGraph from '../mxgraph/view/mxGraph';
-import mxCodec from '../mxgraph/io/mxCodec';
+import Codec from '../mxgraph/io/Codec';
 import mxUtils from '../mxgraph/util/mxUtils';
 import mxConstants from '../mxgraph/util/mxConstants';
 import mxEdgeStyle from '../mxgraph/view/mxEdgeStyle';
@@ -197,7 +197,7 @@ class Codec extends React.Component {
             xmlDocument.documentElement != null &&
             xmlDocument.documentElement.nodeName === 'mxGraphModel'
           ) {
-            const decoder = new mxCodec(xmlDocument);
+            const decoder = new Codec(xmlDocument);
             const node = xmlDocument.documentElement;
 
             container.innerHTML = '';

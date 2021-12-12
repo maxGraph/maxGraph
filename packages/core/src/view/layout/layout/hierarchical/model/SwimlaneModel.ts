@@ -10,8 +10,8 @@ import CellPath from '../../../../cell/datatypes/CellPath';
 import GraphLayout from '../../GraphLayout';
 import Dictionary from '../../../../../util/Dictionary';
 import CellArray from '../../../../cell/datatypes/CellArray';
-import Cell from '../../../../cell/datatypes/Cell';
-import { clone } from '../../../../../util/CloneUtils';
+import Cell from '../../../../cell/Cell';
+import { clone } from '../../../../../util/cloneUtils';
 
 /**
  * Class: mxSwimlaneModel
@@ -192,7 +192,7 @@ class SwimlaneModel {
    *
    * Parameters:
    *
-   * layout - Reference to the <mxHierarchicalLayout> algorithm.
+   * layout - Reference to the <HierarchicalLayout> algorithm.
    * vertices - Array of <mxCells> that represent the vertices whom are to
    * have an internal representation created.
    * internalVertices - The array of <mxGraphHierarchyNodes> to have their

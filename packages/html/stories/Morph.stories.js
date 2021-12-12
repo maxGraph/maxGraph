@@ -1,7 +1,7 @@
 import {
   Graph,
-  mxDomHelpers,
-  mxMorphing,
+  DomHelpers,
+  Morphing,
   InternalEvent,
   RubberBand,
 } from '@maxgraph/core';
@@ -67,7 +67,7 @@ const Template = ({ label, ...args }) => {
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('Morph', function () {
+    DomHelpers.button('Morph', function () {
       graph.clearSelection();
 
       graph.getModel().beginUpdate();
@@ -83,7 +83,7 @@ const Template = ({ label, ...args }) => {
         graph.getModel().setGeometry(v2, geo);
       } finally {
         // Arguments are number of steps, ease and delay
-        const morph = new mxMorphing(graph, 20, 1.2, 20);
+        const morph = new Morphing(graph, 20, 1.2, 20);
         morph.addListener(InternalEvent.DONE, function () {
           graph.getModel().endUpdate();
         });

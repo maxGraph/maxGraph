@@ -10,8 +10,8 @@ import {
   getSource,
   isMouseEvent,
   isPopupTrigger,
-} from '../../util/EventUtils';
-import { isAncestorNode } from '../../util/DomUtils';
+} from '../../util/eventUtils';
+import { isAncestorNode } from '../../util/domUtils';
 import CellState from '../cell/datatypes/CellState';
 import Shape from '../geometry/shape/Shape';
 
@@ -26,15 +26,15 @@ import Shape from '../geometry/shape/Shape';
  * {
  *   mouseDown: (sender, evt)=>
  *   {
- *     mxLog.debug('mouseDown');
+ *     MaxLog.debug('mouseDown');
  *   },
  *   mouseMove: (sender, evt)=>
  *   {
- *     mxLog.debug('mouseMove');
+ *     MaxLog.debug('mouseMove');
  *   },
  *   mouseUp: (sender, evt)=>
  *   {
- *     mxLog.debug('mouseUp');
+ *     MaxLog.debug('mouseUp');
  *   }
  * });
  * (end)

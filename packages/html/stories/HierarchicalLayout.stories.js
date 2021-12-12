@@ -2,7 +2,7 @@ import {
   Graph,
   DomUtils,
   FastOrganicLayout,
-  mxHierarchicalLayout,
+  HierarchicalLayout,
   Perimeter,
   InternalEvent,
   RubberBand,
@@ -57,7 +57,7 @@ const Template = ({ label, ...args }) => {
 
   // Creates a layout algorithm to be used
   // with the graph
-  const layout = new mxHierarchicalLayout(graph);
+  const layout = new HierarchicalLayout(graph);
   const organic = new FastOrganicLayout(graph);
   organic.forceConstant = 120;
 

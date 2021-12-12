@@ -10,7 +10,7 @@ import {
   getDirectedBounds,
   isNotNullish,
   mod,
-} from '../../../util/Utils';
+} from '../../../util/utils';
 import {
   DIRECTION_EAST,
   DIRECTION_NORTH,
@@ -21,12 +21,12 @@ import {
   RECTANGLE_ROUNDING_FACTOR,
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
-} from '../../../util/Constants';
+} from '../../../util/constants';
 import Point from '../Point';
 import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
 import SvgCanvas2D from '../../../util/canvas/SvgCanvas2D';
 import InternalEvent from '../../event/InternalEvent';
-import mxClient from '../../../mxClient';
+import Client from '../../../Client';
 import CellState from '../../cell/datatypes/CellState';
 import StencilShape from './node/StencilShape';
 import CellOverlay from '../../cell/CellOverlay';
@@ -1269,7 +1269,7 @@ class Shape {
    * Paints the line shape.
    */
   setTransparentBackgroundImage(node: SVGElement) {
-    node.style.backgroundImage = `url('${mxClient.imageBasePath}/transparent.gif')`;
+    node.style.backgroundImage = `url('${Client.imageBasePath}/transparent.gif')`;
   }
 
   /**

@@ -5,8 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 import InternalMouseEvent from './InternalMouseEvent';
-import mxClient from '../../mxClient';
-import { isConsumed, isMouseEvent } from '../../util/EventUtils';
+import Client from '../../Client';
+import { isConsumed, isMouseEvent } from '../../util/eventUtils';
 import CellState from '../cell/datatypes/CellState';
 import {
   EventCache,
@@ -117,9 +117,9 @@ class InternalEvent {
    * Function: addGestureListeners
    *
    * Adds the given listeners for touch, mouse and/or pointer events. If
-   * <mxClient.IS_POINTER> is true then pointer events will be registered,
-   * else the respective mouse events will be registered. If <mxClient.IS_POINTER>
-   * is false and <mxClient.IS_TOUCH> is true then the respective touch events
+   * <Client.IS_POINTER> is true then pointer events will be registered,
+   * else the respective mouse events will be registered. If <Client.IS_POINTER>
+   * is false and <Client.IS_TOUCH> is true then the respective touch events
    * will be registered as well as the mouse events.
    */
   static addGestureListeners(
@@ -131,7 +131,7 @@ class InternalEvent {
     if (startListener) {
       InternalEvent.addListener(
         node,
-        mxClient.IS_POINTER ? 'pointerdown' : 'mousedown',
+        Client.IS_POINTER ? 'pointerdown' : 'mousedown',
         startListener
       );
     }
@@ -139,7 +139,7 @@ class InternalEvent {
     if (moveListener) {
       InternalEvent.addListener(
         node,
-        mxClient.IS_POINTER ? 'pointermove' : 'mousemove',
+        Client.IS_POINTER ? 'pointermove' : 'mousemove',
         moveListener
       );
     }
@@ -147,12 +147,12 @@ class InternalEvent {
     if (endListener) {
       InternalEvent.addListener(
         node,
-        mxClient.IS_POINTER ? 'pointerup' : 'mouseup',
+        Client.IS_POINTER ? 'pointerup' : 'mouseup',
         endListener
       );
     }
 
-    if (!mxClient.IS_POINTER && mxClient.IS_TOUCH) {
+    if (!Client.IS_POINTER && Client.IS_TOUCH) {
       if (startListener) {
         InternalEvent.addListener(node, 'touchstart', startListener);
       }
@@ -171,7 +171,7 @@ class InternalEvent {
    * Function: removeGestureListeners
    *
    * Removes the given listeners from mousedown, mousemove, mouseup and the
-   * respective touch events if <mxClient.IS_TOUCH> is true.
+   * respective touch events if <Client.IS_TOUCH> is true.
    */
   static removeGestureListeners(
     node: Listenable,
@@ -182,7 +182,7 @@ class InternalEvent {
     if (startListener) {
       InternalEvent.removeListener(
         node,
-        mxClient.IS_POINTER ? 'pointerdown' : 'mousedown',
+        Client.IS_POINTER ? 'pointerdown' : 'mousedown',
         startListener
       );
     }
@@ -190,7 +190,7 @@ class InternalEvent {
     if (moveListener) {
       InternalEvent.removeListener(
         node,
-        mxClient.IS_POINTER ? 'pointermove' : 'mousemove',
+        Client.IS_POINTER ? 'pointermove' : 'mousemove',
         moveListener
       );
     }
@@ -198,12 +198,12 @@ class InternalEvent {
     if (endListener) {
       InternalEvent.removeListener(
         node,
-        mxClient.IS_POINTER ? 'pointerup' : 'mouseup',
+        Client.IS_POINTER ? 'pointerup' : 'mouseup',
         endListener
       );
     }
 
-    if (!mxClient.IS_POINTER && mxClient.IS_TOUCH) {
+    if (!Client.IS_POINTER && Client.IS_TOUCH) {
       if (startListener) {
         InternalEvent.removeListener(node, 'touchstart', startListener);
       }
@@ -322,8 +322,8 @@ class InternalEvent {
    * ```javascript
    * mxEvent.addMouseWheelListener(function (evt, up)
    * {
-   *   mxLog.show();
-   *   mxLog.debug('mouseWheel: up='+up);
+   *   MaxLog.show();
+   *   MaxLog.debug('mouseWheel: up='+up);
    * });
    * ```
    *
@@ -351,7 +351,7 @@ class InternalEvent {
 
       target = target != null ? target : window;
 
-      if (mxClient.IS_SF && !mxClient.IS_TOUCH) {
+      if (Client.IS_SF && !Client.IS_TOUCH) {
         let scale = 1;
 
         InternalEvent.addListener(target, 'gesturestart', (evt: GestureEvent) => {

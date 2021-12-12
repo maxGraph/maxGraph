@@ -1,5 +1,5 @@
 import {
-  mxEditor,
+  Editor,
   ConnectionHandler,
   ImageBox,
   Perimeter,
@@ -41,8 +41,8 @@ const Template = ({ label, ...args }) => {
   // const config = utils
   //   .load('editors/config/keyhandler-commons.xml')
   //   .getDocumentElement();
-  // const editor = new mxEditor(config);
-  const editor = new mxEditor(null);
+  // const editor = new Editor(config);
+  const editor = new Editor(null);
   editor.setGraphContainer(container);
   const { graph } = editor;
   const model = graph.getModel();

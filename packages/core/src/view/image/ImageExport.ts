@@ -6,7 +6,7 @@
  */
 
 import AbstractCanvas2D from '../../util/canvas/AbstractCanvas2D';
-import CellState from '../cell/datatypes/CellState';
+import CellState from '../cell/CellState';
 import Shape from '../geometry/shape/Shape';
 
 /**
@@ -28,7 +28,7 @@ import Shape from '../geometry/shape/Shape';
  * var h = Math.ceil(bounds.y + bounds.height);
  *
  * var xml = mxUtils.getXml(root);
- * new mxXmlRequest('export', 'format=png&w=' + w +
+ * new MaxXmlRequest('export', 'format=png&w=' + w +
  * 		'&h=' + h + '&bg=#F9F7ED&xml=' + encodeURIComponent(xml))
  * 		.simulate(document, '_blank');
  * (end)

@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import mxClient from '../mxClient';
+import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
 import {
   contains,
@@ -13,7 +13,7 @@ import {
   getRotatedPoint,
   isNumeric,
   toRadians,
-} from '../util/Utils';
+} from '../util/utils';
 import RectangleShape from './geometry/shape/node/RectangleShape';
 import mxGuide from '../util/Guide';
 import Point from './geometry/Point';
@@ -26,24 +26,24 @@ import {
   INVALID_CONNECT_TARGET_COLOR,
   NONE,
   VALID_COLOR,
-} from '../util/Constants';
+} from '../util/constants';
 import Dictionary from '../util/Dictionary';
-import CellHighlight from './selection/CellHighlight';
+import CellHighlight from '../selection/CellHighlight';
 import Rectangle from './geometry/Rectangle';
-import { getClientX, getClientY, isAltDown, isMultiTouchEvent } from '../util/EventUtils';
+import { getClientX, getClientY, isAltDown, isMultiTouchEvent } from '../util/eventUtils';
 import { Graph } from './Graph';
 import Guide from '../util/Guide';
 import Shape from './geometry/shape/Shape';
 import InternalMouseEvent from './event/InternalMouseEvent';
-import SelectionCellsHandler from './selection/SelectionCellsHandler';
-import Cell from './cell/datatypes/Cell';
-import PopupMenuHandler from './popups_menus/PopupMenuHandler';
+import SelectionCellsHandler from './handlers/SelectionCellsHandler';
+import Cell from './cell/Cell';
+import PopupMenuHandler from './handlers/PopupMenuHandler';
 import EventSource from './event/EventSource';
-import CellArray from './cell/datatypes/CellArray';
-import CellState from './cell/datatypes/CellState';
+import CellArray from '../cell/datatypes/CellArray';
+import CellState from '../cell/datatypes/CellState';
 import EventObject from './event/EventObject';
-import ConnectionHandler from './connection/ConnectionHandler';
-import CellEditor from './editing/CellEditor';
+import ConnectionHandler from './handlers/ConnectionHandler';
+import CellEditor from './handlers/CellEditor';
 
 import type { ColorValue, GraphPlugin } from '../types';
 
@@ -361,7 +361,7 @@ class GraphHandler implements GraphPlugin {
    *
    * If live preview is allowed on this system.  Default is true for systems with SVG support.
    */
-  allowLivePreview = mxClient.IS_SVG;
+  allowLivePreview = Client.IS_SVG;
 
   cell: Cell | null = null;
 
@@ -827,7 +827,7 @@ class GraphHandler implements GraphPlugin {
       shape.pointerEvents = false;
 
       // Workaround for artifacts on iOS
-      if (mxClient.IS_IOS) {
+      if (Client.IS_IOS) {
         shape.getSvgScreenOffset = () => {
           return 0;
         };

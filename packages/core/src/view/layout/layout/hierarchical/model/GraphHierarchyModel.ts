@@ -9,7 +9,7 @@ import Dictionary from '../../../../../util/Dictionary';
 import GraphHierarchyNode from './GraphHierarchyNode';
 import GraphHierarchyEdge from './GraphHierarchyEdge';
 import GraphLayout from '../../GraphLayout';
-import Cell from '../../../../cell/datatypes/Cell';
+import Cell from '../../../../cell/Cell';
 import CellArray from '../../../../cell/datatypes/CellArray';
 
 /**
@@ -184,7 +184,7 @@ class GraphHierarchyModel {
    *
    * Parameters:
    *
-   * layout - Reference to the <mxHierarchicalLayout> algorithm.
+   * layout - Reference to the <HierarchicalLayout> algorithm.
    * vertices - Array of <mxCells> that represent the vertices whom are to
    * have an internal representation created.
    * internalVertices - The array of <mxGraphHierarchyNodes> to have their

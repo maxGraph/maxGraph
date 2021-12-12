@@ -1,12 +1,12 @@
 import {
   Graph,
-  mxWindow,
+  MaxWindow,
   mxKeyHandler,
   RubberBand,
   InternalEvent,
-  mxLog,
+  MaxLog,
   DomUtils,
-  mxClient,
+  Client,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -27,7 +27,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   const container = document.createElement('div');
   container.style.position = 'relative';
@@ -39,7 +39,7 @@ const Template = ({ label, ...args }) => {
 
   // Note that we're using the container scrollbars for the graph so that the
   // container extends to the parent div inside the window
-  let wnd = new mxWindow(
+  let wnd = new MaxWindow(
     'Scrollable, resizable, given height',
     container,
     50,
@@ -87,7 +87,7 @@ const Template = ({ label, ...args }) => {
   let content = document.createElement('div');
   DomUtils.write(content, lorem + lorem + lorem);
 
-  wnd = new mxWindow(
+  wnd = new MaxWindow(
     'Scrollable, resizable, auto height',
     content,
     300,
@@ -105,7 +105,7 @@ const Template = ({ label, ...args }) => {
   content = content.cloneNode(true);
   content.style.width = '400px';
 
-  wnd = new mxWindow(
+  wnd = new MaxWindow(
     'Scrollable, resizable, fixed content',
     content,
     520,
@@ -120,7 +120,7 @@ const Template = ({ label, ...args }) => {
   wnd.setResizable(true);
   wnd.setVisible(true);
 
-  mxLog.show();
+  MaxLog.show();
 
   return container;
 };

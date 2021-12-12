@@ -9,10 +9,10 @@ import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
 import EventSource from '../event/EventSource';
 import ImageBox from '../image/ImageBox';
-import CellState from './datatypes/CellState';
+import CellState from './CellState';
 
 /**
- * Class: mxCellOverlay
+ * Class: CellOverlay
  *
  * Extends <mxEventSource> to implement a graph overlay, represented by an icon
  * and a tooltip. Overlays can handle and fire <click> events and are added to
@@ -32,7 +32,7 @@ import CellState from './datatypes/CellState';
  * if the overlay is clicked.
  *
  * (code)
- * let overlay = new mxCellOverlay(img, html);
+ * let overlay = new CellOverlay(img, html);
  * graph.addCellOverlay(vertex, overlay);
  * overlay.addListener(mxEvent.CLICK, (sender, evt)=>
  * {
@@ -50,7 +50,7 @@ import CellState from './datatypes/CellState';
  * contains the cell. For touch devices this is fired if the element receives
  * a touchend event.
  *
- * Constructor: mxCellOverlay
+ * Constructor: CellOverlay
  *
  * Constructs a new overlay using the given image and tooltip.
  *

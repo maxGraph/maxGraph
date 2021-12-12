@@ -5,8 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { getAlignmentAsPoint, isNotNullish, mod } from '../Utils';
-import mxClient from '../../mxClient';
+import { getAlignmentAsPoint, isNotNullish, mod } from '../utils';
+import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
   ALIGN_BOTTOM,
@@ -30,12 +30,12 @@ import {
   NS_SVG,
   NS_XLINK,
   WORD_WRAP,
-} from '../Constants';
+} from '../constants';
 import Rectangle from '../../view/geometry/Rectangle';
 import AbstractCanvas2D from './AbstractCanvas2D';
-import { getXml } from '../XmlUtils';
-import { importNodeImplementation, isNode, write } from '../DomUtils';
-import { htmlEntities, trim } from '../StringUtils';
+import { getXml } from '../xmlUtils';
+import { importNodeImplementation, isNode, write } from '../domUtils';
+import { htmlEntities, trim } from '../stringUtils';
 import {
   AlignValue,
   ColorValue,
@@ -50,8 +50,8 @@ import {
 // Activates workaround for gradient ID resolution if base tag is used.
 const useAbsoluteIds =
   typeof DOMParser === 'function' &&
-  !mxClient.IS_CHROMEAPP &&
-  !mxClient.IS_EDGE &&
+  !Client.IS_CHROMEAPP &&
+  !Client.IS_EDGE &&
   document.getElementsByTagName('base').length > 0;
 
 /**
@@ -681,7 +681,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
         this.updateFill();
       } else if (!this.styleEnabled) {
         // Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=814952
-        if (node.nodeName === 'ellipse' && mxClient.IS_FF) {
+        if (node.nodeName === 'ellipse' && Client.IS_FF) {
           node.setAttribute('fill', 'transparent');
         } else {
           node.setAttribute('fill', NONE);
@@ -894,7 +894,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     // Firefox uses transparent for no fill in ellipses
     if (
       shadow.getAttribute('fill') !== 'none' &&
-      (!mxClient.IS_FF || shadow.getAttribute('fill') !== 'transparent')
+      (!Client.IS_FF || shadow.getAttribute('fill') !== 'transparent')
     ) {
       shadow.setAttribute('fill', s.shadowColor);
     }
@@ -1630,8 +1630,8 @@ class SvgCanvas2D extends AbstractCanvas2D {
       }
 
       if (
-        !mxClient.IS_CHROMEAPP &&
-        !mxClient.IS_EDGE &&
+        !Client.IS_CHROMEAPP &&
+        !Client.IS_EDGE &&
         this.root.ownerDocument === document
       ) {
         // Workaround for potential base tag

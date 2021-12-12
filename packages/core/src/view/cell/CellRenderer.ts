@@ -46,7 +46,7 @@ import {
   SHAPE_RHOMBUS,
   SHAPE_SWIMLANE,
   SHAPE_TRIANGLE,
-} from '../../util/Constants';
+} from '../../util/constants';
 import {
   convertPoint,
   equalEntries,
@@ -54,24 +54,24 @@ import {
   getRotatedPoint,
   mod,
   toRadians,
-} from '../../util/Utils';
+} from '../../util/utils';
 import Rectangle from '../geometry/Rectangle';
 import StencilShapeRegistry from '../geometry/shape/node/StencilShapeRegistry';
 import InternalEvent from '../event/InternalEvent';
-import mxClient from '../../mxClient';
+import Client from '../../Client';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import Dictionary from '../../util/Dictionary';
 import EventObject from '../event/EventObject';
 import Point from '../geometry/Point';
 import Shape from '../geometry/shape/Shape';
-import CellState from './datatypes/CellState';
-import Cell from './datatypes/Cell';
+import CellState from './CellState';
+import Cell from './Cell';
 import CellOverlay from './CellOverlay';
-import { getClientX, getClientY, getSource } from '../../util/EventUtils';
-import { isNode } from '../../util/DomUtils';
+import { getClientX, getClientY, getSource } from '../../util/eventUtils';
+import { isNode } from '../../util/domUtils';
 import { CellStateStyles } from '../../types';
-import CellArray from './datatypes/CellArray';
-import SelectionCellsHandler from '../selection/SelectionCellsHandler';
+import CellArray from './CellArray';
+import SelectionCellsHandler from '../handlers/SelectionCellsHandler';
 
 /**
  * Class: mxCellRenderer
@@ -90,10 +90,10 @@ import SelectionCellsHandler from '../selection/SelectionCellsHandler';
  * directly inside the graph container for certain browsers.
  *
  * (code)
- * mxLog.show();
+ * MaxLog.show();
  * for (var i in mxCellRenderer.defaultShapes)
  * {
- *   mxLog.debug(i);
+ *   MaxLog.debug(i);
  * }
  * (end)
  *
@@ -469,7 +469,7 @@ class CellRenderer {
       const getState = (evt: MouseEvent) => {
         let result: CellState | null = state;
 
-        if (mxClient.IS_TOUCH || forceGetCell) {
+        if (Client.IS_TOUCH || forceGetCell) {
           const x = getClientX(evt);
           const y = getClientY(evt);
 
@@ -539,7 +539,7 @@ class CellRenderer {
    * state - <mxCellState> whose label should be initialized.
    */
   initializeLabel(state: CellState, shape: Shape): void {
-    if (mxClient.IS_SVG && mxClient.NO_FO && shape.dialect !== DIALECT_SVG) {
+    if (Client.IS_SVG && Client.NO_FO && shape.dialect !== DIALECT_SVG) {
       shape.init(state.view.graph.container);
     } else {
       shape.init(state.view.getDrawPane());
@@ -606,7 +606,7 @@ class CellRenderer {
   /**
    * Function: installOverlayListeners
    *
-   * Installs the listeners for the given <mxCellState>, <mxCellOverlay> and
+   * Installs the listeners for the given <mxCellState>, <CellOverlay> and
    * <mxShape> that represents the overlay.
    */
   installCellOverlayListeners(state: CellState, overlay: CellOverlay, shape: Shape) {
@@ -635,7 +635,7 @@ class CellRenderer {
       }
     );
 
-    if (mxClient.IS_TOUCH) {
+    if (Client.IS_TOUCH) {
       InternalEvent.addListener(shape.node, 'touchend', (evt: Event) => {
         overlay.fireEvent(
           new EventObject(InternalEvent.CLICK, { event: evt, cell: state.cell })
@@ -722,7 +722,7 @@ class CellRenderer {
     // should go into the graph container directly in order to be clickable. Otherwise
     // it is obscured by the HTML label that overlaps the cell.
     const isForceHtml =
-      graph.isHtmlLabel(state.cell) && mxClient.NO_FO && graph.dialect === DIALECT_SVG;
+      graph.isHtmlLabel(state.cell) && Client.NO_FO && graph.dialect === DIALECT_SVG;
 
     if (isForceHtml) {
       control.dialect = DIALECT_PREFERHTML;
@@ -735,7 +735,7 @@ class CellRenderer {
     const node = control.node;
 
     // Workaround for missing click event on iOS is to check tolerance below
-    if (clickHandler && !mxClient.IS_IOS) {
+    if (clickHandler && !Client.IS_IOS) {
       if (graph.isEnabled()) {
         node.style.cursor = 'pointer';
       }
@@ -772,7 +772,7 @@ class CellRenderer {
       );
 
       // Uses capture phase for event interception to stop bubble phase
-      if (clickHandler && mxClient.IS_IOS) {
+      if (clickHandler && Client.IS_IOS) {
         node.addEventListener(
           'touchend',
           (evt: Event) => {
@@ -850,7 +850,7 @@ class CellRenderer {
           graph.dialect !== DIALECT_SVG &&
           // @ts-ignore nodeName should exist
           source.nodeName === 'IMG') ||
-        mxClient.IS_TOUCH
+        Client.IS_TOUCH
       ) {
         const x = getClientX(evt);
         const y = getClientY(evt);

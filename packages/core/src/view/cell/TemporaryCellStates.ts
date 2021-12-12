@@ -10,11 +10,11 @@
 
 import Rectangle from '../geometry/Rectangle';
 import Dictionary from '../../util/Dictionary';
-import GraphView from '../view/GraphView';
-import Cell from './datatypes/Cell';
-import CellState from './datatypes/CellState';
+import GraphView from '../GraphView';
+import Cell from './Cell';
+import CellState from './CellState';
 import Shape from '../geometry/shape/Shape';
-import CellArray from './datatypes/CellArray';
+import CellArray from './CellArray';
 
 class TemporaryCellStates {
   oldValidateCellState: Function | null;

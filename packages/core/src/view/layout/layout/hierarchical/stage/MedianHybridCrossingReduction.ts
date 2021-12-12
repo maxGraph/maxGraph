@@ -35,7 +35,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   /**
    * Variable: layout
    *
-   * Reference to the enclosing <mxHierarchicalLayout>.
+   * Reference to the enclosing <HierarchicalLayout>.
    */
   layout = null;
 

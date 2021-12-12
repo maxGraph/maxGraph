@@ -10,7 +10,7 @@ import Rectangle from '../../geometry/Rectangle';
 import Geometry from '../../geometry/Geometry';
 import Point from '../../geometry/Point';
 import { Graph } from '../../Graph';
-import Cell from '../../cell/datatypes/Cell';
+import Cell from '../../cell/Cell';
 import CellArray from '../../cell/datatypes/CellArray';
 
 /**
@@ -117,11 +117,11 @@ class GraphLayout {
    * Example:
    *
    * (code)
-   * mxLog.show();
+   * MaxLog.show();
    * var cell = graph.getSelectionCell();
    * graph.traverse(cell, false, function(vertex, edge)
    * {
-   *   mxLog.debug(graph.getLabel(vertex));
+   *   MaxLog.debug(graph.getLabel(vertex));
    * });
    * (end)
    *
