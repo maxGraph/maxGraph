@@ -1,4 +1,4 @@
-import { NODETYPE_ELEMENT } from './Constants';
+import { NODETYPE_ELEMENT } from './constants';
 
 /**
  * Function: extractTextWithWhitespace
@@ -302,7 +302,7 @@ export const isAncestorNode = (ancestor, child) => {
  * nodeType - Optional node type to return. Default is
  * <mxConstants.NODETYPE_ELEMENT>.
  */
-export const getChildNodes = (node, nodeType) => {
+export const getChildNodes = (node: Element, nodeType: number=NODETYPE_ELEMENT) => {
   nodeType = nodeType || NODETYPE_ELEMENT;
 
   const children = [];

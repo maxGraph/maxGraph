@@ -1,6 +1,6 @@
-import DragSource from '../view/drag_drop/DragSource';
+import DragSource from '../view/other/DragSource';
 import Point from '../view/geometry/Point';
-import { TOOLTIP_VERTICAL_OFFSET } from './Constants';
+import { TOOLTIP_VERTICAL_OFFSET } from './constants';
 
 /**
  * Function: makeDraggable

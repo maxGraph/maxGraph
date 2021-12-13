@@ -201,7 +201,7 @@ const Resources = {
    * lan - The language for which the file should be loaded.
    * callback - Optional callback for asynchronous loading.
    */
-  add: (basename, lan, callback) => {
+  add: (basename: string, lan: string, callback) => {
     lan =
       lan != null
         ? lan
@@ -280,7 +280,7 @@ const Resources = {
    * Parses the key, value pairs in the specified
    * text and stores them as local resources.
    */
-  parse: (text) => {
+  parse: (text: string) => {
     if (text != null) {
       const lines = text.split('\n');
 
@@ -337,7 +337,7 @@ const Resources = {
    * to be replaced with in the resulting string.
    * defaultValue - Optional string that specifies the default return value.
    */
-  get: (key, params, defaultValue) => {
+  get: (key: string, params: any[]|null=null, defaultValue?: string) => {
     let value = Resources.resources[key];
 
     // Applies the default value if no resource was found

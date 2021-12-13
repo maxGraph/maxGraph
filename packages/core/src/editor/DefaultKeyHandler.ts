@@ -7,7 +7,8 @@
 
 import InternalEvent from '../view/event/InternalEvent';
 import EventObject from '../view/event/EventObject';
-import KeyHandler from '../view/handlers/KeyHandler';
+import KeyHandler from '../view/handler/KeyHandler';
+import Editor from './Editor';
 
 /**
  * Binds keycodes to actionnames in an editor.  This aggregates an internal {@link handler} and extends the implementation of {@link mxKeyHandler.escape} to not only cancel the editing, but also hide the properties dialog and fire an <Editor.escape> event via {@link editor}.  An instance of this class is created by {@link Editor} and stored in {@link Editor.keyHandler}.
@@ -27,7 +28,7 @@ import KeyHandler from '../view/handlers/KeyHandler';
  * An {@link InternalEvent.ESCAPE} event is fired via the editor if the escape key is pressed.
  */
 class DefaultKeyHandler {
-  constructor(editor) {
+  constructor(editor: Editor) {
     if (editor != null) {
       this.editor = editor;
       this.handler = new KeyHandler(editor.graph);
@@ -48,14 +49,12 @@ class DefaultKeyHandler {
   /**
    * Reference to the enclosing {@link Editor}.
    */
-  // editor: Editor;
-  editor = null;
+  editor: Editor | null = null;
 
   /**
    * Holds the {@link mxKeyHandler} for key event handling.
    */
-  // handler: mxKeyHandler;
-  handler = null;
+  handler: KeyHandler | null = null;
 
   /**
    * Binds the specified keycode to the given action in {@link editor}.  The optional control flag specifies if the control key must be pressed to trigger the action.
@@ -64,27 +63,25 @@ class DefaultKeyHandler {
    * @param action    Name of the action to execute in {@link editor}.
    * @param control   Optional boolean that specifies if control must be pressed.  Default is false.
    */
-  // bindAction(code: number, action: string, control?: boolean): void;
-  bindAction(code, action, control) {
+  bindAction(code: number, action: string, control?: boolean): void {
     const keyHandler = () => {
-      this.editor.execute(action);
+      (<Editor>this.editor).execute(action);
     };
 
     if (control) {
       // Binds the function to control-down keycode
-      this.handler.bindControlKey(code, keyHandler);
+      (<KeyHandler>this.handler).bindControlKey(code, keyHandler);
     } else {
       // Binds the function to the normal keycode
-      this.handler.bindKey(code, keyHandler);
+      (<KeyHandler>this.handler).bindKey(code, keyHandler);
     }
   }
 
   /**
    * Destroys the {@link handler} associated with this object.  This does normally not need to be called, the {@link handler} is destroyed automatically when the window unloads (in IE) by {@link Editor}.
    */
-  // destroy(): void;
-  destroy() {
-    this.handler.destroy();
+  destroy(): void {
+    (<KeyHandler>this.handler).destroy();
     this.handler = null;
   }
 }

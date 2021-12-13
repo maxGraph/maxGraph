@@ -208,42 +208,36 @@ class PrintPreview {
   /**
    * Holds the scale of the print preview.
    */
-  // scale: number;
-  scale = null;
+  scale: number;
 
   /**
    * The border inset around each side of every page in the preview. This is set
    * to 0 if autoOrigin is false.
    * @default 0
    */
-  // border: number;
-  border = 0;
+  border: number = 0;
 
   /**
    * The margin at the top of the page (number).
    * @default 0
    */
-  // marginTop: number;
-  marginTop = 0;
+  marginTop: number = 0;
 
   /**
    * The margin at the bottom of the page (number).
    * @default 0
    */
-  // marginBottom: number;
-  marginBottom = 0;
+  marginBottom: number = 0;
 
   /**
    * Holds the horizontal offset of the output.
    */
-  // x0: number;
-  x0 = 0;
+  x0: number = 0;
 
   /**
    * Holds the vertical offset of the output.
    */
-  // y0: number;
-  y0 = 0;
+  y0: number = 0;
 
   /**
    * Specifies if the origin should be automatically computed based on the top,
@@ -251,74 +245,63 @@ class PrintPreview {
    * to {@link x0} and {@link y0} in {@link open}.
    * @default true
    */
-  // autoOrigin: boolean;
-  autoOrigin = true;
+  autoOrigin: boolean = true;
 
   /**
    * Specifies if overlays should be printed.
    * @default false
    */
-  // printOverlays: boolean;
-  printOverlays = false;
+  printOverlays: boolean = false;
 
   /**
    * Specifies if controls (such as folding icons) should be printed. Default is
    * false.
    */
-  // printControls: boolean;
-  printControls = false;
+  printControls: boolean = false;
 
   /**
    * Specifies if the background image should be printed.
    * @default false
    */
-  // printBackgroundImage: boolean;
-  printBackgroundImage = false;
+  printBackgroundImage: boolean = false;
 
   /**
    * Holds the color value for the page background color.
    * @default '#ffffff'
    */
-  // backgroundColor: string;
-  backgroundColor = '#ffffff';
+  backgroundColor: string = '#ffffff';
 
   /**
    * Holds the color value for the page border.
    */
-  // borderColor: string;
-  borderColor = null;
+  borderColor: string;
 
   /**
    * Holds the title of the preview window.
    */
-  // title: string;
-  title = null;
+  title: string;
 
   /**
    * Boolean that specifies if the page selector should be
    * displayed.
    * @default true
    */
-  // pageSelector: boolean;
-  pageSelector = null;
+  pageSelector: boolean;
 
   /**
    * Reference to the preview window.
    */
-  // wnd: Window;
-  wnd = null;
+  wnd: Window;
 
   /**
    * Assign any window here to redirect the rendering in {@link open}.
    */
-  // targetWindow: Window;
-  targetWindow = null;
+  targetWindow: Window;
 
   /**
    * Holds the actual number of pages in the preview.
    */
-  // pageCount: number;
-  pageCount = 0;
+  pageCount: number = 0;
 
   /**
    * Specifies is clipping should be used to avoid creating too many cell states
@@ -326,14 +309,12 @@ class PrintPreview {
    * used if this is enabled.
    * @default true
    */
-  // clipping: boolean;
-  clipping = true;
+  clipping: boolean = true;
 
   /**
    * Returns {@link wnd}.
    */
-  // getWindow(): Window;
-  getWindow() {
+  getWindow(): Window {
     return this.wnd;
   }
 
@@ -342,8 +323,7 @@ class PrintPreview {
    * page. This implementation returns an X-UA meta tag for IE5 in quirks mode,
    * IE8 in IE8 standards mode and edge in IE9 standards mode.
    */
-  // getDoctype(): string;
-  getDoctype() {
+  getDoctype(): string {
     const dt = '';
     return dt;
   }

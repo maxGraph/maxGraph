@@ -10,6 +10,7 @@ import TerminalChange from '../../view/undoable_changes/TerminalChange';
 import ValueChange from '../../view/undoable_changes/ValueChange';
 import ChildChange from '../../view/undoable_changes/ChildChange';
 import StyleChange from '../../view/undoable_changes/StyleChange';
+import { Graph } from 'src/view/Graph';
 
 /**
  * Provides animation effects.
@@ -38,8 +39,7 @@ class Effects {
    * @param done - Optional function argument that is invoked after the
    * last step of the animation.
    */
-  // static animateChanges(graph: mxGraph, changes: Array<any>, done?: Function): void;
-  static animateChanges(graph, changes, done) {
+  static animateChanges(graph: Graph, changes: any[], done?: Function): void {
     const maxStep = 10;
     let step = 0;
 

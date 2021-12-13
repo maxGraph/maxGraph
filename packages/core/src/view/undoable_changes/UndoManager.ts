@@ -8,6 +8,7 @@
 import InternalEvent from '../event/InternalEvent';
 import EventObject from '../event/EventObject';
 import EventSource from '../event/EventSource';
+import UndoableEdit from './UndoableEdit';
 
 /**
  * @class UndoManager
@@ -74,10 +75,9 @@ import EventSource from '../event/EventSource';
  * property contains the {@link mxUndoableEdit} that was added.
  */
 class UndoManager extends EventSource {
-  constructor(size) {
+  constructor(size: number=100) {
     super();
-
-    this.size = size != null ? size : 100;
+    this.size = size;
     this.clear();
   }
 
@@ -86,34 +86,29 @@ class UndoManager extends EventSource {
    * 100.
    * @default 100
    */
-  // size: number;
-  size = null;
+  size: number = 100;
 
   /**
    * Array that contains the steps of the command history.
    */
-  // history: Array<mxUndoableEdit>;
-  history = null;
+  history: UndoableEdit[] = [];
 
   /**
    * Index of the element to be added next.
    */
-  // indexOfNextAdd: number;
-  indexOfNextAdd = 0;
+  indexOfNextAdd: number = 0;
 
   /**
    * Returns true if the history is empty.
    */
-  // isEmpty(): boolean;
-  isEmpty() {
+  isEmpty(): boolean {
     return this.history.length == 0;
   }
 
   /**
    * Clears the command history.
    */
-  // clear(): void;
-  clear() {
+  clear(): void {
     this.history = [];
     this.indexOfNextAdd = 0;
     this.fireEvent(new EventObject(InternalEvent.CLEAR));
@@ -122,16 +117,14 @@ class UndoManager extends EventSource {
   /**
    * Returns true if an undo is possible.
    */
-  // canUndo(): boolean;
-  canUndo() {
+  canUndo(): boolean {
     return this.indexOfNextAdd > 0;
   }
 
   /**
    * Undoes the last change.
    */
-  // undo(): void;
-  undo() {
+  undo(): void {
     while (this.indexOfNextAdd > 0) {
       const edit = this.history[--this.indexOfNextAdd];
       edit.undo();
@@ -146,16 +139,14 @@ class UndoManager extends EventSource {
   /**
    * Returns true if a redo is possible.
    */
-  // canRedo(): boolean;
-  canRedo() {
+  canRedo(): boolean {
     return this.indexOfNextAdd < this.history.length;
   }
 
   /**
    * Redoes the last change.
    */
-  // redo(): void;
-  redo() {
+  redo(): void {
     const n = this.history.length;
 
     while (this.indexOfNextAdd < n) {
@@ -172,8 +163,7 @@ class UndoManager extends EventSource {
   /**
    * Method to be called to add new undoable edits to the <history>.
    */
-  // undoableEditHappened(undoableEdit: mxUndoableEdit): void;
-  undoableEditHappened(undoableEdit) {
+  undoableEditHappened(undoableEdit: UndoableEdit): void {
     this.trim();
 
     if (this.size > 0 && this.size == this.history.length) {
@@ -189,8 +179,7 @@ class UndoManager extends EventSource {
    * Removes all pending steps after <indexOfNextAdd> from the history,
    * invoking die on each edit. This is called from <undoableEditHappened>.
    */
-  // trim(): void;
-  trim() {
+  trim(): void {
     if (this.history.length > this.indexOfNextAdd) {
       const edits = this.history.splice(
         this.indexOfNextAdd,

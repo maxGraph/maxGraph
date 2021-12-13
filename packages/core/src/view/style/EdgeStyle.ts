@@ -849,7 +849,7 @@ class EdgeStyle {
     [[2081, 2562], [1057, 2114, 2568], [2184, 2562], null],
   ];
 
-  static vertexSeperations = [];
+  static vertexSeperations: any = [];
 
   static limits = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -995,7 +995,7 @@ class EdgeStyle {
   static OrthConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
     const { graph } = state.view;
 
-    const pts = EdgeStyle.scalePointArray(state.absolutePoints, state.view.scale);
+    const pts = EdgeStyle.scalePointArray(<Point[]>state.absolutePoints, state.view.scale);
     let source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
     let target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
 

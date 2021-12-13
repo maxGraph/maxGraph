@@ -274,7 +274,7 @@ class KeyHandler {
    * evt - Key event that represents the keystroke.
    */
   isGraphEvent(evt: KeyboardEvent) {
-    const source = <EventTarget>getSource(evt);
+    const source = <Element>getSource(evt);
 
     // Accepts events from the target object or
     // in-place editing inside graph

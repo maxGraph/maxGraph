@@ -4,8 +4,11 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
+import Cell from '../view/cell/Cell';
+import PopupMenu from '../util/gui/PopupMenu';
 import { getTextContent } from '../util/domUtils';
 import Resources from '../util/Resources';
+import Editor from './Editor';
 
 /**
  * Creates popupmenus for mouse events.  This object holds an XML node which is a description of the popup menu to be created.  In {@link createMenu}, the configuration is applied to the context and the resulting menu items are added to the menu dynamically.  See {@link createMenu} for a description of the configuration format.
@@ -15,7 +18,7 @@ import Resources from '../util/Resources';
  * This class uses the {@link DefaultPopupMenuCodec} to read configuration data into an existing instance, however, the actual parsing is done by this class during program execution, so the format is described below.
  */
 class DefaultPopupMenu {
-  constructor(config) {
+  constructor(config: Element) {
     this.config = config;
   }
 
@@ -24,14 +27,12 @@ class DefaultPopupMenu {
    *
    * @default null
    */
-  // imageBasePath: string;
-  imageBasePath = null;
+  imageBasePath: string | null = null;
 
   /**
    * XML node used as the description of new menu items.  This node is used in {@link createMenu} to dynamically create the menu items if their respective conditions evaluate to true for the given arguments.
    */
-  // config: Element;
-  config = null;
+  config: Element;
 
   /**
    * This function is called from {@link Editor} to add items to the
@@ -132,7 +133,7 @@ class DefaultPopupMenu {
    * @param evt - Optional mouse event which triggered the menu.
    */
   // createMenu(editor: Editor, menu: mxPopupMenu, cell?: mxCell, evt?: MouseEvent): void;
-  createMenu(editor, menu, cell, evt) {
+  createMenu(editor: Editor, menu: PopupMenu, cell?: Cell, evt?: MouseEvent) {
     if (this.config != null) {
       const conditions = this.createConditions(editor, cell, evt);
       const item = this.config.firstChild;
@@ -156,7 +157,7 @@ class DefaultPopupMenu {
    * item - XML node that represents the current menu item.
    * parent - DOM node that represents the parent menu item.
    */
-  addItems(editor, menu, cell, evt, conditions, item, parent) {
+  addItems(editor: Editor, menu: PopupMenu, cell: Cell, evt: MouseEvent, conditions, item: Element, parent: Element) {
     let addSeparator = false;
 
     while (item != null) {
@@ -234,16 +235,16 @@ class DefaultPopupMenu {
    * Default is true.
    */
   addAction(
-    menu,
-    editor,
-    lab,
-    icon,
+    menu: PopupMenu,
+    editor: Editor,
+    lab?: string,
+    icon?: string,
     funct,
-    action,
-    cell,
-    parent,
-    iconCls,
-    enabled
+    action?: string,
+    cell?: Cell,
+    parent: Element,
+    iconCls?: string,
+    enabled: boolean=true
   ) {
     const clickHandler = evt => {
       if (typeof funct === 'function') {

@@ -34,7 +34,7 @@ import {
 import { Graph } from '../view/Graph';
 import SwimlaneManager from '../view/layout/SwimlaneManager';
 import LayoutManager from '../view/layout/LayoutManager';
-import RubberBand from '../view/handlers/RubberBand';
+import RubberBand from '../view/handler/RubberBand';
 import InternalEvent from '../view/event/InternalEvent';
 import RootChange from '../view/undoable_changes/RootChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
