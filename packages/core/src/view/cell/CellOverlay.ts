@@ -140,7 +140,7 @@ class CellOverlay extends EventSource {
   /**
    * Function: getBounds
    *
-   * Returns the bounds of the overlay for the given <mxCellState> as an
+   * Returns the bounds of the overlay for the given <CellState> as an
    * <mxRectangle>. This should be overridden when using multiple overlays
    * per cell so that the overlays do not overlap.
    *
@@ -167,7 +167,7 @@ class CellOverlay extends EventSource {
    *
    * Parameters:
    *
-   * state - <mxCellState> that represents the current state of the
+   * state - <CellState> that represents the current state of the
    * associated cell.
    */
   getBounds(state: CellState): Rectangle {

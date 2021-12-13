@@ -12,6 +12,9 @@ import { intersects } from '../../util/utils';
 import { DIALECT_SVG } from '../../util/constants';
 import { write } from '../../util/domUtils';
 import { Graph } from '../Graph';
+import CellState from '../cell/CellState';
+import CellArray from '../cell/CellArray';
+import Cell from '../cell/Cell';
 
 /**
  * @class PrintPreview
@@ -169,15 +172,15 @@ import { Graph } from '../Graph';
  */
 class PrintPreview {
   constructor(
-    graph,
-    scale,
-    pageFormat,
-    border,
-    x0,
-    y0,
-    borderColor,
-    title,
-    pageSelector
+    graph: Graph,
+    scale: number | null,
+    pageFormat: string | null,
+    border: number | null,
+    x0: number | null,
+    y0: number | null,
+    borderColor: string,
+    title: string,
+    pageSelector: boolean | null
   ) {
     this.graph = graph;
     this.scale = scale != null ? scale : 1 / graph.pageScale;
@@ -723,7 +726,7 @@ class PrintPreview {
    * @param pageNumber Integer representing the page number.
    */
   // renderPage(w: number, h: number, dx?: number, dy?: number, content?: Function, pageNumber?: number): HTMLDivElement;
-  renderPage(w, h, dx, dy, content, pageNumber) {
+  renderPage(w: number, h: number, dx: number, dy: number, content: (div: HTMLDivElement) => void, pageNumber?: number): HTMLDivElement{
     const doc = this.wnd.document;
     let div = document.createElement('div');
     let arg = null;
@@ -825,7 +828,7 @@ class PrintPreview {
    * div - Div that contains the output.
    * clip - Contains the clipping rectangle as an <mxRectangle>.
    */
-  addGraphFragment(dx, dy, scale, pageNumber, div, clip) {
+  addGraphFragment(dx: number, dy: number, scale: number, pageNumber: number, div: HTMLDivElement, clip: Rectangle) {
     const view = this.graph.getView();
     const previousContainer = this.graph.container;
     this.graph.container = div;
@@ -915,8 +918,8 @@ class PrintPreview {
     try {
       // Creates the temporary cell states in the view and
       // draws them onto the temporary DOM nodes in the view
-      const cells = [this.getRoot()];
-      temp = new TemporaryCellStates(view, scale, cells, null, (state) => {
+      const cells = new CellArray(<Cell>this.getRoot());
+      temp = new TemporaryCellStates(view, scale, cells, null, (state: CellState) => {
         return this.getLinkForCellState(state);
       });
     } finally {
@@ -974,16 +977,14 @@ class PrintPreview {
   /**
    * Returns the link for the given cell state. This returns null.
    */
-  // getLinkForCellState(state: mxCellState): string;
-  getLinkForCellState(state) {
+  getLinkForCellState(state: CellState): string {
     return this.graph.getLinkForCell(state.cell);
   }
 
   /**
    * Inserts the background image into the given div.
    */
-  // insertBackgroundImage(div: HTMLDivElement, dx: number, dy: number): void;
-  insertBackgroundImage(div, dx, dy) {
+  insertBackgroundImage(div: HTMLDivElement, dx: number, dy: number): void {
     const bg = this.graph.backgroundImage;
 
     if (bg != null) {
@@ -1002,16 +1003,14 @@ class PrintPreview {
   /**
    * Returns the pages to be added before the print output. This returns null.
    */
-  // getCoverPages(): any;
-  getCoverPages() {
+  getCoverPages(): any {
     return null;
   }
 
   /**
    * Returns the pages to be added after the print output. This returns null.
    */
-  // getAppendices(): any;
-  getAppendices() {
+  getAppendices(): any {
     return null;
   }
 
@@ -1022,8 +1021,7 @@ class PrintPreview {
    *
    * @param css Optional CSS string to be used in the head section.
    */
-  // print(css?: string): void;
-  print(css) {
+  print(css?: string): void {
     const wnd = this.open(css);
 
     if (wnd != null) {
@@ -1035,7 +1033,7 @@ class PrintPreview {
    * Closes the print preview window.
    */
   // close(): void;
-  close() {
+  close(): void {
     if (this.wnd != null) {
       this.wnd.close();
       this.wnd = null;

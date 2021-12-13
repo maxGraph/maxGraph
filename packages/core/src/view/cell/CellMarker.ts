@@ -46,7 +46,7 @@ import Cell from './Cell';
  * Event: mxEvent.MARK
  *
  * Fires after a cell has been marked or unmarked. The <code>state</code>
- * property contains the marked <mxCellState> or null if no state is marked.
+ * property contains the marked <CellState> or null if no state is marked.
  *
  * Constructor: mxCellMarker
  *
@@ -119,14 +119,14 @@ class CellMarker extends EventSource {
   /**
    * Variable: validState
    *
-   * Holds the marked <mxCellState> if it is valid.
+   * Holds the marked <CellState> if it is valid.
    */
   validState: CellState | null = null;
 
   /**
    * Variable: markedState
    *
-   * Holds the marked <mxCellState>.
+   * Holds the marked <CellState>.
    */
   markedState: CellState | null = null;
 
@@ -335,7 +335,7 @@ class CellMarker extends EventSource {
   /**
    * Function: isValidState
    *
-   * Returns true if the given <mxCellState> is a valid state. If this
+   * Returns true if the given <CellState> is a valid state. If this
    * returns true, then the state is stored in <validState>. The return value
    * of this method is used as the argument for <getMarkerColor>.
    */
@@ -347,7 +347,7 @@ class CellMarker extends EventSource {
    * Function: getMarkerColor
    *
    * Returns the valid- or invalidColor depending on the value of isValid.
-   * The given <mxCellState> is ignored by this implementation.
+   * The given <CellState> is ignored by this implementation.
    */
   getMarkerColor(evt: Event, state: CellState | null, isValid: boolean) {
     return isValid ? this.validColor : this.invalidColor;
@@ -357,7 +357,7 @@ class CellMarker extends EventSource {
    * Function: getState
    *
    * Uses <getCell>, <getStateToMark> and <intersects> to return the
-   * <mxCellState> for the given <mxMouseEvent>.
+   * <CellState> for the given <mxMouseEvent>.
    */
   getState(me: InternalMouseEvent) {
     const view = this.graph.getView();
@@ -383,7 +383,7 @@ class CellMarker extends EventSource {
   /**
    * Function: getStateToMark
    *
-   * Returns the <mxCellState> to be marked for the given <mxCellState> under
+   * Returns the <CellState> to be marked for the given <CellState> under
    * the mouse. This returns the given state.
    */
   getStateToMark(state: CellState | null) {

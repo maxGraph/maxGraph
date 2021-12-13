@@ -12,8 +12,8 @@ import {
   isPopupTrigger,
 } from '../../util/eventUtils';
 import { isAncestorNode } from '../../util/domUtils';
-import CellState from '../cell/datatypes/CellState';
-import Shape from '../geometry/shape/Shape';
+import CellState from '../cell/CellState';
+import Shape from '../geometry/Shape';
 
 /**
  * Class: mxMouseEvent
@@ -46,7 +46,7 @@ import Shape from '../geometry/shape/Shape';
  * Parameters:
  *
  * evt - Native mouse event.
- * state - Optional <mxCellState> under the mouse.
+ * state - Optional <CellState> under the mouse.
  *
  */
 class InternalMouseEvent {
@@ -94,14 +94,14 @@ class InternalMouseEvent {
   /**
    * Variable: state
    *
-   * Holds the optional <mxCellState> associated with this event.
+   * Holds the optional <CellState> associated with this event.
    */
   state: CellState | null;
 
   /**
    * Variable: sourceState
    *
-   * Holds the <mxCellState> that was passed to the constructor. This can be
+   * Holds the <CellState> that was passed to the constructor. This can be
    * different from <state> depending on the result of <mxGraph.getEventState>.
    */
   sourceState: CellState | null;

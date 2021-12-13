@@ -7,7 +7,7 @@
 import InternalMouseEvent from './InternalMouseEvent';
 import Client from '../../Client';
 import { isConsumed, isMouseEvent } from '../../util/eventUtils';
-import CellState from '../cell/datatypes/CellState';
+import CellState from '../cell/CellState';
 import {
   EventCache,
   GestureEvent,
@@ -223,8 +223,8 @@ class InternalEvent {
    *
    * Redirects the mouse events from the given DOM node to the graph dispatch
    * loop using the event and given state as event arguments. State can
-   * either be an instance of <mxCellState> or a function that returns an
-   * <mxCellState>. The down, move, up and dblClick arguments are optional
+   * either be an instance of <CellState> or a function that returns an
+   * <CellState>. The down, move, up and dblClick arguments are optional
    * functions that take the trigger event as arguments and replace the
    * default behaviour.
    */

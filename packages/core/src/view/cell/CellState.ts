@@ -5,20 +5,20 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Point from '../../geometry/Point';
-import Rectangle from '../../geometry/Rectangle';
+import Point from '../geometry/Point';
+import Rectangle from '../geometry/Rectangle';
 import Cell from './Cell';
 import GraphView from '../../view/GraphView';
-import Shape from '../../geometry/shape/Shape';
-import TextShape from '../../geometry/shape/node/TextShape';
-import Dictionary from '../../../util/Dictionary';
-import { ALIGN_MIDDLE, NONE } from '../../../util/Constants';
-import { CellStateStyles } from '../../../types';
-import RectangleShape from '../../geometry/shape/node/RectangleShape';
-import CellOverlay from '../CellOverlay';
+import Shape from '../geometry/Shape';
+import TextShape from '../geometry/node/TextShape';
+import Dictionary from '../../util/Dictionary';
+import { ALIGN_MIDDLE, NONE } from '../../util/constants';
+import { CellStateStyles } from '../../types';
+import RectangleShape from '../geometry/node/RectangleShape';
+import CellOverlay from './CellOverlay';
 
 /**
- * Class: mxCellState
+ * Class: CellState
  *
  * Represents the current state of a cell in a given <mxGraphView>.
  *
@@ -31,7 +31,7 @@ import CellOverlay from '../CellOverlay';
  * let bbox = (state.text != null) ? state.text.boundingBox : null;
  * (end)
  *
- * Constructor: mxCellState
+ * Constructor: CellState
  *
  * Constructs a new object that represents the current state of the given
  * cell in the specified view.
@@ -106,10 +106,10 @@ class CellState extends Rectangle {
   /**
    * Variable: absolutePoints
    *
-   * Holds an array of <mxPoints> that represent the absolute points of an
+   * Holds an array of <Point> that represent the absolute points of an
    * edge.
    */
-  absolutePoints: (Point | null)[] = [];
+  absolutePoints: (null | Point)[] = [];
 
   /**
    * Variable: absoluteOffset
@@ -315,7 +315,7 @@ class CellState extends Rectangle {
    *
    * Parameters:
    *
-   * terminalState - <mxCellState> that represents the terminal.
+   * terminalState - <CellState> that represents the terminal.
    * source - Boolean that specifies if the source or target state should be set.
    */
   setVisibleTerminalState(terminalState: CellState | null, source = false) {
@@ -444,7 +444,7 @@ class CellState extends Rectangle {
   /**
    * Returns true if the given cell state is a loop.
    *
-   * @param state {@link mxCellState} that represents a potential loop.
+   * @param state {@link CellState} that represents a potential loop.
    */
   isLoop(state: CellState) {
     const src = this.getVisibleTerminalState(true);
@@ -462,7 +462,7 @@ class CellState extends Rectangle {
    * implementation returns the value stored under
    * {@link 'verticalAlign'} in the cell style.
    *
-   * @param state {@link mxCellState} whose vertical alignment should be
+   * @param state {@link CellState} whose vertical alignment should be
    * returned.
    */
   getVerticalAlign() {
@@ -472,7 +472,7 @@ class CellState extends Rectangle {
   /**
    * Returns true if the given state has no stroke- or fillcolor and no image.
    *
-   * @param state {@link mxCellState} to check.
+   * @param state {@link CellState} to check.
    */
   isTransparentState() {
     let result = false;
@@ -490,7 +490,7 @@ class CellState extends Rectangle {
    * returns the value stored under {@link 'image'} in the cell
    * style.
    *
-   * @param state {@link mxCellState} whose image URL should be returned.
+   * @param state {@link CellState} whose image URL should be returned.
    */
   getImageSrc() {
     return this.style.image;
@@ -501,7 +501,7 @@ class CellState extends Rectangle {
    * implementation returns the value stored under
    * {@link mxConstants.STYLE_INDICATOR_COLOR} in the cell style.
    *
-   * @param state {@link mxCellState} whose indicator color should be
+   * @param state {@link CellState} whose indicator color should be
    * returned.
    */
   getIndicatorColor() {
@@ -513,7 +513,7 @@ class CellState extends Rectangle {
    * implementation returns the value stored under
    * {@link mxConstants.STYLE_INDICATOR_GRADIENTCOLOR} in the cell style.
    *
-   * @param state {@link mxCellState} whose indicator gradient color should be
+   * @param state {@link CellState} whose indicator gradient color should be
    * returned.
    */
   getIndicatorGradientColor() {
@@ -525,7 +525,7 @@ class CellState extends Rectangle {
    * implementation returns the value stored under
    * {@link mxConstants.STYLE_INDICATOR_SHAPE} in the cell style.
    *
-   * @param state {@link mxCellState} whose indicator shape should be returned.
+   * @param state {@link CellState} whose indicator shape should be returned.
    */
   getIndicatorShape() {
     return this.style.indicatorShape;
@@ -536,7 +536,7 @@ class CellState extends Rectangle {
    * implementation returns the value stored under
    * {@link mxConstants.STYLE_INDICATOR_IMAGE} in the cell style.
    *
-   * @param state {@link mxCellState} whose indicator image should be returned.
+   * @param state {@link CellState} whose indicator image should be returned.
    */
   getIndicatorImageSrc() {
     return this.style.indicatorImage;

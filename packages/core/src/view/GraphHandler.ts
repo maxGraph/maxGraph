@@ -14,7 +14,7 @@ import {
   isNumeric,
   toRadians,
 } from '../util/utils';
-import RectangleShape from './geometry/shape/node/RectangleShape';
+import RectangleShape from './geometry/node/RectangleShape';
 import mxGuide from '../util/Guide';
 import Point from './geometry/Point';
 import {
@@ -28,22 +28,22 @@ import {
   VALID_COLOR,
 } from '../util/constants';
 import Dictionary from '../util/Dictionary';
-import CellHighlight from '../selection/CellHighlight';
+import CellHighlight from './cell/CellHighlight';
 import Rectangle from './geometry/Rectangle';
 import { getClientX, getClientY, isAltDown, isMultiTouchEvent } from '../util/eventUtils';
 import { Graph } from './Graph';
 import Guide from '../util/Guide';
-import Shape from './geometry/shape/Shape';
+import Shape from './geometry/Shape';
 import InternalMouseEvent from './event/InternalMouseEvent';
-import SelectionCellsHandler from './handlers/SelectionCellsHandler';
+import SelectionCellsHandler from './handler/SelectionCellsHandler';
 import Cell from './cell/Cell';
-import PopupMenuHandler from './handlers/PopupMenuHandler';
+import PopupMenuHandler from './handler/PopupMenuHandler';
 import EventSource from './event/EventSource';
-import CellArray from '../cell/datatypes/CellArray';
-import CellState from '../cell/datatypes/CellState';
+import CellArray from './cell/CellArray';
+import CellState from './cell/CellState';
 import EventObject from './event/EventObject';
-import ConnectionHandler from './handlers/ConnectionHandler';
-import CellEditor from './handlers/CellEditor';
+import ConnectionHandler from './handler/ConnectionHandler';
+import CellEditor from './handler/CellEditor';
 
 import type { ColorValue, GraphPlugin } from '../types';
 

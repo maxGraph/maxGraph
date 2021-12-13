@@ -13,7 +13,7 @@ import Dictionary from '../../util/Dictionary';
 import GraphView from '../GraphView';
 import Cell from './Cell';
 import CellState from './CellState';
-import Shape from '../geometry/shape/Shape';
+import Shape from '../geometry/Shape';
 import CellArray from './CellArray';
 
 class TemporaryCellStates {

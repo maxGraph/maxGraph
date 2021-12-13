@@ -7,8 +7,8 @@
 
 import Point from './Point';
 import Rectangle from './Rectangle';
-import { equalPoints, getRotatedPoint, toRadians } from '../../util/Utils';
-import { clone } from '../../util/CloneUtils';
+import { equalPoints, getRotatedPoint, toRadians } from '../../util/utils';
+import { clone } from '../../util/cloneUtils';
 
 /**
  * @class Geometry
@@ -106,7 +106,7 @@ class Geometry extends Rectangle {
   targetPoint: Point | null = null;
 
   /**
-   * Array of {@link mxPoints} which specifies the control points along the edge.
+   * Array of {@link Point} which specifies the control points along the edge.
    * These points are the intermediate points on the edge, for the endpoints
    * use {@link targetPoint} and {@link sourcePoint} or set the terminals of the edge to
    * a non-null value. Default is null.

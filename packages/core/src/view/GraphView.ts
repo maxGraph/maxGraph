@@ -10,7 +10,7 @@ import Rectangle from './geometry/Rectangle';
 import Dictionary from '../util/Dictionary';
 import EventSource from './event/EventSource';
 import EventObject from './event/EventObject';
-import RectangleShape from './geometry/shape/node/RectangleShape';
+import RectangleShape from './geometry/node/RectangleShape';
 import {
   ALIGN_BOTTOM,
   ALIGN_CENTER,
@@ -34,23 +34,23 @@ import MaxLog from '../util/gui/MaxLog';
 import Resources from '../util/Resources';
 import CellState from './cell/CellState';
 import UndoableEdit from './undoable_changes/UndoableEdit';
-import ImageShape from './geometry/shape/node/ImageShape';
+import ImageShape from './geometry/node/ImageShape';
 import InternalMouseEvent from './event/InternalMouseEvent';
 import Cell from './cell/Cell';
 import Image from './image/ImageBox';
 import CurrentRootChange from './undoable_changes/CurrentRootChange';
 import Model from './other/Model';
-import Shape from './geometry/shape/Shape';
+import Shape from './geometry/Shape';
 import Geometry from './geometry/Geometry';
-import ConnectionConstraint from './ConnectionConstraint';
-import PopupMenuHandler from './handlers/PopupMenuHandler';
+import ConnectionConstraint from './other/ConnectionConstraint';
+import PopupMenuHandler from './handler/PopupMenuHandler';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/eventUtils';
 import { clone } from '../util/cloneUtils';
 import CellArray from './cell/CellArray';
 
 import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
-import TooltipHandler from './handlers/TooltipHandler';
+import TooltipHandler from './handler/TooltipHandler';
 import { MouseEventListener } from '../types';
 
 /**
@@ -572,7 +572,7 @@ class GraphView extends EventSource {
    * Returns the bounding box of the shape and the label for the given
    * {@link CellState} and its children if recurse is true.
    *
-   * @param state {@link mxCellState} whose bounding box should be returned.
+   * @param state {@link CellState} whose bounding box should be returned.
    * @param recurse Optional boolean indicating if the children should be included.
    * Default is true.
    */
@@ -869,7 +869,7 @@ class GraphView extends EventSource {
   /**
    * Updates the given {@link CellState}.
    *
-   * @param state {@link mxCellState} to be updated.
+   * @param state {@link CellState} to be updated.
    */
   updateCellState(state: CellState) {
     const absoluteOffset = state.absoluteOffset;
@@ -1009,7 +1009,7 @@ class GraphView extends EventSource {
    * Updates the absoluteOffset of the given vertex cell state. This takes
    * into account the label position styles.
    *
-   * @param state {@link mxCellState} whose absolute offset should be updated.
+   * @param state {@link CellState} whose absolute offset should be updated.
    */
   updateVertexLabelOffset(state: CellState): void {
     const h = state.style.labelPosition ?? ALIGN_CENTER;
@@ -1074,7 +1074,7 @@ class GraphView extends EventSource {
    * Invoked when a state has been processed in {@link validatePoints}. This is used
    * to update the order of the DOM nodes of the shape.
    *
-   * @param state {@link mxCellState} that represents the cell state.
+   * @param state {@link CellState} that represents the cell state.
    */
   stateValidated(state: CellState): void {
     const graph = this.graph;
@@ -1100,9 +1100,9 @@ class GraphView extends EventSource {
    * Sets the initial absolute terminal points in the given state before the edge
    * style is computed.
    *
-   * @param edge {@link mxCellState} whose initial terminal points should be updated.
-   * @param source {@link mxCellState} which represents the source terminal.
-   * @param target {@link mxCellState} which represents the target terminal.
+   * @param edge {@link CellState} whose initial terminal points should be updated.
+   * @param source {@link CellState} which represents the source terminal.
+   * @param target {@link CellState} which represents the target terminal.
    */
   updateFixedTerminalPoints(
     edge: CellState,
@@ -1130,8 +1130,8 @@ class GraphView extends EventSource {
    *
    * Parameters:
    *
-   * edge - <mxCellState> whose terminal point should be updated.
-   * terminal - <mxCellState> which represents the actual terminal.
+   * edge - <CellState> whose terminal point should be updated.
+   * terminal - <CellState> which represents the actual terminal.
    * source - Boolean that specifies if the terminal is the source.
    * constraint - <mxConnectionConstraint> that specifies the connection.
    */
@@ -1154,8 +1154,8 @@ class GraphView extends EventSource {
    *
    * Parameters:
    *
-   * edge - <mxCellState> whose terminal point should be returned.
-   * terminal - <mxCellState> which represents the actual terminal.
+   * edge - <CellState> whose terminal point should be returned.
+   * terminal - <CellState> which represents the actual terminal.
    * source - Boolean that specifies if the terminal is the source.
    * constraint - <mxConnectionConstraint> that specifies the connection.
    */
@@ -1191,7 +1191,7 @@ class GraphView extends EventSource {
    * if it has a fixed aspect and returns the previous bounds as an {@link Rectangle} if
    * the bounds have been modified or null otherwise.
    *
-   * @param edge {@link mxCellState} whose bounds should be updated.
+   * @param edge {@link CellState} whose bounds should be updated.
    */
   updateBoundsFromStencil(state: CellState | null) {
     let previous = null;
@@ -1222,12 +1222,12 @@ class GraphView extends EventSource {
 
   /**
    * Updates the absolute points in the given state using the specified array
-   * of {@link mxPoints} as the relative points.
+   * of {@link Point} as the relative points.
    *
-   * @param edge {@link mxCellState} whose absolute points should be updated.
-   * @param points Array of {@link mxPoints} that constitute the relative points.
-   * @param source {@link mxCellState} that represents the source terminal.
-   * @param target {@link mxCellState} that represents the target terminal.
+   * @param edge {@link CellState} whose absolute points should be updated.
+   * @param points Array of {@link Point} that constitute the relative points.
+   * @param source {@link CellState} that represents the source terminal.
+   * @param target {@link CellState} that represents the target terminal.
    */
   updatePoints(
     edge: CellState,
@@ -1354,9 +1354,9 @@ class GraphView extends EventSource {
    * Updates the terminal points in the given state after the edge style was
    * computed for the edge.
    *
-   * @param state {@link mxCellState} whose terminal points should be updated.
-   * @param source {@link mxCellState} that represents the source terminal.
-   * @param target {@link mxCellState} that represents the target terminal.
+   * @param state {@link CellState} whose terminal points should be updated.
+   * @param source {@link CellState} that represents the source terminal.
+   * @param target {@link CellState} that represents the target terminal.
    */
   updateFloatingTerminalPoints(
     state: CellState,
@@ -1380,9 +1380,9 @@ class GraphView extends EventSource {
    * Updates the absolute terminal point in the given state for the given
    * start and end state, where start is the source if source is true.
    *
-   * @param edge {@link mxCellState} whose terminal point should be updated.
-   * @param start {@link mxCellState} for the terminal on "this" side of the edge.
-   * @param end {@link mxCellState} for the terminal on the other side of the edge.
+   * @param edge {@link CellState} whose terminal point should be updated.
+   * @param start {@link CellState} for the terminal on "this" side of the edge.
+   * @param end {@link CellState} for the terminal on the other side of the edge.
    * @param source Boolean indicating if start is the source terminal state.
    */
   updateFloatingTerminalPoint(
@@ -1401,9 +1401,9 @@ class GraphView extends EventSource {
    * Returns the floating terminal point for the given edge, start and end
    * state, where start is the source if source is true.
    *
-   * @param edge {@link mxCellState} whose terminal point should be returned.
-   * @param start {@link mxCellState} for the terminal on "this" side of the edge.
-   * @param end {@link mxCellState} for the terminal on the other side of the edge.
+   * @param edge {@link CellState} whose terminal point should be returned.
+   * @param start {@link CellState} for the terminal on "this" side of the edge.
+   * @param end {@link CellState} for the terminal on the other side of the edge.
    * @param source Boolean indicating if start is the source terminal state.
    */
   getFloatingTerminalPoint(
@@ -1444,8 +1444,8 @@ class GraphView extends EventSource {
    * Returns an {@link CellState} that represents the source or target terminal or
    * port for the given edge.
    *
-   * @param state {@link mxCellState} that represents the state of the edge.
-   * @param terminal {@link mxCellState} that represents the terminal.
+   * @param state {@link CellState} that represents the state of the edge.
+   * @param terminal {@link CellState} that represents the terminal.
    * @param source Boolean indicating if the given terminal is the source terminal.
    */
   getTerminalPort(state: CellState, terminal: CellState, source: boolean = false) {
@@ -1472,7 +1472,7 @@ class GraphView extends EventSource {
    * Returns an {@link Point} that defines the location of the intersection point between
    * the perimeter and the line between the center of the shape and the given point.
    *
-   * @param terminal {@link mxCellState} for the source or target terminal.
+   * @param terminal {@link CellState} for the source or target terminal.
    * @param next {@link mxPoint} that lies outside of the given terminal.
    * @param orthogonal Boolean that specifies if the orthogonal projection onto
    * the perimeter should be returned. If this is false then the intersection
@@ -1586,7 +1586,7 @@ class GraphView extends EventSource {
    * };
    * ```
    *
-   * @param {CellState} terminal mxCellState that represents the terminal.
+   * @param {CellState} terminal CellState that represents the terminal.
    * @param {number} border Number that adds a border between the shape and the perimeter.
    */
   getPerimeterBounds(
@@ -1625,8 +1625,8 @@ class GraphView extends EventSource {
    * Returns the nearest point in the list of absolute points or the center
    * of the opposite terminal.
    *
-   * @param edge {@link mxCellState} that represents the edge.
-   * @param opposite {@link mxCellState} that represents the opposite terminal.
+   * @param edge {@link CellState} that represents the edge.
+   * @param opposite {@link CellState} that represents the opposite terminal.
    * @param source Boolean indicating if the next point for the source or target
    * should be returned.
    */
@@ -1687,7 +1687,7 @@ class GraphView extends EventSource {
    * Also updates {@link CellState.terminalDistance}, {@link CellState.length} and
    * {@link CellState.segments}.
    *
-   * @param state {@link mxCellState} whose bounds should be updated.
+   * @param state {@link CellState} whose bounds should be updated.
    */
   updateEdgeBounds(state: CellState) {
     const points = <(Point | null)[]>state.absolutePoints;
@@ -1749,7 +1749,7 @@ class GraphView extends EventSource {
    * {@link Geometry} as an {@link Point}. The edge is represented by the given
    * {@link CellState}.
    *
-   * @param state {@link mxCellState} that represents the state of the parent edge.
+   * @param state {@link CellState} that represents the state of the parent edge.
    * @param geometry {@link mxGeometry} that represents the relative location.
    */
   getPoint(state: CellState, geometry: Geometry | null = null): Point {
@@ -1812,7 +1812,7 @@ class GraphView extends EventSource {
    * Gets the relative point that describes the given, absolute label
    * position for the given edge state.
    *
-   * @param state {@link mxCellState} that represents the state of the parent edge.
+   * @param state {@link CellState} that represents the state of the parent edge.
    * @param x Specifies the x-coordinate of the absolute label location.
    * @param y Specifies the y-coordinate of the absolute label location.
    */
@@ -1911,7 +1911,7 @@ class GraphView extends EventSource {
    * relative distance between the center along the line and the absolute
    * orthogonal distance if the geometry is relative.
    *
-   * @param state {@link mxCellState} whose absolute offset should be updated.
+   * @param state {@link CellState} whose absolute offset should be updated.
    */
   updateEdgeLabelOffset(state: CellState) {
     const points = state.absolutePoints;

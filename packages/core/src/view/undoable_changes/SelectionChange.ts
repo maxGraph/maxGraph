@@ -1,7 +1,7 @@
 import EventObject from '../event/EventObject';
 import Resources from '../../util/Resources';
 import InternalEvent from '../event/InternalEvent';
-import CellArray from '../cell/datatypes/CellArray';
+import CellArray from '../cell/CellArray';
 
 import type { UndoableChange } from '../../types';
 import type { Graph } from '../Graph';

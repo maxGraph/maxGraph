@@ -32,14 +32,14 @@ import {
 } from './constants';
 import Point from '../view/geometry/Point';
 import Dictionary from './Dictionary';
-import CellPath from '../view/cell/datatypes/CellPath';
+import CellPath from '../view/cell/CellPath';
 import Rectangle from '../view/geometry/Rectangle';
 import { getFunctionName } from './stringUtils';
 import { getOuterHtml } from './domUtils';
-import CellState from '../view/cell/datatypes/CellState';
+import CellState from '../view/cell/CellState';
 import Cell from '../view/cell/Cell';
 import Model from '../view/other/Model';
-import CellArray from '../view/cell/datatypes/CellArray';
+import CellArray from '../view/cell/CellArray';
 import { Graph } from 'src/view/Graph';
 
 import type { CellStateStyles, Properties, StyleValue } from '../types';
@@ -399,12 +399,12 @@ export const getColor = (array: any, key: string, defaultValue: any) => {
 /**
  * Function: equalPoints
  *
- * Compares all mxPoints in the given lists.
+ * Compares all Point in the given lists.
  *
  * Parameters:
  *
- * a - Array of <mxPoints> to be compared.
- * b - Array of <mxPoints> to be compared.
+ * a - Array of <Point> to be compared.
+ * b - Array of <Point> to be compared.
  */
 export const equalPoints = (a: (Point | null)[] | null, b: (Point | null)[] | null) => {
   if ((!a && b) || (a && !b) || (a && b && a.length != b.length)) {
@@ -500,7 +500,7 @@ export const toString = (obj: Properties) => {
       } else {
         output += `${i} = ${obj[i]}\n`;
       }
-    } catch (e) {
+    } catch (e: any) {
       output += `${i}=${e.message}`;
     }
   }
@@ -710,7 +710,7 @@ export const getRotatedPoint = (pt: Point, cos: number, sin: number, c = new Poi
  * Parameters:
  *
  * terminal - <mxCelState> that represents the terminal.
- * edge - <mxCellState> that represents the edge.
+ * edge - <CellState> that represents the edge.
  * source - Boolean that specifies if the terminal is the source terminal.
  * defaultValue - Default value to be returned.
  */
@@ -1114,7 +1114,7 @@ export const intersects = (a: Rectangle, b: Rectangle) => {
  *
  * Parameters:
  *
- * state - <mxCellState>
+ * state - <CellState>
  * x - X-coordinate.
  * y - Y-coordinate.
  * hotspot - Optional size of the hostpot.

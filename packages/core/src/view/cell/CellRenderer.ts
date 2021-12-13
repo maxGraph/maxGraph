@@ -3,23 +3,23 @@
  * Copyright (c) 2006-2017, Gaudenz Alder
  */
 
-import RectangleShape from '../geometry/shape/node/RectangleShape';
-import EllipseShape from '../geometry/shape/node/EllipseShape';
-import RhombusShape from '../geometry/shape/node/RhombusShape';
-import CylinderShape from '../geometry/shape/node/CylinderShape';
-import ConnectorShape from '../geometry/shape/edge/ConnectorShape';
-import ActorShape from '../geometry/shape/ActorShape';
-import TriangleShape from '../geometry/shape/node/TriangleShape';
-import HexagonShape from '../geometry/shape/node/HexagonShape';
-import CloudShape from '../geometry/shape/node/CloudShape';
-import LineShape from '../geometry/shape/edge/LineShape';
-import ArrowShape from '../geometry/shape/edge/ArrowShape';
-import ArrowConnectorShape from '../geometry/shape/edge/ArrowConnectorShape';
-import DoubleEllipseShape from '../geometry/shape/node/DoubleEllipseShape';
-import SwimlaneShape from '../geometry/shape/node/SwimlaneShape';
-import ImageShape from '../geometry/shape/node/ImageShape';
-import LabelShape from '../geometry/shape/node/LabelShape';
-import TextShape from '../geometry/shape/node/TextShape';
+import RectangleShape from '../geometry/node/RectangleShape';
+import EllipseShape from '../geometry/node/EllipseShape';
+import RhombusShape from '../geometry/node/RhombusShape';
+import CylinderShape from '../geometry/node/CylinderShape';
+import ConnectorShape from '../geometry/edge/ConnectorShape';
+import ActorShape from '../geometry/ActorShape';
+import TriangleShape from '../geometry/node/TriangleShape';
+import HexagonShape from '../geometry/node/HexagonShape';
+import CloudShape from '../geometry/node/CloudShape';
+import LineShape from '../geometry/edge/LineShape';
+import ArrowShape from '../geometry/edge/ArrowShape';
+import ArrowConnectorShape from '../geometry/edge/ArrowConnectorShape';
+import DoubleEllipseShape from '../geometry/node/DoubleEllipseShape';
+import SwimlaneShape from '../geometry/node/SwimlaneShape';
+import ImageShape from '../geometry/node/ImageShape';
+import LabelShape from '../geometry/node/LabelShape';
+import TextShape from '../geometry/node/TextShape';
 import {
   ALIGN_CENTER,
   ALIGN_MIDDLE,
@@ -56,14 +56,14 @@ import {
   toRadians,
 } from '../../util/utils';
 import Rectangle from '../geometry/Rectangle';
-import StencilShapeRegistry from '../geometry/shape/node/StencilShapeRegistry';
+import StencilShapeRegistry from '../geometry/node/StencilShapeRegistry';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import Dictionary from '../../util/Dictionary';
 import EventObject from '../event/EventObject';
 import Point from '../geometry/Point';
-import Shape from '../geometry/shape/Shape';
+import Shape from '../geometry/Shape';
 import CellState from './CellState';
 import Cell from './Cell';
 import CellOverlay from './CellOverlay';
@@ -71,7 +71,7 @@ import { getClientX, getClientY, getSource } from '../../util/eventUtils';
 import { isNode } from '../../util/domUtils';
 import { CellStateStyles } from '../../types';
 import CellArray from './CellArray';
-import SelectionCellsHandler from '../handlers/SelectionCellsHandler';
+import SelectionCellsHandler from '../handler/SelectionCellsHandler';
 
 /**
  * Class: mxCellRenderer
@@ -195,7 +195,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the shape should be initialized.
+   * state - <CellState> for which the shape should be initialized.
    */
   initializeShape(state: CellState) {
     if (state.shape) {
@@ -212,7 +212,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the shape should be created.
+   * state - <CellState> for which the shape should be created.
    */
   createShape(state: CellState) {
     let shape = null;
@@ -238,7 +238,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the indicator shape should be created.
+   * state - <CellState> for which the indicator shape should be created.
    */
   createIndicatorShape(state: CellState) {
     if (state.shape) {
@@ -278,7 +278,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the shape should be configured.
+   * state - <CellState> for which the shape should be configured.
    */
   configureShape(state: CellState) {
     const shape = state.shape;
@@ -408,7 +408,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the label should be created.
+   * state - <CellState> for which the label should be created.
    */
   getLabelValue(state: CellState) {
     return state.view.graph.getLabel(state.cell);
@@ -421,7 +421,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the label should be created.
+   * state - <CellState> for which the label should be created.
    */
   createLabel(state: CellState, value: string) {
     const { graph } = state.view;
@@ -536,7 +536,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose label should be initialized.
+   * state - <CellState> whose label should be initialized.
    */
   initializeLabel(state: CellState, shape: Shape): void {
     if (Client.IS_SVG && Client.NO_FO && shape.dialect !== DIALECT_SVG) {
@@ -553,7 +553,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the overlay should be created.
+   * state - <CellState> for which the overlay should be created.
    */
   createCellOverlays(state: CellState) {
     const { graph } = state.view;
@@ -596,7 +596,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the overlay should be created.
+   * state - <CellState> for which the overlay should be created.
    * overlay - <mxImageShape> that represents the overlay.
    */
   initializeOverlay(state: CellState, overlay: ImageShape) {
@@ -606,7 +606,7 @@ class CellRenderer {
   /**
    * Function: installOverlayListeners
    *
-   * Installs the listeners for the given <mxCellState>, <CellOverlay> and
+   * Installs the listeners for the given <CellState>, <CellOverlay> and
    * <mxShape> that represents the overlay.
    */
   installCellOverlayListeners(state: CellState, overlay: CellOverlay, shape: Shape) {
@@ -651,7 +651,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the control should be created.
+   * state - <CellState> for which the control should be created.
    */
   createControl(state: CellState) {
     const { graph } = state.view;
@@ -684,7 +684,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose control click handler should be returned.
+   * state - <CellState> whose control click handler should be returned.
    */
   createControlClickHandler(state: CellState) {
     const { graph } = state.view;
@@ -705,7 +705,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the control should be initialized.
+   * state - <CellState> for which the control should be initialized.
    * control - <mxShape> to be initialized.
    * handleEvents - Boolean indicating if mousedown and mousemove should fire events via the graph.
    * clickHandler - Optional function to implement clicks on the control.
@@ -804,7 +804,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose shape fired the event.
+   * state - <CellState> whose shape fired the event.
    * evt - Mouse event which was fired.
    */
   isShapeEvent(state: CellState, evt: MouseEvent) {
@@ -819,7 +819,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose label fired the event.
+   * state - <CellState> whose label fired the event.
    * evt - Mouse event which was fired.
    */
   isLabelEvent(state: CellState, evt: MouseEvent) {
@@ -833,7 +833,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the event listeners should be isntalled.
+   * state - <CellState> for which the event listeners should be isntalled.
    */
   installListeners(state: CellState) {
     const { graph } = state.view;
@@ -914,7 +914,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose label should be redrawn.
+   * state - <CellState> whose label should be redrawn.
    */
   redrawLabel(state: CellState, forced: boolean) {
     const { graph } = state.view;
@@ -1001,7 +1001,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose label should be checked.
+   * state - <CellState> whose label should be checked.
    * shape - <mxText> shape to be checked.
    */
   isTextShapeInvalid(state: CellState, shape: TextShape): boolean {
@@ -1067,7 +1067,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose label scale should be returned.
+   * state - <CellState> whose label scale should be returned.
    */
   getTextScale(state: CellState): number {
     return state.view.scale;
@@ -1080,7 +1080,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose label bounds should be returned.
+   * state - <CellState> whose label bounds should be returned.
    */
   getLabelBounds(state: CellState): Rectangle {
     const { graph } = state.view;
@@ -1159,7 +1159,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose label bounds should be rotated.
+   * state - <CellState> whose label bounds should be rotated.
    * bounds - <mxRectangle> the rectangle to be rotated.
    */
   rotateLabelBounds(state: CellState, bounds: Rectangle): void {
@@ -1232,7 +1232,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose overlays should be redrawn.
+   * state - <CellState> whose overlays should be redrawn.
    */
   redrawCellOverlays(state: CellState, forced: boolean = false): void {
     this.createCellOverlays(state);
@@ -1287,7 +1287,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose control should be redrawn.
+   * state - <CellState> whose control should be redrawn.
    */
   redrawControl(state: CellState, forced: boolean = false): void {
     const image = state.view.graph.getFoldingImage(state);
@@ -1469,7 +1469,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose shapes should be returned.
+   * state - <CellState> whose shapes should be returned.
    */
   getShapesForState(state: CellState): [Shape | null, TextShape | null, Shape | null] {
     return [state.shape, state.text, state.control];
@@ -1484,7 +1484,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the shapes should be updated.
+   * state - <CellState> for which the shapes should be updated.
    * force - Optional boolean that specifies if the cell should be reconfiured
    * and redrawn without any additional checks.
    * rendering - Optional boolean that specifies if the cell should actually
@@ -1508,7 +1508,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> whose label should be redrawn.
+   * state - <CellState> whose label should be redrawn.
    */
   redrawShape(
     state: CellState,
@@ -1648,7 +1648,7 @@ class CellRenderer {
    *
    * Parameters:
    *
-   * state - <mxCellState> for which the shapes should be destroyed.
+   * state - <CellState> for which the shapes should be destroyed.
    */
   destroy(state: CellState) {
     if (state.shape) {
@@ -1674,36 +1674,27 @@ class CellRenderer {
   }
 }
 
-// Adds default shapes into the default shapes array
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_RECTANGLE, RectangleShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_ELLIPSE, EllipseShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_RHOMBUS, RhombusShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_CYLINDER, CylinderShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_CONNECTOR, ConnectorShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_ACTOR, ActorShape);
-CellRenderer.registerShape(SHAPE_TRIANGLE, TriangleShape);
-CellRenderer.registerShape(SHAPE_HEXAGON, HexagonShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_CLOUD, CloudShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_LINE, LineShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_ARROW, ArrowShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_ARROW_CONNECTOR, ArrowConnectorShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_DOUBLE_ELLIPSE, DoubleEllipseShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_SWIMLANE, SwimlaneShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_IMAGE, ImageShape);
-// @ts-ignore
-CellRenderer.registerShape(SHAPE_LABEL, LabelShape);
+// Add default shapes into the default shapes array
+for (const [shapeName, shapeClass] of [
+  [SHAPE_RECTANGLE, RectangleShape],
+  [SHAPE_ELLIPSE, EllipseShape],
+  [SHAPE_RHOMBUS, RhombusShape],
+  [SHAPE_CYLINDER, CylinderShape],
+  [SHAPE_CONNECTOR, ConnectorShape],
+  [SHAPE_ACTOR, ActorShape],
+  [SHAPE_TRIANGLE, TriangleShape],
+  [SHAPE_HEXAGON, HexagonShape],
+  [SHAPE_CLOUD, CloudShape],
+  [SHAPE_LINE, LineShape],
+  [SHAPE_ARROW, ArrowShape],
+  [SHAPE_ARROW_CONNECTOR, ArrowConnectorShape],
+  [SHAPE_DOUBLE_ELLIPSE, DoubleEllipseShape],
+  [SHAPE_SWIMLANE, SwimlaneShape],
+  [SHAPE_IMAGE, ImageShape],
+  [SHAPE_LABEL, LabelShape],
+]) {
+  // @ts-ignore
+  CellRenderer.registerShape(shapeName, shapeClass);
+}
 
 export default CellRenderer;

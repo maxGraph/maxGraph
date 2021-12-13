@@ -1,6 +1,6 @@
 import Cell from './Cell';
-import Dictionary from '../../../util/Dictionary';
-import ObjectIdentity from '../../../util/ObjectIdentity';
+import Dictionary from '../../util/Dictionary';
+import ObjectIdentity from '../../util/ObjectIdentity';
 
 class CellArray extends Array<Cell> {
   constructor(...items: Cell[]) {
@@ -168,7 +168,7 @@ class CellArray extends Array<Cell> {
    * @private
    */
   cloneCellImpl(cell: Cell, mapping: any = {}, includeChildren: boolean): Cell {
-    const ident = ObjectIdentity.get(cell);
+    const ident = <string>ObjectIdentity.get(cell);
     let clone = mapping ? mapping[ident] : null;
 
     if (clone == null) {
@@ -197,7 +197,7 @@ class CellArray extends Array<Cell> {
     const source = cell.getTerminal(true);
 
     if (source != null) {
-      const tmp = mapping[ObjectIdentity.get(source)];
+      const tmp = mapping[<string>ObjectIdentity.get(source)];
       if (tmp != null) {
         tmp.insertEdge(clone, true);
       }
@@ -205,7 +205,7 @@ class CellArray extends Array<Cell> {
 
     const target = cell.getTerminal(false);
     if (target != null) {
-      const tmp = mapping[ObjectIdentity.get(target)];
+      const tmp = mapping[<string>ObjectIdentity.get(target)];
       if (tmp != null) {
         tmp.insertEdge(clone, false);
       }

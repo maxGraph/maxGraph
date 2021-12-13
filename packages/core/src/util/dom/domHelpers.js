@@ -1,5 +1,5 @@
 import InternalEvent from "../../view/event/InternalEvent";
-import { write } from "../DomUtils";
+import { write } from "../domUtils";
 
 /**
  * Function: linkAction

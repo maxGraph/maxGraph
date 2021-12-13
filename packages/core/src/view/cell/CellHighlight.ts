@@ -12,9 +12,9 @@ import {
 } from '../../util/constants';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
-import CellState from '../cell/datatypes/CellState';
+import CellState from './CellState';
 import { Graph } from '../Graph';
-import Shape from '../geometry/shape/Shape';
+import Shape from '../geometry/Shape';
 
 import type { ColorValue } from '../../types';
 

@@ -7,9 +7,9 @@
 
 import { getRotatedPoint, toRadians } from '../../util/utils';
 import Point from '../geometry/Point';
-import ImageShape from '../geometry/shape/node/ImageShape';
+import ImageShape from '../geometry/node/ImageShape';
 import Rectangle from '../geometry/Rectangle';
-import RectangleShape from '../geometry/shape/node/RectangleShape';
+import RectangleShape from '../geometry/node/RectangleShape';
 import {
   DIALECT_MIXEDHTML,
   DIALECT_STRICTHTML,
@@ -19,7 +19,7 @@ import {
   HANDLE_STROKECOLOR,
 } from '../../util/constants';
 import InternalEvent from '../event/InternalEvent';
-import Shape from '../geometry/shape/Shape';
+import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import ImageBox from '../image/ImageBox';
 import CellState from './CellState';

@@ -36,8 +36,8 @@ export const getClientY = (evt: MouseEvent) => {
  *
  * Returns the event's target or srcElement depending on the browser.
  */
-export const getSource = (evt: MouseEvent) => {
-  return evt.srcElement !== undefined ? evt.srcElement : evt.target;
+export const getSource = (evt: MouseEvent | KeyboardEvent): EventTarget | null => {
+  return evt.target;
 };
 
 /**
@@ -126,9 +126,6 @@ export const isLeftMouseButton = (evt: MouseEvent) => {
  * {@link mxGraph.isMouseDown} property.
  */
 export const isMiddleMouseButton = (evt: MouseEvent) => {
-  if ('which' in evt) {
-    return evt.which === 2;
-  }
   return evt.button === 4;
 };
 
@@ -138,9 +135,6 @@ export const isMiddleMouseButton = (evt: MouseEvent) => {
  * trigger {@link isPopupTrigger} should be used.
  */
 export const isRightMouseButton = (evt: MouseEvent) => {
-  if ('which' in evt) {
-    return evt.which === 3;
-  }
   return evt.button === 2;
 };
 
@@ -163,27 +157,27 @@ export const isPopupTrigger = (evt: MouseEvent) => {
 /**
  * Returns true if the shift key is pressed for the given event.
  */
-export const isShiftDown = (evt: MouseEvent) => {
+export const isShiftDown = (evt: MouseEvent | KeyboardEvent) => {
   return evt.shiftKey;
 };
 
 /**
  * Returns true if the alt key is pressed for the given event.
  */
-export const isAltDown = (evt: MouseEvent) => {
+export const isAltDown = (evt: MouseEvent | KeyboardEvent) => {
   return evt.altKey;
 };
 
 /**
  * Returns true if the control key is pressed for the given event.
  */
-export const isControlDown = (evt: MouseEvent) => {
+export const isControlDown = (evt: MouseEvent | KeyboardEvent) => {
   return evt.ctrlKey;
 };
 
 /**
  * Returns true if the meta key is pressed for the given event.
  */
-export const isMetaDown = (evt: MouseEvent) => {
+export const isMetaDown = (evt: MouseEvent | KeyboardEvent) => {
   return evt.metaKey;
 };

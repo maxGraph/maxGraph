@@ -14,7 +14,7 @@ import {
   reversePortConstraints,
 } from '../../util/utils';
 import Point from '../geometry/Point';
-import CellState from '../cell/datatypes/CellState';
+import CellState from '../cell/CellState';
 import {
   DEFAULT_MARKERSIZE,
   DIRECTION_EAST,
@@ -32,6 +32,7 @@ import {
   NONE,
 } from '../../util/constants';
 import Rectangle from '../geometry/Rectangle';
+import Geometry from '../geometry/Geometry';
 
 /**
  * Class: mxEdgeStyle
@@ -114,19 +115,19 @@ class EdgeStyle {
    * The implementation of the style then adds all intermediate waypoints
    * except for the last point, that is, the connection point between the
    * edge and the target terminal. The first ant the last point in the
-   * result array are then replaced with mxPoints that take into account
+   * result array are then replaced with Point that take into account
    * the terminal's perimeter and next point on the edge.
    *
    * Parameters:
    *
-   * state - <mxCellState> that represents the edge to be updated.
-   * source - <mxCellState> that represents the source terminal.
-   * target - <mxCellState> that represents the target terminal.
+   * state - <CellState> that represents the edge to be updated.
+   * source - <CellState> that represents the source terminal.
+   * target - <CellState> that represents the target terminal.
    * points - List of relative control points.
-   * result - Array of <mxPoints> that represent the actual points of the
+   * result - Array of <Point> that represent the actual points of the
    * edge.
    */
-  static EntityRelation(state, source, target, points, result) {
+  static EntityRelation(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
     const { view } = state;
     const { graph } = view;
     const segment = getValue(state.style, 'segment', ENTITY_SEGMENT) * view.scale;
@@ -138,7 +139,7 @@ class EdgeStyle {
     let isSourceLeft = false;
 
     if (source != null) {
-      const sourceGeometry = source.cell.getGeometry();
+      const sourceGeometry = <Geometry>source.cell.getGeometry();
 
       if (sourceGeometry.relative) {
         isSourceLeft = sourceGeometry.x <= 0.5;
@@ -168,7 +169,7 @@ class EdgeStyle {
     let isTargetLeft = true;
 
     if (target != null) {
-      const targetGeometry = target.cell.getGeometry();
+      const targetGeometry = <Geometry>target.cell.getGeometry();
 
       if (targetGeometry.relative) {
         isTargetLeft = targetGeometry.x <= 0.5;
@@ -233,7 +234,7 @@ class EdgeStyle {
    *
    * Implements a self-reference, aka. loop.
    */
-  static Loop(state, source, target, points, result) {
+  static Loop(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
     const pts = state.absolutePoints;
 
     const p0 = pts[0];
@@ -313,7 +314,7 @@ class EdgeStyle {
    * unspecified. See <EntityRelation> for a description of the
    * parameters.
    */
-  static ElbowConnector(state, source, target, points, result) {
+  static ElbowConnector(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
     let pt = points != null && points.length > 0 ? points[0] : null;
 
     let vertical = false;
@@ -359,7 +360,7 @@ class EdgeStyle {
    * Implements a vertical elbow edge. See <EntityRelation> for a description
    * of the parameters.
    */
-  static SideToSide(state, source, target, points, result) {
+  static SideToSide(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
     const { view } = state;
     let pt = points != null && points.length > 0 ? points[0] : null;
     const pts = state.absolutePoints;
@@ -430,7 +431,7 @@ class EdgeStyle {
    * Implements a horizontal elbow edge. See <EntityRelation> for a
    * description of the parameters.
    */
-  static TopToBottom(state, source, target, points, result) {
+  static TopToBottom(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
     const { view } = state;
     let pt = points != null && points.length > 0 ? points[0] : null;
     const pts = state.absolutePoints;
@@ -500,15 +501,15 @@ class EdgeStyle {
    * Implements an orthogonal edge style. Use <mxEdgeSegmentHandler>
    * as an interactive handler for this style.
    *
-   * state - <mxCellState> that represents the edge to be updated.
-   * sourceScaled - <mxCellState> that represents the source terminal.
-   * targetScaled - <mxCellState> that represents the target terminal.
+   * state - <CellState> that represents the edge to be updated.
+   * sourceScaled - <CellState> that represents the source terminal.
+   * targetScaled - <CellState> that represents the target terminal.
    * controlHints - List of relative control points.
-   * result - Array of <mxPoints> that represent the actual points of the
+   * result - Array of <Point> that represent the actual points of the
    * edge.
    *
    */
-  static SegmentConnector(state, sourceScaled, targetScaled, controlHints, result) {
+  static SegmentConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
     // Creates array of all way- and terminalpoints
     const pts = EdgeStyle.scalePointArray(state.absolutePoints, state.view.scale);
     const source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
@@ -885,7 +886,7 @@ class EdgeStyle {
   static VERTEX_MASK = 3072;
   // mxEdgeStyle.SOURCE_MASK | mxEdgeStyle.TARGET_MASK,
 
-  static getJettySize(state, isSource) {
+  static getJettySize(state: CellState, isSource: boolean) {
     let value = getValue(
       state.style,
       isSource ? 'sourceJettySize' : 'targetJettySize',
@@ -924,8 +925,8 @@ class EdgeStyle {
    * scale - the scaling to divide by
    *
    */
-  static scalePointArray(points, scale) {
-    let result = [];
+  static scalePointArray(points: Point[], scale: number) {
+    let result: any = [];
 
     if (points != null) {
       for (let i = 0; i < points.length; i += 1) {
@@ -949,15 +950,15 @@ class EdgeStyle {
   /**
    * Function: scaleCellState
    *
-   * Scales an <mxCellState>
+   * Scales an <CellState>
    *
    * Parameters:
    *
-   * state - <mxCellState> to scale
+   * state - <CellState> to scale
    * scale - the scaling to divide by
    *
    */
-  static scaleCellState(state, scale) {
+  static scaleCellState(state: CellState, scale: number) {
     let result = null;
 
     if (state != null) {
@@ -983,22 +984,23 @@ class EdgeStyle {
    *
    * Parameters:
    *
-   * state - <mxCellState> that represents the edge to be updated.
-   * sourceScaled - <mxCellState> that represents the source terminal.
-   * targetScaled - <mxCellState> that represents the target terminal.
+   * state - <CellState> that represents the edge to be updated.
+   * sourceScaled - <CellState> that represents the source terminal.
+   * targetScaled - <CellState> that represents the target terminal.
    * controlHints - List of relative control points.
-   * result - Array of <mxPoints> that represent the actual points of the
+   * result - Array of <Point> that represent the actual points of the
    * edge.
    *
    */
-  static OrthConnector(state, sourceScaled, targetScaled, controlHints, result) {
+  static OrthConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
     const { graph } = state.view;
-    const sourceEdge = source == null ? false : source.cell.isEdge();
-    const targetEdge = target == null ? false : target.cell.isEdge();
 
     const pts = EdgeStyle.scalePointArray(state.absolutePoints, state.view.scale);
     let source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
     let target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
+
+    const sourceEdge = source == null ? false : source.cell.isEdge();
+    const targetEdge = target == null ? false : target.cell.isEdge();
 
     const p0 = pts[0];
     const pe = pts[pts.length - 1];
@@ -1060,7 +1062,7 @@ class EdgeStyle {
       // console.log('source rotation', rotation);
 
       if (rotation !== 0) {
-        const newRect = getBoundingBox(
+        const newRect = <Rectangle>getBoundingBox(
           new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
           rotation
         );
@@ -1078,7 +1080,7 @@ class EdgeStyle {
       // console.log('target rotation', rotation);
 
       if (rotation !== 0) {
-        const newRect = getBoundingBox(
+        const newRect = <Rectangle>getBoundingBox(
           new Rectangle(targetX, targetY, targetWidth, targetHeight),
           rotation
         );
@@ -1502,7 +1504,7 @@ class EdgeStyle {
     }
   }
 
-  static getRoutePattern(dir, quad, dx, dy) {
+  static getRoutePattern(dir: number[], quad: number, dx: number, dy: number) {
     let sourceIndex = dir[0] === DIRECTION_MASK_EAST ? 3 : dir[0];
     let targetIndex = dir[1] === DIRECTION_MASK_EAST ? 3 : dir[1];
 
@@ -1516,11 +1518,11 @@ class EdgeStyle {
       targetIndex += 4;
     }
 
-    let result = routePatterns[sourceIndex - 1][targetIndex - 1];
+    let result = EdgeStyle.routePatterns[sourceIndex - 1][targetIndex - 1];
 
     if (dx === 0 || dy === 0) {
-      if (inlineRoutePatterns[sourceIndex - 1][targetIndex - 1] != null) {
-        result = inlineRoutePatterns[sourceIndex - 1][targetIndex - 1];
+      if (EdgeStyle.inlineRoutePatterns[sourceIndex - 1][targetIndex - 1] != null) {
+        result = EdgeStyle.inlineRoutePatterns[sourceIndex - 1][targetIndex - 1];
       }
     }
 

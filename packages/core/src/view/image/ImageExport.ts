@@ -7,7 +7,7 @@
 
 import AbstractCanvas2D from '../../util/canvas/AbstractCanvas2D';
 import CellState from '../cell/CellState';
-import Shape from '../geometry/shape/Shape';
+import Shape from '../geometry/Shape';
 
 /**
  * Creates a new image export instance to be used with an export canvas. Here

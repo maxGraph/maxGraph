@@ -5,11 +5,11 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { DIALECT_SVG, GUIDE_COLOR, GUIDE_STROKEWIDTH } from './Constants';
+import { DIALECT_SVG, GUIDE_COLOR, GUIDE_STROKEWIDTH } from './constants';
 import Point from '../view/geometry/Point';
-import PolylineShape from '../view/geometry/shape/edge/PolylineShape';
-import CellState from '../view/cell/datatypes/CellState';
-import Shape from '../view/geometry/shape/Shape';
+import PolylineShape from '../view/geometry/edge/PolylineShape';
+import CellState from '../view/cell/CellState';
+import Shape from '../view/geometry/Shape';
 import Rectangle from '../view/geometry/Rectangle';
 import { Graph } from '../view/Graph';
 

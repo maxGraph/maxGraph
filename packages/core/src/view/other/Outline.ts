@@ -14,15 +14,16 @@ import {
 } from '../../util/constants';
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
-import RectangleShape from '../geometry/shape/node/RectangleShape';
-import { Graph } from '../Graph';
-import ImageShape from '../geometry/shape/node/ImageShape';
+import RectangleShape from '../geometry/node/RectangleShape';
+import { Graph, defaultPlugins } from '../Graph';
+import ImageShape from '../geometry/node/ImageShape';
 import InternalEvent from '../event/InternalEvent';
 import Image from '../image/ImageBox';
 import EventObject from '../event/EventObject';
 import { getSource, isMouseEvent } from '../../util/eventUtils';
 import EventSource from '../event/EventSource';
 import { hasScrollbars } from '../../util/utils';
+import { KeyboardEventListener, Listenable, MouseEventListener } from 'src/types';
 
 /**
  * @class Outline
@@ -121,6 +122,7 @@ class Outline {
     view.addListener(InternalEvent.UP, this.updateHandler);
 
     // Updates blue rectangle on scroll
+    // @ts-ignore because sender and evt don't seem used
     InternalEvent.addListener(this.source.container, 'scroll', this.updateHandler);
 
     this.panHandler = (sender: any, evt: EventObject) => {
@@ -157,19 +159,19 @@ class Outline {
     const handler = (evt: MouseEvent) => {
       const t = getSource(evt);
 
-      const redirect = (evt: Event) => {
+      const redirect = (evt: MouseEvent) => {
         const outline = <Graph>this.outline;
         outline.fireMouseEvent(InternalEvent.MOUSE_MOVE, new InternalMouseEvent(evt));
       };
 
-      var redirect2 = (evt: Event) => {
+      var redirect2 = (evt: MouseEvent) => {
         const outline = <Graph>this.outline;
-        InternalEvent.removeGestureListeners(t, null, redirect, redirect2);
+        InternalEvent.removeGestureListeners(<Listenable>t, null, redirect, redirect2);
         outline.fireMouseEvent(InternalEvent.MOUSE_UP, new InternalMouseEvent(evt));
       };
 
       const outline = <Graph>this.outline;
-      InternalEvent.addGestureListeners(t, null, redirect, redirect2);
+      InternalEvent.addGestureListeners(<Listenable>t, null, redirect, redirect2);
       outline.fireMouseEvent(InternalEvent.MOUSE_DOWN, new InternalMouseEvent(evt));
     };
 
@@ -199,11 +201,11 @@ class Outline {
 
   selectionBorder: RectangleShape | null = null;
 
-  updateHandler: Function | null = null;
+  updateHandler: ((sender: any, evt: EventObject) => void) | null = null;
 
-  refreshHandler: Function | null = null;
+  refreshHandler: ((sender: any, evt: EventObject) => void) | null = null;
 
-  panHandler: Function | null = null;
+  panHandler: ((sender: any, evt: EventObject) => void) | null = null;
 
   active: boolean | null = null;
 
@@ -312,7 +314,7 @@ class Outline {
     const graph = new Graph(
       container,
       this.source.getModel(),
-      this.graphRenderHint,
+      defaultPlugins,
       this.source.getStylesheet()
     );
     graph.foldingEnabled = false;
@@ -729,10 +731,15 @@ class Outline {
    */
   destroy(): void {
     if (this.source != null) {
+      // @ts-ignore
       this.source.removeListener(this.panHandler);
+      // @ts-ignore
       this.source.removeListener(this.refreshHandler);
+      // @ts-ignore
       this.source.getModel().removeListener(this.updateHandler);
+      // @ts-ignore
       this.source.getView().removeListener(this.updateHandler);
+      // @ts-ignore
       InternalEvent.removeListener(this.source.container, 'scroll', this.updateHandler);
       // @ts-ignore
       this.source = null;
