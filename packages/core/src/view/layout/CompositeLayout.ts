@@ -4,6 +4,8 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
+import Cell from '../cell/Cell';
+import { Graph } from '../Graph';
 import GraphLayout from './GraphLayout';
 
 /**
@@ -35,7 +37,7 @@ import GraphLayout from './GraphLayout';
  * the first layout of the above array is used to handle moves.
  */
 class CompositeLayout extends GraphLayout {
-  constructor(graph, layouts, master) {
+  constructor(graph: Graph, layouts: GraphLayout[], master?: GraphLayout) {
     super(graph);
     this.layouts = layouts;
     this.master = master;
@@ -46,7 +48,7 @@ class CompositeLayout extends GraphLayout {
    *
    * Holds the array of <mxGraphLayouts> that this layout contains.
    */
-  layouts = null;
+  layouts: GraphLayout[];
 
   /**
    * Variable: master
@@ -54,7 +56,7 @@ class CompositeLayout extends GraphLayout {
    * Reference to the <mxGraphLayouts> that handles moves. If this is null
    * then the first layout in <layouts> is used.
    */
-  master = null;
+  master?: GraphLayout;
 
   /**
    * Function: moveCell
@@ -62,7 +64,7 @@ class CompositeLayout extends GraphLayout {
    * Implements <mxGraphLayout.moveCell> by calling move on <master> or the first
    * layout in <layouts>.
    */
-  moveCell(cell, x, y) {
+  moveCell(cell: Cell, x: number, y: number) {
     if (this.master != null) {
       this.master.moveCell.apply(this.master, [cell, x, y]);
     } else {
@@ -76,7 +78,7 @@ class CompositeLayout extends GraphLayout {
    * Implements <mxGraphLayout.execute> by executing all <layouts> in a
    * single transaction.
    */
-  execute(parent) {
+  execute(parent: Cell): void {
     const model = this.graph.getModel();
 
     model.beginUpdate();

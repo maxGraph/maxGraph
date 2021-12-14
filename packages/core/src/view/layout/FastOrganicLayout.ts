@@ -8,6 +8,7 @@ import ObjectIdentity from '../../util/ObjectIdentity';
 import GraphLayout from './GraphLayout';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
+import CellArray from '../cell/CellArray';
 
 /**
  * Class: mxFastOrganicLayout
@@ -108,63 +109,63 @@ class MxFastOrganicLayout extends GraphLayout {
    *
    * An array of all vertices to be laid out.
    */
-  vertexArray;
+  vertexArray: CellArray = new CellArray();
 
   /**
    * Variable: dispX
    *
    * An array of locally stored X co-ordinate displacements for the vertices.
    */
-  dispX;
+  dispX: number[] = [];
 
   /**
    * Variable: dispY
    *
    * An array of locally stored Y co-ordinate displacements for the vertices.
    */
-  dispY;
+  dispY: number[] = [];
 
   /**
    * Variable: cellLocation
    *
    * An array of locally stored co-ordinate positions for the vertices.
    */
-  cellLocation;
+  cellLocation: any[] = [];
 
   /**
    * Variable: radius
    *
    * The approximate radius of each cell, nodes only.
    */
-  radius;
+  radius: number[] = [];
 
   /**
    * Variable: radiusSquared
    *
    * The approximate radius squared of each cell, nodes only.
    */
-  radiusSquared;
+  radiusSquared: number[] = [];
 
   /**
    * Variable: isMoveable
    *
    * Array of booleans representing the movable states of the vertices.
    */
-  isMoveable;
+  isMoveable: boolean[] = [];
 
   /**
    * Variable: neighbours
    *
    * Local copy of cell neighbours.
    */
-  neighbours;
+  neighbours: { [key: number]: number[] } = {};
 
   /**
    * Variable: indices
    *
    * Hashtable from cells to local indices.
    */
-  indices;
+  indices: { [key: string]: number } = {};
 
   /**
    * Variable: allowedToRun
@@ -198,7 +199,7 @@ class MxFastOrganicLayout extends GraphLayout {
    */
   execute(parent: Cell) {
     const model = this.graph.getModel();
-    this.vertexArray = [];
+    this.vertexArray = new CellArray();
     let cells = this.graph.getChildVertices(parent);
 
     for (let i = 0; i < cells.length; i += 1) {
@@ -212,12 +213,12 @@ class MxFastOrganicLayout extends GraphLayout {
       : null;
     const n = this.vertexArray.length;
 
-    this.indices = [];
+    this.indices = {};
     this.dispX = [];
     this.dispY = [];
     this.cellLocation = [];
     this.isMoveable = [];
-    this.neighbours = [];
+    this.neighbours = {};
     this.radius = [];
     this.radiusSquared = [];
 
@@ -236,7 +237,7 @@ class MxFastOrganicLayout extends GraphLayout {
       this.cellLocation[i] = [];
 
       // Set up the mapping from array indices to cells
-      const id = ObjectIdentity.get(vertex);
+      const id = <string>ObjectIdentity.get(vertex);
       this.indices[id] = i;
       const bounds = this.getVertexBounds(vertex);
 
@@ -282,7 +283,7 @@ class MxFastOrganicLayout extends GraphLayout {
           }
 
           // Looks the cell up in the indices dictionary
-          const id = ObjectIdentity.get(cells[j]);
+          const id = <string>ObjectIdentity.get(cells[j]);
           const index = this.indices[id];
 
           // Check the connected cell in part of the vertex list to be

@@ -12,6 +12,7 @@ import { convertPoint } from '../util/utils';
 import InternalEvent from '../view/event/InternalEvent';
 import { getClientX, getClientY } from '../util/eventUtils';
 import { makeDraggable } from '../util/gestureUtils';
+import Editor from './Editor';
 
 /**
  * Toolbar for the editor. This modifies the state of the graph
@@ -38,7 +39,7 @@ import { makeDraggable } from '../util/gestureUtils';
  * description of the configuration format.
  */
 class DefaultToolbar {
-  constructor(container, editor) {
+  constructor(container: Element, editor: Editor) {
     this.editor = editor;
 
     if (container != null && editor != null) {
@@ -49,42 +50,36 @@ class DefaultToolbar {
   /**
    * Reference to the enclosing {@link Editor}.
    */
-  // editor: Editor;
-  editor = null;
+  editor: Editor = null;
 
   /**
    * Holds the internal {@link MaxToolbar}.
    */
-  // toolbar: MaxToolbar;
-  toolbar = null;
+  toolbar: MaxToolbar | null = null;
 
   /**
    * Reference to the function used to reset the {@link toolbar}.
    */
-  // resetHandler: Function;
-  resetHandler = null;
+  resetHandler: Function = null;
 
   /**
    * Defines the spacing between existing and new vertices in gridSize units when a new vertex is dropped on an existing cell.  Default is 4 (40 pixels).
    *
    * @Default is 4
    */
-  // spacing: number;
-  spacing = 4;
+  spacing: number = 4;
 
   /**
    * Specifies if elements should be connected if new cells are dropped onto connectable elements.
    *
    * @Default is false.
    */
-  // connectOnDrop: boolean;
-  connectOnDrop = false;
+  connectOnDrop: boolean = false;
 
   /**
    * Constructs the {@link toolbar} for the given container and installs a listener that updates the {@link Editor.insertFunction} on {@link editor} if an item is selected in the toolbar.  This assumes that {@link editor} is not null.
    */
-  // init(container: HTMLElement): void;
-  init(container) {
+  init(container: Element): void {
     if (container != null) {
       this.toolbar = new MaxToolbar(container);
 

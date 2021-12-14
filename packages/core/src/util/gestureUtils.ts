@@ -1,6 +1,7 @@
 import DragSource from '../view/other/DragSource';
 import Point from '../view/geometry/Point';
 import { TOOLTIP_VERTICAL_OFFSET } from './constants';
+import { Graph } from 'src/view/Graph';
 
 /**
  * Function: makeDraggable
@@ -71,16 +72,16 @@ import { TOOLTIP_VERTICAL_OFFSET } from './constants';
  * location (x, y). Default is mxGraph.getCellAt.
  */
 export const makeDraggable = (
-  element,
-  graphF,
-  funct,
-  dragElement,
-  dx,
-  dy,
-  autoscroll,
-  scalePreview,
-  highlightDropTargets,
-  getDropTarget
+  element: Element,
+  graphF: Graph | Function,
+  funct: Function,
+  dragElement: Element,
+  dx: number,
+  dy: number,
+  autoscroll: boolean,
+  scalePreview: boolean,
+  highlightDropTargets: boolean,
+  getDropTarget: Function
 ) => {
   const dragSource = new DragSource(element, funct);
   dragSource.dragOffset = new Point(

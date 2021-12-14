@@ -6,6 +6,7 @@ import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Dictionary from '../../util/Dictionary';
 import { Graph } from '../Graph';
+import Point from '../geometry/Point';
 
 declare module '../Graph' {
   interface Graph {
@@ -348,12 +349,12 @@ const EdgeMixin: PartialType = {
           const s = this.getView().scale;
           const idx = findNearestSegment(state, (dx + t.x) * s, (dy + t.y) * s);
 
-          geo.points = geo.points.slice(0, idx);
+          geo.points = (<Point[]>geo.points).slice(0, idx);
           geo = edge.getGeometry();
 
           if (geo) {
             geo = geo.clone();
-            geo.points = geo.points.slice(idx);
+            geo.points = (<Point[]>geo.points).slice(idx);
             this.getModel().setGeometry(edge, geo);
           }
         }
@@ -694,7 +695,7 @@ const EdgeMixin: PartialType = {
     let geo = edge.getGeometry();
 
     // Resets the control points
-    if (geo && geo.points.length > 0) {
+    if (geo && (<Point[]>geo.points).length > 0) {
       geo = geo.clone();
       geo.points = [];
       this.getModel().setGeometry(edge, geo);

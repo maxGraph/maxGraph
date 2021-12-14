@@ -34,7 +34,7 @@ class GraphLayout {
   /**
    * Reference to the enclosing {@link mxGraph}.
    */
-  graph: Graph = null;
+  graph: Graph;
 
   /**
    * Boolean indicating if the bounding box of the label should be used if
@@ -45,7 +45,7 @@ class GraphLayout {
   /**
    * The parent cell of the layout, if any
    */
-  parent: Cell = null;
+  parent: Cell | null = null;
 
   /**
    * Notified when a cell is being moved in a parent that has automatic
@@ -159,7 +159,7 @@ class GraphLayout {
 
               if (!directed || isSource) {
                 const next = this.graph.view.getVisibleTerminal(e, !isSource);
-                this.traverse(next, directed, func, e, visited);
+                this.traverse(<Cell>next, directed, func, e, visited);
               }
             }
           }
@@ -175,9 +175,9 @@ class GraphLayout {
    * @param child {@link mxCell} that specifies the child.
    * @param traverseAncestors boolean whether to
    */
-  isAncestor(parent: Cell, child: Cell, traverseAncestors?: boolean): boolean {
+  isAncestor(parent: Cell, child: Cell | null, traverseAncestors?: boolean): boolean {
     if (!traverseAncestors) {
-      return child.getParent() === parent;
+      return (<Cell>child).getParent() === parent;
     }
 
     if (child === parent) {
@@ -233,14 +233,14 @@ class GraphLayout {
    * Disables or enables the edge style of the given edge.
    */
   setEdgeStyleEnabled(edge: Cell, value: any): void {
-    this.graph.setCellStyles('noEdgeStyle', value ? '0' : '1', [edge]);
+    this.graph.setCellStyles('noEdgeStyle', value ? '0' : '1', new CellArray(edge));
   }
 
   /**
    * Disables or enables orthogonal end segments of the given edge.
    */
   setOrthogonalEdge(edge: Cell, value: any): void {
-    this.graph.setCellStyles('orthogonal', value ? '1' : '0', [edge]);
+    this.graph.setCellStyles('orthogonal', value ? '1' : '0', new CellArray(edge));
   }
 
   /**
@@ -261,7 +261,6 @@ class GraphLayout {
           result.y += parentGeo.y;
 
           parent = parent.getParent();
-
           parentGeo = parent.getGeometry();
         }
       }
@@ -274,7 +273,7 @@ class GraphLayout {
    * Replaces the array of Point in the geometry of the given edge
    * with the given array of Point.
    */
-  setEdgePoints(edge: Cell, points: Point[]): void {
+  setEdgePoints(edge: Cell, points: Point[] | null): void {
     if (edge != null) {
       const { model } = this.graph;
       let geometry = edge.getGeometry();
@@ -287,8 +286,7 @@ class GraphLayout {
       }
 
       if (this.parent != null && points != null) {
-        const parent = edge.getParent();
-
+        const parent = <Cell>edge.getParent();
         const parentOffset = this.getParentOffset(parent);
 
         for (let i = 0; i < points.length; i += 1) {
@@ -313,7 +311,7 @@ class GraphLayout {
    * @param x Integer that defines the x-coordinate of the new location.
    * @param y Integer that defines the y-coordinate of the new location.
    */
-  setVertexLocation(cell: Cell, x: number, y: number): Rectangle {
+  setVertexLocation(cell: Cell, x: number, y: number): Rectangle | null {
     const model = this.graph.getModel();
     let geometry = cell.getGeometry();
     let result = null;
@@ -370,7 +368,7 @@ class GraphLayout {
    * the bounding box if {@link useBoundingBox} is true.
    */
   getVertexBounds(cell: Cell): Rectangle {
-    let geo = cell.getGeometry();
+    let geo = <Rectangle>cell.getGeometry();
 
     // Checks for oversize label bounding box and corrects
     // the return value accordingly
@@ -417,11 +415,11 @@ class GraphLayout {
    */
   arrangeGroups(
     cells: CellArray,
-    border: Rectangle,
-    topBorder,
-    rightBorder,
-    bottomBorder,
-    leftBorder
+    border: number,
+    topBorder: number,
+    rightBorder: number,
+    bottomBorder: number,
+    leftBorder: number
   ) {
     return this.graph.updateGroupBounds(
       cells,

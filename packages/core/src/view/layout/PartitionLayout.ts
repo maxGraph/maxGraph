@@ -119,7 +119,7 @@ class PartitionLayout extends GraphLayout {
   execute(parent: Cell): void {
     const horizontal = this.isHorizontal();
     const model = this.graph.getModel();
-    let pgeo = parent.getGeometry();
+    let pgeo = <Rectangle>parent.getGeometry();
 
     // Handles special case where the parent is either a layer with no
     // geometry or the current root of the view in which case the size

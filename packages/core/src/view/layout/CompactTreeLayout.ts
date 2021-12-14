@@ -16,6 +16,7 @@ import CellArray from '../cell/CellArray';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
 import { findTreeRoots } from '../../util/treeTraversal';
+import CellArray from '../cell/CellArray';
 
 /**
  * @class CompactTreeLayout
@@ -40,17 +41,21 @@ class CompactTreeLayout extends GraphLayout {
     this.invert = invert;
   }
 
+  parentX: number | null = null;
+  parentY: number | null = null;
+  visited = {};
+
   /**
    * Specifies the orientation of the layout.
    * @default true
    */
-  horizontal: boolean = null;
+  horizontal: boolean = true;
 
   /**
    * Specifies if edge directions should be inverted.
    * @default false.
    */
-  invert: boolean = null;
+  invert: boolean = false;
 
   /**
    * If the parents should be resized to match the width/height of the
@@ -101,7 +106,7 @@ class CompactTreeLayout extends GraphLayout {
    * A set of the parents that need updating based on children
    * process as part of the layout.
    */
-  parentsChanged: { [id: string]: Cell } = null;
+  parentsChanged: { [id: string]: Cell } | null = null;
 
   /**
    * Specifies if the tree should be moved to the top, left corner
@@ -109,14 +114,6 @@ class CompactTreeLayout extends GraphLayout {
    * @default false
    */
   moveTree: boolean = false;
-
-  /**
-   * Specifies if the tree should be moved to the top, left corner
-   * if it is inside a top-level layer.
-   * @default false
-   */
-  // visited: boolean;
-  visited = null;
 
   /**
    * Holds the levelDistance.
@@ -288,7 +285,7 @@ class CompactTreeLayout extends GraphLayout {
         this.node = this.dfs(this.root, parent);
 
         if (this.alignRanks) {
-          this.maxRankHeight = [];
+          this.maxRankHeight = new CellArray();
           this.findRankHeights(this.node, 0);
           this.setCellHeights(this.node, 0);
         }
@@ -443,7 +440,7 @@ class CompactTreeLayout extends GraphLayout {
    * Makes sure the specified parent is never left by the
    * algorithm.
    */
-  dfs(cell, parent) {
+  dfs(cell: Cell, parent: Cell) {
     const id = CellPath.create(cell);
     let node = null;
 
@@ -528,7 +525,7 @@ class CompactTreeLayout extends GraphLayout {
    * Starts the actual compact tree layout algorithm
    * at the given node.
    */
-  horizontalLayout(node: any, x0: number, y0: number, bounds: Rectangle): Rectangle {
+  horizontalLayout(node: any, x0: number, y0: number, bounds: Rectangle | null=null): Rectangle {
     node.x += x0 + node.offsetX;
     node.y += y0 + node.offsetY;
     bounds = this.apply(node, bounds);
@@ -553,8 +550,7 @@ class CompactTreeLayout extends GraphLayout {
    * Starts the actual compact tree layout algorithm
    * at the given node.
    */
-  // verticalLayout(node: any, parent: mxCell, x0: number, y0: number, bounds: mxRectangle): mxRectangle;
-  verticalLayout(node, parent, x0, y0, bounds) {
+  verticalLayout(node: Element, parent: Cell, x0: number, y0: number, bounds: Rectangle | null=null): Rectangle {
     node.x += x0 + node.offsetY;
     node.y += y0 + node.offsetX;
     bounds = this.apply(node, bounds);
@@ -736,7 +732,7 @@ class CompactTreeLayout extends GraphLayout {
   /**
    * Function: bridge
    */
-  bridge(line1, x1, y1, line2, x2, y2) {
+  bridge(line1, x1: number, y1: number, line2, x2: number, y2: number) {
     const dx = x2 + line2.dx - x1;
     let dy = 0;
     let s = 0;
@@ -758,8 +754,7 @@ class CompactTreeLayout extends GraphLayout {
    * Starts the actual compact tree layout algorithm
    * at the given node.
    */
-  // createNode(cell: mxCell): _mxCompactTreeLayoutNode;
-  createNode(cell) {
+  createNode(cell: Cell): _mxCompactTreeLayoutNode {
     const node = {};
     node.cell = cell;
     node.x = 0;
@@ -790,7 +785,7 @@ class CompactTreeLayout extends GraphLayout {
    * Starts the actual compact tree layout algorithm
    * at the given node.
    */
-  apply(node: any, bounds: Rectangle): Rectangle {
+  apply(node: any, bounds: Rectangle | null=null): Rectangle {
     const model = this.graph.getModel();
     const { cell } = node;
     let g = cell.getGeometry();
@@ -829,8 +824,7 @@ class CompactTreeLayout extends GraphLayout {
    * Starts the actual compact tree layout algorithm
    * at the given node.
    */
-  // createLine(dx: number, dy: number, next: any): _mxCompactTreeLayoutLine;
-  createLine(dx, dy, next) {
+  createLine(dx: number, dy: number, next: any): _mxCompactTreeLayoutLine {
     const line = {};
     line.dx = dx;
     line.dy = dy;
@@ -864,8 +858,7 @@ class CompactTreeLayout extends GraphLayout {
   /**
    * Moves the specified node and all of its children by the given amount.
    */
-  // localEdgeProcessing(node: _mxCompactTreeLayoutNode): void;
-  localEdgeProcessing(node) {
+  localEdgeProcessing(node: _mxCompactTreeLayoutNode): void {
     this.processNodeOutgoing(node);
     let { child } = node;
 
@@ -878,8 +871,7 @@ class CompactTreeLayout extends GraphLayout {
   /**
    * Separates the x position of edges as they connect to vertices
    */
-  // processNodeOutgoing(node: _mxCompactTreeLayoutNode): void;
-  processNodeOutgoing(node) {
+  processNodeOutgoing(node: _mxCompactTreeLayoutNode): void {
     let { child } = node;
     const parentCell = node.cell;
 

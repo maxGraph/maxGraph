@@ -3,6 +3,8 @@ import TemporaryCellStates from '../view/cell/TemporaryCellStates';
 import Codec from './serialization/Codec';
 import { DIALECT_SVG, NS_SVG } from './constants';
 import { htmlEntities } from './stringUtils';
+import { Cell, Graph } from 'src';
+import CellArray from 'src/view/cell/CellArray';
 
 /**
  * Function: createXmlDocument
@@ -24,14 +26,20 @@ export const createXmlDocument = () => {
 /**
  * Function: getViewXml
  */
-export const getViewXml = (graph, scale, cells, x0, y0) => {
+export const getViewXml = (
+  graph: Graph, 
+  scale: number | null=null, 
+  cells: CellArray | null=null, 
+  x0: number, 
+  y0: number
+) => {
   x0 = x0 != null ? x0 : 0;
   y0 = y0 != null ? y0 : 0;
   scale = scale != null ? scale : 1;
 
   if (cells == null) {
     const model = graph.getModel();
-    cells = [model.getRoot()];
+    cells = new CellArray(<Cell>model.getRoot());
   }
 
   const view = graph.getView();

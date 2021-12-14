@@ -6,7 +6,7 @@ import { Graph } from '../Graph';
 
 declare module '../Graph' {
   interface Graph {
-    orderCells: (back: boolean, cells: CellArray) => CellArray;
+    orderCells: (back: boolean, cells?: CellArray) => CellArray;
     cellsOrdered: (cells: CellArray, back: boolean) => void;
   }
 }
@@ -40,7 +40,7 @@ const OrderMixin: PartialType = {
     }
 
     this.batchUpdate(() => {
-      this.cellsOrdered(cells, back);
+      this.cellsOrdered(<CellArray>cells, back);
       const event = new EventObject(
         InternalEvent.ORDER_CELLS,
         'back',

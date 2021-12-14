@@ -9,9 +9,9 @@ import DefaultKeyHandler from './DefaultKeyHandler';
 import EventSource from '../view/event/EventSource';
 import Resources from '../util/Resources';
 import Client from '../Client';
-import CompactTreeLayout from '../view/layout/layout/CompactTreeLayout';
+import CompactTreeLayout from '../view/layout/CompactTreeLayout';
 import DefaultToolbar from './DefaultToolbar';
-import StackLayout from '../view/layout/layout/StackLayout';
+import StackLayout from '../view/layout/StackLayout';
 import EventObject from '../view/event/EventObject';
 import { getOffset } from '../util/utils';
 import Codec from '../util/serialization/Codec';
@@ -520,49 +520,43 @@ class Editor extends EventSource {
    * Holds a {@link graph} for displaying the diagram. The graph
    * is created in {@link setGraphContainer}.
    */
-  // graph: mxGraph;
-  graph = null;
+  // @ts-ignore
+  graph: Graph;
 
   /**
    * Holds the render hint used for creating the
    * graph in {@link setGraphContainer}. See {@link graph}. Default is null.
    * @default null
    */
-  // graphRenderHint: any;
-  graphRenderHint = null;
+  graphRenderHint: any = null;
 
   /**
    * Holds a {@link DefaultToolbar} for displaying the toolbar. The
    * toolbar is created in {@link setToolbarContainer}.
    */
-  // toolbar: any;
-  toolbar = null;
+  toolbar: any = null;
 
   /**
    * DOM container that holds the statusbar.
    * Use {@link setStatusContainer} to set this value.
    */
-  // status: any;
-  status = null;
+  status: any = null;
 
   /**
    * Holds a {@link DefaultPopupMenu} for displaying popupmenus.
    */
-  // popupHandler: DefaultPopupMenu;
-  popupHandler = null;
+  popupHandler: DefaultPopupMenu | null = null;
 
   /**
    * Holds an {@link UndoManager} for the command history.
    */
-  // undoManager: UndoManager;
-  undoManager = null;
+  undoManager: UndoManager | null = null;
 
   /**
    * Holds a {@link DefaultKeyHandler} for handling keyboard events.
    * The handler is created in {@link setGraphContainer}.
    */
-  // keyHandler: DefaultKeyHandler;
-  keyHandler = null;
+  keyHandler: DefaultKeyHandler | null = null;
 
   /**
    * Maps from actionnames to actions, which are functions taking
@@ -571,8 +565,7 @@ class Editor extends EventSource {
    * by name, passing the cell to be operated upon as the second
    * argument.
    */
-  // actions: Function;
-  actions = null;
+  actions: Function | null = null;
 
   /**
    * Group: Actions and Options
@@ -599,7 +592,6 @@ class Editor extends EventSource {
    * ```
    * @default 'edit'
    */
-  // dblClickAction: 'edit';
   dblClickAction = 'edit';
 
   /**
@@ -609,24 +601,21 @@ class Editor extends EventSource {
    * top-level cells. Default is false.
    * @default false
    */
-  // swimlaneRequired: boolean;
-  swimlaneRequired = false;
+  swimlaneRequired: boolean = false;
 
   /**
    * Specifies if the context menu should be disabled in the graph container.
    * Default is true.
    * @default true
    */
-  // disableContextMenu: boolean;
-  disableContextMenu = true;
+  disableContextMenu: boolean = true;
 
   /**
    * Specifies the function to be used for inserting new
    * cells into the graph. This is assigned from the
    * {@link DefaultToolbar} if a vertex-tool is clicked.
    */
-  // insertFunction: Function;
-  insertFunction = null;
+  insertFunction: Function = null;
 
   /**
    * Group: Templates
@@ -638,50 +627,43 @@ class Editor extends EventSource {
    * mousepointer is selected. Default is false.
    * @default false
    */
-  // forcedInserting: boolean;
-  forcedInserting = false;
+  forcedInserting: boolean = false;
 
   /**
    * Maps from names to protoype cells to be used
    * in the toolbar for inserting new cells into
    * the diagram.
    */
-  // templates: any;
-  templates = null;
+  templates: any = null;
 
   /**
    * Prototype edge cell that is used for creating new edges.
    */
-  // defaultEdge: any;
-  defaultEdge = null;
+  defaultEdge: any = null;
 
   /**
    * Specifies the edge style to be returned in {@link getEdgeStyle}. Default is null.
    * @default null
    */
-  // defaultEdgeStyle: any;
-  defaultEdgeStyle = null;
+  defaultEdgeStyle: any = null;
 
   /**
    * Prototype group cell that is used for creating new groups.
    */
-  // defaultGroup: any;
-  defaultGroup = null;
+  defaultGroup: any = null;
 
   /**
    * Default size for the border of new groups. If null,
    * then then <mxGraph.gridSize> is used. Default is null.
    * @default null
    */
-  // groupBorderSize: any;
-  groupBorderSize = null;
+  groupBorderSize: any = null;
 
   /**
    * Contains the URL of the last opened file as a string. Default is null.
    * @default null
    */
-  // filename: string;
-  filename = null;
+  filename: string = null;
 
   /**
    * Group: Backend Integration
@@ -690,7 +672,6 @@ class Editor extends EventSource {
    * Character to be used for encoding linefeeds in {@link save}. Default is '&#xa;'.
    * @default '&#xa;'
    */
-  // linefeed: '&#xa;';
   linefeed = '&#xa;';
 
   /**
@@ -698,7 +679,6 @@ class Editor extends EventSource {
    * data in a post request to the server. Default is 'xml'.
    * @default 'xml'
    */
-  // postParameterName: 'xml';
   postParameterName = 'xml';
 
   /**
@@ -706,24 +686,21 @@ class Editor extends EventSource {
    * should be converted using encodeURIComponent. Default is true.
    * @default true
    */
-  // escapePostData: boolean;
-  escapePostData = true;
+  escapePostData: boolean = true;
 
   /**
    * Specifies the URL to be used for posting the diagram
    * to a backend in {@link save}.
    * @default null
    */
-  // urlPost: string;
-  urlPost = null;
+  urlPost: string = null;
 
   /**
    * Specifies the URL to be used for creating a bitmap of
    * the graph in the image action.
    * @default null
    */
-  // urlImage: string;
-  urlImage = null;
+  urlImage: string = null;
 
   /**
    * Specifies the direction of the flow
@@ -732,8 +709,7 @@ class Editor extends EventSource {
    * ie. vertical flow.
    * @default false
    */
-  // horizontalFlow: boolean;
-  horizontalFlow = false;
+  horizontalFlow: boolean = false;
 
   /**
    * Group: Autolayout
@@ -751,8 +727,7 @@ class Editor extends EventSource {
    * the {@link layoutSwimlanes} switch.
    * @default false
    */
-  // layoutDiagram: boolean;
-  layoutDiagram = false;
+  layoutDiagram: boolean = false;
 
   /**
    * Specifies the spacing between swimlanes if
@@ -760,8 +735,7 @@ class Editor extends EventSource {
    * {@link layoutDiagram}. Default is 0.
    * @default 0
    */
-  // swimlaneSpacing: number;
-  swimlaneSpacing = 0;
+  swimlaneSpacing: number = 0;
 
   /**
    * Specifies if the swimlanes should be kept at the same
@@ -774,8 +748,7 @@ class Editor extends EventSource {
    * automatically "stacked" if {@link layoutDiagram} is true.
    * @default false
    */
-  // maintainSwimlanes: boolean;
-  maintainSwimlanes = false;
+  maintainSwimlanes: boolean = false;
 
   /**
    * Specifies if the children of swimlanes should
@@ -783,16 +756,14 @@ class Editor extends EventSource {
    * depending on {@link horizontalFlow}. Default is false.
    * @default false
    */
-  // layoutSwimlanes: boolean;
-  layoutSwimlanes = false;
+  layoutSwimlanes: boolean = false;
 
   /**
    * Specifies the attribute values to be cycled when inserting new swimlanes.
    * Default is an empty array.
    * @default any[]
    */
-  // cycleAttributeValues: any[];
-  cycleAttributeValues = null;
+  cycleAttributeValues: any[] = null;
 
   /**
    * Group: Attribute Cycling
@@ -804,8 +775,7 @@ class Editor extends EventSource {
    * {@link cycleAttributeName}. Default is 0.
    * @default 0
    */
-  // cycleAttributeIndex: number;
-  cycleAttributeIndex = 0;
+  cycleAttributeIndex: number = 0;
 
   /**
    * Name of the attribute to be assigned a {@link cycleAttributeValues}
@@ -818,8 +788,7 @@ class Editor extends EventSource {
   /**
    * Holds the [@link MaxWindow} created in {@link showTasks}.
    */
-  // tasks: any;
-  tasks = null;
+  tasks: any = null;
 
   /**
    * Group: Windows
@@ -827,27 +796,23 @@ class Editor extends EventSource {
   /**
    * Icon for the tasks window.
    */
-  // tasksWindowImage: any;
-  tasksWindowImage = null;
+  tasksWindowImage: any = null;
 
   /**
    * Specifies the top coordinate of the tasks window in pixels. Default is 20.
    * @default 20
    */
-  // tasksTop: number;
-  tasksTop = 20;
+  tasksTop: number = 20;
 
   /**
    * Holds the {@link MaxWindow} created in {@link showHelp}
    */
-  // help: any;
-  help = null;
+  help: any = null;
 
   /**
    * Icon for the help window.
    */
-  // helpWindowImage: any;
-  helpWindowImage = null;
+  helpWindowImage: any = null;
 
   /**
    * Specifies the URL to be used for the contents of the
@@ -855,29 +820,26 @@ class Editor extends EventSource {
    * resources file under urlHelp for language-specific
    * online help support.
    */
-  // urlHelp: string;
-  urlHelp = null;
+  urlHelp: string = null;
 
   /**
    * Specifies the width of the help window in pixels. Default is 300.
    * @default 300
    */
-  // helpWidth: number;
-  helpWidth = 300;
+  helpWidth: number = 300;
 
   /**
    * Specifies the height of the help window in pixels. Default is 260.
    * @default 260
    */
   // helpHeight: number;
-  helpHeight = 260;
+  helpHeight: number = 260;
 
   /**
    * Specifies the width of the properties window in pixels. Default is 240.
    * @default 240
    */
-  // propertiesWidth: number;
-  propertiesWidth = 240;
+  propertiesWidth: number = 240;
 
   /**
    * Specifies the height of the properties window in pixels.
@@ -885,8 +847,7 @@ class Editor extends EventSource {
    * sized to fit its contents. Default is null.
    * @default null
    */
-  // propertiesHeight: number;
-  propertiesHeight = null;
+  propertiesHeight: number | null = null;
 
   /**
    * Specifies if the properties dialog should be automatically
@@ -895,28 +856,24 @@ class Editor extends EventSource {
    * account if the dialog is already visible. Default is false.
    * @default false
    */
-  // movePropertiesDialog: boolean;
-  movePropertiesDialog = false;
+  movePropertiesDialog: boolean = false;
 
   /**
    * Specifies if <{@link xGraph.validateGraph} should automatically be invoked after
    * each change. Default is false.
    * @default false
    */
-  // validating: boolean;
-  validating = false;
+  validating: boolean = false;
 
   /**
    * True if the graph has been modified since it was last saved.
    */
-  // modified: boolean;
-  modified = false;
+  modified: boolean = false;
 
   /**
    * Returns {@link modified}.
    */
-  // isModified(): boolean;
-  isModified() {
+  isModified(): boolean {
     return this.modified;
   }
 
@@ -924,8 +881,7 @@ class Editor extends EventSource {
    * Sets {@link modified} to the specified boolean value.
    * @param value
    */
-  // setModified(value: boolean): void;
-  setModified(value) {
+  setModified(value: boolean): void {
     this.modified = value;
   }
 
@@ -985,22 +941,21 @@ class Editor extends EventSource {
    * toggleOutline - Shows or hides the outline window.
    * toggleConsole - Shows or hides the console window.
    */
-  // addActions(): void;
-  addActions() {
-    this.addAction('save', (editor) => {
+  addActions(): void {
+    this.addAction('save', (editor: Editor) => {
       editor.save();
     });
 
-    this.addAction('print', (editor) => {
+    this.addAction('print', (editor: Editor) => {
       const preview = new PrintPreview(editor.graph, 1);
       preview.open();
     });
 
-    this.addAction('show', (editor) => {
+    this.addAction('show', (editor: Editor) => {
       show(editor.graph, null, 10, 10);
     });
 
-    this.addAction('exportImage', (editor) => {
+    this.addAction('exportImage', (editor: Editor) => {
       const url = editor.getUrlImage();
 
       if (url == null || Client.IS_LOCAL) {
@@ -1018,277 +973,277 @@ class Editor extends EventSource {
       }
     });
 
-    this.addAction('refresh', (editor) => {
+    this.addAction('refresh', (editor: Editor) => {
       editor.graph.refresh();
     });
 
-    this.addAction('cut', (editor) => {
+    this.addAction('cut', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         mxClipboard.cut(editor.graph);
       }
     });
 
-    this.addAction('copy', (editor) => {
+    this.addAction('copy', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         mxClipboard.copy(editor.graph);
       }
     });
 
-    this.addAction('paste', (editor) => {
+    this.addAction('paste', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         mxClipboard.paste(editor.graph);
       }
     });
 
-    this.addAction('delete', (editor) => {
+    this.addAction('delete', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.removeCells();
       }
     });
 
-    this.addAction('group', (editor) => {
+    this.addAction('group', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.setSelectionCell(editor.groupCells());
       }
     });
 
-    this.addAction('ungroup', (editor) => {
+    this.addAction('ungroup', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.setSelectionCells(editor.graph.ungroupCells());
       }
     });
 
-    this.addAction('removeFromParent', (editor) => {
+    this.addAction('removeFromParent', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.removeCellsFromParent();
       }
     });
 
-    this.addAction('undo', (editor) => {
+    this.addAction('undo', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.undo();
       }
     });
 
-    this.addAction('redo', (editor) => {
+    this.addAction('redo', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.redo();
       }
     });
 
-    this.addAction('zoomIn', (editor) => {
+    this.addAction('zoomIn', (editor: Editor) => {
       editor.graph.zoomIn();
     });
 
-    this.addAction('zoomOut', (editor) => {
+    this.addAction('zoomOut', (editor: Editor) => {
       editor.graph.zoomOut();
     });
 
-    this.addAction('actualSize', (editor) => {
+    this.addAction('actualSize', (editor: Editor) => {
       editor.graph.zoomActual();
     });
 
-    this.addAction('fit', (editor) => {
+    this.addAction('fit', (editor: Editor) => {
       editor.graph.fit();
     });
 
-    this.addAction('showProperties', (editor, cell) => {
-      editor.showProperties(cell);
+    this.addAction('showProperties', (editor: Editor, cell: Cell) => {
+      editor.showProperties(cell: Cell);
     });
 
-    this.addAction('selectAll', (editor) => {
+    this.addAction('selectAll', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.selectAll();
       }
     });
 
-    this.addAction('selectNone', (editor) => {
+    this.addAction('selectNone', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.clearSelection();
       }
     });
 
-    this.addAction('selectVertices', (editor) => {
+    this.addAction('selectVertices', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.selectVertices();
       }
     });
 
-    this.addAction('selectEdges', (editor) => {
+    this.addAction('selectEdges', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.selectEdges();
       }
     });
 
-    this.addAction('edit', (editor, cell) => {
+    this.addAction('edit', (editor: Editor, cell: Cell) => {
       if (editor.graph.isEnabled() && editor.graph.isCellEditable(cell)) {
         editor.graph.startEditingAtCell(cell);
       }
     });
 
-    this.addAction('toBack', (editor, cell) => {
+    this.addAction('toBack', (editor: Editor, cell: Cell) => {
       if (editor.graph.isEnabled()) {
         editor.graph.orderCells(true);
       }
     });
 
-    this.addAction('toFront', (editor, cell) => {
+    this.addAction('toFront', (editor: Editor, cell: Cell) => {
       if (editor.graph.isEnabled()) {
         editor.graph.orderCells(false);
       }
     });
 
-    this.addAction('enterGroup', (editor, cell) => {
+    this.addAction('enterGroup', (editor: Editor, cell: Cell) => {
       editor.graph.enterGroup(cell);
     });
 
-    this.addAction('exitGroup', (editor) => {
+    this.addAction('exitGroup', (editor: Editor) => {
       editor.graph.exitGroup();
     });
 
-    this.addAction('home', (editor) => {
+    this.addAction('home', (editor: Editor) => {
       editor.graph.home();
     });
 
-    this.addAction('selectPrevious', (editor) => {
+    this.addAction('selectPrevious', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.selectPreviousCell();
       }
     });
 
-    this.addAction('selectNext', (editor) => {
+    this.addAction('selectNext', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.selectNextCell();
       }
     });
 
-    this.addAction('selectParent', (editor) => {
+    this.addAction('selectParent', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.selectParentCell();
       }
     });
 
-    this.addAction('selectChild', (editor) => {
+    this.addAction('selectChild', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.selectChildCell();
       }
     });
 
-    this.addAction('collapse', (editor) => {
+    this.addAction('collapse', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.foldCells(true);
       }
     });
 
-    this.addAction('collapseAll', (editor) => {
+    this.addAction('collapseAll', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         const cells = editor.graph.getChildVertices();
         editor.graph.foldCells(true, false, cells);
       }
     });
 
-    this.addAction('expand', (editor) => {
+    this.addAction('expand', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.foldCells(false);
       }
     });
 
-    this.addAction('expandAll', (editor) => {
+    this.addAction('expandAll', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         const cells = editor.graph.getChildVertices();
         editor.graph.foldCells(false, false, cells);
       }
     });
 
-    this.addAction('bold', (editor) => {
+    this.addAction('bold', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.toggleCellStyleFlags('fontStyle', FONT_BOLD);
       }
     });
 
-    this.addAction('italic', (editor) => {
+    this.addAction('italic', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.toggleCellStyleFlags('fontStyle', FONT_ITALIC);
       }
     });
 
-    this.addAction('underline', (editor) => {
+    this.addAction('underline', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.toggleCellStyleFlags('fontStyle', FONT_UNDERLINE);
       }
     });
 
-    this.addAction('alignCellsLeft', (editor) => {
+    this.addAction('alignCellsLeft', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.alignCells(ALIGN_LEFT);
       }
     });
 
-    this.addAction('alignCellsCenter', (editor) => {
+    this.addAction('alignCellsCenter', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.alignCells(ALIGN_CENTER);
       }
     });
 
-    this.addAction('alignCellsRight', (editor) => {
+    this.addAction('alignCellsRight', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.alignCells(ALIGN_RIGHT);
       }
     });
 
-    this.addAction('alignCellsTop', (editor) => {
+    this.addAction('alignCellsTop', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.alignCells(ALIGN_TOP);
       }
     });
 
-    this.addAction('alignCellsMiddle', (editor) => {
+    this.addAction('alignCellsMiddle', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.alignCells(ALIGN_MIDDLE);
       }
     });
 
-    this.addAction('alignCellsBottom', (editor) => {
+    this.addAction('alignCellsBottom', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.alignCells(ALIGN_BOTTOM);
       }
     });
 
-    this.addAction('alignFontLeft', (editor) => {
+    this.addAction('alignFontLeft', (editor: Editor) => {
       editor.graph.setCellStyles('align', ALIGN_LEFT);
     });
 
-    this.addAction('alignFontCenter', (editor) => {
+    this.addAction('alignFontCenter', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.setCellStyles('align', ALIGN_CENTER);
       }
     });
 
-    this.addAction('alignFontRight', (editor) => {
+    this.addAction('alignFontRight', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.setCellStyles('align', ALIGN_RIGHT);
       }
     });
 
-    this.addAction('alignFontTop', (editor) => {
+    this.addAction('alignFontTop', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.setCellStyles('verticalAlign', ALIGN_TOP);
       }
     });
 
-    this.addAction('alignFontMiddle', (editor) => {
+    this.addAction('alignFontMiddle', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.setCellStyles('verticalAlign', ALIGN_MIDDLE);
       }
     });
 
-    this.addAction('alignFontBottom', (editor) => {
+    this.addAction('alignFontBottom', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
         editor.graph.setCellStyles('verticalAlign', ALIGN_BOTTOM);
       }
     });
 
-    this.addAction('zoom', (editor) => {
+    this.addAction('zoom', (editor: Editor) => {
       const current = editor.graph.getView().scale * 100;
       const scale =
         parseFloat(
@@ -1300,7 +1255,7 @@ class Editor extends EventSource {
       }
     });
 
-    this.addAction('toggleTasks', (editor) => {
+    this.addAction('toggleTasks', (editor: Editor) => {
       if (editor.tasks != null) {
         editor.tasks.setVisible(!editor.tasks.isVisible());
       } else {
@@ -1308,7 +1263,7 @@ class Editor extends EventSource {
       }
     });
 
-    this.addAction('toggleHelp', (editor) => {
+    this.addAction('toggleHelp', (editor: Editor) => {
       if (editor.help != null) {
         editor.help.setVisible(!editor.help.isVisible());
       } else {
@@ -1316,7 +1271,7 @@ class Editor extends EventSource {
       }
     });
 
-    this.addAction('toggleOutline', (editor) => {
+    this.addAction('toggleOutline', (editor: Editor) => {
       if (editor.outline == null) {
         editor.showOutline();
       } else {
@@ -1324,7 +1279,7 @@ class Editor extends EventSource {
       }
     });
 
-    this.addAction('toggleConsole', (editor) => {
+    this.addAction('toggleConsole', (editor: Editor) => {
       MaxLog.setVisible(!MaxLog.isVisible());
     });
   }
@@ -1340,8 +1295,7 @@ class Editor extends EventSource {
    * ```
    * @param node XML node that contains the configuration.
    */
-  // configure(node: any): void;
-  configure(node) {
+  configure(node: Element): void {
     if (node != null) {
       // Creates a decoder for the XML data
       // and uses it to configure the editor
@@ -1357,16 +1311,14 @@ class Editor extends EventSource {
   /**
    * Resets the cookie that is used to remember if the editor has already been used.
    */
-  // resetFirstTime(): void;
-  resetFirstTime() {
+  resetFirstTime(): void {
     document.cookie = 'mxgraph=seen; expires=Fri, 27 Jul 2001 02:47:11 UTC; path=/';
   }
 
   /**
    * Resets the command history, modified state and counters.
    */
-  // resetHistory(): void;
-  resetHistory() {
+  resetHistory(): void {
     this.lastSnapshot = new Date().getTime();
     this.undoManager.clear();
     this.ignoredChanges = 0;
@@ -1378,7 +1330,7 @@ class Editor extends EventSource {
    *
    * @example
    * ```javascript
-   * editor.addAction('test', function(editor, cell)
+   * editor.addAction('test', function(editor: Editor, cell: Cell)
    * {
    * 		mxUtils.alert("test "+cell);
    * });
@@ -1388,8 +1340,7 @@ class Editor extends EventSource {
    * of the function is the editor it is used with,
    * the second argument is the cell it operates upon.
    */
-  // addAction(actionname: string, funct: Function): void;
-  addAction(actionname, funct) {
+  addAction(actionname: string, funct: Function): void {
     this.actions[actionname] = funct;
   }
 
@@ -1409,8 +1360,7 @@ class Editor extends EventSource {
    * @param cell
    * @param evt
    */
-  // execute(actionname: string, cell?: any, evt?: Event): void;
-  execute(actionname, cell, evt) {
+  execute(actionname: string, cell?: Cell, evt?: Event): void {
     const action = this.actions[actionname];
 
     if (action != null) {
@@ -1436,8 +1386,7 @@ class Editor extends EventSource {
    * @param name
    * @param template
    */
-  // addTemplate(name: any, template: any): void;
-  addTemplate(name, template) {
+  addTemplate(name: string, template: any): void {
     this.templates[name] = template;
   }
 
@@ -1445,8 +1394,7 @@ class Editor extends EventSource {
    * Returns the template for the given name.
    * @param name
    */
-  // getTemplate(name: string): any;
-  getTemplate(name) {
+  getTemplate(name: string): any {
     return this.templates[name];
   }
 
@@ -1455,7 +1403,7 @@ class Editor extends EventSource {
    * container and is initialized from {@link setGraphContainer}.
    * @returns graph instance
    */
-  createGraph() {
+  createGraph(): Graph {
     const graph = new Graph();
 
     // Enables rubberband, tooltips, panning
@@ -1509,8 +1457,7 @@ class Editor extends EventSource {
    * @param graph
    * @returns SwimlaneManager instance
    */
-  // createSwimlaneManager(graph: any): mxSwimlaneManager;
-  createSwimlaneManager(graph) {
+  createSwimlaneManager(graph: Graph): SwimlaneManager {
     const swimlaneMgr = new SwimlaneManager(graph, false);
 
     swimlaneMgr.isHorizontal = () => {
@@ -1530,12 +1477,11 @@ class Editor extends EventSource {
    * @param graph
    * @returns LayoutManager instance
    */
-  // createLayoutManager(graph: any): mxLayoutManager;
-  createLayoutManager(graph) {
+  createLayoutManager(graph: Graph): LayoutManager {
     const layoutMgr = new LayoutManager(graph);
 
     const self = this; // closure
-    layoutMgr.getLayout = (cell) => {
+    layoutMgr.getLayout = (cell: Cell) => {
       let layout = null;
       const model = self.graph.getModel();
 
@@ -1543,7 +1489,7 @@ class Editor extends EventSource {
         // Executes the swimlane layout if a child of
         // a swimlane has been changed. The layout is
         // lazy created in createSwimlaneLayout.
-        if (self.layoutSwimlanes && graph.isSwimlane(cell)) {
+        if (self.layoutSwimlanes && graph.isSwimlane(cell: Cell)) {
           if (self.swimlaneLayout == null) {
             self.swimlaneLayout = self.createSwimlaneLayout();
           }
@@ -1556,7 +1502,7 @@ class Editor extends EventSource {
         // lazy created in createDiagramLayout.
         else if (
           self.layoutDiagram &&
-          (graph.isValidRoot(cell) || cell.getParent().getParent() == null)
+          (graph.isValidRoot(cell: Cell) || cell.getParent().getParent() == null)
         ) {
           if (self.diagramLayout == null) {
             self.diagramLayout = self.createDiagramLayout();
@@ -1576,8 +1522,7 @@ class Editor extends EventSource {
    * Sets the graph's container using {@link graph.init}.
    * @param container
    */
-  // setGraphContainer(container: any): void;
-  setGraphContainer(container) {
+  setGraphContainer(container: any): void {
     if (this.graph.container == null) {
       // Creates the graph instance inside the given container and render hint
       // this.graph = new mxGraph(container, null, this.graphRenderHint);
@@ -1599,8 +1544,7 @@ class Editor extends EventSource {
    * on a cell and reset the selection tool in the toolbar.
    * @param graph
    */
-  // installDblClickHandler(graph: any): void;
-  installDblClickHandler(graph) {
+  installDblClickHandler(graph: Graph): void {
     // Installs a listener for double click events
     graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
       const cell = evt.getProperty('cell');
@@ -1616,8 +1560,7 @@ class Editor extends EventSource {
    * Adds the {@link undoManager} to the graph model and the view.
    * @param graph
    */
-  // installUndoHandler(graph: any): void;
-  installUndoHandler(graph) {
+  installUndoHandler(graph: Graph): void {
     const listener = (sender, evt) => {
       const edit = evt.getProperty('edit');
       this.undoManager.undoableEditHappened(edit);
@@ -1640,8 +1583,7 @@ class Editor extends EventSource {
    * Installs listeners for dispatching the {@link root} event.
    * @param graph
    */
-  // installDrillHandler(graph: any): void;
-  installDrillHandler(graph) {
+  installDrillHandler(graph: Graph): void {
     const listener = (sender) => {
       this.fireEvent(new EventObject(InternalEvent.ROOT));
     };
@@ -1656,8 +1598,7 @@ class Editor extends EventSource {
    * fires a {@link root} event.
    * @param graph
    */
-  // installChangeHandler(graph: any): void;
-  installChangeHandler(graph) {
+  installChangeHandler(graph: Graph): void {
     const listener = (sender, evt) => {
       // Updates the modified state
       this.setModified(true);
@@ -1692,8 +1633,7 @@ class Editor extends EventSource {
    * Installs the handler for invoking {@link insertFunction} if one is defined.
    * @param graph
    */
-  // installInsertHandler(graph: any): void;
-  installInsertHandler(graph) {
+  installInsertHandler(graph: Graph): void {
     const self = this; // closure
     const insertHandler = {
       mouseDown: (sender, me) => {
@@ -1734,8 +1674,7 @@ class Editor extends EventSource {
    * swimlanes in the diagram.
    * @returns StackLayout instance
    */
-  // createDiagramLayout(): mxStackLayout;
-  createDiagramLayout() {
+  createDiagramLayout(): StackLayout {
     const gs = this.graph.gridSize;
     const layout = new StackLayout(
       this.graph,
@@ -1746,8 +1685,8 @@ class Editor extends EventSource {
     );
 
     // Overrides isIgnored to only take into account swimlanes
-    layout.isVertexIgnored = (cell) => {
-      return !layout.graph.isSwimlane(cell);
+    layout.isVertexIgnored = (cell: Cell) => {
+      return !layout.graph.isSwimlane(cell: Cell);
     };
 
     return layout;
@@ -1758,8 +1697,7 @@ class Editor extends EventSource {
    * children of each swimlane.
    * @returns CompactTreeLayout instance
    */
-  // createSwimlaneLayout(): mxCompactTreeLayout;
-  createSwimlaneLayout() {
+  createSwimlaneLayout(): CompactTreeLayout {
     return new CompactTreeLayout(this.graph, this.horizontalFlow);
   }
 
@@ -1767,8 +1705,7 @@ class Editor extends EventSource {
    * Creates the {@link toolbar} with no container.
    * @returns DefaultToolbar instance
    */
-  // createToolbar(): DefaultToolbar;
-  createToolbar() {
+  createToolbar(): DefaultToolbar {
     return new DefaultToolbar(null, this);
   }
 
@@ -1776,8 +1713,7 @@ class Editor extends EventSource {
    * Initializes the toolbar for the given container.
    * @param container
    */
-  // setToolbarContainer(container: any): void;
-  setToolbarContainer(container) {
+  setToolbarContainer(container: any): void {
     this.toolbar.init(container);
   }
 
@@ -1788,8 +1724,7 @@ class Editor extends EventSource {
    * in the status bar.
    * @param container DOM node that will contain the statusbar.
    */
-  // setStatusContainer(container: any): void;
-  setStatusContainer(container) {
+  setStatusContainer(container: any): void {
     if (this.status == null) {
       this.status = container;
 
@@ -1818,8 +1753,7 @@ class Editor extends EventSource {
    * Display the specified message in the status bar.
    * @param message String the specified the message to be displayed.
    */
-  // setStatus(message: string): void;
-  setStatus(message) {
+  setStatus(message: string): void {
     if (this.status != null && message != null) {
       this.status.innerHTML = message;
     }
@@ -1830,8 +1764,7 @@ class Editor extends EventSource {
    * specified DOM node with the value of {@link getTitle}.
    * @param container DOM node that will contain the title.
    */
-  // setTitleContainer(container: any): void;
-  setTitleContainer(container) {
+  setTitleContainer(container: any): void {
     this.addListener(InternalEvent.ROOT, (sender) => {
       container.innerHTML = this.getTitle();
     });
@@ -1845,27 +1778,25 @@ class Editor extends EventSource {
    * @param horizontal Optional boolean to specify the tree's
    * orientation. Default is true.
    */
-  // treeLayout(cell: mxCell, horizontal: boolean): void;
-  treeLayout(cell, horizontal) {
+  treeLayout(cell: Cell, horizontal: boolean): void {
     if (cell != null) {
       const layout = new CompactTreeLayout(this.graph, horizontal);
-      layout.execute(cell);
+      layout.execute(cell: Cell);
     }
   }
 
   /**
    * Returns the string value for the current root of the diagram.
    */
-  // getTitle(): string;
-  getTitle() {
+  getTitle(): string {
     let title = '';
     const { graph } = this;
     let cell = graph.getCurrentRoot();
 
     while (cell != null && cell.getParent().getParent() != null) {
       // Append each label of a valid root
-      if (graph.isValidRoot(cell)) {
-        title = ` > ${graph.convertValueToString(cell)}${title}`;
+      if (graph.isValidRoot(cell: Cell)) {
+        title = ` > ${graph.convertValueToString(cell: Cell)}${title}`;
       }
 
       cell = cell.getParent();
@@ -1879,8 +1810,7 @@ class Editor extends EventSource {
   /**
    * Returns the string value of the root cell in {@link graph.model}.
    */
-  // getRootTitle(): string;
-  getRootTitle() {
+  getRootTitle(): string {
     const root = this.graph.getModel().getRoot();
     return this.graph.convertValueToString(root);
   }
@@ -1888,16 +1818,14 @@ class Editor extends EventSource {
   /**
    * Undo the last change in {@link graph}.
    */
-  // undo(): void;
-  undo() {
+  undo(): void {
     this.undoManager.undo();
   }
 
   /**
    * Redo the last change in {@link graph}.
    */
-  // redo(): void;
-  redo() {
+  redo(): void {
     this.undoManager.redo();
   }
 
@@ -1906,8 +1834,7 @@ class Editor extends EventSource {
    * {@link graph.groupCells}, using the grid size of the graph as the spacing
    * in the group's content area.
    */
-  // groupCells(): any;
-  groupCells() {
+  groupCells(): any {
     const border =
       this.groupBorderSize != null ? this.groupBorderSize : this.graph.gridSize;
     return this.graph.groupCells(this.createGroup(), border);
@@ -1918,8 +1845,7 @@ class Editor extends EventSource {
    * as a new group cell in {@link group}.
    * @returns Cell
    */
-  // createGroup(): mxCell;
-  createGroup() {
+  createGroup(): Cell {
     const model = this.graph.getModel();
 
     return model.cloneCell(this.defaultGroup);
@@ -1945,8 +1871,7 @@ class Editor extends EventSource {
    *
    * @param filename URL of the file to be opened.
    */
-  // open(filename: string): void;
-  open(filename) {
+  open(filename: string): void {
     if (filename != null) {
       const xml = load(filename).getXml();
       this.readGraphModel(xml.documentElement);
@@ -1962,7 +1887,7 @@ class Editor extends EventSource {
    * @param node
    */
   // readGraphModel(node: any): void;
-  readGraphModel(node) {
+  readGraphModel(node: any) {
     const dec = new Codec(node.ownerDocument);
     dec.decode(node, this.graph.getModel());
     this.resetHistory();
@@ -1990,8 +1915,7 @@ class Editor extends EventSource {
    * @param url
    * @param linefeed
    */
-  // save(url: any, linefeed: any): void;
-  save(url, linefeed) {
+  save(url?: string, linefeed: any): void {
     // Gets the URL to post the data to
     url = url || this.getUrlPost();
 
@@ -2113,7 +2037,7 @@ class Editor extends EventSource {
    * @param cell
    */
   // showProperties(cell: mxCell): void;
-  showProperties(cell) {
+  showProperties(cell: Cell) {
     cell = cell || this.graph.getSelectionCell();
 
     // Uses the root node for the properties dialog
@@ -2190,9 +2114,9 @@ class Editor extends EventSource {
    * node attributes in a form.
    */
   // createProperties(cell: any): HTMLTableElement | null;
-  createProperties(cell) {
+  createProperties(cell: Cell) {
     const model = this.graph.getModel();
-    const value = model.getValue(cell);
+    const value = model.getValue(cell: Cell);
 
     if (isNode(value)) {
       // Creates a form for the user object inside
@@ -2387,8 +2311,7 @@ class Editor extends EventSource {
    * Updates the contents of the tasks window using {@link createTasks}.
    * @param div
    */
-  // refreshTasks(div: any): void;
-  refreshTasks(div) {
+  refreshTasks(div: Element): void {
     if (this.tasks != null) {
       const div = this.tasks.content;
       InternalEvent.release(div);
@@ -2405,8 +2328,7 @@ class Editor extends EventSource {
    * Default implementation is empty.
    * @param div
    */
-  // createTasks(div: any): void;
-  createTasks(div) {
+  createTasks(div: Element): void {
     // override
   }
 
@@ -2417,8 +2339,7 @@ class Editor extends EventSource {
    * is undefined.
    * @param tasks
    */
-  // showHelp(tasks: any): void;
-  showHelp(tasks) {
+  showHelp(tasks: any): void {
     if (this.help == null) {
       const frame = document.createElement('iframe');
       frame.setAttribute('src', Resources.get('urlHelp') || this.urlHelp);
@@ -2471,8 +2392,7 @@ class Editor extends EventSource {
    * Shows the outline window. If the window does not exist, then it is
    * created using an {@link outline}.
    */
-  // showOutline(): void;
-  showOutline() {
+  showOutline(): void {
     const create = this.outline == null;
 
     if (create) {
@@ -2525,8 +2445,7 @@ class Editor extends EventSource {
    * pan - Pans using the left mouse button, new connections are disabled.
    * @param modename
    */
-  // setMode(modename: any): void;
-  setMode(modename) {
+  setMode(modename: any): void {
     if (modename === 'select') {
       this.graph.panningHandler.useLeftButtonForPanning = false;
       this.graph.setConnectable(false);
@@ -2546,8 +2465,7 @@ class Editor extends EventSource {
    * @param cell
    * @param evt
    */
-  // createPopupMenu(menu: any, cell: any, evt: any): void;
-  createPopupMenu(menu, cell, evt) {
+  createPopupMenu(menu: any, cell: Cell, evt: any): void {
     this.popupHandler.createMenu(this, menu, cell, evt);
   }
 
@@ -2558,8 +2476,7 @@ class Editor extends EventSource {
    * @param source
    * @param target
    */
-  // createEdge(source: any, target: any): void;
-  createEdge(source, target) {
+  createEdge(source: Cell, target: Cell): void {
     // Clones the defaultedge prototype
     let e = null;
 
@@ -2601,7 +2518,7 @@ class Editor extends EventSource {
    * @param cell
    */
   // consumeCycleAttribute(cell: any): any;
-  consumeCycleAttribute(cell) {
+  consumeCycleAttribute(cell: Cell) {
     return this.cycleAttributeValues != null &&
       this.cycleAttributeValues.length > 0 &&
       this.graph.isSwimlane(cell)
@@ -2617,7 +2534,7 @@ class Editor extends EventSource {
    * @param cell
    */
   // cycleAttribute(cell: any): void;
-  cycleAttribute(cell) {
+  cycleAttribute(cell: Cell) {
     if (this.cycleAttributeName != null) {
       const value = this.consumeCycleAttribute(cell);
 

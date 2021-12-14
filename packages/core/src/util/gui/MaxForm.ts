@@ -13,7 +13,7 @@ import { write, writeln } from "../domUtils";
  * @class MaxForm
  */
 class MaxForm {
-  constructor(className) {
+  constructor(className: string) {
     this.table = document.createElement('table');
     this.table.className = className;
     this.body = document.createElement('tbody');

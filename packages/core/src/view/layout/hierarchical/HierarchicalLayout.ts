@@ -13,6 +13,7 @@ import ObjectIdentity from '../../../util/ObjectIdentity';
 import MinimumCycleRemover from './stage/MinimumCycleRemover';
 import MedianHybridCrossingReduction from './stage/MedianHybridCrossingReduction';
 import CoordinateAssignment from './stage/CoordinateAssignment';
+import { Graph } from 'src/view/Graph';
 
 /**
  * Class: HierarchicalLayout
@@ -32,7 +33,7 @@ import CoordinateAssignment from './stage/CoordinateAssignment';
  * deterministic. Default is true.
  */
 class HierarchicalLayout extends GraphLayout {
-  constructor(graph, orientation, deterministic) {
+  constructor(graph: Graph, orientation: number, deterministic: boolean=true) {
     super(graph);
     this.orientation = orientation != null ? orientation : DIRECTION_NORTH;
     this.deterministic = deterministic != null ? deterministic : true;

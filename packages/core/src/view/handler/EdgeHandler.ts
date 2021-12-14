@@ -776,7 +776,7 @@ class EdgeHandler {
     const target = this.state.getVisibleTerminalState(false);
     const geo = this.state.cell.getGeometry();
     const edgeStyle = geo
-      ? this.graph.view.getEdgeStyle(this.state, geo.points, source, target)
+      ? this.graph.view.getEdgeStyle(this.state, geo.points || undefined, source, target)
       : null;
 
     return (
@@ -1260,7 +1260,7 @@ class EdgeHandler {
 
     if (!geometry) return null;
 
-    let points = geometry.points.slice();
+    let points = (geometry.points || []).slice();
     const point = new Point(pt.x, pt.y);
     let result: Point[] | null = null;
 
@@ -2082,7 +2082,7 @@ class EdgeHandler {
 
       if (geo != null && geo.points != null) {
         geo = geo.clone();
-        geo.points.splice(index - 1, 1);
+        (geo.points || []).splice(index - 1, 1);
         this.graph.getModel().setGeometry(state.cell, geo);
         this.refresh();
         this.redraw();

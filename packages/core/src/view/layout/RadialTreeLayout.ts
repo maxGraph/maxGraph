@@ -25,6 +25,9 @@ class RadialTreeLayout extends CompactTreeLayout {
     super(graph, false);
   }
 
+  centerX: number | null = null;
+  centerY: number | null = null;
+
   /**
    * The initial offset to compute the angle position.
    * @default 0.5
@@ -133,7 +136,7 @@ class RadialTreeLayout extends CompactTreeLayout {
     this.edgeRouting = false;
     // this.horizontal = false;
 
-    super.execute(parent, root);
+    super.execute(parent, root || undefined);
 
     let bounds = null;
     const rootBounds = this.getVertexBounds(this.root);

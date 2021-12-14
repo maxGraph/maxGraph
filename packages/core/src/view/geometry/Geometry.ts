@@ -111,7 +111,7 @@ class Geometry extends Rectangle {
    * use {@link targetPoint} and {@link sourcePoint} or set the terminals of the edge to
    * a non-null value. Default is null.
    */
-  points: Point[] = [];
+  points: Point[] | null = null;
 
   /**
    * For edges, this holds the offset (in pixels) from the position defined
@@ -300,10 +300,12 @@ class Geometry extends Rectangle {
     }
 
     // Translate the control points
-    for (let i = 0; i < this.points.length; i += 1) {
-      if (this.points[i]) {
-        this.points[i].x = this.points[i].x * sx;
-        this.points[i].y = this.points[i].y * sy;
+    if (this.points) {
+      for (let i = 0; i < this.points.length; i += 1) {
+        if (this.points[i]) {
+          this.points[i].x = this.points[i].x * sx;
+          this.points[i].y = this.points[i].y * sy;
+        }
       }
     }
 

@@ -250,7 +250,7 @@ export const para = (parent, text) => {
  * attributeName - Optional attribute name to check.
  * attributeValue - Optional attribute value to check.
  */
-export const isNode = (value, nodeName, attributeName, attributeValue) => {
+export const isNode = (value: any, nodeName: string | null=null, attributeName?: string, attributeValue?: string) => {
   if (
     value != null &&
     !isNaN(value.nodeType) &&

@@ -254,7 +254,7 @@ declare module '../Graph' {
     ) => Rectangle | null;
     getBoundingBoxFromGeometry: (
       cells: CellArray,
-      includeEdges: boolean
+      includeEdges?: boolean
     ) => Rectangle | null;
   }
 }

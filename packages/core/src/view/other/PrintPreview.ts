@@ -291,12 +291,12 @@ class PrintPreview {
   /**
    * Reference to the preview window.
    */
-  wnd: Window;
+  wnd: Window | null = null;
 
   /**
    * Assign any window here to redirect the rendering in {@link open}.
    */
-  targetWindow: Window;
+  targetWindow: Window | null = null;
 
   /**
    * Holds the actual number of pages in the preview.
@@ -314,7 +314,7 @@ class PrintPreview {
   /**
    * Returns {@link wnd}.
    */
-  getWindow(): Window {
+  getWindow(): Window | null {
     return this.wnd;
   }
 
@@ -355,8 +355,7 @@ class PrintPreview {
    * @param targetWindow Optional window that should be used for rendering. If
    * this is specified then no HEAD tag, CSS and BODY tag will be written.
    */
-  // open(css?: string, targetWindow?: Window, forcePageBreaks?: boolean, keepOpen?: boolean): Window;
-  open(css, targetWindow, forcePageBreaks, keepOpen) {
+  open(css?: string, targetWindow?: Window, forcePageBreaks?: boolean, keepOpen?: boolean): Window {
     // Closing the window while the page is being rendered may cause an
     // exception in IE. This and any other exceptions are simply ignored.
     const previousInitializeOverlay = this.graph.cellRenderer.initializeOverlay;
@@ -577,8 +576,7 @@ class PrintPreview {
   /**
    * Adds a page break to the given document.
    */
-  // addPageBreak(doc: Document): void;
-  addPageBreak(doc) {
+  addPageBreak(doc: Document): void {
     const hr = doc.createElement('hr');
     hr.className = 'mxPageBreak';
     doc.body.appendChild(hr);
@@ -587,8 +585,7 @@ class PrintPreview {
   /**
    * Writes the closing tags for body and page after calling {@link writePostfix}.
    */
-  // closeDocument(): void;
-  closeDocument() {
+  closeDocument(): void {
     try {
       if (this.wnd != null && this.wnd.document != null) {
         const doc = this.wnd.document;
@@ -610,8 +607,7 @@ class PrintPreview {
    * Writes the HEAD section into the given document, without the opening
    * and closing HEAD tags.
    */
-  // writeHead(doc: Document, css: string): void;
-  writeHead(doc, css) {
+  writeHead(doc: Document, css: string): void {
     if (this.title != null) {
       doc.writeln(`<title>${this.title}</title>`);
     }
@@ -705,7 +701,6 @@ class PrintPreview {
    * Takes the inner div as the argument.
    * @param pageNumber Integer representing the page number.
    */
-  // renderPage(w: number, h: number, dx?: number, dy?: number, content?: Function, pageNumber?: number): HTMLDivElement;
   renderPage(w: number, h: number, dx: number, dy: number, content: (div: HTMLDivElement) => void, pageNumber?: number): HTMLDivElement{
     const doc = this.wnd.document;
     let div = document.createElement('div');
@@ -1012,7 +1007,6 @@ class PrintPreview {
   /**
    * Closes the print preview window.
    */
-  // close(): void;
   close(): void {
     if (this.wnd != null) {
       this.wnd.close();

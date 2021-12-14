@@ -58,7 +58,7 @@ declare module '../Graph' {
       constraint?: ConnectionConstraint | null
     ) => void;
     disconnectGraph: (cells: CellArray) => void;
-    getConnections: (cell: Cell, parent: Cell | null) => CellArray;
+    getConnections: (cell: Cell, parent?: Cell | null) => CellArray;
     isConstrainChild: (cell: Cell) => boolean;
     isConstrainChildren: () => boolean;
     setConstrainChildren: (value: boolean) => void;

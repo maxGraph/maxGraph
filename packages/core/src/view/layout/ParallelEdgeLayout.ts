@@ -103,9 +103,9 @@ class ParallelEdgeLayout extends GraphLayout {
    * Finds the parallel edges in the given parent.
    */
   findParallels(parent: Cell, cells: CellArray) {
-    const lookup = [];
+    const lookup: any = [];
 
-    const addCell = (cell) => {
+    const addCell = (cell: Cell) => {
       if (!this.isEdgeIgnored(cell)) {
         const id = this.getEdgeId(cell);
 
@@ -146,8 +146,8 @@ class ParallelEdgeLayout extends GraphLayout {
     const view = this.graph.getView();
 
     // Cannot used cached visible terminal because this could be triggered in BEFORE_UNDO
-    let src = view.getVisibleTerminal(edge, true);
-    let trg = view.getVisibleTerminal(edge, false);
+    let src: Cell | string | null = view.getVisibleTerminal(edge, true);
+    let trg: Cell | string | null = view.getVisibleTerminal(edge, false);
     let pts = '';
 
     if (src != null && trg != null) {
@@ -170,7 +170,7 @@ class ParallelEdgeLayout extends GraphLayout {
           pts = tmp.join(',');
         }
       }
-      return (src > trg ? `${trg}-${src}` : `${src}-${trg}`) + pts;
+      return (<string>src > <string>trg ? `${trg}-${src}` : `${src}-${trg}`) + pts;
     }
     return null;
   }

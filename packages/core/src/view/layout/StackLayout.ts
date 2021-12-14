@@ -198,9 +198,9 @@ class StackLayout extends GraphLayout {
   /**
    * Returns the size for the parent container or the size of the graph container if the parent is a layer or the root of the model.
    */
-  getParentSize(parent: Cell): void {
+  getParentSize(parent: Cell): Rectangle {
     const model = this.graph.getModel();
-    let pgeo = parent.getGeometry();
+    let pgeo = <Rectangle>parent.getGeometry();
 
     // Handles special case where the parent is either a layer with no
     // geometry or the current root of the view in which case the size
@@ -257,7 +257,7 @@ class StackLayout extends GraphLayout {
   /**
    * Snaps the given value to the grid size.
    */
-  snap(value): void {
+  snap(value: number): number {
     if (this.gridSize != null && this.gridSize > 0) {
       value = Math.max(value, this.gridSize);
 

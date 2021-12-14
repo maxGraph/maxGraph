@@ -155,7 +155,7 @@ class StencilShape extends Shape {
         this.constraints = [];
 
         for (let i = 0; i < tmp.length; i += 1) {
-          this.constraints.push(this.parseConstraint(tmp[i]));
+          this.constraints.push(this.parseConstraint(tmp[i] as Element));
         }
       }
     }
@@ -187,7 +187,7 @@ class StencilShape extends Shape {
     const loc = node.getAttribute('localized');
 
     if ((StencilShape.defaultLocalized && !loc) || loc === '1') {
-      result = Resources.get(result);
+      result = Resources.get(<string>result);
     }
 
     return result;

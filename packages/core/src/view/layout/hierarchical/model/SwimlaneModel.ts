@@ -4,14 +4,14 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import GraphHierarchyNode from './GraphHierarchyNode';
-import GraphHierarchyEdge from './GraphHierarchyEdge';
-import CellPath from '../../../cell/CellPath';
-import GraphLayout from '../../GraphLayout';
-import Dictionary from '../../../../util/Dictionary';
-import CellArray from '../../../cell/CellArray';
-import Cell from '../../../cell/Cell';
-import { clone } from '../../../../util/cloneUtils';
+import GraphHierarchyNode from "./GraphHierarchyNode";
+import GraphHierarchyEdge from "./GraphHierarchyEdge";
+import CellPath from "../../../cell/CellPath";
+import GraphLayout from "../../GraphLayout";
+import Dictionary from "../../../../util/Dictionary";
+import CellArray from "../../../cell/CellArray";
+import Cell from "../../../cell/Cell";
+import { clone } from "../../../../util/cloneUtils";
 
 /**
  * Class: mxSwimlaneModel
@@ -43,7 +43,7 @@ class SwimlaneModel {
     vertices: CellArray,
     roots: CellArray,
     parent: Cell,
-    tightenToSource
+    tightenToSource: boolean
   ) {
     const graph = layout.getGraph();
     this.tightenToSource = tightenToSource;
@@ -93,7 +93,10 @@ class SwimlaneModel {
             internalTargetCell = this.vertexMapper.get(targetCell);
           }
 
-          if (internalTargetCell != null && internalVertices[i] !== internalTargetCell) {
+          if (
+            internalTargetCell != null &&
+            internalVertices[i] !== internalTargetCell
+          ) {
             internalEdge.target = internalTargetCell;
 
             if (internalTargetCell.connectsAsTarget.length == 0) {
@@ -231,7 +234,11 @@ class SwimlaneModel {
         const cell = layout.getVisibleTerminal(conns[j], false);
 
         // Looking for outgoing edges only
-        if (cell !== vertices[i] && cell.isVertex() && !layout.isVertexIgnored(cell)) {
+        if (
+          cell !== vertices[i] &&
+          cell.isVertex() &&
+          !layout.isVertexIgnored(cell)
+        ) {
           // We process all edge between this source and its targets
           // If there are edges going both ways, we need to collect
           // them all into one internal edges to avoid looping problems
@@ -245,7 +252,11 @@ class SwimlaneModel {
           // are the same. All the graph edges will have been assigned to
           // an internal edge going the other way, so we don't want to
           // process them again
-          const undirectedEdges = layout.getEdgesBetween(vertices[i], cell, false);
+          const undirectedEdges = layout.getEdgesBetween(
+            vertices[i],
+            cell,
+            false
+          );
           const directedEdges = layout.getEdgesBetween(vertices[i], cell, true);
 
           if (
@@ -272,7 +283,9 @@ class SwimlaneModel {
 
             internalEdge.source = internalVertices[i];
 
-            if (internalVertices[i].connectsAsSource.indexOf(internalEdge) < 0) {
+            if (
+              internalVertices[i].connectsAsSource.indexOf(internalEdge) < 0
+            ) {
               internalVertices[i].connectsAsSource.push(internalEdge);
             }
           }
@@ -460,7 +473,13 @@ class SwimlaneModel {
    * chainCount - the number of edges in the chain of vertices going through
    * the current swimlane
    */
-  maxChainDfs(parent: Cell, root: Cell, connectingEdge: Cell, seen, chainCount: number) {
+  maxChainDfs(
+    parent: Cell,
+    root: Cell,
+    connectingEdge: Cell,
+    seen,
+    chainCount: number
+  ) {
     if (root != null) {
       const rootId = CellPath.create(root.cell);
 
@@ -486,7 +505,13 @@ class SwimlaneModel {
           // Only navigate in source->target direction within the same
           // swimlane, or from a lower index swimlane to a higher one
           if (root.swimlaneIndex < targetNode.swimlaneIndex) {
-            this.maxChainDfs(root, targetNode, internalEdge, clone(seen, null, true), 0);
+            this.maxChainDfs(
+              root,
+              targetNode,
+              internalEdge,
+              clone(seen, null, true),
+              0
+            );
           } else if (root.swimlaneIndex === targetNode.swimlaneIndex) {
             this.maxChainDfs(
               root,
@@ -580,7 +605,12 @@ class SwimlaneModel {
    * trackAncestors - Whether or not the search is to keep track all nodes
    * directly above this one in the search path.
    */
-  visit(visitor: Function, dfsRoots: CellArray, trackAncestors: boolean, seenNodes) {
+  visit(
+    visitor: Function,
+    dfsRoots: CellArray,
+    trackAncestors: boolean,
+    seenNodes
+  ) {
     // Run dfs through on all roots
     if (dfsRoots != null) {
       for (let i = 0; i < dfsRoots.length; i += 1) {
