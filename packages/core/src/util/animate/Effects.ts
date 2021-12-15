@@ -109,7 +109,7 @@ class Effects {
    * Sets the opacity on the given cell and its descendants.
    *
    * @param graph - <mxGraph> that contains the cells.
-   * @param cell - <mxCell> to set the opacity for.
+   * @param cell - <Cell> to set the opacity for.
    * @param opacity - New value for the opacity in %.
    */
   // static cascadeOpacity(graph: mxGraph, cell: mxCell, opacity: number): void;

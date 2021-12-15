@@ -215,7 +215,7 @@ class CellEditor implements GraphPlugin {
   /**
    * Variable: editingCell
    *
-   * Reference to the <mxCell> that is currently being edited.
+   * Reference to the <Cell> that is currently being edited.
    */
   // editingCell: mxCell;
   editingCell: Cell | null = null;
@@ -759,7 +759,7 @@ class CellEditor implements GraphPlugin {
    *
    * Parameters:
    *
-   * cell - <mxCell> to start editing.
+   * cell - <Cell> to start editing.
    * trigger - Optional mouse event that triggered the editor.
    */
   startEditing(cell: Cell, trigger: MouseEvent | null = null) {
@@ -1136,7 +1136,7 @@ class CellEditor implements GraphPlugin {
    *
    * Parameters:
    *
-   * cell - <mxCell> for which a text for an empty editing box should be
+   * cell - <Cell> for which a text for an empty editing box should be
    * returned.
    */
   getEmptyLabelText(cell: Cell | null = null) {

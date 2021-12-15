@@ -15,7 +15,7 @@ import { importNode } from '../domUtils';
 /**
  * Class: CellCodec
  *
- * Codec for <mxCell>s. This class is created and registered
+ * Codec for <Cell>s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec>
  * and the <CodecRegistry>.
  *
@@ -36,7 +36,7 @@ import { importNode } from '../domUtils';
  *
  * CodecRegistry.getCodec(mxCell).exclude.push('name_of_field');
  *
- * To subclass <mxCell>, replace the template and add an alias as
+ * To subclass <Cell>, replace the template and add an alias as
  * follows.
  *
  * (code)
@@ -93,7 +93,7 @@ class CellCodec extends ObjectCodec {
   /**
    * Function: afterEncode
    *
-   * Encodes an <mxCell> and wraps the XML up inside the
+   * Encodes an <Cell> and wraps the XML up inside the
    * XML of the user object (inversion).
    */
   afterEncode(enc, obj, node) {
@@ -118,7 +118,7 @@ class CellCodec extends ObjectCodec {
   /**
    * Function: beforeDecode
    *
-   * Decodes an <mxCell> and uses the enclosing XML node as
+   * Decodes an <Cell> and uses the enclosing XML node as
    * the user object for the cell (inversion).
    */
   beforeDecode(dec, node, obj) {

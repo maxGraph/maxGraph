@@ -49,14 +49,14 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * Variable: roots
    *
-   * Holds the array of <mxCell> that this layout contains.
+   * Holds the array of <Cell> that this layout contains.
    */
   roots = null;
 
   /**
    * Variable: swimlanes
    *
-   * Holds the array of <mxCell> of the ordered swimlanes to lay out
+   * Holds the array of <Cell> of the ordered swimlanes to lay out
    */
   swimlanes = null;
 
@@ -223,7 +223,7 @@ class SwimlaneLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * parent - Parent <mxCell> that contains the children to be laid out.
+   * parent - Parent <Cell> that contains the children to be laid out.
    * swimlanes - Ordered array of swimlanes to be laid out
    */
   execute(parent: Cell, swimlanes: CellArray): void {
@@ -404,7 +404,7 @@ class SwimlaneLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * parent - <mxCell> whose children should be checked.
+   * parent - <Cell> whose children should be checked.
    * vertices - array of vertices to limit search to
    */
   findRoots(parent: Cell, vertices: CellArray) {
@@ -471,7 +471,7 @@ class SwimlaneLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * cell - <mxCell> whose edges should be returned.
+   * cell - <Cell> whose edges should be returned.
    */
   getEdges(cell: Cell): CellArray {
     const cachedEdges = this.edgesCache.get(cell);
@@ -532,7 +532,7 @@ class SwimlaneLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * edge - <mxCell> whose edges should be returned.
+   * edge - <Cell> whose edges should be returned.
    * source - Boolean that specifies whether the source or target terminal is to be returned
    */
   getVisibleTerminal(edge: Cell, source: boolean): Cell {
@@ -723,7 +723,7 @@ class SwimlaneLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * cell - <mxCell> that represents the port.
+   * cell - <Cell> that represents the port.
    */
   isPort(cell: Cell): boolean {
     if ((<Geometry>cell.geometry).relative) {
@@ -773,10 +773,10 @@ class SwimlaneLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * vertex - <mxCell> that represents the vertex where the traversal starts.
+   * vertex - <Cell> that represents the vertex where the traversal starts.
    * directed - boolean indicating if edges should only be traversed
    * from source to target. Default is true.
-   * edge - Optional <mxCell> that represents the incoming edge. This is
+   * edge - Optional <Cell> that represents the incoming edge. This is
    * null for the first step of the traversal.
    * allVertices - Array of cell paths for the visited cells.
    * swimlaneIndex - the laid out order index of the swimlane vertex is contained in

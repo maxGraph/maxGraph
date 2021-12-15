@@ -146,7 +146,7 @@ class GraphHierarchyModel {
    * Store of roots of this hierarchy model, these are real graph cells, not
    * internal cells
    */
-  roots = null;
+  roots: CellArray | null = null;
 
   /**
    * Variable: parent
@@ -583,7 +583,7 @@ class GraphHierarchyModel {
    * childHash - the new hash code for this node
    * layer - the layer on the dfs tree ( not the same as the model ranks )
    */
-  extendedDfs(parent: Cell, root: Cell, connectingEdge: Cell, visitor, seen, ancestors, childHash, layer) {
+  extendedDfs(parent: GraphHierarchyNode, root: GraphHierarchyNode, connectingEdge: GraphHierarchyNode, visitor, seen, ancestors, childHash, layer) {
     // Explanation of custom hash set. Previously, the ancestors variable
     // was passed through the dfs as a HashSet. The ancestors were copied
     // into a new HashSet and when the new child was processed it was also

@@ -20,13 +20,16 @@ import MaxWindow, { popup } from './MaxWindow';
  * Specifies the name of the console window. Default is 'Console'.
  */
 class MaxLog {
+  static textarea: HTMLElement | null = null;
+  static window: any;
+  static td: any;
+
   /**
    * Initializes the DOM node for the console.
    * This requires document.body to point to a non-null value.
    * This is called from within setVisible if the log has not yet been initialized.
    */
-  // static init(): void;
-  static init() {
+  static init(): void {
     if (MaxLog.window == null && document.body != null) {
       const title = `${MaxLog.consoleName} - mxGraph ${Client.VERSION}`;
 

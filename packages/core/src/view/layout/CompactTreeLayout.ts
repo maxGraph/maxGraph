@@ -12,7 +12,6 @@ import CellPath from '../cell/CellPath';
 import Rectangle from '../geometry/Rectangle';
 import { sortCells } from '../../util/utils';
 import WeightedCellSorter from './WeightedCellSorter';
-import CellArray from '../cell/CellArray';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
 import { findTreeRoots } from '../../util/treeTraversal';

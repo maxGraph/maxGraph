@@ -1000,11 +1000,11 @@ const CellsMixin: PartialType = {
    * Parameters:
    *
    * cells - Array of <mxCells> to be inserted.
-   * parent - <mxCell> that represents the new parent. If no parent is
+   * parent - <Cell> that represents the new parent. If no parent is
    * given then the default parent is used.
    * index - Optional index to insert the cells at. Default is to append.
-   * source - Optional source <mxCell> for all inserted cells.
-   * target - Optional target <mxCell> for all inserted cells.
+   * source - Optional source <Cell> for all inserted cells.
+   * target - Optional target <Cell> for all inserted cells.
    * absolute - Optional boolean indicating of cells should be kept at
    * their absolute position. Default is false.
    */
@@ -1869,7 +1869,7 @@ const CellsMixin: PartialType = {
    * dx - Integer that specifies the x-coordinate of the vector. Default is 0.
    * dy - Integer that specifies the y-coordinate of the vector. Default is 0.
    * clone - Boolean indicating if the cells should be cloned. Default is false.
-   * target - <mxCell> that represents the new parent of the cells.
+   * target - <Cell> that represents the new parent of the cells.
    * evt - Mouseevent that triggered the invocation.
    * mapping - Optional mapping for existing clones.
    */
@@ -2432,7 +2432,7 @@ const CellsMixin: PartialType = {
    *
    * x0 - X-coordinate of the origin.
    * y0 - Y-coordinate of the origin.
-   * parent - Optional <mxCell> whose children should be checked. Default is
+   * parent - Optional <Cell> whose children should be checked. Default is
    * <defaultParent>.
    * rightHalfpane - Boolean indicating if the cells in the right halfpane
    * from the origin should be returned.

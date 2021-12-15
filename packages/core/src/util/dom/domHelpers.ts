@@ -15,7 +15,7 @@ import { write } from "../domUtils";
  * action - String that defines the name of the action to be executed.
  * pad - Optional left-padding for the link. Default is 0.
  */
-export const linkAction = (parent, text, editor, action, pad) => {
+export const linkAction = (parent: HTMLElement, text: string, editor: Editor, action: string, pad: number=0) => {
   return link(
     parent,
     text,

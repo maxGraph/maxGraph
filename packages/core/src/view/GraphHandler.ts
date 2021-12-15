@@ -718,7 +718,7 @@ class GraphHandler implements GraphPlugin {
    *
    * Parameters:
    *
-   * initialCell - <mxCell> that triggered this handler.
+   * initialCell - <Cell> that triggered this handler.
    */
   getCells(initialCell: Cell) {
     if (!this.delayedSelection && this.graph.isCellMovable(initialCell)) {

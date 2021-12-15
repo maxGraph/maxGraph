@@ -14,6 +14,9 @@ import MinimumCycleRemover from './stage/MinimumCycleRemover';
 import MedianHybridCrossingReduction from './stage/MedianHybridCrossingReduction';
 import CoordinateAssignment from './stage/CoordinateAssignment';
 import { Graph } from 'src/view/Graph';
+import CellArray from 'src/view/cell/CellArray';
+import Cell from 'src/view/cell/Cell';
+import CellPath from 'src/view/cell/CellPath';
 
 /**
  * Class: HierarchicalLayout
@@ -42,9 +45,9 @@ class HierarchicalLayout extends GraphLayout {
   /**
    * Variable: roots
    *
-   * Holds the array of <mxCell> that this layout contains.
+   * Holds the array of <Cell> that this layout contains.
    */
-  roots = null;
+  roots: CellArray | null = null;
 
   /**
    * Variable: resizeParent
@@ -52,7 +55,7 @@ class HierarchicalLayout extends GraphLayout {
    * Specifies if the parent should be resized after the layout so that it
    * contains all the child cells. Default is false. See also <parentBorder>.
    */
-  resizeParent = false;
+  resizeParent: boolean = false;
 
   /**
    * Variable: maintainParentLocation
@@ -61,7 +64,7 @@ class HierarchicalLayout extends GraphLayout {
    * top, left corner stays the same before and after execution of
    * the layout. Default is false for backwards compatibility.
    */
-  maintainParentLocation = false;
+  maintainParentLocation: boolean = false;
 
   /**
    * Variable: moveParent
@@ -69,7 +72,7 @@ class HierarchicalLayout extends GraphLayout {
    * Specifies if the parent should be moved if <resizeParent> is enabled.
    * Default is false.
    */
-  moveParent = false;
+  moveParent: boolean = false;
 
   /**
    * Variable: parentBorder
@@ -77,28 +80,28 @@ class HierarchicalLayout extends GraphLayout {
    * The border to be added around the children if the parent is to be
    * resized using <resizeParent>. Default is 0.
    */
-  parentBorder = 0;
+  parentBorder: number = 0;
 
   /**
    * Variable: intraCellSpacing
    *
    * The spacing buffer added between cells on the same layer. Default is 30.
    */
-  intraCellSpacing = 30;
+  intraCellSpacing: number = 30;
 
   /**
    * Variable: interRankCellSpacing
    *
    * The spacing buffer added between cell on adjacent layers. Default is 100.
    */
-  interRankCellSpacing = 100;
+  interRankCellSpacing: number = 100;
 
   /**
    * Variable: interHierarchySpacing
    *
    * The spacing buffer between unconnected hierarchies. Default is 60.
    */
-  interHierarchySpacing = 60;
+  interHierarchySpacing: number = 60;
 
   /**
    * Variable: parallelEdgeSpacing
@@ -106,7 +109,7 @@ class HierarchicalLayout extends GraphLayout {
    * The distance between each parallel edge on each ranks for long edges.
    * Default is 10.
    */
-  parallelEdgeSpacing = 10;
+  parallelEdgeSpacing: number = 10;
 
   /**
    * Variable: orientation
@@ -114,7 +117,7 @@ class HierarchicalLayout extends GraphLayout {
    * The position of the root node(s) relative to the laid out graph in.
    * Default is <mxConstants.DIRECTION_NORTH>.
    */
-  orientation = DIRECTION_NORTH;
+  orientation: string = DIRECTION_NORTH;
 
   /**
    * Variable: fineTuning
@@ -122,7 +125,7 @@ class HierarchicalLayout extends GraphLayout {
    * Whether or not to perform local optimisations and iterate multiple times
    * through the algorithm. Default is true.
    */
-  fineTuning = true;
+  fineTuning: boolean = true;
 
   /**
    *
@@ -131,7 +134,7 @@ class HierarchicalLayout extends GraphLayout {
    * Whether or not to tighten the assigned ranks of vertices up towards
    * the source cells. Default is true.
    */
-  tightenToSource = true;
+  tightenToSource: boolean = true;
 
   /**
    * Variable: disableEdgeStyle
@@ -139,7 +142,7 @@ class HierarchicalLayout extends GraphLayout {
    * Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
    * modified by the result. Default is true.
    */
-  disableEdgeStyle = true;
+  disableEdgeStyle: boolean = true;
 
   /**
    * Variable: traverseAncestors
@@ -149,14 +152,14 @@ class HierarchicalLayout extends GraphLayout {
    * terminal vertices have different parents but are in the same
    * ancestry chain. Default is true.
    */
-  traverseAncestors = true;
+  traverseAncestors: boolean = true;
 
   /**
    * Variable: model
    *
-   * The internal <mxGraphHierarchyModel> formed of the layout.
+   * The internal <GraphHierarchyModel> formed of the layout.
    */
-  model = null;
+  model: GraphHierarchyModel | null = null;
 
   /**
    * Variable: edgesSet
@@ -190,9 +193,9 @@ class HierarchicalLayout extends GraphLayout {
   /**
    * Function: getModel
    *
-   * Returns the internal <mxGraphHierarchyModel> for this layout algorithm.
+   * Returns the internal <GraphHierarchyModel> for this layout algorithm.
    */
-  getModel() {
+  getModel(): GraphHierarchyModel {
     return this.model;
   }
 
@@ -203,10 +206,10 @@ class HierarchicalLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * parent - Parent <mxCell> that contains the children to be laid out.
+   * parent - Parent <Cell> that contains the children to be laid out.
    * roots - Optional starting roots of the layout.
    */
-  execute(parent, roots) {
+  execute(parent: Cell, roots) {
     this.parent = parent;
     const { model } = this.graph;
     this.edgesCache = new Dictionary();
@@ -295,7 +298,7 @@ class HierarchicalLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * parent - <mxCell> whose children should be checked.
+   * parent - <Cell> whose children should be checked.
    * vertices - array of vertices to limit search to
    */
   findRoots(parent, vertices) {
@@ -352,9 +355,9 @@ class HierarchicalLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * cell - <mxCell> whose edges should be returned.
+   * cell - <Cell> whose edges should be returned.
    */
-  getEdges(cell) {
+  getEdges(cell: Cell) {
     const cachedEdges = this.edgesCache.get(cell);
 
     if (cachedEdges != null) {
@@ -409,10 +412,10 @@ class HierarchicalLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * edge - <mxCell> whose edges should be returned.
+   * edge - <Cell> whose edges should be returned.
    * source - Boolean that specifies whether the source or target terminal is to be returned
    */
-  getVisibleTerminal(edge, source) {
+  getVisibleTerminal(edge: Cell, source: boolean) {
     let terminalCache = this.edgesTargetTermCache;
 
     if (source) {
@@ -596,7 +599,7 @@ class HierarchicalLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * cell - <mxCell> that represents the port.
+   * cell - <Cell> that represents the port.
    */
   isPort(cell) {
     if (cell != null && cell.geometry != null) {
@@ -617,7 +620,7 @@ class HierarchicalLayout extends GraphLayout {
    * target -
    * directed -
    */
-  getEdgesBetween(source, target, directed) {
+  getEdgesBetween(source: Cell, target: Cell, directed: boolean) {
     directed = directed != null ? directed : false;
     const edges = this.getEdges(source);
     const result = [];
@@ -648,18 +651,18 @@ class HierarchicalLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * vertex - <mxCell> that represents the vertex where the traversal starts.
+   * vertex - <Cell> that represents the vertex where the traversal starts.
    * directed - boolean indicating if edges should only be traversed
    * from source to target. Default is true.
-   * edge - Optional <mxCell> that represents the incoming edge. This is
+   * edge - Optional <Cell> that represents the incoming edge. This is
    * null for the first step of the traversal.
    * allVertices - Array of cell paths for the visited cells.
    */
   traverse(
-    vertex,
-    directed,
-    edge,
-    allVertices,
+    vertex: Cell,
+    directed: boolean,
+    edge: Cell | null,
+    allVertices: CellPath[],
     currentComp,
     hierarchyVertices,
     filledVertexSet

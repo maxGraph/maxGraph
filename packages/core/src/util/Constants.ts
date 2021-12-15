@@ -834,7 +834,7 @@ export const SHAPE_CLOUD = 'cloud';
  * Variable: SHAPE_TRIANGLE
  *
  * Name under which <mxTriangle> is registered in <mxCellRenderer>.
- * Default is triangle.
+ * Default is triangle. 
  */
 export const SHAPE_TRIANGLE = 'triangle';
 

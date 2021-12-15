@@ -12,6 +12,7 @@ import EventSource from '../../view/event/EventSource';
 import EventObject from '../../view/event/EventObject';
 import Client from '../../Client';
 import { br, write, writeln } from '../domUtils';
+import Cell from 'src/view/cell/Cell';
 
 /**
  * Creates a toolbar inside a given DOM node. The toolbar may contain icons,
@@ -26,23 +27,20 @@ import { br, write, writeln } from '../domUtils';
  * @extends {EventSource}
  */
 class MaxToolbar extends EventSource {
-  constructor(container) {
+  constructor(container: HTMLElement) {
     super();
-
     this.container = container;
   }
 
   /**
    * Reference to the DOM nodes that contains the toolbar.
    */
-  // container: HTMLElement | null;
-  container = null;
+  container: HTMLElement;
 
   /**
    * Specifies if events are handled. Default is true.
    */
-  // enabled: boolean;
-  enabled = true;
+  enabled: boolean = true;
 
   /**
    * Specifies if <resetMode> requires a forced flag of true for resetting
@@ -50,8 +48,7 @@ class MaxToolbar extends EventSource {
    * if the toolbar item is double clicked to avoid a reset after a single
    * use of the item.
    */
-  // noReset: boolean;
-  noReset = false;
+  noReset: boolean = false;
 
   /**
    * Boolean indicating if the default mode should be the last selected
@@ -62,8 +59,7 @@ class MaxToolbar extends EventSource {
    * of what was last selected. Otherwise, the selected item after a reset is
    * the previously selected item.
    */
-  // updateDefaultMode: boolean;
-  updateDefaultMode = true;
+  updateDefaultMode: boolean = true;
 
   /**
    * Function: addItem
@@ -83,7 +79,14 @@ class MaxToolbar extends EventSource {
    * factoryMethod - Optional factory method for popup menu, eg.
    * (menu, evt, cell)=> { menu.addItem('Hello, World!'); }
    */
-  addItem(title, icon, funct, pressedIcon, style, factoryMethod) {
+  addItem(
+    title: string, 
+    icon: string, 
+    funct: Function, 
+    pressedIcon: string, 
+    style: string, 
+    factoryMethod: (menu: string, evt: MouseEvent, cell: Cell) => void) 
+  {
     const img = document.createElement(icon != null ? 'img' : 'button');
     const initialClassName =
       style || (factoryMethod != null ? 'mxToolbarMode' : 'mxToolbarItem');
@@ -252,7 +255,7 @@ class MaxToolbar extends EventSource {
    * be selected at a time. The currently selected item is the default item
    * after a reset of the toolbar.
    */
-  addSwitchMode(title, icon, funct, pressedIcon, style) {
+  addSwitchMode(title: string, icon: string, funct: () => void, pressedIcon: string, style) {
     const img = document.createElement('img');
     img.initialClassName = style || 'mxToolbarMode';
     img.className = img.initialClassName;

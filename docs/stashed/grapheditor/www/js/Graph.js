@@ -2611,7 +2611,7 @@ Graph.prototype.setDefaultParent = function(cell)
  * 
  * Parameters:
  * 
- * cell - <mxCell> whose link should be returned.
+ * cell - <Cell> whose link should be returned.
  */
 Graph.prototype.getClickableLinkForCell = function(cell)
 {
@@ -3641,7 +3641,7 @@ Graph.prototype.isLabelMovable = function(cell)
  * 
  * Parameters:
  * 
- * parent - Optional <mxCell> whose children should be selected.
+ * parent - Optional <Cell> whose children should be selected.
  * Default is <defaultParent>.
  */
 Graph.prototype.selectAll = function(parent)
@@ -3666,7 +3666,7 @@ Graph.prototype.selectAll = function(parent)
  * 
  * vertices - Boolean indicating if vertices should be selected.
  * edges - Boolean indicating if edges should be selected.
- * parent - Optional <mxCell> that acts as the root of the recursion.
+ * parent - Optional <Cell> that acts as the root of the recursion.
  * Default is <defaultParent>.
  */
 Graph.prototype.selectCells = function(vertices, edges, parent)
@@ -3689,7 +3689,7 @@ Graph.prototype.selectCells = function(vertices, edges, parent)
  * 
  * x - X-coordinate of the location to be checked.
  * y - Y-coordinate of the location to be checked.
- * parent - <mxCell> that should be used as the root of the recursion.
+ * parent - <Cell> that should be used as the root of the recursion.
  * Default is <defaultParent>.
  */
 Graph.prototype.getSwimlaneAt = (x, y, parent) =>

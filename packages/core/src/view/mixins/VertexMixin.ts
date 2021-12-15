@@ -76,10 +76,10 @@ const VertexMixin: PartialType = {
   /**
    * Function: insertVertex
    *
-   * Adds a new vertex into the given parent <mxCell> using value as the user
+   * Adds a new vertex into the given parent <Cell> using value as the user
    * object and the given coordinates as the <mxGeometry> of the new vertex.
    * The id and style are used for the respective properties of the new
-   * <mxCell>, which is returned.
+   * <Cell>, which is returned.
    *
    * When adding new vertices from a mouse event, one should take into
    * account the offset of the graph container and the scale and translation
@@ -103,7 +103,7 @@ const VertexMixin: PartialType = {
    *
    * Parameters:
    *
-   * parent - <mxCell> that specifies the parent of the new vertex.
+   * parent - <Cell> that specifies the parent of the new vertex.
    * id - Optional string that defines the Id of the new vertex.
    * value - Object to be used as the user object.
    * x - Integer that defines the x coordinate of the vertex.

@@ -91,7 +91,7 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
    * Variable: factoryMethod
    *
    * Function that is used to create the popup menu. The function takes the
-   * current panning handler, the <mxCell> under the mouse and the mouse
+   * current panning handler, the <Cell> under the mouse and the mouse
    * event that triggered the call as arguments.
    */
   factoryMethod?: (handler: PopupMenuItem, cell: Cell | null, me: MouseEvent) => void;
@@ -422,8 +422,10 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
    * parent - Optional item returned by <addItem>.
    * force - Optional boolean to ignore <smartSeparators>. Default is false.
    */
-  addSeparator(parent: PopupMenuItem, force = false) {
-    parent = parent || this;
+  addSeparator(parent: PopupMenuItem | null=null, force = false) {
+    // Defaults to this instance if no parent (submenu) specified, but 
+    // all the necessary DOM elements are present as in PopupMenuItem
+    parent = <PopupMenuItem>(parent || this);
 
     if (this.smartSeparators && !force) {
       parent.willAddSeparator = true;

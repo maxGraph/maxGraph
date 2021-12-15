@@ -70,7 +70,7 @@ if (mxLoadResources) {
  * ### Actions:
  *
  * Actions are functions stored in the <actions> array under their names. The
- * functions take the <Editor> as the first, and an optional <mxCell> as the
+ * functions take the <Editor> as the first, and an optional <Cell> as the
  * second argument and are invoked using <execute>. Any additional arguments
  * passed to execute are passed on to the action as-is.
  *

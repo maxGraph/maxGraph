@@ -12,15 +12,7 @@ import CellArray from 'src/view/cell/CellArray';
  * Returns a new, empty XML document.
  */
 export const createXmlDocument = () => {
-  let doc = null;
-
-  if (document.implementation && document.implementation.createDocument) {
-    doc = document.implementation.createDocument('', '', null);
-  } else if ('ActiveXObject' in window) {
-    doc = createMsXmlDocument();
-  }
-
-  return doc;
+  return document.implementation.createDocument('', '', null);
 };
 
 /**
@@ -108,7 +100,7 @@ export const getViewXml = (
  * linefeed - Optional string that linefeeds are converted into. Default is
  * &#xa;
  */
-export const getXml = (node, linefeed) => {
+export const getXml = (node: Element, linefeed: string='&#xa;'): string => {
   let xml = '';
 
   if (window.XMLSerializer != null) {
@@ -144,7 +136,7 @@ export const getXml = (node, linefeed) => {
  * Default is an empty string.
  * newline - Option string that represents a linefeed. Default is '\n'.
  */
-export const getPrettyXml = (node, tab, indent, newline, ns) => {
+export const getPrettyXml = (node: Element, tab: string, indent: string, newline: string, ns: string) => {
   const result = [];
 
   if (node != null) {

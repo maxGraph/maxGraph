@@ -373,7 +373,7 @@ class CellMarker extends EventSource {
   /**
    * Function: getCell
    *
-   * Returns the <mxCell> for the given event and cell. This returns the
+   * Returns the <Cell> for the given event and cell. This returns the
    * given cell.
    */
   getCell(me: InternalMouseEvent) {

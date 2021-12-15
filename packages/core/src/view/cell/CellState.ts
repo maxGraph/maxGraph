@@ -39,7 +39,7 @@ import CellOverlay from './CellOverlay';
  * Parameters:
  *
  * view - <mxGraphView> that contains the state.
- * cell - <mxCell> that this state represents.
+ * cell - <Cell> that this state represents.
  * style - Array of key, value pairs that constitute the style.
  */
 class CellState extends Rectangle {
@@ -69,7 +69,7 @@ class CellState extends Rectangle {
   /**
    * Variable: cell
    *
-   * Reference to the <mxCell> that is represented by this state.
+   * Reference to the <Cell> that is represented by this state.
    */
   cell: Cell;
 

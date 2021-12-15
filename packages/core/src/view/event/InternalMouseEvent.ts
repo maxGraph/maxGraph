@@ -181,7 +181,7 @@ class InternalMouseEvent {
   /**
    * Function: getCell
    *
-   * Returns the <mxCell> in <state> is not null.
+   * Returns the <Cell> in <state> is not null.
    */
   getCell() {
     const state = this.getState();

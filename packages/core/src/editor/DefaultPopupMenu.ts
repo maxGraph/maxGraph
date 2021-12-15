@@ -9,6 +9,7 @@ import PopupMenu from '../util/gui/PopupMenu';
 import { getTextContent } from '../util/domUtils';
 import Resources from '../util/Resources';
 import Editor from './Editor';
+import { PopupMenuItem } from 'src/types';
 
 /**
  * Creates popupmenus for mouse events.  This object holds an XML node which is a description of the popup menu to be created.  In {@link createMenu}, the configuration is applied to the context and the resulting menu items are added to the menu dynamically.  See {@link createMenu} for a description of the configuration format.
@@ -132,12 +133,10 @@ class DefaultPopupMenu {
    * @param cell - Optional {@link mxCell} which is under the mousepointer.
    * @param evt - Optional mouse event which triggered the menu.
    */
-  // createMenu(editor: Editor, menu: mxPopupMenu, cell?: mxCell, evt?: MouseEvent): void;
   createMenu(editor: Editor, menu: PopupMenu, cell?: Cell, evt?: MouseEvent) {
     if (this.config != null) {
       const conditions = this.createConditions(editor, cell, evt);
-      const item = this.config.firstChild;
-
+      const item = <Element>this.config.firstChild;
       this.addItems(editor, menu, cell, evt, conditions, item, null);
     }
   }
@@ -151,13 +150,21 @@ class DefaultPopupMenu {
    *
    * editor - Enclosing <Editor> instance.
    * menu - <mxPopupMenu> that is used for adding items and separators.
-   * cell - Optional <mxCell> which is under the mousepointer.
+   * cell - Optional <Cell> which is under the mousepointer.
    * evt - Optional mouse event which triggered the menu.
    * conditions - Array of names boolean conditions.
    * item - XML node that represents the current menu item.
    * parent - DOM node that represents the parent menu item.
    */
-  addItems(editor: Editor, menu: PopupMenu, cell: Cell, evt: MouseEvent, conditions, item: Element, parent: Element) {
+  addItems(
+    editor: Editor, 
+    menu: PopupMenu, 
+    cell: Cell | null=null, 
+    evt: MouseEvent | null=null, 
+    conditions: any, 
+    item: Element, 
+    parent: PopupMenuItem | null=null
+  ) {
     let addSeparator = false;
 
     while (item != null) {
@@ -165,7 +172,7 @@ class DefaultPopupMenu {
         const condition = item.getAttribute('if');
 
         if (condition == null || conditions[condition]) {
-          let as = item.getAttribute('as');
+          let as = <string>item.getAttribute('as');
           as = Resources.get(as) || as;
           const funct = eval(getTextContent(item));
           const action = item.getAttribute('action');
@@ -201,6 +208,7 @@ class DefaultPopupMenu {
             cell,
             evt,
             conditions,
+            // @ts-ignore
             item.firstChild,
             row
           );
@@ -209,6 +217,7 @@ class DefaultPopupMenu {
         addSeparator = true;
       }
 
+      // @ts-ignore
       item = item.nextSibling;
     }
   }
@@ -226,9 +235,9 @@ class DefaultPopupMenu {
    * icon - Optional URL that represents the icon of the menu item.
    * action - Optional name of the action to execute in the given editor.
    * funct - Optional function to execute before the optional action. The
-   * function takes an <Editor>, the <mxCell> under the mouse and the
+   * function takes an <Editor>, the <Cell> under the mouse and the
    * mouse event that triggered the call.
-   * cell - Optional <mxCell> to use as an argument for the action.
+   * cell - Optional <Cell> to use as an argument for the action.
    * parent - DOM node that represents the parent menu item.
    * iconCls - Optional CSS class for the menu icon.
    * enabled - Optional boolean that specifies if the menu item is enabled.
@@ -237,16 +246,16 @@ class DefaultPopupMenu {
   addAction(
     menu: PopupMenu,
     editor: Editor,
-    lab?: string,
+    lab: string,
     icon?: string,
-    funct,
+    funct: Function | null=null,
     action?: string,
     cell?: Cell,
-    parent: Element,
+    parent?: PopupMenuItem,
     iconCls?: string,
     enabled: boolean=true
   ) {
-    const clickHandler = evt => {
+    const clickHandler = (evt: MouseEvent) => {
       if (typeof funct === 'function') {
         funct.call(editor, editor, cell, evt);
       }
@@ -254,7 +263,7 @@ class DefaultPopupMenu {
         editor.execute(action, cell, evt);
       }
     };
-    return menu.addItem(lab, icon, clickHandler, parent, iconCls, enabled);
+    return menu.addItem(lab, icon || null, clickHandler, parent, iconCls, enabled);
   }
 
   /**
@@ -264,14 +273,13 @@ class DefaultPopupMenu {
    * @param cell
    * @param evt
    */
-  // createConditions(editor: Editor, cell: mxCell, evt: MouseEvent): void;
-  createConditions(editor, cell, evt) {
+  createConditions(editor: Editor, cell: Cell | null=null, evt: MouseEvent | null=null): void {
     // Creates array with conditions
     const model = editor.graph.getModel();
-    const childCount = cell.getChildCount();
+    const childCount = cell ? cell.getChildCount() : 0;
 
     // Adds some frequently used conditions
-    const conditions = [];
+    const conditions: any = {};
     conditions.nocell = cell == null;
     conditions.ncells = editor.graph.getSelectionCount() > 1;
     conditions.notRoot =

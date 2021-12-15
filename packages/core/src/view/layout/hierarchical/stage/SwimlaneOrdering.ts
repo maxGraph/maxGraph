@@ -6,8 +6,10 @@
  */
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import { remove } from '../../../../util/utils';
-import CellPath from '../../../../cell/datatypes/CellPath';
+import CellPath from '../../../cell/CellPath';
 import { clone } from '../../../../util/cloneUtils';
+import HierarchicalLayout from '../HierarchicalLayout';
+import Cell from 'src/view/cell/Cell';
 
 /**
  * Class: SwimlaneOrdering
@@ -20,7 +22,7 @@ import { clone } from '../../../../util/cloneUtils';
  * Creates a cycle remover for the given internal model.
  */
 class SwimlaneOrdering extends HierarchicalLayoutStage {
-  constructor(layout) {
+  constructor(layout: HierarchicalLayout) {
     super();
 
     this.layout = layout;
@@ -31,7 +33,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
    *
    * Reference to the enclosing <HierarchicalLayout>.
    */
-  layout = null;
+  layout: HierarchicalLayout;
 
   /**
    * Function: execute
@@ -40,9 +42,9 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
    * and creates the resulting laid out graph within that facade for further
    * use.
    */
-  execute(parent) {
+  execute(parent: Cell) {
     const model = this.layout.getModel();
-    const seenNodes = {};
+    const seenNodes: { [key: string]: Cell } = {};
     const unseenNodes = clone(model.vertexMapper, null, true);
 
     // Perform a dfs through the internal model. If a cycle is found,
@@ -59,7 +61,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
     }
 
     model.visit(
-      (parent, node, connectingEdge, layer, seen) => {
+      (parent: Cell, node: Cell, connectingEdge: Cell, layer: any, seen: any) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
         // relationship to that edge in the parent and the cell

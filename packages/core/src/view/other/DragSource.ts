@@ -33,7 +33,7 @@ import Guide from '../../util/Guide';
 import Cell from '../cell/Cell';
 import GraphHandler from '../GraphHandler';
 
-type DropHandler = (
+export type DropHandler = (
   graph: Graph,
   evt: MouseEvent,
   cell: Cell | null,

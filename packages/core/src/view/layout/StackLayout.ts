@@ -442,7 +442,7 @@ class StackLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * child - The given child of <mxCell>.
+   * child - The given child of <Cell>.
    * geo - The specific geometry of <mxGeometry>.
    */
   setChildGeometry(child: Cell, geo: Geometry) {
@@ -466,7 +466,7 @@ class StackLayout extends GraphLayout {
    *
    * Parameters:
    *
-   * parent - The given parent of <mxCell>.
+   * parent - The given parent of <Cell>.
    * pgeo - The new <mxGeometry> for parent.
    * last - The last <mxGeometry>.
    */

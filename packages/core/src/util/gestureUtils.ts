@@ -1,7 +1,8 @@
-import DragSource from '../view/other/DragSource';
+import DragSource, { DropHandler } from '../view/other/DragSource';
 import Point from '../view/geometry/Point';
 import { TOOLTIP_VERTICAL_OFFSET } from './constants';
 import { Graph } from 'src/view/Graph';
+import Cell from 'src/view/cell/Cell';
 
 /**
  * Function: makeDraggable
@@ -74,14 +75,14 @@ import { Graph } from 'src/view/Graph';
 export const makeDraggable = (
   element: Element,
   graphF: Graph | Function,
-  funct: Function,
+  funct: DropHandler,
   dragElement: Element,
   dx: number,
   dy: number,
   autoscroll: boolean,
   scalePreview: boolean,
   highlightDropTargets: boolean,
-  getDropTarget: Function
+  getDropTarget: (graph: Graph, x: number, y: number, evt: MouseEvent) => Cell | null
 ) => {
   const dragSource = new DragSource(element, funct);
   dragSource.dragOffset = new Point(
@@ -110,13 +111,14 @@ export const makeDraggable = (
 
   // Translates switches into dragSource customizations
   if (dragElement != null) {
+    // @ts-ignore
     dragSource.createDragElement = () => {
       return dragElement.cloneNode(true);
     };
 
     if (scalePreview) {
       dragSource.createPreviewElement = (graph) => {
-        const elt = dragElement.cloneNode(true);
+        const elt = <HTMLElement>dragElement.cloneNode(true);
 
         const w = parseInt(elt.style.width);
         const h = parseInt(elt.style.height);

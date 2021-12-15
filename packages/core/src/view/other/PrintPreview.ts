@@ -767,14 +767,11 @@ class PrintPreview {
   /**
    * Returns the root cell for painting the graph.
    */
-  // getRoot(): mxCell;
-  getRoot() {
+  getRoot(): Cell | null {
     let root = this.graph.view.currentRoot;
-
     if (root == null) {
       root = this.graph.getModel().getRoot();
     }
-
     return root;
   }
 
@@ -952,7 +949,7 @@ class PrintPreview {
   /**
    * Returns the link for the given cell state. This returns null.
    */
-  getLinkForCellState(state: CellState): string {
+  getLinkForCellState(state: CellState): string | null {
     return this.graph.getLinkForCell(state.cell);
   }
 
@@ -967,8 +964,8 @@ class PrintPreview {
       img.style.position = 'absolute';
       img.style.marginLeft = `${Math.round(dx * this.scale)}px`;
       img.style.marginTop = `${Math.round(dy * this.scale)}px`;
-      img.setAttribute('width', Math.round(this.scale * bg.width));
-      img.setAttribute('height', Math.round(this.scale * bg.height));
+      img.setAttribute('width', String(Math.round(this.scale * bg.width)));
+      img.setAttribute('height', String(Math.round(this.scale * bg.height)));
       img.src = bg.src;
 
       div.insertBefore(img, div.firstChild);

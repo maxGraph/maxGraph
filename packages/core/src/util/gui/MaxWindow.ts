@@ -205,11 +205,12 @@ class MaxWindow extends EventSource {
     }
   }
 
+  resize: HTMLElement | null = null;
+
   /**
    * Initializes the DOM tree that represents the window.
    */
-  // init(x: number, y: number, width: number, height: number, style: string): void;
-  init(x, y, width, height, style) {
+  init(x: number, y: number, width: number, height: number, style: string): void {
     style = style != null ? style : 'MaxWindow';
 
     this.div = document.createElement('div');
@@ -290,71 +291,60 @@ class MaxWindow extends EventSource {
   /**
    * URL of the image to be used for the close icon in the titlebar.
    */
-  // closeImage: string; //  = Client.imageBasePath + '/close.gif';
   closeImage = `${Client.imageBasePath}/close.gif`;
 
   /**
    * URL of the image to be used for the minimize icon in the titlebar.
    */
-  // minimizeImage: string; // = Client.imageBasePath + '/minimize.gif';
   minimizeImage = `${Client.imageBasePath}/minimize.gif`;
 
   /**
    * URL of the image to be used for the normalize icon in the titlebar.
    */
-  // normalizeImage: string; // = Client.imageBasePath + '/normalize.gif';
   normalizeImage = `${Client.imageBasePath}/normalize.gif`;
 
   /**
    * URL of the image to be used for the maximize icon in the titlebar.
    */
-  // maximizeImage: string; // = Client.imageBasePath + '/maximize.gif';
   maximizeImage = `${Client.imageBasePath}/maximize.gif`;
 
   /**
    * URL of the image to be used for the resize icon.
    */
-  // resizeImage: string; // = Client.imageBasePath + '/resize.gif';
   resizeImage = `${Client.imageBasePath}/resize.gif`;
 
   /**
    * Boolean flag that represents the visible state of the window.
    */
-  // visible: boolean; // = false;
-  visible = false;
+  visible: boolean = false;
 
   /**
    * <mxRectangle> that specifies the minimum width and height of the window.
    * Default is (50, 40).
    */
-  // minimumSize: mxRectangle; // = new mxRectangle(0, 0, 50, 40);
   minimumSize = new Rectangle(0, 0, 50, 40);
 
   /**
    * Specifies if the window should be destroyed when it is closed. If this
    * is false then the window is hidden using <setVisible>. Default is true.
    */
-  // destroyOnClose: boolean; // = true;
-  destroyOnClose = true;
+  destroyOnClose: boolean = true;
 
   /**
    * Reference to the DOM node (TD) that contains the title.
    */
-  // title: HTMLElement;
-  title = null;
+  title: HTMLElement | null = null;
 
   /**
    * Reference to the DOM node that represents the window content.
    */
-  // content: HTMLElement;
-  content = null;
+  content: HTMLElement | null = null;
 
   /**
    * Sets the window title to the given string. HTML markup inside the title
    * will be escaped.
    */
-  // setTitle(title: HTMLElement): void;
-  setTitle(title) {
+  setTitle(title: HTMLElement): void {
     // Removes all text content nodes (normally just one)
     let child = this.title.firstChild;
 
@@ -375,8 +365,7 @@ class MaxWindow extends EventSource {
   /**
    * Sets if the window contents should be scrollable.
    */
-  // setScrollable(scrollable: boolean): void;
-  setScrollable(scrollable) {
+  setScrollable(scrollable: boolean): void {
     // Workaround for hang in Presto 2.5.22 (Opera 10.5)
     if (navigator.userAgent == null || navigator.userAgent.indexOf('Presto/2.5') < 0) {
       if (scrollable) {
@@ -390,8 +379,7 @@ class MaxWindow extends EventSource {
   /**
    * Puts the window on top of all other windows.
    */
-  // activate(): void;
-  activate() {
+  activate(): void {
     if (MaxWindow.activeWindow !== this) {
       const style = getCurrentStyle(this.getElement());
       const index = style != null ? style.zIndex : 3;
@@ -417,28 +405,24 @@ class MaxWindow extends EventSource {
   /**
    * Returuns the outermost DOM node that makes up the window.
    */
-  // getElement(): HTMLElement;
-  getElement() {
+  getElement(): HTMLElement {
     return this.div;
   }
 
   /**
    * Makes sure the window is inside the client area of the window.
    */
-  // fit(): void;
-  fit() {
+  fit(): void {
     fit(this.div);
   }
 
   /**
    * Returns true if the window is resizable.
    */
-  // isResizable(): boolean;
-  isResizable() {
+  isResizable(): boolean {
     if (this.resize != null) {
       return this.resize.style.display !== 'none';
     }
-
     return false;
   }
 
@@ -454,8 +438,7 @@ class MaxWindow extends EventSource {
    * }
    * ```
    */
-  // setResizable(resizable: boolean): void;
-  setResizable(resizable) {
+  setResizable(resizable: boolean): void {
     if (resizable) {
       if (this.resize == null) {
         this.resize = document.createElement('img');
@@ -529,8 +512,7 @@ class MaxWindow extends EventSource {
   /**
    * Sets the size of the window.
    */
-  // setSize(width: number, height: number): void;
-  setSize(width, height) {
+  setSize(width: number, height: number): void {
     width = Math.max(this.minimumSize.width, width);
     height = Math.max(this.minimumSize.height, height);
 
@@ -549,8 +531,7 @@ class MaxWindow extends EventSource {
   /**
    * Sets if the window is minimizable.
    */
-  // setMinimizable(minimizable: boolean): void;
-  setMinimizable(minimizable) {
+  setMinimizable(minimizable: boolean): void {
     this.minimize.style.display = minimizable ? '' : 'none';
   }
 
@@ -559,8 +540,7 @@ class MaxWindow extends EventSource {
    * A width or height of 0 means keep the existing width or height. This
    * implementation returns the height of the window title and keeps the width.
    */
-  // getMinimumSize(): mxRectangle;
-  getMinimumSize() {
+  getMinimumSize(): Rectangle {
     return new Rectangle(0, 0, 0, this.title.offsetHeight);
   }
 

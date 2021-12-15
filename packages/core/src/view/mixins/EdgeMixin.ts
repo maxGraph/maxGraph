@@ -322,9 +322,9 @@ const EdgeMixin: PartialType = {
    *
    * Parameters:
    *
-   * edge - <mxCell> that represents the edge to be splitted.
+   * edge - <Cell> that represents the edge to be splitted.
    * cells - <mxCells> that represents the cells to insert into the edge.
-   * newEdge - <mxCell> that represents the edge to be inserted.
+   * newEdge - <Cell> that represents the edge to be inserted.
    * dx - Optional integer that specifies the vector to move the cells.
    * dy - Optional integer that specifies the vector to move the cells.
    * x - Integer that specifies the x-coordinate of the drop location.
@@ -529,7 +529,7 @@ const EdgeMixin: PartialType = {
    *
    * Parameters:
    *
-   * cell - <mxCell> whose edges should be returned.
+   * cell - <Cell> whose edges should be returned.
    * parent - Optional parent of the opposite end for an edge to be
    * returned.
    * incoming - Optional boolean that specifies if incoming edges should

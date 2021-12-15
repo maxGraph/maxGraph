@@ -682,8 +682,8 @@ class EdgeHandler {
    *
    * Parameters:
    *
-   * source - <mxCell> that represents the source terminal.
-   * target - <mxCell> that represents the target terminal.
+   * source - <Cell> that represents the source terminal.
+   * target - <Cell> that represents the target terminal.
    */
   validateConnection(source: Cell | null, target: Cell | null) {
     return this.graph.getEdgeValidationError(this.state.cell, source, target);
@@ -1864,7 +1864,7 @@ class EdgeHandler {
    *
    * Parameters:
    *
-   * edge - <mxCell> that represents the edge.
+   * edge - <Cell> that represents the edge.
    * x - Integer that specifies the x-coordinate of the new location.
    * y - Integer that specifies the y-coordinate of the new location.
    */
@@ -1920,8 +1920,8 @@ class EdgeHandler {
    *
    * Parameters:
    *
-   * edge - <mxCell> that represents the edge to be reconnected.
-   * terminal - <mxCell> that represents the new terminal.
+   * edge - <Cell> that represents the edge to be reconnected.
+   * terminal - <Cell> that represents the new terminal.
    * isSource - Boolean indicating if the new terminal is the source or
    * target terminal.
    * isClone - Boolean indicating if the new connection should be a clone of

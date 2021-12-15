@@ -1404,7 +1404,7 @@ class VertexHandler {
    *
    * Parameters:
    *
-   * cell - <mxCell> to be rotated.
+   * cell - <Cell> to be rotated.
    * angle - Angle in degrees.
    */
   rotateCell(cell: Cell, angle: number, parent?: Cell) {

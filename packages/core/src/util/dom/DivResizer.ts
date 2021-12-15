@@ -5,6 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
+import InternalEvent from 'src/view/event/InternalEvent';
 import { getCurrentStyle } from '../utils';
 
 /**
@@ -31,7 +32,7 @@ import { getCurrentStyle } from '../utils';
  * @class DivResizer
  */
 class DivResizer {
-  constructor(div, container) {
+  constructor(div: HTMLElement, container: HTMLElement | typeof globalThis | null) {
     if (div.nodeName.toLowerCase() == 'div') {
       if (container == null) {
         container = window;
@@ -45,7 +46,7 @@ class DivResizer {
         this.resizeHeight = style.height == 'auto';
       }
 
-      mxEvent.addListener(container, 'resize', evt => {
+      InternalEvent.addListener(container, 'resize', (evt: MouseEvent) => {
         if (!this.handlingResize) {
           this.handlingResize = true;
           this.resize();
@@ -56,6 +57,9 @@ class DivResizer {
       this.resize();
     }
   }
+
+  // @ts-ignore
+  div: HTMLElement;
 
   /**
    * Boolean specifying if the width should be updated.

@@ -229,7 +229,7 @@ class DefaultToolbar {
    * pressed - Optional URL of the icon that represents the pressed state.
    * insert - Optional JavaScript function that handles an insert of the new
    * cell. This function takes the <Editor>, new cell to be inserted, mouse
-   * event and optional <mxCell> under the mouse pointer as arguments.
+   * event and optional <Cell> under the mouse pointer as arguments.
    * toggle - Optional boolean that specifies if the item can be toggled.
    * Default is true.
    */

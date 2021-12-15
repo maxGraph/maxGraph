@@ -198,9 +198,9 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  *
  * graph - Reference to the enclosing <mxGraph>.
  * factoryMethod - Optional function to create the edge. The function takes
- * the source and target <mxCell> as the first and second argument and an
+ * the source and target <Cell> as the first and second argument and an
  * optional cell style from the preview as the third argument. It returns
- * the <mxCell> that represents the new edge.
+ * the <Cell> that represents the new edge.
  */
 class ConnectionHandler extends EventSource implements GraphPlugin {
   static pluginId = 'ConnectionHandler';
@@ -230,8 +230,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Variable: factoryMethod
    *
    * Function that is used for creating new edges. The function takes the
-   * source and target <mxCell> as the first and second argument and returns
-   * a new <mxCell> that represents the edge. This is used in <createEdge>.
+   * source and target <Cell> as the first and second argument and returns
+   * a new <Cell> that represents the edge. This is used in <createEdge>.
    */
   factoryMethod: FactoryMethod | null = null;
 
@@ -506,11 +506,11 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    *
    * Parameters:
    *
-   * edge - <mxCell> that represents the edge to be inserted.
-   * source - <mxCell> that represents the source terminal.
-   * target - <mxCell> that represents the target terminal.
+   * edge - <Cell> that represents the edge to be inserted.
+   * source - <Cell> that represents the source terminal.
+   * target - <Cell> that represents the target terminal.
    * evt - Mousedown event of the connect gesture.
-   * dropTarget - <mxCell> that represents the cell under the mouse when it was
+   * dropTarget - <Cell> that represents the cell under the mouse when it was
    * released.
    */
   isInsertBefore(
@@ -717,7 +717,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    *
    * Parameters:
    *
-   * cell - <mxCell> that represents the source terminal.
+   * cell - <Cell> that represents the source terminal.
    * me - <mxMouseEvent> that is associated with this call.
    */
   isValidSource(cell: Cell, me: InternalMouseEvent) {
@@ -733,7 +733,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    *
    * Parameters:
    *
-   * cell - <mxCell> that represents the target terminal.
+   * cell - <Cell> that represents the target terminal.
    */
   isValidTarget(cell: Cell) {
     return true;
@@ -748,8 +748,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    *
    * Parameters:
    *
-   * source - <mxCell> that represents the source terminal.
-   * target - <mxCell> that represents the target terminal.
+   * source - <Cell> that represents the source terminal.
+   * target - <Cell> that represents the target terminal.
    */
   validateConnection(source: Cell, target: Cell) {
     if (!this.isValidTarget(target)) {
@@ -1875,10 +1875,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    *
    * Parameters:
    *
-   * source - <mxCell> that represents the source terminal.
-   * target - <mxCell> that represents the target terminal.
+   * source - <Cell> that represents the source terminal.
+   * target - <Cell> that represents the target terminal.
    * evt - Mousedown event of the connect gesture.
-   * dropTarget - <mxCell> that represents the cell under the mouse when it was
+   * dropTarget - <Cell> that represents the cell under the mouse when it was
    * released.
    */
   connect(
@@ -2110,7 +2110,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Parameters:
    *
    * evt - Mousedown event of the connect gesture.
-   * source - <mxCell> that represents the source terminal.
+   * source - <Cell> that represents the source terminal.
    */
   createTargetVertex(evt: MouseEvent, source: Cell) {
     // Uses the first non-relative source
@@ -2180,8 +2180,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Parameters:
    *
    * value - Value to be used for creating the edge.
-   * source - <mxCell> that represents the source terminal.
-   * target - <mxCell> that represents the target terminal.
+   * source - <Cell> that represents the source terminal.
+   * target - <Cell> that represents the target terminal.
    * style - Optional style from the preview edge.
    */
   createEdge(value: any, source: Cell | null, target: Cell | null, style: string = '') {

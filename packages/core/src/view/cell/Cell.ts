@@ -352,7 +352,7 @@ class Cell {
    *
    * Parameters:
    *
-   * @param parent<mxCell> that represents the new parent.
+   * @param parent<Cell> that represents the new parent.
    */
   setParent(parent: Cell | null) {
     this.parent = parent;
@@ -425,7 +425,7 @@ class Cell {
    *
    * Parameters:
    *
-   * @param child<mxCell> to be inserted or appended to the child array.
+   * @param child<Cell> to be inserted or appended to the child array.
    * @param indexOptional integer that specifies the index at which the child
    * should be inserted into the child array.
    */
@@ -492,7 +492,7 @@ class Cell {
    *
    * Parameters:
    *
-   * @param edge<mxCell> whose index in <edges> should be returned.
+   * @param edge<Cell> whose index in <edges> should be returned.
    */
   getEdgeIndex(edge: Cell) {
     return this.edges.indexOf(edge);
@@ -515,7 +515,7 @@ class Cell {
    *
    * Parameters:
    *
-   * @param edge              <mxCell> to be inserted into the edge array.
+   * @param edge              <Cell> to be inserted into the edge array.
    * @param isOutgoing Boolean that specifies if the edge is outgoing.
    */
   insertEdge(edge: Cell, isOutgoing: boolean = false) {
@@ -539,7 +539,7 @@ class Cell {
    *
    * Parameters:
    *
-   * @param edge<mxCell> to be removed from the edge array.
+   * @param edge<Cell> to be removed from the edge array.
    * @param isOutgoing Boolean that specifies if the edge is outgoing.
    */
   removeEdge(edge: Cell | null, isOutgoing: boolean = false): Cell | null {

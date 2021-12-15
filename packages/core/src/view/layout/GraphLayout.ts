@@ -71,7 +71,7 @@ class GraphLayout {
    *
    * Parameters:
    *
-   * cell - <mxCell> which has been moved.
+   * cell - <Cell> which has been moved.
    * bounds - <mxRectangle> that represents the new cell bounds.
    */
   resizeCell(cell: Cell, bounds: Rectangle, prev?: Cell) {}

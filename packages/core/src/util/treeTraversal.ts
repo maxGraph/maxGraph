@@ -1,5 +1,5 @@
 import Cell from '../view/cell/Cell';
-import CellArray from './datatypes/CellArray';
+import CellArray from '../view/cell/CellArray';
 import Dictionary from './Dictionary';
 import { Graph } from '../view/Graph';
 
@@ -93,12 +93,12 @@ export function findTreeRoots(
  *
  * Parameters:
  *
- * vertex - <mxCell> that represents the vertex where the traversal starts.
+ * vertex - <Cell> that represents the vertex where the traversal starts.
  * directed - Optional boolean indicating if edges should only be traversed
  * from source to target. Default is true.
  * func - Visitor function that takes the current vertex and the incoming
  * edge as arguments. The traversal stops if the function returns false.
- * edge - Optional <mxCell> that represents the incoming edge. This is
+ * edge - Optional <Cell> that represents the incoming edge. This is
  * null for the first step of the traversal.
  * visited - Optional <mxDictionary> from cells to true for the visited cells.
  * inverse - Optional boolean to traverse in inverse direction. Default is false.

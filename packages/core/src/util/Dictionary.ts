@@ -52,8 +52,7 @@ class Dictionary<T, U> {
    * Returns the value for the given key.
    */
   get(key: T) {
-    const id = ObjectIdentity.get(key);
-
+    const id = <string>ObjectIdentity.get(key);
     return this.map[id] ?? null;
   }
 
@@ -64,10 +63,9 @@ class Dictionary<T, U> {
    * value for that key.
    */
   put(key: T, value: U) {
-    const id = ObjectIdentity.get(key);
+    const id = <string>ObjectIdentity.get(key);
     const previous = this.map[id];
     this.map[id] = value;
-
     return previous ?? null;
   }
 
@@ -78,10 +76,9 @@ class Dictionary<T, U> {
    * has been removed.
    */
   remove(key: T) {
-    const id = ObjectIdentity.get(key);
+    const id = <string>ObjectIdentity.get(key);
     const previous = this.map[id];
     delete this.map[id];
-
     return previous ?? null;
   }
 
@@ -92,11 +89,9 @@ class Dictionary<T, U> {
    */
   getKeys() {
     const result = [];
-
     for (const key in this.map) {
       result.push(key);
     }
-
     return result;
   }
 
@@ -107,11 +102,9 @@ class Dictionary<T, U> {
    */
   getValues() {
     const result = [];
-
     for (const key in this.map) {
       result.push(this.map[key]);
     }
-
     return result;
   }
 
