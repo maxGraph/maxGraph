@@ -11,8 +11,9 @@ import PopupMenu from './PopupMenu';
 import EventSource from '../../view/event/EventSource';
 import EventObject from '../../view/event/EventObject';
 import Client from '../../Client';
-import { br, write, writeln } from '../domUtils';
+import { br, write, writeln } from '../dom/domUtils';
 import Cell from 'src/view/cell/Cell';
+import { KeyboardEventListener, MouseEventListener } from 'src/types';
 
 /**
  * Creates a toolbar inside a given DOM node. The toolbar may contain icons,
@@ -32,10 +33,15 @@ class MaxToolbar extends EventSource {
     this.container = container;
   }
 
+  menu: PopupMenu | null = null;
+  currentImg: HTMLImageElement | HTMLButtonElement | null = null;
+  selectedMode: HTMLImageElement | null = null;
+  defaultMode: HTMLImageElement | HTMLButtonElement | null = null;
+
   /**
    * Reference to the DOM nodes that contains the toolbar.
    */
-  container: HTMLElement;
+  container: HTMLElement | null = null;
 
   /**
    * Specifies if events are handled. Default is true.
@@ -82,7 +88,7 @@ class MaxToolbar extends EventSource {
   addItem(
     title: string, 
     icon: string, 
-    funct: Function, 
+    funct: MouseEventListener | KeyboardEventListener, 
     pressedIcon: string, 
     style: string, 
     factoryMethod: (menu: string, evt: MouseEvent, cell: Cell) => void) 
@@ -112,7 +118,7 @@ class MaxToolbar extends EventSource {
       }
     }
 
-    const mouseHandler = (evt) => {
+    const mouseHandler = (evt: MouseEvent) => {
       if (pressedIcon != null) {
         img.setAttribute('src', icon);
       } else {
@@ -180,8 +186,7 @@ class MaxToolbar extends EventSource {
    *
    * @param style - Optional style classname. Default is mxToolbarCombo.
    */
-  // addCombo(style?: string): HTMLSelectElement;
-  addCombo(style) {
+  addCombo(style?: string): HTMLSelectElement {
     const div = document.createElement('div');
     div.style.display = 'inline';
     div.className = 'mxToolbarComboContainer';
@@ -203,8 +208,7 @@ class MaxToolbar extends EventSource {
    * @param title - String that specifies the title of the default element.
    * @param style - Optional style classname. Default is mxToolbarCombo.
    */
-  // addActionCombo(title: string, style?: string): HTMLSelectElement;
-  addActionCombo(title, style) {
+  addActionCombo(title: string, style?: string): HTMLSelectElement {
     const select = document.createElement('select');
     select.className = style || 'mxToolbarCombo';
     this.addOption(select, title, null);
@@ -232,8 +236,7 @@ class MaxToolbar extends EventSource {
    * @param title - String that specifies the title of the option.
    * @param value - Specifies the value associated with this option.
    */
-  // addOption(combo: HTMLSelectElement, title: string, value: string): HTMLOptionElement;
-  addOption(combo, title, value) {
+  addOption(combo: HTMLSelectElement, title: string, value: string): HTMLOptionElement {
     const option = document.createElement('option');
     writeln(option, title);
 
@@ -255,7 +258,7 @@ class MaxToolbar extends EventSource {
    * be selected at a time. The currently selected item is the default item
    * after a reset of the toolbar.
    */
-  addSwitchMode(title: string, icon: string, funct: () => void, pressedIcon: string, style) {
+  addSwitchMode(title: string, icon: string, funct: () => void, pressedIcon: string, style: string) {
     const img = document.createElement('img');
     img.initialClassName = style || 'mxToolbarMode';
     img.className = img.initialClassName;
@@ -319,7 +322,14 @@ class MaxToolbar extends EventSource {
    * The function argument uses the following signature: funct(evt, cell) where
    * evt is the native mouse event and cell is the cell under the mouse.
    */
-  addMode(title, icon, funct, pressedIcon, style, toggle) {
+  addMode(
+    title: string | null=null,
+    icon: string | null=null,
+    funct: Function,
+    pressedIcon: string,
+    style: string | null=null,
+    toggle: boolean=false
+  ) {
     toggle = toggle != null ? toggle : true;
     const img = document.createElement(icon != null ? 'img' : 'button');
 
@@ -333,12 +343,12 @@ class MaxToolbar extends EventSource {
     }
 
     if (this.enabled && toggle) {
-      InternalEvent.addListener(img, 'click', (evt) => {
+      InternalEvent.addListener(img, 'click', (evt: MouseEvent) => {
         this.selectMode(img, funct);
         this.noReset = false;
       });
 
-      InternalEvent.addListener(img, 'dblclick', (evt) => {
+      InternalEvent.addListener(img, 'dblclick', (evt: MouseEvent) => {
         this.selectMode(img, funct);
         this.noReset = true;
       });
@@ -351,7 +361,6 @@ class MaxToolbar extends EventSource {
     }
 
     this.container.appendChild(img);
-
     return img;
   }
 
@@ -360,8 +369,7 @@ class MaxToolbar extends EventSource {
    * DOM node as selected. This function fires a select event with the given
    * function as a parameter.
    */
-  // selectMode(domNode: HTMLImageElement, funct: Function): void;
-  selectMode(domNode, funct) {
+  selectMode(domNode: HTMLImageElement, funct: Function): void {
     if (this.selectedMode != domNode) {
       if (this.selectedMode != null) {
         const tmp = this.selectedMode.altIcon;
@@ -392,8 +400,7 @@ class MaxToolbar extends EventSource {
    * Selects the default mode and resets the state of the previously selected
    * mode.
    */
-  // resetMode(forced: boolean): void;
-  resetMode(forced) {
+  resetMode(forced: boolean=false): void {
     if ((forced || !this.noReset) && this.selectedMode != this.defaultMode) {
       // The last selected switch mode will be activated
       // so the function was already executed and is
@@ -409,24 +416,21 @@ class MaxToolbar extends EventSource {
    *
    * @param icon - URL of the separator icon.
    */
-  // addSeparator(icon: string): HTMLImageElement;
-  addSeparator(icon) {
+  addSeparator(icon: string): HTMLImageElement {
     return this.addItem(null, icon, null);
   }
 
   /**
    * Adds a break to the container.
    */
-  // addBreak(): void;
-  addBreak() {
+  addBreak(): void {
     br(this.container);
   }
 
   /**
    * Adds a horizontal line to the container.
    */
-  // addLine(): void;
-  addLine() {
+  addLine(): void {
     const hr = document.createElement('hr');
 
     hr.style.marginRight = '6px';
@@ -438,8 +442,7 @@ class MaxToolbar extends EventSource {
   /**
    * Removes the toolbar and all its associated resources.
    */
-  // destroy(): void;
-  destroy() {
+  destroy(): void {
     InternalEvent.release(this.container);
     this.container = null;
     this.defaultMode = null;

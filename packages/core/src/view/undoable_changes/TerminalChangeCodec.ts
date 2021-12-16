@@ -5,9 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import ObjectCodec from './ObjectCodec';
-import TerminalChange from '../../view/undoable_changes/TerminalChange';
-import CodecRegistry from './CodecRegistry';
+import ObjectCodec from '../../util/serialization/ObjectCodec';
+import TerminalChange from './TerminalChange';
+import CodecRegistry from '../../util/serialization/CodecRegistry';
 
 /**
  * Class: TerminalChangeCodec

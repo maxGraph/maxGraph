@@ -5,7 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { write, writeln } from "../domUtils";
+import { write, writeln } from "../dom/domUtils";
+import Resources from "../Resources";
 
 /**
  * A simple class for creating HTML forms.
@@ -24,21 +25,18 @@ class MaxForm {
   /**
    * Holds the DOM node that represents the table.
    */
-  // table: HTMLTableElement;
-  table = null;
+  table: HTMLTableElement;
 
   /**
    * Holds the DOM node that represents the tbody (table body). New rows
    * can be added to this object using DOM API.
    */
-  // body: boolean;
-  body = false;
+  body: HTMLElement;
 
   /**
    * Returns the table that contains this form.
    */
-  // getTable(): HTMLTableElement;
-  getTable() {
+  getTable(): HTMLTableElement {
     return this.table;
   }
 
@@ -46,8 +44,7 @@ class MaxForm {
    * Helper method to add an OK and Cancel button using the respective
    * functions.
    */
-  // addButtons(okFunct: Function, cancelFunct: Function): void;
-  addButtons(okFunct, cancelFunct) {
+  addButtons(okFunct: Function, cancelFunct: Function): void {
     const tr = document.createElement('tr');
     let td = document.createElement('td');
     tr.appendChild(td);
@@ -78,8 +75,7 @@ class MaxForm {
   /**
    * Adds an input for the given name, type and value and returns it.
    */
-  // addText(name: string, value: any, type: string): HTMLInputElement;
-  addText(name, value, type) {
+  addText(name: string, value: any, type: string): HTMLInputElement {
     const input = document.createElement('input');
 
     input.setAttribute('type', type || 'text');
@@ -91,8 +87,7 @@ class MaxForm {
   /**
    * Adds a checkbox for the given name and value and returns the textfield.
    */
-  // addCheckbox(name: string, value: boolean): HTMLInputElement;
-  addCheckbox(name, value) {
+  addCheckbox(name: string, value: boolean): HTMLInputElement {
     const input = document.createElement('input');
 
     input.setAttribute('type', 'checkbox');
@@ -109,8 +104,7 @@ class MaxForm {
   /**
    * Adds a textarea for the given name and value and returns the textarea.
    */
-  // addTextarea(name: string, value: string, rows: number): HTMLTextAreaElement;
-  addTextarea(name, value, rows) {
+  addTextarea(name: string, value: string, rows: number): HTMLTextAreaElement {
     const input = document.createElement('textarea');
 
     if (Client.IS_NS) {
@@ -126,8 +120,7 @@ class MaxForm {
   /**
    * Adds a combo for the given name and returns the combo.
    */
-  // addCombo(name: string, isMultiSelect: boolean, size?: number): HTMLSelectElement;
-  addCombo(name, isMultiSelect, size) {
+  addCombo(name: string, isMultiSelect: boolean, size?: number): HTMLSelectElement {
     const select = document.createElement('select');
 
     if (size != null) {
@@ -144,8 +137,7 @@ class MaxForm {
   /**
    * Adds an option for the given label to the specified combo.
    */
-  // addOption(combo: HTMLElement, label: string, value: any, isSelected?: boolean): void;
-  addOption(combo, label, value, isSelected) {
+  addOption(combo: HTMLElement, label: string, value: any, isSelected?: boolean): void {
     const option = document.createElement('option');
 
     writeln(option, label);
@@ -162,8 +154,7 @@ class MaxForm {
    * Adds a new row with the name and the input field in two columns and
    * returns the given input.
    */
-  // addField(name: string, input: FormFieldType): FormFieldType;
-  addField(name, input) {
+  addField(name: string, input: FormFieldType): FormFieldType {
     const tr = document.createElement('tr');
     let td = document.createElement('td');
     write(td, name);

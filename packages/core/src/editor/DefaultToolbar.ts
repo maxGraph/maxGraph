@@ -39,7 +39,7 @@ import Editor from './Editor';
  * description of the configuration format.
  */
 class DefaultToolbar {
-  constructor(container: Element, editor: Editor) {
+  constructor(container: HTMLElement, editor: Editor) {
     this.editor = editor;
 
     if (container != null && editor != null) {
@@ -50,7 +50,7 @@ class DefaultToolbar {
   /**
    * Reference to the enclosing {@link Editor}.
    */
-  editor: Editor = null;
+  editor: Editor;
 
   /**
    * Holds the internal {@link MaxToolbar}.
@@ -60,7 +60,7 @@ class DefaultToolbar {
   /**
    * Reference to the function used to reset the {@link toolbar}.
    */
-  resetHandler: Function = null;
+  resetHandler: Function | null = null;
 
   /**
    * Defines the spacing between existing and new vertices in gridSize units when a new vertex is dropped on an existing cell.  Default is 4 (40 pixels).
@@ -79,13 +79,13 @@ class DefaultToolbar {
   /**
    * Constructs the {@link toolbar} for the given container and installs a listener that updates the {@link Editor.insertFunction} on {@link editor} if an item is selected in the toolbar.  This assumes that {@link editor} is not null.
    */
-  init(container: Element): void {
+  init(container: HTMLElement): void {
     if (container != null) {
       this.toolbar = new MaxToolbar(container);
 
       // Installs the insert function in the editor if an item is
       // selected in the toolbar
-      this.toolbar.addListener(InternalEvent.SELECT, (sender, evt) => {
+      this.toolbar.addListener(InternalEvent.SELECT, (sender: Element, evt: InternalEvent) => {
         const funct = evt.getProperty('function');
 
         if (funct != null) {

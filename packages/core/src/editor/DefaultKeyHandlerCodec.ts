@@ -5,9 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import ObjectCodec from './ObjectCodec';
-import DefaultKeyHandler from '../../editor/DefaultKeyHandler';
-import CodecRegistry from './CodecRegistry';
+import ObjectCodec from '../util/serialization/ObjectCodec';
+import DefaultKeyHandler from './DefaultKeyHandler';
+import CodecRegistry from '../util/serialization/CodecRegistry';
 
 /**
  * Class: DefaultKeyHandlerCodec

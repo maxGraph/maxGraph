@@ -5,9 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { Graph } from '../../view/Graph';
-import CodecRegistry from './CodecRegistry';
-import ObjectCodec from './ObjectCodec';
+import { Graph } from './Graph';
+import CodecRegistry from '../util/serialization/CodecRegistry';
+import ObjectCodec from '../util/serialization/ObjectCodec';
 
 /**
  * Class: GraphCodec

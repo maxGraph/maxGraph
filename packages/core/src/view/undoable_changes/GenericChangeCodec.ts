@@ -5,15 +5,15 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import ObjectCodec from './ObjectCodec';
-import ValueChange from '../../view/undoable_changes/ValueChange';
-import StyleChange from '../../view/undoable_changes/StyleChange';
-import GeometryChange from '../../view/undoable_changes/GeometryChange';
-import CollapseChange from '../../view/undoable_changes/CollapseChange';
-import VisibleChange from '../../view/undoable_changes/VisibleChange';
-import CellAttributeChange from '../../view/undoable_changes/CellAttributeChange';
-import CodecRegistry from './CodecRegistry';
-import { isNode } from '../domUtils';
+import ObjectCodec from '../../util/serialization/ObjectCodec';
+import ValueChange from './ValueChange';
+import StyleChange from './StyleChange';
+import GeometryChange from './GeometryChange';
+import CollapseChange from './CollapseChange';
+import VisibleChange from './VisibleChange';
+import CellAttributeChange from './CellAttributeChange';
+import CodecRegistry from '../../util/serialization/CodecRegistry';
+import { isNode } from '../../util/dom/domUtils';
 
 /**
  * Class: GenericChangeCodec

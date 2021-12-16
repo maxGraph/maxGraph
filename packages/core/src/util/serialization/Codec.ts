@@ -5,13 +5,13 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import CellPath from '../../view/cell/datatypes/CellPath';
+import CellPath from '../../view/cell/CellPath';
 import CodecRegistry from './CodecRegistry';
 import { NODETYPE_ELEMENT } from '../constants';
 import Cell from '../../view/cell/Cell';
 import MaxLog from '../gui/MaxLog';
 import { getFunctionName } from '../stringUtils';
-import { importNode, isNode } from '../domUtils';
+import { importNode, isNode } from '../dom/domUtils';
 
 const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);
@@ -130,26 +130,22 @@ class Codec {
   /**
    * The owner document of the codec.
    */
-  // document: XMLDocument;
-  document = null;
+  document: XMLDocument = null;
 
   /**
    * Maps from IDs to objects.
    */
-  // objects: Array<string>;
-  objects = null;
+  objects: Array<string> = null;
 
   /**
    * Lookup table for resolving IDs to elements.
    */
-  // elements: Array<any>;
-  elements = null;
+  elements: Array<any> = null;
 
   /**
    * Specifies if default values should be encoded. Default is false.
    */
-  // encodeDefaults: boolean;
-  encodeDefaults = false;
+  encodeDefaults: boolean = false;
 
   /**
    * Assoiates the given object with the given ID and returns the given object.
@@ -157,10 +153,8 @@ class Codec {
    * @param id ID for the object to be associated with.
    * @param obj Object to be associated with the ID.
    */
-  // putObject(id: string, obj: any): any;
-  putObject(id, obj) {
+  putObject(id: string, obj: any): any {
     this.objects[id] = obj;
-
     return obj;
   }
 
@@ -170,8 +164,7 @@ class Codec {
    * object. If no object is found, then the element with the respective ID
    * from the document is parsed using {@link decode}.
    */
-  // getObject(id: string): any;
-  getObject(id) {
+  getObject(id: string): any {
     let obj = null;
 
     if (id != null) {
@@ -209,8 +202,7 @@ class Codec {
    *
    * @param id ID of the object to be returned.
    */
-  // lookup(id: string): any;
-  lookup(id) {
+  lookup(id: string): any {
     return null;
   }
 
@@ -219,8 +211,7 @@ class Codec {
    *
    * @param id String that contains the ID.
    */
-  // getElementById(id: string): Element;
-  getElementById(id) {
+  getElementById(id: string): Element {
     this.updateElements();
 
     return this.elements[id];
@@ -231,8 +222,7 @@ class Codec {
    *
    * @param id String that contains the ID.
    */
-  // updateElements(): void;
-  updateElements() {
+  updateElements(): void {
     if (this.elements == null) {
       this.elements = {};
 
@@ -245,8 +235,7 @@ class Codec {
   /**
    * Adds the given element to {@link elements} if it has an ID.
    */
-  // addElement(node: Node): void;
-  addElement(node) {
+  addElement(node: Node): void {
     if (node.nodeType === NODETYPE_ELEMENT) {
       const id = node.getAttribute('id');
 
@@ -276,8 +265,7 @@ class Codec {
    *
    * @param obj Object to return the ID for.
    */
-  // getId(obj: any): string;
-  getId(obj) {
+  getId(obj: any): string {
     let id = null;
 
     if (obj != null) {
@@ -317,8 +305,7 @@ class Codec {
    *
    * @param obj Object whose ID should be returned.
    */
-  // reference(obj: any): any;
-  reference(obj) {
+  reference(obj: any): any {
     return null;
   }
 
@@ -328,8 +315,7 @@ class Codec {
    *
    * @param obj Object to be encoded.
    */
-  // encode(obj: any): XMLDocument;
-  encode(obj) {
+  encode(obj: any): XMLDocument {
     let node = null;
 
     if (obj != null && obj.constructor != null) {
@@ -361,8 +347,7 @@ class Codec {
    * @param node XML node to be decoded.
    * @param into Optional object to be decodec into.
    */
-  // decode(node: Node, into?: any): any;
-  decode(node, into) {
+  decode(node: Node, into?: any): any {
     this.updateElements();
     let obj = null;
 
@@ -404,8 +389,7 @@ class Codec {
    * @param includeChildren Optional boolean indicating if the
    * function should include all descendents. Default is true.
    */
-  // encodeCell(cell: mxCell, node: Node, includeChildren?: boolean): void;
-  encodeCell(cell, node, includeChildren) {
+  encodeCell(cell: Cell, node: Node, includeChildren?: boolean): void {
     node.appendChild(this.encode(cell));
 
     if (includeChildren == null || includeChildren) {
@@ -423,11 +407,10 @@ class Codec {
    * given type.
    */
   // isCellCodec(codec: Codec): boolean;
-  isCellCodec(codec) {
+  isCellCodec(codec: Codec): boolean {
     if (codec != null && typeof codec.isCellCodec === 'function') {
       return codec.isCellCodec();
     }
-
     return false;
   }
 
@@ -444,8 +427,7 @@ class Codec {
    * and insertEdge on the parent and terminals, respectively.
    * Default is true.
    */
-  // decodeCell(node: Node, restoreStructures?: boolean): mxCell;
-  decodeCell(node, restoreStructures) {
+  decodeCell(node: Node, restoreStructures?: boolean): Cell {
     restoreStructures = restoreStructures != null ? restoreStructures : true;
     let cell = null;
 
@@ -484,8 +466,7 @@ class Codec {
   /**
    * Inserts the given cell into its parent and terminal cells.
    */
-  // insertIntoGraph(cell: mxCell): void;
-  insertIntoGraph(cell) {
+  insertIntoGraph(cell: Cell): void {
     const { parent } = cell;
     const source = cell.getTerminal(true);
     const target = cell.getTerminal(false);
@@ -521,8 +502,7 @@ class Codec {
    * @param attributes Attributename to be set.
    * @param value New value of the attribute.
    */
-  // setAttribute(node: Node, attribute: string, value: any): void;
-  setAttribute(node, attribute, value) {
+  setAttribute(node: Node, attribute: string, value: any): void {
     if (attribute != null && value != null) {
       node.setAttribute(attribute, value);
     }

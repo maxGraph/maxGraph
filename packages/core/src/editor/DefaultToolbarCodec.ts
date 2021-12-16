@@ -5,13 +5,13 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import ObjectCodec from './ObjectCodec';
-import DefaultToolbar from '../../editor/DefaultToolbar';
-import CodecRegistry from './CodecRegistry';
-import { getChildNodes, getTextContent } from '../domUtils';
-import { getClientX, getClientY } from '../eventUtils';
-import { NODETYPE_ELEMENT } from '../constants';
-import { convertPoint } from '../utils';
+import ObjectCodec from '../util/serialization/ObjectCodec';
+import DefaultToolbar from './DefaultToolbar';
+import CodecRegistry from '../util/serialization/CodecRegistry';
+import { getChildNodes, getTextContent } from '../util/dom/domUtils';
+import { getClientX, getClientY } from '../util/eventUtils';
+import { NODETYPE_ELEMENT } from '../util/constants';
+import { convertPoint } from '../util/utils';
 
 /**
  * Class: DefaultToolbarCodec

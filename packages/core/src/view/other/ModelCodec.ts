@@ -5,9 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Model from '../../view/other/Model';
-import ObjectCodec from './ObjectCodec';
-import CodecRegistry from './CodecRegistry';
+import Model from './Model';
+import ObjectCodec from '../../util/serialization/ObjectCodec';
+import CodecRegistry from '../../util/serialization/CodecRegistry';
 
 /**
  * Class: ModelCodec

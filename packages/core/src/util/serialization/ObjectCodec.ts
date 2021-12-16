@@ -11,8 +11,9 @@ import Geometry from '../../view/geometry/Geometry';
 import Point from '../../view/geometry/Point';
 import { NODETYPE_ELEMENT } from '../constants';
 import { isInteger, isNumeric } from '../utils';
-import { getTextContent } from '../domUtils';
+import { getTextContent } from '../dom/domUtils';
 import { load } from '../network/MaxXmlRequest';
+import Codec from './Codec';
 
 /**
  * Generic codec for JavaScript objects that implements a mapping between
@@ -206,41 +207,35 @@ class ObjectCodec {
    * Default is false. NOTE: Enabling this carries a possible security risk.
    * @static
    */
-  // static allowEval: boolean;
-  static allowEval = false;
+  static allowEval: boolean = false;
 
   /**
    * Holds the template object associated with this codec.
    */
-  // template: any;
-  template = null;
+  template: any = null;
 
   /**
    * Array containing the variable names that should be
    * ignored by the codec.
    */
-  // exclude: Array<string>;
-  exclude = null;
+  exclude: Array<string> | null = null;
 
   /**
    * Array containing the variable names that should be
    * turned into or converted from references. See
    * {@link Codec.getId} and {@link Codec.getObject}.
    */
-  // idrefs: Array<string>;
-  idrefs = null;
+  idrefs: Array<string> | null = null;
 
   /**
    * Maps from from fieldnames to XML attribute names.
    */
-  // mapping: { [key: string]: string };
-  mapping = null;
+  mapping: { [key: string]: string } | null = null;
 
   /**
    * Maps from from XML attribute names to fieldnames.
    */
-  // reverse: any;
-  reverse = null;
+  reverse: any = null;
 
   /**
    * Returns the name used for the nodenames and lookup of the codec when
@@ -249,16 +244,14 @@ class ObjectCodec {
    * if that is different than what this returns. The default implementation
    * returns the classname of the template class.
    */
-  // getName(): string;
-  getName() {
+  getName(): string {
     return this.template.constructor.name;
   }
 
   /**
    * Returns a new instance of the template for this codec.
    */
-  // cloneTemplate(): any;
-  cloneTemplate() {
+  cloneTemplate(): any {
     return new this.template.constructor();
   }
 
@@ -268,8 +261,7 @@ class ObjectCodec {
    * the input if there is no reverse mapping for the
    * given name.
    */
-  // getFieldName(attributename: string): string;
-  getFieldName(attributename) {
+  getFieldName(attributename: string): string {
     if (attributename != null) {
       const mapped = this.reverse[attributename];
 
@@ -287,8 +279,7 @@ class ObjectCodec {
    * the input if there is no mapping for the
    * given name.
    */
-  // getAttributeName(fieldname: string): string;
-  getAttributeName(fieldname) {
+  getAttributeName(fieldname: string): string {
     if (fieldname != null) {
       const mapped = this.mapping[fieldname];
 
@@ -311,8 +302,7 @@ class ObjectCodec {
    * @param write Boolean indicating if the field is being encoded or decoded.
    * Write is true if the field is being encoded, else it is being decoded.
    */
-  // isExcluded(obj: any, attr: string, value: any, write?: boolean): boolean;
-  isExcluded(obj, attr, value, write) {
+  isExcluded(obj: any, attr: string, value: any, write?: boolean): boolean {
     return attr == ObjectIdentity.FIELD_NAME || this.exclude.indexOf(attr) >= 0;
   }
 
@@ -327,8 +317,7 @@ class ObjectCodec {
    * @param write Boolean indicating if the field is being encoded or decoded.
    * Write is true if the field is being encoded, else it is being decoded.
    */
-  // isReference(obj: any, attr: string, value: any, write?: boolean): boolean;
-  isReference(obj, attr, value, write) {
+  isReference(obj: any, attr: string, value: any, write?: boolean): boolean {
     return this.idrefs.indexOf(attr) >= 0;
   }
 
@@ -370,8 +359,7 @@ class ObjectCodec {
    * @param enc {@link Codec} that controls the encoding process.
    * @param obj Object to be encoded.
    */
-  // encode(enc: Codec, obj: any): Node;
-  encode(enc, obj) {
+  encode(enc: Codec, obj: any): Node {
     const node = enc.document.createElement(this.getName());
 
     obj = this.beforeEncode(enc, obj, node);
@@ -388,8 +376,7 @@ class ObjectCodec {
    * @param obj Object to be encoded.
    * @param node XML node that contains the encoded object.
    */
-  // encodeObject(enc: Codec, obj: any, node: Node): void;
-  encodeObject(enc, obj, node) {
+  encodeObject(enc: Codec, obj: any, node: Node): void {
     enc.setAttribute(node, 'id', enc.getId(obj));
 
     for (const i in obj) {
@@ -417,8 +404,7 @@ class ObjectCodec {
    * @param value Value of the property to be encoded.
    * @param node XML node that contains the encoded object.
    */
-  // encodeValue(enc: Codec, obj: any, name: string, value: any, node: Node): void;
-  encodeValue(enc, obj, name, value, node) {
+  encodeValue(enc: Codec, obj: any, name: string, value: any, node: Node): void {
     if (value != null) {
       if (this.isReference(obj, name, value, true)) {
         const tmp = enc.getId(value);
@@ -448,8 +434,7 @@ class ObjectCodec {
    * Writes the given value into node using {@link writePrimitiveAttribute}
    * or {@link writeComplexAttribute} depending on the type of the value.
    */
-  // writeAttribute(enc: Codec, obj: any, name: string, value: any, node: Node): void;
-  writeAttribute(enc, obj, name, value, node) {
+  writeAttribute(enc: Codec, obj: any, name: string, value: any, node: Node): void {
     if (typeof value !== 'object' /* primitive type */) {
       this.writePrimitiveAttribute(enc, obj, name, value, node);
     } /* complex type */ else {
@@ -460,8 +445,7 @@ class ObjectCodec {
   /**
    * Writes the given value as an attribute of the given node.
    */
-  // writePrimitiveAttribute(enc: Codec, obj: any, name: string, value: any, node: Node): void;
-  writePrimitiveAttribute(enc, obj, name, value, node) {
+  writePrimitiveAttribute(enc: Codec, obj: any, name: string, value: any, node: Node): void {
     value = this.convertAttributeToXml(enc, obj, name, value, node);
 
     if (name == null) {
@@ -482,8 +466,7 @@ class ObjectCodec {
   /**
    * Writes the given value as a child node of the given node.
    */
-  // writeComplexAttribute(enc: Codec, obj: any, name: string, value: any, node: Node): void;
-  writeComplexAttribute(enc, obj, name, value, node) {
+  writeComplexAttribute(enc: Codec, obj: any, name: string, value: any, node: Node): void {
     const child = enc.encode(value);
 
     if (child != null) {
@@ -506,8 +489,7 @@ class ObjectCodec {
    * @param name Name of the attribute to be converted.
    * @param value Value to be converted.
    */
-  // convertAttributeToXml(enc: Codec, obj: any, name: string, value: any): any;
-  convertAttributeToXml(enc, obj, name, value) {
+  convertAttributeToXml(enc: Codec, obj: any, name: string, value: any): any {
     // Makes sure to encode boolean values as numeric values
     if (this.isBooleanAttribute(enc, obj, name, value)) {
       // Checks if the value is true (do not use the value as is, because
@@ -526,8 +508,7 @@ class ObjectCodec {
    * @param name Name of the attribute to be converted.
    * @param value Value of the attribute to be converted.
    */
-  // isBooleanAttribute(enc: Codec, obj: any, name: string, value: any): boolean;
-  isBooleanAttribute(enc, obj, name, value) {
+  isBooleanAttribute(enc: Codec, obj: any, name: string, value: any): boolean {
     return typeof value.length === 'undefined' && (value == true || value == false);
   }
 
@@ -539,8 +520,7 @@ class ObjectCodec {
    * @param attr XML attribute to be converted.
    * @param obj Objec to convert the attribute for.
    */
-  // convertAttributeFromXml(dec: Codec, attr: any, obj: any): any;
-  convertAttributeFromXml(dec, attr, obj) {
+  convertAttributeFromXml(dec: Codec, attr: any, obj: any): any {
     let { value } = attr;
 
     if (this.isNumericAttribute(dec, attr, obj)) {
@@ -561,8 +541,7 @@ class ObjectCodec {
    * @param attr XML attribute to be converted.
    * @param obj Objec to convert the attribute for.
    */
-  // isNumericAttribute(dec: Codec, attr: any, obj: any): boolean;
-  isNumericAttribute(dec, attr, obj) {
+  isNumericAttribute(dec: Codec, attr: any, obj: any): boolean {
     // Handles known numeric attributes for generic objects
     const result =
       (obj.constructor === Geometry &&
@@ -586,8 +565,7 @@ class ObjectCodec {
    * @param obj Object to be encoded.
    * @param node XML node to encode the object into.
    */
-  // beforeEncode(enc: Codec, obj: any, node?: Node): any;
-  beforeEncode(enc, obj, node) {
+  beforeEncode(enc: Codec, obj: any, node?: Node): any {
     return obj;
   }
 
@@ -602,8 +580,7 @@ class ObjectCodec {
    * @param obj Object to be encoded.
    * @param node XML node that represents the default encoding.
    */
-  // afterEncode(enc: Codec, obj: any, node: Node): Node;
-  afterEncode(enc, obj, node) {
+  afterEncode(enc: Codec, obj: any, node: Node): Node {
     return node;
   }
 
@@ -657,8 +634,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param into Optional objec to encode the node into.
    */
-  // decode(dec: Codec, node: Node, into?: any): any;
-  decode(dec, node, into) {
+  decode(dec: Codec, node: Node, into?: any): any {
     const id = node.getAttribute('id');
     let obj = dec.objects[id];
 
@@ -683,8 +659,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Objec to encode the node into.
    */
-  // decodeNode(dec: Codec, node: Node, obj: any): void;
-  decodeNode(dec, node, obj) {
+  decodeNode(dec: Codec, node: Node, obj: any): void {
     if (node != null) {
       this.decodeAttributes(dec, node, obj);
       this.decodeChildren(dec, node, obj);
@@ -698,8 +673,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Objec to encode the node into.
    */
-  // decodeAttributes(dec: Codec, node: Node, obj: any): void;
-  decodeAttributes(dec, node, obj) {
+  decodeAttributes(dec: Codec, node: Node, obj: any): void {
     const attrs = node.attributes;
 
     if (attrs != null) {
@@ -717,8 +691,7 @@ class ObjectCodec {
    * @param attr XML attribute to be decoded.
    * @param obj Objec to encode the attribute into.
    */
-  // isIgnoredAttribute(dec: Codec, attr: any, obj?: any): boolean;
-  isIgnoredAttribute(dec, attr, obj) {
+  isIgnoredAttribute(dec: Codec, attr: any, obj?: any): boolean {
     return attr.nodeName === 'as' || attr.nodeName === 'id';
   }
 
@@ -729,8 +702,7 @@ class ObjectCodec {
    * @param attr XML attribute to be decoded.
    * @param obj Objec to encode the attribute into.
    */
-  // decodeAttribute(dec: Codec, attr: any, obj?: any): void;
-  decodeAttribute(dec, attr, obj) {
+  decodeAttribute(dec: Codec, attr: any, obj?: any): void {
     if (!this.isIgnoredAttribute(dec, attr, obj)) {
       const name = attr.nodeName;
 
@@ -768,8 +740,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Objec to encode the node into.
    */
-  // decodeChildren(dec: Codec, node: Node, obj?: any): void;
-  decodeChildren(dec, node, obj) {
+  decodeChildren(dec: Codec, node: Node, obj?: any): void {
     let child = node.firstChild;
 
     while (child != null) {
@@ -790,8 +761,7 @@ class ObjectCodec {
    * @param child XML child element to be decoded.
    * @param obj Objec to encode the node into.
    */
-  // decodeChild(dec: Codec, child: Node, obj: any): void;
-  decodeChild(dec, child, obj) {
+  decodeChild(dec: Codec, child: Node, obj: any): void {
     const fieldname = this.getFieldName(child.getAttribute('as'));
 
     if (fieldname == null || !this.isExcluded(obj, fieldname, child, false)) {
@@ -824,8 +794,7 @@ class ObjectCodec {
    * required to override this to return the correct collection instance
    * based on the encoded child.
    */
-  // getFieldTemplate(obj: any, fieldname: string, child: Node): any;
-  getFieldTemplate(obj, fieldname, child) {
+  getFieldTemplate(obj: any, fieldname: string, child: Node): any {
     let template = obj[fieldname];
 
     // Non-empty arrays are replaced completely
@@ -844,8 +813,7 @@ class ObjectCodec {
    * collection. For strongly typed languages it may be required to
    * override this with the correct code to add an entry to an object.
    */
-  // addObjectValue(obj: any, fieldname: string, value: any, template: any): void;
-  addObjectValue(obj, fieldname, value, template) {
+  addObjectValue(obj: any, fieldname: string, value: any, template: any): void {
     if (value != null && value !== template) {
       if (fieldname != null && fieldname.length > 0) {
         obj[fieldname] = value;
@@ -865,8 +833,7 @@ class ObjectCodec {
    * @param node XML node to be checked.
    * @param into Optional object to pass-thru to the codec.
    */
-  // processInclude(dec: Codec, node: Node, into?: any): boolean;
-  processInclude(dec, node, into) {
+  processInclude(dec: Codec, node: Node, into?: any): boolean {
     if (node.nodeName === 'include') {
       const name = node.getAttribute('name');
       if (name != null) {
@@ -898,8 +865,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Object to encode the node into.
    */
-  // beforeDecode(dec: Codec, node: Node, obj: any): Node;
-  beforeDecode(dec, node, obj) {
+  beforeDecode(dec: Codec, node: Node, obj: any): Node {
     return node;
   }
 
@@ -913,8 +879,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Object that represents the default decoding.
    */
-  // afterDecode(dec: Codec, node: Node, obj?: any): any;
-  afterDecode(dec, node, obj) {
+  afterDecode(dec: Codec, node: Node, obj?: any): any {
     return obj;
   }
 }

@@ -5,15 +5,15 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Stylesheet from '../../view/style/Stylesheet';
-import { isNumeric } from '../utils';
-import CodecRegistry from './CodecRegistry';
-import { NODETYPE_ELEMENT } from '../constants';
-import MaxLog from '../gui/MaxLog';
-import StyleRegistry from '../../view/style/StyleRegistry';
-import ObjectCodec from './ObjectCodec';
-import { getTextContent } from '../domUtils';
-import { clone } from '../cloneUtils';
+import Stylesheet from './Stylesheet';
+import { isNumeric } from '../../util/utils';
+import CodecRegistry from '../../util/serialization/CodecRegistry';
+import { NODETYPE_ELEMENT } from '../../util/constants';
+import MaxLog from '../../util/gui/MaxLog';
+import StyleRegistry from './StyleRegistry';
+import ObjectCodec from '../../util/serialization/ObjectCodec';
+import { getTextContent } from '../../util/dom/domUtils';
+import { clone } from '../../util/cloneUtils';
 
 /**
  * Class: StylesheetCodec

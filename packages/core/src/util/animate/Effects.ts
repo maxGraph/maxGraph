@@ -11,6 +11,7 @@ import ValueChange from '../../view/undoable_changes/ValueChange';
 import ChildChange from '../../view/undoable_changes/ChildChange';
 import StyleChange from '../../view/undoable_changes/StyleChange';
 import { Graph } from 'src/view/Graph';
+import Cell from 'src/view/cell/Cell';
 
 /**
  * Provides animation effects.
@@ -112,8 +113,7 @@ class Effects {
    * @param cell - <Cell> to set the opacity for.
    * @param opacity - New value for the opacity in %.
    */
-  // static cascadeOpacity(graph: mxGraph, cell: mxCell, opacity: number): void;
-  static cascadeOpacity(graph, cell, opacity) {
+  static cascadeOpacity(graph: Graph, cell: Cell, opacity: number): void {
     // Fades all children
     const childCount = cell.getChildCount();
 

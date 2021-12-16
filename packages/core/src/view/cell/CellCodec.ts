@@ -5,12 +5,12 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Cell from '../../view/cell/Cell';
-import ObjectCodec from './ObjectCodec';
-import CodecRegistry from './CodecRegistry';
-import { NODETYPE_ELEMENT } from '../constants';
-import { removeWhitespace } from '../stringUtils';
-import { importNode } from '../domUtils';
+import Cell from './Cell';
+import ObjectCodec from '../../util/serialization/ObjectCodec';
+import CodecRegistry from '../../util/serialization/CodecRegistry';
+import { NODETYPE_ELEMENT } from '../../util/constants';
+import { removeWhitespace } from '../../util/stringUtils';
+import { importNode } from '../../util/dom/domUtils';
 
 /**
  * Class: CellCodec

@@ -2,7 +2,7 @@
  * Copyright (c) 2006-2020, JGraph Ltd
  * Copyright (c) 2006-2020, draw.io AG
  */
-import { write } from '../domUtils';
+import { write } from '../dom/domUtils';
 
 /**
  * XML HTTP request wrapper. See also: {@link mxUtils.get}, {@link mxUtils.post} and
@@ -114,16 +114,14 @@ class MaxXmlRequest {
    *
    * @default false
    */
-  // binary: boolean;
-  binary = false;
+  binary: boolean = false;
 
   /**
    * Specifies if withCredentials should be used in HTML5-compliant browsers. Default is false.
    *
    * @default false
    */
-  // withCredentials: boolean;
-  withCredentials = false;
+  withCredentials: boolean = false;
 
   /**
    * Variable: username
@@ -142,22 +140,19 @@ class MaxXmlRequest {
   /**
    * Holds the inner, browser-specific request object.
    */
-  // request: any;
-  request = null;
+  request: any = null;
 
   /**
    * Specifies if request values should be decoded as URIs before setting the
    * textarea value in {@link simulate}. Defaults to false for backwards compatibility,
    * to avoid another decode on the server this should be set to true.
    */
-  // decodeSimulateValues: boolean;
-  decodeSimulateValues = false;
+  decodeSimulateValues: boolean = false;
 
   /**
    * Returns {@link binary}.
    */
-  // isBinary(): boolean;
-  isBinary() {
+  isBinary(): boolean {
     return this.binary;
   }
 
@@ -166,32 +161,28 @@ class MaxXmlRequest {
    *
    * @param value
    */
-  // setBinary(value: boolean): void;
-  setBinary(value) {
+  setBinary(value: boolean): void {
     this.binary = value;
   }
 
   /**
    * Returns the response as a string.
    */
-  // getText(): string;
-  getText() {
+  getText(): string {
     return this.request.responseText;
   }
 
   /**
    * Returns true if the response is ready.
    */
-  // isReady(): boolean;
-  isReady() {
+  isReady(): boolean {
     return this.request.readyState === 4;
   }
 
   /**
    * Returns the document element of the response XML document.
    */
-  // getDocumentElement(): XMLDocument;
-  getDocumentElement() {
+  getDocumentElement(): XMLDocument {
     const doc = this.getXml();
 
     if (doc != null) {
@@ -205,8 +196,7 @@ class MaxXmlRequest {
    * Returns the response as an XML document. Use {@link getDocumentElement} to get
    * the document element of the XML document.
    */
-  // getXml(): XMLDocument;
-  getXml() {
+  getXml(): XMLDocument {
     let xml = this.request.responseXML;
 
     // Handles missing response headers in IE, the first condition handles
@@ -225,16 +215,14 @@ class MaxXmlRequest {
    * Returns the status as a number, eg. 404 for "Not found" or 200 for "OK".
    * Note: The NS_ERROR_NOT_AVAILABLE for invalid responses cannot be cought.
    */
-  // getStatus(): number;
-  getStatus() {
+  getStatus(): number {
     return this.request != null ? this.request.status : null;
   }
 
   /**
    * Creates and returns the inner {@link request} object.
    */
-  // create(): any;
-  create() {
+  create(): any {
     const req = new XMLHttpRequest();
 
     // TODO: Check for overrideMimeType required here?
@@ -256,8 +244,7 @@ class MaxXmlRequest {
    * @param timeout Optional timeout in ms before calling ontimeout.
    * @param ontimeout Optional function to execute on timeout.
    */
-  // send(onload: Function, onerror: Function, timeout?: number, ontimeout?: Function): void;
-  send(onload, onerror, timeout, ontimeout) {
+  send(onload: Function, onerror: Function, timeout?: number, ontimeout?: Function): void {
     this.request = this.create();
 
     if (this.request != null) {
@@ -321,8 +308,7 @@ class MaxXmlRequest {
    * @param request
    * @param params
    */
-  // setRequestHeaders(request: any, params: any): void;
-  setRequestHeaders(request, params) {
+  setRequestHeaders(request: any, params: any): void {
     if (params != null) {
       request.setRequestHeader(
         'Content-Type',
@@ -338,8 +324,7 @@ class MaxXmlRequest {
    * @param doc Document that contains the form element.
    * @param target Target to send the form result to.
    */
-  // simulate(doc: any, target: any): void;
-  simulate(doc, target) {
+  simulate(doc: any, target: any): void {
     doc = doc || document;
     let old = null;
 

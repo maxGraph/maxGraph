@@ -5,10 +5,10 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import ChildChange from '../../view/undoable_changes/ChildChange';
-import ObjectCodec from './ObjectCodec';
-import CodecRegistry from './CodecRegistry';
-import { NODETYPE_ELEMENT } from '../constants';
+import ChildChange from './ChildChange';
+import ObjectCodec from '../../util/serialization/ObjectCodec';
+import CodecRegistry from '../../util/serialization/CodecRegistry';
+import { NODETYPE_ELEMENT } from '../../util/constants';
 
 /**
  * Class: ChildChangeCodec

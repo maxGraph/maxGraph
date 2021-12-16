@@ -1,5 +1,6 @@
+import Editor from "src/editor/Editor";
 import InternalEvent from "../../view/event/InternalEvent";
-import { write } from "../domUtils";
+import { write } from "./domUtils";
 
 /**
  * Function: linkAction

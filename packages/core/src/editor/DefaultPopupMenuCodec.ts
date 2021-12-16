@@ -5,9 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import DefaultPopupMenu from '../../editor/DefaultPopupMenu';
-import CodecRegistry from './CodecRegistry';
-import ObjectCodec from './ObjectCodec';
+import DefaultPopupMenu from './DefaultPopupMenu';
+import CodecRegistry from '../util/serialization/CodecRegistry';
+import ObjectCodec from '../util/serialization/ObjectCodec';
 
 /**
  * Class: DefaultPopupMenuCodec

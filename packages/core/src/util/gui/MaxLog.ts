@@ -7,7 +7,7 @@
 
 import Client from '../../Client';
 import InternalEvent from '../../view/event/InternalEvent';
-import { getInnerHtml, write } from '../domUtils';
+import { getInnerHtml, write } from '../dom/domUtils';
 import MaxWindow, { popup } from './MaxWindow';
 
 /**
@@ -196,16 +196,14 @@ class MaxLog {
   /**
    * Writes the current navigator information to the console.
    */
-  // static info(): void;
-  static info() {
+  static info(): void {
     MaxLog.writeln(toString(navigator));
   }
 
   /**
    * Adds a button to the console using the given label and function.
    */
-  // static addButton(lab: string, funct: Function): void;
-  static addButton(lab, funct) {
+  static addButton(lab: string, funct: Function): void {
     const button = document.createElement('button');
     write(button, lab);
     InternalEvent.addListener(button, 'click', funct);
@@ -250,8 +248,7 @@ class MaxLog {
   /**
    * Writes the specified string to the console if TRACE is true and returns the current time in milliseconds.
    */
-  // static enter(string: string): void;
-  static enter(string) {
+  static enter(string: string): void {
     if (MaxLog.TRACE) {
       MaxLog.writeln(`Entering ${string}`);
       return new Date().getTime();
@@ -296,8 +293,7 @@ class MaxLog {
   /**
    * Adds the specified strings to the console.
    */
-  // static write(): void;
-  static write() {
+  static write(): void {
     let string = '';
 
     for (let i = 0; i < arguments.length; i += 1) {
@@ -326,8 +322,7 @@ class MaxLog {
   /**
    * Adds the specified strings to the console, appending a linefeed at the end of each string.
    */
-  // static writeln(): void;
-  static writeln() {
+  static writeln(): void {
     let string = '';
 
     for (let i = 0; i < arguments.length; i += 1) {

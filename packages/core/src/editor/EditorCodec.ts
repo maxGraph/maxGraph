@@ -5,11 +5,11 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Editor from '../../editor/Editor';
-import MaxWindow from '../gui/MaxWindow';
-import ObjectCodec from './ObjectCodec';
-import CodecRegistry from './CodecRegistry';
-import { getChildNodes } from '../domUtils';
+import Editor from './Editor';
+import MaxWindow from '../util/gui/MaxWindow';
+import ObjectCodec from '../util/serialization/ObjectCodec';
+import CodecRegistry from '../util/serialization/CodecRegistry';
+import { getChildNodes } from '../util/dom/domUtils';
 
 /**
  * Class: EditorCodec

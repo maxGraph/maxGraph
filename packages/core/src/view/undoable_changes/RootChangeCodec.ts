@@ -5,10 +5,10 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import RootChange from '../../view/undoable_changes/RootChange';
-import CodecRegistry from './CodecRegistry';
-import { NODETYPE_ELEMENT } from '../constants';
-import ObjectCodec from './ObjectCodec';
+import RootChange from './RootChange';
+import CodecRegistry from '../../util/serialization/CodecRegistry';
+import { NODETYPE_ELEMENT } from '../../util/constants';
+import ObjectCodec from '../../util/serialization/ObjectCodec';
 
 /**
  * Class: RootChangeCodec

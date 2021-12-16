@@ -12,7 +12,7 @@ import { fit, getCurrentStyle } from '../utils';
 import InternalEvent from '../../view/event/InternalEvent';
 import Client from '../../Client';
 import { NODETYPE_TEXT } from '../constants';
-import { br, write } from '../domUtils';
+import { br, write } from '../dom/domUtils';
 import Resources from '../Resources';
 import { getClientX, getClientY } from '../eventUtils';
 import { htmlEntities } from '../stringUtils';
@@ -169,16 +169,16 @@ import { htmlEntities } from '../stringUtils';
  */
 class MaxWindow extends EventSource {
   constructor(
-    title,
-    content,
-    x,
-    y,
-    width,
-    height,
-    minimizable,
-    movable,
-    replaceNode,
-    style
+    title: HTMLElement,
+    content: HTMLElement | null,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    minimizable: boolean,
+    movable: boolean,
+    replaceNode: HTMLElement,
+    style: string
   ) {
     super();
 
@@ -205,7 +205,15 @@ class MaxWindow extends EventSource {
     }
   }
 
+  static activeWindow: MaxWindow | null = null;
+
+  td: HTMLElement | null = null;
+  div: HTMLElement | null = null;
+  table: HTMLElement | null = null;
   resize: HTMLElement | null = null;
+  buttons: HTMLElement | null = null;
+  closeImg: HTMLElement | null = null;
+  contentWrapper: HTMLElement | null = null;
 
   /**
    * Initializes the DOM tree that represents the window.

@@ -57,8 +57,7 @@ class CodecRegistry {
    *
    * @param codec - {@link ObjectCodec} to be registered.
    */
-  // static register(codec: ObjectCodec): ObjectCodec;
-  static register(codec) {
+  static register(codec: ObjectCodec): ObjectCodec {
     if (codec != null) {
       const name = codec.getName();
       CodecRegistry.codecs[name] = codec;
@@ -76,8 +75,7 @@ class CodecRegistry {
    * Adds an alias for mapping a classname to a codecname.
    * @static
    */
-  // static addAlias(classname: string, codecname: string): void;
-  static addAlias(classname, codecname) {
+  static addAlias(classname: string, codecname: string): void {
     CodecRegistry.aliases[classname] = codecname;
   }
 
@@ -89,8 +87,7 @@ class CodecRegistry {
    *
    * @param ctor - JavaScript constructor function.
    */
-  // static getCodec(ctor: any): ObjectCodec;
-  static getCodec(constructor_) {
+  static getCodec(constructor_: any): ObjectCodec | null {
     let codec = null;
 
     if (constructor_ != null) {
