@@ -5,13 +5,13 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { DIALECT_SVG, GUIDE_COLOR, GUIDE_STROKEWIDTH } from './constants';
-import Point from '../view/geometry/Point';
-import PolylineShape from '../view/geometry/edge/PolylineShape';
-import CellState from '../view/cell/CellState';
-import Shape from '../view/geometry/Shape';
-import Rectangle from '../view/geometry/Rectangle';
-import { Graph } from '../view/Graph';
+import { DIALECT_SVG, GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/constants';
+import Point from '../geometry/Point';
+import PolylineShape from '../geometry/edge/PolylineShape';
+import CellState from '../cell/CellState';
+import Shape from '../geometry/Shape';
+import Rectangle from '../geometry/Rectangle';
+import { Graph } from '../Graph';
 
 /**
  * Class: mxGuide

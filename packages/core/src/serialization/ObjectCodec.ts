@@ -5,14 +5,14 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import ObjectIdentity from '../ObjectIdentity';
+import ObjectIdentity from '../util/ObjectIdentity';
 import MaxLog from '../gui/MaxLog';
-import Geometry from '../../view/geometry/Geometry';
-import Point from '../../view/geometry/Point';
-import { NODETYPE_ELEMENT } from '../constants';
-import { isInteger, isNumeric } from '../utils';
-import { getTextContent } from '../dom/domUtils';
-import { load } from '../network/MaxXmlRequest';
+import Geometry from '../view/geometry/Geometry';
+import Point from '../view/geometry/Point';
+import { NODETYPE_ELEMENT } from '../util/constants';
+import { isInteger, isNumeric } from '../util/utils';
+import { getTextContent } from '../util/domUtils';
+import { load } from '../util/MaxXmlRequest';
 import Codec from './Codec';
 
 /**
@@ -188,12 +188,17 @@ import Codec from './Codec';
  * @class ObjectCodec
  */
 class ObjectCodec {
-  constructor(template, exclude, idrefs, mapping) {
+  constructor(
+    template: any, 
+    exclude: string[]=[], 
+    idrefs: string[]=[], 
+    mapping: { [key: string]: string }={}
+  ) {
     this.template = template;
 
-    this.exclude = exclude != null ? exclude : [];
-    this.idrefs = idrefs != null ? idrefs : [];
-    this.mapping = mapping != null ? mapping : [];
+    this.exclude = exclude;
+    this.idrefs = idrefs;
+    this.mapping = mapping;
 
     this.reverse = {};
 
@@ -212,30 +217,30 @@ class ObjectCodec {
   /**
    * Holds the template object associated with this codec.
    */
-  template: any = null;
+  template: any;
 
   /**
    * Array containing the variable names that should be
    * ignored by the codec.
    */
-  exclude: Array<string> | null = null;
+  exclude: Array<string>;
 
   /**
    * Array containing the variable names that should be
    * turned into or converted from references. See
    * {@link Codec.getId} and {@link Codec.getObject}.
    */
-  idrefs: Array<string> | null = null;
+  idrefs: Array<string>;
 
   /**
    * Maps from from fieldnames to XML attribute names.
    */
-  mapping: { [key: string]: string } | null = null;
+  mapping: { [key: string]: string };
 
   /**
    * Maps from from XML attribute names to fieldnames.
    */
-  reverse: any = null;
+  reverse: { [key: string]: string };
 
   /**
    * Returns the name used for the nodenames and lookup of the codec when
@@ -279,7 +284,7 @@ class ObjectCodec {
    * the input if there is no mapping for the
    * given name.
    */
-  getAttributeName(fieldname: string): string {
+  getAttributeName(fieldname: string | null): string | null {
     if (fieldname != null) {
       const mapped = this.mapping[fieldname];
 
@@ -287,7 +292,6 @@ class ObjectCodec {
         fieldname = mapped;
       }
     }
-
     return fieldname;
   }
 
@@ -376,11 +380,11 @@ class ObjectCodec {
    * @param obj Object to be encoded.
    * @param node XML node that contains the encoded object.
    */
-  encodeObject(enc: Codec, obj: any, node: Node): void {
+  encodeObject(enc: Codec, obj: any, node: Element): void {
     enc.setAttribute(node, 'id', enc.getId(obj));
 
     for (const i in obj) {
-      let name = i;
+      let name: string | null = i;
       const value = obj[name];
 
       if (value != null && !this.isExcluded(obj, name, value, true)) {
@@ -404,7 +408,7 @@ class ObjectCodec {
    * @param value Value of the property to be encoded.
    * @param node XML node that contains the encoded object.
    */
-  encodeValue(enc: Codec, obj: any, name: string, value: any, node: Node): void {
+  encodeValue(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
     if (value != null) {
       if (this.isReference(obj, name, value, true)) {
         const tmp = enc.getId(value);
@@ -419,11 +423,9 @@ class ObjectCodec {
         value = tmp;
       }
 
-      const defaultValue = this.template[name];
-
       // Checks if the value is a default value and
       // the name is correct
-      if (name == null || enc.encodeDefaults || defaultValue != value) {
+      if (name == null || enc.encodeDefaults || this.template[name] != value) {
         name = this.getAttributeName(name);
         this.writeAttribute(enc, obj, name, value, node);
       }
@@ -434,7 +436,7 @@ class ObjectCodec {
    * Writes the given value into node using {@link writePrimitiveAttribute}
    * or {@link writeComplexAttribute} depending on the type of the value.
    */
-  writeAttribute(enc: Codec, obj: any, name: string, value: any, node: Node): void {
+  writeAttribute(enc: Codec, obj: any, name: string, value: any, node: Element): void {
     if (typeof value !== 'object' /* primitive type */) {
       this.writePrimitiveAttribute(enc, obj, name, value, node);
     } /* complex type */ else {
@@ -445,8 +447,8 @@ class ObjectCodec {
   /**
    * Writes the given value as an attribute of the given node.
    */
-  writePrimitiveAttribute(enc: Codec, obj: any, name: string, value: any, node: Node): void {
-    value = this.convertAttributeToXml(enc, obj, name, value, node);
+  writePrimitiveAttribute(enc: Codec, obj: any, name: string, value: any, node: Element): void {
+    value = this.convertAttributeToXml(enc, obj, name, value, node);  // TODO: params don't seem to match - is this a bug? ===================================
 
     if (name == null) {
       const child = enc.document.createElement('add');
@@ -634,7 +636,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param into Optional objec to encode the node into.
    */
-  decode(dec: Codec, node: Node, into?: any): any {
+  decode(dec: Codec, node: Element, into?: any): any {
     const id = node.getAttribute('id');
     let obj = dec.objects[id];
 
@@ -648,7 +650,6 @@ class ObjectCodec {
 
     node = this.beforeDecode(dec, node, obj);
     this.decodeNode(dec, node, obj);
-
     return this.afterDecode(dec, node, obj);
   }
 
@@ -659,7 +660,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Objec to encode the node into.
    */
-  decodeNode(dec: Codec, node: Node, obj: any): void {
+  decodeNode(dec: Codec, node: Element, obj: any): void {
     if (node != null) {
       this.decodeAttributes(dec, node, obj);
       this.decodeChildren(dec, node, obj);
@@ -673,7 +674,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Objec to encode the node into.
    */
-  decodeAttributes(dec: Codec, node: Node, obj: any): void {
+  decodeAttributes(dec: Codec, node: Element, obj: any): void {
     const attrs = node.attributes;
 
     if (attrs != null) {
@@ -740,11 +741,11 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Objec to encode the node into.
    */
-  decodeChildren(dec: Codec, node: Node, obj?: any): void {
-    let child = node.firstChild;
-
+  decodeChildren(dec: Codec, node: Element, obj?: any): void {
+    let child = <Element>node.firstChild;
+    
     while (child != null) {
-      const tmp = child.nextSibling;
+      const tmp = <Element>child.nextSibling;
 
       if (child.nodeType === NODETYPE_ELEMENT && !this.processInclude(dec, child, obj)) {
         this.decodeChild(dec, child, obj);
@@ -761,8 +762,8 @@ class ObjectCodec {
    * @param child XML child element to be decoded.
    * @param obj Objec to encode the node into.
    */
-  decodeChild(dec: Codec, child: Node, obj: any): void {
-    const fieldname = this.getFieldName(child.getAttribute('as'));
+  decodeChild(dec: Codec, child: Element, obj: any): void {
+    const fieldname = this.getFieldName(<string>child.getAttribute('as'));
 
     if (fieldname == null || !this.isExcluded(obj, fieldname, child, false)) {
       const template = this.getFieldTemplate(obj, fieldname, child);
@@ -780,7 +781,7 @@ class ObjectCodec {
 
       try {
         this.addObjectValue(obj, fieldname, value, template);
-      } catch (e) {
+      } catch (e: any) {
         throw new Error(`${e.message} for ${child.nodeName}`);
       }
     }
@@ -833,7 +834,7 @@ class ObjectCodec {
    * @param node XML node to be checked.
    * @param into Optional object to pass-thru to the codec.
    */
-  processInclude(dec: Codec, node: Node, into?: any): boolean {
+  processInclude(dec: Codec, node: Element, into?: any): boolean {
     if (node.nodeName === 'include') {
       const name = node.getAttribute('name');
       if (name != null) {
@@ -865,7 +866,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Object to encode the node into.
    */
-  beforeDecode(dec: Codec, node: Node, obj: any): Node {
+  beforeDecode(dec: Codec, node: Element, obj: any): Element {
     return node;
   }
 

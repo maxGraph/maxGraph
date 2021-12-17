@@ -40,14 +40,13 @@ import ObjectCodec from './ObjectCodec';
  * @class CodecRegistry
  */
 class CodecRegistry {
-  static codecs = [];
+  static codecs: { [key: string]: any } = {};
 
   /**
    * Maps from classnames to codecnames.
    * @static
    */
-  // static aliases: { [key: string]: any };
-  static aliases = [];
+  static aliases: { [key: string]: any } = {};
 
   /**
    * Registers a new codec and associates the name of the template
@@ -63,7 +62,6 @@ class CodecRegistry {
       CodecRegistry.codecs[name] = codec;
 
       const classname = codec.template.constructor.name;
-
       if (classname !== name) {
         CodecRegistry.addAlias(classname, name);
       }

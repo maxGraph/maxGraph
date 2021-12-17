@@ -1,5 +1,5 @@
 import Editor from "src/editor/Editor";
-import InternalEvent from "../../view/event/InternalEvent";
+import InternalEvent from "../view/event/InternalEvent";
 import { write } from "./domUtils";
 
 /**

@@ -23,8 +23,8 @@ import {
   SHADOW_OFFSET_Y,
 } from '../../util/constants';
 import Point from './Point';
-import AbstractCanvas2D from '../../util/canvas/AbstractCanvas2D';
-import SvgCanvas2D from '../../util/canvas/SvgCanvas2D';
+import AbstractCanvas2D from '../canvas/AbstractCanvas2D';
+import SvgCanvas2D from '../canvas/SvgCanvas2D';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import CellState from '../cell/CellState';
@@ -94,7 +94,7 @@ class Shape {
   opacity = 100;
   isDashed = false;
 
-  fill: ColorValue | null = NONE;
+  fill: ColorValue = NONE;
 
   gradient: ColorValue = NONE;
 

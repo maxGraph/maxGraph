@@ -1,4 +1,4 @@
-import { NODETYPE_ELEMENT } from '../constants';
+import { NODETYPE_ELEMENT } from './constants';
 
 /**
  * Function: extractTextWithWhitespace

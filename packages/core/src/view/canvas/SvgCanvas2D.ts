@@ -5,37 +5,26 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { getAlignmentAsPoint, isNotNullish, mod } from '../utils';
+import { getAlignmentAsPoint, isNotNullish, mod } from '../../util/utils';
 import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  ALIGN_BOTTOM,
-  ALIGN_CENTER,
-  ALIGN_LEFT,
-  ALIGN_MIDDLE,
-  ALIGN_RIGHT,
-  ALIGN_TOP,
+  ALIGN,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
-  DIRECTION_EAST,
-  DIRECTION_NORTH,
-  DIRECTION_SOUTH,
-  DIRECTION_WEST,
-  FONT_BOLD,
-  FONT_ITALIC,
-  FONT_STRIKETHROUGH,
-  FONT_UNDERLINE,
+  DIRECTION,
+  FONT,
   LINE_HEIGHT,
   NONE,
   NS_SVG,
   NS_XLINK,
   WORD_WRAP,
-} from '../constants';
-import Rectangle from '../../view/geometry/Rectangle';
+} from '../../util/constants';
+import Rectangle from '../geometry/Rectangle';
 import AbstractCanvas2D from './AbstractCanvas2D';
-import { getXml } from '../xmlUtils';
-import { importNodeImplementation, isNode, write } from '../domUtils';
-import { htmlEntities, trim } from '../stringUtils';
+import { getXml } from '../../util/xmlUtils';
+import { importNodeImplementation, isNode, write } from '../../util/domUtils';
+import { htmlEntities, trim } from '../../util/stringUtils';
 import {
   AlignValue,
   ColorValue,
@@ -290,7 +279,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     ) => void
   ) => {
     let item = `box-sizing: border-box; font-size: 0; text-align: ${
-      align === ALIGN_LEFT ? 'left' : align === ALIGN_RIGHT ? 'right' : 'center'
+      align === ALIGN.LEFT ? 'left' : align === ALIGN.RIGHT ? 'right' : 'center'
     }; `;
     const pt = getAlignmentAsPoint(align, valign);
     let ofl = 'overflow: hidden; ';
@@ -473,9 +462,9 @@ class SvgCanvas2D extends AbstractCanvas2D {
     const s = this.state;
 
     if (isNotNullish(text) && s.fontSize > 0) {
-      const dy = valign === ALIGN_TOP ? 1 : valign === ALIGN_BOTTOM ? 0 : 0.3;
+      const dy = valign === ALIGN.TOP ? 1 : valign === ALIGN.BOTTOM ? 0 : 0.3;
       const anchor =
-        align === ALIGN_RIGHT ? 'end' : align === ALIGN_LEFT ? 'start' : 'middle';
+        align === ALIGN.RIGHT ? 'end' : align === ALIGN.LEFT ? 'start' : 'middle';
 
       const alt = this.createElement('text');
       alt.setAttribute('x', String(Math.round(x + s.dx)));
@@ -489,21 +478,21 @@ class SvgCanvas2D extends AbstractCanvas2D {
         alt.setAttribute('text-anchor', anchor);
       }
 
-      if ((s.fontStyle & FONT_BOLD) === FONT_BOLD) {
+      if ((s.fontStyle & FONT.BOLD) === FONT.BOLD) {
         alt.setAttribute('font-weight', 'bold');
       }
 
-      if ((s.fontStyle & FONT_ITALIC) === FONT_ITALIC) {
+      if ((s.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
         alt.setAttribute('font-style', 'italic');
       }
 
       const txtDecor = [];
 
-      if ((s.fontStyle & FONT_UNDERLINE) === FONT_UNDERLINE) {
+      if ((s.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
         txtDecor.push('underline');
       }
 
-      if ((s.fontStyle & FONT_STRIKETHROUGH) === FONT_STRIKETHROUGH) {
+      if ((s.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
         txtDecor.push('line-through');
       }
 
@@ -546,18 +535,18 @@ class SvgCanvas2D extends AbstractCanvas2D {
     // Wrong gradient directions possible?
     let dir = null;
 
-    if (direction == null || direction === DIRECTION_SOUTH) {
+    if (direction == null || direction === DIRECTION.SOUTH) {
       dir = 's';
-    } else if (direction === DIRECTION_EAST) {
+    } else if (direction === DIRECTION.EAST) {
       dir = 'e';
     } else {
       const tmp = start;
       start = end;
       end = tmp;
 
-      if (direction === DIRECTION_NORTH) {
+      if (direction === DIRECTION.NORTH) {
         dir = 's';
-      } else if (direction === DIRECTION_WEST) {
+      } else if (direction === DIRECTION.WEST) {
         dir = 'e';
       }
     }
@@ -631,13 +620,13 @@ class SvgCanvas2D extends AbstractCanvas2D {
     gradient.setAttribute('x2', '0%');
     gradient.setAttribute('y2', '0%');
 
-    if (direction == null || direction === DIRECTION_SOUTH) {
+    if (direction == null || direction === DIRECTION.SOUTH) {
       gradient.setAttribute('y2', '100%');
-    } else if (direction === DIRECTION_EAST) {
+    } else if (direction === DIRECTION.EAST) {
       gradient.setAttribute('x2', '100%');
-    } else if (direction === DIRECTION_NORTH) {
+    } else if (direction === DIRECTION.NORTH) {
       gradient.setAttribute('y1', '100%');
-    } else if (direction === DIRECTION_WEST) {
+    } else if (direction === DIRECTION.WEST) {
       gradient.setAttribute('x1', '100%');
     }
 
@@ -1422,21 +1411,21 @@ class SvgCanvas2D extends AbstractCanvas2D {
         this.pointerEvents ? this.pointerEventsValue : 'none'
       }; `;
 
-    if ((s.fontStyle & FONT_BOLD) === FONT_BOLD) {
+    if ((s.fontStyle & FONT.BOLD) === FONT.BOLD) {
       css += 'font-weight: bold; ';
     }
 
-    if ((s.fontStyle & FONT_ITALIC) === FONT_ITALIC) {
+    if ((s.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
       css += 'font-style: italic; ';
     }
 
     const deco = [];
 
-    if ((s.fontStyle & FONT_UNDERLINE) === FONT_UNDERLINE) {
+    if ((s.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
       deco.push('underline');
     }
 
-    if ((s.fontStyle & FONT_STRIKETHROUGH) === FONT_STRIKETHROUGH) {
+    if ((s.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
       deco.push('line-through');
     }
 
@@ -1600,16 +1589,16 @@ class SvgCanvas2D extends AbstractCanvas2D {
       let cx = x;
       let cy = y;
 
-      if (align === ALIGN_CENTER) {
+      if (align === ALIGN.CENTERCENTER) {
         cx -= w / 2;
-      } else if (align === ALIGN_RIGHT) {
+      } else if (align === ALIGN.RIGHT) {
         cx -= w;
       }
 
       if (overflow !== 'fill') {
-        if (valign === ALIGN_MIDDLE) {
+        if (valign === ALIGN.MIDDLE) {
           cy -= h / 2;
-        } else if (valign === ALIGN_BOTTOM) {
+        } else if (valign === ALIGN.BOTTOM) {
           cy -= h;
         }
       }
@@ -1644,7 +1633,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
 
     // Default is left
     const anchor =
-      align === ALIGN_RIGHT ? 'end' : align === ALIGN_CENTER ? 'middle' : 'start';
+      align === ALIGN.RIGHT ? 'end' : align === ALIGN.CENTER ? 'middle' : 'start';
 
     // Text-anchor start is default in SVG
     if (anchor !== 'start') {
@@ -1669,7 +1658,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
 
     let cy = y + size - 1;
 
-    if (valign === ALIGN_MIDDLE) {
+    if (valign === ALIGN.MIDDLE) {
       if (overflow === 'fill') {
         cy -= h / 2;
       } else {
@@ -1679,7 +1668,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
             : textHeight) / 2;
         cy -= dy;
       }
-    } else if (valign === ALIGN_BOTTOM) {
+    } else if (valign === ALIGN.BOTTOM) {
       if (overflow === 'fill') {
         cy -= h;
       } else {
@@ -1733,21 +1722,21 @@ class SvgCanvas2D extends AbstractCanvas2D {
       node.setAttribute('font-family', s.fontFamily);
     }
 
-    if ((s.fontStyle & FONT_BOLD) === FONT_BOLD) {
+    if ((s.fontStyle & FONT.BOLD) === FONT.BOLD) {
       node.setAttribute('font-weight', 'bold');
     }
 
-    if ((s.fontStyle & FONT_ITALIC) === FONT_ITALIC) {
+    if ((s.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
       node.setAttribute('font-style', 'italic');
     }
 
     const txtDecor = [];
 
-    if ((s.fontStyle & FONT_UNDERLINE) === FONT_UNDERLINE) {
+    if ((s.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
       txtDecor.push('underline');
     }
 
-    if ((s.fontStyle & FONT_STRIKETHROUGH) === FONT_STRIKETHROUGH) {
+    if ((s.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
       txtDecor.push('line-through');
     }
 
@@ -1778,15 +1767,15 @@ class SvgCanvas2D extends AbstractCanvas2D {
       let bbox = null;
 
       if (overflow === 'fill' || overflow === 'width') {
-        if (align === ALIGN_CENTER) {
+        if (align === ALIGN.CENTER) {
           x -= w / 2;
-        } else if (align === ALIGN_RIGHT) {
+        } else if (align === ALIGN.RIGHT) {
           x -= w;
         }
 
-        if (valign === ALIGN_MIDDLE) {
+        if (valign === ALIGN.MIDDLE) {
           y -= h / 2;
-        } else if (valign === ALIGN_BOTTOM) {
+        } else if (valign === ALIGN.BOTTOM) {
           y -= h;
         }
 
@@ -1823,11 +1812,11 @@ class SvgCanvas2D extends AbstractCanvas2D {
         div.style.visibility = 'hidden';
         div.style.display = 'inline-block';
 
-        if ((s.fontStyle & FONT_BOLD) === FONT_BOLD) {
+        if ((s.fontStyle & FONT.BOLD) === FONT.BOLD) {
           div.style.fontWeight = 'bold';
         }
 
-        if ((s.fontStyle & FONT_ITALIC) === FONT_ITALIC) {
+        if ((s.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
           div.style.fontStyle = 'italic';
         }
 
@@ -1839,15 +1828,15 @@ class SvgCanvas2D extends AbstractCanvas2D {
         const h = div.offsetHeight;
         document.body.removeChild(div);
 
-        if (align === ALIGN_CENTER) {
+        if (align === ALIGN.CENTER) {
           x -= w / 2;
-        } else if (align === ALIGN_RIGHT) {
+        } else if (align === ALIGN.RIGHT) {
           x -= w;
         }
 
-        if (valign === ALIGN_MIDDLE) {
+        if (valign === ALIGN.MIDDLE) {
           y -= h / 2;
-        } else if (valign === ALIGN_BOTTOM) {
+        } else if (valign === ALIGN.BOTTOM) {
           y -= h;
         }
 

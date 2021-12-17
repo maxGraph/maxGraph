@@ -15,13 +15,11 @@ import {
   toRadians,
 } from '../util/utils';
 import RectangleShape from './geometry/node/RectangleShape';
-import mxGuide from '../util/Guide';
+import mxGuide from './other/Guide';
 import Point from './geometry/Point';
 import {
-  CURSOR_MOVABLE_EDGE,
-  CURSOR_MOVABLE_VERTEX,
-  DIALECT_STRICTHTML,
-  DIALECT_SVG,
+  CURSOR,
+  DIALECT,
   DROP_TARGET_COLOR,
   INVALID_CONNECT_TARGET_COLOR,
   NONE,
@@ -32,7 +30,7 @@ import CellHighlight from './cell/CellHighlight';
 import Rectangle from './geometry/Rectangle';
 import { getClientX, getClientY, isAltDown, isMultiTouchEvent } from '../util/eventUtils';
 import { Graph } from './Graph';
-import Guide from '../util/Guide';
+import Guide from './other/Guide';
 import Shape from './geometry/Shape';
 import InternalMouseEvent from './event/InternalMouseEvent';
 import SelectionCellsHandler from './handler/SelectionCellsHandler';
@@ -816,13 +814,13 @@ class GraphHandler implements GraphPlugin {
     shape.isDashed = true;
 
     if (this.htmlPreview) {
-      shape.dialect = DIALECT_STRICTHTML;
+      shape.dialect = DIALECT.STRICTHTML;
       shape.init(this.graph.container);
     } else {
       // Makes sure to use either VML or SVG shapes in order to implement
       // event-transparency on the background area of the rectangle since
       // HTML shapes do not let mouseevents through even when transparent
-      shape.dialect = DIALECT_SVG;
+      shape.dialect = DIALECT.SVG;
       shape.init(this.graph.getView().getOverlayPane());
       shape.pointerEvents = false;
 
@@ -1161,9 +1159,9 @@ class GraphHandler implements GraphPlugin {
 
       if (!cursor && cell && graph.isEnabled() && graph.isCellMovable(cell)) {
         if (cell.isEdge()) {
-          cursor = CURSOR_MOVABLE_EDGE;
+          cursor = CURSOR.MOVABLE_EDGE;
         } else {
-          cursor = CURSOR_MOVABLE_VERTEX;
+          cursor = CURSOR.MOVABLE_VERTEX;
         }
       }
 

@@ -33,50 +33,36 @@ export const MAX_HOTSPOT_SIZE = 0;
  * Variable: RENDERING_HINT_EXACT
  *
  * Defines the exact rendering hint.
- */
-export const RENDERING_HINT_EXACT = 'exact';
-
-/**
+ *
  * Variable: RENDERING_HINT_FASTER
  *
  * Defines the faster rendering hint.
- */
-export const RENDERING_HINT_FASTER = 'faster';
-
-/**
+ *
  * Variable: RENDERING_HINT_FASTEST
  *
  * Defines the fastest rendering hint.
  */
-export const RENDERING_HINT_FASTEST = 'fastest';
+export const enum RENDERING_HINT {
+    EXACT = 'exact',
+    FASTER = 'faster',
+    FASTEST = 'fastest',
+};
 
 /**
- * Variable: DIALECT_SVG
+ * - DIALECT_SVG: Defines the SVG display dialect name.
  *
- * Defines the SVG display dialect name.
- */
-export const DIALECT_SVG = 'svg';
-
-/**
- * Variable: DIALECT_MIXEDHTML
+ * - DIALECT_MIXEDHTML: Defines the mixed HTML display dialect name.
  *
- * Defines the mixed HTML display dialect name.
- */
-export const DIALECT_MIXEDHTML = 'mixedHtml';
-
-/**
- * Variable: DIALECT_PREFERHTML
+ * - DIALECT_PREFERHTML: Defines the preferred HTML display dialect name.
  *
- * Defines the preferred HTML display dialect name.
+ * - DIALECT_STRICTHTML: Defines the strict HTML display dialect.
  */
-export const DIALECT_PREFERHTML = 'preferHtml';
-
-/**
- * Variable: DIALECT_STRICTHTML
- *
- * Defines the strict HTML display dialect.
- */
-export const DIALECT_STRICTHTML = 'strictHtml';
+export const enum DIALECT {
+    SVG = 'svg',
+    MIXEDHTML = 'mixedHtml',
+    PREFERHTML = 'preferHtml',
+    STRICTHTML = 'strictHtml',
+};
 
 /**
  * Variable: NS_SVG
@@ -101,14 +87,6 @@ export const NS_XLINK = 'http://www.w3.org/1999/xlink';
 export const SHADOWCOLOR = 'gray';
 
 /**
- * Variable: VML_SHADOWCOLOR
- *
- * Used for shadow color in filters where transparency is not supported
- * (Microsoft Internet Explorer). Default is gray.
- */
-export const VML_SHADOWCOLOR = 'gray';
-
-/**
  * Variable: SHADOW_OFFSET_X
  *
  * Specifies the x-offset of the shadow. Default is 2.
@@ -129,89 +107,20 @@ export const SHADOW_OFFSET_Y = 3;
  */
 export const SHADOW_OPACITY = 1;
 
-/**
- * Variable: NODETYPE_ELEMENT
- *
- * DOM node of type ELEMENT.
- */
-export const NODETYPE_ELEMENT = 1;
-
-/**
- * Variable: NODETYPE_ATTRIBUTE
- *
- * DOM node of type ATTRIBUTE.
- */
-export const NODETYPE_ATTRIBUTE = 2;
-
-/**
- * Variable: NODETYPE_TEXT
- *
- * DOM node of type TEXT.
- */
-export const NODETYPE_TEXT = 3;
-
-/**
- * Variable: NODETYPE_CDATA
- *
- * DOM node of type CDATA.
- */
-export const NODETYPE_CDATA = 4;
-
-/**
- * Variable: NODETYPE_ENTITY_REFERENCE
- *
- * DOM node of type ENTITY_REFERENCE.
- */
-export const NODETYPE_ENTITY_REFERENCE = 5;
-
-/**
- * Variable: NODETYPE_ENTITY
- *
- * DOM node of type ENTITY.
- */
-export const NODETYPE_ENTITY = 6;
-
-/**
- * Variable: NODETYPE_PROCESSING_INSTRUCTION
- *
- * DOM node of type PROCESSING_INSTRUCTION.
- */
-export const NODETYPE_PROCESSING_INSTRUCTION = 7;
-
-/**
- * Variable: NODETYPE_COMMENT
- *
- * DOM node of type COMMENT.
- */
-export const NODETYPE_COMMENT = 8;
-
-/**
- * Variable: NODETYPE_DOCUMENT
- *
- * DOM node of type DOCUMENT.
- */
-export const NODETYPE_DOCUMENT = 9;
-
-/**
- * Variable: NODETYPE_DOCUMENTTYPE
- *
- * DOM node of type DOCUMENTTYPE.
- */
-export const NODETYPE_DOCUMENTTYPE = 10;
-
-/**
- * Variable: NODETYPE_DOCUMENT_FRAGMENT
- *
- * DOM node of type DOCUMENT_FRAGMENT.
- */
-export const NODETYPE_DOCUMENT_FRAGMENT = 11;
-
-/**
- * Variable: NODETYPE_NOTATION
- *
- * DOM node of type NOTATION.
- */
-export const NODETYPE_NOTATION = 12;
+export const enum NODETYPE {
+    ELEMENT = 1,
+    ATTRIBUTE = 2,
+    TEXT = 3,
+    CDATA = 4,
+    ENTITY_REFERENCE = 5,
+    ENTITY = 6,
+    PROCESSING_INSTRUCTION = 7,
+    COMMENT = 8,
+    DOCUMENT = 9,
+    DOCUMENTTYPE = 10,
+    DOCUMENT_FRAGMENT = 11,
+    NOTATION = 12,
+}
 
 /**
  * Variable: TOOLTIP_VERTICAL_OFFSET
@@ -275,53 +184,29 @@ export const HIGHLIGHT_SIZE = 2;
 export const HIGHLIGHT_OPACITY = 100;
 
 /**
- * Variable: CURSOR_MOVABLE_VERTEX
+ * - CURSOR_MOVABLE_VERTEX: Defines the cursor for a movable vertex. Default is 'move'.
  *
- * Defines the cursor for a movable vertex. Default is 'move'.
- */
-export const CURSOR_MOVABLE_VERTEX = 'move';
-
-/**
- * Variable: CURSOR_MOVABLE_EDGE
+ * - CURSOR_MOVABLE_EDGE: Defines the cursor for a movable edge. Default is 'move'.
  *
- * Defines the cursor for a movable edge. Default is 'move'.
- */
-export const CURSOR_MOVABLE_EDGE = 'move';
-
-/**
- * Variable: CURSOR_LABEL_HANDLE
+ * - CURSOR_LABEL_HANDLE: Defines the cursor for a movable label. Default is 'default'.
  *
- * Defines the cursor for a movable label. Default is 'default'.
- */
-export const CURSOR_LABEL_HANDLE = 'default';
-
-/**
- * Variable: CURSOR_TERMINAL_HANDLE
+ * - CURSOR_TERMINAL_HANDLE: Defines the cursor for a terminal handle. Default is 'pointer'.
  *
- * Defines the cursor for a terminal handle. Default is 'pointer'.
- */
-export const CURSOR_TERMINAL_HANDLE = 'pointer';
-
-/**
- * Variable: CURSOR_BEND_HANDLE
+ * - CURSOR_BEND_HANDLE: Defines the cursor for a movable bend. Default is 'crosshair'.
  *
- * Defines the cursor for a movable bend. Default is 'crosshair'.
- */
-export const CURSOR_BEND_HANDLE = 'crosshair';
-
-/**
- * Variable: CURSOR_VIRTUAL_BEND_HANDLE
+ * - CURSOR_VIRTUAL_BEND_HANDLE: Defines the cursor for a movable bend. Default is 'crosshair'.
  *
- * Defines the cursor for a movable bend. Default is 'crosshair'.
+ * - CURSOR_CONNECT: Defines the cursor for a connectable state. Default is 'pointer'.
  */
-export const CURSOR_VIRTUAL_BEND_HANDLE = 'crosshair';
-
-/**
- * Variable: CURSOR_CONNECT
- *
- * Defines the cursor for a connectable state. Default is 'pointer'.
- */
-export const CURSOR_CONNECT = 'pointer';
+export const enum CURSOR {
+    MOVABLE_VERTEX = 'move',
+    MOVABLE_EDGE = 'move',
+    LABEL_HANDLE = 'default',
+    TERMINAL_HANDLE = 'pointer',
+    BEND_HANDLE = 'crosshair',
+    VIRTUAL_BEND_HANDLE = 'crosshair',
+    CONNECT = 'pointer',
+};
 
 /**
  * Variable: HIGHLIGHT_COLOR
@@ -691,474 +576,163 @@ export const PAGE_FORMAT_LETTER_LANDSCAPE = [0, 0, 1100, 850];
 export const NONE = 'none';
 
 /**
- * Variable: FONT_BOLD
+ * - FONT_BOLD: Constant for bold fonts. Default is 1.
  *
- * Constant for bold fonts. Default is 1.
+ * - FONT_ITALIC: Constant for italic fonts. Default is 2.
+ *
+ * - FONT_UNDERLINE: Constant for underlined fonts. Default is 4.
+ *
+ * - FONT_STRIKETHROUGH: Constant for strikthrough fonts. Default is 8.
  */
-export const FONT_BOLD = 1;
+export const enum FONT {
+    BOLD = 1,
+    ITALIC = 2,
+    UNDERLINE = 4,
+    STRIKETHROUGH = 8,
+};
 
 /**
- * Variable: FONT_ITALIC
+ * - ARROW_CLASSIC: Constant for classic arrow markers.
  *
- * Constant for italic fonts. Default is 2.
+ * - ARROW_CLASSIC_THIN: Constant for thin classic arrow markers.
+ *
+ * - ARROW_BLOCK: Constant for block arrow markers.
+ *
+ * - ARROW_BLOCK_THIN: Constant for thin block arrow markers.
+ *
+ * - ARROW_OPEN: Constant for open arrow markers.
+ *
+ * - ARROW_OPEN_THIN: Constant for thin open arrow markers.
+ *
+ * - ARROW_OVAL: Constant for oval arrow markers.
+ *
+ * - ARROW_DIAMOND: Constant for diamond arrow markers.
+ *
+ * - ARROW_DIAMOND_THIN: Constant for thin diamond arrow markers.
  */
-export const FONT_ITALIC = 2;
+export const enum ARROW {
+    CLASSIC = 'classic',
+    CLASSIC_THIN = 'classicThin',
+    BLOCK = 'block',
+    BLOCK_THIN = 'blockThin',
+    OPEN = 'open',
+    OPEN_THIN = 'openThin',    
+    OVAL = 'oval',
+    DIAMOND = 'diamond',
+    DIAMOND_THIN = 'diamondThin',
+};
 
 /**
- * Variable: FONT_UNDERLINE
+ * - ALIGN_LEFT: Constant for left horizontal alignment. Default is left.
  *
- * Constant for underlined fonts. Default is 4.
+ * - ALIGN_CENTER: Constant for center horizontal alignment. Default is center.
+ *
+ * - ALIGN_RIGHT: Constant for right horizontal alignment. Default is right.
+ *
+ * - ALIGN_TOP: Constant for top vertical alignment. Default is top.
+ *
+ * - ALIGN_MIDDLE: Constant for middle vertical alignment. Default is middle.
+ *
+ * - ALIGN_BOTTOM: Constant for bottom vertical alignment. Default is bottom.
  */
-export const FONT_UNDERLINE = 4;
+export const enum ALIGN {
+    LEFT = 'left',
+    CENTER = 'center',
+    RIGHT = 'right',
+    TOP = 'top',
+    MIDDLE = 'middle',
+    BOTTOM = 'bottom',
+};
 
-/**
- * Variable: FONT_STRIKETHROUGH
- *
- * Constant for strikthrough fonts. Default is 8.
- */
-export const FONT_STRIKETHROUGH = 8;
-
-/**
- * Variable: SHAPE_RECTANGLE
- *
- * Name under which <mxRectangleShape> is registered in <mxCellRenderer>.
- * Default is rectangle.
- */
-export const SHAPE_RECTANGLE = 'rectangle';
-
-/**
- * Variable: SHAPE_ELLIPSE
- *
- * Name under which <mxEllipse> is registered in <mxCellRenderer>.
- * Default is ellipse.
- */
-export const SHAPE_ELLIPSE = 'ellipse';
-
-/**
- * Variable: SHAPE_DOUBLE_ELLIPSE
- *
- * Name under which <mxDoubleEllipse> is registered in <mxCellRenderer>.
- * Default is doubleEllipse.
- */
-export const SHAPE_DOUBLE_ELLIPSE = 'doubleEllipse';
-
-/**
- * Variable: SHAPE_RHOMBUS
- *
- * Name under which <mxRhombus> is registered in <mxCellRenderer>.
- * Default is rhombus.
- */
-export const SHAPE_RHOMBUS = 'rhombus';
-
-/**
- * Variable: SHAPE_LINE
- *
- * Name under which <mxLine> is registered in <mxCellRenderer>.
- * Default is line.
- */
-export const SHAPE_LINE = 'line';
-
-/**
- * Variable: SHAPE_IMAGE
- *
- * Name under which <mxImageShape> is registered in <mxCellRenderer>.
- * Default is image.
- */
-export const SHAPE_IMAGE = 'image';
-
-/**
- * Variable: SHAPE_ARROW
- *
- * Name under which <mxArrow> is registered in <mxCellRenderer>.
- * Default is arrow.
- */
-export const SHAPE_ARROW = 'arrow';
-
-/**
- * Variable: SHAPE_ARROW_CONNECTOR
- *
- * Name under which <mxArrowConnector> is registered in <mxCellRenderer>.
- * Default is arrowConnector.
- */
-export const SHAPE_ARROW_CONNECTOR = 'arrowConnector';
-
-/**
- * Variable: SHAPE_LABEL
- *
- * Name under which <mxLabel> is registered in <mxCellRenderer>.
- * Default is label.
- */
-export const SHAPE_LABEL = 'label';
-
-/**
- * Variable: SHAPE_CYLINDER
- *
- * Name under which <mxCylinder> is registered in <mxCellRenderer>.
- * Default is cylinder.
- */
-export const SHAPE_CYLINDER = 'cylinder';
-
-/**
- * Variable: SHAPE_SWIMLANE
- *
- * Name under which <mxSwimlane> is registered in <mxCellRenderer>.
- * Default is swimlane.
- */
-export const SHAPE_SWIMLANE = 'swimlane';
-
-/**
- * Variable: SHAPE_CONNECTOR
- *
- * Name under which <mxConnector> is registered in <mxCellRenderer>.
- * Default is connector.
- */
-export const SHAPE_CONNECTOR = 'connector';
-
-/**
- * Variable: SHAPE_ACTOR
- *
- * Name under which <mxActor> is registered in <mxCellRenderer>.
- * Default is actor.
- */
-export const SHAPE_ACTOR = 'actor';
-
-/**
- * Variable: SHAPE_CLOUD
- *
- * Name under which <mxCloud> is registered in <mxCellRenderer>.
- * Default is cloud.
- */
-export const SHAPE_CLOUD = 'cloud';
-
-/**
- * Variable: SHAPE_TRIANGLE
- *
- * Name under which <mxTriangle> is registered in <mxCellRenderer>.
- * Default is triangle. 
- */
-export const SHAPE_TRIANGLE = 'triangle';
-
-/**
- * Variable: SHAPE_HEXAGON
- *
- * Name under which <mxHexagon> is registered in <mxCellRenderer>.
- * Default is hexagon.
- */
-export const SHAPE_HEXAGON = 'hexagon';
-
-/**
- * Variable: ARROW_CLASSIC
- *
- * Constant for classic arrow markers.
- */
-export const ARROW_CLASSIC = 'classic';
-
-/**
- * Variable: ARROW_CLASSIC_THIN
- *
- * Constant for thin classic arrow markers.
- */
-export const ARROW_CLASSIC_THIN = 'classicThin';
-
-/**
- * Variable: ARROW_BLOCK
- *
- * Constant for block arrow markers.
- */
-export const ARROW_BLOCK = 'block';
-
-/**
- * Variable: ARROW_BLOCK_THIN
- *
- * Constant for thin block arrow markers.
- */
-export const ARROW_BLOCK_THIN = 'blockThin';
-
-/**
- * Variable: ARROW_OPEN
- *
- * Constant for open arrow markers.
- */
-export const ARROW_OPEN = 'open';
-
-/**
- * Variable: ARROW_OPEN_THIN
- *
- * Constant for thin open arrow markers.
- */
-export const ARROW_OPEN_THIN = 'openThin';
-
-/**
- * Variable: ARROW_OVAL
- *
- * Constant for oval arrow markers.
- */
-export const ARROW_OVAL = 'oval';
-
-/**
- * Variable: ARROW_DIAMOND
- *
- * Constant for diamond arrow markers.
- */
-export const ARROW_DIAMOND = 'diamond';
-
-/**
- * Variable: ARROW_DIAMOND_THIN
- *
- * Constant for thin diamond arrow markers.
- */
-export const ARROW_DIAMOND_THIN = 'diamondThin';
-
-/**
- * Variable: ALIGN_LEFT
- *
- * Constant for left horizontal alignment. Default is left.
- */
-export const ALIGN_LEFT = 'left';
-
-/**
- * Variable: ALIGN_CENTER
- *
- * Constant for center horizontal alignment. Default is center.
- */
-export const ALIGN_CENTER = 'center';
-
-/**
- * Variable: ALIGN_RIGHT
- *
- * Constant for right horizontal alignment. Default is right.
- */
-export const ALIGN_RIGHT = 'right';
-
-/**
- * Variable: ALIGN_TOP
- *
- * Constant for top vertical alignment. Default is top.
- */
-export const ALIGN_TOP = 'top';
-
-/**
- * Variable: ALIGN_MIDDLE
- *
- * Constant for middle vertical alignment. Default is middle.
- */
-export const ALIGN_MIDDLE = 'middle';
-
-/**
- * Variable: ALIGN_BOTTOM
- *
- * Constant for bottom vertical alignment. Default is bottom.
- */
-export const ALIGN_BOTTOM = 'bottom';
-
-/**
- * Variable: DIRECTION_NORTH
- *
- * Constant for direction north. Default is north.
- */
-export const DIRECTION_NORTH = 'north';
-
-/**
- * Variable: DIRECTION_SOUTH
- *
- * Constant for direction south. Default is south.
- */
-export const DIRECTION_SOUTH = 'south';
-
-/**
- * Variable: DIRECTION_EAST
- *
- * Constant for direction east. Default is east.
- */
-export const DIRECTION_EAST = 'east';
-
-/**
- * Variable: DIRECTION_WEST
- *
- * Constant for direction west. Default is west.
- */
-export const DIRECTION_WEST = 'west';
+export const enum DIRECTION {
+    NORTH = 'north',
+    SOUTH = 'south',
+    EAST = 'east',
+    WEST = 'west',
+}
 
 /**
  * Variable: TEXT_DIRECTION_DEFAULT
  *
  * Constant for text direction default. Default is an empty string. Use
  * this value to use the default text direction of the operating system.
- */
-export const TEXT_DIRECTION_DEFAULT = '';
-
-/**
+ *
  * Variable: TEXT_DIRECTION_AUTO
  *
  * Constant for text direction automatic. Default is auto. Use this value
  * to find the direction for a given text with <mxText.getAutoDirection>.
- */
-export const TEXT_DIRECTION_AUTO = 'auto';
-
-/**
+*
  * Variable: TEXT_DIRECTION_LTR
  *
  * Constant for text direction left to right. Default is ltr. Use this
  * value for left to right text direction.
- */
-export const TEXT_DIRECTION_LTR = 'ltr';
-
-/**
+ * 
  * Variable: TEXT_DIRECTION_RTL
  *
  * Constant for text direction right to left. Default is rtl. Use this
  * value for right to left text direction.
  */
-export const TEXT_DIRECTION_RTL = 'rtl';
+export const enum TEXT_DIRECTION {
+    DEFAULT = '',
+    AUTO = 'auto',
+    LTR = 'ltr',
+    RTL = 'rtl',
+};
 
 /**
- * Variable: DIRECTION_MASK_NONE
+ * - DIRECTION_MASK_NONE: Constant for no direction.
  *
- * Constant for no direction.
+ * - DIRECTION_MASK_WEST: Bitwise mask for west direction.
+ *
+ * - DIRECTION_MASK_NORTH: Bitwise mask for north direction.
+ *
+ * - DIRECTION_MASK_SOUTH: Bitwise mask for south direction.
+ *
+ * - DIRECTION_MASK_EAST: Bitwise mask for east direction.
+ *
+ * - DIRECTION_MASK_ALL: Bitwise mask for all directions.
  */
-export const DIRECTION_MASK_NONE = 0;
+export const DIRECTION_MASK = {
+    NONE: 0,
+    WEST: 1,
+    NORTH: 2,
+    SOUTH: 4,
+    EAST: 8,
+    ALL: 15,
+};
 
 /**
- * Variable: DIRECTION_MASK_WEST
- *
- * Bitwise mask for west direction.
+ * Variable: ELBOW
+ * 
+ * Default is horizontal.
  */
-export const DIRECTION_MASK_WEST = 1;
+export const enum ELBOW {
+    VERTICAL = 'vertical',
+    HORIZONTAL = 'horizontal',
+};
 
 /**
- * Variable: DIRECTION_MASK_NORTH
+ * Variable: EDGESTYLE
  *
- * Bitwise mask for north direction.
+ * Can be used as a string value for the STYLE_EDGE style.
  */
-export const DIRECTION_MASK_NORTH = 2;
+export const enum EDGESTYLE {
+    ELBOW = 'elbowEdgeStyle',
+    ENTITY_RELATION = 'entityRelationEdgeStyle',
+    LOOP = 'loopEdgeStyle',
+    SIDETOSIDE = 'sideToSideEdgeStyle',
+    TOPTOBOTTOM = 'topToBottomEdgeStyle',
+    ORTHOGONAL = 'orthogonalEdgeStyle',
+    SEGMENT = 'segmentEdgeStyle',
+};
 
 /**
- * Variable: DIRECTION_MASK_SOUTH
- *
- * Bitwise mask for south direction.
+ * Can be used as a string value for the STYLE_PERIMETER style.
  */
-export const DIRECTION_MASK_SOUTH = 4;
-
-/**
- * Variable: DIRECTION_MASK_EAST
- *
- * Bitwise mask for east direction.
- */
-export const DIRECTION_MASK_EAST = 8;
-
-/**
- * Variable: DIRECTION_MASK_ALL
- *
- * Bitwise mask for all directions.
- */
-export const DIRECTION_MASK_ALL = 15;
-
-/**
- * Variable: ELBOW_VERTICAL
- *
- * Constant for elbow vertical. Default is horizontal.
- */
-export const ELBOW_VERTICAL = 'vertical';
-
-/**
- * Variable: ELBOW_HORIZONTAL
- *
- * Constant for elbow horizontal. Default is horizontal.
- */
-export const ELBOW_HORIZONTAL = 'horizontal';
-
-/**
- * Variable: EDGESTYLE_ELBOW
- *
- * Name of the elbow edge style. Can be used as a string value
- * for the STYLE_EDGE style.
- */
-export const EDGESTYLE_ELBOW = 'elbowEdgeStyle';
-
-/**
- * Variable: EDGESTYLE_ENTITY_RELATION
- *
- * Name of the entity relation edge style. Can be used as a string value
- * for the STYLE_EDGE style.
- */
-export const EDGESTYLE_ENTITY_RELATION = 'entityRelationEdgeStyle';
-
-/**
- * Variable: EDGESTYLE_LOOP
- *
- * Name of the loop edge style. Can be used as a string value
- * for the STYLE_EDGE style.
- */
-export const EDGESTYLE_LOOP = 'loopEdgeStyle';
-
-/**
- * Variable: EDGESTYLE_SIDETOSIDE
- *
- * Name of the side to side edge style. Can be used as a string value
- * for the STYLE_EDGE style.
- */
-export const EDGESTYLE_SIDETOSIDE = 'sideToSideEdgeStyle';
-
-/**
- * Variable: EDGESTYLE_TOPTOBOTTOM
- *
- * Name of the top to bottom edge style. Can be used as a string value
- * for the STYLE_EDGE style.
- */
-export const EDGESTYLE_TOPTOBOTTOM = 'topToBottomEdgeStyle';
-
-/**
- * Variable: EDGESTYLE_ORTHOGONAL
- *
- * Name of the generic orthogonal edge style. Can be used as a string value
- * for the STYLE_EDGE style.
- */
-export const EDGESTYLE_ORTHOGONAL = 'orthogonalEdgeStyle';
-
-/**
- * Variable: EDGESTYLE_SEGMENT
- *
- * Name of the generic segment edge style. Can be used as a string value
- * for the STYLE_EDGE style.
- */
-export const EDGESTYLE_SEGMENT = 'segmentEdgeStyle';
-
-/**
- * Variable: PERIMETER_ELLIPSE
- *
- * Name of the ellipse perimeter. Can be used as a string value
- * for the STYLE_PERIMETER style.
- */
-export const PERIMETER_ELLIPSE = 'ellipsePerimeter';
-
-/**
- * Variable: PERIMETER_RECTANGLE
- *
- * Name of the rectangle perimeter. Can be used as a string value
- * for the STYLE_PERIMETER style.
- */
-export const PERIMETER_RECTANGLE = 'rectanglePerimeter';
-
-/**
- * Variable: PERIMETER_RHOMBUS
- *
- * Name of the rhombus perimeter. Can be used as a string value
- * for the STYLE_PERIMETER style.
- */
-export const PERIMETER_RHOMBUS = 'rhombusPerimeter';
-
-/**
- * Variable: PERIMETER_HEXAGON
- *
- * Name of the hexagon perimeter. Can be used as a string value
- * for the STYLE_PERIMETER style.
- */
-export const PERIMETER_HEXAGON = 'hexagonPerimeter';
-
-/**
- * Variable: PERIMETER_TRIANGLE
- *
- * Name of the triangle perimeter. Can be used as a string value
- * for the STYLE_PERIMETER style.
- */
-export const PERIMETER_TRIANGLE = 'trianglePerimeter';
+export const enum PERIMETER {
+    ELLIPSE = 'ellipsePerimeter',
+    RECTANGLE = 'rectanglePerimeter',
+    RHOMBUS = 'rhombusPerimeter',
+    HEXAGON = 'hexagonPerimeter',
+    TRIANGLE = 'trianglePerimeter'
+};

@@ -5,9 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Client from '../../Client';
-import InternalEvent from '../../view/event/InternalEvent';
-import { getInnerHtml, write } from '../dom/domUtils';
+import Client from '../Client';
+import InternalEvent from '../view/event/InternalEvent';
+import { getInnerHtml, write } from '../util/domUtils';
 import MaxWindow, { popup } from './MaxWindow';
 
 /**

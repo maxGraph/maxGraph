@@ -6,8 +6,9 @@
  */
 
 import Model from './Model';
-import ObjectCodec from '../../util/serialization/ObjectCodec';
-import CodecRegistry from '../../util/serialization/CodecRegistry';
+import ObjectCodec from '../../serialization/ObjectCodec';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import Cell from '../cell/Cell';
 
 /**
  * Class: ModelCodec
@@ -28,7 +29,7 @@ class ModelCodec extends ObjectCodec {
    * cell nodes as produced by the <CellCodec>. The sequence is
    * wrapped-up in a node with the name root.
    */
-  encodeObject(enc, obj, node) {
+  encodeObject(enc: any, obj: Cell, node: Element) {
     const rootNode = enc.document.createElement('root');
     enc.encodeCell(obj.getRoot(), rootNode);
     node.appendChild(rootNode);
@@ -39,11 +40,11 @@ class ModelCodec extends ObjectCodec {
    *
    * Overrides decode child to handle special child nodes.
    */
-  decodeChild(dec, child, obj) {
+  decodeChild(dec: any, child: Element, obj: Cell | Model) {
     if (child.nodeName === 'root') {
-      this.decodeRoot(dec, child, obj);
+      this.decodeRoot(dec, child, <Model>obj);
     } else {
-      decodeChild.apply(this, [dec, child, obj]);
+      this.decodeChild.apply(this, [dec, child, obj]);
     }
   }
 
@@ -53,7 +54,7 @@ class ModelCodec extends ObjectCodec {
    * Reads the cells into the graph model. All cells
    * are children of the root element in the node.
    */
-  decodeRoot(dec, root, model) {
+  decodeRoot(dec: any, root: Element, model: Model) {
     let rootCell = null;
     let tmp = root.firstChild;
 
@@ -63,7 +64,6 @@ class ModelCodec extends ObjectCodec {
       if (cell != null && cell.getParent() == null) {
         rootCell = cell;
       }
-
       tmp = tmp.nextSibling;
     }
 

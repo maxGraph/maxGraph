@@ -72,7 +72,7 @@ import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isSh
  * event listener is installed.
  */
 class KeyHandler {
-  constructor(graph: Graph, target: Element) {
+  constructor(graph: Graph, target: Element | null=null) {
     if (graph != null) {
       this.graph = graph;
       this.target = target || document.documentElement;

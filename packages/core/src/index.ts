@@ -95,22 +95,22 @@ export { default as MedianHybridCrossingReduction } from './view/layout/hierarch
 export { default as MinimumCycleRemover } from './view/layout/hierarchical/stage/MinimumCycleRemover';
 export { default as SwimlaneOrdering } from './view/layout/hierarchical/stage/SwimlaneOrdering';
 
-export { default as CellCodec } from './util/serialization/CellCodec';
-export { default as ChildChangeCodec } from './util/serialization/ChildChangeCodec';
-export { default as Codec } from './util/serialization/Codec';
-export { default as CodecRegistry } from './util/serialization/CodecRegistry';
-export { default as DefaultKeyHandlerCodec } from './util/serialization/DefaultKeyHandlerCodec';
-export { default as DefaultPopupMenuCodec } from './util/serialization/DefaultPopupMenuCodec';
-export { default as DefaultToolbarCodec } from './util/serialization/DefaultToolbarCodec';
-export { default as EditorCodec } from './util/serialization/EditorCodec';
-export { default as GenericChangeCodec } from './util/serialization/GenericChangeCodec';
-export { default as GraphCodec } from './util/serialization/GraphCodec';
-export { default as GraphViewCodec } from './util/serialization/GraphViewCodec';
-export { default as ModelCodec } from './util/serialization/ModelCodec';
-export { default as ObjectCodec } from './util/serialization/ObjectCodec';
-export { default as RootChangeCodec } from './util/serialization/RootChangeCodec';
-export { default as StylesheetCodec } from './util/serialization/StylesheetCodec';
-export { default as TerminalChangeCodec } from './util/serialization/TerminalChangeCodec';
+export { default as CellCodec } from './view/cell/CellCodec';
+export { default as ChildChangeCodec } from './view/undoable_changes/ChildChangeCodec';
+export { default as Codec } from './serialization/Codec';
+export { default as CodecRegistry } from './serialization/CodecRegistry';
+export { default as DefaultKeyHandlerCodec } from './editor/DefaultKeyHandlerCodec';
+export { default as DefaultPopupMenuCodec } from './editor/DefaultPopupMenuCodec';
+export { default as DefaultToolbarCodec } from './editor/DefaultToolbarCodec';
+export { default as EditorCodec } from './editor/EditorCodec';
+export { default as GenericChangeCodec } from './view/undoable_changes/GenericChangeCodec';
+export { default as GraphCodec } from './view/GraphCodec';
+export { default as GraphViewCodec } from './view/GraphViewCodec';
+export { default as ModelCodec } from './view/other/ModelCodec';
+export { default as ObjectCodec } from './serialization/ObjectCodec';
+export { default as RootChangeCodec } from './view/undoable_changes/RootChangeCodec';
+export { default as StylesheetCodec } from './view/style/StylesheetCodec';
+export { default as TerminalChangeCodec } from './view/undoable_changes/TerminalChangeCodec';
 
 export { default as ActorShape } from './view/geometry/ActorShape';
 export { default as LabelShape } from './view/geometry/node/LabelShape';
@@ -138,7 +138,7 @@ export { default as StencilShape } from './view/geometry/node/StencilShape';
 export { default as StencilShapeRegistry } from './view/geometry/node/StencilShapeRegistry';
 
 export * as Constants from './util/constants';
-export { default as Guide } from './util/Guide';
+export { default as Guide } from './view/other/Guide';
 export { default as Resources } from './util/Resources';
 export * as utils from './util/utils';
 export * as CloneUtils from './util/cloneUtils';
@@ -148,13 +148,13 @@ export * as GestureUtils from './util/gestureUtils';
 export * as StringUtils from './util/stringUtils';
 export * as XmlUtils from './util/xmlUtils';
 
-export { default as Animation } from './util/animate/Animation';
-export { default as Effects } from './util/animate/Effects';
-export { default as Morphing } from './util/animate/Morphing';
+export { default as Animation } from './view/animate/Animation';
+export { default as Effects } from './view/animate/Effects';
+export { default as Morphing } from './view/animate/Morphing';
 
-export { default as AbstractCanvas2D } from './util/canvas/AbstractCanvas2D';
-export { default as SvgCanvas2D } from './util/canvas/SvgCanvas2D';
-export { default as XmlCanvas2D } from './util/canvas/XmlCanvas2D';
+export { default as AbstractCanvas2D } from './view/canvas/AbstractCanvas2D';
+export { default as SvgCanvas2D } from './view/canvas/SvgCanvas2D';
+export { default as XmlCanvas2D } from './view/canvas/XmlCanvas2D';
 
 export { default as Dictionary } from './util/Dictionary';
 export { default as Geometry } from './view/geometry/Geometry';
@@ -167,8 +167,7 @@ export { default as Perimeter } from './view/style/Perimeter';
 export { default as StyleRegistry } from './view/style/StyleRegistry';
 export { default as Stylesheet } from './view/style/Stylesheet';
 
-export { default as DivResizer } from './util/dom/DivResizer';
-export * as DomHelpers from './util/dom/domHelpers';
+export * as DomHelpers from './util/domHelpers';
 
 export { default as DragSource } from './view/other/DragSource';
 export { default as PanningManager } from './view/other/PanningManager';
@@ -178,21 +177,21 @@ export { default as EventObject } from './view/event/EventObject';
 export { default as EventSource } from './view/event/EventSource';
 export { default as InternalMouseEvent } from './view/event/InternalMouseEvent';
 
-export { default as MaxForm } from './util/gui/MaxForm';
-export { default as MaxLog } from './util/gui/MaxLog';
-export { default as PopupMenu } from './util/gui/PopupMenu';
-export { default as MaxToolbar } from './util/gui/MaxToolbar';
-export { default as MaxWindow } from './util/gui/MaxWindow';
+export { default as MaxForm } from './gui/MaxForm';
+export { default as MaxLog } from './gui/MaxLog';
+export { default as PopupMenu } from './gui/PopupMenu';
+export { default as MaxToolbar } from './gui/MaxToolbar';
+export { default as MaxWindow } from './gui/MaxWindow';
 
 export { default as ImageBox } from './view/image/ImageBox';
 export { default as ImageBundle } from './view/image/ImageBundle';
 export { default as ImageExport } from './view/image/ImageExport';
 
-export { default as UrlConverter } from './util/network/UrlConverter';
-export { default as MaxXmlRequest } from './util/network/MaxXmlRequest';
+export { default as UrlConverter } from './util/UrlConverter';
+export { default as MaxXmlRequest } from './util/MaxXmlRequest';
 
-export { default as AutoSaveManager } from './util/storage/AutoSaveManager';
-export { default as Clipboard } from './util/storage/Clipboard';
+export { default as AutoSaveManager } from './view/other/AutoSaveManager';
+export { default as Clipboard } from './util/Clipboard';
 
 export { default as UndoableEdit } from './view/undoable_changes/UndoableEdit';
 export { default as UndoManager } from './view/undoable_changes/UndoManager';

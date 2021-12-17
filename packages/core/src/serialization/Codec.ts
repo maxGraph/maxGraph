@@ -5,13 +5,15 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import CellPath from '../../view/cell/CellPath';
+import CellPath from '../view/cell/CellPath';
 import CodecRegistry from './CodecRegistry';
-import { NODETYPE_ELEMENT } from '../constants';
-import Cell from '../../view/cell/Cell';
+import { NODETYPE } from '../util/constants';
+import Cell from '../view/cell/Cell';
 import MaxLog from '../gui/MaxLog';
-import { getFunctionName } from '../stringUtils';
-import { importNode, isNode } from '../dom/domUtils';
+import { getFunctionName } from '../util/stringUtils';
+import { importNode, isNode } from '../util/domUtils';
+import CellCodec from 'src/view/cell/CellCodec';
+import ObjectCodec from './ObjectCodec';
 
 const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);
@@ -122,25 +124,25 @@ const createXmlDocument = () => {
  * @class Codec
  */
 class Codec {
-  constructor(document) {
+  constructor(document: XMLDocument) {
     this.document = document || createXmlDocument();
-    this.objects = [];
+    this.objects = {};
   }
 
   /**
    * The owner document of the codec.
    */
-  document: XMLDocument = null;
+  document: XMLDocument;
 
   /**
    * Maps from IDs to objects.
    */
-  objects: Array<string> = null;
+  objects: { [key: string]: Element };
 
   /**
    * Lookup table for resolving IDs to elements.
    */
-  elements: Array<any> = null;
+  elements: any = null;  // { [key: string]: Element } | null
 
   /**
    * Specifies if default values should be encoded. Default is false.
@@ -213,7 +215,6 @@ class Codec {
    */
   getElementById(id: string): Element {
     this.updateElements();
-
     return this.elements[id];
   }
 
@@ -235,8 +236,8 @@ class Codec {
   /**
    * Adds the given element to {@link elements} if it has an ID.
    */
-  addElement(node: Node): void {
-    if (node.nodeType === NODETYPE_ELEMENT) {
+  addElement(node: Element): void {
+    if (node.nodeType === NODETYPE.ELEMENT) {
       const id = node.getAttribute('id');
 
       if (id != null) {
@@ -248,11 +249,10 @@ class Codec {
       }
     }
 
-    node = node.firstChild;
-
-    while (node != null) {
-      this.addElement(node);
-      node = node.nextSibling;
+    let nodeChild = node.firstChild;
+    while (nodeChild != null) {
+      this.addElement(<Element>nodeChild);
+      nodeChild = nodeChild.nextSibling;
     }
   }
 
@@ -284,7 +284,6 @@ class Codec {
         }
       }
     }
-
     return id;
   }
 
@@ -315,7 +314,7 @@ class Codec {
    *
    * @param obj Object to be encoded.
    */
-  encode(obj: any): XMLDocument {
+  encode(obj: any): Element {
     let node = null;
 
     if (obj != null && obj.constructor != null) {
@@ -331,7 +330,6 @@ class Codec {
         );
       }
     }
-
     return node;
   }
 
@@ -347,14 +345,15 @@ class Codec {
    * @param node XML node to be decoded.
    * @param into Optional object to be decodec into.
    */
-  decode(node: Node, into?: any): any {
+  decode(node: Element, into?: any): any {
     this.updateElements();
     let obj = null;
 
-    if (node != null && node.nodeType === NODETYPE_ELEMENT) {
-      let ctor = null;
+    if (node != null && node.nodeType === NODETYPE.ELEMENT) {
+      let ctor: any = null;
 
       try {
+        // @ts-ignore
         ctor = window[node.nodeName];
       } catch (err) {
         // ignore
@@ -365,11 +364,10 @@ class Codec {
       if (dec != null) {
         obj = dec.decode(this, node, into);
       } else {
-        obj = node.cloneNode(true);
+        obj = <Element>node.cloneNode(true);
         obj.removeAttribute('as');
       }
     }
-
     return obj;
   }
 
@@ -406,9 +404,8 @@ class Codec {
    * {@link CellCodec.isCellCodec} to check if the codec is of the
    * given type.
    */
-  // isCellCodec(codec: Codec): boolean;
-  isCellCodec(codec: Codec): boolean {
-    if (codec != null && typeof codec.isCellCodec === 'function') {
+  isCellCodec(codec: any): boolean {
+    if (codec != null && 'isCellCodec' in codec) {
       return codec.isCellCodec();
     }
     return false;
@@ -427,11 +424,11 @@ class Codec {
    * and insertEdge on the parent and terminals, respectively.
    * Default is true.
    */
-  decodeCell(node: Node, restoreStructures?: boolean): Cell {
+  decodeCell(node: Element, restoreStructures?: boolean): Cell {
     restoreStructures = restoreStructures != null ? restoreStructures : true;
     let cell = null;
 
-    if (node != null && node.nodeType === NODETYPE_ELEMENT) {
+    if (node != null && node.nodeType === NODETYPE.ELEMENT) {
       // Tries to find a codec for the given node name. If that does
       // not return a codec then the node is the user object (an XML node
       // that contains the mxCell, aka inversion).
@@ -452,14 +449,12 @@ class Codec {
       if (!this.isCellCodec(decoder)) {
         decoder = CodecRegistry.getCodec(Cell);
       }
-
-      cell = decoder.decode(this, node);
+      cell = (<ObjectCodec>decoder).decode(this, node);
 
       if (restoreStructures) {
         this.insertIntoGraph(cell);
       }
     }
-
     return cell;
   }
 
@@ -502,7 +497,7 @@ class Codec {
    * @param attributes Attributename to be set.
    * @param value New value of the attribute.
    */
-  setAttribute(node: Node, attribute: string, value: any): void {
+  setAttribute(node: Element, attribute: string, value: any): void {
     if (attribute != null && value != null) {
       node.setAttribute(attribute, value);
     }

@@ -4,12 +4,12 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { setOpacity } from '../utils';
-import GeometryChange from '../../view/undoable_changes/GeometryChange';
-import TerminalChange from '../../view/undoable_changes/TerminalChange';
-import ValueChange from '../../view/undoable_changes/ValueChange';
-import ChildChange from '../../view/undoable_changes/ChildChange';
-import StyleChange from '../../view/undoable_changes/StyleChange';
+import { setOpacity } from '../../util/utils';
+import GeometryChange from '../undoable_changes/GeometryChange';
+import TerminalChange from '../undoable_changes/TerminalChange';
+import ValueChange from '../undoable_changes/ValueChange';
+import ChildChange from '../undoable_changes/ChildChange';
+import StyleChange from '../undoable_changes/StyleChange';
 import { Graph } from 'src/view/Graph';
 import Cell from 'src/view/cell/Cell';
 

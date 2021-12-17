@@ -4,9 +4,9 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import EventSource from '../../view/event/EventSource';
-import EventObject from '../../view/event/EventObject';
-import InternalEvent from '../../view/event/InternalEvent';
+import EventSource from '../event/EventSource';
+import EventObject from '../event/EventObject';
+import InternalEvent from '../event/InternalEvent';
 
 /**
  * Implements a basic animation in JavaScript.
@@ -15,37 +15,32 @@ import InternalEvent from '../../view/event/InternalEvent';
  * @extends {EventSource}
  */
 class Animation extends EventSource {
-  constructor(delay) {
+  constructor(delay: number=20) {
     super();
-
-    this.delay = delay != null ? delay : 20;
+    this.delay = delay;
   }
 
   /**
    * Specifies the delay between the animation steps. Defaul is 30ms.
    */
-  // delay: number;
-  delay = null;
+  delay: number;
 
   /**
    * Reference to the thread while the animation is running.
    */
-  // thread: number;
-  thread = null;
+  thread: number | null = null;
 
   /**
    * Returns true if the animation is running.
    */
-  // isRunning(): boolean;
-  isRunning() {
+  isRunning(): boolean {
     return this.thread != null;
   }
 
   /**
    * Starts the animation by repeatedly invoking updateAnimation.
    */
-  // startAnimation(): void;
-  startAnimation() {
+  startAnimation(): void {
     if (this.thread == null) {
       this.thread = window.setInterval(this.updateAnimation.bind(this), this.delay);
     }
@@ -56,16 +51,14 @@ class Animation extends EventSource {
    * when finished, startAnimation to resume. This is called whenever the
    * timer fires and fires an mxEvent.EXECUTE event with no properties.
    */
-  // updateAnimation(): void;
-  updateAnimation() {
+  updateAnimation(): void {
     this.fireEvent(new EventObject(InternalEvent.EXECUTE));
   }
 
   /**
    * Stops the animation by deleting the timer and fires an <mxEvent.DONE>.
    */
-  // stopAnimation(): void;
-  stopAnimation() {
+  stopAnimation(): void {
     if (this.thread != null) {
       window.clearInterval(this.thread);
       this.thread = null;

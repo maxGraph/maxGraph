@@ -6,7 +6,7 @@
  */
 
 import Client from '../Client';
-import MaxToolbar from '../util/gui/MaxToolbar';
+import MaxToolbar from '../gui/MaxToolbar';
 import Geometry from '../view/geometry/Geometry';
 import { convertPoint } from '../util/utils';
 import InternalEvent from '../view/event/InternalEvent';
@@ -39,7 +39,7 @@ import Editor from './Editor';
  * description of the configuration format.
  */
 class DefaultToolbar {
-  constructor(container: HTMLElement, editor: Editor) {
+  constructor(container: HTMLElement | null=null, editor: Editor | null=null) {
     this.editor = editor;
 
     if (container != null && editor != null) {
@@ -119,8 +119,7 @@ class DefaultToolbar {
    * @param action - Name of the action to execute when the item is clicked.
    * @param pressed - Optional URL of the icon for the pressed state.
    */
-  // addItem(title: string, icon: string, action: string, pressed?: string): any;
-  addItem(title, icon, action, pressed) {
+  addItem(title: string, icon: string, action: string, pressed?: string): any {
     const clickHandler = () => {
       if (action != null && action.length > 0) {
         this.editor.execute(action);
@@ -134,8 +133,7 @@ class DefaultToolbar {
    *
    * @param icon - Optional URL of the icon that represents the vertical separator. Default is {@link Client.imageBasePath} + ‘/separator.gif’.
    */
-  // addSeparator(icon?: string): void;
-  addSeparator(icon) {
+  addSeparator(icon?: string): void {
     icon = icon || `${Client.imageBasePath}/separator.gif`;
     this.toolbar.addSeparator(icon);
   }
@@ -143,8 +141,7 @@ class DefaultToolbar {
   /**
    * Helper method to invoke {@link MaxToolbar.addCombo} on toolbar and return the resulting DOM node.
    */
-  // addCombo(): HTMLElement;
-  addCombo() {
+  addCombo(): HTMLElement {
     return this.toolbar.addCombo();
   }
 
@@ -158,7 +155,7 @@ class DefaultToolbar {
    *
    * title - String that represents the title of the combo.
    */
-  addActionCombo(title) {
+  addActionCombo(title: string) {
     return this.toolbar.addActionCombo(title);
   }
 
@@ -169,8 +166,7 @@ class DefaultToolbar {
    * @param title - String that represents the title of the combo.
    * @param action - Name of the action to execute in {@link editor}.
    */
-  // addActionOption(combo: HTMLElement, title: string, action: string): void;
-  addActionOption(combo, title, action) {
+  addActionOption(combo: HTMLElement, title: string, action: string): void {
     const clickHandler = () => {
       this.editor.execute(action);
     };
@@ -185,8 +181,7 @@ class DefaultToolbar {
    * @param title - String that represents the title of the combo.
    * @param value - Object that represents the value of the option.
    */
-  // addOption(combo: HTMLElement, title: string, value: object): HTMLElement;
-  addOption(combo, title, value) {
+  addOption(combo: HTMLElement, title: string, value: object): HTMLElement {
     return this.toolbar.addOption(combo, title, value);
   }
 
@@ -200,8 +195,7 @@ class DefaultToolbar {
    * @param pressed - Optional URL of the icon that represents the pressed state.
    * @param funct - Optional JavaScript function that takes the {@link Editor} as the first and only argument that is executed after the mode has been selected.
    */
-  // addMode(title: string, icon: string, mode: string, pressed?: string, funct?: Function): any;
-  addMode(title, icon, mode, pressed, funct) {
+  addMode(title: string, icon: string, mode: string, pressed?: string, funct?: Function): any {
     const clickHandler = () => {
       this.editor.setMode(mode);
 
@@ -280,12 +274,11 @@ class DefaultToolbar {
    *
    * Parameters:
    *
-   * @param vertex - {@link mxCell} to be inserted.
+   * @param vertex - {@link Cell} to be inserted.
    * @param evt - Mouse event that represents the drop.
-   * @param target - Optional {@link mxCell} that represents the drop target.
+   * @param target - Optional {@link Cell} that represents the drop target.
    */
-  // drop(vertex: mxCell, evt: MouseEvent, target?: mxCell): void;
-  drop(vertex, evt, target) {
+  drop(vertex: Cell, evt: MouseEvent, target?: Cell): void {
     const { graph } = this.editor;
     const model = graph.getModel();
 
@@ -308,12 +301,11 @@ class DefaultToolbar {
    * Handles a drop by inserting the given vertex into the given parent cell
    * or the default parent if no parent is specified.
    *
-   * @param vertex - {@link mxCell} to be inserted.
+   * @param vertex - {@link Cell} to be inserted.
    * @param evt - Mouse event that represents the drop.
-   * @param target - Optional {@link mxCell} that represents the parent.
+   * @param target - Optional {@link Cell} that represents the parent.
    */
-  // insert(vertex: mxCell, evt: MouseEvent, target?: mxCell): any;
-  insert(vertex, evt, target) {
+  insert(vertex: Cell, evt: MouseEvent, target?: Cell): any {
     const { graph } = this.editor;
 
     if (graph.canImportCell(vertex)) {
@@ -334,12 +326,11 @@ class DefaultToolbar {
   /**
    * Handles a drop by connecting the given vertex to the given source cell.
    *
-   * @param vertex - {@link mxCell} to be inserted.
+   * @param vertex - {@link Cell} to be inserted.
    * @param evt - Mouse event that represents the drop.
-   * @param source - Optional {@link mxCell} that represents the source terminal.
+   * @param source - Optional {@link Cell} that represents the source terminal.
    */
-  // connect(vertex: mxCell, evt: MouseEvent, source?: mxCell): void;
-  connect(vertex, evt, source) {
+  connect(vertex: Cell, evt: MouseEvent, source?: Cell): void {
     const { graph } = this.editor;
     const model = graph.getModel();
 
@@ -404,13 +395,12 @@ class DefaultToolbar {
    * @param img - DOM node that represents the image.
    * @param dropHandler - Function that handles a drop of the image.
    */
-  // installDropHandler(img: HTMLElement, dropHandler: Function): void;
-  installDropHandler(img, dropHandler) {
+  installDropHandler(img: HTMLElement, dropHandler: Function): void {
     const sprite = document.createElement('img');
     sprite.setAttribute('src', img.getAttribute('src'));
 
     // Handles delayed loading of the images
-    const loader = (evt) => {
+    const loader = (evt: InternalEvent) => {
       // Preview uses the image node with double size. Later this can be
       // changed to use a separate preview and guides, but for this the
       // dropHandler must use the additional x- and y-arguments and the

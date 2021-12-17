@@ -96,7 +96,7 @@ class CellCodec extends ObjectCodec {
    * Encodes an <Cell> and wraps the XML up inside the
    * XML of the user object (inversion).
    */
-  afterEncode(enc, obj, node) {
+  afterEncode(enc, obj: Element, node: Element) {
     if (obj.value != null && obj.value.nodeType === NODETYPE_ELEMENT) {
       // Wraps the graphical annotation up in the user object (inversion)
       // by putting the result of the default encoding into a clone of the

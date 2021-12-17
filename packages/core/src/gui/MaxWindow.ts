@@ -5,17 +5,17 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Rectangle from '../../view/geometry/Rectangle';
-import EventObject from '../../view/event/EventObject';
-import EventSource from '../../view/event/EventSource';
-import { fit, getCurrentStyle } from '../utils';
-import InternalEvent from '../../view/event/InternalEvent';
-import Client from '../../Client';
-import { NODETYPE_TEXT } from '../constants';
-import { br, write } from '../dom/domUtils';
-import Resources from '../Resources';
-import { getClientX, getClientY } from '../eventUtils';
-import { htmlEntities } from '../stringUtils';
+import Rectangle from '../view/geometry/Rectangle';
+import EventObject from '../view/event/EventObject';
+import EventSource from '../view/event/EventSource';
+import { fit, getCurrentStyle } from '../util/utils';
+import InternalEvent from '../view/event/InternalEvent';
+import Client from '../Client';
+import { NODETYPE_TEXT } from '../util/constants';
+import { br, write } from '../util/domUtils';
+import Resources from '../util/Resources';
+import { getClientX, getClientY } from '../util/eventUtils';
+import { htmlEntities } from '../util/stringUtils';
 
 /**
  * Basic window inside a document.

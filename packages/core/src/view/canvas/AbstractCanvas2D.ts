@@ -4,20 +4,20 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { arcToCurves, getRotatedPoint } from '../utils';
+import { arcToCurves, getRotatedPoint } from '../../util/utils';
 import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
-  DIRECTION_EAST,
+  DIRECTION,
   NONE,
   SHADOWCOLOR,
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
   SHADOW_OPACITY,
-} from '../constants';
-import UrlConverter from '../network/UrlConverter';
-import Point from '../../view/geometry/Point';
-import { clone } from '../cloneUtils';
+} from '../../util/constants';
+import UrlConverter from '../../util/UrlConverter';
+import Point from '../geometry/Point';
+import { clone } from '../../util/cloneUtils';
 
 import type {
   AlignValue,
@@ -175,7 +175,7 @@ class AbstractCanvas2D {
       gradientFillAlpha: 1,
       gradientColor: NONE,
       gradientAlpha: 1,
-      gradientDirection: DIRECTION_EAST,
+      gradientDirection: DIRECTION.EAST,
       strokeColor: NONE,
       strokeWidth: 1,
       dashed: false,

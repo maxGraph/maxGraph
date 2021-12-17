@@ -6,19 +6,9 @@
  */
 
 import {
-  EDGESTYLE_ELBOW,
-  EDGESTYLE_ENTITY_RELATION,
-  EDGESTYLE_LOOP,
-  EDGESTYLE_ORTHOGONAL,
-  EDGESTYLE_SEGMENT,
-  EDGESTYLE_SIDETOSIDE,
-  EDGESTYLE_TOPTOBOTTOM,
-  PERIMETER_ELLIPSE,
-  PERIMETER_HEXAGON,
-  PERIMETER_RECTANGLE,
-  PERIMETER_RHOMBUS,
-  PERIMETER_TRIANGLE,
-} from '../../util/Constants';
+  EDGESTYLE,
+  PERIMETER,
+} from '../../util/constants';
 import EdgeStyle from './EdgeStyle';
 import Perimeter from './Perimeter';
 
@@ -69,18 +59,18 @@ class StyleRegistry {
   }
 }
 
-StyleRegistry.putValue(EDGESTYLE_ELBOW, EdgeStyle.ElbowConnector);
-StyleRegistry.putValue(EDGESTYLE_ENTITY_RELATION, EdgeStyle.EntityRelation);
-StyleRegistry.putValue(EDGESTYLE_LOOP, EdgeStyle.Loop);
-StyleRegistry.putValue(EDGESTYLE_SIDETOSIDE, EdgeStyle.SideToSide);
-StyleRegistry.putValue(EDGESTYLE_TOPTOBOTTOM, EdgeStyle.TopToBottom);
-StyleRegistry.putValue(EDGESTYLE_ORTHOGONAL, EdgeStyle.OrthConnector);
-StyleRegistry.putValue(EDGESTYLE_SEGMENT, EdgeStyle.SegmentConnector);
+StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
+StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
+StyleRegistry.putValue(EDGESTYLE.LOOP, EdgeStyle.Loop);
+StyleRegistry.putValue(EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide);
+StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
+StyleRegistry.putValue(EDGESTYLE.ORTHOGONAL, EdgeStyle.OrthConnector);
+StyleRegistry.putValue(EDGESTYLE.SEGMENT, EdgeStyle.SegmentConnector);
 
-StyleRegistry.putValue(PERIMETER_ELLIPSE, Perimeter.EllipsePerimeter);
-StyleRegistry.putValue(PERIMETER_RECTANGLE, Perimeter.RectanglePerimeter);
-StyleRegistry.putValue(PERIMETER_RHOMBUS, Perimeter.RhombusPerimeter);
-StyleRegistry.putValue(PERIMETER_TRIANGLE, Perimeter.TrianglePerimeter);
-StyleRegistry.putValue(PERIMETER_HEXAGON, Perimeter.HexagonPerimeter);
+StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
+StyleRegistry.putValue(PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter);
+StyleRegistry.putValue(PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter);
+StyleRegistry.putValue(PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter);
+StyleRegistry.putValue(PERIMETER.HEXAGON, Perimeter.HexagonPerimeter);
 
 export default StyleRegistry;

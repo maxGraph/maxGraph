@@ -189,7 +189,7 @@ class CellState extends Rectangle {
 
   point: Point | null = null;
 
-  constructor(view: GraphView, cell: Cell, style: CellStateStyles) {
+  constructor(view: GraphView | null=null, cell: Cell | null=null, style: CellStateStyles | null=null) {
     super();
 
     this.view = view;

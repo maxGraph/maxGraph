@@ -4,8 +4,8 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import Point from '../../view/geometry/Point';
-import CellStatePreview from '../../view/cell/CellStatePreview';
+import Point from '../geometry/Point';
+import CellStatePreview from '../cell/CellStatePreview';
 import Animation from './Animation';
 
 /**

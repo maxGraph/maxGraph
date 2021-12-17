@@ -5,8 +5,10 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { write, writeln } from "../dom/domUtils";
-import Resources from "../Resources";
+import Client from "src/Client";
+import InternalEvent from "src/view/event/InternalEvent";
+import { write, writeln } from "../util/domUtils";
+import Resources from "../util/Resources";
 
 /**
  * A simple class for creating HTML forms.
@@ -55,7 +57,7 @@ class MaxForm {
     write(button, Resources.get('ok') || 'OK');
     td.appendChild(button);
 
-    mxEvent.addListener(button, 'click', () => {
+    InternalEvent.addListener(button, 'click', () => {
       okFunct();
     });
 
@@ -64,7 +66,7 @@ class MaxForm {
     write(button, Resources.get('cancel') || 'Cancel');
     td.appendChild(button);
 
-    mxEvent.addListener(button, 'click', () => {
+    InternalEvent.addListener(button, 'click', () => {
       cancelFunct();
     });
 
@@ -81,7 +83,7 @@ class MaxForm {
     input.setAttribute('type', type || 'text');
     input.value = value;
 
-    return this.addField(name, input);
+    return <HTMLInputElement>this.addField(name, input);
   }
 
   /**
@@ -111,10 +113,10 @@ class MaxForm {
       rows--;
     }
 
-    input.setAttribute('rows', rows || 2);
+    input.setAttribute('rows', String(rows || 2));
     input.value = value;
 
-    return this.addField(name, input);
+    return <HTMLTextAreaElement>this.addField(name, input);
   }
 
   /**
@@ -124,14 +126,14 @@ class MaxForm {
     const select = document.createElement('select');
 
     if (size != null) {
-      select.setAttribute('size', size);
+      select.setAttribute('size', String(size));
     }
 
     if (isMultiSelect) {
       select.setAttribute('multiple', 'true');
     }
 
-    return this.addField(name, select);
+    return <HTMLSelectElement>this.addField(name, select);
   }
 
   /**
@@ -144,7 +146,7 @@ class MaxForm {
     option.setAttribute('value', value);
 
     if (isSelected) {
-      option.setAttribute('selected', isSelected);
+      option.setAttribute('selected', String(isSelected));
     }
 
     combo.appendChild(option);
@@ -154,7 +156,7 @@ class MaxForm {
    * Adds a new row with the name and the input field in two columns and
    * returns the given input.
    */
-  addField(name: string, input: FormFieldType): FormFieldType {
+  addField(name: string, input: Element): Element {
     const tr = document.createElement('tr');
     let td = document.createElement('td');
     write(td, name);

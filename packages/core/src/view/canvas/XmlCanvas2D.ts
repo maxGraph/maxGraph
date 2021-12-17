@@ -13,8 +13,8 @@ import {
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
   SHADOW_OPACITY,
-} from '../constants';
-import { getOuterHtml, isNode } from '../dom/domUtils';
+} from '../../util/constants';
+import { getOuterHtml, isNode } from '../../util/domUtils';
 
 /**
  * Class: mxXmlCanvas2D

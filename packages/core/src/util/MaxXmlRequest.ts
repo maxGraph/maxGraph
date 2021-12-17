@@ -2,7 +2,7 @@
  * Copyright (c) 2006-2020, JGraph Ltd
  * Copyright (c) 2006-2020, draw.io AG
  */
-import { write } from '../dom/domUtils';
+import { write } from './domUtils';
 
 /**
  * XML HTTP request wrapper. See also: {@link mxUtils.get}, {@link mxUtils.post} and
@@ -69,11 +69,18 @@ import { write } from '../dom/domUtils';
  * processed in Java, for example when creating an image.
  */
 class MaxXmlRequest {
-  constructor(url, params, method, async, username, password) {
+  constructor(
+    url: string, 
+    params: string | null=null, 
+    method: 'GET' | 'POST'='POST', 
+    async: boolean=true, 
+    username: string | null=null, 
+    password: string | null=null
+  ) {
     this.url = url;
     this.params = params;
     this.method = method || 'POST';
-    this.async = async != null ? async : true;
+    this.async = async;
     this.username = username;
     this.password = password;
   }
@@ -83,14 +90,14 @@ class MaxXmlRequest {
    *
    * Holds the target URL of the request.
    */
-  url = null;
+  url: string;
 
   /**
    * Variable: params
    *
    * Holds the form encoded data for the POST request.
    */
-  params = null;
+  params: string | null;
 
   /**
    * Variable: method
@@ -98,14 +105,14 @@ class MaxXmlRequest {
    * Specifies the request method. Possible values are POST and GET. Default
    * is POST.
    */
-  method = null;
+  method: 'GET' | 'POST';
 
   /**
    * Variable: async
    *
    * Boolean indicating if the request is asynchronous.
    */
-  async = null;
+  async: boolean;
 
   /**
    * Boolean indicating if the request is binary. This option is ignored in IE.
@@ -128,14 +135,14 @@ class MaxXmlRequest {
    *
    * Specifies the username to be used for authentication.
    */
-  username = null;
+  username: string | null;
 
   /**
    * Variable: password
    *
    * Specifies the password to be used for authentication.
    */
-  password = null;
+  password: string | null;
 
   /**
    * Holds the inner, browser-specific request object.
@@ -324,7 +331,7 @@ class MaxXmlRequest {
    * @param doc Document that contains the form element.
    * @param target Target to send the form result to.
    */
-  simulate(doc: any, target: any): void {
+  simulate(doc: any, target: string | null=null): void {
     doc = doc || document;
     let old = null;
 
@@ -408,10 +415,9 @@ class MaxXmlRequest {
  *
  * url - URL to get the data from.
  */
-export const load = url => {
+export const load = (url: string) => {
   const req = new MaxXmlRequest(url, null, 'GET', false);
   req.send();
-
   return req;
 }
 
@@ -585,7 +591,7 @@ export const post = (url, params, onload, onerror) => {
  * doc - Document to create the form in.
  * target - Target to send the form result to.
  */
-export const submit = (url, params, doc, target) => {
+export const submit = (url: string, params: string, doc: XMLDocument, target: string) => {
   return new MaxXmlRequest(url, params).simulate(doc, target);
 };
 

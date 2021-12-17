@@ -28,7 +28,7 @@ import Editor from './Editor';
  * An {@link InternalEvent.ESCAPE} event is fired via the editor if the escape key is pressed.
  */
 class DefaultKeyHandler {
-  constructor(editor: Editor) {
+  constructor(editor: Editor | null=null) {
     if (editor != null) {
       this.editor = editor;
       this.handler = new KeyHandler(editor.graph);

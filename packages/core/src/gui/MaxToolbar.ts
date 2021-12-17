@@ -5,13 +5,13 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import InternalEvent from '../../view/event/InternalEvent';
-import Point from '../../view/geometry/Point';
+import InternalEvent from '../view/event/InternalEvent';
+import Point from '../view/geometry/Point';
 import PopupMenu from './PopupMenu';
-import EventSource from '../../view/event/EventSource';
-import EventObject from '../../view/event/EventObject';
-import Client from '../../Client';
-import { br, write, writeln } from '../dom/domUtils';
+import EventSource from '../view/event/EventSource';
+import EventObject from '../view/event/EventObject';
+import Client from '../Client';
+import { br, write, writeln } from '../util/domUtils';
 import Cell from 'src/view/cell/Cell';
 import { KeyboardEventListener, MouseEventListener } from 'src/types';
 
@@ -37,11 +37,12 @@ class MaxToolbar extends EventSource {
   currentImg: HTMLImageElement | HTMLButtonElement | null = null;
   selectedMode: HTMLImageElement | null = null;
   defaultMode: HTMLImageElement | HTMLButtonElement | null = null;
+  defaultFunction: Function | null = null;
 
   /**
    * Reference to the DOM nodes that contains the toolbar.
    */
-  container: HTMLElement | null = null;
+  container: HTMLElement;
 
   /**
    * Specifies if events are handled. Default is true.
@@ -213,7 +214,7 @@ class MaxToolbar extends EventSource {
     select.className = style || 'mxToolbarCombo';
     this.addOption(select, title, null);
 
-    InternalEvent.addListener(select, 'change', (evt) => {
+    InternalEvent.addListener(select, 'change', (evt: InternalEvent) => {
       const value = select.options[select.selectedIndex];
       select.selectedIndex = 0;
 
@@ -236,7 +237,7 @@ class MaxToolbar extends EventSource {
    * @param title - String that specifies the title of the option.
    * @param value - Specifies the value associated with this option.
    */
-  addOption(combo: HTMLSelectElement, title: string, value: string): HTMLOptionElement {
+  addOption(combo: HTMLSelectElement, title: string, value: string | null = null): HTMLOptionElement {
     const option = document.createElement('option');
     writeln(option, title);
 
@@ -444,6 +445,7 @@ class MaxToolbar extends EventSource {
    */
   destroy(): void {
     InternalEvent.release(this.container);
+    // @ts-ignore
     this.container = null;
     this.defaultMode = null;
     this.defaultFunction = null;
