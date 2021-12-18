@@ -13,8 +13,6 @@ import CellArray from '../cell/CellArray';
 import Cell from '../cell/Cell';
 
 /**
- * Class: mxParallelEdgeLayout
- *
  * Extends <mxGraphLayout> for arranging parallel edges. This layout works
  * on edges for all pairs of vertices where there is more than one edge
  * connecting the latter.
@@ -72,8 +70,6 @@ class ParallelEdgeLayout extends GraphLayout {
   checkOverlap: boolean = false;
 
   /**
-   * Function: execute
-   *
    * Implements <mxGraphLayout.execute>.
    */
   execute(parent: Cell, cells: CellArray) {
@@ -94,8 +90,6 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Function: findParallels
-   *
    * Finds the parallel edges in the given parent.
    */
   findParallels(parent: Cell, cells: CellArray) {
@@ -132,8 +126,6 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Function: getEdgeId
-   *
    * Returns a unique ID for the given edge. The id is independent of the
    * edge direction and is built using the visible terminal of the given
    * edge.
@@ -172,8 +164,6 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Function: layout
-   *
    * Lays out the parallel edges in the given array.
    */
   layout(parallels: CellArray) {
@@ -228,8 +218,6 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Function: route
-   *
    * Routes the given edge via the given point.
    */
   route(edge: Cell, x: number, y: number) {

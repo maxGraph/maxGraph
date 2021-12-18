@@ -32,8 +32,6 @@ class MarkerShape {
   }
 
   /**
-   * Function: createMarker
-   *
    * Returns a function to paint the given marker.
    */
   static createMarker(

@@ -62,8 +62,6 @@ class GraphLayout {
   moveCell(cell: Cell, x: number, y: number): void {}
 
   /**
-   * Function: resizeCell
-   *
    * Notified when a cell is being resized in a parent that has automatic
    * layout to update the other cells in the layout.
    *
@@ -409,8 +407,6 @@ class GraphLayout {
   }
 
   /**
-   * Function: arrangeGroups
-   *
    * Shortcut to <mxGraph.updateGroupBounds> with moveGroup set to true.
    */
   arrangeGroups(

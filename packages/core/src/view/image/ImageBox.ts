@@ -6,8 +6,6 @@
  */
 
 /**
- * Class: mxImage
- *
  * Encapsulates the URL, width and height of an image.
  *
  * Constructor: mxImage

@@ -25,8 +25,6 @@ class StyleRegistry {
   static values = <any>{};
 
   /**
-   * Function: putValue
-   *
    * Puts the given object into the registry under the given name.
    */
   static putValue(name: string, obj: any): void {
@@ -34,8 +32,6 @@ class StyleRegistry {
   }
 
   /**
-   * Function: getValue
-   *
    * Returns the value associated with the given name.
    */
   static getValue(name: string): any {
@@ -43,8 +39,6 @@ class StyleRegistry {
   }
 
   /**
-   * Function: getName
-   *
    * Returns the name for the given value.
    */
   static getName(value: any): string | null {

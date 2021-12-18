@@ -61,8 +61,6 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: invert
-   *
    * Inverts the direction of this internal edge(s)
    */
   invert() {
@@ -73,8 +71,6 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: getNextLayerConnectedCells
-   *
    * Returns the cells this cell connects to on the next layer up
    */
   getNextLayerConnectedCells(layer: number) {
@@ -95,8 +91,6 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: getPreviousLayerConnectedCells
-   *
    * Returns the cells this cell connects to on the next layer down
    */
   getPreviousLayerConnectedCells(layer: number) {
@@ -117,8 +111,6 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: isEdge
-   *
    * Returns true.
    */
   isEdge() {
@@ -126,8 +118,6 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: getGeneralPurposeVariable
-   *
    * Gets the value of temp for the specified layer
    */
   getGeneralPurposeVariable(layer: number) {
@@ -135,8 +125,6 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: setGeneralPurposeVariable
-   *
    * Set the value of temp for the specified layer
    */
   setGeneralPurposeVariable(layer: number, value: number) {
@@ -144,8 +132,6 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: getCoreCell
-   *
    * Gets the first core edge associated with this wrapper
    */
   getCoreCell() {

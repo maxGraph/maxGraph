@@ -76,8 +76,6 @@ class GraphAbstractHierarchyCell extends Cell {
   }
 
   /**
-   * Function: getNextLayerConnectedCells
-   *
    * Returns the cells this cell connects to on the next layer up
    */
   getNextLayerConnectedCells(layer: number): CellArray | null {
@@ -85,8 +83,6 @@ class GraphAbstractHierarchyCell extends Cell {
   }
 
   /**
-   * Function: getPreviousLayerConnectedCells
-   *
    * Returns the cells this cell connects to on the next layer down
    */
   getPreviousLayerConnectedCells(layer: number): CellArray | null {
@@ -94,8 +90,6 @@ class GraphAbstractHierarchyCell extends Cell {
   }
 
   /**
-   * Function: isEdge
-   *
    * Returns whether or not this cell is an edge
    */
   isEdge() {
@@ -103,8 +97,6 @@ class GraphAbstractHierarchyCell extends Cell {
   }
 
   /**
-   * Function: isVertex
-   *
    * Returns whether or not this cell is a node
    */
   isVertex() {
@@ -112,8 +104,6 @@ class GraphAbstractHierarchyCell extends Cell {
   }
 
   /**
-   * Function: getGeneralPurposeVariable
-   *
    * Gets the value of temp for the specified layer
    */
   getGeneralPurposeVariable(layer: number): number | null {
@@ -121,15 +111,11 @@ class GraphAbstractHierarchyCell extends Cell {
   }
 
   /**
-   * Function: setGeneralPurposeVariable
-   *
    * Set the value of temp for the specified layer
    */
   setGeneralPurposeVariable(layer: number, value: number) {}
 
   /**
-   * Function: setX
-   *
    * Set the value of x for the specified layer
    */
   setX(layer: number, value: number) {
@@ -141,8 +127,6 @@ class GraphAbstractHierarchyCell extends Cell {
   }
 
   /**
-   * Function: getX
-   *
    * Gets the value of x on the specified layer
    */
   getX(layer: number) {
@@ -156,8 +140,6 @@ class GraphAbstractHierarchyCell extends Cell {
   }
 
   /**
-   * Function: setY
-   *
    * Set the value of y for the specified layer
    */
   setY(layer: number, value: number) {

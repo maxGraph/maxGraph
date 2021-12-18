@@ -9,8 +9,6 @@ import { Graph } from '../Graph';
 import GraphLayout from './GraphLayout';
 
 /**
- * Class: mxCompositeLayout
- *
  * Allows to compose multiple layouts into a single layout. The master layout
  * is the layout that handles move operations if another layout than the first
  * element in <layouts> should be used. The <master> layout is not executed as
@@ -55,8 +53,6 @@ class CompositeLayout extends GraphLayout {
   master?: GraphLayout;
 
   /**
-   * Function: moveCell
-   *
    * Implements <mxGraphLayout.moveCell> by calling move on <master> or the first
    * layout in <layouts>.
    */
@@ -69,8 +65,6 @@ class CompositeLayout extends GraphLayout {
   }
 
   /**
-   * Function: execute
-   *
    * Implements <mxGraphLayout.execute> by executing all <layouts> in a
    * single transaction.
    */

@@ -16,8 +16,6 @@ type MapKey = string;
 type Visitor<MapKey, U> = (key: MapKey, value: U) => void;
 
 /**
- * Class: mxDictionary
- *
  * A wrapper class for an associative array with object keys. Note: This
  * implementation uses <mxObjectIdentitiy> to turn object keys into strings.
  *

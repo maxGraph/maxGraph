@@ -18,8 +18,6 @@ import type { GraphPlugin } from '../../types';
 import EventSource from '../event/EventSource';
 
 /**
- * Class: mxTooltipHandler
- *
  * Graph event handler that displays tooltips. <mxGraph.getTooltip> is used to
  * get the tooltip for a cell or handle. This handler is built-into
  * <mxGraph.tooltipHandler> and enabled using <mxGraph.setTooltips>.

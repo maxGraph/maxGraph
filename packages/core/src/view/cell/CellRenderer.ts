@@ -56,8 +56,6 @@ import CellArray from './CellArray';
 import SelectionCellsHandler from '../handler/SelectionCellsHandler';
 
 /**
- * Class: mxCellRenderer
- *
  * Renders cells into a document object model. The <defaultShapes> is a global
  * map of shapename, constructor pairs that is used in all instances. You can
  * get a list of all available shape names using the following code.
@@ -152,8 +150,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: initializeShape
-   *
    * Initializes the shape in the given state by calling its init method with
    * the correct container after configuring it using <configureShape>.
    *
@@ -170,8 +166,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: createShape
-   *
    * Creates and returns the shape for the given cell state.
    *
    * Parameters:
@@ -196,8 +190,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: createIndicatorShape
-   *
    * Creates the indicator shape for the given cell state.
    *
    * Parameters:
@@ -211,8 +203,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: getShape
-   *
    * Returns the shape for the given name from <defaultShapes>.
    */
   getShape(name: string | null) {
@@ -220,8 +210,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: getShapeConstructor
-   *
    * Returns the constructor to be used for creating the shape.
    */
   getShapeConstructor(state: CellState) {
@@ -236,8 +224,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: configureShape
-   *
    * Configures the shape for the given cell state.
    *
    * Parameters:
@@ -260,8 +246,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: postConfigureShape
-   *
    * Replaces any reserved words used for attributes, eg. inherit,
    * indicated or swimlane for colors in the shape for the given state.
    * This implementation resolves these keywords on the fill, stroke
@@ -278,8 +262,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: checkPlaceholderStyles
-   *
    * Resolves special keywords 'inherit', 'indicated' and 'swimlane' and sets
    * the respective color on the shape.
    */
@@ -304,8 +286,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: resolveColor
-   *
    * Resolves special keywords 'inherit', 'indicated' and 'swimlane' and sets
    * the respective color on the shape.
    */
@@ -366,8 +346,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: getLabelValue
-   *
    * Returns the value to be used for the label.
    *
    * Parameters:
@@ -379,8 +357,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: createLabel
-   *
    * Creates the label for the given cell state.
    *
    * Parameters:
@@ -494,8 +470,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: initializeLabel
-   *
    * Initiailzes the label with a suitable container.
    *
    * Parameters:
@@ -511,8 +485,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: createCellOverlays
-   *
    * Creates the actual shape for showing the overlay for the given cell state.
    *
    * Parameters:
@@ -554,8 +526,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: initializeOverlay
-   *
    * Initializes the given overlay.
    *
    * Parameters:
@@ -568,8 +538,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: installOverlayListeners
-   *
    * Installs the listeners for the given <CellState>, <CellOverlay> and
    * <mxShape> that represents the overlay.
    */
@@ -609,8 +577,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: createControl
-   *
    * Creates the control for the given cell state.
    *
    * Parameters:
@@ -642,8 +608,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: createControlClickHandler
-   *
    * Hook for creating the click handler for the folding icon.
    *
    * Parameters:
@@ -663,8 +627,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: initControl
-   *
    * Initializes the given control and returns the corresponding DOM node.
    *
    * Parameters:
@@ -761,8 +723,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: isShapeEvent
-   *
    * Returns true if the event is for the shape of the given state. This
    * implementation always returns true.
    *
@@ -776,8 +736,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: isLabelEvent
-   *
    * Returns true if the event is for the label of the given state. This
    * implementation always returns true.
    *
@@ -791,8 +749,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: installListeners
-   *
    * Installs the event listeners for the given cell state.
    *
    * Parameters:
@@ -872,8 +828,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: redrawLabel
-   *
    * Redraws the label for the given cell state.
    *
    * Parameters:
@@ -959,8 +913,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: isTextShapeInvalid
-   *
    * Returns true if the style for the text shape has changed.
    *
    * Parameters:
@@ -1012,8 +964,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: redrawLabelShape
-   *
    * Called to invoked redraw on the given text shape.
    *
    * Parameters:
@@ -1025,8 +975,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: getTextScale
-   *
    * Returns the scaling used for the label of the given state
    *
    * Parameters:
@@ -1038,8 +986,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: getLabelBounds
-   *
    * Returns the bounds to be used to draw the label of the given state.
    *
    * Parameters:
@@ -1116,8 +1062,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: rotateLabelBounds
-   *
    * Adds the shape rotation to the given label bounds and
    * applies the alignment and offsets.
    *
@@ -1190,8 +1134,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: redrawCellOverlays
-   *
    * Redraws the overlays for the given cell state.
    *
    * Parameters:
@@ -1245,8 +1187,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: redrawControl
-   *
    * Redraws the control for the given cell state.
    *
    * Parameters:
@@ -1280,8 +1220,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: getControlBounds
-   *
    * Returns the bounds to be used to draw the control (folding icon) of the
    * given state.
    */
@@ -1343,8 +1281,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: insertStateAfter
-   *
    * Inserts the given array of <mxShapes> after the given nodes in the DOM.
    *
    * Parameters:
@@ -1426,8 +1362,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: getShapesForState
-   *
    * Returns the <mxShapes> for the given cell state in the order in which they should
    * appear in the DOM.
    *
@@ -1440,8 +1374,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: redraw
-   *
    * Updates the bounds or points and scale of the shapes for the given cell
    * state. This is called in mxGraphView.validatePoints as the last step of
    * updating all cells.
@@ -1466,8 +1398,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: redrawShape
-   *
    * Redraws the shape for the given cell state.
    *
    * Parameters:
@@ -1582,8 +1512,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: doRedrawShape
-   *
    * Invokes redraw on the shape of the given state.
    */
   doRedrawShape(state: CellState): void {
@@ -1591,8 +1519,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: isShapeInvalid
-   *
    * Returns true if the given shape must be repainted.
    */
   isShapeInvalid(state: CellState, shape: Shape): boolean {
@@ -1606,8 +1532,6 @@ class CellRenderer {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the shapes associated with the given cell state.
    *
    * Parameters:

@@ -11,8 +11,6 @@ import CodecRegistry from '../../util/serialization/CodecRegistry';
 import { NODETYPE_ELEMENT } from '../../util/constants';
 
 /**
- * Class: ChildChangeCodec
- *
  * Codec for <mxChildChange>s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec> and
  * the <CodecRegistry>.

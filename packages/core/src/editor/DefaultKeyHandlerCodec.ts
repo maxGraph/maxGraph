@@ -10,8 +10,6 @@ import DefaultKeyHandler from './DefaultKeyHandler';
 import CodecRegistry from '../util/serialization/CodecRegistry';
 
 /**
- * Class: DefaultKeyHandlerCodec
- *
  * Custom codec for configuring <DefaultKeyHandler>s. This class is created
  * and registered dynamically at load time and used implicitly via
  * <Codec> and the <CodecRegistry>. This codec only reads configuration

@@ -148,8 +148,6 @@ class DefaultToolbar {
   }
 
   /**
-   * Function: addActionCombo
-   *
    * Helper method to invoke <MaxToolbar.addActionCombo> on <toolbar> using
    * the given title and return the resulting DOM node.
    *
@@ -209,8 +207,6 @@ class DefaultToolbar {
   }
 
   /**
-   * Function: addPrototype
-   *
    * Creates an item for inserting a clone of the specified prototype cell into
    * the <editor>'s graph. The ptype may either be a cell or a function that
    * returns a cell.

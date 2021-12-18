@@ -16,8 +16,6 @@ import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 
 /**
- * Class: mxMouseEvent
- *
  * Base class for all mouse events in mxGraph. A listener for this event should
  * implement the following methods:
  *

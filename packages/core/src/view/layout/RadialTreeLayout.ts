@@ -114,8 +114,6 @@ class RadialTreeLayout extends CompactTreeLayout {
   }
 
   /**
-   * Function: execute
-   *
    * Implements <mxGraphLayout.execute>.
    *
    * If the parent has any connected edges, then it is used as the root of

@@ -16,8 +16,6 @@ import { getTextContent } from '../../util/dom/domUtils';
 import { clone } from '../../util/cloneUtils';
 
 /**
- * Class: StylesheetCodec
- *
  * Codec for <mxStylesheet>s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec>
  * and the <CodecRegistry>.

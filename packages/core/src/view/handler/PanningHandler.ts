@@ -23,8 +23,6 @@ import type { GraphPlugin, MouseEventListener } from '../../types';
 import type { Graph } from '../Graph';
 
 /**
- * Class: mxPanningHandler
- *
  * Event handler that pans and creates popupmenus. To use the left
  * mousebutton for panning without interfering with cell moving and
  * resizing, use <isUseLeftButton> and <isIgnoreCell>. For grid size
@@ -206,8 +204,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   mouseDownEvent: InternalMouseEvent | null = null;
 
   /**
-   * Function: isActive
-   *
    * Returns true if the handler is currently active.
    */
   isActive() {
@@ -215,8 +211,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isPanningEnabled
-   *
    * Returns <panningEnabled>.
    */
   isPanningEnabled() {
@@ -224,8 +218,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: setPanningEnabled
-   *
    * Sets <panningEnabled>.
    */
   setPanningEnabled(value: boolean) {
@@ -233,8 +225,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isPinchEnabled
-   *
    * Returns <pinchEnabled>.
    */
   isPinchEnabled() {
@@ -242,8 +232,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: setPinchEnabled
-   *
    * Sets <pinchEnabled>.
    */
   setPinchEnabled(value: boolean) {
@@ -251,8 +239,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isPanningTrigger
-   *
    * Returns true if the given event is a panning trigger for the optional
    * given cell. This returns true if control-shift is pressed or if
    * <usePopupTrigger> is true and the event is a popup trigger.
@@ -268,8 +254,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isForcePanningEvent
-   *
    * Returns true if the given <mxMouseEvent> should start panning. This
    * implementation always returns true if <ignoreCell> is true or for
    * multi touch events.
@@ -279,8 +263,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseDown
-   *
    * Handles the event by initiating the panning. By consuming the event all
    * subsequent events of the gesture are redirected to this handler.
    */
@@ -299,8 +281,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: start
-   *
    * Starts panning at the given event.
    */
   start(me: InternalMouseEvent) {
@@ -317,8 +297,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: consumePanningTrigger
-   *
    * Consumes the given <mxMouseEvent> if it was a panning trigger in
    * <mouseDown>. The default is to invoke <mxMouseEvent.consume>. Note that this
    * will block any further event processing. If you haven't disabled built-in
@@ -349,8 +327,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseMove
-   *
    * Handles the event by updating the panning on the graph.
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
@@ -389,8 +365,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Handles the event by setting the translation on the view or showing the
    * popupmenu.
    */
@@ -418,8 +392,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: zoomGraph
-   *
    * Zooms the graph to the given value and consumed the event if needed.
    */
   zoomGraph(evt: Event) {
@@ -435,8 +407,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Handles the event by setting the translation on the view or showing the
    * popupmenu.
    */
@@ -449,8 +419,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: panGraph
-   *
    * Pans <graph> by the given amount.
    */
   panGraph(dx: number, dy: number) {
@@ -458,8 +426,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes.
    */
   onDestroy() {

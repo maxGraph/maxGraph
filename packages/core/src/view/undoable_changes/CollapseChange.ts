@@ -4,8 +4,6 @@ import Model from '../other/Model';
 import type { UndoableChange } from '../../types';
 
 /**
- * Class: mxCollapseChange
- *
  * Action to change a cell's collapsed state in a model.
  *
  * Constructor: mxCollapseChange
@@ -27,8 +25,6 @@ class CollapseChange implements UndoableChange {
   }
 
   /**
-   * Function: execute
-   *
    * Changes the collapsed state of {@link cell}` to {@link previous}` using
    * <Transactions.collapsedStateForCellChanged>.
    */

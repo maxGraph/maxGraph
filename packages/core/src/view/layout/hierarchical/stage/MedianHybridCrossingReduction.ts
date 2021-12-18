@@ -8,8 +8,6 @@ import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import MedianCellSorter from './MedianCellSorter';
 
 /**
- * Class: mxMedianHybridCrossingReduction
- *
  * Sets the horizontal locations of node and edge dummy nodes on each layer.
  * Uses median down and up weighings as well heuristic to straighten edges as
  * far as possible.
@@ -77,8 +75,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   function;
 
   /**
-   * Function: execute
-   *
    * Performs a vertex ordering within ranks as described by Gansner et al
    * 1993
    */
@@ -159,8 +155,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: calculateCrossings
-   *
    * Calculates the total number of edge crossing in the current graph.
    * Returns the current number of edge crossings in the hierarchy graph
    * model in the current candidate layout
@@ -181,8 +175,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: calculateRankCrossing
-   *
    * Calculates the number of edges crossings between the specified rank and
    * the rank below it. Returns the number of edges crossings with the rank
    * beneath
@@ -260,8 +252,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: transpose
-   *
    * Takes each possible adjacent cell pair on each rank and checks if
    * swapping them around reduces the number of crossing
    *
@@ -428,8 +418,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: weightedMedian
-   *
    * Sweeps up or down the layout attempting to minimise the median placement
    * of connected cells on adjacent ranks
    *
@@ -453,8 +441,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: medianRank
-   *
    * Attempts to minimise the median placement of connected cells on this rank
    * and one of the adjacent ranks
    *
@@ -524,8 +510,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: medianValue
-   *
    * Calculates the median rank order positioning for the specified cell using
    * the connected cells on the specified rank. Returns the median rank
    * ordering value of the connected cells

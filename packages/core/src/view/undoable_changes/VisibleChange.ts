@@ -4,8 +4,6 @@ import Model from '../other/Model';
 import type { UndoableChange } from '../../types';
 
 /**
- * Class: mxVisibleChange
- *
  * Action to change a cell's visible state in a model.
  *
  * Constructor: mxVisibleChange
@@ -27,8 +25,6 @@ class VisibleChange implements UndoableChange {
   }
 
   /**
-   * Function: execute
-   *
    * Changes the visible state of {@link cell}` to {@link previous}` using
    * <Transactions.visibleStateForCellChanged>.
    */

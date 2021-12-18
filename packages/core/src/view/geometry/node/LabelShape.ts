@@ -15,8 +15,6 @@ import { ColorValue } from '../../../types';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
- * Class: mxLabel
- *
  * Extends <mxShape> to implement an image shape with a label.
  * This shape is registered under <mxConstants.SHAPE_LABEL> in
  * <mxCellRenderer>.

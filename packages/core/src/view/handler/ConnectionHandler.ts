@@ -46,8 +46,6 @@ import CellArray from '../cell/CellArray';
 type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) => Cell;
 
 /**
- * Class: mxConnectionHandler
- *
  * Graph event handler that creates new connections. Uses <mxTerminalMarker>
  * for finding and highlighting the source and target vertices and
  * <factoryMethod> to create the edge instance. This handler is built-into
@@ -425,8 +423,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isEnabled
-   *
    * Returns true if events are handled. This implementation
    * returns <enabled>.
    */
@@ -435,8 +431,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: setEnabled
-   *
    * Enables or disables event handling. This implementation
    * updates <enabled>.
    *
@@ -449,8 +443,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isInsertBefore
-   *
    * Returns <insertBeforeSource> for non-loops and false for loops.
    *
    * Parameters:
@@ -473,8 +465,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isCreateTarget
-   *
    * Returns <createTarget>.
    *
    * Parameters:
@@ -486,8 +476,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: setCreateTarget
-   *
    * Sets <createTarget>.
    */
   setCreateTarget(value: boolean) {
@@ -495,8 +483,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: createShape
-   *
    * Creates the preview shape for new connections.
    */
   createShape() {
@@ -519,8 +505,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isConnectableCell
-   *
    * Returns true if the given cell is connectable. This is a hook to
    * disable floating connections. This implementation returns true.
    */
@@ -529,8 +513,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: createMarker
-   *
    * Creates and returns the <mxCellMarker> used in <marker>.
    */
   createMarker() {
@@ -632,8 +614,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: start
-   *
    * Starts a new connection for the given state and coordinates.
    */
   start(state: CellState, x: number, y: number, edgeState: CellState) {
@@ -650,8 +630,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isConnecting
-   *
    * Returns true if the source terminal has been clicked and a new
    * connection is currently being previewed.
    */
@@ -660,8 +638,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isValidSource
-   *
    * Returns <mxGraph.isValidSource> for the given source terminal.
    *
    * Parameters:
@@ -674,8 +650,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isValidTarget
-   *
    * Returns true. The call to <mxGraph.isValidTarget> is implicit by calling
    * <mxGraph.getEdgeValidationError> in <validateConnection>. This is an
    * additional hook for disabling certain targets in this specific handler.
@@ -689,8 +663,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: validateConnection
-   *
    * Returns the error message or an empty string if the connection for the
    * given source target pair is not valid. Otherwise it returns null. This
    * implementation uses <mxGraph.getEdgeValidationError>.
@@ -708,8 +680,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: getConnectImage
-   *
    * Hook to return the <mxImage> used for the connection icon of the given
    * <CellState>. This implementation returns <connectImage>.
    *
@@ -722,8 +692,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isMoveIconToFrontForState
-   *
    * Returns true if the state has a HTML label in the graph's container, otherwise
    * it returns <moveIconFront>.
    *
@@ -739,8 +707,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: createIcons
-   *
    * Creates the array <mxImageShapes> that represent the connect icons for
    * the given <CellState>.
    *
@@ -806,8 +772,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: redrawIcons
-   *
    * Redraws the given array of <mxImageShapes>.
    *
    * Parameters:
@@ -851,8 +815,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: destroyIcons
-   *
    * Destroys the connect icons and resets the respective state.
    */
   destroyIcons() {
@@ -867,8 +829,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isStartEvent
-   *
    * Returns true if the given mouse down event should start this handler. The
    * This implementation returns true if the event does not force marquee
    * selection, and the currentConstraint and currentFocus of the
@@ -886,8 +846,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseDown
-   *
    * Handles the event by initiating a new connection.
    */
   mouseDown(sender: EventSource, me: InternalMouseEvent) {
@@ -941,8 +899,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isImmediateConnectSource
-   *
    * Returns true if a tap on the given source state should immediately start
    * connecting. This implementation returns true if the state is not movable
    * in the graph.
@@ -952,8 +908,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: createEdgeState
-   *
    * Hook to return an <CellState> which may be used during the preview.
    * This implementation returns null.
    *
@@ -973,8 +927,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isOutlineConnectEvent
-   *
    * Returns true if <outlineConnect> is true and the source of the event is the outline shape
    * or shift is pressed.
    */
@@ -1007,8 +959,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: updateCurrentState
-   *
    * Updates the current state for a given mouse move event by using
    * the <marker>.
    */
@@ -1127,8 +1077,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isCellEnabled
-   *
    * Returns true if the given cell does not allow new connections to be created.
    */
   isCellEnabled(cell: Cell) {
@@ -1136,8 +1084,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: convertWaypoint
-   *
    * Converts the given point from screen coordinates to model coordinates.
    */
   convertWaypoint(point: Point) {
@@ -1149,8 +1095,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: snapToPreview
-   *
    * Called to snap the given point to the current preview. This snaps to the
    * first point of the preview if alt is not pressed.
    */
@@ -1173,8 +1117,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseMove
-   *
    * Handles the event by updating the preview edge or by highlighting
    * a possible source or target terminal.
    */
@@ -1427,8 +1369,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: updateEdgeState
-   *
    * Updates <edgeState>.
    */
   updateEdgeState(current: Point | null, constraint: ConnectionConstraint | null) {
@@ -1500,8 +1440,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: getTargetPerimeterPoint
-   *
    * Returns the perimeter point for the given target state.
    *
    * Parameters:
@@ -1537,8 +1475,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: getSourcePerimeterPoint
-   *
    * Hook to update the icon position(s) based on a mouseOver event. This is
    * an empty implementation.
    *
@@ -1589,8 +1525,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: updateIcons
-   *
    * Hook to update the icon position(s) based on a mouseOver event. This is
    * an empty implementation.
    *
@@ -1605,8 +1539,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isStopEvent
-   *
    * Returns true if the given mouse up event should stop this handler. The
    * connection will be created if <error> is null. Note that this is only
    * called if <waypointsEnabled> is true. This implemtation returns true
@@ -1617,8 +1549,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: addWaypoint
-   *
    * Adds the waypoint for the given event to <waypoints>.
    */
   addWaypointForEvent(me: InternalMouseEvent) {
@@ -1643,8 +1573,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: checkConstraints
-   *
    * Returns true if the connection for the given constraints is valid. This
    * implementation returns true if the constraints are not pointing to the
    * same fixed connection point.
@@ -1663,8 +1591,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Handles the event by inserting the new connection.
    */
   mouseUp(sender: EventSource, me: InternalMouseEvent) {
@@ -1727,8 +1653,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: reset
-   *
    * Resets the state of this handler.
    */
   reset(): void {
@@ -1758,8 +1682,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: drawPreview
-   *
    * Redraws the preview edge using the color and width returned by
    * <getEdgeColor> and <getEdgeWidth>.
    */
@@ -1769,8 +1691,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: getEdgeColor
-   *
    * Returns the color used to draw the preview edge. This returns green if
    * there is no edge validation error and red otherwise.
    *
@@ -1787,8 +1707,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: getEdgeColor
-   *
    * Returns the color used to draw the preview edge. This returns green if
    * there is no edge validation error and red otherwise.
    *
@@ -1802,8 +1720,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: getEdgeWidth
-   *
    * Returns the width used to draw the preview edge. This returns 3 if
    * there is no edge validation error and 1 otherwise.
    *
@@ -1817,8 +1733,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: connect
-   *
    * Connects the given source and target using a new edge. This
    * implementation uses <createEdge> to create the edge.
    *
@@ -2016,8 +1930,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: selectCells
-   *
    * Selects the given edge after adding a new connection. The target argument
    * contains the target vertex if one has been inserted.
    */
@@ -2026,8 +1938,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: insertEdge
-   *
    * Creates, inserts and returns the new edge for the given parameters. This
    * implementation does only use <createEdge> if <factoryMethod> is defined,
    * otherwise <mxGraph.insertEdge> will be used.
@@ -2050,8 +1960,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: createTargetVertex
-   *
    * Hook method for creating new vertices on the fly if no target was
    * under the mouse. This is only called if <createTarget> is true and
    * returns null.
@@ -2108,8 +2016,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: getAlignmentTolerance
-   *
    * Returns the tolerance for aligning new targets to sources. This returns the grid size / 2.
    */
   getAlignmentTolerance(evt?: MouseEvent): number {
@@ -2119,8 +2025,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: createEdge
-   *
    * Creates and returns a new edge using <factoryMethod> if one exists. If
    * no factory method is defined, then a new default edge is returned. The
    * source and target arguments are informal, the actual connection is
@@ -2155,8 +2059,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes. This should be
    * called on all instances. It is called automatically for the built-in
    * instance created for each <mxGraph>.

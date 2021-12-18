@@ -14,8 +14,6 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import { Graph } from '../Graph';
 
 /**
- * Class: mxPanningManager
- *
  * Implements a handler for panning.
  */
 class PanningManager {

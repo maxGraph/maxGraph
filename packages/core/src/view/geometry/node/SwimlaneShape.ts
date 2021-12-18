@@ -130,8 +130,6 @@ class SwimlaneShape extends Shape {
   }
 
   /**
-   * Function: getSwimlaneArcSize
-   *
    * Returns the arcsize for the swimlane.
    */
   getSwimlaneArcSize(w: number, h: number, start: number) {
@@ -199,8 +197,6 @@ class SwimlaneShape extends Shape {
   }
 
   /**
-   * Function: paintSwimlane
-   *
    * Paints the swimlane vertex shape.
    */
   paintSwimlane(
@@ -289,8 +285,6 @@ class SwimlaneShape extends Shape {
   }
 
   /**
-   * Function: paintRoundedSwimlane
-   *
    * Paints the swimlane vertex shape.
    */
   paintRoundedSwimlane(
@@ -388,8 +382,6 @@ class SwimlaneShape extends Shape {
   }
 
   /**
-   * Function: paintDivider
-   *
    * Paints the divider between swimlane title and content area.
    */
   paintDivider(
@@ -419,8 +411,6 @@ class SwimlaneShape extends Shape {
   }
 
   /**
-   * Function: paintSeparator
-   *
    * Paints the vertical or horizontal separator line between swimlanes.
    */
   paintSeparator(

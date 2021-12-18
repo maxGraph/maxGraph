@@ -40,8 +40,6 @@ import GraphHandler from './GraphHandler';
 import SelectionCellsHandler from './SelectionCellsHandler';
 
 /**
- * Class: mxVertexHandler
- *
  * Event handler for resizing cells. This handler is automatically created in
  * <mxGraph.createHandler>.
  *
@@ -328,8 +326,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isRotationHandleVisible
-   *
    * Returns true if the rotation handle should be showing.
    */
   isRotationHandleVisible() {
@@ -345,8 +341,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isConstrainedEvent
-   *
    * Returns true if the aspect ratio if the cell should be maintained.
    */
   isConstrainedEvent(me: InternalMouseEvent) {
@@ -354,8 +348,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isCenteredEvent
-   *
    * Returns true if the center of the vertex should be maintained during the resize.
    */
   isCenteredEvent(state: CellState, me: InternalMouseEvent) {
@@ -363,8 +355,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: createCustomHandles
-   *
    * Returns an array of custom handles. This implementation returns null.
    */
   createCustomHandles() {
@@ -372,8 +362,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: updateMinBounds
-   *
    * Initializes the shapes required for this vertex handler.
    */
   updateMinBounds() {
@@ -399,8 +387,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: getSelectionBounds
-   *
    * Returns the mxRectangle that defines the bounds of the selection
    * border.
    */
@@ -414,8 +400,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: createParentHighlightShape
-   *
    * Creates the shape used to draw the selection border.
    */
   createParentHighlightShape(bounds: Rectangle) {
@@ -423,8 +407,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: createSelectionShape
-   *
    * Creates the shape used to draw the selection border.
    */
   createSelectionShape(bounds: Rectangle) {
@@ -440,8 +422,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: getSelectionColor
-   *
    * Returns <mxConstants.VERTEX_SELECTION_COLOR>.
    */
   getSelectionColor() {
@@ -449,8 +429,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: getSelectionStrokeWidth
-   *
    * Returns <mxConstants.VERTEX_SELECTION_STROKEWIDTH>.
    */
   getSelectionStrokeWidth() {
@@ -458,8 +436,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isSelectionDashed
-   *
    * Returns <mxConstants.VERTEX_SELECTION_DASHED>.
    */
   isSelectionDashed() {
@@ -467,8 +443,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: createSizer
-   *
    * Creates a sizer handle for the specified cursor and index and returns
    * the new <mxRectangleShape> that represents the handle.
    */
@@ -511,8 +485,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isSizerVisible
-   *
    * Returns true if the sizer for the given index is visible.
    * This returns true for all given indices.
    */
@@ -521,8 +493,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: createSizerShape
-   *
    * Creates the shape used for the sizer handle for the specified bounds an
    * index. Only images and rectangles should be returned if support for HTML
    * labels with not foreign objects is required.
@@ -549,8 +519,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: createBounds
-   *
    * Helper method to create an <mxRectangle> around the given centerpoint
    * with a width and height of 2*s or 6, if no s is given.
    */
@@ -567,8 +535,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: getHandleForEvent
-   *
    * Returns the index of the handle for the given event. This returns the index
    * of the sizer from where the event originated or <mxEvent.LABEL_INDEX>.
    */
@@ -632,8 +598,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isCustomHandleEvent
-   *
    * Returns true if the given event allows custom handles to be changed. This
    * implementation returns true.
    */
@@ -642,8 +606,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: mouseDown
-   *
    * Handles the event if a handle has been clicked. By consuming the
    * event all subsequent events of the gesture are redirected to this
    * handler.
@@ -660,8 +622,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isLivePreviewBorder
-   *
    * Called if <livePreview> is enabled to check if a border should be painted.
    * This implementation returns true if the shape is transparent.
    */
@@ -674,8 +634,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: start
-   *
    * Starts the handling of the mouse gesture.
    */
   start(x: number, y: number, index: number) {
@@ -768,8 +726,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: createGhostPreview
-   *
    * Starts the handling of the mouse gesture.
    */
   createGhostPreview() {
@@ -783,8 +739,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: hideHandles
-   *
    * Shortcut to <hideSizers>.
    */
   setHandlesVisible(visible: boolean) {
@@ -800,8 +754,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: hideSizers
-   *
    * Hides all sizers except.
    *
    * Starts the handling of the mouse gesture.
@@ -811,8 +763,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: checkTolerance
-   *
    * Checks if the coordinates for the given event are within the
    * <mxGraph.tolerance>. If the event is a mouse event then the tolerance is
    * ignored.
@@ -830,22 +780,16 @@ class VertexHandler {
   }
 
   /**
-   * Function: updateHint
-   *
    * Hook for subclassers do show details while the handler is active.
    */
   updateHint(me: InternalMouseEvent) {}
 
   /**
-   * Function: removeHint
-   *
    * Hooks for subclassers to hide details when the handler gets inactive.
    */
   removeHint() {}
 
   /**
-   * Function: roundAngle
-   *
    * Hook for rounding the angle. This uses Math.round.
    */
   // roundAngle(angle: number): number;
@@ -854,8 +798,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: roundLength
-   *
    * Hook for rounding the unscaled width or height. This uses Math.round.
    */
   roundLength(length: number) {
@@ -863,8 +805,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: mouseMove
-   *
    * Handles the event by updating the preview.
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
@@ -923,8 +863,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isGhostPreview
-   *
    * Returns true if a ghost preview should be used for custom handles.
    */
   isGhostPreview() {
@@ -932,8 +870,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: rotateVertex
-   *
    * Rotates the vertex.
    */
   moveLabel(me: InternalMouseEvent) {
@@ -951,8 +887,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: rotateVertex
-   *
    * Rotates the vertex.
    */
   rotateVertex(me: InternalMouseEvent) {
@@ -997,8 +931,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: rotateVertex
-   *
    * Rotates the vertex.
    */
   resizeVertex(me: InternalMouseEvent) {
@@ -1164,8 +1096,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: updateLivePreview
-   *
    * Repaints the live preview.
    */
   updateLivePreview(me: InternalMouseEvent) {
@@ -1230,8 +1160,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: moveToFront
-   *
    * Handles the event by applying the changes to the geometry.
    */
   moveToFront() {
@@ -1253,8 +1181,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Handles the event by applying the changes to the geometry.
    */
   mouseUp(sender: EventSource, me: InternalMouseEvent) {
@@ -1339,8 +1265,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: rotateCell
-   *
    * Rotates the given cell to the given rotation.
    */
   isRecursiveResize(state: CellState, me: InternalMouseEvent) {
@@ -1348,8 +1272,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: rotateClick
-   *
    * Hook for subclassers to implement a single click on the rotation handle.
    * This code is executed as part of the model transaction. This implementation
    * is empty.
@@ -1357,8 +1279,6 @@ class VertexHandler {
   rotateClick() {}
 
   /**
-   * Function: rotateCell
-   *
    * Rotates the given cell and its children by the given angle in degrees.
    *
    * Parameters:
@@ -1402,8 +1322,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: reset
-   *
    * Resets the state of this handler.
    */
   reset() {
@@ -1463,8 +1381,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: resizeCell
-   *
    * Uses the given vector to change the bounds of the given cell
    * in the graph using <mxGraph.resizeCell>.
    */
@@ -1525,8 +1441,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: moveChildren
-   *
    * Moves the children of the given cell by the given vector.
    */
   moveChildren(cell: Cell, dx: number, dy: number) {
@@ -1546,8 +1460,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: union
-   *
    * Returns the union of the given bounds and location for the specified
    * handle index.
    *
@@ -1738,8 +1650,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: redraw
-   *
    * Redraws the handles and the preview.
    */
   redraw(ignoreHandles?: boolean) {
@@ -1781,8 +1691,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: getSizerBounds
-   *
    * Returns the bounds used to paint the resize handles.
    */
   getSizerBounds() {
@@ -1790,8 +1698,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: redrawHandles
-   *
    * Redraws the handles. To hide certain handles the following code can be used.
    *
    * (code)
@@ -1982,8 +1888,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isCustomHandleVisible
-   *
    * Returns true if the given custom handle is visible.
    */
   isCustomHandleVisible(handle: CellHandle) {
@@ -1991,8 +1895,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: getRotationHandlePosition
-   *
    * Returns an <mxPoint> that defines the rotation handle position.
    */
   getRotationHandlePosition() {
@@ -2003,8 +1905,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isParentHighlightVisible
-   *
    * Returns true if the parent highlight should be visible. This implementation
    * always returns true.
    */
@@ -2014,8 +1914,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: updateParentHighlight
-   *
    * Updates the highlight of the parent if <parentHighlightEnabled> is true.
    */
   updateParentHighlight() {
@@ -2070,8 +1968,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: drawPreview
-   *
    * Redraws the preview.
    */
   // drawPreview(): void;
@@ -2094,8 +1990,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: getSelectionBorderBounds
-   *
    * Returns the bounds for the selection border.
    */
   getSelectionBorderBounds() {
@@ -2103,8 +1997,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: isDestroyed
-   *
    * Returns true if this handler was destroyed or not initialized.
    */
   isDestroyed() {
@@ -2112,8 +2004,6 @@ class VertexHandler {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes.
    */
   // destroy(): void;

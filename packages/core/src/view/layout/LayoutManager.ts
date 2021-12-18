@@ -176,8 +176,6 @@ class LayoutManager extends EventSource {
   }
 
   /**
-   * Function: hasLayout
-   *
    * Returns true if the given cell has a layout. This implementation invokes
    * <getLayout> with <mxEvent.LAYOUT_CELLS> as the eventName. Override this
    * if creating layouts in <getLayout> is expensive and return true if

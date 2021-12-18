@@ -17,8 +17,6 @@ import {
 import { getOuterHtml, isNode } from '../../util/domUtils';
 
 /**
- * Class: mxXmlCanvas2D
- *
  * Base class for all canvases. The following methods make up the public
  * interface of the canvas 2D for all painting in mxGraph:
  *
@@ -262,8 +260,6 @@ class mxXmlCanvas2D extends mxAbstractCanvas2D {
   }
 
   /**
-   * Function: setGradient
-   *
    * Sets the gradient. Note that the coordinates may be ignored by some implementations.
    *
    * Parameters:
@@ -734,8 +730,6 @@ class mxXmlCanvas2D extends mxAbstractCanvas2D {
   }
 
   /**
-   * Function: image
-   *
    * Paints an image.
    *
    * Parameters:
@@ -854,8 +848,6 @@ class mxXmlCanvas2D extends mxAbstractCanvas2D {
   }
 
   /**
-   * Function: text
-   *
    * Paints the given text. Possible values for format are empty string for
    * plain text and html for HTML markup. Background and border color as well
    * as clipping is not available in plain text labels for VML. HTML labels

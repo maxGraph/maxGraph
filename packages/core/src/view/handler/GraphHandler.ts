@@ -46,8 +46,6 @@ import CellEditor from './CellEditor';
 import type { ColorValue, GraphPlugin } from '../../types';
 
 /**
- * Class: mxGraphHandler
- *
  * Graph event handler that handles selection. Individual cells are handled
  * separately using <mxVertexHandler> or one of the edge handlers. These
  * handlers are created using <mxGraph.createHandler> in

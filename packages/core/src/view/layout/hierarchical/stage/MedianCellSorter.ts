@@ -14,8 +14,6 @@ class MedianCellSorter {
   cell: boolean = false;
 
   /**
-   * Function: compare
-   *
    * Compares two MedianCellSorters.
    */
   compare(a: MedianCellSorter, b: MedianCellSorter) {

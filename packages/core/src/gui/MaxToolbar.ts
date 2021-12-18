@@ -69,8 +69,6 @@ class MaxToolbar extends EventSource {
   updateDefaultMode: boolean = true;
 
   /**
-   * Function: addItem
-   *
    * Adds the given function as an image with the specified title and icon
    * and returns the new image node.
    *
@@ -253,8 +251,6 @@ class MaxToolbar extends EventSource {
   }
 
   /**
-   * Function: addSwitchMode
-   *
    * Adds a new selectable item to the toolbar. Only one switch mode item may
    * be selected at a time. The currently selected item is the default item
    * after a reset of the toolbar.
@@ -314,8 +310,6 @@ class MaxToolbar extends EventSource {
   }
 
   /**
-   * Function: addMode
-   *
    * Adds a new item to the toolbar. The selection is typically reset after
    * the item has been consumed, for example by adding a new vertex to the
    * graph. The reset is not carried out if the item is double clicked.

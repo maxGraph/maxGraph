@@ -10,8 +10,6 @@ import CellArray from '../cell/CellArray';
 import Cell from '../cell/Cell';
 
 /**
- * Class: mxCircleLayout
- *
  * Extends <mxGraphLayout> to implement a circular layout for a given radius.
  * The vertices do not need to be connected for this layout to work and all
  * connections between vertices are not taken into account.
@@ -75,8 +73,6 @@ class CircleLayout extends GraphLayout {
   disableEdgeStyle: boolean = true;
 
   /**
-   * Function: execute
-   *
    * Implements <mxGraphLayout.execute>.
    */
   execute(parent: Cell) {
@@ -139,8 +135,6 @@ class CircleLayout extends GraphLayout {
   }
 
   /**
-   * Function: getRadius
-   *
    * Returns the radius to be used for the given vertex count. Max is the maximum
    * width or height of all vertices in the layout.
    */
@@ -149,8 +143,6 @@ class CircleLayout extends GraphLayout {
   }
 
   /**
-   * Function: circle
-   *
    * Executes the circular layout for the specified array
    * of vertices and the given radius. This is called from
    * <execute>.

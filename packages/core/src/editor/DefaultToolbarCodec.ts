@@ -15,8 +15,6 @@ import { convertPoint } from '../util/utils';
 import Resources from 'src/util/Resources';
 
 /**
- * Class: DefaultToolbarCodec
- *
  * Custom codec for configuring <DefaultToolbar>s. This class is created
  * and registered dynamically at load time and used implicitly via
  * <Codec> and the <CodecRegistry>. This codec only reads configuration

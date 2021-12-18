@@ -44,8 +44,6 @@ class StencilShape extends Shape {
   static defaultLocalized = false;
 
   /**
-   * Function: allowEval
-   *
    * Static global switch that specifies if the use of eval is allowed for
    * evaluating text content and images. Default is false. Set this to true
    * if stencils can not contain user input.
@@ -94,8 +92,6 @@ class StencilShape extends Shape {
   strokeWidthValue: string | null = null;
 
   /**
-   * Function: parseDescription
-   *
    * Reads <w0>, <h0>, <aspect>, <bgNodes> and <fgNodes> from <desc>.
    */
   parseDescription() {
@@ -120,8 +116,6 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Function: parseConstraints
-   *
    * Reads the constraints from <desc> into <constraints> using
    * <parseConstraint>.
    */
@@ -142,8 +136,6 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Function: parseConstraint
-   *
    * Parses the given XML node and returns its <mxConnectionConstraint>.
    */
   parseConstraint(node: Element) {
@@ -156,8 +148,6 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Function: evaluateTextAttribute
-   *
    * Gets the given attribute as a text. The return value from <evaluateAttribute>
    * is used as a key to <mxResources.get> if the localized attribute in the text
    * node is 1 or if <defaultLocalized> is true.
@@ -174,8 +164,6 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Function: evaluateAttribute
-   *
    * Gets the attribute for the given name from the given node. If the attribute
    * does not exist then the text content of the node is evaluated and if it is
    * a function it is invoked with <shape> as the only argument and the return
@@ -200,8 +188,6 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Function: drawShape
-   *
    * Draws this stencil inside the given bounds.
    */
   drawShape(
@@ -260,8 +246,6 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Function: drawChildren
-   *
    * Draws this stencil inside the given bounds.
    */
   drawChildren(
@@ -290,8 +274,6 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Function: computeAspect
-   *
    * Returns a rectangle that contains the offset in x and y and the horizontal
    * and vertical scale in width and height used to draw this shape inside the
    * given <mxRectangle>.
@@ -345,8 +327,6 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Function: drawNode
-   *
    * Draws this stencil inside the given bounds.
    */
   drawNode(

@@ -5,8 +5,6 @@ import Model from '../other/Model';
 import type { UndoableChange } from '../../types';
 
 /**
- * Class: mxGeometryChange
- *
  * Action to change a cell's geometry in a model.
  *
  * Constructor: mxGeometryChange
@@ -28,8 +26,6 @@ class GeometryChange implements UndoableChange {
   }
 
   /**
-   * Function: execute
-   *
    * Changes the geometry of {@link cell}` ro {@link previous}` using
    * <Transactions.geometryForCellChanged>.
    */

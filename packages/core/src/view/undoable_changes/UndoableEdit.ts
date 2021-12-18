@@ -12,8 +12,6 @@ import EventSource from '../event/EventSource';
 import type { UndoableChange } from '../../types';
 
 /**
- * Class: mxUndoableEdit
- *
  * Implements a composite undoable edit. Here is an example for a custom change
  * which gets executed via the model:
  *
@@ -91,8 +89,6 @@ class UndoableEdit {
   }
 
   /**
-   * Function: isEmpty
-   *
    * Returns true if the this edit contains no changes.
    */
   isEmpty() {
@@ -100,8 +96,6 @@ class UndoableEdit {
   }
 
   /**
-   * Function: isSignificant
-   *
    * Returns <significant>.
    */
   isSignificant() {
@@ -109,8 +103,6 @@ class UndoableEdit {
   }
 
   /**
-   * Function: add
-   *
    * Adds the specified change to this edit. The change is an object that is
    * expected to either have an undo and redo, or an execute function.
    */
@@ -120,24 +112,18 @@ class UndoableEdit {
   }
 
   /**
-   * Function: notify
-   *
    * Hook to notify any listeners of the changes after an <undo> or <redo>
    * has been carried out. This implementation is empty.
    */
   notify() {}
 
   /**
-   * Function: die
-   *
    * Hook to free resources after the edit has been removed from the command
    * history. This implementation is empty.
    */
   die() {}
 
   /**
-   * Function: undo
-   *
    * Undoes all changes in this edit.
    */
   undo() {
@@ -167,8 +153,6 @@ class UndoableEdit {
   }
 
   /**
-   * Function: redo
-   *
    * Redoes all changes in this edit.
    */
   redo() {

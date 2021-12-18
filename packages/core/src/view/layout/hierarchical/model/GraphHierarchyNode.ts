@@ -11,8 +11,6 @@ import Cell from '../../../cell/Cell';
 import GraphHierarchyEdge from './GraphHierarchyEdge';
 
 /**
- * Class: mxGraphHierarchyNode
- *
  * An abstraction of a hierarchical edge for the hierarchy layout
  *
  * Constructor: mxGraphHierarchyNode
@@ -59,8 +57,6 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   hashCode: any = false;
 
   /**
-   * Function: getRankValue
-   *
    * Returns the integer value of the layer that this node resides in
    */
   getRankValue(layer: number): number {
@@ -68,8 +64,6 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: getNextLayerConnectedCells
-   *
    * Returns the cells this cell connects to on the next layer up
    */
   getNextLayerConnectedCells(layer: number): CellArray {
@@ -94,8 +88,6 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: getPreviousLayerConnectedCells
-   *
    * Returns the cells this cell connects to on the next layer down
    */
   getPreviousLayerConnectedCells(layer: number): CellArray {
@@ -119,8 +111,6 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: isVertex
-   *
    * Returns true.
    */
   isVertex(): boolean {
@@ -128,8 +118,6 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: getGeneralPurposeVariable
-   *
    * Gets the value of temp for the specified layer
    */
   getGeneralPurposeVariable(layer: number): any {
@@ -137,8 +125,6 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: setGeneralPurposeVariable
-   *
    * Set the value of temp for the specified layer
    */
   setGeneralPurposeVariable(layer: number, value: number): void {
@@ -146,8 +132,6 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: isAncestor
-   */
   isAncestor(otherNode: GraphHierarchyNode): boolean {
     // Firstly, the hash code of this node needs to be shorter than the
     // other node
@@ -180,8 +164,6 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Function: getCoreCell
-   *
    * Gets the core vertex associated with this wrapper
    */
   getCoreCell(): Cell {

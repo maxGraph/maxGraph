@@ -4,8 +4,6 @@ import Cell from '../cell/Cell';
 import type { UndoableChange } from '../../types';
 
 /**
- * Class: mxCellAttributeChange
- *
  * Action to change the attribute of a cell's user object.
  * There is no method on the graph model that uses this
  * action. To use the action, you can use the code shown
@@ -49,8 +47,6 @@ class CellAttributeChange implements UndoableChange {
   }
 
   /**
-   * Function: execute
-   *
    * Changes the attribute of the cell's user object by
    * using <mxCell.setAttribute>.
    */

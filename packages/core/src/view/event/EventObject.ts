@@ -8,8 +8,6 @@
 type EventProperties = Record<string, any>;
 
 /**
- * Class: mxEventObject
- *
  * The mxEventObject is a wrapper for all properties of a single event.
  * Additionally, it also offers functions to consume the event and check if it
  * was consumed as follows:
@@ -66,8 +64,6 @@ class EventObject {
   consumed: boolean = false;
 
   /**
-   * Function: getName
-   *
    * Returns <name>.
    */
   getName() {
@@ -75,8 +71,6 @@ class EventObject {
   }
 
   /**
-   * Function: getProperties
-   *
    * Returns <properties>.
    */
   getProperties() {
@@ -84,8 +78,6 @@ class EventObject {
   }
 
   /**
-   * Function: getProperty
-   *
    * Returns the property for the given key.
    */
   getProperty(key: string) {
@@ -93,8 +85,6 @@ class EventObject {
   }
 
   /**
-   * Function: isConsumed
-   *
    * Returns true if the event has been consumed.
    */
   isConsumed() {
@@ -102,8 +92,6 @@ class EventObject {
   }
 
   /**
-   * Function: consume
-   *
    * Consumes the event.
    */
   consume() {

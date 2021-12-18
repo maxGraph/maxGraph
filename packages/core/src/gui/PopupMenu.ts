@@ -16,8 +16,6 @@ import InternalMouseEvent from '../view/event/InternalMouseEvent';
 import { PopupMenuItem } from '../types';
 
 /**
- * Class: mxPopupMenu
- *
  * Basic popup menu. To add a vertical scrollbar to a given submenu, the
  * following code can be used.
  *

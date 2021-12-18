@@ -3231,8 +3231,6 @@ EditorUi.prototype.setPageVisible = function(value)
 };
 
 /**
- * Class: ChangeGridColor
- *
  * Undoable change to grid color.
  */
 function ChangeGridColor(ui, color)

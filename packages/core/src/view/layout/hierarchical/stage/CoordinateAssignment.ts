@@ -13,8 +13,6 @@ import Point from '../../../geometry/Point';
 import HierarchicalEdgeStyle from '../HierarchicalEdgeStyle';
 
 /**
- * Class: mxCoordinateAssignment
- *
  * Sets the horizontal locations of node and edge dummy nodes on each layer.
  * Uses median down and up weighings as well as heuristics to straighten edges as
  * far as possible.

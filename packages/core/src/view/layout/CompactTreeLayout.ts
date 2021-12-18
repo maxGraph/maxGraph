@@ -433,8 +433,6 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-   * Function: dfs
-   *
    * Does a depth first search starting at the specified cell.
    * Makes sure the specified parent is never left by the
    * algorithm.
@@ -729,8 +727,6 @@ class CompactTreeLayout extends GraphLayout {
   }
 
   /**
-   * Function: bridge
-   */
   bridge(line1, x1: number, y1: number, line2, x2: number, y2: number) {
     const dx = x2 + line2.dx - x1;
     let dy = 0;

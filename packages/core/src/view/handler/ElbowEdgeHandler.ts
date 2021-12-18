@@ -23,8 +23,6 @@ import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 
 /**
- * Class: mxElbowEdgeHandler
- *
  * Graph event handler that reconnects edges and modifies control points and
  * the edge label location. Uses <mxTerminalMarker> for finding and
  * highlighting new source and target vertices. This handler is automatically
@@ -60,8 +58,6 @@ class ElbowEdgeHandler extends EdgeHandler {
     Client.language !== 'none' ? 'doubleClickOrientation' : '';
 
   /**
-   * Function: createBends
-   *
    * Overrides <mxEdgeHandler.createBends> to create custom bends.
    */
   createBends() {
@@ -95,8 +91,6 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-   * Function: createVirtualBend
-   *
    * Creates a virtual bend that supports double clicking and calls
    * <mxGraph.flipEdge>.
    */
@@ -114,8 +108,6 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-   * Function: getCursorForBend
-   *
    * Returns the cursor to be used for the bend.
    */
   getCursorForBend() {
@@ -127,8 +119,6 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-   * Function: getTooltipForNode
-   *
    * Returns the tooltip for the given node.
    */
   getTooltipForNode(node: Element) {
@@ -147,8 +137,6 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-   * Function: convertPoint
-   *
    * Converts the given point in-place from screen to unscaled, untranslated
    * graph coordinates and applies the grid.
    *
@@ -174,8 +162,6 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-   * Function: redrawInnerBends
-   *
    * Updates and redraws the inner bends.
    *
    * Parameters:

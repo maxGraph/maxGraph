@@ -14,8 +14,6 @@ import Geometry from '../geometry/Geometry';
 import CellArray from '../cell/CellArray';
 
 /**
- * Class: mxStackLayout
- *
  * Extends <mxGraphLayout> to create a horizontal or vertical stack of the
  * child vertices. The children do not need to be connected for this layout
  * to work.
@@ -436,8 +434,6 @@ class StackLayout extends GraphLayout {
   }
 
   /**
-   * Function: setChildGeometry
-   *
    * Sets the specific geometry to the given child cell.
    *
    * Parameters:
@@ -460,8 +456,6 @@ class StackLayout extends GraphLayout {
   }
 
   /**
-   * Function: updateParentGeometry
-   *
    * Updates the geometry of the given parent cell.
    *
    * Parameters:

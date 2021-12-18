@@ -18,8 +18,6 @@ import RectangleShape from '../geometry/node/RectangleShape';
 import CellOverlay from './CellOverlay';
 
 /**
- * Class: CellState
- *
  * Represents the current state of a cell in a given <mxGraphView>.
  *
  * For edges, the edge label position is stored in <absoluteOffset>.
@@ -167,8 +165,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: getPerimeterBounds
-   *
    * Returns the <mxRectangle> that should be used as the perimeter of the
    * cell.
    *
@@ -204,8 +200,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: setAbsoluteTerminalPoint
-   *
    * Sets the first or last point in <absolutePoints> depending on isSource.
    *
    * Parameters:
@@ -232,8 +226,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: setCursor
-   *
    * Sets the given cursor on the shape and text shape.
    */
   setCursor(cursor: string) {
@@ -246,8 +238,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: getVisibleTerminal
-   *
    * Returns the visible source or target terminal cell.
    *
    * Parameters:
@@ -261,8 +251,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: getVisibleTerminalState
-   *
    * Returns the visible source or target terminal state.
    *
    * Parameters:
@@ -275,8 +263,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: setVisibleTerminalState
-   *
    * Sets the visible source or target terminal state.
    *
    * Parameters:
@@ -293,8 +279,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: getCellBounds
-   *
    * Returns the unscaled, untranslated bounds.
    */
   getCellBounds() {
@@ -302,8 +286,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: getPaintBounds
-   *
    * Returns the unscaled, untranslated paint bounds. This is the same as
    * <getCellBounds> but with a 90 degree rotation if the shape's
    * isPaintBoundsInverted returns true.
@@ -313,8 +295,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: updateCachedBounds
-   *
    * Updates the cellBounds and paintBounds.
    */
   updateCachedBounds() {
@@ -360,8 +340,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Function: clone
-   *
    * Returns a clone of this <mxPoint>.
    */
   clone() {

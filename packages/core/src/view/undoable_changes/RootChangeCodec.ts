@@ -11,8 +11,6 @@ import { NODETYPE_ELEMENT } from '../../util/constants';
 import ObjectCodec from '../../util/serialization/ObjectCodec';
 
 /**
- * Class: RootChangeCodec
- *
  * Codec for <mxRootChange>s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec> and
  * the <CodecRegistry>.

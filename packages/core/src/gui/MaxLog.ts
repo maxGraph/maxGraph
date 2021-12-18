@@ -11,8 +11,6 @@ import { getInnerHtml, write } from '../util/domUtils';
 import MaxWindow, { popup } from './MaxWindow';
 
 /**
- * Class: MaxLog
- *
  * A singleton class that implements a simple console.
  *
  * Variable: consoleName
@@ -223,8 +221,6 @@ class MaxLog {
   }
 
   /**
-   * Function: setVisible
-   *
    * Shows or hides the console.
    */
   static setVisible(visible) {
@@ -248,8 +244,6 @@ class MaxLog {
   }
 
   /**
-   * Function: leave
-   *
    * Writes the specified string to the console
    * if <TRACE> is true and computes the difference
    * between the current time and t0 in milliseconds.

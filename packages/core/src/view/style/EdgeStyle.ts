@@ -27,8 +27,6 @@ import Rectangle from '../geometry/Rectangle';
 import Geometry from '../geometry/Geometry';
 
 /**
- * Class: mxEdgeStyle
- *
  * Provides various edge styles to be used as the values for
  * <'edge'> in a cell style.
  *
@@ -98,8 +96,6 @@ import Geometry from '../geometry/Geometry';
  */
 class EdgeStyle {
   /*
-   * Function: EntityRelation
-   *
    * Implements an entity relation style for edges (as used in database
    * schema diagrams). At the time the function is called, the result
    * array contains a placeholder (null) for the first absolute point,
@@ -222,8 +218,6 @@ class EdgeStyle {
   }
 
   /**
-   * Function: Loop
-   *
    * Implements a self-reference, aka. loop.
    */
   static Loop(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
@@ -298,8 +292,6 @@ class EdgeStyle {
   }
 
   /**
-   * Function: ElbowConnector
-   *
    * Uses either <SideToSide> or <TopToBottom> depending on the horizontal
    * flag in the cell style. <SideToSide> is used if horizontal is true or
    * unspecified. See <EntityRelation> for a description of the
@@ -345,8 +337,6 @@ class EdgeStyle {
   }
 
   /**
-   * Function: SideToSide
-   *
    * Implements a vertical elbow edge. See <EntityRelation> for a description
    * of the parameters.
    */
@@ -416,8 +406,6 @@ class EdgeStyle {
   }
 
   /**
-   * Function: TopToBottom
-   *
    * Implements a horizontal elbow edge. See <EntityRelation> for a
    * description of the parameters.
    */
@@ -486,8 +474,6 @@ class EdgeStyle {
   }
 
   /**
-   * Function: SegmentConnector
-   *
    * Implements an orthogonal edge style. Use <mxEdgeSegmentHandler>
    * as an interactive handler for this style.
    *
@@ -905,8 +891,6 @@ class EdgeStyle {
   }
 
   /**
-   * Function: scalePointArray
-   *
    * Scales an array of <mxPoint>
    *
    * Parameters:
@@ -938,8 +922,6 @@ class EdgeStyle {
   }
 
   /**
-   * Function: scaleCellState
-   *
    * Scales an <CellState>
    *
    * Parameters:
@@ -967,8 +949,6 @@ class EdgeStyle {
   }
 
   /**
-   * Function: OrthConnector
-   *
    * Implements a local orthogonal router between the given
    * cells.
    *

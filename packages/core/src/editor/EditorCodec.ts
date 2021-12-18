@@ -12,8 +12,6 @@ import CodecRegistry from '../util/serialization/CodecRegistry';
 import { getChildNodes } from '../util/dom/domUtils';
 
 /**
- * Class: EditorCodec
- *
  * Codec for <Editor>s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec>
  * and the <CodecRegistry>.

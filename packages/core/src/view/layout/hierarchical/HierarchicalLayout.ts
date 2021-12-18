@@ -19,8 +19,6 @@ import Cell from 'src/view/cell/Cell';
 import CellPath from 'src/view/cell/CellPath';
 
 /**
- * Class: HierarchicalLayout
- *
  * A hierarchical layout algorithm.
  *
  * Constructor: HierarchicalLayout
@@ -153,8 +151,6 @@ class HierarchicalLayout extends GraphLayout {
   edgeStyle = HierarchicalEdgeStyle.POLYLINE;
 
   /**
-   * Function: getModel
-   *
    * Returns the internal <GraphHierarchyModel> for this layout algorithm.
    */
   getModel(): GraphHierarchyModel {
@@ -162,8 +158,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: execute
-   *
    * Executes the layout for the children of the specified parent.
    *
    * Parameters:
@@ -250,8 +244,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: findRoots
-   *
    * Returns all visible children in the given parent which do not have
    * incoming edges. If the result is empty then the children with the
    * maximum difference between incoming and outgoing edges are returned.
@@ -311,8 +303,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: getEdges
-   *
    * Returns the connected edges for the given cell.
    *
    * Parameters:
@@ -368,8 +358,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: getVisibleTerminal
-   *
    * Helper function to return visible terminal for edge allowing for ports
    *
    * Parameters:
@@ -414,8 +402,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: run
-   *
    * The API method used to exercise the layout upon the graph description
    * and produce a separate description of the vertex position and edge
    * routing changes made. It runs each stage of the layout that has been
@@ -527,8 +513,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: filterDescendants
-   *
    * Creates an array of descendant cells
    */
   filterDescendants(cell, result) {
@@ -554,8 +538,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: isPort
-   *
    * Returns true if the given cell is a "port", that is, when connecting to
    * it, its parent is the connecting vertex in terms of graph traversal
    *
@@ -571,8 +553,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: getEdgesBetween
-   *
    * Returns the edges between the given source and target. This takes into
    * account collapsed and invisible cells and ports.
    *
@@ -721,8 +701,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: cycleStage
-   *
    * Executes the cycle stage using mxMinimumCycleRemover.
    */
   cycleStage(parent) {
@@ -731,8 +709,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: layeringStage
-   *
    * Implements first stage of a Sugiyama layout.
    */
   layeringStage() {
@@ -741,8 +717,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: crossingStage
-   *
    * Executes the crossing stage using mxMedianHybridCrossingReduction.
    */
   crossingStage(parent) {
@@ -751,8 +725,6 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Function: placementStage
-   *
    * Executes the placement stage using mxCoordinateAssignment.
    */
   placementStage(initialX, parent) {

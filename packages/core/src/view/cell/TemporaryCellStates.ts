@@ -3,8 +3,6 @@
  * Copyright (c) 2006-2017, Gaudenz Alder
  */
 /**
- * Class: mxTemporaryCellStates
- *
  * Creates a temporary set of cell states.
  */
 

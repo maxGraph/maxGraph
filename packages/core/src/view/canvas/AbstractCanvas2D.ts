@@ -30,8 +30,6 @@ import type {
 } from '../../types';
 
 /**
- * Class: mxAbstractCanvas2D
- *
  * Base class for all canvases. A description of the public API is available in <mxXmlCanvas2D>.
  * All color values of <mxConstants.NONE> will be converted to null in the state.
  *
@@ -116,8 +114,6 @@ class AbstractCanvas2D {
   pointerEventsValue: string | null = null;
 
   /**
-   * Function: createUrlConverter
-   *
    * Create a new <UrlConverter> and returns it.
    */
   createUrlConverter() {
@@ -125,8 +121,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: reset
-   *
    * Resets the state of this canvas.
    */
   reset() {
@@ -135,8 +129,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: createState
-   *
    * Creates the state of the this canvas.
    */
   createState() {
@@ -178,8 +170,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: format
-   *
    * Rounds all numbers to integers.
    */
   format(value: number) {
@@ -187,8 +177,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: addOp
-   *
    * Adds the given operation to the path.
    */
   addOp = (op: string, ...args: number[]) => {
@@ -208,8 +196,6 @@ class AbstractCanvas2D {
   };
 
   /**
-   * Function: rotatePoint
-   *
    * Rotates the given point and returns the result as an <mxPoint>.
    */
   rotatePoint(x: number, y: number, theta: number, cx: number, cy: number) {
@@ -224,8 +210,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: save
-   *
    * Saves the current state.
    */
   save() {
@@ -234,8 +218,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: restore
-   *
    * Restores the current state.
    */
   restore() {
@@ -245,8 +227,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setLink
-   *
    * Sets the current link. Hook for subclassers.
    */
   setLink(link: string | null) {
@@ -254,8 +234,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: scale
-   *
    * Scales the current state.
    */
   scale(value: number) {
@@ -265,8 +243,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: translate
-   *
    * Translates the current state.
    */
   translate(dx: number, dy: number) {
@@ -275,8 +251,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: rotate
-   *
    * Rotates the current state.
    */
   rotate(theta: number, flipH: boolean, flipV: boolean, cx: number, cy: number) {
@@ -284,8 +258,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setAlpha
-   *
    * Sets the current alpha.
    */
   setAlpha(value: number) {
@@ -293,8 +265,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setFillAlpha
-   *
    * Sets the current solid fill alpha.
    */
   setFillAlpha(value: number) {
@@ -302,8 +272,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setStrokeAlpha
-   *
    * Sets the current stroke alpha.
    */
   setStrokeAlpha(value: number) {
@@ -311,8 +279,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setFillColor
-   *
    * Sets the current fill color.
    */
   setFillColor(value: ColorValue) {
@@ -321,8 +287,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setGradient
-   *
    * Sets the current gradient.
    */
   setGradient(
@@ -345,8 +309,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setStrokeColor
-   *
    * Sets the current stroke color.
    */
   setStrokeColor(value: ColorValue) {
@@ -354,8 +316,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setStrokeWidth
-   *
    * Sets the current stroke width.
    */
   setStrokeWidth(value: number) {
@@ -363,8 +323,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setDashed
-   *
    * Enables or disables dashed lines.
    */
   setDashed(value: boolean, fixDash = false) {
@@ -373,8 +331,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setDashPattern
-   *
    * Sets the current dash pattern.
    */
   setDashPattern(value: string) {
@@ -382,8 +338,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setLineCap
-   *
    * Sets the current line cap.
    */
   setLineCap(value: string) {
@@ -391,8 +345,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setLineJoin
-   *
    * Sets the current line join.
    */
   setLineJoin(value: string) {
@@ -400,8 +352,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setMiterLimit
-   *
    * Sets the current miter limit.
    */
   setMiterLimit(value: number) {
@@ -409,8 +359,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setFontColor
-   *
    * Sets the current font color.
    */
   setFontColor(value: ColorValue) {
@@ -418,8 +366,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setFontBackgroundColor
-   *
    * Sets the current font background color.
    */
   setFontBackgroundColor(value: ColorValue) {
@@ -427,8 +373,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setFontBorderColor
-   *
    * Sets the current font border color.
    */
   setFontBorderColor(value: ColorValue) {
@@ -436,8 +380,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setFontSize
-   *
    * Sets the current font size.
    */
   setFontSize(value: number) {
@@ -445,8 +387,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setFontFamily
-   *
    * Sets the current font family.
    */
   setFontFamily(value: string) {
@@ -454,8 +394,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setFontStyle
-   *
    * Sets the current font style.
    */
   setFontStyle(value: number) {
@@ -463,8 +401,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setShadow
-   *
    * Enables or disables and configures the current shadow.
    */
   setShadow(enabled: boolean) {
@@ -472,8 +408,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setShadowColor
-   *
    * Enables or disables and configures the current shadow.
    */
   setShadowColor(value: ColorValue) {
@@ -481,8 +415,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setShadowAlpha
-   *
    * Enables or disables and configures the current shadow.
    */
   setShadowAlpha(value: number) {
@@ -490,8 +422,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: setShadowOffset
-   *
    * Enables or disables and configures the current shadow.
    */
   setShadowOffset(dx: number, dy: number) {
@@ -500,8 +430,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: begin
-   *
    * Starts a new path.
    */
   begin() {
@@ -511,8 +439,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: moveTo
-   *
    *  Moves the current path the given coordinates.
    */
   moveTo(x: number, y: number) {
@@ -520,8 +446,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: lineTo
-   *
    * Draws a line to the given coordinates. Uses moveTo with the op argument.
    */
   lineTo(x: number, y: number) {
@@ -529,8 +453,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: quadTo
-   *
    * Adds a quadratic curve to the current path.
    */
   quadTo(x1: number, y1: number, x2: number, y2: number) {
@@ -538,8 +460,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: curveTo
-   *
    * Adds a bezier curve to the current path.
    */
   curveTo(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number) {
@@ -547,8 +467,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: arcTo
-   *
    * Adds the given arc to the current path. This is a synthetic operation that
    * is broken down into curves.
    */
@@ -588,8 +506,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: close
-   *
    * Closes the current path.
    */
   close(x1?: number, y1?: number, x2?: number, y2?: number, x3?: number, y3?: number) {
@@ -597,8 +513,6 @@ class AbstractCanvas2D {
   }
 
   /**
-   * Function: end
-   *
    * Empty implementation for backwards compatibility. This will be removed.
    */
   end() {}

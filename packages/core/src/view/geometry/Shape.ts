@@ -267,8 +267,6 @@ class Shape {
   }
 
   /**
-   * Function: init
-   *
    * Initializes the shape by creaing the DOM node using <create>
    * and adding it into the given container.
    *
@@ -283,8 +281,6 @@ class Shape {
   }
 
   /**
-   * Function: initStyles
-   *
    * Sets the styles to their default values.
    */
   initStyles() {
@@ -298,8 +294,6 @@ class Shape {
   }
 
   /**
-   * Function: isHtmlAllowed
-   *
    * Returns true if HTML is allowed for this shape. This implementation always
    * returns false.
    */
@@ -308,8 +302,6 @@ class Shape {
   }
 
   /**
-   * Function: getSvgScreenOffset
-   *
    * Returns 0, or 0.5 if <strokewidth> % 2 == 1.
    */
   getSvgScreenOffset(): number {
@@ -322,8 +314,6 @@ class Shape {
   }
 
   /**
-   * Function: create
-   *
    * Creates and returns the DOM node(s) for the shape in
    * the given container. This implementation invokes
    * <createSvg>, <createHtml> or <createVml> depending
@@ -338,8 +328,6 @@ class Shape {
   }
 
   /**
-   * Function: reconfigure
-   *
    * Reconfigures this shape. This will update the colors etc in
    * addition to the bounds or points.
    */
@@ -348,8 +336,6 @@ class Shape {
   }
 
   /**
-   * Function: redraw
-   *
    * Creates and returns the SVG node(s) to represent this shape.
    */
   redraw() {
@@ -367,8 +353,6 @@ class Shape {
   }
 
   /**
-   * Function: clear
-   *
    * Removes all child nodes and resets all CSS.
    */
   clear() {
@@ -378,8 +362,6 @@ class Shape {
   }
 
   /**
-   * Function: updateBoundsFromPoints
-   *
    * Updates the bounds based on the points.
    */
   updateBoundsFromPoints() {
@@ -397,8 +379,6 @@ class Shape {
   }
 
   /**
-   * Function: getLabelBounds
-   *
    * Returns the <mxRectangle> for the label bounds of this shape, based on the
    * given scaled and translated bounds of the shape. This method should not
    * change the rectangle in-place. This implementation returns the given rect.
@@ -444,8 +424,6 @@ class Shape {
   }
 
   /**
-   * Function: getLabelMargins
-   *
    * Returns the scaled top, left, bottom and right margin to be used for
    * computing the label bounds as an <mxRectangle>, where the bottom and right
    * margin are defined in the width and height of the rectangle, respectively.
@@ -455,8 +433,6 @@ class Shape {
   }
 
   /**
-   * Function: checkBounds
-   *
    * Returns true if the bounds are not null and all of its variables are numeric.
    */
   checkBounds() {
@@ -475,8 +451,6 @@ class Shape {
   }
 
   /**
-   * Function: redrawShape
-   *
    * Updates the SVG or VML shape.
    */
   redrawShape() {
@@ -500,8 +474,6 @@ class Shape {
   }
 
   /**
-   * Function: createCanvas
-   *
    * Creates a new canvas for drawing this shape. May return null.
    */
   createCanvas() {
@@ -527,8 +499,6 @@ class Shape {
   }
 
   /**
-   * Function: createSvgCanvas
-   *
    * Creates and returns an <mxSvgCanvas2D> for rendering this shape.
    */
   createSvgCanvas() {
@@ -559,8 +529,6 @@ class Shape {
   }
 
   /**
-   * Function: destroyCanvas
-   *
    * Destroys the given canvas which was used for drawing. This implementation
    * increments the reference counts on all shared gradients used in the canvas.
    */
@@ -582,15 +550,11 @@ class Shape {
   }
 
   /**
-   * Function: beforePaint
-   *
    * Invoked before paint is called.
    */
   beforePaint(c: AbstractCanvas2D) {}
 
   /**
-   * Function: afterPaint
-   *
    * Invokes after paint was called.
    */
   afterPaint(c: AbstractCanvas2D) {}
@@ -738,8 +702,6 @@ class Shape {
   }
 
   /**
-   * Function: getGradientBounds
-   *
    * Returns the bounding box for the gradient box for this shape.
    */
   getGradientBounds(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
@@ -747,8 +709,6 @@ class Shape {
   }
 
   /**
-   * Function: updateTransform
-   *
    * Sets the scale and rotation on the given canvas.
    */
   updateTransform(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
@@ -760,8 +720,6 @@ class Shape {
   }
 
   /**
-   * Function: paintVertexShape
-   *
    * Paints the vertex shape.
    */
   paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
@@ -774,8 +732,6 @@ class Shape {
   }
 
   /**
-   * Function: paintBackground
-   *
    * Hook for subclassers. This implementation is empty.
    */
   paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {}
@@ -786,15 +742,11 @@ class Shape {
   paintForeground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {}
 
   /**
-   * Function: paintEdgeShape
-   *
    * Hook for subclassers. This implementation is empty.
    */
   paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {}
 
   /**
-   * Function: getArcSize
-   *
    * Returns the arc size for the given dimension.
    */
   getArcSize(w: number, h: number) {
@@ -810,8 +762,6 @@ class Shape {
   }
 
   /**
-   * Function: paintGlassEffect
-   *
    * Paints the glass gradient effect.
    */
   paintGlassEffect(
@@ -848,8 +798,6 @@ class Shape {
   }
 
   /**
-   * Function: addPoints
-   *
    * Paints the given points with rounded corners.
    */
   addPoints(
@@ -943,8 +891,6 @@ class Shape {
   }
 
   /**
-   * Function: resetStyles
-   *
    * Resets all styles.
    */
   resetStyles() {
@@ -969,8 +915,6 @@ class Shape {
   }
 
   /**
-   * Function: apply
-   *
    * Applies the style of the given <CellState> to the shape. This
    * implementation assigns the following styles to local fields:
    *
@@ -1040,8 +984,6 @@ class Shape {
   }
 
   /**
-   * Function: setCursor
-   *
    * Sets the cursor on the given shape.
    *
    * Parameters:
@@ -1054,8 +996,6 @@ class Shape {
   }
 
   /**
-   * Function: getCursor
-   *
    * Returns the current cursor.
    */
   getCursor() {
@@ -1070,8 +1010,6 @@ class Shape {
   }
 
   /**
-   * Function: updateBoundingBox
-   *
    * Updates the <boundingBox> for this shape using <createBoundingBox> and
    * <augmentBoundingBox> and stores the result in <boundingBox>.
    */
@@ -1112,8 +1050,6 @@ class Shape {
   }
 
   /**
-   * Function: createBoundingBox
-   *
    * Returns a new rectangle that represents the bounding box of the bare shape
    * with no shadows or strokewidths.
    */
@@ -1146,8 +1082,6 @@ class Shape {
   }
 
   /**
-   * Function: isPaintBoundsInverted
-   *
    * Returns true if the bounds should be inverted.
    */
   isPaintBoundsInverted() {
@@ -1159,8 +1093,6 @@ class Shape {
   }
 
   /**
-   * Function: getRotation
-   *
    * Returns the rotation from the style.
    */
   getRotation() {
@@ -1168,8 +1100,6 @@ class Shape {
   }
 
   /**
-   * Function: getTextRotation
-   *
    * Returns the rotation for the text label.
    */
   getTextRotation() {
@@ -1183,8 +1113,6 @@ class Shape {
   }
 
   /**
-   * Function: getShapeRotation
-   *
    * Returns the actual rotation of the shape.
    */
   getShapeRotation() {
@@ -1202,8 +1130,6 @@ class Shape {
   }
 
   /**
-   * Function: createTransparentSvgRectangle
-   *
    * Adds a transparent rectangle that catches all events.
    */
   createTransparentSvgRectangle(x: number, y: number, w: number, h: number) {
@@ -1221,8 +1147,6 @@ class Shape {
   redrawHtmlShape() {}
 
   /**
-   * Function: setTransparentBackgroundImage
-   *
    * Sets a transparent background CSS style to catch all events.
    *
    * Paints the line shape.
@@ -1232,8 +1156,6 @@ class Shape {
   }
 
   /**
-   * Function: releaseSvgGradients
-   *
    * Paints the line shape.
    */
   releaseSvgGradients(grads: GradientMap) {
@@ -1251,8 +1173,6 @@ class Shape {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the shape by removing it from the DOM and releasing the DOM
    * node associated with the shape using <mxEvent.release>.
    */

@@ -21,8 +21,6 @@ import CellArray from '../../cell/CellArray';
 import { Geometry } from 'src';
 
 /**
- * Class: mxSwimlaneLayout
- *
  * A hierarchical layout algorithm.
  *
  * Constructor: mxSwimlaneLayout
@@ -166,8 +164,6 @@ class SwimlaneLayout extends GraphLayout {
   edgeStyle = HierarchicalEdgeStyle.POLYLINE;
 
   /**
-   * Function: getModel
-   *
    * Returns the internal <mxSwimlaneModel> for this layout algorithm.
    */
   getModel() {
@@ -175,8 +171,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: execute
-   *
    * Executes the layout for the children of the specified parent.
    *
    * Parameters:
@@ -272,8 +266,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: updateGroupBounds
-   *
    * Updates the bounds of the given array of groups so that it includes
    * all child vertices.
    *
@@ -352,8 +344,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: findRoots
-   *
    * Returns all visible children in the given parent which do not have
    * incoming edges. If the result is empty then the children with the
    * maximum difference between incoming and outgoing edges are returned.
@@ -423,8 +413,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: getEdges
-   *
    * Returns the connected edges for the given cell.
    *
    * Parameters:
@@ -484,8 +472,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: getVisibleTerminal
-   *
    * Helper function to return visible terminal for edge allowing for ports
    *
    * Parameters:
@@ -530,8 +516,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: run
-   *
    * The API method used to exercise the layout upon the graph description
    * and produce a separate description of the vertex position and edge
    * routing changes made. It runs each stage of the layout that has been
@@ -642,8 +626,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: filterDescendants
-   *
    * Creates an array of descendant cells
    */
   filterDescendants(cell: Cell, result: { [key: string]: Cell }) {
@@ -674,8 +656,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: isPort
-   *
    * Returns true if the given cell is a "port", that is, when connecting to
    * it, its parent is the connecting vertex in terms of graph traversal
    *
@@ -691,8 +671,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: getEdgesBetween
-   *
    * Returns the edges between the given source and target. This takes into
    * account collapsed and invisible cells and ports.
    *
@@ -834,8 +812,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: cycleStage
-   *
    * Executes the cycle stage using mxMinimumCycleRemover.
    */
   cycleStage(parent: Cell) {
@@ -844,8 +820,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: layeringStage
-   *
    * Implements first stage of a Sugiyama layout.
    */
   layeringStage(): void {
@@ -854,8 +828,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: crossingStage
-   *
    * Executes the crossing stage using mxMedianHybridCrossingReduction.
    */
   crossingStage(parent: Cell): void {
@@ -864,8 +836,6 @@ class SwimlaneLayout extends GraphLayout {
   }
 
   /**
-   * Function: placementStage
-   *
    * Executes the placement stage using mxCoordinateAssignment.
    */
   placementStage(initialX: number, parent: Cell): number {

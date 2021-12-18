@@ -10,8 +10,6 @@ import TerminalChange from './TerminalChange';
 import CodecRegistry from '../../util/serialization/CodecRegistry';
 
 /**
- * Class: TerminalChangeCodec
- *
  * Codec for <mxTerminalChange>s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec> and
  * the <CodecRegistry>.

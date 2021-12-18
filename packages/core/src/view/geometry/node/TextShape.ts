@@ -189,8 +189,6 @@ class TextShape extends Shape {
   cacheEnabled = true;
 
   /**
-   * Function: getSvgScreenOffset
-   *
    * Disables offset in IE9 for crisper image output.
    */
   getSvgScreenOffset() {
@@ -198,8 +196,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: checkBounds
-   *
    * Returns true if the bounds are not null and all of its variables are numeric.
    */
   checkBounds() {
@@ -216,8 +212,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: paint
-   *
    * Generic rendering code.
    */
   paint(c: AbstractCanvas2D, update = false): void {
@@ -297,8 +291,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: redraw
-   *
    * Renders the text using the given DOM nodes.
    */
   redraw(): void {
@@ -336,8 +328,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: resetStyles
-   *
    * Resets all styles.
    */
   resetStyles(): void {
@@ -362,8 +352,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: apply
-   *
    * Extends mxShape to update the text styles.
    *
    * Parameters:
@@ -403,8 +391,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: getAutoDirection
-   *
    * Used to determine the automatic text direction. Returns
    * <mxConstants.TEXT_DIRECTION_LTR> or <mxConstants.TEXT_DIRECTION_RTL>
    * depending on the contents of <value>. This is not invoked for HTML, wrapped
@@ -423,8 +409,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: getContentNode
-   *
    * Returns the node that contains the rendered input.
    */
   getContentNode() {
@@ -446,8 +430,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: updateBoundingBox
-   *
    * Updates the <boundingBox> for this shape using the given node and position.
    */
   updateBoundingBox() {
@@ -546,8 +528,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: getShapeRotation
-   *
    * Returns 0 to avoid using rotation in the canvas via updateTransform.
    */
   getShapeRotation() {
@@ -555,8 +535,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: getTextRotation
-   *
    * Returns the rotation for the text label of the corresponding shape.
    */
   getTextRotation() {
@@ -564,8 +542,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: isPaintBoundsInverted
-   *
    * Inverts the bounds if <mxShape.isBoundsInverted> returns true or if the
    * horizontal style is false.
    */
@@ -574,8 +550,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: configureCanvas
-   *
    * Sets the state of the canvas for drawing the shape.
    */
   configureCanvas(c: AbstractCanvas2D, x: number, y: number, w: number, h: number): void {
@@ -590,8 +564,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: getHtmlValue
-   *
    * Private helper function to create SVG elements
    */
   getHtmlValue() {
@@ -610,8 +582,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: getTextCss
-   *
    * Private helper function to create SVG elements
    */
   getTextCss() {
@@ -649,8 +619,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: redrawHtmlShape
-   *
    * Updates the HTML node(s) to reflect the latest bounds and scale.
    */
   redrawHtmlShape() {
@@ -731,8 +699,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: setInnerHtml
-   *
    * Sets the inner HTML of the given element to the <value>.
    */
   updateInnerHtml(elt: HTMLElement) {
@@ -757,8 +723,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: updateValue
-   *
    * Updates the HTML node(s) to reflect the latest bounds and scale.
    */
   updateValue() {
@@ -830,8 +794,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: updateFont
-   *
    * Updates the HTML node(s) to reflect the latest bounds and scale.
    */
   updateFont(node: HTMLElement | SVGGElement) {
@@ -880,8 +842,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: updateSize
-   *
    * Updates the HTML node(s) to reflect the latest bounds and scale.
    */
   updateSize(node: HTMLElement, enableWrap = false) {
@@ -949,8 +909,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: getMargin
-   *
    * Returns the spacing as an <mxPoint>.
    */
   updateMargin() {
@@ -958,8 +916,6 @@ class TextShape extends Shape {
   }
 
   /**
-   * Function: getSpacing
-   *
    * Returns the spacing as an <mxPoint>.
    */
   getSpacing() {

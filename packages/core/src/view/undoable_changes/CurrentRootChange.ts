@@ -7,8 +7,6 @@ import InternalEvent from '../event/InternalEvent';
 import type { UndoableChange } from '../../types';
 
 /**
- * Class: mxCurrentRootChange
- *
  * Action to change the current root in a view.
  */
 class CurrentRootChange implements UndoableChange {

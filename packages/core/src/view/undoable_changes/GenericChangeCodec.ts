@@ -16,8 +16,6 @@ import CodecRegistry from '../../util/serialization/CodecRegistry';
 import { isNode } from '../../util/dom/domUtils';
 
 /**
- * Class: GenericChangeCodec
- *
  * Codec for <mxValueChange>s, <mxStyleChange>s, <mxGeometryChange>s,
  * <mxCollapseChange>s and <mxVisibleChange>s. This class is created
  * and registered dynamically at load time and used implicitly

@@ -49,8 +49,6 @@ import CellArray from '../cell/CellArray';
 import TooltipHandler from './TooltipHandler';
 
 /**
- * Class: mxCellEditor
- *
  * In-place editor for the graph. To control this editor, use
  * <mxGraph.invokesStopCellEditing>, <mxGraph.enterStopsCellEditing> and
  * <mxGraph.escapeEnabled>. If <mxGraph.enterStopsCellEditing> is true then
@@ -298,8 +296,6 @@ class CellEditor implements GraphPlugin {
   align: string | null = null;
 
   /**
-   * Function: init
-   *
    * Creates the <textarea> and installs the event listeners. The key handler
    * updates the <modified> state.
    */
@@ -318,8 +314,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: applyValue
-   *
    * Called in <stopEditing> if cancel is false to invoke <mxGraph.labelChanged>.
    */
   // applyValue(state: CellState, value: string): void;
@@ -328,8 +322,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: setAlign
-   *
    * Sets the temporary horizontal alignment for the current editing session.
    */
   setAlign(align: string) {
@@ -342,8 +334,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: getInitialValue
-   *
    * Gets the initial editing value for the given cell.
    */
   getInitialValue(state: CellState, trigger: MouseEvent | null) {
@@ -353,8 +343,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: getCurrentValue
-   *
    * Returns the current editing value.
    */
   getCurrentValue(state: CellState) {
@@ -364,8 +352,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: isCancelEditingKeyEvent
-   *
    * Returns true if <escapeCancelsEditing> is true and shift, control and meta
    * are not pressed.
    */
@@ -380,8 +366,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: installListeners
-   *
    * Installs listeners for focus, change and standard key event handling.
    */
   // installListeners(elt: Element): void;
@@ -480,8 +464,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: isStopEditingEvent
-   *
    * Returns true if the given keydown event should stop cell editing. This
    * returns true if F2 is pressed of if <mxGraph.enterStopsCellEditing> is true
    * and enter is pressed without control or shift.
@@ -497,8 +479,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: isEventSource
-   *
    * Returns true if this editor is the source for the given native event.
    */
   isEventSource(evt: MouseEvent) {
@@ -506,8 +486,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: resize
-   *
    * Returns <modified>.
    */
   resize() {
@@ -697,8 +675,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: focusLost
-   *
    * Called if the textarea has lost focus.
    */
   focusLost() {
@@ -706,8 +682,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: getBackgroundColor
-   *
    * Returns the background color for the in-place editor. This implementation
    * always returns NONE.
    */
@@ -716,8 +690,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: startEditing
-   *
    * Starts the editor for the given cell.
    *
    * Parameters:
@@ -853,8 +825,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: isSelectText
-   *
    * Returns <selectText>.
    */
   isSelectText() {
@@ -862,8 +832,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: clearSelection
-   */
   clearSelection() {
     const selection = window.getSelection();
 
@@ -877,8 +845,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: stopEditing
-   *
    * Stops the editor and applies the value if cancel is false.
    */
   stopEditing(cancel: boolean = false) {
@@ -935,8 +901,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: prepareTextarea
-   *
    * Prepares the textarea for getting its value in <stopEditing>.
    * This implementation removes the extra trailing linefeed in Firefox.
    */
@@ -948,8 +912,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: isHideLabel
-   *
    * Returns true if the label should be hidden while the cell is being
    * edited.
    */
@@ -958,8 +920,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: getMinimumSize
-   *
    * Returns the minimum width and height for editing the given state.
    */
   getMinimumSize(state: CellState) {
@@ -975,8 +935,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: getEditorBounds
-   *
    * Returns the <mxRectangle> that defines the bounds of the editor.
    */
   getEditorBounds(state: CellState) {
@@ -1091,8 +1049,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: getEmptyLabelText
-   *
    * Returns the initial label value to be used of the label of the given
    * cell is empty. This label is displayed and cleared on the first keystroke.
    * This implementation returns <emptyLabelText>.
@@ -1107,8 +1063,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: getEditingCell
-   *
    * Returns the cell that is currently being edited or null if no cell is
    * being edited.
    */
@@ -1117,8 +1071,6 @@ class CellEditor implements GraphPlugin {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the editor and removes all associated resources.
    */
   onDestroy() {

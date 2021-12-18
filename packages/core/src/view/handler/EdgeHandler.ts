@@ -339,8 +339,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isParentHighlightVisible
-   *
    * Returns true if the parent highlight should be visible. This implementation
    * always returns true.
    */
@@ -350,8 +348,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: updateParentHighlight
-   *
    * Updates the highlight of the parent if <parentHighlightEnabled> is true.
    */
   updateParentHighlight() {
@@ -401,8 +397,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: createCustomHandles
-   *
    * Returns an array of custom handles. This implementation returns an empty array.
    */
   createCustomHandles(): CellHandle[] {
@@ -410,8 +404,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isVirtualBendsEnabled
-   *
    * Returns true if virtual bends should be added. This returns true if
    * <virtualBendsEnabled> is true and the current style allows and
    * renders custom waypoints.
@@ -427,8 +419,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isCellEnabled
-   *
    * Returns true if the given cell allows new connections to be created. This implementation
    * always returns true.
    */
@@ -437,8 +427,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isAddPointEvent
-   *
    * Returns true if the given event is a trigger to add a new Point. This
    * implementation returns true if shift is pressed.
    */
@@ -447,8 +435,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isRemovePointEvent
-   *
    * Returns true if the given event is a trigger to remove a point. This
    * implementation returns true if shift is pressed.
    */
@@ -457,8 +443,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getSelectionPoints
-   *
    * Returns the list of points that defines the selection stroke.
    */
   getSelectionPoints(state: CellState) {
@@ -466,8 +450,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: createSelectionShape
-   *
    * Creates the shape used to draw the selection border.
    */
   createParentHighlightShape(bounds: Rectangle) {
@@ -483,8 +465,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: createSelectionShape
-   *
    * Creates the shape used to draw the selection border.
    */
   createSelectionShape(points: (Point | null)[]) {
@@ -502,8 +482,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getSelectionColor
-   *
    * Returns <mxConstants.EDGE_SELECTION_COLOR>.
    */
   getSelectionColor() {
@@ -511,8 +489,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getSelectionStrokeWidth
-   *
    * Returns <mxConstants.EDGE_SELECTION_STROKEWIDTH>.
    */
   getSelectionStrokeWidth() {
@@ -520,8 +496,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isSelectionDashed
-   *
    * Returns <mxConstants.EDGE_SELECTION_DASHED>.
    */
   isSelectionDashed() {
@@ -529,8 +503,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isConnectableCell
-   *
    * Returns true if the given cell is connectable. This is a hook to
    * disable floating connections. This implementation returns true.
    */
@@ -539,8 +511,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getCellAt
-   *
    * Creates and returns the <mxCellMarker> used in <marker>.
    */
   getCellAt(x: number, y: number) {
@@ -548,8 +518,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: createMarker
-   *
    * Creates and returns the <mxCellMarker> used in <marker>.
    */
   createMarker() {
@@ -620,8 +588,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: validateConnection
-   *
    * Returns the error message or an empty string if the connection for the
    * given source, target pair is not valid. Otherwise it returns null. This
    * implementation uses <mxGraph.getEdgeValidationError>.
@@ -636,8 +602,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: createBends
-   *
    * Creates and returns the bends used for modifying the edge. This is
    * typically an array of <mxRectangleShapes>.
    */
@@ -679,8 +643,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: createVirtualBends
-   *
    * Creates and returns the bends used for modifying the edge. This is
    * typically an array of <mxRectangleShapes>.
    */
@@ -704,8 +666,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isHandleEnabled
-   *
    * Creates the shape used to display the given bend.
    */
   isHandleEnabled(index: number) {
@@ -713,8 +673,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isHandleVisible
-   *
    * Returns true if the handle at the given index is visible.
    */
   isHandleVisible(index: number) {
@@ -733,8 +691,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: createHandleShape
-   *
    * Creates the shape used to display the given bend. Note that the index may be
    * null for special cases, such as when called from
    * <mxElbowEdgeHandler.createVirtualBend>. Only images and rectangles should be
@@ -767,8 +723,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: createLabelHandleShape
-   *
    * Creates the shape used to display the the label handle.
    */
   createLabelHandleShape() {
@@ -792,8 +746,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: initBend
-   *
    * Helper method to initialize the given bend.
    *
    * Parameters:
@@ -825,8 +777,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getHandleForEvent
-   *
    * Returns the index of the handle for the given event.
    */
   getHandleForEvent(me: InternalMouseEvent) {
@@ -895,8 +845,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isAddVirtualBendEvent
-   *
    * Returns true if the given event allows virtual bends to be added. This
    * implementation returns true.
    */
@@ -906,8 +854,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isCustomHandleEvent
-   *
    * Returns true if the given event allows custom handles to be changed. This
    * implementation returns true.
    */
@@ -916,8 +862,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: mouseDown
-   *
    * Handles the event by checking if a special element of the handler
    * was clicked, in which case the index parameter is non-null. The
    * indices may be one of <LABEL_HANDLE> or the number of the respective
@@ -957,8 +901,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: start
-   *
    * Starts the handling of the mouse gesture.
    */
   start(x: number, y: number, index: number) {
@@ -1001,8 +943,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: clonePreviewState
-   *
    * Returns a clone of the current preview state for the given point and terminal.
    */
   clonePreviewState(point: Point, terminal: Cell | null) {
@@ -1010,8 +950,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getSnapToTerminalTolerance
-   *
    * Returns the tolerance for the guides. Default value is
    * gridSize * scale / 2.
    */
@@ -1020,23 +958,17 @@ class EdgeHandler {
   }
 
   /**
-   * Function: updateHint
-   *
    * Hook for subclassers do show details while the handler is active.
    */
 
   updateHint(me: InternalMouseEvent, point: Point) {}
 
   /**
-   * Function: removeHint
-   *
    * Hooks for subclassers to hide details when the handler gets inactive.
    */
   removeHint() {}
 
   /**
-   * Function: roundLength
-   *
    * Hook for rounding the unscaled width or height. This uses Math.round.
    */
   roundLength(length: number) {
@@ -1044,8 +976,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isSnapToTerminalsEvent
-   *
    * Returns true if <snapToTerminals> is true and if alt is not pressed.
    */
   isSnapToTerminalsEvent(me: InternalMouseEvent) {
@@ -1053,8 +983,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getPointForEvent
-   *
    * Returns the point for the given event.
    */
   // getPointForEvent(me: mxMouseEvent): mxPoint;
@@ -1120,8 +1048,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getPreviewTerminalState
-   *
    * Updates the given preview state taking into account the state of the constraint handler.
    */
   getPreviewTerminalState(me: InternalMouseEvent) {
@@ -1192,8 +1118,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getPreviewPoints
-   *
    * Updates the given preview state taking into account the state of the constraint handler.
    *
    * Parameters:
@@ -1306,8 +1230,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isOutlineConnectEvent
-   *
    * Returns true if <outlineConnect> is true and the source of the event is the outline shape
    * or shift is pressed.
    */
@@ -1340,8 +1262,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: updatePreviewState
-   *
    * Updates the given preview state taking into account the state of the constraint handler.
    */
   updatePreviewState(
@@ -1467,8 +1387,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: mouseMove
-   *
    * Handles the event by updating the preview.
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
@@ -1576,8 +1494,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Handles the event to applying the previewed changes on the edge by
    * using <moveLabel>, <connect> or <changePoints>.
    */
@@ -1726,8 +1642,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: reset
-   *
    * Resets the state of this handler.
    */
   reset() {
@@ -1760,8 +1674,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: setPreviewColor
-   *
    * Sets the color of the preview to the given value.
    */
   setPreviewColor(color: ColorValue) {
@@ -1769,8 +1681,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: convertPoint
-   *
    * Converts the given point in-place from screen to unscaled, untranslated
    * graph coordinates and applies the grid. Returns the given, modified
    * point instance.
@@ -1804,8 +1714,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: moveLabel
-   *
    * Changes the coordinates for the label of the given edge.
    *
    * Parameters:
@@ -1859,8 +1767,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: connect
-   *
    * Changes the terminal or terminal point of the given edge in the graph
    * model.
    *
@@ -1901,8 +1807,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: changeTerminalPoint
-   *
    * Changes the terminal point of the given edge.
    */
   changeTerminalPoint(edge: Cell, point: Point, isSource: boolean, clone: boolean) {
@@ -1934,8 +1838,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: changePoints
-   *
    * Changes the control points of the given edge in the graph model.
    */
   changePoints(edge: Cell, points: Point[], clone: boolean) {
@@ -1968,8 +1870,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: addPoint
-   *
    * Adds a control point for the given state and event.
    */
   addPoint(state: CellState, evt: MouseEvent) {
@@ -1981,8 +1881,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: addPointAt
-   *
    * Adds a control point at the given point.
    */
   addPointAt(state: CellState, x: number, y: number) {
@@ -2018,8 +1916,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: removePoint
-   *
    * Removes the control point at the given index from the given state.
    */
   removePoint(state: CellState, index: number) {
@@ -2037,8 +1933,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: getHandleFillColor
-   *
    * Returns the fillcolor for the handle at the given index.
    */
   getHandleFillColor(index: number) {
@@ -2063,8 +1957,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: redraw
-   *
    * Redraws the preview, and the bends- and label control points.
    */
   redraw(ignoreHandles?: boolean) {
@@ -2097,8 +1989,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: redrawHandles
-   *
    * Redraws the handles.
    */
   redrawHandles() {
@@ -2213,8 +2103,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isCustomHandleVisible
-   *
    * Returns true if the given custom handle is visible.
    */
   isCustomHandleVisible(handle: CellHandle) {
@@ -2222,8 +2110,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: hideHandles
-   *
    * Shortcut to <hideSizers>.
    */
   setHandlesVisible(visible: boolean) {
@@ -2243,8 +2129,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: redrawInnerBends
-   *
    * Updates and redraws the inner bends.
    *
    * Parameters:
@@ -2297,8 +2181,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: checkLabelHandle
-   *
    * Checks if the label handle intersects the given bounds and moves it if it
    * intersects.
    */
@@ -2315,8 +2197,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: drawPreview
-   *
    * Redraws the preview.
    */
   drawPreview() {
@@ -2355,8 +2235,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: refresh
-   *
    * Refreshes the bends of this handler.
    */
   refresh() {
@@ -2385,8 +2263,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: isDestroyed
-   *
    * Returns true if <destroy> was called.
    */
   isDestroyed() {
@@ -2394,8 +2270,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: destroyBends
-   *
    * Destroys all elements in <bends>.
    */
   destroyBends(bends: Shape[] | CellHandle[]) {
@@ -2409,8 +2283,6 @@ class EdgeHandler {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes. This does
    * normally not need to be called as handlers are destroyed automatically
    * when the corresponding cell is deselected.

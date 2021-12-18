@@ -16,8 +16,6 @@ import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';
 
 /**
- * Class: mxPopupMenuHandler
- *
  * Event handler that creates popupmenus.
  *
  * Constructor: mxPopupMenuHandler

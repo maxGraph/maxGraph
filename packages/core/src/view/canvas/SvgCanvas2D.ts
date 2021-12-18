@@ -402,8 +402,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Function: getAlternateText
-   *
    * Returns the alternate text string for the given foreignObject.
    */
   getAlternateText(
@@ -425,8 +423,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Function: getAlternateContent
-   *
    * Returns the alternate content for the given foreignObject.
    */
   createAlternateContent(
@@ -1031,8 +1027,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Function: image
-   *
    * Private helper function to create SVG elements
    */
   image(
@@ -1210,8 +1204,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Function: addForeignObject
-   *
    * Creates a foreignObject for the given string and adds it to the given root.
    */
   addForeignObject(
@@ -1437,8 +1429,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Function: text
-   *
    * Paints the given text. Possible values for format are empty string for plain
    * text and html for HTML markup. Note that HTML markup is only supported if
    * foreignObject is supported and <foEnabled> is true. (This means IE9 and later
@@ -1544,8 +1534,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Function: plainText
-   *
    * Paints the given text. Possible values for format are empty string for
    * plain text and html for HTML markup.
    */
@@ -1746,8 +1734,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Function: addTextBackground
-   *
    * Background color and border
    */
   addTextBackground(

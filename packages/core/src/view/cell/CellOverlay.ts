@@ -12,8 +12,6 @@ import ImageBox from '../image/ImageBox';
 import CellState from './CellState';
 
 /**
- * Class: CellOverlay
- *
  * Extends <mxEventSource> to implement a graph overlay, represented by an icon
  * and a tooltip. Overlays can handle and fire <click> events and are added to
  * the graph using <mxGraph.addCellOverlay>, and removed using

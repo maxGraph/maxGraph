@@ -21,8 +21,6 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   points: Point[] = [];
 
   /**
-   * Function: getCurrentPoints
-   *
    * Returns the current absolute points.
    */
   getCurrentPoints() {
@@ -50,8 +48,6 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   }
 
   /**
-   * Function: getPreviewPoints
-   *
    * Updates the given preview state taking into account the state of the constraint handler.
    */
   getPreviewPoints(point: Point) {
@@ -107,8 +103,6 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   }
 
   /**
-   * Function: updatePreviewState
-   *
    * Overridden to perform optimization of the edge style result.
    */
   updatePreviewState(
@@ -269,8 +263,6 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   }
 
   /**
-   * Function: getTooltipForNode
-   *
    * Returns no tooltips.
    */
   getTooltipForNode(node: Element): string | null {
@@ -278,8 +270,6 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   }
 
   /**
-   * Function: createBends
-   *
    * Adds custom bends for the center of each segment.
    */
   start(x: number, y: number, index: number) {
@@ -296,8 +286,6 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   }
 
   /**
-   * Function: createBends
-   *
    * Adds custom bends for the center of each segment.
    */
   createBends() {
@@ -342,8 +330,6 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   }
 
   /**
-   * Function: redraw
-   *
    * Overridden to invoke <refresh> before the redraw.
    */
   redraw() {
@@ -352,8 +338,6 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   }
 
   /**
-   * Function: redrawInnerBends
-   *
    * Updates the position of the custom bends.
    */
   redrawInnerBends(p0: Point, pe: Point) {

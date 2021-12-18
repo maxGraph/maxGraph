@@ -13,8 +13,6 @@ import { removeWhitespace } from '../../util/stringUtils';
 import { importNode } from '../../util/domUtils';
 
 /**
- * Class: CellCodec
- *
  * Codec for <Cell>s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec>
  * and the <CodecRegistry>.
@@ -61,8 +59,6 @@ class CellCodec extends ObjectCodec {
   }
 
   /**
-   * Function: isCellCodec
-   *
    * Returns true since this is a cell codec.
    */
   isCellCodec() {
@@ -79,8 +75,6 @@ class CellCodec extends ObjectCodec {
   }
 
   /**
-   * Function: isExcluded
-   *
    * Excludes user objects that are XML nodes.
    */
   isExcluded(obj, attr, value, isWrite) {
@@ -91,8 +85,6 @@ class CellCodec extends ObjectCodec {
   }
 
   /**
-   * Function: afterEncode
-   *
    * Encodes an <Cell> and wraps the XML up inside the
    * XML of the user object (inversion).
    */
@@ -116,8 +108,6 @@ class CellCodec extends ObjectCodec {
   }
 
   /**
-   * Function: beforeDecode
-   *
    * Decodes an <Cell> and uses the enclosing XML node as
    * the user object for the cell (inversion).
    */

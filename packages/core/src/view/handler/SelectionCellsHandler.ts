@@ -18,8 +18,6 @@ import VertexHandler from './VertexHandler';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 
 /**
- * Class: mxSelectionCellsHandler
- *
  * An event handler that manages cell handlers and invokes their mouse event
  * processing functions.
  *
@@ -92,8 +90,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   handlers: Dictionary<Cell, EdgeHandler | VertexHandler>;
 
   /**
-   * Function: isEnabled
-   *
    * Returns <enabled>.
    */
   isEnabled() {
@@ -101,8 +97,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: setEnabled
-   *
    * Sets <enabled>.
    */
   setEnabled(value: boolean) {
@@ -110,8 +104,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: getHandler
-   *
    * Returns the handler for the given cell.
    */
   getHandler(cell: Cell) {
@@ -119,8 +111,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isHandled
-   *
    * Returns true if the given cell has a handler.
    */
   isHandled(cell: Cell) {
@@ -128,8 +118,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: reset
-   *
    * Resets all handlers.
    */
   reset() {
@@ -139,8 +127,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: getHandledSelectionCells
-   *
    * Reloads or updates all handlers.
    */
   getHandledSelectionCells() {
@@ -148,8 +134,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: refresh
-   *
    * Reloads or updates all handlers.
    */
   refresh() {
@@ -210,8 +194,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: isHandlerActive
-   *
    * Returns true if the given handler is active and should not be redrawn.
    */
   isHandlerActive(handler: EdgeHandler | VertexHandler) {
@@ -219,8 +201,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: updateHandler
-   *
    * Updates the handler for the given shape if one exists.
    */
   updateHandler(state: CellState) {
@@ -246,8 +226,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseDown
-   *
    * Redirects the given event to the handlers.
    */
   mouseDown(sender: EventSource, me: InternalMouseEvent) {
@@ -259,8 +237,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseMove
-   *
    * Redirects the given event to the handlers.
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
@@ -272,8 +248,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Redirects the given event to the handlers.
    */
   mouseUp(sender: EventSource, me: InternalMouseEvent) {
@@ -285,8 +259,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes.
    */
   onDestroy() {

@@ -7,8 +7,6 @@
 
 /**
  *
- * Class: UrlConverter
- *
  * Converts relative and absolute URLs to absolute URLs with protocol and domain.
  */
 class UrlConverter {
@@ -32,8 +30,6 @@ class UrlConverter {
   baseDomain: string | null = null;
 
   /**
-   * Function: updateBaseUrl
-   *
    * Private helper function to update the base URL.
    */
   updateBaseUrl() {
@@ -48,8 +44,6 @@ class UrlConverter {
   }
 
   /**
-   * Function: isEnabled
-   *
    * Returns <enabled>.
    */
   isEnabled() {
@@ -57,8 +51,6 @@ class UrlConverter {
   }
 
   /**
-   * Function: setEnabled
-   *
    * Sets <enabled>.
    */
   setEnabled(value: boolean) {
@@ -66,8 +58,6 @@ class UrlConverter {
   }
 
   /**
-   * Function: getBaseUrl
-   *
    * Returns <baseUrl>.
    */
   getBaseUrl() {
@@ -75,8 +65,6 @@ class UrlConverter {
   }
 
   /**
-   * Function: setBaseUrl
-   *
    * Sets <baseUrl>.
    */
   setBaseUrl(value: string) {
@@ -84,8 +72,6 @@ class UrlConverter {
   }
 
   /**
-   * Function: getBaseDomain
-   *
    * Returns <baseDomain>.
    */
   getBaseDomain() {
@@ -93,8 +79,6 @@ class UrlConverter {
   }
 
   /**
-   * Function: setBaseDomain
-   *
    * Sets <baseDomain>.
    */
   setBaseDomain(value: string) {
@@ -102,8 +86,6 @@ class UrlConverter {
   }
 
   /**
-   * Function: isRelativeUrl
-   *
    * Returns true if the given URL is relative.
    */
   isRelativeUrl(url: string) {
@@ -118,8 +100,6 @@ class UrlConverter {
   }
 
   /**
-   * Function: convert
-   *
    * Converts the given URL to an absolute URL with protol and domain.
    * Relative URLs are first converted to absolute URLs.
    */

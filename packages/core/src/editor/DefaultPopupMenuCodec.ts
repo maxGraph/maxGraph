@@ -10,8 +10,6 @@ import CodecRegistry from '../util/serialization/CodecRegistry';
 import ObjectCodec from '../util/serialization/ObjectCodec';
 
 /**
- * Class: DefaultPopupMenuCodec
- *
  * Custom codec for configuring <DefaultPopupMenu>s. This class is created
  * and registered dynamically at load time and used implicitly via
  * <Codec> and the <CodecRegistry>. This codec only reads configuration

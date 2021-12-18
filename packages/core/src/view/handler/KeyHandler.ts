@@ -11,8 +11,6 @@ import { isAncestorNode } from '../../util/domUtils';
 import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isShiftDown } from '../../util/eventUtils';
 
 /**
- * Class: mxKeyHandler
- *
  * Event handler that listens to keystroke events. This is not a singleton,
  * however, it is normally only required once if the target is the document
  * element (default).
@@ -125,8 +123,6 @@ class KeyHandler {
   enabled = true;
 
   /**
-   * Function: isEnabled
-   *
    * Returns true if events are handled. This implementation returns
    * <enabled>.
    */
@@ -135,8 +131,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: setEnabled
-   *
    * Enables or disables event handling by updating <enabled>.
    *
    * Parameters:
@@ -148,8 +142,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: bindKey
-   *
    * Binds the specified keycode to the given function. This binding is used
    * if the control key is not pressed.
    *
@@ -163,8 +155,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: bindShiftKey
-   *
    * Binds the specified keycode to the given function. This binding is used
    * if the shift key is pressed.
    *
@@ -178,8 +168,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: bindControlKey
-   *
    * Binds the specified keycode to the given function. This binding is used
    * if the control key is pressed.
    *
@@ -193,8 +181,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: bindControlShiftKey
-   *
    * Binds the specified keycode to the given function. This binding is used
    * if the control and shift key are pressed.
    *
@@ -208,8 +194,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: isControlDown
-   *
    * Returns true if the control key is pressed. This uses <mxEvent.isControlDown>.
    *
    * Parameters:
@@ -221,8 +205,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: getFunction
-   *
    * Returns the function associated with the given key event or null if no
    * function is associated with the given event.
    *
@@ -248,8 +230,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: isGraphEvent
-   *
    * Returns true if the event should be processed by this handler, that is,
    * if the event source is either the target, one of its direct children, a
    * descendant of the <mxGraph.container>, or the <mxGraph.cellEditor> of the
@@ -278,8 +258,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: keyDown
-   *
    * Handles the event by invoking the function bound to the respective keystroke
    * if <isEnabledForEvent> returns true for the given event and if
    * <isEventIgnored> returns false, except for escape for which
@@ -309,8 +287,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: isEnabledForEvent
-   *
    * Returns true if the given event should be handled. <isEventIgnored> is
    * called later if the event is not an escape key stroke, in which case
    * <escape> is called. This implementation returns true if <isEnabled>
@@ -331,8 +307,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: isEventIgnored
-   *
    * Returns true if the given keystroke should be ignored. This returns
    * graph.isEditing().
    *
@@ -345,8 +319,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: escape
-   *
    * Hook to process ESCAPE keystrokes. This implementation invokes
    * <mxGraph.stopEditing> to cancel the current editing, connecting
    * and/or other ongoing modifications.
@@ -363,8 +335,6 @@ class KeyHandler {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its references into the DOM. This does
    * normally not need to be called, it is called automatically when the
    * window unloads (in IE).

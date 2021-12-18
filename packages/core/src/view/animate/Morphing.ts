@@ -14,8 +14,6 @@ import CellArray from '../cell/CellArray';
 
 /**
  *
- * Class: Morphing
- *
  * Implements animation for morphing cells. Here is an example of
  * using this class for animating the result of a layout algorithm:
  *
@@ -86,8 +84,6 @@ class Morphing extends Animation {
   cells: CellArray | null = null;
 
   /**
-   * Function: updateAnimation
-   *
    * Animation step.
    */
   updateAnimation() {
@@ -113,8 +109,6 @@ class Morphing extends Animation {
   }
 
   /**
-   * Function: show
-   *
    * Shows the changes in the given <CellStatePreview>.
    */
   show(move: CellStatePreview) {
@@ -122,8 +116,6 @@ class Morphing extends Animation {
   }
 
   /**
-   * Function: animateCell
-   *
    * Animates the given cell state using <CellStatePreview.moveState>.
    */
   animateCell(cell: Cell, move: CellStatePreview, recurse: boolean=false) {
@@ -163,8 +155,6 @@ class Morphing extends Animation {
   }
 
   /**
-   * Function: stopRecursion
-   *
    * Returns true if the animation should not recursively find more
    * deltas for children if the given parent state has been animated.
    */
@@ -173,8 +163,6 @@ class Morphing extends Animation {
   }
 
   /**
-   * Function: getDelta
-   *
    * Returns the vector between the current rendered state and the future
    * location of the state after the display will be updated.
    */
@@ -189,8 +177,6 @@ class Morphing extends Animation {
   }
 
   /**
-   * Function: getOriginForCell
-   *
    * Returns the top, left corner of the given cell. TODO: Improve performance
    * by using caching inside this method as the result per cell never changes
    * during the lifecycle of this object.

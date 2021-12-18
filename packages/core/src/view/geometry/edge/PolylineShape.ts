@@ -11,8 +11,6 @@ import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
 import { ColorValue } from '../../../types';
 
 /**
- * Class: mxPolyline
- *
  * Extends <mxShape> to implement a polyline (a line with multiple points).
  * This shape is registered under <mxConstants.SHAPE_POLYLINE> in
  * <mxCellRenderer>.

@@ -11,8 +11,6 @@ import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
 
 /**
- * Class: mxFastOrganicLayout
- *
  * Extends <mxGraphLayout> to implement a fast organic layout algorithm.
  * The vertices need to be connected for this layout to work, vertices
  * with no connections are ignored.
@@ -146,8 +144,6 @@ class MxFastOrganicLayout extends GraphLayout {
   allowedToRun = true;
 
   /**
-   * Function: isVertexIgnored
-   *
    * Returns a boolean indicating if the given <Cell> should be ignored as a
    * vertex. This returns true if the cell has no connections.
    *
@@ -162,8 +158,6 @@ class MxFastOrganicLayout extends GraphLayout {
   }
 
   /**
-   * Function: execute
-   *
    * Implements <mxGraphLayout.execute>. This operates on all children of the
    * given parent where <isVertexIgnored> returns false.
    */
@@ -345,8 +339,6 @@ class MxFastOrganicLayout extends GraphLayout {
   }
 
   /**
-   * Function: calcPositions
-   *
    * Takes the displacements calculated for each cell and applies them to the
    * local cache of cell positions. Limits the displacement to the current
    * temperature.
@@ -384,8 +376,6 @@ class MxFastOrganicLayout extends GraphLayout {
   }
 
   /**
-   * Function: calcAttraction
-   *
    * Calculates the attractive forces between all laid out nodes linked by
    * edges
    */
@@ -430,8 +420,6 @@ class MxFastOrganicLayout extends GraphLayout {
   }
 
   /**
-   * Function: calcRepulsion
-   *
    * Calculates the repulsive forces between all laid out nodes
    */
   calcRepulsion() {
@@ -485,8 +473,6 @@ class MxFastOrganicLayout extends GraphLayout {
   }
 
   /**
-   * Function: reduceTemperature
-   *
    * Reduces the temperature of the layout from an initial setting in a linear
    * fashion to zero.
    */

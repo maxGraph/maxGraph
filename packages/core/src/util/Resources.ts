@@ -7,8 +7,6 @@ import { NONE } from './constants';
 import { get, load } from './MaxXmlRequest';
 
 /**
- * Class: mxResources
- *
  * Implements internationalization. You can provide any number of
  * resource files on the server using the following format for the
  * filename: name[-en].properties. The en stands for any lowercase

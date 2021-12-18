@@ -105,8 +105,6 @@ class CellTracker extends CellMarker {
   mouseUp(sender: EventSource, me: InternalMouseEvent) {}
 
   /**
-   * Function: destroy
-   *
    * Destroys the object and all its resources and DOM nodes. This doesn't
    * normally need to be called. It is called automatically when the window
    * unloads.

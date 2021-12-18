@@ -22,8 +22,6 @@ class StyleChange implements UndoableChange {
   }
 
   /**
-   * Function: execute
-   *
    * Changes the style of {@link cell}` to {@link previous}` using
    * <Transactions.styleForCellChanged>.
    */

@@ -143,8 +143,6 @@ class Effects {
   }
 
   /**
-   * Function: fadeOut
-   *
    * Asynchronous fade-out operation.
    */
   static fadeOut(node: HTMLElement, from: number, remove: boolean, step: number, delay: number, isEnabled: boolean): void {

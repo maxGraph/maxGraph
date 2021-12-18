@@ -12,8 +12,6 @@ import HierarchicalLayout from '../HierarchicalLayout';
 import Cell from 'src/view/cell/Cell';
 
 /**
- * Class: SwimlaneOrdering
- *
  * An implementation of the first stage of the Sugiyama layout. Straightforward
  * longest path calculation of layer assignment
  *
@@ -34,8 +32,6 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
   layout: HierarchicalLayout;
 
   /**
-   * Function: execute
-   *
    * Takes the graph detail and configuration information within the facade
    * and creates the resulting laid out graph within that facade for further
    * use.

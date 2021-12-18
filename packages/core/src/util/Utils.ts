@@ -32,8 +32,6 @@ import { Graph } from 'src/view/Graph';
 import type { CellStateStyles, Properties, StyleValue } from '../types';
 
 /**
- * Class: mxUtils
- *
  * A singleton class that provides cross-browser helper methods.
  * This is a global functionality. To access the functions in this
  * class, use the global classname appended by the functionname.
@@ -57,8 +55,6 @@ const utils = {
   errorResource: 'error',
 
   /**
-   * Variable: closeResource
-   *
    * Specifies the resource key for the label of the close button. If the
    * resource for this key does not exist then the value is used as
    * the label. Default is 'close'.
@@ -66,8 +62,6 @@ const utils = {
   closeResource: 'close',
 
   /**
-   * Variable: errorImage
-   *
    * Defines the image used for error dialogs.
    */
   errorImage: '/error.gif', // Client.imageBasePath + '/error.gif',

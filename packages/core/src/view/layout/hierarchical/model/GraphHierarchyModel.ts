@@ -13,8 +13,6 @@ import Cell from '../../../cell/Cell';
 import CellArray from '../../../cell/CellArray';
 
 /**
- * Class: mxGraphHierarchyModel
- *
  * Internal model of a hierarchical graph. This model stores nodes and edges
  * equivalent to the real graph nodes and edges, but also stores the rank of the
  * cells, the order within the ranks and the new candidate locations of cells.
@@ -160,8 +158,6 @@ class GraphHierarchyModel {
   tightenToSource: boolean = false;
 
   /**
-   * Function: createInternalCells
-   *
    * Creates all edges in the internal model
    *
    * Parameters:
@@ -250,8 +246,6 @@ class GraphHierarchyModel {
   }
 
   /**
-   * Function: initialRank
-   *
    * Basic determination of minimum layer ranking by working from from sources
    * or sinks and working through each node in the relevant edge direction.
    * Starting at the sinks is basically a longest path layering algorithm.
@@ -384,8 +378,6 @@ class GraphHierarchyModel {
   }
 
   /**
-   * Function: fixRanks
-   *
    * Fixes the layer assignments to the values stored in the nodes. Also needs
    * to create dummy nodes for edges that cross layers.
    */
@@ -452,8 +444,6 @@ class GraphHierarchyModel {
   }
 
   /**
-   * Function: visit
-   *
    * A depth first search through the internal heirarchy model.
    *
    * Parameters:
@@ -504,8 +494,6 @@ class GraphHierarchyModel {
   }
 
   /**
-   * Function: dfs
-   *
    * Performs a depth first search on the internal hierarchy model
    *
    * Parameters:
@@ -546,8 +534,6 @@ class GraphHierarchyModel {
   }
 
   /**
-   * Function: extendedDfs
-   *
    * Performs a depth first search on the internal hierarchy model. This dfs
    * extends the default version by keeping track of cells ancestors, but it
    * should be only used when necessary because of it can be computationally

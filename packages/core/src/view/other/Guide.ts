@@ -14,8 +14,6 @@ import Rectangle from '../geometry/Rectangle';
 import { Graph } from '../Graph';
 
 /**
- * Class: mxGuide
- *
  * Implements the alignment of selection cells to other cells in the graph.
  *
  * Constructor: mxGuide
@@ -69,8 +67,6 @@ class Guide {
   tolerance = 2;
 
   /**
-   * Function: setStates
-   *
    * Sets the <mxCellStates> that should be used for alignment.
    */
   setStates(states: CellState[]) {
@@ -78,8 +74,6 @@ class Guide {
   }
 
   /**
-   * Function: isEnabledForEvent
-   *
    * Returns true if the guide should be enabled for the given native event. This
    * implementation always returns true.
    */
@@ -88,8 +82,6 @@ class Guide {
   }
 
   /**
-   * Function: getGuideTolerance
-   *
    * Returns the tolerance for the guides. Default value is gridSize / 2.
    */
   getGuideTolerance(gridEnabled = false) {
@@ -99,8 +91,6 @@ class Guide {
   }
 
   /**
-   * Function: createGuideShape
-   *
    * Returns the mxShape to be used for painting the respective guide. This
    * implementation returns a new, dashed and crisp <mxPolyline> using
    * <mxConstants.GUIDE_COLOR> and <mxConstants.GUIDE_STROKEWIDTH> as the format.
@@ -125,8 +115,6 @@ class Guide {
   }
 
   /**
-   * Function: move
-   *
    * Moves the <bounds> by the given <mxPoint> and returnt the snapped point.
    */
   move(
@@ -334,8 +322,6 @@ class Guide {
   }
 
   /**
-   * Function: getDelta
-   *
    * Rounds to pixels for virtual states (eg. page guides)
    */
   getDelta(
@@ -356,8 +342,6 @@ class Guide {
   }
 
   /**
-   * Function: hide
-   *
    * Hides all current guides.
    */
   getGuideColor(state: CellState, horizontal: boolean) {
@@ -365,8 +349,6 @@ class Guide {
   }
 
   /**
-   * Function: hide
-   *
    * Hides all current guides.
    */
   hide() {
@@ -374,8 +356,6 @@ class Guide {
   }
 
   /**
-   * Function: setVisible
-   *
    * Shows or hides the current guides.
    */
   setVisible(visible: boolean) {
@@ -388,8 +368,6 @@ class Guide {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys all resources that this object uses.
    */
   destroy() {
