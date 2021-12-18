@@ -8,15 +8,13 @@ import Shape from '../Shape';
 import Rectangle from '../Rectangle';
 import {
   DEFAULT_STARTSIZE,
-  DIRECTION_NORTH,
-  DIRECTION_SOUTH,
-  DIRECTION_WEST,
+  DIRECTION,
   LINE_ARCSIZE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
 } from '../../../util/constants';
 import { ColorValue } from '../../../types';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link Shape} to implement a swimlane shape.
@@ -85,15 +83,15 @@ class SwimlaneShape extends Shape {
 
     // East is default
     const shapeVertical =
-      this.direction === DIRECTION_NORTH || this.direction === DIRECTION_SOUTH;
+      this.direction === DIRECTION.NORTH || this.direction === DIRECTION.SOUTH;
     const realHorizontal = horizontal == !shapeVertical;
 
     const realFlipH =
       !realHorizontal &&
-      flipH !== (this.direction === DIRECTION_SOUTH || this.direction === DIRECTION_WEST);
+      flipH !== (this.direction === DIRECTION.SOUTH || this.direction === DIRECTION.WEST);
     const realFlipV =
       realHorizontal &&
-      flipV !== (this.direction === DIRECTION_SOUTH || this.direction === DIRECTION_WEST);
+      flipV !== (this.direction === DIRECTION.SOUTH || this.direction === DIRECTION.WEST);
 
     // Shape is horizontal
     if (!shapeVertical) {

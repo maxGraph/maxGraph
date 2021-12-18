@@ -6,18 +6,13 @@
  */
 import Rectangle from '../Rectangle';
 import {
-  ALIGN_BOTTOM,
-  ALIGN_CENTER,
-  ALIGN_LEFT,
-  ALIGN_MIDDLE,
-  ALIGN_RIGHT,
-  ALIGN_TOP,
+  ALIGN,
   DEFAULT_IMAGESIZE,
   NONE,
 } from '../../../util/constants';
 import RectangleShape from './RectangleShape';
 import { ColorValue } from '../../../types';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
  * Class: mxLabel
@@ -162,24 +157,24 @@ class LabelShape extends RectangleShape {
    * @param {number} h
    */
   getImageBounds(x: number, y: number, w: number, h: number) {
-    const align = this.style?.imageAlign ?? ALIGN_LEFT;
-    const valign = this.style?.verticalAlign ?? ALIGN_MIDDLE;
+    const align = this.style?.imageAlign ?? ALIGN.LEFT;
+    const valign = this.style?.verticalAlign ?? ALIGN.MIDDLE;
     const width = this.style?.imageWidth ?? DEFAULT_IMAGESIZE;
     const height = this.style?.imageHeight ?? DEFAULT_IMAGESIZE;
     const spacing = this.style?.spacing ?? this.spacing + 5;
 
-    if (align === ALIGN_CENTER) {
+    if (align === ALIGN.CENTER) {
       x += (w - width) / 2;
-    } else if (align === ALIGN_RIGHT) {
+    } else if (align === ALIGN.RIGHT) {
       x += w - width - spacing;
     } // default is left
     else {
       x += spacing;
     }
 
-    if (valign === ALIGN_TOP) {
+    if (valign === ALIGN.TOP) {
       y += spacing;
-    } else if (valign === ALIGN_BOTTOM) {
+    } else if (valign === ALIGN.BOTTOM) {
       y += h - height - spacing;
     } // default is middle
     else {
@@ -225,24 +220,24 @@ class LabelShape extends RectangleShape {
    * @returns {Rectangle}
    */
   getIndicatorBounds(x: number, y: number, w: number, h: number) {
-    const align = this.style?.imageAlign ?? ALIGN_LEFT;
-    const valign = this.style?.verticalAlign ?? ALIGN_MIDDLE;
+    const align = this.style?.imageAlign ?? ALIGN.LEFT;
+    const valign = this.style?.verticalAlign ?? ALIGN.MIDDLE;
     const width = this.style?.indicatorWidth ?? this.indicatorSize;
     const height = this.style?.indicatorHeight ?? this.indicatorSize;
     const spacing = this.spacing + 5;
 
-    if (align === ALIGN_RIGHT) {
+    if (align === ALIGN.RIGHT) {
       x += w - width - spacing;
-    } else if (align === ALIGN_CENTER) {
+    } else if (align === ALIGN.CENTER) {
       x += (w - width) / 2;
     } // default is left
     else {
       x += spacing;
     }
 
-    if (valign === ALIGN_BOTTOM) {
+    if (valign === ALIGN.BOTTOM) {
       y += h - height - spacing;
-    } else if (valign === ALIGN_TOP) {
+    } else if (valign === ALIGN.TOP) {
       y += spacing;
     } // default is middle
     else {

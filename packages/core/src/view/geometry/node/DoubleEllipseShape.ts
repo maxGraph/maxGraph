@@ -5,9 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Rectangle from '../../Rectangle';
+import Rectangle from '../Rectangle';
 import Shape from '../Shape';
-import AbstractCanvas2D from '../../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../../view/canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link Shape} to implement a double ellipse shape.

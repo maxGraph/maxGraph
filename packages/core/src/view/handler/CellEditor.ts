@@ -16,17 +16,12 @@ import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  ALIGN_CENTER,
-  ALIGN_LEFT,
-  ALIGN_MIDDLE,
+  ALIGN,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_TEXT_DIRECTION,
-  DIALECT_STRICTHTML,
-  FONT_BOLD,
-  FONT_ITALIC,
-  FONT_STRIKETHROUGH,
-  FONT_UNDERLINE,
+  DIALECT,
+  FONT,
   LINE_HEIGHT,
   NONE,
   WORD_WRAP,
@@ -596,8 +591,8 @@ class CellEditor implements GraphPlugin {
 
         if (m == null) {
           m = getAlignmentAsPoint(
-            this.align || getValue(state.style, 'align', ALIGN_CENTER),
-            getValue(state.style, 'verticalAlign', ALIGN_MIDDLE)
+            this.align || getValue(state.style, 'align', ALIGN.CENTER),
+            getValue(state.style, 'verticalAlign', ALIGN.MIDDLE)
           );
         }
 
@@ -616,8 +611,8 @@ class CellEditor implements GraphPlugin {
           }
         } else {
           let bounds = Rectangle.fromRectangle(state);
-          let hpos = getValue(state.style, 'labelPosition', ALIGN_CENTER);
-          let vpos = getValue(state.style, 'verticalLabelPosition', ALIGN_MIDDLE);
+          let hpos = getValue(state.style, 'labelPosition', ALIGN.CENTER);
+          let vpos = getValue(state.style, 'verticalLabelPosition', ALIGN.MIDDLE);
 
           bounds =
             state.shape != null && hpos === 'center' && vpos === 'middle'
@@ -657,8 +652,8 @@ class CellEditor implements GraphPlugin {
               bounds.x + spacingLeft,
               bounds.y + spacingTop,
               bounds.width -
-                (hpos === ALIGN_CENTER && lw == null ? spacingLeft + spacingRight : 0),
-              bounds.height - (vpos === ALIGN_MIDDLE ? spacingTop + spacingBottom : 0)
+                (hpos === ALIGN.CENTER && lw == null ? spacingLeft + spacingRight : 0),
+              bounds.height - (vpos === ALIGN.MIDDLE ? spacingTop + spacingBottom : 0)
             );
           }
 
@@ -785,15 +780,15 @@ class CellEditor implements GraphPlugin {
       const size = state.style.fontSize ?? DEFAULT_FONTSIZE;
       const family = state.style.fontFamily ?? DEFAULT_FONTFAMILY;
       const color = state.style.fontColor ?? 'black';
-      const align = state.style.align ?? ALIGN_LEFT;
-      const bold = (state.style.fontStyle || 0) & FONT_BOLD;
-      const italic = (state.style.fontStyle || 0) & FONT_ITALIC;
+      const align = state.style.align ?? ALIGN.LEFT;
+      const bold = (state.style.fontStyle || 0) & FONT.BOLD;
+      const italic = (state.style.fontStyle || 0) & FONT.ITALIC;
 
       const txtDecor = [];
-      if ((state.style.fontStyle || 0) & FONT_UNDERLINE) {
+      if ((state.style.fontStyle || 0) & FONT.UNDERLINE) {
         txtDecor.push('underline');
       }
-      if ((state.style.fontStyle || 0) & FONT_STRIKETHROUGH) {
+      if ((state.style.fontStyle || 0) & FONT.STRIKETHROUGH) {
         txtDecor.push('line-through');
       }
 
@@ -818,7 +813,7 @@ class CellEditor implements GraphPlugin {
       if (dir === 'auto') {
         if (
           state.text !== null &&
-          state.text.dialect !== DIALECT_STRICTHTML &&
+          state.text.dialect !== DIALECT.STRICTHTML &&
           !isNode(state.text.value)
         ) {
           dir = state.text.getAutoDirection();
@@ -1097,7 +1092,7 @@ class CellEditor implements GraphPlugin {
       // Applies the horizontal and vertical label positions
       if (state.cell.isVertex()) {
         const horizontal: string = <string>(
-          getStringValue(state.style, 'labelPosition', ALIGN_CENTER)
+          getStringValue(state.style, 'labelPosition', ALIGN.CENTER)
         );
 
         if (horizontal === 'left') {

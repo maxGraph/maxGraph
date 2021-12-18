@@ -6,8 +6,9 @@
  */
 
 import GraphView from './GraphView';
-import ObjectCodec from '../util/serialization/ObjectCodec';
-import CodecRegistry from '../util/serialization/CodecRegistry';
+import ObjectCodec from '../serialization/ObjectCodec';
+import CodecRegistry from '../serialization/CodecRegistry';
+import Cell from './cell/Cell';
 
 /**
  * Class: GraphViewCodec
@@ -21,7 +22,7 @@ import CodecRegistry from '../util/serialization/CodecRegistry';
  */
 class GraphViewCodec extends ObjectCodec {
   constructor() {
-    super(new mxGraphView());
+    super(new GraphView());
   }
 
   /**
@@ -31,8 +32,8 @@ class GraphViewCodec extends ObjectCodec {
    * starting at the model's root. This returns the
    * top-level graph node of the recursive encoding.
    */
-  encode(enc, view) {
-    return this.encodeCell(enc, view, view.graph.getModel().getRoot());
+  encode(enc: any, view: GraphView) {
+    return this.encodeCell(enc, view, <Cell>view.graph.getModel().getRoot());
   }
 
   /**
@@ -55,7 +56,7 @@ class GraphViewCodec extends ObjectCodec {
    * values from the cell style are added as attribute
    * values to the node.
    */
-  encodeCell(enc, view, cell) {
+  encodeCell(enc: any, view: GraphView, cell: Cell) {
     const model = view.graph.getModel();
     const state = view.getState(cell);
     const parent = cell.getParent();

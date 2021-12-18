@@ -4,7 +4,7 @@
  */
 import Client from '../Client';
 import { NONE } from './constants';
-import { get, load } from './network/MaxXmlRequest';
+import { get, load } from './MaxXmlRequest';
 
 /**
  * Class: mxResources
@@ -201,7 +201,7 @@ const Resources = {
    * lan - The language for which the file should be loaded.
    * callback - Optional callback for asynchronous loading.
    */
-  add: (basename: string, lan: string, callback) => {
+  add: (basename: string, lan: string, callback: (Function)) => {
     lan =
       lan != null
         ? lan

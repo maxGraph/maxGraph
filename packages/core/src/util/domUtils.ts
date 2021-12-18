@@ -1,4 +1,4 @@
-import { NODETYPE_ELEMENT } from './constants';
+import { NODETYPE } from './constants';
 
 /**
  * Function: extractTextWithWhitespace
@@ -9,7 +9,7 @@ import { NODETYPE_ELEMENT } from './constants';
  *
  * elems - DOM nodes to return the text for.
  */
-export const extractTextWithWhitespace = (elems) => {
+export const extractTextWithWhitespace = (elems: Element[]): string => {
   // Known block elements for handling linefeeds (list is not complete)
   const blocks = [
     'BLOCKQUOTE',
@@ -26,9 +26,9 @@ export const extractTextWithWhitespace = (elems) => {
     'TABLE',
     'UL',
   ];
-  const ret = [];
+  const ret: string[] = [];
 
-  function doExtract(elts) {
+  function doExtract(elts: Element[]) {
     // Single break should be ignored
     if (
       elts.length == 1 &&
@@ -79,7 +79,7 @@ export const extractTextWithWhitespace = (elems) => {
  *
  * node - DOM node to return the text content for.
  */
-export const getTextContent = (node) => {
+export const getTextContent = (node: Element): string => {
   return node != null
     ? node[node.textContent === undefined ? 'text' : 'textContent']
     : '';
@@ -95,7 +95,7 @@ export const getTextContent = (node) => {
  * node - DOM node to set the text content for.
  * text - String that represents the text content.
  */
-export const setTextContent = (node, text) => {
+export const setTextContent = (node: Element, text: string) => {
   if (node.innerText !== undefined) {
     node.innerText = text;
   } else {
@@ -114,7 +114,7 @@ export const setTextContent = (node, text) => {
  *
  * node - DOM node to return the inner HTML for.
  */
-export const getInnerHtml = (node) => {
+export const getInnerHtml = (node: Element) => {
   if (node != null) {
     const serializer = new XMLSerializer();
     return serializer.serializeToString(node);
@@ -134,7 +134,7 @@ export const getInnerHtml = (node) => {
  *
  * node - DOM node to return the outer HTML for.
  */
-export const getOuterHtml = (node) => {
+export const getOuterHtml = (node: Element) => {
   if (node != null) {
     const serializer = new XMLSerializer();
     return serializer.serializeToString(node);
@@ -154,7 +154,7 @@ export const getOuterHtml = (node) => {
  * parent - DOM node to append the text node to.
  * text - String representing the text to be added.
  */
-export const write = (parent, text) => {
+export const write = (parent: Element, text: string) => {
   const doc = parent.ownerDocument;
   const node = doc.createTextNode(text);
 
@@ -176,7 +176,7 @@ export const write = (parent, text) => {
  * parent - DOM node to append the text node to.
  * text - String representing the text to be added.
  */
-export const writeln = (parent, text) => {
+export const writeln = (parent: Element, text: string) => {
   const doc = parent.ownerDocument;
   const node = doc.createTextNode(text);
 
@@ -197,8 +197,7 @@ export const writeln = (parent, text) => {
  *
  * parent - DOM node to append the linebreak to.
  */
-export const br = (parent, count) => {
-  count = count || 1;
+export const br = (parent: Element, count: number=1) => {
   let br = null;
 
   for (let i = 0; i < count; i += 1) {
@@ -222,7 +221,7 @@ export const br = (parent, count) => {
  * parent - DOM node to append the text node to.
  * text - String representing the text for the new paragraph.
  */
-export const para = (parent, text) => {
+export const para = (parent: Element, text: string) => {
   const p = document.createElement('p');
   write(p, text);
 
@@ -277,7 +276,7 @@ export const isNode = (value: any, nodeName: string | null=null, attributeName?:
  * ancestor - DOM node that represents the ancestor.
  * child - DOM node that represents the child.
  */
-export const isAncestorNode = (ancestor, child) => {
+export const isAncestorNode = (ancestor: Element, child: Element | null) => {
   let parent = child;
 
   while (parent != null) {
@@ -285,9 +284,8 @@ export const isAncestorNode = (ancestor, child) => {
       return true;
     }
 
-    parent = parent.parentNode;
+    parent = <Element | null>parent.parentNode;
   }
-
   return false;
 };
 
@@ -302,8 +300,8 @@ export const isAncestorNode = (ancestor, child) => {
  * nodeType - Optional node type to return. Default is
  * <mxConstants.NODETYPE_ELEMENT>.
  */
-export const getChildNodes = (node: Element, nodeType: number=NODETYPE_ELEMENT) => {
-  nodeType = nodeType || NODETYPE_ELEMENT;
+export const getChildNodes = (node: Element, nodeType: number=NODETYPE.ELEMENT) => {
+  nodeType = nodeType || NODETYPE.ELEMENT;
 
   const children = [];
   let tmp = node.firstChild;
@@ -315,7 +313,6 @@ export const getChildNodes = (node: Element, nodeType: number=NODETYPE_ELEMENT) 
 
     tmp = tmp.nextSibling;
   }
-
   return children;
 };
 

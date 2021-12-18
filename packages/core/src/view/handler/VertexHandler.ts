@@ -6,11 +6,8 @@
  */
 import Rectangle from '../geometry/Rectangle';
 import {
-  CURSOR_LABEL_HANDLE,
-  CURSOR_MOVABLE_VERTEX,
-  DIALECT_MIXEDHTML,
-  DIALECT_STRICTHTML,
-  DIALECT_SVG,
+  CURSOR,
+  DIALECT,
   HANDLE_FILLCOLOR,
   HANDLE_SIZE,
   HANDLE_STROKECOLOR,
@@ -39,7 +36,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import CellArray from '../cell/CellArray';
 import EdgeHandler from './EdgeHandler';
 import EventSource from '../event/EventSource';
-import GraphHandler from '../GraphHandler';
+import GraphHandler from './GraphHandler';
 import SelectionCellsHandler from './SelectionCellsHandler';
 
 /**
@@ -257,14 +254,14 @@ class VertexHandler {
     );
     this.selectionBorder = this.createSelectionShape(this.bounds);
     // VML dialect required here for event transparency in IE
-    this.selectionBorder.dialect = DIALECT_SVG;
+    this.selectionBorder.dialect = DIALECT.SVG;
     this.selectionBorder.pointerEvents = false;
     this.selectionBorder.rotation = this.state.style.rotation ?? 0;
     this.selectionBorder.init(this.graph.getView().getOverlayPane());
     InternalEvent.redirectMouseEvents(this.selectionBorder.node, this.graph, this.state);
 
     if (this.graph.isCellMovable(this.state.cell)) {
-      this.selectionBorder.setCursor(CURSOR_MOVABLE_VERTEX);
+      this.selectionBorder.setCursor(CURSOR.MOVABLE_VERTEX);
     }
 
     const graphHandler = this.graph.getPlugin('GraphHandler') as GraphHandler;
@@ -309,7 +306,7 @@ class VertexHandler {
         ) {
           // Marks this as the label handle for getHandleForEvent
           this.labelShape = this.createSizer(
-            CURSOR_LABEL_HANDLE,
+            CURSOR.LABEL_HANDLE,
             InternalEvent.LABEL_HANDLE,
             LABEL_HANDLE_SIZE,
             LABEL_HANDLE_FILLCOLOR
@@ -323,7 +320,7 @@ class VertexHandler {
         this.state.height < 2
       ) {
         this.labelShape = this.createSizer(
-          CURSOR_MOVABLE_VERTEX,
+          CURSOR.MOVABLE_VERTEX,
           InternalEvent.LABEL_HANDLE,
           undefined,
           LABEL_HANDLE_FILLCOLOR
@@ -530,11 +527,11 @@ class VertexHandler {
     ) {
       sizer.bounds.height -= 1;
       sizer.bounds.width -= 1;
-      sizer.dialect = DIALECT_STRICTHTML;
+      sizer.dialect = DIALECT.STRICTHTML;
       sizer.init(this.graph.container);
     } else {
       sizer.dialect =
-        this.graph.dialect !== DIALECT_SVG ? DIALECT_MIXEDHTML : DIALECT_SVG;
+        this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
       sizer.init(this.graph.getView().getOverlayPane());
     }
 
@@ -756,10 +753,10 @@ class VertexHandler {
           this.state.text != null &&
           this.state.text.node.parentNode === this.graph.container
         ) {
-          this.preview.dialect = DIALECT_STRICTHTML;
+          this.preview.dialect = DIALECT.STRICTHTML;
           this.preview.init(this.graph.container);
         } else {
-          this.preview.dialect = DIALECT_SVG;
+          this.preview.dialect = DIALECT.SVG;
           this.preview.init(this.graph.view.getOverlayPane());
         }
       }
@@ -2097,7 +2094,7 @@ class VertexHandler {
         ) {
           this.parentHighlight = this.createParentHighlightShape(pstate);
           // VML dialect required here for event transparency in IE
-          this.parentHighlight.dialect = DIALECT_SVG;
+          this.parentHighlight.dialect = DIALECT.SVG;
           this.parentHighlight.pointerEvents = false;
           this.parentHighlight.rotation = pstate.style.rotation ?? 0;
           this.parentHighlight.init(this.graph.getView().getOverlayPane());

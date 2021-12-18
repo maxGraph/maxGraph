@@ -3,11 +3,8 @@ import Rectangle from '../geometry/Rectangle';
 import { convertPoint, getValue, mixInto, mod } from '../../util/utils';
 import {
   DEFAULT_STARTSIZE,
-  DIRECTION_EAST,
-  DIRECTION_NORTH,
-  DIRECTION_SOUTH,
-  DIRECTION_WEST,
-  SHAPE_SWIMLANE,
+  DIRECTION,
+  SHAPE,
 } from '../../util/constants';
 import CellArray from '../cell/CellArray';
 import { getClientX, getClientY } from '../../util/eventUtils';
@@ -212,17 +209,17 @@ const SwimlaneMixin: PartialType = {
    * Returns the direction for the given swimlane style.
    */
   getSwimlaneDirection(style) {
-    const dir = style.direction ?? DIRECTION_EAST;
+    const dir = style.direction ?? DIRECTION.EAST;
     const flipH = style.flipH;
     const flipV = style.flipV;
     const h = style.horizontal;
     let n = h ? 0 : 3;
 
-    if (dir === DIRECTION_NORTH) {
+    if (dir === DIRECTION.NORTH) {
       n--;
-    } else if (dir === DIRECTION_WEST) {
+    } else if (dir === DIRECTION.WEST) {
       n += 2;
-    } else if (dir === DIRECTION_SOUTH) {
+    } else if (dir === DIRECTION.SOUTH) {
       n += 1;
     }
 
@@ -236,7 +233,7 @@ const SwimlaneMixin: PartialType = {
       n += 2;
     }
 
-    return [DIRECTION_NORTH, DIRECTION_EAST, DIRECTION_SOUTH, DIRECTION_WEST][
+    return [DIRECTION.NORTH, DIRECTION.EAST, DIRECTION.SOUTH, DIRECTION.WEST][
       mod(n, 4)
     ] as DirectionValue;
   },
@@ -258,11 +255,11 @@ const SwimlaneMixin: PartialType = {
       const size = style.startSize ?? DEFAULT_STARTSIZE;
       const dir = this.getSwimlaneDirection(style);
 
-      if (dir === DIRECTION_NORTH) {
+      if (dir === DIRECTION.NORTH) {
         result.y = size;
-      } else if (dir === DIRECTION_WEST) {
+      } else if (dir === DIRECTION.WEST) {
         result.x = size;
-      } else if (dir === DIRECTION_SOUTH) {
+      } else if (dir === DIRECTION.SOUTH) {
         result.height = size;
       } else {
         result.width = size;
@@ -281,7 +278,7 @@ const SwimlaneMixin: PartialType = {
    */
   isSwimlane(cell, ignoreState = false) {
     if (cell && cell.getParent() !== this.getModel().getRoot() && !cell.isEdge()) {
-      return this.getCurrentCellStyle(cell, ignoreState).shape === SHAPE_SWIMLANE;
+      return this.getCurrentCellStyle(cell, ignoreState).shape === SHAPE.SWIMLANE;
     }
     return false;
   },

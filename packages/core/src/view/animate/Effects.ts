@@ -12,6 +12,7 @@ import ChildChange from '../undoable_changes/ChildChange';
 import StyleChange from '../undoable_changes/StyleChange';
 import { Graph } from 'src/view/Graph';
 import Cell from 'src/view/cell/Cell';
+import { UndoableChange } from 'src/types';
 
 /**
  * Provides animation effects.
@@ -40,7 +41,7 @@ class Effects {
    * @param done - Optional function argument that is invoked after the
    * last step of the animation.
    */
-  static animateChanges(graph: Graph, changes: any[], done?: Function): void {
+  static animateChanges(graph: Graph, changes: UndoableChange[], done?: Function): void {
     const maxStep = 10;
     let step = 0;
 
@@ -146,7 +147,7 @@ class Effects {
    *
    * Asynchronous fade-out operation.
    */
-  static fadeOut(node, from, remove, step, delay, isEnabled) {
+  static fadeOut(node: HTMLElement, from: number, remove: boolean, step: number, delay: number, isEnabled: boolean): void {
     step = step || 40;
     delay = delay || 30;
 

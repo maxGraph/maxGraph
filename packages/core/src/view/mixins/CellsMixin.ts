@@ -14,18 +14,11 @@ import {
   toRadians,
 } from '../../util/utils';
 import {
-  ALIGN_BOTTOM,
-  ALIGN_CENTER,
-  ALIGN_MIDDLE,
-  ALIGN_RIGHT,
-  ALIGN_TOP,
+  ALIGN,
   DEFAULT_FONTSIZE,
   DEFAULT_IMAGESIZE,
-  DIRECTION_EAST,
-  DIRECTION_NORTH,
-  DIRECTION_SOUTH,
-  DIRECTION_WEST,
-  SHAPE_LABEL,
+  DIRECTION,
+  SHAPE,
 } from '../../util/constants';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
@@ -74,20 +67,20 @@ declare module '../Graph' {
     setCellStyles: (
       key: keyof CellStateStyles,
       value: CellStateStyles[keyof CellStateStyles],
-      cells: CellArray
+      cells?: CellArray
     ) => void;
     toggleCellStyleFlags: (
       key: keyof CellStateStyles,
       flag: number,
-      cells: CellArray
+      cells?: CellArray | null
     ) => void;
     setCellStyleFlags: (
       key: keyof CellStateStyles,
       flag: number,
-      value: boolean | null,
-      cells: CellArray
+      value?: boolean | null,
+      cells?: CellArray | null
     ) => void;
-    alignCells: (align: string, cells: CellArray, param: number | null) => void;
+    alignCells: (align: string, cells?: CellArray, param?: number | null) => void;
     cloneCell: (
       cell: Cell,
       allowInvalidEdges?: boolean,
@@ -126,7 +119,7 @@ declare module '../Graph' {
       extend?: boolean
     ) => void;
     autoSizeCell: (cell: Cell, recurse?: boolean) => void;
-    removeCells: (cells: CellArray | null, includeEdges: boolean) => CellArray;
+    removeCells: (cells?: CellArray | null, includeEdges?: boolean | null) => CellArray;
     cellsRemoved: (cells: CellArray) => void;
     toggleCells: (show: boolean, cells: CellArray, includeEdges: boolean) => CellArray;
     cellsToggled: (cells: CellArray, show: boolean) => void;
@@ -169,22 +162,22 @@ declare module '../Graph' {
       dy: number,
       disconnect: boolean,
       constrain: boolean,
-      extend?: boolean
+      extend?: boolean | null
     ) => void;
     translateCell: (cell: Cell, dx: number, dy: number) => void;
     getCellContainmentArea: (cell: Cell) => Rectangle | null;
     constrainChild: (cell: Cell, sizeFirst?: boolean) => void;
     getChildCells: (
       parent: Cell | null,
-      vertices?: boolean,
-      edges?: boolean
+      vertices?: boolean | null,
+      edges?: boolean | null
     ) => CellArray;
     getCellAt: (
       x: number,
       y: number,
       parent?: Cell | null,
-      vertices?: boolean,
-      edges?: boolean,
+      vertices?: boolean | null,
+      edges?: boolean | null,
       ignoreFn?: Function | null
     ) => Cell | null;
     getCells: (
@@ -193,7 +186,7 @@ declare module '../Graph' {
       width: number,
       height: number,
       parent?: Cell | null,
-      result?: CellArray,
+      result?: CellArray | null,
       intersection?: Rectangle | null,
       ignoreFn?: Function | null,
       includeDescendants?: boolean
@@ -764,26 +757,26 @@ const CellsMixin: PartialType = {
 
           if (state && !cell.isEdge()) {
             if (param === null) {
-              if (align === ALIGN_CENTER) {
+              if (align === ALIGN.CENTER) {
                 param = state.x + state.width / 2;
                 break;
-              } else if (align === ALIGN_RIGHT) {
+              } else if (align === ALIGN.RIGHT) {
                 param = state.x + state.width;
-              } else if (align === ALIGN_TOP) {
+              } else if (align === ALIGN.TOP) {
                 param = state.y;
-              } else if (align === ALIGN_MIDDLE) {
+              } else if (align === ALIGN.MIDDLE) {
                 param = state.y + state.height / 2;
                 break;
-              } else if (align === ALIGN_BOTTOM) {
+              } else if (align === ALIGN.BOTTOM) {
                 param = state.y + state.height;
               } else {
                 param = state.x;
               }
-            } else if (align === ALIGN_RIGHT) {
+            } else if (align === ALIGN.RIGHT) {
               param = Math.max(param, state.x + state.width);
-            } else if (align === ALIGN_TOP) {
+            } else if (align === ALIGN.TOP) {
               param = Math.min(param, state.y);
-            } else if (align === ALIGN_BOTTOM) {
+            } else if (align === ALIGN.BOTTOM) {
               param = Math.max(param, state.y + state.height);
             } else {
               param = Math.min(param, state.x);
@@ -808,15 +801,15 @@ const CellsMixin: PartialType = {
               if (geo != null && !cell.isEdge()) {
                 geo = <Geometry>geo.clone();
 
-                if (align === ALIGN_CENTER) {
+                if (align === ALIGN.CENTER) {
                   geo.x += (p - state.x - state.width / 2) / s;
-                } else if (align === ALIGN_RIGHT) {
+                } else if (align === ALIGN.RIGHT) {
                   geo.x += (p - state.x - state.width) / s;
-                } else if (align === ALIGN_TOP) {
+                } else if (align === ALIGN.TOP) {
                   geo.y += (p - state.y) / s;
-                } else if (align === ALIGN_MIDDLE) {
+                } else if (align === ALIGN.MIDDLE) {
                   geo.y += (p - state.y - state.height / 2) / s;
-                } else if (align === ALIGN_BOTTOM) {
+                } else if (align === ALIGN.BOTTOM) {
                   geo.y += (p - state.y - state.height) / s;
                 } else {
                   geo.x += (p - state.x) / s;
@@ -827,7 +820,7 @@ const CellsMixin: PartialType = {
             }
           }
 
-          this.fireEvent(new EventObject(InternalEvent.ALIGN_CELLS, { align, cells }));
+          this.fireEvent(new EventObject(InternalEvent.ALIGN.CELLS, { align, cells }));
         });
       }
     }
@@ -1414,19 +1407,19 @@ const CellsMixin: PartialType = {
           this.getModel().setStyle(cell, cellStyle);
         } else {
           const state = this.getView().createState(cell);
-          const align = state.style.align ?? ALIGN_CENTER;
+          const align = state.style.align ?? ALIGN.CENTER;
 
-          if (align === ALIGN_RIGHT) {
+          if (align === ALIGN.RIGHT) {
             geo.x += geo.width - size.width;
-          } else if (align === ALIGN_CENTER) {
+          } else if (align === ALIGN.CENTER) {
             geo.x += Math.round((geo.width - size.width) / 2);
           }
 
           const valign = state.getVerticalAlign();
 
-          if (valign === ALIGN_BOTTOM) {
+          if (valign === ALIGN.BOTTOM) {
             geo.y += geo.height - size.height;
-          } else if (valign === ALIGN_MIDDLE) {
+          } else if (valign === ALIGN.MIDDLE) {
             geo.y += Math.round((geo.height - size.height) / 2);
           }
 
@@ -1491,12 +1484,12 @@ const CellsMixin: PartialType = {
 
       // Adds dimension of image if shape is a label
       if (state.getImageSrc() || style.image) {
-        if (style.shape === SHAPE_LABEL) {
-          if (style.verticalAlign === ALIGN_MIDDLE) {
+        if (style.shape === SHAPE.LABEL) {
+          if (style.verticalAlign === ALIGN.MIDDLE) {
             dx += style.imageWidth || DEFAULT_IMAGESIZE;
           }
 
-          if (style.align !== ALIGN_CENTER) {
+          if (style.align !== ALIGN.CENTER) {
             dy += style.imageHeight || DEFAULT_IMAGESIZE;
           }
         }
@@ -2097,21 +2090,21 @@ const CellsMixin: PartialType = {
           if (this.isSwimlane(parent)) {
             const size = this.getStartSize(parent);
             const style = this.getCurrentCellStyle(parent);
-            const dir = style.direction ?? DIRECTION_EAST;
+            const dir = style.direction ?? DIRECTION.EAST;
             const flipH = style.flipH ?? false;
             const flipV = style.flipV ?? false;
 
-            if (dir === DIRECTION_SOUTH || dir === DIRECTION_NORTH) {
+            if (dir === DIRECTION.SOUTH || dir === DIRECTION.NORTH) {
               const tmp = size.width;
               size.width = size.height;
               size.height = tmp;
             }
 
             if (
-              (dir === DIRECTION_EAST && !flipV) ||
-              (dir === DIRECTION_NORTH && !flipH) ||
-              (dir === DIRECTION_WEST && flipV) ||
-              (dir === DIRECTION_SOUTH && flipH)
+              (dir === DIRECTION.EAST && !flipV) ||
+              (dir === DIRECTION.NORTH && !flipH) ||
+              (dir === DIRECTION.WEST && flipV) ||
+              (dir === DIRECTION.SOUTH && flipH)
             ) {
               x = size.width;
               y = size.height;

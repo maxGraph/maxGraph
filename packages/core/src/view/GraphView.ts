@@ -11,14 +11,7 @@ import Dictionary from '../util/Dictionary';
 import EventSource from './event/EventSource';
 import EventObject from './event/EventObject';
 import RectangleShape from './geometry/node/RectangleShape';
-import {
-  ALIGN_BOTTOM,
-  ALIGN_CENTER,
-  ALIGN_LEFT,
-  ALIGN_MIDDLE,
-  ALIGN_RIGHT,
-  ALIGN_TOP,
-} from '../util/constants';
+import { ALIGN } from '../util/constants';
 import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
 import {
@@ -30,7 +23,7 @@ import {
   relativeCcw,
   toRadians,
 } from '../util/utils';
-import MaxLog from '../util/gui/MaxLog';
+import MaxLog from '../gui/MaxLog';
 import Resources from '../util/Resources';
 import CellState from './cell/CellState';
 import UndoableEdit from './undoable_changes/UndoableEdit';
@@ -97,7 +90,7 @@ import { MouseEventListener } from '../types';
  * respectively.
  */
 class GraphView extends EventSource {
-  constructor(graph: Graph) {
+  constructor(graph: Graph | null=null) {
     super();
 
     this.graph = graph;
@@ -158,7 +151,7 @@ class GraphView extends EventSource {
   /**
    * Reference to the enclosing {@link graph}.
    */
-  graph: Graph;
+  graph: Graph | null;
 
   /**
    * {@link Cell} that acts as the root of the displayed cell hierarchy.
@@ -1012,9 +1005,9 @@ class GraphView extends EventSource {
    * @param state {@link CellState} whose absolute offset should be updated.
    */
   updateVertexLabelOffset(state: CellState): void {
-    const h = state.style.labelPosition ?? ALIGN_CENTER;
+    const h = state.style.labelPosition ?? ALIGN.CENTER;
 
-    if (h === ALIGN_LEFT) {
+    if (h === ALIGN.LEFT) {
       let lw = state.style.labelWidth ?? null;
 
       if (lw != null) {
@@ -1025,20 +1018,20 @@ class GraphView extends EventSource {
 
       // @ts-ignore
       state.absoluteOffset.x -= lw;
-    } else if (h === ALIGN_RIGHT) {
+    } else if (h === ALIGN.RIGHT) {
       // @ts-ignore
       state.absoluteOffset.x += state.width;
-    } else if (h === ALIGN_CENTER) {
+    } else if (h === ALIGN.CENTER) {
       const lw = state.style.labelWidth ?? null;
 
       if (lw != null) {
         // Aligns text block with given width inside the vertex width
-        const align = state.style.align ?? ALIGN_CENTER;
+        const align = state.style.align ?? ALIGN.CENTER;
         let dx = 0;
 
-        if (align === ALIGN_CENTER) {
+        if (align === ALIGN.CENTER) {
           dx = 0.5;
-        } else if (align === ALIGN_RIGHT) {
+        } else if (align === ALIGN.RIGHT) {
           dx = 1;
         }
 
@@ -1049,12 +1042,12 @@ class GraphView extends EventSource {
       }
     }
 
-    const v = state.style.verticalLabelPosition ?? ALIGN_MIDDLE;
+    const v = state.style.verticalLabelPosition ?? ALIGN.MIDDLE;
 
-    if (v === ALIGN_TOP) {
+    if (v === ALIGN.TOP) {
       // @ts-ignore
       state.absoluteOffset.y -= state.height;
-    } else if (v === ALIGN_BOTTOM) {
+    } else if (v === ALIGN.BOTTOM) {
       // @ts-ignore
       state.absoluteOffset.y += state.height;
     }

@@ -24,7 +24,7 @@ declare module '../Graph' {
       relative: boolean,
       geometryClass: typeof Geometry
     ) => Cell;
-    getChildVertices: (parent: Cell) => CellArray;
+    getChildVertices: (parent?: Cell | null) => CellArray;
     isVertexLabelsMovable: () => boolean;
     setVertexLabelsMovable: (value: boolean) => void;
   }

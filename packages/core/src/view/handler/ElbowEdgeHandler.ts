@@ -6,10 +6,9 @@
  */
 import EdgeHandler from './EdgeHandler';
 import {
-  CURSOR_TERMINAL_HANDLE,
-  EDGESTYLE_ELBOW,
-  EDGESTYLE_TOPTOBOTTOM,
-  ELBOW_VERTICAL,
+  CURSOR,
+  EDGESTYLE,
+  ELBOW,
   HANDLE_SIZE,
 } from '../../util/constants';
 import InternalEvent from '../event/InternalEvent';
@@ -73,7 +72,7 @@ class ElbowEdgeHandler extends EdgeHandler {
     // Source
     let bend = this.createHandleShape(0);
     this.initBend(bend);
-    bend.setCursor(CURSOR_TERMINAL_HANDLE);
+    bend.setCursor(CURSOR.TERMINAL_HANDLE);
     bends.push(bend);
 
     // Virtual
@@ -91,7 +90,7 @@ class ElbowEdgeHandler extends EdgeHandler {
     // Target
     bend = this.createHandleShape(2);
     this.initBend(bend);
-    bend.setCursor(CURSOR_TERMINAL_HANDLE);
+    bend.setCursor(CURSOR.TERMINAL_HANDLE);
     bends.push(bend);
 
     return bends;
@@ -122,9 +121,9 @@ class ElbowEdgeHandler extends EdgeHandler {
    * Returns the cursor to be used for the bend.
    */
   getCursorForBend() {
-    return this.state.style.edge === EDGESTYLE_TOPTOBOTTOM ||
-      (this.state.style.edge === EDGESTYLE_ELBOW &&
-        this.state.style.elbow === ELBOW_VERTICAL)
+    return this.state.style.edge === EDGESTYLE.TOPTOBOTTOM ||
+      (this.state.style.edge === EDGESTYLE.ELBOW &&
+        this.state.style.elbow === ELBOW.VERTICAL)
       ? 'row-resize'
       : 'col-resize';
   }

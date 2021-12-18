@@ -8,8 +8,7 @@ import Image from '../image/ImageBox';
 import Client from '../../Client';
 import {
   DEFAULT_VALID_COLOR,
-  DIALECT_MIXEDHTML,
-  DIALECT_SVG,
+  DIALECT,
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_SIZE,
   HIGHLIGHT_STROKEWIDTH,
@@ -323,7 +322,7 @@ class ConstraintHandler {
 
             if (this.focusHighlight == null) {
               const hl = this.createHighlightShape();
-              hl.dialect = DIALECT_SVG;
+              hl.dialect = DIALECT.SVG;
               hl.pointerEvents = false;
 
               hl.init(this.graph.getView().getOverlayPane());
@@ -423,7 +422,7 @@ class ConstraintHandler {
         );
         const icon = new ImageShape(bounds, src);
         icon.dialect =
-          this.graph.dialect !== DIALECT_SVG ? DIALECT_MIXEDHTML : DIALECT_SVG;
+          this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
         icon.preserveImageAspect = false;
         icon.init(this.graph.getView().getDecoratorPane());
 

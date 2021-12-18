@@ -11,19 +11,17 @@ import Shape from '../Shape';
 import Resources from '../../../util/Resources';
 import { getNumber, getValue, isNotNullish } from '../../../util/utils';
 import {
-  ALIGN_LEFT,
-  ALIGN_TOP,
-  DIRECTION_NORTH,
-  DIRECTION_SOUTH,
-  NODETYPE_ELEMENT,
+  ALIGN,
+  DIRECTION,
+  NODETYPE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
-  TEXT_DIRECTION_AUTO,
+  TEXT_DIRECTION,
 } from '../../../util/constants';
 import StencilShapeRegistry from './StencilShapeRegistry';
 import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
 
 /**
@@ -300,7 +298,7 @@ class StencilShape extends Shape {
       let tmp = node.firstChild as Element;
 
       while (tmp) {
-        if (tmp.nodeType === NODETYPE_ELEMENT) {
+        if (tmp.nodeType === NODETYPE.ELEMENT) {
           this.drawNode(canvas, shape, tmp, aspect, disableShadow, paint);
         }
 
@@ -335,7 +333,7 @@ class StencilShape extends Shape {
     let sx = w / this.w0;
     let sy = h / this.h0;
 
-    const inverse = direction === DIRECTION_NORTH || direction === DIRECTION_SOUTH;
+    const inverse = direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH;
 
     if (inverse) {
       sy = w / this.h0;
@@ -405,7 +403,7 @@ class StencilShape extends Shape {
           let childNode = node.firstChild as Element;
 
           while (childNode != null) {
-            if (childNode.nodeType === NODETYPE_ELEMENT) {
+            if (childNode.nodeType === NODETYPE.ELEMENT) {
               const childName = childNode.nodeName;
 
               if (childName === 'move' || childName === 'line') {
@@ -453,7 +451,7 @@ class StencilShape extends Shape {
           let childNode = node.firstChild as Element;
 
           while (childNode) {
-            if (childNode.nodeType === NODETYPE_ELEMENT) {
+            if (childNode.nodeType === NODETYPE.ELEMENT) {
               this.drawNode(canvas, shape, childNode, aspect, disableShadow, paint);
             }
 
@@ -576,14 +574,14 @@ class StencilShape extends Shape {
             0,
             0,
             str,
-            (node.getAttribute('align') as AlignValue) || ALIGN_LEFT,
-            (node.getAttribute('valign') as VAlignValue) || ALIGN_TOP,
+            (node.getAttribute('align') as AlignValue) || ALIGN.LEFT,
+            (node.getAttribute('valign') as VAlignValue) || ALIGN.TOP,
             false,
             '',
             'auto',
             false,
             rotation,
-            TEXT_DIRECTION_AUTO
+            TEXT_DIRECTION.AUTO
           );
         }
       } else if (name === 'include-shape') {

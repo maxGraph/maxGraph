@@ -6,7 +6,7 @@
  */
 import {
   DEFAULT_VALID_COLOR,
-  DIALECT_SVG,
+  DIALECT,
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_STROKEWIDTH,
 } from '../../util/constants';
@@ -159,11 +159,11 @@ class CellHighlight {
     shape.isDashed = this.dashed;
     shape.isShadow = false;
 
-    shape.dialect = DIALECT_SVG;
+    shape.dialect = DIALECT.SVG;
     shape.init(this.graph.getView().getOverlayPane());
     InternalEvent.redirectMouseEvents(shape.node, this.graph, this.state);
 
-    if (this.graph.dialect !== DIALECT_SVG) {
+    if (this.graph.dialect !== DIALECT.SVG) {
       shape.pointerEvents = false;
     } else {
       shape.svgPointerEvents = 'stroke';

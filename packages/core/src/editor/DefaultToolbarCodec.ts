@@ -5,13 +5,14 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import ObjectCodec from '../util/serialization/ObjectCodec';
+import ObjectCodec from '../serialization/ObjectCodec';
 import DefaultToolbar from './DefaultToolbar';
-import CodecRegistry from '../util/serialization/CodecRegistry';
-import { getChildNodes, getTextContent } from '../util/dom/domUtils';
+import CodecRegistry from '../serialization/CodecRegistry';
+import { getChildNodes, getTextContent } from '../util/domUtils';
 import { getClientX, getClientY } from '../util/eventUtils';
-import { NODETYPE_ELEMENT } from '../util/constants';
+import { NODETYPE } from '../util/constants';
 import { convertPoint } from '../util/utils';
+import Resources from 'src/util/Resources';
 
 /**
  * Class: DefaultToolbarCodec
@@ -31,7 +32,7 @@ class DefaultToolbarCodec extends ObjectCodec {
    *
    * Returns null.
    */
-  encode(enc, obj) {
+  encode(enc: any, obj: any) {
     return null;
   }
 
@@ -127,13 +128,13 @@ class DefaultToolbarCodec extends ObjectCodec {
    * </DefaultToolbar>
    * (end)
    */
-  decode(dec, node, into) {
+  decode(dec: any, node: Element, into: Element) {
     if (into != null) {
       const { editor } = into;
       node = node.firstChild;
 
       while (node != null) {
-        if (node.nodeType === NODETYPE_ELEMENT) {
+        if (node.nodeType === NODETYPE.ELEMENT) {
           if (!this.processInclude(dec, node, into)) {
             if (node.nodeName === 'separator') {
               into.addSeparator();
@@ -241,7 +242,7 @@ class DefaultToolbarCodec extends ObjectCodec {
 
                     // Selects the toolbar icon if a selection change
                     // is made in the corresponding combobox.
-                    mxEvent.addListener(select, 'change', () => {
+                    InternalEvent.addListener(select, 'change', () => {
                       into.toolbar.selectMode(img, (evt) => {
                         const pt = convertPoint(
                           editor.graph.container,

@@ -22,10 +22,10 @@ declare module '../Graph' {
     getFoldingImage: (state: CellState) => Image | null;
     foldCells: (
       collapse: boolean,
-      recurse: boolean,
-      cells: CellArray | null,
-      checkFoldable: boolean,
-      evt: Event | null
+      recurse?: boolean,
+      cells?: CellArray | null,
+      checkFoldable?: boolean,
+      evt?: Event | null
     ) => CellArray | null;
     cellsFolded: (
       cells: CellArray | null,

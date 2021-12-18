@@ -8,15 +8,9 @@ import CellMarker from '../cell/CellMarker';
 import Point from '../geometry/Point';
 import {
   CONNECT_HANDLE_FILLCOLOR,
-  CURSOR_BEND_HANDLE,
-  CURSOR_LABEL_HANDLE,
-  CURSOR_MOVABLE_EDGE,
-  CURSOR_TERMINAL_HANDLE,
-  CURSOR_VIRTUAL_BEND_HANDLE,
+  CURSOR,
   DEFAULT_VALID_COLOR,
-  DIALECT_MIXEDHTML,
-  DIALECT_STRICTHTML,
-  DIALECT_SVG,
+  DIALECT,
   EDGE_SELECTION_COLOR,
   EDGE_SELECTION_DASHED,
   EDGE_SELECTION_STROKEWIDTH,
@@ -64,7 +58,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import Cell from '../cell/Cell';
 import ImageBox from '../image/ImageBox';
 import EventSource from '../event/EventSource';
-import GraphHandler from '../GraphHandler';
+import GraphHandler from './GraphHandler';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and the edge
@@ -321,10 +315,10 @@ class EdgeHandler {
     this.abspoints = this.getSelectionPoints(this.state);
     this.shape = this.createSelectionShape(this.abspoints);
     this.shape.dialect =
-      this.graph.dialect !== DIALECT_SVG ? DIALECT_MIXEDHTML : DIALECT_SVG;
+      this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
     this.shape.init(this.graph.getView().getOverlayPane());
     this.shape.pointerEvents = false;
-    this.shape.setCursor(CURSOR_MOVABLE_EDGE);
+    this.shape.setCursor(CURSOR.MOVABLE_EDGE);
     InternalEvent.redirectMouseEvents(this.shape.node, this.graph, this.state);
 
     // Updates preferHtml
@@ -372,7 +366,7 @@ class EdgeHandler {
     this.label = new Point(this.state.absoluteOffset.x, this.state.absoluteOffset.y);
     this.labelShape = this.createLabelHandleShape();
     this.initBend(this.labelShape);
-    this.labelShape.setCursor(CURSOR_LABEL_HANDLE);
+    this.labelShape.setCursor(CURSOR.LABEL_HANDLE);
 
     this.customHandles = this.createCustomHandles();
 
@@ -441,7 +435,7 @@ class EdgeHandler {
         if (parent && parent.isVertex() && pstate && !pstate.parentHighlight) {
           this.parentHighlight = this.createParentHighlightShape(pstate);
           // VML dialect required here for event transparency in IE
-          this.parentHighlight.dialect = DIALECT_SVG;
+          this.parentHighlight.dialect = DIALECT.SVG;
           this.parentHighlight.pointerEvents = false;
           this.parentHighlight.rotation = pstate.style.rotation;
           this.parentHighlight.init(this.graph.getView().getOverlayPane());
@@ -715,7 +709,7 @@ class EdgeHandler {
             });
 
             if (this.isHandleEnabled(i)) {
-              bend.setCursor(terminal ? CURSOR_TERMINAL_HANDLE : CURSOR_BEND_HANDLE);
+              bend.setCursor(terminal ? CURSOR.TERMINAL_HANDLE : CURSOR.BEND_HANDLE);
             }
 
             bends.push(bend);
@@ -748,7 +742,7 @@ class EdgeHandler {
       for (let i = 1; i < this.abspoints.length; i += 1) {
         ((bend) => {
           this.initBend(bend);
-          bend.setCursor(CURSOR_VIRTUAL_BEND_HANDLE);
+          bend.setCursor(CURSOR.VIRTUAL_BEND_HANDLE);
           bends.push(bend);
         })(this.createHandleShape());
       }
@@ -856,10 +850,10 @@ class EdgeHandler {
    */
   initBend(bend: Shape, dblClick?: (evt: MouseEvent) => void) {
     if (this.preferHtml) {
-      bend.dialect = DIALECT_STRICTHTML;
+      bend.dialect = DIALECT.STRICTHTML;
       bend.init(this.graph.container);
     } else {
-      bend.dialect = this.graph.dialect !== DIALECT_SVG ? DIALECT_MIXEDHTML : DIALECT_SVG;
+      bend.dialect = this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
       bend.init(this.graph.getView().getOverlayPane());
     }
 

@@ -3,7 +3,7 @@
  * Copyright (c) 2006-2017, Gaudenz Alder
  */
 
-const Client = {
+class Client {
   /**
    * Class: Client
    *
@@ -22,7 +22,7 @@ const Client = {
    *
    * Current version is 4.2.2.
    */
-  VERSION: '4.2.2',
+  static VERSION = '4.2.2';
 
   /**
    * Variable: mxResourceExtension
@@ -37,14 +37,15 @@ const Client = {
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
    * (end)
    */
-  mxResourceExtension: '.txt',
-  setResourceExtension: value => {
+  static mxResourceExtension = '.txt';
+
+  static setResourceExtension = value => {
     Client.mxResourceExtension = value;
     
     // Removes dependency with mxResources.
     // Client.mxResourceExtension can be used instead.
     // mxResources.extension = value;
-  },
+  };
 
   /**
    * Variable: mxLoadResources
@@ -61,8 +62,9 @@ const Client = {
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
    * (end)
    */
-  mxLoadResources: true,
-  setLoadResources: value => {},
+  static mxLoadResources = true;
+
+  static setLoadResources = value => {};
 
   /**
    * Variable: mxForceIncludes
@@ -78,10 +80,11 @@ const Client = {
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
    * (end)
    */
-  mxForceIncludes: false,
-  setForceIncludes: value => {
+  static mxForceIncludes = false;
+
+  static setForceIncludes = value => {
     Client.mxForceIncludes = value;
-  },
+  };
 
   /**
    * Variable: mxLoadStylesheets
@@ -97,10 +100,11 @@ const Client = {
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
    * (end)
    */
-  mxLoadStylesheets: true,
-  setLoadStylesheets: value => {
+  static mxLoadStylesheets = true;
+
+  static setLoadStylesheets = value => {
     Client.mxLoadStylesheets = value;
-  },
+  };
 
   /**
    * Variable: basePath
@@ -119,8 +123,9 @@ const Client = {
    * When using a relative path, the path is relative to the URL of the page that
    * contains the assignment. Trailing slashes are automatically removed.
    */
-  basePath: '.',
-  setBasePath: value => {
+  static basePath = '.';
+
+  static setBasePath = value => {
     if (typeof value !== 'undefined' && value.length > 0) {
       // Adds a trailing slash if required
       if (value.substring(value.length - 1) === '/') {
@@ -130,7 +135,7 @@ const Client = {
     } else {
       Client.basePath = '.';
     }
-  },
+  };
 
   /**
    * Variable: imageBasePath
@@ -149,8 +154,9 @@ const Client = {
    * When using a relative path, the path is relative to the URL of the page that
    * contains the assignment. Trailing slashes are automatically removed.
    */
-  imageBasePath: '.',
-  setImageBasePath: value => {
+  static imageBasePath = '.';
+  
+  static setImageBasePath = value => {
     if (typeof value !== 'undefined' && value.length > 0) {
       // Adds a trailing slash if required
       if (value.substring(value.length - 1) === '/') {
@@ -160,7 +166,7 @@ const Client = {
     } else {
       Client.imageBasePath = `${Client.basePath}/images`;
     }
-  },
+  };
 
   /**
    * Variable: language
@@ -193,14 +199,15 @@ const Client = {
    * <mxGraph.containsValidationErrorsResource> and
    * <mxGraph.alreadyConnectedResource>.
    */
-  language: typeof window !== 'undefined' ? navigator.language : 'en',
-  setLanguage: value => {
+  static language = typeof window !== 'undefined' ? navigator.language : 'en';
+
+  static setLanguage = value => {
     if (typeof value !== 'undefined' && value != null) {
       Client.language = value;
     } else {
       Client.language = navigator.language;
     }
-  },
+  };
 
   /**
    * Variable: defaultLanguage
@@ -219,14 +226,15 @@ const Client = {
    * <script type="text/javascript" src="js/Client.js"></script>
    * (end)
    */
-  defaultLanguage: 'en',
-  setDefaultLanguage: value => {
+  static defaultLanguage = 'en';
+
+  static setDefaultLanguage = value => {
     if (typeof value !== 'undefined' && value != null) {
       Client.defaultLanguage = value;
     } else {
       Client.defaultLanguage = 'en';
     }
-  },
+  };
 
   /**
    * Variable: languages
@@ -246,84 +254,84 @@ const Client = {
    * will be returned.
    */
 
-  setLanguages: value => {
+  static setLanguages = value => {
     if (typeof value !== 'undefined' && value != null) {
       Client.languages = value;
     }
-  },
+  };
 
   /**
    * Variable: IS_EDGE
    *
    * True if the current browser is Microsoft Edge.
    */
-  IS_EDGE:
+  static IS_EDGE =
     typeof window !== 'undefined' &&
     navigator.userAgent != null &&
-    !!navigator.userAgent.match(/Edge\//),
+    !!navigator.userAgent.match(/Edge\//);
 
   /**
    * Variable: IS_NS
    *
    * True if the current browser is Netscape (including Firefox).
    */
-  IS_NS:
+  static IS_NS =
     typeof window !== 'undefined' &&
     navigator.userAgent != null &&
     navigator.userAgent.indexOf('Mozilla/') >= 0 &&
     navigator.userAgent.indexOf('MSIE') < 0 &&
-    navigator.userAgent.indexOf('Edge/') < 0,
+    navigator.userAgent.indexOf('Edge/') < 0;
 
   /**
    * Variable: IS_SF
    *
    * True if the current browser is Safari.
    */
-  IS_SF:
+  static IS_SF =
     typeof window !== 'undefined' &&
-    /Apple Computer, Inc/.test(navigator.vendor),
+    /Apple Computer, Inc/.test(navigator.vendor);
 
   /**
    * Variable: IS_ANDROID
    *
    * Returns true if the user agent contains Android.
    */
-  IS_ANDROID:
+  static IS_ANDROID =
     typeof window !== 'undefined' &&
-    navigator.appVersion.indexOf('Android') >= 0,
+    navigator.appVersion.indexOf('Android') >= 0;
 
   /**
    * Variable: IS_IOS
    *
    * Returns true if the user agent is an iPad, iPhone or iPod.
    */
-  IS_IOS:
-    typeof window !== 'undefined' && /iP(hone|od|ad)/.test(navigator.platform),
+  static IS_IOS =
+    typeof window !== 'undefined' && /iP(hone|od|ad)/.test(navigator.platform);
 
   /**
    * Variable: IS_GC
    *
    * True if the current browser is Google Chrome.
    */
-  IS_GC: typeof window !== 'undefined' && /Google Inc/.test(navigator.vendor),
+  static IS_GC = typeof window !== 'undefined' && /Google Inc/.test(navigator.vendor);
 
   /**
    * Variable: IS_CHROMEAPP
    *
    * True if the this is running inside a Chrome App.
    */
-  IS_CHROMEAPP:
+  static IS_CHROMEAPP =
     typeof window !== 'undefined' &&
     window.chrome != null &&
     chrome.app != null &&
-    chrome.app.runtime != null,
+    chrome.app.runtime != null;
 
   /**
    * Variable: IS_FF
    *
    * True if the current browser is Firefox.
    */
-  IS_FF: typeof window !== 'undefined' && typeof InstallTrigger !== 'undefined',
+  static IS_FF = typeof window !== 'undefined' && typeof InstallTrigger !== 'undefined';
 
   /**
    * Variable: IS_MT
@@ -332,7 +340,7 @@ const Client = {
    * for all Firefox-based browsers newer than or equal 3, such as Camino,
    * Iceweasel, Seamonkey and Iceape.
    */
-  IS_MT:
+  static IS_MT =
     typeof window !== 'undefined' &&
     ((navigator.userAgent.indexOf('Firefox/') >= 0 &&
       navigator.userAgent.indexOf('Firefox/1.') < 0 &&
@@ -343,16 +351,16 @@ const Client = {
       (navigator.userAgent.indexOf('SeaMonkey/') >= 0 &&
         navigator.userAgent.indexOf('SeaMonkey/1.') < 0) ||
       (navigator.userAgent.indexOf('Iceape/') >= 0 &&
-        navigator.userAgent.indexOf('Iceape/1.') < 0)),
+        navigator.userAgent.indexOf('Iceape/1.') < 0));
 
   /**
    * Variable: IS_SVG
    *
    * True if the browser supports SVG.
    */
-  IS_SVG:
+  static IS_SVG =
     typeof window !== 'undefined' &&
-    navigator.appName.toUpperCase() !== 'MICROSOFT INTERNET EXPLORER',
+    navigator.appName.toUpperCase() !== 'MICROSOFT INTERNET EXPLORER';
 
   /**
    * Variable: NO_FO
@@ -360,38 +368,38 @@ const Client = {
    * True if foreignObject support is not available. This is the case for
    * Opera, older SVG-based browsers and all versions of IE.
    */
-  NO_FO:
+  static NO_FO =
     typeof window !== 'undefined' &&
     (!document.createElementNS ||
       document.createElementNS(
         'http://www.w3.org/2000/svg',
         'foreignObject'
       ) !== '[object SVGForeignObjectElement]' ||
-      navigator.userAgent.indexOf('Opera/') >= 0),
+      navigator.userAgent.indexOf('Opera/') >= 0);
 
   /**
    * Variable: IS_WIN
    *
    * True if the client is a Windows.
    */
-  IS_WIN:
-    typeof window !== 'undefined' && navigator.appVersion.indexOf('Win') > 0,
+  static IS_WIN =
+    typeof window !== 'undefined' && navigator.appVersion.indexOf('Win') > 0;
 
   /**
    * Variable: IS_MAC
    *
    * True if the client is a Mac.
    */
-  IS_MAC:
-    typeof window !== 'undefined' && navigator.appVersion.indexOf('Mac') > 0,
+  static IS_MAC =
+    typeof window !== 'undefined' && navigator.appVersion.indexOf('Mac') > 0;
 
   /**
    * Variable: IS_CHROMEOS
    *
    * True if the client is a Chrome OS.
    */
-  IS_CHROMEOS:
-    typeof window !== 'undefined' && /\bCrOS\b/.test(navigator.appVersion),
+  static IS_CHROMEOS =
+    typeof window !== 'undefined' && /\bCrOS\b/.test(navigator.appVersion);
 
   /**
    * Variable: IS_TOUCH
@@ -399,28 +407,28 @@ const Client = {
    * True if this device supports touchstart/-move/-end events (Apple iOS,
    * Android, Chromebook and Chrome Browser on touch-enabled devices).
    */
-  IS_TOUCH:
-    typeof window !== 'undefined' && 'ontouchstart' in document.documentElement,
+  static IS_TOUCH =
+    typeof window !== 'undefined' && 'ontouchstart' in document.documentElement;
 
   /**
    * Variable: IS_POINTER
    *
    * True if this device supports Microsoft pointer events (always false on Macs).
    */
-  IS_POINTER:
+  static IS_POINTER =
     typeof window !== 'undefined' &&
     window.PointerEvent != null &&
-    !(navigator.appVersion.indexOf('Mac') > 0),
+    !(navigator.appVersion.indexOf('Mac') > 0);
 
   /**
    * Variable: IS_LOCAL
    *
    * True if the documents location does not start with http:// or https://.
    */
-  IS_LOCAL:
+  static IS_LOCAL =
     typeof window !== 'undefined' &&
     document.location.href.indexOf('http://') < 0 &&
-    document.location.href.indexOf('https://') < 0,
+    document.location.href.indexOf('https://') < 0;
 
   /**
    * Function: isBrowserSupported
@@ -437,9 +445,9 @@ const Client = {
    * }
    * (end)
    */
-  isBrowserSupported: () => {
+  static isBrowserSupported = () => {
     return Client.IS_SVG;
-  },
+  };
 
   /**
    * Function: link
@@ -461,7 +469,7 @@ const Client = {
    * doc - Optional parent document of the link node.
    * id - unique id for the link element to check if it already exists
    */
-  link: (rel, href, doc, id) => {
+  static link = (rel, href, doc, id) => {
     doc = doc || document;
 
     // Workaround for Operation Aborted in IE6 if base tag is used in head
@@ -478,7 +486,7 @@ const Client = {
 
     const head = doc.getElementsByTagName('head')[0];
     head.appendChild(link);
-  },
+  };
 };
 
 export default Client;

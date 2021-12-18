@@ -189,13 +189,12 @@ class MaxXmlRequest {
   /**
    * Returns the document element of the response XML document.
    */
-  getDocumentElement(): XMLDocument {
+  getDocumentElement(): HTMLElement | null {
     const doc = this.getXml();
 
     if (doc != null) {
       return doc.documentElement;
     }
-
     return null;
   }
 
@@ -214,7 +213,6 @@ class MaxXmlRequest {
     if (xml == null || xml.documentElement == null) {
       xml = new DOMParser().parseFromString(this.request.responseText, 'text/xml');
     }
-
     return xml;
   }
 
@@ -236,7 +234,6 @@ class MaxXmlRequest {
     if (this.isBinary() && req.overrideMimeType) {
       req.overrideMimeType('text/plain; charset=x-user-defined');
     }
-
     return req;
   }
 
@@ -462,7 +459,7 @@ export const load = (url: string) => {
  * ontimeout - Optional function to execute on timeout.
  * headers - Optional with headers, eg. {'Authorization': 'token xyz'}
  */
-export const get = (url, onload, onerror, binary, timeout, ontimeout, headers) => {
+export const get = (url: string, onload: Function, onerror: Function, binary: boolean, timeout: number, ontimeout: Function, headers: { [key: string]: string }) => {
   const req = new MaxXmlRequest(url, null, 'GET');
   const { setRequestHeaders } = req;
 

@@ -13,6 +13,8 @@ import InternalEvent from '../view/event/InternalEvent';
 import { getClientX, getClientY } from '../util/eventUtils';
 import { makeDraggable } from '../util/gestureUtils';
 import Editor from './Editor';
+import Cell from 'src/view/cell/Cell';
+import CellArray from 'src/view/cell/CellArray';
 
 /**
  * Toolbar for the editor. This modifies the state of the graph
@@ -314,8 +316,8 @@ class DefaultToolbar {
       const pt = convertPoint(graph.container, x, y);
 
       // Splits the target edge or inserts into target group
-      if (graph.isSplitEnabled() && graph.isSplitTarget(target, [vertex], evt)) {
-        return graph.splitEdge(target, [vertex], null, pt.x, pt.y);
+      if (graph.isSplitEnabled() && graph.isSplitTarget(target, new CellArray(vertex), evt)) {
+        return graph.splitEdge(target, new CellArray(vertex), null, pt.x, pt.y);
       }
       return this.editor.addVertex(target, vertex, pt.x, pt.y);
     }
@@ -418,8 +420,7 @@ class DefaultToolbar {
    * Destroys the {@link toolbar} associated with this object and removes all installed listeners.
    * This does normally not need to be called, the {@link toolbar} is destroyed automatically when the window unloads (in IE) by {@link Editor}.
    */
-  // destroy(): void;
-  destroy() {
+  destroy(): void {
     if (this.resetHandler != null) {
       this.editor.graph.removeListener('dblclick', this.resetHandler);
       this.editor.removeListener('escape', this.resetHandler);

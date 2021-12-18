@@ -8,30 +8,21 @@
 import Client from '../../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  ALIGN_BOTTOM,
-  ALIGN_CENTER,
-  ALIGN_MIDDLE,
-  ALIGN_RIGHT,
+  ALIGN,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
   DEFAULT_TEXT_DIRECTION,
-  DIALECT_STRICTHTML,
-  FONT_BOLD,
-  FONT_ITALIC,
-  FONT_STRIKETHROUGH,
-  FONT_UNDERLINE,
-  LINE_HEIGHT,
+  DIALECT,
+  FONT,
   NONE,
-  TEXT_DIRECTION_AUTO,
-  TEXT_DIRECTION_DEFAULT,
-  TEXT_DIRECTION_LTR,
-  TEXT_DIRECTION_RTL,
+  TEXT_DIRECTION,
   WORD_WRAP,
+  LINE_HEIGHT,
 } from '../../../util/constants';
 import { getAlignmentAsPoint, getBoundingBox } from '../../../util/utils';
 import Point from '../Point';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Shape from '../Shape';
 import Rectangle from '../Rectangle';
 import CellState from '../../cell/CellState';
@@ -48,7 +39,7 @@ import {
   TextDirectionValue,
   VAlignValue,
 } from '../../../types';
-import SvgCanvas2D from '../../../util/canvas/SvgCanvas2D';
+import SvgCanvas2D from '../../canvas/SvgCanvas2D';
 
 /**
  * Extends mxShape to implement a text shape.
@@ -65,8 +56,8 @@ class TextShape extends Shape {
   constructor(
     value: string | HTMLElement | SVGGElement,
     bounds: Rectangle,
-    align: AlignValue = ALIGN_CENTER,
-    valign: VAlignValue = ALIGN_MIDDLE,
+    align: AlignValue = ALIGN.CENTER,
+    valign: VAlignValue = ALIGN.MIDDLE,
     color = 'black',
     family = DEFAULT_FONTFAMILY,
     size = DEFAULT_FONTSIZE,
@@ -90,8 +81,8 @@ class TextShape extends Shape {
     this.value = value;
     this.bounds = bounds;
     this.color = color ?? 'black';
-    this.align = align ?? ALIGN_CENTER;
-    this.valign = valign ?? ALIGN_MIDDLE;
+    this.align = align ?? ALIGN.CENTER;
+    this.valign = valign ?? ALIGN.MIDDLE;
     this.family = family ?? DEFAULT_FONTFAMILY;
     this.size = size ?? DEFAULT_FONTSIZE;
     this.fontStyle = fontStyle ?? DEFAULT_FONTSTYLE;
@@ -276,7 +267,7 @@ class TextShape extends Shape {
       );
     } else {
       // Checks if text contains HTML markup
-      const realHtml = isNode(this.value) || this.dialect === DIALECT_STRICTHTML;
+      const realHtml = isNode(this.value) || this.dialect === DIALECT.STRICTHTML;
 
       // Always renders labels as HTML in VML
       const fmt = realHtml ? 'html' : '';
@@ -299,12 +290,12 @@ class TextShape extends Shape {
 
       let dir: TextDirectionValue = this.textDirection;
 
-      if (dir === TEXT_DIRECTION_AUTO && !realHtml) {
+      if (dir === TEXT_DIRECTION.AUTO && !realHtml) {
         dir = this.getAutoDirection();
       }
 
-      if (dir !== TEXT_DIRECTION_LTR && dir !== TEXT_DIRECTION_RTL) {
-        dir = TEXT_DIRECTION_DEFAULT;
+      if (dir !== TEXT_DIRECTION.LTR && dir !== TEXT_DIRECTION.RTL) {
+        dir = TEXT_DIRECTION.DEFAULT;
       }
 
       c.text(
@@ -336,7 +327,7 @@ class TextShape extends Shape {
       this.checkBounds() &&
       this.cacheEnabled &&
       this.lastValue === this.value &&
-      (isNode(this.value) || this.dialect === DIALECT_STRICTHTML)
+      (isNode(this.value) || this.dialect === DIALECT.STRICTHTML)
     ) {
       if (this.node.nodeName === 'DIV') {
         this.redrawHtmlShape();
@@ -356,7 +347,7 @@ class TextShape extends Shape {
     } else {
       super.redraw();
 
-      if (isNode(this.value) || this.dialect === DIALECT_STRICTHTML) {
+      if (isNode(this.value) || this.dialect === DIALECT.STRICTHTML) {
         this.lastValue = this.value;
       } else {
         this.lastValue = null;
@@ -373,8 +364,8 @@ class TextShape extends Shape {
     super.resetStyles();
 
     this.color = 'black';
-    this.align = ALIGN_CENTER;
-    this.valign = ALIGN_MIDDLE;
+    this.align = ALIGN.CENTER;
+    this.valign = ALIGN.MIDDLE;
     this.family = DEFAULT_FONTFAMILY;
     this.size = DEFAULT_FONTSIZE;
     this.fontStyle = DEFAULT_FONTSTYLE;
@@ -447,8 +438,8 @@ class TextShape extends Shape {
 
     // Returns the direction defined by the character
     return tmp && tmp.length > 0 && tmp[0] > 'z'
-      ? TEXT_DIRECTION_RTL
-      : TEXT_DIRECTION_LTR;
+      ? TEXT_DIRECTION.RTL
+      : TEXT_DIRECTION.LTR;
   }
 
   /**
@@ -484,8 +475,8 @@ class TextShape extends Shape {
     this.boundingBox = this.bounds.clone();
     const rot = this.getTextRotation();
 
-    const h = this.style?.labelPosition ?? ALIGN_CENTER;
-    const v = this.style?.verticalLabelPosition ?? ALIGN_MIDDLE;
+    const h = this.style?.labelPosition ?? ALIGN.CENTER;
+    const v = this.style?.verticalLabelPosition ?? ALIGN.MIDDLE;
 
     if (
       !this.ignoreStringSize &&
@@ -493,8 +484,8 @@ class TextShape extends Shape {
       this.overflow !== 'fill' &&
       (!this.clipped ||
         !this.ignoreClippedStringSize ||
-        h !== ALIGN_CENTER ||
-        v !== ALIGN_MIDDLE)
+        h !== ALIGN.CENTER ||
+        v !== ALIGN.MIDDLE)
     ) {
       let ow = null;
       let oh = null;
@@ -626,7 +617,7 @@ class TextShape extends Shape {
   getHtmlValue() {
     let val = this.value as string;
 
-    if (this.dialect !== DIALECT_STRICTHTML) {
+    if (this.dialect !== DIALECT.STRICTHTML) {
       // @ts-ignore
       val = htmlEntities(val, false);
     }
@@ -652,21 +643,21 @@ class TextShape extends Shape {
         this.color
       }; line-height: ${lh}; pointer-events: ${this.pointerEvents ? 'all' : 'none'}; `;
 
-    if ((this.fontStyle & FONT_BOLD) === FONT_BOLD) {
+    if ((this.fontStyle & FONT.BOLD) === FONT.BOLD) {
       css += 'font-weight: bold; ';
     }
 
-    if ((this.fontStyle & FONT_ITALIC) === FONT_ITALIC) {
+    if ((this.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
       css += 'font-style: italic; ';
     }
 
     const deco = [];
 
-    if ((this.fontStyle & FONT_UNDERLINE) === FONT_UNDERLINE) {
+    if ((this.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
       deco.push('underline');
     }
 
-    if ((this.fontStyle & FONT_STRIKETHROUGH) === FONT_STRIKETHROUGH) {
+    if ((this.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
       deco.push('line-through');
     }
 
@@ -771,7 +762,7 @@ class TextShape extends Shape {
     } else {
       let val = this.value as string;
 
-      if (this.dialect !== DIALECT_STRICTHTML) {
+      if (this.dialect !== DIALECT.STRICTHTML) {
         // LATER: Can be cached in updateValue
         val = htmlEntities(val, false);
       }
@@ -799,7 +790,7 @@ class TextShape extends Shape {
     } else {
       let val = this.value as string;
 
-      if (this.dialect !== DIALECT_STRICTHTML) {
+      if (this.dialect !== DIALECT.STRICTHTML) {
         val = htmlEntities(val, false);
       }
 
@@ -845,11 +836,11 @@ class TextShape extends Shape {
       if (divs.length > 0) {
         let dir = this.textDirection;
 
-        if (dir === TEXT_DIRECTION_AUTO && this.dialect !== DIALECT_STRICTHTML) {
+        if (dir === TEXT_DIRECTION.AUTO && this.dialect !== DIALECT.STRICTHTML) {
           dir = this.getAutoDirection();
         }
 
-        if (dir === TEXT_DIRECTION_LTR || dir === TEXT_DIRECTION_RTL) {
+        if (dir === TEXT_DIRECTION.LTR || dir === TEXT_DIRECTION.RTL) {
           divs[divs.length - 1].setAttribute('dir', dir);
         } else {
           divs[divs.length - 1].removeAttribute('dir');
@@ -875,13 +866,13 @@ class TextShape extends Shape {
     style.verticalAlign = 'top';
     style.color = this.color;
 
-    if ((this.fontStyle & FONT_BOLD) === FONT_BOLD) {
+    if ((this.fontStyle & FONT.BOLD) === FONT.BOLD) {
       style.fontWeight = 'bold';
     } else {
       style.fontWeight = '';
     }
 
-    if ((this.fontStyle & FONT_ITALIC) === FONT_ITALIC) {
+    if ((this.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
       style.fontStyle = 'italic';
     } else {
       style.fontStyle = '';
@@ -889,19 +880,19 @@ class TextShape extends Shape {
 
     const txtDecor = [];
 
-    if ((this.fontStyle & FONT_UNDERLINE) === FONT_UNDERLINE) {
+    if ((this.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
       txtDecor.push('underline');
     }
 
-    if ((this.fontStyle & FONT_STRIKETHROUGH) === FONT_STRIKETHROUGH) {
+    if ((this.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
       txtDecor.push('line-through');
     }
 
     style.textDecoration = txtDecor.join(' ');
 
-    if (this.align === ALIGN_CENTER) {
+    if (this.align === ALIGN.CENTER) {
       style.textAlign = 'center';
-    } else if (this.align === ALIGN_RIGHT) {
+    } else if (this.align === ALIGN.RIGHT) {
       style.textAlign = 'right';
     } else {
       style.textAlign = 'left';
@@ -995,17 +986,17 @@ class TextShape extends Shape {
     let dx = 0;
     let dy = 0;
 
-    if (this.align === ALIGN_CENTER) {
+    if (this.align === ALIGN.CENTER) {
       dx = (this.spacingLeft - this.spacingRight) / 2;
-    } else if (this.align === ALIGN_RIGHT) {
+    } else if (this.align === ALIGN.RIGHT) {
       dx = -this.spacingRight - this.baseSpacingRight;
     } else {
       dx = this.spacingLeft + this.baseSpacingLeft;
     }
 
-    if (this.valign === ALIGN_MIDDLE) {
+    if (this.valign === ALIGN.MIDDLE) {
       dy = (this.spacingTop - this.spacingBottom) / 2;
-    } else if (this.valign === ALIGN_BOTTOM) {
+    } else if (this.valign === ALIGN.BOTTOM) {
       dy = -this.spacingBottom - this.baseSpacingBottom;
     } else {
       dy = this.spacingTop + this.baseSpacingTop;

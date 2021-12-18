@@ -22,7 +22,7 @@ import PanningHandler from '../handler/PanningHandler';
 import ConnectionHandler from '../handler/ConnectionHandler';
 import Point from '../geometry/Point';
 import { convertPoint, mixInto } from '../../util/utils';
-import { NONE, SHAPE_SWIMLANE } from '../../util/constants';
+import { NONE, SHAPE } from '../../util/constants';
 import Client from '../../Client';
 import EventSource from '../event/EventSource';
 import CellEditor from '../handler/CellEditor';

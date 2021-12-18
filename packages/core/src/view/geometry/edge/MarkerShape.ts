@@ -5,12 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 import { ArrowType } from '../../../types';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
-import {
-  ARROW_CLASSIC,
-  ARROW_CLASSIC_THIN,
-  ARROW_DIAMOND,
-} from '../../../util/constants';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import { ARROW } from '../../../util/constants';
 import Point from '../Point';
 import Shape from '../Shape';
 
@@ -89,7 +85,7 @@ class MarkerShape {
       pt.x -= endOffsetX;
       pt.y -= endOffsetY;
 
-      const f = type !== ARROW_CLASSIC && type !== ARROW_CLASSIC_THIN ? 1 : 3 / 4;
+      const f = type !== ARROW.CLASSIC && type !== ARROW.CLASSIC_THIN ? 1 : 3 / 4;
       pe.x += -unitX * f - endOffsetX;
       pe.y += -unitY * f - endOffsetY;
 
@@ -101,7 +97,7 @@ class MarkerShape {
           pt.y - unitY + unitX / widthFactor
         );
 
-        if (type === ARROW_CLASSIC || type === ARROW_CLASSIC_THIN) {
+        if (type === ARROW.CLASSIC || type === ARROW.CLASSIC_THIN) {
           canvas.lineTo(pt.x - (unitX * 3) / 4, pt.y - (unitY * 3) / 4);
         }
 
@@ -222,7 +218,7 @@ class MarkerShape {
     // only half the strokewidth is processed ). Or 0.9862 for thin diamond.
     // Note these values and the tk variable below are dependent, update
     // both together (saves trig hard coding it).
-    const swFactor = type === ARROW_DIAMOND ? 0.7071 : 0.9862;
+    const swFactor = type === ARROW.DIAMOND ? 0.7071 : 0.9862;
     const endOffsetX = unitX * sw * swFactor;
     const endOffsetY = unitY * sw * swFactor;
 
@@ -237,7 +233,7 @@ class MarkerShape {
     pe.y += -unitY - endOffsetY;
 
     // thickness factor for diamond
-    const tk = type === ARROW_DIAMOND ? 2 : 3.4;
+    const tk = type === ARROW.DIAMOND ? 2 : 3.4;
 
     return () => {
       canvas.begin();

@@ -21,32 +21,14 @@ import ImageShape from '../geometry/node/ImageShape';
 import LabelShape from '../geometry/node/LabelShape';
 import TextShape from '../geometry/node/TextShape';
 import {
-  ALIGN_CENTER,
-  ALIGN_MIDDLE,
+  ALIGN,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
   DEFAULT_TEXT_DIRECTION,
-  DIALECT_PREFERHTML,
-  DIALECT_STRICTHTML,
-  DIALECT_SVG,
-  SHAPE_ACTOR,
-  SHAPE_ARROW,
-  SHAPE_ARROW_CONNECTOR,
-  SHAPE_CLOUD,
-  SHAPE_CONNECTOR,
-  SHAPE_CYLINDER,
-  SHAPE_DOUBLE_ELLIPSE,
-  SHAPE_ELLIPSE,
-  SHAPE_HEXAGON,
-  SHAPE_IMAGE,
-  SHAPE_LABEL,
-  SHAPE_LINE,
-  SHAPE_RECTANGLE,
-  SHAPE_RHOMBUS,
-  SHAPE_SWIMLANE,
-  SHAPE_TRIANGLE,
+  DIALECT,
 } from '../../util/constants';
+import SHAPE from '../geometry/shapeConstants';
 import {
   convertPoint,
   equalEntries,
@@ -433,7 +415,7 @@ class CellRenderer {
       state.text = new this.defaultTextShape(
         value,
         new Rectangle(),
-        state.style.align ?? ALIGN_CENTER,
+        state.style.align ?? ALIGN.CENTER,
         state.getVerticalAlign(),
         state.style.fontColor,
         state.style.fontFamily,
@@ -454,7 +436,7 @@ class CellRenderer {
         state.style.textDirection ?? DEFAULT_TEXT_DIRECTION
       );
       state.text.opacity = state.style.textOpacity ?? 100;
-      state.text.dialect = isForceHtml ? DIALECT_STRICTHTML : state.view.graph.dialect;
+      state.text.dialect = isForceHtml ? DIALECT.STRICTHTML : state.view.graph.dialect;
       state.text.style = state.style;
       state.text.state = state;
       this.initializeLabel(state, state.text);
@@ -539,7 +521,7 @@ class CellRenderer {
    * state - <CellState> whose label should be initialized.
    */
   initializeLabel(state: CellState, shape: Shape): void {
-    if (Client.IS_SVG && Client.NO_FO && shape.dialect !== DIALECT_SVG) {
+    if (Client.IS_SVG && Client.NO_FO && shape.dialect !== DIALECT.SVG) {
       shape.init(state.view.graph.container);
     } else {
       shape.init(state.view.getDrawPane());
@@ -722,10 +704,10 @@ class CellRenderer {
     // should go into the graph container directly in order to be clickable. Otherwise
     // it is obscured by the HTML label that overlaps the cell.
     const isForceHtml =
-      graph.isHtmlLabel(state.cell) && Client.NO_FO && graph.dialect === DIALECT_SVG;
+      graph.isHtmlLabel(state.cell) && Client.NO_FO && graph.dialect === DIALECT.SVG;
 
     if (isForceHtml) {
-      control.dialect = DIALECT_PREFERHTML;
+      control.dialect = DIALECT.PREFERHTML;
       control.init(graph.container);
       control.node.style.zIndex = String(1);
     } else {
@@ -847,7 +829,7 @@ class CellRenderer {
 
       if (
         (source &&
-          graph.dialect !== DIALECT_SVG &&
+          graph.dialect !== DIALECT.SVG &&
           // @ts-ignore nodeName should exist
           source.nodeName === 'IMG') ||
         Client.IS_TOUCH
@@ -1130,10 +1112,10 @@ class CellRenderer {
 
     // Shape can modify its label bounds
     if (state.shape != null) {
-      const hpos = state.style.labelPosition ?? ALIGN_CENTER;
-      const vpos = state.style.verticalLabelPosition ?? ALIGN_MIDDLE;
+      const hpos = state.style.labelPosition ?? ALIGN.CENTER;
+      const vpos = state.style.verticalLabelPosition ?? ALIGN.MIDDLE;
 
-      if (hpos === ALIGN_CENTER && vpos === ALIGN_MIDDLE) {
+      if (hpos === ALIGN.CENTER && vpos === ALIGN.MIDDLE) {
         bounds = state.shape.getLabelBounds(bounds);
       }
     }
@@ -1175,14 +1157,14 @@ class CellRenderer {
       bounds.x += spacing.x * s;
       bounds.y += spacing.y * s;
 
-      const hpos = state.style.labelPosition ?? ALIGN_CENTER;
-      const vpos = state.style.verticalLabelPosition ?? ALIGN_MIDDLE;
+      const hpos = state.style.labelPosition ?? ALIGN.CENTER;
+      const vpos = state.style.verticalLabelPosition ?? ALIGN.MIDDLE;
       const lw = state.style.labelWidth ?? null;
 
       bounds.width = Math.max(
         0,
         bounds.width -
-          (hpos === ALIGN_CENTER && lw == null
+          (hpos === ALIGN.CENTER && lw == null
             ? // @ts-ignore
               state.text.spacingLeft * s + state.text.spacingRight * s
             : 0)
@@ -1190,7 +1172,7 @@ class CellRenderer {
       bounds.height = Math.max(
         0,
         bounds.height -
-          (vpos === ALIGN_MIDDLE
+          (vpos === ALIGN.MIDDLE
             ? // @ts-ignore
               state.text.spacingTop * s + state.text.spacingBottom * s
             : 0)
@@ -1676,22 +1658,22 @@ class CellRenderer {
 
 // Add default shapes into the default shapes array
 for (const [shapeName, shapeClass] of [
-  [SHAPE_RECTANGLE, RectangleShape],
-  [SHAPE_ELLIPSE, EllipseShape],
-  [SHAPE_RHOMBUS, RhombusShape],
-  [SHAPE_CYLINDER, CylinderShape],
-  [SHAPE_CONNECTOR, ConnectorShape],
-  [SHAPE_ACTOR, ActorShape],
-  [SHAPE_TRIANGLE, TriangleShape],
-  [SHAPE_HEXAGON, HexagonShape],
-  [SHAPE_CLOUD, CloudShape],
-  [SHAPE_LINE, LineShape],
-  [SHAPE_ARROW, ArrowShape],
-  [SHAPE_ARROW_CONNECTOR, ArrowConnectorShape],
-  [SHAPE_DOUBLE_ELLIPSE, DoubleEllipseShape],
-  [SHAPE_SWIMLANE, SwimlaneShape],
-  [SHAPE_IMAGE, ImageShape],
-  [SHAPE_LABEL, LabelShape],
+  [SHAPE.RECTANGLE, RectangleShape],
+  [SHAPE.ELLIPSE, EllipseShape],
+  [SHAPE.RHOMBUS, RhombusShape],
+  [SHAPE.CYLINDER, CylinderShape],
+  [SHAPE.CONNECTOR, ConnectorShape],
+  [SHAPE.ACTOR, ActorShape],
+  [SHAPE.TRIANGLE, TriangleShape],
+  [SHAPE.HEXAGON, HexagonShape],
+  [SHAPE.CLOUD, CloudShape],
+  [SHAPE.LINE, LineShape],
+  [SHAPE.ARROW, ArrowShape],
+  [SHAPE.ARROW_CONNECTOR, ArrowConnectorShape],
+  [SHAPE.DOUBLE_ELLIPSE, DoubleEllipseShape],
+  [SHAPE.SWIMLANE, SwimlaneShape],
+  [SHAPE.IMAGE, ImageShape],
+  [SHAPE.LABEL, LabelShape],
 ]) {
   // @ts-ignore
   CellRenderer.registerShape(shapeName, shapeClass);

@@ -8,10 +8,9 @@ import Point from '../geometry/Point';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import {
-  CURSOR_CONNECT,
+  CURSOR,
   DEFAULT_VALID_COLOR,
-  DIALECT_STRICTHTML,
-  DIALECT_SVG,
+  DIALECT,
   HIGHLIGHT_STROKEWIDTH,
   INVALID_COLOR,
   NONE,
@@ -28,7 +27,7 @@ import ConstraintHandler from './ConstraintHandler';
 import PolylineShape from '../geometry/edge/PolylineShape';
 import EventSource from '../event/EventSource';
 import Rectangle from '../geometry/Rectangle';
-import MaxLog from '../../util/gui/MaxLog';
+import MaxLog from '../../gui/MaxLog';
 import {
   getClientX,
   getClientY,
@@ -558,7 +557,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
         : new PolylineShape([], INVALID_COLOR);
 
     if (shape && shape.node) {
-      shape.dialect = DIALECT_SVG;
+      shape.dialect = DIALECT.SVG;
       shape.scale = this.graph.view.scale;
       shape.pointerEvents = false;
       shape.isDashed = true;
@@ -815,10 +814,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
       icon.preserveImageAspect = false;
 
       if (this.isMoveIconToFrontForState(state)) {
-        icon.dialect = DIALECT_STRICTHTML;
+        icon.dialect = DIALECT.STRICTHTML;
         icon.init(this.graph.container);
       } else {
-        icon.dialect = DIALECT_SVG;
+        icon.dialect = DIALECT.SVG;
         icon.init(this.graph.getView().getOverlayPane());
 
         // Move the icon back in the overlay pane
@@ -827,7 +826,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
         }
       }
 
-      icon.node.style.cursor = CURSOR_CONNECT;
+      icon.node.style.cursor = CURSOR.CONNECT;
 
       // Events transparency
       const getState = () => {
@@ -1441,7 +1440,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
           this.icons = this.createIcons(this.currentState);
 
           if (this.icons.length === 0) {
-            this.currentState.setCursor(CURSOR_CONNECT);
+            this.currentState.setCursor(CURSOR.CONNECT);
             me.consume();
           }
         }

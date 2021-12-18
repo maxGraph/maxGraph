@@ -5,8 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { Graph } from '../../view/Graph';
-import CellArray from '../../view/cell/CellArray';
+import { Graph } from '../view/Graph';
+import CellArray from '../view/cell/CellArray';
 
 /**
  * @class

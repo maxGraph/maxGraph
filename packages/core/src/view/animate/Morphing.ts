@@ -7,6 +7,10 @@
 import Point from '../geometry/Point';
 import CellStatePreview from '../cell/CellStatePreview';
 import Animation from './Animation';
+import CellState from '../cell/CellState';
+import Cell from '../cell/Cell';
+import { Graph } from '../Graph';
+import CellArray from '../cell/CellArray';
 
 /**
  *
@@ -46,11 +50,11 @@ import Animation from './Animation';
  * delay - Optional delay between the animation steps. Passed to <Animation>.
  */
 class Morphing extends Animation {
-  constructor(graph, steps, ease, delay) {
+  constructor(graph: Graph, steps: number=6, ease: number=1.5, delay: number) {
     super(delay);
     this.graph = graph;
-    this.steps = steps != null ? steps : 6;
-    this.ease = ease != null ? ease : 1.5;
+    this.steps = steps;
+    this.ease = ease;
   }
 
   /**
@@ -58,21 +62,21 @@ class Morphing extends Animation {
    *
    * Specifies the delay between the animation steps. Defaul is 30ms.
    */
-  graph = null;
+  graph: Graph;
 
   /**
    * Variable: steps
    *
    * Specifies the maximum number of steps for the morphing.
    */
-  steps = null;
+  steps: number;
 
   /**
    * Variable: step
    *
    * Contains the current step.
    */
-  step = 0;
+  step: number = 0;
 
   /**
    * Variable: ease
@@ -80,7 +84,7 @@ class Morphing extends Animation {
    * Ease-off for movement towards the given vector. Larger values are
    * slower and smoother. Default is 4.
    */
-  ease = null;
+  ease: number;
 
   /**
    * Variable: cells
@@ -89,7 +93,7 @@ class Morphing extends Animation {
    * then all cells are checked and animated if they have been moved
    * in the current transaction.
    */
-  cells = null;
+  cells: CellArray | null = null;
 
   /**
    * Function: updateAnimation
@@ -102,13 +106,13 @@ class Morphing extends Animation {
 
     if (this.cells != null) {
       // Animates the given cells individually without recursion
-      for (let i = 0; i < this.cells.length; i += 1) {
-        this.animateCell(this.cells[i], move, false);
+      for (let cell of this.cells) {
+        this.animateCell(cell, move, false);
       }
     } else {
       // Animates all changed cells by using recursion to find
       // the changed cells but not for the animation itself
-      this.animateCell(this.graph.getModel().getRoot(), move, true);
+      this.animateCell(<Cell>this.graph.getModel().getRoot(), move, true);
     }
 
     this.show(move);
@@ -121,18 +125,18 @@ class Morphing extends Animation {
   /**
    * Function: show
    *
-   * Shows the changes in the given <mxCellStatePreview>.
+   * Shows the changes in the given <CellStatePreview>.
    */
-  show(move) {
+  show(move: CellStatePreview) {
     move.show();
   }
 
   /**
    * Function: animateCell
    *
-   * Animates the given cell state using <mxCellStatePreview.moveState>.
+   * Animates the given cell state using <CellStatePreview.moveState>.
    */
-  animateCell(cell, move, recurse) {
+  animateCell(cell: Cell, move: CellStatePreview, recurse: boolean=false) {
     const state = this.graph.getView().getState(cell);
     let delta = null;
 
@@ -174,7 +178,7 @@ class Morphing extends Animation {
    * Returns true if the animation should not recursively find more
    * deltas for children if the given parent state has been animated.
    */
-  stopRecursion(state, delta) {
+  stopRecursion(state: CellState | null=null, delta: Point | null=null) {
     return delta != null && (delta.x != 0 || delta.y != 0);
   }
 
@@ -184,8 +188,8 @@ class Morphing extends Animation {
    * Returns the vector between the current rendered state and the future
    * location of the state after the display will be updated.
    */
-  getDelta(state) {
-    const origin = this.getOriginForCell(state.cell);
+  getDelta(state: CellState) {
+    const origin = <Point>this.getOriginForCell(state.cell);
     const translate = this.graph.getView().getTranslate();
     const scale = this.graph.getView().getScale();
     const x = state.x / scale - translate.x;
@@ -201,16 +205,16 @@ class Morphing extends Animation {
    * by using caching inside this method as the result per cell never changes
    * during the lifecycle of this object.
    */
-  getOriginForCell(cell) {
+  getOriginForCell(cell: Cell | null=null): Point | null {
     let result = null;
 
     if (cell != null) {
       const parent = cell.getParent();
       const geo = cell.getGeometry();
-      result = this.getOriginForCell(parent);
+      result = <Point>this.getOriginForCell(parent);
 
       // TODO: Handle offsets
-      if (geo != null) {
+      if (geo != null && parent != null) {
         if (geo.relative) {
           const pgeo = parent.getGeometry();
 
@@ -229,7 +233,6 @@ class Morphing extends Animation {
       const t = this.graph.view.getTranslate();
       result = new Point(-t.x, -t.y);
     }
-
     return result;
   }
 }

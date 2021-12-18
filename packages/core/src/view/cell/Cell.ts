@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { NODETYPE_ELEMENT } from '../../util/constants';
+import { NODETYPE } from '../../util/constants';
 import Geometry from '../geometry/Geometry';
 import CellOverlay from './CellOverlay';
 import { clone } from '../../util/cloneUtils';
@@ -584,7 +584,7 @@ class Cell {
 
     return (
       isNotNullish(userObject) &&
-      (userObject.nodeType === NODETYPE_ELEMENT && userObject.hasAttribute
+      (userObject.nodeType === NODETYPE.ELEMENT && userObject.hasAttribute
         ? userObject.hasAttribute(name)
         : isNotNullish(userObject.getAttribute(name)))
     );
@@ -603,7 +603,7 @@ class Cell {
   getAttribute(name: string, defaultValue?: any): any {
     const userObject = this.getValue();
     const val =
-      isNotNullish(userObject) && userObject.nodeType === NODETYPE_ELEMENT
+      isNotNullish(userObject) && userObject.nodeType === NODETYPE.ELEMENT
         ? userObject.getAttribute(name)
         : null;
 
@@ -621,7 +621,7 @@ class Cell {
   setAttribute(name: string, value: any): void {
     const userObject = this.getValue();
 
-    if (isNotNullish(userObject) && userObject.nodeType === NODETYPE_ELEMENT) {
+    if (isNotNullish(userObject) && userObject.nodeType === NODETYPE.ELEMENT) {
       userObject.setAttribute(name, value);
     }
   }

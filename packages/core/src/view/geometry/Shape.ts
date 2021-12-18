@@ -12,10 +12,7 @@ import {
   mod,
 } from '../../util/utils';
 import {
-  DIRECTION_EAST,
-  DIRECTION_NORTH,
-  DIRECTION_SOUTH,
-  DIRECTION_WEST,
+  DIRECTION,
   LINE_ARCSIZE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
@@ -98,7 +95,7 @@ class Shape {
 
   gradient: ColorValue = NONE;
 
-  gradientDirection: DirectionValue = DIRECTION_EAST;
+  gradientDirection: DirectionValue = DIRECTION.EAST;
 
   fillOpacity = 100;
 
@@ -118,7 +115,7 @@ class Shape {
 
   endArrow: ArrowType = NONE;
 
-  direction: DirectionValue = DIRECTION_EAST;
+  direction: DirectionValue = DIRECTION.EAST;
 
   flipH = false;
 
@@ -292,7 +289,7 @@ class Shape {
 
   indicatorGradientColor: ColorValue = NONE;
 
-  indicatorDirection: DirectionValue = DIRECTION_EAST;
+  indicatorDirection: DirectionValue = DIRECTION.EAST;
 
   indicatorImageSrc: string | null = null;
 
@@ -445,13 +442,13 @@ class Shape {
    * change the rectangle in-place. This implementation returns the given rect.
    */
   getLabelBounds(rect: Rectangle) {
-    const d = this.style?.direction ?? DIRECTION_EAST;
+    const d = this.style?.direction ?? DIRECTION.EAST;
     let bounds = rect.clone();
 
     // Normalizes argument for getLabelMargins hook
     if (
-      d !== DIRECTION_SOUTH &&
-      d !== DIRECTION_NORTH &&
+      d !== DIRECTION.SOUTH &&
+      d !== DIRECTION.NORTH &&
       this.state &&
       this.state.text &&
       this.state.text.isPaintBoundsInverted()
@@ -995,13 +992,13 @@ class Shape {
 
     this.fill = NONE;
     this.gradient = NONE;
-    this.gradientDirection = DIRECTION_EAST;
+    this.gradientDirection = DIRECTION.EAST;
     this.stroke = NONE;
     this.startSize = 1;
     this.endSize = 1;
     this.startArrow = NONE;
     this.endArrow = NONE;
-    this.direction = DIRECTION_EAST;
+    this.direction = DIRECTION.EAST;
 
     this.isShadow = false;
     this.isDashed = false;
@@ -1067,7 +1064,7 @@ class Shape {
       this.flipH = !!this.style.flipH;
       this.flipV = !!this.style.flipV;
 
-      if (this.direction === DIRECTION_NORTH || this.direction === DIRECTION_SOUTH) {
+      if (this.direction === DIRECTION.NORTH || this.direction === DIRECTION.SOUTH) {
         const tmp = this.flipH;
         this.flipH = this.flipV;
         this.flipV = tmp;
@@ -1164,7 +1161,7 @@ class Shape {
     const bb = this.bounds.clone();
     if (
       (this.stencil &&
-        (this.direction === DIRECTION_NORTH || this.direction === DIRECTION_SOUTH)) ||
+        (this.direction === DIRECTION.NORTH || this.direction === DIRECTION.SOUTH)) ||
       this.isPaintBoundsInverted()
     ) {
       bb.rotate90();
@@ -1195,7 +1192,7 @@ class Shape {
     // Stencil implements inversion via aspect
     return (
       !this.stencil &&
-      (this.direction === DIRECTION_NORTH || this.direction === DIRECTION_SOUTH)
+      (this.direction === DIRECTION.NORTH || this.direction === DIRECTION.SOUTH)
     );
   }
 
@@ -1231,11 +1228,11 @@ class Shape {
   getShapeRotation() {
     let rot = this.getRotation();
 
-    if (this.direction === DIRECTION_NORTH) {
+    if (this.direction === DIRECTION.NORTH) {
       rot += 270;
-    } else if (this.direction === DIRECTION_WEST) {
+    } else if (this.direction === DIRECTION.WEST) {
       rot += 180;
-    } else if (this.direction === DIRECTION_SOUTH) {
+    } else if (this.direction === DIRECTION.SOUTH) {
       rot += 90;
     }
 

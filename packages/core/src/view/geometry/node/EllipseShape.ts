@@ -5,8 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 import Shape from '../Shape';
-import AbstractCanvas2D from '../../../../util/canvas/AbstractCanvas2D';
-import Rectangle from '../../Rectangle';
+import AbstractCanvas2D from '../../../view/canvas/AbstractCanvas2D';
+import Rectangle from '../Rectangle';
 
 /**
  * Extends mxShape to implement an ellipse shape.

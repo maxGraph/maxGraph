@@ -5,18 +5,18 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Client from '../Client';
-import InternalEvent from './event/InternalEvent';
+import Client from '../../Client';
+import InternalEvent from '../event/InternalEvent';
 import {
   contains,
   convertPoint,
   getRotatedPoint,
   isNumeric,
   toRadians,
-} from '../util/utils';
-import RectangleShape from './geometry/node/RectangleShape';
-import mxGuide from './other/Guide';
-import Point from './geometry/Point';
+} from '../../util/utils';
+import RectangleShape from '../geometry/node/RectangleShape';
+import mxGuide from '../other/Guide';
+import Point from '../geometry/Point';
 import {
   CURSOR,
   DIALECT,
@@ -24,26 +24,26 @@ import {
   INVALID_CONNECT_TARGET_COLOR,
   NONE,
   VALID_COLOR,
-} from '../util/constants';
-import Dictionary from '../util/Dictionary';
-import CellHighlight from './cell/CellHighlight';
-import Rectangle from './geometry/Rectangle';
-import { getClientX, getClientY, isAltDown, isMultiTouchEvent } from '../util/eventUtils';
-import { Graph } from './Graph';
-import Guide from './other/Guide';
-import Shape from './geometry/Shape';
-import InternalMouseEvent from './event/InternalMouseEvent';
-import SelectionCellsHandler from './handler/SelectionCellsHandler';
-import Cell from './cell/Cell';
-import PopupMenuHandler from './handler/PopupMenuHandler';
-import EventSource from './event/EventSource';
-import CellArray from './cell/CellArray';
-import CellState from './cell/CellState';
-import EventObject from './event/EventObject';
-import ConnectionHandler from './handler/ConnectionHandler';
-import CellEditor from './handler/CellEditor';
+} from '../../util/constants';
+import Dictionary from '../../util/Dictionary';
+import CellHighlight from '../cell/CellHighlight';
+import Rectangle from '../geometry/Rectangle';
+import { getClientX, getClientY, isAltDown, isMultiTouchEvent } from '../../util/eventUtils';
+import { Graph } from '../Graph';
+import Guide from '../other/Guide';
+import Shape from '../geometry/Shape';
+import InternalMouseEvent from '../event/InternalMouseEvent';
+import SelectionCellsHandler from './SelectionCellsHandler';
+import Cell from '../cell/Cell';
+import PopupMenuHandler from './PopupMenuHandler';
+import EventSource from '../event/EventSource';
+import CellArray from '../cell/CellArray';
+import CellState from '../cell/CellState';
+import EventObject from '../event/EventObject';
+import ConnectionHandler from './ConnectionHandler';
+import CellEditor from './CellEditor';
 
-import type { ColorValue, GraphPlugin } from '../types';
+import type { ColorValue, GraphPlugin } from '../../types';
 
 /**
  * Class: mxGraphHandler

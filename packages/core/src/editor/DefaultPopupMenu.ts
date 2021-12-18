@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import Cell from '../view/cell/Cell';
-import PopupMenu from '../util/gui/PopupMenu';
+import PopupMenu from '../gui/PopupMenu';
 import { getTextContent } from '../util/domUtils';
 import Resources from '../util/Resources';
 import Editor from './Editor';
@@ -19,7 +19,7 @@ import { PopupMenuItem } from 'src/types';
  * This class uses the {@link DefaultPopupMenuCodec} to read configuration data into an existing instance, however, the actual parsing is done by this class during program execution, so the format is described below.
  */
 class DefaultPopupMenu {
-  constructor(config: Element) {
+  constructor(config: Element | null=null) {
     this.config = config;
   }
 
@@ -33,7 +33,7 @@ class DefaultPopupMenu {
   /**
    * XML node used as the description of new menu items.  This node is used in {@link createMenu} to dynamically create the menu items if their respective conditions evaluate to true for the given arguments.
    */
-  config: Element;
+  config: Element | null;
 
   /**
    * This function is called from {@link Editor} to add items to the

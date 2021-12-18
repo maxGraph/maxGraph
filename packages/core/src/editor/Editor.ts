@@ -14,23 +14,13 @@ import DefaultToolbar from './DefaultToolbar';
 import StackLayout from '../view/layout/StackLayout';
 import EventObject from '../view/event/EventObject';
 import { getOffset } from '../util/utils';
-import Codec from '../util/serialization/Codec';
-import MaxWindow, { error } from '../util/gui/MaxWindow';
-import MaxForm from '../util/gui/MaxForm';
+import Codec from '../serialization/Codec';
+import MaxWindow, { error } from '../gui/MaxWindow';
+import MaxForm from '../gui/MaxForm';
 import Outline from '../view/other/Outline';
 import Cell from '../view/cell/Cell';
 import Geometry from '../view/geometry/Geometry';
-import {
-  ALIGN_BOTTOM,
-  ALIGN_CENTER,
-  ALIGN_LEFT,
-  ALIGN_MIDDLE,
-  ALIGN_RIGHT,
-  ALIGN_TOP,
-  FONT_BOLD,
-  FONT_ITALIC,
-  FONT_UNDERLINE,
-} from '../util/constants';
+import { ALIGN, FONT } from '../util/constants';
 import { Graph } from '../view/Graph';
 import SwimlaneManager from '../view/layout/SwimlaneManager';
 import LayoutManager from '../view/layout/LayoutManager';
@@ -40,11 +30,11 @@ import RootChange from '../view/undoable_changes/RootChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
 import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
 import PrintPreview from '../view/other/PrintPreview';
-import mxClipboard from '../util/storage/Clipboard';
-import MaxLog from '../util/gui/MaxLog';
+import mxClipboard from '../util/Clipboard';
+import MaxLog from '../gui/MaxLog';
 import { isNode } from '../util/domUtils';
 import { getViewXml, getXml } from '../util/xmlUtils';
-import { load, post, submit } from '../util/network/MaxXmlRequest';
+import { load, post, submit } from '../util/MaxXmlRequest';
 
 /**
  * Installs the required language resources at class
@@ -410,10 +400,10 @@ if (mxLoadResources) {
  * @extends EventSource
  */
 class Editor extends EventSource {
-  constructor(config) {
+  constructor(config: Element) {
     super();
 
-    this.actions = [];
+    this.actions = {};
     this.addActions();
 
     // Executes the following only if a document has been instanciated.
@@ -445,6 +435,8 @@ class Editor extends EventSource {
       }
     }
   }
+
+  onInit: Function | null = null;
 
   /**
    * Specifies the resource key for the zoom dialog. If the resource for this
@@ -615,7 +607,7 @@ class Editor extends EventSource {
    * cells into the graph. This is assigned from the
    * {@link DefaultToolbar} if a vertex-tool is clicked.
    */
-  insertFunction: Function = null;
+  insertFunction: Function | null = null;
 
   /**
    * Group: Templates
@@ -763,7 +755,7 @@ class Editor extends EventSource {
    * Default is an empty array.
    * @default any[]
    */
-  cycleAttributeValues: any[] = null;
+  cycleAttributeValues: any[] = [];
 
   /**
    * Group: Attribute Cycling
@@ -1048,7 +1040,7 @@ class Editor extends EventSource {
     });
 
     this.addAction('showProperties', (editor: Editor, cell: Cell) => {
-      editor.showProperties(cell: Cell);
+      editor.showProperties(cell);
     });
 
     this.addAction('selectAll', (editor: Editor) => {
@@ -1157,89 +1149,89 @@ class Editor extends EventSource {
 
     this.addAction('bold', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.toggleCellStyleFlags('fontStyle', FONT_BOLD);
+        editor.graph.toggleCellStyleFlags('fontStyle', FONT.BOLD);
       }
     });
 
     this.addAction('italic', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.toggleCellStyleFlags('fontStyle', FONT_ITALIC);
+        editor.graph.toggleCellStyleFlags('fontStyle', FONT.ITALIC);
       }
     });
 
     this.addAction('underline', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.toggleCellStyleFlags('fontStyle', FONT_UNDERLINE);
+        editor.graph.toggleCellStyleFlags('fontStyle', FONT.UNDERLINE);
       }
     });
 
     this.addAction('alignCellsLeft', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN_LEFT);
+        editor.graph.alignCells(ALIGN.LEFT);
       }
     });
 
     this.addAction('alignCellsCenter', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN_CENTER);
+        editor.graph.alignCells(ALIGN.CENTER);
       }
     });
 
     this.addAction('alignCellsRight', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN_RIGHT);
+        editor.graph.alignCells(ALIGN.RIGHT);
       }
     });
 
     this.addAction('alignCellsTop', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN_TOP);
+        editor.graph.alignCells(ALIGN.TOP);
       }
     });
 
     this.addAction('alignCellsMiddle', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN_MIDDLE);
+        editor.graph.alignCells(ALIGN.MIDDLE);
       }
     });
 
     this.addAction('alignCellsBottom', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN_BOTTOM);
+        editor.graph.alignCells(ALIGN.BOTTOM);
       }
     });
 
     this.addAction('alignFontLeft', (editor: Editor) => {
-      editor.graph.setCellStyles('align', ALIGN_LEFT);
+      editor.graph.setCellStyles('align', ALIGN.LEFT);
     });
 
     this.addAction('alignFontCenter', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('align', ALIGN_CENTER);
+        editor.graph.setCellStyles('align', ALIGN.CENTER);
       }
     });
 
     this.addAction('alignFontRight', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('align', ALIGN_RIGHT);
+        editor.graph.setCellStyles('align', ALIGN.RIGHT);
       }
     });
 
     this.addAction('alignFontTop', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('verticalAlign', ALIGN_TOP);
+        editor.graph.setCellStyles('verticalAlign', ALIGN.TOP);
       }
     });
 
     this.addAction('alignFontMiddle', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('verticalAlign', ALIGN_MIDDLE);
+        editor.graph.setCellStyles('verticalAlign', ALIGN.MIDDLE);
       }
     });
 
     this.addAction('alignFontBottom', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('verticalAlign', ALIGN_BOTTOM);
+        editor.graph.setCellStyles('verticalAlign', ALIGN.BOTTOM);
       }
     });
 
@@ -1781,7 +1773,7 @@ class Editor extends EventSource {
   treeLayout(cell: Cell, horizontal: boolean): void {
     if (cell != null) {
       const layout = new CompactTreeLayout(this.graph, horizontal);
-      layout.execute(cell: Cell);
+      layout.execute(cell);
     }
   }
 
@@ -2116,7 +2108,7 @@ class Editor extends EventSource {
   // createProperties(cell: any): HTMLTableElement | null;
   createProperties(cell: Cell) {
     const model = this.graph.getModel();
-    const value = model.getValue(cell: Cell);
+    const value = model.getValue(cell);
 
     if (isNode(value)) {
       // Creates a form for the user object inside
@@ -2407,12 +2399,7 @@ class Editor extends EventSource {
 
       const wnd = new MaxWindow(
         Resources.get(this.outlineResource) || this.outlineResource,
-        div,
-        600,
-        480,
-        200,
-        200,
-        false
+        div, 600, 480, 200, 200, false
       );
 
       // Creates the outline in the specified div
@@ -2553,7 +2540,7 @@ class Editor extends EventSource {
    * @param y
    */
   // addVertex(parent: any, vertex: any, x: any, y: any): any;
-  addVertex(parent, vertex, x, y) {
+  addVertex(parent: Cell, vertex: Cell, x: number, y: number) {
     const model = this.graph.getModel();
 
     while (parent != null && !this.graph.isValidDropTarget(parent)) {

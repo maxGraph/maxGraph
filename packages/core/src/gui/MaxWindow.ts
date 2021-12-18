@@ -11,7 +11,7 @@ import EventSource from '../view/event/EventSource';
 import { fit, getCurrentStyle } from '../util/utils';
 import InternalEvent from '../view/event/InternalEvent';
 import Client from '../Client';
-import { NODETYPE_TEXT } from '../util/constants';
+import { NODETYPE } from '../util/constants';
 import { br, write } from '../util/domUtils';
 import Resources from '../util/Resources';
 import { getClientX, getClientY } from '../util/eventUtils';
@@ -176,9 +176,9 @@ class MaxWindow extends EventSource {
     width: number,
     height: number,
     minimizable: boolean,
-    movable: boolean,
+    movable: boolean=true,
     replaceNode: HTMLElement,
-    style: string
+    style: string=''
   ) {
     super();
 
@@ -193,7 +193,7 @@ class MaxWindow extends EventSource {
       this.setMinimizable(minimizable);
       this.setTitle(title);
 
-      if (movable == null || movable) {
+      if (movable) {
         this.installMoveHandler();
       }
 
@@ -212,6 +212,8 @@ class MaxWindow extends EventSource {
   table: HTMLElement | null = null;
   resize: HTMLElement | null = null;
   buttons: HTMLElement | null = null;
+  minimize: HTMLElement | null = null;
+  maximize: HTMLElement | null = null;
   closeImg: HTMLElement | null = null;
   contentWrapper: HTMLElement | null = null;
 
@@ -352,14 +354,14 @@ class MaxWindow extends EventSource {
    * Sets the window title to the given string. HTML markup inside the title
    * will be escaped.
    */
-  setTitle(title: HTMLElement): void {
+  setTitle(title: string): void {
     // Removes all text content nodes (normally just one)
     let child = this.title.firstChild;
 
     while (child != null) {
       const next = child.nextSibling;
 
-      if (child.nodeType === NODETYPE_TEXT) {
+      if (child.nodeType === NODETYPE.TEXT) {
         child.parentNode.removeChild(child);
       }
 
@@ -457,12 +459,12 @@ class MaxWindow extends EventSource {
         this.resize.setAttribute('src', this.resizeImage);
         this.resize.style.cursor = 'nw-resize';
 
-        let startX = null;
-        let startY = null;
-        let width = null;
-        let height = null;
+        let startX: number | null = null;
+        let startY: number | null = null;
+        let width: number | null = null;
+        let height: number | null = null;
 
-        const start = (evt) => {
+        const start = (evt: MouseEvent) => {
           // LATER: pointerdown starting on border of resize does start
           // the drag operation but does not fire consecutive events via
           // one of the listeners below (does pan instead).
@@ -480,7 +482,7 @@ class MaxWindow extends EventSource {
 
         // Adds a temporary pair of listeners to intercept
         // the gesture event in the document
-        let dragHandler = (evt) => {
+        let dragHandler = (evt: MouseEvent) => {
           if (startX != null && startY != null) {
             const dx = getClientX(evt) - startX;
             const dy = getClientY(evt) - startY;
@@ -492,7 +494,7 @@ class MaxWindow extends EventSource {
           }
         };
 
-        let dropHandler = (evt) => {
+        let dropHandler = (evt: MouseEvent) => {
           if (startX != null && startY != null) {
             startX = null;
             startY = null;
@@ -555,8 +557,7 @@ class MaxWindow extends EventSource {
   /**
    * Installs the event listeners required for minimizing the window.
    */
-  // installMinimizeHandler(): void;
-  installMinimizeHandler() {
+  installMinimizeHandler(): void {
     this.minimize = document.createElement('img');
 
     this.minimize.setAttribute('src', this.minimizeImage);
@@ -628,16 +629,14 @@ class MaxWindow extends EventSource {
   /**
    * Sets if the window is maximizable.
    */
-  // setMaximizable(maximizable: boolean): void;
-  setMaximizable(maximizable) {
+  setMaximizable(maximizable: boolean): void {
     this.maximize.style.display = maximizable ? '' : 'none';
   }
 
   /**
    * Installs the event listeners required for maximizing the window.
    */
-  // installMaximizeHandler(): void;
-  installMaximizeHandler() {
+  installMaximizeHandler(): void {
     this.maximize = document.createElement('img');
 
     this.maximize.setAttribute('src', this.maximizeImage);
@@ -749,8 +748,7 @@ class MaxWindow extends EventSource {
   /**
    * Installs the event listeners required for moving the window.
    */
-  // installMoveHandler(): void;
-  installMoveHandler() {
+  installMoveHandler(): void {
     this.title.style.cursor = 'move';
 
     InternalEvent.addGestureListeners(this.title, (evt) => {
@@ -789,8 +787,7 @@ class MaxWindow extends EventSource {
   /**
    * Sets the upper, left corner of the window.
    */
-  // setLocation(x: number, y: number): void;
-  setLocation(x, y) {
+  setLocation(x: number, y: number): void {
     this.div.style.left = `${x}px`;
     this.div.style.top = `${y}px`;
   }
@@ -798,16 +795,14 @@ class MaxWindow extends EventSource {
   /**
    * Returns the current position on the x-axis.
    */
-  // getX(): number;
-  getX() {
+  getX(): number {
     return parseInt(this.div.style.left);
   }
 
   /**
    * Returns the current position on the y-axis.
    */
-  // getY(): number;
-  getY() {
+  getY(): number {
     return parseInt(this.div.style.top);
   }
 
@@ -815,8 +810,7 @@ class MaxWindow extends EventSource {
    * Adds the <closeImage> as a new image node in <closeImg> and installs the
    * <close> event.
    */
-  // installCloseHandler(): void;
-  installCloseHandler() {
+  installCloseHandler(): void {
     this.closeImg = document.createElement('img');
 
     this.closeImg.setAttribute('src', this.closeImage);
@@ -846,8 +840,7 @@ class MaxWindow extends EventSource {
    *
    * @param image - URL of the image to be used.
    */
-  // setImage(image: string): void;
-  setImage(image) {
+  setImage(image: string): void {
     this.image = document.createElement('img');
     this.image.setAttribute('src', image);
     this.image.setAttribute('align', 'left');
@@ -864,16 +857,14 @@ class MaxWindow extends EventSource {
    *
    * @param closable - Boolean specifying if the window should be closable.
    */
-  // setClosable(closable: boolean): void;
-  setClosable(closable) {
+  setClosable(closable: boolean): void {
     this.closeImg.style.display = closable ? '' : 'none';
   }
 
   /**
    * Returns true if the window is visible.
    */
-  // isVisible(): boolean;
-  isVisible() {
+  isVisible(): boolean {
     if (this.div != null) {
       return this.div.style.display !== 'none';
     }
@@ -887,8 +878,7 @@ class MaxWindow extends EventSource {
    *
    * @param visible - Boolean indicating if the window should be made visible.
    */
-  // setVisible(visible: boolean): void;
-  setVisible(visible) {
+  setVisible(visible: boolean): void {
     if (this.div != null && this.isVisible() !== visible) {
       if (visible) {
         this.show();
@@ -901,8 +891,7 @@ class MaxWindow extends EventSource {
   /**
    * Shows the window.
    */
-  // show(): void;
-  show() {
+  show(): void {
     this.div.style.display = '';
     this.activate();
 
@@ -923,8 +912,7 @@ class MaxWindow extends EventSource {
   /**
    * Hides the window.
    */
-  // hide(): void;
-  hide() {
+  hide(): void {
     this.div.style.display = 'none';
     this.fireEvent(new EventObject(InternalEvent.HIDE));
   }
@@ -933,8 +921,7 @@ class MaxWindow extends EventSource {
    * Destroys the window and removes all associated resources. Fires a
    * <destroy> event prior to destroying the window.
    */
-  // destroy(): void;
-  destroy() {
+  destroy(): void {
     this.fireEvent(new EventObject(InternalEvent.DESTROY));
 
     if (this.div != null) {
@@ -1026,7 +1013,7 @@ export const popup = (content, isInternalWindow) => {
  * close - Optional boolean indicating whether to add a close button.
  * icon - Optional icon for the window decoration.
  */
-export const error = (message, width, close, icon) => {
+export const error = (message: string, width: number, close: boolean, icon: string | null=null) => {
   const div = document.createElement('div');
   div.style.padding = '20px';
 

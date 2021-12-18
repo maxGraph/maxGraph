@@ -6,11 +6,11 @@
  */
 
 import Cell from './Cell';
-import ObjectCodec from '../../util/serialization/ObjectCodec';
-import CodecRegistry from '../../util/serialization/CodecRegistry';
-import { NODETYPE_ELEMENT } from '../../util/constants';
+import ObjectCodec from '../../serialization/ObjectCodec';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import { NODETYPE } from '../../util/constants';
 import { removeWhitespace } from '../../util/stringUtils';
-import { importNode } from '../../util/dom/domUtils';
+import { importNode } from '../../util/domUtils';
 
 /**
  * Class: CellCodec
@@ -86,7 +86,7 @@ class CellCodec extends ObjectCodec {
   isExcluded(obj, attr, value, isWrite) {
     return (
       super.isExcluded(obj, attr, value, isWrite) ||
-      (isWrite && attr === 'value' && value.nodeType === NODETYPE_ELEMENT)
+      (isWrite && attr === 'value' && value.nodeType === NODETYPE.ELEMENT)
     );
   }
 
@@ -97,7 +97,7 @@ class CellCodec extends ObjectCodec {
    * XML of the user object (inversion).
    */
   afterEncode(enc, obj: Element, node: Element) {
-    if (obj.value != null && obj.value.nodeType === NODETYPE_ELEMENT) {
+    if (obj.value != null && obj.value.nodeType === NODETYPE.ELEMENT) {
       // Wraps the graphical annotation up in the user object (inversion)
       // by putting the result of the default encoding into a clone of the
       // user object (node type 1) and returning this cloned user object.

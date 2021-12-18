@@ -11,9 +11,7 @@ import ImageShape from '../geometry/node/ImageShape';
 import Rectangle from '../geometry/Rectangle';
 import RectangleShape from '../geometry/node/RectangleShape';
 import {
-  DIALECT_MIXEDHTML,
-  DIALECT_STRICTHTML,
-  DIALECT_SVG,
+  DIALECT,
   HANDLE_FILLCOLOR,
   HANDLE_SIZE,
   HANDLE_STROKECOLOR,
@@ -196,11 +194,11 @@ class VertexHandle implements CellHandle {
     const shape = this.shape as Shape; // `this.shape` cannot be null.
 
     if (html && shape.isHtmlAllowed()) {
-      shape.dialect = DIALECT_STRICTHTML;
+      shape.dialect = DIALECT.STRICTHTML;
       shape.init(this.graph.container);
     } else {
       shape.dialect =
-        this.graph.dialect !== DIALECT_SVG ? DIALECT_MIXEDHTML : DIALECT_SVG;
+        this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
 
       if (this.cursor) {
         shape.init(this.graph.getView().getOverlayPane());
