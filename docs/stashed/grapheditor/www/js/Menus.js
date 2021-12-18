@@ -14,7 +14,7 @@ Menus = function(editorUi)
 	this.init();
 	
 	// Pre-fetches checkmark image
-	if (!mxClient.IS_SVG)
+	if (!Client.IS_SVG)
 	{
 		new Image().src = this.checkmarkImage;
 	}
@@ -232,7 +232,7 @@ Menus.prototype.init = function()
 		
 		menu.addItem(Resources.get('horizontalFlow'), null, (() =>
 		{
-			let layout = new mxHierarchicalLayout(graph, mxConstants.DIRECTION_WEST);
+			let layout = new HierarchicalLayout(graph, mxConstants.DIRECTION_WEST);
 			
     		this.editorUi.executeLayout(function()
     		{
@@ -242,7 +242,7 @@ Menus.prototype.init = function()
 		}), parent);
 		menu.addItem(Resources.get('verticalFlow'), null, (() =>
 		{
-			let layout = new mxHierarchicalLayout(graph, mxConstants.DIRECTION_NORTH);
+			let layout = new HierarchicalLayout(graph, mxConstants.DIRECTION_NORTH);
 			
     		this.editorUi.executeLayout(function()
     		{
@@ -654,7 +654,7 @@ Menus.prototype.addInsertTableItem = function(menu, insertFn, parent)
 	var elt2 = menu.addItem('', null, null, parent, null, null, null, true);
 	
 	// Quirks mode does not add cell padding if cell is empty, needs good old spacer solution
-	let quirksCellHtml = '<img src="' + mxClient.imageBasePath + '/transparent.gif' + '" width="16" height="16"/>';
+	let quirksCellHtml = '<img src="' + Client.imageBasePath + '/transparent.gif' + '" width="16" height="16"/>';
 
 	function createPicker(rows, cols)
 	{
@@ -1362,7 +1362,7 @@ Menubar.prototype.addMenuHandler = function(elt, funct)
 		}));
 		
 		// Hides menu if already showing and prevents focus
-        mxEvent.addListener(elt, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown',
+        mxEvent.addListener(elt, (Client.IS_POINTER) ? 'pointerdown' : 'mousedown',
         	((evt) =>
 		{
 			show = this.currentElt != elt;

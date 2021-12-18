@@ -1,4 +1,4 @@
-import { error } from '../../packages/core/src/util/gui/mxWindow';
+import { error } from '../../packages/core/src/util/gui/MaxWindow';
 
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
 /**
@@ -78,7 +78,7 @@ export default Touch;
     function main(container)
     {
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is not supported.
         error('Browser is not supported!', 200, false);
@@ -86,7 +86,7 @@ export default Touch;
       else
       {
         // To detect if touch events are actually supported, the following condition is recommended:
-        // mxClient.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+        // Client.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
 
         // Disables built-in text selection and context menu while not editing text
         let textEditing =  ((evt) =>
@@ -281,7 +281,7 @@ export default Touch;
       mxConstants.LABEL_HANDLE_SIZE = 7;
 
       // Larger tolerance and grid for real touch devices
-      if (mxClient.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
+      if (Client.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
       {
         Shape.prototype.svgStrokeTolerance = 18;
         VertexHandler.prototype.tolerance = 12;
@@ -368,7 +368,7 @@ export default Touch;
           this.connectorImg.style.height = '29px';
           this.connectorImg.style.position = 'absolute';
 
-          if (!mxClient.IS_TOUCH)
+          if (!Client.IS_TOUCH)
           {
             this.connectorImg.setAttribute('title', Resources.get('connect'));
             mxEvent.redirectMouseEvents(this.connectorImg, this.graph, this.state);

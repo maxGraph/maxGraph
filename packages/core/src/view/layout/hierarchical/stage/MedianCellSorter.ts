@@ -1,0 +1,33 @@
+class MedianCellSorter {
+  constructor() {
+    // empty
+  }
+
+  /**
+   * The weighted value of the cell stored.
+   */
+  medianValue: number = 0;
+
+  /**
+   * The cell whose median value is being calculated
+   */
+  cell: boolean = false;
+
+  /**
+   * Compares two MedianCellSorters.
+   */
+  compare(a: MedianCellSorter, b: MedianCellSorter) {
+    if (a != null && b != null) {
+      if (b.medianValue > a.medianValue) {
+        return -1;
+      }
+      if (b.medianValue < a.medianValue) {
+        return 1;
+      }
+      return 0;
+    }
+    return 0;
+  }
+}
+
+export default MedianCellSorter;

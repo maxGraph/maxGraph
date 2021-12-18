@@ -5,8 +5,8 @@ import {
   Clipboard,
   utils,
   EventUtils,
-  mxClient,
-  mxCodec,
+  Client,
+  Codec,
   Model,
   StringUtils,
 } from '@maxgraph/core';
@@ -45,7 +45,7 @@ const Template = ({ label, ...args }) => {
 
   // Public helper method for shared clipboard.
   Clipboard.cellsToString = function (cells) {
-    const codec = new mxCodec();
+    const codec = new Codec();
     const model = new Model();
     const parent = model.getRoot().getChildAt(0);
 
@@ -83,8 +83,8 @@ const Template = ({ label, ...args }) => {
     ) {
       if (
         evt.keyCode === 224 /* FF */ ||
-        (!mxClient.IS_MAC && evt.keyCode === 17) /* Control */ ||
-        (mxClient.IS_MAC &&
+        (!Client.IS_MAC && evt.keyCode === 17) /* Control */ ||
+        (Client.IS_MAC &&
           (evt.keyCode === 91 || evt.keyCode === 93)) /* Left/Right Meta */
       ) {
         // Cannot use parentNode for check in IE
@@ -182,7 +182,7 @@ const Template = ({ label, ...args }) => {
 
       if (node != null) {
         const model = new Model();
-        const codec = new mxCodec(node.ownerDocument);
+        const codec = new Codec(node.ownerDocument);
         codec.decode(node, model);
 
         const childCount = model.getRoot().getChildCount();

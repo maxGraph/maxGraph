@@ -44,7 +44,7 @@
 		let mxBasePath = '../../../src';
 	</script>
 	<script type="text/javascript" src="sanitizer/sanitizer.min.js"></script>
-	<script type="text/javascript" src="../../../src/js/mxClient.js"></script>
+	<script type="text/javascript" src="../../../src/js/Client.js"></script>
 	<script type="text/javascript" src="js/Graph.js"></script>
 	<script type="text/javascript" src="js/Shapes.js"></script>
 </head>
@@ -63,7 +63,7 @@
 		function show(data)
 		{
 			let xmlDoc = mxUtils.parseXml(data);
-			let codec = new mxCodec(xmlDoc);
+			let codec = new Codec(xmlDoc);
 			codec.decode(xmlDoc.documentElement, graph.getModel());
 		};
 	</script>

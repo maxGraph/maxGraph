@@ -8,7 +8,7 @@ import { clone } from '../../../../../packages/core/src/util/CloneUtils';
 
 const { br } = require('../../../../../packages/core/src/util/DomUtils');
 const { setOpacity } = require('../../../../../packages/core/src/util/Utils');
-const { button } = require('../../../../../packages/core/src/util/dom/mxDomHelpers');
+const { button } = require('../../../../../packages/core/src/util/dom/DomHelpers');
 const { htmlEntities } = require('../../../../../packages/core/src/util/StringUtils');
 const { setPrefixedStyle } = require('../../../../../packages/core/src/util/Utils');
 const { mod } = require('../../../../../packages/core/src/util/Utils');
@@ -405,7 +405,7 @@ Format.prototype.refresh = function()
 	this.container.appendChild(div);
 	
 	// Prevents text selection
-    mxEvent.addListener(label, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown',
+    mxEvent.addListener(label, (Client.IS_POINTER) ? 'pointerdown' : 'mousedown',
         ((evt) =>
 	{
 		evt.preventDefault();
@@ -460,7 +460,7 @@ Format.prototype.refresh = function()
 		mxEvent.addListener(elt, 'click', clickHandler);
 		
 		// Prevents text selection
-	    mxEvent.addListener(elt, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown',
+	    mxEvent.addListener(elt, (Client.IS_POINTER) ? 'pointerdown' : 'mousedown',
         	((evt) =>
     	{
 			evt.preventDefault();
@@ -818,7 +818,7 @@ BaseFormatPanel.prototype.createStepper = function(input, update, step, height, 
 	step = (step != null) ? step : 1;
 	height = (height != null) ? height : 8;
 	
-	if (mxClient.IS_MT)
+	if (Client.IS_MT)
 	{
 		height = height + 1;
 	} 
@@ -1311,7 +1311,7 @@ BaseFormatPanel.prototype.addArrow = function(elt, height)
 	
 	arrow.style.height = height + 'px';
 	arrow.style.borderLeft = '1px solid #a0a0a0';
-	arrow.innerHTML = '<img border="0" src="' + ((mxClient.IS_SVG) ? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHBJREFUeNpidHB2ZyAGsACxDRBPIKCuA6TwCBB/h2rABu4A8SYmKCcXiP/iUFgAxL9gCi8A8SwsirZCMQMTkmANEH9E4v+CmsaArvAdyNFI/FlQ92EoBIE+qCRIUz168DBgsU4OqhinQpgHMABAgAEALY4XLIsJ20oAAAAASUVORK5CYII=' :
+	arrow.innerHTML = '<img border="0" src="' + ((Client.IS_SVG) ? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHBJREFUeNpidHB2ZyAGsACxDRBPIKCuA6TwCBB/h2rABu4A8SYmKCcXiP/iUFgAxL9gCi8A8SwsirZCMQMTkmANEH9E4v+CmsaArvAdyNFI/FlQ92EoBIE+qCRIUz168DBgsU4OqhinQpgHMABAgAEALY4XLIsJ20oAAAAASUVORK5CYII=' :
 		IMAGE_PATH + '/dropdown.png') + '" style="margin-bottom:4px;">';
 	setOpacity(arrow, 70);
 	
@@ -3265,7 +3265,7 @@ TextFormatPanel.prototype.addFont = function(container)
 		return currentFontColor;
 	}, function(color)
 	{
-		if (mxClient.IS_FF)
+		if (Client.IS_FF)
 		{
 			// Workaround for Firefox that adds the font element around
 			// anchor elements which ignore inherited colors is to move
@@ -4144,7 +4144,7 @@ TextFormatPanel.prototype.addFont = function(container)
 			}
 		};
 		
-		if (mxClient.IS_FF || mxClient.IS_EDGE)
+		if (Client.IS_FF || Client.IS_EDGE)
 		{
 			mxEvent.addListener(graph.cellEditor.textarea, 'DOMSubtreeModified', updateCssHandler);
 		}
@@ -6167,7 +6167,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 			btn.style.position = 'absolute';
 			btn.className = 'geColorBtn';
 			btn.style.marginTop = '-4px';
-			btn.style.paddingBottom = mxClient.IS_MT ? '0px' : '2px';
+			btn.style.paddingBottom = Client.IS_MT ? '0px' : '2px';
 			btn.style.height = '22px';
 			btn.style.right = '72px';
 			btn.style.width = '56px';
@@ -6330,7 +6330,7 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 	graph.view.addListener('unitChanged', unitChangeListener);
 	this.listeners.push({destroy: function() { graph.view.removeListener(unitChangeListener); }});
 	
-	if (mxClient.IS_SVG)
+	if (Client.IS_SVG)
 	{
 		input.style.marginTop = '-2px';
 		input.style.right = '84px';

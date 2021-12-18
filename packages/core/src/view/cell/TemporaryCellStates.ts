@@ -3,18 +3,16 @@
  * Copyright (c) 2006-2017, Gaudenz Alder
  */
 /**
- * Class: mxTemporaryCellStates
- *
  * Creates a temporary set of cell states.
  */
 
 import Rectangle from '../geometry/Rectangle';
 import Dictionary from '../../util/Dictionary';
-import GraphView from '../view/GraphView';
-import Cell from './datatypes/Cell';
-import CellState from './datatypes/CellState';
-import Shape from '../geometry/shape/Shape';
-import CellArray from './datatypes/CellArray';
+import GraphView from '../GraphView';
+import Cell from './Cell';
+import CellState from './CellState';
+import Shape from '../geometry/Shape';
+import CellArray from './CellArray';
 
 class TemporaryCellStates {
   oldValidateCellState: Function | null;

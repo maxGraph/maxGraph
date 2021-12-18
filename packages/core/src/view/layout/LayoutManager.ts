@@ -7,19 +7,19 @@
 
 import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
-import { convertPoint, sortCells } from '../../util/Utils';
-import RootChange from '../model/RootChange';
-import ChildChange from '../model/ChildChange';
-import TerminalChange from '../cell/edge/TerminalChange';
-import GeometryChange from '../geometry/GeometryChange';
-import VisibleChange from '../style/VisibleChange';
-import StyleChange from '../style/StyleChange';
+import { convertPoint, sortCells } from '../../util/utils';
+import RootChange from '../undoable_changes/RootChange';
+import ChildChange from '../undoable_changes/ChildChange';
+import TerminalChange from '../undoable_changes/TerminalChange';
+import GeometryChange from '../undoable_changes/GeometryChange';
+import VisibleChange from '../undoable_changes/VisibleChange';
+import StyleChange from '../undoable_changes/StyleChange';
 import EventObject from '../event/EventObject';
-import Cell from '../cell/datatypes/Cell';
+import Cell from '../cell/Cell';
 import Rectangle from '../geometry/Rectangle';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import { getClientX, getClientY } from '../../util/EventUtils';
-import CellArray from '../cell/datatypes/CellArray';
+import { getClientX, getClientY } from '../../util/eventUtils';
+import CellArray from '../cell/CellArray';
 import { Graph } from '../Graph';
 import { GraphLayout, UndoableEdit } from 'src';
 
@@ -176,8 +176,6 @@ class LayoutManager extends EventSource {
   }
 
   /**
-   * Function: hasLayout
-   *
    * Returns true if the given cell has a layout. This implementation invokes
    * <getLayout> with <mxEvent.LAYOUT_CELLS> as the eventName. Override this
    * if creating layouts in <getLayout> is expensive and return true if

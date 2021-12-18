@@ -2,7 +2,7 @@ import {
   Graph,
   Rectangle,
   RubberBand,
-  mxDomHelpers,
+  DomHelpers,
   InternalEvent,
 } from '@maxgraph/core';
 
@@ -88,26 +88,26 @@ const Template = ({ label, ...args }) => {
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('Toggle Page Breaks', function (evt) {
+    DomHelpers.button('Toggle Page Breaks', function (evt) {
       graph.pageBreaksVisible = !graph.pageBreaksVisible;
       graph.sizeDidChange();
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Zoom In', function (evt) {
+    DomHelpers.button('Zoom In', function (evt) {
       graph.zoomIn();
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Zoom Out', function (evt) {
+    DomHelpers.button('Zoom Out', function (evt) {
       graph.zoomOut();
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Print', function (evt) {
+    DomHelpers.button('Print', function (evt) {
       // Matches actual printer paper size and avoids blank pages
       const scale = 0.5;
 
@@ -170,7 +170,7 @@ const Template = ({ label, ...args }) => {
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Reset View', function (evt) {
+    DomHelpers.button('Reset View', function (evt) {
       graph.view.scaleAndTranslate(0.15, 0, 0);
     })
   );

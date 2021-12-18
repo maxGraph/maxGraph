@@ -1,8 +1,8 @@
-import type Cell from './view/cell/datatypes/Cell';
-import type CellState from './view/cell/datatypes/CellState';
+import type Cell from './view/cell/Cell';
+import type CellState from './view/cell/CellState';
 import EventSource from './view/event/EventSource';
 import type InternalMouseEvent from './view/event/InternalMouseEvent';
-import type Shape from './view/geometry/shape/Shape';
+import type Shape from './view/geometry/Shape';
 import type { Graph } from './view/Graph';
 import type ImageBox from './view/image/ImageBox';
 

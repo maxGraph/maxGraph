@@ -1,16 +1,16 @@
 import {
   Graph,
   Rectangle,
-  mxDomHelpers,
+  DomHelpers,
   mxKeyHandler,
   InternalEvent,
   XmlUtils,
-  mxCodec,
+  Codec,
   Constants,
   utils,
   EdgeStyle,
   DomUtils,
-  mxForm,
+  MaxForm,
   CellAttributeChange,
 } from '@maxgraph/core';
 
@@ -151,8 +151,8 @@ const Template = ({ label, ...args }) => {
 
   // Adds an option to view the XML of the graph
   buttons.appendChild(
-    mxDomHelpers.button('View XML', function () {
-      const encoder = new mxCodec();
+    DomHelpers.button('View XML', function () {
+      const encoder = new Codec();
       const node = encoder.encode(graph.getModel());
       popup(utils.getPrettyXml(node), true);
     })
@@ -227,7 +227,7 @@ const Template = ({ label, ...args }) => {
       DomUtils.br(div);
 
       // Creates the form from the attributes of the user object
-      const form = new mxForm();
+      const form = new MaxForm();
 
       const attrs = cell.value.attributes;
 

@@ -13,8 +13,6 @@ type EventListenerObject = {
 };
 
 /**
- * Class: mxEventSource
- *
  * Base class for objects that dispatch named events. To create a subclass that
  * inherits from mxEventSource, the following code is used.
  *
@@ -27,8 +25,8 @@ type EventListenerObject = {
  *
  * Known Subclasses:
  *
- * <Transactions>, <mxGraph>, <mxGraphView>, <mxEditor>, <mxCellOverlay>,
- * <mxToolbar>, <mxWindow>
+ * <Transactions>, <mxGraph>, <mxGraphView>, <Editor>, <CellOverlay>,
+ * <MaxToolbar>, <MaxWindow>
  *
  * Constructor: mxEventSource
  *
@@ -40,8 +38,6 @@ class EventSource {
   }
 
   /**
-   * Variable: eventListeners
-   *
    * Holds the event names and associated listeners in an array. The array
    * contains the event name followed by the respective listener for each
    * registered listener.
@@ -49,22 +45,16 @@ class EventSource {
   eventListeners: EventListenerObject[] = [];
 
   /**
-   * Variable: eventsEnabled
-   *
    * Specifies if events can be fired. Default is true.
    */
   eventsEnabled = true;
 
   /**
-   * Variable: eventSource
-   *
    * Optional source for events. Default is null.
    */
   eventSource: EventTarget | null = null;
 
   /**
-   * Function: isEventsEnabled
-   *
    * Returns <eventsEnabled>.
    */
   isEventsEnabled() {
@@ -72,8 +62,6 @@ class EventSource {
   }
 
   /**
-   * Function: setEventsEnabled
-   *
    * Sets <eventsEnabled>.
    */
   setEventsEnabled(value: boolean) {
@@ -81,8 +69,6 @@ class EventSource {
   }
 
   /**
-   * Function: getEventSource
-   *
    * Returns <eventSource>.
    */
   getEventSource() {
@@ -90,8 +76,6 @@ class EventSource {
   }
 
   /**
-   * Function: setEventSource
-   *
    * Sets <eventSource>.
    */
   setEventSource(value: EventTarget | null) {
@@ -99,8 +83,6 @@ class EventSource {
   }
 
   /**
-   * Function: addListener
-   *
    * Binds the specified function to the given event name. If no event name
    * is given, then the listener is registered for all events.
    *
@@ -111,8 +93,6 @@ class EventSource {
   }
 
   /**
-   * Function: removeListener
-   *
    * Removes all occurrences of the given listener from <eventListeners>.
    */
   removeListener(funct: Function) {
@@ -128,8 +108,6 @@ class EventSource {
   }
 
   /**
-   * Function: fireEvent
-   *
    * Dispatches the given event to the listeners which are registered for
    * the event. The sender argument is optional. The current execution scope
    * ("this") is used for the listener invocation (see <mxUtils.bind>).

@@ -10,40 +10,40 @@ import EventObject from './event/EventObject';
 import EventSource from './event/EventSource';
 import InternalEvent from './event/InternalEvent';
 import Rectangle from './geometry/Rectangle';
-import TooltipHandler from './tooltip/TooltipHandler';
-import mxClient from '../mxClient';
-import SelectionCellsHandler from './selection/SelectionCellsHandler';
-import ConnectionHandler from './connection/ConnectionHandler';
-import GraphHandler from './GraphHandler';
-import PanningHandler from './panning/PanningHandler';
-import PopupMenuHandler from './popups_menus/PopupMenuHandler';
-import GraphView from './view/GraphView';
+import TooltipHandler from './handler/TooltipHandler';
+import Client from '../Client';
+import SelectionCellsHandler from './handler/SelectionCellsHandler';
+import ConnectionHandler from './handler/ConnectionHandler';
+import GraphHandler from './handler/GraphHandler';
+import PanningHandler from './handler/PanningHandler';
+import PopupMenuHandler from './handler/PopupMenuHandler';
+import GraphView from './GraphView';
 import CellRenderer from './cell/CellRenderer';
-import CellEditor from './editing/CellEditor';
+import CellEditor from './handler/CellEditor';
 import Point from './geometry/Point';
-import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/Utils';
-import Cell from './cell/datatypes/Cell';
-import Model from './model/Model';
+import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/utils';
+import Cell from './cell/Cell';
+import Model from './other/Model';
 import Stylesheet from './style/Stylesheet';
-import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants';
+import { PAGE_FORMAT_A4_PORTRAIT } from '../util/constants';
 
-import ChildChange from './model/ChildChange';
-import GeometryChange from './geometry/GeometryChange';
-import RootChange from './model/RootChange';
-import StyleChange from './style/StyleChange';
-import TerminalChange from './cell/edge/TerminalChange';
-import ValueChange from './cell/ValueChange';
-import CellState from './cell/datatypes/CellState';
-import { isNode } from '../util/DomUtils';
+import ChildChange from './undoable_changes/ChildChange';
+import GeometryChange from './undoable_changes/GeometryChange';
+import RootChange from './undoable_changes/RootChange';
+import StyleChange from './undoable_changes/StyleChange';
+import TerminalChange from './undoable_changes/TerminalChange';
+import ValueChange from './undoable_changes/ValueChange';
+import CellState from './cell/CellState';
+import { isNode } from '../util/domUtils';
 import EdgeStyle from './style/EdgeStyle';
-import EdgeHandler from './cell/edge/EdgeHandler';
-import VertexHandler from './cell/vertex/VertexHandler';
-import EdgeSegmentHandler from './cell/edge/EdgeSegmentHandler';
-import ElbowEdgeHandler from './cell/edge/ElbowEdgeHandler';
+import EdgeHandler from './handler/EdgeHandler';
+import VertexHandler from './handler/VertexHandler';
+import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
+import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 
 import type { GraphPlugin, GraphPluginConstructor } from '../types';
 
-const defaultPlugins: GraphPluginConstructor[] = [
+export const defaultPlugins: GraphPluginConstructor[] = [
   CellEditor,
   TooltipHandler,
   SelectionCellsHandler,
@@ -77,6 +77,7 @@ class Graph extends EventSource {
 
   graphModelChangeListener: Function | null = null;
   paintBackground: Function | null = null;
+  foldingEnabled: null | boolean = null;
 
   /*****************************************************************************
    * Group: Variables
@@ -104,7 +105,7 @@ class Graph extends EventSource {
    * ```javascript
    * var req = mxUtils.load('stylesheet.xml');
    * var root = req.getDocumentElement();
-   * var dec = new mxCodec(root.ownerDocument);
+   * var dec = new Codec(root.ownerDocument);
    * dec.decode(root, graph.stylesheet);
    * ```
    */
@@ -347,12 +348,12 @@ class Graph extends EventSource {
 
   /**
    * Specifies the {@link Image} for the image to be used to display a warning
-   * overlay. See {@link setCellWarning}. Default value is mxClient.imageBasePath +
+   * overlay. See {@link setCellWarning}. Default value is Client.imageBasePath +
    * '/warning'.  The extension for the image depends on the platform. It is
    * '.png' on the Mac and '.gif' on all other platforms.
    */
   warningImage: Image = new Image(
-    `${mxClient.imageBasePath}/warning${mxClient.IS_MAC ? '.png' : '.gif'}`,
+    `${Client.imageBasePath}/warning${Client.IS_MAC ? '.png' : '.gif'}`,
     16,
     16
   );
@@ -364,7 +365,7 @@ class Graph extends EventSource {
    * @default 'alreadyConnected'
    */
   alreadyConnectedResource: string =
-    mxClient.language != 'none' ? 'alreadyConnected' : '';
+    Client.language != 'none' ? 'alreadyConnected' : '';
 
   /**
    * Specifies the resource key for the warning message to be displayed when
@@ -373,7 +374,7 @@ class Graph extends EventSource {
    * @default 'containsValidationErrors'
    */
   containsValidationErrorsResource: string =
-    mxClient.language != 'none' ? 'containsValidationErrors' : '';
+    Client.language != 'none' ? 'containsValidationErrors' : '';
 
   constructor(
     container: HTMLElement,
@@ -757,8 +758,6 @@ class Graph extends EventSource {
   }
 
   /**
-   * Function: fit
-   *
    * Scales the graph such that the complete diagram fits into <container> and
    * returns the current scale in the view. To fit an initial graph prior to
    * rendering, set <mxGraphView.rendering> to false prior to changing the model
@@ -922,7 +921,7 @@ class Graph extends EventSource {
    * returns a new {@link EdgeHandler} of the corresponding cell is an edge,
    * otherwise it returns an {@link VertexHandler}.
    *
-   * @param state {@link mxCellState} whose handler should be created.
+   * @param state {@link CellState} whose handler should be created.
    */
   createHandler(state: CellState) {
     let result: EdgeHandler | VertexHandler | null = null;
@@ -948,7 +947,7 @@ class Graph extends EventSource {
   /**
    * Hooks to create a new {@link VertexHandler} for the given {@link CellState}.
    *
-   * @param state {@link mxCellState} to create the handler for.
+   * @param state {@link CellState} to create the handler for.
    */
   createVertexHandler(state: CellState): VertexHandler {
     return new VertexHandler(state);
@@ -957,7 +956,7 @@ class Graph extends EventSource {
   /**
    * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
    *
-   * @param state {@link mxCellState} to create the handler for.
+   * @param state {@link CellState} to create the handler for.
    */
   createEdgeHandler(state: CellState, edgeStyle: any) {
     let result = null;
@@ -983,7 +982,7 @@ class Graph extends EventSource {
   /**
    * Hooks to create a new {@link EdgeSegmentHandler} for the given {@link CellState}.
    *
-   * @param state {@link mxCellState} to create the handler for.
+   * @param state {@link CellState} to create the handler for.
    */
   createEdgeSegmentHandler(state: CellState) {
     return new EdgeSegmentHandler(state);
@@ -992,7 +991,7 @@ class Graph extends EventSource {
   /**
    * Hooks to create a new {@link ElbowEdgeHandler} for the given {@link CellState}.
    *
-   * @param state {@link mxCellState} to create the handler for.
+   * @param state {@link CellState} to create the handler for.
    */
   createElbowEdgeHandler(state: CellState) {
     return new ElbowEdgeHandler(state);
@@ -1184,7 +1183,7 @@ class Graph extends EventSource {
    * Returns true if perimeter points should be computed such that the
    * resulting edge has only horizontal or vertical segments.
    *
-   * @param edge {@link mxCellState} that represents the edge.
+   * @param edge {@link CellState} that represents the edge.
    */
   isOrthogonal(edge: CellState): boolean {
     /*
@@ -1367,7 +1366,7 @@ class Graph extends EventSource {
   /**
    * Returns {@link recursiveResize}.
    *
-   * @param state {@link mxCellState} that is being resized.
+   * @param state {@link CellState} that is being resized.
    */
   isRecursiveResize(state: CellState | null = null) {
     return this.recursiveResize;

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2006-2012, JGraph Ltd
  */
-const { popup } = require('../../../../../packages/core/src/util/gui/mxWindow');
+const { popup } = require('../../../../../packages/core/src/util/gui/MaxWindow');
 const { clearSelection } = require('../../../../../packages/core/src/util/DomUtils');
 const { htmlEntities } = require('../../../../../packages/core/src/util/StringUtils');
 const { getXml } = require('../../../../../packages/core/src/util/XmlUtils');
@@ -38,7 +38,7 @@ EditorUi = function(editor, container, lightbox)
 	}
 	
 	// Pre-fetches submenu image or replaces with embedded image if supported
-	if (mxClient.IS_SVG)
+	if (Client.IS_SVG)
 	{
 		mxPopupMenu.prototype.submenuImage = 'data:image/gif;base64,R0lGODlhCQAJAIAAAP///zMzMyH5BAEAAAAALAAAAAAJAAkAAAIPhI8WebHsHopSOVgb26AAADs=';
 	}
@@ -48,7 +48,7 @@ EditorUi = function(editor, container, lightbox)
 	}
 
 	// Pre-fetches connect image
-	if (!mxClient.IS_SVG && ConnectionHandler.prototype.connectImage != null)
+	if (!Client.IS_SVG && ConnectionHandler.prototype.connectImage != null)
 	{
 		new Image().src = ConnectionHandler.prototype.connectImage.src;
 	}
@@ -147,7 +147,7 @@ EditorUi = function(editor, container, lightbox)
 		graph.init(this.diagramContainer);
 	
 	    // Improves line wrapping for in-place editor
-	    if (mxClient.IS_SVG && graph.view.getDrawPane() != null)
+	    if (Client.IS_SVG && graph.view.getDrawPane() != null)
 	    {
 	        let root = graph.view.getDrawPane().ownerSVGElement;
 	        
@@ -252,9 +252,9 @@ EditorUi = function(editor, container, lightbox)
 		graph.cellEditor.isStopEditingEvent = function(evt)
 		{
 			return cellEditorIsStopEditingEvent.apply(this, arguments) ||
-				(evt.keyCode == 13 && ((!mxClient.IS_SF && mxEvent.isControlDown(evt)) ||
-				(mxClient.IS_MAC && mxEvent.isMetaDown(evt)) ||
-				(mxClient.IS_SF && mxEvent.isShiftDown(evt))));
+				(evt.keyCode == 13 && ((!Client.IS_SF && mxEvent.isControlDown(evt)) ||
+				(Client.IS_MAC && mxEvent.isMetaDown(evt)) ||
+				(Client.IS_SF && mxEvent.isShiftDown(evt))));
 		};
 				
 		// Adds space+wheel for zoom
@@ -924,7 +924,7 @@ EditorUi = function(editor, container, lightbox)
 	   	
 		// Workaround for bug on iOS see
 		// http://stackoverflow.com/questions/19012135/ios-7-ipad-safari-landscape-innerheight-outerheight-layout-issue
-		if (mxClient.IS_IOS && !window.navigator.standalone)
+		if (Client.IS_IOS && !window.navigator.standalone)
 		{
 			this.scrollHandler = (() =>
 		   	{
@@ -989,7 +989,7 @@ EditorUi.compactUi = true;
 /**
  * Specifies the size of the split bar.
  */
-EditorUi.prototype.splitSize = (mxClient.IS_TOUCH || mxClient.IS_POINTER) ? 12 : 8;
+EditorUi.prototype.splitSize = (Client.IS_TOUCH || Client.IS_POINTER) ? 12 : 8;
 
 /**
  * Specifies the height of the menubar. Default is 30.
@@ -1446,7 +1446,7 @@ EditorUi.prototype.onKeyPress = function(evt)
 		graph.startEditing();
 
 		// Workaround for FF where char is lost if cursor is placed before char
-		if (mxClient.IS_FF)
+		if (Client.IS_FF)
 		{
 			let ce = graph.cellEditor;
 			
@@ -2235,7 +2235,7 @@ EditorUi.prototype.initCanvas = function()
 			
 			graph.container.appendChild(this.chromelessToolbar);
 			
-			mxEvent.addListener(graph.container, (mxClient.IS_POINTER) ? 'pointermove' : 'mousemove', ((evt) =>
+			mxEvent.addListener(graph.container, (Client.IS_POINTER) ? 'pointermove' : 'mousemove', ((evt) =>
 			{
 				if (!mxEvent.isTouchEvent(evt))
 				{
@@ -2248,7 +2248,7 @@ EditorUi.prototype.initCanvas = function()
 				}
 			}));
 			
-			mxEvent.addListener(this.chromelessToolbar, (mxClient.IS_POINTER) ? 'pointermove' : 'mousemove', function(evt)
+			mxEvent.addListener(this.chromelessToolbar, (Client.IS_POINTER) ? 'pointermove' : 'mousemove', function(evt)
 			{
 				mxEvent.consume(evt);
 			});
@@ -2459,7 +2459,7 @@ EditorUi.prototype.initCanvas = function()
 		  				bgGroup.style.transformOrigin = '';
 
 		  				// Workaround for no reset of transform in Safari
-		  				if (mxClient.IS_SF)
+		  				if (Client.IS_SF)
 		  				{
 			  				mainGroup.style.transform = 'scale(1)';
 			  				bgGroup.style.transform = 'scale(1)';
@@ -3231,8 +3231,6 @@ EditorUi.prototype.setPageVisible = function(value)
 };
 
 /**
- * Class: ChangeGridColor
- *
  * Undoable change to grid color.
  */
 function ChangeGridColor(ui, color)
@@ -3254,9 +3252,9 @@ ChangeGridColor.prototype.execute = function()
 // Registers codec for ChangePageSetup
 (function()
 {
-	let codec = new mxObjectCodec(new ChangeGridColor(), ['ui']);
+	let codec = new ObjectCodec(new ChangeGridColor(), ['ui']);
 
-	mxCodecRegistry.register(codec);
+	CodecRegistry.register(codec);
 })();
 
 /**
@@ -3336,7 +3334,7 @@ ChangePageSetup.prototype.execute = function()
 // Registers codec for ChangePageSetup
 (function()
 {
-	let codec = new mxObjectCodec(new ChangePageSetup(),  ['ui', 'previousColor', 'previousImage', 'previousFormat', 'previousPageScale']);
+	let codec = new ObjectCodec(new ChangePageSetup(),  ['ui', 'previousColor', 'previousImage', 'previousFormat', 'previousPageScale']);
 
 	codec.afterDecode = function(dec, node, obj)
 	{
@@ -3353,7 +3351,7 @@ ChangePageSetup.prototype.execute = function()
 		return obj;
 	};
 	
-	mxCodecRegistry.register(codec);
+	CodecRegistry.register(codec);
 })();
 
 /**
@@ -3599,7 +3597,7 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 	// FIXME: Fix if footer visible
 	let off = 0;
 	
-	if (mxClient.IS_IOS && !window.navigator.standalone)
+	if (Client.IS_IOS && !window.navigator.standalone)
 	{
 		if (window.innerHeight != document.documentElement.clientHeight)
 		{
@@ -3936,7 +3934,7 @@ EditorUi.prototype.addSplitHandler = function(elt, horizontal, dx, onChange)
 	let last = null;
 
 	// Disables built-in pan and zoom in IE10 and later
-	if (mxClient.IS_POINTER)
+	if (Client.IS_POINTER)
 	{
 		elt.style.touchAction = 'none';
 	}
@@ -4323,7 +4321,7 @@ EditorUi.prototype.save = function(name)
 			{
 				if (xml.length < MAX_REQUEST_SIZE)
 				{
-					new mxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
+					new MaxXmlRequest(SAVE_URL, 'filename=' + encodeURIComponent(name) +
 						'&xml=' + encodeURIComponent(xml)).simulate(document, '_blank');
 				}
 				else
@@ -4372,7 +4370,7 @@ EditorUi.prototype.executeLayout = function(exec, animate, post)
 				navigator.userAgent.indexOf('Camino') < 0))
 			{
 				// New API for animating graph layout results asynchronously
-				let morph = new mxMorphing(graph);
+				let morph = new Morphing(graph);
 				morph.addListener(mxEvent.DONE, (() =>
 				{
 					graph.getModel().endUpdate();
@@ -4569,7 +4567,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 			(evt.keyCode != 90 && evt.keyCode != 89 && evt.keyCode != 188 &&
 			evt.keyCode != 190 && evt.keyCode != 85)) && ((evt.keyCode != 66 && evt.keyCode != 73) ||
 			!this.isControlDown(evt) ||  (this.graph.cellEditor.isContentEditing() &&
-			!mxClient.IS_FF && !mxClient.IS_SF)) && isEventIgnored.apply(this, arguments));
+			!Client.IS_FF && !Client.IS_SF)) && isEventIgnored.apply(this, arguments));
 	};
 	
 	// Ignores graph enabled state but not chromeless state
@@ -4582,7 +4580,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 	// Routes command-key to control-key on Mac
 	keyHandler.isControlDown = function(evt)
 	{
-		return mxEvent.isControlDown(evt) || (mxClient.IS_MAC && evt.metaKey);
+		return mxEvent.isControlDown(evt) || (Client.IS_MAC && evt.metaKey);
 	};
 
 	let queue = [];
@@ -4968,7 +4966,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 		keyHandler.bindKey(113, function() { if (graph.isEnabled()) { graph.startEditingAtCell(); }}); // F2
 	}
 	
-	if (!mxClient.IS_WIN)
+	if (!Client.IS_WIN)
 	{
 		keyHandler.bindAction(90, true, 'redo', true); // Ctrl+Shift+Z
 	}

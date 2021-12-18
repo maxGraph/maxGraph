@@ -50,7 +50,7 @@ export default MYNAMEHERE;
   </script>
 
   <!-- Loads and initializes the library -->
-  <script type="text/javascript" src="../src/js/mxClient.js"></script>
+  <script type="text/javascript" src="../src/js/Client.js"></script>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.chartjs.org/dist/2.6.0/Chart.bundle.js"></script>
@@ -63,7 +63,7 @@ export default MYNAMEHERE;
     function main(container)
     {
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is not supported.
         mxUtils.error('Browser is not supported!', 200, false);
@@ -71,7 +71,7 @@ export default MYNAMEHERE;
       else
       {
         // Fixes possible clipping issues in Chrome
-        mxClient.NO_FO = true;
+        Client.NO_FO = true;
 
         // Disables the built-in context menu
         mxEvent.disableContextMenu(container);

@@ -12,20 +12,18 @@ import {
   MAX_HOTSPOT_SIZE,
   MIN_HOTSPOT_SIZE,
   NONE,
-} from '../../util/Constants';
-import CellHighlight from '../selection/CellHighlight';
+} from '../../util/constants';
+import CellHighlight from './CellHighlight';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import { intersectsHotspot, isNumeric } from '../../util/Utils';
+import { intersectsHotspot, isNumeric } from '../../util/utils';
 import { Graph } from '../Graph';
 import { ColorValue } from '../../types';
-import CellState from './datatypes/CellState';
+import CellState from './CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import Cell from './datatypes/Cell';
+import Cell from './Cell';
 
 /**
- * Class: mxCellMarker
- *
  * A helper class to process mouse locations and highlight cells.
  *
  * Helper class to highlight cells. To add a cell marker to an existing graph
@@ -46,7 +44,7 @@ import Cell from './datatypes/Cell';
  * Event: mxEvent.MARK
  *
  * Fires after a cell has been marked or unmarked. The <code>state</code>
- * property contains the marked <mxCellState> or null if no state is marked.
+ * property contains the marked <CellState> or null if no state is marked.
  *
  * Constructor: mxCellMarker
  *
@@ -65,22 +63,16 @@ import Cell from './datatypes/Cell';
  */
 class CellMarker extends EventSource {
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
 
   /**
-   * Variable: enabled
-   *
    * Specifies if the marker is enabled. Default is true.
    */
   enabled = true;
 
   /**
-   * Variable: hotspot
-   *
    * Specifies the portion of the width and height that should trigger
    * a highlight. The area around the center of the cell to be marked is used
    * as the hotspot. Possible values are between 0 and 1. Default is
@@ -89,44 +81,32 @@ class CellMarker extends EventSource {
   hotspot = DEFAULT_HOTSPOT;
 
   /**
-   * Variable: hotspotEnabled
-   *
    * Specifies if the hotspot is enabled. Default is false.
    */
   hotspotEnabled = false;
 
   /**
-   * Variable: validColor
-   *
    * Holds the valid marker color.
    */
   validColor: ColorValue;
 
   /**
-   * Variable: invalidColor
-   *
    * Holds the invalid marker color.
    */
   invalidColor: ColorValue;
 
   /**
-   * Variable: currentColor
-   *
    * Holds the current marker color.
    */
   currentColor: ColorValue = NONE;
 
   /**
-   * Variable: validState
-   *
-   * Holds the marked <mxCellState> if it is valid.
+   * Holds the marked <CellState> if it is valid.
    */
   validState: CellState | null = null;
 
   /**
-   * Variable: markedState
-   *
-   * Holds the marked <mxCellState>.
+   * Holds the marked <CellState>.
    */
   markedState: CellState | null = null;
 
@@ -148,8 +128,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: setEnabled
-   *
    * Enables or disables event handling. This implementation
    * updates <enabled>.
    *
@@ -162,8 +140,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: isEnabled
-   *
    * Returns true if events are handled. This implementation
    * returns <enabled>.
    */
@@ -172,8 +148,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: setHotspot
-   *
    * Sets the <hotspot>.
    */
   setHotspot(hotspot: number) {
@@ -181,8 +155,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: getHotspot
-   *
    * Returns the <hotspot>.
    */
   getHotspot() {
@@ -190,8 +162,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: setHotspotEnabled
-   *
    * Specifies whether the hotspot should be used in <intersects>.
    */
   setHotspotEnabled(enabled: boolean) {
@@ -199,8 +169,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: isHotspotEnabled
-   *
    * Returns true if hotspot is used in <intersects>.
    */
   isHotspotEnabled() {
@@ -208,8 +176,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: hasValidState
-   *
    * Returns true if <validState> is not null.
    */
   hasValidState() {
@@ -217,8 +183,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: getValidState
-   *
    * Returns the <validState>.
    */
   getValidState() {
@@ -226,8 +190,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: getMarkedState
-   *
    * Returns the <markedState>.
    */
   getMarkedState() {
@@ -235,8 +197,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: reset
-   *
    * Resets the state of the cell marker.
    */
   reset() {
@@ -249,8 +209,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: process
-   *
    * Processes the given event and cell and marks the state returned by
    * <getState> with the color returned by <getMarkerColor>. If the
    * markerColor is not null, then the state is stored in <markedState>. If
@@ -270,8 +228,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: setCurrentState
-   *
    * Sets and marks the current valid state.
    */
   setCurrentState(state: CellState | null, me: InternalMouseEvent, color?: ColorValue) {
@@ -298,8 +254,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: markCell
-   *
    * Marks the given cell using the given color, or <validColor> if no color is specified.
    */
   markCell(cell: Cell, color: ColorValue) {
@@ -313,8 +267,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: mark
-   *
    * Marks the <markedState> and fires a <mark> event.
    */
   mark() {
@@ -324,8 +276,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: unmark
-   *
    * Hides the marker and fires a <mark> event.
    */
   unmark(): void {
@@ -333,9 +283,7 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: isValidState
-   *
-   * Returns true if the given <mxCellState> is a valid state. If this
+   * Returns true if the given <CellState> is a valid state. If this
    * returns true, then the state is stored in <validState>. The return value
    * of this method is used as the argument for <getMarkerColor>.
    */
@@ -344,20 +292,16 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: getMarkerColor
-   *
    * Returns the valid- or invalidColor depending on the value of isValid.
-   * The given <mxCellState> is ignored by this implementation.
+   * The given <CellState> is ignored by this implementation.
    */
   getMarkerColor(evt: Event, state: CellState | null, isValid: boolean) {
     return isValid ? this.validColor : this.invalidColor;
   }
 
   /**
-   * Function: getState
-   *
    * Uses <getCell>, <getStateToMark> and <intersects> to return the
-   * <mxCellState> for the given <mxMouseEvent>.
+   * <CellState> for the given <mxMouseEvent>.
    */
   getState(me: InternalMouseEvent) {
     const view = this.graph.getView();
@@ -371,9 +315,7 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: getCell
-   *
-   * Returns the <mxCell> for the given event and cell. This returns the
+   * Returns the <Cell> for the given event and cell. This returns the
    * given cell.
    */
   getCell(me: InternalMouseEvent) {
@@ -381,9 +323,7 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: getStateToMark
-   *
-   * Returns the <mxCellState> to be marked for the given <mxCellState> under
+   * Returns the <CellState> to be marked for the given <CellState> under
    * the mouse. This returns the given state.
    */
   getStateToMark(state: CellState | null) {
@@ -391,8 +331,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: intersects
-   *
    * Returns true if the given coordinate pair intersects the given state.
    * This returns true if the <hotspot> is 0 or the coordinates are inside
    * the hotspot for the given cell state.
@@ -416,8 +354,6 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes.
    */
   destroy() {

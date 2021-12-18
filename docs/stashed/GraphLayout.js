@@ -45,7 +45,7 @@ export default GraphLayout;
     function main(container)
     {
       // Checks if browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is
         // not supported.
@@ -114,7 +114,7 @@ export default GraphLayout;
             {
               if (animate.checked)
               {
-                let morph = new mxMorphing(graph);
+                let morph = new Morphing(graph);
                 morph.addListener(mxEvent.DONE, function()
                 {
                   graph.getModel().endUpdate();
@@ -148,7 +148,7 @@ export default GraphLayout;
               if (animate.checked)
               {
                 // Default values are 6, 1.5, 20
-                let morph = new mxMorphing(graph, 10, 1.7, 20);
+                let morph = new Morphing(graph, 10, 1.7, 20);
                 morph.addListener(mxEvent.DONE, function()
                 {
                   graph.getModel().endUpdate();

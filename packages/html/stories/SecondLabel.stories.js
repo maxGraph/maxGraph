@@ -1,7 +1,7 @@
 import {
   Graph,
   RectangleShape,
-  mxDomHelpers,
+  DomHelpers,
   TextShape,
   Point,
   Rectangle,
@@ -204,7 +204,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   buttons.appendChild(
-    mxDomHelpers.button('Toggle Child Vertices', function (evt) {
+    DomHelpers.button('Toggle Child Vertices', function (evt) {
       relativeChildVerticesVisible = !relativeChildVerticesVisible;
       graph.refresh();
     })
@@ -212,7 +212,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   buttons.appendChild(
-    mxDomHelpers.button('Toggle IDs', function (evt) {
+    DomHelpers.button('Toggle IDs', function (evt) {
       secondLabelVisible = !secondLabelVisible;
       graph.refresh();
     })

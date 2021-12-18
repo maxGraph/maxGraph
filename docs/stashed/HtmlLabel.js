@@ -50,7 +50,7 @@ export default MYNAMEHERE;
   </script>
 
   <!-- Loads and initializes the library -->
-  <script type="text/javascript" src="../src/js/mxClient.js"></script>
+  <script type="text/javascript" src="../src/js/Client.js"></script>
 
   <!-- Example code -->
   <script type="text/javascript">
@@ -60,7 +60,7 @@ export default MYNAMEHERE;
     function main(container)
     {
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is not supported.
         mxUtils.error('Browser is not supported!', 200, false);
@@ -91,7 +91,7 @@ export default MYNAMEHERE;
         if (cached)
         {
           // Ignores cached label in codec
-          mxCodecRegistry.getCodec(mxCell).exclude.push('div');
+          CodecRegistry.getCodec(mxCell).exclude.push('div');
 
           // Invalidates cached labels
           graph.model.setValue = function(cell, value)
@@ -177,7 +177,7 @@ export default MYNAMEHERE;
         graph.insertVertex(parent, null, obj, 20, 20, 80, 60);
 
         // Undo/redo
-        let undoManager = new mxUndoManager();
+        let undoManager = new UndoManager();
         let listener = function(sender, evt)
         {
           undoManager.undoableEditHappened(evt.getProperty('edit'));

@@ -3,13 +3,13 @@ import {
   RubberBand,
   ConnectionHandler,
   ImageBox,
-  mxToolbar,
+  MaxToolbar,
   Model,
   mxKeyHandler,
   Cell,
   Geometry,
   DragSource,
-  mxDomHelpers,
+  DomHelpers,
   GestureUtils,
 } from '@maxgraph/core';
 
@@ -59,7 +59,7 @@ const Template = ({ label, ...args }) => {
   div.appendChild(tbContainer);
 
   // Creates new toolbar without event processing
-  const toolbar = new mxToolbar(tbContainer);
+  const toolbar = new MaxToolbar(tbContainer);
   toolbar.enabled = false;
 
   // Creates the model and the graph inside the container
@@ -103,7 +103,7 @@ const Template = ({ label, ...args }) => {
   addVertex('/images/actor.gif', 30, 40, 'shape=actor');
   toolbar.addLine();
 
-  const button = mxDomHelpers.button('Create toolbar entry from selection', (evt) => {
+  const button = DomHelpers.button('Create toolbar entry from selection', (evt) => {
     if (!graph.isSelectionEmpty()) {
       // Creates a copy of the selection array to preserve its state
       const cells = graph.getSelectionCells();

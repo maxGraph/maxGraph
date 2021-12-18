@@ -85,7 +85,7 @@ export default ShowRegion;
     function main(container)
     {
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is not supported.
         mxUtils.error('Browser is not supported!', 200, false);

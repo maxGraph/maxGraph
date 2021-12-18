@@ -4,49 +4,34 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import mxClient from '../mxClient';
+import Client from '../Client';
 import {
-  ALIGN_BOTTOM,
-  ALIGN_LEFT,
-  ALIGN_RIGHT,
-  ALIGN_TOP,
+  ALIGN,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
-  DIRECTION_EAST,
-  DIRECTION_MASK_EAST,
-  DIRECTION_MASK_NONE,
-  DIRECTION_MASK_NORTH,
-  DIRECTION_MASK_SOUTH,
-  DIRECTION_MASK_WEST,
-  DIRECTION_NORTH,
-  DIRECTION_SOUTH,
-  DIRECTION_WEST,
-  FONT_BOLD,
-  FONT_ITALIC,
-  FONT_STRIKETHROUGH,
-  FONT_UNDERLINE,
+  DIRECTION,
+  DIRECTION_MASK,
+  FONT,
   LINE_HEIGHT,
-  NODETYPE_ELEMENT,
+  NODETYPE,
   NONE,
   PAGE_FORMAT_A4_PORTRAIT,
-} from './Constants';
+} from './constants';
 import Point from '../view/geometry/Point';
 import Dictionary from './Dictionary';
-import CellPath from '../view/cell/datatypes/CellPath';
+import CellPath from '../view/cell/CellPath';
 import Rectangle from '../view/geometry/Rectangle';
-import { getFunctionName } from './StringUtils';
-import { getOuterHtml } from './DomUtils';
-import CellState from '../view/cell/datatypes/CellState';
-import Cell from '../view/cell/datatypes/Cell';
-import Model from '../view/model/Model';
-import CellArray from '../view/cell/datatypes/CellArray';
+import { getFunctionName } from './stringUtils';
+import { getOuterHtml } from './domUtils';
+import CellState from '../view/cell/CellState';
+import Cell from '../view/cell/Cell';
+import Model from '../view/other/Model';
+import CellArray from '../view/cell/CellArray';
 import { Graph } from 'src/view/Graph';
 
 import type { CellStateStyles, Properties, StyleValue } from '../types';
 
 /**
- * Class: mxUtils
- *
  * A singleton class that provides cross-browser helper methods.
  * This is a global functionality. To access the functions in this
  * class, use the global classname appended by the functionname.
@@ -70,8 +55,6 @@ const utils = {
   errorResource: 'error',
 
   /**
-   * Variable: closeResource
-   *
    * Specifies the resource key for the label of the close button. If the
    * resource for this key does not exist then the value is used as
    * the label. Default is 'close'.
@@ -79,11 +62,9 @@ const utils = {
   closeResource: 'close',
 
   /**
-   * Variable: errorImage
-   *
    * Defines the image used for error dialogs.
    */
-  errorImage: '/error.gif', // mxClient.imageBasePath + '/error.gif',
+  errorImage: '/error.gif', // Client.imageBasePath + '/error.gif',
 };
 
 /**
@@ -166,9 +147,9 @@ export const setPrefixedStyle = (
 ) => {
   let prefix = null;
 
-  if (mxClient.IS_SF || mxClient.IS_GC) {
+  if (Client.IS_SF || Client.IS_GC) {
     prefix = 'Webkit';
-  } else if (mxClient.IS_MT) {
+  } else if (Client.IS_MT) {
     prefix = 'Moz';
   }
 
@@ -207,7 +188,7 @@ export const findNode = (
   attr: string,
   value: StyleValue
 ): Element | null => {
-  if (node.nodeType === NODETYPE_ELEMENT) {
+  if (node.nodeType === NODETYPE.ELEMENT) {
     const tmp = node.getAttribute(attr);
     if (tmp && tmp === value) {
       return node;
@@ -399,12 +380,12 @@ export const getColor = (array: any, key: string, defaultValue: any) => {
 /**
  * Function: equalPoints
  *
- * Compares all mxPoints in the given lists.
+ * Compares all Point in the given lists.
  *
  * Parameters:
  *
- * a - Array of <mxPoints> to be compared.
- * b - Array of <mxPoints> to be compared.
+ * a - Array of <Point> to be compared.
+ * b - Array of <Point> to be compared.
  */
 export const equalPoints = (a: (Point | null)[] | null, b: (Point | null)[] | null) => {
   if ((!a && b) || (a && !b) || (a && b && a.length != b.length)) {
@@ -500,7 +481,7 @@ export const toString = (obj: Properties) => {
       } else {
         output += `${i} = ${obj[i]}\n`;
       }
-    } catch (e) {
+    } catch (e: any) {
       output += `${i}=${e.message}`;
     }
   }
@@ -710,7 +691,7 @@ export const getRotatedPoint = (pt: Point, cos: number, sin: number, c = new Poi
  * Parameters:
  *
  * terminal - <mxCelState> that represents the terminal.
- * edge - <mxCellState> that represents the edge.
+ * edge - <CellState> that represents the edge.
  * source - Boolean that specifies if the terminal is the source terminal.
  * defaultValue - Default value to be returned.
  */
@@ -731,7 +712,7 @@ export const getPortConstraints = (
   }
 
   const directions = value.toString();
-  let returnValue = DIRECTION_MASK_NONE;
+  let returnValue = DIRECTION_MASK.NONE;
   const constraintRotationEnabled = getValue(terminal.style, 'portConstraintRotation', 0);
   let rotation = 0;
 
@@ -755,67 +736,67 @@ export const getPortConstraints = (
     }
   }
 
-  if (directions.indexOf(DIRECTION_NORTH) >= 0) {
+  if (directions.indexOf(DIRECTION.NORTH) >= 0) {
     switch (quad) {
       case 0:
-        returnValue |= DIRECTION_MASK_NORTH;
+        returnValue |= DIRECTION_MASK.NORTH;
         break;
       case 1:
-        returnValue |= DIRECTION_MASK_EAST;
+        returnValue |= DIRECTION_MASK.EAST;
         break;
       case 2:
-        returnValue |= DIRECTION_MASK_SOUTH;
+        returnValue |= DIRECTION_MASK.SOUTH;
         break;
       case 3:
-        returnValue |= DIRECTION_MASK_WEST;
+        returnValue |= DIRECTION_MASK.WEST;
         break;
     }
   }
-  if (directions.indexOf(DIRECTION_WEST) >= 0) {
+  if (directions.indexOf(DIRECTION.WEST) >= 0) {
     switch (quad) {
       case 0:
-        returnValue |= DIRECTION_MASK_WEST;
+        returnValue |= DIRECTION_MASK.WEST;
         break;
       case 1:
-        returnValue |= DIRECTION_MASK_NORTH;
+        returnValue |= DIRECTION_MASK.NORTH;
         break;
       case 2:
-        returnValue |= DIRECTION_MASK_EAST;
+        returnValue |= DIRECTION_MASK.EAST;
         break;
       case 3:
-        returnValue |= DIRECTION_MASK_SOUTH;
+        returnValue |= DIRECTION_MASK.SOUTH;
         break;
     }
   }
-  if (directions.indexOf(DIRECTION_SOUTH) >= 0) {
+  if (directions.indexOf(DIRECTION.SOUTH) >= 0) {
     switch (quad) {
       case 0:
-        returnValue |= DIRECTION_MASK_SOUTH;
+        returnValue |= DIRECTION_MASK.SOUTH;
         break;
       case 1:
-        returnValue |= DIRECTION_MASK_WEST;
+        returnValue |= DIRECTION_MASK.WEST;
         break;
       case 2:
-        returnValue |= DIRECTION_MASK_NORTH;
+        returnValue |= DIRECTION_MASK.NORTH;
         break;
       case 3:
-        returnValue |= DIRECTION_MASK_EAST;
+        returnValue |= DIRECTION_MASK.EAST;
         break;
     }
   }
-  if (directions.indexOf(DIRECTION_EAST) >= 0) {
+  if (directions.indexOf(DIRECTION.EAST) >= 0) {
     switch (quad) {
       case 0:
-        returnValue |= DIRECTION_MASK_EAST;
+        returnValue |= DIRECTION_MASK.EAST;
         break;
       case 1:
-        returnValue |= DIRECTION_MASK_SOUTH;
+        returnValue |= DIRECTION_MASK.SOUTH;
         break;
       case 2:
-        returnValue |= DIRECTION_MASK_WEST;
+        returnValue |= DIRECTION_MASK.WEST;
         break;
       case 3:
-        returnValue |= DIRECTION_MASK_NORTH;
+        returnValue |= DIRECTION_MASK.NORTH;
         break;
     }
   }
@@ -832,10 +813,10 @@ export const getPortConstraints = (
 export const reversePortConstraints = (constraint: number) => {
   let result = 0;
 
-  result = (constraint & DIRECTION_MASK_WEST) << 3;
-  result |= (constraint & DIRECTION_MASK_NORTH) << 1;
-  result |= (constraint & DIRECTION_MASK_SOUTH) >> 1;
-  result |= (constraint & DIRECTION_MASK_EAST) >> 3;
+  result = (constraint & DIRECTION_MASK.WEST) << 3;
+  result |= (constraint & DIRECTION_MASK.NORTH) << 1;
+  result |= (constraint & DIRECTION_MASK.SOUTH) >> 1;
+  result |= (constraint & DIRECTION_MASK.EAST) >> 3;
 
   return result;
 };
@@ -885,7 +866,7 @@ export const getDirectedBounds = (
   flipH: boolean,
   flipV: boolean
 ) => {
-  const d = getValue(style, 'direction', DIRECTION_EAST);
+  const d = getValue(style, 'direction', DIRECTION.EAST);
   flipH = flipH != null ? flipH : getValue(style, 'flipH', false);
   flipV = flipV != null ? flipV : getValue(style, 'flipV', false);
 
@@ -895,8 +876,8 @@ export const getDirectedBounds = (
   m.height = Math.round(Math.max(0, Math.min(rect.height, m.height)));
 
   if (
-    (flipV && (d === DIRECTION_SOUTH || d === DIRECTION_NORTH)) ||
-    (flipH && (d === DIRECTION_EAST || d === DIRECTION_WEST))
+    (flipV && (d === DIRECTION.SOUTH || d === DIRECTION.NORTH)) ||
+    (flipH && (d === DIRECTION.EAST || d === DIRECTION.WEST))
   ) {
     const tmp = m.x;
     m.x = m.width;
@@ -904,8 +885,8 @@ export const getDirectedBounds = (
   }
 
   if (
-    (flipH && (d === DIRECTION_SOUTH || d === DIRECTION_NORTH)) ||
-    (flipV && (d === DIRECTION_EAST || d === DIRECTION_WEST))
+    (flipH && (d === DIRECTION.SOUTH || d === DIRECTION.NORTH)) ||
+    (flipV && (d === DIRECTION.EAST || d === DIRECTION.WEST))
   ) {
     const tmp = m.y;
     m.y = m.height;
@@ -914,17 +895,17 @@ export const getDirectedBounds = (
 
   const m2 = Rectangle.fromRectangle(m);
 
-  if (d === DIRECTION_SOUTH) {
+  if (d === DIRECTION.SOUTH) {
     m2.y = m.x;
     m2.x = m.height;
     m2.width = m.y;
     m2.height = m.width;
-  } else if (d === DIRECTION_WEST) {
+  } else if (d === DIRECTION.WEST) {
     m2.y = m.height;
     m2.x = m.width;
     m2.width = m.x;
     m2.height = m.y;
-  } else if (d === DIRECTION_NORTH) {
+  } else if (d === DIRECTION.NORTH) {
     m2.y = m.width;
     m2.x = m.y;
     m2.width = m.height;
@@ -1114,7 +1095,7 @@ export const intersects = (a: Rectangle, b: Rectangle) => {
  *
  * Parameters:
  *
- * state - <mxCellState>
+ * state - <CellState>
  * x - X-coordinate.
  * y - Y-coordinate.
  * hotspot - Optional size of the hostpot.
@@ -1951,16 +1932,16 @@ export const getAlignmentAsPoint = (align: string, valign: string) => {
   let dy = -0.5;
 
   // Horizontal alignment
-  if (align === ALIGN_LEFT) {
+  if (align === ALIGN.LEFT) {
     dx = 0;
-  } else if (align === ALIGN_RIGHT) {
+  } else if (align === ALIGN.RIGHT) {
     dx = -1;
   }
 
   // Vertical alignment
-  if (valign === ALIGN_TOP) {
+  if (valign === ALIGN.TOP) {
     dy = 0;
-  } else if (valign === ALIGN_BOTTOM) {
+  } else if (valign === ALIGN.BOTTOM) {
     dy = -1;
   }
 
@@ -2008,21 +1989,21 @@ export const getSizeForString = (
 
   // Sets the font style
   if (fontStyle !== null) {
-    if ((fontStyle & FONT_BOLD) === FONT_BOLD) {
+    if ((fontStyle & FONT.BOLD) === FONT.BOLD) {
       div.style.fontWeight = 'bold';
     }
 
-    if ((fontStyle & FONT_ITALIC) === FONT_ITALIC) {
+    if ((fontStyle & FONT.ITALIC) === FONT.ITALIC) {
       div.style.fontStyle = 'italic';
     }
 
     const txtDecor = [];
 
-    if ((fontStyle & FONT_UNDERLINE) == FONT_UNDERLINE) {
+    if ((fontStyle & FONT.UNDERLINE) == FONT.UNDERLINE) {
       txtDecor.push('underline');
     }
 
-    if ((fontStyle & FONT_STRIKETHROUGH) == FONT_STRIKETHROUGH) {
+    if ((fontStyle & FONT.STRIKETHROUGH) == FONT.STRIKETHROUGH) {
       txtDecor.push('line-through');
     }
 
@@ -2341,7 +2322,7 @@ export const printScreen = (graph: Graph) => {
 
   // Workaround for Google Chrome which needs a bit of a
   // delay in order to render the SVG contents
-  if (mxClient.IS_GC) {
+  if (Client.IS_GC) {
     wnd.setTimeout(print, 500);
   } else {
     print();

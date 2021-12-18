@@ -83,7 +83,7 @@ Actions.prototype.init = function()
 
 	// Edit actions
 	this.addAction('undo', function() { ui.undo(); }, null, 'sprite-undo', Editor.ctrlKey + '+Z');
-	this.addAction('redo', function() { ui.redo(); }, null, 'sprite-redo', (!mxClient.IS_WIN) ? Editor.ctrlKey + '+Shift+Z' : Editor.ctrlKey + '+Y');
+	this.addAction('redo', function() { ui.redo(); }, null, 'sprite-redo', (!Client.IS_WIN) ? Editor.ctrlKey + '+Shift+Z' : Editor.ctrlKey + '+Y');
 	this.addAction('cut', function() { mxClipboard.cut(graph); }, null, 'sprite-cut', Editor.ctrlKey + '+X');
 	this.addAction('copy', function()
 	{
@@ -969,9 +969,9 @@ Actions.prototype.init = function()
 	{
 		let ext = '';
 		
-		if (Resources.isLanguageSupported(mxClient.language))
+		if (Resources.isLanguageSupported(Client.language))
 		{
-			ext = '_' + mxClient.language;
+			ext = '_' + Client.language;
 		}
 		
 		graph.openLink(RESOURCES_PATH + '/help' + ext + '.html');

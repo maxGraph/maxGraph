@@ -2,8 +2,8 @@ import { Graph, Constants } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 import { clone } from '@maxgraph/core/util/CloneUtils';
-import { button } from '@maxgraph/core/util/dom/mxDomHelpers';
-import { load } from '@maxgraph/core/util/network/mxXmlRequest';
+import { button } from '@maxgraph/core/util/dom/DomHelpers';
+import { load } from '@maxgraph/core/util/network/MaxXmlRequest';
 
 export default {
   title: 'Xml_Json/FileIO',
@@ -29,7 +29,7 @@ const Template = ({ label, ...args }) => {
   // from the onLoad event handler of the document (see below).
   function main(container) {
     // Checks if browser is supported
-    if (!mxClient.isBrowserSupported()) {
+    if (!Client.isBrowserSupported()) {
       // Displays an error message if the browser is
       // not supported.
       alert('Browser is not supported!', 200, false);
@@ -182,7 +182,7 @@ const Template = ({ label, ...args }) => {
   function read(graph, filename) {
     const req = load(filename);
     const root = req.getDocumentElement();
-    const dec = new mxCodec(root.ownerDocument);
+    const dec = new Codec(root.ownerDocument);
 
     dec.decode(root, graph.getModel());
   }

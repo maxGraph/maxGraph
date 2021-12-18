@@ -61,7 +61,7 @@ export default Map;
   </script>
 
   <!-- Loads and initializes the library -->
-  <script type="text/javascript" src="../src/js/mxClient.js"></script>
+  <script type="text/javascript" src="../src/js/Client.js"></script>
 
   <!-- Example code -->
   <script type="text/javascript">
@@ -132,7 +132,7 @@ export default Map;
       div.style.position = 'absolute';
 
       // Allows labels to be rendered outside the container
-      mxClient.NO_FO = true;
+      Client.NO_FO = true;
 
       // Creates the graph inside the given container
       let graph = new mxGraph(div);

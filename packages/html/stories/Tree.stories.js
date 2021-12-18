@@ -4,7 +4,7 @@ import {
   CellRenderer,
   GraphView,
   ImageBox,
-  mxClient,
+  Client,
   EdgeStyle,
   mxKeyHandler,
   CompactTreeLayout,
@@ -31,7 +31,7 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   /*
     Defines a custom shape for the tree node that includes the
@@ -117,9 +117,9 @@ const Template = ({ label, ...args }) => {
   class MyCustomGraph extends Graph {
     // Sets the collapse and expand icons. The values below are the default
     // values, but this is how to replace them if you need to.
-    collapsedImage = new ImageBox(`${mxClient.imageBasePath}/collapsed.gif`, 9, 9);
+    collapsedImage = new ImageBox(`${Client.imageBasePath}/collapsed.gif`, 9, 9);
 
-    expandedImage = new ImageBox(`${mxClient.imageBasePath}/expanded.gif`, 9, 9);
+    expandedImage = new ImageBox(`${Client.imageBasePath}/expanded.gif`, 9, 9);
 
     isCellFoldable(cell) {
       // Defines the condition for showing the folding icon

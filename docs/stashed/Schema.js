@@ -6,8 +6,8 @@ import React from 'react';
 import mxEvent from '../mxgraph/util/mxEvent';
 import mxGraph from '../mxgraph/view/mxGraph';
 import mxRubberband from '../mxgraph/handler/mxRubberband';
-import { error } from '../../packages/core/src/util/gui/mxWindow';
-import { load } from '../../packages/core/src/util/network/mxXmlRequest';
+import { error } from '../../packages/core/src/util/gui/MaxWindow';
+import { load } from '../../packages/core/src/util/network/MaxXmlRequest';
 import { htmlEntities } from '../../packages/core/src/util/StringUtils';
 import { setOpacity } from '../../packages/core/src/util/Utils';
 import { write, writeln } from '../../packages/core/src/util/DomUtils';
@@ -51,7 +51,7 @@ export default MYNAMEHERE;
     function main(container, outline, toolbar, sidebar, status)
     {
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is not supported.
         error('Browser is not supported!', 200, false);
@@ -94,7 +94,7 @@ export default MYNAMEHERE;
         // editor is used to create certain functionality for the
         // graph, such as the rubberband selection, but most parts
         // of the UI are custom in this example.
-        let editor = new mxEditor();
+        let editor = new Editor();
         let graph = editor.graph;
         let model = graph.model;
 
@@ -433,7 +433,7 @@ export default MYNAMEHERE;
           let textarea = document.createElement('textarea');
           textarea.style.width = '400px';
           textarea.style.height = '400px';
-          let enc = new mxCodec(createXmlDocument());
+          let enc = new Codec(createXmlDocument());
           let node = enc.encode(editor.graph.getModel());
           textarea.value = getPrettyXml(node);
           showModalWindow('XML', textarea, 410, 440);
@@ -464,7 +464,7 @@ export default MYNAMEHERE;
           try
           {
             mxEvent.release(splash);
-            mxEffects.fadeOut(splash, 100, true);
+            Effects.fadeOut(splash, 100, true);
           }
           catch (e)
           {
@@ -519,13 +519,13 @@ export default MYNAMEHERE;
       let x = Math.max(0, document.body.scrollWidth/2-width/2);
       let y = Math.max(10, (document.body.scrollHeight ||
             document.documentElement.scrollHeight)/2-height*2/3);
-      let wnd = new mxWindow(title, content, x, y, width, height, false, true);
+      let wnd = new MaxWindow(title, content, x, y, width, height, false, true);
       wnd.setClosable(true);
 
       // Fades the background out after after the window has been closed
       wnd.addListener(mxEvent.DESTROY, function(evt)
       {
-        mxEffects.fadeOut(background, 50, true,
+        Effects.fadeOut(background, 50, true,
           10, 30, true);
       });
 
@@ -742,7 +742,7 @@ export default MYNAMEHERE;
     {
       // Creates a form for the user object inside
       // the cell
-      let form = new mxForm('properties');
+      let form = new MaxForm('properties');
 
       // Adds a field for the columnname
       let nameField = form.addText('Name', cell.value.name);

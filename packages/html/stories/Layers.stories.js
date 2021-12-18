@@ -1,4 +1,4 @@
-import { Graph, mxDomHelpers, Cell, Model, Point } from '@maxgraph/core';
+import { Graph, DomHelpers, Cell, Model, Point } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -93,13 +93,13 @@ const Template = ({ label, ...args }) => {
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('Layer 0', function () {
+    DomHelpers.button('Layer 0', function () {
       model.setVisible(layer0, !layer0.isVisible());
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Layer 1', function () {
+    DomHelpers.button('Layer 1', function () {
       model.setVisible(layer1, !layer1.isVisible());
     })
   );

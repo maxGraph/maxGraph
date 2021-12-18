@@ -6,19 +6,9 @@
  */
 
 import {
-  EDGESTYLE_ELBOW,
-  EDGESTYLE_ENTITY_RELATION,
-  EDGESTYLE_LOOP,
-  EDGESTYLE_ORTHOGONAL,
-  EDGESTYLE_SEGMENT,
-  EDGESTYLE_SIDETOSIDE,
-  EDGESTYLE_TOPTOBOTTOM,
-  PERIMETER_ELLIPSE,
-  PERIMETER_HEXAGON,
-  PERIMETER_RECTANGLE,
-  PERIMETER_RHOMBUS,
-  PERIMETER_TRIANGLE,
-} from '../../util/Constants';
+  EDGESTYLE,
+  PERIMETER,
+} from '../../util/constants';
 import EdgeStyle from './EdgeStyle';
 import Perimeter from './Perimeter';
 
@@ -30,15 +20,11 @@ import Perimeter from './Perimeter';
  */
 class StyleRegistry {
   /**
-   * Variable: values
-   *
    * Maps from strings to objects.
    */
   static values = <any>{};
 
   /**
-   * Function: putValue
-   *
    * Puts the given object into the registry under the given name.
    */
   static putValue(name: string, obj: any): void {
@@ -46,8 +32,6 @@ class StyleRegistry {
   }
 
   /**
-   * Function: getValue
-   *
    * Returns the value associated with the given name.
    */
   static getValue(name: string): any {
@@ -55,8 +39,6 @@ class StyleRegistry {
   }
 
   /**
-   * Function: getName
-   *
    * Returns the name for the given value.
    */
   static getName(value: any): string | null {
@@ -69,18 +51,18 @@ class StyleRegistry {
   }
 }
 
-StyleRegistry.putValue(EDGESTYLE_ELBOW, EdgeStyle.ElbowConnector);
-StyleRegistry.putValue(EDGESTYLE_ENTITY_RELATION, EdgeStyle.EntityRelation);
-StyleRegistry.putValue(EDGESTYLE_LOOP, EdgeStyle.Loop);
-StyleRegistry.putValue(EDGESTYLE_SIDETOSIDE, EdgeStyle.SideToSide);
-StyleRegistry.putValue(EDGESTYLE_TOPTOBOTTOM, EdgeStyle.TopToBottom);
-StyleRegistry.putValue(EDGESTYLE_ORTHOGONAL, EdgeStyle.OrthConnector);
-StyleRegistry.putValue(EDGESTYLE_SEGMENT, EdgeStyle.SegmentConnector);
+StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
+StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
+StyleRegistry.putValue(EDGESTYLE.LOOP, EdgeStyle.Loop);
+StyleRegistry.putValue(EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide);
+StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
+StyleRegistry.putValue(EDGESTYLE.ORTHOGONAL, EdgeStyle.OrthConnector);
+StyleRegistry.putValue(EDGESTYLE.SEGMENT, EdgeStyle.SegmentConnector);
 
-StyleRegistry.putValue(PERIMETER_ELLIPSE, Perimeter.EllipsePerimeter);
-StyleRegistry.putValue(PERIMETER_RECTANGLE, Perimeter.RectanglePerimeter);
-StyleRegistry.putValue(PERIMETER_RHOMBUS, Perimeter.RhombusPerimeter);
-StyleRegistry.putValue(PERIMETER_TRIANGLE, Perimeter.TrianglePerimeter);
-StyleRegistry.putValue(PERIMETER_HEXAGON, Perimeter.HexagonPerimeter);
+StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
+StyleRegistry.putValue(PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter);
+StyleRegistry.putValue(PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter);
+StyleRegistry.putValue(PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter);
+StyleRegistry.putValue(PERIMETER.HEXAGON, Perimeter.HexagonPerimeter);
 
 export default StyleRegistry;

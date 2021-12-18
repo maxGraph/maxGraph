@@ -9,11 +9,9 @@ import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
 import EventSource from '../event/EventSource';
 import ImageBox from '../image/ImageBox';
-import CellState from './datatypes/CellState';
+import CellState from './CellState';
 
 /**
- * Class: mxCellOverlay
- *
  * Extends <mxEventSource> to implement a graph overlay, represented by an icon
  * and a tooltip. Overlays can handle and fire <click> events and are added to
  * the graph using <mxGraph.addCellOverlay>, and removed using
@@ -32,7 +30,7 @@ import CellState from './datatypes/CellState';
  * if the overlay is clicked.
  *
  * (code)
- * let overlay = new mxCellOverlay(img, html);
+ * let overlay = new CellOverlay(img, html);
  * graph.addCellOverlay(vertex, overlay);
  * overlay.addListener(mxEvent.CLICK, (sender, evt)=>
  * {
@@ -50,7 +48,7 @@ import CellState from './datatypes/CellState';
  * contains the cell. For touch devices this is fired if the element receives
  * a touchend event.
  *
- * Constructor: mxCellOverlay
+ * Constructor: CellOverlay
  *
  * Constructs a new overlay using the given image and tooltip.
  *
@@ -83,22 +81,16 @@ class CellOverlay extends EventSource {
   }
 
   /**
-   * Variable: image
-   *
    * Holds the <mxImage> to be used as the icon.
    */
   image: ImageBox;
 
   /**
-   * Variable: tooltip
-   *
    * Holds the optional string to be used as the tooltip.
    */
   tooltip?: string | null;
 
   /**
-   * Variable: align
-   *
    * Holds the horizontal alignment for the overlay. Default is
    * <mxConstants.ALIGN_RIGHT>. For edges, the overlay always appears in the
    * center of the edge.
@@ -106,8 +98,6 @@ class CellOverlay extends EventSource {
   align: 'left' | 'center' | 'right' = 'right';
 
   /**
-   * Variable: verticalAlign
-   *
    * Holds the vertical alignment for the overlay. Default is
    * <mxConstants.ALIGN_BOTTOM>. For edges, the overlay always appears in the
    * center of the edge.
@@ -115,32 +105,24 @@ class CellOverlay extends EventSource {
   verticalAlign: 'top' | 'middle' | 'bottom' = 'bottom';
 
   /**
-   * Variable: offset
-   *
    * Holds the offset as an <mxPoint>. The offset will be scaled according to the
    * current scale.
    */
   offset = new Point();
 
   /**
-   * Variable: cursor
-   *
    * Holds the cursor for the overlay. Default is 'help'.
    */
   cursor = 'help';
 
   /**
-   * Variable: defaultOverlap
-   *
    * Defines the overlapping for the overlay, that is, the proportional distance
    * from the origin to the point defined by the alignment. Default is 0.5.
    */
   defaultOverlap = 0.5;
 
   /**
-   * Function: getBounds
-   *
-   * Returns the bounds of the overlay for the given <mxCellState> as an
+   * Returns the bounds of the overlay for the given <CellState> as an
    * <mxRectangle>. This should be overridden when using multiple overlays
    * per cell so that the overlays do not overlap.
    *
@@ -167,7 +149,7 @@ class CellOverlay extends EventSource {
    *
    * Parameters:
    *
-   * state - <mxCellState> that represents the current state of the
+   * state - <CellState> that represents the current state of the
    * associated cell.
    */
   getBounds(state: CellState): Rectangle {
@@ -223,8 +205,6 @@ class CellOverlay extends EventSource {
   }
 
   /**
-   * Function: toString
-   *
    * Returns the textual representation of the overlay to be used as the
    * tooltip. This implementation returns <tooltip>.
    */

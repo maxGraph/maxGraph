@@ -13,8 +13,6 @@ type ImageMap = {
 };
 
 /**
- * Class: mxImageBundle
- *
  * Maps from keys to base64 encoded images or file locations. All values must
  * be URLs or use the format data:image/format followed by a comma and the base64
  * encoded image data, eg. "data:image/gif,XYZ", where XYZ is the base64 encoded
@@ -64,22 +62,16 @@ class ImageBundle {
   }
 
   /**
-   * Variable: images
-   *
    * Maps from keys to images.
    */
   images: ImageMap;
 
   /**
-   * Variable: alt
-   *
    * Specifies if the fallback representation should be returned.
    */
   alt: boolean;
 
   /**
-   * Function: putImage
-   *
    * Adds the specified entry to the map. The entry is an object with a value and
    * fallback property as specified in the arguments.
    */
@@ -88,8 +80,6 @@ class ImageBundle {
   }
 
   /**
-   * Function: getImage
-   *
    * Returns the value for the given key. This returns the value
    * or fallback, depending on <alt>. The fallback is returned if
    * <alt> is true, the value is returned otherwise.

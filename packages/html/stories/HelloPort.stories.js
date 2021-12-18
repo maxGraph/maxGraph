@@ -4,12 +4,12 @@ import {
   EdgeStyle,
   Point,
   Constants,
-  mxDomHelpers,
-  mxClient,
+  DomHelpers,
+  Client,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { popup } from '@maxgraph/core/util/gui/mxWindow';
+import { popup } from '@maxgraph/core/util/gui/MaxWindow';
 import { getPrettyXml } from '@maxgraph/core/util/XmlUtils';
 
 export default {
@@ -24,7 +24,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   const div = document.createElement('div');
 
@@ -101,8 +101,8 @@ const Template = ({ label, ...args }) => {
   const controller = document.createElement('div');
   div.appendChild(controller);
 
-  const button = mxDomHelpers.button('View XML', function () {
-    const encoder = new mxCodec();
+  const button = DomHelpers.button('View XML', function () {
+    const encoder = new Codec();
     const node = encoder.encode(graph.getModel());
     popup(getPrettyXml(node), true);
   });

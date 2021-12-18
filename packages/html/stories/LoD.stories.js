@@ -1,4 +1,4 @@
-import { Graph, mxDomHelpers } from '@maxgraph/core';
+import { Graph, DomHelpers } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -69,13 +69,13 @@ const Template = ({ label, ...args }) => {
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('+', function () {
+    DomHelpers.button('+', function () {
       graph.zoomIn();
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('-', function () {
+    DomHelpers.button('-', function () {
       graph.zoomOut();
     })
   );

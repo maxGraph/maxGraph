@@ -2,7 +2,7 @@ import {
   Graph,
   Constants,
   InternalEvent,
-  mxClient,
+  Client,
   Point,
   Outline,
   EdgeStyle,
@@ -12,7 +12,7 @@ import {
   CellOverlay,
   ImageBox,
   utils,
-  mxToolbar,
+  MaxToolbar,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -49,10 +49,10 @@ const Template = ({ label, ...args }) => {
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Sets a gradient background
-  if (mxClient.IS_GC || mxClient.IS_SF) {
+  if (Client.IS_GC || Client.IS_SF) {
     container.style.background =
       '-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#E7E7E7))';
-  } else if (mxClient.IS_NS) {
+  } else if (Client.IS_NS) {
     container.style.background = '-moz-linear-gradient(top, #FFFFFF, #E7E7E7)';
   }
 
@@ -81,7 +81,7 @@ const Template = ({ label, ...args }) => {
   const outln = new Outline(graph, outline);
 
   // Disables tooltips on touch devices
-  graph.setTooltips(!mxClient.IS_TOUCH);
+  graph.setTooltips(!Client.IS_TOUCH);
 
   // Set some stylesheet options for the visual appearance of vertices
   let style = graph.getStylesheet().getDefaultVertexStyle();
@@ -219,7 +219,7 @@ const Template = ({ label, ...args }) => {
   const content = document.createElement('div');
   content.style.padding = '4px';
   div.appendChild(content);
-  const tb = new mxToolbar(content);
+  const tb = new MaxToolbar(content);
 
   tb.addItem('Zoom In', 'images/zoom_in32.png', function (evt) {
     graph.zoomIn();

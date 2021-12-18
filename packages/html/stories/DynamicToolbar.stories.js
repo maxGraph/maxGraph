@@ -3,7 +3,7 @@ import {
   RubberBand,
   ConnectionHandler,
   ImageBox,
-  mxToolbar,
+  MaxToolbar,
   Model,
   mxKeyHandler,
   Cell,
@@ -59,7 +59,7 @@ const Template = ({ label, ...args }) => {
   div.appendChild(tbContainer);
 
   // Creates new toolbar without event processing
-  const toolbar = new mxToolbar(tbContainer);
+  const toolbar = new MaxToolbar(tbContainer);
   toolbar.enabled = false;
 
   // Creates the model and the graph inside the container

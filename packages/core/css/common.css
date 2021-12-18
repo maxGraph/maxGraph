@@ -25,7 +25,7 @@ div.mxRubberband {
 	padding: 0px;
 	margin: 0px;
 }
-div.mxWindow {
+div.MaxWindow {
 	-webkit-box-shadow: 3px 3px 12px #C0C0C0;
 	-moz-box-shadow: 3px 3px 12px #C0C0C0;
 	box-shadow: 3px 3px 12px #C0C0C0;
@@ -36,7 +36,7 @@ div.mxWindow {
 	overflow: hidden;
 	z-index: 1;
 }
-table.mxWindow {
+table.MaxWindow {
 	border-collapse: collapse;
 	table-layout: fixed;
   	font-family: Arial;

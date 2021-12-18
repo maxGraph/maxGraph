@@ -88,7 +88,7 @@ export default MYNAMEHERE;
             // Condition to avoid scrollbar events starting a rubberband
             // selection
             else if (this.isContainerEvent(evt) &&
-              ((!mxClient.IS_GC && !mxClient.IS_SF) ||
+              ((!Client.IS_GC && !Client.IS_SF) ||
               !this.isScrollEvent(evt)))
             {
               graph.fireMouseEvent(mxEvent.MOUSE_DOWN,
@@ -192,7 +192,7 @@ export default MYNAMEHERE;
     function main(container)
     {
       // Checks if the browser is supported
-      if (!mxClient.isBrowserSupported())
+      if (!Client.isBrowserSupported())
       {
         // Displays an error message if the browser is not supported.
         mxUtils.error('Browser is not supported!', 200, false);
@@ -238,7 +238,7 @@ export default MYNAMEHERE;
           let onload = function(req)
           {
             let dt = (new Date().getTime() - t0) / 1000;
-            //mxLog.debug('post returned after '+dt+' secs');
+            //MaxLog.debug('post returned after '+dt+' secs');
 
             if (req.getStatus() == 200)
             {
@@ -258,7 +258,7 @@ export default MYNAMEHERE;
                 loader.style.visibility = 'hidden';
 
                 let dt = (new Date().getTime() - t0) / 1000;
-                //mxLog.debug('received '+img.clientWidth+'x'+img.clientHeight+' pixels in '+dt+' secs');
+                //MaxLog.debug('received '+img.clientWidth+'x'+img.clientHeight+' pixels in '+dt+' secs');
                 graph.setEnabled(true);
               };
 
@@ -273,12 +273,12 @@ export default MYNAMEHERE;
 
           let onerror = function(req)
           {
-            //mxLog.debug('error: '+req.getStatus());
+            //MaxLog.debug('error: '+req.getStatus());
           }
 
-          //mxLog.debug('sent '+(xml.length/1024)+' KB');
+          //MaxLog.debug('sent '+(xml.length/1024)+' KB');
           graph.setEnabled(false);
-          new mxXmlRequest('/ServerView', 'xml='+xml).send(onload, onerror);
+          new MaxXmlRequest('/ServerView', 'xml='+xml).send(onload, onerror);
         };
 
         // Uncomment the following if you want the container
@@ -294,7 +294,7 @@ export default MYNAMEHERE;
         // Gets the default parent for inserting new cells. This
         // is normally the first child of the root (ie. layer 0).
         let parent = graph.getDefaultParent();
-        //mxLog.show();
+        //MaxLog.show();
 
         // Adds cells to the model in a single step
         graph.getModel().beginUpdate();

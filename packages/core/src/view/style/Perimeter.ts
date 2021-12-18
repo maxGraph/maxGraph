@@ -5,16 +5,16 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { intersection } from '../../util/Utils';
+import { intersection } from '../../util/utils';
 import Point from '../geometry/Point';
 import {
   DIRECTION_EAST,
   DIRECTION_NORTH,
   DIRECTION_SOUTH,
   DIRECTION_WEST,
-} from '../../util/Constants';
+} from '../../util/constants';
 import Rectangle from '../geometry/Rectangle';
-import CellState from '../cell/datatypes/CellState';
+import CellState from '../cell/CellState';
 import { CellStateStyles } from '../../types';
 
 /**
@@ -90,7 +90,7 @@ class Perimeter {
    *
    * @param bounds {@link mxRectangle} that represents the absolute bounds of the
    * vertex.
-   * @param vertex {@link mxCellState} that represents the vertex.
+   * @param vertex {@link CellState} that represents the vertex.
    * @param next {@link mxPoint} that represents the nearest neighbour point on the
    * given edge.
    * @param orthogonal Boolean that specifies if the orthogonal projection onto
