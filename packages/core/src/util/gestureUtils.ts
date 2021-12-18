@@ -5,8 +5,6 @@ import { Graph } from 'src/view/Graph';
 import Cell from 'src/view/cell/Cell';
 
 /**
- * Function: makeDraggable
- *
  * Configures the given DOM element to act as a drag source for the
  * specified graph. Returns a a new <mxDragSource>. If
  * <mxDragSource.guideEnabled> is enabled then the x and y arguments must

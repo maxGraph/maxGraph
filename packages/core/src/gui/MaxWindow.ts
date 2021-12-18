@@ -937,8 +937,6 @@ class MaxWindow extends EventSource {
 }
 
 /**
- * Function: popup
- *
  * Shows the specified text content in a new <MaxWindow> or a new browser
  * window if isInternalWindow is false.
  *
@@ -999,8 +997,6 @@ export const popup = (content, isInternalWindow) => {
 };
 
 /**
- * Function: error
- *
  * Displays the given error message in a new <MaxWindow> of the given width.
  * If close is true then an additional close button is added to the window.
  * The optional icon specifies the icon to be used for the window. Default

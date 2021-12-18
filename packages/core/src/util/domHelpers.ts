@@ -4,8 +4,6 @@ import InternalEvent from "../view/event/InternalEvent";
 import { write } from "./domUtils";
 
 /**
- * Function: linkAction
- *
  * Adds a hyperlink to the specified parent that invokes action on the
  * specified editor.
  *
@@ -29,8 +27,6 @@ export const linkAction = (parent: HTMLElement, text: string, editor: Editor, ac
 };
 
 /**
- * Function: linkInvoke
- *
  * Adds a hyperlink to the specified parent that invokes the specified
  * function on the editor passing along the specified argument. The
  * function name is the name of a function of the editor instance,
@@ -57,8 +53,6 @@ export const linkInvoke = (parent: Element, text: string, editor: Editor, functN
 };
 
 /**
- * Function: link
- *
  * Adds a hyperlink to the specified parent and invokes the given function
  * when the link is clicked.
  *
@@ -88,8 +82,6 @@ export const link = (parent: Element, text: string, funct: MouseEventListener | 
 };
 
 /**
- * Function: button
- *
  * Returns a new button with the given level and function as an onclick
  * event handler.
  *

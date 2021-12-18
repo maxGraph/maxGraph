@@ -375,8 +375,6 @@ class MaxXmlRequest {
 }
 
 /**
- * Function: load
- *
  * Loads the specified URL *synchronously* and returns the <MaxXmlRequest>.
  * Throws an exception if the file cannot be loaded. See <mxUtils.get> for
  * an asynchronous implementation.
@@ -407,8 +405,6 @@ export const load = (url: string) => {
 }
 
 /**
- * Function: get
- *
  * Loads the specified URL *asynchronously* and invokes the given functions
  * depending on the request status. Returns the <MaxXmlRequest> in use. Both
  * functions take the <MaxXmlRequest> as the only parameter. See
@@ -479,8 +475,6 @@ export const get = (url: string, onload: Function, onerror: Function, binary: bo
 }
 
 /**
- * Function: getAll
- *
  * Loads the URLs in the given array *asynchronously* and invokes the given function
  * if all requests returned with a valid 2xx status. The error handler is invoked
  * once on the first error or invalid response.
@@ -532,8 +526,6 @@ export const getAll = (urls, onload, onerror) => {
 }
 
 /**
- * Function: post
- *
  * Posts the specified params to the given URL *asynchronously* and invokes
  * the given functions depending on the request status. Returns the
  * <MaxXmlRequest> in use. Both functions take the <MaxXmlRequest> as the
@@ -562,8 +554,6 @@ export const post = (url, params, onload, onerror) => {
 }
 
 /**
- * Function: submit
- *
  * Submits the given parameters to the specified URL using
  * <MaxXmlRequest.simulate> and returns the <MaxXmlRequest>.
  * Make sure to use encodeURIComponent for the parameter

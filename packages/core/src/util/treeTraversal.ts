@@ -72,8 +72,6 @@ export function findTreeRoots(
 }
 
 /**
- * Function: traverse
- *
  * Traverses the (directed) graph invoking the given function for each
  * visited vertex and edge. The function is invoked with the current vertex
  * and the incoming edge as a parameter. This implementation makes sure

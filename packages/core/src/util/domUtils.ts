@@ -1,8 +1,6 @@
 import { NODETYPE } from './constants';
 
 /**
- * Function: extractTextWithWhitespace
- *
  * Returns the text content of the specified node.
  *
  * Parameters:
@@ -71,8 +69,6 @@ export const extractTextWithWhitespace = (elems: Element[]): string => {
 };
 
 /**
- * Function: getTextContent
- *
  * Returns the text content of the specified node.
  *
  * Parameters:
@@ -86,8 +82,6 @@ export const getTextContent = (node: Element): string => {
 };
 
 /**
- * Function: setTextContent
- *
  * Sets the text content of the specified node.
  *
  * Parameters:
@@ -104,8 +98,6 @@ export const setTextContent = (node: Element, text: string) => {
 };
 
 /**
- * Function: getInnerHtml
- *
  * Returns the inner HTML for the given node as a string or an empty string
  * if no node was specified. The inner HTML is the text representing all
  * children of the node, but not the node itself.
@@ -124,8 +116,6 @@ export const getInnerHtml = (node: Element) => {
 };
 
 /**
- * Function: getOuterHtml
- *
  * Returns the outer HTML for the given node as a string or an empty
  * string if no node was specified. The outer HTML is the text representing
  * all children of the node including the node itself.
@@ -144,8 +134,6 @@ export const getOuterHtml = (node: Element) => {
 };
 
 /**
- * Function: write
- *
  * Creates a text node for the given string and appends it to the given
  * parent. Returns the text node.
  *
@@ -166,8 +154,6 @@ export const write = (parent: Element, text: string) => {
 };
 
 /**
- * Function: writeln
- *
  * Creates a text node for the given string and appends it to the given
  * parent with an additional linefeed. Returns the text node.
  *
@@ -189,8 +175,6 @@ export const writeln = (parent: Element, text: string) => {
 };
 
 /**
- * Function: br
- *
  * Appends a linebreak to the given parent and returns the linebreak.
  *
  * Parameters:
@@ -211,8 +195,6 @@ export const br = (parent: Element, count: number=1) => {
 };
 
 /**
- * Function: para
- *
  * Appends a new paragraph with the given text to the specified parent and
  * returns the paragraph.
  *
@@ -233,8 +215,6 @@ export const para = (parent: Element, text: string) => {
 };
 
 /**
- * Function: isNode
- *
  * Returns true if the given value is an XML node with the node name
  * and if the optional attribute has the specified value.
  *
@@ -265,8 +245,6 @@ export const isNode = (value: any, nodeName: string | null=null, attributeName?:
 };
 
 /**
- * Function: isAncestorNode
- *
  * Returns true if the given ancestor is an ancestor of the
  * given DOM node in the DOM. This also returns true if the
  * child is the ancestor.
@@ -290,8 +268,6 @@ export const isAncestorNode = (ancestor: Element, child: Element | null) => {
 };
 
 /**
- * Function: getChildNodes
- *
  * Returns an array of child nodes that are of the given node type.
  *
  * Parameters:
@@ -317,8 +293,6 @@ export const getChildNodes = (node: Element, nodeType: number=NODETYPE.ELEMENT) 
 };
 
 /**
- * Function: importNode
- *
  * Cross browser implementation for document.importNode. Uses document.importNode
  * in all browsers but IE, where the node is cloned by creating a new node and
  * copying all attributes and children into it using importNode, recursively.
@@ -334,8 +308,6 @@ export const importNode = (doc, node, allChildren) => {
 };
 
 /**
- * Function: importNodeImplementation
- *
  * Full DOM API implementation for importNode without using importNode API call.
  *
  * Parameters:
@@ -381,8 +353,6 @@ export const importNodeImplementation = (doc, node, allChildren) => {
 };
 
 /**
- * Function: clearSelection
- *
  * Clears the current selection in the page.
  */
 export const clearSelection = () => {

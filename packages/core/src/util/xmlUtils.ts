@@ -7,8 +7,6 @@ import { Cell, Graph } from 'src';
 import CellArray from 'src/view/cell/CellArray';
 
 /**
- * Function: createXmlDocument
- *
  * Returns a new, empty XML document.
  */
 export const createXmlDocument = () => {
@@ -16,8 +14,6 @@ export const createXmlDocument = () => {
 };
 
 /**
- * Function: getViewXml
- */
 export const getViewXml = (
   graph: Graph, 
   scale: number | null=null, 
@@ -87,8 +83,6 @@ export const getViewXml = (
 };
 
 /**
- * Function: getXml
- *
  * Returns the XML content of the specified node. For Internet Explorer,
  * all \r\n\t[\t]* are removed from the XML string and the remaining \r\n
  * are replaced by \n. All \n are then replaced with linefeed, or &#xa; if
@@ -121,8 +115,6 @@ export const getXml = (node: Element, linefeed: string='&#xa;'): string => {
 };
 
 /**
- * Function: getPrettyXML
- *
  * Returns a pretty printed string that represents the XML tree for the
  * given node. This method should only be used to print XML for reading,
  * use <getXml> instead to obtain a string for processing.

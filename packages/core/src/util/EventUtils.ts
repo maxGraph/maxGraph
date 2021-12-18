@@ -32,8 +32,6 @@ export const getClientY = (evt: MouseEvent) => {
 };
 
 /**
- * Function: getSource
- *
  * Returns the event's target or srcElement depending on the browser.
  */
 export const getSource = (evt: MouseEvent | KeyboardEvent): EventTarget | null => {

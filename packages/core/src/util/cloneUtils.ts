@@ -1,8 +1,6 @@
 import ObjectIdentity from './ObjectIdentity';
 
 /**
- * Function: clone
- *
  * Recursively clones the specified object ignoring all fieldnames in the
  * given array of transient fields. <mxObjectIdentity.FIELD_NAME> is always
  * ignored by this function.
