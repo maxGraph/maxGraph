@@ -2605,8 +2605,6 @@ Graph.prototype.setDefaultParent = function(cell)
 };
 
 /**
- * Function: getClickableLinkForCell
- * 
  * Returns the first non-null link for the cell or its ancestors.
  * 
  * Parameters:
@@ -3633,8 +3631,6 @@ Graph.prototype.isLabelMovable = function(cell)
 };
 
 /**
- * Function: selectAll
- * 
  * Selects all children of the given parent cell or the children of the
  * default parent if no parent is specified. To select leaf vertices and/or
  * edges use <selectCells>.
@@ -3655,8 +3651,6 @@ Graph.prototype.selectAll = function(parent)
 };
 
 /**
- * Function: selectCells
- * 
  * Selects all vertices and/or edges depending on the given boolean
  * arguments recursively, starting at the given parent or the default
  * parent if no parent is specified. Use <selectAll> to select all cells.
@@ -3680,8 +3674,6 @@ Graph.prototype.selectCells = function(vertices, edges, parent)
 };
 
 /**
- * Function: getSwimlaneAt
- * 
  * Returns the bottom-most swimlane that intersects the given point (x, y)
  * in the cell hierarchy that starts at the given parent.
  * 
@@ -3746,8 +3738,6 @@ Graph.prototype.zoom = function(factor, center)
 };
 
 /**
- * Function: zoomIn
- * 
  * Zooms into the graph by <zoomFactor>.
  */
 Graph.prototype.zoomIn = function()
@@ -3766,8 +3756,6 @@ Graph.prototype.zoomIn = function()
 };
 
 /**
- * Function: zoomOut
- * 
  * Zooms out of the graph by <zoomFactor>.
  */
 Graph.prototype.zoomOut = function()
@@ -3786,8 +3774,6 @@ Graph.prototype.zoomOut = function()
 };
 
 /**
- * Function: fitWindow
- * 
  * Sets the current visible rectangle of the window in graph coordinates.
  */
 Graph.prototype.fitWindow = function(bounds, border)
@@ -5134,8 +5120,6 @@ TableLayout.prototype = new StackLayout();
 TableLayout.prototype.constructor = TableLayout;
 
 /**
- * Function: isHorizontal
- * 
  * Overrides stack layout to handle row reorder.
  */
 TableLayout.prototype.isHorizontal = function()	
@@ -5144,8 +5128,6 @@ TableLayout.prototype.isHorizontal = function()
 };
 
 /**
- * Function: isVertexIgnored
- * 
  * Overrides to allow for table rows and cells.
  */
 TableLayout.prototype.isVertexIgnored = function(vertex)
@@ -5155,8 +5137,6 @@ TableLayout.prototype.isVertexIgnored = function(vertex)
 };
 
 /**
- * Function: getSize
- * 
  * Returns the total vertical or horizontal size of the given cells.
  */
 TableLayout.prototype.getSize = function(cells, horizontal)
@@ -5180,8 +5160,6 @@ TableLayout.prototype.getSize = function(cells, horizontal)
 };
 
 /**
- * Function: getRowLayout
- * 
  * Returns the column positions for the given row and table width.
  */
 TableLayout.prototype.getRowLayout = function(row, width)
@@ -5208,8 +5186,6 @@ TableLayout.prototype.getRowLayout = function(row, width)
 };
 
 /**
- * Function: layoutRow
- * 
  * Places the cells at the given positions in the given row.
  */
 TableLayout.prototype.layoutRow = function(row, positions, height, tw)
@@ -5271,8 +5247,6 @@ TableLayout.prototype.layoutRow = function(row, positions, height, tw)
 };
 
 /**
- * Function: execute
- * 
  * Implements <mxGraphLayout.execute>.
  */
 TableLayout.prototype.execute = function(parent)

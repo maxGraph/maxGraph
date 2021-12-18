@@ -14,7 +14,7 @@ import TooltipHandler from './handler/TooltipHandler';
 import Client from '../Client';
 import SelectionCellsHandler from './handler/SelectionCellsHandler';
 import ConnectionHandler from './handler/ConnectionHandler';
-import GraphHandler from './GraphHandler';
+import GraphHandler from './handler/GraphHandler';
 import PanningHandler from './handler/PanningHandler';
 import PopupMenuHandler from './handler/PopupMenuHandler';
 import GraphView from './GraphView';
