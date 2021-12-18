@@ -58,37 +58,27 @@ class Morphing extends Animation {
   }
 
   /**
-   * Variable: graph
-   *
    * Specifies the delay between the animation steps. Defaul is 30ms.
    */
   graph: Graph;
 
   /**
-   * Variable: steps
-   *
    * Specifies the maximum number of steps for the morphing.
    */
   steps: number;
 
   /**
-   * Variable: step
-   *
    * Contains the current step.
    */
   step: number = 0;
 
   /**
-   * Variable: ease
-   *
    * Ease-off for movement towards the given vector. Larger values are
    * slower and smoother. Default is 4.
    */
   ease: number;
 
   /**
-   * Variable: cells
-   *
    * Optional array of cells to be animated. If this is not specified
    * then all cells are checked and animated if they have been moved
    * in the current transaction.

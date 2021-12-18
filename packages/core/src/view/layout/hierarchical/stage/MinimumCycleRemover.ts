@@ -27,8 +27,6 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
   }
 
   /**
-   * Variable: layout
-   *
    * Reference to the enclosing <HierarchicalLayout>.
    */
   layout: GraphLayout;

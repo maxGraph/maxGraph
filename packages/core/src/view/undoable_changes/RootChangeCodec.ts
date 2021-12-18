@@ -29,8 +29,6 @@ class RootChangeCodec extends ObjectCodec {
   }
 
   /**
-   * Function: onEncode
-   *
    * Encodes the child recursively.
    */
   afterEncode(enc, obj, node) {
@@ -40,8 +38,6 @@ class RootChangeCodec extends ObjectCodec {
   }
 
   /**
-   * Function: beforeDecode
-   *
    * Decodes the optional children as cells
    * using the respective decoder.
    */
@@ -69,8 +65,6 @@ class RootChangeCodec extends ObjectCodec {
   }
 
   /**
-   * Function: afterDecode
-   *
    * Restores the state by assigning the previous value.
    */
   afterDecode(dec, node, obj) {

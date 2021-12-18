@@ -314,8 +314,6 @@ const EventsMixin: PartialType = {
   doubleTapTolerance: 25,
 
   /**
-   * Variable: lastTouchX
-   *
    * Holds the x-coordinate of the last touch event for double tap detection.
    */
   lastTouchX: 0,

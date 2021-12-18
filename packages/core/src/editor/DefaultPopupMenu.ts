@@ -142,8 +142,6 @@ class DefaultPopupMenu {
   }
 
   /**
-   * Function: addItems
-   *
    * Recursively adds the given items and all of its children into the given menu.
    *
    * Parameters:
@@ -223,8 +221,6 @@ class DefaultPopupMenu {
   }
 
   /**
-   * Function: addAction
-   *
    * Helper method to bind an action to a new menu item.
    *
    * Parameters:

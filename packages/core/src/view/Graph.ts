@@ -758,8 +758,6 @@ class Graph extends EventSource {
   }
 
   /**
-   * Function: fit
-   *
    * Scales the graph such that the complete diagram fits into <container> and
    * returns the current scale in the view. To fit an initial graph prior to
    * rendering, set <mxGraphView.rendering> to false prior to changing the model

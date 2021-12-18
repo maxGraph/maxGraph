@@ -86,30 +86,22 @@ class MaxXmlRequest {
   }
 
   /**
-   * Variable: url
-   *
    * Holds the target URL of the request.
    */
   url: string;
 
   /**
-   * Variable: params
-   *
    * Holds the form encoded data for the POST request.
    */
   params: string | null;
 
   /**
-   * Variable: method
-   *
    * Specifies the request method. Possible values are POST and GET. Default
    * is POST.
    */
   method: 'GET' | 'POST';
 
   /**
-   * Variable: async
-   *
    * Boolean indicating if the request is asynchronous.
    */
   async: boolean;
@@ -131,15 +123,11 @@ class MaxXmlRequest {
   withCredentials: boolean = false;
 
   /**
-   * Variable: username
-   *
    * Specifies the username to be used for authentication.
    */
   username: string | null;
 
   /**
-   * Variable: password
-   *
    * Specifies the password to be used for authentication.
    */
   password: string | null;

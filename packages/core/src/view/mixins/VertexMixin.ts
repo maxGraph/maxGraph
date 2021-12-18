@@ -74,8 +74,6 @@ const VertexMixin: PartialType = {
   },
 
   /**
-   * Function: insertVertex
-   *
    * Adds a new vertex into the given parent <Cell> using value as the user
    * object and the given coordinates as the <mxGeometry> of the new vertex.
    * The id and style are used for the respective properties of the new
@@ -166,8 +164,6 @@ const VertexMixin: PartialType = {
   },
 
   /**
-   * Function: createVertex
-   *
    * Hook method that creates the new vertex for <insertVertex>.
    */
   createVertex(

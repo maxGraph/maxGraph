@@ -79,8 +79,6 @@ const SnapMixin: PartialType = {
   },
 
   /**
-   * Function: snapDelta
-   *
    * Snaps the given delta with the given scaled bounds.
    */
   snapDelta(

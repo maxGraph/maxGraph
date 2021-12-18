@@ -49,8 +49,6 @@ class GenericChangeCodec extends ObjectCodec {
   }
 
   /**
-   * Function: afterDecode
-   *
    * Restores the state by assigning the previous value.
    */
   afterDecode(dec, node, obj) {

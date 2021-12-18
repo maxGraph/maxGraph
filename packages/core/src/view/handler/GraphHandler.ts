@@ -167,8 +167,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
@@ -180,8 +178,6 @@ class GraphHandler implements GraphPlugin {
   refreshThread: number | null = null;
 
   /**
-   * Variable: maxCells
-   *
    * Defines the maximum number of cells to paint subhandles
    * for. Default is 50 for Firefox and 20 for IE. Set this
    * to 0 if you want an unlimited number of handles to be
@@ -192,134 +188,98 @@ class GraphHandler implements GraphPlugin {
   maxCells = 50;
 
   /**
-   * Variable: enabled
-   *
    * Specifies if events are handled. Default is true.
    */
   enabled = true;
 
   /**
-   * Variable: highlightEnabled
-   *
    * Specifies if drop targets under the mouse should be enabled. Default is
    * true.
    */
   highlightEnabled = true;
 
   /**
-   * Variable: cloneEnabled
-   *
    * Specifies if cloning by control-drag is enabled. Default is true.
    */
   cloneEnabled = true;
 
   /**
-   * Variable: moveEnabled
-   *
    * Specifies if moving is enabled. Default is true.
    */
   moveEnabled = true;
 
   /**
-   * Variable: guidesEnabled
-   *
    * Specifies if other cells should be used for snapping the right, center or
    * left side of the current selection. Default is false.
    */
   guidesEnabled = false;
 
   /**
-   * Variable: handlesVisible
-   *
    * Whether the handles of the selection are currently visible.
    */
   handlesVisible = true;
 
   /**
-   * Variable: guide
-   *
    * Holds the <mxGuide> instance that is used for alignment.
    */
   guide: Guide | null = null;
 
   /**
-   * Variable: currentDx
-   *
    * Stores the x-coordinate of the current mouse move.
    */
   currentDx = 0;
 
   /**
-   * Variable: currentDy
-   *
    * Stores the y-coordinate of the current mouse move.
    */
   currentDy = 0;
 
   /**
-   * Variable: updateCursor
-   *
    * Specifies if a move cursor should be shown if the mouse is over a movable
    * cell. Default is true.
    */
   updateCursor = true;
 
   /**
-   * Variable: selectEnabled
-   *
    * Specifies if selecting is enabled. Default is true.
    */
   selectEnabled = true;
 
   /**
-   * Variable: removeCellsFromParent
-   *
    * Specifies if cells may be moved out of their parents. Default is true.
    */
   removeCellsFromParent = true;
 
   /**
-   * Variable: removeEmptyParents
-   *
    * If empty parents should be removed from the model after all child cells
    * have been moved out. Default is true.
    */
   removeEmptyParents = false;
 
   /**
-   * Variable: connectOnDrop
-   *
    * Specifies if drop events are interpreted as new connections if no other
    * drop action is defined. Default is false.
    */
   connectOnDrop = false;
 
   /**
-   * Variable: scrollOnMove
-   *
    * Specifies if the view should be scrolled so that a moved cell is
    * visible. Default is true.
    */
   scrollOnMove = true;
 
   /**
-   * Variable: minimumSize
-   *
    * Specifies the minimum number of pixels for the width and height of a
    * selection border. Default is 6.
    */
   minimumSize = 6;
 
   /**
-   * Variable: previewColor
-   *
    * Specifies the color of the preview shape. Default is black.
    */
   previewColor: ColorValue = 'black';
 
   /**
-   * Variable: htmlPreview
-   *
    * Specifies if the graph container should be used for preview. If this is used
    * then drop target detection relies entirely on <mxGraph.getCellAt> because
    * the HTML preview does not "let events through". Default is false.
@@ -327,29 +287,21 @@ class GraphHandler implements GraphPlugin {
   htmlPreview = false;
 
   /**
-   * Variable: shape
-   *
    * Reference to the <mxShape> that represents the preview.
    */
   shape: Shape | null = null;
 
   /**
-   * Variable: scaleGrid
-   *
    * Specifies if the grid should be scaled. Default is false.
    */
   scaleGrid = false;
 
   /**
-   * Variable: rotationEnabled
-   *
    * Specifies if the bounding box should allow for rotation. Default is true.
    */
   rotationEnabled = true;
 
   /**
-   * Variable: maxLivePreview
-   *
    * Maximum number of cells for which live preview should be used.  Default is 0 which means no live preview.
    */
   maxLivePreview = 0;
@@ -384,8 +336,6 @@ class GraphHandler implements GraphPlugin {
   highlight: CellHighlight | null = null;
 
   /**
-   * Function: isEnabled
-   *
    * Returns <enabled>.
    */
   isEnabled() {
@@ -393,8 +343,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: setEnabled
-   *
    * Sets <enabled>.
    */
   setEnabled(value: boolean) {
@@ -402,8 +350,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: isCloneEnabled
-   *
    * Returns <cloneEnabled>.
    */
   isCloneEnabled() {
@@ -411,8 +357,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: setCloneEnabled
-   *
    * Sets <cloneEnabled>.
    *
    * Parameters:
@@ -424,8 +368,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: isMoveEnabled
-   *
    * Returns <moveEnabled>.
    */
   isMoveEnabled() {
@@ -433,8 +375,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: setMoveEnabled
-   *
    * Sets <moveEnabled>.
    */
   setMoveEnabled(value: boolean) {
@@ -442,8 +382,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: isSelectEnabled
-   *
    * Returns <selectEnabled>.
    */
   isSelectEnabled() {
@@ -451,8 +389,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: setSelectEnabled
-   *
    * Sets <selectEnabled>.
    */
   setSelectEnabled(value: boolean) {
@@ -460,8 +396,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: isRemoveCellsFromParent
-   *
    * Returns <removeCellsFromParent>.
    */
   isRemoveCellsFromParent() {
@@ -469,8 +403,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: setRemoveCellsFromParent
-   *
    * Sets <removeCellsFromParent>.
    */
   setRemoveCellsFromParent(value: boolean) {
@@ -478,8 +410,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: isPropagateSelectionCell
-   *
    * Returns true if the given cell and parent should propagate
    * selection state to the parent.
    */
@@ -505,8 +435,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: getInitialCellForEvent
-   *
    * Hook to return initial cell for the given event.
    */
   getInitialCellForEvent(me: InternalMouseEvent) {
@@ -536,8 +464,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: isDelayedSelection
-   *
    * Hook to return true for delayed selections.
    */
   isDelayedSelection(cell: Cell, me: InternalMouseEvent) {
@@ -562,8 +488,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: selectDelayed
-   *
    * Implements the delayed selection for the given mouse event.
    */
   selectDelayed(me: InternalMouseEvent) {
@@ -581,8 +505,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: selectCellForEvent
-   *
    * Selects the given cell for the given <mxMouseEvent>.
    */
   selectCellForEvent(cell: Cell, me: InternalMouseEvent) {
@@ -614,8 +536,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: consumeMouseEvent
-   *
    * Consumes the given mouse event. NOTE: This may be used to enable click
    * events for links in labels on iOS as follows as consuming the initial
    * touchStart disables firing the subsequent click evnent on the link.
@@ -637,8 +557,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: mouseDown
-   *
    * Handles the event by selecing the given cell and creating a handle for
    * it. By consuming the event all subsequent events of the gesture are
    * redirected to this handler.
@@ -688,8 +606,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: getGuideStates
-   *
    * Creates an array of cell states which should be used as guides.
    */
   getGuideStates() {
@@ -707,8 +623,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: getCells
-   *
    * Returns the cells to be modified by this handler. This implementation
    * returns all selection cells that are movable, or the given initial cell if
    * the given cell is not selected and movable. This handles the case of moving
@@ -726,8 +640,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: getPreviewBounds
-   *
    * Returns the <mxRectangle> used as the preview bounds for
    * moving the given cells.
    */
@@ -762,8 +674,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: getBoundingBox
-   *
    * Returns the union of the <mxCellStates> for the given array of <mxCells>.
    * For vertices, this method uses the bounding box of the corresponding shape
    * if one exists. The bounding box of the corresponding text label and all
@@ -805,8 +715,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: createPreviewShape
-   *
    * Creates the shape used to draw the preview for the given bounds.
    */
   createPreviewShape(bounds: Rectangle) {
@@ -840,8 +748,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: start
-   *
    * Starts the handling of the mouse gesture.
    */
   start(cell: Cell, x: number, y: number, cells?: CellArray) {
@@ -914,8 +820,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: isCellMoving
-   *
    * Returns true if the given cell is currently being moved.
    */
   isCellMoving(cell: Cell) {
@@ -923,8 +827,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: useGuidesForEvent
-   *
    * Returns true if the guides should be used for the given <mxMouseEvent>.
    * This implementation returns <mxGuide.isEnabledForEvent>.
    */
@@ -936,8 +838,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: snap
-   *
    * Snaps the given vector to the grid and returns the given mxPoint instance.
    */
   snap(vector: Point) {
@@ -950,8 +850,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: getDelta
-   *
    * Returns an <mxPoint> that represents the vector for moving the cells
    * for the given <mxMouseEvent>.
    */
@@ -967,22 +865,16 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: updateHint
-   *
    * Hook for subclassers do show details while the handler is active.
    */
   updateHint(me?: InternalMouseEvent) {}
 
   /**
-   * Function: removeHint
-   *
    * Hooks for subclassers to hide details when the handler gets inactive.
    */
   removeHint() {}
 
   /**
-   * Function: roundLength
-   *
    * Hook for rounding the unscaled vector. This uses Math.round.
    */
   roundLength(length: number) {
@@ -990,8 +882,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: isValidDropTarget
-   *
    * Returns true if the given cell is a valid drop target.
    */
   isValidDropTarget(target: Cell, me: InternalMouseEvent) {
@@ -999,8 +889,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: checkPreview
-   *
    * Updates the preview if cloning state has changed.
    */
   checkPreview() {
@@ -1022,8 +910,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: mouseMove
-   *
    * Handles the event by highlighting possible drop targets and updating the
    * preview.
    */
@@ -1174,8 +1060,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: updatePreview
-   *
    * Updates the bounds of the preview shape.
    */
   updatePreview(remote = false) {
@@ -1197,8 +1081,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: updatePreviewShape
-   *
    * Updates the bounds of the preview shape.
    */
   updatePreviewShape() {
@@ -1214,8 +1096,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: updateLivePreview
-   *
    * Updates the bounds of the preview shape.
    */
   updateLivePreview(dx: number, dy: number) {
@@ -1383,8 +1263,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: redrawHandles
-   *
    * Redraws the preview shape for the given states array.
    */
   redrawHandles(states: CellState[][]) {
@@ -1402,8 +1280,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: resetPreviewStates
-   *
    * Resets the given preview states array.
    */
   resetPreviewStates(states: CellState[][]) {
@@ -1413,8 +1289,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: suspend
-   *
    * Suspends the livew preview.
    */
   suspend() {
@@ -1436,8 +1310,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: resume
-   *
    * Suspends the livew preview.
    */
   resume() {
@@ -1459,8 +1331,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: resetLivePreview
-   *
    * Resets the livew preview.
    */
   resetLivePreview() {
@@ -1504,8 +1374,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: setHandlesVisibleForCells
-   *
    * Sets wether the handles attached to the given cells are visible.
    *
    * Parameters:
@@ -1537,8 +1405,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: setHighlightColor
-   *
    * Sets the color of the rectangle used to highlight drop targets.
    *
    * Parameters:
@@ -1552,8 +1418,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Handles the event by applying the changes to the selection cells.
    */
   mouseUp(sender: EventSource, me: InternalMouseEvent) {
@@ -1628,8 +1492,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: reset
-   *
    * Resets the state of this handler.
    */
   reset() {
@@ -1667,8 +1529,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: shouldRemoveCellsFromParent
-   *
    * Returns true if the given cells should be removed from the parent for the specified
    * mousereleased event.
    */
@@ -1696,8 +1556,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: moveCells
-   *
    * Moves the given cells by the specified amount.
    */
   moveCells(
@@ -1782,8 +1640,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: shouldRemoveParent
-   *
    * Returns true if the given parent should be removed after removal of child cells.
    */
   shouldRemoveParent(parent: Cell) {
@@ -1799,8 +1655,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: destroyShapes
-   *
    * Destroy the preview and highlight shapes.
    */
   destroyShapes() {
@@ -1823,8 +1677,6 @@ class GraphHandler implements GraphPlugin {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes.
    */
   onDestroy() {

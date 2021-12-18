@@ -29,8 +29,6 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
   }
 
   /**
-   * Variable: layout
-   *
    * Reference to the enclosing <HierarchicalLayout>.
    */
   layout: HierarchicalLayout;

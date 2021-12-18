@@ -107,8 +107,6 @@ class DragSource {
   previewElement: HTMLElement | null = null;
 
   /**
-   * Variable: previewOffset
-   *
    * Optional <mxPoint> that specifies the offset of the preview in pixels.
    */
   previewOffset: Point | null = null;

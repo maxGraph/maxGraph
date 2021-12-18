@@ -983,8 +983,6 @@ const CellsMixin: PartialType = {
   },
 
   /**
-   * Function: addCells
-   *
    * Adds the cells to the parent at the given index, connecting each cell to
    * the optional source and target terminal. The change is carried out using
    * <cellsAdded>. This method fires <mxEvent.ADD_CELLS> while the
@@ -1023,8 +1021,6 @@ const CellsMixin: PartialType = {
   },
 
   /**
-   * Function: cellsAdded
-   *
    * Adds the specified cells to the given parent. This method fires
    * <mxEvent.CELLS_ADDED> while the transaction is in progress.
    */
@@ -1842,8 +1838,6 @@ const CellsMixin: PartialType = {
   },
 
   /**
-   * Function: moveCells
-   *
    * Moves or clones the specified cells and moves the cells or clones by the
    * given amount, adding them to the optional target cell. The evt is the
    * mouse event as the mouse was released. The change is carried out using
@@ -1989,8 +1983,6 @@ const CellsMixin: PartialType = {
   },
 
   /**
-   * Function: cellsMoved
-   *
    * Moves the specified cells by the given vector, disconnecting the cells
    * using disconnectGraph is disconnect is true. This method fires
    * <mxEvent.CELLS_MOVED> while the transaction is in progress.
@@ -2415,8 +2407,6 @@ const CellsMixin: PartialType = {
   },
 
   /**
-   * Function: getCellsBeyond
-   *
    * Returns the children of the given parent that are contained in the
    * halfpane from the given point (x0, y0) rightwards or downwards
    * depending on rightHalfpane and bottomHalfpane.

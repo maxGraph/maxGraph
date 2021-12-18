@@ -87,8 +87,6 @@ import SelectionCellsHandler from '../handler/SelectionCellsHandler';
  */
 class CellRenderer {
   /**
-   * Variable: defaultShapes
-   *
    * Static array that contains the globally registered shapes which are
    * known to all instances of this class. For adding new shapes you should
    * use the static <mxCellRenderer.registerShape> function.
@@ -96,60 +94,44 @@ class CellRenderer {
   static defaultShapes: { [key: string]: typeof Shape } = {};
 
   /**
-   * Variable: defaultEdgeShape
-   *
    * Defines the default shape for edges. Default is <mxConnector>.
    */
   // @ts-expect-error The constructors for Shape and Connector are different.
   defaultEdgeShape: typeof Shape = ConnectorShape;
 
   /**
-   * Variable: defaultVertexShape
-   *
    * Defines the default shape for vertices. Default is <mxRectangleShape>.
    */
   defaultVertexShape: typeof RectangleShape = RectangleShape;
 
   /**
-   * Variable: defaultTextShape
-   *
    * Defines the default shape for labels. Default is <mxText>.
    */
   defaultTextShape: typeof TextShape = TextShape;
 
   /**
-   * Variable: legacyControlPosition
-   *
    * Specifies if the folding icon should ignore the horizontal
    * orientation of a swimlane. Default is true.
    */
   legacyControlPosition = true;
 
   /**
-   * Variable: legacySpacing
-   *
    * Specifies if spacing and label position should be ignored if overflow is
    * fill or width. Default is true for backwards compatiblity.
    */
   legacySpacing = true;
 
   /**
-   * Variable: antiAlias
-   *
    * Anti-aliasing option for new shapes. Default is true.
    */
   antiAlias = true;
 
   /**
-   * Variable: minSvgStrokeWidth
-   *
    * Minimum stroke width for SVG output.
    */
   minSvgStrokeWidth = 1;
 
   /**
-   * Variable: forceControlClickHandler
-   *
    * Specifies if the enabled state of the graph should be ignored in the control
    * click handler (to allow folding in disabled graphs). Default is false.
    */

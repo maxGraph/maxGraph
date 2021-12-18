@@ -329,8 +329,6 @@ class PrintPreview {
   }
 
   /**
-   * Function: appendGraph
-   *
    * Adds the given graph to the existing print preview.
    *
    * Parameters:
@@ -776,8 +774,6 @@ class PrintPreview {
   }
 
   /**
-   * Function: useCssTransforms
-   *
    * Returns true if CSS transforms should be used for scaling content.
    * This returns true if foreignObject is supported and we're not in Safari
    * as it has clipping bugs for transformed CSS content with foreignObjects.
@@ -787,8 +783,6 @@ class PrintPreview {
   }
 
   /**
-   * Function: addGraphFragment
-   *
    * Adds a graph fragment to the given div.
    *
    * Parameters:

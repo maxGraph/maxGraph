@@ -53,85 +53,61 @@ class AbstractCanvas2D {
   converter: UrlConverter;
 
   /**
-   * Variable: state
-   *
    * Holds the current state.
    */
   state: CanvasState = this.createState();
 
   /**
-   * Variable: states
-   *
    * Stack of states.
    */
   states: CanvasState[] = [];
 
   /**
-   * Variable: path
-   *
    * Holds the current path as an array.
    */
   path: (string | number)[] = [];
 
   /**
-   * Variable: rotateHtml
-   *
    * Switch for rotation of HTML. Default is false.
    */
   rotateHtml = true;
 
   /**
-   * Variable: lastX
-   *
    * Holds the last x coordinate.
    */
   lastX = 0;
 
   /**
-   * Variable: lastY
-   *
    * Holds the last y coordinate.
    */
   lastY = 0;
 
   /**
-   * Variable: moveOp
-   *
    * Contains the string used for moving in paths. Default is 'M'.
    */
   moveOp = 'M';
 
   /**
-   * Variable: lineOp
-   *
    * Contains the string used for moving in paths. Default is 'L'.
    */
   lineOp = 'L';
 
   /**
-   * Variable: quadOp
-   *
    * Contains the string used for quadratic paths. Default is 'Q'.
    */
   quadOp = 'Q';
 
   /**
-   * Variable: curveOp
-   *
    * Contains the string used for bezier curves. Default is 'C'.
    */
   curveOp = 'C';
 
   /**
-   * Variable: closeOp
-   *
    * Holds the operator for closing curves. Default is 'Z'.
    */
   closeOp = 'Z';
 
   /**
-   * Variable: pointerEvents
-   *
    * Boolean value that specifies if events should be handled. Default is false.
    */
   pointerEvents = false;

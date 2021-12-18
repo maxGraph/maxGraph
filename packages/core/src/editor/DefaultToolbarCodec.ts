@@ -28,8 +28,6 @@ class DefaultToolbarCodec extends ObjectCodec {
   }
 
   /**
-   * Function: encode
-   *
    * Returns null.
    */
   encode(enc: any, obj: any) {
@@ -37,8 +35,6 @@ class DefaultToolbarCodec extends ObjectCodec {
   }
 
   /**
-   * Function: decode
-   *
    * Reads a sequence of the following child nodes
    * and attributes:
    *

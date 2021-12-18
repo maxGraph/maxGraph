@@ -23,8 +23,6 @@ class DefaultKeyHandlerCodec extends ObjectCodec {
   }
 
   /**
-   * Function: encode
-   *
    * Returns null.
    */
   encode(enc, obj) {
@@ -32,8 +30,6 @@ class DefaultKeyHandlerCodec extends ObjectCodec {
   }
 
   /**
-   * Function: decode
-   *
    * Reads a sequence of the following child nodes
    * and attributes:
    *

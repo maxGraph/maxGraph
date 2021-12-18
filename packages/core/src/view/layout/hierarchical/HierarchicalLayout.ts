@@ -43,23 +43,17 @@ class HierarchicalLayout extends GraphLayout {
   }
 
   /**
-   * Variable: roots
-   *
    * Holds the array of <Cell> that this layout contains.
    */
   roots: CellArray | null = null;
 
   /**
-   * Variable: resizeParent
-   *
    * Specifies if the parent should be resized after the layout so that it
    * contains all the child cells. Default is false. See also <parentBorder>.
    */
   resizeParent: boolean = false;
 
   /**
-   * Variable: maintainParentLocation
-   *
    * Specifies if the parent location should be maintained, so that the
    * top, left corner stays the same before and after execution of
    * the layout. Default is false for backwards compatibility.
@@ -67,61 +61,45 @@ class HierarchicalLayout extends GraphLayout {
   maintainParentLocation: boolean = false;
 
   /**
-   * Variable: moveParent
-   *
    * Specifies if the parent should be moved if <resizeParent> is enabled.
    * Default is false.
    */
   moveParent: boolean = false;
 
   /**
-   * Variable: parentBorder
-   *
    * The border to be added around the children if the parent is to be
    * resized using <resizeParent>. Default is 0.
    */
   parentBorder: number = 0;
 
   /**
-   * Variable: intraCellSpacing
-   *
    * The spacing buffer added between cells on the same layer. Default is 30.
    */
   intraCellSpacing: number = 30;
 
   /**
-   * Variable: interRankCellSpacing
-   *
    * The spacing buffer added between cell on adjacent layers. Default is 100.
    */
   interRankCellSpacing: number = 100;
 
   /**
-   * Variable: interHierarchySpacing
-   *
    * The spacing buffer between unconnected hierarchies. Default is 60.
    */
   interHierarchySpacing: number = 60;
 
   /**
-   * Variable: parallelEdgeSpacing
-   *
    * The distance between each parallel edge on each ranks for long edges.
    * Default is 10.
    */
   parallelEdgeSpacing: number = 10;
 
   /**
-   * Variable: orientation
-   *
    * The position of the root node(s) relative to the laid out graph in.
    * Default is <mxConstants.DIRECTION_NORTH>.
    */
   orientation: string = DIRECTION_NORTH;
 
   /**
-   * Variable: fineTuning
-   *
    * Whether or not to perform local optimisations and iterate multiple times
    * through the algorithm. Default is true.
    */
@@ -129,24 +107,18 @@ class HierarchicalLayout extends GraphLayout {
 
   /**
    *
-   * Variable: tightenToSource
-   *
    * Whether or not to tighten the assigned ranks of vertices up towards
    * the source cells. Default is true.
    */
   tightenToSource: boolean = true;
 
   /**
-   * Variable: disableEdgeStyle
-   *
    * Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
    * modified by the result. Default is true.
    */
   disableEdgeStyle: boolean = true;
 
   /**
-   * Variable: traverseAncestors
-   *
    * Whether or not to drill into child cells and layout in reverse
    * group order. This also cause the layout to navigate edges whose
    * terminal vertices have different parents but are in the same
@@ -155,36 +127,26 @@ class HierarchicalLayout extends GraphLayout {
   traverseAncestors: boolean = true;
 
   /**
-   * Variable: model
-   *
    * The internal <GraphHierarchyModel> formed of the layout.
    */
   model: GraphHierarchyModel | null = null;
 
   /**
-   * Variable: edgesSet
-   *
    * A cache of edges whose source terminal is the key
    */
   edgesCache = null;
 
   /**
-   * Variable: edgesSet
-   *
    * A cache of edges whose source terminal is the key
    */
   edgeSourceTermCache = null;
 
   /**
-   * Variable: edgesSet
-   *
    * A cache of edges whose source terminal is the key
    */
   edgesTargetTermCache = null;
 
   /**
-   * Variable: edgeStyle
-   *
    * The style to apply between cell layers to edge segments.
    * Default is <mxHierarchicalEdgeStyle.POLYLINE>.
    */

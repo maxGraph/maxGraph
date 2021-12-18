@@ -113,8 +113,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
@@ -124,53 +122,39 @@ class PanningHandler extends EventSource implements GraphPlugin {
   getPanningManager = () => this.panningManager;
 
   /**
-   * Variable: useLeftButtonForPanning
-   *
    * Specifies if panning should be active for the left mouse button.
    * Setting this to true may conflict with <mxRubberband>. Default is false.
    */
   useLeftButtonForPanning = false;
 
   /**
-   * Variable: usePopupTrigger
-   *
    * Specifies if <mxEvent.isPopupTrigger> should also be used for panning.
    */
   usePopupTrigger = true;
 
   /**
-   * Variable: ignoreCell
-   *
    * Specifies if panning should be active even if there is a cell under the
    * mousepointer. Default is false.
    */
   ignoreCell = false;
 
   /**
-   * Variable: previewEnabled
-   *
    * Specifies if the panning should be previewed. Default is true.
    */
   previewEnabled = true;
 
   /**
-   * Variable: useGrid
-   *
    * Specifies if the panning steps should be aligned to the grid size.
    * Default is false.
    */
   useGrid = false;
 
   /**
-   * Variable: panningEnabled
-   *
    * Specifies if panning should be enabled. Default is false.
    */
   panningEnabled = false;
 
   /**
-   * Variable: pinchEnabled
-   *
    * Specifies if pinch gestures should be handled as zoom. Default is true.
    */
   pinchEnabled = true;
@@ -178,43 +162,31 @@ class PanningHandler extends EventSource implements GraphPlugin {
   initialScale = 0;
 
   /**
-   * Variable: maxScale
-   *
    * Specifies the maximum scale. Default is 8.
    */
   maxScale = 8;
 
   /**
-   * Variable: minScale
-   *
    * Specifies the minimum scale. Default is 0.01.
    */
   minScale = 0.01;
 
   /**
-   * Variable: dx
-   *
    * Holds the current horizontal offset.
    */
   dx = 0;
 
   /**
-   * Variable: dy
-   *
    * Holds the current vertical offset.
    */
   dy = 0;
 
   /**
-   * Variable: startX
-   *
    * Holds the x-coordinate of the start point.
    */
   startX = 0;
 
   /**
-   * Variable: startY
-   *
    * Holds the y-coordinate of the start point.
    */
   startY = 0;

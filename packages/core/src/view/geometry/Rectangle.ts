@@ -33,15 +33,11 @@ class Rectangle extends Point {
   }
 
   /**
-   * Variable: width
-   *
    * Holds the width of the rectangle. Default is 0.
    */
   _width = 0;
 
   /**
-   * Variable: height
-   *
    * Holds the height of the rectangle. Default is 0.
    */
   _height = 0;

@@ -61,15 +61,11 @@ class VertexHandler {
   selectionBorder: RectangleShape;
 
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
 
   /**
-   * Variable: state
-   *
    * Reference to the <CellState> being modified.
    */
   state: CellState;
@@ -77,128 +73,94 @@ class VertexHandler {
   sizers: Shape[] = [];
 
   /**
-   * Variable: singleSizer
-   *
    * Specifies if only one sizer handle at the bottom, right corner should be
    * used. Default is false.
    */
   singleSizer: boolean = false;
 
   /**
-   * Variable: index
-   *
    * Holds the index of the current handle.
    */
   index: number | null = null;
 
   /**
-   * Variable: allowHandleBoundsCheck
-   *
    * Specifies if the bounds of handles should be used for hit-detection in IE or
    * if <tolerance> > 0. Default is true.
    */
   allowHandleBoundsCheck: boolean = true;
 
   /**
-   * Variable: handleImage
-   *
    * Optional <mxImage> to be used as handles. Default is null.
    */
   handleImage: Image | null = null;
 
   /**
-   * Variable: handlesVisible
-   *
    * If handles are currently visible.
    */
   handlesVisible = true;
 
   /**
-   * Variable: tolerance
-   *
    * Optional tolerance for hit-detection in <getHandleForEvent>. Default is 0.
    */
   tolerance: number = 0;
 
   /**
-   * Variable: rotationEnabled
-   *
    * Specifies if a rotation handle should be visible. Default is false.
    */
   rotationEnabled: boolean = false;
 
   /**
-   * Variable: parentHighlightEnabled
-   *
    * Specifies if the parent should be highlighted if a child cell is selected.
    * Default is false.
    */
   parentHighlightEnabled: boolean = false;
 
   /**
-   * Variable: rotationRaster
-   *
    * Specifies if rotation steps should be "rasterized" depening on the distance
    * to the handle. Default is true.
    */
   rotationRaster: boolean = true;
 
   /**
-   * Variable: rotationCursor
-   *
    * Specifies the cursor for the rotation handle. Default is 'crosshair'.
    */
   rotationCursor: string = 'crosshair';
 
   /**
-   * Variable: livePreview
-   *
    * Specifies if resize should change the cell in-place. This is an experimental
    * feature for non-touch devices. Default is false.
    */
   livePreview: boolean = false;
 
   /**
-   * Variable: movePreviewToFront
-   *
    * Specifies if the live preview should be moved to the front.
    */
   movePreviewToFront: boolean = false;
 
   /**
-   * Variable: manageSizers
-   *
    * Specifies if sizers should be hidden and spaced if the vertex is small.
    * Default is false.
    */
   manageSizers: boolean = false;
 
   /**
-   * Variable: constrainGroupByChildren
-   *
    * Specifies if the size of groups should be constrained by the children.
    * Default is false.
    */
   constrainGroupByChildren: boolean = false;
 
   /**
-   * Variable: rotationHandleVSpacing
-   *
    * Vertical spacing for rotation icon. Default is -16.
    */
   rotationHandleVSpacing: number = -16;
 
   /**
-   * Variable: horizontalOffset
-   *
    * The horizontal offset for the handles. This is updated in <redrawHandles>
    * if <manageSizers> is true and the sizers are offset horizontally.
    */
   horizontalOffset: number = 0;
 
   /**
-   * Variable: verticalOffset
-   *
    * The horizontal offset for the handles. This is updated in <redrawHandles>
    * if <manageSizers> is true and the sizers are offset vertically.
    */

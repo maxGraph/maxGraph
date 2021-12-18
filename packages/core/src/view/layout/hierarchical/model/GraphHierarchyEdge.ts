@@ -11,37 +11,27 @@ import Cell from '../../../cell/Cell';
 
 class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**
-   * Variable: edges
-   *
    * The graph edge(s) this object represents. Parallel edges are all grouped
    * together within one hierarchy edge.
    */
   edges: CellArray;
 
   /**
-   * Variable: ids
-   *
    * The object identities of the wrapped cells
    */
   ids: string[];
 
   /**
-   * Variable: source
-   *
    * The node this edge is sourced at
    */
   source: Cell | null = null;
 
   /**
-   * Variable: target
-   *
    * The node this edge targets
    */
   target: Cell | null = null;
 
   /**
-   * Variable: isReversed
-   *
    * Whether or not the direction of this edge has been reversed
    * internally to create a DAG for the hierarchical layout
    */

@@ -49,59 +49,43 @@ class PopupMenuHandler extends PopupMenu implements GraphPlugin {
   popupTrigger = false;
 
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
 
   /**
-   * Variable: selectOnPopup
-   *
    * Specifies if cells should be selected if a popupmenu is displayed for
    * them. Default is true.
    */
   selectOnPopup = true;
 
   /**
-   * Variable: clearSelectionOnBackground
-   *
    * Specifies if cells should be deselected if a popupmenu is displayed for
    * the diagram background. Default is true.
    */
   clearSelectionOnBackground = true;
 
   /**
-   * Variable: triggerX
-   *
    * X-coordinate of the mouse down event.
    */
   triggerX: number | null = null;
 
   /**
-   * Variable: triggerY
-   *
    * Y-coordinate of the mouse down event.
    */
   triggerY: number | null = null;
 
   /**
-   * Variable: screenX
-   *
    * Screen X-coordinate of the mouse down event.
    */
   screenX: number | null = null;
 
   /**
-   * Variable: screenY
-   *
    * Screen Y-coordinate of the mouse down event.
    */
   screenY: number | null = null;
 
   /**
-   * Function: init
-   *
    * Initializes the shapes required for this vertex handler.
    */
   init() {
@@ -114,8 +98,6 @@ class PopupMenuHandler extends PopupMenu implements GraphPlugin {
   }
 
   /**
-   * Function: isSelectOnPopup
-   *
    * Hook for returning if a cell should be selected for a given <mxMouseEvent>.
    * This implementation returns <selectOnPopup>.
    */
@@ -124,8 +106,6 @@ class PopupMenuHandler extends PopupMenu implements GraphPlugin {
   }
 
   /**
-   * Function: mouseDown
-   *
    * Handles the event by initiating the panning. By consuming the event all
    * subsequent events of the gesture are redirected to this handler.
    */
@@ -143,8 +123,6 @@ class PopupMenuHandler extends PopupMenu implements GraphPlugin {
   }
 
   /**
-   * Function: mouseMove
-   *
    * Handles the event by updating the panning on the graph.
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
@@ -162,8 +140,6 @@ class PopupMenuHandler extends PopupMenu implements GraphPlugin {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Handles the event by setting the translation on the view or showing the
    * popupmenu.
    */
@@ -204,8 +180,6 @@ class PopupMenuHandler extends PopupMenu implements GraphPlugin {
   }
 
   /**
-   * Function: getCellForPopupEvent
-   *
    * Hook to return the cell for the mouse up popup trigger handling.
    */
   getCellForPopupEvent(me: InternalMouseEvent) {
@@ -213,8 +187,6 @@ class PopupMenuHandler extends PopupMenu implements GraphPlugin {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes.
    */
   onDestroy() {

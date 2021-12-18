@@ -26,8 +26,6 @@ class GraphViewCodec extends ObjectCodec {
   }
 
   /**
-   * Function: encode
-   *
    * Encodes the given <mxGraphView> using <encodeCell>
    * starting at the model's root. This returns the
    * top-level graph node of the recursive encoding.
@@ -37,8 +35,6 @@ class GraphViewCodec extends ObjectCodec {
   }
 
   /**
-   * Function: encodeCell
-   *
    * Recursively encodes the specifed cell. Uses layer
    * as the default nodename. If the cell's parent is
    * null, then graph is used for the nodename. If

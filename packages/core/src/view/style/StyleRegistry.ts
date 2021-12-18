@@ -20,8 +20,6 @@ import Perimeter from './Perimeter';
  */
 class StyleRegistry {
   /**
-   * Variable: values
-   *
    * Maps from strings to objects.
    */
   static values = <any>{};

@@ -57,15 +57,11 @@ import type { UndoableChange } from '../../types';
  */
 class UndoableEdit {
   /**
-   * Variable: source
-   *
    * Specifies the source of the edit.
    */
   source: EventSource;
 
   /**
-   * Variable: changes
-   *
    * Array that contains the changes that make up this edit. The changes are
    * expected to either have an undo and redo function, or an execute
    * function. Default is an empty array.
@@ -73,23 +69,17 @@ class UndoableEdit {
   changes: UndoableChange[] = [];
 
   /**
-   * Variable: significant
-   *
    * Specifies if the undoable change is significant.
    * Default is true.
    */
   significant = true;
 
   /**
-   * Variable: undone
-   *
    * Specifies if this edit has been undone. Default is false.
    */
   undone = false;
 
   /**
-   * Variable: redone
-   *
    * Specifies if this edit has been redone. Default is false.
    */
   redone = false;

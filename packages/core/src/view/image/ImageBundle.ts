@@ -64,15 +64,11 @@ class ImageBundle {
   }
 
   /**
-   * Variable: images
-   *
    * Maps from keys to images.
    */
   images: ImageMap;
 
   /**
-   * Variable: alt
-   *
    * Specifies if the fallback representation should be returned.
    */
   alt: boolean;

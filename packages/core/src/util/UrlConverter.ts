@@ -17,22 +17,16 @@ class UrlConverter {
   }
 
   /**
-   * Variable: enabled
-   *
    * Specifies if the converter is enabled. Default is true.
    */
   enabled = true;
 
   /**
-   * Variable: baseUrl
-   *
    * Specifies the base URL to be used as a prefix for relative URLs.
    */
   baseUrl: string | null = null;
 
   /**
-   * Variable: baseDomain
-   *
    * Specifies the base domain to be used as a prefix for absolute URLs.
    */
   baseDomain: string | null = null;

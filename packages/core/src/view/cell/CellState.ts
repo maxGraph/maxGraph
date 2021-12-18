@@ -60,60 +60,44 @@ class CellState extends Rectangle {
   overlays: Dictionary<CellOverlay, Shape> = new Dictionary();
 
   /**
-   * Variable: view
-   *
    * Reference to the enclosing <mxGraphView>.
    */
   view: GraphView;
 
   /**
-   * Variable: cell
-   *
    * Reference to the <Cell> that is represented by this state.
    */
   cell: Cell;
 
   /**
-   * Variable: style
-   *
    * Contains an array of key, value pairs that represent the style of the
    * cell.
    */
   style: CellStateStyles;
 
   /**
-   * Variable: invalidStyle
-   *
    * Specifies if the style is invalid. Default is false.
    */
   invalidStyle = false;
 
   /**
-   * Variable: invalid
-   *
    * Specifies if the state is invalid. Default is true.
    */
   invalid = true;
 
   /**
-   * Variable: origin
-   *
    * <mxPoint> that holds the origin for all child cells. Default is a new
    * empty <mxPoint>.
    */
   origin: Point;
 
   /**
-   * Variable: absolutePoints
-   *
    * Holds an array of <Point> that represent the absolute points of an
    * edge.
    */
   absolutePoints: (null | Point)[] = [];
 
   /**
-   * Variable: absoluteOffset
-   *
    * <mxPoint> that holds the absolute offset. For edges, this is the
    * absolute coordinates of the label position. For vertices, this is the
    * offset of the label relative to the top, left corner of the vertex.
@@ -121,66 +105,48 @@ class CellState extends Rectangle {
   absoluteOffset: Point;
 
   /**
-   * Variable: visibleSourceState
-   *
    * Caches the visible source terminal state.
    */
   visibleSourceState: CellState | null = null;
 
   /**
-   * Variable: visibleTargetState
-   *
    * Caches the visible target terminal state.
    */
   visibleTargetState: CellState | null = null;
 
   /**
-   * Variable: terminalDistance
-   *
    * Caches the distance between the end points for an edge.
    */
   terminalDistance = 0;
 
   /**
-   * Variable: length
-   *
    * Caches the length of an edge.
    */
   length = 0;
 
   /**
-   * Variable: segments
-   *
    * Array of numbers that represent the cached length of each segment of the
    * edge.
    */
   segments: number[] = [];
 
   /**
-   * Variable: shape
-   *
    * Holds the <mxShape> that represents the cell graphically.
    */
   shape: Shape | null = null;
 
   /**
-   * Variable: text
-   *
    * Holds the <mxText> that represents the label of the cell. Thi smay be
    * null if the cell has no label.
    */
   text: TextShape | null = null;
 
   /**
-   * Variable: unscaledWidth
-   *
    * Holds the unscaled width of the state.
    */
   unscaledWidth = 0;
 
   /**
-   * Variable: unscaledHeight
-   *
    * Holds the unscaled height of the state.
    */
   unscaledHeight = 0;

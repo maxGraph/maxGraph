@@ -131,53 +131,39 @@ class TextShape extends Shape {
   flipV = false;
 
   /**
-   * Variable: baseSpacingTop
-   *
    * Specifies the spacing to be added to the top spacing. Default is 0. Use the
    * value 5 here to get the same label positions as in mxGraph 1.x.
    */
   baseSpacingTop = 0;
 
   /**
-   * Variable: baseSpacingBottom
-   *
    * Specifies the spacing to be added to the bottom spacing. Default is 0. Use the
    * value 1 here to get the same label positions as in mxGraph 1.x.
    */
   baseSpacingBottom = 0;
 
   /**
-   * Variable: baseSpacingLeft
-   *
    * Specifies the spacing to be added to the left spacing. Default is 0.
    */
   baseSpacingLeft = 0;
 
   /**
-   * Variable: baseSpacingRight
-   *
    * Specifies the spacing to be added to the right spacing. Default is 0.
    */
   baseSpacingRight = 0;
 
   /**
-   * Variable: replaceLinefeeds
-   *
    * Specifies if linefeeds in HTML labels should be replaced with BR tags.
    * Default is true.
    */
   replaceLinefeeds = true;
 
   /**
-   * Variable: verticalTextRotation
-   *
    * Rotation for vertical text. Default is -90 (bottom to top).
    */
   verticalTextRotation = -90;
 
   /**
-   * Variable: ignoreClippedStringSize
-   *
    * Specifies if the string size should be measured in <updateBoundingBox> if
    * the label is clipped and the label position is center and middle. If this is
    * true, then the bounding box will be set to <bounds>. Default is true.
@@ -186,8 +172,6 @@ class TextShape extends Shape {
   ignoreClippedStringSize = true;
 
   /**
-   * Variable: ignoreStringSize
-   *
    * Specifies if the actual string size should be measured. If disabled the
    * boundingBox will not ignore the actual size of the string, otherwise
    * <bounds> will be used instead. Default is false.
@@ -195,15 +179,11 @@ class TextShape extends Shape {
   ignoreStringSize = false;
 
   /**
-   * Variable: lastValue
-   *
    * Contains the last rendered text value. Used for caching.
    */
   lastValue: string | HTMLElement | SVGGElement | null = null;
 
   /**
-   * Variable: cacheEnabled
-   *
    * Specifies if caching for HTML labels should be enabled. Default is true.
    */
   cacheEnabled = true;

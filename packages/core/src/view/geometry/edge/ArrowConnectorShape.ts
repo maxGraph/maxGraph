@@ -50,8 +50,6 @@ class ArrowConnectorShape extends Shape {
   useSvgBoundingBox = true;
 
   /**
-   * Function: isRoundable
-   *
    * Hook for subclassers.
    */
   isRoundable() {
@@ -392,8 +390,6 @@ class ArrowConnectorShape extends Shape {
   }
 
   /**
-   * Function: paintMarker
-   *
    * Paints the marker.
    */
   paintMarker(

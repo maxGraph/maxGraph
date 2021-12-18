@@ -79,44 +79,32 @@ class TooltipHandler implements GraphPlugin {
   div: HTMLElement;
 
   /**
-   * Variable: zIndex
-   *
    * Specifies the zIndex for the tooltip and its shadow. Default is 10005.
    */
   zIndex = 10005;
 
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
 
   /**
-   * Variable: delay
-   *
    * Delay to show the tooltip in milliseconds. Default is 500.
    */
   delay: number;
 
   /**
-   * Variable: ignoreTouchEvents
-   *
    * Specifies if touch and pen events should be ignored. Default is true.
    */
   ignoreTouchEvents = true;
 
   /**
-   * Variable: hideOnHover
-   *
    * Specifies if the tooltip should be hidden if the mouse is moved over the
    * current cell. Default is false.
    */
   hideOnHover = false;
 
   /**
-   * Variable: destroyed
-   *
    * True if this handler was destroyed using <destroy>.
    */
   destroyed = false;
@@ -129,15 +117,11 @@ class TooltipHandler implements GraphPlugin {
   thread: number | null = null;
 
   /**
-   * Variable: enabled
-   *
    * Specifies if events are handled. Default is false.
    */
   enabled = false;
 
   /**
-   * Function: isEnabled
-   *
    * Returns true if events are handled. This implementation
    * returns <enabled>.
    */
@@ -146,8 +130,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: setEnabled
-   *
    * Enables or disables event handling. This implementation
    * updates <enabled>.
    */
@@ -156,8 +138,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: isHideOnHover
-   *
    * Returns <hideOnHover>.
    */
   isHideOnHover() {
@@ -165,8 +145,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: setHideOnHover
-   *
    * Sets <hideOnHover>.
    */
   setHideOnHover(value: boolean) {
@@ -174,8 +152,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: getStateForEvent
-   *
    * Returns the <CellState> to be used for showing a tooltip for this event.
    */
   getStateForEvent(me: InternalMouseEvent) {
@@ -183,8 +159,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: mouseDown
-   *
    * Handles the event by initiating a rubberband selection. By consuming the
    * event all subsequent events of the gesture are redirected to this
    * handler.
@@ -195,8 +169,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: mouseMove
-   *
    * Handles the event by updating the rubberband selection.
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
@@ -222,8 +194,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Handles the event by resetting the tooltip timer or hiding the existing
    * tooltip.
    */
@@ -233,8 +203,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: resetTimer
-   *
    * Resets the timer.
    */
   resetTimer() {
@@ -245,8 +213,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: reset
-   *
    * Resets and/or restarts the timer to trigger the display of the tooltip.
    */
   reset(me: InternalMouseEvent, restart: boolean, state: CellState | null = null) {
@@ -297,8 +263,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: hide
-   *
    * Hides the tooltip and resets the timer.
    */
   hide() {
@@ -307,8 +271,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: hideTooltip
-   *
    * Hides the tooltip.
    */
   hideTooltip() {
@@ -317,8 +279,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: show
-   *
    * Shows the tooltip for the specified cell and optional index at the
    * specified location (with a vertical offset of 10 pixels).
    */
@@ -343,8 +303,6 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes.
    */
   onDestroy() {

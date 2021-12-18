@@ -74,22 +74,16 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   eventReceiver: HTMLElement | null = null;
 
   /**
-   * Variable: submenuImage
-   *
    * URL of the image to be used for the submenu icon.
    */
   submenuImage = `${Client.imageBasePath}/submenu.gif`;
 
   /**
-   * Variable: zIndex
-   *
    * Specifies the zIndex for the popupmenu and its shadow. Default is 1006.
    */
   zIndex = 10006;
 
   /**
-   * Variable: factoryMethod
-   *
    * Function that is used to create the popup menu. The function takes the
    * current panning handler, the <Cell> under the mouse and the mouse
    * event that triggered the call as arguments.
@@ -97,45 +91,33 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   factoryMethod?: (handler: PopupMenuItem, cell: Cell | null, me: MouseEvent) => void;
 
   /**
-   * Variable: useLeftButtonForPopup
-   *
    * Specifies if popupmenus should be activated by clicking the left mouse
    * button. Default is false.
    */
   useLeftButtonForPopup = false;
 
   /**
-   * Variable: enabled
-   *
    * Specifies if events are handled. Default is true.
    */
   enabled = true;
 
   /**
-   * Variable: itemCount
-   *
    * Contains the number of times <addItem> has been called for a new menu.
    */
   itemCount = 0;
 
   /**
-   * Variable: autoExpand
-   *
    * Specifies if submenus should be expanded on mouseover. Default is false.
    */
   autoExpand = false;
 
   /**
-   * Variable: smartSeparators
-   *
    * Specifies if separators should only be added if a menu item follows them.
    * Default is false.
    */
   smartSeparators = false;
 
   /**
-   * Variable: labels
-   *
    * Specifies if any labels should be visible. Default is true.
    */
   labels = true;
@@ -144,8 +126,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   containsItems = false;
 
   /**
-   * Function: isEnabled
-   *
    * Returns true if events are handled. This implementation
    * returns <enabled>.
    */
@@ -154,8 +134,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: setEnabled
-   *
    * Enables or disables event handling. This implementation
    * updates <enabled>.
    */
@@ -164,8 +142,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: isPopupTrigger
-   *
    * Returns true if the given event is a popupmenu trigger for the optional
    * given cell.
    *
@@ -181,8 +157,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: addItem
-   *
    * Adds the given item to the given parent item. If no parent item is specified
    * then the item is added to the top-level menu. The return value may be used
    * as the parent argument, ie. as a submenu item. The return value is the table
@@ -343,8 +317,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: createSubmenu
-   *
    * Creates the nodes required to add submenu items inside the given parent
    * item. This is called in <addItem> if a parent item is used for the first
    * time. This adds various DOM nodes and a <submenuImage> to the parent.
@@ -380,8 +352,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: showSubmenu
-   *
    * Shows the submenu inside the given parent row.
    */
   // showSubmenu(parent: Element, row: Element): void;
@@ -412,8 +382,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: addSeparator
-   *
    * Adds a horizontal separator in the given parent item or the top-level menu
    * if no parent is specified.
    *
@@ -454,8 +422,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: popup
-   *
    * Shows the popup menu for the given event and cell.
    *
    * Example:
@@ -489,8 +455,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: isMenuShowing
-   *
    * Returns true if the menu is showing.
    */
   // isMenuShowing(): boolean;
@@ -499,8 +463,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: showMenu
-   *
    * Shows the menu.
    */
   // showMenu(): void;
@@ -511,8 +473,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: hideMenu
-   *
    * Removes the menu and all submenus.
    */
   // hideMenu(): void;
@@ -529,8 +489,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: hideSubmenu
-   *
    * Removes all submenus inside the given parent.
    *
    * Parameters:
@@ -550,8 +508,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes.
    */
   destroy() {

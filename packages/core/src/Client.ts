@@ -13,8 +13,6 @@ class Client {
    * use. You may have to load chrome://global/content/contentAreaUtils.js in
    * your page to disable certain security restrictions in Mozilla.
    *
-   * Variable: VERSION
-   *
    * Contains the current version of the mxGraph library. The strings that
    * communicate versions of mxGraph use the following format.
    *
@@ -25,8 +23,6 @@ class Client {
   static VERSION = '4.2.2';
 
   /**
-   * Variable: mxResourceExtension
-   *
    * Optional global config variable to specify the extension of resource files.
    * Default is true. NOTE: This is a global variable, not a variable of Client.
    *
@@ -48,8 +44,6 @@ class Client {
   };
 
   /**
-   * Variable: mxLoadResources
-   *
    * Optional global config variable to toggle loading of the two resource files
    * in <mxGraph> and <Editor>. Default is true. NOTE: This is a global variable,
    * not a variable of Client. If this is false, you can use <Client.loadResources>
@@ -67,8 +61,6 @@ class Client {
   static setLoadResources = value => {};
 
   /**
-   * Variable: mxForceIncludes
-   *
    * Optional global config variable to force loading the JavaScript files in
    * development mode. Default is undefined. NOTE: This is a global variable,
    * not a variable of Client.
@@ -87,8 +79,6 @@ class Client {
   };
 
   /**
-   * Variable: mxLoadStylesheets
-   *
    * Optional global config variable to toggle loading of the CSS files when
    * the library is initialized. Default is true. NOTE: This is a global variable,
    * not a variable of Client.
@@ -107,8 +97,6 @@ class Client {
   };
 
   /**
-   * Variable: basePath
-   *
    * Basepath for all URLs in the core without trailing slash. Default is '.'.
    * Set mxBasePath prior to loading the Client library as follows to override
    * this setting:
@@ -138,8 +126,6 @@ class Client {
   };
 
   /**
-   * Variable: imageBasePath
-   *
    * Basepath for all images URLs in the core without trailing slash. Default is
    * <Client.basePath> + '/images'. Set mxImageBasePath prior to loading the
    * Client library as follows to override this setting:
@@ -169,8 +155,6 @@ class Client {
   };
 
   /**
-   * Variable: language
-   *
    * Defines the language of the client, eg. en for english, de for german etc.
    * The special value 'none' will disable all built-in internationalization and
    * resource loading. See <mxResources.getSpecialBundle> for handling identifiers
@@ -210,8 +194,6 @@ class Client {
   };
 
   /**
-   * Variable: defaultLanguage
-   *
    * Defines the default language which is used in the common resource files. Any
    * resources for this language will only load the common resource file, but not
    * the language-specific resource file. Default is 'en'.
@@ -237,8 +219,6 @@ class Client {
   };
 
   /**
-   * Variable: languages
-   *
    * Defines the optional array of all supported language extensions. The default
    * language does not have to be part of this list. See
    * <mxResources.isLanguageSupported>.
@@ -261,8 +241,6 @@ class Client {
   };
 
   /**
-   * Variable: IS_EDGE
-   *
    * True if the current browser is Microsoft Edge.
    */
   static IS_EDGE =
@@ -271,8 +249,6 @@ class Client {
     !!navigator.userAgent.match(/Edge\//);
 
   /**
-   * Variable: IS_NS
-   *
    * True if the current browser is Netscape (including Firefox).
    */
   static IS_NS =
@@ -283,8 +259,6 @@ class Client {
     navigator.userAgent.indexOf('Edge/') < 0;
 
   /**
-   * Variable: IS_SF
-   *
    * True if the current browser is Safari.
    */
   static IS_SF =
@@ -292,8 +266,6 @@ class Client {
     /Apple Computer, Inc/.test(navigator.vendor);
 
   /**
-   * Variable: IS_ANDROID
-   *
    * Returns true if the user agent contains Android.
    */
   static IS_ANDROID =
@@ -301,23 +273,17 @@ class Client {
     navigator.appVersion.indexOf('Android') >= 0;
 
   /**
-   * Variable: IS_IOS
-   *
    * Returns true if the user agent is an iPad, iPhone or iPod.
    */
   static IS_IOS =
     typeof window !== 'undefined' && /iP(hone|od|ad)/.test(navigator.platform);
 
   /**
-   * Variable: IS_GC
-   *
    * True if the current browser is Google Chrome.
    */
   static IS_GC = typeof window !== 'undefined' && /Google Inc/.test(navigator.vendor);
 
   /**
-   * Variable: IS_CHROMEAPP
-   *
    * True if the this is running inside a Chrome App.
    */
   static IS_CHROMEAPP =
@@ -327,15 +293,11 @@ class Client {
     chrome.app.runtime != null;
 
   /**
-   * Variable: IS_FF
-   *
    * True if the current browser is Firefox.
    */
   static IS_FF = typeof window !== 'undefined' && typeof InstallTrigger !== 'undefined';
 
   /**
-   * Variable: IS_MT
-   *
    * True if -moz-transform is available as a CSS style. This is the case
    * for all Firefox-based browsers newer than or equal 3, such as Camino,
    * Iceweasel, Seamonkey and Iceape.
@@ -354,8 +316,6 @@ class Client {
         navigator.userAgent.indexOf('Iceape/1.') < 0));
 
   /**
-   * Variable: IS_SVG
-   *
    * True if the browser supports SVG.
    */
   static IS_SVG =
@@ -363,8 +323,6 @@ class Client {
     navigator.appName.toUpperCase() !== 'MICROSOFT INTERNET EXPLORER';
 
   /**
-   * Variable: NO_FO
-   *
    * True if foreignObject support is not available. This is the case for
    * Opera, older SVG-based browsers and all versions of IE.
    */
@@ -378,32 +336,24 @@ class Client {
       navigator.userAgent.indexOf('Opera/') >= 0);
 
   /**
-   * Variable: IS_WIN
-   *
    * True if the client is a Windows.
    */
   static IS_WIN =
     typeof window !== 'undefined' && navigator.appVersion.indexOf('Win') > 0;
 
   /**
-   * Variable: IS_MAC
-   *
    * True if the client is a Mac.
    */
   static IS_MAC =
     typeof window !== 'undefined' && navigator.appVersion.indexOf('Mac') > 0;
 
   /**
-   * Variable: IS_CHROMEOS
-   *
    * True if the client is a Chrome OS.
    */
   static IS_CHROMEOS =
     typeof window !== 'undefined' && /\bCrOS\b/.test(navigator.appVersion);
 
   /**
-   * Variable: IS_TOUCH
-   *
    * True if this device supports touchstart/-move/-end events (Apple iOS,
    * Android, Chromebook and Chrome Browser on touch-enabled devices).
    */
@@ -411,8 +361,6 @@ class Client {
     typeof window !== 'undefined' && 'ontouchstart' in document.documentElement;
 
   /**
-   * Variable: IS_POINTER
-   *
    * True if this device supports Microsoft pointer events (always false on Macs).
    */
   static IS_POINTER =
@@ -421,8 +369,6 @@ class Client {
     !(navigator.appVersion.indexOf('Mac') > 0);
 
   /**
-   * Variable: IS_LOCAL
-   *
    * True if the documents location does not start with http:// or https://.
    */
   static IS_LOCAL =
@@ -431,8 +377,6 @@ class Client {
     document.location.href.indexOf('https://') < 0;
 
   /**
-   * Function: isBrowserSupported
-   *
    * Returns true if the current browser is supported, that is, if
    * <Client.IS_SVG> is true.
    *
@@ -450,8 +394,6 @@ class Client {
   };
 
   /**
-   * Function: link
-   *
    * Adds a link node to the head of the document. Use this
    * to add a stylesheet to the page as follows:
    *

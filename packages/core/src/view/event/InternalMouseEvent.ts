@@ -62,53 +62,39 @@ class InternalMouseEvent {
   }
 
   /**
-   * Variable: consumed
-   *
    * Holds the consumed state of this event.
    */
   consumed = false;
 
   /**
-   * Variable: evt
-   *
    * Holds the inner event object.
    */
   evt: MouseEvent;
 
   /**
-   * Variable: graphX
-   *
    * Holds the x-coordinate of the event in the graph. This value is set in
    * <mxGraph.fireMouseEvent>.
    */
   graphX: number;
 
   /**
-   * Variable: graphY
-   *
    * Holds the y-coordinate of the event in the graph. This value is set in
    * <mxGraph.fireMouseEvent>.
    */
   graphY: number;
 
   /**
-   * Variable: state
-   *
    * Holds the optional <CellState> associated with this event.
    */
   state: CellState | null;
 
   /**
-   * Variable: sourceState
-   *
    * Holds the <CellState> that was passed to the constructor. This can be
    * different from <state> depending on the result of <mxGraph.getEventState>.
    */
   sourceState: CellState | null;
 
   /**
-   * Function: getEvent
-   *
    * Returns <evt>.
    */
   getEvent() {
@@ -116,8 +102,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: getSource
-   *
    * Returns the target DOM element using <mxEvent.getSource> for <evt>.
    */
   getSource() {
@@ -125,8 +109,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: isSource
-   *
    * Returns true if the given <mxShape> is the source of <evt>.
    */
   isSource(shape: Shape | null) {
@@ -134,8 +116,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: getX
-   *
    * Returns <evt.clientX>.
    */
   getX() {
@@ -143,8 +123,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: getY
-   *
    * Returns <evt.clientY>.
    */
   getY() {
@@ -152,8 +130,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: getGraphX
-   *
    * Returns <graphX>.
    */
   getGraphX() {
@@ -161,8 +137,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: getGraphY
-   *
    * Returns <graphY>.
    */
   getGraphY() {
@@ -170,8 +144,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: getState
-   *
    * Returns <state>.
    */
   getState() {
@@ -179,8 +151,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: getCell
-   *
    * Returns the <Cell> in <state> is not null.
    */
   getCell() {
@@ -189,8 +159,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: isPopupTrigger
-   *
    * Returns true if the event is a popup trigger.
    */
   isPopupTrigger() {
@@ -198,8 +166,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: isConsumed
-   *
    * Returns <consumed>.
    */
   isConsumed() {
@@ -207,8 +173,6 @@ class InternalMouseEvent {
   }
 
   /**
-   * Function: consume
-   *
    * Sets <consumed> to true and invokes preventDefault on the native event
    * if such a method is defined. This is used mainly to avoid the cursor from
    * being changed to a text cursor in Webkit. You can use the preventDefault

@@ -25,8 +25,6 @@ class LineShape extends Shape {
   }
 
   /**
-   * Function: vertical
-   *
    * Whether to paint a vertical line.
    */
   vertical: boolean;

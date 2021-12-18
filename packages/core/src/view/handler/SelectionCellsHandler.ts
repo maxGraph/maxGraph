@@ -67,36 +67,26 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
 
   /**
-   * Variable: enabled
-   *
    * Specifies if events are handled. Default is true.
    */
   enabled = true;
 
   /**
-   * Variable: refreshHandler
-   *
    * Keeps a reference to an event listener for later removal.
    */
   refreshHandler: (sender: EventSource, evt: EventObject) => void;
 
   /**
-   * Variable: maxHandlers
-   *
    * Defines the maximum number of handlers to paint individually. Default is 100.
    */
   maxHandlers = 100;
 
   /**
-   * Variable: handlers
-   *
    * <mxDictionary> that maps from cells to handlers.
    */
   handlers: Dictionary<Cell, EdgeHandler | VertexHandler>;

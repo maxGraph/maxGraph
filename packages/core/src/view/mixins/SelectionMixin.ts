@@ -710,8 +710,6 @@ const SelectionMixin: PartialType = {
    *****************************************************************************/
 
   /**
-   * Function: getSelectionCellsForChanges
-   *
    * Returns the cells to be selected for the given array of changes.
    *
    * Parameters:

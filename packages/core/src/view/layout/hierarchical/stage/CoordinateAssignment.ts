@@ -50,73 +50,53 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Variable: layout
-   *
    * Reference to the enclosing <HierarchicalLayout>.
    */
   layout = null;
 
   /**
-   * Variable: intraCellSpacing
-   *
    * The minimum buffer between cells on the same rank. Default is 30.
    */
   intraCellSpacing = 30;
 
   /**
-   * Variable: interRankCellSpacing
-   *
    * The minimum distance between cells on adjacent ranks. Default is 100.
    */
   interRankCellSpacing = 100;
 
   /**
-   * Variable: parallelEdgeSpacing
-   *
    * The distance between each parallel edge on each ranks for long edges.
    * Default is 10.
    */
   parallelEdgeSpacing = 10;
 
   /**
-   * Variable: maxIterations
-   *
    * The number of heuristic iterations to run. Default is 8.
    */
   maxIterations = 8;
 
   /**
-   * Variable: prefHozEdgeSep
-   *
    * The preferred horizontal distance between edges exiting a vertex Default is 5.
    */
   prefHozEdgeSep = 5;
 
   /**
-   * Variable: prefVertEdgeOff
-   *
    * The preferred vertical offset between edges exiting a vertex Default is 2.
    */
   prefVertEdgeOff = 2;
 
   /**
-   * Variable: minEdgeJetty
-   *
    * The minimum distance for an edge jetty from a vertex Default is 12.
    */
   minEdgeJetty = 12;
 
   /**
-   * Variable: channelBuffer
-   *
    * The size of the vertical buffer in the center of inter-rank channels
    * where edge control points should not be placed Default is 4.
    */
   channelBuffer = 4;
 
   /**
-   * Variable: jettyPositions
-   *
    * Map of internal edges and (x,y) pair of positions of the start and end jetty
    * for that edge where it connects to the source and target vertices.
    * Note this should technically be a WeakHashMap, but since JS does not
@@ -128,101 +108,73 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   jettyPositions = null;
 
   /**
-   * Variable: orientation
-   *
    * The position of the root ( start ) node(s) relative to the rest of the
    * laid out graph. Default is <mxConstants.DIRECTION.NORTH>.
    */
   orientation = DIRECTION.NORTH;
 
   /**
-   * Variable: initialX
-   *
    * The minimum x position node placement starts at
    */
   initialX = null;
 
   /**
-   * Variable: limitX
-   *
    * The maximum x value this positioning lays up to
    */
   limitX = null;
 
   /**
-   * Variable: currentXDelta
-   *
    * The sum of x-displacements for the current iteration
    */
   currentXDelta = null;
 
   /**
-   * Variable: widestRank
-   *
    * The rank that has the widest x position
    */
   widestRank = null;
 
   /**
-   * Variable: rankTopY
-   *
    * Internal cache of top-most values of Y for each rank
    */
   rankTopY = null;
 
   /**
-   * Variable: rankBottomY
-   *
    * Internal cache of bottom-most value of Y for each rank
    */
   rankBottomY = null;
 
   /**
-   * Variable: widestRankValue
-   *
    * The X-coordinate of the edge of the widest rank
    */
   widestRankValue = null;
 
   /**
-   * Variable: rankWidths
-   *
    * The width of all the ranks
    */
   rankWidths = null;
 
   /**
-   * Variable: rankY
-   *
    * The Y-coordinate of all the ranks
    */
   rankY = null;
 
   /**
-   * Variable: fineTuning
-   *
    * Whether or not to perform local optimisations and iterate multiple times
    * through the algorithm. Default is true.
    */
   fineTuning = true;
 
   /**
-   * Variable: nextLayerConnectedCache
-   *
    * A store of connections to the layer above for speed
    */
   nextLayerConnectedCache = null;
 
   /**
-   * Variable: previousLayerConnectedCache
-   *
    * A store of connections to the layer below for speed
    */
   previousLayerConnectedCache = null;
 
   /**
-   * Variable: groupPadding
-   *
    * Padding added to resized parents Default is 10.
    */
   groupPadding = 10;
@@ -252,8 +204,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: execute
-   *
    * A basic horizontal coordinate assignment algorithm
    */
   execute(parent) {
@@ -317,8 +267,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: minNode
-   *
    * Performs one median positioning sweep in both directions
    */
   minNode(model) {
@@ -480,8 +428,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: medianPos
-   *
    * Performs one median positioning sweep in one direction
    *
    * Parameters:
@@ -505,8 +451,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: rankMedianPosition
-   *
    * Performs median minimisation over one rank.
    *
    * Parameters:
@@ -665,8 +609,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: calculatedWeightedValue
-   *
    * Calculates the priority the specified cell has based on the type of its
    * cell and the cells it is connected to on the next layer
    *
@@ -694,8 +636,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: medianXValue
-   *
    * Calculates the median position of the connected cell on the specified
    * rank
    *
@@ -731,8 +671,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: initialCoords
-   *
    * Sets up the layout in an initial positioning. The ranks are all centered
    * as much as possible along the middle vertex in each rank. The other cells
    * are then placed as close as possible on either side.
@@ -760,8 +698,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: rankCoordinates
-   *
    * Sets up the layout in an initial positioning. All the first cells in each
    * rank are moved to the left and the rest of the rank inserted as close
    * together as their size and buffering permits. This method works on just
@@ -833,8 +769,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: calculateWidestRank
-   *
    * Calculates the width rank in the hierarchy. Also set the y value of each
    * rank whilst performing the calculation
    *
@@ -942,8 +876,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: minPath
-   *
    * Straightens out chains of virtual nodes where possibleacade to those stored after this layout
    * processing step has completed.
    *
@@ -1055,8 +987,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: repositionValid
-   *
    * Determines whether or not a node may be moved to the specified x
    * position on the specified rank
    *
@@ -1119,8 +1049,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: setCellLocations
-   *
    * Sets the cell locations in the facade to those stored after this layout
    * processing step has completed.
    *
@@ -1166,8 +1094,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: localEdgeProcessing
-   *
    * Separates the x position of edges as they connect to vertices
    *
    * Parameters:
@@ -1304,8 +1230,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: setEdgePosition
-   *
    * Fixes the control points
    */
   setEdgePosition(cell) {
@@ -1538,8 +1462,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: setVertexLocation
-   *
    * Fixes the position of the specified vertex.
    *
    * Parameters:
@@ -1573,8 +1495,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   }
 
   /**
-   * Function: processReversedEdge
-   *
    * Hook to add additional processing
    *
    * Parameters:

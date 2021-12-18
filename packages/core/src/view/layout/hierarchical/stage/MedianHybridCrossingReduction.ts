@@ -33,45 +33,33 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   }
 
   /**
-   * Variable: layout
-   *
    * Reference to the enclosing <HierarchicalLayout>.
    */
   layout = null;
 
   /**
-   * Variable: maxIterations
-   *
    * The maximum number of iterations to perform whilst reducing edge
    * crossings. Default is 24.
    */
   maxIterations = 24;
 
   /**
-   * Variable: nestedBestRanks
-   *
    * Stores each rank as a collection of cells in the best order found for
    * each layer so far
    */
   nestedBestRanks = null;
 
   /**
-   * Variable: currentBestCrossings
-   *
    * The total number of crossings found in the best configuration so far
    */
   currentBestCrossings = 0;
 
   /**
-   * Variable: iterationsWithoutImprovement
-   *
    * The total number of crossings found in the best configuration so far
    */
   iterationsWithoutImprovement = 0;
 
   /**
-   * Variable: maxNoImprovementIterations
-   *
    * The total number of crossings found in the best configuration so far
    */
   maxNoImprovementIterations = 2;

@@ -13,37 +13,27 @@ import Point from '../geometry/Point';
  */
 class ConnectionConstraint {
   /**
-   * Variable: point
-   *
    * <mxPoint> that specifies the fixed location of the connection point.
    */
   point: Point | null;
 
   /**
-   * Variable: perimeter
-   *
    * Boolean that specifies if the point should be projected onto the perimeter
    * of the terminal.
    */
   perimeter = true;
 
   /**
-   * Variable: name
-   *
    * Optional string that specifies the name of the constraint.
    */
   name: string | null = null;
 
   /**
-   * Variable: dx
-   *
    * Optional float that specifies the horizontal offset of the constraint.
    */
   dx = 0;
 
   /**
-   * Variable: dy
-   *
    * Optional float that specifies the vertical offset of the constraint.
    */
   dy = 0;

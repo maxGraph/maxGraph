@@ -288,8 +288,6 @@ const GroupingMixin: PartialType = {
   },
 
   /**
-   * Function: getCellsForUngroup
-   *
    * Returns the selection cells that can be ungrouped.
    */
   getCellsForUngroup() {
@@ -341,8 +339,6 @@ const GroupingMixin: PartialType = {
   },
 
   /**
-   * Function: updateGroupBounds
-   *
    * Updates the bounds of the given groups to include all children and returns
    * the passed-in cells. Call this with the groups in parent to child order,
    * top-most group first, the cells are processed in reverse order and cells

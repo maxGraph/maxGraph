@@ -22,15 +22,11 @@ class Point {
   }
 
   /**
-   * Variable: x
-   *
    * Holds the x-coordinate of the point. Default is 0.
    */
   _x = 0;
 
   /**
-   * Variable: y
-   *
    * Holds the y-coordinate of the point. Default is 0.
    */
   _y = 0;

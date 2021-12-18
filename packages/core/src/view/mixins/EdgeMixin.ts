@@ -313,8 +313,6 @@ const EdgeMixin: PartialType = {
   },
 
   /**
-   * Function: splitEdge
-   *
    * Splits the given edge by adding the newEdge between the previous source
    * and the given cell and reconnecting the source of the given edge to the
    * given cell. This method fires <mxEvent.SPLIT_EDGE> while the transaction
@@ -519,8 +517,6 @@ const EdgeMixin: PartialType = {
   },
 
   /**
-   * Function: getEdges
-   *
    * Returns the incoming and/or outgoing edges for the given cell.
    * If the optional parent argument is specified, then only edges are returned
    * where the opposite is in the given parent cell. If at least one of incoming

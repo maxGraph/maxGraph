@@ -193,47 +193,35 @@ class CellEditor implements GraphPlugin {
   textDirection: '' | 'auto' | 'ltr' | 'rtl' | null = null;
 
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
 
   /**
-   * Variable: textarea
-   *
    * Holds the DIV that is used for text editing. Note that this may be null before the first
    * edit. Instantiated in <init>.
    */
   textarea: HTMLElement | null = null;
 
   /**
-   * Variable: editingCell
-   *
    * Reference to the <Cell> that is currently being edited.
    */
   // editingCell: mxCell;
   editingCell: Cell | null = null;
 
   /**
-   * Variable: trigger
-   *
    * Reference to the event that was used to start editing.
    */
   // trigger: MouseEvent;
   trigger: InternalMouseEvent | MouseEvent | null = null;
 
   /**
-   * Variable: modified
-   *
    * Specifies if the label has been modified.
    */
   // modified: boolean;
   modified: boolean = false;
 
   /**
-   * Variable: autoSize
-   *
    * Specifies if the textarea should be resized while the text is being edited.
    * Default is true.
    */
@@ -241,8 +229,6 @@ class CellEditor implements GraphPlugin {
   autoSize: boolean = true;
 
   /**
-   * Variable: selectText
-   *
    * Specifies if the text should be selected when editing starts. Default is
    * true.
    */
@@ -250,8 +236,6 @@ class CellEditor implements GraphPlugin {
   selectText: boolean = true;
 
   /**
-   * Variable: emptyLabelText
-   *
    * Text to be displayed for empty labels. Default is '' or '<br>' in Firefox as
    * a workaround for the missing cursor bug for empty content editable. This can
    * be set to eg. "[Type Here]" to easier visualize editing of empty labels. The
@@ -262,8 +246,6 @@ class CellEditor implements GraphPlugin {
   emptyLabelText: string = Client.IS_FF ? '<br>' : '';
 
   /**
-   * Variable: escapeCancelsEditing
-   *
    * If true, pressing the escape key will stop editing and not accept the new
    * value. Change this to false to accept the new value on escape, and cancel
    * editing on Shift+Escape instead. Default is true.
@@ -272,32 +254,24 @@ class CellEditor implements GraphPlugin {
   escapeCancelsEditing: boolean = true;
 
   /**
-   * Variable: textNode
-   *
    * Reference to the label DOM node that has been hidden.
    */
   // textNode: string;
   textNode: SVGGElement | null = null;
 
   /**
-   * Variable: zIndex
-   *
    * Specifies the zIndex for the textarea. Default is 5.
    */
   // zIndex: number;
   zIndex: number = 5;
 
   /**
-   * Variable: minResize
-   *
    * Defines the minimum width and height to be used in <resize>. Default is 0x20px.
    */
   // minResize: mxRectangle;
   minResize: Rectangle = new Rectangle(0, 20);
 
   /**
-   * Variable: wordWrapPadding
-   *
    * Correction factor for word wrapping width. Default is 2 in quirks, 0 in IE
    * 11 and 1 in all other browsers and modes.
    */
@@ -305,24 +279,18 @@ class CellEditor implements GraphPlugin {
   wordWrapPadding: number = 0;
 
   /**
-   * Variable: blurEnabled
-   *
    * If <focusLost> should be called if <textarea> loses the focus. Default is false.
    */
   // blurEnabled: boolean;
   blurEnabled: boolean = false;
 
   /**
-   * Variable: initialValue
-   *
    * Holds the initial editing value to check if the current value was modified.
    */
   // initialValue: string;
   initialValue: string | null = null;
 
   /**
-   * Variable: align
-   *
    * Holds the current temporary horizontal alignment for the cell style. If this
    * is modified then the current text alignment is changed and the cell style is
    * updated when the value is applied.

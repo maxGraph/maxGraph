@@ -64,8 +64,6 @@ class MxFastOrganicLayout extends GraphLayout {
   minDistanceLimit: number = 2;
 
   /**
-   * Variable: maxDistanceLimit
-   *
    * Maximal distance limit. Default is 500. Prevents of
    * dividing by zero.
    */
@@ -77,99 +75,71 @@ class MxFastOrganicLayout extends GraphLayout {
   minDistanceLimitSquared: number = 4;
 
   /**
-   * Variable: initialTemp
-   *
    * Start value of temperature. Default is 200.
    */
   initialTemp: number = 200;
 
   /**
-   * Variable: temperature
-   *
    * Temperature to limit displacement at later stages of layout.
    */
   temperature: number = 0;
 
   /**
-   * Variable: maxIterations
-   *
    * Total number of iterations to run the layout though.
    */
   maxIterations: number = 0;
 
   /**
-   * Variable: iteration
-   *
    * Current iteration count.
    */
   iteration: number = 0;
 
   /**
-   * Variable: vertexArray
-   *
    * An array of all vertices to be laid out.
    */
   vertexArray: CellArray = new CellArray();
 
   /**
-   * Variable: dispX
-   *
    * An array of locally stored X co-ordinate displacements for the vertices.
    */
   dispX: number[] = [];
 
   /**
-   * Variable: dispY
-   *
    * An array of locally stored Y co-ordinate displacements for the vertices.
    */
   dispY: number[] = [];
 
   /**
-   * Variable: cellLocation
-   *
    * An array of locally stored co-ordinate positions for the vertices.
    */
   cellLocation: any[] = [];
 
   /**
-   * Variable: radius
-   *
    * The approximate radius of each cell, nodes only.
    */
   radius: number[] = [];
 
   /**
-   * Variable: radiusSquared
-   *
    * The approximate radius squared of each cell, nodes only.
    */
   radiusSquared: number[] = [];
 
   /**
-   * Variable: isMoveable
-   *
    * Array of booleans representing the movable states of the vertices.
    */
   isMoveable: boolean[] = [];
 
   /**
-   * Variable: neighbours
-   *
    * Local copy of cell neighbours.
    */
   neighbours: { [key: number]: number[] } = {};
 
   /**
-   * Variable: indices
-   *
    * Hashtable from cells to local indices.
    */
   indices: { [key: string]: number } = {};
 
   /**
-   * Variable: allowedToRun
-   *
    * Boolean flag that specifies if the layout is allowed to run. If this is
    * set to false, then the layout exits in the following iteration.
    */

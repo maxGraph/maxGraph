@@ -40,47 +40,35 @@ class CircleLayout extends GraphLayout {
   }
 
   /**
-   * Variable: radius
-   *
    * Integer specifying the size of the radius. Default is 100.
    */
   radius: number;
 
   /**
-   * Variable: moveCircle
-   *
    * Boolean specifying if the circle should be moved to the top,
    * left corner specified by <x0> and <y0>. Default is false.
    */
   moveCircle: boolean = false;
 
   /**
-   * Variable: x0
-   *
    * Integer specifying the left coordinate of the circle.
    * Default is 0.
    */
   x0: number = 0;
 
   /**
-   * Variable: y0
-   *
    * Integer specifying the top coordinate of the circle.
    * Default is 0.
    */
   y0: number = 0;
 
   /**
-   * Variable: resetEdges
-   *
    * Specifies if all edge points of traversed edges should be removed.
    * Default is true.
    */
   resetEdges: boolean = true;
 
   /**
-   * Variable: disableEdgeStyle
-   *
    * Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
    * modified by the result. Default is true.
    */

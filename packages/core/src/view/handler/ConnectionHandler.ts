@@ -219,15 +219,11 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   waypoints: Point[] = [];
 
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
 
   /**
-   * Variable: factoryMethod
-   *
    * Function that is used for creating new edges. The function takes the
    * source and target <Cell> as the first and second argument and returns
    * a new <Cell> that represents the edge. This is used in <createEdge>.
@@ -235,8 +231,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   factoryMethod: FactoryMethod | null = null;
 
   /**
-   * Variable: moveIconFront
-   *
    * Specifies if icons should be displayed inside the graph container instead
    * of the overlay pane. This is used for HTML labels on vertices which hide
    * the connect icon. This has precendence over <moveIconBack> when set
@@ -245,8 +239,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   moveIconFront = false;
 
   /**
-   * Variable: moveIconBack
-   *
    * Specifies if icons should be moved to the back of the overlay pane. This can
    * be set to true if the icons of the connection handler conflict with other
    * handles, such as the vertex label move handle. Default is false.
@@ -254,8 +246,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   moveIconBack = false;
 
   /**
-   * Variable: connectImage
-   *
    * <mxImage> that is used to trigger the creation of a new connection. This
    * is used in <createIcons>. Default is null.
    */
@@ -263,30 +253,22 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   connectImage: Image | null = null;
 
   /**
-   * Variable: targetConnectImage
-   *
    * Specifies if the connect icon should be centered on the target state
    * while connections are being previewed. Default is false.
    */
   targetConnectImage = false;
 
   /**
-   * Variable: enabled
-   *
    * Specifies if events are handled. Default is false.
    */
   enabled = false;
 
   /**
-   * Variable: select
-   *
    * Specifies if new edges should be selected. Default is true.
    */
   select = true;
 
   /**
-   * Variable: createTarget
-   *
    * Specifies if <createTargetVertex> should be called if no target was under the
    * mouse for the new connection. Setting this to true means the connection
    * will be drawn as valid if no target is under the mouse, and
@@ -297,38 +279,28 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   createTarget = false;
 
   /**
-   * Variable: marker
-   *
    * Holds the <mxTerminalMarker> used for finding source and target cells.
    */
   marker: CellMarker;
 
   /**
-   * Variable: constraintHandler
-   *
    * Holds the <mxConstraintHandler> used for drawing and highlighting
    * constraints.
    */
   constraintHandler: ConstraintHandler;
 
   /**
-   * Variable: error
-   *
    * Holds the current validation error while connections are being created.
    */
   error: string | null = null;
 
   /**
-   * Variable: waypointsEnabled
-   *
    * Specifies if single clicks should add waypoints on the new edge. Default is
    * false.
    */
   waypointsEnabled = false;
 
   /**
-   * Variable: ignoreMouseDown
-   *
    * Specifies if the connection handler should ignore the state of the mouse
    * button when highlighting the source. Default is false, that is, the
    * handler only highlights the source if no button is being pressed.
@@ -336,16 +308,12 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   ignoreMouseDown = false;
 
   /**
-   * Variable: first
-   *
    * Holds the <mxPoint> where the mouseDown took place while the handler is
    * active.
    */
   first: Point | null = null;
 
   /**
-   * Variable: connectIconOffset
-   *
    * Holds the offset for connect icons during connection preview.
    * Default is mxPoint(0, <mxConstants.TOOLTIP_VERTICAL_OFFSET>).
    * Note that placing the icon under the mouse pointer with an
@@ -354,38 +322,28 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   connectIconOffset = new Point(0, TOOLTIP_VERTICAL_OFFSET);
 
   /**
-   * Variable: edgeState
-   *
    * Optional <CellState> that represents the preview edge while the
    * handler is active. This is created in <createEdgeState>.
    */
   edgeState: CellState | null = null;
 
   /**
-   * Variable: changeHandler
-   *
    * Holds the change event listener for later removal.
    */
   changeHandler: (sender: Listenable) => void;
 
   /**
-   * Variable: drillHandler
-   *
    * Holds the drill event listener for later removal.
    */
   drillHandler: (sender: Listenable) => void;
 
   /**
-   * Variable: mouseDownCounter
-   *
    * Counts the number of mouseDown events since the start. The initial mouse
    * down event counts as 1.
    */
   mouseDownCounter = 0;
 
   /**
-   * Variable: movePreviewAway
-   *
    * Switch to enable moving the preview away from the mousepointer. This is required in browsers
    * where the preview cannot be made transparent to events and if the built-in hit detection on
    * the HTML elements in the page should be used. Default is the value of <Client.IS_VML>.
@@ -393,8 +351,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   movePreviewAway = false;
 
   /**
-   * Variable: outlineConnect
-   *
    * Specifies if connections to the outline of a highlighted target should be
    * enabled. This will allow to place the connection point along the outline of
    * the highlighted target. Default is false.
@@ -402,23 +358,17 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   outlineConnect = false;
 
   /**
-   * Variable: livePreview
-   *
    * Specifies if the actual shape of the edge state should be used for the preview.
    * Default is false. (Ignored if no edge state is created in <createEdgeState>.)
    */
   livePreview = false;
 
   /**
-   * Variable: cursor
-   *
    * Specifies the cursor to be used while the handler is active. Default is null.
    */
   cursor: string | null = null;
 
   /**
-   * Variable: insertBeforeSource
-   *
    * Specifies if new edges should be inserted before the source vertex in the
    * cell hierarchy. Default is false for backwards compatibility.
    */

@@ -65,22 +65,16 @@ import Cell from './Cell';
  */
 class CellMarker extends EventSource {
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
 
   /**
-   * Variable: enabled
-   *
    * Specifies if the marker is enabled. Default is true.
    */
   enabled = true;
 
   /**
-   * Variable: hotspot
-   *
    * Specifies the portion of the width and height that should trigger
    * a highlight. The area around the center of the cell to be marked is used
    * as the hotspot. Possible values are between 0 and 1. Default is
@@ -89,43 +83,31 @@ class CellMarker extends EventSource {
   hotspot = DEFAULT_HOTSPOT;
 
   /**
-   * Variable: hotspotEnabled
-   *
    * Specifies if the hotspot is enabled. Default is false.
    */
   hotspotEnabled = false;
 
   /**
-   * Variable: validColor
-   *
    * Holds the valid marker color.
    */
   validColor: ColorValue;
 
   /**
-   * Variable: invalidColor
-   *
    * Holds the invalid marker color.
    */
   invalidColor: ColorValue;
 
   /**
-   * Variable: currentColor
-   *
    * Holds the current marker color.
    */
   currentColor: ColorValue = NONE;
 
   /**
-   * Variable: validState
-   *
    * Holds the marked <CellState> if it is valid.
    */
   validState: CellState | null = null;
 
   /**
-   * Variable: markedState
-   *
    * Holds the marked <CellState>.
    */
   markedState: CellState | null = null;

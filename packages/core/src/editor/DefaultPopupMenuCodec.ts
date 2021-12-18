@@ -26,8 +26,6 @@ class DefaultPopupMenuCodec extends ObjectCodec {
   }
 
   /**
-   * Function: encode
-   *
    * Returns null.
    */
   encode(enc, obj) {
@@ -35,8 +33,6 @@ class DefaultPopupMenuCodec extends ObjectCodec {
   }
 
   /**
-   * Function: decode
-   *
    * Uses the given node as the config for <DefaultPopupMenu>.
    */
   decode(dec, node, into) {

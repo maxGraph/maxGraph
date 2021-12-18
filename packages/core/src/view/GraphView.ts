@@ -1117,8 +1117,6 @@ class GraphView extends EventSource {
   }
 
   /**
-   * Function: updateFixedTerminalPoint
-   *
    * Sets the fixed source or target terminal point on the given edge.
    *
    * Parameters:
@@ -1141,8 +1139,6 @@ class GraphView extends EventSource {
   }
 
   /**
-   * Function: getFixedTerminalPoint
-   *
    * Returns the fixed source or target terminal point for the given edge.
    *
    * Parameters:

@@ -9,64 +9,46 @@ import Cell from '../../../cell/Cell';
 
 class GraphAbstractHierarchyCell extends Cell {
   /**
-   * Variable: maxRank
-   *
    * The maximum rank this cell occupies. Default is -1.
    */
   maxRank = -1;
 
   /**
-   * Variable: minRank
-   *
    * The minimum rank this cell occupies. Default is -1.
    */
   minRank = -1;
 
   /**
-   * Variable: x
-   *
    * The x position of this cell for each layer it occupies
    */
   x: number[];
 
   /**
-   * Variable: y
-   *
    * The y position of this cell for each layer it occupies
    */
   y: number[];
 
   /**
-   * Variable: width
-   *
    * The width of this cell. Default is 0.
    */
   width = 0;
 
   /**
-   * Variable: height
-   *
    * The height of this cell. Default is 0.
    */
   height = 0;
 
   /**
-   * Variable: nextLayerConnectedCells
-   *
    * A cached version of the cells this cell connects to on the next layer up
    */
   nextLayerConnectedCells: CellArray[] | null = null;
 
   /**
-   * Variable: previousLayerConnectedCells
-   *
    * A cached version of the cells this cell connects to on the next layer down
    */
   previousLayerConnectedCells: CellArray[] | null = null;
 
   /**
-   * Variable: temp
-   *
    * Temporary variable for general use. Generally, try to avoid
    * carrying information between stages. Currently, the longest
    * path layering sets temp to the rank position in fixRanks()

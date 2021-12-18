@@ -29,57 +29,41 @@ class Guide {
   }
 
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph> instance.
    */
   graph: Graph;
 
   /**
-   * Variable: states
-   *
    * Contains the <mxCellStates> that are used for alignment.
    */
   states: CellState[] = [];
 
   /**
-   * Variable: horizontal
-   *
    * Specifies if horizontal guides are enabled. Default is true.
    */
   horizontal = true;
 
   /**
-   * Variable: vertical
-   *
    * Specifies if vertical guides are enabled. Default is true.
    */
   vertical = true;
 
   /**
-   * Variable: vertical
-   *
    * Holds the <mxShape> for the horizontal guide.
    */
   guideX: Shape | null = null;
 
   /**
-   * Variable: vertical
-   *
    * Holds the <mxShape> for the vertical guide.
    */
   guideY: Shape | null = null;
 
   /**
-   * Variable: rounded
-   *
    * Specifies if rounded coordinates should be used. Default is false.
    */
   rounded = false;
 
   /**
-   * Variable: tolerance
-   *
    * Default tolerance in px if grid is disabled. Default is 2.
    */
   tolerance = 2;

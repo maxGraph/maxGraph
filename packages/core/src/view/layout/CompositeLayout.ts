@@ -44,15 +44,11 @@ class CompositeLayout extends GraphLayout {
   }
 
   /**
-   * Variable: layouts
-   *
    * Holds the array of <mxGraphLayouts> that this layout contains.
    */
   layouts: GraphLayout[];
 
   /**
-   * Variable: master
-   *
    * Reference to the <mxGraphLayouts> that handles moves. If this is null
    * then the first layout in <layouts> is used.
    */

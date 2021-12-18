@@ -40,8 +40,6 @@ class EditorCodec extends ObjectCodec {
   }
 
   /**
-   * Function: beforeDecode
-   *
    * Decodes the ui-part of the configuration node by reading
    * a sequence of the following child nodes and attributes
    * and passes the control to the default decoding mechanism:
@@ -114,8 +112,6 @@ class EditorCodec extends ObjectCodec {
   }
 
   /**
-   * Function: decodeChild
-   *
    * Overrides decode child to handle special child nodes.
    */
   decodeChild(dec, child, obj) {
@@ -135,8 +131,6 @@ class EditorCodec extends ObjectCodec {
   }
 
   /**
-   * Function: decodeUi
-   *
    * Decodes the ui elements from the given node.
    */
   decodeUi(dec, node, editor) {
@@ -200,8 +194,6 @@ class EditorCodec extends ObjectCodec {
   }
 
   /**
-   * Function: decodeTemplates
-   *
    * Decodes the cells from the given node as templates.
    */
   decodeTemplates(dec, node, editor) {

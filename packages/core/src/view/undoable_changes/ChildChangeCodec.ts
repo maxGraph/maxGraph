@@ -38,8 +38,6 @@ class ChildChangeCodec extends ObjectCodec {
   }
 
   /**
-   * Function: isReference
-   *
    * Returns true for the child attribute if the child
    * cell had a previous parent or if we're reading the
    * child as an attribute rather than a child node, in
@@ -53,8 +51,6 @@ class ChildChangeCodec extends ObjectCodec {
   }
 
   /**
-   * Function: isExcluded
-   *
    * Excludes references to parent or previous if not in the model.
    */
   isExcluded(obj, attr, value, write) {
@@ -68,8 +64,6 @@ class ChildChangeCodec extends ObjectCodec {
   }
 
   /**
-   * Function: afterEncode
-   *
    * Encodes the child recusively and adds the result
    * to the given node.
    */
@@ -90,8 +84,6 @@ class ChildChangeCodec extends ObjectCodec {
   }
 
   /**
-   * Function: beforeDecode
-   *
    * Decodes the any child nodes as using the respective
    * codec from the registry.
    */
@@ -138,8 +130,6 @@ class ChildChangeCodec extends ObjectCodec {
   }
 
   /**
-   * Function: afterDecode
-   *
    * Restores object state in the child change.
    */
   afterDecode(dec, node, obj) {

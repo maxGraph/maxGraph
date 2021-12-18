@@ -87,8 +87,6 @@ class RadialTreeLayout extends CompactTreeLayout {
   rowMinCenX: number[] = [];
 
   /**
-   * Variable: rowMaxCenX
-   *
    * Array of x coordinate of rightmost vertex of each row
    */
   rowMaxCenX: number[] = [];

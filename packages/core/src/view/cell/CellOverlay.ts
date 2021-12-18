@@ -83,22 +83,16 @@ class CellOverlay extends EventSource {
   }
 
   /**
-   * Variable: image
-   *
    * Holds the <mxImage> to be used as the icon.
    */
   image: ImageBox;
 
   /**
-   * Variable: tooltip
-   *
    * Holds the optional string to be used as the tooltip.
    */
   tooltip?: string | null;
 
   /**
-   * Variable: align
-   *
    * Holds the horizontal alignment for the overlay. Default is
    * <mxConstants.ALIGN_RIGHT>. For edges, the overlay always appears in the
    * center of the edge.
@@ -106,8 +100,6 @@ class CellOverlay extends EventSource {
   align: 'left' | 'center' | 'right' = 'right';
 
   /**
-   * Variable: verticalAlign
-   *
    * Holds the vertical alignment for the overlay. Default is
    * <mxConstants.ALIGN_BOTTOM>. For edges, the overlay always appears in the
    * center of the edge.
@@ -115,31 +107,23 @@ class CellOverlay extends EventSource {
   verticalAlign: 'top' | 'middle' | 'bottom' = 'bottom';
 
   /**
-   * Variable: offset
-   *
    * Holds the offset as an <mxPoint>. The offset will be scaled according to the
    * current scale.
    */
   offset = new Point();
 
   /**
-   * Variable: cursor
-   *
    * Holds the cursor for the overlay. Default is 'help'.
    */
   cursor = 'help';
 
   /**
-   * Variable: defaultOverlap
-   *
    * Defines the overlapping for the overlay, that is, the proportional distance
    * from the origin to the point defined by the alignment. Default is 0.5.
    */
   defaultOverlap = 0.5;
 
   /**
-   * Function: getBounds
-   *
    * Returns the bounds of the overlay for the given <CellState> as an
    * <mxRectangle>. This should be overridden when using multiple overlays
    * per cell so that the overlays do not overlap.
@@ -223,8 +207,6 @@ class CellOverlay extends EventSource {
   }
 
   /**
-   * Function: toString
-   *
    * Returns the textual representation of the overlay to be used as the
    * tooltip. This implementation returns <tooltip>.
    */

@@ -38,8 +38,6 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Variable: defaultLocalized
-   *
    * Static global variable that specifies the default value for the localized
    * attribute of the text element. Default is false.
    */
@@ -55,58 +53,42 @@ class StencilShape extends Shape {
   static allowEval = false;
 
   /**
-   * Variable: desc
-   *
    * Holds the XML node with the stencil description.
    */
   desc: Element;
 
   /**
-   * Variable: constraints
-   *
    * Holds an array of <mxConnectionConstraints> as defined in the shape.
    */
   constraints: ConnectionConstraint[] = [];
 
   /**
-   * Variable: aspect
-   *
    * Holds the aspect of the shape. Default is 'auto'.
    */
   aspect = 'auto';
 
   /**
-   * Variable: w0
-   *
    * Holds the width of the shape. Default is 100.
    */
   w0 = 100;
 
   /**
-   * Variable: h0
-   *
    * Holds the height of the shape. Default is 100.
    */
   h0 = 100;
 
   /**
-   * Variable: bgNodes
-   *
    * Holds the XML node with the stencil description.
    */
   // bgNode: Element;
   bgNode: Element | null = null;
 
   /**
-   * Variable: fgNodes
-   *
    * Holds the XML node with the stencil description.
    */
   fgNode: Element | null = null;
 
   /**
-   * Variable: strokewidth
-   *
    * Holds the strokewidth direction from the description.
    */
   strokeWidthValue: string | null = null;

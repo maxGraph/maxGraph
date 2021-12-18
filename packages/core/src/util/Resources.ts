@@ -61,46 +61,34 @@ import { get, load } from './MaxXmlRequest';
  */
 const Resources = {
   /*
-   * Variable: resources
-   *
    * Object that maps from keys to values.
    */
   resources: {},
 
   /**
-   * Variable: extension
-   *
    * Specifies the extension used for language files. Default is <mxResourceExtension>.
    */
   extension: '.txt',
 
   /**
-   * Variable: resourcesEncoded
-   *
    * Specifies whether or not values in resource files are encoded with \u or
    * percentage. Default is false.
    */
   resourcesEncoded: false,
 
   /**
-   * Variable: loadDefaultBundle
-   *
    * Specifies if the default file for a given basename should be loaded.
    * Default is true.
    */
   loadDefaultBundle: true,
 
   /**
-   * Variable: loadDefaultBundle
-   *
    * Specifies if the specific language file file for a given basename should
    * be loaded. Default is true.
    */
   loadSpecialBundle: true,
 
   /**
-   * Function: isLanguageSupported
-   *
    * Hook for subclassers to disable support for a given language. This
    * implementation returns true if lan is in <Client.languages>.
    *
@@ -117,8 +105,6 @@ const Resources = {
   },
 
   /**
-   * Function: getDefaultBundle
-   *
    * Hook for subclassers to return the URL for the special bundle. This
    * implementation returns basename + <extension> or null if
    * <loadDefaultBundle> is false.
@@ -139,8 +125,6 @@ const Resources = {
   },
 
   /**
-   * Function: getSpecialBundle
-   *
    * Hook for subclassers to return the URL for the special bundle. This
    * implementation returns basename + '_' + lan + <extension> or null if
    * <loadSpecialBundle> is false or lan equals <Client.defaultLanguage>.
@@ -180,8 +164,6 @@ const Resources = {
   },
 
   /**
-   * Function: add
-   *
    * Adds the default and current language properties file for the specified
    * basename. Existing keys are overridden as new files are added. If no
    * callback is used then the request is synchronous.
@@ -275,8 +257,6 @@ const Resources = {
   },
 
   /**
-   * Function: parse
-   *
    * Parses the key, value pairs in the specified
    * text and stores them as local resources.
    */
@@ -311,8 +291,6 @@ const Resources = {
   },
 
   /**
-   * Function: get
-   *
    * Returns the value for the specified resource key.
    *
    * Example:
@@ -354,8 +332,6 @@ const Resources = {
   },
 
   /**
-   * Function: replacePlaceholders
-   *
    * Replaces the given placeholders with the given parameters.
    *
    * Parameters:
@@ -392,8 +368,6 @@ const Resources = {
   },
 
   /**
-   * Function: loadResources
-   *
    * Loads all required resources asynchronously. Use this to load the graph and
    * editor resources if <mxLoadResources> is false.
    *

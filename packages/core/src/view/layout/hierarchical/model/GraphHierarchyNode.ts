@@ -33,36 +33,26 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   }
 
   /**
-   * Variable: cell
-   *
    * The graph cell this object represents.
    */
   cell: Cell | null = null;
 
   /**
-   * Variable: id
-   *
    * The object identity of the wrapped cell
    */
   id: string | null = null;
 
   /**
-   * Variable: connectsAsTarget
-   *
    * Collection of hierarchy edges that have this node as a target
    */
   connectsAsTarget: GraphHierarchyEdge[] | null = null;
 
   /**
-   * Variable: connectsAsSource
-   *
    * Collection of hierarchy edges that have this node as a source
    */
   connectsAsSource: GraphHierarchyEdge[] | null = null;
 
   /**
-   * Variable: hashCode
-   *
    * Assigns a unique hashcode for each node. Used by the model dfs instead
    * of copying HashSets
    */

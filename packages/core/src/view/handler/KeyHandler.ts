@@ -89,51 +89,37 @@ class KeyHandler {
   keydownHandler: ((event: KeyboardEvent) => void) | null = null;
 
   /**
-   * Variable: graph
-   *
    * Reference to the <mxGraph> associated with this handler.
    */
   graph: Graph | null = null;
 
   /**
-   * Variable: target
-   *
    * Reference to the target DOM, that is, the DOM node where the key event
    * listeners are installed.
    */
   target: Element | null = null;
 
   /**
-   * Variable: normalKeys
-   *
    * Maps from keycodes to functions for non-pressed control keys.
    */
   normalKeys: { [key: number]: Function } = {};
 
   /**
-   * Variable: shiftKeys
-   *
    * Maps from keycodes to functions for pressed shift keys.
    */
   shiftKeys: { [key: number]: Function } = {};
 
   /**
-   * Variable: controlKeys
-   *
    * Maps from keycodes to functions for pressed control keys.
    */
   controlKeys: { [key: number]: Function } = {};
 
   /**
-   * Variable: controlShiftKeys
-   *
    * Maps from keycodes to functions for pressed control and shift keys.
    */
   controlShiftKeys: { [key: number]: Function } = {};
 
   /**
-   * Variable: enabled
-   *
    * Specifies if events are handled. Default is true.
    */
   enabled = true;

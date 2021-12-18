@@ -113,65 +113,47 @@ class GraphHierarchyModel {
   }
 
   /**
-   * Variable: maxRank
-   *
    * Stores the largest rank number allocated
    */
   maxRank: number | null = null;
 
   /**
-   * Variable: vertexMapper
-   *
    * Map from graph vertices to internal model nodes.
    */
   vertexMapper = null;
 
   /**
-   * Variable: edgeMapper
-   *
    * Map from graph edges to internal model edges
    */
   edgeMapper = null;
 
   /**
-   * Variable: ranks
-   *
    * Mapping from rank number to actual rank
    */
   ranks = null;
 
   /**
-   * Variable: roots
-   *
    * Store of roots of this hierarchy model, these are real graph cells, not
    * internal cells
    */
   roots: CellArray | null = null;
 
   /**
-   * Variable: parent
-   *
    * The parent cell whose children are being laid out
    */
   parent: Cell | null = null;
 
   /**
-   * Variable: dfsCount
-   *
    * Count of the number of times the ancestor dfs has been used.
    */
   dfsCount: number = 0;
 
   /**
-   * Variable: SOURCESCANSTARTRANK
-   *
    * High value to start source layering scan rank value from.
    */
   SOURCESCANSTARTRANK: number = 100000000;
 
   /**
-   * Variable: tightenToSource
-   *
    * Whether or not to tighten the assigned ranks of vertices up towards
    * the source cells.
    */

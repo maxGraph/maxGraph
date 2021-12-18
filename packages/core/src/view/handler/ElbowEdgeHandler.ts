@@ -50,8 +50,6 @@ class ElbowEdgeHandler extends EdgeHandler {
   flipEnabled = true;
 
   /**
-   * Variable: doubleClickOrientationResource
-   *
    * Specifies the resource key for the tooltip to be displayed on the single
    * control point for routed edges. If the resource for this key does not
    * exist then the value is used as the error message. Default is

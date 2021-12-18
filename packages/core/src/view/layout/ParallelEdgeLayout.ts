@@ -61,15 +61,11 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Variable: spacing
-   *
    * Defines the spacing between the parallels. Default is 20.
    */
   spacing: number = 20;
 
   /**
-   * Variable: checkOverlap
-   *
    * Specifies if only overlapping edges should be considered
    * parallel. Default is false.
    */

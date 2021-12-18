@@ -28,8 +28,6 @@ class StylesheetCodec extends ObjectCodec {
   }
 
   /**
-   * Variable: allowEval
-   *
    * Static global switch that specifies if the use of eval is allowed for
    * evaluating text content. Default is true. Set this to false if stylesheets
    * may contain user input.
@@ -37,8 +35,6 @@ class StylesheetCodec extends ObjectCodec {
   static allowEval = true;
 
   /**
-   * Function: encode
-   *
    * Encodes a stylesheet. See <decode> for a description of the
    * format.
    */
@@ -73,8 +69,6 @@ class StylesheetCodec extends ObjectCodec {
   }
 
   /**
-   * Function: getStringValue
-   *
    * Returns the string for encoding the given value.
    */
   getStringValue(key, value) {
@@ -90,8 +84,6 @@ class StylesheetCodec extends ObjectCodec {
   }
 
   /**
-   * Function: decode
-   *
    * Reads a sequence of the following child nodes
    * and attributes:
    *

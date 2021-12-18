@@ -117,73 +117,53 @@ class SwimlaneModel {
   }
 
   /**
-   * Variable: maxRank
-   *
    * Stores the largest rank number allocated
    */
   maxRank: number;
 
   /**
-   * Variable: vertexMapper
-   *
    * Map from graph vertices to internal model nodes.
    */
   vertexMapper: Dictionary<Cell, Cell>;
 
   /**
-   * Variable: edgeMapper
-   *
    * Map from graph edges to internal model edges
    */
   edgeMapper: Dictionary<Cell, Cell>;
 
   /**
-   * Variable: ranks
-   *
    * Mapping from rank number to actual rank
    */
   ranks: [] = [];
 
   /**
-   * Variable: roots
-   *
    * Store of roots of this hierarchy model, these are real graph cells, not
    * internal cells
    */
   roots: CellArray;
 
   /**
-   * Variable: parent
-   *
    * The parent cell whose children are being laid out
    */
   parent: Cell;
 
   /**
-   * Variable: dfsCount
-   *
    * Count of the number of times the ancestor dfs has been used.
    */
   dfsCount: number = 0;
 
   /**
-   * Variable: SOURCESCANSTARTRANK
-   *
    * High value to start source layering scan rank value from.
    */
   SOURCESCANSTARTRANK: number = 100000000;
 
   /**
-   * Variable: tightenToSource
-   *
    * Whether or not to tighten the assigned ranks of vertices up towards
    * the source cells.
    */
   tightenToSource: boolean = false;
 
   /**
-   * Variable: ranksPerGroup
-   *
    * An array of the number of ranks within each swimlane
    */
   ranksPerGroup = null;

@@ -76,51 +76,37 @@ import GraphHandler from './GraphHandler';
  */
 class EdgeHandler {
   /**
-   * Variable: graph
-   *
    * Reference to the enclosing <mxGraph>.
    */
   graph: Graph;
 
   /**
-   * Variable: state
-   *
    * Reference to the <CellState> being modified.
    */
   state: CellState;
 
   /**
-   * Variable: marker
-   *
    * Holds the <mxTerminalMarker> which is used for highlighting terminals.
    */
   marker: CellMarker;
 
   /**
-   * Variable: constraintHandler
-   *
    * Holds the <mxConstraintHandler> used for drawing and highlighting
    * constraints.
    */
   constraintHandler: ConstraintHandler;
 
   /**
-   * Variable: error
-   *
    * Holds the current validation error while a connection is being changed.
    */
   error: string | null = null;
 
   /**
-   * Variable: shape
-   *
    * Holds the <mxShape> that represents the preview edge.
    */
   shape: Shape;
 
   /**
-   * Variable: bends
-   *
    * Holds the <mxShapes> that represent the points.
    */
   bends: Shape[] = [];
@@ -128,53 +114,39 @@ class EdgeHandler {
   virtualBends: Shape[] = [];
 
   /**
-   * Variable: labelShape
-   *
    * Holds the <mxShape> that represents the label position.
    */
   labelShape: Shape;
 
   /**
-   * Variable: cloneEnabled
-   *
    * Specifies if cloning by control-drag is enabled. Default is true.
    */
   cloneEnabled = true;
 
   /**
-   * Variable: addEnabled
-   *
    * Specifies if adding bends by shift-click is enabled. Default is false.
    * Note: This experimental feature is not recommended for production use.
    */
   addEnabled = false;
 
   /**
-   * Variable: removeEnabled
-   *
    * Specifies if removing bends by shift-click is enabled. Default is false.
    * Note: This experimental feature is not recommended for production use.
    */
   removeEnabled = false;
 
   /**
-   * Variable: dblClickRemoveEnabled
-   *
    * Specifies if removing bends by double click is enabled. Default is false.
    */
   dblClickRemoveEnabled = false;
 
   /**
-   * Variable: mergeRemoveEnabled
-   *
    * Specifies if removing bends by dropping them on other bends is enabled.
    * Default is false.
    */
   mergeRemoveEnabled = false;
 
   /**
-   * Variable: straightRemoveEnabled
-   *
    * Specifies if removing bends by creating straight segments should be enabled.
    * If enabled, this can be overridden by holding down the alt key while moving.
    * Default is false.
@@ -182,8 +154,6 @@ class EdgeHandler {
   straightRemoveEnabled = false;
 
   /**
-   * Variable: virtualBendsEnabled
-   *
    * Specifies if virtual bends should be added in the center of each
    * segments. These bends can then be used to add new waypoints.
    * Default is false.
@@ -191,24 +161,18 @@ class EdgeHandler {
   virtualBendsEnabled = false;
 
   /**
-   * Variable: virtualBendOpacity
-   *
    * Opacity to be used for virtual bends (see <virtualBendsEnabled>).
    * Default is 20.
    */
   virtualBendOpacity = 20;
 
   /**
-   * Variable: parentHighlightEnabled
-   *
    * Specifies if the parent should be highlighted if a child cell is selected.
    * Default is false.
    */
   parentHighlightEnabled = false;
 
   /**
-   * Variable: preferHtml
-   *
    * Specifies if bends should be added to the graph container. This is updated
    * in <init> based on whether the edge or one of its terminals has an HTML
    * label in the container.
@@ -216,24 +180,18 @@ class EdgeHandler {
   preferHtml = false;
 
   /**
-   * Variable: allowHandleBoundsCheck
-   *
    * Specifies if the bounds of handles should be used for hit-detection in IE
    * Default is true.
    */
   allowHandleBoundsCheck = true;
 
   /**
-   * Variable: snapToTerminals
-   *
    * Specifies if waypoints should snap to the routing centers of terminals.
    * Default is false.
    */
   snapToTerminals = false;
 
   /**
-   * Variable: handleImage
-   *
    * Optional <mxImage> to be used as handles. Default is null.
    */
   handleImage: ImageBox | null = null;
@@ -241,16 +199,12 @@ class EdgeHandler {
   labelHandleImage: ImageBox | null = null;
 
   /**
-   * Variable: tolerance
-   *
    * Optional tolerance for hit-detection in <getHandleForEvent>. Default is 0.
    */
   // tolerance: number;
   tolerance = 0;
 
   /**
-   * Variable: outlineConnect
-   *
    * Specifies if connections to the outline of a highlighted target should be
    * enabled. This will allow to place the connection point along the outline of
    * the highlighted target. Default is false.
@@ -259,8 +213,6 @@ class EdgeHandler {
   outlineConnect = false;
 
   /**
-   * Variable: manageLabelHandle
-   *
    * Specifies if the label handle should be moved if it intersects with another
    * handle. Uses <checkLabelHandle> for checking and moving. Default is false.
    */

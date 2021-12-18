@@ -136,95 +136,69 @@ class Shape {
   glass = false;
 
   /**
-   * Variable: dialect
-   *
    * Holds the dialect in which the shape is to be painted.
    * This can be one of the DIALECT constants in <mxConstants>.
    */
   dialect: string | null = null;
 
   /**
-   * Variable: scale
-   *
    * Holds the scale in which the shape is being painted.
    */
   scale = 1;
 
   /**
-   * Variable: antiAlias
-   *
    * Rendering hint for configuring the canvas.
    */
   antiAlias = true;
 
   /**
-   * Variable: minSvgStrokeWidth
-   *
    * Minimum stroke width for SVG output.
    */
   minSvgStrokeWidth = 1;
 
   /**
-   * Variable: bounds
-   *
    * Holds the <mxRectangle> that specifies the bounds of this shape.
    */
   bounds: Rectangle | null = null;
 
   /**
-   * Variable: points
-   *
    * Holds the array of <Point> that specify the points of this shape.
    */
   points: (Point | null)[] = [];
 
   /**
-   * Variable: node
-   *
    * Holds the outermost DOM node that represents this shape.
    */
   node: SVGGElement;
 
   /**
-   * Variable: state
-   *
    * Optional reference to the corresponding <CellState>.
    */
   state: CellState | null = null;
 
   /**
-   * Variable: style
-   *
    * Optional reference to the style of the corresponding <CellState>.
    */
   style: CellStateStyles | null = null;
 
   /**
-   * Variable: boundingBox
-   *
    * Contains the bounding box of the shape, that is, the smallest rectangle
    * that includes all pixels of the shape.
    */
   boundingBox: Rectangle | null = null;
 
   /**
-   * Variable: stencil
-   *
    * Holds the <mxStencil> that defines the shape.
    */
   stencil: StencilShape | null = null;
 
   /**
-   * Variable: svgStrokeTolerance
-   *
    * Event-tolerance for SVG strokes (in px). Default is 8. This is only passed
    * to the canvas in <createSvgCanvas> if <pointerEvents> is true.
    */
   svgStrokeTolerance = 8;
 
   /**
-   * Variable: pointerEvents
-   *
    * Specifies if pointer events should be handled. Default is true.
    */
   pointerEvents = true;
@@ -232,31 +206,23 @@ class Shape {
   originalPointerEvents: boolean | null = null;
 
   /**
-   * Variable: svgPointerEvents
-   *
    * Specifies if pointer events should be handled. Default is true.
    */
   svgPointerEvents = 'all';
 
   /**
-   * Variable: shapePointerEvents
-   *
    * Specifies if pointer events outside of shape should be handled. Default
    * is false.
    */
   shapePointerEvents = false;
 
   /**
-   * Variable: stencilPointerEvents
-   *
    * Specifies if pointer events outside of stencils should be handled. Default
    * is false. Set this to true for backwards compatibility with the 1.x branch.
    */
   stencilPointerEvents = false;
 
   /**
-   * Variable: outline
-   *
    * Specifies if the shape should be drawn as an outline. This disables all
    * fill colors and can be used to disable other drawing states that should
    * not be painted for outlines. Default is false. This should be set before
@@ -265,15 +231,11 @@ class Shape {
   outline = false;
 
   /**
-   * Variable: visible
-   *
    * Specifies if the shape is visible. Default is true.
    */
   visible = true;
 
   /**
-   * Variable: useSvgBoundingBox
-   *
    * Allows to use the SVG bounding box in SVG. Default is false for performance
    * reasons.
    */

@@ -114,8 +114,6 @@ class InternalEvent {
   }
 
   /**
-   * Function: addGestureListeners
-   *
    * Adds the given listeners for touch, mouse and/or pointer events. If
    * <Client.IS_POINTER> is true then pointer events will be registered,
    * else the respective mouse events will be registered. If <Client.IS_POINTER>
@@ -168,8 +166,6 @@ class InternalEvent {
   }
 
   /**
-   * Function: removeGestureListeners
-   *
    * Removes the given listeners from mousedown, mousemove, mouseup and the
    * respective touch events if <Client.IS_TOUCH> is true.
    */
@@ -219,8 +215,6 @@ class InternalEvent {
   }
 
   /**
-   * Function: redirectMouseEvents
-   *
    * Redirects the mouse events from the given DOM node to the graph dispatch
    * loop using the event and given state as event arguments. State can
    * either be an instance of <CellState> or a function that returns an
@@ -1003,8 +997,6 @@ class InternalEvent {
   static RESET = 'reset';
 
   /**
-   * Variable: PINCH_THRESHOLD
-   *
    * Threshold for pinch gestures to fire a mouse wheel event.
    * Default value is 10.
    */

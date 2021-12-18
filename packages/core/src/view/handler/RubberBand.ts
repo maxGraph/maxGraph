@@ -88,36 +88,26 @@ class RubberBand implements GraphPlugin {
   defaultOpacity: number = 20;
 
   /**
-   * Variable: enabled
-   *
    * Specifies if events are handled. Default is true.
    */
   enabled = true;
 
   /**
-   * Variable: div
-   *
    * Holds the DIV element which is currently visible.
    */
   div: HTMLElement | null = null;
 
   /**
-   * Variable: sharedDiv
-   *
    * Holds the DIV element which is used to display the rubberband.
    */
   sharedDiv: HTMLElement | null = null;
 
   /**
-   * Variable: currentX
-   *
    * Holds the value of the x argument in the last call to <update>.
    */
   currentX = 0;
 
   /**
-   * Variable: currentY
-   *
    * Holds the value of the y argument in the last call to <update>.
    */
   currentY = 0;
@@ -135,8 +125,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: setEnabled
-   *
    * Enables or disables event handling. This implementation updates
    * <enabled>.
    */
@@ -145,8 +133,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: isForceRubberbandEvent
-   *
    * Returns true if the given <mxMouseEvent> should start rubberband selection.
    * This implementation returns true if the alt key is pressed.
    */
@@ -155,8 +141,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: mouseDown
-   *
    * Handles the event by initiating a rubberband selection. By consuming the
    * event all subsequent events of the gesture are redirected to this
    * handler.
@@ -222,8 +206,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: mouseMove
-   *
    * Handles the event by updating therubberband selection.
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
@@ -274,8 +256,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: isActive
-   *
    * Returns true if this handler is active.
    */
   isActive(sender?: EventSource, me?: InternalMouseEvent) {
@@ -283,8 +263,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: mouseUp
-   *
    * Handles the event by selecting the region of the rubberband using
    * <mxGraph.selectRegion>.
    */
@@ -299,8 +277,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: execute
-   *
    * Resets the state of this handler and selects the current region
    * for the given event.
    */
@@ -310,8 +286,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: reset
-   *
    * Resets the state of the rubberband selection.
    */
   reset() {
@@ -346,8 +320,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: update
-   *
    * Sets <currentX> and <currentY> and calls <repaint>.
    */
   update(x: number, y: number) {
@@ -358,8 +330,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: repaint
-   *
    * Computes the bounding box and updates the style of the <div>.
    */
   repaint() {
@@ -383,8 +353,6 @@ class RubberBand implements GraphPlugin {
   }
 
   /**
-   * Function: destroy
-   *
    * Destroys the handler and all its resources and DOM nodes. This does
    * normally not need to be called, it is called automatically when the
    * window unloads.

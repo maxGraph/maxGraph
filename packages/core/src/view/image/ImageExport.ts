@@ -62,8 +62,6 @@ class ImageExport {
   }
 
   /**
-   * Function: visitStatesRecursive
-   *
    * Visits the given state and all its descendants to the given canvas recursively.
    */
   visitStatesRecursive(state: CellState, canvas: AbstractCanvas2D, visitor: Function) {
@@ -109,8 +107,6 @@ class ImageExport {
   }
 
   /**
-   * Function: drawShape
-   *
    * Draws the shape of the given state.
    */
   drawShape(state: CellState, canvas: AbstractCanvas2D): void {
@@ -141,8 +137,6 @@ class ImageExport {
   }
 
   /**
-   * Function: drawOverlays
-   *
    * Draws the overlays for the given state. This is called if <includeOverlays>
    * is true.
    */

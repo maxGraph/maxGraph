@@ -51,22 +51,16 @@ class EventObject {
   }
 
   /**
-   * Variable: name
-   *
    * Holds the name.
    */
   name: string;
 
   /**
-   * Variable: properties
-   *
    * Holds the properties as an associative array.
    */
   properties: EventProperties;
 
   /**
-   * Variable: consumed
-   *
    * Holds the consumed state. Default is false.
    */
   consumed: boolean = false;

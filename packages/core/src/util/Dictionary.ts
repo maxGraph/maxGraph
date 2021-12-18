@@ -31,15 +31,11 @@ class Dictionary<T, U> {
   }
 
   /**
-   * Function: map
-   *
    * Stores the (key, value) pairs in this dictionary.
    */
   map: Record<MapKey, U> = {};
 
   /**
-   * Function: clear
-   *
    * Clears the dictionary.
    */
   clear() {
@@ -47,8 +43,6 @@ class Dictionary<T, U> {
   }
 
   /**
-   * Function: get
-   *
    * Returns the value for the given key.
    */
   get(key: T) {
@@ -57,8 +51,6 @@ class Dictionary<T, U> {
   }
 
   /**
-   * Function: put
-   *
    * Stores the value under the given key and returns the previous
    * value for that key.
    */
@@ -70,8 +62,6 @@ class Dictionary<T, U> {
   }
 
   /**
-   * Function: remove
-   *
    * Removes the value for the given key and returns the value that
    * has been removed.
    */
@@ -83,8 +73,6 @@ class Dictionary<T, U> {
   }
 
   /**
-   * Function: getKeys
-   *
    * Returns all keys as an array.
    */
   getKeys() {
@@ -96,8 +84,6 @@ class Dictionary<T, U> {
   }
 
   /**
-   * Function: getValues
-   *
    * Returns all values as an array.
    */
   getValues() {
@@ -109,8 +95,6 @@ class Dictionary<T, U> {
   }
 
   /**
-   * Function: visit
-   *
    * Visits all entries in the dictionary using the given function with the
    * following signature: (key, value)=> where key is a string and
    * value is an object.
