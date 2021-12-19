@@ -463,9 +463,9 @@ export const ABSOLUTE_LINE_HEIGHT = false;
  * Defines the default style for all fonts. Default is 0. This can be set
  * to any combination of font styles as follows.
  *
- * (code)
+ * ```javascript
  * mxConstants.DEFAULT_FONTSTYLE = mxConstants.FONT_BOLD | mxConstants.FONT_ITALIC;
- * (end)
+ * ```
  */
 export const DEFAULT_FONTSTYLE = 0;
 

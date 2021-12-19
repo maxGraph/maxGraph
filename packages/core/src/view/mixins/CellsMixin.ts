@@ -1846,9 +1846,9 @@ const CellsMixin: PartialType = {
    *
    * Use the following code to move all cells in the graph.
    *
-   * (code)
+   * ```javascript
    * graph.moveCells(graph.getChildCells(null, true, true), 10, 10);
-   * (end)
+   * ```
    *
    * Parameters:
    *

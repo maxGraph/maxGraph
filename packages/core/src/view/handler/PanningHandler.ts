@@ -303,7 +303,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
    * context menus and require immediate selection of the cell on mouseDown in
    * Safari and/or on the Mac, then use the following code:
    *
-   * (code)
+   * ```javascript
    * consumePanningTrigger(me)
    * {
    *   if (me.evt.preventDefault)
@@ -320,7 +320,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
    *     me.consumed = true;
    *   }
    * };
-   * (end)
+   * ```
    */
   consumePanningTrigger(me: InternalMouseEvent) {
     me.consume();

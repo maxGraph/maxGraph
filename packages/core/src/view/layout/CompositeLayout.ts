@@ -15,12 +15,12 @@ import GraphLayout from './GraphLayout';
  * the code assumes that it is part of <layouts>.
  *
  * Example:
- * (code)
+ * ```javascript
  * let first = new mxFastOrganicLayout(graph);
  * let second = new mxParallelEdgeLayout(graph);
  * let layout = new mxCompositeLayout(graph, [first, second], first);
  * layout.execute(graph.getDefaultParent());
- * (end)
+ * ```
  *
  * Constructor: mxCompositeLayout
  *

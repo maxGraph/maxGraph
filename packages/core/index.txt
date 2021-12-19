@@ -147,19 +147,19 @@ Images:
   For faster image rendering during application runtime, images can be
   prefetched using the following code:
   
-  (code)
+  ```javascript
   let image = new Image();
   image.src = url_to_image;
-  (end)
+  ```
 
 Deployment:
 
   The client is added to the page using the following script tag inside the
   head of a document:
 
-  (code)
+  ```javascript
   <script type="text/javascript" src="js/Client.js"></script>
-  (end)
+  ```
 
   The deployment version of the Client.js file contains all required code
   in a single file. For deployment, the complete javascript/src directory is
@@ -179,9 +179,9 @@ Compression:
   When using Apache2 with mod_deflate, you can use the following directive
   in src/js/.htaccess to speedup the loading of the JavaScript sources:
   
-  (code)
+  ```javascript
   SetOutputFilter DEFLATE
-  (end)
+  ```
 
 Classes:
   
@@ -216,44 +216,44 @@ Constructor:
   that it may have using the call function on the mxGraph function object,
   passing along explitely each argument:
 
-  (code)
+  ```javascript
   function MyGraph(container)
   {
     mxGraph.call(this, container);
   }
-  (end)
+  ```
   
   The prototype of MyGraph inherits from mxGraph as follows. As usual, the
   constructor is redefined after extending the superclass:
 
-  (code)
+  ```javascript
   MyGraph.prototype = new mxGraph();
   constructor = MyGraph;
-  (end)
+  ```
   
   You may want to define the codec associated for the class after the above
   code. This code will be executed at class loading time and makes sure the
   same codec is used to encode instances of mxGraph and MyGraph.
 
-  (code)
+  ```javascript
   let codec = CodecRegistry.getCodec(mxGraph);
   codec.template = new MyGraph();
   CodecRegistry.register(codec);
-  (end)
+  ```
   
 Functions:
 
   In the prototype for MyGraph, functions of mxGraph can then be extended as
   follows.
   
-  (code)
+  ```javascript
   isCellSelectable(cell) {
     let selectable = isSelectable.apply(this, arguments);
 
     let geo = this.model.getGeometry(cell);
     return selectable && (geo == null || !geo.relative);
   }
-  (end)
+  ```
   
   The supercall in the first line is optional. It is done using the apply
   function on the isSelectable function object of the mxGraph prototype, using
@@ -261,14 +261,14 @@ Functions:
   superclass function are only possible if the function is not replaced in the
   superclass as follows, which is another way of �subclassing� in JavaScript.
 
-  (code)
+  ```javascript
   isCellSelectable(cell) {
     let geo = this.model.getGeometry(cell);
     return selectable &&
         (geo == null ||
         !geo.relative);
   }
-  (end)
+  ```
 
   The above scheme is useful if a function definition needs to be replaced
   completely.
@@ -277,37 +277,37 @@ Functions:
   is used. The example below adds a new function to return the XML
   representation of the graph model:
 
-  (code)
+  ```javascript
   getXml() {
     let enc = new Codec();
     return enc.encode(this.getModel());
   }
-  (end)
+  ```
   
 Variables:
 
   Likewise, a new field is declared and defined as follows.
 
-  (code)
+  ```javascript
   myField = 'Hello, World!';
-  (end)
+  ```
   
   Note that the value assigned to myField is created only once, that is, all
   instances of MyGraph share the same value. If you require instance-specific
   values, then the field must be defined in the constructor instead.
 
-  (code)
+  ```javascript
   function MyGraph(container)
   {
     mxGraph.call(this, container);
     
     this.myField = new Array();
   }
-  (end)
+  ```
 
   Finally, a new instance of MyGraph is created using the following code, where
   container is a DOM node that acts as a container for the graph view:
 
-  (code)
+  ```javascript
   let graph = new MyGraph(container);
-  (end)
+  ```

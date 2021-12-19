@@ -15,7 +15,7 @@ import type { UndoableChange } from '../../types';
  * Implements a composite undoable edit. Here is an example for a custom change
  * which gets executed via the model:
  *
- * (code)
+ * ```javascript
  * function CustomChange(model, name)
  * {
  *   this.model = model;
@@ -32,7 +32,7 @@ import type { UndoableChange } from '../../types';
  *
  * let name = prompt('Enter name');
  * graph.model.execute(new CustomChange(graph.model, name));
- * (end)
+ * ```
  *
  * Event: mxEvent.EXECUTED
  *

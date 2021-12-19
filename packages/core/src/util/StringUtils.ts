@@ -1,4 +1,4 @@
-import { NODETYPE_TEXT } from './Constants';
+import { NODETYPE } from './constants';
 import { getTextContent } from './DomUtils';
 
 /**
@@ -116,7 +116,7 @@ export const replaceTrailingNewlines = (str: string, pattern: string) => {
 export const removeWhitespace = (node: HTMLElement, before: boolean) => {
   let tmp = before ? node.previousSibling : node.nextSibling;
 
-  while (tmp != null && tmp.nodeType === NODETYPE_TEXT) {
+  while (tmp != null && tmp.nodeType === NODETYPE.TEXT) {
     const next = before ? tmp.previousSibling : tmp.nextSibling;
     const text = getTextContent(tmp);
 

@@ -19,7 +19,7 @@ import Shape from '../geometry/Shape';
  * Base class for all mouse events in mxGraph. A listener for this event should
  * implement the following methods:
  *
- * (code)
+ * ```javascript
  * graph.addMouseListener(
  * {
  *   mouseDown: (sender, evt)=>
@@ -35,7 +35,7 @@ import Shape from '../geometry/Shape';
  *     MaxLog.debug('mouseUp');
  *   }
  * });
- * (end)
+ * ```
  *
  * Constructor: mxMouseEvent
  *

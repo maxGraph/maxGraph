@@ -524,9 +524,9 @@ class StyleMap implements Record<string, any> {
    * Value is "endArrow".
    *
    * Example:
-   * (code)
+   * ```javascript
    * style[mxConstants.STYLE_ENDARROW] = mxConstants.ARROW_CLASSIC;
-   * (end)
+   * ```
    */
   endArrow: any;
 

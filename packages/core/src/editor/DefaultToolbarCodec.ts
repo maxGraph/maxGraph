@@ -13,6 +13,7 @@ import { getClientX, getClientY } from '../util/eventUtils';
 import { NODETYPE } from '../util/constants';
 import { convertPoint } from '../util/utils';
 import Resources from 'src/util/Resources';
+import InternalEvent from 'src/view/event/InternalEvent';
 
 /**
  * Custom codec for configuring <DefaultToolbar>s. This class is created
@@ -67,7 +68,7 @@ class DefaultToolbarCodec extends ObjectCodec {
    * inserting the cloned template into the graph. Here is an example of such
    * a node:
    *
-   * (code)
+   * ```javascript
    * <add as="Swimlane" template="swimlane" icon="images/swimlane.gif"><![CDATA[
    *   function (editor, cell, evt, targetCell)
    *   {
@@ -77,7 +78,7 @@ class DefaultToolbarCodec extends ObjectCodec {
    *     return editor.addVertex(targetCell, cell, pt.x, pt.y);
    *   }
    * ]]></add>
-   * (end)
+   * ```
    *
    * In the above function, editor is the enclosing <Editor> instance, cell
    * is the clone of the template, evt is the mouse event that represents the
@@ -89,7 +90,7 @@ class DefaultToolbarCodec extends ObjectCodec {
    * example below, the default edge style is set when this specific
    * connect-mode is activated:
    *
-   * (code)
+   * ```javascript
    * <add as="connect" mode="connect"><![CDATA[
    *   function (editor)
    *   {
@@ -99,7 +100,7 @@ class DefaultToolbarCodec extends ObjectCodec {
    *     }
    *   }
    * ]]></add>
-   * (end)
+   * ```
    *
    * Both functions require <DefaultToolbarCodec.allowEval> to be set to true.
    *
@@ -113,14 +114,14 @@ class DefaultToolbarCodec extends ObjectCodec {
    *
    * To add items to the toolbar:
    *
-   * (code)
+   * ```javascript
    * <DefaultToolbar as="toolbar">
    *   <add as="save" action="save" icon="images/save.gif"/>
    *   <br/><hr/>
    *   <add as="select" mode="select" icon="images/select.gif"/>
    *   <add as="connect" mode="connect" icon="images/connect.gif"/>
    * </DefaultToolbar>
-   * (end)
+   * ```
    */
   decode(dec: any, node: Element, into: Element) {
     if (into != null) {

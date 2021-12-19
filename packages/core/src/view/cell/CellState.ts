@@ -25,9 +25,9 @@ import CellOverlay from './CellOverlay';
  * The size for oversize labels can be retrieved using the boundingBox property
  * of the <text> field as shown below.
  *
- * (code)
+ * ```javascript
  * let bbox = (state.text != null) ? state.text.boundingBox : null;
- * (end)
+ * ```
  *
  * Constructor: CellState
  *

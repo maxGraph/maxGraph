@@ -44,13 +44,13 @@ class DefaultKeyHandlerCodec extends ObjectCodec {
    *
    * Example:
    *
-   * (code)
+   * ```javascript
    * <DefaultKeyHandler as="keyHandler">
    *   <add as="88" control="true" action="cut"/>
    *   <add as="67" control="true" action="copy"/>
    *   <add as="86" control="true" action="paste"/>
    * </DefaultKeyHandler>
-   * (end)
+   * ```
    *
    * The keycodes are for the x, c and v keys.
    *

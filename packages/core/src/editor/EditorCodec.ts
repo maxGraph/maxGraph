@@ -78,7 +78,7 @@ class EditorCodec extends ObjectCodec {
    *
    * Example:
    *
-   * (code)
+   * ```javascript
    * <ui>
    *   <stylesheet name="css/process.css"/>
    *   <resource basename="resources/app"/>
@@ -87,7 +87,7 @@ class EditorCodec extends ObjectCodec {
    *   <add as="status" element="status"/>
    *   <add as="toolbar" x="10" y="20" width="54"/>
    * </ui>
-   * (end)
+   * ```
    */
   afterDecode(dec, node, obj) {
     // Assigns the specified templates for edges

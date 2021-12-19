@@ -25,7 +25,7 @@ import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isSh
  * The following example creates a key handler that listens to the delete key
  * (46) and deletes the selection cells if the graph is enabled.
  *
- * (code)
+ * ```javascript
  * let keyHandler = new mxKeyHandler(graph);
  * keyHandler.bindKey(46, (evt)=>
  * {
@@ -34,7 +34,7 @@ import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isSh
  *     graph.removeCells();
  *   }
  * });
- * (end)
+ * ```
  *
  * Keycodes:
  *
@@ -45,7 +45,7 @@ import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isSh
  * To support the Command key and the Control key on the Mac, the following
  * code can be used.
  *
- * (code)
+ * ```javascript
  * keyHandler.getFunction = (evt)=>
  * {
  *   if (evt != null)
@@ -55,7 +55,7 @@ import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isSh
  *
  *   return null;
  * };
- * (end)
+ * ```
  *
  * Constructor: mxKeyHandler
  *

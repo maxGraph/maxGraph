@@ -114,14 +114,14 @@ class GraphLayout {
    *
    * Example:
    *
-   * (code)
+   * ```javascript
    * MaxLog.show();
    * var cell = graph.getSelectionCell();
    * graph.traverse(cell, false, function(vertex, edge)
    * {
    *   MaxLog.debug(graph.getLabel(vertex));
    * });
-   * (end)
+   * ```
    *
    * @param vertex {@link mxCell} that represents the vertex where the traversal starts.
    * @param directed Optional boolean indicating if edges should only be traversed

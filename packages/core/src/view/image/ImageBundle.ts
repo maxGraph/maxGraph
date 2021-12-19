@@ -20,7 +20,7 @@ type ImageMap = {
  *
  * To add a new image bundle to an existing graph, the following code is used:
  *
- * (code)
+ * ```javascript
  * let bundle = new mxImageBundle(alt);
  * bundle.putImage('myImage', 'data:image/gif,R0lGODlhEAAQAMIGAAAAAICAAICAgP' +
  *   '//AOzp2O3r2////////yH+FUNyZWF0ZWQgd2l0aCBUaGUgR0lNUAAh+QQBCgAHACwAAAAA' +
@@ -32,7 +32,7 @@ type ImageMap = {
  *   '<stop offset="90%" stop-color="#fcc"/></linearGradient>' +
  *   '<rect fill="url(#gradient)" width="100%" height="100%"/></svg>'), fallback);
  * graph.addImageBundle(bundle);
- * (end);
+ * ```;
  *
  * Alt is an optional boolean (default is false) that specifies if the value
  * or the fallback should be returned in <getImage>.

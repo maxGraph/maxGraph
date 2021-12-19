@@ -109,7 +109,7 @@ class StylesheetCodec extends ObjectCodec {
    *
    * Example:
    *
-   * (code)
+   * ```javascript
    * <mxStylesheet as="stylesheet">
    *   <add as="text">
    *     <add as="fontSize" value="12"/>
@@ -118,7 +118,7 @@ class StylesheetCodec extends ObjectCodec {
    *     <add as="shape" value="rectangle"/>
    *   </add>
    * </mxStylesheet>
-   * (end)
+   * ```
    */
   decode(dec, node, into) {
     const obj = into || new this.template.constructor();

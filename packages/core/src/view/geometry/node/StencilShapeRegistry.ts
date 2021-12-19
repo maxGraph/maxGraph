@@ -6,7 +6,7 @@
  *
  * Code to add stencils.
  *
- * (code)
+ * ```javascript
  * let req = mxUtils.load('test/stencils.xml');
  * let root = req.getDocumentElement();
  * let shape = root.firstChild;
@@ -20,7 +20,7 @@
  *
  *   shape = shape.nextSibling;
  * }
- * (end)
+ * ```
  */
 
 import StencilShape from './StencilShape';

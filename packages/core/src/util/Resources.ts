@@ -23,11 +23,11 @@ import { get, load } from './MaxXmlRequest';
  * <add> or via a resource tag in the UI section of the
  * editor configuration file, eg:
  *
- * (code)
+ * ```javascript
  * <Editor>
  *   <ui>
  *     <resource basename="examples/resources/mxWorkflow"/>
- * (end)
+ * ```
  *
  * The above element will load examples/resources/mxWorkflow.properties as well
  * as the language specific file for the current language, if it exists.
@@ -94,11 +94,10 @@ const Resources = {
    *
    * lan - The current language.
    */
-  isLanguageSupported: (lan) => {
+  isLanguageSupported: (lan: string): boolean => {
     if (Client.languages != null) {
       return Client.languages.indexOf(lan) >= 0;
     }
-
     return true;
   },
 
@@ -112,7 +111,7 @@ const Resources = {
    * basename - The basename for which the file should be loaded.
    * lan - The current language.
    */
-  getDefaultBundle: (basename, lan) => {
+  getDefaultBundle: (basename: string, lan: string): string | null => {
     if (
       Resources.loadDefaultBundle ||
       !Resources.isLanguageSupported(lan)
@@ -140,7 +139,7 @@ const Resources = {
    * basename - The basename for which the file should be loaded.
    * lan - The language for which the file should be loaded.
    */
-  getSpecialBundle: (basename, lan) => {
+  getSpecialBundle: (basename: string, lan: string): string | null => {
     if (Client.languages == null || !this.isLanguageSupported(lan)) {
       const dash = lan.indexOf('-');
 
@@ -171,9 +170,9 @@ const Resources = {
    * At application startup, additional resources may be
    * added using the following code:
    *
-   * (code)
+   * ```javascript
    * mxResources.add('resources/editor');
-   * (end)
+   * ```
    *
    * Parameters:
    *
@@ -181,7 +180,7 @@ const Resources = {
    * lan - The language for which the file should be loaded.
    * callback - Optional callback for asynchronous loading.
    */
-  add: (basename: string, lan: string, callback: (Function)) => {
+  add: (basename: string, lan: string, callback: Function): void => {
     lan =
       lan != null
         ? lan
@@ -258,7 +257,7 @@ const Resources = {
    * Parses the key, value pairs in the specified
    * text and stores them as local resources.
    */
-  parse: (text: string) => {
+  parse: (text: string): void => {
     if (text != null) {
       const lines = text.split('\n');
 
@@ -293,15 +292,15 @@ const Resources = {
    *
    * Example:
    * To read the value for 'welomeMessage', use the following:
-   * (code)
+   * ```javascript
    * let result = mxResources.get('welcomeMessage') || '';
-   * (end)
+   * ```
    *
    * This would require an entry of the following form in
    * one of the English language resource files:
-   * (code)
+   * ```javascript
    * welcomeMessage=Welcome to mxGraph!
-   * (end)
+   * ```
    *
    * The part behind the || is the string value to be used if the given
    * resource is not available.
@@ -313,7 +312,7 @@ const Resources = {
    * to be replaced with in the resulting string.
    * defaultValue - Optional string that specifies the default return value.
    */
-  get: (key: string, params: any[]|null=null, defaultValue?: string) => {
+  get: (key: string, params: any[]|null=null, defaultValue?: string): string | null => {
     let value = Resources.resources[key];
 
     // Applies the default value if no resource was found
@@ -338,7 +337,7 @@ const Resources = {
    * params - Array of the values for the placeholders of the form {1}...{n}
    * to be replaced with in the resulting string.
    */
-  replacePlaceholders: (value, params) => {
+  replacePlaceholders: (value: string, params: string[]): string => {
     const result = [];
     let index = null;
 
@@ -373,7 +372,7 @@ const Resources = {
    *
    * callback - Callback function for asynchronous loading.
    */
-  loadResources: (callback) => {
+  loadResources: (callback: Function): void => {
     Resources.add(`${Client.basePath}/resources/editor`, null, () => {
       Resources.add(`${Client.basePath}/resources/graph`, null, callback);
     });

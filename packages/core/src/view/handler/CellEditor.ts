@@ -58,7 +58,7 @@ import TooltipHandler from './TooltipHandler';
  * To customize the location of the textbox in the graph, override
  * <getEditorBounds> as follows:
  *
- * (code)
+ * ```javascript
  * graph.cellEditor.getEditorBounds = (state)=>
  * {
  *   let result = getEditorBounds.apply(this, arguments);
@@ -71,7 +71,7 @@ import TooltipHandler from './TooltipHandler';
  *
  *   return result;
  * };
- * (end)
+ * ```
  *
  * Note that this hook is only called if <autoSize> is false. If <autoSize> is true,
  * then <mxShape.getLabelBounds> is used to compute the current bounds of the textbox.
@@ -84,7 +84,7 @@ import TooltipHandler from './TooltipHandler';
  *
  * To only allow numeric input in the in-place editor, use the following code.
  *
- * (code)
+ * ```javascript
  * let text = graph.cellEditor.textarea;
  *
  * mxEvent.addListener(text, 'keydown', function (evt)
@@ -95,7 +95,7 @@ import TooltipHandler from './TooltipHandler';
  *     mxEvent.consume(evt);
  *   }
  * });
- * (end)
+ * ```
  *
  * Placeholder:
  *
@@ -111,7 +111,7 @@ import TooltipHandler from './TooltipHandler';
  * should have focus or a focusable parent should be used to add the
  * key press handler as follows.
  *
- * (code)
+ * ```javascript
  * mxEvent.addListener(graph.container, 'keypress', mxUtils.bind(this, (evt)=>
  * {
  *   if (!graph.isEditing() && !graph.isSelectionEmpty() && evt.which !== 0 &&
@@ -125,13 +125,13 @@ import TooltipHandler from './TooltipHandler';
  *     }
  *   }
  * }));
- * (end)
+ * ```
  *
  * To allow focus for a DIV, and hence to receive key press events, some browsers
  * require it to have a valid tabindex attribute. In this case the following
  * code may be used to keep the container focused.
  *
- * (code)
+ * ```javascript
  * let graphFireMouseEvent = graph.fireMouseEvent;
  * graph.fireMouseEvent = (evtName, me, sender)=>
  * {
@@ -142,7 +142,7 @@ import TooltipHandler from './TooltipHandler';
  *
  *   graphFireMouseEvent.apply(this, arguments);
  * };
- * (end)
+ * ```
  *
  * Constructor: mxCellEditor
  *

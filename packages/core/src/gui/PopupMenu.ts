@@ -19,7 +19,7 @@ import { PopupMenuItem } from '../types';
  * Basic popup menu. To add a vertical scrollbar to a given submenu, the
  * following code can be used.
  *
- * (code)
+ * ```javascript
  * let mxPopupMenuShowMenu = showMenu;
  * showMenu = ()=>
  * {
@@ -29,7 +29,7 @@ import { PopupMenuItem } from '../types';
  *   this.div.style.overflowX = 'hidden';
  *   this.div.style.maxHeight = '160px';
  * };
- * (end)
+ * ```
  *
  * Constructor: mxPopupMenu
  *
@@ -424,12 +424,12 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
    *
    * Example:
    *
-   * (code)
+   * ```javascript
    * graph.panningHandler.popup(x, y, cell, evt)
    * {
    *   mxUtils.alert('Hello, World!');
    * }
-   * (end)
+   * ```
    */
   popup(x: number, y: number, cell: Cell | null, evt: MouseEvent) {
     if (this.div != null && this.tbody != null && this.factoryMethod != null) {
@@ -491,7 +491,7 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
    *
    * Parameters:
    *
-   * parent - An item returned by <addItem>.
+   * @param parent An item returned by <addItem>.
    */
   hideSubmenu(parent: PopupMenuItem) {
     if (parent.activeRow != null) {

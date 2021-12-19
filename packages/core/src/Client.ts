@@ -26,12 +26,12 @@ class Client {
    * Optional global config variable to specify the extension of resource files.
    * Default is true. NOTE: This is a global variable, not a variable of Client.
    *
-   * (code)
+   * ```javascript
    * <script type="text/javascript">
    *     let mxResourceExtension = '.txt';
    * </script>
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * (end)
+   * ```
    */
   static mxResourceExtension = '.txt';
 
@@ -49,12 +49,12 @@ class Client {
    * not a variable of Client. If this is false, you can use <Client.loadResources>
    * with its callback to load the default bundles asynchronously.
    *
-   * (code)
+   * ```javascript
    * <script type="text/javascript">
    *     let mxLoadResources = false;
    * </script>
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * (end)
+   * ```
    */
   static mxLoadResources = true;
 
@@ -65,12 +65,12 @@ class Client {
    * development mode. Default is undefined. NOTE: This is a global variable,
    * not a variable of Client.
    *
-   * (code)
+   * ```javascript
    * <script type="text/javascript">
    *     let mxForceIncludes = false;
    * </script>
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * (end)
+   * ```
    */
   static mxForceIncludes = false;
 
@@ -83,12 +83,12 @@ class Client {
    * the library is initialized. Default is true. NOTE: This is a global variable,
    * not a variable of Client.
    *
-   * (code)
+   * ```javascript
    * <script type="text/javascript">
    *     let mxLoadStylesheets = false;
    * </script>
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * (end)
+   * ```
    */
   static mxLoadStylesheets = true;
 
@@ -101,12 +101,12 @@ class Client {
    * Set mxBasePath prior to loading the Client library as follows to override
    * this setting:
    *
-   * (code)
+   * ```javascript
    * <script type="text/javascript">
    *     mxBasePath = '/path/to/core/directory';
    * </script>
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * (end)
+   * ```
    *
    * When using a relative path, the path is relative to the URL of the page that
    * contains the assignment. Trailing slashes are automatically removed.
@@ -130,12 +130,12 @@ class Client {
    * <Client.basePath> + '/images'. Set mxImageBasePath prior to loading the
    * Client library as follows to override this setting:
    *
-   * (code)
+   * ```javascript
    * <script type="text/javascript">
    *     mxImageBasePath = '/path/to/image/directory';
    * </script>
    * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * (end)
+   * ```
    *
    * When using a relative path, the path is relative to the URL of the page that
    * contains the assignment. Trailing slashes are automatically removed.
@@ -163,12 +163,12 @@ class Client {
    * Set mxLanguage prior to loading the Client library as follows to override
    * this setting:
    *
-   * (code)
+   * ```javascript
    * <script type="text/javascript">
    *     mxLanguage = 'en';
    * </script>
    * <script type="text/javascript" src="js/Client.js"></script>
-   * (end)
+   * ```
    *
    * If internationalization is disabled, then the following variables should be
    * overridden to reflect the current language of the system. These variables are
@@ -201,12 +201,12 @@ class Client {
    * Set mxDefaultLanguage prior to loading the Client library as follows to override
    * this setting:
    *
-   * (code)
+   * ```javascript
    * <script type="text/javascript">
    *     mxDefaultLanguage = 'de';
    * </script>
    * <script type="text/javascript" src="js/Client.js"></script>
-   * (end)
+   * ```
    */
   static defaultLanguage = 'en';
 
@@ -223,12 +223,12 @@ class Client {
    * language does not have to be part of this list. See
    * <mxResources.isLanguageSupported>.
    *
-   * (code)
+   * ```javascript
    * <script type="text/javascript">
    *     mxLanguages = ['de', 'it', 'fr'];
    * </script>
    * <script type="text/javascript" src="js/Client.js"></script>
-   * (end)
+   * ```
    *
    * This is used to avoid unnecessary requests to language files, ie. if a 404
    * will be returned.
@@ -332,7 +332,7 @@ class Client {
       document.createElementNS(
         'http://www.w3.org/2000/svg',
         'foreignObject'
-      ) !== '[object SVGForeignObjectElement]' ||
+      ).toString() !== '[object SVGForeignObjectElement]' ||
       navigator.userAgent.indexOf('Opera/') >= 0);
 
   /**
@@ -382,12 +382,12 @@ class Client {
    *
    * Example:
    *
-   * (code)
+   * ```javascript
    * if (!Client.isBrowserSupported())
    * {
    *   mxUtils.error('Browser is not supported!', 200, false);
    * }
-   * (end)
+   * ```
    */
   static isBrowserSupported = () => {
     return Client.IS_SVG;
@@ -397,9 +397,9 @@ class Client {
    * Adds a link node to the head of the document. Use this
    * to add a stylesheet to the page as follows:
    *
-   * (code)
+   * ```javascript
    * Client.link('stylesheet', filename);
-   * (end)
+   * ```
    *
    * where filename is the (relative) URL of the stylesheet. The charset
    * is hardcoded to ISO-8859-1 and the type is text/css.

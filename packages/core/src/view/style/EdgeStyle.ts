@@ -32,10 +32,10 @@ import Geometry from '../geometry/Geometry';
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * let style = stylesheet.getDefaultEdgeStyle();
  * style.edge = mxEdgeStyle.ElbowConnector;
- * (end)
+ * ```
  *
  * Sets the default edge style to <ElbowConnector>.
  *
@@ -44,7 +44,7 @@ import Geometry from '../geometry/Geometry';
  * To write a custom edge style, a function must be added to the mxEdgeStyle
  * object as follows:
  *
- * (code)
+ * ```javascript
  * mxEdgeStyle.MyStyle = (state, source, target, points, result)=>
  * {
  *   if (source != null && target != null)
@@ -59,7 +59,7 @@ import Geometry from '../geometry/Geometry';
  *     result.push(pt);
  *   }
  * };
- * (end)
+ * ```
  *
  * In the above example, a right angle is created using a point on the
  * horizontal center of the target vertex and the vertical center of the source
@@ -68,15 +68,15 @@ import Geometry from '../geometry/Geometry';
  * which acts as the return value of the function.
  *
  * The new edge style should then be registered in the <mxStyleRegistry> as follows:
- * (code)
+ * ```javascript
  * mxStyleRegistry.putValue('myEdgeStyle', mxEdgeStyle.MyStyle);
- * (end)
+ * ```
  *
  * The custom edge style above can now be used in a specific edge as follows:
  *
- * (code)
+ * ```javascript
  * model.setStyle(edge, 'edgeStyle=myEdgeStyle');
- * (end)
+ * ```
  *
  * Note that the key of the <mxStyleRegistry> entry for the function should
  * be used in string values, unless <mxGraphView.allowEval> is true, in
@@ -85,10 +85,10 @@ import Geometry from '../geometry/Geometry';
  *
  * Or it can be used for all edges in the graph as follows:
  *
- * (code)
+ * ```javascript
  * let style = graph.getStylesheet().getDefaultEdgeStyle();
  * style.edge = mxEdgeStyle.MyStyle;
- * (end)
+ * ```
  *
  * Note that the object can be used directly when programmatically setting
  * the value, but the key in the <mxStyleRegistry> should be used when

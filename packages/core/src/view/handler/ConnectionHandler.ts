@@ -53,7 +53,7 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * new mxConnectionHandler(graph, (source, target, style)=>
  * {
  *   edge = new mxCell('', new mxGeometry());
@@ -62,12 +62,12 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  *   edge.geometry.relative = true;
  *   return edge;
  * });
- * (end)
+ * ```
  *
  * Here is an alternative solution that just sets a specific user object for
  * new edges by overriding <insertEdge>.
  *
- * (code)
+ * ```javascript
  * mxConnectionHandlerInsertEdge = insertEdge;
  * insertEdge = (parent, id, value, source, target, style)=>
  * {
@@ -75,7 +75,7 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  *
  *   return mxConnectionHandlerInsertEdge.apply(this, arguments);
  * };
- * (end)
+ * ```
  *
  * Using images to trigger connections:
  *
@@ -114,23 +114,23 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  * In order to display the "connect image" whenever the mouse is over the cell,
  * an DEFAULT_HOTSPOT of 1 should be used:
  *
- * (code)
+ * ```javascript
  * mxConstants.DEFAULT_HOTSPOT = 1;
- * (end)
+ * ```
  *
  * In order to avoid confusion with the highlighting, the highlight color
  * should not be used with a connect image:
  *
- * (code)
+ * ```javascript
  * mxConstants.HIGHLIGHT_COLOR = null;
- * (end)
+ * ```
  *
  * To install the image, the connectImage field of the mxConnectionHandler must
  * be assigned a new <mxImage> instance:
  *
- * (code)
+ * ```javascript
  * connectImage = new mxImage('images/green-dot.gif', 14, 14);
- * (end)
+ * ```
  *
  * This will use the green-dot.gif with a width and height of 14 pixels as the
  * image to trigger new connections. In createIcons the icon field of the
@@ -163,7 +163,7 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  * actual connection point, <mxGraph.getConnectionConstraint> can be used. To resolve
  * the port IDs, use <Transactions.getCell>.
  *
- * (code)
+ * ```javascript
  * graph.connectionHandler.addListener(mxEvent.CONNECT, (sender, evt)=>
  * {
  *   let edge = evt.getProperty('cell');
@@ -177,7 +177,7 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  *   MaxLog.show();
  *   MaxLog.debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
  * });
- * (end)
+ * ```
  *
  * Event: mxEvent.RESET
  *
@@ -913,14 +913,14 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    *
    * Use the following code to create a preview for an existing edge style:
    *
-   * (code)
+   * ```javascript
    * graph.connectionHandler.createEdgeState(me)
    * {
    *   var edge = graph.createEdge(null, null, null, null, null, 'edgeStyle=elbowEdgeStyle');
    *
    *   return new CellState(this.graph.view, edge, this.graph.getCellStyle(edge));
    * };
-   * (end)
+   * ```
    */
   createEdgeState(me?: InternalMouseEvent): CellState | null {
     return null;

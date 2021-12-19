@@ -17,7 +17,7 @@ import CellArray from '../cell/CellArray';
  * Implements animation for morphing cells. Here is an example of
  * using this class for animating the result of a layout algorithm:
  *
- * (code)
+ * ```javascript
  * graph.getModel().beginUpdate();
  * try
  * {
@@ -34,7 +34,7 @@ import CellArray from '../cell/CellArray';
  *
  *   morph.startAnimation();
  * }
- * (end)
+ * ```
  *
  * Constructor: Morphing
  *

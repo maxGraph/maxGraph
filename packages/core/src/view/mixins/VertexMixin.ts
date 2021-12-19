@@ -84,18 +84,18 @@ const VertexMixin: PartialType = {
    * of the view in order to find the correct unscaled, untranslated
    * coordinates using <mxGraph.getPointForEvent> as follows:
    *
-   * (code)
+   * ```javascript
    * let pt = graph.getPointForEvent(evt);
    * let parent = graph.getDefaultParent();
    * graph.insertVertex(parent, null,
    *       'Hello, World!', x, y, 220, 30);
-   * (end)
+   * ```
    *
    * For adding image cells, the style parameter can be assigned as
    *
-   * (code)
+   * ```javascript
    * stylename;image=imageUrl
-   * (end)
+   * ```
    *
    * See <mxGraph> for more information on using images.
    *

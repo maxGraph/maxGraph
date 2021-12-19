@@ -37,7 +37,7 @@ import { importNode } from '../../util/domUtils';
  * To subclass <Cell>, replace the template and add an alias as
  * follows.
  *
- * (code)
+ * ```javascript
  * function CustomCell(value, geometry, style)
  * {
  *   mxCell.apply(this, arguments);
@@ -47,7 +47,7 @@ import { importNode } from '../../util/domUtils';
  *
  * CodecRegistry.getCodec(mxCell).template = new CustomCell();
  * CodecRegistry.addAlias('CustomCell', 'mxCell');
- * (end)
+ * ```
  */
 class CellCodec extends ObjectCodec {
   constructor() {

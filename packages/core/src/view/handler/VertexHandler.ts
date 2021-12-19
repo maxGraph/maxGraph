@@ -1466,7 +1466,7 @@ class VertexHandler {
    * To override this to limit the size of vertex via a minWidth/-Height style,
    * the following code can be used.
    *
-   * (code)
+   * ```javascript
    * let vertexHandlerUnion = union;
    * union = (bounds, dx, dy, index, gridEnabled, scale, tr, constrained)=>
    * {
@@ -1477,18 +1477,18 @@ class VertexHandler {
    *
    *   return result;
    * };
-   * (end)
+   * ```
    *
    * The minWidth/-Height style can then be used as follows:
    *
-   * (code)
+   * ```javascript
    * graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30, 'minWidth=100;minHeight=100;');
-   * (end)
+   * ```
    *
    * To override this to update the height for a wrapped text if the width of a vertex is
    * changed, the following can be used.
    *
-   * (code)
+   * ```javascript
    * let mxVertexHandlerUnion = union;
    * union = (bounds, dx, dy, index, gridEnabled, scale, tr, constrained)=>
    * {
@@ -1507,7 +1507,7 @@ class VertexHandler {
    *
    *   return result;
    * };
-   * (end)
+   * ```
    */
   union(
     bounds: Rectangle,
@@ -1700,7 +1700,7 @@ class VertexHandler {
   /**
    * Redraws the handles. To hide certain handles the following code can be used.
    *
-   * (code)
+   * ```javascript
    * redrawHandles()
    * {
    *   mxVertexHandlerRedrawHandles.apply(this, arguments);
@@ -1711,7 +1711,7 @@ class VertexHandler {
    *     this.sizers[6].node.style.display = 'none';
    *   }
    * };
-   * (end)
+   * ```
    */
   redrawHandles() {
     let s = this.getSizerBounds();

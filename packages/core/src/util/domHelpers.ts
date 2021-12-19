@@ -85,12 +85,12 @@ export const link = (parent: Element, text: string, funct: MouseEventListener | 
  * Returns a new button with the given level and function as an onclick
  * event handler.
  *
- * (code)
+ * ```javascript
  * document.body.appendChild(mxUtils.button('Test', (evt)=>
  * {
  *   alert('Hello, World!');
  * }));
- * (end)
+ * ```
  *
  * Parameters:
  *

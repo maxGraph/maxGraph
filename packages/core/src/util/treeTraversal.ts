@@ -80,14 +80,14 @@ export function findTreeRoots(
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * MaxLog.show();
  * let cell = graph.getSelectionCell();
  * graph.traverse(cell, false, (vertex, edge)=>
  * {
  *   MaxLog.debug(graph.getLabel(vertex));
  * });
- * (end)
+ * ```
  *
  * Parameters:
  *

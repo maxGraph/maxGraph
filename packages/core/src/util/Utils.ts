@@ -41,9 +41,9 @@ import type { CellStateStyles, Properties, StyleValue } from '../types';
  *
  * For example, the following code displays an error message:
  *
- * (code)
+ * ```javascript
  * mxUtils.error('Browser is not supported!', 200, false);
- * (end)
+ * ```
  */
 const utils = {
   /* Variable: errorResource
@@ -136,9 +136,9 @@ export const parseCssNumber = (value: string) => {
  * Adds the given style with the standard name and an optional vendor prefix for the current
  * browser.
  *
- * (code)
+ * ```javascript
  * mxUtils.setPrefixedStyle(node.style, 'transformOrigin', '0% 0%');
- * (end)
+ * ```
  */
 export const setPrefixedStyle = (
   style: CSSStyleDeclaration,
@@ -1285,10 +1285,10 @@ export const getScrollOrigin = (
  * Converts the specified point (x, y) using the offset of the specified
  * container and returns a new <mxPoint> with the result.
  *
- * (code)
+ * ```javascript
  * let pt = mxUtils.convertPoint(graph.container,
  *   mxEvent.getClientX(evt), mxEvent.getClientY(evt));
- * (end)
+ * ```
  *
  * Parameters:
  *
@@ -1814,13 +1814,13 @@ export const setStyle = (style: string | null, key: string, value: any) => {
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * let cells = graph.getSelectionCells();
  * mxUtils.setCellStyleFlags(graph.model,
  *       cells,
  *       mxConstants.STYLE_FONTSTYLE,
  *       mxConstants.FONT_BOLD);
- * (end)
+ * ```
  *
  * Toggles the bold font style.
  *
@@ -1958,10 +1958,10 @@ export const getAlignmentAsPoint = (align: string, valign: string) => {
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * let label = graph.getLabel(cell).replace(/\n/g, "<br>");
  * let size = graph.getSizeForString(label);
- * (end)
+ * ```
  *
  * Parameters:
  *

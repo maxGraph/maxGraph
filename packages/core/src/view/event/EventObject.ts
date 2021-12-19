@@ -12,10 +12,10 @@ type EventProperties = Record<string, any>;
  * Additionally, it also offers functions to consume the event and check if it
  * was consumed as follows:
  *
- * (code)
+ * ```javascript
  * evt.consume();
  * INV: evt.isConsumed() == true
- * (end)
+ * ```
  *
  * Constructor: mxEventObject
  *
@@ -24,9 +24,9 @@ type EventProperties = Record<string, any>;
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * new mxEventObject("eventName", key1, val1, .., keyN, valN)
- * (end)
+ * ```
  */
 class EventObject {
   constructor(name = '', ...args: any[]) {

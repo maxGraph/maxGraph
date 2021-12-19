@@ -17,10 +17,10 @@ import CellArray from '../cell/CellArray';
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * let layout = new mxFastOrganicLayout(graph);
  * layout.execute(graph.getDefaultParent());
- * (end)
+ * ```
  *
  * Constructor: mxCompactTreeLayout
  *

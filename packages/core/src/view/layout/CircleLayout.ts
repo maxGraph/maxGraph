@@ -16,10 +16,10 @@ import Cell from '../cell/Cell';
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * let layout = new mxCircleLayout(graph);
  * layout.execute(graph.getDefaultParent());
- * (end)
+ * ```
  *
  * Constructor: mxCircleLayout
  *

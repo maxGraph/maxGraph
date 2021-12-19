@@ -54,16 +54,16 @@ import { write } from './domUtils';
  * Sends an encoded graph model to the specified URL using xml as the
  * parameter name. The parameter can then be retrieved in C# as follows:
  *
- * (code)
+ * ```javascript
  * string xml = HttpUtility.UrlDecode(context.Request.Params["xml"]);
- * (end)
+ * ```
  *
  * Or in Java as follows:
  *
- * (code)
+ * ```javascript
  * String xml = URLDecoder.decode(request.getParameter("xml"), "UTF-8").replace("
 ", "&#xa;");
- * (end)
+ * ```
  *
  * Note that the linefeeds should only be replaced if the XML is
  * processed in Java, for example when creating an image.
@@ -381,7 +381,7 @@ class MaxXmlRequest {
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * try
  * {
  *   let req = mxUtils.load(filename);
@@ -392,7 +392,7 @@ class MaxXmlRequest {
  * {
  *   mxUtils.alert('Cannot load '+filename+': '+ex);
  * }
- * (end)
+ * ```
  *
  * Parameters:
  *
@@ -412,25 +412,25 @@ export const load = (url: string) => {
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * mxUtils.get(url, (req)=>
  * {
  *    let node = req.getDocumentElement();
  *    // Process XML DOM...
  * });
- * (end)
+ * ```
  *
  * So for example, to load a diagram into an existing graph model, the
  * following code is used.
  *
- * (code)
+ * ```javascript
  * mxUtils.get(url, (req)=>
  * {
  *   let node = req.getDocumentElement();
  *   let dec = new Codec(node.ownerDocument);
  *   dec.decode(node, graph.getModel());
  * });
- * (end)
+ * ```
  *
  * Parameters:
  *
@@ -534,13 +534,13 @@ export const getAll = (urls, onload, onerror) => {
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * mxUtils.post(url, 'key=value', (req)=>
  * {
  *   mxUtils.alert('Ready: '+req.isReady()+' Status: '+req.getStatus());
  *  // Process req.getDocumentElement() using DOM API if OK...
  * });
- * (end)
+ * ```
  *
  * Parameters:
  *

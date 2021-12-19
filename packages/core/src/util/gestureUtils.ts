@@ -12,7 +12,7 @@ import Cell from 'src/view/cell/Cell';
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * let funct = (graph, evt, cell, x, y)=>
  * {
  *   if (graph.canImportCell(cell))
@@ -47,7 +47,7 @@ import Cell from 'src/view/cell/Cell';
  * dragImage.style.height = '32px';
  * mxUtils.makeDraggable(img, graph, funct, dragImage);
  * document.body.appendChild(img);
- * (end)
+ * ```
  *
  * Parameters:
  *

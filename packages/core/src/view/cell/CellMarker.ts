@@ -29,7 +29,7 @@ import Cell from './Cell';
  * Helper class to highlight cells. To add a cell marker to an existing graph
  * for highlighting all cells, the following code is used:
  *
- * (code)
+ * ```javascript
  * let marker = new mxCellMarker(graph);
  * graph.addMouseListener({
  *   mouseDown: ()=> {},
@@ -39,7 +39,7 @@ import Cell from './Cell';
  *   },
  *   mouseUp: ()=> {}
  * });
- * (end)
+ * ```
  *
  * Event: mxEvent.MARK
  *

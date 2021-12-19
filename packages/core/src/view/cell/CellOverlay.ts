@@ -29,7 +29,7 @@ import CellState from './CellState';
  * The following adds a new overlays for a given vertex and selects the cell
  * if the overlay is clicked.
  *
- * (code)
+ * ```javascript
  * let overlay = new CellOverlay(img, html);
  * graph.addCellOverlay(vertex, overlay);
  * overlay.addListener(mxEvent.CLICK, (sender, evt)=>
@@ -37,7 +37,7 @@ import CellState from './CellState';
  *   let cell = evt.getProperty('cell');
  *   graph.setSelectionCell(cell);
  * });
- * (end)
+ * ```
  *
  * For cell overlays to be printed use <mxPrintPreview.printOverlays>.
  *
@@ -130,7 +130,7 @@ class CellOverlay extends EventSource {
    * x=[-1..1] from the start to the end of the edge and y is the
    * orthogonal offset in px).
    *
-   * (code)
+   * ```javascript
    * overlay.getBounds = function(state)
    * {
    *   var bounds = getBounds.apply(this, arguments);
@@ -145,7 +145,7 @@ class CellOverlay extends EventSource {
    *
    *   return bounds;
    * };
-   * (end)
+   * ```
    *
    * Parameters:
    *

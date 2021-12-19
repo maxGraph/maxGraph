@@ -69,13 +69,13 @@ import SelectionCellsHandler from '../handler/SelectionCellsHandler';
  * graph view, with some exceptions, namely the HTML labels being placed
  * directly inside the graph container for certain browsers.
  *
- * (code)
+ * ```javascript
  * MaxLog.show();
  * for (var i in mxCellRenderer.defaultShapes)
  * {
  *   MaxLog.debug(i);
  * }
- * (end)
+ * ```
  *
  * Constructor: mxCellRenderer
  *

@@ -763,15 +763,15 @@ class Graph extends EventSource {
    * rendering, set <mxGraphView.rendering> to false prior to changing the model
    * and execute the following after changing the model.
    *
-   * (code)
+   * ```javascript
    * graph.fit();
    * graph.view.rendering = true;
    * graph.refresh();
-   * (end)
+   * ```
    *
    * To fit and center the graph, the following code can be used.
    *
-   * (code)
+   * ```javascript
    * let margin = 2;
    * let max = 3;
    *
@@ -785,7 +785,7 @@ class Graph extends EventSource {
    * graph.view.scaleAndTranslate(s,
    *   (margin + cw - w * s) / (2 * s) - bounds.x / graph.view.scale,
    *   (margin + ch - h * s) / (2 * s) - bounds.y / graph.view.scale);
-   * (end)
+   * ```
    *
    * Parameters:
    *

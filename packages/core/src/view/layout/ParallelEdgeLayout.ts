@@ -19,15 +19,15 @@ import Cell from '../cell/Cell';
  *
  * Example:
  *
- * (code)
+ * ```javascript
  * let layout = new mxParallelEdgeLayout(graph);
  * layout.execute(graph.getDefaultParent());
- * (end)
+ * ```
  *
  * To run the layout for the parallel edges of a changed edge only, the
  * following code can be used.
  *
- * (code)
+ * ```javascript
  * let layout = new mxParallelEdgeLayout(graph);
  *
  * graph.addListener(mxEvent.CELL_CONNECTED, (sender, evt)=>
@@ -47,7 +47,7 @@ import Cell from '../cell/Cell';
  *
  *   layout.execute(graph.getDefaultParent());
  * });
- * (end)
+ * ```
  *
  * Constructor: mxParallelEdgeLayout
  *

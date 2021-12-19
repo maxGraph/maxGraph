@@ -14,7 +14,7 @@ import Shape from '../geometry/Shape';
  * is an example that uses this class to create an image via a backend using
  * <mxXmlExportCanvas>.
  *
- * (code)
+ * ```javascript
  * var xmlDoc = mxUtils.createXmlDocument();
  * var root = xmlDoc.createElement('output');
  * xmlDoc.appendChild(root);
@@ -31,7 +31,7 @@ import Shape from '../geometry/Shape';
  * new MaxXmlRequest('export', 'format=png&w=' + w +
  * 		'&h=' + h + '&bg=#F9F7ED&xml=' + encodeURIComponent(xml))
  * 		.simulate(document, '_blank');
- * (end)
+ * ```
  *
  * @class ImageExport
  */
