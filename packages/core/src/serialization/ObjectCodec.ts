@@ -410,7 +410,8 @@ class ObjectCodec {
    */
   encodeValue(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
     if (value != null) {
-      if (this.isReference(obj, name, value, true)) {
+      // TODO: What is the case where `name` can be `null`? =========================================================================
+      if (name != null && this.isReference(obj, name, value, true)) {
         const tmp = enc.getId(value);
 
         if (tmp == null) {
@@ -436,7 +437,7 @@ class ObjectCodec {
    * Writes the given value into node using {@link writePrimitiveAttribute}
    * or {@link writeComplexAttribute} depending on the type of the value.
    */
-  writeAttribute(enc: Codec, obj: any, name: string, value: any, node: Element): void {
+  writeAttribute(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
     if (typeof value !== 'object' /* primitive type */) {
       this.writePrimitiveAttribute(enc, obj, name, value, node);
     } /* complex type */ else {
@@ -447,9 +448,9 @@ class ObjectCodec {
   /**
    * Writes the given value as an attribute of the given node.
    */
-  writePrimitiveAttribute(enc: Codec, obj: any, name: string, value: any, node: Element): void {
+  writePrimitiveAttribute(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
     value = this.convertAttributeToXml(enc, obj, name, value, node);  // TODO: params don't seem to match - is this a bug? ===================================
-
+    
     if (name == null) {
       const child = enc.document.createElement('add');
 
@@ -468,7 +469,7 @@ class ObjectCodec {
   /**
    * Writes the given value as a child node of the given node.
    */
-  writeComplexAttribute(enc: Codec, obj: any, name: string, value: any, node: Element): void {
+  writeComplexAttribute(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
     const child = enc.encode(value);
 
     if (child != null) {
@@ -637,7 +638,7 @@ class ObjectCodec {
    * @param into Optional objec to encode the node into.
    */
   decode(dec: Codec, node: Element, into?: any): any {
-    const id = node.getAttribute('id');
+    const id = <string>node.getAttribute('id');
     let obj = dec.objects[id];
 
     if (obj == null) {

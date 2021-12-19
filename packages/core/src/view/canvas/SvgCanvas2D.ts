@@ -494,8 +494,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
         alt.setAttribute('text-decoration', txtDecor.join(' '));
       }
 
-      write(alt, text);
-
+      write(alt, <string>text);
       return alt;
     }
     return null;
@@ -1159,7 +1158,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       return div;
     }
     if (isNode(val)) {
-      val = `<div><div>${getXml(val)}</div></div>`;
+      val = `<div><div>${getXml(<Element>val)}</div></div>`;
     }
 
     val = `<div xmlns="http://www.w3.org/1999/xhtml">${val}</div>`;
@@ -1312,16 +1311,16 @@ class SvgCanvas2D extends AbstractCanvas2D {
       this.state.fontBackgroundColor != null ? this.state.fontBackgroundColor : null,
       this.state.fontBorderColor != null ? this.state.fontBorderColor : null,
       `display: flex; align-items: unsafe ${
-        valign === ALIGN_TOP
+        valign === ALIGN.TOP
           ? 'flex-start'
-          : valign === ALIGN_BOTTOM
+          : valign === ALIGN.BOTTOM
           ? 'flex-end'
           : 'center'
       }; ` +
         `justify-content: unsafe ${
-          align === ALIGN_LEFT
+          align === ALIGN.LEFT
             ? 'flex-start'
-            : align === ALIGN_RIGHT
+            : align === ALIGN.RIGHT
             ? 'flex-end'
             : 'center'
         }; `,
@@ -1575,7 +1574,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       let cx = x;
       let cy = y;
 
-      if (align === ALIGN.CENTERCENTER) {
+      if (align === ALIGN.CENTER) {
         cx -= w / 2;
       } else if (align === ALIGN.RIGHT) {
         cx -= w;

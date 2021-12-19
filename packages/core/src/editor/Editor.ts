@@ -24,8 +24,6 @@ import { ALIGN, FONT } from '../util/constants';
 import { Graph } from '../view/Graph';
 import SwimlaneManager from '../view/layout/SwimlaneManager';
 import LayoutManager from '../view/layout/LayoutManager';
-import RubberBand from '../view/handler/RubberBand';
-import InternalEvent from '../view/event/InternalEvent';
 import RootChange from '../view/undoable_changes/RootChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
 import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
@@ -1487,7 +1485,7 @@ class Editor extends EventSource {
         // lazy created in createDiagramLayout.
         else if (
           self.layoutDiagram &&
-          (graph.isValidRoot(cell) || cell.getParent().getParent() == null)
+          (graph.isValidRoot(cell) || (<Cell>cell.getParent()).getParent() == null)
         ) {
           if (self.diagramLayout == null) {
             self.diagramLayout = self.createDiagramLayout();
@@ -1778,7 +1776,7 @@ class Editor extends EventSource {
     const { graph } = this;
     let cell = graph.getCurrentRoot();
 
-    while (cell != null && cell.getParent().getParent() != null) {
+    while (cell != null && (<Cell>cell.getParent()).getParent() != null) {
       // Append each label of a valid root
       if (graph.isValidRoot(cell)) {
         title = ` > ${graph.convertValueToString(cell)}${title}`;
@@ -2126,17 +2124,17 @@ class Editor extends EventSource {
       // Creates textareas for each attribute of the
       // user object within the cell
       const attrs = value.attributes;
-      const texts = [];
+      const texts: HTMLTextAreaElement[] = [];
 
       for (let i = 0; i < attrs.length; i += 1) {
         // Creates a textarea with more lines for
         // the cell label
         const val = attrs[i].value;
-        texts[i] = form.addTextarea(
+        texts.push(form.addTextarea(
           attrs[i].nodeName,
           val,
           attrs[i].nodeName === 'label' ? 4 : 2
-        );
+        ));
       }
 
       // Adds an OK and Cancel button to the dialog
@@ -2200,7 +2198,6 @@ class Editor extends EventSource {
       };
 
       form.addButtons(okFunction, cancelFunction);
-
       return form.table;
     }
 
@@ -2443,13 +2440,13 @@ class Editor extends EventSource {
    * @param source
    * @param target
    */
-  createEdge(source: Cell, target: Cell): void {
+  createEdge(source: Cell, target: Cell): Cell {
     // Clones the defaultedge prototype
-    let e = null;
+    let e: Cell;
 
     if (this.defaultEdge != null) {
       const model = this.graph.getModel();
-      e = model.cloneCell(this.defaultEdge);
+      e = <Cell>model.cloneCell(this.defaultEdge);
     } else {
       e = new Cell('');
       e.setEdge(true);
@@ -2465,7 +2462,6 @@ class Editor extends EventSource {
     if (style != null) {
       e.setStyle(style);
     }
-
     return e;
   }
 
@@ -2526,8 +2522,8 @@ class Editor extends EventSource {
     parent = parent != null ? parent : this.graph.getSwimlaneAt(x, y);
     const { scale } = this.graph.getView();
 
-    let geo = vertex.getGeometry();
-    const pgeo = parent.getGeometry();
+    let geo = <Geometry>vertex.getGeometry();
+    const pgeo = <Geometry>parent.getGeometry();
 
     if (this.graph.isSwimlane(vertex) && !this.graph.swimlaneNesting) {
       parent = null;

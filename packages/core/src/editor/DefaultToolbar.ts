@@ -53,7 +53,7 @@ class DefaultToolbar {
   /**
    * Reference to the enclosing {@link Editor}.
    */
-  editor: Editor;
+  editor: Editor | null;
 
   /**
    * Holds the internal {@link MaxToolbar}.
@@ -311,7 +311,6 @@ class DefaultToolbar {
       }
       return this.editor.addVertex(target, vertex, pt.x, pt.y);
     }
-
     return null;
   }
 
@@ -323,20 +322,20 @@ class DefaultToolbar {
    * @param source - Optional {@link Cell} that represents the source terminal.
    */
   connect(vertex: Cell, evt: MouseEvent, source?: Cell): void {
-    const { graph } = this.editor;
+    const { graph } = <Editor>this.editor;
     const model = graph.getModel();
 
     if (
       source != null &&
-      vertex.isCellConnectable() &&
+      vertex.isConnectable() &&
       graph.isEdgeValid(null, source, vertex)
     ) {
       let edge = null;
 
       model.beginUpdate();
       try {
-        const geo = source.getGeometry();
-        const g = vertex.getGeometry().clone();
+        const geo = <Geometry>source.getGeometry();
+        const g = (<Geometry>vertex.getGeometry()).clone();
 
         // Moves the vertex away from the drop target that will
         // be used as the source for the new connection
@@ -344,9 +343,9 @@ class DefaultToolbar {
         g.y = geo.y + (geo.height - g.height) / 2;
 
         const step = this.spacing * graph.gridSize;
-        const dist = model.getDirectedEdgeCount(source, true) * 20;
+        const dist = source.getDirectedEdgeCount(true) * 20;
 
-        if (this.editor.horizontalFlow) {
+        if ((<Editor>this.editor).horizontalFlow) {
           g.x += (g.width + geo.width) / 2 + step + dist;
         } else {
           g.y += (g.height + geo.height) / 2 + step + dist;
@@ -362,7 +361,7 @@ class DefaultToolbar {
 
         // Creates the edge using the editor instance and calls
         // the second function that fires an add event
-        edge = this.editor.createEdge(source, vertex);
+        edge = (<Editor>this.editor).createEdge(source, vertex);
 
         if (edge.getGeometry() == null) {
           const edgeGeometry = new Geometry();

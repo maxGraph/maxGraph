@@ -8,7 +8,7 @@
 import Point from '../Point';
 import ActorShape from '../ActorShape';
 import { LINE_ARCSIZE } from '../../../util/constants';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
  * Implementation of the triangle shape.
