@@ -344,17 +344,15 @@ const GroupingMixin: PartialType = {
    * top-most group first, the cells are processed in reverse order and cells
    * with no children are ignored.
    *
-   * Parameters:
-   *
-   * cells - The groups whose bounds should be updated. If this is null, then
+   * @param cells The groups whose bounds should be updated. If this is null, then
    * the selection cells are used.
-   * border - Optional border to be added in the group. Default is 0.
-   * moveGroup - Optional boolean that allows the group to be moved. Default
+   * @param border Optional border to be added in the group. Default is 0.
+   * @param moveGroup Optional boolean that allows the group to be moved. Default
    * is false.
-   * topBorder - Optional top border to be added in the group. Default is 0.
-   * rightBorder - Optional top border to be added in the group. Default is 0.
-   * bottomBorder - Optional top border to be added in the group. Default is 0.
-   * leftBorder - Optional top border to be added in the group. Default is 0.
+   * @param topBorder Optional top border to be added in the group. Default is 0.
+   * @param rightBorder Optional top border to be added in the group. Default is 0.
+   * @param bottomBorder Optional top border to be added in the group. Default is 0.
+   * @param leftBorder Optional top border to be added in the group. Default is 0.
    */
   updateGroupBounds(
     cells,

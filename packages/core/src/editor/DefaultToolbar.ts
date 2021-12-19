@@ -151,9 +151,7 @@ class DefaultToolbar {
    * Helper method to invoke <MaxToolbar.addActionCombo> on <toolbar> using
    * the given title and return the resulting DOM node.
    *
-   * Parameters:
-   *
-   * title - String that represents the title of the combo.
+   * @param title String that represents the title of the combo.
    */
   addActionCombo(title: string) {
     return this.toolbar.addActionCombo(title);
@@ -211,18 +209,16 @@ class DefaultToolbar {
    * the <editor>'s graph. The ptype may either be a cell or a function that
    * returns a cell.
    *
-   * Parameters:
-   *
-   * title - String that represents the title of the item.
-   * icon - URL of the icon that represents the item.
-   * ptype - Function or object that represents the prototype cell. If ptype
+   * @param title String that represents the title of the item.
+   * @param icon URL of the icon that represents the item.
+   * @param ptype Function or object that represents the prototype cell. If ptype
    * is a function then it is invoked with no arguments to create new
    * instances.
-   * pressed - Optional URL of the icon that represents the pressed state.
-   * insert - Optional JavaScript function that handles an insert of the new
+   * @param pressed Optional URL of the icon that represents the pressed state.
+   * @param insert Optional JavaScript function that handles an insert of the new
    * cell. This function takes the <Editor>, new cell to be inserted, mouse
    * event and optional <Cell> under the mouse pointer as arguments.
-   * toggle - Optional boolean that specifies if the item can be toggled.
+   * @param toggle Optional boolean that specifies if the item can be toggled.
    * Default is true.
    */
   addPrototype(title, icon, ptype, pressed, insert, toggle) {
@@ -269,8 +265,6 @@ class DefaultToolbar {
    * Handles a drop from a toolbar item to the graph. The given vertex
    * represents the new cell to be inserted. This invokes {@link insert} or
    * {@link connect} depending on the given target cell.
-   *
-   * Parameters:
    *
    * @param vertex - {@link Cell} to be inserted.
    * @param evt - Mouse event that represents the drop.

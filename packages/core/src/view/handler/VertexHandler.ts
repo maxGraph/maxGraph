@@ -48,9 +48,7 @@ import SelectionCellsHandler from './SelectionCellsHandler';
  * Constructs an event handler that allows to resize vertices
  * and groups.
  *
- * Parameters:
- *
- * state - <CellState> of the cell to be resized.
+ * @param state <CellState> of the cell to be resized.
  */
 class VertexHandler {
   escapeHandler: (sender: Listenable, evt: Event) => void;
@@ -1281,10 +1279,8 @@ class VertexHandler {
   /**
    * Rotates the given cell and its children by the given angle in degrees.
    *
-   * Parameters:
-   *
-   * cell - <Cell> to be rotated.
-   * angle - Angle in degrees.
+   * @param cell <Cell> to be rotated.
+   * @param angle Angle in degrees.
    */
   rotateCell(cell: Cell, angle: number, parent?: Cell) {
     if (angle !== 0) {

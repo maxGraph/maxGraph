@@ -354,9 +354,7 @@ class TextShape extends Shape {
   /**
    * Extends mxShape to update the text styles.
    *
-   * Parameters:
-   *
-   * state - <CellState> of the corresponding cell.
+   * @param state <CellState> of the corresponding cell.
    */
   apply(state: CellState): void {
     const old = this.spacing;

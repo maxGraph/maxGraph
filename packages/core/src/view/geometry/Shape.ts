@@ -270,9 +270,7 @@ class Shape {
    * Initializes the shape by creaing the DOM node using <create>
    * and adding it into the given container.
    *
-   * Parameters:
-   *
-   * container - DOM node that will contain the shape.
+   * @param container DOM node that will contain the shape.
    */
   init(container: HTMLElement | SVGElement) {
     if (!this.node.parentNode) {
@@ -319,9 +317,7 @@ class Shape {
    * <createSvg>, <createHtml> or <createVml> depending
    * on the <dialect> and style settings.
    *
-   * Parameters:
-   *
-   * container - DOM node that will contain the shape.
+   * @param container DOM node that will contain the shape.
    */
   create() {
     return document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -943,9 +939,7 @@ class Shape {
    * state.cell or the <CellState> itself. If <outline> should be true, make
    * sure to set it before calling this method.
    *
-   * Parameters:
-   *
-   * state - <CellState> of the corresponding cell.
+   * @param state <CellState> of the corresponding cell.
    */
   apply(state: CellState) {
     this.state = state;
@@ -986,9 +980,7 @@ class Shape {
   /**
    * Sets the cursor on the given shape.
    *
-   * Parameters:
-   *
-   * cursor - The cursor to be used.
+   * @param cursor The cursor to be used.
    */
   setCursor(cursor: string) {
     this.cursor = cursor;

@@ -394,9 +394,7 @@ class MaxXmlRequest {
  * }
  * ```
  *
- * Parameters:
- *
- * url - URL to get the data from.
+ * @param url URL to get the data from.
  */
 export const load = (url: string) => {
   const req = new MaxXmlRequest(url, null, 'GET', false);
@@ -432,16 +430,14 @@ export const load = (url: string) => {
  * });
  * ```
  *
- * Parameters:
- *
- * url - URL to get the data from.
- * onload - Optional function to execute for a successful response.
- * onerror - Optional function to execute on error.
- * binary - Optional boolean parameter that specifies if the request is
+ * @param url URL to get the data from.
+ * @param onload Optional function to execute for a successful response.
+ * @param onerror Optional function to execute on error.
+ * @param binary Optional boolean parameter that specifies if the request is
  * binary.
- * timeout - Optional timeout in ms before calling ontimeout.
- * ontimeout - Optional function to execute on timeout.
- * headers - Optional with headers, eg. {'Authorization': 'token xyz'}
+ * @param timeout Optional timeout in ms before calling ontimeout.
+ * @param ontimeout Optional function to execute on timeout.
+ * @param headers Optional with headers, eg. {'Authorization': 'token xyz'}
  */
 export const get = (url: string, onload: Function, onerror: Function, binary: boolean, timeout: number, ontimeout: Function, headers: { [key: string]: string }) => {
   const req = new MaxXmlRequest(url, null, 'GET');
@@ -479,11 +475,9 @@ export const get = (url: string, onload: Function, onerror: Function, binary: bo
  * if all requests returned with a valid 2xx status. The error handler is invoked
  * once on the first error or invalid response.
  *
- * Parameters:
- *
- * urls - Array of URLs to be loaded.
- * onload - Callback with array of <mxXmlRequests>.
- * onerror - Optional function to execute on error.
+ * @param urls Array of URLs to be loaded.
+ * @param onload Callback with array of <mxXmlRequests>.
+ * @param onerror Optional function to execute on error.
  */
 export const getAll = (urls, onload, onerror) => {
   let remain = urls.length;
@@ -542,12 +536,10 @@ export const getAll = (urls, onload, onerror) => {
  * });
  * ```
  *
- * Parameters:
- *
- * url - URL to get the data from.
- * params - Parameters for the post request.
- * onload - Optional function to execute for a successful response.
- * onerror - Optional function to execute on error.
+ * @param url URL to get the data from.
+ * @param params Parameters for the post request.
+ * @param onload Optional function to execute for a successful response.
+ * @param onerror Optional function to execute on error.
  */
 export const post = (url, params, onload, onerror) => {
   return new MaxXmlRequest(url, params).send(onload, onerror);
@@ -559,12 +551,10 @@ export const post = (url, params, onload, onerror) => {
  * Make sure to use encodeURIComponent for the parameter
  * values.
  *
- * Parameters:
- *
- * url - URL to get the data from.
- * params - Parameters for the form.
- * doc - Document to create the form in.
- * target - Target to send the form result to.
+ * @param url URL to get the data from.
+ * @param params Parameters for the form.
+ * @param doc Document to create the form in.
+ * @param target Target to send the form result to.
  */
 export const submit = (url: string, params: string, doc: XMLDocument, target: string) => {
   return new MaxXmlRequest(url, params).simulate(doc, target);

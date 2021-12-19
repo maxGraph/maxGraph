@@ -35,10 +35,8 @@ import { isNode } from '../../util/dom/domUtils';
  * Factory function that creates a <ObjectCodec> for
  * the specified change and fieldname.
  *
- * Parameters:
- *
- * obj - An instance of the change object.
- * variable - The fieldname for the change data.
+ * @param obj An instance of the change object.
+ * @param variable The fieldname for the change data.
  */
 class GenericChangeCodec extends ObjectCodec {
   constructor(obj, variable) {

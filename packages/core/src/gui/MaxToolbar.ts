@@ -72,16 +72,14 @@ class MaxToolbar extends EventSource {
    * Adds the given function as an image with the specified title and icon
    * and returns the new image node.
    *
-   * Parameters:
-   *
-   * title - Optional string that is used as the tooltip.
-   * icon - Optional URL of the image to be used. If no URL is given, then a
+   * @param title Optional string that is used as the tooltip.
+   * @param icon Optional URL of the image to be used. If no URL is given, then a
    * button is created.
-   * funct - Function to execute on a mouse click.
-   * pressedIcon - Optional URL of the pressed image. Default is a gray
+   * @param funct Function to execute on a mouse click.
+   * @param pressedIcon Optional URL of the pressed image. Default is a gray
    * background.
-   * style - Optional style classname. Default is mxToolbarItem.
-   * factoryMethod - Optional factory method for popup menu, eg.
+   * @param style Optional style classname. Default is mxToolbarItem.
+   * @param factoryMethod Optional factory method for popup menu, eg.
    * (menu, evt, cell)=> { menu.addItem('Hello, World!'); }
    */
   addItem(
@@ -406,8 +404,6 @@ class MaxToolbar extends EventSource {
 
   /**
    * Adds the specifies image as a separator.
-   *
-   * Parameters:
    *
    * @param icon - URL of the separator icon.
    */

@@ -90,9 +90,7 @@ const Resources = {
    * Hook for subclassers to disable support for a given language. This
    * implementation returns true if lan is in <Client.languages>.
    *
-   * Parameters:
-   *
-   * lan - The current language.
+   * @param lan The current language.
    */
   isLanguageSupported: (lan: string): boolean => {
     if (Client.languages != null) {
@@ -106,10 +104,8 @@ const Resources = {
    * implementation returns basename + <extension> or null if
    * <loadDefaultBundle> is false.
    *
-   * Parameters:
-   *
-   * basename - The basename for which the file should be loaded.
-   * lan - The current language.
+   * @param basename The basename for which the file should be loaded.
+   * @param lan The current language.
    */
   getDefaultBundle: (basename: string, lan: string): string | null => {
     if (
@@ -134,10 +130,8 @@ const Resources = {
    * If <mxResources.language> is null then the first part of the language is
    * used to maintain backwards compatibility.
    *
-   * Parameters:
-   *
-   * basename - The basename for which the file should be loaded.
-   * lan - The language for which the file should be loaded.
+   * @param basename The basename for which the file should be loaded.
+   * @param lan The language for which the file should be loaded.
    */
   getSpecialBundle: (basename: string, lan: string): string | null => {
     if (Client.languages == null || !this.isLanguageSupported(lan)) {
@@ -174,11 +168,9 @@ const Resources = {
    * mxResources.add('resources/editor');
    * ```
    *
-   * Parameters:
-   *
-   * basename - The basename for which the file should be loaded.
-   * lan - The language for which the file should be loaded.
-   * callback - Optional callback for asynchronous loading.
+   * @param basename The basename for which the file should be loaded.
+   * @param lan The language for which the file should be loaded.
+   * @param callback Optional callback for asynchronous loading.
    */
   add: (basename: string, lan: string, callback: Function): void => {
     lan =
@@ -305,12 +297,10 @@ const Resources = {
    * The part behind the || is the string value to be used if the given
    * resource is not available.
    *
-   * Parameters:
-   *
-   * key - String that represents the key of the resource to be returned.
-   * params - Array of the values for the placeholders of the form {1}...{n}
+   * @param key String that represents the key of the resource to be returned.
+   * @param params Array of the values for the placeholders of the form {1}...{n}
    * to be replaced with in the resulting string.
-   * defaultValue - Optional string that specifies the default return value.
+   * @param defaultValue Optional string that specifies the default return value.
    */
   get: (key: string, params: any[]|null=null, defaultValue?: string): string | null => {
     let value = Resources.resources[key];
@@ -331,10 +321,8 @@ const Resources = {
   /**
    * Replaces the given placeholders with the given parameters.
    *
-   * Parameters:
-   *
-   * value - String that contains the placeholders.
-   * params - Array of the values for the placeholders of the form {1}...{n}
+   * @param value String that contains the placeholders.
+   * @param params Array of the values for the placeholders of the form {1}...{n}
    * to be replaced with in the resulting string.
    */
   replacePlaceholders: (value: string, params: string[]): string => {
@@ -368,9 +356,7 @@ const Resources = {
    * Loads all required resources asynchronously. Use this to load the graph and
    * editor resources if <mxLoadResources> is false.
    *
-   * Parameters:
-   *
-   * callback - Callback function for asynchronous loading.
+   * @param callback Callback function for asynchronous loading.
    */
   loadResources: (callback: Function): void => {
     Resources.add(`${Client.basePath}/resources/editor`, null, () => {

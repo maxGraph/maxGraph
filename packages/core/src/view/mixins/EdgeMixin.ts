@@ -318,16 +318,14 @@ const EdgeMixin: PartialType = {
    * given cell. This method fires <mxEvent.SPLIT_EDGE> while the transaction
    * is in progress. Returns the new edge that was inserted.
    *
-   * Parameters:
-   *
-   * edge - <Cell> that represents the edge to be splitted.
-   * cells - <mxCells> that represents the cells to insert into the edge.
-   * newEdge - <Cell> that represents the edge to be inserted.
-   * dx - Optional integer that specifies the vector to move the cells.
-   * dy - Optional integer that specifies the vector to move the cells.
-   * x - Integer that specifies the x-coordinate of the drop location.
-   * y - Integer that specifies the y-coordinate of the drop location.
-   * parent - Optional parent to insert the cell. If null the parent of
+   * @param edge <Cell> that represents the edge to be splitted.
+   * @param cells <mxCells> that represents the cells to insert into the edge.
+   * @param newEdge <Cell> that represents the edge to be inserted.
+   * @param dx Optional integer that specifies the vector to move the cells.
+   * @param dy Optional integer that specifies the vector to move the cells.
+   * @param x Integer that specifies the x-coordinate of the drop location.
+   * @param y Integer that specifies the y-coordinate of the drop location.
+   * @param parent Optional parent to insert the cell. If null the parent of
    * the edge is used.
    */
   splitEdge(edge, cells, newEdge, dx = 0, dy = 0, x, y, parent = null) {
@@ -523,18 +521,16 @@ const EdgeMixin: PartialType = {
    * or outgoing is true, then loops are ignored, if both are false, then all
    * edges connected to the given cell are returned including loops.
    *
-   * Parameters:
-   *
-   * cell - <Cell> whose edges should be returned.
-   * parent - Optional parent of the opposite end for an edge to be
+   * @param cell <Cell> whose edges should be returned.
+   * @param parent Optional parent of the opposite end for an edge to be
    * returned.
-   * incoming - Optional boolean that specifies if incoming edges should
+   * @param incoming Optional boolean that specifies if incoming edges should
    * be included in the result. Default is true.
-   * outgoing - Optional boolean that specifies if outgoing edges should
+   * @param outgoing Optional boolean that specifies if outgoing edges should
    * be included in the result. Default is true.
-   * includeLoops - Optional boolean that specifies if loops should be
+   * @param includeLoops Optional boolean that specifies if loops should be
    * included in the result. Default is true.
-   * recurse - Optional boolean the specifies if the parent specified only
+   * @param recurse Optional boolean the specifies if the parent specified only
    * need be an ancestral parent, true, or the direct parent, false.
    * Default is false
    */

@@ -89,17 +89,15 @@ export function findTreeRoots(
  * });
  * ```
  *
- * Parameters:
- *
- * vertex - <Cell> that represents the vertex where the traversal starts.
- * directed - Optional boolean indicating if edges should only be traversed
+ * @param vertex <Cell> that represents the vertex where the traversal starts.
+ * @param directed Optional boolean indicating if edges should only be traversed
  * from source to target. Default is true.
- * func - Visitor function that takes the current vertex and the incoming
+ * @param func Visitor function that takes the current vertex and the incoming
  * edge as arguments. The traversal stops if the function returns false.
- * edge - Optional <Cell> that represents the incoming edge. This is
+ * @param edge Optional <Cell> that represents the incoming edge. This is
  * null for the first step of the traversal.
- * visited - Optional <mxDictionary> from cells to true for the visited cells.
- * inverse - Optional boolean to traverse in inverse direction. Default is false.
+ * @param visited Optional <mxDictionary> from cells to true for the visited cells.
+ * @param inverse Optional boolean to traverse in inverse direction. Default is false.
  * This is ignored if directed is false.
  */
 export function traverse(

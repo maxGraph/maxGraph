@@ -49,25 +49,23 @@ import Cell from 'src/view/cell/Cell';
  * document.body.appendChild(img);
  * ```
  *
- * Parameters:
- *
- * element - DOM element to make draggable.
- * graphF - <mxGraph> that acts as the drop target or a function that takes a
+ * @param element DOM element to make draggable.
+ * @param graphF <mxGraph> that acts as the drop target or a function that takes a
  * mouse event and returns the current <mxGraph>.
- * funct - Function to execute on a successful drop.
- * dragElement - Optional DOM node to be used for the drag preview.
- * dx - Optional horizontal offset between the cursor and the drag
+ * @param funct Function to execute on a successful drop.
+ * @param dragElement Optional DOM node to be used for the drag preview.
+ * @param dx Optional horizontal offset between the cursor and the drag
  * preview.
- * dy - Optional vertical offset between the cursor and the drag
+ * @param dy Optional vertical offset between the cursor and the drag
  * preview.
- * autoscroll - Optional boolean that specifies if autoscroll should be
+ * @param autoscroll Optional boolean that specifies if autoscroll should be
  * used. Default is mxGraph.autoscroll.
- * scalePreview - Optional boolean that specifies if the preview element
+ * @param scalePreview Optional boolean that specifies if the preview element
  * should be scaled according to the graph scale. If this is true, then
  * the offsets will also be scaled. Default is false.
- * highlightDropTargets - Optional boolean that specifies if dropTargets
+ * @param highlightDropTargets Optional boolean that specifies if dropTargets
  * should be highlighted. Default is true.
- * getDropTarget - Optional function to return the drop target for a given
+ * @param getDropTarget Optional function to return the drop target for a given
  * location (x, y). Default is mxGraph.getCellAt.
  */
 export const makeDraggable = (

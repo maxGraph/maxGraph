@@ -32,9 +32,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
  *
  * Constructs an edge handler for the specified <CellState>.
  *
- * Parameters:
- *
- * state - <CellState> of the cell to be modified.
+ * @param state <CellState> of the cell to be modified.
  */
 class ElbowEdgeHandler extends EdgeHandler {
   constructor(state: CellState) {
@@ -140,10 +138,8 @@ class ElbowEdgeHandler extends EdgeHandler {
    * Converts the given point in-place from screen to unscaled, untranslated
    * graph coordinates and applies the grid.
    *
-   * Parameters:
-   *
-   * point - <mxPoint> to be converted.
-   * gridEnabled - Boolean that specifies if the grid should be applied.
+   * @param point <mxPoint> to be converted.
+   * @param gridEnabled Boolean that specifies if the grid should be applied.
    */
   convertPoint(point: Point, gridEnabled: boolean) {
     const scale = this.graph.getView().getScale();
@@ -164,10 +160,8 @@ class ElbowEdgeHandler extends EdgeHandler {
   /**
    * Updates and redraws the inner bends.
    *
-   * Parameters:
-   *
-   * p0 - <mxPoint> that represents the location of the first point.
-   * pe - <mxPoint> that represents the location of the last point.
+   * @param p0 <mxPoint> that represents the location of the first point.
+   * @param pe <mxPoint> that represents the location of the last point.
    */
   redrawInnerBends(p0: Point, pe: Point) {
     const g = this.state.cell.getGeometry();

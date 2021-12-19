@@ -41,11 +41,8 @@ import Shape from '../geometry/Shape';
  *
  * Constructs a new event object for the given arguments.
  *
- * Parameters:
- *
- * evt - Native mouse event.
- * state - Optional <CellState> under the mouse.
- *
+ * @param evt Native mouse event.
+ * @param state Optional <CellState> under the mouse.
  */
 class InternalMouseEvent {
   constructor(evt: MouseEvent, state: CellState | null = null) {
@@ -176,9 +173,7 @@ class InternalMouseEvent {
    * being changed to a text cursor in Webkit. You can use the preventDefault
    * flag to disable this functionality.
    *
-   * Parameters:
-   *
-   * preventDefault - Specifies if the native event should be canceled. Default
+   * @param preventDefault Specifies if the native event should be canceled. Default
    * is true.
    */
   consume(preventDefault?: boolean) {

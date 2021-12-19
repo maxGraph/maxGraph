@@ -33,9 +33,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
  * Fires if a cell has been remove from the selection. The <code>state</code>
  * property contains the <CellState> that has been removed.
  *
- * Parameters:
- *
- * graph - Reference to the enclosing <mxGraph>.
+ * @param graph Reference to the enclosing <mxGraph>.
  */
 class SelectionCellsHandler extends EventSource implements GraphPlugin {
   static pluginId = 'SelectionCellsHandler';

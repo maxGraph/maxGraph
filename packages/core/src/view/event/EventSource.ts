@@ -118,10 +118,8 @@ class EventSource {
    * fireEvent(new mxEventObject("eventName", key1, val1, .., keyN, valN))
    * ```
    *
-   * Parameters:
-   *
-   * evt - <mxEventObject> that represents the event.
-   * sender - Optional sender to be passed to the listener. Default value is
+   * @param evt <mxEventObject> that represents the event.
+   * @param sender Optional sender to be passed to the listener. Default value is
    * the return value of <getEventSource>.
    */
   fireEvent(evt: EventObject, sender: EventTarget | null = null) {

@@ -126,8 +126,6 @@ class DefaultPopupMenu {
    * The order in which the items and conditions appear is not significant as
    * all conditions are evaluated before any items are created.
    *
-   * Parameters:
-   *
    * @param editor - Enclosing {@link Editor} instance.
    * @param menu - {@link mxPopupMenu} that is used for adding items and separators.
    * @param cell - Optional {@link mxCell} which is under the mousepointer.
@@ -144,15 +142,13 @@ class DefaultPopupMenu {
   /**
    * Recursively adds the given items and all of its children into the given menu.
    *
-   * Parameters:
-   *
-   * editor - Enclosing <Editor> instance.
-   * menu - <mxPopupMenu> that is used for adding items and separators.
-   * cell - Optional <Cell> which is under the mousepointer.
-   * evt - Optional mouse event which triggered the menu.
-   * conditions - Array of names boolean conditions.
-   * item - XML node that represents the current menu item.
-   * parent - DOM node that represents the parent menu item.
+   * @param editor Enclosing <Editor> instance.
+   * @param menu <mxPopupMenu> that is used for adding items and separators.
+   * @param cell Optional <Cell> which is under the mousepointer.
+   * @param evt Optional mouse event which triggered the menu.
+   * @param conditions Array of names boolean conditions.
+   * @param item XML node that represents the current menu item.
+   * @param parent DOM node that represents the parent menu item.
    */
   addItems(
     editor: Editor, 
@@ -223,20 +219,18 @@ class DefaultPopupMenu {
   /**
    * Helper method to bind an action to a new menu item.
    *
-   * Parameters:
-   *
-   * menu - <mxPopupMenu> that is used for adding items and separators.
-   * editor - Enclosing <Editor> instance.
-   * lab - String that represents the label of the menu item.
-   * icon - Optional URL that represents the icon of the menu item.
-   * action - Optional name of the action to execute in the given editor.
-   * funct - Optional function to execute before the optional action. The
+   * @param menu <mxPopupMenu> that is used for adding items and separators.
+   * @param editor Enclosing <Editor> instance.
+   * @param lab String that represents the label of the menu item.
+   * @param icon Optional URL that represents the icon of the menu item.
+   * @param action Optional name of the action to execute in the given editor.
+   * @param funct Optional function to execute before the optional action. The
    * function takes an <Editor>, the <Cell> under the mouse and the
    * mouse event that triggered the call.
-   * cell - Optional <Cell> to use as an argument for the action.
-   * parent - DOM node that represents the parent menu item.
-   * iconCls - Optional CSS class for the menu icon.
-   * enabled - Optional boolean that specifies if the menu item is enabled.
+   * @param cell Optional <Cell> to use as an argument for the action.
+   * @param parent DOM node that represents the parent menu item.
+   * @param iconCls Optional CSS class for the menu icon.
+   * @param enabled Optional boolean that specifies if the menu item is enabled.
    * Default is true.
    */
   addAction(

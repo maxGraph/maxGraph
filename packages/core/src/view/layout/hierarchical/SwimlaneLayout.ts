@@ -173,10 +173,8 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * Executes the layout for the children of the specified parent.
    *
-   * Parameters:
-   *
-   * parent - Parent <Cell> that contains the children to be laid out.
-   * swimlanes - Ordered array of swimlanes to be laid out
+   * @param parent Parent <Cell> that contains the children to be laid out.
+   * @param swimlanes Ordered array of swimlanes to be laid out
    */
   execute(parent: Cell, swimlanes: CellArray): void {
     this.parent = parent;
@@ -350,10 +348,8 @@ class SwimlaneLayout extends GraphLayout {
    * This takes into account edges that are being promoted to the given
    * root due to invisible children or collapsed cells.
    *
-   * Parameters:
-   *
-   * parent - <Cell> whose children should be checked.
-   * vertices - array of vertices to limit search to
+   * @param parent <Cell> whose children should be checked.
+   * @param vertices array of vertices to limit search to
    */
   findRoots(parent: Cell, vertices: CellArray) {
     const roots = [];
@@ -415,9 +411,7 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * Returns the connected edges for the given cell.
    *
-   * Parameters:
-   *
-   * cell - <Cell> whose edges should be returned.
+   * @param cell <Cell> whose edges should be returned.
    */
   getEdges(cell: Cell): CellArray {
     const cachedEdges = this.edgesCache.get(cell);
@@ -474,10 +468,8 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * Helper function to return visible terminal for edge allowing for ports
    *
-   * Parameters:
-   *
-   * edge - <Cell> whose edges should be returned.
-   * source - Boolean that specifies whether the source or target terminal is to be returned
+   * @param edge <Cell> whose edges should be returned.
+   * @param source Boolean that specifies whether the source or target terminal is to be returned
    */
   getVisibleTerminal(edge: Cell, source: boolean): Cell {
     let terminalCache = this.edgesTargetTermCache;
@@ -659,9 +651,7 @@ class SwimlaneLayout extends GraphLayout {
    * Returns true if the given cell is a "port", that is, when connecting to
    * it, its parent is the connecting vertex in terms of graph traversal
    *
-   * Parameters:
-   *
-   * cell - <Cell> that represents the port.
+   * @param cell <Cell> that represents the port.
    */
   isPort(cell: Cell): boolean {
     if ((<Geometry>cell.geometry).relative) {
@@ -673,8 +663,6 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * Returns the edges between the given source and target. This takes into
    * account collapsed and invisible cells and ports.
-   *
-   * Parameters:
    *
    * source -
    * target -
@@ -707,15 +695,13 @@ class SwimlaneLayout extends GraphLayout {
    * each vertex is only visited once. The function may return false if the
    * traversal should stop at the given vertex.
    *
-   * Parameters:
-   *
-   * vertex - <Cell> that represents the vertex where the traversal starts.
-   * directed - boolean indicating if edges should only be traversed
+   * @param vertex <Cell> that represents the vertex where the traversal starts.
+   * @param directed boolean indicating if edges should only be traversed
    * from source to target. Default is true.
-   * edge - Optional <Cell> that represents the incoming edge. This is
+   * @param edge Optional <Cell> that represents the incoming edge. This is
    * null for the first step of the traversal.
-   * allVertices - Array of cell paths for the visited cells.
-   * swimlaneIndex - the laid out order index of the swimlane vertex is contained in
+   * @param allVertices Array of cell paths for the visited cells.
+   * @param swimlaneIndex the laid out order index of the swimlane vertex is contained in
    */
   traverse(
     vertex: Cell,

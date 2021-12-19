@@ -428,10 +428,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   /**
    * Performs one median positioning sweep in one direction
    *
-   * Parameters:
-   *
-   * i - the iteration of the whole process
-   * model - an internal model of the hierarchical layout
+   * @param i the iteration of the whole process
+   * @param model an internal model of the hierarchical layout
    */
   medianPos(i, model) {
     // Reverse sweep direction each time through this method
@@ -451,11 +449,9 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   /**
    * Performs median minimisation over one rank.
    *
-   * Parameters:
-   *
-   * rankValue - the layer number of this rank
-   * model - an internal model of the hierarchical layout
-   * nextRankValue - the layer number whose connected cels are to be laid out
+   * @param rankValue the layer number of this rank
+   * @param model an internal model of the hierarchical layout
+   * @param nextRankValue the layer number whose connected cels are to be laid out
    * relative to
    */
   rankMedianPosition(rankValue, model, nextRankValue) {
@@ -610,10 +606,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * Calculates the priority the specified cell has based on the type of its
    * cell and the cells it is connected to on the next layer
    *
-   * Parameters:
-   *
-   * currentCell - the cell whose weight is to be calculated
-   * collection - the cells the specified cell is connected to
+   * @param currentCell the cell whose weight is to be calculated
+   * @param collection the cells the specified cell is connected to
    */
   calculatedWeightedValue(currentCell, collection) {
     let totalWeight = 0;
@@ -637,10 +631,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * Calculates the median position of the connected cell on the specified
    * rank
    *
-   * Parameters:
-   *
-   * connectedCells - the cells the candidate connects to on this level
-   * rankValue - the layer number of this rank
+   * @param connectedCells the cells the candidate connects to on this level
+   * @param rankValue the layer number of this rank
    */
   medianXValue(connectedCells, rankValue) {
     if (connectedCells.length === 0) {
@@ -673,10 +665,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * as much as possible along the middle vertex in each rank. The other cells
    * are then placed as close as possible on either side.
    *
-   * Parameters:
-   *
-   * facade - the facade describing the input graph
-   * model - an internal model of the hierarchical layout
+   * @param facade the facade describing the input graph
+   * @param model an internal model of the hierarchical layout
    */
   initialCoords(facade, model) {
     this.calculateWidestRank(facade, model);
@@ -701,11 +691,9 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * together as their size and buffering permits. This method works on just
    * the specified rank.
    *
-   * Parameters:
-   *
-   * rankValue - the current rank being processed
-   * graph - the facade describing the input graph
-   * model - an internal model of the hierarchical layout
+   * @param rankValue the current rank being processed
+   * @param graph the facade describing the input graph
+   * @param model an internal model of the hierarchical layout
    */
   rankCoordinates(rankValue, graph, model) {
     const rank = model.ranks[rankValue];
@@ -770,10 +758,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * Calculates the width rank in the hierarchy. Also set the y value of each
    * rank whilst performing the calculation
    *
-   * Parameters:
-   *
-   * graph - the facade describing the input graph
-   * model - an internal model of the hierarchical layout
+   * @param graph the facade describing the input graph
+   * @param model an internal model of the hierarchical layout
    */
   calculateWidestRank(graph, model) {
     // Starting y co-ordinate
@@ -877,10 +863,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * Straightens out chains of virtual nodes where possibleacade to those stored after this layout
    * processing step has completed.
    *
-   * Parameters:
-   *
-   * graph - the facade describing the input graph
-   * model - an internal model of the hierarchical layout
+   * @param graph the facade describing the input graph
+   * @param model an internal model of the hierarchical layout
    */
   minPath(graph, model) {
     // Work down and up each edge with at least 2 control points
@@ -988,12 +972,10 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * Determines whether or not a node may be moved to the specified x
    * position on the specified rank
    *
-   * Parameters:
-   *
-   * model - the layout model
-   * cell - the cell being analysed
-   * rank - the layer of the cell
-   * position - the x position being sought
+   * @param model the layout model
+   * @param cell the cell being analysed
+   * @param rank the layer of the cell
+   * @param position the x position being sought
    */
   repositionValid(model, cell, rank, position) {
     const rankArray = model.ranks[rank];
@@ -1050,10 +1032,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * Sets the cell locations in the facade to those stored after this layout
    * processing step has completed.
    *
-   * Parameters:
-   *
-   * graph - the input graph
-   * model - the layout model
+   * @param graph the input graph
+   * @param model the layout model
    */
   setCellLocations(graph, model) {
     this.rankTopY = [];
@@ -1094,9 +1074,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   /**
    * Separates the x position of edges as they connect to vertices
    *
-   * Parameters:
-   *
-   * model - the layout model
+   * @param model the layout model
    */
   localEdgeProcessing(model) {
     // Iterate through each vertex, look at the edges connected in
@@ -1462,9 +1440,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   /**
    * Fixes the position of the specified vertex.
    *
-   * Parameters:
-   *
-   * cell - the vertex to position
+   * @param cell the vertex to position
    */
   setVertexLocation(cell) {
     const realCell = cell.cell;
@@ -1495,10 +1471,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   /**
    * Hook to add additional processing
    *
-   * Parameters:
-   *
-   * edge - the hierarchical model edge
-   * realEdge - the real edge in the graph
+   * @param edge the hierarchical model edge
+   * @param realEdge the real edge in the graph
    */
   processReversedEdge(graph, model) {
     // hook for subclassers

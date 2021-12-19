@@ -159,9 +159,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * Returns the current number of edge crossings in the hierarchy graph
    * model in the current candidate layout
    *
-   * Parameters:
-   *
-   * model - the internal model describing the hierarchy
+   * @param model the internal model describing the hierarchy
    */
   calculateCrossings(model) {
     const numRanks = model.ranks.length;
@@ -179,10 +177,8 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * the rank below it. Returns the number of edges crossings with the rank
    * beneath
    *
-   * Parameters:
-   *
-   * i -  the topmost rank of the pair ( higher rank value )
-   * model - the internal model describing the hierarchy
+   * @param i  the topmost rank of the pair ( higher rank value )
+   * @param model the internal model describing the hierarchy
    */
   calculateRankCrossing(i, model) {
     let totalCrossings = 0;
@@ -255,10 +251,8 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * Takes each possible adjacent cell pair on each rank and checks if
    * swapping them around reduces the number of crossing
    *
-   * Parameters:
-   *
-   * mainLoopIteration - the iteration number of the main loop
-   * model - the internal model describing the hierarchy
+   * @param mainLoopIteration the iteration number of the main loop
+   * @param model the internal model describing the hierarchy
    */
   transpose(mainLoopIteration, model) {
     let improved = true;
@@ -421,10 +415,8 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * Sweeps up or down the layout attempting to minimise the median placement
    * of connected cells on adjacent ranks
    *
-   * Parameters:
-   *
-   * iteration - the iteration number of the main loop
-   * model - the internal model describing the hierarchy
+   * @param iteration the iteration number of the main loop
+   * @param model the internal model describing the hierarchy
    */
   weightedMedian(iteration, model) {
     // Reverse sweep direction each time through this method
@@ -444,10 +436,8 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * Attempts to minimise the median placement of connected cells on this rank
    * and one of the adjacent ranks
    *
-   * Parameters:
-   *
-   * rankValue - the layer number of this rank
-   * downwardSweep - whether or not this is a downward sweep through the graph
+   * @param rankValue the layer number of this rank
+   * @param downwardSweep whether or not this is a downward sweep through the graph
    */
   medianRank(rankValue, downwardSweep) {
     const numCellsForRank = this.nestedBestRanks[rankValue].length;
@@ -514,11 +504,9 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * the connected cells on the specified rank. Returns the median rank
    * ordering value of the connected cells
    *
-   * Parameters:
-   *
-   * connectedCells - the cells on the specified rank connected to the
+   * @param connectedCells the cells on the specified rank connected to the
    * specified cell
-   * rankValue - the rank that the connected cell lie upon
+   * @param rankValue the rank that the connected cell lie upon
    */
   medianValue(connectedCells, rankValue) {
     const medianValues = [];

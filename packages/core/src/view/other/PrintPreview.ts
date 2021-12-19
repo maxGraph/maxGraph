@@ -331,10 +331,8 @@ class PrintPreview {
   /**
    * Adds the given graph to the existing print preview.
    *
-   * Parameters:
-   *
-   * css - Optional CSS string to be used in the head section.
-   * targetWindow - Optional window that should be used for rendering. If
+   * @param css Optional CSS string to be used in the head section.
+   * @param targetWindow Optional window that should be used for rendering. If
    * this is specified then no HEAD tag, CSS and BODY tag will be written.
    */
   appendGraph(graph, scale, x0, y0, forcePageBreaks, keepOpen) {
@@ -785,14 +783,12 @@ class PrintPreview {
   /**
    * Adds a graph fragment to the given div.
    *
-   * Parameters:
-   *
-   * dx - Horizontal translation for the diagram.
-   * dy - Vertical translation for the diagram.
-   * scale - Scale for the diagram.
-   * pageNumber - Number of the page to be rendered.
-   * div - Div that contains the output.
-   * clip - Contains the clipping rectangle as an <mxRectangle>.
+   * @param dx Horizontal translation for the diagram.
+   * @param dy Vertical translation for the diagram.
+   * @param scale Scale for the diagram.
+   * @param pageNumber Number of the page to be rendered.
+   * @param div Div that contains the output.
+   * @param clip Contains the clipping rectangle as an <mxRectangle>.
    */
   addGraphFragment(dx: number, dy: number, scale: number, pageNumber: number, div: HTMLDivElement, clip: Rectangle) {
     const view = this.graph.getView();
@@ -982,8 +978,6 @@ class PrintPreview {
 
   /**
    * Opens the print preview and shows the print dialog.
-   *
-   * Parameters:
    *
    * @param css Optional CSS string to be used in the head section.
    */

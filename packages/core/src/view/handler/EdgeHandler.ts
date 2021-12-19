@@ -592,10 +592,8 @@ class EdgeHandler {
    * given source, target pair is not valid. Otherwise it returns null. This
    * implementation uses <mxGraph.getEdgeValidationError>.
    *
-   * Parameters:
-   *
-   * source - <Cell> that represents the source terminal.
-   * target - <Cell> that represents the target terminal.
+   * @param source <Cell> that represents the source terminal.
+   * @param target <Cell> that represents the target terminal.
    */
   validateConnection(source: Cell | null, target: Cell | null) {
     return this.graph.getEdgeValidationError(this.state.cell, source, target);
@@ -748,9 +746,7 @@ class EdgeHandler {
   /**
    * Helper method to initialize the given bend.
    *
-   * Parameters:
-   *
-   * bend - <mxShape> that represents the bend to be initialized.
+   * @param bend <mxShape> that represents the bend to be initialized.
    */
   initBend(bend: Shape, dblClick?: (evt: MouseEvent) => void) {
     if (this.preferHtml) {
@@ -1120,10 +1116,8 @@ class EdgeHandler {
   /**
    * Updates the given preview state taking into account the state of the constraint handler.
    *
-   * Parameters:
-   *
-   * pt - <mxPoint> that contains the current pointer position.
-   * me - Optional <mxMouseEvent> that contains the current event.
+   * @param pt <mxPoint> that contains the current pointer position.
+   * @param me Optional <mxMouseEvent> that contains the current event.
    */
   getPreviewPoints(pt: Point, me?: InternalMouseEvent) {
     const geometry = this.state.cell.getGeometry();
@@ -1685,10 +1679,8 @@ class EdgeHandler {
    * graph coordinates and applies the grid. Returns the given, modified
    * point instance.
    *
-   * Parameters:
-   *
-   * point - <mxPoint> to be converted.
-   * gridEnabled - Boolean that specifies if the grid should be applied.
+   * @param point <mxPoint> to be converted.
+   * @param gridEnabled Boolean that specifies if the grid should be applied.
    */
   convertPoint(point: Point, gridEnabled: boolean) {
     const scale = this.graph.getView().getScale();
@@ -1716,11 +1708,9 @@ class EdgeHandler {
   /**
    * Changes the coordinates for the label of the given edge.
    *
-   * Parameters:
-   *
-   * edge - <Cell> that represents the edge.
-   * x - Integer that specifies the x-coordinate of the new location.
-   * y - Integer that specifies the y-coordinate of the new location.
+   * @param edge <Cell> that represents the edge.
+   * @param x Integer that specifies the x-coordinate of the new location.
+   * @param y Integer that specifies the y-coordinate of the new location.
    */
   moveLabel(edgeState: CellState, x: number, y: number) {
     const model = this.graph.getModel();
@@ -1770,15 +1760,13 @@ class EdgeHandler {
    * Changes the terminal or terminal point of the given edge in the graph
    * model.
    *
-   * Parameters:
-   *
-   * edge - <Cell> that represents the edge to be reconnected.
-   * terminal - <Cell> that represents the new terminal.
-   * isSource - Boolean indicating if the new terminal is the source or
+   * @param edge <Cell> that represents the edge to be reconnected.
+   * @param terminal <Cell> that represents the new terminal.
+   * @param isSource Boolean indicating if the new terminal is the source or
    * target terminal.
-   * isClone - Boolean indicating if the new connection should be a clone of
+   * @param isClone Boolean indicating if the new connection should be a clone of
    * the old edge.
-   * me - <mxMouseEvent> that contains the mouse up event.
+   * @param me <mxMouseEvent> that contains the mouse up event.
    */
   connect(
     edge: Cell,
@@ -2131,10 +2119,8 @@ class EdgeHandler {
   /**
    * Updates and redraws the inner bends.
    *
-   * Parameters:
-   *
-   * p0 - <mxPoint> that represents the location of the first point.
-   * pe - <mxPoint> that represents the location of the last point.
+   * @param p0 <mxPoint> that represents the location of the first point.
+   * @param pe <mxPoint> that represents the location of the last point.
    */
   redrawInnerBends(p0: Point, pe: Point) {
     for (let i = 1; i < this.bends.length - 1; i += 1) {

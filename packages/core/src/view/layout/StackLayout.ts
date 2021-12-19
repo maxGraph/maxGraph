@@ -436,10 +436,8 @@ class StackLayout extends GraphLayout {
   /**
    * Sets the specific geometry to the given child cell.
    *
-   * Parameters:
-   *
-   * child - The given child of <Cell>.
-   * geo - The specific geometry of <mxGeometry>.
+   * @param child The given child of <Cell>.
+   * @param geo The specific geometry of <mxGeometry>.
    */
   setChildGeometry(child: Cell, geo: Geometry) {
     const geo2 = child.getGeometry();
@@ -458,11 +456,9 @@ class StackLayout extends GraphLayout {
   /**
    * Updates the geometry of the given parent cell.
    *
-   * Parameters:
-   *
-   * parent - The given parent of <Cell>.
-   * pgeo - The new <mxGeometry> for parent.
-   * last - The last <mxGeometry>.
+   * @param parent The given parent of <Cell>.
+   * @param pgeo The new <mxGeometry> for parent.
+   * @param last The last <mxGeometry>.
    */
   updateParentGeometry(parent: Cell, pgeo: Geometry, last: Geometry) {
     const horizontal = this.isHorizontal();

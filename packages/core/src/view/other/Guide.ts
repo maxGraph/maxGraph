@@ -95,9 +95,7 @@ class Guide {
    * implementation returns a new, dashed and crisp <mxPolyline> using
    * <mxConstants.GUIDE_COLOR> and <mxConstants.GUIDE_STROKEWIDTH> as the format.
    *
-   * Parameters:
-   *
-   * horizontal - Boolean that specifies which guide should be created.
+   * @param horizontal Boolean that specifies which guide should be created.
    */
   createGuideShape(horizontal = false) {
     // TODO: Should vertical guides be supported here?? ============================

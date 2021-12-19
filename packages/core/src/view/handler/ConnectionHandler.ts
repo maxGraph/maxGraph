@@ -191,10 +191,8 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  * the creation of a new connection or use connect icons as explained
  * above.
  *
- * Parameters:
- *
- * graph - Reference to the enclosing <mxGraph>.
- * factoryMethod - Optional function to create the edge. The function takes
+ * @param graph Reference to the enclosing <mxGraph>.
+ * @param factoryMethod Optional function to create the edge. The function takes
  * the source and target <Cell> as the first and second argument and an
  * optional cell style from the preview as the third argument. It returns
  * the <Cell> that represents the new edge.
@@ -434,9 +432,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Enables or disables event handling. This implementation
    * updates <enabled>.
    *
-   * Parameters:
-   *
-   * enabled - Boolean that specifies the new enabled state.
+   * @param enabled Boolean that specifies the new enabled state.
    */
   setEnabled(enabled: boolean) {
     this.enabled = enabled;
@@ -445,13 +441,11 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Returns <insertBeforeSource> for non-loops and false for loops.
    *
-   * Parameters:
-   *
-   * edge - <Cell> that represents the edge to be inserted.
-   * source - <Cell> that represents the source terminal.
-   * target - <Cell> that represents the target terminal.
-   * evt - Mousedown event of the connect gesture.
-   * dropTarget - <Cell> that represents the cell under the mouse when it was
+   * @param edge <Cell> that represents the edge to be inserted.
+   * @param source <Cell> that represents the source terminal.
+   * @param target <Cell> that represents the target terminal.
+   * @param evt Mousedown event of the connect gesture.
+   * @param dropTarget <Cell> that represents the cell under the mouse when it was
    * released.
    */
   isInsertBefore(
@@ -467,9 +461,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Returns <createTarget>.
    *
-   * Parameters:
-   *
-   * evt - Current active native pointer event.
+   * @param evt Current active native pointer event.
    */
   isCreateTarget(evt: Event) {
     return this.createTarget;
@@ -640,10 +632,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Returns <mxGraph.isValidSource> for the given source terminal.
    *
-   * Parameters:
-   *
-   * cell - <Cell> that represents the source terminal.
-   * me - <mxMouseEvent> that is associated with this call.
+   * @param cell <Cell> that represents the source terminal.
+   * @param me <mxMouseEvent> that is associated with this call.
    */
   isValidSource(cell: Cell, me: InternalMouseEvent) {
     return this.graph.isValidSource(cell);
@@ -654,9 +644,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * <mxGraph.getEdgeValidationError> in <validateConnection>. This is an
    * additional hook for disabling certain targets in this specific handler.
    *
-   * Parameters:
-   *
-   * cell - <Cell> that represents the target terminal.
+   * @param cell <Cell> that represents the target terminal.
    */
   isValidTarget(cell: Cell) {
     return true;
@@ -667,10 +655,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * given source target pair is not valid. Otherwise it returns null. This
    * implementation uses <mxGraph.getEdgeValidationError>.
    *
-   * Parameters:
-   *
-   * source - <Cell> that represents the source terminal.
-   * target - <Cell> that represents the target terminal.
+   * @param source <Cell> that represents the source terminal.
+   * @param target <Cell> that represents the target terminal.
    */
   validateConnection(source: Cell, target: Cell) {
     if (!this.isValidTarget(target)) {
@@ -683,9 +669,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Hook to return the <mxImage> used for the connection icon of the given
    * <CellState>. This implementation returns <connectImage>.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose connect image should be returned.
+   * @param state <CellState> whose connect image should be returned.
    */
   getConnectImage(state: CellState) {
     return this.connectImage;
@@ -695,9 +679,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Returns true if the state has a HTML label in the graph's container, otherwise
    * it returns <moveIconFront>.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose connect icons should be returned.
+   * @param state <CellState> whose connect icons should be returned.
    */
   isMoveIconToFrontForState(state: CellState) {
     if (state.text && state.text.node.parentNode === this.graph.container) {
@@ -710,9 +692,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Creates the array <mxImageShapes> that represent the connect icons for
    * the given <CellState>.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose connect icons should be returned.
+   * @param state <CellState> whose connect icons should be returned.
    */
   createIcons(state: CellState) {
     const image = this.getConnectImage(state);
@@ -774,9 +754,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Redraws the given array of <mxImageShapes>.
    *
-   * Parameters:
-   *
-   * icons - Array of <mxImageShapes> to be redrawn.
+   * @param icons Array of <mxImageShapes> to be redrawn.
    */
   redrawIcons(icons: ImageShape[], state: CellState) {
     if (icons[0] && icons[0].bounds) {
@@ -1442,10 +1420,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Returns the perimeter point for the given target state.
    *
-   * Parameters:
-   *
-   * state - <CellState> that represents the target cell state.
-   * me - <mxMouseEvent> that represents the mouse move.
+   * @param state <CellState> that represents the target cell state.
+   * @param me <mxMouseEvent> that represents the mouse move.
    */
   getTargetPerimeterPoint(state: CellState, me: InternalMouseEvent) {
     let result: Point | null = null;
@@ -1478,11 +1454,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Hook to update the icon position(s) based on a mouseOver event. This is
    * an empty implementation.
    *
-   * Parameters:
-   *
-   * state - <CellState> that represents the target cell state.
-   * next - <mxPoint> that represents the next point along the previewed edge.
-   * me - <mxMouseEvent> that represents the mouse move.
+   * @param state <CellState> that represents the target cell state.
+   * @param next <mxPoint> that represents the next point along the previewed edge.
+   * @param me <mxMouseEvent> that represents the mouse move.
    */
   getSourcePerimeterPoint(state: CellState, next: Point, me: InternalMouseEvent) {
     let result = null;
@@ -1528,11 +1502,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Hook to update the icon position(s) based on a mouseOver event. This is
    * an empty implementation.
    *
-   * Parameters:
-   *
-   * state - <CellState> under the mouse.
-   * icons - Array of currently displayed icons.
-   * me - <mxMouseEvent> that contains the mouse event.
+   * @param state <CellState> under the mouse.
+   * @param icons Array of currently displayed icons.
+   * @param me <mxMouseEvent> that contains the mouse event.
    */
   updateIcons(state: CellState, icons: ImageShape[], me: InternalMouseEvent) {
     // empty
@@ -1694,9 +1666,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Returns the color used to draw the preview edge. This returns green if
    * there is no edge validation error and red otherwise.
    *
-   * Parameters:
-   *
-   * valid - Boolean indicating if the color for a valid edge should be
+   * @param valid Boolean indicating if the color for a valid edge should be
    * returned.
    */
   updatePreview(valid: boolean) {
@@ -1710,9 +1680,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Returns the color used to draw the preview edge. This returns green if
    * there is no edge validation error and red otherwise.
    *
-   * Parameters:
-   *
-   * valid - Boolean indicating if the color for a valid edge should be
+   * @param valid Boolean indicating if the color for a valid edge should be
    * returned.
    */
   getEdgeColor(valid: boolean) {
@@ -1723,9 +1691,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Returns the width used to draw the preview edge. This returns 3 if
    * there is no edge validation error and 1 otherwise.
    *
-   * Parameters:
-   *
-   * valid - Boolean indicating if the width for a valid edge should be
+   * @param valid Boolean indicating if the width for a valid edge should be
    * returned.
    */
   getEdgeWidth(valid: boolean): number {
@@ -1736,12 +1702,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Connects the given source and target using a new edge. This
    * implementation uses <createEdge> to create the edge.
    *
-   * Parameters:
-   *
-   * source - <Cell> that represents the source terminal.
-   * target - <Cell> that represents the target terminal.
-   * evt - Mousedown event of the connect gesture.
-   * dropTarget - <Cell> that represents the cell under the mouse when it was
+   * @param source <Cell> that represents the source terminal.
+   * @param target <Cell> that represents the target terminal.
+   * @param evt Mousedown event of the connect gesture.
+   * @param dropTarget <Cell> that represents the cell under the mouse when it was
    * released.
    */
   connect(
@@ -1964,10 +1928,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * under the mouse. This is only called if <createTarget> is true and
    * returns null.
    *
-   * Parameters:
-   *
-   * evt - Mousedown event of the connect gesture.
-   * source - <Cell> that represents the source terminal.
+   * @param evt Mousedown event of the connect gesture.
+   * @param source <Cell> that represents the source terminal.
    */
   createTargetVertex(evt: MouseEvent, source: Cell) {
     // Uses the first non-relative source
@@ -2030,12 +1992,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * source and target arguments are informal, the actual connection is
    * setup later by the caller of this function.
    *
-   * Parameters:
-   *
-   * value - Value to be used for creating the edge.
-   * source - <Cell> that represents the source terminal.
-   * target - <Cell> that represents the target terminal.
-   * style - Optional style from the preview edge.
+   * @param value Value to be used for creating the edge.
+   * @param source <Cell> that represents the source terminal.
+   * @param target <Cell> that represents the target terminal.
+   * @param style Optional style from the preview edge.
    */
   createEdge(value: any, source: Cell | null, target: Cell | null, style: string = '') {
     let edge = null;

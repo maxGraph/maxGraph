@@ -50,14 +50,12 @@ import Cell from './Cell';
  *
  * Constructs a new cell marker.
  *
- * Parameters:
- *
- * graph - Reference to the enclosing <mxGraph>.
- * validColor - Optional marker color for valid states. Default is
+ * @param graph Reference to the enclosing <mxGraph>.
+ * @param validColor Optional marker color for valid states. Default is
  * <mxConstants.DEFAULT_VALID_COLOR>.
- * invalidColor - Optional marker color for invalid states. Default is
+ * @param invalidColor Optional marker color for invalid states. Default is
  * <mxConstants.DEFAULT_INVALID_COLOR>.
- * hotspot - Portion of the width and hight where a state intersects a
+ * @param hotspot Portion of the width and hight where a state intersects a
  * given coordinate pair. A value of 0 means always highlight. Default is
  * <mxConstants.DEFAULT_HOTSPOT>.
  */
@@ -131,9 +129,7 @@ class CellMarker extends EventSource {
    * Enables or disables event handling. This implementation
    * updates <enabled>.
    *
-   * Parameters:
-   *
-   * enabled - Boolean that specifies the new enabled state.
+   * @param enabled Boolean that specifies the new enabled state.
    */
   setEnabled(enabled: boolean) {
     this.enabled = enabled;

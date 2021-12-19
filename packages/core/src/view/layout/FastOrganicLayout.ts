@@ -147,9 +147,7 @@ class MxFastOrganicLayout extends GraphLayout {
    * Returns a boolean indicating if the given <Cell> should be ignored as a
    * vertex. This returns true if the cell has no connections.
    *
-   * Parameters:
-   *
-   * vertex - <Cell> whose ignored state should be returned.
+   * @param vertex <Cell> whose ignored state should be returned.
    */
   isVertexIgnored(vertex: Cell) {
     return (

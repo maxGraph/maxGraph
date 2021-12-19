@@ -109,8 +109,6 @@ class ConstraintHandler {
    * Enables or disables event handling. This implementation
    * updates {@link enabled}.
    *
-   * Parameters:
-   *
    * @param {boolean} enabled - Boolean that specifies the new enabled state.
    */
   setEnabled(enabled: boolean) {
@@ -143,9 +141,7 @@ class ConstraintHandler {
    * Returns the tolerance to be used for intersecting connection points. This
    * implementation returns {@link mxGraph.tolerance}.
    *
-   * Parameters:
-   *
-   * me - {@link mxMouseEvent} whose tolerance should be returned.
+   * @param me {@link mxMouseEvent} whose tolerance should be returned.
    */
   getTolerance(me: InternalMouseEvent) {
     return this.graph.getEventTolerance();

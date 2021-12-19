@@ -62,10 +62,8 @@ import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isSh
  * Constructs an event handler that executes functions bound to specific
  * keystrokes.
  *
- * Parameters:
- *
- * graph - Reference to the associated <mxGraph>.
- * target - Optional reference to the event target. If null, the document
+ * @param graph Reference to the associated <mxGraph>.
+ * @param target Optional reference to the event target. If null, the document
  * element is used as the event target, that is, the object where the key
  * event listener is installed.
  */
@@ -133,9 +131,7 @@ class KeyHandler {
   /**
    * Enables or disables event handling by updating <enabled>.
    *
-   * Parameters:
-   *
-   * enabled - Boolean that specifies the new enabled state.
+   * @param enabled Boolean that specifies the new enabled state.
    */
   setEnabled(enabled: boolean) {
     this.enabled = enabled;
@@ -145,10 +141,8 @@ class KeyHandler {
    * Binds the specified keycode to the given function. This binding is used
    * if the control key is not pressed.
    *
-   * Parameters:
-   *
-   * code - Integer that specifies the keycode.
-   * funct - JavaScript function that takes the key event as an argument.
+   * @param code Integer that specifies the keycode.
+   * @param funct JavaScript function that takes the key event as an argument.
    */
   bindKey(code: number, funct: Function) {
     this.normalKeys[code] = funct;
@@ -158,10 +152,8 @@ class KeyHandler {
    * Binds the specified keycode to the given function. This binding is used
    * if the shift key is pressed.
    *
-   * Parameters:
-   *
-   * code - Integer that specifies the keycode.
-   * funct - JavaScript function that takes the key event as an argument.
+   * @param code Integer that specifies the keycode.
+   * @param funct JavaScript function that takes the key event as an argument.
    */
   bindShiftKey(code: number, funct: Function) {
     this.shiftKeys[code] = funct;
@@ -171,10 +163,8 @@ class KeyHandler {
    * Binds the specified keycode to the given function. This binding is used
    * if the control key is pressed.
    *
-   * Parameters:
-   *
-   * code - Integer that specifies the keycode.
-   * funct - JavaScript function that takes the key event as an argument.
+   * @param code Integer that specifies the keycode.
+   * @param funct JavaScript function that takes the key event as an argument.
    */
   bindControlKey(code: number, funct: Function) {
     this.controlKeys[code] = funct;
@@ -184,10 +174,8 @@ class KeyHandler {
    * Binds the specified keycode to the given function. This binding is used
    * if the control and shift key are pressed.
    *
-   * Parameters:
-   *
-   * code - Integer that specifies the keycode.
-   * funct - JavaScript function that takes the key event as an argument.
+   * @param code Integer that specifies the keycode.
+   * @param funct JavaScript function that takes the key event as an argument.
    */
   bindControlShiftKey(code: number, funct: Function) {
     this.controlShiftKeys[code] = funct;
@@ -196,9 +184,7 @@ class KeyHandler {
   /**
    * Returns true if the control key is pressed. This uses <mxEvent.isControlDown>.
    *
-   * Parameters:
-   *
-   * evt - Key event whose control key pressed state should be returned.
+   * @param evt Key event whose control key pressed state should be returned.
    */
   isControlDown(evt: KeyboardEvent) {
     return _isControlDown(evt);
@@ -208,9 +194,7 @@ class KeyHandler {
    * Returns the function associated with the given key event or null if no
    * function is associated with the given event.
    *
-   * Parameters:
-   *
-   * evt - Key event whose associated function should be returned.
+   * @param evt Key event whose associated function should be returned.
    */
   getFunction(evt: KeyboardEvent) {
     if (evt != null && !isAltDown(evt)) {
@@ -235,9 +219,7 @@ class KeyHandler {
    * descendant of the <mxGraph.container>, or the <mxGraph.cellEditor> of the
    * <graph>.
    *
-   * Parameters:
-   *
-   * evt - Key event that represents the keystroke.
+   * @param evt Key event that represents the keystroke.
    */
   isGraphEvent(evt: KeyboardEvent) {
     const source = <Element>getSource(evt);
@@ -263,9 +245,7 @@ class KeyHandler {
    * <isEventIgnored> returns false, except for escape for which
    * <isEventIgnored> is not invoked.
    *
-   * Parameters:
-   *
-   * evt - Key event that represents the keystroke.
+   * @param evt Key event that represents the keystroke.
    */
   keyDown(evt: KeyboardEvent) {
     if (this.isEnabledForEvent(evt)) {
@@ -293,9 +273,7 @@ class KeyHandler {
    * returns true for both, this handler and <graph>, if the event is not
    * consumed and if <isGraphEvent> returns true.
    *
-   * Parameters:
-   *
-   * evt - Key event that represents the keystroke.
+   * @param evt Key event that represents the keystroke.
    */
   isEnabledForEvent(evt: KeyboardEvent) {
     return (
@@ -310,9 +288,7 @@ class KeyHandler {
    * Returns true if the given keystroke should be ignored. This returns
    * graph.isEditing().
    *
-   * Parameters:
-   *
-   * evt - Key event that represents the keystroke.
+   * @param evt Key event that represents the keystroke.
    */
   isEventIgnored(evt: KeyboardEvent) {
     return (<Graph>this.graph).isEditing();
@@ -323,9 +299,7 @@ class KeyHandler {
    * <mxGraph.stopEditing> to cancel the current editing, connecting
    * and/or other ongoing modifications.
    *
-   * Parameters:
-   *
-   * evt - Key event that represents the keystroke. Possible keycode in this
+   * @param evt Key event that represents the keystroke. Possible keycode in this
    * case is 27 (ESCAPE).
    */
   escape(evt: KeyboardEvent) {

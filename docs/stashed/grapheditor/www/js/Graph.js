@@ -2607,9 +2607,7 @@ Graph.prototype.setDefaultParent = function(cell)
 /**
  * Returns the first non-null link for the cell or its ancestors.
  * 
- * Parameters:
- * 
- * cell - <Cell> whose link should be returned.
+ * @param cell <Cell> whose link should be returned.
  */
 Graph.prototype.getClickableLinkForCell = function(cell)
 {
@@ -3635,9 +3633,7 @@ Graph.prototype.isLabelMovable = function(cell)
  * default parent if no parent is specified. To select leaf vertices and/or
  * edges use <selectCells>.
  * 
- * Parameters:
- * 
- * parent - Optional <Cell> whose children should be selected.
+ * @param parent Optional <Cell> whose children should be selected.
  * Default is <defaultParent>.
  */
 Graph.prototype.selectAll = function(parent)
@@ -3656,11 +3652,9 @@ Graph.prototype.selectAll = function(parent)
  * parent if no parent is specified. Use <selectAll> to select all cells.
  * For vertices, only cells with no children are selected.
  * 
- * Parameters:
- * 
- * vertices - Boolean indicating if vertices should be selected.
- * edges - Boolean indicating if edges should be selected.
- * parent - Optional <Cell> that acts as the root of the recursion.
+ * @param vertices Boolean indicating if vertices should be selected.
+ * @param edges Boolean indicating if edges should be selected.
+ * @param parent Optional <Cell> that acts as the root of the recursion.
  * Default is <defaultParent>.
  */
 Graph.prototype.selectCells = function(vertices, edges, parent)
@@ -3677,11 +3671,9 @@ Graph.prototype.selectCells = function(vertices, edges, parent)
  * Returns the bottom-most swimlane that intersects the given point (x, y)
  * in the cell hierarchy that starts at the given parent.
  * 
- * Parameters:
- * 
- * x - X-coordinate of the location to be checked.
- * y - Y-coordinate of the location to be checked.
- * parent - <Cell> that should be used as the root of the recursion.
+ * @param x X-coordinate of the location to be checked.
+ * @param y Y-coordinate of the location to be checked.
+ * @param parent <Cell> that should be used as the root of the recursion.
  * Default is <defaultParent>.
  */
 Graph.prototype.getSwimlaneAt = (x, y, parent) =>
@@ -8219,10 +8211,8 @@ if (typeof VertexHandler != 'undefined')
 		 * Distribuets the centers of the given cells equally along the available
 		 * horizontal or vertical space.
 		 * 
-		 * Parameters:
-		 * 
-		 * horizontal - Boolean that specifies the direction of the distribution.
-		 * cells - Optional array of <mxCells> to be distributed. Edges are ignored.
+		 * @param horizontal Boolean that specifies the direction of the distribution.
+		 * @param cells Optional array of <mxCells> to be distributed. Edges are ignored.
 		 */
 		Graph.prototype.distributeCells = function(horizontal, cells)
 		{

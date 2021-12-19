@@ -40,12 +40,10 @@ import CellArray from '../cell/CellArray';
  *
  * Constructs an animation.
  *
- * Parameters:
- *
- * graph - Reference to the enclosing <mxGraph>.
- * steps - Optional number of steps in the morphing animation. Default is 6.
- * ease - Optional easing constant for the animation. Default is 1.5.
- * delay - Optional delay between the animation steps. Passed to <Animation>.
+ * @param graph Reference to the enclosing <mxGraph>.
+ * @param steps Optional number of steps in the morphing animation. Default is 6.
+ * @param ease Optional easing constant for the animation. Default is 1.5.
+ * @param delay Optional delay between the animation steps. Passed to <Animation>.
  */
 class Morphing extends Animation {
   constructor(graph: Graph, steps: number=6, ease: number=1.5, delay: number) {

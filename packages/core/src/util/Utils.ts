@@ -73,9 +73,7 @@ const utils = {
  * Removes the cursors from the style of the given DOM node and its
  * descendants.
  *
- * Parameters:
- *
- * element - DOM node to remove the cursor style from.
+ * @param element DOM node to remove the cursor style from.
  */
 export const removeCursors = (element: HTMLElement) => {
   if (element.style) {
@@ -98,9 +96,7 @@ export const removeCursors = (element: HTMLElement) => {
  *
  * Returns the current style of the specified element.
  *
- * Parameters:
- *
- * element - DOM node whose current style should be returned.
+ * @param element DOM node whose current style should be returned.
  */
 export const getCurrentStyle = (element: HTMLElement) => {
   return element ? window.getComputedStyle(element, '') : null;
@@ -167,9 +163,7 @@ export const setPrefixedStyle = (
  * Returns true if the overflow CSS property of the given node is either
  * scroll or auto.
  *
- * Parameters:
- *
- * node - DOM node whose style should be checked for scrollbars.
+ * @param node DOM node whose style should be checked for scrollbars.
  */
 export const hasScrollbars = (node: HTMLElement) => {
   const style = getCurrentStyle(node);
@@ -220,10 +214,8 @@ export const findNode = (
  *
  * The length of arrays is not modified inside this function.
  *
- * Parameters:
- *
- * obj - Object to find in the given array.
- * array - Array to check for the given obj.
+ * @param obj Object to find in the given array.
+ * @param array Array to check for the given obj.
  */
 export const remove = (obj: object, array: object[]) => {
   let result = null;
@@ -304,11 +296,9 @@ export const fit = (node: HTMLElement) => {
  * Returns the value for the given key in the given associative array or
  * the given default value if the value is null.
  *
- * Parameters:
- *
- * array - Associative array that contains the value for the key.
- * key - Key whose value should be returned.
- * defaultValue - Value to be returned if the value for the given
+ * @param array Associative array that contains the value for the key.
+ * @param key Key whose value should be returned.
+ * @param defaultValue Value to be returned if the value for the given
  * key is null.
  */
 export const getValue = (array: any, key: string, defaultValue?: any) => {
@@ -334,11 +324,9 @@ export const getStringValue = (array: any, key: string, defaultValue: string) =>
  * array or the given default value (or 0) if the value is null. The value
  * is converted to a numeric value using the Number function.
  *
- * Parameters:
- *
- * array - Associative array that contains the value for the key.
- * key - Key whose value should be returned.
- * defaultValue - Value to be returned if the value for the given
+ * @param array Associative array that contains the value for the key.
+ * @param key Key whose value should be returned.
+ * @param defaultValue Value to be returned if the value for the given
  * key is null. Default is 0.
  */
 export const getNumber = (array: any, key: string, defaultValue: number) => {
@@ -358,11 +346,9 @@ export const getNumber = (array: any, key: string, defaultValue: number) => {
  * array or the given default value if the value is null. If the value
  * is <mxConstants.NONE> then null is returned.
  *
- * Parameters:
- *
- * array - Associative array that contains the value for the key.
- * key - Key whose value should be returned.
- * defaultValue - Value to be returned if the value for the given
+ * @param array Associative array that contains the value for the key.
+ * @param key Key whose value should be returned.
+ * @param defaultValue Value to be returned if the value for the given
  * key is null. Default is null.
  */
 export const getColor = (array: any, key: string, defaultValue: any) => {
@@ -382,10 +368,8 @@ export const getColor = (array: any, key: string, defaultValue: any) => {
  *
  * Compares all Point in the given lists.
  *
- * Parameters:
- *
- * a - Array of <Point> to be compared.
- * b - Array of <Point> to be compared.
+ * @param a Array of <Point> to be compared.
+ * @param b Array of <Point> to be compared.
  */
 export const equalPoints = (a: (Point | null)[] | null, b: (Point | null)[] | null) => {
   if ((!a && b) || (a && !b) || (a && b && a.length != b.length)) {
@@ -409,10 +393,8 @@ export const equalPoints = (a: (Point | null)[] | null, b: (Point | null)[] | nu
  * Returns true if all properties of the given objects are equal. Values
  * with NaN are equal to NaN and unequal to any other value.
  *
- * Parameters:
- *
- * a - First object to be compared.
- * b - Second object to be compared.
+ * @param a First object to be compared.
+ * @param b Second object to be compared.
  */
 export const equalEntries = (a: Properties | null, b: Properties | null) => {
   // Counts keys in b to check if all values have been compared
@@ -462,9 +444,7 @@ export const removeDuplicates = (arr: any) => {
  *
  * Returns a textual representation of the specified object.
  *
- * Parameters:
- *
- * obj - Object to return the string representation for.
+ * @param obj Object to return the string representation for.
  */
 export const toString = (obj: Properties) => {
   let output = '';
@@ -627,11 +607,9 @@ export const arcToCurves = (
  *
  * Returns the bounding box for the rotated rectangle.
  *
- * Parameters:
- *
- * rect - <mxRectangle> to be rotated.
- * angle - Number that represents the angle (in degrees).
- * cx - Optional <mxPoint> that represents the rotation center. If no
+ * @param rect <mxRectangle> to be rotated.
+ * @param angle Number that represents the angle (in degrees).
+ * @param cx Optional <mxPoint> that represents the rotation center. If no
  * rotation center is given then the center of rect is used.
  */
 export const getBoundingBox = (
@@ -688,12 +666,10 @@ export const getRotatedPoint = (pt: Point, cos: number, sin: number, c = new Poi
  * @param defaultValue Default value to return if the key is undefined.
  * @return the mask of port constraint directions
  *
- * Parameters:
- *
- * terminal - <mxCelState> that represents the terminal.
- * edge - <CellState> that represents the edge.
- * source - Boolean that specifies if the terminal is the source terminal.
- * defaultValue - Default value to be returned.
+ * @param terminal <mxCelState> that represents the terminal.
+ * @param edge <CellState> that represents the edge.
+ * @param source Boolean that specifies if the terminal is the source terminal.
+ * @param defaultValue Default value to be returned.
  */
 export const getPortConstraints = (
   terminal: CellState,
@@ -960,11 +936,9 @@ export const getPerimeterPoint = (pts: Point[], center: Point, point: Point) => 
  *
  * Returns true if the given rectangle intersects the given segment.
  *
- * Parameters:
- *
- * bounds - <mxRectangle> that represents the rectangle.
- * p1 - <mxPoint> that represents the first point of the segment.
- * p2 - <mxPoint> that represents the second point of the segment.
+ * @param bounds <mxRectangle> that represents the rectangle.
+ * @param p1 <mxPoint> that represents the first point of the segment.
+ * @param p2 <mxPoint> that represents the second point of the segment.
  */
 export const rectangleIntersectsSegment = (bounds: Rectangle, p1: Point, p2: Point) => {
   const top = bounds.y;
@@ -1035,11 +1009,9 @@ export const rectangleIntersectsSegment = (bounds: Rectangle, p1: Point, p2: Poi
  *
  * Returns true if the specified point (x, y) is contained in the given rectangle.
  *
- * Parameters:
- *
- * bounds - <mxRectangle> that represents the area.
- * x - X-coordinate of the point.
- * y - Y-coordinate of the point.
+ * @param bounds <mxRectangle> that represents the area.
+ * @param x X-coordinate of the point.
+ * @param y Y-coordinate of the point.
  */
 export const contains = (bounds: Rectangle, x: number, y: number) => {
   return (
@@ -1055,10 +1027,8 @@ export const contains = (bounds: Rectangle, x: number, y: number) => {
  *
  * Returns true if the two rectangles intersect.
  *
- * Parameters:
- *
- * a - <mxRectangle> to be checked for intersection.
- * b - <mxRectangle> to be checked for intersection.
+ * @param a <mxRectangle> to be checked for intersection.
+ * @param b <mxRectangle> to be checked for intersection.
  */
 export const intersects = (a: Rectangle, b: Rectangle) => {
   let tw = a.width;
@@ -1093,14 +1063,12 @@ export const intersects = (a: Rectangle, b: Rectangle) => {
  *
  * Returns true if the state and the hotspot intersect.
  *
- * Parameters:
- *
- * state - <CellState>
- * x - X-coordinate.
- * y - Y-coordinate.
- * hotspot - Optional size of the hostpot.
- * min - Optional min size of the hostpot.
- * max - Optional max size of the hostpot.
+ * @param state <CellState>
+ * @param x X-coordinate.
+ * @param y Y-coordinate.
+ * @param hotspot Optional size of the hostpot.
+ * @param min Optional min size of the hostpot.
+ * @param max Optional max size of the hostpot.
  */
 export const intersectsHotspot = (
   state: CellState,
@@ -1165,10 +1133,8 @@ export const intersectsHotspot = (
  * offset is the distance from the top left corner of the container to the
  * top left corner of the document.
  *
- * Parameters:
- *
- * container - DOM node to return the offset for.
- * scollOffset - Optional boolean to add the scroll offset of the document.
+ * @param container DOM node to return the offset for.
+ * @param scollOffset Optional boolean to add the scroll offset of the document.
  * Default is false.
  */
 export const getOffset = (container: HTMLElement, scrollOffset = false) => {
@@ -1235,12 +1201,10 @@ export const getDocumentScrollOrigin = (doc: Document) => {
  *
  * Returns the top, left corner of the viewrect as an <mxPoint>.
  *
- * Parameters:
- *
- * node - DOM node whose scroll origin should be returned.
- * includeAncestors - Whether the scroll origin of the ancestors should be
+ * @param node DOM node whose scroll origin should be returned.
+ * @param includeAncestors Whether the scroll origin of the ancestors should be
  * included. Default is false.
- * includeDocument - Whether the scroll origin of the document should be
+ * @param includeDocument Whether the scroll origin of the document should be
  * included. Default is true.
  */
 export const getScrollOrigin = (
@@ -1290,11 +1254,9 @@ export const getScrollOrigin = (
  *   mxEvent.getClientX(evt), mxEvent.getClientY(evt));
  * ```
  *
- * Parameters:
- *
- * container - DOM node to use for the offset.
- * x - X-coordinate of the point to be converted.
- * y - Y-coordinate of the point to be converted.
+ * @param container DOM node to use for the offset.
+ * @param x X-coordinate of the point to be converted.
+ * @param y Y-coordinate of the point to be converted.
  */
 export const convertPoint = (container: HTMLElement, x: number, y: number) => {
   const origin = getScrollOrigin(container, false);
@@ -1312,9 +1274,7 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
  * Returns true if the specified value is numeric, that is, if it is not
  * null, not an empty string, not a HEX number and isNaN returns false.
  *
- * Parameters:
- *
- * n - String representing the possibly numeric value.
+ * @param n String representing the possibly numeric value.
  */
 export const isNumeric = (n: any) => {
   return (
@@ -1329,9 +1289,7 @@ export const isNumeric = (n: any) => {
  *
  * Returns true if the given value is an valid integer number.
  *
- * Parameters:
- *
- * n - String representing the possibly numeric value.
+ * @param n String representing the possibly numeric value.
  */
 export const isInteger = (n: string) => {
   return String(parseInt(n)) === String(n);
@@ -1353,16 +1311,14 @@ export const mod = (n: number, m: number) => {
  *
  * Returns the intersection of two lines as an <mxPoint>.
  *
- * Parameters:
- *
- * x0 - X-coordinate of the first line's startpoint.
- * y0 - X-coordinate of the first line's startpoint.
- * x1 - X-coordinate of the first line's endpoint.
- * y1 - Y-coordinate of the first line's endpoint.
- * x2 - X-coordinate of the second line's startpoint.
- * y2 - Y-coordinate of the second line's startpoint.
- * x3 - X-coordinate of the second line's endpoint.
- * y3 - Y-coordinate of the second line's endpoint.
+ * @param x0 X-coordinate of the first line's startpoint.
+ * @param y0 X-coordinate of the first line's startpoint.
+ * @param x1 X-coordinate of the first line's endpoint.
+ * @param y1 Y-coordinate of the first line's endpoint.
+ * @param x2 X-coordinate of the second line's startpoint.
+ * @param y2 Y-coordinate of the second line's startpoint.
+ * @param x3 X-coordinate of the second line's endpoint.
+ * @param y3 Y-coordinate of the second line's endpoint.
  */
 export const intersection = (
   x0: number,
@@ -1400,14 +1356,12 @@ export const intersection = (
  * distance between a point and a line (with infinite length) use
  * <mxUtils.ptLineDist>.
  *
- * Parameters:
- *
- * x1 - X-coordinate of the startpoint of the segment.
- * y1 - Y-coordinate of the startpoint of the segment.
- * x2 - X-coordinate of the endpoint of the segment.
- * y2 - Y-coordinate of the endpoint of the segment.
- * px - X-coordinate of the point.
- * py - Y-coordinate of the point.
+ * @param x1 X-coordinate of the startpoint of the segment.
+ * @param y1 Y-coordinate of the startpoint of the segment.
+ * @param x2 X-coordinate of the endpoint of the segment.
+ * @param y2 Y-coordinate of the endpoint of the segment.
+ * @param px X-coordinate of the point.
+ * @param py Y-coordinate of the point.
  */
 export const ptSegDistSq = (
   x1: number,
@@ -1456,14 +1410,12 @@ export const ptSegDistSq = (
  * To get the distance between a point and a segment (with a specific
  * length) use <mxUtils.ptSeqDistSq>.
  *
- * Parameters:
- *
- * x1 - X-coordinate of point 1 of the line.
- * y1 - Y-coordinate of point 1 of the line.
- * x2 - X-coordinate of point 1 of the line.
- * y2 - Y-coordinate of point 1 of the line.
- * px - X-coordinate of the point.
- * py - Y-coordinate of the point.
+ * @param x1 X-coordinate of point 1 of the line.
+ * @param y1 Y-coordinate of point 1 of the line.
+ * @param x2 X-coordinate of point 1 of the line.
+ * @param y2 Y-coordinate of point 1 of the line.
+ * @param px X-coordinate of the point.
+ * @param py Y-coordinate of the point.
  */
 export const ptLineDist = (
   x1: number,
@@ -1485,14 +1437,12 @@ export const ptLineDist = (
  * Returns 1 if the given point on the right side of the segment, 0 if its
  * on the segment, and -1 if the point is on the left side of the segment.
  *
- * Parameters:
- *
- * x1 - X-coordinate of the startpoint of the segment.
- * y1 - Y-coordinate of the startpoint of the segment.
- * x2 - X-coordinate of the endpoint of the segment.
- * y2 - Y-coordinate of the endpoint of the segment.
- * px - X-coordinate of the point.
- * py - Y-coordinate of the point.
+ * @param x1 X-coordinate of the startpoint of the segment.
+ * @param y1 Y-coordinate of the startpoint of the segment.
+ * @param x2 X-coordinate of the endpoint of the segment.
+ * @param y2 Y-coordinate of the endpoint of the segment.
+ * @param px X-coordinate of the point.
+ * @param py Y-coordinate of the point.
  */
 export const relativeCcw = (
   x1: number,
@@ -1530,10 +1480,8 @@ export const relativeCcw = (
  *
  * Sets the opacity of the specified DOM node to the given value in %.
  *
- * Parameters:
- *
- * node - DOM node to set the opacity for.
- * value - Opacity in %. Possible values are between 0 and 100.
+ * @param node DOM node to set the opacity for.
+ * @param value Opacity in %. Possible values are between 0 and 100.
  */
 export const setOpacity = (node: HTMLElement | SVGElement, value: number) => {
   node.style.opacity = String(value / 100);
@@ -1545,9 +1493,7 @@ export const setOpacity = (node: HTMLElement | SVGElement, value: number) => {
  * Creates and returns an image (IMG node) or VML image (v:image) in IE6 in
  * quirks mode.
  *
- * Parameters:
- *
- * src - URL that points to the image to be displayed.
+ * @param src URL that points to the image to be displayed.
  */
 export const createImage = (src: string) => {
   let imageNode = null;
@@ -1595,9 +1541,7 @@ export const sortCells = (cells: CellArray, ascending = true): CellArray => {
  * Returns the stylename in a style of the form [(stylename|key=value);] or
  * an empty string if the given style does not contain a stylename.
  *
- * Parameters:
- *
- * style - String of the form [(stylename|key=value);].
+ * @param style String of the form [(stylename|key=value);].
  */
 export const getStylename = (style: string) => {
   const pairs = style.split(';');
@@ -1616,9 +1560,7 @@ export const getStylename = (style: string) => {
  * Returns the stylenames in a style of the form [(stylename|key=value);]
  * or an empty array if the given style does not contain any stylenames.
  *
- * Parameters:
- *
- * style - String of the form [(stylename|key=value);].
+ * @param style String of the form [(stylename|key=value);].
  */
 export const getStylenames = (style: string) => {
   const result = [];
@@ -1723,12 +1665,10 @@ export const removeAllStylenames = (style: string) => {
  * Assigns the value for the given key in the styles of the given cells, or
  * removes the key from the styles if the value is null.
  *
- * Parameters:
- *
- * model - <Transactions> to execute the transaction in.
- * cells - Array of <mxCells> to be updated.
- * key - Key of the style to be changed.
- * value - New value for the given key.
+ * @param model <Transactions> to execute the transaction in.
+ * @param cells Array of <mxCells> to be updated.
+ * @param key Key of the style to be changed.
+ * @param value New value for the given key.
  */
 export const setCellStyles = (
   model: Model,
@@ -1760,11 +1700,9 @@ export const setCellStyles = (
  * new style. If value is null or zero length then the key is removed from
  * the style. This is for cell styles, not for CSS styles.
  *
- * Parameters:
- *
- * style - String of the form [(stylename|key=value);].
- * key - Key of the style to be changed.
- * value - New value for the given key.
+ * @param style String of the form [(stylename|key=value);].
+ * @param key Key of the style to be changed.
+ * @param value New value for the given key.
  */
 export const setStyle = (style: string | null, key: string, value: any) => {
   const isValue =
@@ -1824,13 +1762,11 @@ export const setStyle = (style: string | null, key: string, value: any) => {
  *
  * Toggles the bold font style.
  *
- * Parameters:
- *
- * model - <Transactions> that contains the cells.
- * cells - Array of <mxCells> to change the style for.
- * key - Key of the style to be changed.
- * flag - Integer for the bit to be changed.
- * value - Optional boolean value for the flag.
+ * @param model <Transactions> that contains the cells.
+ * @param cells Array of <mxCells> to change the style for.
+ * @param key Key of the style to be changed.
+ * @param flag Integer for the bit to be changed.
+ * @param value Optional boolean value for the flag.
  */
 export const setCellStyleFlags = (
   model: Model,
@@ -1862,12 +1798,10 @@ export const setCellStyleFlags = (
  * Sets or removes the given key from the specified style and returns the
  * new style. If value is null then the flag is toggled.
  *
- * Parameters:
- *
- * style - String of the form [(stylename|key=value);].
- * key - Key of the style to be changed.
- * flag - Integer for the bit to be changed.
- * value - Optional boolean value for the given flag.
+ * @param style String of the form [(stylename|key=value);].
+ * @param key Key of the style to be changed.
+ * @param flag Integer for the bit to be changed.
+ * @param value Optional boolean value for the given flag.
  */
 export const setStyleFlag = (
   style: string | null,
@@ -1963,15 +1897,13 @@ export const getAlignmentAsPoint = (align: string, valign: string) => {
  * let size = graph.getSizeForString(label);
  * ```
  *
- * Parameters:
- *
- * text - String whose size should be returned.
- * fontSize - Integer that specifies the font size in pixels. Default is
+ * @param text String whose size should be returned.
+ * @param fontSize Integer that specifies the font size in pixels. Default is
  * <mxConstants.DEFAULT_FONTSIZE>.
- * fontFamily - String that specifies the name of the font family. Default
+ * @param fontFamily String that specifies the name of the font family. Default
  * is <mxConstants.DEFAULT_FONTFAMILY>.
- * textWidth - Optional width for text wrapping.
- * fontStyle - Optional font style.
+ * @param textWidth Optional width for text wrapping.
+ * @param fontStyle Optional font style.
  */
 export const getSizeForString = (
   text: string,
@@ -2043,13 +1975,11 @@ export const getSizeForString = (
  * scale is always computed such that it given the given amount or fewer
  * pages in the print output. See <mxPrintPreview> for an example.
  *
- * Parameters:
- *
- * pageCount - Specifies the number of pages in the print output.
- * graph - <mxGraph> that should be printed.
- * pageFormat - Optional <mxRectangle> that specifies the page format.
+ * @param pageCount Specifies the number of pages in the print output.
+ * @param graph <mxGraph> that should be printed.
+ * @param pageFormat Optional <mxRectangle> that specifies the page format.
  * Default is <mxConstants.PAGE_FORMAT_A4_PORTRAIT>.
- * border - The border along each side of every page.
+ * @param border The border along each side of every page.
  */
 export const getScaleForPageCount = (
   pageCount: number,
@@ -2180,14 +2110,12 @@ export const getScaleForPageCount = (
  * If you experience problems with missing stylesheets in IE then try adding
  * the domain to the trusted sites.
  *
- * Parameters:
- *
- * graph - <mxGraph> to be copied.
- * doc - Document where the new graph is created.
- * x0 - X-coordinate of the graph view origin. Default is 0.
- * y0 - Y-coordinate of the graph view origin. Default is 0.
- * w - Optional width of the graph view.
- * h - Optional height of the graph view.
+ * @param graph <mxGraph> to be copied.
+ * @param doc Document where the new graph is created.
+ * @param x0 X-coordinate of the graph view origin. Default is 0.
+ * @param y0 Y-coordinate of the graph view origin. Default is 0.
+ * @param w Optional width of the graph view.
+ * @param h Optional height of the graph view.
  */
 export const show = (
   graph: Graph,
@@ -2302,9 +2230,7 @@ export const show = (
  *
  * This function should be called from within the document with the graph.
  *
- * Parameters:
- *
- * graph - <mxGraph> to be printed.
+ * @param graph <mxGraph> to be printed.
  */
 export const printScreen = (graph: Graph) => {
   const wnd = window.open();

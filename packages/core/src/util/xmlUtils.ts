@@ -88,10 +88,8 @@ export const getViewXml = (
  * are replaced by \n. All \n are then replaced with linefeed, or &#xa; if
  * no linefeed is defined.
  *
- * Parameters:
- *
- * node - DOM node to return the XML for.
- * linefeed - Optional string that linefeeds are converted into. Default is
+ * @param node DOM node to return the XML for.
+ * @param linefeed Optional string that linefeeds are converted into. Default is
  * &#xa;
  */
 export const getXml = (node: Element, linefeed: string='&#xa;'): string => {
@@ -119,14 +117,12 @@ export const getXml = (node: Element, linefeed: string='&#xa;'): string => {
  * given node. This method should only be used to print XML for reading,
  * use <getXml> instead to obtain a string for processing.
  *
- * Parameters:
- *
- * node - DOM node to return the XML for.
- * tab - Optional string that specifies the indentation for one level.
+ * @param node DOM node to return the XML for.
+ * @param tab Optional string that specifies the indentation for one level.
  * Default is two spaces.
- * indent - Optional string that represents the current indentation.
+ * @param indent Optional string that represents the current indentation.
  * Default is an empty string.
- * newline - Option string that represents a linefeed. Default is '\n'.
+ * @param newline Option string that represents a linefeed. Default is '\n'.
  */
 export const getPrettyXml = (node: Element, tab: string, indent: string, newline: string, ns: string) => {
   const result = [];

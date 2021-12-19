@@ -940,10 +940,8 @@ class MaxWindow extends EventSource {
  * Shows the specified text content in a new <MaxWindow> or a new browser
  * window if isInternalWindow is false.
  *
- * Parameters:
- *
- * content - String that specifies the text to be displayed.
- * isInternalWindow - Optional boolean indicating if an MaxWindow should be
+ * @param content String that specifies the text to be displayed.
+ * @param isInternalWindow Optional boolean indicating if an MaxWindow should be
  * used instead of a new browser window. Default is false.
  */
 export const popup = (content, isInternalWindow) => {
@@ -1002,12 +1000,10 @@ export const popup = (content, isInternalWindow) => {
  * The optional icon specifies the icon to be used for the window. Default
  * is <mxUtils.errorImage>.
  *
- * Parameters:
- *
- * message - String specifying the message to be displayed.
- * width - Integer specifying the width of the window.
- * close - Optional boolean indicating whether to add a close button.
- * icon - Optional icon for the window decoration.
+ * @param message String specifying the message to be displayed.
+ * @param width Integer specifying the width of the window.
+ * @param close Optional boolean indicating whether to add a close button.
+ * @param icon Optional icon for the window decoration.
  */
 export const error = (message: string, width: number, close: boolean, icon: string | null=null) => {
   const div = document.createElement('div');

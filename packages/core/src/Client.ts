@@ -404,12 +404,10 @@ class Client {
    * where filename is the (relative) URL of the stylesheet. The charset
    * is hardcoded to ISO-8859-1 and the type is text/css.
    *
-   * Parameters:
-   *
-   * rel - String that represents the rel attribute of the link node.
-   * href - String that represents the href attribute of the link node.
-   * doc - Optional parent document of the link node.
-   * id - unique id for the link element to check if it already exists
+   * @param rel String that represents the rel attribute of the link node.
+   * @param href String that represents the href attribute of the link node.
+   * @param doc Optional parent document of the link node.
+   * @param id unique id for the link element to check if it already exists
    */
   static link = (rel, href, doc, id) => {
     doc = doc || document;

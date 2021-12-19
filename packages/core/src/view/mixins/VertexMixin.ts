@@ -99,19 +99,17 @@ const VertexMixin: PartialType = {
    *
    * See <mxGraph> for more information on using images.
    *
-   * Parameters:
-   *
-   * parent - <Cell> that specifies the parent of the new vertex.
-   * id - Optional string that defines the Id of the new vertex.
-   * value - Object to be used as the user object.
-   * x - Integer that defines the x coordinate of the vertex.
-   * y - Integer that defines the y coordinate of the vertex.
-   * width - Integer that defines the width of the vertex.
-   * height - Integer that defines the height of the vertex.
-   * style - Optional string that defines the cell style.
-   * relative - Optional boolean that specifies if the geometry is relative.
+   * @param parent <Cell> that specifies the parent of the new vertex.
+   * @param id Optional string that defines the Id of the new vertex.
+   * @param value Object to be used as the user object.
+   * @param x Integer that defines the x coordinate of the vertex.
+   * @param y Integer that defines the y coordinate of the vertex.
+   * @param width Integer that defines the width of the vertex.
+   * @param height Integer that defines the height of the vertex.
+   * @param style Optional string that defines the cell style.
+   * @param relative Optional boolean that specifies if the geometry is relative.
    * Default is false.
-   * geometryClass - Optional class reference to a class derived from mxGeometry.
+   * @param geometryClass Optional class reference to a class derived from mxGeometry.
    *                 This can be useful for defining custom constraints.
    */
   insertVertex(...args) {

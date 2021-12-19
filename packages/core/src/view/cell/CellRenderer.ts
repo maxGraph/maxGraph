@@ -153,9 +153,7 @@ class CellRenderer {
    * Initializes the shape in the given state by calling its init method with
    * the correct container after configuring it using <configureShape>.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the shape should be initialized.
+   * @param state <CellState> for which the shape should be initialized.
    */
   initializeShape(state: CellState) {
     if (state.shape) {
@@ -168,9 +166,7 @@ class CellRenderer {
   /**
    * Creates and returns the shape for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the shape should be created.
+   * @param state <CellState> for which the shape should be created.
    */
   createShape(state: CellState) {
     let shape = null;
@@ -192,9 +188,7 @@ class CellRenderer {
   /**
    * Creates the indicator shape for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the indicator shape should be created.
+   * @param state <CellState> for which the indicator shape should be created.
    */
   createIndicatorShape(state: CellState) {
     if (state.shape) {
@@ -226,9 +220,7 @@ class CellRenderer {
   /**
    * Configures the shape for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the shape should be configured.
+   * @param state <CellState> for which the shape should be configured.
    */
   configureShape(state: CellState) {
     const shape = state.shape;
@@ -348,9 +340,7 @@ class CellRenderer {
   /**
    * Returns the value to be used for the label.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the label should be created.
+   * @param state <CellState> for which the label should be created.
    */
   getLabelValue(state: CellState) {
     return state.view.graph.getLabel(state.cell);
@@ -359,9 +349,7 @@ class CellRenderer {
   /**
    * Creates the label for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the label should be created.
+   * @param state <CellState> for which the label should be created.
    */
   createLabel(state: CellState, value: string) {
     const { graph } = state.view;
@@ -472,9 +460,7 @@ class CellRenderer {
   /**
    * Initiailzes the label with a suitable container.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose label should be initialized.
+   * @param state <CellState> whose label should be initialized.
    */
   initializeLabel(state: CellState, shape: Shape): void {
     if (Client.IS_SVG && Client.NO_FO && shape.dialect !== DIALECT.SVG) {
@@ -487,9 +473,7 @@ class CellRenderer {
   /**
    * Creates the actual shape for showing the overlay for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the overlay should be created.
+   * @param state <CellState> for which the overlay should be created.
    */
   createCellOverlays(state: CellState) {
     const { graph } = state.view;
@@ -528,10 +512,8 @@ class CellRenderer {
   /**
    * Initializes the given overlay.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the overlay should be created.
-   * overlay - <mxImageShape> that represents the overlay.
+   * @param state <CellState> for which the overlay should be created.
+   * @param overlay <mxImageShape> that represents the overlay.
    */
   initializeOverlay(state: CellState, overlay: ImageShape) {
     overlay.init(state.view.getOverlayPane());
@@ -579,9 +561,7 @@ class CellRenderer {
   /**
    * Creates the control for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the control should be created.
+   * @param state <CellState> for which the control should be created.
    */
   createControl(state: CellState) {
     const { graph } = state.view;
@@ -610,9 +590,7 @@ class CellRenderer {
   /**
    * Hook for creating the click handler for the folding icon.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose control click handler should be returned.
+   * @param state <CellState> whose control click handler should be returned.
    */
   createControlClickHandler(state: CellState) {
     const { graph } = state.view;
@@ -629,12 +607,10 @@ class CellRenderer {
   /**
    * Initializes the given control and returns the corresponding DOM node.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the control should be initialized.
-   * control - <mxShape> to be initialized.
-   * handleEvents - Boolean indicating if mousedown and mousemove should fire events via the graph.
-   * clickHandler - Optional function to implement clicks on the control.
+   * @param state <CellState> for which the control should be initialized.
+   * @param control <mxShape> to be initialized.
+   * @param handleEvents Boolean indicating if mousedown and mousemove should fire events via the graph.
+   * @param clickHandler Optional function to implement clicks on the control.
    */
   initControl(
     state: CellState,
@@ -726,10 +702,8 @@ class CellRenderer {
    * Returns true if the event is for the shape of the given state. This
    * implementation always returns true.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose shape fired the event.
-   * evt - Mouse event which was fired.
+   * @param state <CellState> whose shape fired the event.
+   * @param evt Mouse event which was fired.
    */
   isShapeEvent(state: CellState, evt: MouseEvent) {
     return true;
@@ -739,10 +713,8 @@ class CellRenderer {
    * Returns true if the event is for the label of the given state. This
    * implementation always returns true.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose label fired the event.
-   * evt - Mouse event which was fired.
+   * @param state <CellState> whose label fired the event.
+   * @param evt Mouse event which was fired.
    */
   isLabelEvent(state: CellState, evt: MouseEvent) {
     return true;
@@ -751,9 +723,7 @@ class CellRenderer {
   /**
    * Installs the event listeners for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the event listeners should be isntalled.
+   * @param state <CellState> for which the event listeners should be isntalled.
    */
   installListeners(state: CellState) {
     const { graph } = state.view;
@@ -830,9 +800,7 @@ class CellRenderer {
   /**
    * Redraws the label for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose label should be redrawn.
+   * @param state <CellState> whose label should be redrawn.
    */
   redrawLabel(state: CellState, forced: boolean) {
     const { graph } = state.view;
@@ -915,10 +883,8 @@ class CellRenderer {
   /**
    * Returns true if the style for the text shape has changed.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose label should be checked.
-   * shape - <mxText> shape to be checked.
+   * @param state <CellState> whose label should be checked.
+   * @param shape <mxText> shape to be checked.
    */
   isTextShapeInvalid(state: CellState, shape: TextShape): boolean {
     function check(property: string, stylename: string, defaultValue: any) {
@@ -966,9 +932,7 @@ class CellRenderer {
   /**
    * Called to invoked redraw on the given text shape.
    *
-   * Parameters:
-   *
-   * shape - <mxText> shape to be redrawn.
+   * @param shape <mxText> shape to be redrawn.
    */
   redrawLabelShape(shape: TextShape): void {
     shape.redraw();
@@ -977,9 +941,7 @@ class CellRenderer {
   /**
    * Returns the scaling used for the label of the given state
    *
-   * Parameters:
-   *
-   * state - <CellState> whose label scale should be returned.
+   * @param state <CellState> whose label scale should be returned.
    */
   getTextScale(state: CellState): number {
     return state.view.scale;
@@ -988,9 +950,7 @@ class CellRenderer {
   /**
    * Returns the bounds to be used to draw the label of the given state.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose label bounds should be returned.
+   * @param state <CellState> whose label bounds should be returned.
    */
   getLabelBounds(state: CellState): Rectangle {
     const { graph } = state.view;
@@ -1065,10 +1025,8 @@ class CellRenderer {
    * Adds the shape rotation to the given label bounds and
    * applies the alignment and offsets.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose label bounds should be rotated.
-   * bounds - <mxRectangle> the rectangle to be rotated.
+   * @param state <CellState> whose label bounds should be rotated.
+   * @param bounds <mxRectangle> the rectangle to be rotated.
    */
   rotateLabelBounds(state: CellState, bounds: Rectangle): void {
     bounds.y -= state.text!.margin!.y * bounds.height;
@@ -1136,9 +1094,7 @@ class CellRenderer {
   /**
    * Redraws the overlays for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose overlays should be redrawn.
+   * @param state <CellState> whose overlays should be redrawn.
    */
   redrawCellOverlays(state: CellState, forced: boolean = false): void {
     this.createCellOverlays(state);
@@ -1189,9 +1145,7 @@ class CellRenderer {
   /**
    * Redraws the control for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose control should be redrawn.
+   * @param state <CellState> whose control should be redrawn.
    */
   redrawControl(state: CellState, forced: boolean = false): void {
     const image = state.view.graph.getFoldingImage(state);
@@ -1283,11 +1237,9 @@ class CellRenderer {
   /**
    * Inserts the given array of <mxShapes> after the given nodes in the DOM.
    *
-   * Parameters:
-   *
-   * shapes - Array of <mxShapes> to be inserted.
-   * node - Node in <drawPane> after which the shapes should be inserted.
-   * htmlNode - Node in the graph container after which the shapes should be inserted that
+   * @param shapes Array of <mxShapes> to be inserted.
+   * @param node Node in <drawPane> after which the shapes should be inserted.
+   * @param htmlNode Node in the graph container after which the shapes should be inserted that
    * will not go into the <drawPane> (eg. HTML labels without foreignObjects).
    */
   insertStateAfter(
@@ -1365,9 +1317,7 @@ class CellRenderer {
    * Returns the <mxShapes> for the given cell state in the order in which they should
    * appear in the DOM.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose shapes should be returned.
+   * @param state <CellState> whose shapes should be returned.
    */
   getShapesForState(state: CellState): [Shape | null, TextShape | null, Shape | null] {
     return [state.shape, state.text, state.control];
@@ -1378,12 +1328,10 @@ class CellRenderer {
    * state. This is called in mxGraphView.validatePoints as the last step of
    * updating all cells.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the shapes should be updated.
-   * force - Optional boolean that specifies if the cell should be reconfiured
+   * @param state <CellState> for which the shapes should be updated.
+   * @param force Optional boolean that specifies if the cell should be reconfiured
    * and redrawn without any additional checks.
-   * rendering - Optional boolean that specifies if the cell should actually
+   * @param rendering Optional boolean that specifies if the cell should actually
    * be drawn into the DOM. If this is false then redraw and/or reconfigure
    * will not be called on the shape.
    */
@@ -1400,9 +1348,7 @@ class CellRenderer {
   /**
    * Redraws the shape for the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> whose label should be redrawn.
+   * @param state <CellState> whose label should be redrawn.
    */
   redrawShape(
     state: CellState,
@@ -1534,9 +1480,7 @@ class CellRenderer {
   /**
    * Destroys the shapes associated with the given cell state.
    *
-   * Parameters:
-   *
-   * state - <CellState> for which the shapes should be destroyed.
+   * @param state <CellState> for which the shapes should be destroyed.
    */
   destroy(state: CellState) {
     if (state.shape) {

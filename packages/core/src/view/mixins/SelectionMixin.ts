@@ -712,11 +712,8 @@ const SelectionMixin: PartialType = {
   /**
    * Returns the cells to be selected for the given array of changes.
    *
-   * Parameters:
-   *
-   * ignoreFn - Optional function that takes a change and returns true if the
+   * @param ignoreFn Optional function that takes a change and returns true if the
    * change should be ignored.
-   *
    */
   getSelectionCellsForChanges(changes, ignoreFn = null) {
     const dict = new Dictionary();

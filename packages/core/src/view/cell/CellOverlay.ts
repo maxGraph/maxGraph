@@ -52,14 +52,12 @@ import CellState from './CellState';
  *
  * Constructs a new overlay using the given image and tooltip.
  *
- * Parameters:
- *
- * image - <mxImage> that represents the icon to be displayed.
- * tooltip - Optional string that specifies the tooltip.
- * align - Optional horizontal alignment for the overlay. Possible
+ * @param image <mxImage> that represents the icon to be displayed.
+ * @param tooltip Optional string that specifies the tooltip.
+ * @param align Optional horizontal alignment for the overlay. Possible
  * values are <ALIGN_LEFT>, <ALIGN_CENTER> and <ALIGN_RIGHT>
  * (default).
- * verticalAlign - Vertical alignment for the overlay. Possible
+ * @param verticalAlign Vertical alignment for the overlay. Possible
  * values are <ALIGN_TOP>, <ALIGN_MIDDLE> and <ALIGN_BOTTOM>
  * (default).
  */
@@ -147,9 +145,7 @@ class CellOverlay extends EventSource {
    * };
    * ```
    *
-   * Parameters:
-   *
-   * state - <CellState> that represents the current state of the
+   * @param state <CellState> that represents the current state of the
    * associated cell.
    */
   getBounds(state: CellState): Rectangle {

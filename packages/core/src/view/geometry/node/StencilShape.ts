@@ -278,11 +278,9 @@ class StencilShape extends Shape {
    * and vertical scale in width and height used to draw this shape inside the
    * given <mxRectangle>.
    *
-   * Parameters:
-   *
-   * shape - <mxShape> to be drawn.
-   * bounds - <mxRectangle> that should contain the stencil.
-   * direction - Optional direction of the shape to be darwn.
+   * @param shape <mxShape> to be drawn.
+   * @param bounds <mxRectangle> that should contain the stencil.
+   * @param direction Optional direction of the shape to be darwn.
    */
   computeAspect(
     shape: Shape | null = null,

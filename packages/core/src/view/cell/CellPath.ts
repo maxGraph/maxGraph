@@ -25,9 +25,7 @@ class CellPath {
    * concatenation of the indices of all ancestors on the (finite) path to
    * the root, eg. "0.0.0.1".
    *
-   * Parameters:
-   *
-   * cell - Cell whose path should be returned.
+   * @param cell Cell whose path should be returned.
    */
   static create(cell: Cell): string {
     let result = '';
@@ -53,9 +51,7 @@ class CellPath {
    * Returns the path for the parent of the cell represented by the given
    * path. Returns null if the given path has no parent.
    *
-   * Parameters:
-   *
-   * path - Path whose parent path should be returned.
+   * @param path Path whose parent path should be returned.
    */
   static getParentPath(path: string) {
     const index = path.lastIndexOf(CellPath.PATH_SEPARATOR);
@@ -74,10 +70,8 @@ class CellPath {
    * Returns the cell for the specified cell path using the given root as the
    * root of the path.
    *
-   * Parameters:
-   *
-   * root - Root cell of the path to be resolved.
-   * path - String that defines the path.
+   * @param root Root cell of the path to be resolved.
+   * @param path String that defines the path.
    */
   static resolve(root: Cell, path: string) {
     let parent: Cell | null = root;

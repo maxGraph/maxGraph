@@ -59,9 +59,7 @@ import type { ColorValue, GraphPlugin } from '../../types';
  * Constructs an event handler that creates handles for the
  * selection cells.
  *
- * Parameters:
- *
- * graph - Reference to the enclosing <mxGraph>.
+ * @param graph Reference to the enclosing <mxGraph>.
  */
 class GraphHandler implements GraphPlugin {
   static pluginId = 'GraphHandler';
@@ -357,9 +355,7 @@ class GraphHandler implements GraphPlugin {
   /**
    * Sets <cloneEnabled>.
    *
-   * Parameters:
-   *
-   * value - Boolean that specifies the new clone enabled state.
+   * @param value Boolean that specifies the new clone enabled state.
    */
   setCloneEnabled(value: boolean) {
     this.cloneEnabled = value;
@@ -626,9 +622,7 @@ class GraphHandler implements GraphPlugin {
    * the given cell is not selected and movable. This handles the case of moving
    * unselectable or unselected cells.
    *
-   * Parameters:
-   *
-   * initialCell - <Cell> that triggered this handler.
+   * @param initialCell <Cell> that triggered this handler.
    */
   getCells(initialCell: Cell) {
     if (!this.delayedSelection && this.graph.isCellMovable(initialCell)) {
@@ -678,9 +672,7 @@ class GraphHandler implements GraphPlugin {
    * controls and overlays are ignored. See also: <mxGraphView.getBounds> and
    * <mxGraph.getBoundingBox>.
    *
-   * Parameters:
-   *
-   * cells - Array of <mxCells> whose bounding box should be returned.
+   * @param cells Array of <mxCells> whose bounding box should be returned.
    */
   getBoundingBox(cells: CellArray) {
     let result = null;
@@ -1374,11 +1366,9 @@ class GraphHandler implements GraphPlugin {
   /**
    * Sets wether the handles attached to the given cells are visible.
    *
-   * Parameters:
-   *
-   * cells - Array of <mxCells>.
-   * visible - Boolean that specifies if the handles should be visible.
-   * force - Forces an update of the handler regardless of the last used value.
+   * @param cells Array of <mxCells>.
+   * @param visible Boolean that specifies if the handles should be visible.
+   * @param force Forces an update of the handler regardless of the last used value.
    */
   setHandlesVisibleForCells(cells: CellArray, visible: boolean, force = false) {
     if (force || this.handlesVisible !== visible) {
@@ -1405,9 +1395,7 @@ class GraphHandler implements GraphPlugin {
   /**
    * Sets the color of the rectangle used to highlight drop targets.
    *
-   * Parameters:
-   *
-   * color - String that represents the new highlight color.
+   * @param color String that represents the new highlight color.
    */
   setHighlightColor(color: ColorValue) {
     if (this.highlight) {

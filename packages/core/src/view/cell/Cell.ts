@@ -259,8 +259,6 @@ class Cell {
    * Specifies if the cell is a vertex. This should only be assigned at
    * construction of the cell and not be changed during its lifecycle.
    *
-   * Parameters:
-   *
    * @param vertex Boolean that specifies if the cell is a vertex.
    */
   setVertex(vertex: boolean): void {
@@ -278,8 +276,6 @@ class Cell {
    * Specifies if the cell is an edge. This should only be assigned at
    * construction of the cell and not be changed during its lifecycle.
    *
-   * Parameters:
-   *
    * @param edge Boolean that specifies if the cell is an edge.
    */
   setEdge(edge: boolean): void {
@@ -295,8 +291,6 @@ class Cell {
 
   /**
    * Sets the connectable state.
-   *
-   * Parameters:
    *
    * @param connectable Boolean that specifies the new connectable state.
    */
@@ -314,8 +308,6 @@ class Cell {
   /**
    * Specifies if the cell is visible.
    *
-   * Parameters:
-   *
    * @param visible Boolean that specifies the new visible state.
    */
   setVisible(visible: boolean): void {
@@ -331,8 +323,6 @@ class Cell {
 
   /**
    * Sets the collapsed state.
-   *
-   * Parameters:
    *
    * @param collapsed Boolean that specifies the new collapsed state.
    */
@@ -350,8 +340,6 @@ class Cell {
   /**
    * Sets the parent cell.
    *
-   * Parameters:
-   *
    * @param parent<Cell> that represents the new parent.
    */
   setParent(parent: Cell | null) {
@@ -360,8 +348,6 @@ class Cell {
 
   /**
    * Returns the source or target terminal.
-   *
-   * Parameters:
    *
    * @param source Boolean that specifies if the source terminal should be
    * returned.
@@ -397,8 +383,6 @@ class Cell {
   /**
    * Returns the index of the specified child in the child array.
    *
-   * Parameters:
-   *
    * @param childChild whose index should be returned.
    */
   getIndex(child: Cell | null) {
@@ -408,8 +392,6 @@ class Cell {
 
   /**
    * Returns the child at the specified index.
-   *
-   * Parameters:
    *
    * @param indexInteger that specifies the child to be returned.
    */
@@ -422,8 +404,6 @@ class Cell {
    * and updates the parent reference of the child. If not childIndex is
    * specified then the child is appended to the child array. Returns the
    * inserted child.
-   *
-   * Parameters:
    *
    * @param child<Cell> to be inserted or appended to the child array.
    * @param indexOptional integer that specifies the index at which the child
@@ -450,8 +430,6 @@ class Cell {
    * Removes the child at the specified index from the child array and
    * returns the child that was removed. Will remove the parent reference of
    * the child.
-   *
-   * Parameters:
    *
    * @param indexInteger that specifies the index of the child to be
    * removed.
@@ -490,8 +468,6 @@ class Cell {
   /**
    * Returns the index of the specified edge in <edges>.
    *
-   * Parameters:
-   *
    * @param edge<Cell> whose index in <edges> should be returned.
    */
   getEdgeIndex(edge: Cell) {
@@ -500,8 +476,6 @@ class Cell {
 
   /**
    * Returns the edge at the specified index in <edges>.
-   *
-   * Parameters:
    *
    * @param indexInteger that specifies the index of the edge to be returned.
    */
@@ -512,8 +486,6 @@ class Cell {
   /**
    * Inserts the specified edge into the edge array and returns the edge.
    * Will update the respective terminal reference of the edge.
-   *
-   * Parameters:
    *
    * @param edge              <Cell> to be inserted into the edge array.
    * @param isOutgoing Boolean that specifies if the edge is outgoing.
@@ -537,8 +509,6 @@ class Cell {
    * Removes the specified edge from the edge array and returns the edge.
    * Will remove the respective terminal reference from the edge.
    *
-   * Parameters:
-   *
    * @param edge<Cell> to be removed from the edge array.
    * @param isOutgoing Boolean that specifies if the edge is outgoing.
    */
@@ -559,8 +529,6 @@ class Cell {
   /**
    * Removes the edge from its source or target terminal.
    *
-   * Parameters:
-   *
    * @param isSource Boolean that specifies if the edge should be removed from its source or target terminal.
    */
   removeFromTerminal(isSource: boolean): void {
@@ -574,8 +542,6 @@ class Cell {
   /**
    * Returns true if the user object is an XML node that contains the given
    * attribute.
-   *
-   * Parameters:
    *
    * @param nameName nameName of the attribute.
    */
@@ -594,8 +560,6 @@ class Cell {
    * Returns the specified attribute from the user object if it is an XML
    * node.
    *
-   * Parameters:
-   *
    * @param nameName              of the attribute whose value should be returned.
    * @param defaultValueOptional  default value to use if the attribute has no
    * value.
@@ -612,8 +576,6 @@ class Cell {
 
   /**
    * Sets the specified attribute on the user object if it is an XML node.
-   *
-   * Parameters:
    *
    * @param nameName    of the attribute whose value should be set.
    * @param valueNew    value of the attribute.

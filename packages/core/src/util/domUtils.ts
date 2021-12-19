@@ -3,9 +3,7 @@ import { NODETYPE } from './constants';
 /**
  * Returns the text content of the specified node.
  *
- * Parameters:
- *
- * elems - DOM nodes to return the text for.
+ * @param elems DOM nodes to return the text for.
  */
 export const extractTextWithWhitespace = (elems: Element[]): string => {
   // Known block elements for handling linefeeds (list is not complete)
@@ -71,9 +69,7 @@ export const extractTextWithWhitespace = (elems: Element[]): string => {
 /**
  * Returns the text content of the specified node.
  *
- * Parameters:
- *
- * node - DOM node to return the text content for.
+ * @param node DOM node to return the text content for.
  */
 export const getTextContent = (node: Element): string => {
   return node != null
@@ -84,10 +80,8 @@ export const getTextContent = (node: Element): string => {
 /**
  * Sets the text content of the specified node.
  *
- * Parameters:
- *
- * node - DOM node to set the text content for.
- * text - String that represents the text content.
+ * @param node DOM node to set the text content for.
+ * @param text String that represents the text content.
  */
 export const setTextContent = (node: Element, text: string) => {
   if (node.innerText !== undefined) {
@@ -102,9 +96,7 @@ export const setTextContent = (node: Element, text: string) => {
  * if no node was specified. The inner HTML is the text representing all
  * children of the node, but not the node itself.
  *
- * Parameters:
- *
- * node - DOM node to return the inner HTML for.
+ * @param node DOM node to return the inner HTML for.
  */
 export const getInnerHtml = (node: Element) => {
   if (node != null) {
@@ -120,9 +112,7 @@ export const getInnerHtml = (node: Element) => {
  * string if no node was specified. The outer HTML is the text representing
  * all children of the node including the node itself.
  *
- * Parameters:
- *
- * node - DOM node to return the outer HTML for.
+ * @param node DOM node to return the outer HTML for.
  */
 export const getOuterHtml = (node: Element) => {
   if (node != null) {
@@ -137,10 +127,8 @@ export const getOuterHtml = (node: Element) => {
  * Creates a text node for the given string and appends it to the given
  * parent. Returns the text node.
  *
- * Parameters:
- *
- * parent - DOM node to append the text node to.
- * text - String representing the text to be added.
+ * @param parent DOM node to append the text node to.
+ * @param text String representing the text to be added.
  */
 export const write = (parent: Element, text: string) => {
   const doc = parent.ownerDocument;
@@ -157,10 +145,8 @@ export const write = (parent: Element, text: string) => {
  * Creates a text node for the given string and appends it to the given
  * parent with an additional linefeed. Returns the text node.
  *
- * Parameters:
- *
- * parent - DOM node to append the text node to.
- * text - String representing the text to be added.
+ * @param parent DOM node to append the text node to.
+ * @param text String representing the text to be added.
  */
 export const writeln = (parent: Element, text: string) => {
   const doc = parent.ownerDocument;
@@ -177,9 +163,7 @@ export const writeln = (parent: Element, text: string) => {
 /**
  * Appends a linebreak to the given parent and returns the linebreak.
  *
- * Parameters:
- *
- * parent - DOM node to append the linebreak to.
+ * @param parent DOM node to append the linebreak to.
  */
 export const br = (parent: Element, count: number=1) => {
   let br = null;
@@ -198,10 +182,8 @@ export const br = (parent: Element, count: number=1) => {
  * Appends a new paragraph with the given text to the specified parent and
  * returns the paragraph.
  *
- * Parameters:
- *
- * parent - DOM node to append the text node to.
- * text - String representing the text for the new paragraph.
+ * @param parent DOM node to append the text node to.
+ * @param text String representing the text for the new paragraph.
  */
 export const para = (parent: Element, text: string) => {
   const p = document.createElement('p');
@@ -222,12 +204,10 @@ export const para = (parent: Element, text: string) => {
  * nodeType property is numeric, that is, if isNaN returns false for
  * value.nodeType.
  *
- * Parameters:
- *
- * value - Object that should be examined as a node.
- * nodeName - String that specifies the node name.
- * attributeName - Optional attribute name to check.
- * attributeValue - Optional attribute value to check.
+ * @param value Object that should be examined as a node.
+ * @param nodeName String that specifies the node name.
+ * @param attributeName Optional attribute name to check.
+ * @param attributeValue Optional attribute value to check.
  */
 export const isNode = (value: any, nodeName: string | null=null, attributeName?: string, attributeValue?: string) => {
   if (
@@ -249,10 +229,8 @@ export const isNode = (value: any, nodeName: string | null=null, attributeName?:
  * given DOM node in the DOM. This also returns true if the
  * child is the ancestor.
  *
- * Parameters:
- *
- * ancestor - DOM node that represents the ancestor.
- * child - DOM node that represents the child.
+ * @param ancestor DOM node that represents the ancestor.
+ * @param child DOM node that represents the child.
  */
 export const isAncestorNode = (ancestor: Element, child: Element | null) => {
   let parent = child;
@@ -270,10 +248,8 @@ export const isAncestorNode = (ancestor: Element, child: Element | null) => {
 /**
  * Returns an array of child nodes that are of the given node type.
  *
- * Parameters:
- *
- * node - Parent DOM node to return the children from.
- * nodeType - Optional node type to return. Default is
+ * @param node Parent DOM node to return the children from.
+ * @param nodeType Optional node type to return. Default is
  * <mxConstants.NODETYPE_ELEMENT>.
  */
 export const getChildNodes = (node: Element, nodeType: number=NODETYPE.ELEMENT) => {
@@ -297,11 +273,9 @@ export const getChildNodes = (node: Element, nodeType: number=NODETYPE.ELEMENT) 
  * in all browsers but IE, where the node is cloned by creating a new node and
  * copying all attributes and children into it using importNode, recursively.
  *
- * Parameters:
- *
- * doc - Document to import the node into.
- * node - Node to be imported.
- * allChildren - If all children should be imported.
+ * @param doc Document to import the node into.
+ * @param node Node to be imported.
+ * @param allChildren If all children should be imported.
  */
 export const importNode = (doc, node, allChildren) => {
   return doc.importNode(node, allChildren);
@@ -310,11 +284,9 @@ export const importNode = (doc, node, allChildren) => {
 /**
  * Full DOM API implementation for importNode without using importNode API call.
  *
- * Parameters:
- *
- * doc - Document to import the node into.
- * node - Node to be imported.
- * allChildren - If all children should be imported.
+ * @param doc Document to import the node into.
+ * @param node Node to be imported.
+ * @param allChildren If all children should be imported.
  */
 export const importNodeImplementation = (doc, node, allChildren) => {
   switch (node.nodeType) {

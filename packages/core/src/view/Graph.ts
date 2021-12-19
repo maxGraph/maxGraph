@@ -787,19 +787,17 @@ class Graph extends EventSource {
    *   (margin + ch - h * s) / (2 * s) - bounds.y / graph.view.scale);
    * ```
    *
-   * Parameters:
-   *
-   * border - Optional number that specifies the border. Default is <border>.
-   * keepOrigin - Optional boolean that specifies if the translate should be
+   * @param border Optional number that specifies the border. Default is <border>.
+   * @param keepOrigin Optional boolean that specifies if the translate should be
    * changed. Default is false.
-   * margin - Optional margin in pixels. Default is 0.
-   * enabled - Optional boolean that specifies if the scale should be set or
+   * @param margin Optional margin in pixels. Default is 0.
+   * @param enabled Optional boolean that specifies if the scale should be set or
    * just returned. Default is true.
-   * ignoreWidth - Optional boolean that specifies if the width should be
+   * @param ignoreWidth Optional boolean that specifies if the width should be
    * ignored. Default is false.
-   * ignoreHeight - Optional boolean that specifies if the height should be
+   * @param ignoreHeight Optional boolean that specifies if the height should be
    * ignored. Default is false.
-   * maxHeight - Optional maximum height.
+   * @param maxHeight Optional maximum height.
    */
   fit(
     border: number = this.getBorder(),

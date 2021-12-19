@@ -148,9 +148,7 @@ import TooltipHandler from './TooltipHandler';
  *
  * Constructs a new in-place editor for the specified graph.
  *
- * Parameters:
- *
- * graph - Reference to the enclosing <mxGraph>.
+ * @param graph Reference to the enclosing <mxGraph>.
  */
 class CellEditor implements GraphPlugin {
   static pluginId = 'CellEditor';
@@ -692,10 +690,8 @@ class CellEditor implements GraphPlugin {
   /**
    * Starts the editor for the given cell.
    *
-   * Parameters:
-   *
-   * cell - <Cell> to start editing.
-   * trigger - Optional mouse event that triggered the editor.
+   * @param cell <Cell> to start editing.
+   * @param trigger Optional mouse event that triggered the editor.
    */
   startEditing(cell: Cell, trigger: MouseEvent | null = null) {
     this.stopEditing(true);
@@ -1053,9 +1049,7 @@ class CellEditor implements GraphPlugin {
    * cell is empty. This label is displayed and cleared on the first keystroke.
    * This implementation returns <emptyLabelText>.
    *
-   * Parameters:
-   *
-   * cell - <Cell> for which a text for an empty editing box should be
+   * @param cell <Cell> for which a text for an empty editing box should be
    * returned.
    */
   getEmptyLabelText(cell: Cell | null = null) {

@@ -34,10 +34,8 @@ import EventSource from '../event/EventSource';
  * delay (in milliseconds). If no delay is specified then a default delay
  * of 500 ms (0.5 sec) is used.
  *
- * Parameters:
- *
- * graph - Reference to the enclosing <mxGraph>.
- * delay - Optional delay in milliseconds.
+ * @param graph Reference to the enclosing <mxGraph>.
+ * @param delay Optional delay in milliseconds.
  */
 class TooltipHandler implements GraphPlugin {
   static pluginId = 'TooltipHandler';

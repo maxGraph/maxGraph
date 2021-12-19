@@ -34,11 +34,9 @@ import CellOverlay from './CellOverlay';
  * Constructs a new object that represents the current state of the given
  * cell in the specified view.
  *
- * Parameters:
- *
- * view - <mxGraphView> that contains the state.
- * cell - <Cell> that this state represents.
- * style - Array of key, value pairs that constitute the style.
+ * @param view <mxGraphView> that contains the state.
+ * @param cell <Cell> that this state represents.
+ * @param style Array of key, value pairs that constitute the style.
  */
 class CellState extends Rectangle {
   // referenced in mxCellRenderer
@@ -168,10 +166,8 @@ class CellState extends Rectangle {
    * Returns the <mxRectangle> that should be used as the perimeter of the
    * cell.
    *
-   * Parameters:
-   *
-   * border - Optional border to be added around the perimeter bounds.
-   * bounds - Optional <mxRectangle> to be used as the initial bounds.
+   * @param border Optional border to be added around the perimeter bounds.
+   * @param bounds Optional <mxRectangle> to be used as the initial bounds.
    */
   getPerimeterBounds(
     border: number = 0,
@@ -202,10 +198,8 @@ class CellState extends Rectangle {
   /**
    * Sets the first or last point in <absolutePoints> depending on isSource.
    *
-   * Parameters:
-   *
-   * point - <mxPoint> that represents the terminal point.
-   * isSource - Boolean that specifies if the first or last point should
+   * @param point <mxPoint> that represents the terminal point.
+   * @param isSource Boolean that specifies if the first or last point should
    * be assigned.
    */
   setAbsoluteTerminalPoint(point: Point | null, isSource = false) {
@@ -240,9 +234,7 @@ class CellState extends Rectangle {
   /**
    * Returns the visible source or target terminal cell.
    *
-   * Parameters:
-   *
-   * source - Boolean that specifies if the source or target cell should be
+   * @param source Boolean that specifies if the source or target cell should be
    * returned.
    */
   getVisibleTerminal(source = false) {
@@ -253,9 +245,7 @@ class CellState extends Rectangle {
   /**
    * Returns the visible source or target terminal state.
    *
-   * Parameters:
-   *
-   * source - Boolean that specifies if the source or target state should be
+   * @param source Boolean that specifies if the source or target state should be
    * returned.
    */
   getVisibleTerminalState(source = false): CellState | null {
@@ -265,10 +255,8 @@ class CellState extends Rectangle {
   /**
    * Sets the visible source or target terminal state.
    *
-   * Parameters:
-   *
-   * terminalState - <CellState> that represents the terminal.
-   * source - Boolean that specifies if the source or target state should be set.
+   * @param terminalState <CellState> that represents the terminal.
+   * @param source Boolean that specifies if the source or target state should be set.
    */
   setVisibleTerminalState(terminalState: CellState | null, source = false) {
     if (source) {

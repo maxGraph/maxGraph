@@ -97,9 +97,7 @@ class Dictionary<T, U> {
    * following signature: (key, value)=> where key is a string and
    * value is an object.
    *
-   * Parameters:
-   *
-   * visitor - A function that takes the key and value as arguments.
+   * @param visitor A function that takes the key and value as arguments.
    */
   visit(visitor: Visitor<MapKey, U>) {
     for (const key in this.map) {

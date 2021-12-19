@@ -47,9 +47,7 @@ export const trim = (str: string | null, chars?: string): string =>
 /**
  * Returns the name for the given function.
  *
- * Parameters:
- *
- * f - JavaScript object that represents a function.
+ * @param f JavaScript object that represents a function.
  */
 export const getFunctionName = (f: any): string => {
   let str = null;
@@ -94,10 +92,8 @@ export const replaceTrailingNewlines = (str: string, pattern: string): string =>
  * Removes the sibling text nodes for the given node that only consists
  * of tabs, newlines and spaces.
  *
- * Parameters:
- *
- * node - DOM node whose siblings should be removed.
- * before - Optional boolean that specifies the direction of the traversal.
+ * @param node DOM node whose siblings should be removed.
+ * @param before Optional boolean that specifies the direction of the traversal.
  */
 export const removeWhitespace = (node: HTMLElement, before: boolean) => {
   let tmp = before ? node.previousSibling : node.nextSibling;

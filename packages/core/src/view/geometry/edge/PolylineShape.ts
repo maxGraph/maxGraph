@@ -19,13 +19,11 @@ import { ColorValue } from '../../../types';
  *
  * Constructs a new polyline shape.
  *
- * Parameters:
- *
- * points - Array of <Point> that define the points. This is stored in
+ * @param points Array of <Point> that define the points. This is stored in
  * <mxShape.points>.
- * stroke - String that defines the stroke color. Default is 'black'. This is
+ * @param stroke String that defines the stroke color. Default is 'black'. This is
  * stored in <stroke>.
- * strokewidth - Optional integer that defines the stroke width. Default is
+ * @param strokewidth Optional integer that defines the stroke width. Default is
  * 1. This is stored in <strokewidth>.
  */
 class PolylineShape extends Shape {

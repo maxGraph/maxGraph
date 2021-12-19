@@ -106,13 +106,11 @@ class EdgeStyle {
    * result array are then replaced with Point that take into account
    * the terminal's perimeter and next point on the edge.
    *
-   * Parameters:
-   *
-   * state - <CellState> that represents the edge to be updated.
-   * source - <CellState> that represents the source terminal.
-   * target - <CellState> that represents the target terminal.
-   * points - List of relative control points.
-   * result - Array of <Point> that represent the actual points of the
+   * @param state <CellState> that represents the edge to be updated.
+   * @param source <CellState> that represents the source terminal.
+   * @param target <CellState> that represents the target terminal.
+   * @param points List of relative control points.
+   * @param result Array of <Point> that represent the actual points of the
    * edge.
    */
   static EntityRelation(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
@@ -893,11 +891,8 @@ class EdgeStyle {
   /**
    * Scales an array of <mxPoint>
    *
-   * Parameters:
-   *
-   * points - array of <mxPoint> to scale
-   * scale - the scaling to divide by
-   *
+   * @param points array of <mxPoint> to scale
+   * @param scale the scaling to divide by
    */
   static scalePointArray(points: Point[], scale: number) {
     let result: any = [];
@@ -924,11 +919,8 @@ class EdgeStyle {
   /**
    * Scales an <CellState>
    *
-   * Parameters:
-   *
-   * state - <CellState> to scale
-   * scale - the scaling to divide by
-   *
+   * @param state <CellState> to scale
+   * @param scale the scaling to divide by
    */
   static scaleCellState(state: CellState, scale: number) {
     let result = null;
@@ -952,15 +944,12 @@ class EdgeStyle {
    * Implements a local orthogonal router between the given
    * cells.
    *
-   * Parameters:
-   *
-   * state - <CellState> that represents the edge to be updated.
-   * sourceScaled - <CellState> that represents the source terminal.
-   * targetScaled - <CellState> that represents the target terminal.
-   * controlHints - List of relative control points.
-   * result - Array of <Point> that represent the actual points of the
+   * @param state <CellState> that represents the edge to be updated.
+   * @param sourceScaled <CellState> that represents the source terminal.
+   * @param targetScaled <CellState> that represents the target terminal.
+   * @param controlHints List of relative control points.
+   * @param result Array of <Point> that represent the actual points of the
    * edge.
-   *
    */
   static OrthConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
     const { graph } = state.view;

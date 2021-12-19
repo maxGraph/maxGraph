@@ -1119,12 +1119,10 @@ class GraphView extends EventSource {
   /**
    * Sets the fixed source or target terminal point on the given edge.
    *
-   * Parameters:
-   *
-   * edge - <CellState> whose terminal point should be updated.
-   * terminal - <CellState> which represents the actual terminal.
-   * source - Boolean that specifies if the terminal is the source.
-   * constraint - <mxConnectionConstraint> that specifies the connection.
+   * @param edge <CellState> whose terminal point should be updated.
+   * @param terminal <CellState> which represents the actual terminal.
+   * @param source Boolean that specifies if the terminal is the source.
+   * @param constraint <mxConnectionConstraint> that specifies the connection.
    */
   updateFixedTerminalPoint(
     edge: CellState,
@@ -1141,12 +1139,10 @@ class GraphView extends EventSource {
   /**
    * Returns the fixed source or target terminal point for the given edge.
    *
-   * Parameters:
-   *
-   * edge - <CellState> whose terminal point should be returned.
-   * terminal - <CellState> which represents the actual terminal.
-   * source - Boolean that specifies if the terminal is the source.
-   * constraint - <mxConnectionConstraint> that specifies the connection.
+   * @param edge <CellState> whose terminal point should be returned.
+   * @param terminal <CellState> which represents the actual terminal.
+   * @param source Boolean that specifies if the terminal is the source.
+   * @param constraint <mxConnectionConstraint> that specifies the connection.
    */
   getFixedTerminalPoint(
     edge: CellState,

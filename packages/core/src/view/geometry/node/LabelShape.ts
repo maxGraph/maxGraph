@@ -23,13 +23,11 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
  *
  * Constructs a new label shape.
  *
- * Parameters:
- *
- * bounds - <mxRectangle> that defines the bounds. This is stored in
+ * @param bounds <mxRectangle> that defines the bounds. This is stored in
  * <mxShape.bounds>.
- * fill - String that defines the fill color. This is stored in <fill>.
- * stroke - String that defines the stroke color. This is stored in <stroke>.
- * strokewidth - Optional integer that defines the stroke width. Default is
+ * @param fill String that defines the fill color. This is stored in <fill>.
+ * @param stroke String that defines the stroke color. This is stored in <stroke>.
+ * @param strokewidth Optional integer that defines the stroke width. Default is
  * 1. This is stored in <strokewidth>.
  */
 class LabelShape extends RectangleShape {

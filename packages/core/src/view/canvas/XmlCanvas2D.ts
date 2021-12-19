@@ -262,19 +262,17 @@ class mxXmlCanvas2D extends mxAbstractCanvas2D {
   /**
    * Sets the gradient. Note that the coordinates may be ignored by some implementations.
    *
-   * Parameters:
-   *
-   * color1 - Hexadecimal representation of the start color.
-   * color2 - Hexadecimal representation of the end color.
-   * x - X-coordinate of the gradient region.
-   * y - y-coordinate of the gradient region.
-   * w - Width of the gradient region.
-   * h - Height of the gradient region.
-   * direction - One of <mxConstants.DIRECTION_NORTH>, <mxConstants.DIRECTION_EAST>,
+   * @param color1 Hexadecimal representation of the start color.
+   * @param color2 Hexadecimal representation of the end color.
+   * @param x X-coordinate of the gradient region.
+   * @param y y-coordinate of the gradient region.
+   * @param w Width of the gradient region.
+   * @param h Height of the gradient region.
+   * @param direction One of <mxConstants.DIRECTION_NORTH>, <mxConstants.DIRECTION_EAST>,
    * <mxConstants.DIRECTION_SOUTH> or <mxConstants.DIRECTION_WEST>.
-   * alpha1 - Optional alpha of the start color. Default is 1. Possible values
+   * @param alpha1 Optional alpha of the start color. Default is 1. Possible values
    * are between 1 (opaque) and 0 (transparent).
-   * alpha2 - Optional alpha of the end color. Default is 1. Possible values
+   * @param alpha2 Optional alpha of the end color. Default is 1. Possible values
    * are between 1 (opaque) and 0 (transparent).
    */
   setGradient(color1, color2, x, y, w, h, direction, alpha1, alpha2) {
@@ -732,16 +730,14 @@ class mxXmlCanvas2D extends mxAbstractCanvas2D {
   /**
    * Paints an image.
    *
-   * Parameters:
-   *
-   * x - Number that represents the x-coordinate of the image.
-   * y - Number that represents the y-coordinate of the image.
-   * w - Number that represents the width of the image.
-   * h - Number that represents the height of the image.
-   * src - String that specifies the URL of the image.
-   * aspect - Boolean indicating if the aspect of the image should be preserved.
-   * flipH - Boolean indicating if the image should be flipped horizontally.
-   * flipV - Boolean indicating if the image should be flipped vertically.
+   * @param x Number that represents the x-coordinate of the image.
+   * @param y Number that represents the y-coordinate of the image.
+   * @param w Number that represents the width of the image.
+   * @param h Number that represents the height of the image.
+   * @param src String that specifies the URL of the image.
+   * @param aspect Boolean indicating if the aspect of the image should be preserved.
+   * @param flipH Boolean indicating if the image should be flipped horizontally.
+   * @param flipV Boolean indicating if the image should be flipped vertically.
    */
   image(x, y, w, h, src, aspect, flipH, flipV) {
     src = this.converter.convert(src);
@@ -854,21 +850,19 @@ class mxXmlCanvas2D extends mxAbstractCanvas2D {
    * are not available as part of shapes with no foreignObject support in SVG
    * (eg. IE9, IE10).
    *
-   * Parameters:
-   *
-   * x - Number that represents the x-coordinate of the text.
-   * y - Number that represents the y-coordinate of the text.
-   * w - Number that represents the available width for the text or 0 for automatic width.
-   * h - Number that represents the available height for the text or 0 for automatic height.
-   * str - String that specifies the text to be painted.
-   * align - String that represents the horizontal alignment.
-   * valign - String that represents the vertical alignment.
-   * wrap - Boolean that specifies if word-wrapping is enabled. Requires w > 0.
-   * format - Empty string for plain text or 'html' for HTML markup.
-   * overflow - Specifies the overflow behaviour of the label. Requires w > 0 and/or h > 0.
-   * clip - Boolean that specifies if the label should be clipped. Requires w > 0 and/or h > 0.
-   * rotation - Number that specifies the angle of the rotation around the anchor point of the text.
-   * dir - Optional string that specifies the text direction. Possible values are rtl and lrt.
+   * @param x Number that represents the x-coordinate of the text.
+   * @param y Number that represents the y-coordinate of the text.
+   * @param w Number that represents the available width for the text or 0 for automatic width.
+   * @param h Number that represents the available height for the text or 0 for automatic height.
+   * @param str String that specifies the text to be painted.
+   * @param align String that represents the horizontal alignment.
+   * @param valign String that represents the vertical alignment.
+   * @param wrap Boolean that specifies if word-wrapping is enabled. Requires w > 0.
+   * @param format Empty string for plain text or 'html' for HTML markup.
+   * @param overflow Specifies the overflow behaviour of the label. Requires w > 0 and/or h > 0.
+   * @param clip Boolean that specifies if the label should be clipped. Requires w > 0 and/or h > 0.
+   * @param rotation Number that specifies the angle of the rotation around the anchor point of the text.
+   * @param dir Optional string that specifies the text direction. Possible values are rtl and lrt.
    */
   text(x, y, w, h, str, align, valign, wrap, format, overflow, clip, rotation, dir) {
     if (this.textEnabled && str != null) {

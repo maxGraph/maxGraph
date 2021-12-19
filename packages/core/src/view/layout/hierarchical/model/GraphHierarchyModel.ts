@@ -160,12 +160,10 @@ class GraphHierarchyModel {
   /**
    * Creates all edges in the internal model
    *
-   * Parameters:
-   *
-   * layout - Reference to the <HierarchicalLayout> algorithm.
-   * vertices - Array of <mxCells> that represent the vertices whom are to
+   * @param layout Reference to the <HierarchicalLayout> algorithm.
+   * @param vertices Array of <mxCells> that represent the vertices whom are to
    * have an internal representation created.
-   * internalVertices - The array of <mxGraphHierarchyNodes> to have their
+   * @param internalVertices The array of <mxGraphHierarchyNodes> to have their
    * information filled in using the real vertices.
    */
   createInternalCells(
@@ -446,10 +444,8 @@ class GraphHierarchyModel {
   /**
    * A depth first search through the internal heirarchy model.
    *
-   * Parameters:
-   *
-   * visitor - The visitor function pattern to be called for each node.
-   * trackAncestors - Whether or not the search is to keep track all nodes
+   * @param visitor The visitor function pattern to be called for each node.
+   * @param trackAncestors Whether or not the search is to keep track all nodes
    * directly above this one in the search path.
    */
   visit(
@@ -496,16 +492,14 @@ class GraphHierarchyModel {
   /**
    * Performs a depth first search on the internal hierarchy model
    *
-   * Parameters:
-   *
-   * parent - the parent internal node of the current internal node
-   * root - the current internal node
-   * connectingEdge - the internal edge connecting the internal node and the parent
+   * @param parent the parent internal node of the current internal node
+   * @param root the current internal node
+   * @param connectingEdge the internal edge connecting the internal node and the parent
    * internal node, if any
-   * visitor - the visitor pattern to be called for each node
-   * seen - a set of all nodes seen by this dfs a set of all of the
+   * @param visitor the visitor pattern to be called for each node
+   * @param seen a set of all nodes seen by this dfs a set of all of the
    * ancestor node of the current node
-   * layer - the layer on the dfs tree ( not the same as the model ranks )
+   * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
   dfs(parent: Cell, root: Cell, connectingEdge: Cell, visitor, seen, layer: number): void {
     if (root != null) {
@@ -539,17 +533,15 @@ class GraphHierarchyModel {
    * should be only used when necessary because of it can be computationally
    * intensive for deep searches.
    *
-   * Parameters:
-   *
-   * parent - the parent internal node of the current internal node
-   * root - the current internal node
-   * connectingEdge - the internal edge connecting the internal node and the parent
+   * @param parent the parent internal node of the current internal node
+   * @param root the current internal node
+   * @param connectingEdge the internal edge connecting the internal node and the parent
    * internal node, if any
-   * visitor - the visitor pattern to be called for each node
-   * seen - a set of all nodes seen by this dfs
-   * ancestors - the parent hash code
-   * childHash - the new hash code for this node
-   * layer - the layer on the dfs tree ( not the same as the model ranks )
+   * @param visitor the visitor pattern to be called for each node
+   * @param seen a set of all nodes seen by this dfs
+   * @param ancestors the parent hash code
+   * @param childHash the new hash code for this node
+   * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
   extendedDfs(parent: GraphHierarchyNode, root: GraphHierarchyNode, connectingEdge: GraphHierarchyNode, visitor, seen, ancestors, childHash, layer) {
     // Explanation of custom hash set. Previously, the ancestors variable

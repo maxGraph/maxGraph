@@ -143,9 +143,7 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
    * Returns true if the given event is a popupmenu trigger for the optional
    * given cell.
    *
-   * Parameters:
-   *
-   * me - <mxMouseEvent> that represents the mouse event.
+   * @param me <mxMouseEvent> that represents the mouse event.
    */
   isPopupTrigger(me: InternalMouseEvent) {
     return (
@@ -319,9 +317,7 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
    * item. This is called in <addItem> if a parent item is used for the first
    * time. This adds various DOM nodes and a <submenuImage> to the parent.
    *
-   * Parameters:
-   *
-   * parent - An item returned by <addItem>.
+   * @param parent An item returned by <addItem>.
    */
   createSubmenu(parent: PopupMenuItem) {
     parent.table = document.createElement('table');
@@ -383,10 +379,8 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
    * Adds a horizontal separator in the given parent item or the top-level menu
    * if no parent is specified.
    *
-   * Parameters:
-   *
-   * parent - Optional item returned by <addItem>.
-   * force - Optional boolean to ignore <smartSeparators>. Default is false.
+   * @param parent Optional item returned by <addItem>.
+   * @param force Optional boolean to ignore <smartSeparators>. Default is false.
    */
   addSeparator(parent: PopupMenuItem | null=null, force = false) {
     // Defaults to this instance if no parent (submenu) specified, but 
@@ -488,8 +482,6 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
 
   /**
    * Removes all submenus inside the given parent.
-   *
-   * Parameters:
    *
    * @param parent An item returned by <addItem>.
    */

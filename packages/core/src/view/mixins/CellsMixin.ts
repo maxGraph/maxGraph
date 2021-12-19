@@ -988,15 +988,13 @@ const CellsMixin: PartialType = {
    * <cellsAdded>. This method fires <mxEvent.ADD_CELLS> while the
    * transaction is in progress. Returns the cells that were added.
    *
-   * Parameters:
-   *
-   * cells - Array of <mxCells> to be inserted.
-   * parent - <Cell> that represents the new parent. If no parent is
+   * @param cells Array of <mxCells> to be inserted.
+   * @param parent <Cell> that represents the new parent. If no parent is
    * given then the default parent is used.
-   * index - Optional index to insert the cells at. Default is to append.
-   * source - Optional source <Cell> for all inserted cells.
-   * target - Optional target <Cell> for all inserted cells.
-   * absolute - Optional boolean indicating of cells should be kept at
+   * @param index Optional index to insert the cells at. Default is to append.
+   * @param source Optional source <Cell> for all inserted cells.
+   * @param target Optional target <Cell> for all inserted cells.
+   * @param absolute Optional boolean indicating of cells should be kept at
    * their absolute position. Default is false.
    */
   addCells(
@@ -1850,15 +1848,13 @@ const CellsMixin: PartialType = {
    * graph.moveCells(graph.getChildCells(null, true, true), 10, 10);
    * ```
    *
-   * Parameters:
-   *
-   * cells - Array of <mxCells> to be moved, cloned or added to the target.
-   * dx - Integer that specifies the x-coordinate of the vector. Default is 0.
-   * dy - Integer that specifies the y-coordinate of the vector. Default is 0.
-   * clone - Boolean indicating if the cells should be cloned. Default is false.
-   * target - <Cell> that represents the new parent of the cells.
-   * evt - Mouseevent that triggered the invocation.
-   * mapping - Optional mapping for existing clones.
+   * @param cells Array of <mxCells> to be moved, cloned or added to the target.
+   * @param dx Integer that specifies the x-coordinate of the vector. Default is 0.
+   * @param dy Integer that specifies the y-coordinate of the vector. Default is 0.
+   * @param clone Boolean indicating if the cells should be cloned. Default is false.
+   * @param target <Cell> that represents the new parent of the cells.
+   * @param evt Mouseevent that triggered the invocation.
+   * @param mapping Optional mapping for existing clones.
    */
   moveCells(
     cells,
@@ -2411,15 +2407,13 @@ const CellsMixin: PartialType = {
    * halfpane from the given point (x0, y0) rightwards or downwards
    * depending on rightHalfpane and bottomHalfpane.
    *
-   * Parameters:
-   *
-   * x0 - X-coordinate of the origin.
-   * y0 - Y-coordinate of the origin.
-   * parent - Optional <Cell> whose children should be checked. Default is
+   * @param x0 X-coordinate of the origin.
+   * @param y0 Y-coordinate of the origin.
+   * @param parent Optional <Cell> whose children should be checked. Default is
    * <defaultParent>.
-   * rightHalfpane - Boolean indicating if the cells in the right halfpane
+   * @param rightHalfpane Boolean indicating if the cells in the right halfpane
    * from the origin should be returned.
-   * bottomHalfpane - Boolean indicating if the cells in the bottom halfpane
+   * @param bottomHalfpane Boolean indicating if the cells in the bottom halfpane
    * from the origin should be returned.
    */
   getCellsBeyond(x0, y0, parent = null, rightHalfpane = false, bottomHalfpane = false) {
