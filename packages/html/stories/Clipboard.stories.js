@@ -8,7 +8,7 @@ import {
   Client,
   Codec,
   Model,
-  StringUtils,
+  stringUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -228,7 +228,7 @@ const Template = ({ label, ...args }) => {
 
   // Parses and inserts XML into graph
   const pasteText = function (text) {
-    const xml = StringUtils.trim(text);
+    const xml = stringUtils.trim(text);
     const x = graph.container.scrollLeft / graph.view.scale - graph.view.translate.x;
     const y = graph.container.scrollTop / graph.view.scale - graph.view.translate.y;
 

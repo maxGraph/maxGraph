@@ -1,7 +1,7 @@
 import {
   Graph,
   RubberBand,
-  Constants,
+  constants,
   RadialTreeLayout,
   Perimeter,
 } from '@maxgraph/core';

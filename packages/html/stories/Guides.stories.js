@@ -2,7 +2,7 @@ import {
   Graph,
   GraphHandler,
   InternalEvent,
-  Constants,
+  constants,
   EdgeHandler,
   EdgeStyle,
   RubberBand,
@@ -39,10 +39,10 @@ const Template = ({ label, ...args }) => {
   };
 
   // Defines the guides to be red (default)
-  // Constants.GUIDE_COLOR = '#FF0000';
+  // constants.GUIDE_COLOR = '#FF0000';
 
   // Defines the guides to be 1 pixel (default)
-  // Constants.GUIDE_STROKEWIDTH = 1;
+  // constants.GUIDE_STROKEWIDTH = 1;
 
   // Enables snapping waypoints to terminals
   EdgeHandler.prototype.snapToTerminals = true;

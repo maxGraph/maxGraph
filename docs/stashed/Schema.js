@@ -8,12 +8,12 @@ import mxGraph from '../mxgraph/view/mxGraph';
 import mxRubberband from '../mxgraph/handler/mxRubberband';
 import { error } from '../../packages/core/src/util/gui/MaxWindow';
 import { load } from '../../packages/core/src/util/network/MaxXmlRequest';
-import { htmlEntities } from '../../packages/core/src/util/StringUtils';
+import { htmlEntities } from '../../packages/core/src/util/stringUtils';
 import { setOpacity } from '../../packages/core/src/util/Utils';
-import { write, writeln } from '../../packages/core/src/util/DomUtils';
-import { createXmlDocument, getPrettyXml } from '../../packages/core/src/util/XmlUtils';
-import { makeDraggable } from '../../packages/core/src/util/GestureUtils';
-import { clone } from '../../packages/core/src/util/CloneUtils';
+import { write, writeln } from '../../packages/core/src/util/domUtils';
+import { createXmlDocument, getPrettyXml } from '../../packages/core/src/util/xmlUtils';
+import { makeDraggable } from '../../packages/core/src/util/gestureUtils';
+import { clone } from '../../packages/core/src/util/cloneUtils';
 
 class Schema extends React.Component {
   constructor(props) {

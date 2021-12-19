@@ -10,7 +10,7 @@ import {
   Geometry,
   InternalEvent,
   utils,
-  GestureUtils,
+  gestureUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -134,7 +134,7 @@ const Template = ({ label, ...args }) => {
       }
     });
 
-    GestureUtils.makeDraggable(img, graph, funct);
+    gestureUtils.makeDraggable(img, graph, funct);
     return img;
   }
 

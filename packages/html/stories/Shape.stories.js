@@ -1,4 +1,4 @@
-import { Graph, CylinderShape, Constants, CellRenderer } from '@maxgraph/core';
+import { Graph, CylinderShape, constants, CellRenderer } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 

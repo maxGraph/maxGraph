@@ -3,11 +3,11 @@ import {
   TextShape,
   Effects,
   InternalEvent,
-  Constants,
+  constants,
   Perimeter,
   Codec,
   utils,
-  XmlUtils,
+  xmlUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -50,7 +50,7 @@ const Template = ({ label, ...args }) => {
 
   // Changes the default vertex style in-place
   const style = graph.getStylesheet().getDefaultVertexStyle();
-  style.shape = Constants.SHAPE_ELLIPSE;
+  style.shape = constants.SHAPE_ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   style.gradientColor = 'white';
 
@@ -85,7 +85,7 @@ const Template = ({ label, ...args }) => {
       graph.getModel().beginUpdate();
       try {
         const xml = server(cell.id);
-        const doc = XmlUtils.parseXml(xml);
+        const doc = xmlUtils.parseXml(xml);
         const dec = new Codec(doc);
         const model = dec.decode(doc.documentElement);
 

@@ -2,11 +2,11 @@
  * Copyright (c) 2006-2012, JGraph Ltd
  */
 const { mod } = require('../../../../../packages/core/src/util/Utils');
-const { br } = require('../../../../../packages/core/src/util/DomUtils');
-const { htmlEntities } = require('../../../../../packages/core/src/util/StringUtils');
+const { br } = require('../../../../../packages/core/src/util/domUtils');
+const { htmlEntities } = require('../../../../../packages/core/src/util/stringUtils');
 const { getScaleForPageCount } = require('../../../../../packages/core/src/util/Utils');
 const { button } = require('../../../../../packages/core/src/util/dom/DomHelpers');
-const { write } = require('../../../../../packages/core/src/util/DomUtils');
+const { write } = require('../../../../../packages/core/src/util/domUtils');
 const { getDocumentScrollOrigin } = require('../../../../../packages/core/src/util/Utils');
 const { setOpacity } = require('../../../../../packages/core/src/util/Utils');
 const { getDocumentSize } = require('../../../../../packages/core/src/util/Utils');

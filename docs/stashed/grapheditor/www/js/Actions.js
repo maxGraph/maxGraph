@@ -5,8 +5,8 @@
  * Constructs the actions object for the given UI.
  */
 const { hasScrollbars } = require('../../../../../packages/core/src/util/Utils');
-const { htmlEntities } = require('../../../../../packages/core/src/util/StringUtils');
-const { extractTextWithWhitespace } = require('../../../../../packages/core/src/util/DomUtils');
+const { htmlEntities } = require('../../../../../packages/core/src/util/stringUtils');
+const { extractTextWithWhitespace } = require('../../../../../packages/core/src/util/domUtils');
 const { getValue } = require('../../../../../packages/core/src/util/Utils');
 
 function Actions(editorUi)

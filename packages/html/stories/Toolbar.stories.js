@@ -10,7 +10,7 @@ import {
   Geometry,
   DragSource,
   DomHelpers,
-  GestureUtils,
+  gestureUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -124,7 +124,7 @@ const Template = ({ label, ...args }) => {
 
       // Creates the image which is used as the drag icon (preview)
       const img = toolbar.addMode(null, '/images/outline.gif', funct);
-      GestureUtils.makeDraggable(img, graph, funct);
+      gestureUtils.makeDraggable(img, graph, funct);
     }
   });
 
@@ -147,7 +147,7 @@ const Template = ({ label, ...args }) => {
 
     // Creates the image which is used as the drag icon (preview)
     const img = toolbar.addMode(null, image, funct);
-    GestureUtils.makeDraggable(img, graph, funct);
+    gestureUtils.makeDraggable(img, graph, funct);
   }
 
   return div;

@@ -2,11 +2,11 @@ import {
   Graph,
   EdgeStyle,
   DomHelpers,
-  XmlUtils,
+  xmlUtils,
   Perimeter,
   utils,
-  Constants,
-  CloneUtils,
+  constants,
+  cloneUtils,
   Codec,
 } from '@maxgraph/core';
 
@@ -32,7 +32,7 @@ const Template = ({ label, ...args }) => {
   div.appendChild(container);
 
   // Should we allow overriding constants?
-  // Constants.SHADOWCOLOR = '#e0e0e0';
+  // constants.SHADOWCOLOR = '#e0e0e0';
 
   // Creates the graph inside the given container
   const graph = createGraph(container);
@@ -77,7 +77,7 @@ const Template = ({ label, ...args }) => {
     '<Cell id="30" value="" edge="1" parent="2" source="27" target="EnterAccountingData"><Geometry relative="1" as="geometry"><Array as="points"><Point x="469" y="40"/></Array></Geometry></Cell>' +
     '<Cell id="33" value="" edge="1" parent="2" source="6" target="EnterAccountingData"><Geometry relative="1" as="geometry"><Array as="points"><Point x="255" y="200"/></Array></Geometry></Cell>' +
     '</root></Transactions>';
-  const doc = XmlUtils.parseXml(xml);
+  const doc = xmlUtils.parseXml(xml);
   const codec = new Codec(doc);
   codec.decode(doc.documentElement, graph.getModel());
 
@@ -102,7 +102,7 @@ const Template = ({ label, ...args }) => {
    */
   function update(graph, xml) {
     if (xml != null && xml.length > 0) {
-      const doc = XmlUtils.parseXml(xml);
+      const doc = xmlUtils.parseXml(xml);
 
       if (doc != null && doc.documentElement != null) {
         const model = graph.getModel();
@@ -188,7 +188,7 @@ const Template = ({ label, ...args }) => {
     style.strokeColor = '#808080';
     style.fillColor = 'white';
     style.gradientColor = 'white';
-    style.gradientDirection = Constants.DIRECTION_EAST;
+    style.gradientDirection = constants.DIRECTION_EAST;
     style.rounded = true;
     style.shadow = true;
     style.fontStyle = 1;
@@ -200,7 +200,7 @@ const Template = ({ label, ...args }) => {
     style.shadow = true;
 
     style = [];
-    style.shape = Constants.SHAPE_SWIMLANE;
+    style.shape = constants.SHAPE_SWIMLANE;
     style.perimiter = Perimeter.RectanglePerimeter;
     style.strokeColor = '#a0a0a0';
     style.fontColor = '#606060';
@@ -217,30 +217,30 @@ const Template = ({ label, ...args }) => {
     graph.getStylesheet().putCellStyle('swimlane', style);
 
     style = [];
-    style.shape = Constants.SHAPE_RHOMBUS;
+    style.shape = constants.SHAPE_RHOMBUS;
     style.perimiter = Perimeter.RhombusPerimeter;
     style.strokeColor = '#91BCC0';
     style.fontColor = 'gray';
     style.fillColor = '#91BCC0';
     style.gradientColor = 'white';
-    style.align = Constants.ALIGN_CENTER;
-    style.verticalAlign = Constants.ALIGN_MIDDLE;
+    style.align = constants.ALIGN_CENTER;
+    style.verticalAlign = constants.ALIGN_MIDDLE;
     style.fontSize = 16;
     graph.getStylesheet().putCellStyle('step', style);
 
     style = [];
-    style.shape = Constants.SHAPE_ELLIPSE;
+    style.shape = constants.SHAPE_ELLIPSE;
     style.perimiter = Perimeter.EllipsePerimeter;
     style.fontColor = 'gray';
     style.fillColor = '#A0C88F';
     style.gradientColor = 'white';
     style.strokeColor = '#A0C88F';
-    style.align = Constants.ALIGN_CENTER;
-    style.verticalAlign = Constants.ALIGN_MIDDLE;
+    style.align = constants.ALIGN_CENTER;
+    style.verticalAlign = constants.ALIGN_MIDDLE;
     style.fontSize = 16;
     graph.getStylesheet().putCellStyle('start', style);
 
-    style = CloneUtils.clone(style);
+    style = cloneUtils.clone(style);
     style.fillColor = '#DACCBC';
     style.strokeColor = '#AF7F73';
     graph.getStylesheet().putCellStyle('end', style);

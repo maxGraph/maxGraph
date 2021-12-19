@@ -2,10 +2,10 @@
  * Copyright (c) 2006-2012, JGraph Ltd
  */
 const { popup } = require('../../../../../packages/core/src/util/gui/MaxWindow');
-const { clearSelection } = require('../../../../../packages/core/src/util/DomUtils');
-const { htmlEntities } = require('../../../../../packages/core/src/util/StringUtils');
-const { getXml } = require('../../../../../packages/core/src/util/XmlUtils');
-const { parseXml } = require('../../../../../packages/core/src/util/XmlUtils');
+const { clearSelection } = require('../../../../../packages/core/src/util/domUtils');
+const { htmlEntities } = require('../../../../../packages/core/src/util/stringUtils');
+const { getXml } = require('../../../../../packages/core/src/util/xmlUtils');
+const { parseXml } = require('../../../../../packages/core/src/util/xmlUtils');
 const { setOpacity } = require('../../../../../packages/core/src/util/Utils');
 const { hasScrollbars } = require('../../../../../packages/core/src/util/Utils');
 const { setPrefixedStyle } = require('../../../../../packages/core/src/util/Utils');
@@ -14,7 +14,7 @@ const { getValue } = require('../../../../../packages/core/src/util/Utils');
 const { setStyle } = require('../../../../../packages/core/src/util/Utils');
 const { getCurrentStyle } = require('../../../../../packages/core/src/util/Utils');
 const { getOffset } = require('../../../../../packages/core/src/util/Utils');
-const { clone } = require('../../../../../packages/core/src/util/CloneUtils');
+const { clone } = require('../../../../../packages/core/src/util/cloneUtils');
 /**
  * Constructs a new graph editor
  */

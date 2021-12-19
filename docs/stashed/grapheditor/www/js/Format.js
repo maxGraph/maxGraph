@@ -2,17 +2,17 @@
  * Copyright (c) 2006-2012, JGraph Ltd
  */
 import { getCurrentStyle, setStyle } from '../../../../../packages/core/src/util/Utils';
-import { getTextContent, setTextContent } from '../../../../../packages/core/src/util/DomUtils';
-import { getXml, parseXml } from '../../../../../packages/core/src/util/XmlUtils';
-import { clone } from '../../../../../packages/core/src/util/CloneUtils';
+import { getTextContent, setTextContent } from '../../../../../packages/core/src/util/domUtils';
+import { getXml, parseXml } from '../../../../../packages/core/src/util/xmlUtils';
+import { clone } from '../../../../../packages/core/src/util/cloneUtils';
 
-const { br } = require('../../../../../packages/core/src/util/DomUtils');
+const { br } = require('../../../../../packages/core/src/util/domUtils');
 const { setOpacity } = require('../../../../../packages/core/src/util/Utils');
 const { button } = require('../../../../../packages/core/src/util/dom/DomHelpers');
-const { htmlEntities } = require('../../../../../packages/core/src/util/StringUtils');
+const { htmlEntities } = require('../../../../../packages/core/src/util/stringUtils');
 const { setPrefixedStyle } = require('../../../../../packages/core/src/util/Utils');
 const { mod } = require('../../../../../packages/core/src/util/Utils');
-const { write } = require('../../../../../packages/core/src/util/DomUtils');
+const { write } = require('../../../../../packages/core/src/util/domUtils');
 const { getValue } = require('../../../../../packages/core/src/util/Utils');
 Format = function(editorUi, container)
 {

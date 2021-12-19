@@ -1,12 +1,12 @@
 import {
   Graph,
-  DomUtils,
+  domUtils,
   FastOrganicLayout,
   HierarchicalLayout,
   Perimeter,
   InternalEvent,
   RubberBand,
-  Constants,
+  constants,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -68,7 +68,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   let button = document.createElement('button');
-  DomUtils.write(button, 'Hierarchical');
+  domUtils.write(button, 'Hierarchical');
   InternalEvent.addListener(button, 'click', function (evt) {
     layout.execute(parent);
   });
@@ -76,7 +76,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   button = document.createElement('button');
-  DomUtils.write(button, 'Organic');
+  domUtils.write(button, 'Organic');
 
   InternalEvent.addListener(button, 'click', function (evt) {
     organic.execute(parent);

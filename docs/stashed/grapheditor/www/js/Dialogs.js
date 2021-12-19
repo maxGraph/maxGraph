@@ -5,15 +5,15 @@ import { getValue } from '../../../../../packages/core/src/util/Utils';
 
 const { setOpacity } = require('../../../../../packages/core/src/util/Utils');
 const { createImage } = require('../../../../../packages/core/src/util/Utils');
-const { createXmlDocument } = require('../../../../../packages/core/src/util/XmlUtils');
-const { isNode } = require('../../../../../packages/core/src/util/DomUtils');
+const { createXmlDocument } = require('../../../../../packages/core/src/util/xmlUtils');
+const { isNode } = require('../../../../../packages/core/src/util/domUtils');
 const { popup } = require('../../../../../packages/core/src/util/gui/MaxWindow');
-const { parseXml } = require('../../../../../packages/core/src/util/XmlUtils');
-const { getPrettyXml } = require('../../../../../packages/core/src/util/XmlUtils');
-const { write } = require('../../../../../packages/core/src/util/DomUtils');
+const { parseXml } = require('../../../../../packages/core/src/util/xmlUtils');
+const { getPrettyXml } = require('../../../../../packages/core/src/util/xmlUtils');
+const { write } = require('../../../../../packages/core/src/util/domUtils');
 const { remove } = require('../../../../../packages/core/src/util/Utils');
 const { button } = require('../../../../../packages/core/src/util/dom/DomHelpers');
-const { br } = require('../../../../../packages/core/src/util/DomUtils');
+const { br } = require('../../../../../packages/core/src/util/domUtils');
 /**
  * Constructs a new open dialog.
  */

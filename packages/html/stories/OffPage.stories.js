@@ -1,4 +1,4 @@
-import { Graph, CellTracker, Constants, InternalEvent } from '@maxgraph/core';
+import { Graph, CellTracker, constants, InternalEvent } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -19,7 +19,7 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Use complete cell as highlight region
-  Constants.ACTIVE_REGION = 1;
+  constants.ACTIVE_REGION = 1;
 
   // Creates the graph inside the given container
   const graph = new Graph(container);

@@ -9,9 +9,9 @@ import mxEvent from '../mxgraph/util/mxEvent';
 import mxGraph from '../mxgraph/view/mxGraph';
 import mxRubberband from '../mxgraph/handler/mxRubberband';
 import { error } from '../../packages/core/src/util/gui/MaxWindow';
-import { createXmlDocument } from '../../packages/core/src/util/XmlUtils';
+import { createXmlDocument } from '../../packages/core/src/util/xmlUtils';
 import { button } from '../../packages/core/src/util/dom/DomHelpers';
-import { isNode } from '../../packages/core/src/util/DomUtils';
+import { isNode } from '../../packages/core/src/util/domUtils';
 
 class Scrollbars extends React.Component {
   constructor(props) {

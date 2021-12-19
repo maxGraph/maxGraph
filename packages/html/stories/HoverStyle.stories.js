@@ -1,4 +1,4 @@
-import { Graph, Constants, RubberBand, CloneUtils } from '@maxgraph/core';
+import { Graph, constants, RubberBand, cloneUtils } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -35,7 +35,7 @@ const Template = ({ label, ...args }) => {
     // once it is set, whereas the above overrides the default value
     state.style.rounded = hover ? '1' : '0';
     state.style.strokeWidth = hover ? '4' : '1';
-    state.style.fontStyle = hover ? Constants.FONT_BOLD : '0';
+    state.style.fontStyle = hover ? constants.FONT_BOLD : '0';
   }
 
   // Changes fill color to red on mouseover
@@ -76,7 +76,7 @@ const Template = ({ label, ...args }) => {
     dragEnter(evt, state) {
       if (state != null) {
         this.previousStyle = state.style;
-        state.style = CloneUtils.clone(state.style);
+        state.style = cloneUtils.clone(state.style);
         updateStyle(state, true);
         state.shape.apply(state);
         state.shape.redraw();

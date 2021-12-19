@@ -1,9 +1,7 @@
 import { NODETYPE } from './constants';
-import { getTextContent } from './DomUtils';
+import { getTextContent } from './domUtils';
 
 /**
- * Function: ltrim
- *
  * Strips all whitespaces from the beginning of the string. Without the
  * second parameter, this will trim these characters:
  *
@@ -14,12 +12,10 @@ import { getTextContent } from './DomUtils';
  * - "\0" (ASCII 0 (0x00)), the NUL-byte
  * - "\x0B" (ASCII 11 (0x0B)), a vertical tab
  */
-export const ltrim = (str: string | null, chars: string = '\\s') =>
+export const ltrim = (str: string | null, chars: string = '\\s'): string =>
   str != null ? str.replace(new RegExp(`^[${chars}]+`, 'g'), '') : null;
 
 /**
- * Function: rtrim
- *
  * Strips all whitespaces from the end of the string. Without the second
  * parameter, this will trim these characters:
  *
@@ -30,12 +26,10 @@ export const ltrim = (str: string | null, chars: string = '\\s') =>
  * - "\0" (ASCII 0 (0x00)), the NUL-byte
  * - "\x0B" (ASCII 11 (0x0B)), a vertical tab
  */
-export const rtrim = (str: string | null, chars: string = '\\s') =>
+export const rtrim = (str: string | null, chars: string = '\\s'): string =>
   str != null ? str.replace(new RegExp(`[${chars}]+$`, 'g'), '') : null;
 
 /**
- * Function: trim
- *
  * Strips all whitespaces from both end of the string.
  * Without the second parameter, Javascript function will trim these
  * characters:
@@ -47,19 +41,17 @@ export const rtrim = (str: string | null, chars: string = '\\s') =>
  * - "\0" (ASCII 0 (0x00)), the NUL-byte
  * - "\x0B" (ASCII 11 (0x0B)), a vertical tab
  */
-export const trim = (str: string | null, chars?: string) =>
+export const trim = (str: string | null, chars?: string): string =>
   ltrim(rtrim(str, chars), chars);
 
 /**
- * Function: getFunctionName
- *
  * Returns the name for the given function.
  *
  * Parameters:
  *
  * f - JavaScript object that represents a function.
  */
-export const getFunctionName = (f: any) => {
+export const getFunctionName = (f: any): string => {
   let str = null;
 
   if (f != null) {
@@ -81,16 +73,13 @@ export const getFunctionName = (f: any) => {
       }
     }
   }
-
   return str;
 };
 
 /**
- * Function: replaceTrailingNewlines
- *
  * Replaces each trailing newline with the given pattern.
  */
-export const replaceTrailingNewlines = (str: string, pattern: string) => {
+export const replaceTrailingNewlines = (str: string, pattern: string): string => {
   // LATER: Check is this can be done with a regular expression
   let postfix = '';
 
@@ -98,13 +87,10 @@ export const replaceTrailingNewlines = (str: string, pattern: string) => {
     str = str.substring(0, str.length - 1);
     postfix += pattern;
   }
-
   return str + postfix;
 };
 
 /**
- * Function: removeWhitespace
- *
  * Removes the sibling text nodes for the given node that only consists
  * of tabs, newlines and spaces.
  *
@@ -135,8 +121,7 @@ export const removeWhitespace = (node: HTMLElement, before: boolean) => {
  * @param {string} s String that contains the characters to be converted.
  * @param {boolean} newline If newlines should be replaced. Default is true.
  */
-// htmlEntities(s: string, newline: boolean): string;
-export const htmlEntities = (s: string, newline: boolean) => {
+export const htmlEntities = (s: string, newline: boolean): string => {
   s = String(s || '');
 
   s = s.replace(/&/g, '&amp;'); // 38 26
@@ -148,6 +133,5 @@ export const htmlEntities = (s: string, newline: boolean) => {
   if (newline == null || newline) {
     s = s.replace(/\n/g, '&#xa;');
   }
-
   return s;
 };

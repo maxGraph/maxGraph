@@ -1,10 +1,10 @@
 import {
   Graph,
-  DomUtils,
+  domUtils,
   RubberBand,
   DragSource,
   utils,
-  GestureUtils,
+  gestureUtils,
   EdgeHandler,
   GraphHandler,
   Guide,
@@ -124,7 +124,7 @@ const Template = ({ label, ...args }) => {
     const elt = document.elementFromPoint(x, y);
 
     for (const graph of graphs) {
-      if (DomUtils.isAncestorNode(graph.container, elt)) {
+      if (domUtils.isAncestorNode(graph.container, elt)) {
         return graph;
       }
     }
@@ -160,7 +160,7 @@ const Template = ({ label, ...args }) => {
   // if scalePreview (last) argument is true. Dx and dy are null to force
   // the use of the defaults. Note that dx and dy are only used for the
   // drag icon but not for the preview.
-  const ds = GestureUtils.makeDraggable(
+  const ds = gestureUtils.makeDraggable(
     img,
     graphF,
     funct,

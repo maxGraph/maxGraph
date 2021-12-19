@@ -2,8 +2,8 @@
  * Copyright (c) 2006-2012, JGraph Ltd
  */
 const { getOffset } = require('../../../../../packages/core/src/util/Utils');
-const { write } = require('../../../../../packages/core/src/util/DomUtils');
-const { htmlEntities } = require('../../../../../packages/core/src/util/StringUtils');
+const { write } = require('../../../../../packages/core/src/util/domUtils');
+const { htmlEntities } = require('../../../../../packages/core/src/util/stringUtils');
 
 /**
  * Construcs a new toolbar for the given editor.

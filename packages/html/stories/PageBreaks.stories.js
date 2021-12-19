@@ -113,7 +113,7 @@ const Template = ({ label, ...args }) => {
 
       // Applies scale to page
       const pf = Rectangle.fromRectangle(
-        graph.pageFormat || Constants.PAGE_FORMAT_A4_PORTRAIT
+        graph.pageFormat || constants.PAGE_FORMAT_A4_PORTRAIT
       );
       pf.width = Math.round(pf.width * scale * graph.pageScale);
       pf.height = Math.round(pf.height * scale * graph.pageScale);

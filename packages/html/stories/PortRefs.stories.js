@@ -7,7 +7,7 @@ import {
   ImageBox,
   Shape,
   TriangleShape,
-  Constants,
+  constants,
   ConnectionConstraint,
   Client,
 } from '@maxgraph/core';
@@ -220,7 +220,7 @@ const Template = ({ label, ...args }) => {
   /* let mxUtilsGetPortConstraints = utils.getPortConstraints;
     utils.getPortConstraints = function(terminal, edge, source, defaultValue)
     {
-      let key = (source) ? Constants.STYLE_SOURCE_PORT : Constants.STYLE_TARGET_PORT;
+      let key = (source) ? constants.STYLE_SOURCE_PORT : constants.STYLE_TARGET_PORT;
       let id = edge.style[key];
 
       let port = terminal.shape.getPorts()[id];

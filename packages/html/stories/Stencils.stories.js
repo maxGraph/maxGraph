@@ -6,7 +6,7 @@ import {
   InternalEvent,
   Point,
   CellHighlight,
-  Constants,
+  constants,
   VertexHandler,
   RubberBand,
   Shape,
@@ -47,13 +47,13 @@ const Template = ({ label, ...args }) => {
 
   // Allow overriding constants?
   // Sets the global shadow color
-  // Constants.SHADOWCOLOR = '#C0C0C0';
-  // Constants.SHADOW_OPACITY = 0.5;
-  // Constants.SHADOW_OFFSET_X = 4;
-  // Constants.SHADOW_OFFSET_Y = 4;
-  // Constants.HANDLE_FILLCOLOR = '#99ccff';
-  // Constants.HANDLE_STROKECOLOR = '#0088cf';
-  // Constants.VERTEX_SELECTION_COLOR = '#00a8ff';
+  // constants.SHADOWCOLOR = '#C0C0C0';
+  // constants.SHADOW_OPACITY = 0.5;
+  // constants.SHADOW_OFFSET_X = 4;
+  // constants.SHADOW_OFFSET_Y = 4;
+  // constants.HANDLE_FILLCOLOR = '#99ccff';
+  // constants.HANDLE_STROKECOLOR = '#0088cf';
+  // constants.VERTEX_SELECTION_COLOR = '#00a8ff';
 
   // Enables connections along the outline
   ConnectionHandler.prototype.outlineConnect = true;
@@ -79,7 +79,7 @@ const Template = ({ label, ...args }) => {
 
     shape.outline = true;
     shape.bounds = bounds;
-    shape.stroke = Constants.HANDLE_STROKECOLOR;
+    shape.stroke = constants.HANDLE_STROKECOLOR;
     shape.strokewidth = this.getSelectionStrokeWidth();
     shape.isDashed = this.isSelectionDashed();
     shape.isShadow = false;
@@ -128,7 +128,7 @@ const Template = ({ label, ...args }) => {
   let shape = root.firstChild;
 
   while (shape != null) {
-    if (shape.nodeType === Constants.NODETYPE_ELEMENT) {
+    if (shape.nodeType === constants.NODETYPE_ELEMENT) {
       StencilShapeRegistry.addStencil(
         shape.getAttribute('name'),
         new StencilShape(shape)

@@ -1,7 +1,7 @@
 import {
   Graph,
   RubberBand,
-  XmlUtils,
+  xmlUtils,
   Multiplicity,
   mxKeyHandler,
   InternalEvent,
@@ -29,7 +29,7 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
-  const xmlDocument = XmlUtils.createXmlDocument();
+  const xmlDocument = xmlUtils.createXmlDocument();
   const sourceNode = xmlDocument.createElement('Source');
   const targetNode = xmlDocument.createElement('Target');
   const subtargetNode = xmlDocument.createElement('Subtarget');

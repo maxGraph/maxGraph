@@ -1,4 +1,4 @@
-import { Graph, Perimeter, Constants, RubberBand } from '@maxgraph/core';
+import { Graph, Perimeter, constants, RubberBand } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -23,7 +23,7 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Should we allow overriding constants?
-  // Constants.SHADOWCOLOR = '#c0c0c0';
+  // constants.SHADOWCOLOR = '#c0c0c0';
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -33,18 +33,18 @@ const Template = ({ label, ...args }) => {
 
   // Makes all cells round with a white, bold label
   let style = graph.stylesheet.getDefaultVertexStyle();
-  style.shape = Constants.SHAPE_ELLIPSE;
+  style.shape = constants.SHAPE_ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   style.fontColor = 'white';
   style.gradientColor = 'white';
-  style.fontStyle = Constants.FONT_BOLD;
+  style.fontStyle = constants.FONT_BOLD;
   style.fontSize = 14;
   style.shadow = true;
 
   // Makes all edge labels gray with a white background
   style = graph.stylesheet.getDefaultEdgeStyle();
   style.fontColor = 'gray';
-  style.fontStyle = Constants.FONT_BOLD;
+  style.fontStyle = constants.FONT_BOLD;
   style.fontColor = 'black';
   style.strokeWidth = 2;
 

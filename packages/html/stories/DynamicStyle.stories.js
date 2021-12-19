@@ -1,4 +1,4 @@
-import { Graph, utils, Constants, RubberBand } from '@maxgraph/core';
+import { Graph, utils, constants, RubberBand } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 

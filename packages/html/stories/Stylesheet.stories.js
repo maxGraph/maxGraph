@@ -1,4 +1,4 @@
-import { Graph, Perimeter, Constants, EdgeStyle } from '@maxgraph/core';
+import { Graph, Perimeter, constants, EdgeStyle } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -52,27 +52,27 @@ const Template = ({ label, ...args }) => {
 
   // Creates the default style for vertices
   let style = [];
-  style.shape = Constants.SHAPE_RECTANGLE;
+  style.shape = constants.SHAPE_RECTANGLE;
   style.perimiter = Perimeter.RectanglePerimeter;
   style.strokeColor = 'gray';
   style.rounded = true;
   style.fillColor = '#EEEEEE';
   style.gradientColor = 'white';
   style.fontColor = '#774400';
-  style.align = Constants.ALIGN_CENTER;
-  style.verticalAlign = Constants.ALIGN_MIDDLE;
+  style.align = constants.ALIGN_CENTER;
+  style.verticalAlign = constants.ALIGN_MIDDLE;
   style.fontSize = '12';
   style.fontStyle = 1;
   graph.getStylesheet().putDefaultVertexStyle(style);
 
   // Creates the default style for edges
   style = [];
-  style.shape = Constants.SHAPE_CONNECTOR;
+  style.shape = constants.SHAPE_CONNECTOR;
   style.strokeColor = '#6482B9';
-  style.align = Constants.ALIGN_CENTER;
-  style.verticalAlign = Constants.ALIGN_MIDDLE;
+  style.align = constants.ALIGN_CENTER;
+  style.verticalAlign = constants.ALIGN_MIDDLE;
   style.edge = EdgeStyle.ElbowConnector;
-  style.endArrow = Constants.ARROW_CLASSIC;
+  style.endArrow = constants.ARROW_CLASSIC;
   style.fontSize = '10';
   graph.getStylesheet().putDefaultEdgeStyle(style);
 

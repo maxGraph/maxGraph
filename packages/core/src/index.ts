@@ -137,16 +137,16 @@ export { default as RhombusShape } from './view/geometry/node/RhombusShape';
 export { default as StencilShape } from './view/geometry/node/StencilShape';
 export { default as StencilShapeRegistry } from './view/geometry/node/StencilShapeRegistry';
 
-export * as Constants from './util/constants';
+export * as constants from './util/constants';
 export { default as Guide } from './view/other/Guide';
 export { default as Resources } from './util/Resources';
 export * as utils from './util/utils';
-export * as CloneUtils from './util/cloneUtils';
-export * as DomUtils from './util/domUtils';
+export * as cloneUtils from './util/cloneUtils';
+export * as domUtils from './util/domUtils';
 export * as EventUtils from './util/eventUtils';
-export * as GestureUtils from './util/gestureUtils';
-export * as StringUtils from './util/stringUtils';
-export * as XmlUtils from './util/xmlUtils';
+export * as gestureUtils from './util/gestureUtils';
+export * as stringUtils from './util/stringUtils';
+export * as xmlUtils from './util/xmlUtils';
 
 export { default as Animation } from './view/animate/Animation';
 export { default as Effects } from './view/animate/Effects';

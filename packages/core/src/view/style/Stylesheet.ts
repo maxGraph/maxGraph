@@ -11,10 +11,10 @@ import {
   NONE,
   SHAPE_CONNECTOR,
   SHAPE_RECTANGLE,
-} from '../../util/Constants';
+} from '../../util/constants';
 import Perimeter from './Perimeter';
 import { isNumeric } from '../../util/Utils';
-import { clone } from '../../util/CloneUtils';
+import { clone } from '../../util/cloneUtils';
 
 import type { CellStateStyles } from '../../types';
 

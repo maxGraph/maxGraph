@@ -1,6 +1,6 @@
 import {
   Graph,
-  Constants,
+  constants,
   InternalEvent,
   Client,
   Point,
@@ -42,7 +42,7 @@ const Template = ({ label, ...args }) => {
 
   // Should we allow overriding constants?
   // Makes the shadow brighter
-  //Constants.SHADOWCOLOR = '#C0C0C0';
+  //constants.SHADOWCOLOR = '#C0C0C0';
 
   const outline = document.getElementById('outlineContainer');
 
@@ -87,8 +87,8 @@ const Template = ({ label, ...args }) => {
   let style = graph.getStylesheet().getDefaultVertexStyle();
   style.shape = 'label';
 
-  style.verticalAlign = Constants.ALIGN_MIDDLE;
-  style.align = Constants.ALIGN_LEFT;
+  style.verticalAlign = constants.ALIGN_MIDDLE;
+  style.align = constants.ALIGN_LEFT;
   style.spacingLeft = 54;
 
   style.gradientColor = '#7d85df';
@@ -301,7 +301,7 @@ const Template = ({ label, ...args }) => {
   function addOverlays(graph, cell, addDeleteIcon) {
     let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
     overlay.cursor = 'hand';
-    overlay.align = Constants.ALIGN_CENTER;
+    overlay.align = constants.ALIGN_CENTER;
     overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
       addChild(graph, cell);
     });
@@ -312,8 +312,8 @@ const Template = ({ label, ...args }) => {
       overlay = new CellOverlay(new ImageBox('images/close.png', 30, 30), 'Delete');
       overlay.cursor = 'hand';
       overlay.offset = new Point(-4, 8);
-      overlay.align = Constants.ALIGN_RIGHT;
-      overlay.verticalAlign = Constants.ALIGN_TOP;
+      overlay.align = constants.ALIGN_RIGHT;
+      overlay.verticalAlign = constants.ALIGN_TOP;
       overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
         deleteSubtree(graph, cell);
       });

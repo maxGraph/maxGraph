@@ -10,7 +10,7 @@ import {
 	ptSegDistSq,
 	toRadians,
 } from '../../../../../packages/core/src/util/Utils';
-import { clone } from '../../../../../packages/core/src/util/CloneUtils';
+import { clone } from '../../../../../packages/core/src/util/cloneUtils';
 
 /**
  * Registers shapes.

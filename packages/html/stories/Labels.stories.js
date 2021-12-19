@@ -1,4 +1,4 @@
-import { Graph, RubberBand, mxKeyHandler, Constants, Rectangle } from '@maxgraph/core';
+import { Graph, RubberBand, mxKeyHandler, constants, Rectangle } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -64,7 +64,7 @@ const Template = ({ label, ...args }) => {
       geometry.width >= 2
     ) {
       const style = this.getCellStyle(cell);
-      const fontSize = style.fontSize || Constants.DEFAULT_FONTSIZE;
+      const fontSize = style.fontSize || constants.DEFAULT_FONTSIZE;
       const max = geometry.width / (fontSize * 0.625);
 
       if (max < label.length) {

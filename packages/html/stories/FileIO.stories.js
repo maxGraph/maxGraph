@@ -1,7 +1,7 @@
-import { Graph, Constants } from '@maxgraph/core';
+import { Graph, constants } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { clone } from '@maxgraph/core/util/CloneUtils';
+import { clone } from '@maxgraph/core/util/cloneUtils';
 import { button } from '@maxgraph/core/util/dom/DomHelpers';
 import { load } from '@maxgraph/core/util/network/MaxXmlRequest';
 
@@ -47,7 +47,7 @@ const Template = ({ label, ...args }) => {
 
       // Changes the default vertex style in-place
       let style = graph.getStylesheet().getDefaultVertexStyle();
-      style.shape = Constants.SHAPE_ROUNDED;
+      style.shape = constants.SHAPE_ROUNDED;
       style.perimiter = Perimeter.RectanglePerimeter;
       style.gradientColor = 'white';
       style.perimeterSpacing = 4;
@@ -57,7 +57,7 @@ const Template = ({ label, ...args }) => {
       style.labelBackgroundColor = 'white';
 
       style = clone(style);
-      style.startArrow = Constants.ARROW_CLASSIC;
+      style.startArrow = constants.ARROW_CLASSIC;
       graph.getStylesheet().putCellStyle('2way', style);
 
       graph.isHtmlLabel = function (cell) {

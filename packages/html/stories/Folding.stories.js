@@ -1,4 +1,4 @@
-import { Graph, Constants, EdgeStyle, StackLayout, LayoutManager } from '@maxgraph/core';
+import { Graph, constants, EdgeStyle, StackLayout, LayoutManager } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -20,7 +20,7 @@ const Template = ({ label, ...args }) => {
 
   // Should we allow overriding constant values?
   // Enables crisp rendering of rectangles in SVG
-  // Constants.ENTITY_SEGMENT = 20;
+  // constants.ENTITY_SEGMENT = 20;
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -45,7 +45,7 @@ const Template = ({ label, ...args }) => {
   style.startSize = 30;
 
   style = [];
-  style.shape = Constants.SHAPE_RECTANGLE;
+  style.shape = constants.SHAPE_RECTANGLE;
   style.strokeColor = 'none';
   style.fillColor = 'none';
   style.foldable = false;

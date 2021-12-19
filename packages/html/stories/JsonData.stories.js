@@ -6,7 +6,7 @@ import {
   InternalEvent,
   Client,
   Codec,
-  DomUtils,
+  domUtils,
   utils,
   MaxWindow,
 } from '@maxgraph/core';
@@ -41,11 +41,11 @@ const Template = ({ label, ...args }) => {
   const codec = new ObjectCodec(new CustomData());
   codec.encode = function (enc, obj) {
     const node = enc.document.createElement('CustomData');
-    DomUtils.setTextContent(node, JSON.stringify(obj));
+    domUtils.setTextContent(node, JSON.stringify(obj));
     return node;
   };
   codec.decode = function (dec, node, into) {
-    const obj = JSON.parse(DomUtils.getTextContent(node));
+    const obj = JSON.parse(domUtils.getTextContent(node));
     obj.constructor = CustomData;
 
     return obj;

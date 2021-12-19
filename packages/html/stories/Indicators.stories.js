@@ -1,4 +1,4 @@
-import { Graph, EdgeStyle, Constants, mxKeyHandler } from '@maxgraph/core';
+import { Graph, EdgeStyle, constants, mxKeyHandler } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -44,7 +44,7 @@ const Template = ({ label, ...args }) => {
   style = graph.getStylesheet().getDefaultEdgeStyle();
 
   style.edge = EdgeStyle.ElbowConnector;
-  style.elbow = Constants.ELBOW_VERTICAL;
+  style.elbow = constants.ELBOW_VERTICAL;
   style.rounded = true;
 
   // Gets the default parent for inserting new cells. This

@@ -7,7 +7,7 @@ import {
   ParallelEdgeLayout,
   ImageBox,
   mxKeyHandler,
-  Constants,
+  constants,
   EdgeStyle,
 } from '@maxgraph/core';
 

@@ -3,7 +3,7 @@
  */
 const { getOffset } = require('../../../../../packages/core/src/util/Utils');
 const { getValue } = require('../../../../../packages/core/src/util/Utils');
-const { write } = require('../../../../../packages/core/src/util/DomUtils');
+const { write } = require('../../../../../packages/core/src/util/domUtils');
 /**
  * Constructs a new graph editor
  */
