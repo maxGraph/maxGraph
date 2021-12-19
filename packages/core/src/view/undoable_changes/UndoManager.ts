@@ -39,7 +39,6 @@ import UndoableEdit from './UndoableEdit';
  * to the model and the view as well to maintain a consistent
  * display across multiple undo/redo steps.
  *
- * @example
  * ```javascript
  * var undoManager = new UndoManager();
  * var listener(sender, evt)

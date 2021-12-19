@@ -25,7 +25,7 @@ declare module '../Graph' {
     getSwimlaneDirection: (style: CellStateStyles) => DirectionValue;
     getActualStartSize: (swimlane: Cell, ignoreState: boolean) => Rectangle;
     isSwimlane: (cell: Cell, ignoreState?: boolean) => boolean;
-    isValidDropTarget: (cell: Cell, cells: CellArray, evt: MouseEvent) => boolean;
+    isValidDropTarget: (cell: Cell, cells?: CellArray | null, evt?: MouseEvent | null) => boolean;
     getDropTarget: (
       cells: CellArray,
       evt: MouseEvent,

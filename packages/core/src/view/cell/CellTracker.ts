@@ -15,13 +15,11 @@ import type { ColorValue } from '../../types';
 /**
  * Event handler that highlights cells
  *
- * @example
  * ```javascript
  * new mxCellTracker(graph, '#00FF00');
  * ```
  *
  * For detecting dragEnter, dragOver and dragLeave on cells, the following code can be used:
- * @example
  * ```javascript
  * graph.addMouseListener(
  * {

@@ -10,7 +10,7 @@ import { Graph } from '../Graph';
 
 declare module '../Graph' {
   interface Graph {
-    groupCells: (group: Cell, border: number, cells: CellArray) => Cell;
+    groupCells: (group: Cell, border: number, cells?: CellArray | null) => Cell;
     getCellsForGroup: (cells: CellArray) => CellArray;
     getBoundsForGroup: (
       group: Cell,
@@ -18,10 +18,10 @@ declare module '../Graph' {
       border: number | null
     ) => Rectangle | null;
     createGroupCell: (cells: CellArray) => Cell;
-    ungroupCells: (cells: CellArray) => CellArray;
+    ungroupCells: (cells?: CellArray | null) => CellArray;
     getCellsForUngroup: () => CellArray;
     removeCellsAfterUngroup: (cells: CellArray) => void;
-    removeCellsFromParent: (cells: CellArray) => CellArray;
+    removeCellsFromParent: (cells?: CellArray | null) => CellArray;
     updateGroupBounds: (
       cells: CellArray,
       border: number,

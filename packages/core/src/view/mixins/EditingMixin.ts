@@ -12,7 +12,7 @@ declare module '../Graph' {
     cellsEditable: boolean;
 
     startEditing: (evt: MouseEvent) => void;
-    startEditingAtCell: (cell: Cell | null, evt: MouseEvent) => void;
+    startEditingAtCell: (cell: Cell | null, evt?: MouseEvent | null) => void;
     getEditingValue: (cell: Cell, evt: MouseEvent | null) => string;
     stopEditing: (cancel: boolean) => void;
     labelChanged: (cell: Cell, value: any, evt: InternalMouseEvent | EventObject) => Cell;

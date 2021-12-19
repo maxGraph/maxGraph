@@ -13,7 +13,6 @@ import { Graph } from '../Graph';
 import CellArray from '../cell/CellArray';
 
 /**
- *
  * Implements animation for morphing cells. Here is an example of
  * using this class for animating the result of a layout algorithm:
  *

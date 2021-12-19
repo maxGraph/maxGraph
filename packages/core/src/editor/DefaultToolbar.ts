@@ -280,7 +280,7 @@ class DefaultToolbar {
       !this.connectOnDrop ||
       !target.isConnectable()
     ) {
-      while (target != null && !graph.isValidDropTarget(target, [vertex], evt)) {
+      while (target != null && !graph.isValidDropTarget(target, new CellArray(vertex), evt)) {
         target = target.getParent();
       }
       this.insert(vertex, evt, target);
@@ -376,7 +376,7 @@ class DefaultToolbar {
         model.endUpdate();
       }
 
-      graph.setSelectionCells([vertex, edge]);
+      graph.setSelectionCells(new CellArray(vertex, edge));
       graph.scrollCellToVisible(vertex);
     }
   }

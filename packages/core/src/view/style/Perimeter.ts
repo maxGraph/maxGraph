@@ -26,14 +26,12 @@ import { CellStateStyles } from '../../types';
  *
  * ### Example
  *
- * @example
  * ```javascript
  * <add as="perimeter">mxPerimeter.RectanglePerimeter</add>
  * ```
  *
  * ### Or programmatically
  *
- * @example
  * ```javascript
  * style.perimiter = mxPerimeter.RectanglePerimeter;
  * ```
@@ -41,7 +39,6 @@ import { CellStateStyles } from '../../types';
  * When adding new perimeter functions, it is recommended to use the
  * mxPerimeter-namespace as follows:
  *
- * @example
  * ```javascript
  * mxPerimeter.CustomPerimeter = function (bounds, vertex, next, orthogonal)
  * {
@@ -53,14 +50,12 @@ import { CellStateStyles } from '../../types';
  * ```
  *
  * #### The new perimeter should then be registered in the {@link mxStyleRegistry} as follows
- * @example
  * ```javascript
  * mxStyleRegistry.putValue('customPerimeter', mxPerimeter.CustomPerimeter);
  * ```
  *
  * #### The custom perimeter above can now be used in a specific vertex as follows:
  *
- * @example
  * ```javascript
  * model.setStyle(vertex, 'perimeter=customPerimeter');
  * ```
@@ -72,7 +67,6 @@ import { CellStateStyles } from '../../types';
  *
  * #### Or it can be used for all vertices in the graph as follows:
  *
- * @example
  * ```javascript
  * var style = graph.getStylesheet().getDefaultVertexStyle();
  * style.perimiter = mxPerimeter.CustomPerimeter;

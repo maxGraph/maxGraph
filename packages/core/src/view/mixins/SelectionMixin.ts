@@ -58,8 +58,8 @@ declare module '../Graph' {
     selectChildCell: () => void;
     selectCell: (isNext?: boolean, isParent?: boolean, isChild?: boolean) => void;
     selectAll: (parent?: Cell | null, descendants?: boolean) => void;
-    selectVertices: (parent: Cell, selectGroups: boolean) => void;
-    selectEdges: (parent: Cell) => void;
+    selectVertices: (parent?: Cell | null, selectGroups?: boolean) => void;
+    selectEdges: (parent?: Cell | null) => void;
     selectCells: (
       vertices: boolean,
       edges: boolean,

@@ -19,7 +19,6 @@ import CellState from '../cell/CellState';
  * a graph view (so that the label bounds are available) before this layout
  * can be executed.
  *
- * @example
  * ```javascript
  * var layout = new mxEdgeLabelLayout(graph);
  * layout.execute(graph.getDefaultParent());

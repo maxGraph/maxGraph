@@ -19,7 +19,6 @@ import { Graph } from '../Graph';
  *
  * ### Example
  *
- * @example
  * ```javascript
  * graph.multiplicities.push(new mxMultiplicity(
  *   true, 'rectangle', null, null, 0, 2, ['circle'],

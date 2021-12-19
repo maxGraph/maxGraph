@@ -47,7 +47,6 @@ const useAbsoluteIds =
  * Extends {@link mxAbstractCanvas2D} to implement a canvas for SVG. This canvas writes all calls as SVG output to the
  * given SVG root node.
  *
- * @example
  * ```javascript
  * var svgDoc = mxUtils.createXmlDocument();
  * var root = (svgDoc.createElementNS != null) ?
@@ -75,7 +74,6 @@ const useAbsoluteIds =
  *
  *
  * To disable anti-aliasing in the output, use the following code.
- * @example
  * ```javascript
  * graph.view.canvas.ownerSVGElement.setAttribute('shape-rendering', 'crispEdges');
  * ```

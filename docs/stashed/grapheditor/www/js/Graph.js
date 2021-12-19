@@ -4325,7 +4325,6 @@ HoverIcons.prototype.removeNodes = function()
 };
 
 /**
- *
  */
 HoverIcons.prototype.setDisplay = function(display)
 {
@@ -4336,7 +4335,6 @@ HoverIcons.prototype.setDisplay = function(display)
 };
 
 /**
- *
  */
 HoverIcons.prototype.isActive = function()
 {
@@ -4344,7 +4342,6 @@ HoverIcons.prototype.isActive = function()
 };
 
 /**
- *
  */
 HoverIcons.prototype.drag = function(evt, x, y)
 {
@@ -4380,7 +4377,6 @@ HoverIcons.prototype.drag = function(evt, x, y)
 };
 
 /**
- *
  */
 HoverIcons.prototype.getStateAt = function(state, x, y)
 {
@@ -4388,7 +4384,6 @@ HoverIcons.prototype.getStateAt = function(state, x, y)
 };
 
 /**
- *
  */
 HoverIcons.prototype.click = function(state, dir, me)
 {
@@ -4413,7 +4408,6 @@ HoverIcons.prototype.click = function(state, dir, me)
 };
 
 /**
- *
  */
 HoverIcons.prototype.execute = function(state, dir, me)
 {

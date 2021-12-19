@@ -35,6 +35,10 @@ import MaxLog from '../gui/MaxLog';
 import { isNode } from '../util/domUtils';
 import { getViewXml, getXml } from '../util/xmlUtils';
 import { load, post, submit } from '../util/MaxXmlRequest';
+import PopupMenuHandler from 'src/view/handler/PopupMenuHandler';
+import RubberBand from '../view/handler/RubberBand';
+import InternalEvent from '../view/event/InternalEvent';
+import InternalMouseEvent from 'src/view/event/InternalMouseEvent';
 
 /**
  * Installs the required language resources at class
@@ -71,7 +75,6 @@ if (mxLoadResources) {
  * To read a diagram from an XML string, for example from a textfield within the
  * page, the following code is used:
  *
- * @example
  * ```javascript
  * var doc = mxUtils.parseXML(xmlString);
  * var node = doc.documentElement;
@@ -132,7 +135,6 @@ if (mxLoadResources) {
  * For converting decimal escape sequences inside strings, a user has provided
  * us with the following function:
  *
- * @example
  * ```javascript
  * function html2js(text)
  * {
@@ -164,7 +166,6 @@ if (mxLoadResources) {
  *
  * For example, in PHP the code that does this looks as follows.
  *
- * @example
  * ```javascript
  * $xml = stripslashes($_POST["xml"]);
  * header("Content-Disposition: attachment; filename=\"diagram.xml\"");
@@ -188,7 +189,6 @@ if (mxLoadResources) {
  * In the following example, the task node is a business object and only the
  * mxCell node and its mxGeometry child contain graph information:
  *
- * @example
  * ```javascript
  * <Task label="Task" description="">
  *   <mxCell vertex="true">
@@ -202,7 +202,6 @@ if (mxLoadResources) {
  * the cell. This means the user object of the cell is the Task node with no
  * children for the above example:
  *
- * @example
  * ```javascript
  * <Task label="Task" description=""/>
  * ```
@@ -223,7 +222,6 @@ if (mxLoadResources) {
  * If you want to displey the properties dialog on a doubleclick, you can set
  * {@link Editor.dblClickAction} to showProperties as follows:
  *
- * @example
  * ```javascript
  * editor.dblClickAction = 'showProperties';
  * ```
@@ -233,7 +231,6 @@ if (mxLoadResources) {
  * The toolbar and popupmenu are typically configured using the respective
  * sections in the config file, that is, the popupmenu is defined as follows:
  *
- * @example
  * ```javascript
  * <Editor>
  *   <DefaultPopupMenu as="popupHandler">
@@ -250,7 +247,6 @@ if (mxLoadResources) {
  * The toolbar is defined in the DefaultToolbar section. Items can be added
  * and removed in this section.
  *
- * @example
  * ```javascript
  * <Editor>
  *   <DefaultToolbar>
@@ -282,7 +278,6 @@ if (mxLoadResources) {
  * For inserting a new cell, say, by clicking a button in the document,
  * the following code can be used. This requires an reference to the editor.
  *
- * @example
  * ```javascript
  * var userObject = new Object();
  * var parent = editor.graph.getDefaultParent();
@@ -302,7 +297,6 @@ if (mxLoadResources) {
  * of the template can be created as follows. The clone is then inserted using
  * the add function instead of addVertex.
  *
- * @example
  * ```javascript
  * var template = editor.templates['task'];
  * var clone = editor.graph.model.cloneCell(template);
@@ -367,7 +361,6 @@ if (mxLoadResources) {
  * For starting an in-place edit after a new vertex has been added to the
  * graph, the following code can be used.
  *
- * @example
  * ```javascript
  * editor.addListener(mxEvent.AFTER_ADD_VERTEX, function(sender, evt)
  * {
@@ -390,7 +383,6 @@ if (mxLoadResources) {
  * Constructs a new editor. This function invokes the {@link onInit} callback
  * upon completion.
  *
- * @example
  * ```javascript
  * var config = mxUtils.load('config/diagrameditor.xml').getDocumentElement();
  * var editor = new Editor(config);
@@ -436,7 +428,15 @@ class Editor extends EventSource {
     }
   }
 
-  onInit: Function | null = null;
+  onInit: Function | null=null;
+  lastSnapshot: number | null=null;
+  ignoredChanges: number | null=null;
+  swimlaneLayout: any;
+  diagramLayout: any;
+  rubberband: RubberBand | null=null;
+  isActive: boolean | null=null;
+  properties: any;
+  destroyed: boolean=false;
 
   /**
    * Specifies the resource key for the zoom dialog. If the resource for this
@@ -454,7 +454,6 @@ class Editor extends EventSource {
    * this key does not exist then the value is used as the error message. Default is 'lastSaved'.
    * @default 'lastSaved'.
    */
-  // lastSavedResource: 'lastSaved' | '';
   lastSavedResource = Client.language !== 'none' ? 'lastSaved' : '';
 
   /**
@@ -462,7 +461,6 @@ class Editor extends EventSource {
    * this key does not exist then the value is used as the error message. Default is 'currentFile'.
    * @default 'currentFile'
    */
-  // currentFileResource: 'currentFile' | '';
   currentFileResource = Client.language !== 'none' ? 'currentFile' : '';
 
   /**
@@ -471,7 +469,6 @@ class Editor extends EventSource {
    * error message. Default is 'properties'.
    * @default 'properties'
    */
-  // propertiesResource: 'properties' | '';
   propertiesResource = Client.language !== 'none' ? 'properties' : '';
 
   /**
@@ -480,7 +477,6 @@ class Editor extends EventSource {
    * error message. Default is 'tasks'.
    * @default 'tasks'
    */
-  // tasksResource: 'tasks' | '';
   tasksResource = Client.language !== 'none' ? 'tasks' : '';
 
   /**
@@ -489,7 +485,6 @@ class Editor extends EventSource {
    * error message. Default is 'help'.
    * @default 'help'
    */
-  // helpResource: 'help' | '';
   helpResource = Client.language !== 'none' ? 'help' : '';
 
   /**
@@ -498,15 +493,13 @@ class Editor extends EventSource {
    * error message. Default is 'outline'.
    * @default 'outline'
    */
-  // outlineResource: 'outline' | '';
   outlineResource = Client.language !== 'none' ? 'outline' : '';
 
   /**
    * Reference to the {@link MaxWindow} that contains the outline. The {@link outline}
    * is stored in outline.outline.
    */
-  // outline: any;
-  outline = null;
+  outline: any = null;
 
   /**
    * Holds a {@link graph} for displaying the diagram. The graph
@@ -655,7 +648,7 @@ class Editor extends EventSource {
    * Contains the URL of the last opened file as a string. Default is null.
    * @default null
    */
-  filename: string = null;
+  filename: string | null = null;
 
   /**
    * Group: Backend Integration
@@ -685,14 +678,14 @@ class Editor extends EventSource {
    * to a backend in {@link save}.
    * @default null
    */
-  urlPost: string = null;
+  urlPost: string | null = null;
 
   /**
    * Specifies the URL to be used for creating a bitmap of
    * the graph in the image action.
    * @default null
    */
-  urlImage: string = null;
+  urlImage: string | null = null;
 
   /**
    * Specifies the direction of the flow
@@ -812,7 +805,7 @@ class Editor extends EventSource {
    * resources file under urlHelp for language-specific
    * online help support.
    */
-  urlHelp: string = null;
+  urlHelp: string | null = null;
 
   /**
    * Specifies the width of the help window in pixels. Default is 300.
@@ -1363,7 +1356,7 @@ class Editor extends EventSource {
 
         // Invokes the function on the editor using the args
         action.apply(this, args);
-      } catch (e) {
+      } catch (e: any) {
         error(`Cannot execute ${actionname}: ${e.message}`, 280, true);
 
         throw e;
@@ -1423,9 +1416,9 @@ class Editor extends EventSource {
 
     // Redirects the function for creating the
     // popupmenu items
-    const popupMenuHandler = graph.getPlugin('PopupMenuHandler');
+    const popupMenuHandler = <PopupMenuHandler>graph.getPlugin('PopupMenuHandler');
 
-    popupMenuHandler.factoryMethod = (menu, cell, evt) => {
+    popupMenuHandler.factoryMethod = (menu: any, cell: Cell, evt: any) => {
       return this.createPopupMenu(menu, cell, evt);
     };
 
@@ -1433,7 +1426,7 @@ class Editor extends EventSource {
     // new connections in the diagram
     const connectionHandler = graph.getPlugin('ConnectionHandler');
 
-    connectionHandler.factoryMethod = (source, target) => {
+    connectionHandler.factoryMethod = (source: Cell, target: Cell): void => {
       return this.createEdge(source, target);
     };
 
@@ -1481,7 +1474,7 @@ class Editor extends EventSource {
         // Executes the swimlane layout if a child of
         // a swimlane has been changed. The layout is
         // lazy created in createSwimlaneLayout.
-        if (self.layoutSwimlanes && graph.isSwimlane(cell: Cell)) {
+        if (self.layoutSwimlanes && graph.isSwimlane(cell)) {
           if (self.swimlaneLayout == null) {
             self.swimlaneLayout = self.createSwimlaneLayout();
           }
@@ -1494,7 +1487,7 @@ class Editor extends EventSource {
         // lazy created in createDiagramLayout.
         else if (
           self.layoutDiagram &&
-          (graph.isValidRoot(cell: Cell) || cell.getParent().getParent() == null)
+          (graph.isValidRoot(cell) || cell.getParent().getParent() == null)
         ) {
           if (self.diagramLayout == null) {
             self.diagramLayout = self.createDiagramLayout();
@@ -1538,7 +1531,7 @@ class Editor extends EventSource {
    */
   installDblClickHandler(graph: Graph): void {
     // Installs a listener for double click events
-    graph.addListener(InternalEvent.DOUBLE_CLICK, (sender, evt) => {
+    graph.addListener(InternalEvent.DOUBLE_CLICK, (sender: any, evt: InternalEvent) => {
       const cell = evt.getProperty('cell');
 
       if (cell != null && graph.isEnabled() && this.dblClickAction != null) {
@@ -1553,7 +1546,7 @@ class Editor extends EventSource {
    * @param graph
    */
   installUndoHandler(graph: Graph): void {
-    const listener = (sender, evt) => {
+    const listener = (sender: any, evt: InternalEvent) => {
       const edit = evt.getProperty('edit');
       this.undoManager.undoableEditHappened(edit);
     };
@@ -1562,7 +1555,7 @@ class Editor extends EventSource {
     graph.getView().addListener(InternalEvent.UNDO, listener);
 
     // Keeps the selection state in sync
-    const undoHandler = (sender, evt) => {
+    const undoHandler = (sender: any, evt: InternalEvent) => {
       const { changes } = evt.getProperty('edit');
       graph.setSelectionCells(graph.getSelectionCellsForChanges(changes));
     };
@@ -1576,7 +1569,7 @@ class Editor extends EventSource {
    * @param graph
    */
   installDrillHandler(graph: Graph): void {
-    const listener = (sender) => {
+    const listener = (sender: any) => {
       this.fireEvent(new EventObject(InternalEvent.ROOT));
     };
 
@@ -1591,7 +1584,7 @@ class Editor extends EventSource {
    * @param graph
    */
   installChangeHandler(graph: Graph): void {
-    const listener = (sender, evt) => {
+    const listener = (sender: any, evt: InternalEvent) => {
       // Updates the modified state
       this.setModified(true);
 
@@ -1628,7 +1621,7 @@ class Editor extends EventSource {
   installInsertHandler(graph: Graph): void {
     const self = this; // closure
     const insertHandler = {
-      mouseDown: (sender, me) => {
+      mouseDown: (sender: any, me: InternalMouseEvent) => {
         if (
           self.insertFunction != null &&
           !me.isPopupTrigger() &&
@@ -1644,13 +1637,13 @@ class Editor extends EventSource {
         }
       },
 
-      mouseMove: (sender, me) => {
+      mouseMove: (sender: any, me: MouseEvent) => {
         if (this.isActive) {
           me.consume();
         }
       },
 
-      mouseUp: (sender, me) => {
+      mouseUp: (sender: any, me: MouseEvent) => {
         if (this.isActive) {
           this.isActive = false;
           me.consume();
@@ -1678,7 +1671,7 @@ class Editor extends EventSource {
 
     // Overrides isIgnored to only take into account swimlanes
     layout.isVertexIgnored = (cell: Cell) => {
-      return !layout.graph.isSwimlane(cell: Cell);
+      return !layout.graph.isSwimlane(cell);
     };
 
     return layout;
@@ -1757,7 +1750,7 @@ class Editor extends EventSource {
    * @param container DOM node that will contain the title.
    */
   setTitleContainer(container: any): void {
-    this.addListener(InternalEvent.ROOT, (sender) => {
+    this.addListener(InternalEvent.ROOT, (sender: any) => {
       container.innerHTML = this.getTitle();
     });
   }
@@ -1787,8 +1780,8 @@ class Editor extends EventSource {
 
     while (cell != null && cell.getParent().getParent() != null) {
       // Append each label of a valid root
-      if (graph.isValidRoot(cell: Cell)) {
-        title = ` > ${graph.convertValueToString(cell: Cell)}${title}`;
+      if (graph.isValidRoot(cell)) {
+        title = ` > ${graph.convertValueToString(cell)}${title}`;
       }
 
       cell = cell.getParent();
@@ -1839,7 +1832,6 @@ class Editor extends EventSource {
    */
   createGroup(): Cell {
     const model = this.graph.getModel();
-
     return model.cloneCell(this.defaultGroup);
   }
 
@@ -1878,8 +1870,7 @@ class Editor extends EventSource {
    * the command history and modified state.
    * @param node
    */
-  // readGraphModel(node: any): void;
-  readGraphModel(node: any) {
+  readGraphModel(node: any): void {
     const dec = new Codec(node.ownerDocument);
     dec.decode(node, this.graph.getModel());
     this.resetHistory();
@@ -1947,8 +1938,7 @@ class Editor extends EventSource {
    * @param url
    * @param data
    */
-  // postDiagram(url: any, data: any): void;
-  postDiagram(url, data) {
+  postDiagram(url: any, data: any): void {
     if (this.escapePostData) {
       data = encodeURIComponent(data);
     }
@@ -1974,12 +1964,10 @@ class Editor extends EventSource {
    *
    * @param linefeed Optional character to be used as the linefeed. Default is {@link linefeed}.
    */
-  // writeGraphModel(linefeed: string): string;
-  writeGraphModel(linefeed) {
+  writeGraphModel(linefeed: string): string {
     linefeed = linefeed != null ? linefeed : this.linefeed;
     const enc = new Codec();
     const node = enc.encode(this.graph.getModel());
-
     return getXml(node, linefeed);
   }
 
@@ -1988,8 +1976,7 @@ class Editor extends EventSource {
    * in {@link save}. The default implementation returns {@link urlPost},
    * adding <code>?draft=true</code>.
    */
-  // getUrlPost(): string;
-  getUrlPost() {
+  getUrlPost(): string {
     return this.urlPost;
   }
 
@@ -2000,8 +1987,7 @@ class Editor extends EventSource {
    * in the image action to create an image. This implementation
    * returns {@link urlImage}.
    */
-  // getUrlImage(): string;
-  getUrlImage() {
+  getUrlImage(): string {
     return this.urlImage;
   }
 
@@ -2011,8 +1997,7 @@ class Editor extends EventSource {
    * @param first
    * @param second
    */
-  // swapStyles(first: any, second: any): void;
-  swapStyles(first, second) {
+  swapStyles(first: any, second: any): void {
     const style = this.graph.getStylesheet().styles[second];
     this.graph
       .getView()
@@ -2028,8 +2013,7 @@ class Editor extends EventSource {
    * {@link createProperties}.
    * @param cell
    */
-  // showProperties(cell: mxCell): void;
-  showProperties(cell: Cell) {
+  showProperties(cell: Cell): void {
     cell = cell || this.graph.getSelectionCell();
 
     // Uses the root node for the properties dialog
@@ -2094,8 +2078,7 @@ class Editor extends EventSource {
   /**
    * Returns true if the properties dialog is currently visible.
    */
-  // isPropertiesVisible(): boolean;
-  isPropertiesVisible() {
+  isPropertiesVisible(): boolean {
     return this.properties != null;
   }
 
@@ -2105,8 +2088,7 @@ class Editor extends EventSource {
    * works for user objects that are XML nodes and display all the
    * node attributes in a form.
    */
-  // createProperties(cell: any): HTMLTableElement | null;
-  createProperties(cell: Cell) {
+  createProperties(cell: Cell): HTMLTableElement | null {
     const model = this.graph.getModel();
     const value = model.getValue(cell);
 
@@ -2119,11 +2101,11 @@ class Editor extends EventSource {
       const id = form.addText('ID', cell.getId());
       id.setAttribute('readonly', 'true');
 
-      let geo = null;
-      let yField = null;
-      let xField = null;
-      let widthField = null;
-      let heightField = null;
+      let geo: Geometry | null = null;
+      let yField: HTMLInputElement | null = null;
+      let xField: HTMLInputElement | null = null;
+      let widthField: HTMLInputElement | null = null;
+      let heightField: HTMLInputElement | null = null;
 
       // Adds fields for the location and size
       if (cell.isVertex()) {
@@ -2228,8 +2210,7 @@ class Editor extends EventSource {
   /**
    * Hides the properties dialog.
    */
-  // hideProperties(): void;
-  hideProperties() {
+  hideProperties(): void {
     if (this.properties != null) {
       this.properties.destroy();
       this.properties = null;
@@ -2257,8 +2238,7 @@ class Editor extends EventSource {
    * };
    * ```
    */
-  // showTasks(): void;
-  showTasks() {
+  showTasks(): void {
     if (this.tasks == null) {
       const div = document.createElement('div');
       div.style.padding = '4px';
@@ -2277,7 +2257,7 @@ class Editor extends EventSource {
       // Installs a function to update the contents
       // of the tasks window on every change of the
       // model, selection or root.
-      const funct = (sender) => {
+      const funct = (sender: any) => {
         InternalEvent.release(div);
         div.innerHTML = '';
         this.createTasks(div);
@@ -2331,7 +2311,7 @@ class Editor extends EventSource {
    * is undefined.
    * @param tasks
    */
-  showHelp(tasks: any): void {
+  showHelp(tasks: any | null=null): void {
     if (this.help == null) {
       const frame = document.createElement('iframe');
       frame.setAttribute('src', Resources.get('urlHelp') || this.urlHelp);
@@ -2363,7 +2343,7 @@ class Editor extends EventSource {
 
       // Workaround for ignored iframe height 100% in FF
       if (Client.IS_NS) {
-        const handler = (sender) => {
+        const handler = (sender: any) => {
           const h = wnd.div.offsetHeight;
           frame.setAttribute('height', `${h - 26}px`);
         };
@@ -2494,8 +2474,7 @@ class Editor extends EventSource {
    * The function is used in {@link createEdge} when new edges
    * are created in the graph.
    */
-  // getEdgeStyle(): string;
-  getEdgeStyle() {
+  getEdgeStyle(): string {
     return this.defaultEdgeStyle;
   }
 
@@ -2504,8 +2483,7 @@ class Editor extends EventSource {
    * or null, if not attribute should be used in the specified cell.
    * @param cell
    */
-  // consumeCycleAttribute(cell: any): any;
-  consumeCycleAttribute(cell: Cell) {
+  consumeCycleAttribute(cell: Cell): any {
     return this.cycleAttributeValues != null &&
       this.cycleAttributeValues.length > 0 &&
       this.graph.isSwimlane(cell)
@@ -2520,8 +2498,7 @@ class Editor extends EventSource {
    * as the value for the {@link cycleAttributeName} key in the given cell's style.
    * @param cell
    */
-  // cycleAttribute(cell: any): void;
-  cycleAttribute(cell: Cell) {
+  cycleAttribute(cell: Cell): void {
     if (this.cycleAttributeName != null) {
       const value = this.consumeCycleAttribute(cell);
 
@@ -2539,12 +2516,11 @@ class Editor extends EventSource {
    * @param x
    * @param y
    */
-  // addVertex(parent: any, vertex: any, x: any, y: any): any;
-  addVertex(parent: Cell, vertex: Cell, x: number, y: number) {
+  addVertex(parent: Cell, vertex: Cell, x: number, y: number): any {
     const model = this.graph.getModel();
 
     while (parent != null && !this.graph.isValidDropTarget(parent)) {
-      parent = model.getParent(parent);
+      parent = parent.getParent();
     }
 
     parent = parent != null ? parent : this.graph.getSwimlaneAt(x, y);
@@ -2631,8 +2607,7 @@ class Editor extends EventSource {
    * normally need to be called, it is called automatically when the window
    * unloads.
    */
-  // destroy(): void;
-  destroy() {
+  destroy(): void {
     if (!this.destroyed) {
       this.destroyed = true;
 

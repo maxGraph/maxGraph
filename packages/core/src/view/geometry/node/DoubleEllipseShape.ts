@@ -15,7 +15,6 @@ import AbstractCanvas2D from '../../../view/canvas/AbstractCanvas2D';
  * This shape is registered under {@link mxConstants.SHAPE_DOUBLE_ELLIPSE} in {@link cellRenderer}.
  *
  * Use the following override to only fill the inner ellipse in this shape:
- * @example
  * ```javascript
  * mxDoubleEllipse.prototype.paintVertexShape = function(c, x, y, w, h)
  * {

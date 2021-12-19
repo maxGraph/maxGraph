@@ -6,7 +6,6 @@
  */
 
 /**
- *
  * Converts relative and absolute URLs to absolute URLs with protocol and domain.
  */
 class UrlConverter {

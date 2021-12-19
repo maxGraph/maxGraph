@@ -45,7 +45,6 @@ import SvgCanvas2D from '../../canvas/SvgCanvas2D';
  * Extends mxShape to implement a text shape.
  * To change vertical text from bottom to top to top to bottom,
  * the following code can be used:
- * @example
  * ```javascript
  * mxText.prototype.verticalTextRotation = 90;
  * ```

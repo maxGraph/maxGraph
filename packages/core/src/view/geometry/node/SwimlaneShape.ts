@@ -40,8 +40,7 @@ class SwimlaneShape extends Shape {
   }
 
   /**
-   *
-   * Default imagewidth and imageheight if an image but no imagewidth
+     * Default imagewidth and imageheight if an image but no imagewidth
    * and imageheight are defined in the style. Value is 16.
    * @type {number}
    * @default 16

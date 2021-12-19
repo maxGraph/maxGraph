@@ -23,7 +23,6 @@ import type { FilterFunction } from '../../types';
  * ### Custom attributes
  * For custom attributes we recommend using an XML node as the value of a cell.
  * The following code can be used to create a cell with an XML node as the value:
- * @example
  * ```javascript
  * var doc = mxUtils.createXmlDocument();
  * var node = doc.createElement('MyNode')
@@ -35,7 +34,6 @@ import type { FilterFunction } from '../../types';
  * For the label to work, {@link graph.convertValueToString} and
  * {@link graph.cellLabelChanged} should be overridden as follows:
  *
- * @example
  * ```javascript
  * graph.convertValueToString(cell)
  * {

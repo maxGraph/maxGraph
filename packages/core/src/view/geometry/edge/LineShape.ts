@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import Shape from '../Shape';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Rectangle from '../Rectangle';
 import { ColorValue } from '../../../types';
 

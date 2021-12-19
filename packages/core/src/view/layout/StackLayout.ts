@@ -33,11 +33,11 @@ import CellArray from '../cell/CellArray';
 class StackLayout extends GraphLayout {
   constructor(
     graph: Graph,
-    horizontal: boolean,
-    spacing: number,
-    x0: number,
-    y0: number,
-    border: number
+    horizontal: boolean | null=null,
+    spacing: number | null=null,
+    x0: number | null=null,
+    y0: number | null=null,
+    border: number | null=null
   ) {
     super(graph);
     this.horizontal = horizontal != null ? horizontal : true;

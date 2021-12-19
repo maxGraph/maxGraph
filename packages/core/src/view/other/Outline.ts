@@ -33,7 +33,6 @@ import { KeyboardEventListener, Listenable, MouseEventListener } from 'src/types
  *
  * ### Example
  *
- * @example
  * ```javascript
  * var outline = new mxOutline(graph, div);
  * ```
@@ -43,7 +42,6 @@ import { KeyboardEventListener, Listenable, MouseEventListener } from 'src/types
  * transparent elements in the graph do not show the page background, but the
  * background of the graph container.
  *
- * @example
  * ```javascript
  * if (document.documentMode == 8)
  * {
@@ -53,7 +51,6 @@ import { KeyboardEventListener, Listenable, MouseEventListener } from 'src/types
  *
  * To move the graph to the top, left corner the following code can be used.
  *
- * @example
  * ```javascript
  * var scale = graph.view.scale;
  * var bounds = graph.getGraphBounds();
@@ -62,7 +59,6 @@ import { KeyboardEventListener, Listenable, MouseEventListener } from 'src/types
  *
  * To toggle the suspended mode, the following can be used.
  *
- * @example
  * ```javascript
  * outline.suspended = !outln.suspended;
  * if (!outline.suspended)

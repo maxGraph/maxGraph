@@ -14,7 +14,6 @@ import CellArray from '../cell/CellArray';
  * layout is suitable for graphs that have no cycles (trees). Vertices that are
  * not connected to the tree will be ignored by this layout.
  *
- * @example
  * ```javascript
  * var layout = new mxRadialTreeLayout(graph);
  * layout.execute(graph.getDefaultParent());

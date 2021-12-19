@@ -22,7 +22,6 @@ import Cell from '../cell/Cell';
  * Implements printing of a diagram across multiple pages. The following opens
  * a print preview for an existing graph:
  *
- * @example
  * ```javascript
  * var preview = new mxPrintPreview(graph);
  * preview.open();
@@ -31,7 +30,6 @@ import Cell from '../cell/Cell';
  * Use {@link getScaleForPageCount} as follows in order to print the graph
  * across a given number of pages:
  *
- * @example
  * ```javascript
  * var pageCount = mxUtils.prompt('Enter page count', '1');
  *
@@ -48,7 +46,6 @@ import Cell from '../cell/Cell';
  * To add additional pages before and after the output, {@link getCoverPages} and
  * {@link getAppendices} can be used, respectively.
  *
- * @example
  * ```javascript
  * var preview = new mxPrintPreview(graph, 1);
  *
@@ -77,7 +74,6 @@ import Cell from '../cell/Cell';
  * To add CSS to the page, use the css argument in the {@link open} function or
  * override {@link writeHead} to add the respective link tags as follows:
  *
- * @example
  * ```javascript
  * var writeHead = preview.writeHead;
  * preview.writeHead(doc, css)
@@ -92,7 +88,6 @@ import Cell from '../cell/Cell';
  * To add a padding to the page in the preview (but not the print output), use
  * the following code:
  *
- * @example
  * ```javascript
  * preview.writeHead(doc)
  * {
@@ -111,7 +106,6 @@ import Cell from '../cell/Cell';
  * Apart from setting the title argument in the mxPrintPreview constructor you
  * can override {@link renderPage} as follows to add a header to any page:
  *
- * @example
  * ```javascript
  * var oldRenderPage = renderPage;
  * renderPage(w, h, x, y, content, pageNumber)
@@ -146,7 +140,6 @@ import Cell from '../cell/Cell';
  * page format in the print dialog to landscape. However, this CSS
  * directive seems to be ignored in most major browsers, including IE.
  *
- * @example
  * ```javascript
  * @page {
  *   size: landscape;
@@ -160,7 +153,6 @@ import Cell from '../cell/Cell';
  * and provide the same DOCTYPE for the print preview if required. Here is
  * an example for IE8 standards mode.
  *
- * @example
  * ```javascript
  * var preview = new mxPrintPreview(graph);
  * preview.getDoctype()
@@ -173,14 +165,14 @@ import Cell from '../cell/Cell';
 class PrintPreview {
   constructor(
     graph: Graph,
-    scale: number | null,
-    pageFormat: string | null,
-    border: number | null,
-    x0: number | null,
-    y0: number | null,
+    scale: number | null=null,
+    pageFormat: string | null=null,
+    border: number | null=null,
+    x0: number | null=null,
+    y0: number | null=null,
     borderColor: string,
     title: string,
-    pageSelector: boolean | null
+    pageSelector: boolean | null=null
   ) {
     this.graph = graph;
     this.scale = scale != null ? scale : 1 / graph.pageScale;

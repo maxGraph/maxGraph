@@ -31,7 +31,6 @@ import { GraphLayout, UndoableEdit } from 'src';
  *
  * ### Example
  *
- * @example
  * ```javascript
  * var layoutMgr = new mxLayoutManager(graph);
  * layoutMgr.getLayout(cell, eventName)

@@ -27,7 +27,6 @@ import CellArray from '../cell/CellArray';
  *
  * ### Example
  *
- * @example
  * ```javascript
  * var layout = new mxCompactTreeLayout(graph);
  * layout.execute(graph.getDefaultParent());

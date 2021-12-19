@@ -7,7 +7,7 @@
 import Shape from '../Shape';
 import { ARROW_SIZE, ARROW_SPACING, ARROW_WIDTH } from '../../../util/constants';
 import Rectangle from '../Rectangle';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Point from '../Point';
 import { ColorValue } from '../../../types';
 

@@ -57,7 +57,6 @@ import type {
  * In the special case where the custom shape consists only of one filled region
  * or one filled region and an additional stroke the mxActor and mxCylinder
  * should be subclassed, respectively.
- * @example
  * ```javascript
  * function CustomShape() { }
  *
@@ -66,7 +65,6 @@ import type {
  * ```
  * To register a custom shape in an existing graph instance, one must register the
  * shape under a new name in the graph’s cell renderer as follows:
- * @example
  * ```javascript
  * mxCellRenderer.registerShape('customShape', CustomShape);
  * ```
@@ -74,7 +72,6 @@ import type {
  * In order to use the shape you can refer to the given name above in a stylesheet.
  * For example, to change the shape for the default vertex style, the following code
  * is used:
- * @example
  * ```javascript
  * var style = graph.getStylesheet().getDefaultVertexStyle();
  * style.shape = 'customShape';

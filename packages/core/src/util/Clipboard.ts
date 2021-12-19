@@ -15,7 +15,6 @@ import CellArray from '../view/cell/CellArray';
  *
  * ### Example:
  *
- * @example
  * ```javascript
  * Clipboard.copy(graph);
  * Clipboard.paste(graph2);
@@ -30,7 +29,6 @@ import CellArray from '../view/cell/CellArray';
  * To restore previous parents for pasted cells, the implementation for
  * {@link copy} and {@link paste} can be changed as follows.
  *
- * @example
  * ```javascript
  * Clipboard.copy = function(graph, cells)
  * {

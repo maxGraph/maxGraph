@@ -104,8 +104,7 @@ class HierarchicalLayout extends GraphLayout {
   fineTuning: boolean = true;
 
   /**
-   *
-   * Whether or not to tighten the assigned ranks of vertices up towards
+     * Whether or not to tighten the assigned ranks of vertices up towards
    * the source cells. Default is true.
    */
   tightenToSource: boolean = true;

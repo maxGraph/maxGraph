@@ -20,7 +20,6 @@ import Cell from '../cell/Cell';
  *
  * Example:
  *
- * @example
  * ```javascript
  * var layout = new mxPartitionLayout(graph, true, 10, 20);
  * layout.execute(graph.getDefaultParent());

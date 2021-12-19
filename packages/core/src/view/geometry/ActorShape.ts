@@ -6,7 +6,7 @@
  */
 import Rectangle from './Rectangle';
 import Shape from './Shape';
-import SvgCanvas2D from '../../util/canvas/SvgCanvas2D';
+import SvgCanvas2D from '../canvas/SvgCanvas2D';
 import { ColorValue } from '../../types';
 import { NONE } from '../../util/constants';
 
@@ -15,8 +15,7 @@ import { NONE } from '../../util/constants';
  * filled area is needed, then this shape's {@link redrawPath} method should be overridden.
  *
  * This shape is registered under {@link mxConstants.SHAPE_ACTOR} in {@link cellRenderer}.
- *
- * @example
+ * 
  * ```javascript
  * function SampleShape() { }
  *

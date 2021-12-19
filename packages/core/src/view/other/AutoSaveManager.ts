@@ -12,7 +12,6 @@ import { Graph } from '../Graph';
  * Manager for automatically saving diagrams. The <save> hook must be
  * implemented.
  *
- * @example
  * ```javascript
  * var mgr = new AutoSaveManager(editor.graph);
  * mgr.save()

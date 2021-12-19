@@ -59,7 +59,6 @@ import { htmlEntities } from '../util/stringUtils';
  *
  * Or the following event handler can be used:
  *
- * @example
  * ```javascript
  * wnd.addListener(mxEvent.MOVE, function(e)
  * {
@@ -69,7 +68,6 @@ import { htmlEntities } from '../util/stringUtils';
  *
  * To keep a window inside the current window:
  *
- * @example
  * ```javascript
  * mxEvent.addListener(window, 'resize', mxUtils.bind(this, function()
  * {

@@ -6,8 +6,8 @@
  */
 
 import DefaultPopupMenu from './DefaultPopupMenu';
-import CodecRegistry from '../util/serialization/CodecRegistry';
-import ObjectCodec from '../util/serialization/ObjectCodec';
+import CodecRegistry from '../serialization/CodecRegistry';
+import ObjectCodec from '../serialization/ObjectCodec';
 
 /**
  * Custom codec for configuring <DefaultPopupMenu>s. This class is created

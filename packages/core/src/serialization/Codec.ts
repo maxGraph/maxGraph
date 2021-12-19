@@ -34,7 +34,6 @@ const createXmlDocument = () => {
  *
  * The following code is used to encode a graph model.
  *
- * @example
  * ```javascript
  * var encoder = new Codec();
  * var result = encoder.encode(graph.getModel());
@@ -48,7 +47,6 @@ const createXmlDocument = () => {
  * an XML file, eg. {@link mxUtils.get}, or using {@link mxUtils.parseXml} for parsing an
  * XML string.
  *
- * @example
  * ```javascript
  * var doc = mxUtils.parseXml(xmlString);
  * var codec = new Codec(doc);
@@ -61,7 +59,6 @@ const createXmlDocument = () => {
  * graph model. Note that the cells do not have a parent reference so they can
  * be added anywhere in the cell hierarchy after parsing.
  *
- * @example
  * ```javascript
  * var xml = '<root><mxCell id="2" value="Hello," vertex="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell><mxCell id="3" value="World!" vertex="1"><mxGeometry x="200" y="150" width="80" height="30" as="geometry"/></mxCell><mxCell id="4" value="" edge="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></root>';
  * var doc = mxUtils.parseXml(xml);
@@ -83,7 +80,6 @@ const createXmlDocument = () => {
  * Using the following code, the selection cells of a graph are encoded and the
  * output is displayed in a dialog box.
  *
- * @example
  * ```javascript
  * var enc = new Codec();
  * var cells = graph.getSelectionCells();
@@ -98,7 +94,6 @@ const createXmlDocument = () => {
  * For debugging I/O you can use the following code to get the sequence of
  * encoded objects:
  *
- * @example
  * ```javascript
  * var oldEncode = encode;
  * encode(obj)
@@ -113,7 +108,6 @@ const createXmlDocument = () => {
  * Note that the I/O system adds object codecs for new object automatically. For
  * decoding those objects, the constructor should be written as follows:
  *
- * @example
  * ```javascript
  * var MyObj(name)
  * {

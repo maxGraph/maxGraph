@@ -77,10 +77,9 @@ class MaxForm {
   /**
    * Adds an input for the given name, type and value and returns it.
    */
-  addText(name: string, value: any, type: string): HTMLInputElement {
+  addText(name: string, value: any, type: string='text'): HTMLInputElement {
     const input = document.createElement('input');
-
-    input.setAttribute('type', type || 'text');
+    input.setAttribute('type', type);
     input.value = value;
 
     return <HTMLInputElement>this.addField(name, input);
@@ -91,7 +90,6 @@ class MaxForm {
    */
   addCheckbox(name: string, value: boolean): HTMLInputElement {
     const input = document.createElement('input');
-
     input.setAttribute('type', 'checkbox');
     this.addField(name, input);
 
@@ -99,7 +97,6 @@ class MaxForm {
     if (value) {
       input.checked = true;
     }
-
     return input;
   }
 

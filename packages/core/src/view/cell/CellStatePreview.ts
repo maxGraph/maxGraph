@@ -13,7 +13,6 @@ import { Graph } from '../Graph';
 import GraphView from '../GraphView';
 
 /**
- *
  * @class CellStatePreview
  *
  * Implements a live preview for moving cells.
@@ -47,8 +46,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
@@ -86,8 +84,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {Function} visitor
    * @memberof mxCellStatePreview
    */
@@ -102,8 +99,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
@@ -135,8 +131,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
@@ -183,8 +178,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {CellState} state
    * @memberof mxCellStatePreview
    */

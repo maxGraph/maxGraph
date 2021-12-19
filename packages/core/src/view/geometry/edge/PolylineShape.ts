@@ -7,7 +7,7 @@
 import Shape from '../Shape';
 import { LINE_ARCSIZE } from '../../../util/constants';
 import Point from '../Point';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { ColorValue } from '../../../types';
 
 /**

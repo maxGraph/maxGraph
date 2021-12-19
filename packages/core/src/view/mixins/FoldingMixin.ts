@@ -117,8 +117,7 @@ const FoldingMixin: PartialType = {
   },
 
   /**
-   *
-   * @default true
+     * @default true
    */
 
   /**
