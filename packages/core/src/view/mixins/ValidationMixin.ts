@@ -66,7 +66,7 @@ const ValidationMixin: PartialType = {
    * Displays the given validation error in a dialog. This implementation uses
    * mxUtils.alert.
    */
-  validationAlert(message) {
+  validationAlert(message: string) {
     alert(message);
   },
 
@@ -78,7 +78,7 @@ const ValidationMixin: PartialType = {
    * @param source {@link mxCell} that represents the source terminal.
    * @param target {@link mxCell} that represents the target terminal.
    */
-  isEdgeValid(edge, source, target) {
+  isEdgeValid(edge: Cell, source: Cell, target: Cell) {
     return !this.getEdgeValidationError(edge, source, target);
   },
 
@@ -119,7 +119,7 @@ const ValidationMixin: PartialType = {
    * @param source {@link mxCell} that represents the source terminal.
    * @param target {@link mxCell} that represents the target terminal.
    */
-  getEdgeValidationError(edge = null, source = null, target = null) {
+  getEdgeValidationError(edge: Cell | null=null, source: Cell | null=null, target: Cell | null=null) {
     if (edge && !this.isAllowDanglingEdges() && (!source || !target)) {
       return '';
     }
@@ -196,7 +196,7 @@ const ValidationMixin: PartialType = {
    * @param source {@link mxCell} that represents the source terminal.
    * @param target {@link mxCell} that represents the target terminal.
    */
-  validateEdge(edge, source, target) {
+  validateEdge(edge: Cell | null=null, source: Cell | null=null, target: Cell | null=null) {
     return null;
   },
 
@@ -214,7 +214,7 @@ const ValidationMixin: PartialType = {
    * the graph root.
    * @param context Object that represents the global validation state.
    */
-  validateGraph(cell, context) {
+  validateGraph(cell: Cell | null=null, context) {
     cell = cell ?? this.getModel().getRoot();
 
     if (!cell) {
@@ -291,7 +291,7 @@ const ValidationMixin: PartialType = {
    *
    * @param cell {@link mxCell} for which the multiplicities should be checked.
    */
-  getCellValidationError(cell) {
+  getCellValidationError(cell: Cell) {
     const outCount = cell.getDirectedEdgeCount(true);
     const inCount = cell.getDirectedEdgeCount(false);
     const value = cell.getValue();
@@ -326,7 +326,7 @@ const ValidationMixin: PartialType = {
    * @param cell {@link mxCell} that represents the cell to validate.
    * @param context Object that represents the global validation state.
    */
-  validateCell(cell, context) {
+  validateCell(cell: Cell, context) {
     return null;
   },
 };

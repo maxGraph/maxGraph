@@ -8,6 +8,7 @@
 import DefaultPopupMenu from './DefaultPopupMenu';
 import CodecRegistry from '../serialization/CodecRegistry';
 import ObjectCodec from '../serialization/ObjectCodec';
+import Codec from 'src/serialization/Codec';
 
 /**
  * Custom codec for configuring <DefaultPopupMenu>s. This class is created
@@ -26,14 +27,14 @@ class DefaultPopupMenuCodec extends ObjectCodec {
   /**
    * Returns null.
    */
-  encode(enc, obj) {
+  encode(enc: Codec, obj: Element): Element | null {
     return null;
   }
 
   /**
    * Uses the given node as the config for <DefaultPopupMenu>.
    */
-  decode(dec, node, into) {
+  decode(dec: Codec, node: Element, into) {
     const inc = node.getElementsByTagName('include')[0];
 
     if (inc != null) {

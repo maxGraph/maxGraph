@@ -9,7 +9,7 @@ import ObjectIdentity from '../util/ObjectIdentity';
 import MaxLog from '../gui/MaxLog';
 import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
-import { NODETYPE_ELEMENT } from '../util/constants';
+import { NODETYPE } from '../util/constants';
 import { isInteger, isNumeric } from '../util/utils';
 import { getTextContent } from '../util/domUtils';
 import { load } from '../util/MaxXmlRequest';
@@ -223,14 +223,14 @@ class ObjectCodec {
    * Array containing the variable names that should be
    * ignored by the codec.
    */
-  exclude: Array<string>;
+  exclude: string[];
 
   /**
    * Array containing the variable names that should be
    * turned into or converted from references. See
    * {@link Codec.getId} and {@link Codec.getObject}.
    */
-  idrefs: Array<string>;
+  idrefs: string[];
 
   /**
    * Maps from from fieldnames to XML attribute names.
@@ -363,7 +363,7 @@ class ObjectCodec {
    * @param enc {@link Codec} that controls the encoding process.
    * @param obj Object to be encoded.
    */
-  encode(enc: Codec, obj: any): Node {
+  encode(enc: Codec, obj: any): Element | null {
     const node = enc.document.createElement(this.getName());
 
     obj = this.beforeEncode(enc, obj, node);
@@ -468,7 +468,7 @@ class ObjectCodec {
   /**
    * Writes the given value as a child node of the given node.
    */
-  writeComplexAttribute(enc: Codec, obj: any, name: string, value: any, node: Node): void {
+  writeComplexAttribute(enc: Codec, obj: any, name: string, value: any, node: Element): void {
     const child = enc.encode(value);
 
     if (child != null) {
@@ -567,7 +567,7 @@ class ObjectCodec {
    * @param obj Object to be encoded.
    * @param node XML node to encode the object into.
    */
-  beforeEncode(enc: Codec, obj: any, node?: Node): any {
+  beforeEncode(enc: Codec, obj: any, node?: Element): any {
     return obj;
   }
 
@@ -582,7 +582,7 @@ class ObjectCodec {
    * @param obj Object to be encoded.
    * @param node XML node that represents the default encoding.
    */
-  afterEncode(enc: Codec, obj: any, node: Node): Node {
+  afterEncode(enc: Codec, obj: any, node: Element): Element {
     return node;
   }
 
@@ -747,7 +747,7 @@ class ObjectCodec {
     while (child != null) {
       const tmp = <Element>child.nextSibling;
 
-      if (child.nodeType === NODETYPE_ELEMENT && !this.processInclude(dec, child, obj)) {
+      if (child.nodeType === NODETYPE.ELEMENT && !this.processInclude(dec, child, obj)) {
         this.decodeChild(dec, child, obj);
       }
 
@@ -795,7 +795,7 @@ class ObjectCodec {
    * required to override this to return the correct collection instance
    * based on the encoded child.
    */
-  getFieldTemplate(obj: any, fieldname: string, child: Node): any {
+  getFieldTemplate(obj: any, fieldname: string, child: Element): any {
     let template = obj[fieldname];
 
     // Non-empty arrays are replaced completely
@@ -880,7 +880,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Object that represents the default decoding.
    */
-  afterDecode(dec: Codec, node: Node, obj?: any): any {
+  afterDecode(dec: Codec, node: Element, obj?: any): any {
     return obj;
   }
 }

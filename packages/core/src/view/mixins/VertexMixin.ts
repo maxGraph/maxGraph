@@ -69,7 +69,7 @@ const VertexMixin: PartialType = {
   /**
    * Sets {@link allowNegativeCoordinates}.
    */
-  setAllowNegativeCoordinates(value) {
+  setAllowNegativeCoordinates(value: boolean) {
     this.allowNegativeCoordinates = value;
   },
 
@@ -212,7 +212,7 @@ const VertexMixin: PartialType = {
   /**
    * Sets {@link vertexLabelsMovable}.
    */
-  setVertexLabelsMovable(value) {
+  setVertexLabelsMovable(value: boolean) {
     this.vertexLabelsMovable = value;
   },
 };

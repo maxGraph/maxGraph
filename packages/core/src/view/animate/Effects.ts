@@ -129,7 +129,7 @@ class Effects {
     }
 
     // Fades all connected edges
-    const edges = graph.model.getEdges(cell);
+    const edges = cell.getEdges();
 
     if (edges != null) {
       for (let i = 0; i < edges.length; i += 1) {

@@ -8,6 +8,7 @@
 import ObjectCodec from '../serialization/ObjectCodec';
 import DefaultKeyHandler from './DefaultKeyHandler';
 import CodecRegistry from '../serialization/CodecRegistry';
+import Codec from 'src/serialization/Codec';
 
 /**
  * Custom codec for configuring <DefaultKeyHandler>s. This class is created
@@ -23,7 +24,7 @@ class DefaultKeyHandlerCodec extends ObjectCodec {
   /**
    * Returns null.
    */
-  encode(enc, obj) {
+  encode(enc: Codec, obj: any) {
     return null;
   }
 
@@ -57,7 +58,7 @@ class DefaultKeyHandlerCodec extends ObjectCodec {
    * See also: <DefaultKeyHandler.bindAction>,
    * http://www.js-examples.com/page/tutorials__key_codes.html
    */
-  decode(dec, node, into) {
+  decode(dec: Codec, node: Element, into) {
     if (into != null) {
       const { editor } = into;
       node = node.firstChild;

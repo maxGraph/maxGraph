@@ -105,7 +105,7 @@ const TooltipMixin: PartialType = {
    *
    * @param cell {@link mxCell} whose tooltip should be returned.
    */
-  getTooltipForCell(cell) {
+  getTooltipForCell(cell: Cell) {
     let tip = null;
 
     if (cell && 'getTooltip' in cell) {
@@ -128,7 +128,7 @@ const TooltipMixin: PartialType = {
    *
    * @param enabled Boolean indicating if tooltips should be enabled.
    */
-  setTooltips(enabled) {
+  setTooltips(enabled: boolean) {
     const tooltipHandler = this.getPlugin('TooltipHandler') as TooltipHandler;
 
     tooltipHandler.setEnabled(enabled);

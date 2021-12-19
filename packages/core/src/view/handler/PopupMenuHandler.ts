@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import PopupMenu from '../../util/gui/PopupMenu';
+import PopupMenu from '../../gui/PopupMenu';
 import InternalEvent from '../event/InternalEvent';
 import { getScrollOrigin } from '../../util/utils';
 import { getMainEvent, isMultiTouchEvent } from '../../util/eventUtils';

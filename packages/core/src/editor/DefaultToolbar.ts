@@ -15,6 +15,7 @@ import { makeDraggable } from '../util/gestureUtils';
 import Editor from './Editor';
 import Cell from 'src/view/cell/Cell';
 import CellArray from 'src/view/cell/CellArray';
+import { Graph } from 'src/view/Graph';
 
 /**
  * Toolbar for the editor. This modifies the state of the graph
@@ -221,7 +222,7 @@ class DefaultToolbar {
    * @param toggle Optional boolean that specifies if the item can be toggled.
    * Default is true.
    */
-  addPrototype(title, icon, ptype, pressed, insert, toggle) {
+  addPrototype(title: string, icon: string, ptype, pressed: string, insert, toggle: boolean=true): HTMLImageElement | HTMLButtonElement {
     // Creates a wrapper function that is in charge of constructing
     // the new cell instance to be inserted into the graph
     const factory = () => {
@@ -237,7 +238,7 @@ class DefaultToolbar {
 
     // Defines the function for a click event on the graph
     // after this item has been selected in the toolbar
-    const clickHandler = (evt, cell) => {
+    const clickHandler = (evt: MouseEvent, cell: Cell) => {
       if (typeof insert === 'function') {
         insert(this.editor, factory(), evt, cell);
       } else {
@@ -252,12 +253,11 @@ class DefaultToolbar {
 
     // Creates a wrapper function that calls the click handler without
     // the graph argument
-    const dropHandler = (graph, evt, cell) => {
+    const dropHandler = (graph: Graph, evt: MouseEvent, cell: Cell) => {
       clickHandler(evt, cell);
     };
 
     this.installDropHandler(img, dropHandler);
-
     return img;
   }
 

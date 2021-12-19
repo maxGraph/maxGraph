@@ -348,8 +348,7 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   /**
    * Shows the submenu inside the given parent row.
    */
-  // showSubmenu(parent: Element, row: Element): void;
-  showSubmenu(parent: PopupMenuItem, row: PopupMenuItem) {
+  showSubmenu(parent: PopupMenuItem, row: PopupMenuItem): void {
     if (row.div != null) {
       row.div.style.left = `${
         parent.div.offsetLeft + row.offsetLeft + row.offsetWidth - 1
@@ -449,16 +448,14 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   /**
    * Returns true if the menu is showing.
    */
-  // isMenuShowing(): boolean;
-  isMenuShowing() {
+  isMenuShowing(): boolean {
     return this.div != null && this.div.parentNode == document.body;
   }
 
   /**
    * Shows the menu.
    */
-  // showMenu(): void;
-  showMenu() {
+  showMenu(): void {
     // Fits the div inside the viewport
     document.body.appendChild(this.div);
     fit(this.div);
@@ -467,8 +464,7 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   /**
    * Removes the menu and all submenus.
    */
-  // hideMenu(): void;
-  hideMenu() {
+  hideMenu(): void {
     if (this.div != null) {
       if (this.div.parentNode != null) {
         this.div.parentNode.removeChild(this.div);
@@ -485,7 +481,7 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
    *
    * @param parent An item returned by <addItem>.
    */
-  hideSubmenu(parent: PopupMenuItem) {
+  hideSubmenu(parent: PopupMenuItem): void {
     if (parent.activeRow != null) {
       this.hideSubmenu(parent.activeRow);
 
@@ -500,7 +496,7 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
   /**
    * Destroys the handler and all its resources and DOM nodes.
    */
-  destroy() {
+  destroy(): void {
     if (this.div != null) {
       InternalEvent.release(this.div);
 
