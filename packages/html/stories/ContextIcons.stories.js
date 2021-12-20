@@ -2,7 +2,7 @@ import {
   Graph,
   InternalEvent,
   RubberBand,
-  EventUtils,
+  eventUtils,
   utils,
   VertexHandler,
 } from '@maxgraph/core';
@@ -75,9 +75,9 @@ const Template = ({ label, ...args }) => {
       img.style.height = '16px';
 
       InternalEvent.addGestureListeners(img, (evt) => {
-        this.start(EventUtils.getClientX(evt), EventUtils.getClientY(evt), 7);
+        this.start(eventUtils.getClientX(evt), eventUtils.getClientY(evt), 7);
         this.graph.isMouseDown = true;
-        this.graph.isMouseTrigger = EventUtils.isMouseEvent(evt);
+        this.graph.isMouseTrigger = eventUtils.isMouseEvent(evt);
         InternalEvent.consume(evt);
       });
       this.domNode.appendChild(img);
@@ -95,12 +95,12 @@ const Template = ({ label, ...args }) => {
       InternalEvent.addGestureListeners(img, (evt) => {
         graphHandler.start(
           this.state.cell,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         graphHandler.cellWasClicked = true;
         this.graph.isMouseDown = true;
-        this.graph.isMouseTrigger = EventUtils.isMouseEvent(evt);
+        this.graph.isMouseTrigger = eventUtils.isMouseEvent(evt);
         InternalEvent.consume(evt);
       });
       this.domNode.appendChild(img);
@@ -115,12 +115,12 @@ const Template = ({ label, ...args }) => {
       InternalEvent.addGestureListeners(img, (evt) => {
         const pt = utils.convertPoint(
           this.graph.container,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         connectionHandler.start(this.state, pt.x, pt.y);
         this.graph.isMouseDown = true;
-        this.graph.isMouseTrigger = EventUtils.isMouseEvent(evt);
+        this.graph.isMouseTrigger = eventUtils.isMouseEvent(evt);
         InternalEvent.consume(evt);
       });
       this.domNode.appendChild(img);

@@ -252,7 +252,7 @@ export const isAncestorNode = (ancestor: Element, child: Element | null) => {
  * @param nodeType Optional node type to return. Default is
  * <mxConstants.NODETYPE_ELEMENT>.
  */
-export const getChildNodes = (node: Element, nodeType: number=NODETYPE.ELEMENT) => {
+export const getChildNodes = (node: Element, nodeType: number=NODETYPE.ELEMENT): ChildNode[] => {
   nodeType = nodeType || NODETYPE.ELEMENT;
 
   const children = [];

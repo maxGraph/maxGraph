@@ -45,7 +45,7 @@ import type { CellStateStyles, Properties, StyleValue } from '../types';
  * mxUtils.error('Browser is not supported!', 200, false);
  * ```
  */
-const utils = {
+export const utils = {
   /* Variable: errorResource
    *
    * Specifies the resource key for the title of the error window. If the

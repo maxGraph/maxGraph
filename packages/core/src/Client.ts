@@ -409,7 +409,12 @@ class Client {
    * @param doc Optional parent document of the link node.
    * @param id unique id for the link element to check if it already exists
    */
-  static link = (rel: string, href: string, doc, id: string | null=null) => {
+  static link = (
+    rel: string, 
+    href: string, 
+    doc: Document | null=null, 
+    id: string | null=null
+  ) => {
     doc = doc || document;
 
     // Workaround for Operation Aborted in IE6 if base tag is used in head

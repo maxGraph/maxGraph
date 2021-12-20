@@ -172,7 +172,7 @@ const Resources = {
    * @param lan The language for which the file should be loaded.
    * @param callback Optional callback for asynchronous loading.
    */
-  add: (basename: string, lan: string, callback: Function): void => {
+  add: (basename: string, lan: string | null=null, callback: Function | null=null): void => {
     lan =
       lan != null
         ? lan

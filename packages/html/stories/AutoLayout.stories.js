@@ -11,7 +11,7 @@ import {
   Client,
   Morphing,
   EventObject,
-  EventUtils,
+  eventUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -174,14 +174,14 @@ const Template = ({ label, ...args }) => {
 
       const pt = utils.convertPoint(
         graph.container,
-        EventUtils.getClientX(evt2),
-        EventUtils.getClientY(evt2)
+        eventUtils.getClientX(evt2),
+        eventUtils.getClientY(evt2)
       );
 
       connectionHandler.start(state, pt.x, pt.y);
 
       graph.isMouseDown = true;
-      graph.isMouseTrigger = EventUtils.isMouseEvent(evt2);
+      graph.isMouseTrigger = eventUtils.isMouseEvent(evt2);
       InternalEvent.consume(evt2);
     });
 

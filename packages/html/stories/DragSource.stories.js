@@ -8,7 +8,7 @@ import {
   EdgeHandler,
   GraphHandler,
   Guide,
-  EventUtils,
+  eventUtils,
   Cell,
   Geometry,
 } from '@maxgraph/core';
@@ -37,7 +37,7 @@ const Template = ({ label, ...args }) => {
   class MyCustomGuide extends Guide {
     isEnabledForEvent(evt) {
       // Alt disables guides
-      return !EventUtils.isAltDown(evt);
+      return !eventUtils.isAltDown(evt);
     }
   }
 
@@ -119,8 +119,8 @@ const Template = ({ label, ...args }) => {
 
   // Returns the graph under the mouse
   const graphF = (evt) => {
-    const x = EventUtils.getClientX(evt);
-    const y = EventUtils.getClientY(evt);
+    const x = eventUtils.getClientX(evt);
+    const y = eventUtils.getClientY(evt);
     const elt = document.elementFromPoint(x, y);
 
     for (const graph of graphs) {

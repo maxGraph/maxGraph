@@ -287,7 +287,6 @@ class DefaultToolbarCodec extends ObjectCodec {
         node = node.nextSibling;
       }
     }
-
     return into;
   }
 }

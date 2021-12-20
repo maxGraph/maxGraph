@@ -4,7 +4,7 @@ import {
   RubberBand,
   Clipboard,
   utils,
-  EventUtils,
+  eventUtils,
   Client,
   Codec,
   Model,
@@ -73,7 +73,7 @@ const Template = ({ label, ...args }) => {
   // Shows a textare when control/cmd is pressed to handle native clipboard actions
   InternalEvent.addListener(document, 'keydown', function (evt) {
     // No dialog visible
-    const source = EventUtils.getSource(evt);
+    const source = eventUtils.getSource(evt);
 
     if (
       graph.isEnabled() &&

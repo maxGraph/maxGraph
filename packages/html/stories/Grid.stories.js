@@ -6,7 +6,7 @@ import {
   GraphView,
   Point,
   DomHelpers,
-  EventUtils,
+  eventUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -67,7 +67,7 @@ const Template = ({ label, ...args }) => {
       GraphView.prototype.isContainerEvent = function (evt) {
         return (
           mxGraphViewIsContainerEvent.apply(this, arguments) ||
-          EventUtils.getSource(evt) == canvas
+          eventUtils.getSource(evt) == canvas
         );
       };
 

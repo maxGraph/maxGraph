@@ -37,6 +37,8 @@ import PopupMenuHandler from 'src/view/handler/PopupMenuHandler';
 import RubberBand from '../view/handler/RubberBand';
 import InternalEvent from '../view/event/InternalEvent';
 import InternalMouseEvent from 'src/view/event/InternalMouseEvent';
+import { MouseListenerSet } from 'src/types';
+import ConnectionHandler from 'src/view/handler/ConnectionHandler';
 
 /**
  * Installs the required language resources at class
@@ -548,7 +550,7 @@ class Editor extends EventSource {
    * by name, passing the cell to be operated upon as the second
    * argument.
    */
-  actions: Function | null = null;
+  actions: { [key: string]: Function } = {};
 
   /**
    * Group: Actions and Options
@@ -1230,7 +1232,7 @@ class Editor extends EventSource {
       const current = editor.graph.getView().scale * 100;
       const scale =
         parseFloat(
-          prompt(Resources.get(editor.askZoomResource) || editor.askZoomResource, current)
+          prompt((Resources.get(editor.askZoomResource) || editor.askZoomResource), current)
         ) / 100;
 
       if (!isNaN(scale)) {
@@ -1303,7 +1305,7 @@ class Editor extends EventSource {
    */
   resetHistory(): void {
     this.lastSnapshot = new Date().getTime();
-    this.undoManager.clear();
+    (<UndoManager>this.undoManager).clear();
     this.ignoredChanges = 0;
     this.setModified(false);
   }
@@ -1416,15 +1418,15 @@ class Editor extends EventSource {
     // popupmenu items
     const popupMenuHandler = <PopupMenuHandler>graph.getPlugin('PopupMenuHandler');
 
-    popupMenuHandler.factoryMethod = (menu: any, cell: Cell, evt: any) => {
+    popupMenuHandler.factoryMethod = (menu: any, cell: Cell | null, evt: any): void => {
       return this.createPopupMenu(menu, cell, evt);
     };
 
     // Redirects the function for creating
     // new connections in the diagram
-    const connectionHandler = graph.getPlugin('ConnectionHandler');
+    const connectionHandler = <ConnectionHandler>graph.getPlugin('ConnectionHandler');
 
-    connectionHandler.factoryMethod = (source: Cell, target: Cell): void => {
+    connectionHandler.factoryMethod = (source: Cell | null, target: Cell | null): Cell => {
       return this.createEdge(source, target);
     };
 
@@ -1529,7 +1531,7 @@ class Editor extends EventSource {
    */
   installDblClickHandler(graph: Graph): void {
     // Installs a listener for double click events
-    graph.addListener(InternalEvent.DOUBLE_CLICK, (sender: any, evt: InternalEvent) => {
+    graph.addListener(InternalEvent.DOUBLE_CLICK, (sender: any, evt: EventObject) => {
       const cell = evt.getProperty('cell');
 
       if (cell != null && graph.isEnabled() && this.dblClickAction != null) {
@@ -1544,22 +1546,22 @@ class Editor extends EventSource {
    * @param graph
    */
   installUndoHandler(graph: Graph): void {
-    const listener = (sender: any, evt: InternalEvent) => {
+    const listener = (sender: any, evt: EventObject) => {
       const edit = evt.getProperty('edit');
-      this.undoManager.undoableEditHappened(edit);
+      (<UndoManager>this.undoManager).undoableEditHappened(edit);
     };
 
     graph.getModel().addListener(InternalEvent.UNDO, listener);
     graph.getView().addListener(InternalEvent.UNDO, listener);
 
     // Keeps the selection state in sync
-    const undoHandler = (sender: any, evt: InternalEvent) => {
+    const undoHandler = (sender: any, evt: EventObject) => {
       const { changes } = evt.getProperty('edit');
       graph.setSelectionCells(graph.getSelectionCellsForChanges(changes));
     };
 
-    this.undoManager.addListener(InternalEvent.UNDO, undoHandler);
-    this.undoManager.addListener(InternalEvent.REDO, undoHandler);
+    (<UndoManager>this.undoManager).addListener(InternalEvent.UNDO, undoHandler);
+    (<UndoManager>this.undoManager).addListener(InternalEvent.REDO, undoHandler);
   }
 
   /**
@@ -1582,7 +1584,7 @@ class Editor extends EventSource {
    * @param graph
    */
   installChangeHandler(graph: Graph): void {
-    const listener = (sender: any, evt: InternalEvent) => {
+    const listener = (sender: any, evt: EventObject) => {
       // Updates the modified state
       this.setModified(true);
 
@@ -1618,7 +1620,7 @@ class Editor extends EventSource {
    */
   installInsertHandler(graph: Graph): void {
     const self = this; // closure
-    const insertHandler = {
+    const insertHandler: MouseListenerSet = {
       mouseDown: (sender: any, me: InternalMouseEvent) => {
         if (
           self.insertFunction != null &&
@@ -1635,13 +1637,13 @@ class Editor extends EventSource {
         }
       },
 
-      mouseMove: (sender: any, me: MouseEvent) => {
+      mouseMove: (sender: any, me: InternalMouseEvent) => {
         if (this.isActive) {
           me.consume();
         }
       },
 
-      mouseUp: (sender: any, me: MouseEvent) => {
+      mouseUp: (sender: any, me: InternalMouseEvent) => {
         if (this.isActive) {
           this.isActive = false;
           me.consume();
@@ -1794,7 +1796,7 @@ class Editor extends EventSource {
    * Returns the string value of the root cell in {@link graph.model}.
    */
   getRootTitle(): string {
-    const root = this.graph.getModel().getRoot();
+    const root = <Cell>this.graph.getModel().getRoot();
     return this.graph.convertValueToString(root);
   }
 
@@ -1802,14 +1804,14 @@ class Editor extends EventSource {
    * Undo the last change in {@link graph}.
    */
   undo(): void {
-    this.undoManager.undo();
+    (<UndoManager>this.undoManager).undo();
   }
 
   /**
    * Redo the last change in {@link graph}.
    */
   redo(): void {
-    this.undoManager.redo();
+    (<UndoManager>this.undoManager).redo();
   }
 
   /**
@@ -1830,7 +1832,7 @@ class Editor extends EventSource {
    */
   createGroup(): Cell {
     const model = this.graph.getModel();
-    return model.cloneCell(this.defaultGroup);
+    return <Cell>model.cloneCell(this.defaultGroup);
   }
 
   /**
@@ -1896,7 +1898,7 @@ class Editor extends EventSource {
    * @param url
    * @param linefeed
    */
-  save(url?: string, linefeed: any): void {
+  save(url: string | null=null, linefeed: string=this.linefeed): void {
     // Gets the URL to post the data to
     url = url || this.getUrlPost();
 
@@ -1941,7 +1943,7 @@ class Editor extends EventSource {
       data = encodeURIComponent(data);
     }
 
-    post(url, `${this.postParameterName}=${data}`, (req) => {
+    post(url, `${this.postParameterName}=${data}`, (req: string) => {
       this.fireEvent(
         new EventObject(InternalEvent.POST, 'request', req, 'url', url, 'data', data)
       );
@@ -1974,7 +1976,7 @@ class Editor extends EventSource {
    * in {@link save}. The default implementation returns {@link urlPost},
    * adding <code>?draft=true</code>.
    */
-  getUrlPost(): string {
+  getUrlPost(): string | null {
     return this.urlPost;
   }
 
@@ -1985,7 +1987,7 @@ class Editor extends EventSource {
    * in the image action to create an image. This implementation
    * returns {@link urlImage}.
    */
-  getUrlImage(): string {
+  getUrlImage(): string | null {
     return this.urlImage;
   }
 
@@ -1995,7 +1997,7 @@ class Editor extends EventSource {
    * @param first
    * @param second
    */
-  swapStyles(first: any, second: any): void {
+  swapStyles(first: string, second: string): void {
     const style = this.graph.getStylesheet().styles[second];
     this.graph
       .getView()
@@ -2011,7 +2013,7 @@ class Editor extends EventSource {
    * {@link createProperties}.
    * @param cell
    */
-  showProperties(cell: Cell): void {
+  showProperties(cell: Cell | null=null): void {
     cell = cell || this.graph.getSelectionCell();
 
     // Uses the root node for the properties dialog
@@ -2088,7 +2090,7 @@ class Editor extends EventSource {
    */
   createProperties(cell: Cell): HTMLTableElement | null {
     const model = this.graph.getModel();
-    const value = model.getValue(cell);
+    const value = cell.getValue();
 
     if (isNode(value)) {
       // Creates a form for the user object inside
@@ -2151,7 +2153,12 @@ class Editor extends EventSource {
         // XML structure / XML node attribute changes.
         model.beginUpdate();
         try {
-          if (geo != null) {
+          if (geo != null && 
+              xField != null && 
+              yField != null && 
+              widthField != null && 
+              heightField != null
+          ) {
             geo = geo.clone();
 
             geo.x = parseFloat(xField.value);
@@ -2429,8 +2436,8 @@ class Editor extends EventSource {
    * @param cell
    * @param evt
    */
-  createPopupMenu(menu: any, cell: Cell, evt: any): void {
-    this.popupHandler.createMenu(this, menu, cell, evt);
+  createPopupMenu(menu: any, cell: Cell | null, evt: any): void {
+    (<DefaultPopupMenu>this.popupHandler).createMenu(this, menu, cell, evt);
   }
 
   /**
@@ -2440,7 +2447,7 @@ class Editor extends EventSource {
    * @param source
    * @param target
    */
-  createEdge(source: Cell, target: Cell): Cell {
+  createEdge(source: Cell | null, target: Cell | null): Cell {
     // Clones the defaultedge prototype
     let e: Cell;
 
@@ -2512,7 +2519,7 @@ class Editor extends EventSource {
    * @param x
    * @param y
    */
-  addVertex(parent: Cell, vertex: Cell, x: number, y: number): any {
+  addVertex(parent: Cell | null, vertex: Cell, x: number, y: number): any {
     const model = this.graph.getModel();
 
     while (parent != null && !this.graph.isValidDropTarget(parent)) {
@@ -2523,7 +2530,7 @@ class Editor extends EventSource {
     const { scale } = this.graph.getView();
 
     let geo = <Geometry>vertex.getGeometry();
-    const pgeo = <Geometry>parent.getGeometry();
+    const pgeo = <Geometry>(<Cell>parent).getGeometry();
 
     if (this.graph.isSwimlane(vertex) && !this.graph.swimlaneNesting) {
       parent = null;
@@ -2594,7 +2601,6 @@ class Editor extends EventSource {
       this.graph.scrollCellToVisible(vertex);
       this.fireEvent(new EventObject(InternalEvent.AFTER_ADD_VERTEX, 'vertex', vertex));
     }
-
     return vertex;
   }
 

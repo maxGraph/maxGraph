@@ -59,8 +59,8 @@ const Template = ({ label, ...args }) => {
       if (cell == null) {
         const pt = utils.convertPoint(
           el,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         cell = this.getCellAt(pt.x, pt.y);
       }

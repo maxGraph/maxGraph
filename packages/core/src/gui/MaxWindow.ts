@@ -16,6 +16,7 @@ import { br, write } from '../util/domUtils';
 import Resources from '../util/Resources';
 import { getClientX, getClientY } from '../util/eventUtils';
 import { htmlEntities } from '../util/stringUtils';
+import { utils } from '../util/Utils';
 
 /**
  * Basic window inside a document.
@@ -167,21 +168,21 @@ import { htmlEntities } from '../util/stringUtils';
  */
 class MaxWindow extends EventSource {
   constructor(
-    title: HTMLElement,
+    title: string,
     content: HTMLElement | null,
     x: number,
     y: number,
-    width: number,
-    height: number,
-    minimizable: boolean,
+    width: number | null=null,
+    height: number | null=null,
+    minimizable: boolean=true,
     movable: boolean=true,
-    replaceNode: HTMLElement,
+    replaceNode: HTMLElement | null=null,
     style: string=''
   ) {
     super();
 
     if (content != null) {
-      minimizable = minimizable != null ? minimizable : true;
+      minimizable = minimizable;
       this.content = content;
       this.init(x, y, width, height, style);
 
@@ -205,22 +206,21 @@ class MaxWindow extends EventSource {
 
   static activeWindow: MaxWindow | null = null;
 
-  td: HTMLElement | null = null;
-  div: HTMLElement | null = null;
-  table: HTMLElement | null = null;
-  resize: HTMLElement | null = null;
-  buttons: HTMLElement | null = null;
-  minimize: HTMLElement | null = null;
-  maximize: HTMLElement | null = null;
-  closeImg: HTMLElement | null = null;
-  contentWrapper: HTMLElement | null = null;
+  td!: HTMLElement;
+  div!: HTMLElement;
+  table!: HTMLElement;
+  resize!: HTMLElement;
+  buttons!: HTMLElement;
+  minimize!: HTMLElement;
+  maximize!: HTMLElement;
+  closeImg!: HTMLElement;
+  contentWrapper!: HTMLElement;
+  image!: HTMLImageElement;
 
   /**
    * Initializes the DOM tree that represents the window.
    */
-  init(x: number, y: number, width: number, height: number, style: string): void {
-    style = style != null ? style : 'MaxWindow';
-
+  init(x: number, y: number, width: number | null=null, height: number | null=null, style: string='MaxWindow'): void {
     this.div = document.createElement('div');
     this.div.className = style;
 
@@ -286,7 +286,7 @@ class MaxWindow extends EventSource {
     this.div.appendChild(this.table);
 
     // Puts the window on top of other windows when clicked
-    const activator = (evt) => {
+    const activator = (evt: MouseEvent) => {
       this.activate();
     };
 
@@ -341,12 +341,12 @@ class MaxWindow extends EventSource {
   /**
    * Reference to the DOM node (TD) that contains the title.
    */
-  title: HTMLElement | null = null;
+  title!: HTMLElement;
 
   /**
    * Reference to the DOM node that represents the window content.
    */
-  content: HTMLElement | null = null;
+  content!: HTMLElement;
 
   /**
    * Sets the window title to the given string. HTML markup inside the title
@@ -360,7 +360,7 @@ class MaxWindow extends EventSource {
       const next = child.nextSibling;
 
       if (child.nodeType === NODETYPE.TEXT) {
-        child.parentNode.removeChild(child);
+        (<Element>child.parentNode).removeChild(child);
       }
 
       child = next;
@@ -390,18 +390,18 @@ class MaxWindow extends EventSource {
   activate(): void {
     if (MaxWindow.activeWindow !== this) {
       const style = getCurrentStyle(this.getElement());
-      const index = style != null ? style.zIndex : 3;
+      const index = style != null ? parseInt(style.zIndex) : 3;
 
       if (MaxWindow.activeWindow) {
         const elt = MaxWindow.activeWindow.getElement();
 
         if (elt != null && elt.style != null) {
-          elt.style.zIndex = index;
+          elt.style.zIndex = String(index);
         }
       }
 
       const previousWindow = MaxWindow.activeWindow;
-      this.getElement().style.zIndex = parseInt(index) + 1;
+      this.getElement().style.zIndex = String(index + 1);
       MaxWindow.activeWindow = this;
 
       this.fireEvent(
@@ -485,7 +485,9 @@ class MaxWindow extends EventSource {
             const dx = getClientX(evt) - startX;
             const dy = getClientY(evt) - startY;
 
-            this.setSize(width + dx, height + dy);
+            if (width != null && height != null) {
+              this.setSize(width + dx, height + dy);
+            }
 
             this.fireEvent(new EventObject(InternalEvent.RESIZE, 'event', evt));
             InternalEvent.consume(evt);
@@ -532,7 +534,7 @@ class MaxWindow extends EventSource {
     this.table.style.height = `${height}px`;
 
     this.contentWrapper.style.height = `${
-      this.div.offsetHeight - this.title.offsetHeight - this.contentHeightCorrection
+      this.div.offsetHeight - this.title.offsetHeight
     }px`;
   }
 
@@ -567,10 +569,10 @@ class MaxWindow extends EventSource {
     this.buttons.appendChild(this.minimize);
 
     let minimized = false;
-    let maxDisplay = null;
-    let height = null;
+    let maxDisplay: string | null = null;
+    let height: string | null = null;
 
-    const funct = (evt) => {
+    const funct = (evt: MouseEvent) => {
       this.activate();
 
       if (!minimized) {
@@ -607,9 +609,12 @@ class MaxWindow extends EventSource {
         this.minimize.setAttribute('src', this.minimizeImage);
         this.minimize.setAttribute('title', 'Minimize');
         this.contentWrapper.style.display = ''; // default
-        this.maximize.style.display = maxDisplay;
-        this.div.style.height = height;
-        this.table.style.height = height;
+        
+        if (maxDisplay != null && height != null) {
+          this.maximize.style.display = maxDisplay;
+          this.div.style.height = height;
+          this.table.style.height = height;
+        }
 
         if (this.resize != null) {
           this.resize.style.visibility = '';
@@ -647,13 +652,13 @@ class MaxWindow extends EventSource {
     this.buttons.appendChild(this.maximize);
 
     let maximized = false;
-    let x = null;
-    let y = null;
-    let height = null;
-    let width = null;
-    let minDisplay = null;
+    let x: number | null = null;
+    let y: number | null = null;
+    let height: string | null = null;
+    let width: string | null = null;
+    let minDisplay: string | null = null;
 
-    const funct = (evt) => {
+    const funct = (evt: MouseEvent) => {
       this.activate();
 
       if (this.maximize.style.display !== 'none') {
@@ -689,13 +694,12 @@ class MaxWindow extends EventSource {
             this.resize.style.visibility = 'hidden';
           }
 
-          const style = getCurrentStyle(this.contentWrapper);
+          const style = <CSSStyleDeclaration>getCurrentStyle(this.contentWrapper);
 
           if (style.overflow === 'auto' || this.resize != null) {
             this.contentWrapper.style.height = `${
               this.div.offsetHeight -
-              this.title.offsetHeight -
-              this.contentHeightCorrection
+              this.title.offsetHeight
             }px`;
           }
 
@@ -706,27 +710,32 @@ class MaxWindow extends EventSource {
           this.maximize.setAttribute('src', this.maximizeImage);
           this.maximize.setAttribute('title', 'Maximize');
           this.contentWrapper.style.display = '';
-          this.minimize.style.display = minDisplay;
+          if (minDisplay != null) {
+            this.minimize.style.display = minDisplay;
+          }
 
           // Restores window state
           this.div.style.left = `${x}px`;
           this.div.style.top = `${y}px`;
 
-          this.div.style.height = height;
-          this.div.style.width = width;
+          if (width != null && height != null) {
+            this.div.style.height = height;
+            this.div.style.width = width;
+          }
 
-          const style = getCurrentStyle(this.contentWrapper);
+          const style = <CSSStyleDeclaration>getCurrentStyle(this.contentWrapper);
 
           if (style.overflow === 'auto' || this.resize != null) {
             this.contentWrapper.style.height = `${
               this.div.offsetHeight -
-              this.title.offsetHeight -
-              this.contentHeightCorrection
+              this.title.offsetHeight
             }px`;
           }
 
-          this.table.style.height = height;
-          this.table.style.width = width;
+          if (width != null && height != null) {
+            this.table.style.height = height;
+            this.table.style.width = width;
+          }
 
           if (this.resize != null) {
             this.resize.style.visibility = '';
@@ -749,7 +758,7 @@ class MaxWindow extends EventSource {
   installMoveHandler(): void {
     this.title.style.cursor = 'move';
 
-    InternalEvent.addGestureListeners(this.title, (evt) => {
+    InternalEvent.addGestureListeners(this.title, (evt: MouseEvent) => {
       const startX = getClientX(evt);
       const startY = getClientY(evt);
       const x = this.getX();
@@ -757,7 +766,7 @@ class MaxWindow extends EventSource {
 
       // Adds a temporary pair of listeners to intercept
       // the gesture event in the document
-      const dragHandler = (evt) => {
+      const dragHandler = (evt: MouseEvent) => {
         const dx = getClientX(evt) - startX;
         const dy = getClientY(evt) - startY;
         this.setLocation(x + dx, y + dy);
@@ -765,7 +774,7 @@ class MaxWindow extends EventSource {
         InternalEvent.consume(evt);
       };
 
-      const dropHandler = (evt) => {
+      const dropHandler = (evt: MouseEvent) => {
         InternalEvent.removeGestureListeners(document, null, dragHandler, dropHandler);
         this.fireEvent(new EventObject(InternalEvent.MOVE_END, 'event', evt));
         InternalEvent.consume(evt);
@@ -819,7 +828,7 @@ class MaxWindow extends EventSource {
 
     this.buttons.appendChild(this.closeImg);
 
-    InternalEvent.addGestureListeners(this.closeImg, (evt) => {
+    InternalEvent.addGestureListeners(this.closeImg, (evt: MouseEvent) => {
       this.fireEvent(new EventObject(InternalEvent.CLOSE, 'event', evt));
 
       if (this.destroyOnClose) {
@@ -866,7 +875,6 @@ class MaxWindow extends EventSource {
     if (this.div != null) {
       return this.div.style.display !== 'none';
     }
-
     return false;
   }
 
@@ -893,14 +901,14 @@ class MaxWindow extends EventSource {
     this.div.style.display = '';
     this.activate();
 
-    const style = getCurrentStyle(this.contentWrapper);
+    const style = <CSSStyleDeclaration>getCurrentStyle(this.contentWrapper);
 
     if (
       (style.overflow == 'auto' || this.resize != null) &&
       this.contentWrapper.style.display != 'none'
     ) {
       this.contentWrapper.style.height = `${
-        this.div.offsetHeight - this.title.offsetHeight - this.contentHeightCorrection
+        this.div.offsetHeight - this.title.offsetHeight
       }px`;
     }
 
@@ -924,12 +932,17 @@ class MaxWindow extends EventSource {
 
     if (this.div != null) {
       InternalEvent.release(this.div);
+      // @ts-ignore
       this.div.parentNode.removeChild(this.div);
+      // @ts-ignore
       this.div = null;
     }
 
+    // @ts-ignore
     this.title = null;
+    // @ts-ignore
     this.content = null;
+    // @ts-ignore
     this.contentWrapper = null;
   }
 }
@@ -942,7 +955,7 @@ class MaxWindow extends EventSource {
  * @param isInternalWindow Optional boolean indicating if an MaxWindow should be
  * used instead of a new browser window. Default is false.
  */
-export const popup = (content, isInternalWindow) => {
+export const popup = (content: string, isInternalWindow: boolean) => {
   if (isInternalWindow) {
     const div = document.createElement('div');
 
@@ -1039,7 +1052,7 @@ export const error = (message: string, width: number, close: boolean, icon: stri
 
     button.setAttribute('style', 'float:right');
 
-    InternalEvent.addListener(button, 'click', (evt) => {
+    InternalEvent.addListener(button, 'click', (evt: MouseEvent) => {
       warn.destroy();
     });
 

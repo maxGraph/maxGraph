@@ -242,8 +242,8 @@ declare module '../Graph' {
     getCursorForCell: (cell: Cell) => string | null;
     getCellBounds: (
       cell: Cell,
-      includeEdges: boolean,
-      includeDescendants: boolean
+      includeEdges?: boolean,
+      includeDescendants?: boolean
     ) => Rectangle | null;
     getBoundingBoxFromGeometry: (
       cells: CellArray,

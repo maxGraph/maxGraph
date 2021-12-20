@@ -168,10 +168,10 @@ class PrintPreview {
     scale: number | null=null,
     pageFormat: string | null=null,
     border: number | null=null,
-    x0: number | null=null,
-    y0: number | null=null,
-    borderColor: string,
-    title: string,
+    x0: number=0,
+    y0: number=0,
+    borderColor: string | null=null,
+    title: string='Printer-friendly version',
     pageSelector: boolean | null=null
   ) {
     this.graph = graph;
@@ -180,9 +180,9 @@ class PrintPreview {
     this.pageFormat = Rectangle.fromRectangle(
       pageFormat != null ? pageFormat : graph.pageFormat
     );
-    this.title = title != null ? title : 'Printer-friendly version';
-    this.x0 = x0 != null ? x0 : 0;
-    this.y0 = y0 != null ? y0 : 0;
+    this.title = title;
+    this.x0 = x0;
+    this.y0 = y0;
     this.borderColor = borderColor;
     this.pageSelector = pageSelector != null ? pageSelector : true;
   }
@@ -266,7 +266,7 @@ class PrintPreview {
   /**
    * Holds the color value for the page border.
    */
-  borderColor: string;
+  borderColor: string | null;
 
   /**
    * Holds the title of the preview window.
@@ -439,7 +439,7 @@ class PrintPreview {
         }
       };
 
-      const addPage = (div, addBreak) => {
+      const addPage = (div: HTMLElement, addBreak: boolean) => {
         // Border of the DIV (aka page) inside the document
         if (this.borderColor != null) {
           div.style.borderColor = this.borderColor;

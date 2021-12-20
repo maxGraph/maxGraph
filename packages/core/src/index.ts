@@ -143,7 +143,7 @@ export { default as Resources } from './util/Resources';
 export * as utils from './util/utils';
 export * as cloneUtils from './util/cloneUtils';
 export * as domUtils from './util/domUtils';
-export * as EventUtils from './util/eventUtils';
+export * as eventUtils from './util/eventUtils';
 export * as gestureUtils from './util/gestureUtils';
 export * as stringUtils from './util/stringUtils';
 export * as xmlUtils from './util/xmlUtils';

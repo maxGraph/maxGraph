@@ -2,7 +2,7 @@ import {
   Graph,
   RubberBand,
   utils,
-  EventUtils,
+  eventUtils,
   InternalEvent,
   Client,
 } from '@maxgraph/core';
@@ -70,8 +70,8 @@ const Template = ({ label, ...args }) => {
         // Gets drop location point for vertex
         const pt = utils.convertPoint(
           graph.container,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         const tr = graph.view.translate;
         const { scale } = graph.view;

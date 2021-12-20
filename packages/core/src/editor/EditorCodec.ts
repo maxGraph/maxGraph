@@ -6,10 +6,13 @@
  */
 
 import Editor from './Editor';
-import MaxWindow from '../util/gui/MaxWindow';
-import ObjectCodec from '../util/serialization/ObjectCodec';
-import CodecRegistry from '../util/serialization/CodecRegistry';
-import { getChildNodes } from '../util/dom/domUtils';
+import MaxWindow from '../gui/MaxWindow';
+import ObjectCodec from '../serialization/ObjectCodec';
+import CodecRegistry from '../serialization/CodecRegistry';
+import { getChildNodes } from '../util/domUtils';
+import Codec from 'src/serialization/Codec';
+import Resources from 'src/util/Resources';
+import Client from 'src/Client';
 
 /**
  * Codec for <Editor>s. This class is created and registered
@@ -89,7 +92,7 @@ class EditorCodec extends ObjectCodec {
    * </ui>
    * ```
    */
-  afterDecode(dec, node, obj) {
+  afterDecode(dec: Codec, node: Element, obj: any) {
     // Assigns the specified templates for edges
     const defaultEdge = node.getAttribute('defaultEdge');
 
@@ -105,14 +108,13 @@ class EditorCodec extends ObjectCodec {
       node.removeAttribute('defaultGroup');
       obj.defaultGroup = obj.templates[defaultGroup];
     }
-
     return obj;
   }
 
   /**
    * Overrides decode child to handle special child nodes.
    */
-  decodeChild(dec, child, obj) {
+  decodeChild(dec: Codec, child: Element, obj: any) {
     if (child.nodeName === 'Array') {
       const role = child.getAttribute('as');
 
@@ -124,15 +126,14 @@ class EditorCodec extends ObjectCodec {
       this.decodeUi(dec, child, obj);
       return;
     }
-
     super.decodeChild.apply(this, [dec, child, obj]);
   }
 
   /**
    * Decodes the ui elements from the given node.
    */
-  decodeUi(dec, node, editor) {
-    let tmp = node.firstChild;
+  decodeUi(dec: Codec, node: Element, editor: Editor) {
+    let tmp = <Element>node.firstChild;
     while (tmp != null) {
       if (tmp.nodeName === 'add') {
         const as = tmp.getAttribute('as');
@@ -147,8 +148,8 @@ class EditorCodec extends ObjectCodec {
             element.style.cssText += `;${style}`;
           }
         } else {
-          const x = parseInt(tmp.getAttribute('x'));
-          const y = parseInt(tmp.getAttribute('y'));
+          const x = parseInt(<string>tmp.getAttribute('x'));
+          const y = parseInt(<string>tmp.getAttribute('y'));
           const width = tmp.getAttribute('width');
           const height = tmp.getAttribute('height');
 
@@ -182,30 +183,30 @@ class EditorCodec extends ObjectCodec {
           editor.setMapContainer(element);
         }
       } else if (tmp.nodeName === 'resource') {
-        Resources.add(tmp.getAttribute('basename'));
+        Resources.add(<string>tmp.getAttribute('basename'));
       } else if (tmp.nodeName === 'stylesheet') {
-        Client.link('stylesheet', tmp.getAttribute('name'));
+        Client.link('stylesheet', <string>tmp.getAttribute('name'));
       }
 
-      tmp = tmp.nextSibling;
+      tmp = <Element>tmp.nextSibling;
     }
   }
 
   /**
    * Decodes the cells from the given node as templates.
    */
-  decodeTemplates(dec, node, editor) {
+  decodeTemplates(dec: Codec, node: Element, editor: Editor) {
     if (editor.templates == null) {
       editor.templates = [];
     }
 
-    const children = getChildNodes(node);
+    const children = <Element[]>getChildNodes(node);
     for (let j = 0; j < children.length; j++) {
-      const name = children[j].getAttribute('as');
-      let child = children[j].firstChild;
+      const name = <string>children[j].getAttribute('as');
+      let child = <Element | null>children[j].firstChild;
 
       while (child != null && child.nodeType !== 1) {
-        child = child.nextSibling;
+        child = <Element | null>child.nextSibling;
       }
 
       if (child != null) {

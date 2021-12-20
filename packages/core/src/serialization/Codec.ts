@@ -118,8 +118,8 @@ const createXmlDocument = () => {
  * @class Codec
  */
 class Codec {
-  constructor(document: XMLDocument) {
-    this.document = document || createXmlDocument();
+  constructor(document: XMLDocument=createXmlDocument()) {
+    this.document = document;
     this.objects = {};
   }
 

@@ -236,7 +236,12 @@ class MaxXmlRequest {
    * @param timeout Optional timeout in ms before calling ontimeout.
    * @param ontimeout Optional function to execute on timeout.
    */
-  send(onload: Function, onerror: Function, timeout?: number, ontimeout?: Function): void {
+  send(
+    onload: Function | null=null, 
+    onerror: Function | null=null, 
+    timeout: number | null=null, 
+    ontimeout: Function | null=null
+  ): void {
     this.request = this.create();
 
     if (this.request != null) {
@@ -439,7 +444,15 @@ export const load = (url: string) => {
  * @param ontimeout Optional function to execute on timeout.
  * @param headers Optional with headers, eg. {'Authorization': 'token xyz'}
  */
-export const get = (url: string, onload: Function, onerror: Function, binary: boolean, timeout: number, ontimeout: Function, headers: { [key: string]: string }) => {
+export const get = (
+  url: string, 
+  onload: Function | null=null, 
+  onerror: Function | null=null, 
+  binary: boolean=false, 
+  timeout: number | null=null, 
+  ontimeout: Function | null=null, 
+  headers: { [key: string]: string } | null=null
+) => {
   const req = new MaxXmlRequest(url, null, 'GET');
   const { setRequestHeaders } = req;
 
@@ -466,7 +479,6 @@ export const get = (url: string, onload: Function, onerror: Function, binary: bo
   }
 
   req.send(onload, onerror, timeout, ontimeout);
-
   return req;
 }
 
@@ -541,7 +553,12 @@ export const getAll = (urls, onload, onerror) => {
  * @param onload Optional function to execute for a successful response.
  * @param onerror Optional function to execute on error.
  */
-export const post = (url, params, onload, onerror) => {
+export const post = (
+  url: string, 
+  params: string | null=null, 
+  onload: Function, 
+  onerror: Function | null=null
+) => {
   return new MaxXmlRequest(url, params).send(onload, onerror);
 }
 

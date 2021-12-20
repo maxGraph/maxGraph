@@ -4,7 +4,7 @@ import {
   utils,
   domUtils,
   cloneUtils,
-  EventUtils,
+  eventUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -79,8 +79,8 @@ const Template = ({ label, ...args }) => {
         // Finds the relative coordinates inside the cell
         const point = utils.convertPoint(
           this.container,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         const state = this.getView().getState(cell);
 
