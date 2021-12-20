@@ -9,7 +9,7 @@ import React from 'react';
 import mxEvent from '../mxgraph/util/mxEvent';
 import mxGraph from '../mxgraph/view/mxGraph';
 import mxRubberband from '../mxgraph/handler/mxRubberband';
-import { convertPoint, createImage, getRotatedPoint, getValue, toRadians } from '../../packages/core/src/util/Utils';
+import { convertPoint, createImage, getRotatedPoint, getValue, toRadians } from '../../packages/core/src/util/utils';
 
 class Touch extends React.Component {
   constructor(props) {
@@ -370,7 +370,7 @@ export default Touch;
 
           if (!Client.IS_TOUCH)
           {
-            this.connectorImg.setAttribute('title', Resources.get('connect'));
+            this.connectorImg.setAttribute('title', Translations.get('connect'));
             mxEvent.redirectMouseEvents(this.connectorImg, this.graph, this.state);
           }
 

@@ -6,9 +6,9 @@
  */
 
 import ChildChange from './ChildChange';
-import ObjectCodec from '../../util/serialization/ObjectCodec';
-import CodecRegistry from '../../util/serialization/CodecRegistry';
-import { NODETYPE_ELEMENT } from '../../util/constants';
+import ObjectCodec from '../../serialization/ObjectCodec';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import { NODETYPE } from '../../util/constants';
 
 /**
  * Codec for <mxChildChange>s. This class is created and registered
@@ -88,7 +88,7 @@ class ChildChangeCodec extends ObjectCodec {
   beforeDecode(dec, node, obj) {
     if (
       node.firstChild != null &&
-      node.firstChild.nodeType === NODETYPE_ELEMENT
+      node.firstChild.nodeType === NODETYPE.ELEMENT
     ) {
       // Makes sure the original node isn't modified
       node = node.cloneNode(true);
@@ -103,7 +103,7 @@ class ChildChangeCodec extends ObjectCodec {
       while (tmp != null) {
         tmp2 = tmp.nextSibling;
 
-        if (tmp.nodeType === NODETYPE_ELEMENT) {
+        if (tmp.nodeType === NODETYPE.ELEMENT) {
           // Ignores all existing cells because those do not need to
           // be re-inserted into the model. Since the encoded version
           // of these cells contains the new parent, this would leave

@@ -122,7 +122,7 @@ Built-in Images:
   The basename of the warning image (images/warning without extension) used in 
   <mxGraph.setCellWarning> is defined in <mxGraph.warningImage>.
 
-Resources:
+Translations:
   
   The <Editor> and <mxGraph> classes add the following resources to
   <mxResources> at class loading time:

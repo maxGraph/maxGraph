@@ -7,7 +7,7 @@
 import Cell from '../view/cell/Cell';
 import PopupMenu from '../gui/PopupMenu';
 import { getTextContent } from '../util/domUtils';
-import Resources from '../util/Resources';
+import Translations from '../util/Translations';
 import Editor from './Editor';
 import { PopupMenuItem } from 'src/types';
 
@@ -167,7 +167,7 @@ class DefaultPopupMenu {
 
         if (condition == null || conditions[condition]) {
           let as = <string>item.getAttribute('as');
-          as = Resources.get(as) || as;
+          as = Translations.get(as) || as;
           const funct = eval(getTextContent(item));
           const action = item.getAttribute('action');
           let icon = item.getAttribute('icon');

@@ -21,7 +21,7 @@ import GraphView from './GraphView';
 import CellRenderer from './cell/CellRenderer';
 import CellEditor from './handler/CellEditor';
 import Point from './geometry/Point';
-import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/utils';
+import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
 import Cell from './cell/Cell';
 import Model from './other/Model';
 import Stylesheet from './style/Stylesheet';

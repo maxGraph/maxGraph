@@ -2799,7 +2799,7 @@ Graph.prototype.createLayersDialog = function()
 			
 			span.appendChild(cb);
 			
-			let title = this.convertValueToString(layer) || (Resources.get('background') || 'Background');
+			let title = this.convertValueToString(layer) || (Translations.get('background') || 'Background');
 			span.setAttribute('title', title);
 			mxUtils.write(span, title);
 			div.appendChild(span);
@@ -4032,10 +4032,10 @@ HoverIcons.prototype.tolerance = (Client.IS_TOUCH) ? 6 : 0;
  */
 HoverIcons.prototype.init = function()
 {
-	this.arrowUp = this.createArrow(this.triangleUp, Resources.get('plusTooltip'));
-	this.arrowRight = this.createArrow(this.triangleRight, Resources.get('plusTooltip'));
-	this.arrowDown = this.createArrow(this.triangleDown, Resources.get('plusTooltip'));
-	this.arrowLeft = this.createArrow(this.triangleLeft, Resources.get('plusTooltip'));
+	this.arrowUp = this.createArrow(this.triangleUp, Translations.get('plusTooltip'));
+	this.arrowRight = this.createArrow(this.triangleRight, Translations.get('plusTooltip'));
+	this.arrowDown = this.createArrow(this.triangleDown, Translations.get('plusTooltip'));
+	this.arrowLeft = this.createArrow(this.triangleLeft, Translations.get('plusTooltip'));
 
 	this.elts = [this.arrowUp, this.arrowRight, this.arrowDown, this.arrowLeft];
 
@@ -4589,10 +4589,10 @@ HoverIcons.prototype.repaint = function()
 			
 			if (this.graph.tooltipHandler.isEnabled())
 			{
-				this.arrowLeft.setAttribute('title', Resources.get('plusTooltip'));
-				this.arrowRight.setAttribute('title', Resources.get('plusTooltip'));
-				this.arrowUp.setAttribute('title', Resources.get('plusTooltip'));
-				this.arrowDown.setAttribute('title', Resources.get('plusTooltip'));
+				this.arrowLeft.setAttribute('title', Translations.get('plusTooltip'));
+				this.arrowRight.setAttribute('title', Translations.get('plusTooltip'));
+				this.arrowUp.setAttribute('title', Translations.get('plusTooltip'));
+				this.arrowDown.setAttribute('title', Translations.get('plusTooltip'));
 			}
 			else
 			{
@@ -8352,7 +8352,7 @@ if (typeof VertexHandler != 'undefined')
 	
 				if (bounds == null)
 				{
-					throw Error(Resources.get('drawingEmpty'));
+					throw Error(Translations.get('drawingEmpty'));
 				}
 	
 				let vs = this.view.scale;
@@ -11436,7 +11436,7 @@ if (typeof VertexHandler != 'undefined')
 			
 			if (this.rotationShape != null)
 			{
-				this.rotationShape.node.setAttribute('title', Resources.get('rotateTooltip'));
+				this.rotationShape.node.setAttribute('title', Translations.get('rotateTooltip'));
 			}
 			
 			if (this.graph.isTable(this.state.cell))
@@ -11541,7 +11541,7 @@ if (typeof VertexHandler != 'undefined')
 						{
 							let changeLink = document.createElement('img');
 							changeLink.setAttribute('src', Editor.editImage);
-							changeLink.setAttribute('title', Resources.get('editLink'));
+							changeLink.setAttribute('title', Translations.get('editLink'));
 							changeLink.setAttribute('width', '11');
 							changeLink.setAttribute('height', '11');
 							changeLink.style.marginLeft = '10px';
@@ -11558,7 +11558,7 @@ if (typeof VertexHandler != 'undefined')
 							
 							let removeLink = document.createElement('img');
 							removeLink.setAttribute('src', Dialog.prototype.clearImage);
-							removeLink.setAttribute('title', Resources.get('removeIt', [Resources.get('link')]));
+							removeLink.setAttribute('title', Translations.get('removeIt', [Translations.get('link')]));
 							removeLink.setAttribute('width', '13');
 							removeLink.setAttribute('height', '10');
 							removeLink.style.marginLeft = '4px';

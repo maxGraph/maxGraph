@@ -4,10 +4,10 @@
  *
  * Constructs the actions object for the given UI.
  */
-const { hasScrollbars } = require('../../../../../packages/core/src/util/Utils');
+const { hasScrollbars } = require('../../../../../packages/core/src/util/utils');
 const { htmlEntities } = require('../../../../../packages/core/src/util/stringUtils');
 const { extractTextWithWhitespace } = require('../../../../../packages/core/src/util/domUtils');
-const { getValue } = require('../../../../../packages/core/src/util/Utils');
+const { getValue } = require('../../../../../packages/core/src/util/utils');
 
 function Actions(editorUi)
 {
@@ -58,7 +58,7 @@ Actions.prototype.init = function()
 			}
 			catch (e)
 			{
-				alert(Resources.get('invalidOrMissingFile') + ': ' + e.message);
+				alert(Translations.get('invalidOrMissingFile') + ': ' + e.message);
 			}
 		}));
 
@@ -272,7 +272,7 @@ Actions.prototype.init = function()
 			ui.handleError(e);
 		}
 	}, null, null, Editor.ctrlKey + '+D');
-	this.put('turn', new Action(Resources.get('turn') + ' / ' + Resources.get('reverse'), function(evt)
+	this.put('turn', new Action(Translations.get('turn') + ' / ' + Translations.get('reverse'), function(evt)
 	{
 		graph.turnShapes(graph.getSelectionCells(), (evt != null) ? mxEvent.isShiftDown(evt) : false);
 	}, null, null, Editor.ctrlKey + '+R'));
@@ -435,7 +435,7 @@ Actions.prototype.init = function()
 				}
 			}
 			
-	    	let dlg = new TextareaDialog(ui, Resources.get('editTooltip') + ':', tooltip, function(newValue)
+	    	let dlg = new TextareaDialog(ui, Translations.get('editTooltip') + ':', tooltip, function(newValue)
 			{
 				graph.setTooltipForCell(cell, newValue);
 			});
@@ -459,14 +459,14 @@ Actions.prototype.init = function()
 			let cell = graph.getSelectionCell();
 			let value = graph.getLinkForCell(cell) || '';
 			
-			ui.showLinkDialog(value, Resources.get('apply'), function(link)
+			ui.showLinkDialog(value, Translations.get('apply'), function(link)
 			{
 				link = trim(link);
     			graph.setLinkForCell(cell, (link.length > 0) ? link : null);
 			});
 		}
 	}, null, null, 'Alt+Shift+L');
-	this.put('insertImage', new Action(Resources.get('image') + '...', function()
+	this.put('insertImage', new Action(Translations.get('image') + '...', function()
 	{
 		if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent()))
 		{
@@ -474,11 +474,11 @@ Actions.prototype.init = function()
 			ui.actions.get('image').funct();
 		}
 	})).isEnabled = isGraphEnabled;
-	this.put('insertLink', new Action(Resources.get('link') + '...', function()
+	this.put('insertLink', new Action(Translations.get('link') + '...', function()
 	{
 		if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent()))
 		{
-			ui.showLinkDialog('', Resources.get('insert'), function(link, docs)
+			ui.showLinkDialog('', Translations.get('insert'), function(link, docs)
 			{
 				link = trim(link);
 				
@@ -564,7 +564,7 @@ Actions.prototype.init = function()
 				
 				let selState = graph.cellEditor.saveSelection();
 				
-				ui.showLinkDialog(oldValue, Resources.get('apply'), ((value) =>
+				ui.showLinkDialog(oldValue, Translations.get('apply'), ((value) =>
 				{
 		    		graph.cellEditor.restoreSelection(selState);
 
@@ -718,13 +718,13 @@ Actions.prototype.init = function()
     		value = state.style.rotation || value;
     	}
 
-		let dlg = new FilenameDialog(ui, value, Resources.get('apply'), function(newValue)
+		let dlg = new FilenameDialog(ui, value, Translations.get('apply'), function(newValue)
 		{
 			if (newValue != null && newValue.length > 0)
 			{
 				graph.setCellStyles('rotation', newValue);
 			}
-		}, Resources.get('enterValue') + ' (' + Resources.get('rotation') + ' 0-360)');
+		}, Translations.get('enterValue') + ' (' + Translations.get('rotation') + ' 0-360)');
 		
 		ui.showDialog(dlg.container, 375, 80, true, true);
 		dlg.init();
@@ -848,9 +848,9 @@ Actions.prototype.init = function()
 				(graph.container.scrollWidth - graph.container.clientWidth) / 2);
 		}
 	}));
-	this.put('customZoom', new Action(Resources.get('custom') + '...', (() =>
+	this.put('customZoom', new Action(Translations.get('custom') + '...', (() =>
 	{
-		let dlg = new FilenameDialog(this.editorUi, parseInt(graph.getView().getScale() * 100), Resources.get('apply'), ((newValue) =>
+		let dlg = new FilenameDialog(this.editorUi, parseInt(graph.getView().getScale() * 100), Translations.get('apply'), ((newValue) =>
 		{
 			let val = parseInt(newValue);
 			
@@ -858,13 +858,13 @@ Actions.prototype.init = function()
 			{
 				graph.zoomTo(val / 100);
 			}
-		}), Resources.get('zoom') + ' (%)');
+		}), Translations.get('zoom') + ' (%)');
 		this.editorUi.showDialog(dlg.container, 300, 80, true, true);
 		dlg.init();
 	}), null, null, Editor.ctrlKey + '+0'));
 	this.addAction('pageScale...', (() =>
 	{
-		let dlg = new FilenameDialog(this.editorUi, parseInt(graph.pageScale * 100), Resources.get('apply'), ((newValue) =>
+		let dlg = new FilenameDialog(this.editorUi, parseInt(graph.pageScale * 100), Translations.get('apply'), ((newValue) =>
 		{
 			let val = parseInt(newValue);
 			
@@ -876,7 +876,7 @@ Actions.prototype.init = function()
 				
 				graph.model.execute(change);
 			}
-		}), Resources.get('pageScale') + ' (%)');
+		}), Translations.get('pageScale') + ' (%)');
 		this.editorUi.showDialog(dlg.container, 300, 80, true, true);
 		dlg.init();
 	}));
@@ -969,7 +969,7 @@ Actions.prototype.init = function()
 	{
 		let ext = '';
 		
-		if (Resources.isLanguageSupported(Client.language))
+		if (Translations.isLanguageSupported(Client.language))
 		{
 			ext = '_' + Client.language;
 		}
@@ -979,7 +979,7 @@ Actions.prototype.init = function()
 	
 	let showingAbout = false;
 	
-	this.put('about', new Action(Resources.get('about') + ' Graph Editor...', function()
+	this.put('about', new Action(Translations.get('about') + ' Graph Editor...', function()
 	{
 		if (!showingAbout)
 		{
@@ -1214,7 +1214,7 @@ Actions.prototype.init = function()
 		{
 			let model = graph.getModel();
 			
-	    	let dlg = new TextareaDialog(this.editorUi, Resources.get('editStyle') + ':',
+	    	let dlg = new TextareaDialog(this.editorUi, Translations.get('editStyle') + ':',
 				cells[0].getStyle() || '', function(newValue)
 			{
 	    		if (newValue != null)
@@ -1346,7 +1346,7 @@ Actions.prototype.init = function()
 	{
 		if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent()))
 		{
-			let title = Resources.get('image') + ' (' + Resources.get('url') + '):';
+			let title = Translations.get('image') + ' (' + Translations.get('url') + '):';
 	    	let state = graph.getView().getState(graph.getSelectionCell());
 	    	let value = '';
 	    	
@@ -1504,11 +1504,11 @@ Actions.prototype.addAction = function(key, funct, enabled, iconCls, shortcut)
 	if (key.substring(key.length - 3) == '...')
 	{
 		key = key.substring(0, key.length - 3);
-		title = Resources.get(key) + '...';
+		title = Translations.get(key) + '...';
 	}
 	else
 	{
-		title = Resources.get(key);
+		title = Translations.get(key);
 	}
 	
 	return this.put(key, new Action(title, funct, enabled, iconCls, shortcut));

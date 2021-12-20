@@ -139,7 +139,7 @@ export { default as StencilShapeRegistry } from './view/geometry/node/StencilSha
 
 export * as constants from './util/constants';
 export { default as Guide } from './view/other/Guide';
-export { default as Resources } from './util/Resources';
+export { default as Translations } from './util/Translations';
 export * as utils from './util/utils';
 export * as cloneUtils from './util/cloneUtils';
 export * as domUtils from './util/domUtils';

@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2006-2012, JGraph Ltd
  */
-const { mod } = require('../../../../../packages/core/src/util/Utils');
+const { mod } = require('../../../../../packages/core/src/util/utils');
 const { br } = require('../../../../../packages/core/src/util/domUtils');
 const { htmlEntities } = require('../../../../../packages/core/src/util/stringUtils');
-const { getScaleForPageCount } = require('../../../../../packages/core/src/util/Utils');
+const { getScaleForPageCount } = require('../../../../../packages/core/src/util/utils');
 const { button } = require('../../../../../packages/core/src/util/dom/DomHelpers');
 const { write } = require('../../../../../packages/core/src/util/domUtils');
-const { getDocumentScrollOrigin } = require('../../../../../packages/core/src/util/Utils');
-const { setOpacity } = require('../../../../../packages/core/src/util/Utils');
-const { getDocumentSize } = require('../../../../../packages/core/src/util/Utils');
+const { getDocumentScrollOrigin } = require('../../../../../packages/core/src/util/utils');
+const { setOpacity } = require('../../../../../packages/core/src/util/utils');
+const { getDocumentSize } = require('../../../../../packages/core/src/util/utils');
 /**
  * Editor constructor executed on page load.
  */
@@ -25,7 +25,7 @@ Editor = function(chromeless, themes, model, graph, editable)
 
 	this.getOrCreateFilename = function()
 	{
-		return this.filename || Resources.get('drawing', [Editor.pageCounter]) + '.xml';
+		return this.filename || Translations.get('drawing', [Editor.pageCounter]) + '.xml';
 	};
 	
 	this.getFilename = function()
@@ -554,7 +554,7 @@ Editor.prototype.setGraphXml = function(node)
 		else
 		{
 			throw { 
-			    message: Resources.get('cannotOpenFile'),
+			    message: Translations.get('cannotOpenFile'),
 			    node: node,
 			    toString: function() { return this.message; }
 			};
@@ -861,7 +861,7 @@ function Dialog(editorUi, elt, w, h, modal, closable, onClose, noScroll, transpa
 		let img = document.createElement('img');
 
 		img.setAttribute('src', Dialog.prototype.closeImage);
-		img.setAttribute('title', Resources.get('close'));
+		img.setAttribute('title', Translations.get('close'));
 		img.className = 'geDialogClose';
 		img.style.top = (top + 14) + 'px';
 		img.style.left = (left + w + 38 - dx) + 'px';
@@ -1063,7 +1063,7 @@ let ErrorDialog = function(editorUi, title, message, buttonText, fn, retry, butt
 	
 	if (retry != null)
 	{
-		let retryBtn = button(Resources.get('tryAgain'), function()
+		let retryBtn = button(Translations.get('tryAgain'), function()
 		{
 			editorUi.hideDialog();
 			retry();
@@ -1164,7 +1164,7 @@ PrintDialog.prototype.create = function(editorUi)
 	td.appendChild(onePageCheckBox);
 	
 	let span = document.createElement('span');
-	write(span, ' ' + Resources.get('fitPage'));
+	write(span, ' ' + Translations.get('fitPage'));
 	td.appendChild(span);
 	
 	mxEvent.addListener(span, 'click', function(evt)
@@ -1191,7 +1191,7 @@ PrintDialog.prototype.create = function(editorUi)
 	td.appendChild(pageCountCheckBox);
 	
 	let span = document.createElement('span');
-	write(span, ' ' + Resources.get('posterPrint') + ':');
+	write(span, ' ' + Translations.get('posterPrint') + ':');
 	td.appendChild(span);
 	
 	mxEvent.addListener(span, 'click', function(evt)
@@ -1214,7 +1214,7 @@ PrintDialog.prototype.create = function(editorUi)
 	td = document.createElement('td');
 	td.style.fontSize = '10pt';
 	td.appendChild(pageCountInput);
-	write(td, ' ' + Resources.get('pages') + ' (max)');
+	write(td, ' ' + Translations.get('pages') + ' (max)');
 	row.appendChild(td);
 	tbody.appendChild(row);
 
@@ -1235,7 +1235,7 @@ PrintDialog.prototype.create = function(editorUi)
 	row = row.cloneNode(false);
 	
 	td = document.createElement('td');
-	write(td, Resources.get('pageScale') + ':');
+	write(td, Translations.get('pageScale') + ':');
 	row.appendChild(td);
 	
 	td = document.createElement('td');
@@ -1315,7 +1315,7 @@ PrintDialog.prototype.create = function(editorUi)
 		}
 	};
 	
-	let cancelBtn = button(Resources.get('cancel'), function()
+	let cancelBtn = button(Translations.get('cancel'), function()
 	{
 		editorUi.hideDialog();
 	});
@@ -1328,7 +1328,7 @@ PrintDialog.prototype.create = function(editorUi)
 
 	if (PrintDialog.previewEnabled)
 	{
-		let previewBtn = button(Resources.get('preview'), function()
+		let previewBtn = button(Translations.get('preview'), function()
 		{
 			editorUi.hideDialog();
 			preview(false);
@@ -1337,7 +1337,7 @@ PrintDialog.prototype.create = function(editorUi)
 		td.appendChild(previewBtn);
 	}
 	
-	let printBtn = button(Resources.get((!PrintDialog.previewEnabled) ? 'ok' : 'print'), function()
+	let printBtn = button(Translations.get((!PrintDialog.previewEnabled) ? 'ok' : 'print'), function()
 	{
 		editorUi.hideDialog();
 		preview(true);
@@ -1398,7 +1398,7 @@ PrintDialog.printPreview = function(preview)
 PrintDialog.createPrintPreview = function(graph, scale, pf, border, x0, y0, autoOrigin)
 {
 	let preview = new PrintPreview(graph, scale, pf, border, x0, y0);
-	preview.title = Resources.get('preview');
+	preview.title = Translations.get('preview');
 	preview.printBackgroundImage = true;
 	preview.autoOrigin = autoOrigin;
 	let bg = graph.background;
@@ -1450,7 +1450,7 @@ let PageSetupDialog = function(editorUi)
 	td = document.createElement('td');
 	td.style.verticalAlign = 'top';
 	td.style.fontSize = '10pt';
-	write(td, Resources.get('paperSize') + ':');
+	write(td, Translations.get('paperSize') + ':');
 	
 	row.appendChild(td);
 	
@@ -1466,7 +1466,7 @@ let PageSetupDialog = function(editorUi)
 	row = document.createElement('tr');
 	
 	td = document.createElement('td');
-	write(td, Resources.get('background') + ':');
+	write(td, Translations.get('background') + ':');
 	
 	row.appendChild(td);
 	
@@ -1513,7 +1513,7 @@ let PageSetupDialog = function(editorUi)
 	
 	td.appendChild(backgroundButton);
 	
-	write(td, Resources.get('gridSize') + ':');
+	write(td, Translations.get('gridSize') + ':');
 	
 	let gridSizeInput = document.createElement('input');
 	gridSizeInput.setAttribute('type', 'number');
@@ -1536,7 +1536,7 @@ let PageSetupDialog = function(editorUi)
 	row = document.createElement('tr');
 	td = document.createElement('td');
 	
-	write(td, Resources.get('image') + ':');
+	write(td, Translations.get('image') + ':');
 	
 	row.appendChild(td);
 	td = document.createElement('td');
@@ -1554,7 +1554,7 @@ let PageSetupDialog = function(editorUi)
 		{
 			changeImageLink.removeAttribute('title');
 			changeImageLink.style.fontSize = '';
-			changeImageLink.innerHTML = htmlEntities(Resources.get('change')) + '...';
+			changeImageLink.innerHTML = htmlEntities(Translations.get('change')) + '...';
 		}
 		else
 		{
@@ -1591,7 +1591,7 @@ let PageSetupDialog = function(editorUi)
 	td.style.paddingTop = '16px';
 	td.setAttribute('align', 'right');
 
-	let cancelBtn = button(Resources.get('cancel'), function()
+	let cancelBtn = button(Translations.get('cancel'), function()
 	{
 		editorUi.hideDialog();
 	});
@@ -1602,7 +1602,7 @@ let PageSetupDialog = function(editorUi)
 		td.appendChild(cancelBtn);
 	}
 	
-	let applyBtn = button(Resources.get('apply'), function()
+	let applyBtn = button(Translations.get('apply'), function()
 	{
 		editorUi.hideDialog();
 		let gridSize = parseInt(gridSizeInput.value);
@@ -1674,7 +1674,7 @@ PageSetupDialog.addPageFormatPanel = function(div, namePostfix, pageFormat, page
 	
 	let portraitSpan = document.createElement('span');
 	portraitSpan.style.maxWidth = '100px';
-	write(portraitSpan, Resources.get('portrait'));
+	write(portraitSpan, Translations.get('portrait'));
 	formatDiv.appendChild(portraitSpan);
 
 	landscapeCheckBox.style.marginLeft = '10px';
@@ -1683,7 +1683,7 @@ PageSetupDialog.addPageFormatPanel = function(div, namePostfix, pageFormat, page
 	
 	let landscapeSpan = document.createElement('span');
 	landscapeSpan.style.width = '100px';
-	write(landscapeSpan, Resources.get('landscape'));
+	write(landscapeSpan, Translations.get('landscape'));
 	formatDiv.appendChild(landscapeSpan)
 
 	let customDiv = document.createElement('div');
@@ -1940,7 +1940,7 @@ PageSetupDialog.getFormats = function()
 	        {key: '16-9', title: '16:9 (1600 x 900)', format: new Rectangle(0, 0, 900, 1600)},
 	        {key: '16-10', title: '16:10 (1920 x 1200)', format: new Rectangle(0, 0, 1200, 1920)},
 	        {key: '4-3', title: '4:3 (1600 x 1200)', format: new Rectangle(0, 0, 1200, 1600)},
-	        {key: 'custom', title: Resources.get('custom'), format: null}];
+	        {key: 'custom', title: Translations.get('custom'), format: null}];
 };
 
 /**
@@ -1961,7 +1961,7 @@ let FilenameDialog = function(editorUi, filename, buttonText, fn, label, validat
 	td.style.whiteSpace = 'nowrap';
 	td.style.fontSize = '10pt';
 	td.style.width = (hints) ? '80px' : '120px';
-	write(td, (label || Resources.get('filename')) + ':');
+	write(td, (label || Translations.get('filename')) + ':');
 	
 	row.appendChild(td);
 	
@@ -2100,7 +2100,7 @@ let FilenameDialog = function(editorUi, filename, buttonText, fn, label, validat
 	td.style.whiteSpace = 'nowrap';
 	td.setAttribute('align', 'right');
 	
-	let cancelBtn = button(Resources.get('cancel'), function()
+	let cancelBtn = button(Translations.get('cancel'), function()
 	{
 		editorUi.hideDialog();
 		
@@ -2118,7 +2118,7 @@ let FilenameDialog = function(editorUi, filename, buttonText, fn, label, validat
 	
 	if (helpLink != null)
 	{
-		let helpBtn = button(Resources.get('help'), function()
+		let helpBtn = button(Translations.get('help'), function()
 		{
 			editorUi.editor.graph.openLink(helpLink);
 		});
@@ -2166,7 +2166,7 @@ FilenameDialog.createTypeHint = function(ui, nameInput, hints)
 	let nameChanged = function()
 	{
 		hint.setAttribute('src', Editor.helpImage);
-		hint.setAttribute('title', Resources.get('help'));
+		hint.setAttribute('title', Translations.get('help'));
 		
 		for (let i = 0; i < hints.length; i++)
 		{
@@ -2174,7 +2174,7 @@ FilenameDialog.createTypeHint = function(ui, nameInput, hints)
 				nameInput.value.length - hints[i].ext.length - 1) == '.' + hints[i].ext)
 			{
 				hint.setAttribute('src',  Client.imageBasePath + '/warning.png');
-				hint.setAttribute('title', Resources.get(hints[i].title));
+				hint.setAttribute('title', Translations.get(hints[i].title));
 				break;
 			}
 		}
@@ -2192,10 +2192,10 @@ FilenameDialog.createTypeHint = function(ui, nameInput, hints)
 		}
 		else if (title != '')
 		{
-			ui.showError(null, title, Resources.get('help'), function()
+			ui.showError(null, title, Translations.get('help'), function()
 			{
 				ui.editor.graph.openLink(FilenameDialog.filenameHelpLink);
-			}, null, Resources.get('ok'), null, null, null, 340, 90);
+			}, null, Translations.get('ok'), null, null, null, 340, 90);
 		}
 		
 		mxEvent.consume(evt);
@@ -2217,7 +2217,7 @@ FilenameDialog.createFileTypes = function(editorUi, nameInput, types)
 	{
 		let typeOption = document.createElement('option');
 		typeOption.setAttribute('value', i);
-		write(typeOption, Resources.get(types[i].description) +
+		write(typeOption, Translations.get(types[i].description) +
 			' (.' + types[i].extension + ')');
 		typeSelect.appendChild(typeOption);
 	}

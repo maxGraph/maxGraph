@@ -11,7 +11,7 @@ import {
   getOffset,
   getScrollOrigin,
   setOpacity,
-} from '../../util/utils';
+} from '../../util/styleUtils';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import mxGuide from '../../util/Guide';
@@ -31,7 +31,7 @@ import EventObject from '../event/EventObject';
 import { Graph } from '../Graph';
 import Guide from '../../util/Guide';
 import Cell from '../cell/Cell';
-import GraphHandler from '../GraphHandler';
+import GraphHandler from '../handler/GraphHandler';
 
 export type DropHandler = (
   graph: Graph,

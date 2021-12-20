@@ -1,4 +1,4 @@
-# Resources from graph.properties
+# Translations from graph.properties
 alreadyConnected=Nodes already connected
 cancel=Cancel
 close=Close

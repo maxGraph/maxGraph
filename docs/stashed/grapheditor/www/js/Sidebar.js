@@ -88,7 +88,7 @@ Sidebar.prototype.init = function()
 	this.addBasicPalette(dir);
 	
 	this.setCurrentSearchEntryLibrary('arrows');
-	this.addStencilPalette('arrows', Resources.get('arrows'), dir + '/arrows.xml',
+	this.addStencilPalette('arrows', Translations.get('arrows'), dir + '/arrows.xml',
 		';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2');
 	this.setCurrentSearchEntryLibrary();
 	
@@ -101,7 +101,7 @@ Sidebar.prototype.init = function()
 	this.setCurrentSearchEntryLibrary();
 	
 	this.setCurrentSearchEntryLibrary('clipart');
-	this.addImagePalette('clipart', Resources.get('clipart'), dir + '/clipart/', '_128x128.png',
+	this.addImagePalette('clipart', Translations.get('clipart'), dir + '/clipart/', '_128x128.png',
 		['Earth_globe', 'Empty_Folder', 'Full_Folder', 'Gear', 'Lock', 'Software', 'Virus', 'Email',
 		 'Database', 'Router_Icon', 'iPad', 'iMac', 'Laptop', 'MacBook', 'Monitor_Tower', 'Printer',
 		 'Server_Tower', 'Workstation', 'Firewall_02', 'Wireless_Router_N', 'Credit_Card',
@@ -718,7 +718,7 @@ Sidebar.prototype.addSearchPalette = function(expand)
 	inner.style.cursor = 'default';
 
 	let input = document.createElement('input');
-	input.setAttribute('placeholder', Resources.get('searchShapes'));
+	input.setAttribute('placeholder', Translations.get('searchShapes'));
 	input.setAttribute('type', 'text');
 	input.style.fontSize = '12px';
 	input.style.overflow = 'hidden';
@@ -733,7 +733,7 @@ Sidebar.prototype.addSearchPalette = function(expand)
 
 	let cross = document.createElement('img');
 	cross.setAttribute('src', Sidebar.prototype.searchImage);
-	cross.setAttribute('title', Resources.get('search'));
+	cross.setAttribute('title', Translations.get('search'));
 	cross.style.position = 'relative';
 	cross.style.left = '-18px';
 	cross.style.top = '1px';
@@ -747,7 +747,7 @@ Sidebar.prototype.addSearchPalette = function(expand)
 	div.appendChild(inner);
 
 	let center = document.createElement('center');
-	let button = button(Resources.get('moreResults'), function()
+	let button = button(Translations.get('moreResults'), function()
 	{
 		find();
 	});
@@ -798,7 +798,7 @@ Sidebar.prototype.addSearchPalette = function(expand)
 		if (cross.getAttribute('src') == Dialog.prototype.closeImage)
 		{
 			cross.setAttribute('src', Sidebar.prototype.searchImage);
-			cross.setAttribute('title', Resources.get('search'));
+			cross.setAttribute('title', Translations.get('search'));
 			button.style.display = 'none';
 			input.value = '';
 			searchTerm = '';
@@ -832,7 +832,7 @@ Sidebar.prototype.addSearchPalette = function(expand)
 					button.setAttribute('disabled', 'true');
 					button.style.display = '';
 					button.style.cursor = 'wait';
-					button.innerHTML = Resources.get('loading') + '...';
+					button.innerHTML = Translations.get('loading') + '...';
 					active = true;
 					
 					// Ignores old results
@@ -901,11 +901,11 @@ Sidebar.prototype.addSearchPalette = function(expand)
 							if (more)
 							{
 								button.removeAttribute('disabled');
-								button.innerHTML = Resources.get('moreResults');
+								button.innerHTML = Translations.get('moreResults');
 							}
 							else
 							{
-								button.innerHTML = Resources.get('reset');
+								button.innerHTML = Translations.get('reset');
 								button.style.display = 'none';
 								complete = true;
 							}
@@ -947,12 +947,12 @@ Sidebar.prototype.addSearchPalette = function(expand)
 		if (input.value == '')
 		{
 			cross.setAttribute('src', Sidebar.prototype.searchImage);
-			cross.setAttribute('title', Resources.get('search'));
+			cross.setAttribute('title', Translations.get('search'));
 		}
 		else
 		{
 			cross.setAttribute('src', Dialog.prototype.closeImage);
-			cross.setAttribute('title', Resources.get('reset'));
+			cross.setAttribute('title', Translations.get('reset'));
 		}
 		
 		if (input.value == '')
@@ -1021,7 +1021,7 @@ Sidebar.prototype.insertSearchHint = function(div, searchTerm, count, page, resu
 			'color:gray;padding:6px 0px 0px 0px !important;margin:4px 8px 4px 8px;' +
 			'text-align:center;cursor:default !important';
 		
-		write(err, Resources.get('noResultsFor', [searchTerm]));
+		write(err, Translations.get('noResultsFor', [searchTerm]));
 		div.appendChild(err);
 	}
 };
@@ -1169,7 +1169,7 @@ Sidebar.prototype.addGeneralPalette = function(expand)
 		}))
 	];
 	
-	this.addPaletteFunctions('general', Resources.get('general'), (expand != null) ? expand : true, fns);
+	this.addPaletteFunctions('general', Translations.get('general'), (expand != null) ? expand : true, fns);
 	this.setCurrentSearchEntryLibrary();
 };
 
@@ -1283,7 +1283,7 @@ Sidebar.prototype.addMiscPalette = function(expand)
 	 	this.createEdgeTemplateEntry('edgeStyle=elbowEdgeStyle;elbow=vertical;endArrow=classic;html=1;', 50, 50, '', 'Vertical Elbow', null, lineTags + 'elbow vertical')
 	];
 
-	this.addPaletteFunctions('misc', Resources.get('misc'), (expand != null) ? expand : true, fns);
+	this.addPaletteFunctions('misc', Translations.get('misc'), (expand != null) ? expand : true, fns);
 	this.setCurrentSearchEntryLibrary();
 };
 /**
@@ -1292,7 +1292,7 @@ Sidebar.prototype.addMiscPalette = function(expand)
 Sidebar.prototype.addAdvancedPalette = function(expand)
 {
 	this.setCurrentSearchEntryLibrary('general', 'advanced');
-	this.addPaletteFunctions('advanced', Resources.get('advanced'), (expand != null) ? expand : false, this.createAdvancedShapes());
+	this.addPaletteFunctions('advanced', Translations.get('advanced'), (expand != null) ? expand : false, this.createAdvancedShapes());
 	this.setCurrentSearchEntryLibrary();
 };
 
@@ -1302,7 +1302,7 @@ Sidebar.prototype.addAdvancedPalette = function(expand)
 Sidebar.prototype.addBasicPalette = function(dir)
 {
 	this.setCurrentSearchEntryLibrary('basic');
-	this.addStencilPalette('basic', Resources.get('basic'), dir + '/basic.xml',
+	this.addStencilPalette('basic', Translations.get('basic'), dir + '/basic.xml',
 		';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2',
 		null, null, null, null, [
 			this.createVertexTemplateEntry('shape=partialRectangle;whiteSpace=wrap;html=1;top=0;bottom=0;fillColor=none;', 120, 60, '', 'Partial Rectangle'),
@@ -2261,7 +2261,7 @@ Sidebar.prototype.addUmlPalette = function(expand)
 	 	this.createEdgeTemplateEntry('endArrow=open;endFill=1;endSize=12;html=1;', 160, 0, '', 'Association 3', null, 'uml association')
 	];
 	
-	this.addPaletteFunctions('uml', Resources.get('uml'), expand || false, fns);
+	this.addPaletteFunctions('uml', Translations.get('uml'), expand || false, fns);
 	this.setCurrentSearchEntryLibrary();
 };
 
@@ -2457,7 +2457,7 @@ Sidebar.prototype.addBpmnPalette = function(dir, expand)
 		this.createEdgeTemplateEntry('shape=link;html=1;', 100, 0, '', 'Link', null, 'bpmn link')
 	];
 	
-	this.addPaletteFunctions('bpmn', 'BPMN ' + Resources.get('general'), false, fns);
+	this.addPaletteFunctions('bpmn', 'BPMN ' + Translations.get('general'), false, fns);
 	this.setCurrentSearchEntryLibrary();
 };
 
@@ -2467,7 +2467,7 @@ Sidebar.prototype.addBpmnPalette = function(dir, expand)
 Sidebar.prototype.createTitle = function(label)
 {
 	let elt = document.createElement('a');
-	elt.setAttribute('title', Resources.get('sidebarTooltip'));
+	elt.setAttribute('title', Translations.get('sidebarTooltip'));
 	elt.className = 'geTitle';
 	write(elt, label);
 
@@ -3267,11 +3267,11 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 	let currentStyleTarget = null;
 	let activeTarget = false;
 	
-	let arrowUp = createArrow(this.triangleUp, Resources.get('connect'));
-	let arrowRight = createArrow(this.triangleRight, Resources.get('connect'));
-	let arrowDown = createArrow(this.triangleDown, Resources.get('connect'));
-	let arrowLeft = createArrow(this.triangleLeft, Resources.get('connect'));
-	let styleTarget = createArrow(this.refreshTarget, Resources.get('replace'));
+	let arrowUp = createArrow(this.triangleUp, Translations.get('connect'));
+	let arrowRight = createArrow(this.triangleRight, Translations.get('connect'));
+	let arrowDown = createArrow(this.triangleDown, Translations.get('connect'));
+	let arrowLeft = createArrow(this.triangleLeft, Translations.get('connect'));
+	let styleTarget = createArrow(this.refreshTarget, Translations.get('replace'));
 	// Workaround for actual parentNode not being updated in old IE
 	let styleTargetParent = null;
 	let roundSource = createArrow(this.roundDrop);
@@ -4116,7 +4116,7 @@ Sidebar.prototype.addFoldingHandler = function(title, content, funct)
 					// Wait cursor does not show up on Mac
 					title.style.cursor = 'wait';
 					let prev = title.innerHTML;
-					title.innerHTML = Resources.get('loading') + '...';
+					title.innerHTML = Translations.get('loading') + '...';
 					
 					window.setTimeout(function()
 					{

@@ -5,15 +5,14 @@
  * Type definitions from the typed-mxgraph project
  */
 import {
-  ALIGN_CENTER,
-  ALIGN_MIDDLE,
-  ARROW_CLASSIC,
+  ALIGN,
+  ARROW,
   NONE,
   SHAPE_CONNECTOR,
   SHAPE_RECTANGLE,
 } from '../../util/constants';
 import Perimeter from './Perimeter';
-import { isNumeric } from '../../util/Utils';
+import { isNumeric } from '../../util/mathUtils';
 import { clone } from '../../util/cloneUtils';
 
 import type { CellStateStyles } from '../../types';
@@ -88,8 +87,8 @@ class Stylesheet {
     const style = {} as CellStateStyles;
     style.shape = SHAPE_RECTANGLE;
     style.perimeter = Perimeter.RectanglePerimeter;
-    style.verticalAlign = ALIGN_MIDDLE;
-    style.align = ALIGN_CENTER;
+    style.verticalAlign = ALIGN.MIDDLE;
+    style.align = ALIGN.CENTER;
     style.fillColor = '#C3D9FF';
     style.strokeColor = '#6482B9';
     style.fontColor = '#774400';
@@ -102,9 +101,9 @@ class Stylesheet {
   createDefaultEdgeStyle() {
     const style = {} as CellStateStyles;
     style.shape = SHAPE_CONNECTOR;
-    style.endArrow = ARROW_CLASSIC;
-    style.verticalAlign = ALIGN_MIDDLE;
-    style.align = ALIGN_CENTER;
+    style.endArrow = ARROW.CLASSIC;
+    style.verticalAlign = ALIGN.MIDDLE;
+    style.align = ALIGN.CENTER;
     style.strokeColor = '#6482B9';
     style.fontColor = '#446299';
     return style;

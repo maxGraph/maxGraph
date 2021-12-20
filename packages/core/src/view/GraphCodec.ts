@@ -6,8 +6,8 @@
  */
 
 import { Graph } from './Graph';
-import CodecRegistry from '../util/serialization/CodecRegistry';
-import ObjectCodec from '../util/serialization/ObjectCodec';
+import CodecRegistry from '../serialization/CodecRegistry';
+import ObjectCodec from '../serialization/ObjectCodec';
 
 /**
  * Codec for <mxGraph>s. This class is created and registered

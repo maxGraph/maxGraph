@@ -5,15 +5,15 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import ObjectCodec from '../../util/serialization/ObjectCodec';
+import ObjectCodec from '../../serialization/ObjectCodec';
 import ValueChange from './ValueChange';
 import StyleChange from './StyleChange';
 import GeometryChange from './GeometryChange';
 import CollapseChange from './CollapseChange';
 import VisibleChange from './VisibleChange';
 import CellAttributeChange from './CellAttributeChange';
-import CodecRegistry from '../../util/serialization/CodecRegistry';
-import { isNode } from '../../util/dom/domUtils';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import { isNode } from '../../util/domUtils';
 
 /**
  * Codec for <mxValueChange>s, <mxStyleChange>s, <mxGeometryChange>s,

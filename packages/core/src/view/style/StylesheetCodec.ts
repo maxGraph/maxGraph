@@ -6,13 +6,13 @@
  */
 
 import Stylesheet from './Stylesheet';
-import { isNumeric } from '../../util/utils';
-import CodecRegistry from '../../util/serialization/CodecRegistry';
-import { NODETYPE_ELEMENT } from '../../util/constants';
-import MaxLog from '../../util/gui/MaxLog';
+import { isNumeric } from '../../util/mathUtils';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import { NODETYPE } from '../../util/constants';
+import MaxLog from '../../gui/MaxLog';
 import StyleRegistry from './StyleRegistry';
-import ObjectCodec from '../../util/serialization/ObjectCodec';
-import { getTextContent } from '../../util/dom/domUtils';
+import ObjectCodec from '../../serialization/ObjectCodec';
+import { getTextContent } from '../../util/domUtils';
 import { clone } from '../../util/cloneUtils';
 
 /**
@@ -151,7 +151,7 @@ class StylesheetCodec extends ObjectCodec {
           let entry = node.firstChild;
 
           while (entry != null) {
-            if (entry.nodeType === NODETYPE_ELEMENT) {
+            if (entry.nodeType === NODETYPE.ELEMENT) {
               const key = entry.getAttribute('as');
 
               if (entry.nodeName === 'add') {

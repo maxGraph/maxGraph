@@ -6,7 +6,7 @@ import React from 'react';
 import mxEvent from '../mxgraph/util/mxEvent';
 import mxGraph from '../mxgraph/view/mxGraph';
 import mxRubberband from '../mxgraph/handler/mxRubberband';
-import { convertPoint, getValue } from '../../packages/core/src/util/Utils';
+import { convertPoint, getValue } from '../../packages/core/src/util/utils';
 
 class MYNAMEHERE extends React.Component {
   constructor(props) {

@@ -7,13 +7,13 @@ import DefaultPopupMenu from './DefaultPopupMenu';
 import UndoManager from '../view/undoable_changes/UndoManager';
 import DefaultKeyHandler from './DefaultKeyHandler';
 import EventSource from '../view/event/EventSource';
-import Resources from '../util/Resources';
+import Translations from '../util/Translations';
 import Client from '../Client';
 import CompactTreeLayout from '../view/layout/CompactTreeLayout';
 import DefaultToolbar from './DefaultToolbar';
 import StackLayout from '../view/layout/StackLayout';
 import EventObject from '../view/event/EventObject';
-import { getOffset } from '../util/utils';
+import { getOffset } from '../util/styleUtils';
 import Codec from '../serialization/Codec';
 import MaxWindow, { error } from '../gui/MaxWindow';
 import MaxForm from '../gui/MaxForm';
@@ -302,7 +302,7 @@ if (mxLoadResources) {
  * var clone = editor.graph.model.cloneCell(template);
  * ```
  *
- * #### Resources:
+ * #### Translations:
  *
  * resources/editor - Language resources for Editor
  *
@@ -1232,7 +1232,7 @@ class Editor extends EventSource {
       const current = editor.graph.getView().scale * 100;
       const scale =
         parseFloat(
-          prompt((Resources.get(editor.askZoomResource) || editor.askZoomResource), current)
+          prompt((Translations.get(editor.askZoomResource) || editor.askZoomResource), current)
         ) / 100;
 
       if (!isNaN(scale)) {
@@ -1718,7 +1718,7 @@ class Editor extends EventSource {
       this.addListener(InternalEvent.SAVE, () => {
         const tstamp = new Date().toLocaleString();
         this.setStatus(
-          `${Resources.get(this.lastSavedResource) || this.lastSavedResource}: ${tstamp}`
+          `${Translations.get(this.lastSavedResource) || this.lastSavedResource}: ${tstamp}`
         );
       });
 
@@ -1726,7 +1726,7 @@ class Editor extends EventSource {
       // when new files are opened
       this.addListener(InternalEvent.OPEN, () => {
         this.setStatus(
-          `${Resources.get(this.currentFileResource) || this.currentFileResource}: ${
+          `${Translations.get(this.currentFileResource) || this.currentFileResource}: ${
             this.filename
           }`
         );
@@ -2062,7 +2062,7 @@ class Editor extends EventSource {
         // Displays the contents in a window and stores a reference to the
         // window for later hiding of the window
         this.properties = new MaxWindow(
-          Resources.get(this.propertiesResource) || this.propertiesResource,
+          Translations.get(this.propertiesResource) || this.propertiesResource,
           node,
           x,
           y,
@@ -2249,7 +2249,7 @@ class Editor extends EventSource {
       div.style.paddingLeft = '20px';
       const w = document.body.clientWidth;
       const wnd = new MaxWindow(
-        Resources.get(this.tasksResource) || this.tasksResource,
+        Translations.get(this.tasksResource) || this.tasksResource,
         div,
         w - 220,
         this.tasksTop,
@@ -2318,7 +2318,7 @@ class Editor extends EventSource {
   showHelp(tasks: any | null=null): void {
     if (this.help == null) {
       const frame = document.createElement('iframe');
-      frame.setAttribute('src', Resources.get('urlHelp') || this.urlHelp);
+      frame.setAttribute('src', Translations.get('urlHelp') || this.urlHelp);
       frame.setAttribute('height', '100%');
       frame.setAttribute('width', '100%');
       frame.setAttribute('frameBorder', '0');
@@ -2328,7 +2328,7 @@ class Editor extends EventSource {
       const h = document.body.clientHeight || document.documentElement.clientHeight;
 
       const wnd = new MaxWindow(
-        Resources.get(this.helpResource) || this.helpResource,
+        Translations.get(this.helpResource) || this.helpResource,
         frame,
         (w - this.helpWidth) / 2,
         (h - this.helpHeight) / 3,
@@ -2382,7 +2382,7 @@ class Editor extends EventSource {
       div.style.cursor = 'move';
 
       const wnd = new MaxWindow(
-        Resources.get(this.outlineResource) || this.outlineResource,
+        Translations.get(this.outlineResource) || this.outlineResource,
         div, 600, 480, 200, 200, false
       );
 

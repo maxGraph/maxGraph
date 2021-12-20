@@ -1,4 +1,4 @@
-# Resources from graph.properties
+# Translations from graph.properties
 alreadyConnected=Knoten schon verbunden
 cancel=Abbrechen
 close=Schliessen

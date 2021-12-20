@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2006-2012, JGraph Ltd
  */
-import { getValue } from '../../../../../packages/core/src/util/Utils';
+import { getValue } from '../../../../../packages/core/src/util/utils';
 
-const { setOpacity } = require('../../../../../packages/core/src/util/Utils');
-const { createImage } = require('../../../../../packages/core/src/util/Utils');
+const { setOpacity } = require('../../../../../packages/core/src/util/utils');
+const { createImage } = require('../../../../../packages/core/src/util/utils');
 const { createXmlDocument } = require('../../../../../packages/core/src/util/xmlUtils');
 const { isNode } = require('../../../../../packages/core/src/util/domUtils');
 const { popup } = require('../../../../../packages/core/src/util/gui/MaxWindow');
 const { parseXml } = require('../../../../../packages/core/src/util/xmlUtils');
 const { getPrettyXml } = require('../../../../../packages/core/src/util/xmlUtils');
 const { write } = require('../../../../../packages/core/src/util/domUtils');
-const { remove } = require('../../../../../packages/core/src/util/Utils');
+const { remove } = require('../../../../../packages/core/src/util/utils');
 const { button } = require('../../../../../packages/core/src/util/dom/DomHelpers');
 const { br } = require('../../../../../packages/core/src/util/domUtils');
 /**
@@ -68,7 +68,7 @@ let ColorDialog = function(editorUi, color, apply, cancelFn)
 		}
 		else
 		{
-			editorUi.handleError({message: Resources.get('invalidInput')});
+			editorUi.handleError({message: Translations.get('invalidInput')});
 		}
 	};
 	
@@ -173,7 +173,7 @@ let ColorDialog = function(editorUi, color, apply, cancelFn)
 		if (addResetOption)
 		{
 			let td = document.createElement('td');
-			td.setAttribute('title', Resources.get('reset'));
+			td.setAttribute('title', Translations.get('reset'));
 			td.style.border = '1px solid black';
 			td.style.padding = '0px';
 			td.style.width = '16px';
@@ -215,7 +215,7 @@ let ColorDialog = function(editorUi, color, apply, cancelFn)
 	buttons.style.textAlign = 'right';
 	buttons.style.whiteSpace = 'nowrap';
 	
-	let cancelBtn = button(Resources.get('cancel'), function()
+	let cancelBtn = button(Translations.get('cancel'), function()
 	{
 		editorUi.hideDialog();
 		
@@ -231,7 +231,7 @@ let ColorDialog = function(editorUi, color, apply, cancelFn)
 		buttons.appendChild(cancelBtn);
 	}
 	
-	let applyBtn = button(Resources.get('apply'), doApply);
+	let applyBtn = button(Translations.get('apply'), doApply);
 	applyBtn.className = 'geBtn gePrimaryBtn';
 	buttons.appendChild(applyBtn);
 	
@@ -352,7 +352,7 @@ let AboutDialog = function(editorUi)
 	let div = document.createElement('div');
 	div.setAttribute('align', 'center');
 	var h3 = document.createElement('h3');
-	write(h3, Resources.get('about') + ' GraphEditor');
+	write(h3, Translations.get('about') + ' GraphEditor');
 	div.appendChild(h3);
 	let img = document.createElement('img');
 	img.style.border = '0px';
@@ -370,7 +370,7 @@ let AboutDialog = function(editorUi)
 	div.appendChild(link);
 	br(div);
 	br(div);
-	let closeBtn = button(Resources.get('close'), function()
+	let closeBtn = button(Translations.get('close'), function()
 	{
 		editorUi.hideDialog();
 	});
@@ -445,7 +445,7 @@ let TextareaDialog = function(editorUi, title, url, fn, cancelFn, cancelTitle, w
 	
 	if (helpLink != null)
 	{
-		let helpBtn = button(Resources.get('help'), function()
+		let helpBtn = button(Translations.get('help'), function()
 		{
 			editorUi.editor.graph.openLink(helpLink);
 		});
@@ -471,7 +471,7 @@ let TextareaDialog = function(editorUi, title, url, fn, cancelFn, cancelTitle, w
 		}
 	}
 	
-	let cancelBtn = button(cancelTitle || Resources.get('cancel'), function()
+	let cancelBtn = button(cancelTitle || Translations.get('cancel'), function()
 	{
 		editorUi.hideDialog();
 		
@@ -494,7 +494,7 @@ let TextareaDialog = function(editorUi, title, url, fn, cancelFn, cancelTitle, w
 	
 	if (fn != null)
 	{
-		let genericBtn = button(applyTitle || Resources.get('apply'), function()
+		let genericBtn = button(applyTitle || Translations.get('apply'), function()
 		{
 			if (!noHide)
 			{
@@ -583,7 +583,7 @@ let EditDiagramDialog = function(editorUi)
 		textarea.addEventListener('drop', handleDrop, false);
 	}
 	
-	let cancelBtn = button(Resources.get('cancel'), function()
+	let cancelBtn = button(Translations.get('cancel'), function()
 	{
 		editorUi.hideDialog();
 	});
@@ -602,13 +602,13 @@ let EditDiagramDialog = function(editorUi)
 	{
 		let replaceOption = document.createElement('option');
 		replaceOption.setAttribute('value', 'replace');
-		write(replaceOption, Resources.get('replaceExistingDrawing'));
+		write(replaceOption, Translations.get('replaceExistingDrawing'));
 		select.appendChild(replaceOption);
 	}
 
 	let newOption = document.createElement('option');
 	newOption.setAttribute('value', 'new');
-	write(newOption, Resources.get('openInNewWindow'));
+	write(newOption, Translations.get('openInNewWindow'));
 	
 	if (EditDiagramDialog.showNewWindowOption)
 	{
@@ -619,13 +619,13 @@ let EditDiagramDialog = function(editorUi)
 	{
 		let importOption = document.createElement('option');
 		importOption.setAttribute('value', 'import');
-		write(importOption, Resources.get('addToExistingDrawing'));
+		write(importOption, Translations.get('addToExistingDrawing'));
 		select.appendChild(importOption);
 	}
 
 	div.appendChild(select);
 
-	let okBtn = button(Resources.get('ok'), function()
+	let okBtn = button(Translations.get('ok'), function()
 	{
 		// Removes all illegal control characters before parsing
 		let data = Graph.zapGremlins(trim(textarea.value));
@@ -724,7 +724,7 @@ let ExportDialog = function(editorUi)
 	td = document.createElement('td');
 	td.style.fontSize = '10pt';
 	td.style.width = '100px';
-	write(td, Resources.get('filename') + ':');
+	write(td, Translations.get('filename') + ':');
 	
 	row.appendChild(td);
 	
@@ -742,7 +742,7 @@ let ExportDialog = function(editorUi)
 	
 	td = document.createElement('td');
 	td.style.fontSize = '10pt';
-	write(td, Resources.get('format') + ':');
+	write(td, Translations.get('format') + ':');
 	
 	row.appendChild(td);
 	
@@ -751,7 +751,7 @@ let ExportDialog = function(editorUi)
 
 	let pngOption = document.createElement('option');
 	pngOption.setAttribute('value', 'png');
-	write(pngOption, Resources.get('formatPng'));
+	write(pngOption, Translations.get('formatPng'));
 	imageFormatSelect.appendChild(pngOption);
 
 	let gifOption = document.createElement('option');
@@ -759,30 +759,30 @@ let ExportDialog = function(editorUi)
 	if (ExportDialog.showGifOption)
 	{
 		gifOption.setAttribute('value', 'gif');
-		write(gifOption, Resources.get('formatGif'));
+		write(gifOption, Translations.get('formatGif'));
 		imageFormatSelect.appendChild(gifOption);
 	}
 	
 	let jpgOption = document.createElement('option');
 	jpgOption.setAttribute('value', 'jpg');
-	write(jpgOption, Resources.get('formatJpg'));
+	write(jpgOption, Translations.get('formatJpg'));
 	imageFormatSelect.appendChild(jpgOption);
 
 	let pdfOption = document.createElement('option');
 	pdfOption.setAttribute('value', 'pdf');
-	write(pdfOption, Resources.get('formatPdf'));
+	write(pdfOption, Translations.get('formatPdf'));
 	imageFormatSelect.appendChild(pdfOption);
 	
 	let svgOption = document.createElement('option');
 	svgOption.setAttribute('value', 'svg');
-	write(svgOption, Resources.get('formatSvg'));
+	write(svgOption, Translations.get('formatSvg'));
 	imageFormatSelect.appendChild(svgOption);
 	
 	if (ExportDialog.showXmlOption)
 	{
 		let xmlOption = document.createElement('option');
 		xmlOption.setAttribute('value', 'xml');
-		write(xmlOption, Resources.get('formatXml'));
+		write(xmlOption, Translations.get('formatXml'));
 		imageFormatSelect.appendChild(xmlOption);
 	}
 
@@ -796,7 +796,7 @@ let ExportDialog = function(editorUi)
 
 	td = document.createElement('td');
 	td.style.fontSize = '10pt';
-	write(td, Resources.get('zoom') + ' (%):');
+	write(td, Translations.get('zoom') + ' (%):');
 	
 	row.appendChild(td);
 	
@@ -815,7 +815,7 @@ let ExportDialog = function(editorUi)
 
 	td = document.createElement('td');
 	td.style.fontSize = '10pt';
-	write(td, Resources.get('width') + ':');
+	write(td, Translations.get('width') + ':');
 	
 	row.appendChild(td);
 	
@@ -833,7 +833,7 @@ let ExportDialog = function(editorUi)
 	
 	td = document.createElement('td');
 	td.style.fontSize = '10pt';
-	write(td, Resources.get('height') + ':');
+	write(td, Translations.get('height') + ':');
 	
 	row.appendChild(td);
 	
@@ -851,7 +851,7 @@ let ExportDialog = function(editorUi)
 	
 	td = document.createElement('td');
 	td.style.fontSize = '10pt';
-	write(td, Resources.get('dpi') + ':');
+	write(td, Translations.get('dpi') + ':');
 	
 	row.appendChild(td);
 	
@@ -880,7 +880,7 @@ let ExportDialog = function(editorUi)
 	
 	let dpiCustOption = document.createElement('option');
 	dpiCustOption.setAttribute('value', 'custom');
-	write(dpiCustOption, Resources.get('custom'));
+	write(dpiCustOption, Translations.get('custom'));
 	dpiSelect.appendChild(dpiCustOption);
 
 	let customDpi = document.createElement('input');
@@ -942,7 +942,7 @@ let ExportDialog = function(editorUi)
 	
 	td = document.createElement('td');
 	td.style.fontSize = '10pt';
-	write(td, Resources.get('background') + ':');
+	write(td, Translations.get('background') + ':');
 	
 	row.appendChild(td);
 	
@@ -952,7 +952,7 @@ let ExportDialog = function(editorUi)
 
 	td = document.createElement('td');
 	td.appendChild(transparentCheckbox);
-	write(td, Resources.get('transparent'));
+	write(td, Translations.get('transparent'));
 	
 	row.appendChild(td);
 	
@@ -962,7 +962,7 @@ let ExportDialog = function(editorUi)
 
 	td = document.createElement('td');
 	td.style.fontSize = '10pt';
-	write(td, Resources.get('borderWidth') + ':');
+	write(td, Translations.get('borderWidth') + ':');
 	
 	row.appendChild(td);
 	
@@ -1118,11 +1118,11 @@ let ExportDialog = function(editorUi)
 	td.style.paddingTop = '22px';
 	td.colSpan = 2;
 	
-	let saveBtn = button(Resources.get('export'), (() =>
+	let saveBtn = button(Translations.get('export'), (() =>
 	{
 		if (parseInt(zoomInput.value) <= 0)
 		{
-			alert(Resources.get('drawingEmpty'));
+			alert(Translations.get('drawingEmpty'));
 		}
 		else
 		{
@@ -1148,7 +1148,7 @@ let ExportDialog = function(editorUi)
 	}));
 	saveBtn.className = 'geBtn gePrimaryBtn';
 	
-	let cancelBtn = button(Resources.get('cancel'), function()
+	let cancelBtn = button(Translations.get('cancel'), function()
 	{
 		editorUi.hideDialog();
 	});
@@ -1240,7 +1240,7 @@ ExportDialog.exportFile = function(editorUi, name, format, bg, s, b, dpi)
 		}
 		else
 		{
-			alert(Resources.get('drawingTooLarge'));
+			alert(Translations.get('drawingTooLarge'));
 		}
 	}
 };
@@ -1262,7 +1262,7 @@ ExportDialog.saveLocalFile = function(editorUi, data, filename, format)
 	}
 	else
 	{
-		alert(Resources.get('drawingTooLarge'));
+		alert(Translations.get('drawingTooLarge'));
 		popup(xml);
 	}
 };
@@ -1329,7 +1329,7 @@ let EditDataDialog = function(ui, cell)
 		img.style.marginBottom = '5px';
 		
 		removeAttr.className = 'geButton';
-		removeAttr.setAttribute('title', Resources.get('delete'));
+		removeAttr.setAttribute('title', Translations.get('delete'));
 		removeAttr.style.position = 'absolute';
 		removeAttr.style.top = '4px';
 		removeAttr.style.right = '0px';
@@ -1426,7 +1426,7 @@ let EditDataDialog = function(ui, cell)
 		text.style.textAlign = 'center';
 		write(text, id);
 		
-		form.addField(Resources.get('id') + ':', text);
+		form.addField(Translations.get('id') + ':', text);
 	}
 	
 	for (let i = 0; i < temp.length; i++)
@@ -1447,7 +1447,7 @@ let EditDataDialog = function(ui, cell)
 	newProp.style.width = '100%';
 	
 	let nameInput = document.createElement('input');
-	nameInput.setAttribute('placeholder', Resources.get('enterPropertyName'));
+	nameInput.setAttribute('placeholder', Translations.get('enterPropertyName'));
 	nameInput.setAttribute('type', 'text');
 	nameInput.setAttribute('size', '40');
 	nameInput.style.boxSizing = 'border-box';
@@ -1458,7 +1458,7 @@ let EditDataDialog = function(ui, cell)
 	top.appendChild(newProp);
 	div.appendChild(top);
 	
-	let addBtn = button(Resources.get('addProperty'), function()
+	let addBtn = button(Translations.get('addProperty'), function()
 	{
 		let name = nameInput.value;
 
@@ -1504,7 +1504,7 @@ let EditDataDialog = function(ui, cell)
 		}
 		else
 		{
-			alert(Resources.get('invalidName'));
+			alert(Translations.get('invalidName'));
 		}
 	});
 	
@@ -1520,7 +1520,7 @@ let EditDataDialog = function(ui, cell)
 		}
 	};
 	
-	addBtn.setAttribute('title', Resources.get('addProperty'));
+	addBtn.setAttribute('title', Translations.get('addProperty'));
 	addBtn.setAttribute('disabled', 'disabled');
 	addBtn.style.textOverflow = 'ellipsis';
 	addBtn.style.position = 'absolute';
@@ -1530,14 +1530,14 @@ let EditDataDialog = function(ui, cell)
 	addBtn.className = 'geBtn';
 	newProp.appendChild(addBtn);
 
-	let cancelBtn = button(Resources.get('cancel'), function()
+	let cancelBtn = button(Translations.get('cancel'), function()
 	{
 		ui.hideDialog.apply(ui, arguments);
 	});
 	
 	cancelBtn.className = 'geBtn';
 	
-	let applyBtn = button(Resources.get('apply'), function()
+	let applyBtn = button(Translations.get('apply'), function()
 	{
 		try
 		{
@@ -1624,13 +1624,13 @@ let EditDataDialog = function(ui, cell)
 		});
 		
 		replace.appendChild(input);
-		write(replace, Resources.get('placeholders'));
+		write(replace, Translations.get('placeholders'));
 		
 		if (EditDataDialog.placeholderHelpLink != null)
 		{
 			let link = document.createElement('a');
 			link.setAttribute('href', EditDataDialog.placeholderHelpLink);
-			link.setAttribute('title', Resources.get('help'));
+			link.setAttribute('title', Translations.get('help'));
 			link.setAttribute('target', '_blank');
 			link.style.marginLeft = '8px';
 			link.style.cursor = 'help';
@@ -1692,7 +1692,7 @@ EditDataDialog.placeholderHelpLink = null;
 let LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 {
 	let div = document.createElement('div');
-	write(div, Resources.get('editLink') + ':');
+	write(div, Translations.get('editLink') + ':');
 	
 	let inner = document.createElement('div');
 	inner.className = 'geTitle';
@@ -1715,7 +1715,7 @@ let LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 	linkInput.style.paddingRight = '14px';
 	
 	let cross = document.createElement('div');
-	cross.setAttribute('title', Resources.get('reset'));
+	cross.setAttribute('title', Translations.get('reset'));
 	cross.style.position = 'relative';
 	cross.style.left = '-16px';
 	cross.style.width = '12px';
@@ -1764,7 +1764,7 @@ let LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 		}
 	});
 
-	let cancelBtn = button(Resources.get('cancel'), function()
+	let cancelBtn = button(Translations.get('cancel'), function()
 	{
 		editorUi.hideDialog();
 	});
@@ -1807,7 +1807,7 @@ let OutlineWindow = function(editorUi, x, y, w, h)
 	div.style.border = '1px solid whiteSmoke';
 	div.style.overflow = 'hidden';
 
-	this.window = new MaxWindow(Resources.get('outline'), div, x, y, w, h, true, true);
+	this.window = new MaxWindow(Translations.get('outline'), div, x, y, w, h, true, true);
 	this.window.minimumSize = new Rectangle(0, 0, 80, 80);
 	this.window.destroyOnClose = false;
 	this.window.setMaximizable(false);
@@ -2072,7 +2072,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 	ldiv.appendChild(removeLink);
 
 	let insertLink = link.cloneNode();
-	insertLink.setAttribute('title', trim(Resources.get('moveSelectionTo', ['...'])));
+	insertLink.setAttribute('title', trim(Translations.get('moveSelectionTo', ['...'])));
 	insertLink.innerHTML = '<div class="geSprite geSprite-insert" style="display:inline-block;"></div>';
 	
 	mxEvent.addListener(insertLink, 'click', function(evt)
@@ -2088,7 +2088,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 					(((child) =>
 					{
 						let item = menu.addItem(graph.convertValueToString(child) ||
-								Resources.get('background'), null, (() =>
+								Translations.get('background'), null, (() =>
 						{
 							graph.moveCells(graph.getSelectionCells(), 0, 0, false, child);
 						}), parent);
@@ -2108,7 +2108,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 	
 	let dataLink = link.cloneNode();
 	dataLink.innerHTML = '<div class="geSprite geSprite-dots" style="display:inline-block;"></div>';
-	dataLink.setAttribute('title', Resources.get('rename'));
+	dataLink.setAttribute('title', Translations.get('rename'));
 
 	mxEvent.addListener(dataLink, 'click', function(evt)
 	{
@@ -2132,13 +2132,13 @@ let LayersWindow = function(editorUi, x, y, w, h)
 		if (graph.isEnabled() && layer != null)
 		{
 			let label = graph.convertValueToString(layer);
-			let dlg = new FilenameDialog(editorUi, label || Resources.get('background'), Resources.get('rename'), ((newValue) =>
+			let dlg = new FilenameDialog(editorUi, label || Translations.get('background'), Translations.get('rename'), ((newValue) =>
 			{
 				if (newValue != null)
 				{
 					graph.cellLabelChanged(layer, newValue);
 				}
-			}), Resources.get('enterName'));
+			}), Translations.get('enterName'));
 			editorUi.showDialog(dlg.container, 300, 100, true, true);
 			dlg.init();
 		}
@@ -2156,7 +2156,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 			try
 			{
 				newCell = graph.cloneCell(selectionLayer);
-				graph.cellLabelChanged(newCell, Resources.get('untitledLayer'));
+				graph.cellLabelChanged(newCell, Translations.get('untitledLayer'));
 				newCell.setVisible(true);
 				newCell = graph.addCell(newCell, graph.model.root);
 				graph.setDefaultParent(newCell);
@@ -2182,7 +2182,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 
 	let addLink = link.cloneNode();
 	addLink.innerHTML = '<div class="geSprite geSprite-plus" style="display:inline-block;"></div>';
-	addLink.setAttribute('title', Resources.get('addLayer'));
+	addLink.setAttribute('title', Translations.get('addLayer'));
 	
 	mxEvent.addListener(addLink, 'click', function(evt)
 	{
@@ -2192,7 +2192,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 			
 			try
 			{
-				let cell = graph.addCell(new Cell(Resources.get('untitledLayer')), graph.model.root);
+				let cell = graph.addCell(new Cell(Translations.get('untitledLayer')), graph.model.root);
 				graph.setDefaultParent(cell);
 			}
 			finally
@@ -2278,7 +2278,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 			btn.setAttribute('align', 'top');
 			btn.setAttribute('border', '0');
 			btn.style.padding = '4px';
-			btn.setAttribute('title', Resources.get('lockUnlock'));
+			btn.setAttribute('title', Translations.get('lockUnlock'));
 
 			let style = graph.getCurrentCellStyle(child);
 
@@ -2326,7 +2326,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 
 			let inp = document.createElement('input');
 			inp.setAttribute('type', 'checkbox');
-			inp.setAttribute('title', Resources.get('hideIt', [child.value || Resources.get('background')]));
+			inp.setAttribute('title', Translations.get('hideIt', [child.value || Translations.get('background')]));
 			inp.style.marginLeft = '4px';
 			inp.style.marginRight = '6px';
 			inp.style.marginTop = '4px';
@@ -2365,7 +2365,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 					{
 						var img2 = document.createElement('a');
 						
-						img2.setAttribute('title', Resources.get('toBack'));
+						img2.setAttribute('title', Translations.get('toBack'));
 						
 						img2.className = 'geButton';
 						img2.style.cssFloat = 'none';
@@ -2392,7 +2392,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 					{
 						var img1 = document.createElement('a');
 						
-						img1.setAttribute('title', Resources.get('toFront'));
+						img1.setAttribute('title', Translations.get('toFront'));
 						
 						img1.className = 'geButton';
 						img1.style.cssFloat = 'none';
@@ -2463,14 +2463,14 @@ let LayersWindow = function(editorUi, x, y, w, h)
 			(((child) =>
 			{
 				addLayer(i, graph.convertValueToString(child) ||
-					Resources.get('background'), child, child);
+					Translations.get('background'), child, child);
 			}))(graph.model.root.getChildAt(i));
 		}
 		
-		let label = graph.convertValueToString(selectionLayer) || Resources.get('background');
-		removeLink.setAttribute('title', Resources.get('removeIt', [label]));
-		duplicateLink.setAttribute('title', Resources.get('duplicateIt', [label]));
-		dataLink.setAttribute('title', Resources.get('editData'));
+		let label = graph.convertValueToString(selectionLayer) || Translations.get('background');
+		removeLink.setAttribute('title', Translations.get('removeIt', [label]));
+		duplicateLink.setAttribute('title', Translations.get('duplicateIt', [label]));
+		dataLink.setAttribute('title', Translations.get('editData'));
 
 		if (graph.isSelectionEmpty())
 		{
@@ -2494,7 +2494,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 		}
 	});
 
-	this.window = new MaxWindow(Resources.get('layers'), div, x, y, w, h, true, true);
+	this.window = new MaxWindow(Translations.get('layers'), div, x, y, w, h, true, true);
 	this.window.minimumSize = new Rectangle(0, 0, 120, 120);
 	this.window.destroyOnClose = false;
 	this.window.setMaximizable(false);

@@ -36594,7 +36594,7 @@
       " * var clone = editor.graph.model.cloneCell(template);",
       " * ```",
       " *",
-      " * #### Resources:",
+      " * #### Translations:",
       " *",
       " * resources/editor - Language resources for mxEditor",
       " *",

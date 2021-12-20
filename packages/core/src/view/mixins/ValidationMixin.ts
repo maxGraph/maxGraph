@@ -1,5 +1,5 @@
 import Cell from '../cell/Cell';
-import Resources from '../../util/Resources';
+import Translations from '../../util/Translations';
 import { isNode } from '../../util/domUtils';
 import CellState from '../cell/CellState';
 import Multiplicity from '../other/Multiplicity';
@@ -149,7 +149,7 @@ const ValidationMixin: PartialType = {
         // Checks if the source and target are not connected by another edge
         if (tmp.length > 1 || (tmp.length === 1 && tmp[0] !== edge)) {
           error += `${
-            Resources.get(this.getAlreadyConnectedResource()) ||
+            Translations.get(this.getAlreadyConnectedResource()) ||
             this.getAlreadyConnectedResource()
           }\n`;
         }
@@ -250,7 +250,7 @@ const ValidationMixin: PartialType = {
     // Adds error for invalid children if collapsed (children invisible)
     if (cell && cell.isCollapsed() && !isValid) {
       warning += `${
-        Resources.get(this.getContainsValidationErrorsResource()) ||
+        Translations.get(this.getContainsValidationErrorsResource()) ||
         this.getContainsValidationErrorsResource()
       }\n`;
     }

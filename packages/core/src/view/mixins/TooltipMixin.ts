@@ -1,6 +1,6 @@
 import CellState from '../cell/CellState';
 import { htmlEntities } from '../../util/stringUtils';
-import Resources from '../../util/Resources';
+import Translations from '../../util/Translations';
 import Shape from '../geometry/Shape';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
@@ -54,7 +54,7 @@ const TooltipMixin: PartialType = {
       (node === state.control.node || node.parentNode === state.control.node)
     ) {
       tip = this.getCollapseExpandResource();
-      tip = htmlEntities(Resources.get(tip) || tip, true).replace(/\\n/g, '<br>');
+      tip = htmlEntities(Translations.get(tip) || tip, true).replace(/\\n/g, '<br>');
     }
 
     if (!tip && state.overlays) {

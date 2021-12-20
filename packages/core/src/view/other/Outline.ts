@@ -22,8 +22,8 @@ import Image from '../image/ImageBox';
 import EventObject from '../event/EventObject';
 import { getSource, isMouseEvent } from '../../util/eventUtils';
 import EventSource from '../event/EventSource';
-import { hasScrollbars } from '../../util/utils';
-import { KeyboardEventListener, Listenable, MouseEventListener } from 'src/types';
+import { hasScrollbars } from '../../util/styleUtils';
+import { Listenable } from 'src/types';
 
 /**
  * @class Outline

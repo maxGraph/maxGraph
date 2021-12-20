@@ -12,7 +12,7 @@ import { getChildNodes, getTextContent } from '../util/domUtils';
 import { getClientX, getClientY } from '../util/eventUtils';
 import { NODETYPE } from '../util/constants';
 import { convertPoint } from '../util/utils';
-import Resources from 'src/util/Resources';
+import Translations from 'src/util/Translations';
 import InternalEvent from 'src/view/event/InternalEvent';
 
 /**
@@ -139,7 +139,7 @@ class DefaultToolbarCodec extends ObjectCodec {
               into.toolbar.addLine();
             } else if (node.nodeName === 'add') {
               let as = node.getAttribute('as');
-              as = Resources.get(as) || as;
+              as = Translations.get(as) || as;
               const icon = node.getAttribute('icon');
               const pressedIcon = node.getAttribute('pressedIcon');
               const action = node.getAttribute('action');

@@ -64,7 +64,7 @@
 			}
 			else
 			{
-				window.parent.alert(window.parent.Resources.get('invalidOrMissingFile'));
+				window.parent.alert(window.parent.Translations.get('invalidOrMissingFile'));
 				
 				return false;
 			}
@@ -102,7 +102,7 @@
 			
 			if (localStorage.length == 0)
 			{
-				window.parent.write(div, window.parent.Resources.get('noFiles'));
+				window.parent.write(div, window.parent.Translations.get('noFiles'));
 			}
 			else
 			{
@@ -142,7 +142,7 @@
 					{
 						return function()
 						{
-							if (window.parent.confirm(window.parent.Resources.get('delete') + ' "' + k + '"?'))
+							if (window.parent.confirm(window.parent.Translations.get('delete') + ' "' + k + '"?'))
 							{
 								localStorage.removeItem(k);
 								window.location.reload();
@@ -171,7 +171,7 @@
 			window.parent.br(div);
 			window.parent.br(div);
 			
-			let cancelBtn = window.parent.button(window.parent.Resources.get('cancel'), function()
+			let cancelBtn = window.parent.button(window.parent.Translations.get('cancel'), function()
 			{
 				hideWindow(true);
 			});
@@ -184,11 +184,11 @@
 		{
 			let editLink = document.getElementById('editLink');
 			let openButton = document.getElementById('openButton');
-			openButton.value = window.parent.Resources.get(window.parent.openKey || 'open');
+			openButton.value = window.parent.Translations.get(window.parent.openKey || 'open');
 			let cancelButton = document.getElementById('cancelButton');
-			cancelButton.value = window.parent.Resources.get('cancel');
+			cancelButton.value = window.parent.Translations.get('cancel');
 			let supportedText = document.getElementById('openSupported');
-			supportedText.innerHTML = window.parent.Resources.get('openSupported');
+			supportedText.innerHTML = window.parent.Translations.get('openSupported');
 			let form = window.openForm || document.getElementById('openForm');
 
 			form.setAttribute('action', window.parent.OPEN_URL);

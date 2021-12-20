@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Resources from '../../util/Resources';
+import Translations from '../../util/Translations';
 import { isNode } from '../../util/domUtils';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
@@ -49,8 +49,8 @@ class Multiplicity {
     this.min = min != null ? min : 0;
     this.max = max != null ? max : 'n';
     this.validNeighbors = validNeighbors;
-    this.countError = Resources.get(countError) || countError;
-    this.typeError = Resources.get(typeError) || typeError;
+    this.countError = Translations.get(countError) || countError;
+    this.typeError = Translations.get(typeError) || typeError;
     this.validNeighborsAllowed = validNeighborsAllowed;
   }
 

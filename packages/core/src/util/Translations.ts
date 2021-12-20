@@ -4,7 +4,7 @@
  */
 import Client from '../Client';
 import { NONE } from './constants';
-import { get, load } from './MaxXmlRequest';
+import MaxXmlRequest, { get, load } from './MaxXmlRequest';
 
 /**
  * Implements internationalization. You can provide any number of
@@ -57,34 +57,34 @@ import { get, load } from './MaxXmlRequest';
  * To load these files asynchronously, set <mxLoadResources> to false
  * before loading Client.js and use <mxResources.loadResources> instead.
  */
-const Resources = {
+class Translations {
   /*
    * Object that maps from keys to values.
    */
-  resources: {},
+  static resources: { [key: string]: string } = {};
 
   /**
    * Specifies the extension used for language files. Default is <mxResourceExtension>.
    */
-  extension: '.txt',
+  static extension = '.txt';
 
   /**
    * Specifies whether or not values in resource files are encoded with \u or
    * percentage. Default is false.
    */
-  resourcesEncoded: false,
+  static resourcesEncoded = false;
 
   /**
    * Specifies if the default file for a given basename should be loaded.
    * Default is true.
    */
-  loadDefaultBundle: true,
+  static loadDefaultBundle = true;
 
   /**
    * Specifies if the specific language file file for a given basename should
    * be loaded. Default is true.
    */
-  loadSpecialBundle: true,
+  static loadSpecialBundle = true;
 
   /**
    * Hook for subclassers to disable support for a given language. This
@@ -92,12 +92,12 @@ const Resources = {
    *
    * @param lan The current language.
    */
-  isLanguageSupported: (lan: string): boolean => {
+  static isLanguageSupported = (lan: string): boolean => {
     if (Client.languages != null) {
       return Client.languages.indexOf(lan) >= 0;
     }
     return true;
-  },
+  };
 
   /**
    * Hook for subclassers to return the URL for the special bundle. This
@@ -107,15 +107,15 @@ const Resources = {
    * @param basename The basename for which the file should be loaded.
    * @param lan The current language.
    */
-  getDefaultBundle: (basename: string, lan: string): string | null => {
+  static getDefaultBundle = (basename: string, lan: string): string | null => {
     if (
-      Resources.loadDefaultBundle ||
-      !Resources.isLanguageSupported(lan)
+      Translations.loadDefaultBundle ||
+      !Translations.isLanguageSupported(lan)
     ) {
-      return basename + (Resources.extension ?? Client.mxResourceExtension);
+      return basename + (Translations.extension ?? Client.mxResourceExtension);
     }
     return null;
-  },
+  };
 
   /**
    * Hook for subclassers to return the URL for the special bundle. This
@@ -133,8 +133,8 @@ const Resources = {
    * @param basename The basename for which the file should be loaded.
    * @param lan The language for which the file should be loaded.
    */
-  getSpecialBundle: (basename: string, lan: string): string | null => {
-    if (Client.languages == null || !this.isLanguageSupported(lan)) {
+  static getSpecialBundle = (basename: string, lan: string): string | null => {
+    if (Client.languages == null || !Translations.isLanguageSupported(lan)) {
       const dash = lan.indexOf('-');
 
       if (dash > 0) {
@@ -143,16 +143,16 @@ const Resources = {
     }
 
     if (
-      Resources.loadSpecialBundle &&
-      Resources.isLanguageSupported(lan) &&
+      Translations.loadSpecialBundle &&
+      Translations.isLanguageSupported(lan) &&
       lan != Client.defaultLanguage
     ) {
       return `${basename}_${lan}${
-        Resources.extension ?? Client.mxResourceExtension
+        Translations.extension ?? Client.mxResourceExtension
       }`;
     }
     return null;
-  },
+  };
 
   /**
    * Adds the default and current language properties file for the specified
@@ -172,7 +172,7 @@ const Resources = {
    * @param lan The language for which the file should be loaded.
    * @param callback Optional callback for asynchronous loading.
    */
-  add: (basename: string, lan: string | null=null, callback: Function | null=null): void => {
+  static add = (basename: string, lan: string | null=null, callback: Function | null=null): void => {
     lan =
       lan != null
         ? lan
@@ -181,16 +181,16 @@ const Resources = {
         : NONE;
 
     if (lan !== NONE) {
-      const defaultBundle = Resources.getDefaultBundle(basename, lan);
-      const specialBundle = Resources.getSpecialBundle(basename, lan);
+      const defaultBundle = Translations.getDefaultBundle(basename, lan);
+      const specialBundle = Translations.getSpecialBundle(basename, lan);
 
       const loadSpecialBundle = () => {
         if (specialBundle != null) {
           if (callback) {
             get(
               specialBundle,
-              (req) => {
-                Resources.parse(req.getText());
+              (req: MaxXmlRequest) => {
+                Translations.parse(req.getText());
                 callback();
               },
               () => {
@@ -202,7 +202,7 @@ const Resources = {
               const req = load(specialBundle);
 
               if (req.isReady()) {
-                Resources.parse(req.getText());
+                Translations.parse(req.getText());
               }
             } catch (e) {
               // ignore
@@ -217,8 +217,8 @@ const Resources = {
         if (callback) {
           get(
             defaultBundle,
-            (req) => {
-              Resources.parse(req.getText());
+            (req: MaxXmlRequest) => {
+              Translations.parse(req.getText());
               loadSpecialBundle();
             },
             () => {
@@ -230,7 +230,7 @@ const Resources = {
             const req = load(defaultBundle);
 
             if (req.isReady()) {
-              Resources.parse(req.getText());
+              Translations.parse(req.getText());
             }
 
             loadSpecialBundle();
@@ -243,13 +243,13 @@ const Resources = {
         loadSpecialBundle();
       }
     }
-  },
+  };
 
   /**
    * Parses the key, value pairs in the specified
    * text and stores them as local resources.
    */
-  parse: (text: string): void => {
+  static parse = (text: string): void => {
     if (text != null) {
       const lines = text.split('\n');
 
@@ -267,17 +267,17 @@ const Resources = {
 
             let value = lines[i].substring(index + 1, idx);
 
-            if (this.resourcesEncoded) {
+            if (Translations.resourcesEncoded) {
               value = value.replace(/\\(?=u[a-fA-F\d]{4})/g, '%');
-              Resources.resources[key] = unescape(value);
+              Translations.resources[key] = unescape(value);
             } else {
-              Resources.resources[key] = value;
+              Translations.resources[key] = value;
             }
           }
         }
       }
     }
-  },
+  };
 
   /**
    * Returns the value for the specified resource key.
@@ -302,8 +302,8 @@ const Resources = {
    * to be replaced with in the resulting string.
    * @param defaultValue Optional string that specifies the default return value.
    */
-  get: (key: string, params: any[]|null=null, defaultValue?: string): string | null => {
-    let value = Resources.resources[key];
+  static get = (key: string, params: any[] | null=null, defaultValue: string | null=null): string | null => {
+    let value: string | null = Translations.resources[key];
 
     // Applies the default value if no resource was found
     if (value == null) {
@@ -312,11 +312,10 @@ const Resources = {
 
     // Replaces the placeholders with the values in the array
     if (value != null && params != null) {
-      value = Resources.replacePlaceholders(value, params);
+      value = Translations.replacePlaceholders(value, params);
     }
-
     return value;
-  },
+  };
 
   /**
    * Replaces the given placeholders with the given parameters.
@@ -325,7 +324,7 @@ const Resources = {
    * @param params Array of the values for the placeholders of the form {1}...{n}
    * to be replaced with in the resulting string.
    */
-  replacePlaceholders: (value: string, params: string[]): string => {
+  static replacePlaceholders = (value: string, params: string[]): string => {
     const result = [];
     let index = null;
 
@@ -350,7 +349,7 @@ const Resources = {
     }
 
     return result.join('');
-  },
+  };
 
   /**
    * Loads all required resources asynchronously. Use this to load the graph and
@@ -358,11 +357,11 @@ const Resources = {
    *
    * @param callback Callback function for asynchronous loading.
    */
-  loadResources: (callback: Function): void => {
-    Resources.add(`${Client.basePath}/resources/editor`, null, () => {
-      Resources.add(`${Client.basePath}/resources/graph`, null, callback);
+  static loadResources = (callback: Function): void => {
+    Translations.add(`${Client.basePath}/resources/editor`, null, () => {
+      Translations.add(`${Client.basePath}/resources/graph`, null, callback);
     });
-  },
+  };
 };
 
-export default Resources;
+export default Translations;

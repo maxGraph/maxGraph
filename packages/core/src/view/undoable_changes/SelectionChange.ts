@@ -1,5 +1,5 @@
 import EventObject from '../event/EventObject';
-import Resources from '../../util/Resources';
+import Translations from '../../util/Translations';
 import InternalEvent from '../event/InternalEvent';
 import CellArray from '../cell/CellArray';
 
@@ -32,7 +32,7 @@ class SelectionChange implements UndoableChange {
    */
   execute() {
     window.status =
-      Resources.get(this.graph.getUpdatingSelectionResource()) ||
+      Translations.get(this.graph.getUpdatingSelectionResource()) ||
       this.graph.getUpdatingSelectionResource();
 
     for (const removed of this.removed) {
@@ -46,7 +46,7 @@ class SelectionChange implements UndoableChange {
     [this.added, this.removed] = [this.removed, this.added];
 
     window.status =
-      Resources.get(this.graph.getDoneResource()) || this.graph.getDoneResource();
+      Translations.get(this.graph.getDoneResource()) || this.graph.getDoneResource();
 
     this.graph.fireEvent(
       new EventObject(InternalEvent.CHANGE, 'added', this.added, 'removed', this.removed)

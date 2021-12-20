@@ -8,7 +8,7 @@
 import Client from "src/Client";
 import InternalEvent from "src/view/event/InternalEvent";
 import { write, writeln } from "../util/domUtils";
-import Resources from "../util/Resources";
+import Translations from "../util/Translations";
 
 /**
  * A simple class for creating HTML forms.
@@ -54,7 +54,7 @@ class MaxForm {
 
     // Adds the ok button
     let button = document.createElement('button');
-    write(button, Resources.get('ok') || 'OK');
+    write(button, Translations.get('ok') || 'OK');
     td.appendChild(button);
 
     InternalEvent.addListener(button, 'click', () => {
@@ -63,7 +63,7 @@ class MaxForm {
 
     // Adds the cancel button
     button = document.createElement('button');
-    write(button, Resources.get('cancel') || 'Cancel');
+    write(button, Translations.get('cancel') || 'Cancel');
     td.appendChild(button);
 
     InternalEvent.addListener(button, 'click', () => {

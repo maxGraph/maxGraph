@@ -1,10 +1,19 @@
+
+/**
+ * Copyright (c) 2006-2015, JGraph Ltd
+ * Copyright (c) 2006-2015, Gaudenz Alder
+ * Updated to ES9 syntax by David Morrissey 2021
+ * Type definitions from the typed-mxgraph project
+ */
+import { NODETYPE } from './constants';
 import Point from '../view/geometry/Point';
-import TemporaryCellStates from '../view/cell/TemporaryCellStates';
-import Codec from './serialization/Codec';
-import { DIALECT_SVG, NS_SVG } from './constants';
+import Cell from '../view/cell/Cell';
+import CellArray from '../view/cell/CellArray';
+import { Graph } from 'src/view/Graph';
 import { htmlEntities } from './stringUtils';
-import { Cell, Graph } from 'src';
-import CellArray from 'src/view/cell/CellArray';
+import TemporaryCellStates from 'src/view/cell/TemporaryCellStates';
+
+import type { StyleValue } from '../types';
 
 /**
  * Returns a new, empty XML document.
@@ -13,7 +22,6 @@ export const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);
 };
 
-/**
 export const getViewXml = (
   graph: Graph, 
   scale: number | null=null, 
@@ -207,4 +215,33 @@ export const getPrettyXml = (node: Element, tab: string, indent: string, newline
   }
 
   return result.join('');
+};
+
+/**
+ * Returns the first node where attr equals value.
+ * This implementation does not use XPath.
+ */
+ export const findNode = (
+  node: Element,
+  attr: string,
+  value: StyleValue
+): Element | null => {
+  if (node.nodeType === NODETYPE.ELEMENT) {
+    const tmp = node.getAttribute(attr);
+    if (tmp && tmp === value) {
+      return node;
+    }
+  }
+
+  node = node.firstChild as Element;
+
+  while (node) {
+    const result = findNode(node, attr, value);
+    if (result) {
+      return result;
+    }
+    node = node.nextSibling as Element;
+  }
+
+  return null;
 };

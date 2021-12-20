@@ -5,14 +5,14 @@
  * Type definitions from the typed-mxgraph project
  */
 
+import { getValue } from '../../util/utils';
+import { getNumber } from '../../util/stringUtils';
 import {
   contains,
   getBoundingBox,
-  getNumber,
   getPortConstraints,
-  getValue,
   reversePortConstraints,
-} from '../../util/utils';
+} from '../../util/mathUtils';
 import Point from '../geometry/Point';
 import CellState from '../cell/CellState';
 import {
@@ -95,7 +95,7 @@ import Geometry from '../geometry/Geometry';
  * setting the value via a key, value pair in a cell style.
  */
 class EdgeStyle {
-  /*
+  /**
    * Implements an entity relation style for edges (as used in database
    * schema diagrams). At the time the function is called, the result
    * array contains a placeholder (null) for the first absolute point,
@@ -475,13 +475,12 @@ class EdgeStyle {
    * Implements an orthogonal edge style. Use <mxEdgeSegmentHandler>
    * as an interactive handler for this style.
    *
-   * state - <CellState> that represents the edge to be updated.
-   * sourceScaled - <CellState> that represents the source terminal.
-   * targetScaled - <CellState> that represents the target terminal.
-   * controlHints - List of relative control points.
-   * result - Array of <Point> that represent the actual points of the
+   * @param state <CellState> that represents the edge to be updated.
+   * @param sourceScaled <CellState> that represents the source terminal.
+   * @param targetScaled <CellState> that represents the target terminal.
+   * @param controlHints List of relative control points.
+   * @param result Array of <Point> that represent the actual points of the
    * edge.
-   *
    */
   static SegmentConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
     // Creates array of all way- and terminalpoints

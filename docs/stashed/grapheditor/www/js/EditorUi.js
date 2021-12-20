@@ -6,14 +6,14 @@ const { clearSelection } = require('../../../../../packages/core/src/util/domUti
 const { htmlEntities } = require('../../../../../packages/core/src/util/stringUtils');
 const { getXml } = require('../../../../../packages/core/src/util/xmlUtils');
 const { parseXml } = require('../../../../../packages/core/src/util/xmlUtils');
-const { setOpacity } = require('../../../../../packages/core/src/util/Utils');
-const { hasScrollbars } = require('../../../../../packages/core/src/util/Utils');
-const { setPrefixedStyle } = require('../../../../../packages/core/src/util/Utils');
-const { convertPoint } = require('../../../../../packages/core/src/util/Utils');
-const { getValue } = require('../../../../../packages/core/src/util/Utils');
-const { setStyle } = require('../../../../../packages/core/src/util/Utils');
-const { getCurrentStyle } = require('../../../../../packages/core/src/util/Utils');
-const { getOffset } = require('../../../../../packages/core/src/util/Utils');
+const { setOpacity } = require('../../../../../packages/core/src/util/utils');
+const { hasScrollbars } = require('../../../../../packages/core/src/util/utils');
+const { setPrefixedStyle } = require('../../../../../packages/core/src/util/utils');
+const { convertPoint } = require('../../../../../packages/core/src/util/utils');
+const { getValue } = require('../../../../../packages/core/src/util/utils');
+const { setStyle } = require('../../../../../packages/core/src/util/utils');
+const { getCurrentStyle } = require('../../../../../packages/core/src/util/utils');
+const { getOffset } = require('../../../../../packages/core/src/util/utils');
 const { clone } = require('../../../../../packages/core/src/util/cloneUtils');
 /**
  * Constructs a new graph editor
@@ -184,7 +184,7 @@ EditorUi = function(editor, container, lightbox)
 			if (mxEvent.getClientX(evt) - off.x - this.diagramContainer.clientWidth > 0 ||
 				mxEvent.getClientY(evt) - off.y - this.diagramContainer.clientHeight > 0)
 			{
-				this.diagramContainer.setAttribute('title', Resources.get('panTooltip'));
+				this.diagramContainer.setAttribute('title', Translations.get('panTooltip'));
 			}
 			else
 			{
@@ -1938,7 +1938,7 @@ EditorUi.prototype.initCanvas = function()
 				{
 					window.location.href = toolbarConfig.backBtn.url;
 					mxEvent.consume(evt);
-				}), Editor.backLargeImage, Resources.get('back', null, 'Back'));
+				}), Editor.backLargeImage, Translations.get('back', null, 'Back'));
 			}
 			
 			if (this.isPagesEnabled())
@@ -1947,7 +1947,7 @@ EditorUi.prototype.initCanvas = function()
 				{
 					this.actions.get('previousPage').funct();
 					mxEvent.consume(evt);
-				}), Editor.previousLargeImage, Resources.get('previousPage'));
+				}), Editor.previousLargeImage, Translations.get('previousPage'));
 				
 				let pageInfo = document.createElement('div');
 				pageInfo.style.display = 'inline-block';
@@ -1962,7 +1962,7 @@ EditorUi.prototype.initCanvas = function()
 				{
 					this.actions.get('nextPage').funct();
 					mxEvent.consume(evt);
-				}), Editor.nextLargeImage, Resources.get('nextPage'));
+				}), Editor.nextLargeImage, Translations.get('nextPage'));
 				
 				let updatePageInfo = (() =>
 				{
@@ -2004,13 +2004,13 @@ EditorUi.prototype.initCanvas = function()
 			{
 				this.actions.get('zoomOut').funct();
 				mxEvent.consume(evt);
-			}), Editor.zoomOutLargeImage, Resources.get('zoomOut') + ' (Alt+Mousewheel)');
+			}), Editor.zoomOutLargeImage, Translations.get('zoomOut') + ' (Alt+Mousewheel)');
 			
 			addButton(((evt) =>
 			{
 				this.actions.get('zoomIn').funct();
 				mxEvent.consume(evt);
-			}), Editor.zoomInLargeImage, Resources.get('zoomIn') + ' (Alt+Mousewheel)');
+			}), Editor.zoomInLargeImage, Translations.get('zoomIn') + ' (Alt+Mousewheel)');
 			
 			addButton(((evt) =>
 			{
@@ -2033,7 +2033,7 @@ EditorUi.prototype.initCanvas = function()
 				}
 				
 				mxEvent.consume(evt);
-			}), Editor.actualSizeLargeImage, Resources.get('fit'));
+			}), Editor.actualSizeLargeImage, Translations.get('fit'));
 	
 			// Changes toolbar opacity on hover
 			let fadeThread = null;
@@ -2127,7 +2127,7 @@ EditorUi.prototype.initCanvas = function()
 					}
 					
 					mxEvent.consume(evt);
-				}), Editor.layersLargeImage, Resources.get('layers'));
+				}), Editor.layersLargeImage, Translations.get('layers'));
 				
 				// Shows/hides layers button depending on content
 				let model = graph.getModel();
@@ -2161,7 +2161,7 @@ EditorUi.prototype.initCanvas = function()
 					}
 					
 					mxEvent.consume(evt);
-				}), Editor.editLargeImage, Resources.get('edit'));
+				}), Editor.editLargeImage, Translations.get('edit'));
 			}
 			
 			if (this.lightboxToolbarActions != null)
@@ -2187,7 +2187,7 @@ EditorUi.prototype.initCanvas = function()
 					}
 					
 					mxEvent.consume(evt);
-				}), Editor.refreshLargeImage, Resources.get('refresh', null, 'Refresh'));
+				}), Editor.refreshLargeImage, Translations.get('refresh', null, 'Refresh'));
 			}
 
 			if (toolbarConfig.fullscreenBtn != null && window.self !== window.top)
@@ -2204,7 +2204,7 @@ EditorUi.prototype.initCanvas = function()
 					}
 					
 					mxEvent.consume(evt);
-				}), Editor.fullscreenLargeImage, Resources.get('openInNewWindow', null, 'Open in New Window'));
+				}), Editor.fullscreenLargeImage, Translations.get('openInNewWindow', null, 'Open in New Window'));
 			}
 			
 			if ((toolbarConfig.closeBtn && window.self === window.top) ||
@@ -2222,7 +2222,7 @@ EditorUi.prototype.initCanvas = function()
 						this.destroy();
 						mxEvent.consume(evt);
 					}
-				}), Editor.closeLargeImage, Resources.get('close') + ' (Escape)');
+				}), Editor.closeLargeImage, Translations.get('close') + ' (Escape)');
 			}
 	
 			// Initial state invisible
@@ -2708,7 +2708,7 @@ EditorUi.prototype.addChromelessToolbarItems = function(addButton)
 	{
 		this.actions.get('print').funct();
 		mxEvent.consume(evt);
-	}), Editor.printLargeImage, Resources.get('print'));
+	}), Editor.printLargeImage, Translations.get('print'));
 };
 
 /**
@@ -2848,7 +2848,7 @@ EditorUi.prototype.onBeforeUnload = function()
 {
 	if (this.editor.modified)
 	{
-		return Resources.get('allChangesLost');
+		return Translations.get('allChangesLost');
 	}
 };
 
@@ -2882,7 +2882,7 @@ EditorUi.prototype.open = function()
 				}
 				catch (e)
 				{
-					alert(Resources.get('invalidOrMissingFile') + ': ' + e.message);
+					alert(Translations.get('invalidOrMissingFile') + ': ' + e.message);
 				}
 			}));
 		}
@@ -3729,7 +3729,7 @@ EditorUi.prototype.createDivs = function()
 	this.diagramContainer = this.createDiv('geDiagramContainer');
 	this.footerContainer = this.createDiv('geFooterContainer');
 	this.hsplit = this.createDiv('geHsplit');
-	this.hsplit.setAttribute('title', Resources.get('collapseExpand'));
+	this.hsplit.setAttribute('title', Translations.get('collapseExpand'));
 
 	// Sets static style for containers
 	this.menubarContainer.style.top = '0px';
@@ -4014,9 +4014,9 @@ EditorUi.prototype.handleError = function(resp, title, fn, invokeFnOnClose, notF
 
 	if (e != null || title != null)
 	{
-		let msg = htmlEntities(Resources.get('unknownError'));
-		let btn = Resources.get('ok');
-		title = (title != null) ? title : Resources.get('error');
+		let msg = htmlEntities(Translations.get('unknownError'));
+		let btn = Translations.get('ok');
+		title = (title != null) ? title : Translations.get('error');
 		
 		if (e != null && e.message != null)
 		{
@@ -4040,7 +4040,7 @@ EditorUi.prototype.handleError = function(resp, title, fn, invokeFnOnClose, notF
  */
 EditorUi.prototype.showError = function(title, msg, btn, fn, retry, btn2, fn2, btn3, fn3, w, h, hide, onClose)
 {
-	let dlg = new ErrorDialog(this, title, msg, btn || Resources.get('ok'),
+	let dlg = new ErrorDialog(this, title, msg, btn || Translations.get('ok'),
 		fn, retry, btn2, fn2, hide, btn3, fn3);
 	let lines = Math.ceil((msg != null) ? msg.length / 50 : 1);
 	this.showDialog(dlg.container, w || 340, h || (100 + lines * 20), true, false, onClose);
@@ -4271,7 +4271,7 @@ EditorUi.prototype.saveFile = function(forceDialog)
 	}
 	else
 	{
-		let dlg = new FilenameDialog(this, this.editor.getOrCreateFilename(), Resources.get('save'), ((name) =>
+		let dlg = new FilenameDialog(this, this.editor.getOrCreateFilename(), Translations.get('save'), ((name) =>
 		{
 			this.save(name);
 		}), null, ((name) =>
@@ -4281,7 +4281,7 @@ EditorUi.prototype.saveFile = function(forceDialog)
 				return true;
 			}
 			
-			confirm(Resources.get('invalidName'));
+			confirm(Translations.get('invalidName'));
 			
 			return false;
 		}));
@@ -4309,13 +4309,13 @@ EditorUi.prototype.save = function(name)
 			if (Editor.useLocalStorage)
 			{
 				if (localStorage.getItem(name) != null &&
-					!confirm(Resources.get('replaceIt', [name])))
+					!confirm(Translations.get('replaceIt', [name])))
 				{
 					return;
 				}
 
 				localStorage.setItem(name, xml);
-				this.editor.setStatus(htmlEntities(Resources.get('saved')) + ' ' + new Date());
+				this.editor.setStatus(htmlEntities(Translations.get('saved')) + ' ' + new Date());
 			}
 			else
 			{
@@ -4326,7 +4326,7 @@ EditorUi.prototype.save = function(name)
 				}
 				else
 				{
-					alert(Resources.get('drawingTooLarge'));
+					alert(Translations.get('drawingTooLarge'));
 					popup(xml);
 					
 					return;
@@ -4339,7 +4339,7 @@ EditorUi.prototype.save = function(name)
 		}
 		catch (e)
 		{
-			this.editor.setStatus(htmlEntities(Resources.get('errorSavingFile')));
+			this.editor.setStatus(htmlEntities(Translations.get('errorSavingFile')));
 		}
 	}
 };
@@ -4417,7 +4417,7 @@ EditorUi.prototype.showImageDialog = function(title, value, fn, ignoreExisting)
 		img.onerror = function()
 		{
 			fn(null);
-			alert(Resources.get('fileNotFound'));
+			alert(Translations.get('fileNotFound'));
 		};
 		
 		img.src = newValue;
@@ -4464,7 +4464,7 @@ EditorUi.prototype.showBackgroundImageDialog = function(apply, img)
 		this.editor.graph.model.execute(change);
 	});
 	
-	let newValue = prompt(Resources.get('backgroundImage'), (img != null) ? img.src : '');
+	let newValue = prompt(Translations.get('backgroundImage'), (img != null) ? img.src : '');
 	
 	if (newValue != null && newValue.length > 0)
 	{
@@ -4477,7 +4477,7 @@ EditorUi.prototype.showBackgroundImageDialog = function(apply, img)
 		img.onerror = function()
 		{
 			apply(null, true);
-			alert(Resources.get('fileNotFound'));
+			alert(Translations.get('fileNotFound'));
 		};
 		
 		img.src = newValue;

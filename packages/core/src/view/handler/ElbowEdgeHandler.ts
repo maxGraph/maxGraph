@@ -14,7 +14,7 @@ import {
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import EdgeStyle from '../style/EdgeStyle';
-import Resources from '../../util/Resources';
+import Translations from '../../util/Translations';
 import Rectangle from '../geometry/Rectangle';
 import { intersects } from '../../util/utils';
 import Client from '../../Client';
@@ -128,7 +128,7 @@ class ElbowEdgeHandler extends EdgeHandler {
       (node === this.bends[1].node || node.parentNode === this.bends[1].node)
     ) {
       tip = this.doubleClickOrientationResource;
-      tip = Resources.get(tip) || tip; // translate
+      tip = Translations.get(tip) || tip; // translate
     }
 
     return tip;

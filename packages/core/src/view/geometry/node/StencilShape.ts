@@ -8,7 +8,7 @@
 import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
-import Resources from '../../../util/Resources';
+import Translations from '../../../util/Translations';
 import { getNumber, getValue, isNotNullish } from '../../../util/utils';
 import {
   ALIGN,
@@ -157,7 +157,7 @@ class StencilShape extends Shape {
     const loc = node.getAttribute('localized');
 
     if ((StencilShape.defaultLocalized && !loc) || loc === '1') {
-      result = Resources.get(<string>result);
+      result = Translations.get(<string>result);
     }
 
     return result;

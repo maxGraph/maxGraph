@@ -11,7 +11,7 @@ import ObjectCodec from '../serialization/ObjectCodec';
 import CodecRegistry from '../serialization/CodecRegistry';
 import { getChildNodes } from '../util/domUtils';
 import Codec from 'src/serialization/Codec';
-import Resources from 'src/util/Resources';
+import Translations from 'src/util/Translations';
 import Client from 'src/Client';
 
 /**
@@ -158,7 +158,7 @@ class EditorCodec extends ObjectCodec {
           element.style.cssText = style;
 
           const wnd = new MaxWindow(
-            Resources.get(as) || as,
+            Translations.get(as) || as,
             element,
             x,
             y,
@@ -183,7 +183,7 @@ class EditorCodec extends ObjectCodec {
           editor.setMapContainer(element);
         }
       } else if (tmp.nodeName === 'resource') {
-        Resources.add(<string>tmp.getAttribute('basename'));
+        Translations.add(<string>tmp.getAttribute('basename'));
       } else if (tmp.nodeName === 'stylesheet') {
         Client.link('stylesheet', <string>tmp.getAttribute('name'));
       }

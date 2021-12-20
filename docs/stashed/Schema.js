@@ -9,7 +9,7 @@ import mxRubberband from '../mxgraph/handler/mxRubberband';
 import { error } from '../../packages/core/src/util/gui/MaxWindow';
 import { load } from '../../packages/core/src/util/network/MaxXmlRequest';
 import { htmlEntities } from '../../packages/core/src/util/stringUtils';
-import { setOpacity } from '../../packages/core/src/util/Utils';
+import { setOpacity } from '../../packages/core/src/util/utils';
 import { write, writeln } from '../../packages/core/src/util/domUtils';
 import { createXmlDocument, getPrettyXml } from '../../packages/core/src/util/xmlUtils';
 import { makeDraggable } from '../../packages/core/src/util/gestureUtils';

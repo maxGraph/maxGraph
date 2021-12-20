@@ -338,3 +338,17 @@ export const clearSelection = () => {
     }
   }
 };
+
+/**
+ * Creates and returns an image (IMG node) or VML image (v:image) in IE6 in
+ * quirks mode.
+ *
+ * @param src URL that points to the image to be displayed.
+ */
+ export const createImage = (src: string) => {
+  let imageNode = null;
+  imageNode = document.createElement('img');
+  imageNode.setAttribute('src', src);
+  imageNode.setAttribute('border', '0');
+  return imageNode;
+};

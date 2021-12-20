@@ -10,7 +10,7 @@ import {
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { intersects } from '@maxgraph/core/util/Utils';
+import { intersects } from '@maxgraph/core/util/utils';
 
 export default {
   title: 'Connections/FixedPoints',

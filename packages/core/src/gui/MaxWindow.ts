@@ -13,10 +13,10 @@ import InternalEvent from '../view/event/InternalEvent';
 import Client from '../Client';
 import { NODETYPE } from '../util/constants';
 import { br, write } from '../util/domUtils';
-import Resources from '../util/Resources';
+import Translations from '../util/Translations';
 import { getClientX, getClientY } from '../util/eventUtils';
 import { htmlEntities } from '../util/stringUtils';
-import { utils } from '../util/Utils';
+import { utils } from '../util/utils';
 
 /**
  * Basic window inside a document.
@@ -1034,7 +1034,7 @@ export const error = (message: string, width: number, close: boolean, icon: stri
   const w = document.body.clientWidth;
   const h = document.body.clientHeight || document.documentElement.clientHeight;
   const warn = new MaxWindow(
-    Resources.get(utils.errorResource) || utils.errorResource,
+    Translations.get(utils.errorResource) || utils.errorResource,
     div,
     (w - width) / 2,
     h / 4,
@@ -1056,7 +1056,7 @@ export const error = (message: string, width: number, close: boolean, icon: stri
       warn.destroy();
     });
 
-    write(button, Resources.get(utils.closeResource) || utils.closeResource);
+    write(button, Translations.get(utils.closeResource) || utils.closeResource);
 
     tmp.appendChild(button);
     div.appendChild(tmp);

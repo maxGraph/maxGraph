@@ -6,9 +6,9 @@
  */
 
 import RootChange from './RootChange';
-import CodecRegistry from '../../util/serialization/CodecRegistry';
-import { NODETYPE_ELEMENT } from '../../util/constants';
-import ObjectCodec from '../../util/serialization/ObjectCodec';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import { NODETYPE } from '../../util/constants';
+import ObjectCodec from '../../serialization/ObjectCodec';
 
 /**
  * Codec for <mxRootChange>s. This class is created and registered
@@ -40,7 +40,7 @@ class RootChangeCodec extends ObjectCodec {
    * using the respective decoder.
    */
   beforeDecode(dec, node, obj) {
-    if (node.firstChild != null && node.firstChild.nodeType === NODETYPE_ELEMENT) {
+    if (node.firstChild != null && node.firstChild.nodeType === NODETYPE.ELEMENT) {
       // Makes sure the original node isn't modified
       node = node.cloneNode(true);
 

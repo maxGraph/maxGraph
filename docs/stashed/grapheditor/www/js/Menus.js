@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2006-2012, JGraph Ltd
  */
-const { getOffset } = require('../../../../../packages/core/src/util/Utils');
-const { getValue } = require('../../../../../packages/core/src/util/Utils');
+const { getOffset } = require('../../../../../packages/core/src/util/utils');
+const { getValue } = require('../../../../../packages/core/src/util/utils');
 const { write } = require('../../../../../packages/core/src/util/domUtils');
 /**
  * Constructs a new graph editor
@@ -91,7 +91,7 @@ Menus.prototype.init = function()
 			
 			menu.addSeparator(parent);
 			
-			menu.addItem(Resources.get('reset'), null, (() =>
+			menu.addItem(Translations.get('reset'), null, (() =>
 			{
 				this.customFonts = [];
 				this.editorUi.fireEvent(new EventObject('customFontsChanged'));
@@ -100,7 +100,7 @@ Menus.prototype.init = function()
 			menu.addSeparator(parent);
 		}
 		
-		this.promptChange(menu, Resources.get('custom') + '...', '', mxConstants.DEFAULT_FONTFAMILY, 'fontFamily', parent, true, ((newValue) =>
+		this.promptChange(menu, Translations.get('custom') + '...', '', mxConstants.DEFAULT_FONTFAMILY, 'fontFamily', parent, true, ((newValue) =>
 		{
 			if (this.customFonts.indexOf(newValue) === -1)
 			{
@@ -124,17 +124,17 @@ Menus.prototype.init = function()
 			}), parent);
 		};
 		
-		addItem(Resources.get('normal'), 'p');
+		addItem(Translations.get('normal'), 'p');
 		
-		addItem('', 'h1').firstChild.nextSibling.innerHTML = '<h1 style="margin:0px;">' + Resources.get('heading') + ' 1</h1>';
-		addItem('', 'h2').firstChild.nextSibling.innerHTML = '<h2 style="margin:0px;">' + Resources.get('heading') + ' 2</h2>';
-		addItem('', 'h3').firstChild.nextSibling.innerHTML = '<h3 style="margin:0px;">' + Resources.get('heading') + ' 3</h3>';
-		addItem('', 'h4').firstChild.nextSibling.innerHTML = '<h4 style="margin:0px;">' + Resources.get('heading') + ' 4</h4>';
-		addItem('', 'h5').firstChild.nextSibling.innerHTML = '<h5 style="margin:0px;">' + Resources.get('heading') + ' 5</h5>';
-		addItem('', 'h6').firstChild.nextSibling.innerHTML = '<h6 style="margin:0px;">' + Resources.get('heading') + ' 6</h6>';
+		addItem('', 'h1').firstChild.nextSibling.innerHTML = '<h1 style="margin:0px;">' + Translations.get('heading') + ' 1</h1>';
+		addItem('', 'h2').firstChild.nextSibling.innerHTML = '<h2 style="margin:0px;">' + Translations.get('heading') + ' 2</h2>';
+		addItem('', 'h3').firstChild.nextSibling.innerHTML = '<h3 style="margin:0px;">' + Translations.get('heading') + ' 3</h3>';
+		addItem('', 'h4').firstChild.nextSibling.innerHTML = '<h4 style="margin:0px;">' + Translations.get('heading') + ' 4</h4>';
+		addItem('', 'h5').firstChild.nextSibling.innerHTML = '<h5 style="margin:0px;">' + Translations.get('heading') + ' 5</h5>';
+		addItem('', 'h6').firstChild.nextSibling.innerHTML = '<h6 style="margin:0px;">' + Translations.get('heading') + ' 6</h6>';
 		
-		addItem('', 'pre').firstChild.nextSibling.innerHTML = '<pre style="margin:0px;">' + Resources.get('formatted') + '</pre>';
-		addItem('', 'blockquote').firstChild.nextSibling.innerHTML = '<blockquote style="margin-top:0px;margin-bottom:0px;">' + Resources.get('blockquote') + '</blockquote>';
+		addItem('', 'pre').firstChild.nextSibling.innerHTML = '<pre style="margin:0px;">' + Translations.get('formatted') + '</pre>';
+		addItem('', 'blockquote').firstChild.nextSibling.innerHTML = '<blockquote style="margin-top:0px;margin-bottom:0px;">' + Translations.get('blockquote') + '</blockquote>';
 	})));
 	this.put('fontSize', new Menu(((menu, parent) =>
 	{
@@ -184,7 +184,7 @@ Menus.prototype.init = function()
 			
 			menu.addSeparator(parent);
 			
-			menu.addItem(Resources.get('reset'), null, (() =>
+			menu.addItem(Translations.get('reset'), null, (() =>
 			{
 				this.customFontSizes = [];
 			}), parent);
@@ -192,45 +192,45 @@ Menus.prototype.init = function()
 			menu.addSeparator(parent);
 		}
 		
-		this.promptChange(menu, Resources.get('custom') + '...', '(pt)', '12', 'fontSize', parent, true, ((newValue) =>
+		this.promptChange(menu, Translations.get('custom') + '...', '(pt)', '12', 'fontSize', parent, true, ((newValue) =>
 		{
 			this.customFontSizes.push(newValue);
 		}));
 	})));
 	this.put('direction', new Menu(((menu, parent) =>
 	{
-		menu.addItem(Resources.get('flipH'), null, function() { graph.toggleCellStyles('flipH', false); }, parent);
-		menu.addItem(Resources.get('flipV'), null, function() { graph.toggleCellStyles('flipV', false); }, parent);
+		menu.addItem(Translations.get('flipH'), null, function() { graph.toggleCellStyles('flipH', false); }, parent);
+		menu.addItem(Translations.get('flipV'), null, function() { graph.toggleCellStyles('flipV', false); }, parent);
 		this.addMenuItems(menu, ['-', 'rotation'], parent);
 	})));
 	this.put('align', new Menu(((menu, parent) =>
 	{
-		menu.addItem(Resources.get('leftAlign'), null, function() { graph.alignCells(mxConstants.ALIGN_LEFT); }, parent);
-		menu.addItem(Resources.get('center'), null, function() { graph.alignCells(mxConstants.ALIGN_CENTER); }, parent);
-		menu.addItem(Resources.get('rightAlign'), null, function() { graph.alignCells(mxConstants.ALIGN_RIGHT); }, parent);
+		menu.addItem(Translations.get('leftAlign'), null, function() { graph.alignCells(mxConstants.ALIGN_LEFT); }, parent);
+		menu.addItem(Translations.get('center'), null, function() { graph.alignCells(mxConstants.ALIGN_CENTER); }, parent);
+		menu.addItem(Translations.get('rightAlign'), null, function() { graph.alignCells(mxConstants.ALIGN_RIGHT); }, parent);
 		menu.addSeparator(parent);
-		menu.addItem(Resources.get('topAlign'), null, function() { graph.alignCells(mxConstants.ALIGN_TOP); }, parent);
-		menu.addItem(Resources.get('middle'), null, function() { graph.alignCells(mxConstants.ALIGN_MIDDLE); }, parent);
-		menu.addItem(Resources.get('bottomAlign'), null, function() { graph.alignCells(mxConstants.ALIGN_BOTTOM); }, parent);
+		menu.addItem(Translations.get('topAlign'), null, function() { graph.alignCells(mxConstants.ALIGN_TOP); }, parent);
+		menu.addItem(Translations.get('middle'), null, function() { graph.alignCells(mxConstants.ALIGN_MIDDLE); }, parent);
+		menu.addItem(Translations.get('bottomAlign'), null, function() { graph.alignCells(mxConstants.ALIGN_BOTTOM); }, parent);
 	})));
 	this.put('distribute', new Menu(((menu, parent) =>
 	{
-		menu.addItem(Resources.get('horizontal'), null, function() { graph.distributeCells(true); }, parent);
-		menu.addItem(Resources.get('vertical'), null, function() { graph.distributeCells(false); }, parent);
+		menu.addItem(Translations.get('horizontal'), null, function() { graph.distributeCells(true); }, parent);
+		menu.addItem(Translations.get('vertical'), null, function() { graph.distributeCells(false); }, parent);
 	})));
 	this.put('layout', new Menu(((menu, parent) =>
 	{
 		let promptSpacing = ((defaultValue, fn) =>
 		{
-			let dlg = new FilenameDialog(this.editorUi, defaultValue, Resources.get('apply'), function(newValue)
+			let dlg = new FilenameDialog(this.editorUi, defaultValue, Translations.get('apply'), function(newValue)
 			{
 				fn(parseFloat(newValue));
-			}, Resources.get('spacing'));
+			}, Translations.get('spacing'));
 			this.editorUi.showDialog(dlg.container, 300, 80, true, true);
 			dlg.init();
 		});
 		
-		menu.addItem(Resources.get('horizontalFlow'), null, (() =>
+		menu.addItem(Translations.get('horizontalFlow'), null, (() =>
 		{
 			let layout = new HierarchicalLayout(graph, mxConstants.DIRECTION_WEST);
 			
@@ -240,7 +240,7 @@ Menus.prototype.init = function()
     			layout.execute(graph.getDefaultParent(), selectionCells.length == 0 ? null : selectionCells);
     		}, true);
 		}), parent);
-		menu.addItem(Resources.get('verticalFlow'), null, (() =>
+		menu.addItem(Translations.get('verticalFlow'), null, (() =>
 		{
 			let layout = new HierarchicalLayout(graph, mxConstants.DIRECTION_NORTH);
 			
@@ -251,7 +251,7 @@ Menus.prototype.init = function()
     		}, true);
 		}), parent);
 		menu.addSeparator(parent);
-		menu.addItem(Resources.get('horizontalTree'), null, (() =>
+		menu.addItem(Translations.get('horizontalTree'), null, (() =>
 		{
 			let tmp = graph.getSelectionCell();
 			let roots = null;
@@ -290,7 +290,7 @@ Menus.prototype.init = function()
 				}));
 			}
 		}), parent);
-		menu.addItem(Resources.get('verticalTree'), null, (() =>
+		menu.addItem(Translations.get('verticalTree'), null, (() =>
 		{
 			let tmp = graph.getSelectionCell();
 			let roots = null;
@@ -329,7 +329,7 @@ Menus.prototype.init = function()
 				}));
 			}
 		}), parent);
-		menu.addItem(Resources.get('radialTree'), null, (() =>
+		menu.addItem(Translations.get('radialTree'), null, (() =>
 		{
 			let tmp = graph.getSelectionCell();
 			let roots = null;
@@ -379,7 +379,7 @@ Menus.prototype.init = function()
 			}
 		}), parent);
 		menu.addSeparator(parent);
-		menu.addItem(Resources.get('organic'), null, (() =>
+		menu.addItem(Translations.get('organic'), null, (() =>
 		{
 			let layout = new MxFastOrganicLayout(graph);
 			
@@ -405,7 +405,7 @@ Menus.prototype.init = function()
 	    		}, true);
 			}));
 		}), parent);
-		menu.addItem(Resources.get('circle'), null, (() =>
+		menu.addItem(Translations.get('circle'), null, (() =>
 		{
 			let layout = new CircleLayout(graph);
 			
@@ -534,7 +534,7 @@ Menus.prototype.addSubmenu = function(name, menu, parent, label)
 	
 		if (menu.showDisabled || enabled)
 		{
-			let submenu = menu.addItem(label || Resources.get(name), null, null, parent, null, enabled);
+			let submenu = menu.addItem(label || Translations.get(name), null, null, parent, null, enabled);
 			this.addMenu(name, menu, submenu);
 		}
 	}
@@ -919,7 +919,7 @@ Menus.prototype.promptChange = function(menu, label, hint, defaultValue, key, pa
     		value = state.style[key] || value;
     	}
     	
-		let dlg = new FilenameDialog(this.editorUi, value, Resources.get('apply'), ((newValue) =>
+		let dlg = new FilenameDialog(this.editorUi, value, Translations.get('apply'), ((newValue) =>
 		{
 			if (newValue != null && newValue.length > 0)
 			{
@@ -939,7 +939,7 @@ Menus.prototype.promptChange = function(menu, label, hint, defaultValue, key, pa
 					fn(newValue);
 				}
 			}
-		}), Resources.get('enterValue') + ((hint.length > 0) ? (' ' + hint) : ''));
+		}), Translations.get('enterValue') + ((hint.length > 0) ? (' ' + hint) : ''));
 		this.editorUi.showDialog(dlg.container, 300, 80, true, true);
 		dlg.init();
 	}), parent, sprite, enabled);
@@ -1187,7 +1187,7 @@ Menus.prototype.addPopupMenuCellItems = function(menu, cell, evt)
 			}
 			
 			menu.addSeparator();
-			this.addMenuItem(menu, 'turn', null, evt, null, Resources.get('reverse'));
+			this.addMenuItem(menu, 'turn', null, evt, null, Translations.get('reverse'));
 			this.addMenuItems(menu, [(isWaypoint) ? 'removeWaypoint' : 'addWaypoint'], null, evt);
 			
 			// Adds reset waypoints option if waypoints exist
@@ -1209,7 +1209,7 @@ Menus.prototype.addPopupMenuCellItems = function(menu, cell, evt)
 			if (cell.isVertex() && getValue(state.style, 'image', null) != null)
 			{
 				menu.addSeparator();
-				this.addMenuItem(menu, 'image', null, evt).firstChild.nextSibling.innerHTML = Resources.get('editImage') + '...';
+				this.addMenuItem(menu, 'image', null, evt).firstChild.nextSibling.innerHTML = Translations.get('editImage') + '...';
 			}
 		}
 	}
@@ -1238,7 +1238,7 @@ Menus.prototype.createMenubar = function(container)
 	{
 		(((menu) =>
 		{
-			let elt = menubar.addMenu(Resources.get(menus[i]), (() =>
+			let elt = menubar.addMenu(Translations.get(menus[i]), (() =>
 			{
 				// Allows extensions of menu.funct
 				menu.funct.apply(this, arguments);

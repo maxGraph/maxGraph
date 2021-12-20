@@ -9,7 +9,7 @@ import {
 	mod, ptLineDist,
 	ptSegDistSq,
 	toRadians,
-} from '../../../../../packages/core/src/util/Utils';
+} from '../../../../../packages/core/src/util/utils';
 import { clone } from '../../../../../packages/core/src/util/cloneUtils';
 
 /**
@@ -3463,7 +3463,7 @@ import { clone } from '../../../../../packages/core/src/util/cloneUtils';
 				
 				if (ss.style.shape == 'umlFrame')
 				{
-					result.push({title: Resources.get('laneColor'), key: 'swimlaneFillColor', defaultValue: '#ffffff'});
+					result.push({title: Translations.get('laneColor'), key: 'swimlaneFillColor', defaultValue: '#ffffff'});
 				}
 				
 				return result;

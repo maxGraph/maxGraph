@@ -24,7 +24,7 @@ import {
   toRadians,
 } from '../util/utils';
 import MaxLog from '../gui/MaxLog';
-import Resources from '../util/Resources';
+import Translations from '../util/Translations';
 import CellState from './cell/CellState';
 import UndoableEdit from './undoable_changes/UndoableEdit';
 import ImageShape from './geometry/node/ImageShape';
@@ -532,7 +532,7 @@ class GraphView extends EventSource {
   validate(cell: Cell | null = null) {
     const t0 = MaxLog.enter('mxGraphView.validate');
     window.status =
-      Resources.get(this.updatingDocumentResource) || this.updatingDocumentResource;
+      Translations.get(this.updatingDocumentResource) || this.updatingDocumentResource;
 
     this.resetValidationState();
 
@@ -549,7 +549,7 @@ class GraphView extends EventSource {
       this.resetValidationState();
     }
 
-    window.status = Resources.get(this.doneResource) || this.doneResource;
+    window.status = Translations.get(this.doneResource) || this.doneResource;
     MaxLog.leave('mxGraphView.validate', t0);
   }
 
