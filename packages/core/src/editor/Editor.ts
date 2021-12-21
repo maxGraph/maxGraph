@@ -39,6 +39,7 @@ import InternalEvent from '../view/event/InternalEvent';
 import InternalMouseEvent from 'src/view/event/InternalMouseEvent';
 import { MouseListenerSet } from 'src/types';
 import ConnectionHandler from 'src/view/handler/ConnectionHandler';
+import { show } from 'src/util/printUtils';
 
 /**
  * Installs the required language resources at class

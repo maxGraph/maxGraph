@@ -5,12 +5,12 @@
  * Type definitions from the typed-mxgraph project
  */
 import Rectangle from './Rectangle';
+import { isNotNullish } from '../../util/utils';
 import {
   getBoundingBox,
   getDirectedBounds,
-  isNotNullish,
   mod,
-} from '../../util/utils';
+} from '../../util/mathUtils';
 import {
   DIRECTION,
   LINE_ARCSIZE,

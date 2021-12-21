@@ -8,7 +8,7 @@ import EventSource from '../event/EventSource';
 import Dictionary from '../../util/Dictionary';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import { sortCells } from '../../util/utils';
+import { sortCells } from '../../util/styleUtils';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 import CellState from '../cell/CellState';

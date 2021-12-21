@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import mxAbstractCanvas2D from './AbstractCanvas2D';
+import AbstractCanvas2D from './AbstractCanvas2D';
 import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
@@ -32,7 +32,7 @@ import { getOuterHtml, isNode } from '../../util/domUtils';
  * - <begin>, <moveTo>, <lineTo>, <quadTo>, <curveTo>
  * - <stroke>, <fill>, <fillAndStroke>
  *
- * <mxAbstractCanvas2D.arcTo> is an additional method for drawing paths. This is
+ * <AbstractCanvas2D.arcTo> is an additional method for drawing paths. This is
  * a synthetic method, meaning that it is turned into a sequence of curves by
  * default. Subclassers may add native support for arcs.
  *
@@ -40,7 +40,7 @@ import { getOuterHtml, isNode } from '../../util/domUtils';
  *
  * Constructs a new abstract canvas.
  */
-class mxXmlCanvas2D extends mxAbstractCanvas2D {
+class mxXmlCanvas2D extends AbstractCanvas2D {
   constructor(root: SVGElement) {
     super();
 

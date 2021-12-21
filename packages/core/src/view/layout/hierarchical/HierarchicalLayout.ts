@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import GraphLayout from '../GraphLayout';
-import { DIRECTION_NORTH } from '../../../util/constants';
+import { DIRECTION } from '../../../util/constants';
 import HierarchicalEdgeStyle from './HierarchicalEdgeStyle';
 import Dictionary from '../../../util/Dictionary';
 import GraphHierarchyModel from './model/GraphHierarchyModel';
@@ -36,7 +36,7 @@ import CellPath from 'src/view/cell/CellPath';
 class HierarchicalLayout extends GraphLayout {
   constructor(graph: Graph, orientation: number, deterministic: boolean=true) {
     super(graph);
-    this.orientation = orientation != null ? orientation : DIRECTION_NORTH;
+    this.orientation = orientation != null ? orientation : DIRECTION.NORTH;
     this.deterministic = deterministic != null ? deterministic : true;
   }
 
@@ -93,9 +93,9 @@ class HierarchicalLayout extends GraphLayout {
 
   /**
    * The position of the root node(s) relative to the laid out graph in.
-   * Default is <mxConstants.DIRECTION_NORTH>.
+   * Default is <mxConstants.DIRECTION.NORTH>.
    */
-  orientation: string = DIRECTION_NORTH;
+  orientation: string = DIRECTION.NORTH;
 
   /**
    * Whether or not to perform local optimisations and iterate multiple times

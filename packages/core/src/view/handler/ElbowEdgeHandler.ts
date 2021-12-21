@@ -13,14 +13,12 @@ import {
 } from '../../util/constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
-import EdgeStyle from '../style/EdgeStyle';
 import Translations from '../../util/Translations';
 import Rectangle from '../geometry/Rectangle';
-import { intersects } from '../../util/utils';
+import { intersects } from '../../util/mathUtils';
 import Client from '../../Client';
 import { isConsumed } from '../../util/eventUtils';
 import CellState from '../cell/CellState';
-import InternalMouseEvent from '../event/InternalMouseEvent';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and

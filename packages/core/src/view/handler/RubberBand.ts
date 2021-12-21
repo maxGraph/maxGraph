@@ -9,7 +9,7 @@ import {
   getScrollOrigin,
   setOpacity,
   setPrefixedStyle,
-} from '../../util/utils';
+} from '../../util/styleUtils';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import InternalMouseEvent from '../event/InternalMouseEvent';

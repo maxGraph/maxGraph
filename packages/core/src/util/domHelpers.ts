@@ -42,6 +42,7 @@ export const linkInvoke = (parent: Element, text: string, editor: Editor, functN
     parent,
     text,
     () => {
+      // @ts-ignore
       editor[functName](arg);
     },
     pad

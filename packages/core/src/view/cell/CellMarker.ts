@@ -16,7 +16,7 @@ import {
 import CellHighlight from './CellHighlight';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import { intersectsHotspot, isNumeric } from '../../util/utils';
+import { intersectsHotspot } from '../../util/mathUtils';
 import { Graph } from '../Graph';
 import { ColorValue } from '../../types';
 import CellState from './CellState';

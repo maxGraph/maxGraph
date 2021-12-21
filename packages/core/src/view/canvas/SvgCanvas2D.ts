@@ -5,7 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { getAlignmentAsPoint, isNotNullish, mod } from '../../util/utils';
+import { isNotNullish } from '../../util/utils';
+import { mod } from '../../util/mathUtils';
+import { getAlignmentAsPoint } from '../../util/styleUtils';
 import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,

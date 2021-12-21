@@ -5,15 +5,17 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { NODETYPE } from './constants';
+import { DIALECT, NODETYPE, NS_SVG } from './constants';
 import Point from '../view/geometry/Point';
 import Cell from '../view/cell/Cell';
 import CellArray from '../view/cell/CellArray';
 import { Graph } from 'src/view/Graph';
-import { htmlEntities } from './stringUtils';
+import { htmlEntities, trim } from './stringUtils';
 import TemporaryCellStates from 'src/view/cell/TemporaryCellStates';
 
 import type { StyleValue } from '../types';
+import { getTextContent } from './domUtils';
+import Codec from 'src/serialization/Codec';
 
 /**
  * Returns a new, empty XML document.
@@ -24,15 +26,12 @@ export const createXmlDocument = () => {
 
 export const getViewXml = (
   graph: Graph, 
-  scale: number | null=null, 
+  scale: number=1, 
   cells: CellArray | null=null, 
-  x0: number, 
-  y0: number
+  x0: number=0, 
+  y0: number=0
 ) => {
-  x0 = x0 != null ? x0 : 0;
-  y0 = y0 != null ? y0 : 0;
-  scale = scale != null ? scale : 1;
-
+  
   if (cells == null) {
     const model = graph.getModel();
     cells = new CellArray(<Cell>model.getRoot());
@@ -51,7 +50,7 @@ export const getViewXml = (
   const { drawPane } = view;
   const { overlayPane } = view;
 
-  if (graph.dialect === DIALECT_SVG) {
+  if (graph.dialect === DIALECT.SVG) {
     view.drawPane = document.createElementNS(NS_SVG, 'g');
     view.canvas.appendChild(view.drawPane);
 
@@ -59,11 +58,11 @@ export const getViewXml = (
     view.overlayPane = document.createElementNS(NS_SVG, 'g');
     view.canvas.appendChild(view.overlayPane);
   } else {
-    view.drawPane = view.drawPane.cloneNode(false);
+    view.drawPane = <SVGElement>view.drawPane.cloneNode(false);
     view.canvas.appendChild(view.drawPane);
 
     // Redirects cell overlays into temporary container
-    view.overlayPane = view.overlayPane.cloneNode(false);
+    view.overlayPane = <SVGElement>view.overlayPane.cloneNode(false);
     view.canvas.appendChild(view.overlayPane);
   }
 
@@ -86,7 +85,6 @@ export const getViewXml = (
     view.overlayPane = overlayPane;
     view.setEventsEnabled(eventsEnabled);
   }
-
   return result;
 };
 
@@ -116,7 +114,6 @@ export const getXml = (node: Element, linefeed: string='&#xa;'): string => {
   // Replaces linefeeds with HTML Entities.
   linefeed = linefeed || '&#xa;';
   xml = xml.replace(/\n/g, linefeed);
-
   return xml;
 };
 
@@ -132,7 +129,7 @@ export const getXml = (node: Element, linefeed: string='&#xa;'): string => {
  * Default is an empty string.
  * @param newline Option string that represents a linefeed. Default is '\n'.
  */
-export const getPrettyXml = (node: Element, tab: string, indent: string, newline: string, ns: string) => {
+export const getPrettyXml = (node: Element, tab: string, indent: string, newline: string, ns: string): string => {
   const result = [];
 
   if (node != null) {
@@ -148,33 +145,33 @@ export const getPrettyXml = (node: Element, tab: string, indent: string, newline
       }
     }
 
-    if (node.nodeType === NODETYPE_DOCUMENT) {
+    if (node.nodeType === NODETYPE.DOCUMENT) {
       result.push(
-        getPrettyXml(node.documentElement, tab, indent, newline, ns)
+        getPrettyXml((<Document><unknown>node).documentElement, tab, indent, newline, ns)
       );
-    } else if (node.nodeType === NODETYPE_DOCUMENT_FRAGMENT) {
+    } else if (node.nodeType === NODETYPE.DOCUMENT_FRAGMENT) {
       let tmp = node.firstChild;
 
       if (tmp != null) {
         while (tmp != null) {
-          result.push(getPrettyXml(tmp, tab, indent, newline, ns));
+          result.push(getPrettyXml(<Element>tmp, tab, indent, newline, ns));
           tmp = tmp.nextSibling;
         }
       }
-    } else if (node.nodeType === NODETYPE_COMMENT) {
-      const value = getTextContent(node);
+    } else if (node.nodeType === NODETYPE.COMMENT) {
+      const value = getTextContent(<Text><unknown>node);
 
       if (value.length > 0) {
         result.push(`${indent}<!--${value}-->${newline}`);
       }
-    } else if (node.nodeType === NODETYPE_TEXT) {
-      const value = trim(getTextContent(node));
-
-      if (value.length > 0) {
+    } else if (node.nodeType === NODETYPE.TEXT) {
+      const value = trim(getTextContent(<Text><unknown>node));
+      
+      if (value && value.length > 0) {
         result.push(indent + htmlEntities(value, false) + newline);
       }
-    } else if (node.nodeType === NODETYPE_CDATA) {
-      const value = getTextContent(node);
+    } else if (node.nodeType === NODETYPE.CDATA) {
+      const value = getTextContent(<Text><unknown>node);
 
       if (value.length > 0) {
         result.push(`${indent}<![CDATA[${value}]]${newline}`);
@@ -202,7 +199,7 @@ export const getPrettyXml = (node: Element, tab: string, indent: string, newline
 
         while (tmp != null) {
           result.push(
-            getPrettyXml(tmp, tab, indent + tab, newline, ns)
+            getPrettyXml(<Element>tmp, tab, indent + tab, newline, ns)
           );
           tmp = tmp.nextSibling;
         }
@@ -213,7 +210,6 @@ export const getPrettyXml = (node: Element, tab: string, indent: string, newline
       }
     }
   }
-
   return result.join('');
 };
 

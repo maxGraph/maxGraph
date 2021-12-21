@@ -9,7 +9,7 @@ import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
 import Translations from '../../../util/Translations';
-import { getNumber, getValue, isNotNullish } from '../../../util/utils';
+import { getValue, isNotNullish } from '../../../util/utils';
 import {
   ALIGN,
   DIRECTION,
@@ -23,6 +23,7 @@ import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
+import { getNumber } from 'src/util/stringUtils';
 
 /**
  * Implements a generic shape which is based on a XML node as a description.
@@ -159,7 +160,6 @@ class StencilShape extends Shape {
     if ((StencilShape.defaultLocalized && !loc) || loc === '1') {
       result = Translations.get(<string>result);
     }
-
     return result;
   }
 
@@ -183,7 +183,6 @@ class StencilShape extends Shape {
         }
       }
     }
-
     return result;
   }
 

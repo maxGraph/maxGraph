@@ -7,7 +7,7 @@
 
 import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
-import { convertPoint, sortCells } from '../../util/utils';
+import { convertPoint, sortCells } from '../../util/styleUtils';
 import RootChange from '../undoable_changes/RootChange';
 import ChildChange from '../undoable_changes/ChildChange';
 import TerminalChange from '../undoable_changes/TerminalChange';
@@ -21,7 +21,8 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import { getClientX, getClientY } from '../../util/eventUtils';
 import CellArray from '../cell/CellArray';
 import { Graph } from '../Graph';
-import { GraphLayout, UndoableEdit } from 'src';
+import GraphLayout from './GraphLayout';
+import UndoableEdit from '../undoable_changes/UndoableEdit';
 
 /**
  * @class LayoutManager

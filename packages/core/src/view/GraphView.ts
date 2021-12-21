@@ -18,11 +18,13 @@ import {
   convertPoint,
   getCurrentStyle,
   getOffset,
+} from '../util/styleUtils';
+import {
   getRotatedPoint,
   ptSegDistSq,
   relativeCcw,
   toRadians,
-} from '../util/utils';
+} from '../util/mathUtils';
 import MaxLog from '../gui/MaxLog';
 import Translations from '../util/Translations';
 import CellState from './cell/CellState';
@@ -32,7 +34,6 @@ import InternalMouseEvent from './event/InternalMouseEvent';
 import Cell from './cell/Cell';
 import Image from './image/ImageBox';
 import CurrentRootChange from './undoable_changes/CurrentRootChange';
-import Model from './other/Model';
 import Shape from './geometry/Shape';
 import Geometry from './geometry/Geometry';
 import ConnectionConstraint from './other/ConnectionConstraint';
@@ -40,7 +41,6 @@ import PopupMenuHandler from './handler/PopupMenuHandler';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/eventUtils';
 import { clone } from '../util/cloneUtils';
 import CellArray from './cell/CellArray';
-
 import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
 import TooltipHandler from './handler/TooltipHandler';

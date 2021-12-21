@@ -5,8 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 import ActorShape from '../ActorShape';
-import AbstractCanvas2D from '../../../../util/canvas/AbstractCanvas2D';
-import Rectangle from '../../Rectangle';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import Rectangle from '../Rectangle';
 
 /**
  * Extends {@link ActorShape} to implement a cloud shape.

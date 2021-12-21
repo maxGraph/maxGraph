@@ -8,7 +8,7 @@ import Shape from '../Shape';
 import Point from '../Point';
 import { LINE_ARCSIZE } from '../../../util/constants';
 import Rectangle from '../Rectangle';
-import AbstractCanvas2D from '../../../util/canvas/AbstractCanvas2D';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link Shape} to implement a rhombus (aka diamond) shape.

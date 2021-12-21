@@ -47,11 +47,11 @@ export const extractTextWithWhitespace = (elems: Element[]): string => {
         ret.push('\n');
       } else {
         if (elem.nodeType === 3 || elem.nodeType === 4) {
-          if (elem.nodeValue.length > 0) {
+          if (elem.nodeValue && elem.nodeValue.length > 0) {
             ret.push(elem.nodeValue);
           }
         } else if (elem.nodeType !== 8 && elem.childNodes.length > 0) {
-          doExtract(elem.childNodes);
+          doExtract(<Element[]>Array.from(elem.childNodes));
         }
 
         if (i < elts.length - 1 && blocks.indexOf(elts[i + 1].nodeName) >= 0) {
@@ -71,10 +71,8 @@ export const extractTextWithWhitespace = (elems: Element[]): string => {
  *
  * @param node DOM node to return the text content for.
  */
-export const getTextContent = (node: Element): string => {
-  return node != null
-    ? node[node.textContent === undefined ? 'text' : 'textContent']
-    : '';
+export const getTextContent = (node: Text | null): string => {
+  return (node != null && node.textContent) ? node.textContent : '';
 };
 
 /**
@@ -83,11 +81,11 @@ export const getTextContent = (node: Element): string => {
  * @param node DOM node to set the text content for.
  * @param text String that represents the text content.
  */
-export const setTextContent = (node: Element, text: string) => {
-  if (node.innerText !== undefined) {
+export const setTextContent = (node: HTMLElement | Text, text: string) => {
+  if ('innerText' in node) {
     node.innerText = text;
   } else {
-    node[node.textContent === undefined ? 'text' : 'textContent'] = text;
+    node.textContent = text;
   }
 };
 
@@ -277,7 +275,7 @@ export const getChildNodes = (node: Element, nodeType: number=NODETYPE.ELEMENT):
  * @param node Node to be imported.
  * @param allChildren If all children should be imported.
  */
-export const importNode = (doc, node, allChildren) => {
+export const importNode = (doc: Document, node: Element, allChildren: boolean) => {
   return doc.importNode(node, allChildren);
 };
 
@@ -288,7 +286,7 @@ export const importNode = (doc, node, allChildren) => {
  * @param node Node to be imported.
  * @param allChildren If all children should be imported.
  */
-export const importNodeImplementation = (doc, node, allChildren) => {
+export const importNodeImplementation = (doc: Document, node: Element, allChildren: boolean) => {
   switch (node.nodeType) {
     case 1 /* element */: {
       const newNode = doc.createElement(node.nodeName);
@@ -297,7 +295,7 @@ export const importNodeImplementation = (doc, node, allChildren) => {
         for (let i = 0; i < node.attributes.length; i += 1) {
           newNode.setAttribute(
             node.attributes[i].nodeName,
-            node.getAttribute(node.attributes[i].nodeName)
+            <string>node.getAttribute(node.attributes[i].nodeName)
           );
         }
       }
@@ -305,7 +303,7 @@ export const importNodeImplementation = (doc, node, allChildren) => {
       if (allChildren && node.childNodes && node.childNodes.length > 0) {
         for (let i = 0; i < node.childNodes.length; i += 1) {
           newNode.appendChild(
-            importNodeImplementation(doc, node.childNodes[i], allChildren)
+            <Node>importNodeImplementation(doc, <Element>node.childNodes[i], allChildren)
           );
         }
       }
@@ -316,9 +314,7 @@ export const importNodeImplementation = (doc, node, allChildren) => {
     case 3: /* text */
     case 4: /* cdata-section */
     case 8 /* comment */: {
-      return doc.createTextNode(
-        node.nodeValue != null ? node.nodeValue : node.value
-      );
+      return doc.createTextNode(node.nodeValue || '');
       break;
     }
   }
@@ -328,13 +324,14 @@ export const importNodeImplementation = (doc, node, allChildren) => {
  * Clears the current selection in the page.
  */
 export const clearSelection = () => {
-  if (document.selection) {
-    document.selection.empty();
-  } else if (window.getSelection) {
-    if (window.getSelection().empty) {
-      window.getSelection().empty();
-    } else if (window.getSelection().removeAllRanges) {
-      window.getSelection().removeAllRanges();
+  // @ts-ignore
+  const sel = window.getSelection ? window.getSelection() : document.selection;
+  
+  if (sel) {
+    if (sel.removeAllRanges) {
+      sel.removeAllRanges();
+    } else if (sel.empty) {
+      sel.empty();
     }
   }
 };

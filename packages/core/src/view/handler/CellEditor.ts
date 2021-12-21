@@ -5,12 +5,11 @@
  * Type definitions from the typed-mxgraph project
  */
 
+import { getValue } from '../../util/utils';
 import {
   getAlignmentAsPoint,
-  getStringValue,
-  getValue,
   setPrefixedStyle,
-} from '../../util/utils';
+} from '../../util/styleUtils';
 import Rectangle from '../geometry/Rectangle';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
@@ -31,9 +30,8 @@ import Cell from '../cell/Cell';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
-import EventObject from '../event/EventObject';
-import { extractTextWithWhitespace, isNode } from '../../util/domUtils';
-import { htmlEntities, replaceTrailingNewlines } from '../../util/stringUtils';
+import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/domUtils';
+import { getStringValue, htmlEntities, replaceTrailingNewlines } from '../../util/stringUtils';
 import {
   getSource,
   isConsumed,
@@ -346,7 +344,7 @@ class CellEditor implements GraphPlugin {
   getCurrentValue(state: CellState) {
     if (!this.textarea) return null;
 
-    return extractTextWithWhitespace(this.textarea.childNodes);
+    return extractTextWithWhitespace(<Element[]>Array.from(this.textarea.childNodes));
   }
 
   /**
@@ -859,7 +857,7 @@ class CellEditor implements GraphPlugin {
       this.trigger = null;
       this.bounds = null;
       textarea.blur();
-      this.clearSelection();
+      clearSelection();
 
       if (textarea.parentNode) {
         textarea.parentNode.removeChild(textarea);

@@ -6,7 +6,7 @@
  */
 import Shape from '../Shape';
 import { ARROW_SIZE, ARROW_SPACING, ARROW_WIDTH, NONE } from '../../../util/constants';
-import { relativeCcw } from '../../../util/utils';
+import { relativeCcw } from '../../../util/mathUtils';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Point from '../Point';
 import Rectangle from '../Rectangle';

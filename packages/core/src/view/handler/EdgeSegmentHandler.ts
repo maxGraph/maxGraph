@@ -7,7 +7,8 @@
 import Point from '../geometry/Point';
 import { CURSOR } from '../../util/constants';
 import Rectangle from '../geometry/Rectangle';
-import { contains, setOpacity } from '../../util/utils';
+import { contains } from '../../util/mathUtils';
+import { setOpacity } from '../../util/styleUtils';
 import ElbowEdgeHandler from './ElbowEdgeHandler';
 import CellState from '../cell/CellState';
 import Cell from '../cell/Cell';

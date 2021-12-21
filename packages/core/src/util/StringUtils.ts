@@ -18,7 +18,7 @@ import type { Properties } from '../types';
  * - "\0" (ASCII 0 (0x00)), the NUL-byte
  * - "\x0B" (ASCII 11 (0x0B)), a vertical tab
  */
-export const ltrim = (str: string | null, chars: string = '\\s'): string =>
+export const ltrim = (str: string | null, chars: string = '\\s'): string | null =>
   str != null ? str.replace(new RegExp(`^[${chars}]+`, 'g'), '') : null;
 
 /**
@@ -32,7 +32,7 @@ export const ltrim = (str: string | null, chars: string = '\\s'): string =>
  * - "\0" (ASCII 0 (0x00)), the NUL-byte
  * - "\x0B" (ASCII 11 (0x0B)), a vertical tab
  */
-export const rtrim = (str: string | null, chars: string = '\\s'): string =>
+export const rtrim = (str: string | null, chars: string = '\\s'): string | null =>
   str != null ? str.replace(new RegExp(`[${chars}]+$`, 'g'), '') : null;
 
 /**
@@ -47,7 +47,7 @@ export const rtrim = (str: string | null, chars: string = '\\s'): string =>
  * - "\0" (ASCII 0 (0x00)), the NUL-byte
  * - "\x0B" (ASCII 11 (0x0B)), a vertical tab
  */
-export const trim = (str: string | null, chars?: string): string =>
+export const trim = (str: string | null, chars?: string): string | null =>
   ltrim(rtrim(str, chars), chars);
 
 /**
@@ -106,7 +106,7 @@ export const removeWhitespace = (node: HTMLElement, before: boolean) => {
 
   while (tmp != null && tmp.nodeType === NODETYPE.TEXT) {
     const next = before ? tmp.previousSibling : tmp.nextSibling;
-    const text = getTextContent(tmp);
+    const text = getTextContent(<Text>tmp);
 
     if (trim(text)?.length === 0) {
       tmp.parentNode?.removeChild(tmp);
@@ -123,7 +123,7 @@ export const removeWhitespace = (node: HTMLElement, before: boolean) => {
  * @param {string} s String that contains the characters to be converted.
  * @param {boolean} newline If newlines should be replaced. Default is true.
  */
-export const htmlEntities = (s: string, newline: boolean): string => {
+export const htmlEntities = (s: string, newline: boolean=true): string => {
   s = String(s || '');
 
   s = s.replace(/&/g, '&amp;'); // 38 26
@@ -132,7 +132,7 @@ export const htmlEntities = (s: string, newline: boolean): string => {
   s = s.replace(/</g, '&lt;'); // 60 3C
   s = s.replace(/>/g, '&gt;'); // 62 3E
 
-  if (newline == null || newline) {
+  if (newline) {
     s = s.replace(/\n/g, '&#xa;');
   }
   return s;

@@ -20,7 +20,8 @@ import {
   WORD_WRAP,
   LINE_HEIGHT,
 } from '../../../util/constants';
-import { getAlignmentAsPoint, getBoundingBox } from '../../../util/utils';
+import { getBoundingBox } from '../../../util/mathUtils';
+import { getAlignmentAsPoint } from '../../../util/styleUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Shape from '../Shape';

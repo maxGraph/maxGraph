@@ -27,14 +27,15 @@ import {
 } from '../../util/constants';
 import {
   contains,
-  convertPoint,
-  equalPoints,
   findNearestSegment,
-  getOffset,
   intersects,
   ptSegDistSq,
+} from '../../util/mathUtils';
+import {
+  convertPoint,
+  getOffset,
   setOpacity,
-} from '../../util/utils';
+} from '../../util/styleUtils';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ConnectionConstraint from '../other/ConnectionConstraint';
@@ -59,6 +60,7 @@ import Cell from '../cell/Cell';
 import ImageBox from '../image/ImageBox';
 import EventSource from '../event/EventSource';
 import GraphHandler from './GraphHandler';
+import { equalPoints } from '../../util/arrayUtils';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and the edge

@@ -14,7 +14,7 @@ import {
   HIGHLIGHT_STROKEWIDTH,
 } from '../../util/constants';
 import InternalEvent from '../event/InternalEvent';
-import { intersects } from '../../util/utils';
+import { intersects } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';

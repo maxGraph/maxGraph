@@ -6,7 +6,7 @@
  */
 
 import GraphLayout from '../GraphLayout';
-import { DIRECTION_NORTH } from '../../../util/constants';
+import { DIRECTION } from '../../../util/constants';
 import HierarchicalEdgeStyle from './HierarchicalEdgeStyle';
 import Dictionary from '../../../util/Dictionary';
 import Rectangle from '../../geometry/Rectangle';
@@ -18,7 +18,7 @@ import CoordinateAssignment from './stage/CoordinateAssignment';
 import { Graph } from '../../Graph';
 import Cell from '../../cell/Cell';
 import CellArray from '../../cell/CellArray';
-import { Geometry } from 'src';
+import Geometry from 'src/view/geometry/Geometry';
 
 /**
  * A hierarchical layout algorithm.
@@ -38,7 +38,7 @@ import { Geometry } from 'src';
 class SwimlaneLayout extends GraphLayout {
   constructor(graph: Graph, orientation: string | null, deterministic: boolean = true) {
     super(graph);
-    this.orientation = orientation != null ? orientation : DIRECTION_NORTH;
+    this.orientation = orientation != null ? orientation : DIRECTION.NORTH;
     this.deterministic = deterministic != null ? deterministic : true;
   }
 
@@ -109,7 +109,7 @@ class SwimlaneLayout extends GraphLayout {
    * The position of the root node(s) relative to the laid out graph in.
    * Default is <mxConstants.DIRECTION_NORTH>.
    */
-  orientation = DIRECTION_NORTH;
+  orientation = DIRECTION.NORTH;
 
   /**
    * Whether or not to perform local optimisations and iterate multiple times
@@ -421,7 +421,7 @@ class SwimlaneLayout extends GraphLayout {
     }
 
     const { model } = this.graph;
-    let edges = [];
+    let edges = new CellArray();
     const isCollapsed = cell.isCollapsed();
     const childCount = cell.getChildCount();
 
@@ -429,13 +429,13 @@ class SwimlaneLayout extends GraphLayout {
       const child = cell.getChildAt(i);
 
       if (this.isPort(child)) {
-        edges = edges.concat(model.getEdges(child, true, true));
+        edges = edges.concat(child.getEdges(true, true));
       } else if (isCollapsed || !child.isVisible()) {
-        edges = edges.concat(model.getEdges(child, true, true));
+        edges = edges.concat(child.getEdges(true, true));
       }
     }
 
-    edges = edges.concat(model.getEdges(cell, true, true));
+    edges = edges.concat(cell.getEdges(true, true));
     const result = new CellArray();
 
     for (let i = 0; i < edges.length; i += 1) {
@@ -461,7 +461,6 @@ class SwimlaneLayout extends GraphLayout {
     }
 
     this.edgesCache.put(cell, result);
-
     return result;
   }
 

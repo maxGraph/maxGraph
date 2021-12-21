@@ -6,11 +6,11 @@
  */
 import PopupMenu from '../../gui/PopupMenu';
 import InternalEvent from '../event/InternalEvent';
-import { getScrollOrigin } from '../../util/utils';
+import { getScrollOrigin } from '../../util/styleUtils';
 import { getMainEvent, isMultiTouchEvent } from '../../util/eventUtils';
 import { Graph } from '../Graph';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import { GraphPlugin, PopupMenuItem } from '../../types';
+import { GraphPlugin } from '../../types';
 import TooltipHandler from './TooltipHandler';
 import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';

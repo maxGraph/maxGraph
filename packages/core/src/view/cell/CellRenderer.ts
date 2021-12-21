@@ -30,13 +30,15 @@ import {
 } from '../../util/constants';
 import SHAPE from '../geometry/shapeConstants';
 import {
-  convertPoint,
-  equalEntries,
-  equalPoints,
   getRotatedPoint,
   mod,
   toRadians,
-} from '../../util/utils';
+} from '../../util/mathUtils';
+import { convertPoint } from '../../util/styleUtils';
+import { 
+  equalEntries,
+  equalPoints,
+} from '../../util/arrayUtils';
 import Rectangle from '../geometry/Rectangle';
 import StencilShapeRegistry from '../geometry/node/StencilShapeRegistry';
 import InternalEvent from '../event/InternalEvent';

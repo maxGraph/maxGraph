@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import InternalEvent from '../event/InternalEvent';
-import { fit, getScrollOrigin } from '../../util/utils';
+import { fit, getScrollOrigin } from '../../util/styleUtils';
 import { TOOLTIP_VERTICAL_OFFSET } from '../../util/constants';
 import { getSource, isMouseEvent } from '../../util/eventUtils';
 import { isNode } from '../../util/domUtils';

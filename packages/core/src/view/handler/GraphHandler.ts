@@ -9,11 +9,11 @@ import Client from '../../Client';
 import InternalEvent from '../event/InternalEvent';
 import {
   contains,
-  convertPoint,
   getRotatedPoint,
   isNumeric,
   toRadians,
-} from '../../util/utils';
+} from '../../util/mathUtils';
+import { convertPoint } from '../../util/styleUtils';
 import RectangleShape from '../geometry/node/RectangleShape';
 import mxGuide from '../other/Guide';
 import Point from '../geometry/Point';

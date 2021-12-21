@@ -8,7 +8,7 @@
 import RectangleShape from './RectangleShape';
 import Rectangle from '../Rectangle';
 import CellState from '../../cell/CellState';
-import AbstractCanvas2D from '../../../util/canvas/SvgCanvas2D';
+import AbstractCanvas2D from '../../canvas/SvgCanvas2D';
 import CellOverlay from '../../cell/CellOverlay';
 import { NONE } from '../../../util/constants';
 import { ColorValue } from 'src/types';

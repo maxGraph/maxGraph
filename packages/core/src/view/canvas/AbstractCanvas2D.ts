@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { arcToCurves, getRotatedPoint } from '../../util/utils';
+import { arcToCurves, getRotatedPoint } from '../../util/mathUtils';
 import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
