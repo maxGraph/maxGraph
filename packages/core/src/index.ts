@@ -58,7 +58,7 @@ export { default as ConstraintHandler } from './view/handler/ConstraintHandler';
 export { default as EdgeHandler } from './view/handler/EdgeHandler';
 export { default as EdgeSegmentHandler } from './view/handler/EdgeSegmentHandler';
 export { default as ElbowEdgeHandler } from './view/handler/ElbowEdgeHandler';
-export { default as GraphHandler } from './view/GraphHandler';
+export { default as GraphHandler } from './view/handler/GraphHandler';
 export { default as VertexHandle } from './view/cell/VertexHandle';
 export { default as KeyHandler } from './view/handler/KeyHandler';
 export { default as PanningHandler } from './view/handler/PanningHandler';

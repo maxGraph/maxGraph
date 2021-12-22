@@ -256,7 +256,7 @@ class EdgeHandler {
     // `state.shape` must exists.
     this.state = state;
 
-    this.graph = this.state.view.graph;
+    this.graph = <Graph>this.state.view.graph;
     this.marker = this.createMarker();
     this.constraintHandler = new ConstraintHandler(this.graph);
 
@@ -337,7 +337,7 @@ class EdgeHandler {
       }
     };
 
-    this.state.view.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
+    (<Graph>this.state.view.graph).addListener(InternalEvent.ESCAPE, this.escapeHandler);
   }
 
   /**
@@ -2096,7 +2096,7 @@ class EdgeHandler {
    * Returns true if the given custom handle is visible.
    */
   isCustomHandleVisible(handle: CellHandle) {
-    return !this.graph.isEditing() && this.state.view.graph.getSelectionCount() === 1;
+    return !this.graph.isEditing() && (<Graph>this.state.view.graph).getSelectionCount() === 1;
   }
 
   /**
@@ -2276,7 +2276,7 @@ class EdgeHandler {
    * when the corresponding cell is deselected.
    */
   destroy() {
-    this.state.view.graph.removeListener(this.escapeHandler);
+    (<Graph>this.state.view.graph).removeListener(this.escapeHandler);
 
     this.marker.destroy();
     // @ts-expect-error Can be null when destroyed.

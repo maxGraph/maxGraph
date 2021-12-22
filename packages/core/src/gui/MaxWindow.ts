@@ -955,7 +955,7 @@ class MaxWindow extends EventSource {
  * @param isInternalWindow Optional boolean indicating if an MaxWindow should be
  * used instead of a new browser window. Default is false.
  */
-export const popup = (content: string, isInternalWindow: boolean) => {
+export const popup = (content: string, isInternalWindow: boolean=false) => {
   if (isInternalWindow) {
     const div = document.createElement('div');
 

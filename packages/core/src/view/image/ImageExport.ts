@@ -8,6 +8,7 @@
 import AbstractCanvas2D from '../canvas/AbstractCanvas2D';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
+import { Graph } from '../Graph';
 
 /**
  * Creates a new image export instance to be used with an export canvas. Here
@@ -68,7 +69,7 @@ class ImageExport {
     if (state) {
       visitor(state, canvas);
 
-      const { graph } = state.view;
+      const graph = <Graph>state.view.graph;
       const childCount = state.cell.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {

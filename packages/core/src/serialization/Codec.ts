@@ -308,7 +308,7 @@ class Codec {
    *
    * @param obj Object to be encoded.
    */
-  encode(obj: any): Element {
+  encode(obj: any): Element | null {
     let node = null;
 
     if (obj != null && obj.constructor != null) {
@@ -382,7 +382,10 @@ class Codec {
    * function should include all descendents. Default is true.
    */
   encodeCell(cell: Cell, node: Node, includeChildren?: boolean): void {
-    node.appendChild(this.encode(cell));
+    const appendMe = this.encode(cell);
+    if (appendMe) {
+      node.appendChild(appendMe);
+    }
 
     if (includeChildren == null || includeChildren) {
       const childCount = cell.getChildCount();

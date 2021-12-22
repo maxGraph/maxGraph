@@ -202,7 +202,7 @@ class VertexHandler {
 
   constructor(state: CellState) {
     this.state = state;
-    this.graph = this.state.view.graph;
+    this.graph = (<Graph>this.state.view.graph);
     this.selectionBounds = this.getSelectionBounds(this.state);
     this.bounds = new Rectangle(
       this.selectionBounds.x,
@@ -309,7 +309,7 @@ class VertexHandler {
     this.escapeHandler = (sender: Listenable, evt: Event) => {
       if (this.livePreview && this.index != null) {
         // Redraws the live preview
-        this.state.view.graph.cellRenderer.redraw(this.state, true);
+        (<Graph>this.state.view.graph).cellRenderer.redraw(this.state, true);
 
         // Redraws connected edges
         this.state.view.invalidate(this.state.cell);
@@ -320,7 +320,7 @@ class VertexHandler {
       this.reset();
     };
 
-    this.state.view.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
+    (<Graph>this.state.view.graph).addListener(InternalEvent.ESCAPE, this.escapeHandler);
   }
 
   /**
@@ -647,7 +647,7 @@ class VertexHandler {
       this.ghostPreview = this.createGhostPreview();
     } else {
       // Saves reference to parent state
-      const { model } = this.state.view.graph;
+      const { model } = (<Graph>this.state.view.graph);
       const parent = this.state.cell.getParent();
 
       if (
@@ -655,7 +655,7 @@ class VertexHandler {
         parent &&
         (parent.isVertex() || parent.isEdge())
       ) {
-        this.parentState = this.state.view.graph.view.getState(parent);
+        this.parentState = (<Graph>this.state.view.graph).view.getState(parent);
       }
 
       // Creates a preview that can be on top of any HTML label
@@ -1135,7 +1135,7 @@ class VertexHandler {
     }
 
     // Draws the live preview
-    this.state.view.graph.cellRenderer.redraw(this.state, true);
+    (<Graph>this.state.view.graph).cellRenderer.redraw(this.state, true);
 
     // Redraws connected edges TODO: Include child edges
     this.state.view.invalidate(this.state.cell);
@@ -1198,7 +1198,7 @@ class VertexHandler {
         if (index <= InternalEvent.CUSTOM_HANDLE) {
           if (this.customHandles != null) {
             // Creates style before changing cell state
-            const style = this.state.view.graph.getCellStyle(this.state.cell);
+            const style = (<Graph>this.state.view.graph).getCellStyle(this.state.cell);
 
             this.customHandles[InternalEvent.CUSTOM_HANDLE - index].active = false;
             this.customHandles[InternalEvent.CUSTOM_HANDLE - index].execute(me);
@@ -1868,7 +1868,7 @@ class VertexHandler {
 
         // Hides rotation handle during text editing
         this.rotationShape.node.style.visibility =
-          this.state.view.graph.isEditing() || !this.handlesVisible ? 'hidden' : '';
+          (<Graph>this.state.view.graph).isEditing() || !this.handlesVisible ? 'hidden' : '';
       }
     }
 
@@ -1887,7 +1887,7 @@ class VertexHandler {
    * Returns true if the given custom handle is visible.
    */
   isCustomHandleVisible(handle: CellHandle) {
-    return !this.graph.isEditing() && this.state.view.graph.getSelectionCount() === 1;
+    return !this.graph.isEditing() && (<Graph>this.state.view.graph).getSelectionCount() === 1;
   }
 
   /**
@@ -2004,7 +2004,7 @@ class VertexHandler {
    */
   // destroy(): void;
   destroy() {
-    this.state.view.graph.removeListener(this.escapeHandler);
+    (<Graph>this.state.view.graph).removeListener(this.escapeHandler);
     this.escapeHandler = () => {};
 
     if (this.preview) {

@@ -233,6 +233,7 @@ class Client {
    * This is used to avoid unnecessary requests to language files, ie. if a 404
    * will be returned.
    */
+  static languages: string[] | null = null;
 
   static setLanguages = value => {
     if (typeof value !== 'undefined' && value != null) {

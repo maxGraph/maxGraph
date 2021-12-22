@@ -10,7 +10,8 @@ import InternalEvent from '../view/event/InternalEvent';
 import { getInnerHtml, write } from '../util/domUtils';
 import { toString } from '../util/stringUtils';
 import MaxWindow, { popup } from './MaxWindow';
-import { KeyboardEventListener, MouseEventListener } from 'src/types';
+import { KeyboardEventListener, MouseEventListener } from '../types';
+import { copyTextToClipboard } from '../util/utils';
 
 /**
  * A singleton class that implements a simple console.
@@ -94,7 +95,7 @@ class MaxLog {
 
       MaxLog.addButton('Copy', function (evt: MouseEvent) {
         try {
-          utils.copy(MaxLog.textarea.value);
+          copyTextToClipboard((<HTMLTextAreaElement>MaxLog.textarea).value);
         } catch (err) {
           alert(err);
         }
@@ -102,14 +103,14 @@ class MaxLog {
 
       MaxLog.addButton('Show', function (evt: MouseEvent) {
         try {
-          popup(MaxLog.textarea.value);
+          popup((<HTMLTextAreaElement>MaxLog.textarea).value);
         } catch (err) {
           alert(err);
         }
       });
 
       MaxLog.addButton('Clear', function (evt: MouseEvent) {
-        MaxLog.textarea.value = '';
+        (<HTMLTextAreaElement>MaxLog.textarea).value = '';
       });
 
       // Cross-browser code to get window size
@@ -148,7 +149,7 @@ class MaxLog {
         const elt = MaxLog.window.getElement();
 
         const resizeHandler = (sender: any, evt: MouseEvent) => {
-          MaxLog.textarea.style.height = `${Math.max(0, elt.offsetHeight - 70)}px`;
+          (<HTMLTextAreaElement>MaxLog.textarea).style.height = `${Math.max(0, elt.offsetHeight - 70)}px`;
         };
 
         MaxLog.window.addListener(InternalEvent.RESIZE_END, resizeHandler);
@@ -225,7 +226,7 @@ class MaxLog {
   /**
    * Shows or hides the console.
    */
-  static setVisible(visible) {
+  static setVisible(visible: boolean) {
     if (MaxLog.window == null) {
       MaxLog.init();
     }
@@ -238,7 +239,7 @@ class MaxLog {
   /**
    * Writes the specified string to the console if TRACE is true and returns the current time in milliseconds.
    */
-  static enter(string: string): void {
+  static enter(string: string): number | undefined {
     if (MaxLog.TRACE) {
       MaxLog.writeln(`Entering ${string}`);
       return new Date().getTime();
@@ -251,7 +252,7 @@ class MaxLog {
    * between the current time and t0 in milliseconds.
    * See <enter> for an example.
    */
-  static leave(string, t0) {
+  static leave(string: string, t0: number) {
     if (MaxLog.TRACE) {
       const dt = t0 !== 0 ? ` (${new Date().getTime() - t0} ms)` : '';
       MaxLog.writeln(`Leaving ${string}${dt}`);

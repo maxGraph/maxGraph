@@ -10,7 +10,7 @@ import MaxLog from '../gui/MaxLog';
 import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
 import { NODETYPE } from '../util/constants';
-import { isInteger, isNumeric } from '../util/utils';
+import { isInteger, isNumeric } from '../util/mathUtils';
 import { getTextContent } from '../util/domUtils';
 import { load } from '../util/MaxXmlRequest';
 import Codec from './Codec';
@@ -448,7 +448,13 @@ class ObjectCodec {
   /**
    * Writes the given value as an attribute of the given node.
    */
-  writePrimitiveAttribute(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
+  writePrimitiveAttribute(
+    enc: Codec, 
+    obj: any, 
+    name: string | null, 
+    value: any, 
+    node: Element
+  ): void {
     value = this.convertAttributeToXml(enc, obj, name, value, node);  // TODO: params don't seem to match - is this a bug? ===================================
     
     if (name == null) {
@@ -774,7 +780,7 @@ class ObjectCodec {
         value = child.getAttribute('value');
 
         if (value == null && ObjectCodec.allowEval) {
-          value = eval(getTextContent(child));
+          value = eval(getTextContent(<Text><unknown>child));
         }
       } else {
         value = dec.decode(child, template);
