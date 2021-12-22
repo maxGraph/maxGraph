@@ -58,7 +58,7 @@ class DefaultKeyHandlerCodec extends ObjectCodec {
    * See also: <DefaultKeyHandler.bindAction>,
    * http://www.js-examples.com/page/tutorials__key_codes.html
    */
-  decode(dec: Codec, node: Element, into) {
+  decode(dec: Codec, node: Element, into: any) {
     if (into != null) {
       const { editor } = into;
       node = node.firstChild;

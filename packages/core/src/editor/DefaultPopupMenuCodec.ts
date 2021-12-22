@@ -34,7 +34,7 @@ class DefaultPopupMenuCodec extends ObjectCodec {
   /**
    * Uses the given node as the config for <DefaultPopupMenu>.
    */
-  decode(dec: Codec, node: Element, into) {
+  decode(dec: Codec, node: Element, into: any) {
     const inc = node.getElementsByTagName('include')[0];
 
     if (inc != null) {

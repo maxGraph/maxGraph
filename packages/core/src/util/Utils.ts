@@ -4,32 +4,6 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import Client from '../Client';
-import {
-  ALIGN,
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
-  DIRECTION,
-  DIRECTION_MASK,
-  FONT,
-  LINE_HEIGHT,
-  NODETYPE,
-  NONE,
-  PAGE_FORMAT_A4_PORTRAIT,
-} from './constants';
-import Point from '../view/geometry/Point';
-import Dictionary from './Dictionary';
-import CellPath from '../view/cell/CellPath';
-import Rectangle from '../view/geometry/Rectangle';
-import { getFunctionName } from './stringUtils';
-import { getOuterHtml } from './domUtils';
-import CellState from '../view/cell/CellState';
-import Cell from '../view/cell/Cell';
-import Model from '../view/other/Model';
-import CellArray from '../view/cell/CellArray';
-import { Graph } from 'src/view/Graph';
-
-import type { CellStateStyles, Properties, StyleValue } from '../types';
 
 /**
  * A singleton class that provides cross-browser helper methods.

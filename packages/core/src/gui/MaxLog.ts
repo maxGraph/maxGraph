@@ -8,7 +8,9 @@
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
 import { getInnerHtml, write } from '../util/domUtils';
+import { toString } from '../util/stringUtils';
 import MaxWindow, { popup } from './MaxWindow';
+import { KeyboardEventListener, MouseEventListener } from 'src/types';
 
 /**
  * A singleton class that implements a simple console.
@@ -18,7 +20,7 @@ import MaxWindow, { popup } from './MaxWindow';
  * Specifies the name of the console window. Default is 'Console'.
  */
 class MaxLog {
-  static textarea: HTMLElement | null = null;
+  static textarea: HTMLTextAreaElement | null = null;
   static window: any;
   static td: any;
 
@@ -71,16 +73,16 @@ class MaxLog {
       table.appendChild(tbody);
 
       // Adds various debugging buttons
-      MaxLog.addButton('Info', function (evt) {
+      MaxLog.addButton('Info', function (evt: MouseEvent) {
         MaxLog.info();
       });
 
-      MaxLog.addButton('DOM', function (evt) {
+      MaxLog.addButton('DOM', function (evt: MouseEvent) {
         const content = getInnerHtml(document.body);
         MaxLog.debug(content);
       });
 
-      MaxLog.addButton('Trace', function (evt) {
+      MaxLog.addButton('Trace', function (evt: MouseEvent) {
         MaxLog.TRACE = !MaxLog.TRACE;
 
         if (MaxLog.TRACE) {
@@ -90,7 +92,7 @@ class MaxLog {
         }
       });
 
-      MaxLog.addButton('Copy', function (evt) {
+      MaxLog.addButton('Copy', function (evt: MouseEvent) {
         try {
           utils.copy(MaxLog.textarea.value);
         } catch (err) {
@@ -98,7 +100,7 @@ class MaxLog {
         }
       });
 
-      MaxLog.addButton('Show', function (evt) {
+      MaxLog.addButton('Show', function (evt: MouseEvent) {
         try {
           popup(MaxLog.textarea.value);
         } catch (err) {
@@ -106,7 +108,7 @@ class MaxLog {
         }
       });
 
-      MaxLog.addButton('Clear', function (evt) {
+      MaxLog.addButton('Clear', function (evt: MouseEvent) {
         MaxLog.textarea.value = '';
       });
 
@@ -145,7 +147,7 @@ class MaxLog {
       ) {
         const elt = MaxLog.window.getElement();
 
-        const resizeHandler = (sender, evt) => {
+        const resizeHandler = (sender: any, evt: MouseEvent) => {
           MaxLog.textarea.style.height = `${Math.max(0, elt.offsetHeight - 70)}px`;
         };
 
@@ -193,7 +195,7 @@ class MaxLog {
   /**
    * Adds a button to the console using the given label and function.
    */
-  static addButton(lab: string, funct: Function): void {
+  static addButton(lab: string, funct: MouseEventListener | KeyboardEventListener): void {
     const button = document.createElement('button');
     write(button, lab);
     InternalEvent.addListener(button, 'click', funct);
@@ -260,7 +262,7 @@ class MaxLog {
    * Adds all arguments to the console if DEBUG is enabled.
    */
   // static debug(message: string): void;
-  static debug(...args) {
+  static debug(...args: string[]) {
     if (MaxLog.DEBUG) {
       MaxLog.writeln(...args);
     }
@@ -270,7 +272,7 @@ class MaxLog {
    * Adds all arguments to the console if WARN is enabled.
    */
   // static warn(message: string): void;
-  static warn(...args) {
+  static warn(...args: string[]) {
     if (MaxLog.WARN) {
       MaxLog.writeln(...args);
     }
@@ -279,13 +281,13 @@ class MaxLog {
   /**
    * Adds the specified strings to the console.
    */
-  static write(): void {
+  static write(...args: string[]): void {
     let string = '';
 
-    for (let i = 0; i < arguments.length; i += 1) {
-      string += arguments[i];
+    for (let i = 0; i < args.length; i += 1) {
+      string += args[i];
 
-      if (i < arguments.length - 1) {
+      if (i < args.length - 1) {
         string += ' ';
       }
     }
@@ -308,13 +310,13 @@ class MaxLog {
   /**
    * Adds the specified strings to the console, appending a linefeed at the end of each string.
    */
-  static writeln(): void {
+  static writeln(...args: string[]): void {
     let string = '';
 
-    for (let i = 0; i < arguments.length; i += 1) {
-      string += arguments[i];
+    for (let i = 0; i < args.length; i += 1) {
+      string += args[i];
 
-      if (i < arguments.length - 1) {
+      if (i < args.length - 1) {
         string += ' ';
       }
     }

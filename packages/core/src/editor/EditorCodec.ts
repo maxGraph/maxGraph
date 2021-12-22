@@ -155,7 +155,9 @@ class EditorCodec extends ObjectCodec {
 
           // Creates a new window around the element
           element = document.createElement('div');
-          element.style.cssText = style;
+          if (style != null) {
+            element.style.cssText = style;
+          }
 
           const wnd = new MaxWindow(
             Translations.get(as) || as,

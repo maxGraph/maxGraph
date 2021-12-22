@@ -31,15 +31,15 @@ class DefaultKeyHandler {
   constructor(editor: Editor | null=null) {
     if (editor != null) {
       this.editor = editor;
-      this.handler = new KeyHandler(editor.graph);
+      const handler = this.handler = new KeyHandler(editor.graph);
 
       // Extends the escape function of the internal key
       // handle to hide the properties dialog and fire
       // the escape event via the editor instance
       const old = this.handler.escape;
 
-      this.handler.escape = evt => {
-        old.apply(this, [editor]);
+      this.handler.escape = (evt) => {
+        old.apply(handler, [evt]);
         editor.hideProperties();
         editor.fireEvent(new EventObject(InternalEvent.ESCAPE, 'event', evt));
       };

@@ -11,9 +11,12 @@ import CodecRegistry from '../serialization/CodecRegistry';
 import { getChildNodes, getTextContent } from '../util/domUtils';
 import { getClientX, getClientY } from '../util/eventUtils';
 import { NODETYPE } from '../util/constants';
-import { convertPoint } from '../util/utils';
+import { convertPoint } from '../util/styleUtils';
 import Translations from 'src/util/Translations';
 import InternalEvent from 'src/view/event/InternalEvent';
+import Editor from './Editor';
+import MaxLog from 'src/gui/MaxLog';
+import Codec from 'src/serialization/Codec';
 
 /**
  * Custom codec for configuring <DefaultToolbar>s. This class is created
@@ -123,10 +126,10 @@ class DefaultToolbarCodec extends ObjectCodec {
    * </DefaultToolbar>
    * ```
    */
-  decode(dec: any, node: Element, into: Element) {
+  decode(dec: Codec, _node: Element, into: any) {
     if (into != null) {
-      const { editor } = into;
-      node = node.firstChild;
+      const editor: Editor = into.editor;
+      let node: Element | null = <Element | null>_node.firstChild;
 
       while (node != null) {
         if (node.nodeType === NODETYPE.ELEMENT) {
@@ -138,7 +141,7 @@ class DefaultToolbarCodec extends ObjectCodec {
             } else if (node.nodeName === 'hr') {
               into.toolbar.addLine();
             } else if (node.nodeName === 'add') {
-              let as = node.getAttribute('as');
+              let as = <string>node.getAttribute('as');
               as = Translations.get(as) || as;
               const icon = node.getAttribute('icon');
               const pressedIcon = node.getAttribute('pressedIcon');
@@ -146,7 +149,7 @@ class DefaultToolbarCodec extends ObjectCodec {
               const mode = node.getAttribute('mode');
               const template = node.getAttribute('template');
               const toggle = node.getAttribute('toggle') != '0';
-              const text = getTextContent(node);
+              const text = getTextContent(<Text><unknown>node);
               let elt = null;
 
               if (action != null) {
@@ -160,7 +163,7 @@ class DefaultToolbarCodec extends ObjectCodec {
                 template != null ||
                 (text != null && text.length > 0)
               ) {
-                let cell = editor.templates[template];
+                let cell = template ? editor.templates[template] : null;
                 const style = node.getAttribute('style');
 
                 if (cell != null && style != null) {
@@ -194,7 +197,7 @@ class DefaultToolbarCodec extends ObjectCodec {
                     const combo = into.addActionCombo(as);
 
                     for (let i = 0; i < children.length; i += 1) {
-                      const child = children[i];
+                      const child = <Element>children[i];
 
                       if (child.nodeName === 'separator') {
                         into.addOption(combo, '---');
@@ -205,7 +208,8 @@ class DefaultToolbarCodec extends ObjectCodec {
                       }
                     }
                   } else {
-                    let select = null;
+                    let select: HTMLSelectElement;
+
                     const create = () => {
                       const template = editor.templates[select.value];
 
@@ -238,7 +242,7 @@ class DefaultToolbarCodec extends ObjectCodec {
                     // Selects the toolbar icon if a selection change
                     // is made in the corresponding combobox.
                     InternalEvent.addListener(select, 'change', () => {
-                      into.toolbar.selectMode(img, (evt) => {
+                      into.toolbar.selectMode(img, (evt: MouseEvent) => {
                         const pt = convertPoint(
                           editor.graph.container,
                           getClientX(evt),
@@ -253,7 +257,7 @@ class DefaultToolbarCodec extends ObjectCodec {
 
                     // Adds the entries to the combobox
                     for (let i = 0; i < children.length; i += 1) {
-                      const child = children[i];
+                      const child = <Element>children[i];
 
                       if (child.nodeName === 'separator') {
                         into.addOption(select, '---');
@@ -284,7 +288,7 @@ class DefaultToolbarCodec extends ObjectCodec {
           }
         }
 
-        node = node.nextSibling;
+        node = <Element | null>node.nextSibling;
       }
     }
     return into;

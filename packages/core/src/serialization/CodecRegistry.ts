@@ -22,7 +22,7 @@ import ObjectCodec from './ObjectCodec';
  *
  *     ```javascript
  *     codec.encode = function(enc, obj) { ... }
- *     codec.decode = function(dec, node, into) { ... }
+ *     codec.decode = function(dec: Codec, node: Element, into: any): any { ... }
  *     ```
  *
  * 3. Register the codec in the <CodecRegistry>.

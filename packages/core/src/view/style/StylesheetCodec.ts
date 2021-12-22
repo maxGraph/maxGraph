@@ -120,7 +120,7 @@ class StylesheetCodec extends ObjectCodec {
    * </mxStylesheet>
    * ```
    */
-  decode(dec, node, into) {
+  decode(dec: Codec, node: Element, into: any): any {
     const obj = into || new this.template.constructor();
     const id = node.getAttribute('id');
 
