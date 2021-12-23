@@ -18,7 +18,7 @@ declare module '../Graph' {
       target: Cell | null
     ) => string | null;
     validateEdge: (edge: Cell, source: Cell, target: Cell) => string | null;
-    validateGraph: (cell: Cell | null, context: any) => string | null;
+    validateGraph: (cell?: Cell | null, context?: any) => string | null;
     getCellValidationError: (cell: Cell) => string | null;
     validateCell: (cell: Cell, context: CellState) => string | null;
   }

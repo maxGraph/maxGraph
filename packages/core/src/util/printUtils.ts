@@ -159,11 +159,11 @@ import { removeCursors } from './styleUtils';
  */
 export const show = (
   graph: Graph,
-  doc: Document,
+  doc: Document | null=null,
   x0 = 0,
   y0 = 0,
-  w?: number,
-  h?: number
+  w: number | null=null,
+  h: number | null=null
 ) => {
   x0 = x0 != null ? x0 : 0;
   y0 = y0 != null ? y0 : 0;

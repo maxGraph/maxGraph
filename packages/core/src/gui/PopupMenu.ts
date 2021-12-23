@@ -176,10 +176,10 @@ class PopupMenu extends EventSource implements Partial<PopupMenuItem> {
     image: string | null,
     funct: Function,
     parent: PopupMenuItem | null = null,
-    iconCls?: string,
-    enabled?: boolean,
-    active?: boolean,
-    noHover?: boolean
+    iconCls: string | null = null,
+    enabled: boolean | null = null,
+    active: boolean | null = null,
+    noHover: boolean | null = null
   ) {
     parent = (parent ?? this) as PopupMenuItem;
     this.itemCount++;

@@ -40,6 +40,7 @@ import InternalMouseEvent from 'src/view/event/InternalMouseEvent';
 import { MouseListenerSet } from 'src/types';
 import ConnectionHandler from 'src/view/handler/ConnectionHandler';
 import { show } from 'src/util/printUtils';
+import PanningHandler from 'src/view/handler/PanningHandler';
 
 /**
  * Installs the required language resources at class
@@ -947,7 +948,7 @@ class Editor extends EventSource {
       if (url == null || Client.IS_LOCAL) {
         editor.execute('show');
       } else {
-        const node = getViewXml(editor.graph, 1);
+        const node = <Element>getViewXml(editor.graph, 1);
         const xml = getXml(node, '\n');
 
         submit(
@@ -1231,13 +1232,14 @@ class Editor extends EventSource {
 
     this.addAction('zoom', (editor: Editor) => {
       const current = editor.graph.getView().scale * 100;
-      const scale =
-        parseFloat(
-          prompt((Translations.get(editor.askZoomResource) || editor.askZoomResource), current)
-        ) / 100;
-
-      if (!isNaN(scale)) {
-        editor.graph.getView().setScale(scale);
+      const preInput = prompt((Translations.get(editor.askZoomResource) || editor.askZoomResource), String(current));
+      
+      if (preInput) {
+        const scale = parseFloat(preInput) / 100;
+        
+        if (!isNaN(scale)) {
+          editor.graph.getView().setScale(scale);
+        }
       }
     });
 
@@ -1346,7 +1348,7 @@ class Editor extends EventSource {
    * @param cell
    * @param evt
    */
-  execute(actionname: string, cell?: Cell, evt?: Event): void {
+  execute(actionname: string, cell: Cell | null=null, evt: Event | null=null): void {
     const action = this.actions[actionname];
 
     if (action != null) {
@@ -1968,7 +1970,7 @@ class Editor extends EventSource {
   writeGraphModel(linefeed: string): string {
     linefeed = linefeed != null ? linefeed : this.linefeed;
     const enc = new Codec();
-    const node = enc.encode(this.graph.getModel());
+    const node = <Element>enc.encode(this.graph.getModel());
     return getXml(node, linefeed);
   }
 
@@ -2319,7 +2321,7 @@ class Editor extends EventSource {
   showHelp(tasks: any | null=null): void {
     if (this.help == null) {
       const frame = document.createElement('iframe');
-      frame.setAttribute('src', Translations.get('urlHelp') || this.urlHelp);
+      frame.setAttribute('src', <string>(Translations.get('urlHelp') || this.urlHelp));
       frame.setAttribute('height', '100%');
       frame.setAttribute('width', '100%');
       frame.setAttribute('frameBorder', '0');
@@ -2418,14 +2420,16 @@ class Editor extends EventSource {
    * @param modename
    */
   setMode(modename: any): void {
+    const panningHandler: PanningHandler = <PanningHandler>this.graph.getPlugin('PanningHandler');
+
     if (modename === 'select') {
-      this.graph.panningHandler.useLeftButtonForPanning = false;
+      panningHandler.useLeftButtonForPanning = false;
       this.graph.setConnectable(false);
     } else if (modename === 'connect') {
-      this.graph.panningHandler.useLeftButtonForPanning = false;
+      panningHandler.useLeftButtonForPanning = false;
       this.graph.setConnectable(true);
     } else if (modename === 'pan') {
-      this.graph.panningHandler.useLeftButtonForPanning = true;
+      panningHandler.useLeftButtonForPanning = true;
       this.graph.setConnectable(false);
     }
   }

@@ -131,7 +131,7 @@ class DefaultPopupMenu {
    * @param cell - Optional {@link mxCell} which is under the mousepointer.
    * @param evt - Optional mouse event which triggered the menu.
    */
-  createMenu(editor: Editor, menu: PopupMenu, cell?: Cell, evt?: MouseEvent) {
+  createMenu(editor: Editor, menu: PopupMenu, cell: Cell | null=null, evt: MouseEvent | null=null) {
     if (this.config != null) {
       const conditions = this.createConditions(editor, cell, evt);
       const item = <Element>this.config.firstChild;
@@ -168,7 +168,7 @@ class DefaultPopupMenu {
         if (condition == null || conditions[condition]) {
           let as = <string>item.getAttribute('as');
           as = Translations.get(as) || as;
-          const funct = eval(getTextContent(item));
+          const funct = eval(getTextContent(<Text><unknown>item));
           const action = item.getAttribute('action');
           let icon = item.getAttribute('icon');
           const iconCls = item.getAttribute('iconCls');
@@ -237,12 +237,12 @@ class DefaultPopupMenu {
     menu: PopupMenu,
     editor: Editor,
     lab: string,
-    icon?: string,
+    icon: string | null=null,
     funct: Function | null=null,
-    action?: string,
-    cell?: Cell,
-    parent?: PopupMenuItem,
-    iconCls?: string,
+    action: string | null=null,
+    cell: Cell | null=null,
+    parent: PopupMenuItem | null=null,
+    iconCls: string | null=null,
     enabled: boolean=true
   ) {
     const clickHandler = (evt: MouseEvent) => {
@@ -285,10 +285,10 @@ class DefaultPopupMenu {
     conditions.swimlane = isCell && editor.graph.isSwimlane(cell);
 
     // Evaluates dynamic conditions from config file
-    const condNodes = this.config.getElementsByTagName('condition');
+    const condNodes = (<Element>this.config).getElementsByTagName('condition');
 
     for (let i = 0; i < condNodes.length; i += 1) {
-      const funct = eval(getTextContent(condNodes[i]));
+      const funct = eval(getTextContent(<Text><unknown>condNodes[i]));
       const name = condNodes[i].getAttribute('name');
 
       if (name != null && typeof funct === 'function') {

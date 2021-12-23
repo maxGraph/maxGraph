@@ -69,7 +69,7 @@ declare module '../Graph' {
     selectCellForEvent: (cell: Cell, evt: MouseEvent) => void;
     selectCellsForEvent: (cells: CellArray, evt: MouseEvent) => void;
     isSiblingSelected: (cell: Cell) => boolean;
-    getSelectionCellsForChanges: (changes: any[], ignoreFn: Function | null) => CellArray;
+    getSelectionCellsForChanges: (changes: any[], ignoreFn?: Function | null) => CellArray;
     updateSelection: () => void;
   }
 }

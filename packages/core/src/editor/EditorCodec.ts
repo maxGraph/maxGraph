@@ -136,7 +136,7 @@ class EditorCodec extends ObjectCodec {
     let tmp = <Element>node.firstChild;
     while (tmp != null) {
       if (tmp.nodeName === 'add') {
-        const as = tmp.getAttribute('as');
+        const as = <string>tmp.getAttribute('as');
         const elt = tmp.getAttribute('element');
         const style = tmp.getAttribute('style');
         let element = null;
@@ -150,8 +150,8 @@ class EditorCodec extends ObjectCodec {
         } else {
           const x = parseInt(<string>tmp.getAttribute('x'));
           const y = parseInt(<string>tmp.getAttribute('y'));
-          const width = tmp.getAttribute('width');
-          const height = tmp.getAttribute('height');
+          const width = tmp.getAttribute('width') || null;
+          const height = tmp.getAttribute('height') || null;
 
           // Creates a new window around the element
           element = document.createElement('div');
@@ -164,8 +164,8 @@ class EditorCodec extends ObjectCodec {
             element,
             x,
             y,
-            width,
-            height,
+            width ? parseInt(width) : null,
+            height ? parseInt(height) : null,
             false,
             true
           );
