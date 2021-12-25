@@ -2002,8 +2002,7 @@ class VertexHandler {
   /**
    * Destroys the handler and all its resources and DOM nodes.
    */
-  // destroy(): void;
-  destroy() {
+  onDestroy() {
     (<Graph>this.state.view.graph).removeListener(this.escapeHandler);
     this.escapeHandler = () => {};
 

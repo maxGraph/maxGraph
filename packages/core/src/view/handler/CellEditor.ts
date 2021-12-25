@@ -477,7 +477,7 @@ class CellEditor implements GraphPlugin {
   /**
    * Returns true if this editor is the source for the given native event.
    */
-  isEventSource(evt: MouseEvent) {
+  isEventSource(evt: MouseEvent | KeyboardEvent) {
     return getSource(evt) === this.textarea;
   }
 

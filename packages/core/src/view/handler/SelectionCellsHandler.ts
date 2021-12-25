@@ -151,7 +151,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
 
         if (handler) {
           if (handler.state !== state) {
-            handler.destroy();
+            handler.onDestroy();
             handler = null;
           } else if (!this.isHandlerActive(handler)) {
             // @ts-ignore refresh may exist
@@ -170,7 +170,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
     // Destroys unused handlers
     oldHandlers.visit((key, handler) => {
       this.fireEvent(new EventObject(InternalEvent.REMOVE, 'state', handler.state));
-      handler.destroy();
+      handler.onDestroy();
     });
 
     // Creates new handlers and updates parent highlight on existing handlers
@@ -210,7 +210,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
       const x = handler.startX;
       const y = handler.startY;
 
-      handler.destroy();
+      handler.onDestroy();
       handler = this.graph.createHandler(state);
 
       if (handler) {

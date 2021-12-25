@@ -473,7 +473,7 @@ class ConstraintHandler {
   /**
    * Destroy this handler.
    */
-  destroy() {
+  onDestroy() {
     this.reset();
 
     this.graph.model.removeListener(this.resetHandler);

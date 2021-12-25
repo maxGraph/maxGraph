@@ -9,6 +9,7 @@ import { Graph } from '../Graph';
 import InternalEvent from '../event/InternalEvent';
 import { isAncestorNode } from '../../util/domUtils';
 import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isShiftDown } from '../../util/eventUtils';
+import CellEditor from './CellEditor';
 
 /**
  * Event handler that listens to keystroke events. This is not a singleton,
@@ -226,11 +227,12 @@ class KeyHandler {
 
     // Accepts events from the target object or
     // in-place editing inside graph
+    const cellEditor = this.graph?.getPlugin('CellEditor') as CellEditor | null;
     if (
       source === this.target ||
       source.parentNode === this.target ||
-      ((<Graph>this.graph).cellEditor != null &&
-      (<Graph>this.graph).cellEditor.isEventSource(evt))
+      cellEditor != null &&
+      cellEditor.isEventSource(evt)
     ) {
       return true;
     }
@@ -313,7 +315,7 @@ class KeyHandler {
    * normally not need to be called, it is called automatically when the
    * window unloads (in IE).
    */
-  destroy() {
+  onDestroy() {
     if (this.target != null && this.keydownHandler != null) {
       InternalEvent.removeListener(this.target, 'keydown', this.keydownHandler);
       this.keydownHandler = null;

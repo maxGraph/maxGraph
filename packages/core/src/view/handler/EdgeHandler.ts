@@ -2275,7 +2275,7 @@ class EdgeHandler {
    * normally not need to be called as handlers are destroyed automatically
    * when the corresponding cell is deselected.
    */
-  destroy() {
+  onDestroy() {
     (<Graph>this.state.view.graph).removeListener(this.escapeHandler);
 
     this.marker.destroy();
@@ -2302,7 +2302,7 @@ class EdgeHandler {
     // @ts-expect-error Can be null when destroyed.
     this.labelShape = null;
 
-    this.constraintHandler.destroy();
+    this.constraintHandler.onDestroy();
     // @ts-expect-error Can be null when destroyed.
     this.constraintHandler = null;
 

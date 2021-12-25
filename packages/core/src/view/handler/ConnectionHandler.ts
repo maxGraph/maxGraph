@@ -2039,7 +2039,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
     }
 
     if (this.constraintHandler) {
-      this.constraintHandler.destroy();
+      this.constraintHandler.onDestroy();
     }
 
     if (this.changeHandler) {

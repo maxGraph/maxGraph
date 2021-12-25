@@ -81,7 +81,7 @@ class DefaultKeyHandler {
    * Destroys the {@link handler} associated with this object.  This does normally not need to be called, the {@link handler} is destroyed automatically when the window unloads (in IE) by {@link Editor}.
    */
   destroy(): void {
-    (<KeyHandler>this.handler).destroy();
+    (<KeyHandler>this.handler).onDestroy();
     this.handler = null;
   }
 }
