@@ -11,6 +11,7 @@ import CodecRegistry from '../../serialization/CodecRegistry';
 import { NODETYPE } from '../../util/constants';
 import { removeWhitespace } from '../../util/stringUtils';
 import { importNode } from '../../util/domUtils';
+import Codec from 'src/serialization/Codec';
 
 /**
  * Codec for <Cell>s. This class is created and registered
@@ -68,7 +69,7 @@ class CellCodec extends ObjectCodec {
   /**
    * Overidden to disable conversion of value to number.
    */
-  isNumericAttribute(dec, attr, obj) {
+  isNumericAttribute(dec: Codec, attr: Element, obj: any) {
     return (
       attr.nodeName !== 'value' && super.isNumericAttribute(dec, attr, obj)
     );
@@ -77,7 +78,7 @@ class CellCodec extends ObjectCodec {
   /**
    * Excludes user objects that are XML nodes.
    */
-  isExcluded(obj, attr, value, isWrite) {
+  isExcluded(obj: any, attr: string, value: Element, isWrite: boolean) {
     return (
       super.isExcluded(obj, attr, value, isWrite) ||
       (isWrite && attr === 'value' && value.nodeType === NODETYPE.ELEMENT)
@@ -88,7 +89,7 @@ class CellCodec extends ObjectCodec {
    * Encodes an <Cell> and wraps the XML up inside the
    * XML of the user object (inversion).
    */
-  afterEncode(enc, obj: Element, node: Element) {
+  afterEncode(enc: Codec, obj: Element, node: Element) {
     if (obj.value != null && obj.value.nodeType === NODETYPE.ELEMENT) {
       // Wraps the graphical annotation up in the user object (inversion)
       // by putting the result of the default encoding into a clone of the
@@ -100,7 +101,7 @@ class CellCodec extends ObjectCodec {
       // Moves the id attribute to the outermost XML node, namely the
       // node which denotes the object boundaries in the file.
       const id = tmp.getAttribute('id');
-      node.setAttribute('id', id);
+      node.setAttribute('id', String(id));
       tmp.removeAttribute('id');
     }
 
@@ -111,7 +112,7 @@ class CellCodec extends ObjectCodec {
    * Decodes an <Cell> and uses the enclosing XML node as
    * the user object for the cell (inversion).
    */
-  beforeDecode(dec, node, obj) {
+  beforeDecode(dec: Codec, node: Element, obj: any) {
     let inner = node.cloneNode(true);
     const classname = this.getName();
 

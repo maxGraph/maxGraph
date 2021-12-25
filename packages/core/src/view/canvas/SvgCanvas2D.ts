@@ -25,7 +25,7 @@ import {
 import Rectangle from '../geometry/Rectangle';
 import AbstractCanvas2D from './AbstractCanvas2D';
 import { getXml } from '../../util/xmlUtils';
-import { importNodeImplementation, isNode, write } from '../../util/domUtils';
+import { isNode, write } from '../../util/domUtils';
 import { htmlEntities, trim } from '../../util/stringUtils';
 import {
   AlignValue,
@@ -736,7 +736,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     if (s.fillColor !== NONE) {
       if (s.gradientColor !== NONE) {
         const id = this.getSvgGradient(
-          s.fillColor,
+          <string>s.fillColor,
           s.gradientColor,
           s.gradientFillAlpha,
           s.gradientAlpha,
@@ -751,7 +751,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
           this.node.setAttribute('fill', `url(#${id})`);
         }
       } else {
-        this.node.setAttribute('fill', s.fillColor.toLowerCase());
+        this.node.setAttribute('fill', (<string>s.fillColor).toLowerCase());
       }
     }
   }
@@ -1228,11 +1228,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
     // Workarounds for print clipping and static position in Safari
     fo.setAttribute('style', 'overflow: visible; text-align: left;');
     fo.setAttribute('pointer-events', 'none');
-
-    // Import needed for older versions of IE
-    if (div.ownerDocument !== document) {
-      div = importNodeImplementation(fo.ownerDocument, div, true);
-    }
 
     fo.appendChild(div);
     group.appendChild(fo);

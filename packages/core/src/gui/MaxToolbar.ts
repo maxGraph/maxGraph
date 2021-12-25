@@ -12,8 +12,16 @@ import EventSource from '../view/event/EventSource';
 import EventObject from '../view/event/EventObject';
 import Client from '../Client';
 import { br, write, writeln } from '../util/domUtils';
-import Cell from 'src/view/cell/Cell';
-import { KeyboardEventListener, MouseEventListener } from 'src/types';
+import Cell from '../view/cell/Cell';
+import { KeyboardEventListener, MouseEventListener, PopupMenuItem } from '../types';
+
+interface HTMLSelectOptionWithFunct extends HTMLOptionElement {
+  funct?: (evt: any) => void;
+};
+
+interface HTMLImageElementWithProps extends HTMLImageElement {
+  
+};
 
 /**
  * Creates a toolbar inside a given DOM node. The toolbar may contain icons,
@@ -83,18 +91,20 @@ class MaxToolbar extends EventSource {
    * (menu, evt, cell)=> { menu.addItem('Hello, World!'); }
    */
   addItem(
-    title: string, 
-    icon: string, 
-    funct: MouseEventListener | KeyboardEventListener, 
-    pressedIcon: string, 
-    style: string, 
-    factoryMethod: (menu: string, evt: MouseEvent, cell: Cell) => void) 
+    title: string | null=null, 
+    icon: string | null=null, 
+    funct: MouseEventListener | KeyboardEventListener | null=null, 
+    pressedIcon: string | null=null, 
+    style: string | null=null, 
+    factoryMethod: ((handler: PopupMenuItem, cell: Cell | null, me: MouseEvent) => void) | null=null) 
   {
     const img = document.createElement(icon != null ? 'img' : 'button');
     const initialClassName =
       style || (factoryMethod != null ? 'mxToolbarMode' : 'mxToolbarItem');
     img.className = initialClassName;
-    img.setAttribute('src', icon);
+    if (icon) {
+      img.setAttribute('src', icon);
+    }
 
     if (title != null) {
       if (icon != null) {
@@ -173,7 +183,6 @@ class MaxToolbar extends EventSource {
     );
 
     InternalEvent.addListener(img, 'mouseout', mouseHandler);
-
     return img;
   }
 
@@ -211,7 +220,7 @@ class MaxToolbar extends EventSource {
     this.addOption(select, title, null);
 
     InternalEvent.addListener(select, 'change', (evt: InternalEvent) => {
-      const value = select.options[select.selectedIndex];
+      const value = <HTMLSelectOptionWithFunct>select.options[select.selectedIndex];
       select.selectedIndex = 0;
 
       if (value.funct != null) {
@@ -220,7 +229,6 @@ class MaxToolbar extends EventSource {
     });
 
     this.container.appendChild(select);
-
     return select;
   }
 
@@ -233,18 +241,17 @@ class MaxToolbar extends EventSource {
    * @param title - String that specifies the title of the option.
    * @param value - Specifies the value associated with this option.
    */
-  addOption(combo: HTMLSelectElement, title: string, value: string | null = null): HTMLOptionElement {
-    const option = document.createElement('option');
+  addOption(combo: HTMLSelectElement, title: string, value: string | ((evt: any) => void) | null = null): HTMLOptionElement {
+    const option = <HTMLSelectOptionWithFunct>document.createElement('option');
     writeln(option, title);
 
     if (typeof value === 'function') {
       option.funct = value;
     } else {
-      option.setAttribute('value', value);
+      option.setAttribute('value', <string>value);
     }
 
     combo.appendChild(option);
-
     return option;
   }
 
@@ -303,7 +310,6 @@ class MaxToolbar extends EventSource {
       this.selectMode(img);
       funct();
     }
-
     return img;
   }
 
@@ -407,7 +413,7 @@ class MaxToolbar extends EventSource {
    *
    * @param icon - URL of the separator icon.
    */
-  addSeparator(icon: string): HTMLImageElement {
+  addSeparator(icon: string): HTMLImageElement | HTMLButtonElement {
     return this.addItem(null, icon, null);
   }
 

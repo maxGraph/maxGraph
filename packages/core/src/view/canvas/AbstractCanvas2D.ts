@@ -281,7 +281,7 @@ class AbstractCanvas2D {
   /**
    * Sets the current fill color.
    */
-  setFillColor(value: ColorValue) {
+  setFillColor(value: ColorValue | null) {
     this.state.fillColor = value;
     this.state.gradientColor = NONE;
   }
@@ -311,7 +311,7 @@ class AbstractCanvas2D {
   /**
    * Sets the current stroke color.
    */
-  setStrokeColor(value: ColorValue) {
+  setStrokeColor(value: ColorValue | null) {
     this.state.strokeColor = value;
   }
 
@@ -361,21 +361,21 @@ class AbstractCanvas2D {
   /**
    * Sets the current font color.
    */
-  setFontColor(value: ColorValue) {
+  setFontColor(value: ColorValue | null) {
     this.state.fontColor = value;
   }
 
   /**
    * Sets the current font background color.
    */
-  setFontBackgroundColor(value: ColorValue) {
+  setFontBackgroundColor(value: ColorValue | null) {
     this.state.fontBackgroundColor = value;
   }
 
   /**
    * Sets the current font border color.
    */
-  setFontBorderColor(value: ColorValue) {
+  setFontBorderColor(value: ColorValue | null) {
     this.state.fontBorderColor = value;
   }
 
@@ -410,7 +410,7 @@ class AbstractCanvas2D {
   /**
    * Enables or disables and configures the current shadow.
    */
-  setShadowColor(value: ColorValue) {
+  setShadowColor(value: ColorValue | null) {
     this.state.shadowColor = value;
   }
 
