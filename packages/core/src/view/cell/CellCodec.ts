@@ -89,7 +89,7 @@ class CellCodec extends ObjectCodec {
    * Encodes an <Cell> and wraps the XML up inside the
    * XML of the user object (inversion).
    */
-  afterEncode(enc: Codec, obj: Element, node: Element) {
+  afterEncode(enc: Codec, obj: Cell, node: Element) {
     if (obj.value != null && obj.value.nodeType === NODETYPE.ELEMENT) {
       // Wraps the graphical annotation up in the user object (inversion)
       // by putting the result of the default encoding into a clone of the
@@ -112,8 +112,8 @@ class CellCodec extends ObjectCodec {
    * Decodes an <Cell> and uses the enclosing XML node as
    * the user object for the cell (inversion).
    */
-  beforeDecode(dec: Codec, node: Element, obj: any) {
-    let inner = node.cloneNode(true);
+  beforeDecode(dec: Codec, node: Element, obj: Cell): Element | null {
+    let inner: Element | null = <Element>node.cloneNode(true);
     const classname = this.getName();
 
     if (node.nodeName !== classname) {
@@ -122,8 +122,8 @@ class CellCodec extends ObjectCodec {
       const tmp = node.getElementsByTagName(classname)[0];
 
       if (tmp != null && tmp.parentNode === node) {
-        removeWhitespace(tmp, true);
-        removeWhitespace(tmp, false);
+        removeWhitespace(<HTMLElement>tmp, true);
+        removeWhitespace(<HTMLElement>tmp, false);
         tmp.parentNode.removeChild(tmp);
         inner = tmp;
       } else {
@@ -140,7 +140,7 @@ class CellCodec extends ObjectCodec {
       }
     } else {
       // Uses ID from XML file as ID for cell in model
-      obj.setId(node.getAttribute('id'));
+      obj.setId(<string>node.getAttribute('id'));
     }
 
     // Preprocesses and removes all Id-references in order to use the
@@ -164,6 +164,7 @@ class CellCodec extends ObjectCodec {
             }
           }
 
+          // @ts-ignore dynamic assignment was in original implementation
           obj[attr] = object;
         }
       }

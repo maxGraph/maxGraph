@@ -13,6 +13,7 @@ import Cell from './Cell';
 import CellState from './CellState';
 import Shape from '../geometry/Shape';
 import CellArray from './CellArray';
+import { Graph } from '../Graph';
 
 class TemporaryCellStates {
   oldValidateCellState: Function | null;
@@ -50,13 +51,13 @@ class TemporaryCellStates {
     this.oldBounds = view.getGraphBounds();
     this.oldStates = view.getStates();
     this.oldScale = view.getScale();
-    this.oldDoRedrawShape = view.graph.cellRenderer.doRedrawShape;
+    this.oldDoRedrawShape = (<Graph>view.graph).cellRenderer.doRedrawShape;
 
     const self = this;
 
     // Overrides doRedrawShape and paint shape to add links on shapes
     if (getLinkForCellState != null) {
-      view.graph.cellRenderer.doRedrawShape = (state: CellState) => {
+      (<Graph>view.graph).cellRenderer.doRedrawShape = (state: CellState) => {
         const shape = <Shape>state?.shape;
         const oldPaint = shape.paint;
 
@@ -71,7 +72,7 @@ class TemporaryCellStates {
           }
         };
 
-        (<Function>self.oldDoRedrawShape).apply(view.graph.cellRenderer, [state]);
+        (<Function>self.oldDoRedrawShape).apply((<Graph>view.graph).cellRenderer, [state]);
         shape.paint = oldPaint;
       };
     }

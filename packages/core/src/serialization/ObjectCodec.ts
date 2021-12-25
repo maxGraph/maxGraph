@@ -873,7 +873,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Object to encode the node into.
    */
-  beforeDecode(dec: Codec, node: Element, obj: any): Element {
+  beforeDecode(dec: Codec, node: Element, obj: any): Element | null {
     return node;
   }
 

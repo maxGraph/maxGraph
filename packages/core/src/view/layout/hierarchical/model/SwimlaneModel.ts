@@ -569,7 +569,7 @@ class SwimlaneModel {
    */
   visit(
     visitor: Function,
-    dfsRoots: CellArray,
+    dfsRoots: GraphHierarchyNode[],
     trackAncestors: boolean,
     seenNodes
   ) {

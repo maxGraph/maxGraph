@@ -52,10 +52,10 @@ class GraphHierarchyModel {
     this.vertexMapper = new Dictionary();
     this.edgeMapper = new Dictionary();
     this.maxRank = 0;
-    const internalVertices = [];
+    const internalVertices: { [key: number]: GraphHierarchyNode[] } = {};
 
     if (vertices == null) {
-      vertices = this.graph.getChildVertices(parent);
+      vertices = graph.getChildVertices(parent);
     }
 
     this.maxRank = this.SOURCESCANSTARTRANK;
@@ -113,22 +113,22 @@ class GraphHierarchyModel {
   /**
    * Stores the largest rank number allocated
    */
-  maxRank: number | null = null;
+  maxRank: number;
 
   /**
    * Map from graph vertices to internal model nodes.
    */
-  vertexMapper = null;
+  vertexMapper: Dictionary<Cell, any>;
 
   /**
    * Map from graph edges to internal model edges
    */
-  edgeMapper = null;
+  edgeMapper: Dictionary<Cell, any>;
 
   /**
    * Mapping from rank number to actual rank
    */
-  ranks = null;
+  ranks: { [key: number]: number } | null = null;
 
   /**
    * Store of roots of this hierarchy model, these are real graph cells, not
@@ -380,8 +380,9 @@ class GraphHierarchyModel {
    * to create dummy nodes for edges that cross layers.
    */
   fixRanks(): void {
-    const rankList = [];
-    this.ranks = [];
+    // TODO: Should this be a CellArray?
+    const rankList: { [key: number]: Cell[] } = {};
+    this.ranks = {};
 
     for (let i = 0; i < this.maxRank + 1; i += 1) {
       rankList[i] = [];
@@ -405,7 +406,7 @@ class GraphHierarchyModel {
     }
 
     this.visit(
-      (parent, node, edge, layer, seen) => {
+      (parent: GraphHierarchyNode, node: GraphHierarchyNode, edge: GraphHierarchyNode, layer: number, seen: number) => {
         if (seen == 0 && node.maxRank < 0 && node.minRank < 0) {
           rankList[node.temp[0]].push(node);
           node.maxRank = node.temp[0];
@@ -543,7 +544,16 @@ class GraphHierarchyModel {
    * @param childHash the new hash code for this node
    * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
-  extendedDfs(parent: GraphHierarchyNode, root: GraphHierarchyNode, connectingEdge: GraphHierarchyNode, visitor, seen, ancestors, childHash, layer) {
+  extendedDfs(
+    parent: GraphHierarchyNode, 
+    root: GraphHierarchyNode, 
+    connectingEdge: GraphHierarchyNode, 
+    visitor, 
+    seen, 
+    ancestors, 
+    childHash, 
+    layer
+  ) {
     // Explanation of custom hash set. Previously, the ancestors variable
     // was passed through the dfs as a HashSet. The ancestors were copied
     // into a new HashSet and when the new child was processed it was also

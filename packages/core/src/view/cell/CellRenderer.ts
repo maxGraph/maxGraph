@@ -56,6 +56,7 @@ import { isNode } from '../../util/domUtils';
 import { CellStateStyles } from '../../types';
 import CellArray from './CellArray';
 import SelectionCellsHandler from '../handler/SelectionCellsHandler';
+import { Graph } from '../Graph';
 
 /**
  * Renders cells into a document object model. The <defaultShapes> is a global
@@ -159,7 +160,7 @@ class CellRenderer {
    */
   initializeShape(state: CellState) {
     if (state.shape) {
-      state.shape.dialect = state.view.graph.dialect;
+      state.shape.dialect = (<Graph>state.view.graph).dialect;
       this.configureShape(state);
       state.shape.init(state.view.getDrawPane());
     }
@@ -287,7 +288,7 @@ class CellRenderer {
     const shape: Shape | null = key === 'fontColor' ? state.text : state.shape;
 
     if (shape) {
-      const { graph } = state.view;
+      const graph = <Graph>state.view.graph;
 
       // @ts-ignore
       const value = shape[field];
@@ -345,7 +346,8 @@ class CellRenderer {
    * @param state <CellState> for which the label should be created.
    */
   getLabelValue(state: CellState) {
-    return state.view.graph.getLabel(state.cell);
+    const graph = <Graph>state.view.graph;
+    return graph.getLabel(state.cell);
   }
 
   /**
@@ -354,7 +356,7 @@ class CellRenderer {
    * @param state <CellState> for which the label should be created.
    */
   createLabel(state: CellState, value: string) {
-    const { graph } = state.view;
+    const graph = <Graph>state.view.graph;
 
     if (state.style.fontSize > 0 || state.style.fontSize == null) {
       // Avoids using DOM node for empty labels
@@ -384,7 +386,7 @@ class CellRenderer {
         state.style.textDirection ?? DEFAULT_TEXT_DIRECTION
       );
       state.text.opacity = state.style.textOpacity ?? 100;
-      state.text.dialect = isForceHtml ? DIALECT.STRICTHTML : state.view.graph.dialect;
+      state.text.dialect = isForceHtml ? DIALECT.STRICTHTML : graph.dialect;
       state.text.style = state.style;
       state.text.state = state;
       this.initializeLabel(state, state.text);
@@ -466,7 +468,8 @@ class CellRenderer {
    */
   initializeLabel(state: CellState, shape: Shape): void {
     if (Client.IS_SVG && Client.NO_FO && shape.dialect !== DIALECT.SVG) {
-      shape.init(state.view.graph.container);
+      const graph = <Graph>state.view.graph;
+      shape.init(graph.container);
     } else {
       shape.init(state.view.getDrawPane());
     }
@@ -478,7 +481,7 @@ class CellRenderer {
    * @param state <CellState> for which the overlay should be created.
    */
   createCellOverlays(state: CellState) {
-    const { graph } = state.view;
+    const graph = <Graph>state.view.graph;
     const overlays = graph.getCellOverlays(state.cell);
     const dict = new Dictionary<CellOverlay, Shape>();
 
@@ -487,7 +490,7 @@ class CellRenderer {
 
       if (!shape) {
         const tmp = new ImageShape(new Rectangle(), overlays[i].image.src);
-        tmp.dialect = state.view.graph.dialect;
+        tmp.dialect = graph.dialect;
         tmp.preserveImageAspect = false;
         tmp.overlay = overlays[i];
         this.initializeOverlay(state, tmp);
@@ -526,7 +529,7 @@ class CellRenderer {
    * <mxShape> that represents the overlay.
    */
   installCellOverlayListeners(state: CellState, overlay: CellOverlay, shape: Shape) {
-    const { graph } = state.view;
+    const graph = <Graph>state.view.graph;
 
     InternalEvent.addListener(shape.node, 'click', (evt: Event) => {
       if (graph.isEditing()) {
@@ -566,7 +569,7 @@ class CellRenderer {
    * @param state <CellState> for which the control should be created.
    */
   createControl(state: CellState) {
-    const { graph } = state.view;
+    const graph = <Graph>state.view.graph;
     const image = graph.getFoldingImage(state);
 
     if (graph.isFoldingEnabled() && image) {
@@ -595,7 +598,7 @@ class CellRenderer {
    * @param state <CellState> whose control click handler should be returned.
    */
   createControlClickHandler(state: CellState) {
-    const { graph } = state.view;
+    const graph = <Graph>state.view.graph;
 
     return (evt: Event) => {
       if (this.forceControlClickHandler || graph.isEnabled()) {
@@ -620,7 +623,7 @@ class CellRenderer {
     handleEvents: boolean,
     clickHandler: EventListener
   ): Element {
-    const { graph } = state.view;
+    const graph = <Graph>state.view.graph;
 
     // In the special case where the label is in HTML and the display is SVG the image
     // should go into the graph container directly in order to be clickable. Otherwise
@@ -728,7 +731,7 @@ class CellRenderer {
    * @param state <CellState> for which the event listeners should be isntalled.
    */
   installListeners(state: CellState) {
-    const { graph } = state.view;
+    const graph = <Graph>state.view.graph;
 
     // Workaround for touch devices routing all events for a mouse
     // gesture (down, move, up) via the initial DOM node. Same for
@@ -805,13 +808,13 @@ class CellRenderer {
    * @param state <CellState> whose label should be redrawn.
    */
   redrawLabel(state: CellState, forced: boolean) {
-    const { graph } = state.view;
+    const graph = <Graph>state.view.graph;
     const value = this.getLabelValue(state);
     const wrapping = graph.isWrapping(state.cell);
     const clipping = graph.isLabelClipped(state.cell);
     const isForceHtml =
-      state.view.graph.isHtmlLabel(state.cell) || (value && isNode(value));
-    const dialect = isForceHtml ? DIALECT_STRICTHTML : state.view.graph.dialect;
+    graph.isHtmlLabel(state.cell) || (value && isNode(value));
+    const dialect = isForceHtml ? DIALECT.STRICTHTML : graph.dialect;
     const overflow = state.style.overflow ?? 'visible';
 
     if (
@@ -955,7 +958,6 @@ class CellRenderer {
    * @param state <CellState> whose label bounds should be returned.
    */
   getLabelBounds(state: CellState): Rectangle {
-    const { graph } = state.view;
     const { scale } = state.view;
     const isEdge = state.cell.isEdge();
     let bounds = new Rectangle(state.absoluteOffset.x, state.absoluteOffset.y);
@@ -1150,7 +1152,7 @@ class CellRenderer {
    * @param state <CellState> whose control should be redrawn.
    */
   redrawControl(state: CellState, forced: boolean = false): void {
-    const image = state.view.graph.getFoldingImage(state);
+    const image = (<Graph>state.view.graph).getFoldingImage(state);
 
     if (state.control != null && image != null) {
       const bounds = this.getControlBounds(state, image.width, image.height);
@@ -1249,6 +1251,7 @@ class CellRenderer {
     node: HTMLElement | SVGElement | null,
     htmlNode: HTMLElement | SVGElement | null
   ) {
+    const graph = <Graph>state.view.graph;
     const shapes = this.getShapesForState(state);
 
     for (let i = 0; i < shapes.length; i += 1) {
@@ -1275,10 +1278,10 @@ class CellRenderer {
           // @ts-ignore
           const shapeNode: HTMLElement = <HTMLElement>shapes[i].node;
 
-          if (shapeNode.parentNode === state.view.graph.container) {
+          if (shapeNode.parentNode === graph.container) {
             let { canvas } = state.view;
 
-            while (canvas != null && canvas.parentNode !== state.view.graph.container) {
+            while (canvas != null && canvas.parentNode !== graph.container) {
               // @ts-ignore
               canvas = canvas.parentNode;
             }
@@ -1358,6 +1361,7 @@ class CellRenderer {
     rendering: boolean = true
   ): boolean {
     let shapeChanged = false;
+    const graph = <Graph>state.view.graph;
 
     // Forces creation of new shape if shape style has changed
     if (
@@ -1372,7 +1376,7 @@ class CellRenderer {
 
     if (
       state.shape == null &&
-      state.view.graph.container != null &&
+      graph.container != null &&
       state.cell !== state.view.currentRoot &&
       (state.cell.isVertex() || state.cell.isEdge())
     ) {
@@ -1388,9 +1392,7 @@ class CellRenderer {
         this.installListeners(state);
 
         // Forces a refresh of the handler if one exists
-        const selectionCellsHandler = state.view.graph.getPlugin(
-          'SelectionCellsHandler'
-        ) as SelectionCellsHandler;
+        const selectionCellsHandler = graph.getPlugin('SelectionCellsHandler') as SelectionCellsHandler;
         selectionCellsHandler.updateHandler(state);
       }
     } else if (
@@ -1402,9 +1404,7 @@ class CellRenderer {
       state.shape.resetStyles();
       this.configureShape(state);
       // LATER: Ignore update for realtime to fix reset of current gesture
-      const selectionCellsHandler = state.view.graph.getPlugin(
-        'SelectionCellsHandler'
-      ) as SelectionCellsHandler;
+      const selectionCellsHandler = graph.getPlugin('SelectionCellsHandler') as SelectionCellsHandler;
       selectionCellsHandler.updateHandler(state);
       force = true;
     }
