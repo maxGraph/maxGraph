@@ -19,7 +19,7 @@ import PanningHandler from './handler/PanningHandler';
 import PopupMenuHandler from './handler/PopupMenuHandler';
 import GraphView from './GraphView';
 import CellRenderer from './cell/CellRenderer';
-import CellEditor from './handler/CellEditor';
+import CellEditorHandler from './handler/CellEditorHandler';
 import Point from './geometry/Point';
 import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
 import Cell from './cell/Cell';
@@ -44,7 +44,7 @@ import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 import type { GraphPlugin, GraphPluginConstructor } from '../types';
 
 export const defaultPlugins: GraphPluginConstructor[] = [
-  CellEditor,
+  CellEditorHandler,
   TooltipHandler,
   SelectionCellsHandler,
   PopupMenuHandler,

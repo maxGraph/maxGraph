@@ -1,6 +1,6 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   xmlUtils,
   Multiplicity,
   mxKeyHandler,
@@ -87,7 +87,7 @@ const Template = ({ label, ...args }) => {
   );
 
   // Enables rubberband selection
-  new RubberBand(graph);
+  new RubberBandHandler(graph);
 
   // Removes cells when [DELETE] is pressed
   const keyHandler = new mxKeyHandler(graph);

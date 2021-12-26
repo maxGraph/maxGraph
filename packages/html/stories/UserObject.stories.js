@@ -141,7 +141,7 @@ const Template = ({ label, ...args }) => {
   };
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);

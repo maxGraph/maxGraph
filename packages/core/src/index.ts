@@ -63,7 +63,7 @@ export { default as VertexHandle } from './view/cell/VertexHandle';
 export { default as KeyHandler } from './view/handler/KeyHandler';
 export { default as PanningHandler } from './view/handler/PanningHandler';
 export { default as PopupMenuHandler } from './view/handler/PopupMenuHandler';
-export { default as RubberBand } from './view/handler/RubberBand';
+export { default as RubberBandHandler } from './view/handler/RubberBandHandler';
 export { default as SelectionCellsHandler } from './view/handler/SelectionCellsHandler';
 export { default as TooltipHandler } from './view/handler/TooltipHandler';
 export { default as VertexHandler } from './view/handler/VertexHandler';
@@ -197,7 +197,7 @@ export { default as UndoableEdit } from './view/undoable_changes/UndoableEdit';
 export { default as UndoManager } from './view/undoable_changes/UndoManager';
 
 export { default as Cell } from './view/cell/Cell';
-export { default as CellEditor } from './view/handler/CellEditor';
+export { default as CellEditorHandler } from './view/handler/CellEditorHandler';
 export { default as CellOverlay } from './view/cell/CellOverlay';
 export { default as CellPath } from './view/cell/CellPath';
 export { default as CellRenderer } from './view/cell/CellRenderer';

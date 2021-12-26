@@ -34,7 +34,7 @@ import { isNode } from '../util/domUtils';
 import { getViewXml, getXml } from '../util/xmlUtils';
 import { load, post, submit } from '../util/MaxXmlRequest';
 import PopupMenuHandler from 'src/view/handler/PopupMenuHandler';
-import RubberBand from '../view/handler/RubberBand';
+import RubberBandHandler from '../view/handler/RubberBandHandler';
 import InternalEvent from '../view/event/InternalEvent';
 import InternalMouseEvent from 'src/view/event/InternalMouseEvent';
 import { MouseListenerSet } from 'src/types';
@@ -435,7 +435,7 @@ class Editor extends EventSource {
   ignoredChanges: number | null=null;
   swimlaneLayout: any;
   diagramLayout: any;
-  rubberband: RubberBand | null=null;
+  rubberband: RubberBandHandler | null=null;
   isActive: boolean | null=null;
   properties: any;
   destroyed: boolean=false;
@@ -1518,7 +1518,7 @@ class Editor extends EventSource {
 
       // Install rubberband selection as the last
       // action handler in the chain
-      this.rubberband = new RubberBand(this.graph);
+      this.rubberband = new RubberBandHandler(this.graph);
 
       // Disables the context menu
       if (this.disableContextMenu) {

@@ -44,8 +44,8 @@ export default MYNAMEHERE;
 
 
     // Makes the background of the in-place editor non-transparent
-    let previousStartEditing = CellEditor.prototype.startEditing;
-    CellEditor.prototype.startEditing = (cell, trigger) =>
+    let previousStartEditing = CellEditorHandler.prototype.startEditing;
+    CellEditorHandler.prototype.startEditing = (cell, trigger) =>
     {
       previousStartEditing.apply(this, arguments);
 

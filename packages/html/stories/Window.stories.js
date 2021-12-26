@@ -2,7 +2,7 @@ import {
   Graph,
   MaxWindow,
   mxKeyHandler,
-  RubberBand,
+  RubberBandHandler,
   InternalEvent,
   MaxLog,
   domUtils,
@@ -57,7 +57,7 @@ const Template = ({ label, ...args }) => {
   graph.setTooltips(true);
   graph.setPanning(true);
 
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   new mxKeyHandler(graph);
 

@@ -1,6 +1,6 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   utils,
   eventUtils,
   InternalEvent,
@@ -53,7 +53,7 @@ const Template = ({ label, ...args }) => {
     const graph = new Graph(container);
 
     // Enables rubberband selection
-    if (args.rubberBand) new RubberBand(graph);
+    if (args.rubberBand) new RubberBandHandler(graph);
 
     InternalEvent.addListener(container, 'dragover', function (evt) {
       if (graph.isEnabled()) {

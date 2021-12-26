@@ -8,7 +8,7 @@ import {
   CellHighlight,
   constants,
   VertexHandler,
-  RubberBand,
+  RubberBandHandler,
   Shape,
   StencilShape,
   StencilShapeRegistry,
@@ -163,7 +163,7 @@ const Template = ({ label, ...args }) => {
   style.shadow = '1';
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

@@ -41,7 +41,7 @@ import CellArray from '../cell/CellArray';
 import CellState from '../cell/CellState';
 import EventObject from '../event/EventObject';
 import ConnectionHandler from './ConnectionHandler';
-import CellEditor from './CellEditor';
+import CellEditorHandler from './CellEditorHandler';
 
 import type { ColorValue, GraphPlugin } from '../../types';
 
@@ -470,7 +470,7 @@ class GraphHandler implements GraphPlugin {
     if (!this.graph.isToggleEvent(me.getEvent()) || !isAltDown(me.getEvent())) {
       while (c) {
         if (selectionCellsHandler.isHandled(c)) {
-          const cellEditor = this.graph.getPlugin('CellEditor') as CellEditor;
+          const cellEditor = this.graph.getPlugin('CellEditorHandler') as CellEditorHandler;
           return cellEditor.getEditingCell() !== c;
         }
 
@@ -581,7 +581,7 @@ class GraphHandler implements GraphPlugin {
             this.graph.isCellMovable(cell) &&
             (!cell.isEdge() ||
               this.graph.getSelectionCount() > 1 ||
-              geo.points.length > 0 ||
+              (geo.points && geo.points.length > 0) ||
               !cell.getTerminal(true) ||
               !cell.getTerminal(false) ||
               this.graph.isAllowDanglingEdges() ||
@@ -1138,7 +1138,7 @@ class GraphHandler implements GraphPlugin {
 
               // Draws the live preview
               if (!this.cloning) {
-                state.view.graph.cellRenderer.redraw(state, true);
+                (<Graph>state.view.graph).cellRenderer.redraw(state, true);
 
                 // Forces redraw of connected edges after all states
                 // have been updated but avoids update of state
@@ -1240,7 +1240,7 @@ class GraphHandler implements GraphPlugin {
 
             // Draws the live preview but avoids update of state
             if (!this.cloning) {
-              state.view.graph.cellRenderer.redraw(state, true);
+              (<Graph>state.view.graph).cellRenderer.redraw(state, true);
             }
           }
         }

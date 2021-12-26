@@ -1,6 +1,6 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   InternalEvent,
   CellRenderer,
   EdgeHandler,
@@ -94,7 +94,7 @@ const Template = ({ label, ...args }) => {
   graph.view.setTranslate(20, 20);
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

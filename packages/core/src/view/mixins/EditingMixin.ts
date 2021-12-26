@@ -5,7 +5,7 @@ import InternalEvent from '../event/InternalEvent';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import { Graph } from '../Graph';
 import { mixInto } from '../../util/utils';
-import CellEditor from '../handler/CellEditor';
+import CellEditorHandler from '../handler/CellEditorHandler';
 
 declare module '../Graph' {
   interface Graph {
@@ -76,7 +76,7 @@ const EditingMixin: PartialType = {
   },
 
   /**
-   * Fires a {@link startEditing} event and invokes {@link CellEditor.startEditing}
+   * Fires a {@link startEditing} event and invokes {@link CellEditorHandler.startEditing}
    * on {@link editor}. After editing was started, a {@link editingStarted} event is
    * fired.
    *
@@ -96,7 +96,7 @@ const EditingMixin: PartialType = {
           new EventObject(InternalEvent.START_EDITING, 'cell', cell, 'event', evt)
         );
 
-        const cellEditor = this.getPlugin('CellEditor') as CellEditor;
+        const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
         cellEditor.startEditing(cell, evt);
 
         this.fireEvent(
@@ -126,7 +126,7 @@ const EditingMixin: PartialType = {
    * should be stored.
    */
   stopEditing(cancel = false) {
-    const cellEditor = this.getPlugin('CellEditor') as CellEditor;
+    const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
     cellEditor.stopEditing(cancel);
 
     this.fireEvent(new EventObject(InternalEvent.EDITING_STOPPED, 'cancel', cancel));
@@ -206,7 +206,7 @@ const EditingMixin: PartialType = {
    * @param cell {@link mxCell} that should be checked.
    */
   isEditing(cell = null) {
-    const cellEditor = this.getPlugin('CellEditor') as CellEditor;
+    const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
     const editingCell = cellEditor.getEditingCell();
     return !cell ? !!editingCell : cell === editingCell;
   },

@@ -5,7 +5,7 @@ import {
   HierarchicalLayout,
   Perimeter,
   InternalEvent,
-  RubberBand,
+  RubberBandHandler,
   constants,
 } from '@maxgraph/core';
 
@@ -42,7 +42,7 @@ const Template = ({ label, ...args }) => {
   const graph = new Graph(container);
 
   // Adds rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Changes the default vertex style in-place
   let style = graph.getStylesheet().getDefaultVertexStyle();

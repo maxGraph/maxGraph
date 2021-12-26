@@ -2,7 +2,7 @@ import {
   Graph,
   ConnectionHandler,
   ImageBox,
-  RubberBand,
+  RubberBandHandler,
   mxKeyHandler,
   DomHelpers,
 } from '@maxgraph/core';
@@ -44,7 +44,7 @@ const Template = ({ label, ...args }) => {
   graph.setAllowLoops(true);
 
   // Enables rubberband selection and key handling
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   const keyHandler = new mxKeyHandler(graph);
 

@@ -148,8 +148,8 @@ import TooltipHandler from './TooltipHandler';
  *
  * @param graph Reference to the enclosing <mxGraph>.
  */
-class CellEditor implements GraphPlugin {
-  static pluginId = 'CellEditor';
+class CellEditorHandler implements GraphPlugin {
+  static pluginId = 'CellEditorHandler';
 
   constructor(graph: Graph) {
     this.graph = graph;
@@ -1079,4 +1079,4 @@ class CellEditor implements GraphPlugin {
   }
 }
 
-export default CellEditor;
+export default CellEditorHandler;

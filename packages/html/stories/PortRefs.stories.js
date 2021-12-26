@@ -1,6 +1,6 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   Point,
   EdgeHandler,
   ConstraintHandler,
@@ -44,7 +44,7 @@ const Template = ({ label, ...args }) => {
   graph.setPortsEnabled(false);
 
   // Enables rubberband selection
-  new RubberBand(graph);
+  new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

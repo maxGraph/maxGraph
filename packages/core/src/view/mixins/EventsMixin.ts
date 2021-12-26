@@ -25,7 +25,7 @@ import { convertPoint, mixInto } from '../../util/utils';
 import { NONE, SHAPE } from '../../util/constants';
 import Client from '../../Client';
 import EventSource from '../event/EventSource';
-import CellEditor from '../handler/CellEditor';
+import CellEditorHandler from '../handler/CellEditorHandler';
 import { Graph } from '../Graph';
 import TooltipHandler from '../handler/TooltipHandler';
 
@@ -270,14 +270,14 @@ const EventsMixin: PartialType = {
    * If `true`, when editing is to be stopped by way of selection changing,
    * data in diagram changing or other means stopCellEditing is invoked, and
    * changes are saved. This is implemented in a focus handler in
-   * {@link CellEditor}.
+   * {@link CellEditorHandler}.
    * @default true
    */
   invokesStopCellEditing: true,
 
   /**
    * If `true`, pressing the enter key without pressing control or shift will stop
-   * editing and accept the new value. This is used in {@link CellEditor} to stop
+   * editing and accept the new value. This is used in {@link CellEditorHandler} to stop
    * cell editing. Note: You can always use F2 and escape to stop editing.
    * @default false
    */
@@ -1051,7 +1051,7 @@ const EventsMixin: PartialType = {
           Math.abs(this.initialTouchY - me.getGraphY()) < this.tolerance;
       }
 
-      const cellEditor = this.getPlugin('CellEditor') as CellEditor;
+      const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
 
       // Stops editing for all events other than from cellEditor
       if (

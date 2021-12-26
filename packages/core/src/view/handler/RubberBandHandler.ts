@@ -27,8 +27,8 @@ import EventSource from '../event/EventSource';
  * This is not built-into [mxGraph].
  * To enable rubberband selection in a graph, use the following code.
  */
-class RubberBand implements GraphPlugin {
-  static pluginId = 'RubberBand';
+class RubberBandHandler implements GraphPlugin {
+  static pluginId = 'RubberBandHandler';
 
   constructor(graph: Graph) {
     this.graph = graph;
@@ -372,4 +372,4 @@ class RubberBand implements GraphPlugin {
   }
 }
 
-export default RubberBand;
+export default RubberBandHandler;

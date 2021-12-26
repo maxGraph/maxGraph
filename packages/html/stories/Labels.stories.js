@@ -1,4 +1,4 @@
-import { Graph, RubberBand, mxKeyHandler, constants, Rectangle } from '@maxgraph/core';
+import { Graph, RubberBandHandler, mxKeyHandler, constants, Rectangle } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -28,7 +28,7 @@ const Template = ({ label, ...args }) => {
   graph.htmlLabels = true;
   graph.vertexLabelsMovable = true;
 
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   new mxKeyHandler(graph);
 

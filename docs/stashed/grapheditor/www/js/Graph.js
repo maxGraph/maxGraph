@@ -9382,7 +9382,7 @@ if (typeof VertexHandler != 'undefined')
 		/**
 		 * HTML in-place editor
 		 */
-		CellEditor.prototype.isContentEditing = function()
+		CellEditorHandler.prototype.isContentEditing = function()
 		{
 			let state = this.graph.view.getState(this.editingCell);
 			
@@ -9392,7 +9392,7 @@ if (typeof VertexHandler != 'undefined')
 		/**
 		 * Returns true if all selected text is inside a table element.
 		 */
-		CellEditor.prototype.isTableSelected = function()
+		CellEditorHandler.prototype.isTableSelected = function()
 		{
 			return this.graph.getParentByName(
 				this.graph.getSelectedElement(),
@@ -9407,7 +9407,7 @@ if (typeof VertexHandler != 'undefined')
 		 * Only the built-in function is invoked if shift is pressed or
 		 * if table cells are selected and shift is not pressed.
 		 */
-		CellEditor.prototype.alignText = function(align, evt)
+		CellEditorHandler.prototype.alignText = function(align, evt)
 		{
 			let shiftPressed = evt != null && mxEvent.isShiftDown(evt);
 			
@@ -9440,7 +9440,7 @@ if (typeof VertexHandler != 'undefined')
 		/**
 		 * Creates the keyboard event handler for the current graph and history.
 		 */
-		CellEditor.prototype.saveSelection = function()
+		CellEditorHandler.prototype.saveSelection = function()
 		{
 		    if (window.getSelection)
 		    {
@@ -9469,7 +9469,7 @@ if (typeof VertexHandler != 'undefined')
 		/**
 		 * Creates the keyboard event handler for the current graph and history.
 		 */
-		CellEditor.prototype.restoreSelection = function(savedSel)
+		CellEditorHandler.prototype.restoreSelection = function(savedSel)
 		{
 			try
 			{
@@ -9539,13 +9539,13 @@ if (typeof VertexHandler != 'undefined')
 		/**
 		 * HTML in-place editor
 		 */
-		CellEditor.prototype.escapeCancelsEditing = false;
+		CellEditorHandler.prototype.escapeCancelsEditing = false;
 
 		/**
 		 * Overridden to set CSS classes.
 		 */
-		let mxCellEditorStartEditing = CellEditor.prototype.startEditing;
-		CellEditor.prototype.startEditing = function(cell, trigger)
+		let mxCellEditorStartEditing = CellEditorHandler.prototype.startEditing;
+		CellEditorHandler.prototype.startEditing = function(cell, trigger)
 		{
 			cell = this.graph.getStartEditingCell(cell, trigger);
 
@@ -9595,8 +9595,8 @@ if (typeof VertexHandler != 'undefined')
 		/**
 		 * HTML in-place editor
 		 */
-		let cellEditorInstallListeners = CellEditor.prototype.installListeners;
-		CellEditor.prototype.installListeners = function(elt)
+		let cellEditorInstallListeners = CellEditorHandler.prototype.installListeners;
+		CellEditorHandler.prototype.installListeners = function(elt)
 		{
 			cellEditorInstallListeners.apply(this, arguments);
 
@@ -9715,7 +9715,7 @@ if (typeof VertexHandler != 'undefined')
 			}));
 		};
 
-		CellEditor.prototype.toggleViewMode = function()
+		CellEditorHandler.prototype.toggleViewMode = function()
 		{
 			let state = this.graph.view.getState(this.editingCell);
 			
@@ -9832,8 +9832,8 @@ if (typeof VertexHandler != 'undefined')
 			}
 		};
 		
-		let mxCellEditorResize = CellEditor.prototype.resize;
-		CellEditor.prototype.resize = function(state, trigger)
+		let mxCellEditorResize = CellEditorHandler.prototype.resize;
+		CellEditorHandler.prototype.resize = function(state, trigger)
 		{
 			if (this.textarea != null)
 			{
@@ -9894,8 +9894,8 @@ if (typeof VertexHandler != 'undefined')
 			}
 		};
 		
-		mxCellEditorGetInitialValue = CellEditor.prototype.getInitialValue;
-		CellEditor.prototype.getInitialValue = function(state, trigger)
+		mxCellEditorGetInitialValue = CellEditorHandler.prototype.getInitialValue;
+		CellEditorHandler.prototype.getInitialValue = function(state, trigger)
 		{
 			if (mxUtils.getValue(state.style, 'html', '0') == '0')
 			{
@@ -9916,8 +9916,8 @@ if (typeof VertexHandler != 'undefined')
 			}
 		};
 		
-		mxCellEditorGetCurrentValue = CellEditor.prototype.getCurrentValue;
-		CellEditor.prototype.getCurrentValue = function(state)
+		mxCellEditorGetCurrentValue = CellEditorHandler.prototype.getCurrentValue;
+		CellEditorHandler.prototype.getCurrentValue = function(state)
 		{
 			if (mxUtils.getValue(state.style, 'html', '0') == '0')
 			{
@@ -9940,8 +9940,8 @@ if (typeof VertexHandler != 'undefined')
 			}
 		};
 	
-		let mxCellEditorStopEditing = CellEditor.prototype.stopEditing;
-		CellEditor.prototype.stopEditing = function(cancel)
+		let mxCellEditorStopEditing = CellEditorHandler.prototype.stopEditing;
+		CellEditorHandler.prototype.stopEditing = function(cancel)
 		{
 			// Restores default view mode before applying value
 			if (this.codeViewMode)
@@ -9955,7 +9955,7 @@ if (typeof VertexHandler != 'undefined')
 			this.focusContainer();
 		};
 		
-		CellEditor.prototype.focusContainer = function()
+		CellEditorHandler.prototype.focusContainer = function()
 		{
 			try
 			{
@@ -9967,8 +9967,8 @@ if (typeof VertexHandler != 'undefined')
 			}
 		};
 	
-		let mxCellEditorApplyValue = CellEditor.prototype.applyValue;
-		CellEditor.prototype.applyValue = function(state, value)
+		let mxCellEditorApplyValue = CellEditorHandler.prototype.applyValue;
+		CellEditorHandler.prototype.applyValue = function(state, value)
 		{
 			// Removes empty relative child labels in edges
 			this.graph.getModel().beginUpdate();
@@ -9994,7 +9994,7 @@ if (typeof VertexHandler != 'undefined')
 		 * Returns the background color to be used for the editing box. This returns
 		 * the label background for edge labels and null for all other cases.
 		 */
-		CellEditor.prototype.getBackgroundColor = function(state)
+		CellEditorHandler.prototype.getBackgroundColor = function(state)
 		{
 			let color = mxUtils.getValue(state.style, 'backgroundColor', null);
 
@@ -10014,7 +10014,7 @@ if (typeof VertexHandler != 'undefined')
 			return color;
 		};
 		
-		CellEditor.prototype.getMinimumSize = function(state)
+		CellEditorHandler.prototype.getMinimumSize = function(state)
 		{
 			let scale = this.graph.getView().scale;
 			

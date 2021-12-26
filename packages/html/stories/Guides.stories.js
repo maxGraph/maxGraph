@@ -5,7 +5,7 @@ import {
   constants,
   EdgeHandler,
   EdgeStyle,
-  RubberBand,
+  RubberBandHandler,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -63,7 +63,7 @@ const Template = ({ label, ...args }) => {
   graph.alternateEdgeStyle = 'elbow=vertical';
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

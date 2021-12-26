@@ -1,4 +1,4 @@
-import { Graph, InternalEvent, RubberBand } from '@maxgraph/core';
+import { Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -30,7 +30,7 @@ const Template = ({ label, ...args }) => {
 
   const graph = new Graph(container);
 
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   const parent = graph.getDefaultParent();
 

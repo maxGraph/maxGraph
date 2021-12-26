@@ -1,6 +1,6 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   ConnectionHandler,
   ImageBox,
   MaxToolbar,
@@ -74,7 +74,7 @@ const Template = ({ label, ...args }) => {
   // Stops editing on enter or escape keypress
   const keyHandler = new mxKeyHandler(graph);
 
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   addVertex('/images/rectangle.gif', 100, 40, '');
   addVertex('/images/rounded.gif', 100, 40, 'shape=rounded');
