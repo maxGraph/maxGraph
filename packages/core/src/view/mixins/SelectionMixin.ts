@@ -63,7 +63,7 @@ declare module '../Graph' {
     selectCells: (
       vertices: boolean,
       edges: boolean,
-      parent: Cell,
+      parent?: Cell | null,
       selectGroups?: boolean
     ) => void;
     selectCellForEvent: (cell: Cell, evt: MouseEvent) => void;

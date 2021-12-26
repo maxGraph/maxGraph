@@ -78,7 +78,7 @@ const ValidationMixin: PartialType = {
    * @param source {@link mxCell} that represents the source terminal.
    * @param target {@link mxCell} that represents the target terminal.
    */
-  isEdgeValid(edge: Cell, source: Cell, target: Cell) {
+  isEdgeValid(edge: Cell | null, source: Cell | null, target: Cell | null) {
     return !this.getEdgeValidationError(edge, source, target);
   },
 

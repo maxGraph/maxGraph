@@ -168,7 +168,7 @@ declare module '../Graph' {
     getCellContainmentArea: (cell: Cell) => Rectangle | null;
     constrainChild: (cell: Cell, sizeFirst?: boolean) => void;
     getChildCells: (
-      parent: Cell | null,
+      parent?: Cell | null,
       vertices?: boolean | null,
       edges?: boolean | null
     ) => CellArray;
@@ -792,7 +792,7 @@ const CellsMixin: PartialType = {
         this.batchUpdate(() => {
           const p = param as number;
 
-          for (const cell of cells) {
+          for (const cell of <CellArray>cells) {
             const state = this.getView().getState(cell);
 
             if (state != null) {

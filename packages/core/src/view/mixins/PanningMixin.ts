@@ -1,4 +1,5 @@
-import { hasScrollbars, mixInto } from '../../util/utils';
+import { mixInto } from '../../util/utils';
+import { hasScrollbars } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import PanningHandler from '../handler/PanningHandler';

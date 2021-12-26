@@ -20,7 +20,8 @@ interface HTMLSelectOptionWithFunct extends HTMLOptionElement {
 };
 
 interface HTMLImageElementWithProps extends HTMLImageElement {
-  
+  initialClassName?: any;
+  altIcon?: any;
 };
 
 /**
@@ -42,9 +43,9 @@ class MaxToolbar extends EventSource {
   }
 
   menu: PopupMenu | null = null;
-  currentImg: HTMLImageElement | HTMLButtonElement | null = null;
-  selectedMode: HTMLImageElement | null = null;
-  defaultMode: HTMLImageElement | HTMLButtonElement | null = null;
+  currentImg: HTMLImageElementWithProps | HTMLButtonElement | null = null;
+  selectedMode: HTMLImageElementWithProps | null = null;
+  defaultMode: HTMLImageElementWithProps | HTMLButtonElement | null = null;
   defaultFunction: Function | null = null;
 
   /**
@@ -127,7 +128,7 @@ class MaxToolbar extends EventSource {
 
     const mouseHandler = (evt: MouseEvent) => {
       if (pressedIcon != null) {
-        img.setAttribute('src', icon);
+        img.setAttribute('src', <string>icon);
       } else {
         img.style.backgroundColor = '';
       }
@@ -260,9 +261,14 @@ class MaxToolbar extends EventSource {
    * be selected at a time. The currently selected item is the default item
    * after a reset of the toolbar.
    */
-  addSwitchMode(title: string, icon: string, funct: () => void, pressedIcon: string, style: string) {
-    const img = document.createElement('img');
-    img.initialClassName = style || 'mxToolbarMode';
+  addSwitchMode(
+    title: string, 
+    icon: string, funct: () => void, 
+    pressedIcon: string, 
+    style: string='mxToolbarMode'
+  ) {
+    const img = <HTMLImageElementWithProps>document.createElement('img');
+    img.initialClassName = style;
     img.className = img.initialClassName;
     img.setAttribute('src', icon);
     img.altIcon = pressedIcon;
@@ -271,14 +277,15 @@ class MaxToolbar extends EventSource {
       img.setAttribute('title', title);
     }
 
-    InternalEvent.addListener(img, 'click', (evt) => {
-      let tmp = this.selectedMode.altIcon;
+    InternalEvent.addListener(img, 'click', (evt: MouseEvent) => {
+      const selectedModeImg = <HTMLImageElementWithProps>this.selectedMode;
+      let tmp = selectedModeImg.altIcon;
 
       if (tmp != null) {
-        this.selectedMode.altIcon = this.selectedMode.getAttribute('src');
-        this.selectedMode.setAttribute('src', tmp);
+        selectedModeImg.altIcon = selectedModeImg.getAttribute('src');
+        selectedModeImg.setAttribute('src', tmp);
       } else {
-        this.selectedMode.className = this.selectedMode.initialClassName;
+        selectedModeImg.className = selectedModeImg.initialClassName;
       }
 
       if (this.updateDefaultMode) {
@@ -330,11 +337,13 @@ class MaxToolbar extends EventSource {
     toggle: boolean=false
   ) {
     toggle = toggle != null ? toggle : true;
-    const img = document.createElement(icon != null ? 'img' : 'button');
+    const img = <HTMLImageElementWithProps>document.createElement(icon != null ? 'img' : 'button');
 
     img.initialClassName = style || 'mxToolbarMode';
     img.className = img.initialClassName;
-    img.setAttribute('src', icon);
+    if (icon) {
+      img.setAttribute('src', icon);
+    }
     img.altIcon = pressedIcon;
 
     if (title != null) {
@@ -368,7 +377,7 @@ class MaxToolbar extends EventSource {
    * DOM node as selected. This function fires a select event with the given
    * function as a parameter.
    */
-  selectMode(domNode: HTMLImageElement, funct: Function): void {
+  selectMode(domNode: HTMLImageElement, funct: Function | null=null): void {
     if (this.selectedMode != domNode) {
       if (this.selectedMode != null) {
         const tmp = this.selectedMode.altIcon;
@@ -404,7 +413,7 @@ class MaxToolbar extends EventSource {
       // The last selected switch mode will be activated
       // so the function was already executed and is
       // no longer required here
-      this.selectMode(this.defaultMode, this.defaultFunction);
+      this.selectMode(<HTMLImageElement>this.defaultMode, this.defaultFunction);
     }
   }
 

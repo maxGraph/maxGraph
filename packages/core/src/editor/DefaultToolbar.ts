@@ -8,7 +8,7 @@
 import Client from '../Client';
 import MaxToolbar from '../gui/MaxToolbar';
 import Geometry from '../view/geometry/Geometry';
-import { convertPoint } from '../util/utils';
+import { convertPoint } from '../util/styleUtils';
 import InternalEvent from '../view/event/InternalEvent';
 import { getClientX, getClientY } from '../util/eventUtils';
 import { makeDraggable } from '../util/gestureUtils';
@@ -16,6 +16,7 @@ import Editor from './Editor';
 import Cell from 'src/view/cell/Cell';
 import CellArray from 'src/view/cell/CellArray';
 import { Graph } from 'src/view/Graph';
+import EventObject from 'src/view/event/EventObject';
 
 /**
  * Toolbar for the editor. This modifies the state of the graph
@@ -88,16 +89,16 @@ class DefaultToolbar {
 
       // Installs the insert function in the editor if an item is
       // selected in the toolbar
-      this.toolbar.addListener(InternalEvent.SELECT, (sender: Element, evt: InternalEvent) => {
+      this.toolbar.addListener(InternalEvent.SELECT, (sender: Element, evt: EventObject) => {
         const funct = evt.getProperty('function');
 
         if (funct != null) {
-          this.editor.insertFunction = () => {
+          (<Editor>this.editor).insertFunction = () => {
             funct.apply(this, [container]);
-            this.toolbar.resetMode();
+            (<MaxToolbar>this.toolbar).resetMode();
           };
         } else {
-          this.editor.insertFunction = null;
+          (<Editor>this.editor).insertFunction = null;
         }
       });
 
@@ -108,8 +109,8 @@ class DefaultToolbar {
         }
       };
 
-      this.editor.graph.addListener(InternalEvent.DOUBLE_CLICK, this.resetHandler);
-      this.editor.addListener(InternalEvent.ESCAPE, this.resetHandler);
+      (<Editor>this.editor).graph.addListener(InternalEvent.DOUBLE_CLICK, this.resetHandler);
+      (<Editor>this.editor).addListener(InternalEvent.ESCAPE, this.resetHandler);
     }
   }
 
@@ -125,10 +126,10 @@ class DefaultToolbar {
   addItem(title: string, icon: string, action: string, pressed?: string): any {
     const clickHandler = () => {
       if (action != null && action.length > 0) {
-        this.editor.execute(action);
+        (<Editor>this.editor).execute(action);
       }
     };
-    return this.toolbar.addItem(title, icon, clickHandler, pressed);
+    return (<MaxToolbar>this.toolbar).addItem(title, icon, clickHandler, pressed);
   }
 
   /**
@@ -138,14 +139,14 @@ class DefaultToolbar {
    */
   addSeparator(icon?: string): void {
     icon = icon || `${Client.imageBasePath}/separator.gif`;
-    this.toolbar.addSeparator(icon);
+    (<MaxToolbar>this.toolbar).addSeparator(icon);
   }
 
   /**
    * Helper method to invoke {@link MaxToolbar.addCombo} on toolbar and return the resulting DOM node.
    */
   addCombo(): HTMLElement {
-    return this.toolbar.addCombo();
+    return (<MaxToolbar>this.toolbar).addCombo();
   }
 
   /**
@@ -155,7 +156,7 @@ class DefaultToolbar {
    * @param title String that represents the title of the combo.
    */
   addActionCombo(title: string) {
-    return this.toolbar.addActionCombo(title);
+    return (<MaxToolbar>this.toolbar).addActionCombo(title);
   }
 
   /**
@@ -167,7 +168,7 @@ class DefaultToolbar {
    */
   addActionOption(combo: HTMLElement, title: string, action: string): void {
     const clickHandler = () => {
-      this.editor.execute(action);
+      (<Editor>this.editor).execute(action);
     };
 
     this.addOption(combo, title, clickHandler);
@@ -180,8 +181,8 @@ class DefaultToolbar {
    * @param title - String that represents the title of the combo.
    * @param value - Object that represents the value of the option.
    */
-  addOption(combo: HTMLElement, title: string, value: object): HTMLElement {
-    return this.toolbar.addOption(combo, title, value);
+  addOption(combo: HTMLSelectElement, title: string, value: object): HTMLElement {
+    return (<MaxToolbar>this.toolbar).addOption(combo, title, value);
   }
 
   /**
@@ -194,15 +195,21 @@ class DefaultToolbar {
    * @param pressed - Optional URL of the icon that represents the pressed state.
    * @param funct - Optional JavaScript function that takes the {@link Editor} as the first and only argument that is executed after the mode has been selected.
    */
-  addMode(title: string, icon: string, mode: string, pressed?: string, funct?: Function): any {
+  addMode(
+    title: string, 
+    icon: string, 
+    mode: string, 
+    pressed: string | null=null, 
+    funct: Function | null=null
+  ): any {
     const clickHandler = () => {
-      this.editor.setMode(mode);
+      (<Editor>this.editor).setMode(mode);
 
       if (funct != null) {
-        funct(this.editor);
+        funct((<Editor>this.editor));
       }
     };
-    return this.toolbar.addSwitchMode(title, icon, clickHandler, pressed);
+    return (<MaxToolbar>this.toolbar).addSwitchMode(title, icon, clickHandler, pressed);
   }
 
   /**
@@ -222,7 +229,14 @@ class DefaultToolbar {
    * @param toggle Optional boolean that specifies if the item can be toggled.
    * Default is true.
    */
-  addPrototype(title: string, icon: string, ptype, pressed: string, insert, toggle: boolean=true): HTMLImageElement | HTMLButtonElement {
+  addPrototype(
+    title: string, 
+    icon: string, 
+    ptype: Function | Cell, 
+    pressed: string, 
+    insert, 
+    toggle: boolean=true
+  ): HTMLImageElement | HTMLButtonElement {
     // Creates a wrapper function that is in charge of constructing
     // the new cell instance to be inserted into the graph
     const factory = () => {
@@ -230,9 +244,8 @@ class DefaultToolbar {
         return ptype();
       }
       if (ptype != null) {
-        return this.editor.graph.cloneCell(ptype);
+        return (<Editor>this.editor).graph.cloneCell(ptype);
       }
-
       return null;
     };
 
@@ -240,16 +253,16 @@ class DefaultToolbar {
     // after this item has been selected in the toolbar
     const clickHandler = (evt: MouseEvent, cell: Cell) => {
       if (typeof insert === 'function') {
-        insert(this.editor, factory(), evt, cell);
+        insert((<Editor>this.editor), factory(), evt, cell);
       } else {
         this.drop(factory(), evt, cell);
       }
 
-      this.toolbar.resetMode();
+      (<MaxToolbar>this.toolbar).resetMode();
       InternalEvent.consume(evt);
     };
 
-    const img = this.toolbar.addMode(title, icon, clickHandler, pressed, null, toggle);
+    const img = (<MaxToolbar>this.toolbar).addMode(title, icon, clickHandler, pressed, null, toggle);
 
     // Creates a wrapper function that calls the click handler without
     // the graph argument
@@ -270,8 +283,8 @@ class DefaultToolbar {
    * @param evt - Mouse event that represents the drop.
    * @param target - Optional {@link Cell} that represents the drop target.
    */
-  drop(vertex: Cell, evt: MouseEvent, target?: Cell): void {
-    const { graph } = this.editor;
+  drop(vertex: Cell, evt: MouseEvent, target: Cell | null=null): void {
+    const { graph } = (<Editor>this.editor);
     const model = graph.getModel();
 
     if (
@@ -297,8 +310,8 @@ class DefaultToolbar {
    * @param evt - Mouse event that represents the drop.
    * @param target - Optional {@link Cell} that represents the parent.
    */
-  insert(vertex: Cell, evt: MouseEvent, target?: Cell): any {
-    const { graph } = this.editor;
+  insert(vertex: Cell, evt: MouseEvent, target: Cell | null=null): any {
+    const { graph } = (<Editor>this.editor);
 
     if (graph.canImportCell(vertex)) {
       const x = getClientX(evt);
@@ -306,10 +319,10 @@ class DefaultToolbar {
       const pt = convertPoint(graph.container, x, y);
 
       // Splits the target edge or inserts into target group
-      if (graph.isSplitEnabled() && graph.isSplitTarget(target, new CellArray(vertex), evt)) {
+      if (target && graph.isSplitEnabled() && graph.isSplitTarget(target, new CellArray(vertex), evt)) {
         return graph.splitEdge(target, new CellArray(vertex), null, pt.x, pt.y);
       }
-      return this.editor.addVertex(target, vertex, pt.x, pt.y);
+      return (<Editor>this.editor).addVertex(target, vertex, pt.x, pt.y);
     }
     return null;
   }
@@ -321,7 +334,7 @@ class DefaultToolbar {
    * @param evt - Mouse event that represents the drop.
    * @param source - Optional {@link Cell} that represents the source terminal.
    */
-  connect(vertex: Cell, evt: MouseEvent, source?: Cell): void {
+  connect(vertex: Cell, evt: MouseEvent, source: Cell | null=null): void {
     const { graph } = <Editor>this.editor;
     const model = graph.getModel();
 
@@ -388,7 +401,7 @@ class DefaultToolbar {
    */
   installDropHandler(img: HTMLElement, dropHandler: Function): void {
     const sprite = document.createElement('img');
-    sprite.setAttribute('src', img.getAttribute('src'));
+    sprite.setAttribute('src', <string>img.getAttribute('src'));
 
     // Handles delayed loading of the images
     const loader = (evt: InternalEvent) => {
@@ -400,7 +413,7 @@ class DefaultToolbar {
       sprite.style.width = `${2 * img.offsetWidth}px`;
       sprite.style.height = `${2 * img.offsetHeight}px`;
 
-      makeDraggable(img, this.editor.graph, dropHandler, sprite);
+      makeDraggable(img, (<Editor>this.editor).graph, dropHandler, sprite);
       InternalEvent.removeListener(sprite, 'load', loader);
     };
   }
@@ -411,8 +424,8 @@ class DefaultToolbar {
    */
   destroy(): void {
     if (this.resetHandler != null) {
-      this.editor.graph.removeListener('dblclick', this.resetHandler);
-      this.editor.removeListener('escape', this.resetHandler);
+      (<Editor>this.editor).graph.removeListener('dblclick', this.resetHandler);
+      (<Editor>this.editor).removeListener('escape', this.resetHandler);
       this.resetHandler = null;
     }
 

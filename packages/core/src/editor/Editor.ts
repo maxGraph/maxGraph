@@ -2635,7 +2635,7 @@ class Editor extends EventSource {
       }
 
       if (this.rubberband != null) {
-        this.rubberband.destroy();
+        this.rubberband.onDestroy();
       }
 
       if (this.toolbar != null) {

@@ -8,8 +8,8 @@ import Rectangle from '../geometry/Rectangle';
 import TemporaryCellStates from '../cell/TemporaryCellStates';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
-import { intersects } from '../../util/utils';
-import { DIALECT_SVG } from '../../util/constants';
+import { intersects } from '../../util/mathUtils';
+import { DIALECT } from '../../util/constants';
 import { write } from '../../util/domUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
@@ -793,7 +793,7 @@ class PrintPreview {
     const overlayPane = view.getOverlayPane();
     const realScale = scale;
 
-    if (this.graph.dialect === DIALECT_SVG) {
+    if (this.graph.dialect === DIALECT.SVG) {
       view.createSvg();
 
       // Uses CSS transform for scaling

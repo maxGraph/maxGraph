@@ -3,8 +3,9 @@ import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import Rectangle from '../geometry/Rectangle';
-import { DIRECTION_NORTH, DIRECTION_SOUTH, DIRECTION_WEST } from '../../util/constants';
-import { getRotatedPoint, mixInto, toRadians } from '../../util/utils';
+import { DIRECTION } from '../../util/constants';
+import { mixInto } from '../../util/utils';
+import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
 import EventObject from '../event/EventObject';
@@ -160,7 +161,7 @@ const ConnectionsMixin: PartialType = {
       const bounds = <Rectangle>this.getView().getPerimeterBounds(terminalState);
       const direction = terminalState.style.direction;
 
-      if (direction === DIRECTION_NORTH || direction === DIRECTION_SOUTH) {
+      if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
         bounds.x += bounds.width / 2 - bounds.height / 2;
         bounds.y += bounds.height / 2 - bounds.width / 2;
         const tmp = bounds.width;
@@ -188,7 +189,7 @@ const ConnectionsMixin: PartialType = {
         let flipH = terminalState.style.flipH;
         let flipV = terminalState.style.flipV;
 
-        if (direction === DIRECTION_NORTH || direction === DIRECTION_SOUTH) {
+        if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
           const tmp = flipH;
           flipH = flipV;
           flipV = tmp;
@@ -366,16 +367,16 @@ const ConnectionsMixin: PartialType = {
 
       // Bounds need to be rotated by 90 degrees for further computation
       if (vertex.style.anchorPointDirection) {
-        if (direction === DIRECTION_NORTH) {
+        if (direction === DIRECTION.NORTH) {
           r1 += 270;
-        } else if (direction === DIRECTION_WEST) {
+        } else if (direction === DIRECTION.WEST) {
           r1 += 180;
-        } else if (direction === DIRECTION_SOUTH) {
+        } else if (direction === DIRECTION.SOUTH) {
           r1 += 90;
         }
 
         // Bounds need to be rotated by 90 degrees for further computation
-        if (direction === DIRECTION_NORTH || direction === DIRECTION_SOUTH) {
+        if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
           bounds.rotate90();
         }
       }
@@ -403,7 +404,7 @@ const ConnectionsMixin: PartialType = {
             sin = -1;
           }
 
-          point = getRotatedPoint(point, cos, sin, cx);
+          point = <Point>getRotatedPoint(point, cos, sin, cx);
         }
 
         point = this.getView().getPerimeterPoint(vertex, point, false);
@@ -414,7 +415,7 @@ const ConnectionsMixin: PartialType = {
           let flipH = vertex.style.flipH;
           let flipV = vertex.style.flipV;
 
-          if (direction === DIRECTION_NORTH || direction === DIRECTION_SOUTH) {
+          if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
             const temp = flipH;
             flipH = flipV;
             flipV = temp;

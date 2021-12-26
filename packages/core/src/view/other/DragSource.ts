@@ -14,7 +14,7 @@ import {
 } from '../../util/styleUtils';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
-import mxGuide from '../../util/Guide';
+import Guide from './Guide';
 import { DROP_TARGET_COLOR } from '../../util/constants';
 import Point from '../geometry/Point';
 import {
@@ -29,7 +29,6 @@ import {
 import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';
 import { Graph } from '../Graph';
-import Guide from '../../util/Guide';
 import Cell from '../cell/Cell';
 import GraphHandler from '../handler/GraphHandler';
 
@@ -524,7 +523,7 @@ class DragSource {
     // Guide is only needed if preview element is used
     if (this.isGuidesEnabled() && this.previewElement) {
       const graphHandler = graph.getPlugin('GraphHandler') as GraphHandler;
-      this.currentGuide = new mxGuide(graph, graphHandler.getGuideStates());
+      this.currentGuide = new Guide(graph, graphHandler.getGuideStates());
     }
 
     if (this.highlightDropTargets) {

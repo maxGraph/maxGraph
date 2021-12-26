@@ -1,6 +1,8 @@
 import Cell from '../cell/Cell';
 import Rectangle from '../geometry/Rectangle';
-import { convertPoint, getValue, mixInto, mod } from '../../util/utils';
+import { mixInto } from '../../util/utils';
+import { convertPoint } from '../../util/styleUtils';
+import { mod } from '../../util/mathUtils';
 import {
   DEFAULT_STARTSIZE,
   DIRECTION,
@@ -25,7 +27,7 @@ declare module '../Graph' {
     getSwimlaneDirection: (style: CellStateStyles) => DirectionValue;
     getActualStartSize: (swimlane: Cell, ignoreState: boolean) => Rectangle;
     isSwimlane: (cell: Cell, ignoreState?: boolean) => boolean;
-    isValidDropTarget: (cell: Cell, cells?: CellArray | null, evt?: MouseEvent | null) => boolean;
+    isValidDropTarget: (cell: Cell, cells: CellArray, evt?: MouseEvent | null) => boolean;
     getDropTarget: (
       cells: CellArray,
       evt: MouseEvent,
