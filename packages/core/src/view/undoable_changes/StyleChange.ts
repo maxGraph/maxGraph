@@ -1,5 +1,7 @@
 import Cell from '../cell/Cell';
 import Model from '../other/Model';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import GenericChangeCodec from './GenericChangeCodec';
 
 import type { UndoableChange } from '../../types';
 
@@ -31,4 +33,7 @@ class StyleChange implements UndoableChange {
   }
 }
 
+CodecRegistry.register(
+  new GenericChangeCodec(new StyleChange(), 'style')
+);
 export default StyleChange;

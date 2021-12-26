@@ -243,25 +243,24 @@ class GraphLayout {
    * Determines the offset of the given parent to the parent
    * of the layout
    */
-  getParentOffset(parent: Cell): Point {
+  getParentOffset(parent: Cell | null): Point {
     const result = new Point();
 
     if (parent != null && parent !== this.parent) {
       const model = this.graph.getModel();
 
-      if (model.isAncestor(this.parent, parent)) {
-        let parentGeo = parent.getGeometry();
+      if (this.parent && this.parent.isAncestor(parent)) {
+        let parentGeo = <Geometry>parent.getGeometry();
 
         while (parent !== this.parent) {
           result.x += parentGeo.x;
           result.y += parentGeo.y;
 
-          parent = parent.getParent();
-          parentGeo = parent.getGeometry();
+          parent = <Cell>parent.getParent();
+          parentGeo = <Geometry>parent.getGeometry();
         }
       }
     }
-
     return result;
   }
 

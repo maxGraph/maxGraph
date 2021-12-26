@@ -1,7 +1,11 @@
 import Model from '../other/Model';
+import Cell from '../cell/Cell';
+import ObjectCodec from '../../serialization/ObjectCodec';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import { NODETYPE } from '../../util/constants';
 
 import type { UndoableChange } from '../../types';
-import Cell from '../cell/Cell';
+import Codec from 'src/serialization/Codec';
 
 /**
  * Action to add or remove a child in a model.
@@ -13,7 +17,7 @@ import Cell from '../cell/Cell';
  *
  * @class ChildChange
  */
-class ChildChange implements UndoableChange {
+export class ChildChange implements UndoableChange {
   model: Model;
   parent: Cell | null;
   child: Cell;
@@ -103,4 +107,147 @@ class ChildChange implements UndoableChange {
   }
 }
 
+/**
+ * Codec for <mxChildChange>s. This class is created and registered
+ * dynamically at load time and used implicitly via <Codec> and
+ * the <CodecRegistry>.
+ *
+ * Transient Fields:
+ *
+ * - model
+ * - previous
+ * - previousIndex
+ * - child
+ *
+ * Reference Fields:
+ *
+ * - parent
+ */
+export class ChildChangeCodec extends ObjectCodec {
+  constructor() {
+    super(
+      new ChildChange(),
+      ['model', 'child', 'previousIndex'],
+      ['parent', 'previous']
+    );
+  }
+
+  /**
+   * Returns true for the child attribute if the child
+   * cell had a previous parent or if we're reading the
+   * child as an attribute rather than a child node, in
+   * which case it's always a reference.
+   */
+  isReference(obj, attr, value, isWrite) {
+    if (attr === 'child' && (!isWrite || obj.model.contains(obj.previous))) {
+      return true;
+    }
+    return this.idrefs.indexOf(attr) >= 0;
+  }
+
+  /**
+   * Excludes references to parent or previous if not in the model.
+   */
+  isExcluded(obj, attr, value, write) {
+    return (
+      super.isExcluded(obj, attr, value, write) ||
+      (write &&
+        value != null &&
+        (attr === 'previous' || attr === 'parent') &&
+        !obj.model.contains(value))
+    );
+  }
+
+  /**
+   * Encodes the child recusively and adds the result
+   * to the given node.
+   */
+  afterEncode(enc, obj, node) {
+    if (this.isReference(obj, 'child', obj.child, true)) {
+      // Encodes as reference (id)
+      node.setAttribute('child', enc.getId(obj.child));
+    } else {
+      // At this point, the encoder is no longer able to know which cells
+      // are new, so we have to encode the complete cell hierarchy and
+      // ignore the ones that are already there at decoding time. Note:
+      // This can only be resolved by moving the notify event into the
+      // execute of the edit.
+      enc.encodeCell(obj.child, node);
+    }
+
+    return node;
+  }
+
+  /**
+   * Decodes the any child nodes as using the respective
+   * codec from the registry.
+   */
+  beforeDecode(dec: Codec, node: Element, obj: any): any {
+    if (
+      node.firstChild != null &&
+      node.firstChild.nodeType === NODETYPE.ELEMENT
+    ) {
+      // Makes sure the original node isn't modified
+      node = node.cloneNode(true);
+
+      let tmp = node.firstChild;
+      obj.child = dec.decodeCell(tmp, false);
+
+      let tmp2 = tmp.nextSibling;
+      tmp.parentNode.removeChild(tmp);
+      tmp = tmp2;
+
+      while (tmp != null) {
+        tmp2 = tmp.nextSibling;
+
+        if (tmp.nodeType === NODETYPE.ELEMENT) {
+          // Ignores all existing cells because those do not need to
+          // be re-inserted into the model. Since the encoded version
+          // of these cells contains the new parent, this would leave
+          // to an inconsistent state on the model (ie. a parent
+          // change without a call to parentForCellChanged).
+          const id = tmp.getAttribute('id');
+
+          if (dec.lookup(id) == null) {
+            dec.decodeCell(tmp);
+          }
+        }
+
+        tmp.parentNode.removeChild(tmp);
+        tmp = tmp2;
+      }
+    } else {
+      const childRef = node.getAttribute('child');
+      obj.child = dec.getObject(childRef);
+    }
+    return node;
+  }
+
+  /**
+   * Restores object state in the child change.
+   */
+  afterDecode(dec: Codec, node: Element, obj: any): any {
+    // Cells are decoded here after a complete transaction so the previous
+    // parent must be restored on the cell for the case where the cell was
+    // added. This is needed for the local model to identify the cell as a
+    // new cell and register the ID.
+    if (obj.child != null) {
+      if (
+        obj.child.parent != null &&
+        obj.previous != null &&
+        obj.child.parent !== obj.previous
+      ) {
+        obj.previous = obj.child.parent;
+      }
+
+      obj.child.parent = obj.previous;
+      obj.previous = obj.parent;
+      obj.previousIndex = obj.index;
+    }
+
+    return obj;
+  }
+}
+
+CodecRegistry.register(new ChildChangeCodec());
 export default ChildChange;

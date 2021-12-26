@@ -7,7 +7,7 @@
 
 import Point from '../geometry/Point';
 import GraphLayout from './GraphLayout';
-import { intersects } from '../../util/utils';
+import { intersects } from '../../util/mathUtils';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
 import CellArray from '../cell/CellArray';

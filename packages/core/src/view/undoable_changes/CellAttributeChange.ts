@@ -1,5 +1,7 @@
 import { isNullish } from '../../util/utils';
 import Cell from '../cell/Cell';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import GenericChangeCodec from './GenericChangeCodec';
 
 import type { UndoableChange } from '../../types';
 
@@ -63,4 +65,7 @@ class CellAttributeChange implements UndoableChange {
   }
 }
 
+CodecRegistry.register(
+  new GenericChangeCodec(new CellAttributeChange(), 'value')
+);
 export default CellAttributeChange;

@@ -1,7 +1,10 @@
 import Cell from '../cell/Cell';
 import Model from '../other/Model';
+import ObjectCodec from '../../serialization/ObjectCodec';
+import CodecRegistry from '../../serialization/CodecRegistry';
 
 import type { UndoableChange } from '../../types';
+import Codec from 'src/serialization/Codec';
 
 /**
  * Action to change a terminal in a model.
@@ -11,7 +14,7 @@ import type { UndoableChange } from '../../types';
  * Constructs a change of a terminal in the
  * specified model.
  */
-class TerminalChange implements UndoableChange {
+export class TerminalChange implements UndoableChange {
   model: Model;
   cell: Cell;
   terminal: Cell | null;
@@ -45,4 +48,35 @@ class TerminalChange implements UndoableChange {
   }
 }
 
+/**
+ * Codec for <mxTerminalChange>s. This class is created and registered
+ * dynamically at load time and used implicitly via <Codec> and
+ * the <CodecRegistry>.
+ *
+ * Transient Fields:
+ *
+ * - model
+ * - previous
+ *
+ * Reference Fields:
+ *
+ * - cell
+ * - terminal
+ */
+export class TerminalChangeCodec extends ObjectCodec {
+  constructor() {
+    super(new TerminalChange(), ['model', 'previous'], ['cell', 'terminal']);
+  }
+
+  /**
+   * Restores the state by assigning the previous value.
+   */
+  afterDecode(dec: Codec, node: Element, obj: any): any {
+    obj.previous = obj.terminal;
+
+    return obj;
+  }
+}
+
+CodecRegistry.register(new TerminalChangeCodec());
 export default TerminalChange;

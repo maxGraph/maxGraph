@@ -1,5 +1,7 @@
 import Cell from '../cell/Cell';
 import Model from '../other/Model';
+import CodecRegistry from '../../serialization/CodecRegistry';
+import GenericChangeCodec from './GenericChangeCodec';
 
 import type { UndoableChange } from '../../types';
 
@@ -37,4 +39,7 @@ class CollapseChange implements UndoableChange {
   }
 }
 
+CodecRegistry.register(
+  new GenericChangeCodec(new CollapseChange(), 'collapsed')
+);
 export default CollapseChange;

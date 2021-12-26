@@ -41,6 +41,9 @@ import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 
+import CodecRegistry from '../serialization/CodecRegistry';
+import ObjectCodec from '../serialization/ObjectCodec';
+
 import type { GraphPlugin, GraphPluginConstructor } from '../types';
 
 export const defaultPlugins: GraphPluginConstructor[] = [
@@ -1438,4 +1441,34 @@ class Graph extends EventSource {
   }
 }
 
+/**
+ * Codec for <mxGraph>s. This class is created and registered
+ * dynamically at load time and used implicitly via <Codec>
+ * and the <CodecRegistry>.
+ *
+ * Transient Fields:
+ *
+ * - graphListeners
+ * - eventListeners
+ * - view
+ * - container
+ * - cellRenderer
+ * - editor
+ * - selection
+ */
+export class GraphCodec extends ObjectCodec {
+  constructor() {
+    super(new Graph(), [
+      'graphListeners',
+      'eventListeners',
+      'view',
+      'container',
+      'cellRenderer',
+      'editor',
+      'selection',
+    ]);
+  }
+}
+
+CodecRegistry.register(new GraphCodec());
 export { Graph };

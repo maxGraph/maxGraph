@@ -9,6 +9,9 @@ import InternalEvent from '../view/event/InternalEvent';
 import EventObject from '../view/event/EventObject';
 import KeyHandler from '../view/handler/KeyHandler';
 import Editor from './Editor';
+import ObjectCodec from '../serialization/ObjectCodec';
+import CodecRegistry from '../serialization/CodecRegistry';
+import Codec from 'src/serialization/Codec';
 
 /**
  * Binds keycodes to actionnames in an editor.  This aggregates an internal {@link handler} and extends the implementation of {@link mxKeyHandler.escape} to not only cancel the editing, but also hide the properties dialog and fire an <Editor.escape> event via {@link editor}.  An instance of this class is created by {@link Editor} and stored in {@link Editor.keyHandler}.
@@ -27,7 +30,7 @@ import Editor from './Editor';
  * See {@link mxKeyHandler}.
  * An {@link InternalEvent.ESCAPE} event is fired via the editor if the escape key is pressed.
  */
-class DefaultKeyHandler {
+export class DefaultKeyHandler {
   constructor(editor: Editor | null=null) {
     if (editor != null) {
       this.editor = editor;
@@ -86,4 +89,73 @@ class DefaultKeyHandler {
   }
 }
 
+/**
+ * Custom codec for configuring <DefaultKeyHandler>s. This class is created
+ * and registered dynamically at load time and used implicitly via
+ * <Codec> and the <CodecRegistry>. This codec only reads configuration
+ * data for existing key handlers, it does not encode or create key handlers.
+ */
+export class DefaultKeyHandlerCodec extends ObjectCodec {
+  constructor() {
+    super(new DefaultKeyHandler());
+  }
+
+  /**
+   * Returns null.
+   */
+  encode(enc: Codec, obj: any) {
+    return null;
+  }
+
+  /**
+   * Reads a sequence of the following child nodes
+   * and attributes:
+   *
+   * Child Nodes:
+   *
+   * add - Binds a keystroke to an actionname.
+   *
+   * Attributes:
+   *
+   * as - Keycode.
+   * action - Actionname to execute in editor.
+   * control - Optional boolean indicating if
+   *     the control key must be pressed.
+   *
+   * Example:
+   *
+   * ```javascript
+   * <DefaultKeyHandler as="keyHandler">
+   *   <add as="88" control="true" action="cut"/>
+   *   <add as="67" control="true" action="copy"/>
+   *   <add as="86" control="true" action="paste"/>
+   * </DefaultKeyHandler>
+   * ```
+   *
+   * The keycodes are for the x, c and v keys.
+   *
+   * See also: <DefaultKeyHandler.bindAction>,
+   * http://www.js-examples.com/page/tutorials__key_codes.html
+   */
+  decode(dec: Codec, _node: Element, into: any) {
+    if (into != null) {
+      const { editor } = into;
+      let node: Element | null = <Element | null>_node.firstChild;
+
+      while (node != null) {
+        if (!this.processInclude(dec, node, into) && node.nodeName === 'add') {
+          const as = node.getAttribute('as');
+          const action = node.getAttribute('action');
+          const control = node.getAttribute('control');
+
+          into.bindAction(as, action, control);
+        }
+        node = <Element | null>node.nextSibling;
+      }
+    }
+    return into;
+  }
+}
+
+CodecRegistry.register(new DefaultKeyHandlerCodec());
 export default DefaultKeyHandler;
