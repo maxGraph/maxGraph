@@ -1,18 +1,20 @@
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
+import { mixInto } from '../../util/utils';
 import {
   contains,
   getBoundingBox,
   getRotatedPoint,
-  getSizeForString,
   intersects,
-  mixInto,
   ptSegDistSq,
+  toRadians,
+} from '../../util/mathUtils';
+import {
   setCellStyleFlags,
   setCellStyles,
   setStyle,
-  toRadians,
-} from '../../util/utils';
+  getSizeForString,
+} from '../../util/styleUtils';
 import {
   ALIGN,
   DEFAULT_FONTSIZE,
@@ -169,8 +171,8 @@ declare module '../Graph' {
     constrainChild: (cell: Cell, sizeFirst?: boolean) => void;
     getChildCells: (
       parent?: Cell | null,
-      vertices?: boolean | null,
-      edges?: boolean | null
+      vertices?: boolean,
+      edges?: boolean
     ) => CellArray;
     getCellAt: (
       x: number,
@@ -186,7 +188,7 @@ declare module '../Graph' {
       width: number,
       height: number,
       parent?: Cell | null,
-      result?: CellArray | null,
+      result?: CellArray,
       intersection?: Rectangle | null,
       ignoreFn?: Function | null,
       includeDescendants?: boolean
@@ -401,7 +403,7 @@ type PartialCells = Pick<
 type PartialType = PartialGraph & PartialCells;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const CellsMixin: PartialType = {
+export const CellsMixin: PartialType = {
   /**
    * Specifies the return value for {@link isCellsResizable}.
    * @default true
@@ -820,7 +822,7 @@ const CellsMixin: PartialType = {
             }
           }
 
-          this.fireEvent(new EventObject(InternalEvent.ALIGN.CELLS, { align, cells }));
+          this.fireEvent(new EventObject(InternalEvent.ALIGN_CELLS, { align, cells }));
         });
       }
     }

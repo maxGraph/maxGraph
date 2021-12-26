@@ -73,15 +73,15 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**
    * Returns the cells this cell connects to on the next layer up
    */
-  getNextLayerConnectedCells(layer: number) {
+  getNextLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] {
     if (this.nextLayerConnectedCells == null) {
       this.nextLayerConnectedCells = [];
 
       for (let i = 0; i < this.temp.length; i += 1) {
-        this.nextLayerConnectedCells[i] = new CellArray();
+        this.nextLayerConnectedCells[i] = [];
 
         if (i === this.temp.length - 1) {
-          this.nextLayerConnectedCells[i].push(this.source as Cell);
+          this.nextLayerConnectedCells[i].push(this.source as GraphAbstractHierarchyCell);
         } else {
           this.nextLayerConnectedCells[i].push(this);
         }
@@ -98,10 +98,10 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
       this.previousLayerConnectedCells = [];
 
       for (let i = 0; i < this.temp.length; i += 1) {
-        this.previousLayerConnectedCells[i] = new CellArray();
+        this.previousLayerConnectedCells[i] = [];
 
         if (i === 0) {
-          this.previousLayerConnectedCells[i].push(this.target as Cell);
+          this.previousLayerConnectedCells[i].push(this.target as GraphAbstractHierarchyCell);
         } else {
           this.previousLayerConnectedCells[i].push(this);
         }

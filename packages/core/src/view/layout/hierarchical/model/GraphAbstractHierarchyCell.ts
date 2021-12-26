@@ -41,12 +41,12 @@ class GraphAbstractHierarchyCell extends Cell {
   /**
    * A cached version of the cells this cell connects to on the next layer up
    */
-  nextLayerConnectedCells: CellArray[] | null = null;
+  nextLayerConnectedCells: { [key: number]: GraphAbstractHierarchyCell[] } | null = null;
 
   /**
    * A cached version of the cells this cell connects to on the next layer down
    */
-  previousLayerConnectedCells: CellArray[] | null = null;
+  previousLayerConnectedCells: { [key: number]: GraphAbstractHierarchyCell[] } | null = null;
 
   /**
    * Temporary variable for general use. Generally, try to avoid
@@ -78,14 +78,14 @@ class GraphAbstractHierarchyCell extends Cell {
   /**
    * Returns the cells this cell connects to on the next layer up
    */
-  getNextLayerConnectedCells(layer: number): CellArray | null {
+  getNextLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] | null {
     return null;
   }
 
   /**
    * Returns the cells this cell connects to on the next layer down
    */
-  getPreviousLayerConnectedCells(layer: number): CellArray | null {
+  getPreviousLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] | null {
     return null;
   }
 

@@ -6,9 +6,7 @@
  */
 import GraphAbstractHierarchyCell from './GraphAbstractHierarchyCell';
 import ObjectIdentity from '../../../../util/ObjectIdentity';
-import CellArray from '../../../cell/CellArray';
 import Cell from '../../../cell/Cell';
-import GraphHierarchyEdge from './GraphHierarchyEdge';
 
 /**
  * An abstraction of a hierarchical edge for the hierarchy layout
@@ -25,7 +23,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   constructor(cell: Cell) {
     super();
     this.cell = cell;
-    this.id = ObjectIdentity.get(cell);
+    this.id = <string>ObjectIdentity.get(cell);
     this.connectsAsTarget = [];
     this.connectsAsSource = [];
   }
@@ -33,22 +31,22 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   /**
    * The graph cell this object represents.
    */
-  cell: Cell | null = null;
+  cell: Cell;
 
   /**
    * The object identity of the wrapped cell
    */
-  id: string | null = null;
+  id: string;
 
   /**
    * Collection of hierarchy edges that have this node as a target
    */
-  connectsAsTarget: GraphHierarchyEdge[] | null = null;
+  connectsAsTarget: GraphAbstractHierarchyCell[];
 
   /**
    * Collection of hierarchy edges that have this node as a source
    */
-  connectsAsSource: GraphHierarchyEdge[] | null = null;
+  connectsAsSource: GraphAbstractHierarchyCell[];
 
   /**
    * Assigns a unique hashcode for each node. Used by the model dfs instead
@@ -66,9 +64,9 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   /**
    * Returns the cells this cell connects to on the next layer up
    */
-  getNextLayerConnectedCells(layer: number): CellArray {
+  getNextLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] {
     if (this.nextLayerConnectedCells == null) {
-      this.nextLayerConnectedCells = [];
+      this.nextLayerConnectedCells = {};
       this.nextLayerConnectedCells[0] = [];
 
       for (let i = 0; i < this.connectsAsTarget.length; i += 1) {
@@ -77,10 +75,10 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
         if (edge.maxRank === -1 || edge.maxRank === layer + 1) {
           // Either edge is not in any rank or
           // no dummy nodes in edge, add node of other side of edge
-          this.nextLayerConnectedCells[0].push(<Cell>edge.source);
+          this.nextLayerConnectedCells[0].push(<GraphAbstractHierarchyCell>edge.source);
         } else {
           // Edge spans at least two layers, add edge
-          this.nextLayerConnectedCells[0].push(edge);
+          this.nextLayerConnectedCells[0].push(<GraphAbstractHierarchyCell>edge);
         }
       }
     }
@@ -90,7 +88,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   /**
    * Returns the cells this cell connects to on the next layer down
    */
-  getPreviousLayerConnectedCells(layer: number): CellArray {
+  getPreviousLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] {
     if (this.previousLayerConnectedCells == null) {
       this.previousLayerConnectedCells = [];
       this.previousLayerConnectedCells[0] = []; // new CellArray()??
@@ -100,7 +98,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
 
         if (edge.minRank === -1 || edge.minRank === layer - 1) {
           // No dummy nodes in edge, add node of other side of edge
-          this.previousLayerConnectedCells[0].push(<Cell>edge.target);
+          this.previousLayerConnectedCells[0].push(<GraphAbstractHierarchyCell>edge.target);
         } else {
           // Edge spans at least two layers, add edge
           this.previousLayerConnectedCells[0].push(edge);

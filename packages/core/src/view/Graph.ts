@@ -413,37 +413,20 @@ class Graph extends EventSource {
   }
 
   getContainer = () => this.container;
-
   getPlugin = (id: string) => this.pluginsMap[id] as unknown;
-
-  getCellRenderer() {
-    return this.cellRenderer;
-  }
-
+  getCellRenderer = () => this.cellRenderer;
   getDialect = () => this.dialect;
-
   isPageVisible = () => this.pageVisible;
-
   isPageBreaksVisible = () => this.pageBreaksVisible;
-
   getPageBreakColor = () => this.pageBreakColor;
-
   isPageBreakDashed = () => this.pageBreakDashed;
-
   getMinPageBreakDist = () => this.minPageBreakDist;
-
   isPreferPageSize = () => this.preferPageSize;
-
   getPageFormat = () => this.pageFormat;
-
   getPageScale = () => this.pageScale;
-
   isExportEnabled = () => this.exportEnabled;
-
   isImportEnabled = () => this.importEnabled;
-
   isIgnoreScrollbars = () => this.ignoreScrollbars;
-
   isTranslateToScrollPosition = () => this.translateToScrollPosition;
 
   getMinimumGraphSize = () => this.minimumGraphSize;

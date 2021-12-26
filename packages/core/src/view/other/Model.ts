@@ -1151,7 +1151,7 @@ class Model extends EventSource {
    *
    * @param {Cell} cell  to be cloned.
    */
-  cloneCell(cell: Cell | null=null, includeChildren: boolean | null=null): Cell | null {
+  cloneCell(cell: Cell | null=null, includeChildren: boolean=true): Cell | null {
     if (cell != null) {
       return new CellArray(cell).cloneCells(includeChildren)[0];
     }
