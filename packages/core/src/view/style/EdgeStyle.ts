@@ -893,8 +893,8 @@ class EdgeStyle {
    * @param points array of <mxPoint> to scale
    * @param scale the scaling to divide by
    */
-  static scalePointArray(points: Point[], scale: number) {
-    let result: any = [];
+  static scalePointArray(points: Point[], scale: number): (Point | null)[] | null {
+    let result: (Point | null)[] | null = [];
 
     if (points != null) {
       for (let i = 0; i < points.length; i += 1) {

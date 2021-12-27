@@ -6,7 +6,8 @@
  */
 import GraphLayout from './GraphLayout';
 import Rectangle from '../geometry/Rectangle';
-import { getNumber, getValue } from '../../util/utils';
+import { getValue } from '../../util/utils';
+import { getNumber } from '../../util/stringUtils';
 import { DEFAULT_STARTSIZE } from '../../util/constants';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
@@ -233,18 +234,18 @@ class StackLayout extends GraphLayout {
 
     if (this.allowGaps) {
       cells.sort((c1, c2) => {
-        const geo1 = c1.getGeometry();
-        const geo2 = c2.getGeometry();
+        const geo1 = <Geometry>c1.getGeometry();
+        const geo2 = <Geometry>c2.getGeometry();
 
         return this.horizontal
           ? geo1.x === geo2.x
             ? 0
-            : geo1.x > geo2.x > 0
+            : (geo1.x > geo2.x && geo2.x > 0)
             ? 1
             : -1
           : geo1.y === geo2.y
           ? 0
-          : geo1.y > geo2.y > 0
+          : (geo1.y > geo2.y && geo2.y > 0)
           ? 1
           : -1;
       });
@@ -281,9 +282,9 @@ class StackLayout extends GraphLayout {
         fillValue = horizontal
           ? pgeo.height - this.marginTop - this.marginBottom
           : pgeo.width - this.marginLeft - this.marginRight;
+        fillValue -= 2 * this.border;
       }
-
-      fillValue -= 2 * this.border;
+      
       let x0 = this.x0 + this.border + this.marginLeft;
       let y0 = this.y0 + this.border + this.marginTop;
 
@@ -302,7 +303,7 @@ class StackLayout extends GraphLayout {
           }
         }
 
-        if (horizontal === horz) {
+        if (horizontal === horz && fillValue != null) {
           fillValue -= start;
         }
 

@@ -53,10 +53,8 @@ class ObjectIdentity {
           obj[FIELD_NAME] = `Function#${ObjectIdentity.counter++}`;
         }
       }
-
       return obj[FIELD_NAME] as string;
     }
-
     return null;
   }
 

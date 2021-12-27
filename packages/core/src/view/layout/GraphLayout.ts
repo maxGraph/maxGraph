@@ -100,6 +100,7 @@ class GraphLayout {
    * or outgoing. Default is null.
    */
   getConstraint(key: string, cell: Cell, edge?: Cell, source?: boolean): any {
+    // @ts-expect-error
     return this.graph.getCurrentCellStyle(cell)[key];
   }
 

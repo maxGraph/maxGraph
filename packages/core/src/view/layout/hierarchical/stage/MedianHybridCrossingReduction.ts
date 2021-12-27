@@ -66,18 +66,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   maxNoImprovementIterations = 2;
 
   /**
-   * Class: MedianCellSorter
-   *
-   * A utility class used to track cells whilst sorting occurs on the median
-   * values. Does not violate (x.compareTo(y)==0) == (x.equals(y))
-   *
-   * Constructor: MedianCellSorter
-   *
-   * Constructs a new median cell sorter.
-   */
-  function;
-
-  /**
    * Performs a vertex ordering within ranks as described by Gansner et al
    * 1993
    */

@@ -453,7 +453,7 @@ class GraphHierarchyModel {
     visitor: Function,
     dfsRoots: GraphHierarchyNode[] | null,
     trackAncestors: boolean,
-    seenNodes: {} | null = null
+    seenNodes: { [key: string]: GraphHierarchyNode } | null = null
   ): void {
     // Run dfs through on all roots
     if (dfsRoots != null) {
@@ -503,15 +503,15 @@ class GraphHierarchyModel {
    * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
   dfs(
-    parent: Cell | null, 
-    root: Cell | null, 
-    connectingEdge: Cell, 
+    parent: GraphHierarchyNode | null, 
+    root: GraphHierarchyNode | null, 
+    connectingEdge: GraphHierarchyNode, 
     visitor, 
-    seen, 
+    seen: { [key: string]: GraphHierarchyNode | null }, 
     layer: number
   ): void {
     if (root != null) {
-      const rootId = root.id;
+      const rootId = <string>root.id;
 
       if (seen[rootId] == null) {
         seen[rootId] = root;

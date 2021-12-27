@@ -26,10 +26,10 @@ export interface _mxCompactTreeLayoutNode {
   offsetX?: number;
   offsetY?: number;
   contour?: {
-    upperTail: _mxCompactTreeLayoutLine,
-    upperHead: _mxCompactTreeLayoutLine,
-    lowerTail: _mxCompactTreeLayoutLine,
-    lowerHead: _mxCompactTreeLayoutLine,
+    upperTail?: _mxCompactTreeLayoutLine,
+    upperHead?: _mxCompactTreeLayoutLine,
+    lowerTail?: _mxCompactTreeLayoutLine,
+    lowerHead?: _mxCompactTreeLayoutLine,
     [key: string]: any,
   };
   next?: _mxCompactTreeLayoutNode;
@@ -827,8 +827,9 @@ export class CompactTreeLayout extends GraphLayout {
           const id = <string>CellPath.create(parent);
 
           // Implements set semantic
-          if (this.parentsChanged[id] == null) {
-            this.parentsChanged[id] = parent;
+          const parentsChanged = <{ [id: string]: Cell }>this.parentsChanged;
+          if (parentsChanged[id] == null) {
+            parentsChanged[id] = parent;
           }
         }
       }
@@ -866,7 +867,7 @@ export class CompactTreeLayout extends GraphLayout {
    * a padding.
    */
   adjustParents(): void {
-    const tmp = [];
+    const tmp = new CellArray();
 
     for (const id in this.parentsChanged) {
       tmp.push(this.parentsChanged[id]);
@@ -919,7 +920,7 @@ export class CompactTreeLayout extends GraphLayout {
       child = child.next;
     }
 
-    sortedCells.sort(compare);
+    sortedCells.sort(WeightedCellSorter.compare);
 
     let availableWidth = <number>node.width;
 
@@ -945,12 +946,11 @@ export class CompactTreeLayout extends GraphLayout {
     child = node.child;
 
     for (let j = 0; j < sortedCells.length; j++) {
-      const childCell = sortedCells[j].cell.cell;
+      const childCell = <Cell>sortedCells[j].cell.cell;
       const childBounds = this.getVertexBounds(childCell);
-
       const edges = this.graph.getEdgesBetween(parentCell, childCell, false);
 
-      const newPoints = [];
+      const newPoints: Point[] = [];
       let x = 0;
       let y = 0;
 

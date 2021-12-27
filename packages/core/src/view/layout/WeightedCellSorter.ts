@@ -6,7 +6,6 @@
  * (x.equals(y))
  *
  */
-import Cell from "../cell/Cell";
 import { _mxCompactTreeLayoutNode } from "./CompactTreeLayout";
 
 class WeightedCellSorter {
@@ -43,7 +42,7 @@ class WeightedCellSorter {
   /**
    * Compares two WeightedCellSorters.
    */
-  compare(a: WeightedCellSorter, b: WeightedCellSorter): number {
+  static compare(a: WeightedCellSorter, b: WeightedCellSorter): number {
     if (a != null && b != null) {
       if (b.weightedValue > a.weightedValue) {
         return -1;

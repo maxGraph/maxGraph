@@ -36,12 +36,14 @@ import Geometry from 'src/view/geometry/Geometry';
  * deterministic. Default is true.
  */
 class SwimlaneLayout extends GraphLayout {
-  constructor(graph: Graph, orientation: string | null, deterministic: boolean = true) {
+  constructor(graph: Graph, orientation: DIRECTION | null, deterministic: boolean = true) {
     super(graph);
     this.orientation = orientation != null ? orientation : DIRECTION.NORTH;
     this.deterministic = deterministic != null ? deterministic : true;
   }
 
+  parentX: number | null = null;
+  parentY: number | null = null;
   deterministic: boolean;
 
   /**
@@ -52,7 +54,7 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * Holds the array of <Cell> of the ordered swimlanes to lay out
    */
-  swimlanes = null;
+  swimlanes: CellArray | null = null;
 
   /**
    * The cell width of any dummy vertices inserted
@@ -109,7 +111,7 @@ class SwimlaneLayout extends GraphLayout {
    * The position of the root node(s) relative to the laid out graph in.
    * Default is <mxConstants.DIRECTION_NORTH>.
    */
-  orientation = DIRECTION.NORTH;
+  orientation: DIRECTION = DIRECTION.NORTH;
 
   /**
    * Whether or not to perform local optimisations and iterate multiple times
@@ -140,22 +142,22 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * The internal <mxSwimlaneModel> formed of the layout.
    */
-  model = null;
+  model: SwimlaneModel | null = null;
 
   /**
    * A cache of edges whose source terminal is the key
    */
-  edgesCache = null;
+  edgesCache: Dictionary<Cell, CellArray> = new Dictionary();
 
   /**
    * A cache of edges whose source terminal is the key
    */
-  edgeSourceTermCache = null;
+  edgeSourceTermCache: Dictionary<Cell, Cell> = new Dictionary();
 
   /**
    * A cache of edges whose source terminal is the key
    */
-  edgesTargetTermCache = null;
+  edgesTargetTermCache: Dictionary<Cell, Cell> = new Dictionary();
 
   /**
    * The style to apply between cell layers to edge segments.
@@ -217,7 +219,8 @@ class SwimlaneLayout extends GraphLayout {
     }
 
     this.swimlanes = swimlanes;
-    const dummyVertices = [];
+    const dummyVertices = new CellArray();
+
     // Check the swimlanes all have vertices
     // in them
     for (let i = 0; i < swimlanes.length; i += 1) {
@@ -242,7 +245,7 @@ class SwimlaneLayout extends GraphLayout {
       this.run(parent);
 
       if (this.resizeParent && !parent.isCollapsed()) {
-        this.graph.updateGroupBounds([parent], this.parentBorder, this.moveParent);
+        this.graph.updateGroupBounds(new CellArray(parent), this.parentBorder, this.moveParent);
       }
 
       // Maintaining parent location
@@ -270,7 +273,7 @@ class SwimlaneLayout extends GraphLayout {
    */
   updateGroupBounds(): void {
     // Get all vertices and edge in the layout
-    const cells = [];
+    const cells = new CellArray();
     const { model } = this;
 
     for (const key in model.edgeMapper) {
@@ -283,9 +286,10 @@ class SwimlaneLayout extends GraphLayout {
 
     let layoutBounds = this.graph.getBoundingBoxFromGeometry(cells, true);
     const childBounds = [];
+    const swimlanes = <CellArray>this.swimlanes;
 
-    for (let i = 0; i < this.swimlanes.length; i += 1) {
-      const lane = this.swimlanes[i];
+    for (let i = 0; i < swimlanes.length; i += 1) {
+      const lane = swimlanes[i];
       const geo = lane.getGeometry();
 
       if (geo != null) {
@@ -310,8 +314,8 @@ class SwimlaneLayout extends GraphLayout {
       }
     }
 
-    for (let i = 0; i < this.swimlanes.length; i += 1) {
-      const lane = this.swimlanes[i];
+    for (let i = 0; i < swimlanes.length; i += 1) {
+      const lane = swimlanes[i];
       const geo = lane.getGeometry();
 
       if (geo != null) {
@@ -351,7 +355,7 @@ class SwimlaneLayout extends GraphLayout {
    * @param parent <Cell> whose children should be checked.
    * @param vertices array of vertices to limit search to
    */
-  findRoots(parent: Cell, vertices: CellArray) {
+  findRoots(parent: Cell, vertices: CellArray): Cell[] {
     const roots = [];
 
     if (parent != null && vertices != null) {
@@ -366,7 +370,7 @@ class SwimlaneLayout extends GraphLayout {
           cell != null &&
           cell.isVertex() &&
           cell.isVisible() &&
-          model.isAncestor(parent, cell)
+          parent.isAncestor(cell)
         ) {
           const conns = this.getEdges(cell);
           let fanOut = 0;
@@ -379,10 +383,10 @@ class SwimlaneLayout extends GraphLayout {
               // Only count connection within this swimlane
               const other = this.getVisibleTerminal(conns[k], false);
 
-              if (model.isAncestor(parent, other)) {
+              if (parent.isAncestor(other)) {
                 fanOut += 1;
               }
-            } else if (model.isAncestor(parent, src)) {
+            } else if (parent.isAncestor(src)) {
               fanIn += 1;
             }
           }
@@ -470,7 +474,7 @@ class SwimlaneLayout extends GraphLayout {
    * @param edge <Cell> whose edges should be returned.
    * @param source Boolean that specifies whether the source or target terminal is to be returned
    */
-  getVisibleTerminal(edge: Cell, source: boolean): Cell {
+  getVisibleTerminal(edge: Cell, source: boolean): Cell | null {
     let terminalCache = this.edgesTargetTermCache;
 
     if (source) {
@@ -499,7 +503,7 @@ class SwimlaneLayout extends GraphLayout {
 
     if (terminal != null) {
       if (this.isPort(terminal)) {
-        terminal = terminal.getParent();
+        terminal = <Cell>terminal.getParent();
       }
       terminalCache.put(edge, terminal);
     }
@@ -716,7 +720,7 @@ class SwimlaneLayout extends GraphLayout {
       // Has this vertex been seen before in any traversal
       // And if the filled vertex set is populated, only
       // process vertices in that it contains
-      const vertexID = ObjectIdentity.get(vertex);
+      const vertexID = <string>ObjectIdentity.get(vertex);
 
       if (
         allVertices[vertexID] == null &&

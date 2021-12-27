@@ -185,23 +185,22 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * Utility method to display current positions
    */
   printStatus() {
-    const model = this.layout.getModel();
+    const model = <GraphHierarchyModel>this.layout.getModel();
+    const ranks = <{ [key: number]: number }>model.ranks;
+    
     MaxLog.show();
-
     MaxLog.writeln('======Coord assignment debug=======');
 
-    for (let j = 0; j < model.ranks.length; j++) {
-      MaxLog.write('Rank ', j, ' : ');
-      const rank = model.ranks[j];
+    for (let j = 0; j < ranks.length; j++) {
+      MaxLog.write('Rank ', String(j), ' : ');
+      const rank = ranks[j];
 
       for (let k = 0; k < rank.length; k++) {
         const cell = rank[k];
-
         MaxLog.write(cell.getGeneralPurposeVariable(j), '  ');
       }
       MaxLog.writeln();
     }
-
     MaxLog.writeln('====================================');
   }
 
@@ -210,7 +209,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    */
   execute(parent: any) {
     this.jettyPositions = Object();
-    const model = this.layout.getModel();
+    const model = <GraphHierarchyModel>this.layout.getModel();
     this.currentXDelta = 0.0;
 
     this.initialCoords(this.layout.getGraph(), model);

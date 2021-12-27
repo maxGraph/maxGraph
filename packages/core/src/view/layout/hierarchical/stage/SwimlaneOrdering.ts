@@ -12,6 +12,7 @@ import HierarchicalLayout from '../HierarchicalLayout';
 import Cell from 'src/view/cell/Cell';
 import GraphHierarchyNode from '../model/GraphHierarchyNode';
 import GraphHierarchyEdge from '../model/GraphHierarchyEdge';
+import GraphHierarchyModel from '../model/GraphHierarchyModel';
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward
@@ -39,7 +40,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
    * use.
    */
   execute(parent: Cell) {
-    const model = this.layout.getModel();
+    const model = <GraphHierarchyModel>this.layout.getModel();
     const seenNodes: { [key: string]: Cell } = {};
     const unseenNodes = clone(model.vertexMapper, null, true);
 
@@ -72,7 +73,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
         const reversedOverSwimlane =
           parent != null &&
           connectingEdge != null &&
-          parent.swimlaneIndex < node.swimlaneIndex &&
+          <number>parent.swimlaneIndex < <number>node.swimlaneIndex &&
           connectingEdge.source === node;
 
         if (isAncestor) {

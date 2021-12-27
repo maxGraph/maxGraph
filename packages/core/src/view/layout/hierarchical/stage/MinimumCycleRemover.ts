@@ -11,6 +11,7 @@ import Cell from '../../../cell/Cell';
 import GraphHierarchyNode from '../model/GraphHierarchyNode';
 import GraphHierarchyEdge from '../model/GraphHierarchyEdge';
 import HierarchicalLayout from '../HierarchicalLayout';
+import GraphHierarchyModel from '../model/GraphHierarchyModel';
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward
@@ -37,7 +38,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
    * use.
    */
   execute(parent: Cell): void {
-    const model = this.layout.getModel();
+    const model = <GraphHierarchyModel>this.layout.getModel();
     const seenNodes: { [key: string]: GraphHierarchyNode } = {};
     const unseenNodesArray = model.vertexMapper.getValues();
     const unseenNodes: { [key: string]: GraphHierarchyNode } = {};

@@ -25,12 +25,12 @@ declare module '../Graph' {
     removeCellsFromParent: (cells?: CellArray | null) => CellArray;
     updateGroupBounds: (
       cells: CellArray,
-      border: number,
-      moveGroup: boolean,
-      topBorder: number,
-      rightBorder: number,
-      bottomBorder: number,
-      leftBorder: number
+      border?: number,
+      moveGroup?: boolean,
+      topBorder?: number,
+      rightBorder?: number,
+      bottomBorder?: number,
+      leftBorder?: number
     ) => CellArray;
     enterGroup: (cell: Cell) => void;
     exitGroup: () => void;

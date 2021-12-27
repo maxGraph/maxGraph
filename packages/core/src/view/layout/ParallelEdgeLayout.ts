@@ -11,6 +11,7 @@ import ObjectIdentity from '../../util/ObjectIdentity';
 import { Graph } from '../Graph';
 import CellArray from '../cell/CellArray';
 import Cell from '../cell/Cell';
+import Geometry from '../geometry/Geometry';
 
 /**
  * Extends <mxGraphLayout> for arranging parallel edges. This layout works
@@ -72,7 +73,7 @@ class ParallelEdgeLayout extends GraphLayout {
   /**
    * Implements <mxGraphLayout.execute>.
    */
-  execute(parent: Cell, cells: CellArray) {
+  execute(parent: Cell, cells: CellArray | null=null): void {
     const lookup = this.findParallels(parent, cells);
 
     this.graph.model.beginUpdate();
@@ -92,7 +93,7 @@ class ParallelEdgeLayout extends GraphLayout {
   /**
    * Finds the parallel edges in the given parent.
    */
-  findParallels(parent: Cell, cells: CellArray) {
+  findParallels(parent: Cell, cells: CellArray | null=null) {
     const lookup: any = [];
 
     const addCell = (cell: Cell) => {
@@ -170,8 +171,8 @@ class ParallelEdgeLayout extends GraphLayout {
     const edge = parallels[0];
     const view = this.graph.getView();
     const model = this.graph.getModel();
-    const src = view.getVisibleTerminal(edge, true).getGeometry();
-    const trg = view.getVisibleTerminal(edge, false).getGeometry();
+    const src = <Geometry>(<Cell>view.getVisibleTerminal(edge, true)).getGeometry();
+    const trg = <Geometry>(<Cell>view.getVisibleTerminal(edge, false)).getGeometry();
 
     let x0;
     let y0;
