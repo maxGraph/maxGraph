@@ -569,7 +569,7 @@ export const CellsMixin: PartialType = {
     }
 
     // Resolves the stylename using the above as the default
-    if (stylename) {
+    if (style && stylename) {
       style = this.postProcessCellStyle(stylesheet.getCellStyle(stylename, style));
     }
 
@@ -586,7 +586,10 @@ export const CellsMixin: PartialType = {
    * defined in RFC 2397 of the IETF.
    */
   postProcessCellStyle(style) {
-    const key = style.image;
+    if (!style.image) {
+      return style;
+    }
+    const key = <string>style.image;
     let image = this.getImageFromBundles(key);
 
     if (image) {

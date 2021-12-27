@@ -10,7 +10,7 @@ import MarkerShape from './MarkerShape';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Rectangle from '../Rectangle';
-import { ColorValue } from '../../../types';
+import { ArrowType, ColorValue } from '../../../types';
 
 /**
  * Extends {@link mxShape} to implement a connector shape.
@@ -68,7 +68,7 @@ class ConnectorShape extends PolylineShape {
 
     let result = null;
     const n = pts.length;
-    const type = source ? this.style.startArrow : this.style.endArrow;
+    const type: ArrowType | typeof NONE = (source ? this.style.startArrow : this.style.endArrow) || NONE;
 
     let p0 = source ? pts[1] : pts[n - 2];
     const pe = source ? pts[0] : pts[n - 1];

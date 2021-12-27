@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import CompactTreeLayout from './CompactTreeLayout';
+import { CompactTreeLayout, _mxCompactTreeLayoutLine, _mxCompactTreeLayoutNode } from './CompactTreeLayout';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
 import CellArray from '../cell/CellArray';
@@ -73,32 +73,32 @@ class RadialTreeLayout extends CompactTreeLayout {
   /**
    * Array of leftmost x coordinate of each row
    */
-  rowMinX: number[] = [];
+  rowMinX: { [key: number]: number } = {};
 
   /**
    * Array of rightmost x coordinate of each row
    */
-  rowMaxX: number[] = [];
+  rowMaxX: { [key: number]: number } = {};
 
   /**
    * Array of x coordinate of leftmost vertex of each row
    */
-  rowMinCenX: number[] = [];
+  rowMinCenX: { [key: number]: number } = {};
 
   /**
    * Array of x coordinate of rightmost vertex of each row
    */
-  rowMaxCenX: number[] = [];
+  rowMaxCenX: { [key: number]: number } = {};
 
   /**
    * Array of y deltas of each row behind root vertex, also the radius in the tree
    */
-  rowRadi: number[] = [];
+  rowRadi: { [key: number]: number } = {};
 
   /**
    * Array of vertices on each row
    */
-  row: CellArray = new CellArray();
+  row: { [key: number]: _mxCompactTreeLayoutLine[] } = {};
 
   /**
    * Returns a boolean indicating if the given {@link mxCell} should be ignored as a vertex.
@@ -169,7 +169,7 @@ class RadialTreeLayout extends CompactTreeLayout {
       for (let j = 0; j < this.row[i].length; j++) {
         const row = this.row[i];
         const node = row[j];
-        const vertexBounds = this.getVertexBounds(node.cell);
+        const vertexBounds = this.getVertexBounds(<Cell>node.cell);
         const xProportion =
           (vertexBounds.x + vertexBounds.width / 2 - xLeftLimit) / fullWidth;
         const theta = 2 * Math.PI * xProportion;
@@ -228,16 +228,16 @@ class RadialTreeLayout extends CompactTreeLayout {
    * @param row      Array of internal nodes, the children of which are to be processed.
    * @param rowNum   Integer indicating which row is being processed.
    */
-  calcRowDims(row: number[], rowNum: number): void {
+  calcRowDims(row: _mxCompactTreeLayoutLine[], rowNum: number): void {
     if (row == null || row.length === 0) {
       return;
     }
 
     // Place root's children proportionally around the first level
-    this.rowMinX[rowNum] = this.centerX;
-    this.rowMaxX[rowNum] = this.centerX;
-    this.rowMinCenX[rowNum] = this.centerX;
-    this.rowMaxCenX[rowNum] = this.centerX;
+    this.rowMinX[rowNum] = <number>this.centerX;
+    this.rowMaxX[rowNum] = <number>this.centerX;
+    this.rowMinCenX[rowNum] = <number>this.centerX;
+    this.rowMaxCenX[rowNum] = <number>this.centerX;
     this.row[rowNum] = [];
 
     let rowHasChildren = false;
@@ -247,7 +247,7 @@ class RadialTreeLayout extends CompactTreeLayout {
 
       while (child != null) {
         const { cell } = child;
-        const vertexBounds = this.getVertexBounds(cell);
+        const vertexBounds = this.getVertexBounds(<Cell>cell);
 
         this.rowMinX[rowNum] = Math.min(vertexBounds.x, this.rowMinX[rowNum]);
         this.rowMaxX[rowNum] = Math.max(

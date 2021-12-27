@@ -38,9 +38,9 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
    */
   execute(parent: Cell): void {
     const model = this.layout.getModel();
-    const seenNodes = {};
+    const seenNodes: { [key: string]: GraphHierarchyNode } = {};
     const unseenNodesArray = model.vertexMapper.getValues();
-    const unseenNodes = {};
+    const unseenNodes: { [key: string]: GraphHierarchyNode } = {};
 
     for (let i = 0; i < unseenNodesArray.length; i += 1) {
       unseenNodes[unseenNodesArray[i].id] = unseenNodesArray[i];
@@ -48,7 +48,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
 
     // Perform a dfs through the internal model. If a cycle is found,
     // reverse it.
-    let rootsArray = null;
+    let rootsArray: GraphHierarchyNode[] | null = null;
 
     if (model.roots != null) {
       const modelRoots = model.roots;
@@ -60,7 +60,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
     }
 
     model.visit(
-      (parent: GraphHierarchyNode, node: GraphHierarchyNode, connectingEdge: GraphHierarchyEdge, layer, seen) => {
+      (parent: GraphHierarchyNode, node: GraphHierarchyNode, connectingEdge: GraphHierarchyEdge, layer: any, seen: any) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
         // relationship to that edge in the parent and the cell
@@ -87,7 +87,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
 
     // Pick a random cell and dfs from it
     model.visit(
-      (parent: GraphHierarchyNode, node: GraphHierarchyNode, connectingEdge: GraphHierarchyEdge, layer, seen) => {
+      (parent: GraphHierarchyNode, node: GraphHierarchyNode, connectingEdge: GraphHierarchyEdge, layer: any, seen: any) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
         // relationship to that edge in the parent and the cell

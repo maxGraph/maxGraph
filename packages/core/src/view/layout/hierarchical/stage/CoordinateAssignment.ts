@@ -11,6 +11,10 @@ import WeightedCellSorter from '../../WeightedCellSorter';
 import Dictionary from '../../../../util/Dictionary';
 import Point from '../../../geometry/Point';
 import HierarchicalEdgeStyle from '../HierarchicalEdgeStyle';
+import HierarchicalLayout from '../HierarchicalLayout';
+import GraphHierarchyModel from '../model/GraphHierarchyModel';
+import Cell from 'src/view/cell/Cell';
+import GraphHierarchyNode from '../model/GraphHierarchyNode';
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.
@@ -30,12 +34,12 @@ import HierarchicalEdgeStyle from '../HierarchicalEdgeStyle';
  */
 class CoordinateAssignment extends HierarchicalLayoutStage {
   constructor(
-    layout,
-    intraCellSpacing,
-    interRankCellSpacing,
-    orientation,
-    initialX,
-    parallelEdgeSpacing
+    layout: HierarchicalLayout,
+    intraCellSpacing: number=30,
+    interRankCellSpacing: number=100,
+    orientation: DIRECTION,
+    initialX: number,
+    parallelEdgeSpacing: number=10
   ) {
     super();
 
@@ -50,7 +54,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   /**
    * Reference to the enclosing <HierarchicalLayout>.
    */
-  layout = null;
+  layout: HierarchicalLayout;
 
   /**
    * The minimum buffer between cells on the same rank. Default is 30.
@@ -114,47 +118,47 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   /**
    * The minimum x position node placement starts at
    */
-  initialX = null;
+  initialX: number;
 
   /**
    * The maximum x value this positioning lays up to
    */
-  limitX = null;
+  limitX: number | null = null;
 
   /**
    * The sum of x-displacements for the current iteration
    */
-  currentXDelta = null;
+  currentXDelta: number | null = null;
 
   /**
    * The rank that has the widest x position
    */
-  widestRank = null;
+  widestRank: number | null = null;
 
   /**
    * Internal cache of top-most values of Y for each rank
    */
-  rankTopY = null;
+  rankTopY: number | null = null;
 
   /**
    * Internal cache of bottom-most value of Y for each rank
    */
-  rankBottomY = null;
+  rankBottomY: number | null = null;
 
   /**
    * The X-coordinate of the edge of the widest rank
    */
-  widestRankValue = null;
+  widestRankValue: number | null = null;
 
   /**
    * The width of all the ranks
    */
-  rankWidths = null;
+  rankWidths: number | null = null;
 
   /**
    * The Y-coordinate of all the ranks
    */
-  rankY = null;
+  rankY: number | null = null;
 
   /**
    * Whether or not to perform local optimisations and iterate multiple times
@@ -204,7 +208,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   /**
    * A basic horizontal coordinate assignment algorithm
    */
-  execute(parent) {
+  execute(parent: any) {
     this.jettyPositions = Object();
     const model = this.layout.getModel();
     this.currentXDelta = 0.0;
@@ -232,9 +236,11 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         // if the total offset is less for the current positioning,
         // there are less heavily angled edges and so the current
         // positioning is used
+        const ranks = <{ [key: number]: number }>model.ranks;
+
         if (this.currentXDelta < bestXDelta) {
-          for (let j = 0; j < model.ranks.length; j++) {
-            const rank = model.ranks[j];
+          for (let j = 0; j < ranks.length; j++) {
+            const rank = ranks[j];
 
             for (let k = 0; k < rank.length; k++) {
               const cell = rank[k];
@@ -245,8 +251,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
           bestXDelta = this.currentXDelta;
         } else {
           // Restore the best positions
-          for (let j = 0; j < model.ranks.length; j++) {
-            const rank = model.ranks[j];
+          for (let j = 0; j < ranks.length; j++) {
+            const rank = ranks[j];
 
             for (let k = 0; k < rank.length; k++) {
               const cell = rank[k];
@@ -256,18 +262,16 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         }
 
         this.minPath(this.layout.getGraph(), model);
-
         this.currentXDelta = 0;
       }
     }
-
     this.setCellLocations(this.layout.getGraph(), model);
   }
 
   /**
    * Performs one median positioning sweep in both directions
    */
-  minNode(model) {
+  minNode(model: GraphHierarchyModel) {
     // Queue all nodes
     const nodeList = [];
 
@@ -431,7 +435,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param i the iteration of the whole process
    * @param model an internal model of the hierarchical layout
    */
-  medianPos(i, model) {
+  medianPos(i: number, model: GraphHierarchyModel) {
     // Reverse sweep direction each time through this method
     const downwardSweep = i % 2 === 0;
 
@@ -454,7 +458,11 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param nextRankValue the layer number whose connected cels are to be laid out
    * relative to
    */
-  rankMedianPosition(rankValue, model, nextRankValue) {
+  rankMedianPosition(
+    rankValue: number, 
+    model: GraphHierarchyModel, 
+    nextRankValue: number
+  ) {
     const rank = model.ranks[rankValue];
 
     // Form an array of the order in which the cell are to be processed
@@ -609,7 +617,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param currentCell the cell whose weight is to be calculated
    * @param collection the cells the specified cell is connected to
    */
-  calculatedWeightedValue(currentCell, collection) {
+  calculatedWeightedValue(currentCell: Cell, collection) {
     let totalWeight = 0;
 
     for (let i = 0; i < collection.length; i += 1) {
@@ -623,7 +631,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         totalWeight += 2;
       }
     }
-
     return totalWeight;
   }
 
@@ -668,7 +675,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param facade the facade describing the input graph
    * @param model an internal model of the hierarchical layout
    */
-  initialCoords(facade, model) {
+  initialCoords(facade, model: GraphHierarchyModel) {
     this.calculateWidestRank(facade, model);
 
     // Sweep up and down from the widest rank
@@ -695,7 +702,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param graph the facade describing the input graph
    * @param model an internal model of the hierarchical layout
    */
-  rankCoordinates(rankValue, graph, model) {
+  rankCoordinates(rankValue: number, graph, model: GraphHierarchyModel) {
     const rank = model.ranks[rankValue];
     let maxY = 0.0;
     let localX =
@@ -761,7 +768,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param graph the facade describing the input graph
    * @param model an internal model of the hierarchical layout
    */
-  calculateWidestRank(graph, model) {
+  calculateWidestRank(graph, model: GraphHierarchyModel) {
     // Starting y co-ordinate
     let y = -this.interRankCellSpacing;
 
@@ -866,7 +873,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param graph the facade describing the input graph
    * @param model an internal model of the hierarchical layout
    */
-  minPath(graph, model) {
+  minPath(graph, model: GraphHierarchyModel) {
     // Work down and up each edge with at least 2 control points
     // trying to straighten each one out. If the same number of
     // straight segments are formed in both directions, the
@@ -977,7 +984,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param rank the layer of the cell
    * @param position the x position being sought
    */
-  repositionValid(model, cell, rank, position) {
+  repositionValid(model: GraphHierarchyModel, cell, rank: number, position: number) {
     const rankArray = model.ranks[rank];
     let rankIndex = -1;
 
@@ -1035,7 +1042,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param graph the input graph
    * @param model the layout model
    */
-  setCellLocations(graph, model) {
+  setCellLocations(graph, model: GraphHierarchyModel) {
     this.rankTopY = [];
     this.rankBottomY = [];
 
@@ -1076,7 +1083,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    *
    * @param model the layout model
    */
-  localEdgeProcessing(model) {
+  localEdgeProcessing(model: GraphHierarchyModel) {
     // Iterate through each vertex, look at the edges connected in
     // both directions.
     for (let rankIndex = 0; rankIndex < model.ranks.length; rankIndex += 1) {
@@ -1332,12 +1339,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
 
           // Work out the vertical positions in a vertical layout
           // in the edge buffer channels above and below this rank
-          let topChannelY =
-            (this.rankTopY[currentRank] + this.rankBottomY[currentRank + 1]) /
-            2.0;
-          let bottomChannelY =
-            (this.rankTopY[currentRank - 1] + this.rankBottomY[currentRank]) /
-            2.0;
+          let topChannelY = (this.rankTopY[currentRank] + this.rankBottomY[currentRank + 1]) / 2.0;
+          let bottomChannelY = (this.rankTopY[currentRank - 1] + this.rankBottomY[currentRank]) / 2.0;
 
           if (reversed) {
             const tmp = topChannelY;
@@ -1356,7 +1359,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
             newPoints.push(new Point(bottomChannelY, positionX));
           }
 
-          this.limitX = Math.max(this.limitX, positionX);
+          this.limitX = Math.max(<number>this.limitX, positionX);
           currentRank += loopDelta;
         }
 
@@ -1442,7 +1445,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    *
    * @param cell the vertex to position
    */
-  setVertexLocation(cell) {
+  setVertexLocation(cell: GraphHierarchyNode) {
     const realCell = cell.cell;
     const positionX = cell.x[0] - cell.width / 2;
     const positionY = cell.y[0] - cell.height / 2;
@@ -1465,7 +1468,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       this.layout.setVertexLocation(realCell, positionY, positionX);
     }
 
-    this.limitX = Math.max(this.limitX, positionX + cell.width);
+    this.limitX = Math.max(<number>this.limitX, positionX + cell.width);
   }
 
   /**
@@ -1474,7 +1477,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param edge the hierarchical model edge
    * @param realEdge the real edge in the graph
    */
-  processReversedEdge(graph, model) {
+  processReversedEdge(graph, model: GraphHierarchyModel) {
     // hook for subclassers
   }
 }

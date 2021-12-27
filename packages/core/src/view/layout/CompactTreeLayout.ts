@@ -17,6 +17,30 @@ import { Graph } from '../Graph';
 import { findTreeRoots } from '../../util/treeTraversal';
 import CellArray from '../cell/CellArray';
 
+export interface _mxCompactTreeLayoutNode {
+  cell?: Cell;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  offsetX?: number;
+  offsetY?: number;
+  contour?: {
+    upperTail: _mxCompactTreeLayoutLine,
+    upperHead: _mxCompactTreeLayoutLine,
+    lowerTail: _mxCompactTreeLayoutLine,
+    lowerHead: _mxCompactTreeLayoutLine,
+    [key: string]: any,
+  };
+  child?: _mxCompactTreeLayoutNode;
+}
+
+export interface _mxCompactTreeLayoutLine {
+  dx: number;
+  dy: number;
+  next: _mxCompactTreeLayoutLine;
+}
+
 /**
  * @class CompactTreeLayout
  * @extends {GraphLayout}
@@ -32,7 +56,7 @@ import CellArray from '../cell/CellArray';
  * layout.execute(graph.getDefaultParent());
  * ```
  */
-class CompactTreeLayout extends GraphLayout {
+export class CompactTreeLayout extends GraphLayout {
   constructor(graph: Graph, horizontal: boolean = true, invert: boolean = false) {
     super(graph);
     this.horizontal = horizontal;
@@ -41,7 +65,7 @@ class CompactTreeLayout extends GraphLayout {
 
   parentX: number | null = null;
   parentY: number | null = null;
-  visited = {};
+  visited: { [key: string]: Cell } = {};
 
   /**
    * Specifies the orientation of the layout.
@@ -185,8 +209,7 @@ class CompactTreeLayout extends GraphLayout {
    * The internal node representation of the root cell. Do not set directly
    * , this value is only exposed to assist with post-processing functionality
    */
-  // node: _mxCompactTreeLayoutNode;
-  node = null;
+  node: _mxCompactTreeLayoutNode | null = null;
 
   /**
    * Returns a boolean indicating if the given {@link mxCell} should be ignored as a
@@ -377,7 +400,7 @@ class CompactTreeLayout extends GraphLayout {
     const lookup = new Dictionary();
 
     edges.sort((e1, e2) => {
-      const end1 = e1.getTerminal(e1.getTerminal(false) == source);
+      const end1 = <Cell>e1.getTerminal(e1.getTerminal(false) == source);
       let p1 = lookup.get(end1);
 
       if (p1 == null) {
@@ -385,7 +408,7 @@ class CompactTreeLayout extends GraphLayout {
         lookup.put(end1, p1);
       }
 
-      const end2 = e2.getTerminal(e2.getTerminal(false) === source);
+      const end2 = <Cell>e2.getTerminal(e2.getTerminal(false) === source);
       let p2 = lookup.get(end2);
 
       if (p2 == null) {
@@ -393,7 +416,7 @@ class CompactTreeLayout extends GraphLayout {
         lookup.put(end2, p2);
       }
 
-      return CellPath.compare(p1, p2);
+      return CellPath.compare(<string[]>p1, <string[]>p2);
     });
   }
 
@@ -546,7 +569,7 @@ class CompactTreeLayout extends GraphLayout {
    * Starts the actual compact tree layout algorithm
    * at the given node.
    */
-  verticalLayout(node: Element, parent: Cell, x0: number, y0: number, bounds: Rectangle | null=null): Rectangle {
+  verticalLayout(node: _mxCompactTreeLayoutNode, parent: Cell, x0: number, y0: number, bounds: Rectangle | null=null): Rectangle {
     node.x += x0 + node.offsetY;
     node.y += y0 + node.offsetX;
     bounds = this.apply(node, bounds);
@@ -725,8 +748,14 @@ class CompactTreeLayout extends GraphLayout {
     return 0;
   }
 
-  /**
-  bridge(line1, x1: number, y1: number, line2, x2: number, y2: number) {
+  bridge(
+    line1: _mxCompactTreeLayoutLine, 
+    x1: number, 
+    y1: number, 
+    line2: _mxCompactTreeLayoutLine, 
+    x2: number, 
+    y2: number
+  ) {
     const dx = x2 + line2.dx - x1;
     let dy = 0;
     let s = 0;
@@ -749,7 +778,7 @@ class CompactTreeLayout extends GraphLayout {
    * at the given node.
    */
   createNode(cell: Cell): _mxCompactTreeLayoutNode {
-    const node = {};
+    const node: _mxCompactTreeLayoutNode = {};
     node.cell = cell;
     node.x = 0;
     node.y = 0;
@@ -771,7 +800,6 @@ class CompactTreeLayout extends GraphLayout {
     node.offsetX = 0;
     node.offsetY = 0;
     node.contour = {};
-
     return node;
   }
 
@@ -810,7 +838,6 @@ class CompactTreeLayout extends GraphLayout {
         );
       }
     }
-
     return bounds;
   }
 
@@ -823,7 +850,6 @@ class CompactTreeLayout extends GraphLayout {
     line.dx = dx;
     line.dy = dy;
     line.next = next;
-
     return line;
   }
 

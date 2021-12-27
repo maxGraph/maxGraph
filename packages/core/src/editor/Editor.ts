@@ -1395,7 +1395,8 @@ export class Editor extends EventSource {
    * @returns graph instance
    */
   createGraph(): Graph {
-    const graph = new Graph();
+    const __dummy: any = undefined;
+    const graph = new Graph(__dummy);
 
     // Enables rubberband, tooltips, panning
     graph.setTooltips(true);
@@ -2671,7 +2672,8 @@ export class Editor extends EventSource {
  */
 export class EditorCodec extends ObjectCodec {
   constructor() {
-    super(new Editor(), [
+    const __dummy: any = undefined;
+    super(new Editor(__dummy), [
       'modified',
       'lastSnapshot',
       'ignoredChanges',

@@ -451,7 +451,7 @@ class GraphHierarchyModel {
    */
   visit(
     visitor: Function,
-    dfsRoots: GraphHierarchyNode[],
+    dfsRoots: GraphHierarchyNode[] | null,
     trackAncestors: boolean,
     seenNodes: {} | null = null
   ): void {
@@ -502,7 +502,14 @@ class GraphHierarchyModel {
    * ancestor node of the current node
    * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
-  dfs(parent: Cell, root: Cell, connectingEdge: Cell, visitor, seen, layer: number): void {
+  dfs(
+    parent: Cell | null, 
+    root: Cell | null, 
+    connectingEdge: Cell, 
+    visitor, 
+    seen, 
+    layer: number
+  ): void {
     if (root != null) {
       const rootId = root.id;
 
