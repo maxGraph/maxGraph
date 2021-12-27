@@ -51,15 +51,15 @@ export class RootChange implements UndoableChange {
  */
 export class RootChangeCodec extends ObjectCodec {
   constructor() {
-    super(new RootChange(), ['model', 'previous', 'root']);
+    const __dummy: any = undefined;
+    super(new RootChange(__dummy, __dummy), ['model', 'previous', 'root']);
   }
 
   /**
    * Encodes the child recursively.
    */
-  afterEncode(enc, obj, node) {
+  afterEncode(enc: Codec, obj: any, node: Element) {
     enc.encodeCell(obj.root, node);
-
     return node;
   }
 
@@ -70,23 +70,22 @@ export class RootChangeCodec extends ObjectCodec {
   beforeDecode(dec: Codec, node: Element, obj: any): any {
     if (node.firstChild != null && node.firstChild.nodeType === NODETYPE.ELEMENT) {
       // Makes sure the original node isn't modified
-      node = node.cloneNode(true);
+      node = <Element>node.cloneNode(true);
 
-      let tmp = node.firstChild;
+      let tmp = <Element>node.firstChild;
       obj.root = dec.decodeCell(tmp, false);
 
-      let tmp2 = tmp.nextSibling;
-      tmp.parentNode.removeChild(tmp);
+      let tmp2 = <Element>tmp.nextSibling;
+      (<Element>tmp.parentNode).removeChild(tmp);
       tmp = tmp2;
 
       while (tmp != null) {
-        tmp2 = tmp.nextSibling;
+        tmp2 = <Element>tmp.nextSibling;
         dec.decodeCell(tmp);
-        tmp.parentNode.removeChild(tmp);
+        (<Element>tmp.parentNode).removeChild(tmp);
         tmp = tmp2;
       }
     }
-
     return node;
   }
 

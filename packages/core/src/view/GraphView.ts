@@ -94,7 +94,7 @@ import CodecRegistry from '../serialization/CodecRegistry';
  * respectively.
  */
 export class GraphView extends EventSource {
-  constructor(graph: Graph | null=null) {
+  constructor(graph: Graph) {
     super();
 
     this.graph = graph;
@@ -155,7 +155,7 @@ export class GraphView extends EventSource {
   /**
    * Reference to the enclosing {@link graph}.
    */
-  graph: Graph | null;
+  graph: Graph;
 
   /**
    * {@link Cell} that acts as the root of the displayed cell hierarchy.
@@ -554,7 +554,7 @@ export class GraphView extends EventSource {
     }
 
     window.status = Translations.get(this.doneResource) || this.doneResource;
-    MaxLog.leave('mxGraphView.validate', t0);
+    MaxLog.leave('mxGraphView.validate', <number>t0);
   }
 
   /**
@@ -983,7 +983,7 @@ export class GraphView extends EventSource {
       this.clear(state.cell, true);
     } else {
       this.updateFixedTerminalPoints(state, source, target);
-      this.updatePoints(state, geo.points, source, target);
+      this.updatePoints(state, <Point[]>geo.points, source, target);
       this.updateFloatingTerminalPoints(state, source, target);
 
       const pts = state.absolutePoints;
@@ -2328,7 +2328,8 @@ export class GraphView extends EventSource {
  */
 export class GraphViewCodec extends ObjectCodec {
   constructor() {
-    super(new GraphView());
+    const __dummy: any = undefined;
+    super(new GraphView(__dummy));
   }
 
   /**
@@ -2359,6 +2360,7 @@ export class GraphViewCodec extends ObjectCodec {
    * values to the node.
    */
   encodeCell(enc: any, view: GraphView, cell: Cell) {
+    let node;
     const model = view.graph.getModel();
     const state = view.getState(cell);
     const parent = cell.getParent();
@@ -2381,7 +2383,7 @@ export class GraphViewCodec extends ObjectCodec {
       }
 
       if (name != null) {
-        const node = enc.document.createElement(name);
+        node = enc.document.createElement(name);
         const lab = view.graph.getLabel(cell);
 
         if (lab != null) {
@@ -2406,6 +2408,7 @@ export class GraphViewCodec extends ObjectCodec {
         } else if (state != null && geo != null) {
           // Writes each key, value in the style pair to an attribute
           for (const i in state.style) {
+            // @ts-ignore
             let value = state.style[i];
 
             // Tries to turn objects and functions into strings
@@ -2426,10 +2429,10 @@ export class GraphViewCodec extends ObjectCodec {
 
           // Writes the list of points into one attribute
           if (abs != null && abs.length > 0) {
-            let pts = `${Math.round(abs[0].x)},${Math.round(abs[0].y)}`;
+            let pts = `${Math.round((<Point>abs[0]).x)},${Math.round((<Point>abs[0]).y)}`;
 
             for (let i = 1; i < abs.length; i += 1) {
-              pts += ` ${Math.round(abs[i].x)},${Math.round(abs[i].y)}`;
+              pts += ` ${Math.round((<Point>abs[i]).x)},${Math.round((<Point>abs[i]).y)}`;
             }
 
             node.setAttribute('points', pts);

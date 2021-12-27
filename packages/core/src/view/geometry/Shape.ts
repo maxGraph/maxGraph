@@ -654,7 +654,7 @@ class Shape {
   configureCanvas(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     let dash: string | null = null;
 
-    if (this.style) {
+    if (this.style && this.style.dashPattern != null) {
       dash = this.style.dashPattern;
     }
 

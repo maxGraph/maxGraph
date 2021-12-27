@@ -125,8 +125,9 @@ export class ChildChange implements UndoableChange {
  */
 export class ChildChangeCodec extends ObjectCodec {
   constructor() {
+    const __dummy: any = undefined;
     super(
-      new ChildChange(),
+      new ChildChange(__dummy, __dummy, __dummy),
       ['model', 'child', 'previousIndex'],
       ['parent', 'previous']
     );
@@ -138,7 +139,7 @@ export class ChildChangeCodec extends ObjectCodec {
    * child as an attribute rather than a child node, in
    * which case it's always a reference.
    */
-  isReference(obj, attr, value, isWrite) {
+  isReference(obj: any, attr: string, value: any, isWrite: boolean) {
     if (attr === 'child' && (!isWrite || obj.model.contains(obj.previous))) {
       return true;
     }
@@ -148,7 +149,7 @@ export class ChildChangeCodec extends ObjectCodec {
   /**
    * Excludes references to parent or previous if not in the model.
    */
-  isExcluded(obj, attr, value, write) {
+  isExcluded(obj: any, attr: string, value: any, write: boolean) {
     return (
       super.isExcluded(obj, attr, value, write) ||
       (write &&
@@ -162,7 +163,7 @@ export class ChildChangeCodec extends ObjectCodec {
    * Encodes the child recusively and adds the result
    * to the given node.
    */
-  afterEncode(enc, obj, node) {
+  afterEncode(enc: Codec, obj: any, node: Element) {
     if (this.isReference(obj, 'child', obj.child, true)) {
       // Encodes as reference (id)
       node.setAttribute('child', enc.getId(obj.child));
@@ -174,7 +175,6 @@ export class ChildChangeCodec extends ObjectCodec {
       // execute of the edit.
       enc.encodeCell(obj.child, node);
     }
-
     return node;
   }
 
@@ -182,23 +182,23 @@ export class ChildChangeCodec extends ObjectCodec {
    * Decodes the any child nodes as using the respective
    * codec from the registry.
    */
-  beforeDecode(dec: Codec, node: Element, obj: any): any {
+  beforeDecode(dec: Codec, _node: Element, obj: any): any {
     if (
-      node.firstChild != null &&
-      node.firstChild.nodeType === NODETYPE.ELEMENT
+      _node.firstChild != null &&
+      _node.firstChild.nodeType === NODETYPE.ELEMENT
     ) {
       // Makes sure the original node isn't modified
-      node = node.cloneNode(true);
+      let node = _node.cloneNode(true);
 
-      let tmp = node.firstChild;
+      let tmp = <Element>node.firstChild;
       obj.child = dec.decodeCell(tmp, false);
 
-      let tmp2 = tmp.nextSibling;
-      tmp.parentNode.removeChild(tmp);
+      let tmp2 = <Element>tmp.nextSibling;
+      (<Element>tmp.parentNode).removeChild(tmp);
       tmp = tmp2;
 
       while (tmp != null) {
-        tmp2 = tmp.nextSibling;
+        tmp2 = <Element>tmp.nextSibling;
 
         if (tmp.nodeType === NODETYPE.ELEMENT) {
           // Ignores all existing cells because those do not need to
@@ -206,21 +206,23 @@ export class ChildChangeCodec extends ObjectCodec {
           // of these cells contains the new parent, this would leave
           // to an inconsistent state on the model (ie. a parent
           // change without a call to parentForCellChanged).
-          const id = tmp.getAttribute('id');
+          const id = <string>tmp.getAttribute('id');
 
           if (dec.lookup(id) == null) {
             dec.decodeCell(tmp);
           }
         }
 
-        tmp.parentNode.removeChild(tmp);
+        (<Element>tmp.parentNode).removeChild(tmp);
         tmp = tmp2;
       }
+
+      return node;
     } else {
-      const childRef = node.getAttribute('child');
+      const childRef = <string>_node.getAttribute('child');
       obj.child = dec.getObject(childRef);
+      return _node;
     }
-    return node;
   }
 
   /**
@@ -244,7 +246,6 @@ export class ChildChangeCodec extends ObjectCodec {
       obj.previous = obj.parent;
       obj.previousIndex = obj.index;
     }
-
     return obj;
   }
 }

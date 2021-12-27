@@ -37,7 +37,8 @@ class GeometryChange implements UndoableChange {
   }
 }
 
+const __dummy: any = undefined;
 CodecRegistry.register(
-  new GenericChangeCodec(new GeometryChange(), 'geometry')
+  new GenericChangeCodec(new GeometryChange(__dummy, __dummy, __dummy), 'geometry')
 );
 export default GeometryChange;

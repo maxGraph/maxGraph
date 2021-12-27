@@ -65,7 +65,8 @@ export class TerminalChange implements UndoableChange {
  */
 export class TerminalChangeCodec extends ObjectCodec {
   constructor() {
-    super(new TerminalChange(), ['model', 'previous'], ['cell', 'terminal']);
+    const __dummy: any = undefined;
+    super(new TerminalChange(__dummy, __dummy, __dummy, __dummy), ['model', 'previous'], ['cell', 'terminal']);
   }
 
   /**
@@ -73,7 +74,6 @@ export class TerminalChangeCodec extends ObjectCodec {
    */
   afterDecode(dec: Codec, node: Element, obj: any): any {
     obj.previous = obj.terminal;
-
     return obj;
   }
 }

@@ -33,7 +33,8 @@ class StyleChange implements UndoableChange {
   }
 }
 
+const __dummy: any = undefined;
 CodecRegistry.register(
-  new GenericChangeCodec(new StyleChange(), 'style')
+  new GenericChangeCodec(new StyleChange(__dummy, __dummy, __dummy), 'style')
 );
 export default StyleChange;

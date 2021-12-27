@@ -137,10 +137,9 @@ const FoldingMixin: PartialType = {
    *
    * @param cell {@link mxCell} whose foldable state should be returned.
    */
-  // isCellFoldable(cell: mxCell, collapse: boolean): boolean;
-  isCellFoldable(cell, collapse = false) {
+  isCellFoldable(cell, collapse?: boolean): boolean {
     const style = this.getCurrentCellStyle(cell);
-    return cell.getChildCount() > 0 && style.foldable;
+    return cell.getChildCount() > 0 && (style.foldable || false);
   },
 
   /**

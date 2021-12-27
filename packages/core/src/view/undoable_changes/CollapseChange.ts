@@ -39,7 +39,8 @@ class CollapseChange implements UndoableChange {
   }
 }
 
+const __dummy: any = undefined;
 CodecRegistry.register(
-  new GenericChangeCodec(new CollapseChange(), 'collapsed')
+  new GenericChangeCodec(new CollapseChange(__dummy, __dummy, __dummy), 'collapsed')
 );
 export default CollapseChange;

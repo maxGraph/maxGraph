@@ -77,7 +77,7 @@ class ImageShape extends RectangleShape {
     this.stroke = NONE;
     this.gradient = NONE;
 
-    if (this.style) {
+    if (this.style && this.style.imageAspect != null) {
       this.preserveImageAspect = this.style.imageAspect;
     }
   }

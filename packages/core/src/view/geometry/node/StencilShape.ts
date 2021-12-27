@@ -173,7 +173,7 @@ class StencilShape extends Shape {
     let result = node.getAttribute(attribute);
 
     if (!result) {
-      const text = getTextContent(node);
+      const text = getTextContent(<Text><unknown>node);
 
       if (text && StencilShape.allowEval) {
         const funct = eval(text);

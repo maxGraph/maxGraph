@@ -7,6 +7,7 @@
 
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import {
+  NONE,
   OUTLINE_COLOR,
   OUTLINE_HANDLE_FILLCOLOR,
   OUTLINE_HANDLE_STROKECOLOR,
@@ -140,7 +141,7 @@ class Outline {
     this.bounds = new Rectangle(0, 0, 0, 0);
     this.selectionBorder = new RectangleShape(
       this.bounds,
-      null,
+      NONE,
       OUTLINE_COLOR,
       OUTLINE_STROKEWIDTH
     );

@@ -65,7 +65,8 @@ class CellAttributeChange implements UndoableChange {
   }
 }
 
+const __dummy: any = undefined;
 CodecRegistry.register(
-  new GenericChangeCodec(new CellAttributeChange(), 'value')
+  new GenericChangeCodec(new CellAttributeChange(__dummy, __dummy, __dummy), 'value')
 );
 export default CellAttributeChange;

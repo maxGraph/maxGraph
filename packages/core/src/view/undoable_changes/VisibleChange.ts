@@ -39,7 +39,8 @@ class VisibleChange implements UndoableChange {
   }
 }
 
+const __dummy: any = undefined;
 CodecRegistry.register(
-  new GenericChangeCodec(new VisibleChange(), 'visible')
+  new GenericChangeCodec(new VisibleChange(__dummy, __dummy, __dummy), 'visible')
 );
 export default VisibleChange;

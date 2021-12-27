@@ -266,11 +266,11 @@ const ConnectionsMixin: PartialType = {
     let dy = 0;
 
     if (point) {
-      perimeter = edge.style[source ? 'exitPerimeter' : 'entryPerimeter'];
+      perimeter = edge.style[source ? 'exitPerimeter' : 'entryPerimeter'] || false;
 
       // Add entry/exit offset
-      dx = edge.style[source ? 'exitDx' : 'entryDx'];
-      dy = edge.style[source ? 'exitDy' : 'entryDy'];
+      dx = <number>edge.style[source ? 'exitDx' : 'entryDx'];
+      dy = <number>edge.style[source ? 'exitDy' : 'entryDy'];
 
       dx = Number.isFinite(dx) ? dx : 0;
       dy = Number.isFinite(dy) ? dy : 0;

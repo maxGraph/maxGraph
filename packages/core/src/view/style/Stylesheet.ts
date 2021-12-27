@@ -289,7 +289,7 @@ export class StylesheetCodec extends ObjectCodec {
   /**
    * Returns the string for encoding the given value.
    */
-  getStringValue(key, value) {
+  getStringValue(key: string, value: any) {
     const type = typeof value;
 
     if (type === 'function') {
@@ -297,7 +297,6 @@ export class StylesheetCodec extends ObjectCodec {
     } else if (type === 'object') {
       value = null;
     }
-
     return value;
   }
 
@@ -340,22 +339,22 @@ export class StylesheetCodec extends ObjectCodec {
    * </mxStylesheet>
    * ```
    */
-  decode(dec: Codec, node: Element, into: any): any {
+  decode(dec: Codec, _node: Element, into: any): any {
     const obj = into || new this.template.constructor();
-    const id = node.getAttribute('id');
+    const id = _node.getAttribute('id');
 
     if (id != null) {
       dec.objects[id] = obj;
     }
 
-    node = node.firstChild;
+    let node: Element | ChildNode | null = _node.firstChild;
 
     while (node != null) {
-      if (!this.processInclude(dec, node, obj) && node.nodeName === 'add') {
-        const as = node.getAttribute('as');
+      if (!this.processInclude(dec, <Element>node, obj) && node.nodeName === 'add') {
+        const as = (<Element>node).getAttribute('as');
 
         if (as != null) {
-          const extend = node.getAttribute('extend');
+          const extend = (<Element>node).getAttribute('extend');
           let style = extend != null ? clone(obj.styles[extend]) : null;
 
           if (style == null) {
@@ -372,19 +371,19 @@ export class StylesheetCodec extends ObjectCodec {
 
           while (entry != null) {
             if (entry.nodeType === NODETYPE.ELEMENT) {
-              const key = entry.getAttribute('as');
+              const key = <string>(<Element>entry).getAttribute('as');
 
               if (entry.nodeName === 'add') {
-                const text = getTextContent(entry);
+                const text = getTextContent(<Text><unknown>entry);
                 let value = null;
 
                 if (text != null && text.length > 0 && StylesheetCodec.allowEval) {
                   value = eval(text);
                 } else {
-                  value = entry.getAttribute('value');
+                  value = (<Element>entry).getAttribute('value');
 
                   if (isNumeric(value)) {
-                    value = parseFloat(value);
+                    value = parseFloat(<string>value);
                   }
                 }
 

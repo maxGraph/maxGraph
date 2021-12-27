@@ -917,7 +917,7 @@ class Graph extends EventSource {
 
       const edgeStyle = this.getView().getEdgeStyle(
         state,
-        geo ? geo.points : undefined,
+        geo ? (geo.points || undefined) : undefined,
         source,
         target
       );
@@ -1178,13 +1178,11 @@ class Graph extends EventSource {
     entity.
      */
     const orthogonal = edge.style.orthogonal;
-
-    if (orthogonal !== null) {
+    if (orthogonal != null) {
       return orthogonal;
     }
 
     const tmp = this.view.getEdgeStyle(edge);
-
     return (
       tmp === EdgeStyle.SegmentConnector ||
       tmp === EdgeStyle.ElbowConnector ||
@@ -1458,6 +1456,7 @@ class Graph extends EventSource {
  */
 export class GraphCodec extends ObjectCodec {
   constructor() {
+    // TODO: Register every possible plugin (i.e. all not being excluded via tree-shaking(?))
     super(new Graph(), [
       'graphListeners',
       'eventListeners',

@@ -24,7 +24,7 @@ import { ColorValue } from '../../../types';
 class RectangleShape extends Shape {
   constructor(
     bounds: Rectangle,
-    fill: ColorValue | null,
+    fill: ColorValue,
     stroke: ColorValue,
     strokeWidth: number = 1
   ) {
@@ -41,7 +41,7 @@ class RectangleShape extends Shape {
   isHtmlAllowed() {
     let events = true;
 
-    if (this.style) {
+    if (this.style && this.style.pointerEvents != null) {
       events = this.style.pointerEvents;
     }
 
@@ -59,7 +59,7 @@ class RectangleShape extends Shape {
   paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     let events = true;
 
-    if (this.style) {
+    if (this.style && this.style.pointerEvents != null) {
       events = this.style.pointerEvents;
     }
 

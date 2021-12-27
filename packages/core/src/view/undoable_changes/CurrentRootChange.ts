@@ -5,6 +5,7 @@ import Cell from '../cell/Cell';
 import InternalEvent from '../event/InternalEvent';
 
 import type { UndoableChange } from '../../types';
+import { Graph } from '../Graph';
 
 /**
  * Action to change the current root in a view.
@@ -42,7 +43,7 @@ class CurrentRootChange implements UndoableChange {
     this.view.currentRoot = this.previous;
     this.previous = tmp;
 
-    const translate = this.view.graph.getTranslateForRoot(this.view.currentRoot);
+    const translate = (<Graph>this.view.graph).getTranslateForRoot(this.view.currentRoot);
 
     if (translate) {
       this.view.translate = new Point(-translate.x, -translate.y);

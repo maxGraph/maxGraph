@@ -36,7 +36,8 @@ class ValueChange implements UndoableChange {
   }
 }
 
+const __dummy: any = undefined;
 CodecRegistry.register(
-  new GenericChangeCodec(new ValueChange(), 'value')
+  new GenericChangeCodec(new ValueChange(__dummy, __dummy, __dummy), 'value')
 );
 export default ValueChange;
