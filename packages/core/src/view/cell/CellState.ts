@@ -16,6 +16,7 @@ import { ALIGN, NONE } from '../../util/constants';
 import { CellStateStyles } from '../../types';
 import RectangleShape from '../geometry/node/RectangleShape';
 import CellOverlay from './CellOverlay';
+import { Graph } from '../Graph';
 
 /**
  * Represents the current state of a cell in a given <mxGraphView>.
@@ -58,18 +59,18 @@ class CellState extends Rectangle {
   /**
    * Reference to the enclosing <mxGraphView>.
    */
-  view: GraphView;
+  view!: GraphView;
 
   /**
    * Reference to the <Cell> that is represented by this state.
    */
-  cell: Cell;
+  cell!: Cell;
 
   /**
    * Contains an array of key, value pairs that represent the style of the
    * cell.
    */
-  style: CellStateStyles;
+  style!: CellStateStyles;
 
   /**
    * Specifies if the style is invalid. Default is false.
@@ -153,9 +154,13 @@ class CellState extends Rectangle {
 
   constructor(view: GraphView | null=null, cell: Cell | null=null, style: CellStateStyles | null=null) {
     super();
-
-    this.view = view;
-    this.cell = cell;
+    
+    if (view) {
+      this.view = view;
+    }
+    if (cell) {
+      this.cell = cell;
+    }
     this.style = style ?? {};
 
     this.origin = new Point();
@@ -370,7 +375,7 @@ class CellState extends Rectangle {
    * Destroys the state and all associated resources.
    */
   destroy() {
-    this.view.graph.cellRenderer.destroy(this);
+    (<Graph>this.view.graph).cellRenderer.destroy(this);
   }
 
   /**
@@ -425,7 +430,7 @@ class CellState extends Rectangle {
    * @param state {@link CellState} whose image URL should be returned.
    */
   getImageSrc() {
-    return this.style.image;
+    return this.style.image || null;
   }
 
   /**
@@ -437,7 +442,7 @@ class CellState extends Rectangle {
    * returned.
    */
   getIndicatorColor() {
-    return this.style.indicatorColor;
+    return this.style.indicatorColor || null;
   }
 
   /**
@@ -449,7 +454,7 @@ class CellState extends Rectangle {
    * returned.
    */
   getIndicatorGradientColor() {
-    return this.style.gradientColor;
+    return this.style.gradientColor || null;
   }
 
   /**
@@ -460,7 +465,7 @@ class CellState extends Rectangle {
    * @param state {@link CellState} whose indicator shape should be returned.
    */
   getIndicatorShape() {
-    return this.style.indicatorShape;
+    return this.style.indicatorShape || null;
   }
 
   /**
@@ -471,7 +476,7 @@ class CellState extends Rectangle {
    * @param state {@link CellState} whose indicator image should be returned.
    */
   getIndicatorImageSrc() {
-    return this.style.indicatorImage;
+    return this.style.indicatorImage || null;
   }
 }
 

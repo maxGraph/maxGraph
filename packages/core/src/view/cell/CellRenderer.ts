@@ -27,8 +27,9 @@ import {
   DEFAULT_FONTSTYLE,
   DEFAULT_TEXT_DIRECTION,
   DIALECT,
+  NONE,
+  SHAPE,
 } from '../../util/constants';
-import SHAPE from '../geometry/shapeConstants';
 import {
   getRotatedPoint,
   mod,
@@ -176,7 +177,7 @@ class CellRenderer {
 
     // Checks if there is a stencil for the name and creates
     // a shape instance for the stencil if one exists
-    const stencil = StencilShapeRegistry.getStencil(state.style.shape);
+    const stencil = StencilShapeRegistry.getStencil(<string>state.style.shape);
 
     if (stencil) {
       shape = new Shape(stencil);
@@ -195,7 +196,7 @@ class CellRenderer {
    */
   createIndicatorShape(state: CellState) {
     if (state.shape) {
-      state.shape.indicatorShape = this.getShape(state.getIndicatorShape());
+      state.shape.indicatorShape = this.getShape(state.getIndicatorShape() || null);
     }
   }
 
@@ -210,7 +211,7 @@ class CellRenderer {
    * Returns the constructor to be used for creating the shape.
    */
   getShapeConstructor(state: CellState) {
-    let ctor = this.getShape(state.style.shape);
+    let ctor = this.getShape(state.style.shape || null);
 
     if (!ctor) {
       // @ts-expect-error The various Shape constructors are not compatible.
@@ -230,12 +231,14 @@ class CellRenderer {
 
     if (shape) {
       shape.apply(state);
-      shape.imageSrc = state.getImageSrc();
-      shape.indicatorColor = state.getIndicatorColor();
-      shape.indicatorStrokeColor = state.style.indicatorStrokeColor;
-      shape.indicatorGradientColor = state.getIndicatorGradientColor();
-      shape.indicatorDirection = state.style.indicatorDirection;
-      shape.indicatorImageSrc = state.getIndicatorImageSrc();
+      shape.imageSrc = state.getImageSrc() || null;
+      shape.indicatorColor = state.getIndicatorColor() || NONE;
+      shape.indicatorStrokeColor = state.style.indicatorStrokeColor || NONE;
+      shape.indicatorGradientColor = state.getIndicatorGradientColor() || NONE;
+      if (state.style.indicatorDirection) {
+        shape.indicatorDirection = state.style.indicatorDirection;
+      }
+      shape.indicatorImageSrc = state.getIndicatorImageSrc() || null;
       this.postConfigureShape(state);
     }
   }
@@ -358,7 +361,7 @@ class CellRenderer {
   createLabel(state: CellState, value: string) {
     const graph = <Graph>state.view.graph;
 
-    if (state.style.fontSize > 0 || state.style.fontSize == null) {
+    if ((state.style.fontSize || 0) > 0 || state.style.fontSize == null) {
       // Avoids using DOM node for empty labels
       const isForceHtml = graph.isHtmlLabel(state.cell) || isNode(value);
 
@@ -1412,7 +1415,7 @@ class CellRenderer {
     // Updates indicator shape
     if (
       state.shape != null &&
-      state.shape.indicatorShape != this.getShape(state.getIndicatorShape())
+      state.shape.indicatorShape != this.getShape(<string>state.getIndicatorShape())
     ) {
       if (state.shape.indicator != null) {
         state.shape.indicator.destroy();

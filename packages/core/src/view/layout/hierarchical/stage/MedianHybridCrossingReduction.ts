@@ -4,6 +4,9 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
+import HierarchicalLayout from '../HierarchicalLayout';
+import GraphAbstractHierarchyCell from '../model/GraphAbstractHierarchyCell';
+import GraphHierarchyModel from '../model/GraphHierarchyModel';
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import MedianCellSorter from './MedianCellSorter';
 
@@ -24,7 +27,7 @@ import MedianCellSorter from './MedianCellSorter';
  * initialX - the leftmost coordinate node placement starts at
  */
 class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
-  constructor(layout) {
+  constructor(layout: HierarchicalLayout) {
     super();
 
     this.layout = layout;
@@ -33,7 +36,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   /**
    * Reference to the enclosing <HierarchicalLayout>.
    */
-  layout = null;
+  layout: HierarchicalLayout;
 
   /**
    * The maximum number of iterations to perform whilst reducing edge
@@ -161,7 +164,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    *
    * @param model the internal model describing the hierarchy
    */
-  calculateCrossings(model) {
+  calculateCrossings(model: GraphHierarchyModel) {
     const numRanks = model.ranks.length;
     let totalCrossings = 0;
 
@@ -180,7 +183,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * @param i  the topmost rank of the pair ( higher rank value )
    * @param model the internal model describing the hierarchy
    */
-  calculateRankCrossing(i, model) {
+  calculateRankCrossing(i: number, model: GraphHierarchyModel) {
     let totalCrossings = 0;
     const rank = model.ranks[i];
     const previousRank = model.ranks[i - 1];
@@ -254,7 +257,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * @param mainLoopIteration the iteration number of the main loop
    * @param model the internal model describing the hierarchy
    */
-  transpose(mainLoopIteration, model) {
+  transpose(mainLoopIteration: number, model: GraphHierarchyModel) {
     let improved = true;
 
     // Track the number of iterations in case of looping
@@ -418,7 +421,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * @param iteration the iteration number of the main loop
    * @param model the internal model describing the hierarchy
    */
-  weightedMedian(iteration, model) {
+  weightedMedian(iteration: number, model: GraphHierarchyModel) {
     // Reverse sweep direction each time through this method
     const downwardSweep = iteration % 2 === 0;
     if (downwardSweep) {
@@ -439,7 +442,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * @param rankValue the layer number of this rank
    * @param downwardSweep whether or not this is a downward sweep through the graph
    */
-  medianRank(rankValue, downwardSweep) {
+  medianRank(rankValue: number, downwardSweep: boolean) {
     const numCellsForRank = this.nestedBestRanks[rankValue].length;
     const medianValues = [];
     const reservedPositions = [];
@@ -508,13 +511,13 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * specified cell
    * @param rankValue the rank that the connected cell lie upon
    */
-  medianValue(connectedCells, rankValue) {
+  medianValue(connectedCells: GraphAbstractHierarchyCell[], rankValue: number) {
     const medianValues = [];
     let arrayCount = 0;
 
     for (let i = 0; i < connectedCells.length; i += 1) {
       const cell = connectedCells[i];
-      medianValues[arrayCount++] = cell.getGeneralPurposeVariable(rankValue);
+      medianValues[arrayCount++] = <number>cell.getGeneralPurposeVariable(rankValue);
     }
 
     // Sort() sorts lexicographically by default (i.e. 11 before 9) so force

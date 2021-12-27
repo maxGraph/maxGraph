@@ -387,7 +387,9 @@ class EdgeHandler {
           // VML dialect required here for event transparency in IE
           this.parentHighlight.dialect = DIALECT.SVG;
           this.parentHighlight.pointerEvents = false;
-          this.parentHighlight.rotation = pstate.style.rotation;
+          if (pstate.style.rotation) {
+            this.parentHighlight.rotation = pstate.style.rotation;
+          }
           this.parentHighlight.init(this.graph.getView().getOverlayPane());
           this.parentHighlight.redraw();
 

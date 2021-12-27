@@ -7,8 +7,10 @@
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import { remove } from '../../../../util/arrayUtils';
 import { clone } from '../../../../util/cloneUtils';
-import GraphLayout from '../../GraphLayout';
 import Cell from '../../../cell/Cell';
+import GraphHierarchyNode from '../model/GraphHierarchyNode';
+import GraphHierarchyEdge from '../model/GraphHierarchyEdge';
+import HierarchicalLayout from '../HierarchicalLayout';
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward
@@ -19,7 +21,7 @@ import Cell from '../../../cell/Cell';
  * Creates a cycle remover for the given internal model.
  */
 class MinimumCycleRemover extends HierarchicalLayoutStage {
-  constructor(layout: GraphLayout) {
+  constructor(layout: HierarchicalLayout) {
     super();
     this.layout = layout;
   }
@@ -27,7 +29,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
   /**
    * Reference to the enclosing <HierarchicalLayout>.
    */
-  layout: GraphLayout;
+  layout: HierarchicalLayout;
 
   /**
    * Takes the graph detail and configuration information within the facade
@@ -58,7 +60,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
     }
 
     model.visit(
-      (parent, node, connectingEdge, layer, seen) => {
+      (parent: GraphHierarchyNode, node: GraphHierarchyNode, connectingEdge: GraphHierarchyEdge, layer, seen) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
         // relationship to that edge in the parent and the cell
@@ -85,7 +87,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
 
     // Pick a random cell and dfs from it
     model.visit(
-      (parent, node, connectingEdge, layer, seen) => {
+      (parent: GraphHierarchyNode, node: GraphHierarchyNode, connectingEdge: GraphHierarchyEdge, layer, seen) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
         // relationship to that edge in the parent and the cell

@@ -10,6 +10,8 @@ import CellPath from '../../../cell/CellPath';
 import { clone } from '../../../../util/cloneUtils';
 import HierarchicalLayout from '../HierarchicalLayout';
 import Cell from 'src/view/cell/Cell';
+import GraphHierarchyNode from '../model/GraphHierarchyNode';
+import GraphHierarchyEdge from '../model/GraphHierarchyEdge';
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward
@@ -55,7 +57,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
     }
 
     model.visit(
-      (parent: Cell, node: Cell, connectingEdge: Cell, layer: any, seen: any) => {
+      (parent: GraphHierarchyNode, node: GraphHierarchyNode, connectingEdge: GraphHierarchyEdge, layer: any, seen: any) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
         // relationship to that edge in the parent and the cell

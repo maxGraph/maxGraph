@@ -8,9 +8,9 @@
 import Dictionary from '../../../../util/Dictionary';
 import GraphHierarchyNode from './GraphHierarchyNode';
 import GraphHierarchyEdge from './GraphHierarchyEdge';
-import GraphLayout from '../../GraphLayout';
 import Cell from '../../../cell/Cell';
 import CellArray from '../../../cell/CellArray';
+import HierarchicalLayout from '../HierarchicalLayout';
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges
@@ -36,7 +36,7 @@ import CellArray from '../../../cell/CellArray';
  */
 class GraphHierarchyModel {
   constructor(
-    layout: GraphLayout,
+    layout: HierarchicalLayout,
     vertices: CellArray,
     roots: CellArray,
     parent: Cell,
@@ -52,7 +52,7 @@ class GraphHierarchyModel {
     this.vertexMapper = new Dictionary();
     this.edgeMapper = new Dictionary();
     this.maxRank = 0;
-    const internalVertices: { [key: number]: GraphHierarchyNode[] } = {};
+    const internalVertices: { [key: number]: GraphHierarchyNode } = {};
 
     if (vertices == null) {
       vertices = graph.getChildVertices(parent);
@@ -167,9 +167,9 @@ class GraphHierarchyModel {
    * information filled in using the real vertices.
    */
   createInternalCells(
-    layout: GraphLayout,
+    layout: HierarchicalLayout,
     vertices: CellArray,
-    internalVertices: CellArray
+    internalVertices: { [key: number]: GraphHierarchyNode }
   ) {
     const graph = layout.getGraph();
 

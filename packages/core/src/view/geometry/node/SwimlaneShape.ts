@@ -212,7 +212,7 @@ class SwimlaneShape extends Shape {
 
     let events = true;
 
-    if (this.style) {
+    if (this.style && this.style.pointerEvents != null) {
       events = this.style.pointerEvents;
     }
 
@@ -301,7 +301,7 @@ class SwimlaneShape extends Shape {
 
     let events = true;
 
-    if (this.style) {
+    if (this.style && this.style.pointerEvents != null) {
       events = this.style.pointerEvents;
     }
 

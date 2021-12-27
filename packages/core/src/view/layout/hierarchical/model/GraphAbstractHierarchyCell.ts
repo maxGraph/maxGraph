@@ -8,6 +8,8 @@ import CellArray from '../../../../view/cell/CellArray';
 import Cell from '../../../cell/Cell';
 
 class GraphAbstractHierarchyCell extends Cell {
+  swimlaneIndex: number | null = null;
+
   /**
    * The maximum rank this cell occupies. Default is -1.
    */
