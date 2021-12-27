@@ -48,7 +48,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * Stores each rank as a collection of cells in the best order found for
    * each layer so far
    */
-  nestedBestRanks: { [key: number]: number[] } | null = null;
+  nestedBestRanks: { [key: number]: GraphAbstractHierarchyCell[] } | null = null;
 
   /**
    * The total number of crossings found in the best configuration so far

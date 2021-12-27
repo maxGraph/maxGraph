@@ -10,8 +10,9 @@ import GraphLayout from './GraphLayout';
 import { intersects } from '../../util/mathUtils';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
-import CellArray from '../cell/CellArray';
 import CellState from '../cell/CellState';
+import TextShape from '../geometry/node/TextShape';
+import Rectangle from '../geometry/Rectangle';
 
 /**
  * Extends <mxGraphLayout> to implement an edge label layout. This layout
@@ -53,7 +54,6 @@ class EdgeLabelLayout extends GraphLayout {
         }
       }
     }
-
     this.placeLabels(vertices, edges);
   }
 
@@ -92,9 +92,9 @@ class EdgeLabelLayout extends GraphLayout {
   /**
    * Places the labels of the given edges.
    */
-  avoid(edge: Cell, vertex: Cell): void {
+  avoid(edge: CellState, vertex: CellState): void {
     const model = this.graph.getModel();
-    const labRect = edge.text.boundingBox;
+    const labRect = <Rectangle>(<TextShape>edge.text).boundingBox;
 
     if (intersects(labRect, vertex)) {
       const dy1 = -labRect.y - labRect.height + vertex.y;

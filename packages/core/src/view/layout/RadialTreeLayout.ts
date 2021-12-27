@@ -4,10 +4,13 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { CompactTreeLayout, _mxCompactTreeLayoutLine, _mxCompactTreeLayoutNode } from './CompactTreeLayout';
+import {
+  CompactTreeLayout,
+  _mxCompactTreeLayoutLine,
+  _mxCompactTreeLayoutNode
+} from './CompactTreeLayout';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
-import CellArray from '../cell/CellArray';
 
 /**
  * Extends {@link mxGraphLayout} to implement a radial tree algorithm. This
@@ -98,7 +101,7 @@ class RadialTreeLayout extends CompactTreeLayout {
   /**
    * Array of vertices on each row
    */
-  row: { [key: number]: _mxCompactTreeLayoutLine[] } = {};
+  row: _mxCompactTreeLayoutNode[][] = [];
 
   /**
    * Returns a boolean indicating if the given {@link mxCell} should be ignored as a vertex.
@@ -132,7 +135,7 @@ class RadialTreeLayout extends CompactTreeLayout {
     super.execute(parent, root || undefined);
 
     let bounds = null;
-    const rootBounds = this.getVertexBounds(this.root);
+    const rootBounds = this.getVertexBounds(<Cell>this.root);
     this.centerX = rootBounds.x + rootBounds.width / 2;
     this.centerY = rootBounds.y + rootBounds.height / 2;
 
@@ -143,7 +146,7 @@ class RadialTreeLayout extends CompactTreeLayout {
       bounds.add(vertexBounds);
     }
 
-    this.calcRowDims([this.node], 0);
+    this.calcRowDims([<_mxCompactTreeLayoutLine>this.node], 0);
 
     let maxLeftGrad = 0;
     let maxRightGrad = 0;
@@ -188,7 +191,7 @@ class RadialTreeLayout extends CompactTreeLayout {
         let totalTheta = 0;
 
         while (child != null) {
-          totalTheta += child.theta;
+          totalTheta += <number>child.theta;
           counter++;
           child = child.next;
         }
@@ -196,12 +199,12 @@ class RadialTreeLayout extends CompactTreeLayout {
         if (counter > 0) {
           const averTheta = totalTheta / counter;
 
-          if (averTheta > node.theta && j < row.length - 1) {
+          if (averTheta > <number>node.theta && j < row.length - 1) {
             const nextTheta = row[j + 1].theta;
-            node.theta = Math.min(averTheta, nextTheta - Math.PI / 10);
-          } else if (averTheta < node.theta && j > 0) {
+            node.theta = Math.min(averTheta, <number>nextTheta - Math.PI / 10);
+          } else if (averTheta < <number>node.theta && j > 0) {
             const lastTheta = row[j - 1].theta;
-            node.theta = Math.max(averTheta, lastTheta + Math.PI / 10);
+            node.theta = Math.max(averTheta, <number>lastTheta + Math.PI / 10);
           }
         }
       }
@@ -212,11 +215,11 @@ class RadialTreeLayout extends CompactTreeLayout {
       for (let j = 0; j < this.row[i].length; j++) {
         const row = this.row[i];
         const node = row[j];
-        const vertexBounds = this.getVertexBounds(node.cell);
+        const vertexBounds = this.getVertexBounds(<Cell>node.cell);
         this.setVertexLocation(
-          node.cell,
-          this.centerX - vertexBounds.width / 2 + this.rowRadi[i] * Math.cos(node.theta),
-          this.centerY - vertexBounds.height / 2 + this.rowRadi[i] * Math.sin(node.theta)
+          <Cell>node.cell,
+          this.centerX - vertexBounds.width / 2 + this.rowRadi[i] * Math.cos(<number>node.theta),
+          this.centerY - vertexBounds.height / 2 + this.rowRadi[i] * Math.sin(<number>node.theta)
         );
       }
     }
@@ -228,7 +231,7 @@ class RadialTreeLayout extends CompactTreeLayout {
    * @param row      Array of internal nodes, the children of which are to be processed.
    * @param rowNum   Integer indicating which row is being processed.
    */
-  calcRowDims(row: _mxCompactTreeLayoutLine[], rowNum: number): void {
+  calcRowDims(row: _mxCompactTreeLayoutNode[], rowNum: number): void {
     if (row == null || row.length === 0) {
       return;
     }
@@ -262,7 +265,7 @@ class RadialTreeLayout extends CompactTreeLayout {
           vertexBounds.x + vertexBounds.width / 2,
           this.rowMaxCenX[rowNum]
         );
-        this.rowRadi[rowNum] = vertexBounds.y - this.getVertexBounds(this.root).y;
+        this.rowRadi[rowNum] = vertexBounds.y - this.getVertexBounds(<Cell>this.root).y;
 
         if (child.child != null) {
           rowHasChildren = true;

@@ -7,9 +7,10 @@
  *
  */
 import Cell from "../cell/Cell";
+import { _mxCompactTreeLayoutNode } from "./CompactTreeLayout";
 
 class WeightedCellSorter {
-  constructor(cell: Cell, weightedValue: number) {
+  constructor(cell: _mxCompactTreeLayoutNode, weightedValue: number) {
     this.cell = cell;
     this.weightedValue = weightedValue;
   }
@@ -37,7 +38,7 @@ class WeightedCellSorter {
   /**
    * The cell whose median value is being calculated.
    */
-  cell: Cell;
+  cell: _mxCompactTreeLayoutNode;
 
   /**
    * Compares two WeightedCellSorters.
