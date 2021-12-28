@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { DIALECT_SVG, GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/constants';
+import { DIALECT, GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/constants';
 import Point from '../geometry/Point';
 import PolylineShape from '../geometry/edge/PolylineShape';
 import CellState from '../cell/CellState';
@@ -172,7 +172,7 @@ class Guide {
             // Makes sure to use SVG shapes in order to implement
             // event-transparency on the background area of the rectangle since
             // HTML shapes do not let mouseevents through even when transparent
-            this.guideX.dialect = DIALECT_SVG;
+            this.guideX.dialect = DIALECT.SVG;
             this.guideX.pointerEvents = false;
             this.guideX.init(this.graph.getView().getOverlayPane());
           }
@@ -211,7 +211,7 @@ class Guide {
             // Makes sure to use SVG shapes in order to implement
             // event-transparency on the background area of the rectangle since
             // HTML shapes do not let mouseevents through even when transparent
-            this.guideY.dialect = DIALECT_SVG;
+            this.guideY.dialect = DIALECT.SVG;
             this.guideY.pointerEvents = false;
             this.guideY.init(this.graph.getView().getOverlayPane());
           }

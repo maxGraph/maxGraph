@@ -5,8 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import Client from "src/Client";
-import InternalEvent from "src/view/event/InternalEvent";
+import Client from '../Client';
+import InternalEvent from '../view/event/InternalEvent';
 import { write, writeln } from "../util/domUtils";
 import Translations from "../util/Translations";
 

@@ -6,7 +6,7 @@ import {
   Point,
   Outline,
   EdgeStyle,
-  mxKeyHandler,
+  KeyHandler,
   CompactTreeLayout,
   LayoutManager,
   CellOverlay,
@@ -124,7 +124,7 @@ const Template = ({ label, ...args }) => {
   style.edge = EdgeStyle.TopToBottom;
 
   // Stops editing on enter or escape keypress
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   // Enables automatic layout on the graph and installs
   // a tree layout for all groups who's children are

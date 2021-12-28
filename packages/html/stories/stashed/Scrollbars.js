@@ -418,7 +418,7 @@ export default Scrollbars;
         new mxRubberband(graph);
 
         // Enables key handling (eg. escape)
-        new mxKeyHandler(graph);
+        new KeyHandler(graph);
 
         // Gets the default parent for inserting new cells. This
         // is normally the first child of the root (ie. layer 0).

@@ -1,4 +1,4 @@
-import { Graph, EdgeStyle, constants, mxKeyHandler } from '@maxgraph/core';
+import { Graph, EdgeStyle, constants, KeyHandler } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -21,7 +21,7 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given container
   const graph = new Graph(container);
   graph.setConnectable(true);
-  new mxKeyHandler(graph);
+  new KeyHandler(graph);
 
   // Enables moving of vertex labels
   graph.vertexLabelsMovable = true;

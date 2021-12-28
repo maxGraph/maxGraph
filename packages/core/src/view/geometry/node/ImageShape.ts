@@ -11,7 +11,7 @@ import CellState from '../../cell/CellState';
 import AbstractCanvas2D from '../../canvas/SvgCanvas2D';
 import CellOverlay from '../../cell/CellOverlay';
 import { NONE } from '../../../util/constants';
-import { ColorValue } from 'src/types';
+import { ColorValue } from '../../../types';
 
 /**
  * Extends {@link mxShape} to implement an image shape.

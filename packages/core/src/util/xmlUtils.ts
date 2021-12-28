@@ -9,13 +9,13 @@ import { DIALECT, NODETYPE, NS_SVG } from './constants';
 import Point from '../view/geometry/Point';
 import Cell from '../view/cell/Cell';
 import CellArray from '../view/cell/CellArray';
-import { Graph } from 'src/view/Graph';
+import { Graph } from '../view/Graph';
 import { htmlEntities, trim } from './stringUtils';
-import TemporaryCellStates from 'src/view/cell/TemporaryCellStates';
+import TemporaryCellStates from '../view/cell/TemporaryCellStates';
 
 import type { StyleValue } from '../types';
 import { getTextContent } from './domUtils';
-import Codec from 'src/serialization/Codec';
+import Codec from '../serialization/Codec';
 
 /**
  * Returns a new, empty XML document.

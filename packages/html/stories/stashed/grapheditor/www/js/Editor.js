@@ -2661,7 +2661,7 @@ FilenameDialog.createFileTypes = function(editorUi, nameInput, types)
 	{
 		graphPanGraph.apply(this, arguments);
 		
-		if ((this.dialect != mxConstants.DIALECT_SVG && this.view.backgroundPageShape != null) &&
+		if ((this.dialect != mxConstants.DIALECT.SVG && this.view.backgroundPageShape != null) &&
 			(!this.useScrollbarsForPanning || !hasScrollbars(this.container)))
 		{
 			this.view.backgroundPageShape.node.style.marginLeft = dx + 'px';

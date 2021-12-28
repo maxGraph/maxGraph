@@ -1,6 +1,6 @@
 import {
   Graph,
-  mxKeyHandler,
+  KeyHandler,
   utils,
   domUtils,
   cloneUtils,
@@ -118,7 +118,7 @@ const Template = ({ label, ...args }) => {
   graph.setHtmlLabels(true);
 
   // Adds handling of return and escape keystrokes for editing
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   // Sample user objects with 2 fields
   const value = {};

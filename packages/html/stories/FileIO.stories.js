@@ -2,8 +2,8 @@ import { Graph, constants } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 import { clone } from '@maxgraph/core/util/cloneUtils';
-import { button } from '@maxgraph/core/util/dom/DomHelpers';
-import { load } from '@maxgraph/core/util/network/MaxXmlRequest';
+import { button } from '@maxgraph/core/util/domHelpers';
+import { load } from '@maxgraph/core/util/MaxXmlRequest';
 
 export default {
   title: 'Xml_Json/FileIO',

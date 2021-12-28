@@ -45,9 +45,9 @@ export { TerminalChange, TerminalChangeCodec } from './view/undoable_changes/Ter
 export { default as ValueChange } from './view/undoable_changes/ValueChange';
 export { default as VisibleChange } from './view/undoable_changes/VisibleChange';
 
-export { EditorKeyHandler, DefaultKeyHandlerCodec } from './editor/EditorKeyHandler';
-export { EditorPopupMenu, DefaultPopupMenuCodec } from './editor/EditorPopupMenu';
-export { EditorToolbar, DefaultToolbarCodec } from './editor/EditorToolbar';
+export { EditorKeyHandler, EditorKeyHandlerCodec } from './editor/EditorKeyHandler';
+export { EditorPopupMenu, EditorPopupMenuCodec } from './editor/EditorPopupMenu';
+export { EditorToolbar, EditorToolbarCodec } from './editor/EditorToolbar';
 export { Editor, EditorCodec } from './editor/Editor';
 
 export { default as CellHighlight } from './view/cell/CellHighlight';
@@ -79,21 +79,21 @@ export { default as PartitionLayout } from './view/layout/PartitionLayout';
 export { default as RadialTreeLayout } from './view/layout/RadialTreeLayout';
 export { default as StackLayout } from './view/layout/StackLayout';
 
-export { default as HierarchicalEdgeStyle } from './view/layout/hierarchical/HierarchicalEdgeStyle';
+export { default as HierarchicalEdgeStyle } from './view/layout/datatypes/HierarchicalEdgeStyle';
 export { default as HierarchicalLayout } from './view/layout/HierarchicalLayout';
 export { default as SwimlaneLayout } from './view/layout/SwimlaneLayout';
 
-export { default as GraphAbstractHierarchyCell } from './view/layout/hierarchical/GraphAbstractHierarchyCell';
-export { default as GraphHierarchyEdge } from './view/layout/hierarchical/model/GraphHierarchyEdge';
-export { default as GraphHierarchyModel } from './view/layout/hierarchical/model/GraphHierarchyModel';
-export { default as GraphHierarchyNode } from './view/layout/hierarchical/model/GraphHierarchyNode';
-export { default as SwimlaneModel } from './view/layout/hierarchical/model/SwimlaneModel';
+export { default as GraphAbstractHierarchyCell } from './view/layout/datatypes/GraphAbstractHierarchyCell';
+export { default as GraphHierarchyEdge } from './view/layout/datatypes/GraphHierarchyEdge';
+export { default as GraphHierarchyModel } from './view/layout/hierarchical/GraphHierarchyModel';
+export { default as GraphHierarchyNode } from './view/layout/datatypes/GraphHierarchyNode';
+export { default as SwimlaneModel } from './view/layout/hierarchical/SwimlaneModel';
 
 export { default as CoordinateAssignment } from './view/layout/hierarchical/CoordinateAssignment';
-export { default as HierarchicalLayoutStage } from './view/layout/hierarchical/stage/HierarchicalLayoutStage';
-export { default as MedianHybridCrossingReduction } from './view/layout/hierarchical/stage/MedianHybridCrossingReduction';
-export { default as MinimumCycleRemover } from './view/layout/hierarchical/stage/MinimumCycleRemover';
-export { default as SwimlaneOrdering } from './view/layout/hierarchical/stage/SwimlaneOrdering';
+export { default as HierarchicalLayoutStage } from './view/layout/hierarchical/HierarchicalLayoutStage';
+export { default as MedianHybridCrossingReduction } from './view/layout/hierarchical/MedianHybridCrossingReduction';
+export { default as MinimumCycleRemover } from './view/layout/hierarchical/MinimumCycleRemover';
+export { default as SwimlaneOrdering } from './view/layout/hierarchical/SwimlaneOrdering';
 
 export { default as Codec } from './serialization/Codec';
 export { default as CodecRegistry } from './serialization/CodecRegistry';

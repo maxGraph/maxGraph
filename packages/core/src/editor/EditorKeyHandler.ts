@@ -11,10 +11,10 @@ import KeyHandler from '../view/handler/KeyHandler';
 import Editor from './Editor';
 import ObjectCodec from '../serialization/ObjectCodec';
 import CodecRegistry from '../serialization/CodecRegistry';
-import Codec from 'src/serialization/Codec';
+import Codec from '../serialization/Codec';
 
 /**
- * Binds keycodes to actionnames in an editor.  This aggregates an internal {@link handler} and extends the implementation of {@link mxKeyHandler.escape} to not only cancel the editing, but also hide the properties dialog and fire an <Editor.escape> event via {@link editor}.  An instance of this class is created by {@link Editor} and stored in {@link Editor.keyHandler}.
+ * Binds keycodes to actionnames in an editor.  This aggregates an internal {@link handler} and extends the implementation of {@link KeyHandler.escape} to not only cancel the editing, but also hide the properties dialog and fire an <Editor.escape> event via {@link editor}.  An instance of this class is created by {@link Editor} and stored in {@link Editor.keyHandler}.
  *
  * @Example
  * Bind the delete key to the delete action in an existing editor.
@@ -27,7 +27,7 @@ import Codec from 'src/serialization/Codec';
  * This class uses the {@link DefaultKeyHandlerCodec} to read configuration data into an existing instance.  See {@link DefaultKeyHandlerCodec} for a description of the configuration format.
  *
  * @Keycodes
- * See {@link mxKeyHandler}.
+ * See {@link KeyHandler}.
  * An {@link InternalEvent.ESCAPE} event is fired via the editor if the escape key is pressed.
  */
 export class EditorKeyHandler {
@@ -55,7 +55,7 @@ export class EditorKeyHandler {
   editor: Editor | null = null;
 
   /**
-   * Holds the {@link mxKeyHandler} for key event handling.
+   * Holds the {@link KeyHandler} for key event handling.
    */
   handler: KeyHandler | null = null;
 

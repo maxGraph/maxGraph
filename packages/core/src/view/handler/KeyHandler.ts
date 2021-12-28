@@ -27,7 +27,7 @@ import CellEditorHandler from './CellEditorHandler';
  * (46) and deletes the selection cells if the graph is enabled.
  *
  * ```javascript
- * let keyHandler = new mxKeyHandler(graph);
+ * let keyHandler = new KeyHandler(graph);
  * keyHandler.bindKey(46, (evt)=>
  * {
  *   if (graph.isEnabled())
@@ -58,7 +58,7 @@ import CellEditorHandler from './CellEditorHandler';
  * };
  * ```
  *
- * Constructor: mxKeyHandler
+ * Constructor: KeyHandler
  *
  * Constructs an event handler that executes functions bound to specific
  * keystrokes.

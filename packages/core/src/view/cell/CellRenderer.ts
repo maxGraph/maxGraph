@@ -430,7 +430,7 @@ class CellRenderer {
 
             forceGetCell =
               // @ts-ignore nodeName should exist.
-              graph.dialect !== DIALECT_SVG && source.nodeName === 'IMG';
+              graph.dialect !== DIALECT.SVG && source.nodeName === 'IMG';
           }
         },
         (evt: MouseEvent) => {

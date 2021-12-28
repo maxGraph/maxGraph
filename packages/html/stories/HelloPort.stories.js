@@ -9,7 +9,7 @@ import {
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { popup } from '@maxgraph/core/util/gui/MaxWindow';
+import { popup } from '@maxgraph/core/gui/MaxWindow';
 import { getPrettyXml } from '@maxgraph/core/util/xmlUtils';
 
 export default {

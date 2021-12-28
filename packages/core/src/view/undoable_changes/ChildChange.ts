@@ -5,7 +5,7 @@ import CodecRegistry from '../../serialization/CodecRegistry';
 import { NODETYPE } from '../../util/constants';
 
 import type { UndoableChange } from '../../types';
-import Codec from 'src/serialization/Codec';
+import Codec from '../../serialization/Codec';
 
 /**
  * Action to add or remove a child in a model.

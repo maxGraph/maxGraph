@@ -1,5 +1,5 @@
-import Editor from "src/editor/Editor";
-import { KeyboardEventListener, MouseEventListener } from "src/types";
+import Editor from '../editor/Editor';
+import { KeyboardEventListener, MouseEventListener } from '../types';
 import InternalEvent from "../view/event/InternalEvent";
 import { write } from "./domUtils";
 

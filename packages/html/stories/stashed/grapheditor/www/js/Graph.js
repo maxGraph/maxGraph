@@ -1809,7 +1809,7 @@ Graph.prototype.init = function(container)
 	 */
 	Graph.prototype.isCssTransformsSupported = function()
 	{
-		return this.dialect == mxConstants.DIALECT_SVG && !Client.NO_FO &&
+		return this.dialect == mxConstants.DIALECT.SVG && !Client.NO_FO &&
 			(!this.lightbox || !Client.IS_SF);
 	};
 
@@ -11454,8 +11454,8 @@ if (typeof VertexHandler != 'undefined')
 				{
 					let shape = new RectangleShape(new Rectangle(0, 0, 6, 6),
 						'#ffffff', mxConstants.HANDLE_STROKECOLOR);
-					shape.dialect = (this.graph.dialect != mxConstants.DIALECT_SVG) ?
-						mxConstants.DIALECT_VML : mxConstants.DIALECT_SVG;
+					shape.dialect = (this.graph.dialect != mxConstants.DIALECT.SVG) ?
+						mxConstants.DIALECT_VML : mxConstants.DIALECT.SVG;
 					shape.init(this.graph.view.getOverlayPane());
 					this.cornerHandles.push(shape);
 				}

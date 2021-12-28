@@ -195,6 +195,13 @@ const Template = ({ label, ...args }) => {
       position: [0, 0.5],
       size: [20, 20],
       style: 'fontSize=9;shape=ellipse;resizable=0;',
+      /*style: {
+        fontSize: 9, 
+        shape: 'ellipse', 
+        resizable: false, 
+        top: 0,    left: 0.5, 
+        width: 20, height: 20
+      },*/
     });
     v2.geometry.offset = new Point(-10, -10);
     v2.geometry.relative = true;

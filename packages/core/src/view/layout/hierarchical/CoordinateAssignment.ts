@@ -13,12 +13,12 @@ import Point from '../../geometry/Point';
 import HierarchicalEdgeStyle from '../datatypes/HierarchicalEdgeStyle';
 import HierarchicalLayout from '../HierarchicalLayout';
 import GraphHierarchyModel from './GraphHierarchyModel';
-import Cell from 'src/view/cell/Cell';
+import Cell from '../../../view/cell/Cell';
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
 import { _mxCompactTreeLayoutNode } from '../CompactTreeLayout';
-import { Graph } from 'src/view/Graph';
-import Geometry from 'src/view/geometry/Geometry';
+import { Graph } from '../../../view/Graph';
+import Geometry from '../../../view/geometry/Geometry';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
 import SwimlaneLayout from '../SwimlaneLayout';
 

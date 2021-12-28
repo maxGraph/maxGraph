@@ -3,7 +3,7 @@ import {
   ConnectionHandler,
   ImageBox,
   RubberBandHandler,
-  mxKeyHandler,
+  KeyHandler,
   DomHelpers,
 } from '@maxgraph/core';
 
@@ -46,7 +46,7 @@ const Template = ({ label, ...args }) => {
   // Enables rubberband selection and key handling
   if (args.rubberBand) new RubberBandHandler(graph);
 
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   // Assigns the delete key
   keyHandler.bindKey(46, function (evt) {

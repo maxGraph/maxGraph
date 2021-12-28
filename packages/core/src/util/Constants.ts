@@ -37,13 +37,13 @@ export const enum RENDERING_HINT {
 };
 
 /**
- * - DIALECT_SVG: Defines the SVG display dialect name.
+ * - DIALECT.SVG: Defines the SVG display dialect name.
  *
- * - DIALECT_MIXEDHTML: Defines the mixed HTML display dialect name.
+ * - DIALECT.MIXEDHTML: Defines the mixed HTML display dialect name.
  *
- * - DIALECT_PREFERHTML: Defines the preferred HTML display dialect name.
+ * - DIALECT.PREFERHTML: Defines the preferred HTML display dialect name.
  *
- * - DIALECT_STRICTHTML: Defines the strict HTML display dialect.
+ * - DIALECT.STRICTHTML: Defines the strict HTML display dialect.
  */
 export const enum DIALECT {
     SVG = 'svg',

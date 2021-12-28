@@ -2,7 +2,7 @@ import {
   Graph,
   Rectangle,
   DomHelpers,
-  mxKeyHandler,
+  KeyHandler,
   InternalEvent,
   xmlUtils,
   Codec,
@@ -63,7 +63,7 @@ const Template = ({ label, ...args }) => {
   graph.setBorder(60);
 
   // Stops editing on enter key, handles escape
-  new mxKeyHandler(graph);
+  new KeyHandler(graph);
 
   // Overrides method to disallow edge label editing
   graph.isCellEditable = function (cell) {

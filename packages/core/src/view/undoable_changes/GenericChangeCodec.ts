@@ -7,7 +7,7 @@
 
 import ObjectCodec from '../../serialization/ObjectCodec';
 import { isNode } from '../../util/domUtils';
-import Codec from 'src/serialization/Codec';
+import Codec from '../../serialization/Codec';
 
 /**
  * Codec for <mxValueChange>s, <mxStyleChange>s, <mxGeometryChange>s,

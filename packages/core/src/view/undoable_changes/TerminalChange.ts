@@ -4,7 +4,7 @@ import ObjectCodec from '../../serialization/ObjectCodec';
 import CodecRegistry from '../../serialization/CodecRegistry';
 
 import type { UndoableChange } from '../../types';
-import Codec from 'src/serialization/Codec';
+import Codec from '../../serialization/Codec';
 
 /**
  * Action to change a terminal in a model.

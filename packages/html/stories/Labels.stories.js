@@ -1,4 +1,4 @@
-import { Graph, RubberBandHandler, mxKeyHandler, constants, Rectangle } from '@maxgraph/core';
+import { Graph, RubberBandHandler, KeyHandler, constants, Rectangle } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -30,7 +30,7 @@ const Template = ({ label, ...args }) => {
 
   if (args.rubberBand) new RubberBandHandler(graph);
 
-  new mxKeyHandler(graph);
+  new KeyHandler(graph);
 
   const graphHandler = graph.getPlugin('GraphHandler');
 

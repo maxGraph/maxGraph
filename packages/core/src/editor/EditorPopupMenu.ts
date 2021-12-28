@@ -11,9 +11,9 @@ import Translations from '../util/Translations';
 import Editor from './Editor';
 import CodecRegistry from '../serialization/CodecRegistry';
 import ObjectCodec from '../serialization/ObjectCodec';
-import Codec from 'src/serialization/Codec';
+import Codec from '../serialization/Codec';
 
-import { PopupMenuItem } from 'src/types';
+import { PopupMenuItem } from '../types';
 
 /**
  * Creates popupmenus for mouse events.  This object holds an XML node which is a description of the popup menu to be created.  In {@link createMenu}, the configuration is applied to the context and the resulting menu items are added to the menu dynamically.  See {@link createMenu} for a description of the configuration format.

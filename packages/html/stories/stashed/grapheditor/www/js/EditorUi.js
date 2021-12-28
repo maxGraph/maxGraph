@@ -4555,7 +4555,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 {
 	let editorUi = this;
 	let graph = this.editor.graph;
-	let keyHandler = new mxKeyHandler(graph);
+	let keyHandler = new KeyHandler(graph);
 
 	let isEventIgnored = keyHandler.isEventIgnored;
 	keyHandler.isEventIgnored = function(evt)
@@ -4755,7 +4755,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 	
 	let keyHandlerGetFunction = keyHandler.getFunction;
 
-	mxKeyHandler.prototype.getFunction = function(evt)
+	KeyHandler.prototype.getFunction = function(evt)
 	{
 		if (graph.isEnabled())
 		{

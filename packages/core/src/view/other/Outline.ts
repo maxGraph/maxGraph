@@ -24,7 +24,7 @@ import EventObject from '../event/EventObject';
 import { getSource, isMouseEvent } from '../../util/eventUtils';
 import EventSource from '../event/EventSource';
 import { hasScrollbars } from '../../util/styleUtils';
-import { Listenable } from 'src/types';
+import { Listenable } from '../../types';
 
 /**
  * @class Outline

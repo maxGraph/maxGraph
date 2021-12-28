@@ -1,6 +1,8 @@
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
-import { findNearestSegment, mixInto, removeDuplicates } from '../../util/utils';
+import { mixInto } from '../../util/utils';
+import { removeDuplicates } from '../../util/arrayUtils';
+import { findNearestSegment } from '../../util/mathUtils';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';

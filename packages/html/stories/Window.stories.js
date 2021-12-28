@@ -1,7 +1,7 @@
 import {
   Graph,
   MaxWindow,
-  mxKeyHandler,
+  KeyHandler,
   RubberBandHandler,
   InternalEvent,
   MaxLog,
@@ -59,7 +59,7 @@ const Template = ({ label, ...args }) => {
 
   if (args.rubberBand) new RubberBandHandler(graph);
 
-  new mxKeyHandler(graph);
+  new KeyHandler(graph);
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 

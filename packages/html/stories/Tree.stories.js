@@ -6,7 +6,7 @@ import {
   ImageBox,
   Client,
   EdgeStyle,
-  mxKeyHandler,
+  KeyHandler,
   CompactTreeLayout,
   LayoutManager,
   Rectangle,
@@ -197,7 +197,7 @@ const Template = ({ label, ...args }) => {
   panningHandler.useLeftButtonForPanning = true;
 
   // Stops editing on enter or escape keypress
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   // Enables automatic layout on the graph and installs
   // a tree layout for all groups who's children are

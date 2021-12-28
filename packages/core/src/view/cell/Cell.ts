@@ -17,7 +17,7 @@ import ObjectCodec from '../../serialization/ObjectCodec';
 import CodecRegistry from '../../serialization/CodecRegistry';
 import { removeWhitespace } from '../../util/stringUtils';
 import { importNode } from '../../util/domUtils';
-import Codec from 'src/serialization/Codec';
+import Codec from '../../serialization/Codec';
 
 import type { FilterFunction } from '../../types';
 

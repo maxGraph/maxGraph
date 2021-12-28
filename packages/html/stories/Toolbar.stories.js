@@ -5,7 +5,7 @@ import {
   ImageBox,
   MaxToolbar,
   Model,
-  mxKeyHandler,
+  KeyHandler,
   Cell,
   Geometry,
   DragSource,
@@ -82,7 +82,7 @@ const Template = ({ label, ...args }) => {
   graph.setMultigraph(false);
 
   // Stops editing on enter or escape keypress
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   if (args.rubberBand) new RubberBandHandler(graph);
 

@@ -23,7 +23,7 @@ import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
-import { getNumber } from 'src/util/stringUtils';
+import { getNumber } from '../../../util/stringUtils';
 
 /**
  * Implements a generic shape which is based on a XML node as a description.

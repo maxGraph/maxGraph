@@ -3,7 +3,7 @@ import {
   RubberBandHandler,
   xmlUtils,
   Multiplicity,
-  mxKeyHandler,
+  KeyHandler,
   InternalEvent,
 } from '@maxgraph/core';
 
@@ -90,7 +90,7 @@ const Template = ({ label, ...args }) => {
   new RubberBandHandler(graph);
 
   // Removes cells when [DELETE] is pressed
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
   keyHandler.bindKey(46, function (evt) {
     if (graph.isEnabled()) {
       graph.removeCells();

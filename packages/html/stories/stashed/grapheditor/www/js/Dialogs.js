@@ -1924,7 +1924,7 @@ let OutlineWindow = function(editorUi, x, y, w, h)
 		outline.update(true);
 	});
 	
-	if (outline.outline.dialect == mxConstants.DIALECT_SVG)
+	if (outline.outline.dialect == mxConstants.DIALECT.SVG)
 	{
 		let zoomInAction = editorUi.actions.get('zoomIn');
 		let zoomOutAction = editorUi.actions.get('zoomOut');

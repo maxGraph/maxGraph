@@ -13,17 +13,17 @@ import InternalEvent from '../view/event/InternalEvent';
 import { getClientX, getClientY } from '../util/eventUtils';
 import { makeDraggable } from '../util/gestureUtils';
 import Editor from './Editor';
-import Cell from 'src/view/cell/Cell';
-import CellArray from 'src/view/cell/CellArray';
-import { Graph } from 'src/view/Graph';
-import EventObject from 'src/view/event/EventObject';
+import Cell from '../view/cell/Cell';
+import CellArray from '../view/cell/CellArray';
+import { Graph } from '../view/Graph';
+import EventObject from '../view/event/EventObject';
 import ObjectCodec from '../serialization/ObjectCodec';
 import CodecRegistry from '../serialization/CodecRegistry';
 import { getChildNodes, getTextContent } from '../util/domUtils';
 import { NODETYPE } from '../util/constants';
-import Translations from 'src/util/Translations';
-import MaxLog from 'src/gui/MaxLog';
-import Codec from 'src/serialization/Codec';
+import Translations from '../util/Translations';
+import MaxLog from '../gui/MaxLog';
+import Codec from '../serialization/Codec';
 
 /**
  * Toolbar for the editor. This modifies the state of the graph

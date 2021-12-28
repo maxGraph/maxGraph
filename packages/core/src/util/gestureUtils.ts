@@ -1,8 +1,8 @@
 import DragSource, { DropHandler } from '../view/other/DragSource';
 import Point from '../view/geometry/Point';
 import { TOOLTIP_VERTICAL_OFFSET } from './constants';
-import { Graph } from 'src/view/Graph';
-import Cell from 'src/view/cell/Cell';
+import { Graph } from '../view/Graph';
+import Cell from '../view/cell/Cell';
 
 /**
  * Configures the given DOM element to act as a drag source for the

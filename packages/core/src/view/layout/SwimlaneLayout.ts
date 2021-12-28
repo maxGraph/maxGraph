@@ -18,7 +18,7 @@ import CoordinateAssignment from './hierarchical/CoordinateAssignment';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
-import Geometry from 'src/view/geometry/Geometry';
+import Geometry from '../../view/geometry/Geometry';
 import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
 
 /**

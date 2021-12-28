@@ -15,7 +15,7 @@ import {
   SHADOW_OPACITY,
 } from '../../util/constants';
 import { getOuterHtml, isNode } from '../../util/domUtils';
-import { DirectionValue, TextDirectionValue } from 'src/types';
+import { DirectionValue, TextDirectionValue } from '../../types';
 
 /**
  * Base class for all canvases. The following methods make up the public

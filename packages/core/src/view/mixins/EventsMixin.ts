@@ -261,7 +261,7 @@ const EventsMixin: PartialType = {
   lastEvent: null, // FIXME: Check if this can be more specific - DOM events or mxEventObjects!
 
   /**
-   * Specifies if {@link mxKeyHandler} should invoke {@link escape} when the escape key
+   * Specifies if {@link KeyHandler} should invoke {@link escape} when the escape key
    * is pressed.
    * @default true
    */

@@ -21,7 +21,7 @@ import ObjectCodec from '../../serialization/ObjectCodec';
 import { getTextContent } from '../../util/domUtils';
 
 import type { CellStateStyles } from '../../types';
-import Codec from 'src/serialization/Codec';
+import Codec from '../../serialization/Codec';
 
 /**
  * @class Stylesheet

@@ -10,7 +10,6 @@ import GraphHierarchyModel from './GraphHierarchyModel';
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import MedianCellSorter from '../util/MedianCellSorter';
 import SwimlaneLayout from '../SwimlaneLayout';
-import Cell from 'src/view/cell/Cell';
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.

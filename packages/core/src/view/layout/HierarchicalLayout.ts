@@ -13,9 +13,9 @@ import ObjectIdentity from '../../util/ObjectIdentity';
 import MinimumCycleRemover from './hierarchical/MinimumCycleRemover';
 import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction';
 import CoordinateAssignment from './hierarchical/CoordinateAssignment';
-import { Graph } from 'src/view/Graph';
-import CellArray from 'src/view/cell/CellArray';
-import Cell from 'src/view/cell/Cell';
+import { Graph } from '../../view/Graph';
+import CellArray from '../../view/cell/CellArray';
+import Cell from '../../view/cell/Cell';
 import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
 
 /**

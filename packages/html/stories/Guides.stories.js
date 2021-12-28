@@ -104,7 +104,7 @@ const Template = ({ label, ...args }) => {
     graph.container.focus();
 
     // Handles keystroke events
-    const keyHandler = new mxKeyHandler(graph);
+    const keyHandler = new KeyHandler(graph);
 
     // Ignores enter keystroke. Remove this line if you want the
     // enter keystroke to stop editing

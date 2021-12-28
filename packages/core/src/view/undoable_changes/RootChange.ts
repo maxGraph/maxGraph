@@ -5,7 +5,7 @@ import { NODETYPE } from '../../util/constants';
 import ObjectCodec from '../../serialization/ObjectCodec';
 
 import type { UndoableChange } from '../../types';
-import Codec from 'src/serialization/Codec';
+import Codec from '../../serialization/Codec';
 
 /**
  * Action to change the root in a model.
