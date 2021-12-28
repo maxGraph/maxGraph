@@ -80,16 +80,16 @@ export { default as RadialTreeLayout } from './view/layout/RadialTreeLayout';
 export { default as StackLayout } from './view/layout/StackLayout';
 
 export { default as HierarchicalEdgeStyle } from './view/layout/hierarchical/HierarchicalEdgeStyle';
-export { default as HierarchicalLayout } from './view/layout/hierarchical/HierarchicalLayout';
-export { default as SwimlaneLayout } from './view/layout/hierarchical/SwimlaneLayout';
+export { default as HierarchicalLayout } from './view/layout/HierarchicalLayout';
+export { default as SwimlaneLayout } from './view/layout/SwimlaneLayout';
 
-export { default as GraphAbstractHierarchyCell } from './view/layout/hierarchical/model/GraphAbstractHierarchyCell';
+export { default as GraphAbstractHierarchyCell } from './view/layout/hierarchical/GraphAbstractHierarchyCell';
 export { default as GraphHierarchyEdge } from './view/layout/hierarchical/model/GraphHierarchyEdge';
 export { default as GraphHierarchyModel } from './view/layout/hierarchical/model/GraphHierarchyModel';
 export { default as GraphHierarchyNode } from './view/layout/hierarchical/model/GraphHierarchyNode';
 export { default as SwimlaneModel } from './view/layout/hierarchical/model/SwimlaneModel';
 
-export { default as CoordinateAssignment } from './view/layout/hierarchical/stage/CoordinateAssignment';
+export { default as CoordinateAssignment } from './view/layout/hierarchical/CoordinateAssignment';
 export { default as HierarchicalLayoutStage } from './view/layout/hierarchical/stage/HierarchicalLayoutStage';
 export { default as MedianHybridCrossingReduction } from './view/layout/hierarchical/stage/MedianHybridCrossingReduction';
 export { default as MinimumCycleRemover } from './view/layout/hierarchical/stage/MinimumCycleRemover';
