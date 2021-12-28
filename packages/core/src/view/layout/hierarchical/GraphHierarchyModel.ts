@@ -118,12 +118,12 @@ class GraphHierarchyModel {
   /**
    * Map from graph vertices to internal model nodes.
    */
-  vertexMapper: Dictionary<Cell, any>;
+  vertexMapper: Dictionary<Cell, GraphHierarchyNode>;
 
   /**
    * Map from graph edges to internal model edges
    */
-  edgeMapper: Dictionary<Cell, any>;
+  edgeMapper: Dictionary<Cell, GraphHierarchyEdge>;
 
   /**
    * Mapping from rank number to actual rank
@@ -249,7 +249,7 @@ class GraphHierarchyModel {
    * Starting at the sinks is basically a longest path layering algorithm.
    */
   initialRank(): void {
-    const startNodes = [];
+    const startNodes: GraphHierarchyNode[] = [];
 
     if (this.roots != null) {
       for (let i = 0; i < this.roots.length; i += 1) {
@@ -262,7 +262,7 @@ class GraphHierarchyModel {
     }
 
     const internalNodes = this.vertexMapper.getValues();
-
+    
     for (let i = 0; i < internalNodes.length; i += 1) {
       // Mark the node as not having had a layer assigned
       internalNodes[i].temp[0] = -1;
@@ -273,7 +273,7 @@ class GraphHierarchyModel {
     while (startNodes.length > 0) {
       const internalNode = startNodes[0];
       var layerDeterminingEdges;
-      var edgesToBeMarked;
+      var edgesToBeMarked: GraphHierarchyEdge[] | null;
 
       layerDeterminingEdges = internalNode.connectsAsTarget;
       edgesToBeMarked = internalNode.connectsAsSource;
@@ -293,7 +293,7 @@ class GraphHierarchyModel {
         if (internalEdge.temp[0] === 5270620) {
           // This edge has been scanned, get the layer of the
           // node on the other end
-          const otherNode = internalEdge.source;
+          const otherNode = <GraphHierarchyNode>internalEdge.source;
           minimumLayer = Math.min(minimumLayer, otherNode.temp[0] - 1);
         } else {
           allEdgesScanned = false;
@@ -310,14 +310,14 @@ class GraphHierarchyModel {
 
         if (edgesToBeMarked != null) {
           for (let i = 0; i < edgesToBeMarked.length; i += 1) {
-            const internalEdge = edgesToBeMarked[i];
+            const internalEdge = <GraphHierarchyEdge>edgesToBeMarked[i];
 
             // Assign unique stamp ( y/m/d/h )
             internalEdge.temp[0] = 5270620;
 
             // Add node on other end of edge to LinkedList of
             // nodes to be analysed
-            const otherNode = internalEdge.target;
+            const otherNode = <GraphHierarchyNode>internalEdge.target;
 
             // Only add node if it hasn't been assigned a layer
             if (otherNode.temp[0] === -1) {
@@ -364,7 +364,7 @@ class GraphHierarchyModel {
 
       for (let j = 0; j < layerDeterminingEdges.length; j++) {
         const internalEdge = layerDeterminingEdges[j];
-        const otherNode = internalEdge.target;
+        const otherNode = <GraphHierarchyNode>internalEdge.target;
         internalNode.temp[0] = Math.max(currentMaxLayer, otherNode.temp[0] + 1);
         currentMaxLayer = internalNode.temp[0];
       }
@@ -392,7 +392,7 @@ class GraphHierarchyModel {
     // Perform a DFS to obtain an initial ordering for each rank.
     // Without doing this you would end up having to process
     // crossings for a standard tree.
-    let rootsArray = null;
+    let rootsArray: GraphHierarchyNode[] | null = null;
 
     if (this.roots != null) {
       const oldRootsArray = this.roots;
@@ -401,7 +401,7 @@ class GraphHierarchyModel {
       for (let i = 0; i < oldRootsArray.length; i += 1) {
         const cell = oldRootsArray[i];
         const internalNode = this.vertexMapper.get(cell);
-        rootsArray[i] = internalNode;
+        rootsArray[i] = <GraphHierarchyNode>internalNode;
       }
     }
 

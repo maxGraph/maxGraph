@@ -1114,7 +1114,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
                 sortedCells.push(sorter);
               }
 
-              sortedCells.sort(new WeightedCellSorter().compare);
+              sortedCells.sort(WeightedCellSorter.compare);
 
               let leftLimit = cell.x[0] - cell.width / 2;
               let rightLimit = leftLimit + cell.width;

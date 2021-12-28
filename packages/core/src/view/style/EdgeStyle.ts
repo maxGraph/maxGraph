@@ -483,8 +483,10 @@ class EdgeStyle {
    * edge.
    */
   static SegmentConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
+    
     // Creates array of all way- and terminalpoints
-    const pts = EdgeStyle.scalePointArray(state.absolutePoints, state.view.scale);
+    // TODO: Figure out what to do when there are nulls in `pts`!
+    const pts = <Point[]><unknown>EdgeStyle.scalePointArray(<Point[]><unknown>state.absolutePoints, state.view.scale);
     const source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
     const target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
     const tol = 1;
@@ -951,9 +953,9 @@ class EdgeStyle {
    * edge.
    */
   static OrthConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
-    const { graph } = state.view;
 
-    const pts = EdgeStyle.scalePointArray(<Point[]>state.absolutePoints, state.view.scale);
+    // TODO: Figure out what to do when there are nulls in `pts`!
+    const pts = <Point[]><unknown>EdgeStyle.scalePointArray(<Point[]>state.absolutePoints, state.view.scale);
     let source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
     let target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
 
