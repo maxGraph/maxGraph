@@ -1,17 +1,16 @@
 /**
- * Copyright (c) 2006-2018, JGraph Ltd
- * Copyright (c) 2006-2018, Gaudenz Alder
+ * Copyright (c) 2006-2015, JGraph Ltd
+ * Copyright (c) 2006-2015, Gaudenz Alder
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import GraphHierarchyNode from "./GraphHierarchyNode";
-import GraphHierarchyEdge from "./GraphHierarchyEdge";
-import CellPath from "../../../cell/CellPath";
-import GraphLayout from "../../GraphLayout";
-import Dictionary from "../../../../util/Dictionary";
-import CellArray from "../../../cell/CellArray";
-import Cell from "../../../cell/Cell";
-import { clone } from "../../../../util/cloneUtils";
+
+import Dictionary from '../../../util/Dictionary';
+import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
+import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
+import Cell from '../../cell/Cell';
+import CellArray from '../../cell/CellArray';
+import HierarchicalLayout from '../HierarchicalLayout';
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges
@@ -20,7 +19,7 @@ import { clone } from "../../../../util/cloneUtils";
  * The internal model also reverses edge direction were appropriate , ignores
  * self-loop and groups parallels together under one edge object.
  *
- * Constructor: mxSwimlaneModel
+ * Constructor: mxGraphHierarchyModel
  *
  * Creates an internal ordered graph model using the vertices passed in. If
  * there are any, leftward edge need to be inverted in the internal model
@@ -35,9 +34,9 @@ import { clone } from "../../../../util/cloneUtils";
  * scanRanksFromSinks - Whether rank assignment is from the sinks or sources.
  * usage
  */
-class SwimlaneModel {
+class GraphHierarchyModel {
   constructor(
-    layout: GraphLayout,
+    layout: HierarchicalLayout,
     vertices: CellArray,
     roots: CellArray,
     parent: Cell,
@@ -53,10 +52,10 @@ class SwimlaneModel {
     this.vertexMapper = new Dictionary();
     this.edgeMapper = new Dictionary();
     this.maxRank = 0;
-    const internalVertices = [];
+    const internalVertices: { [key: number]: GraphHierarchyNode } = {};
 
     if (vertices == null) {
-      vertices = this.graph.getChildVertices(parent);
+      vertices = graph.getChildVertices(parent);
     }
 
     this.maxRank = this.SOURCESCANSTARTRANK;
@@ -81,7 +80,7 @@ class SwimlaneModel {
           let targetCell = layout.getVisibleTerminal(realEdge, false);
           let internalTargetCell = this.vertexMapper.get(targetCell);
 
-          if (internalVertices[i] == internalTargetCell) {
+          if (internalVertices[i] === internalTargetCell) {
             // If there are parallel edges going between two vertices and not all are in the same direction
             // you can have navigated across one direction when doing the cycle reversal that isn't the same
             // direction as the first real edge in the array above. When that happens the if above catches
@@ -91,13 +90,10 @@ class SwimlaneModel {
             internalTargetCell = this.vertexMapper.get(targetCell);
           }
 
-          if (
-            internalTargetCell != null &&
-            internalVertices[i] !== internalTargetCell
-          ) {
+          if (internalTargetCell != null && internalVertices[i] !== internalTargetCell) {
             internalEdge.target = internalTargetCell;
 
-            if (internalTargetCell.connectsAsTarget.length == 0) {
+            if (internalTargetCell.connectsAsTarget.length === 0) {
               internalTargetCell.connectsAsTarget = [];
             }
 
@@ -122,28 +118,28 @@ class SwimlaneModel {
   /**
    * Map from graph vertices to internal model nodes.
    */
-  vertexMapper: Dictionary<Cell, Cell>;
+  vertexMapper: Dictionary<Cell, any>;
 
   /**
    * Map from graph edges to internal model edges
    */
-  edgeMapper: Dictionary<Cell, Cell>;
+  edgeMapper: Dictionary<Cell, any>;
 
   /**
    * Mapping from rank number to actual rank
    */
-  ranks: [] = [];
+  ranks: { [key: number]: number } | null = null;
 
   /**
    * Store of roots of this hierarchy model, these are real graph cells, not
    * internal cells
    */
-  roots: CellArray;
+  roots: CellArray | null = null;
 
   /**
    * The parent cell whose children are being laid out
    */
-  parent: Cell;
+  parent: Cell | null = null;
 
   /**
    * Count of the number of times the ancestor dfs has been used.
@@ -162,11 +158,6 @@ class SwimlaneModel {
   tightenToSource: boolean = false;
 
   /**
-   * An array of the number of ranks within each swimlane
-   */
-  ranksPerGroup = null;
-
-  /**
    * Creates all edges in the internal model
    *
    * @param layout Reference to the <HierarchicalLayout> algorithm.
@@ -176,25 +167,16 @@ class SwimlaneModel {
    * information filled in using the real vertices.
    */
   createInternalCells(
-    layout: GraphLayout,
+    layout: HierarchicalLayout,
     vertices: CellArray,
-    internalVertices: CellArray
+    internalVertices: { [key: number]: GraphHierarchyNode }
   ) {
     const graph = layout.getGraph();
-    const { swimlanes } = layout;
 
     // Create internal edges
     for (let i = 0; i < vertices.length; i += 1) {
       internalVertices[i] = new GraphHierarchyNode(vertices[i]);
       this.vertexMapper.put(vertices[i], internalVertices[i]);
-      internalVertices[i].swimlaneIndex = -1;
-
-      for (let ii = 0; ii < swimlanes.length; ii += 1) {
-        if (vertices[i].getParent() === swimlanes[ii]) {
-          internalVertices[i].swimlaneIndex = ii;
-          break;
-        }
-      }
 
       // If the layout is deterministic, order the cells
       // List outgoingCells = graph.getNeighbours(vertices[i], deterministic);
@@ -204,15 +186,11 @@ class SwimlaneModel {
       // Create internal edges, but don't do any rank assignment yet
       // First use the information from the greedy cycle remover to
       // invert the leftward edges internally
-      for (let j = 0; j < conns.length; j += 1) {
-        const cell = layout.getVisibleTerminal(conns[j], false);
+      for (let j = 0; j < conns.length; j++) {
+        const cell = <Cell>layout.getVisibleTerminal(conns[j], false);
 
         // Looking for outgoing edges only
-        if (
-          cell !== vertices[i] &&
-          cell.isVertex() &&
-          !layout.isVertexIgnored(cell)
-        ) {
+        if (cell !== vertices[i] && cell.isVertex() && !layout.isVertexIgnored(cell)) {
           // We process all edge between this source and its targets
           // If there are edges going both ways, we need to collect
           // them all into one internal edges to avoid looping problems
@@ -226,11 +204,7 @@ class SwimlaneModel {
           // are the same. All the graph edges will have been assigned to
           // an internal edge going the other way, so we don't want to
           // process them again
-          const undirectedEdges = layout.getEdgesBetween(
-            vertices[i],
-            cell,
-            false
-          );
+          const undirectedEdges = layout.getEdgesBetween(vertices[i], cell, false);
           const directedEdges = layout.getEdgesBetween(vertices[i], cell, true);
 
           if (
@@ -241,7 +215,7 @@ class SwimlaneModel {
           ) {
             const internalEdge = new GraphHierarchyEdge(undirectedEdges);
 
-            for (let k = 0; k < undirectedEdges.length; k += 1) {
+            for (let k = 0; k < undirectedEdges.length; k++) {
               const edge = undirectedEdges[k];
               this.edgeMapper.put(edge, internalEdge);
 
@@ -257,9 +231,7 @@ class SwimlaneModel {
 
             internalEdge.source = internalVertices[i];
 
-            if (
-              internalVertices[i].connectsAsSource.indexOf(internalEdge) < 0
-            ) {
+            if (internalVertices[i].connectsAsSource.indexOf(internalEdge) < 0) {
               internalVertices[i].connectsAsSource.push(internalEdge);
             }
           }
@@ -277,37 +249,17 @@ class SwimlaneModel {
    * Starting at the sinks is basically a longest path layering algorithm.
    */
   initialRank(): void {
-    this.ranksPerGroup = [];
-
     const startNodes = [];
-    const seen = {};
 
     if (this.roots != null) {
       for (let i = 0; i < this.roots.length; i += 1) {
         const internalNode = this.vertexMapper.get(this.roots[i]);
-        this.maxChainDfs(null, internalNode, null, seen, 0);
 
         if (internalNode != null) {
           startNodes.push(internalNode);
         }
       }
     }
-
-    // Calculate the lower and upper rank bounds of each swimlane
-    const lowerRank = [];
-    const upperRank = [];
-
-    for (let i = this.ranksPerGroup.length - 1; i >= 0; i--) {
-      if (i === this.ranksPerGroup.length - 1) {
-        lowerRank[i] = 0;
-      } else {
-        lowerRank[i] = upperRank[i + 1] + 1;
-      }
-
-      upperRank[i] = lowerRank[i] + this.ranksPerGroup[i];
-    }
-
-    this.maxRank = upperRank[0];
 
     const internalNodes = this.vertexMapper.getValues();
 
@@ -333,7 +285,7 @@ class SwimlaneModel {
       // Work out the layer of this node from the layer determining
       // edges. The minimum layer number of any node connected by one of
       // the layer determining edges variable
-      let minimumLayer = upperRank[0];
+      let minimumLayer = this.SOURCESCANSTARTRANK;
 
       for (let i = 0; i < layerDeterminingEdges.length; i += 1) {
         const internalEdge = layerDeterminingEdges[i];
@@ -353,11 +305,8 @@ class SwimlaneModel {
       // If all edge have been scanned, assign the layer, mark all
       // edges in the other direction and remove from the nodes list
       if (allEdgesScanned) {
-        if (minimumLayer > upperRank[internalNode.swimlaneIndex]) {
-          minimumLayer = upperRank[internalNode.swimlaneIndex];
-        }
-
         internalNode.temp[0] = minimumLayer;
+        this.maxRank = Math.min(this.maxRank, minimumLayer);
 
         if (edgesToBeMarked != null) {
           for (let i = 0; i < edgesToBeMarked.length; i += 1) {
@@ -402,96 +351,28 @@ class SwimlaneModel {
 
     // Normalize the ranks down from their large starting value to place
     // at least 1 sink on layer 0
-    //  for (var key in this.vertexMapper)
-    //  {
-    //    let internalNode = this.vertexMapper[key];
-    //    // Mark the node as not having had a layer assigned
-    //    internalNode.temp[0] -= this.maxRank;
-    //  }
+    for (let i = 0; i < internalNodes.length; i += 1) {
+      // Mark the node as not having had a layer assigned
+      internalNodes[i].temp[0] -= this.maxRank;
+    }
 
     // Tighten the rank 0 nodes as far as possible
-    //  for ( let i = 0; i < startNodesCopy.length; i += 1)
-    //  {
-    //    let internalNode = startNodesCopy[i];
-    //    let currentMaxLayer = 0;
-    //    let layerDeterminingEdges = internalNode.connectsAsSource;
-    //
-    //    for ( let j = 0; j < layerDeterminingEdges.length; j++)
-    //    {
-    //      let internalEdge = layerDeterminingEdges[j];
-    //      let otherNode = internalEdge.target;
-    //      internalNode.temp[0] = Math.max(currentMaxLayer,
-    //          otherNode.temp[0] + 1);
-    //      currentMaxLayer = internalNode.temp[0];
-    //    }
-    //  }
-  }
+    for (let i = 0; i < startNodesCopy.length; i += 1) {
+      const internalNode = startNodesCopy[i];
+      let currentMaxLayer = 0;
+      const layerDeterminingEdges = internalNode.connectsAsSource;
 
-  /**
-   * Performs a depth first search on the internal hierarchy model. This dfs
-   * extends the default version by keeping track of chains within groups.
-   * Any cycles should be removed prior to running, but previously seen cells
-   * are ignored.
-   *
-   * @param parent the parent internal node of the current internal node
-   * @param root the current internal node
-   * @param connectingEdge the internal edge connecting the internal node and the parent
-   * internal node, if any
-   * @param seen a set of all nodes seen by this dfs
-   * @param chainCount the number of edges in the chain of vertices going through
-   * the current swimlane
-   */
-  maxChainDfs(
-    parent: Cell,
-    root: Cell,
-    connectingEdge: Cell,
-    seen,
-    chainCount: number
-  ) {
-    if (root != null) {
-      const rootId = CellPath.create(root.cell);
-
-      if (seen[rootId] == null) {
-        seen[rootId] = root;
-        const slIndex = root.swimlaneIndex;
-
-        if (
-          this.ranksPerGroup[slIndex] == null ||
-          this.ranksPerGroup[slIndex] < chainCount
-        ) {
-          this.ranksPerGroup[slIndex] = chainCount;
-        }
-
-        // Copy the connects as source list so that visitors
-        // can change the original for edge direction inversions
-        const outgoingEdges = root.connectsAsSource.slice();
-
-        for (let i = 0; i < outgoingEdges.length; i += 1) {
-          const internalEdge = outgoingEdges[i];
-          const targetNode = internalEdge.target;
-
-          // Only navigate in source->target direction within the same
-          // swimlane, or from a lower index swimlane to a higher one
-          if (root.swimlaneIndex < targetNode.swimlaneIndex) {
-            this.maxChainDfs(
-              root,
-              targetNode,
-              internalEdge,
-              clone(seen, null, true),
-              0
-            );
-          } else if (root.swimlaneIndex === targetNode.swimlaneIndex) {
-            this.maxChainDfs(
-              root,
-              targetNode,
-              internalEdge,
-              clone(seen, null, true),
-              chainCount + 1
-            );
-          }
-        }
+      for (let j = 0; j < layerDeterminingEdges.length; j++) {
+        const internalEdge = layerDeterminingEdges[j];
+        const otherNode = internalEdge.target;
+        internalNode.temp[0] = Math.max(currentMaxLayer, otherNode.temp[0] + 1);
+        currentMaxLayer = internalNode.temp[0];
       }
     }
+
+    // Reset the maxRank to that which would be expected for a from-sink
+    // scan
+    this.maxRank = this.SOURCESCANSTARTRANK - this.maxRank;
   }
 
   /**
@@ -499,8 +380,9 @@ class SwimlaneModel {
    * to create dummy nodes for edges that cross layers.
    */
   fixRanks(): void {
-    const rankList = [];
-    this.ranks = [];
+    // TODO: Should this be a CellArray?
+    const rankList: { [key: number]: Cell[] } = {};
+    this.ranks = {};
 
     for (let i = 0; i < this.maxRank + 1; i += 1) {
       rankList[i] = [];
@@ -524,8 +406,8 @@ class SwimlaneModel {
     }
 
     this.visit(
-      (parent, node, edge, layer, seen) => {
-        if (seen === 0 && node.maxRank < 0 && node.minRank < 0) {
+      (parent: GraphHierarchyNode, node: GraphHierarchyNode, edge: GraphHierarchyNode, layer: number, seen: number) => {
+        if (seen == 0 && node.maxRank < 0 && node.minRank < 0) {
           rankList[node.temp[0]].push(node);
           node.maxRank = node.temp[0];
           node.minRank = node.temp[0];
@@ -569,10 +451,10 @@ class SwimlaneModel {
    */
   visit(
     visitor: Function,
-    dfsRoots: GraphHierarchyNode[],
+    dfsRoots: GraphHierarchyNode[] | null,
     trackAncestors: boolean,
-    seenNodes
-  ) {
+    seenNodes: { [key: string]: GraphHierarchyNode } | null = null
+  ): void {
     // Run dfs through on all roots
     if (dfsRoots != null) {
       for (let i = 0; i < dfsRoots.length; i += 1) {
@@ -604,7 +486,7 @@ class SwimlaneModel {
         }
       }
 
-      this.dfsCount += 1;
+      this.dfsCount++;
     }
   }
 
@@ -621,15 +503,15 @@ class SwimlaneModel {
    * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
   dfs(
-    parent: Cell,
-    root: Cell,
-    connectingEdge: Cell,
-    visitor: Function,
-    seen,
+    parent: GraphHierarchyNode | null, 
+    root: GraphHierarchyNode | null, 
+    connectingEdge: GraphHierarchyNode, 
+    visitor, 
+    seen: { [key: string]: GraphHierarchyNode | null }, 
     layer: number
-  ) {
+  ): void {
     if (root != null) {
-      const rootId = root.id;
+      const rootId = <string>root.id;
 
       if (seen[rootId] == null) {
         seen[rootId] = root;
@@ -670,14 +552,14 @@ class SwimlaneModel {
    * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
   extendedDfs(
-    parent: Cell,
-    root: Cell,
-    connectingEdge: Cell,
-    visitor: Function,
-    seen,
-    ancestors,
-    childHash,
-    layer: number
+    parent: GraphHierarchyNode, 
+    root: GraphHierarchyNode, 
+    connectingEdge: GraphHierarchyNode, 
+    visitor, 
+    seen, 
+    ancestors, 
+    childHash, 
+    layer
   ) {
     // Explanation of custom hash set. Previously, the ancestors variable
     // was passed through the dfs as a HashSet. The ancestors were copied
@@ -706,14 +588,14 @@ class SwimlaneModel {
         // start of the parent hash code does not equal the start of
         // this nodes hash code, indicating the code was set on a
         // previous run of this dfs.
-        if (root.hashCode == null || root.hashCode[0] !== parent.hashCode[0]) {
+        if (root.hashCode == null || root.hashCode[0] != parent.hashCode[0]) {
           const hashCodeLength = parent.hashCode.length + 1;
           root.hashCode = parent.hashCode.slice();
           root.hashCode[hashCodeLength - 1] = childHash;
         }
       }
 
-      const rootId = root.id;
+      const rootId = <string>root.id;
 
       if (seen[rootId] == null) {
         seen[rootId] = root;
@@ -722,46 +604,22 @@ class SwimlaneModel {
         // Copy the connects as source list so that visitors
         // can change the original for edge direction inversions
         const outgoingEdges = root.connectsAsSource.slice();
-        const incomingEdges = root.connectsAsTarget.slice();
 
         for (let i = 0; i < outgoingEdges.length; i += 1) {
           const internalEdge = outgoingEdges[i];
           const targetNode = internalEdge.target;
 
-          // Only navigate in source->target direction within the same
-          // swimlane, or from a lower index swimlane to a higher one
-          if (root.swimlaneIndex <= targetNode.swimlaneIndex) {
-            this.extendedDfs(
-              root,
-              targetNode,
-              internalEdge,
-              visitor,
-              seen,
-              root.hashCode,
-              i,
-              layer + 1
-            );
-          }
-        }
-
-        for (let i = 0; i < incomingEdges.length; i += 1) {
-          const internalEdge = incomingEdges[i];
-          const targetNode = internalEdge.source;
-
-          // Only navigate in target->source direction from a lower index
-          // swimlane to a higher one
-          if (root.swimlaneIndex < targetNode.swimlaneIndex) {
-            this.extendedDfs(
-              root,
-              targetNode,
-              internalEdge,
-              visitor,
-              seen,
-              root.hashCode,
-              i,
-              layer + 1
-            );
-          }
+          // Root check is O(|roots|)
+          this.extendedDfs(
+            root,
+            targetNode,
+            internalEdge,
+            visitor,
+            seen,
+            root.hashCode,
+            i,
+            layer + 1
+          );
         }
       } else {
         // Use the int field to indicate this node has been seen
@@ -771,4 +629,4 @@ class SwimlaneModel {
   }
 }
 
-export default SwimlaneModel;
+export default GraphHierarchyModel;

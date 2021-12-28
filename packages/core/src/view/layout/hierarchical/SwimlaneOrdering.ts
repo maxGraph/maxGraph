@@ -5,14 +5,14 @@
  * Type definitions from the typed-mxgraph project
  */
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import { remove } from '../../../../util/arrayUtils';
-import CellPath from '../../../cell/CellPath';
-import { clone } from '../../../../util/cloneUtils';
+import { remove } from '../../../util/arrayUtils';
+import CellPath from '../../cell/CellPath';
+import { clone } from '../../../util/cloneUtils';
 import HierarchicalLayout from '../HierarchicalLayout';
 import Cell from 'src/view/cell/Cell';
-import GraphHierarchyNode from '../model/GraphHierarchyNode';
-import GraphHierarchyEdge from '../model/GraphHierarchyEdge';
-import GraphHierarchyModel from '../model/GraphHierarchyModel';
+import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
+import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
+import GraphHierarchyModel from './GraphHierarchyModel';
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward

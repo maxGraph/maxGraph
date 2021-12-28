@@ -4,19 +4,19 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import GraphLayout from '../GraphLayout';
-import { DIRECTION } from '../../../util/constants';
-import HierarchicalEdgeStyle from './HierarchicalEdgeStyle';
-import Dictionary from '../../../util/Dictionary';
-import GraphHierarchyModel from './model/GraphHierarchyModel';
-import ObjectIdentity from '../../../util/ObjectIdentity';
-import MinimumCycleRemover from './stage/MinimumCycleRemover';
-import MedianHybridCrossingReduction from './stage/MedianHybridCrossingReduction';
-import CoordinateAssignment from './stage/CoordinateAssignment';
+import GraphLayout from './GraphLayout';
+import { DIRECTION } from '../../util/constants';
+import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
+import Dictionary from '../../util/Dictionary';
+import GraphHierarchyModel from './hierarchical/GraphHierarchyModel';
+import ObjectIdentity from '../../util/ObjectIdentity';
+import MinimumCycleRemover from './hierarchical/MinimumCycleRemover';
+import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction';
+import CoordinateAssignment from './hierarchical/CoordinateAssignment';
 import { Graph } from 'src/view/Graph';
 import CellArray from 'src/view/cell/CellArray';
 import Cell from 'src/view/cell/Cell';
-import GraphHierarchyNode from './model/GraphHierarchyNode';
+import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
 
 /**
  * A hierarchical layout algorithm.
@@ -554,10 +554,10 @@ class HierarchicalLayout extends GraphLayout {
    * target -
    * directed -
    */
-  getEdgesBetween(source: Cell, target: Cell, directed: boolean) {
+  getEdgesBetween(source: Cell, target: Cell, directed: boolean): CellArray {
     directed = directed != null ? directed : false;
     const edges = this.getEdges(source);
-    const result = [];
+    const result = new CellArray();
 
     // Checks if the edge is connected to the correct
     // cell and returns the first match

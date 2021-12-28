@@ -5,9 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 import GraphAbstractHierarchyCell from './GraphAbstractHierarchyCell';
-import ObjectIdentity from '../../../../util/ObjectIdentity';
-import CellArray from '../../../cell/CellArray';
-import Cell from '../../../cell/Cell';
+import ObjectIdentity from '../../../util/ObjectIdentity';
+import CellArray from '../../cell/CellArray';
+import Cell from '../../cell/Cell';
 
 class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**

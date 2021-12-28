@@ -5,10 +5,10 @@
  * Type definitions from the typed-mxgraph project
  */
 import HierarchicalLayout from '../HierarchicalLayout';
-import GraphAbstractHierarchyCell from '../model/GraphAbstractHierarchyCell';
-import GraphHierarchyModel from '../model/GraphHierarchyModel';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
+import GraphHierarchyModel from './GraphHierarchyModel';
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import MedianCellSorter from './MedianCellSorter';
+import MedianCellSorter from '../util/MedianCellSorter';
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.
@@ -69,14 +69,15 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * Performs a vertex ordering within ranks as described by Gansner et al
    * 1993
    */
-  execute(parent) {
-    const model = this.layout.getModel();
+  execute(parent: any) {
+    const model = <GraphHierarchyModel>this.layout.getModel();
+    let ranks = model.ranks;
 
     // Stores initial ordering as being the best one found so far
     this.nestedBestRanks = [];
 
-    for (let i = 0; i < model.ranks.length; i += 1) {
-      this.nestedBestRanks[i] = model.ranks[i].slice();
+    for (let i = 0; i < ranks.length; i += 1) {
+      this.nestedBestRanks[i] = ranks[i].slice();
     }
 
     let iterationsWithoutImprovement = 0;
@@ -128,9 +129,8 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
     }
 
     // Store the best rankings but in the model
-    const ranks = [];
+    ranks = [];
     const rankList = [];
-
     for (let i = 0; i < model.maxRank + 1; i += 1) {
       rankList[i] = [];
       ranks[i] = rankList[i];
@@ -141,7 +141,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
         rankList[i].push(this.nestedBestRanks[i][j]);
       }
     }
-
     model.ranks = ranks;
   }
 
@@ -173,8 +172,9 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    */
   calculateRankCrossing(i: number, model: GraphHierarchyModel) {
     let totalCrossings = 0;
-    const rank = model.ranks[i];
-    const previousRank = model.ranks[i - 1];
+    const ranks = model.ranks; 
+    const rank = ranks[i];
+    const previousRank = ranks[i - 1];
 
     const tmpIndices = [];
 
@@ -200,13 +200,11 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
     }
 
     let indices = [];
-
     for (let j = 0; j < tmpIndices.length; j++) {
       indices = indices.concat(tmpIndices[j]);
     }
 
     let firstIndex = 1;
-
     while (firstIndex < previousRank.length) {
       firstIndex <<= 1;
     }
@@ -215,7 +213,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
     firstIndex -= 1;
 
     const tree = [];
-
     for (let j = 0; j < treeSize; ++j) {
       tree[j] = 0;
     }
@@ -234,7 +231,6 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
         ++tree[treeIndex];
       }
     }
-
     return totalCrossings;
   }
 
@@ -257,9 +253,10 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
       // nudge a stuck layout into a lower crossing total.
       const nudge = mainLoopIteration % 2 === 1 && count % 2 === 1;
       improved = false;
+      const ranks = model.ranks;
 
-      for (let i = 0; i < model.ranks.length; i += 1) {
-        const rank = model.ranks[i];
+      for (let i = 0; i < ranks.length; i += 1) {
+        const rank = ranks[i];
         const orderedCells = [];
 
         for (let j = 0; j < rank.length; j++) {
@@ -431,12 +428,13 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * @param downwardSweep whether or not this is a downward sweep through the graph
    */
   medianRank(rankValue: number, downwardSweep: boolean) {
-    const numCellsForRank = this.nestedBestRanks[rankValue].length;
+    const nestedBestRanks = <{ [key: number]: GraphAbstractHierarchyCell[] }>this.nestedBestRanks;
+    const numCellsForRank = nestedBestRanks[rankValue].length;
     const medianValues = [];
-    const reservedPositions = [];
+    const reservedPositions: { [key: number]: boolean } = {};
 
     for (let i = 0; i < numCellsForRank; i += 1) {
-      const cell = this.nestedBestRanks[rankValue][i];
+      const cell = nestedBestRanks[rankValue][i];
       const sorterEntry = new MedianCellSorter();
       sorterEntry.cell = cell;
 

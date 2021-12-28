@@ -5,16 +5,16 @@
  * Type definitions from the typed-mxgraph project
  */
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import { DIRECTION } from '../../../../util/constants';
-import MaxLog from '../../../../gui/MaxLog';
-import WeightedCellSorter from '../../WeightedCellSorter';
-import Dictionary from '../../../../util/Dictionary';
-import Point from '../../../geometry/Point';
-import HierarchicalEdgeStyle from '../HierarchicalEdgeStyle';
+import { DIRECTION } from '../../../util/constants';
+import MaxLog from '../../../gui/MaxLog';
+import WeightedCellSorter from '../util/WeightedCellSorter';
+import Dictionary from '../../../util/Dictionary';
+import Point from '../../geometry/Point';
+import HierarchicalEdgeStyle from '../datatypes/HierarchicalEdgeStyle';
 import HierarchicalLayout from '../HierarchicalLayout';
-import GraphHierarchyModel from '../model/GraphHierarchyModel';
+import GraphHierarchyModel from './GraphHierarchyModel';
 import Cell from 'src/view/cell/Cell';
-import GraphHierarchyNode from '../model/GraphHierarchyNode';
+import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.

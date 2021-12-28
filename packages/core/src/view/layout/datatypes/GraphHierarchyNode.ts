@@ -5,8 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 import GraphAbstractHierarchyCell from './GraphAbstractHierarchyCell';
-import ObjectIdentity from '../../../../util/ObjectIdentity';
-import Cell from '../../../cell/Cell';
+import ObjectIdentity from '../../../util/ObjectIdentity';
+import Cell from '../../cell/Cell';
 
 /**
  * An abstraction of a hierarchical edge for the hierarchy layout

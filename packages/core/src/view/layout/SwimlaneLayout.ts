@@ -5,20 +5,21 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import GraphLayout from '../GraphLayout';
-import { DIRECTION } from '../../../util/constants';
-import HierarchicalEdgeStyle from './HierarchicalEdgeStyle';
-import Dictionary from '../../../util/Dictionary';
-import Rectangle from '../../geometry/Rectangle';
-import SwimlaneModel from './model/SwimlaneModel';
-import ObjectIdentity from '../../../util/ObjectIdentity';
-import SwimlaneOrdering from './stage/SwimlaneOrdering';
-import MedianHybridCrossingReduction from './stage/MedianHybridCrossingReduction';
-import CoordinateAssignment from './stage/CoordinateAssignment';
-import { Graph } from '../../Graph';
-import Cell from '../../cell/Cell';
-import CellArray from '../../cell/CellArray';
+import GraphLayout from './GraphLayout';
+import { DIRECTION } from '../../util/constants';
+import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
+import Dictionary from '../../util/Dictionary';
+import Rectangle from '../geometry/Rectangle';
+import SwimlaneModel from './hierarchical/SwimlaneModel';
+import ObjectIdentity from '../../util/ObjectIdentity';
+import SwimlaneOrdering from './hierarchical/SwimlaneOrdering';
+import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction';
+import CoordinateAssignment from './hierarchical/CoordinateAssignment';
+import { Graph } from '../Graph';
+import Cell from '../cell/Cell';
+import CellArray from '../cell/CellArray';
 import Geometry from 'src/view/geometry/Geometry';
+import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
 
 /**
  * A hierarchical layout algorithm.
@@ -592,16 +593,7 @@ class SwimlaneLayout extends GraphLayout {
       for (let i = 0; i < this.roots.length; i += 1) {
         const vertexSet = Object();
         hierarchyVertices.push(vertexSet);
-
-        this.traverse(
-          this.roots[i],
-          true,
-          null,
-          allVertexSet,
-          vertexSet,
-          hierarchyVertices,
-          null
-        );
+        this.traverse(this.roots[i], true, null, allVertexSet, vertexSet, hierarchyVertices, null);
       }
     }
 
@@ -709,12 +701,12 @@ class SwimlaneLayout extends GraphLayout {
   traverse(
     vertex: Cell,
     directed: boolean,
-    edge: Cell,
+    edge: Cell | null,
     allVertices: { [key: string]: Cell },
-    currentComp,
-    hierarchyVertices,
-    filledVertexSet,
-    swimlaneIndex
+    currentComp: { [key: string]: Cell },
+    hierarchyVertices: GraphHierarchyNode[],
+    filledVertexSet: { [key: string]: Cell } | null,
+    swimlaneIndex: number
   ) {
     if (vertex != null && allVertices != null) {
       // Has this vertex been seen before in any traversal
@@ -812,8 +804,9 @@ class SwimlaneLayout extends GraphLayout {
    * Implements first stage of a Sugiyama layout.
    */
   layeringStage(): void {
-    this.model.initialRank();
-    this.model.fixRanks();
+    const model = <SwimlaneModel>this.model;
+    model.initialRank();
+    model.fixRanks();
   }
 
   /**

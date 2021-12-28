@@ -4,8 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import CellArray from '../../../../view/cell/CellArray';
-import Cell from '../../../cell/Cell';
+import Cell from '../../cell/Cell';
 
 class GraphAbstractHierarchyCell extends Cell {
   swimlaneIndex: number | null = null;
