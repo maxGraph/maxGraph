@@ -50,7 +50,7 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * Holds the array of <Cell> that this layout contains.
    */
-  roots = null;
+  roots: CellArray | null = null;
 
   /**
    * Holds the array of <Cell> of the ordered swimlanes to lay out
@@ -357,7 +357,7 @@ class SwimlaneLayout extends GraphLayout {
    * @param parent <Cell> whose children should be checked.
    * @param vertices array of vertices to limit search to
    */
-  findRoots(parent: Cell, vertices: CellArray): Cell[] {
+  findRoots(parent: Cell, vertices: { [key: string]: Cell }): Cell[] {
     const roots = [];
 
     if (parent != null && vertices != null) {
@@ -410,7 +410,6 @@ class SwimlaneLayout extends GraphLayout {
         roots.push(best);
       }
     }
-
     return roots;
   }
 
@@ -520,16 +519,16 @@ class SwimlaneLayout extends GraphLayout {
   run(parent: Cell): void {
     // Separate out unconnected hierarchies
     const hierarchyVertices = [];
-    const allVertexSet = Object();
+    const allVertexSet: { [key: string]: Cell } = {};
 
     if (this.swimlanes != null && this.swimlanes.length > 0 && parent != null) {
-      const filledVertexSet = Object();
+      const filledVertexSet: { [key: string]: Cell } = {};
 
       for (let i = 0; i < this.swimlanes.length; i += 1) {
         this.filterDescendants(this.swimlanes[i], filledVertexSet);
       }
 
-      this.roots = [];
+      this.roots = new CellArray();
       let filledVertexSetEmpty = true;
 
       // Poor man's isSetEmpty
@@ -589,21 +588,21 @@ class SwimlaneLayout extends GraphLayout {
       }
     } else {
       // Find vertex set as directed traversal from roots
+      const roots = <Cell[]>this.roots;
 
-      for (let i = 0; i < this.roots.length; i += 1) {
+      for (let i = 0; i < roots.length; i += 1) {
         const vertexSet = Object();
         hierarchyVertices.push(vertexSet);
-        this.traverse(this.roots[i], true, null, allVertexSet, vertexSet, hierarchyVertices, null);
+        this.traverse(roots[i], true, null, allVertexSet, vertexSet, hierarchyVertices, null);
       }
     }
 
-    const tmp = [];
-
+    const tmp = new CellArray();
     for (var key in allVertexSet) {
       tmp.push(allVertexSet[key]);
     }
 
-    this.model = new SwimlaneModel(this, tmp, this.roots, parent, this.tightenToSource);
+    this.model = new SwimlaneModel(this, tmp, <CellArray>this.roots, parent, this.tightenToSource);
 
     this.cycleStage(parent);
     this.layeringStage();
@@ -836,7 +835,7 @@ class SwimlaneLayout extends GraphLayout {
     placementStage.fineTuning = this.fineTuning;
     placementStage.execute(parent);
 
-    return placementStage.limitX + this.interHierarchySpacing;
+    return <number>placementStage.limitX + this.interHierarchySpacing;
   }
 }
 

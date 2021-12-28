@@ -12,7 +12,6 @@ import Cell from '../view/cell/Cell';
 import MaxLog from '../gui/MaxLog';
 import { getFunctionName } from '../util/stringUtils';
 import { importNode, isNode } from '../util/domUtils';
-import CellCodec from 'src/view/cell/CellCodec';
 import ObjectCodec from './ObjectCodec';
 
 const createXmlDocument = () => {

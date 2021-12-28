@@ -11,6 +11,7 @@ import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
 import Cell from '../../cell/Cell';
 import CellArray from '../../cell/CellArray';
 import HierarchicalLayout from '../HierarchicalLayout';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges
@@ -128,7 +129,7 @@ class GraphHierarchyModel {
   /**
    * Mapping from rank number to actual rank
    */
-  ranks: { [key: number]: number } | null = null;
+  ranks: GraphAbstractHierarchyCell[][] | null = null;
 
   /**
    * Store of roots of this hierarchy model, these are real graph cells, not
@@ -381,12 +382,12 @@ class GraphHierarchyModel {
    */
   fixRanks(): void {
     // TODO: Should this be a CellArray?
-    const rankList: { [key: number]: Cell[] } = {};
-    this.ranks = {};
+    const rankList: { [key: number]: GraphAbstractHierarchyCell[] } = {};
+    this.ranks = [];
 
     for (let i = 0; i < this.maxRank + 1; i += 1) {
       rankList[i] = [];
-      this.ranks[i] = rankList[i];
+      this.ranks.push(rankList[i]);
     }
 
     // Perform a DFS to obtain an initial ordering for each rank.
