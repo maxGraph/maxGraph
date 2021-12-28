@@ -7,6 +7,7 @@
 import GraphAbstractHierarchyCell from './GraphAbstractHierarchyCell';
 import ObjectIdentity from '../../../util/ObjectIdentity';
 import Cell from '../../cell/Cell';
+import GraphHierarchyEdge from './GraphHierarchyEdge';
 
 /**
  * An abstraction of a hierarchical edge for the hierarchy layout
@@ -41,12 +42,12 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   /**
    * Collection of hierarchy edges that have this node as a target
    */
-  connectsAsTarget: GraphAbstractHierarchyCell[];
+  connectsAsTarget: GraphHierarchyEdge[];
 
   /**
    * Collection of hierarchy edges that have this node as a source
    */
-  connectsAsSource: GraphAbstractHierarchyCell[];
+  connectsAsSource: GraphHierarchyEdge[];
 
   /**
    * Assigns a unique hashcode for each node. Used by the model dfs instead

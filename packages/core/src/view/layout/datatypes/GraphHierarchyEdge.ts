@@ -8,6 +8,7 @@ import GraphAbstractHierarchyCell from './GraphAbstractHierarchyCell';
 import ObjectIdentity from '../../../util/ObjectIdentity';
 import CellArray from '../../cell/CellArray';
 import Cell from '../../cell/Cell';
+import GraphHierarchyNode from './GraphHierarchyNode';
 
 class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**
@@ -24,12 +25,12 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**
    * The node this edge is sourced at
    */
-  source: Cell | null = null;
+  source: GraphHierarchyNode | null = null;
 
   /**
    * The node this edge targets
    */
-  target: Cell | null = null;
+  target: GraphHierarchyNode | null = null;
 
   /**
    * Whether or not the direction of this edge has been reversed

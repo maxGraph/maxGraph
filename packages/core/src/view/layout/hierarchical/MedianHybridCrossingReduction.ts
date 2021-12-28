@@ -9,6 +9,7 @@ import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell'
 import GraphHierarchyModel from './GraphHierarchyModel';
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import MedianCellSorter from '../util/MedianCellSorter';
+import SwimlaneLayout from '../SwimlaneLayout';
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.
@@ -27,7 +28,7 @@ import MedianCellSorter from '../util/MedianCellSorter';
  * initialX - the leftmost coordinate node placement starts at
  */
 class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
-  constructor(layout: HierarchicalLayout) {
+  constructor(layout: HierarchicalLayout | SwimlaneLayout) {
     super();
 
     this.layout = layout;
@@ -36,7 +37,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
   /**
    * Reference to the enclosing <HierarchicalLayout>.
    */
-  layout: HierarchicalLayout;
+  layout: HierarchicalLayout | SwimlaneLayout;
 
   /**
    * The maximum number of iterations to perform whilst reducing edge
@@ -472,7 +473,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
       } else {
         // Nodes with no adjacent vertices are flagged in the reserved array
         // to indicate they should be left in their current position.
-        reservedPositions[cell.getGeneralPurposeVariable(rankValue)] = true;
+        reservedPositions[<number>cell.getGeneralPurposeVariable(rankValue)] = true;
       }
     }
 

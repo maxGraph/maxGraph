@@ -7,7 +7,6 @@
 import GraphHierarchyNode from "../datatypes/GraphHierarchyNode";
 import GraphHierarchyEdge from "../datatypes/GraphHierarchyEdge";
 import CellPath from "../../cell/CellPath";
-import GraphLayout from "../GraphLayout";
 import Dictionary from "../../../util/Dictionary";
 import CellArray from "../../cell/CellArray";
 import Cell from "../../cell/Cell";
@@ -133,7 +132,7 @@ class SwimlaneModel {
   /**
    * Mapping from rank number to actual rank
    */
-  ranks: [] = [];
+  ranks: GraphHierarchyNode[][] = [];
 
   /**
    * Store of roots of this hierarchy model, these are real graph cells, not
@@ -165,7 +164,7 @@ class SwimlaneModel {
   /**
    * An array of the number of ranks within each swimlane
    */
-  ranksPerGroup = null;
+  ranksPerGroup: { [key: number]: number } | null = null;
 
   /**
    * Creates all edges in the internal model
@@ -280,12 +279,12 @@ class SwimlaneModel {
   initialRank(): void {
     this.ranksPerGroup = [];
 
-    const startNodes = [];
+    const startNodes: GraphHierarchyNode[] = [];
     const seen = {};
 
     if (this.roots != null) {
       for (let i = 0; i < this.roots.length; i += 1) {
-        const internalNode = this.vertexMapper.get(this.roots[i]);
+        const internalNode = <GraphHierarchyNode>this.vertexMapper.get(this.roots[i]);
         this.maxChainDfs(null, internalNode, null, seen, 0);
 
         if (internalNode != null) {
@@ -295,8 +294,8 @@ class SwimlaneModel {
     }
 
     // Calculate the lower and upper rank bounds of each swimlane
-    const lowerRank = [];
-    const upperRank = [];
+    const lowerRank: { [key: number]: number } = {};
+    const upperRank: { [key: number]: number } = {};
 
     for (let i = this.ranksPerGroup.length - 1; i >= 0; i--) {
       if (i === this.ranksPerGroup.length - 1) {
@@ -342,7 +341,7 @@ class SwimlaneModel {
         if (internalEdge.temp[0] === 5270620) {
           // This edge has been scanned, get the layer of the
           // node on the other end
-          const otherNode = internalEdge.source;
+          const otherNode = <GraphHierarchyNode>internalEdge.source;
           minimumLayer = Math.min(minimumLayer, otherNode.temp[0] - 1);
         } else {
           allEdgesScanned = false;
@@ -354,8 +353,8 @@ class SwimlaneModel {
       // If all edge have been scanned, assign the layer, mark all
       // edges in the other direction and remove from the nodes list
       if (allEdgesScanned) {
-        if (minimumLayer > upperRank[internalNode.swimlaneIndex]) {
-          minimumLayer = upperRank[internalNode.swimlaneIndex];
+        if (minimumLayer > upperRank[<number>internalNode.swimlaneIndex]) {
+          minimumLayer = upperRank[<number>internalNode.swimlaneIndex];
         }
 
         internalNode.temp[0] = minimumLayer;
@@ -369,7 +368,7 @@ class SwimlaneModel {
 
             // Add node on other end of edge to LinkedList of
             // nodes to be analysed
-            const otherNode = internalEdge.target;
+            const otherNode = <GraphHierarchyNode>internalEdge.target;
 
             // Only add node if it hasn't been assigned a layer
             if (otherNode.temp[0] === -1) {
@@ -443,24 +442,25 @@ class SwimlaneModel {
    * the current swimlane
    */
   maxChainDfs(
-    parent: GraphHierarchyNode,
+    parent: GraphHierarchyNode | null,
     root: GraphHierarchyNode,
-    connectingEdge: GraphHierarchyEdge,
-    seen,
+    connectingEdge: GraphHierarchyEdge | null,
+    seen: { [key: string]: Cell },
     chainCount: number
   ) {
     if (root != null) {
-      const rootId = CellPath.create(root.cell);
+      const rootId = <string>CellPath.create(root.cell);
 
       if (seen[rootId] == null) {
         seen[rootId] = root;
-        const slIndex = root.swimlaneIndex;
+        const slIndex = <number>root.swimlaneIndex;
+        const ranksPerGroup = <{ [key: number]: number }>this.ranksPerGroup;
 
         if (
-          this.ranksPerGroup[slIndex] == null ||
-          this.ranksPerGroup[slIndex] < chainCount
+          ranksPerGroup[slIndex] == null ||
+          ranksPerGroup[slIndex] < chainCount
         ) {
-          this.ranksPerGroup[slIndex] = chainCount;
+          ranksPerGroup[slIndex] = chainCount;
         }
 
         // Copy the connects as source list so that visitors
@@ -468,12 +468,12 @@ class SwimlaneModel {
         const outgoingEdges = root.connectsAsSource.slice();
 
         for (let i = 0; i < outgoingEdges.length; i += 1) {
-          const internalEdge = outgoingEdges[i];
-          const targetNode = internalEdge.target;
+          const internalEdge = <GraphHierarchyEdge>outgoingEdges[i];
+          const targetNode = <GraphHierarchyNode>internalEdge.target;
 
           // Only navigate in source->target direction within the same
           // swimlane, or from a lower index swimlane to a higher one
-          if (root.swimlaneIndex < targetNode.swimlaneIndex) {
+          if (<number>root.swimlaneIndex < <number>targetNode.swimlaneIndex) {
             this.maxChainDfs(
               root,
               targetNode,
@@ -500,7 +500,7 @@ class SwimlaneModel {
    * to create dummy nodes for edges that cross layers.
    */
   fixRanks(): void {
-    const rankList = [];
+    const rankList: GraphHierarchyNode[][] = [];
     this.ranks = [];
 
     for (let i = 0; i < this.maxRank + 1; i += 1) {
@@ -511,7 +511,7 @@ class SwimlaneModel {
     // Perform a DFS to obtain an initial ordering for each rank.
     // Without doing this you would end up having to process
     // crossings for a standard tree.
-    let rootsArray = null;
+    let rootsArray: GraphHierarchyNode[] | null = null;
 
     if (this.roots != null) {
       const oldRootsArray = this.roots;
@@ -519,13 +519,13 @@ class SwimlaneModel {
 
       for (let i = 0; i < oldRootsArray.length; i += 1) {
         const cell = oldRootsArray[i];
-        const internalNode = this.vertexMapper.get(cell);
+        const internalNode = <GraphHierarchyNode>this.vertexMapper.get(cell);
         rootsArray[i] = internalNode;
       }
     }
 
     this.visit(
-      (parent, node, edge, layer, seen) => {
+      (parent: GraphHierarchyNode, node: GraphHierarchyNode, edge: GraphHierarchyNode, layer: number, seen: number) => {
         if (seen === 0 && node.maxRank < 0 && node.minRank < 0) {
           rankList[node.temp[0]].push(node);
           node.maxRank = node.temp[0];
@@ -570,9 +570,9 @@ class SwimlaneModel {
    */
   visit(
     visitor: Function,
-    dfsRoots: GraphHierarchyNode[],
+    dfsRoots: GraphHierarchyNode[] | null,
     trackAncestors: boolean,
-    seenNodes
+    seenNodes: { [key: string]: Cell } | null
   ) {
     // Run dfs through on all roots
     if (dfsRoots != null) {
@@ -622,15 +622,15 @@ class SwimlaneModel {
    * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
   dfs(
-    parent: Cell,
-    root: Cell,
-    connectingEdge: Cell,
+    parent: Cell | null,
+    root: GraphHierarchyNode,
+    connectingEdge: Cell | null,
     visitor: Function,
-    seen,
+    seen: { [key: string]: Cell },
     layer: number
   ) {
     if (root != null) {
-      const rootId = root.id;
+      const rootId = <string>root.id;
 
       if (seen[rootId] == null) {
         seen[rootId] = root;
@@ -642,7 +642,7 @@ class SwimlaneModel {
 
         for (let i = 0; i < outgoingEdges.length; i += 1) {
           const internalEdge = outgoingEdges[i];
-          const targetNode = internalEdge.target;
+          const targetNode = <GraphHierarchyNode>internalEdge.target;
 
           // Root check is O(|roots|)
           this.dfs(root, targetNode, internalEdge, visitor, seen, layer + 1);
@@ -671,13 +671,13 @@ class SwimlaneModel {
    * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
   extendedDfs(
-    parent: Cell,
-    root: Cell,
-    connectingEdge: Cell,
+    parent: GraphHierarchyNode | null,
+    root: GraphHierarchyNode,
+    connectingEdge: Cell | null,
     visitor: Function,
-    seen,
-    ancestors,
-    childHash,
+    seen: { [key: string]: Cell },
+    ancestors: any,
+    childHash: string | number,
     layer: number
   ) {
     // Explanation of custom hash set. Previously, the ancestors variable
@@ -714,7 +714,7 @@ class SwimlaneModel {
         }
       }
 
-      const rootId = root.id;
+      const rootId = <string>root.id;
 
       if (seen[rootId] == null) {
         seen[rootId] = root;
@@ -727,11 +727,11 @@ class SwimlaneModel {
 
         for (let i = 0; i < outgoingEdges.length; i += 1) {
           const internalEdge = outgoingEdges[i];
-          const targetNode = internalEdge.target;
+          const targetNode = <GraphHierarchyNode>internalEdge.target;
 
           // Only navigate in source->target direction within the same
           // swimlane, or from a lower index swimlane to a higher one
-          if (root.swimlaneIndex <= targetNode.swimlaneIndex) {
+          if (<number>root.swimlaneIndex <= <number>targetNode.swimlaneIndex) {
             this.extendedDfs(
               root,
               targetNode,
@@ -747,11 +747,11 @@ class SwimlaneModel {
 
         for (let i = 0; i < incomingEdges.length; i += 1) {
           const internalEdge = incomingEdges[i];
-          const targetNode = internalEdge.source;
+          const targetNode = <GraphHierarchyNode>internalEdge.source;
 
           // Only navigate in target->source direction from a lower index
           // swimlane to a higher one
-          if (root.swimlaneIndex < targetNode.swimlaneIndex) {
+          if (<number>root.swimlaneIndex < <number>targetNode.swimlaneIndex) {
             this.extendedDfs(
               root,
               targetNode,

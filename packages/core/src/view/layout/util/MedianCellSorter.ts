@@ -1,3 +1,5 @@
+import GraphAbstractHierarchyCell from "../datatypes/GraphAbstractHierarchyCell";
+
 /**
  * Class: MedianCellSorter
  *
@@ -21,7 +23,7 @@ class MedianCellSorter {
   /**
    * The cell whose median value is being calculated
    */
-  cell: boolean = false;
+  cell: GraphAbstractHierarchyCell | boolean = false;
 
   /**
    * Compares two MedianCellSorters.

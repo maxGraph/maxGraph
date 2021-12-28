@@ -275,9 +275,10 @@ class SwimlaneLayout extends GraphLayout {
   updateGroupBounds(): void {
     // Get all vertices and edge in the layout
     const cells = new CellArray();
-    const { model } = this;
+    const model = <SwimlaneModel>this.model;
 
     for (const key in model.edgeMapper) {
+      // @ts-expect-error
       const edge = model.edgeMapper[key];
 
       for (let i = 0; i < edge.edges.length; i += 1) {
@@ -300,7 +301,7 @@ class SwimlaneLayout extends GraphLayout {
           ? this.graph.getStartSize(lane)
           : new Rectangle();
 
-        const bounds = this.graph.getBoundingBoxFromGeometry(children);
+        const bounds = <Rectangle>this.graph.getBoundingBoxFromGeometry(children);
         childBounds[i] = bounds;
         const childrenY = bounds.y + geo.y - size.height - this.parentBorder;
         const maxChildrenY = bounds.y + geo.y + bounds.height;
@@ -332,13 +333,13 @@ class SwimlaneLayout extends GraphLayout {
           i === 0 ? this.parentBorder : this.interRankCellSpacing / 2;
         const w = size.width + leftGroupBorder;
         const x = childBounds[i].x - w;
-        const y = layoutBounds.y - this.parentBorder;
+        const y = (<Rectangle>layoutBounds).y - this.parentBorder;
 
         newGeo.x += x;
         newGeo.y = y;
 
         newGeo.width = childBounds[i].width + w + this.interRankCellSpacing / 2;
-        newGeo.height = layoutBounds.height + size.height + 2 * this.parentBorder;
+        newGeo.height = (<Rectangle>layoutBounds).height + size.height + 2 * this.parentBorder;
 
         this.graph.model.setGeometry(lane, newGeo);
         this.graph.moveCells(children, -x, geo.y - y);
@@ -425,7 +426,6 @@ class SwimlaneLayout extends GraphLayout {
       return cachedEdges;
     }
 
-    const { model } = this.graph;
     let edges = new CellArray();
     const isCollapsed = cell.isCollapsed();
     const childCount = cell.getChildCount();
@@ -452,11 +452,11 @@ class SwimlaneLayout extends GraphLayout {
         (source !== target &&
           ((target === cell &&
             (this.parent == null ||
-              this.graph.isValidAncestor(source, this.parent, this.traverseAncestors))) ||
+              this.graph.isValidAncestor(<Cell>source, this.parent, this.traverseAncestors))) ||
             (source === cell &&
               (this.parent == null ||
                 this.graph.isValidAncestor(
-                  target,
+                  <Cell>target,
                   this.parent,
                   this.traverseAncestors
                 )))))
@@ -624,7 +624,7 @@ class SwimlaneLayout extends GraphLayout {
       cell.getParent() !== this.parent &&
       cell.isVisible()
     ) {
-      result[ObjectIdentity.get(cell)] = cell;
+      result[<string>ObjectIdentity.get(cell)] = cell;
     }
 
     if (this.traverseAncestors || (cell === this.parent && cell.isVisible())) {
@@ -741,14 +741,16 @@ class SwimlaneLayout extends GraphLayout {
           }
 
           let otherIndex = 0;
+          const swimlanes = <CellArray>this.swimlanes;
+
           // Get the swimlane index of the other terminal
-          for (otherIndex = 0; otherIndex < this.swimlanes.length; otherIndex++) {
-            if (model.isAncestor(this.swimlanes[otherIndex], otherVertex)) {
+          for (otherIndex = 0; otherIndex < swimlanes.length; otherIndex++) {
+            if (swimlanes[otherIndex].isAncestor(otherVertex)) {
               break;
             }
           }
 
-          if (otherIndex >= this.swimlanes.length) {
+          if (otherIndex >= swimlanes.length) {
             continue;
           }
 
@@ -760,7 +762,7 @@ class SwimlaneLayout extends GraphLayout {
             ((!directed || isSource) && otherIndex === swimlaneIndex)
           ) {
             currentComp = this.traverse(
-              otherVertex,
+              <Cell>otherVertex,
               directed,
               edges[i],
               allVertices,
@@ -777,8 +779,10 @@ class SwimlaneLayout extends GraphLayout {
         for (let i = 0; i < hierarchyVertices.length; i += 1) {
           const comp = hierarchyVertices[i];
 
+          // @ts-expect-error
           if (comp[vertexID] != null) {
             for (const key in comp) {
+              // @ts-expect-error
               currentComp[key] = comp[key];
             }
 

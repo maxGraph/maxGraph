@@ -673,8 +673,10 @@ class HierarchicalLayout extends GraphLayout {
         for (let i = 0; i < hierarchyVertices.length; i += 1) {
           const comp = hierarchyVertices[i];
 
+          // @ts-expect-error
           if (comp[vertexID] != null) {
             for (const key in comp) {
+              // @ts-expect-error
               currentComp[key] = comp[key];
             }
 

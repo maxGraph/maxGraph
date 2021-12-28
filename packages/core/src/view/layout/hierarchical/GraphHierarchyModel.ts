@@ -78,7 +78,7 @@ class GraphHierarchyModel {
         if (realEdges != null && realEdges.length > 0) {
           const realEdge = realEdges[0];
           let targetCell = layout.getVisibleTerminal(realEdge, false);
-          let internalTargetCell = this.vertexMapper.get(targetCell);
+          let internalTargetCell = this.vertexMapper.get(<Cell>targetCell);
 
           if (internalVertices[i] === internalTargetCell) {
             // If there are parallel edges going between two vertices and not all are in the same direction
@@ -87,7 +87,7 @@ class GraphHierarchyModel {
             // that and we correct the target cell before continuing.
             // This branch only detects this single case
             targetCell = layout.getVisibleTerminal(realEdge, true);
-            internalTargetCell = this.vertexMapper.get(targetCell);
+            internalTargetCell = this.vertexMapper.get(<Cell>targetCell);
           }
 
           if (internalTargetCell != null && internalVertices[i] !== internalTargetCell) {
@@ -505,8 +505,8 @@ class GraphHierarchyModel {
   dfs(
     parent: GraphHierarchyNode | null, 
     root: GraphHierarchyNode | null, 
-    connectingEdge: GraphHierarchyNode, 
-    visitor, 
+    connectingEdge: GraphHierarchyEdge | null, 
+    visitor: Function, 
     seen: { [key: string]: GraphHierarchyNode | null }, 
     layer: number
   ): void {
@@ -552,14 +552,14 @@ class GraphHierarchyModel {
    * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
   extendedDfs(
-    parent: GraphHierarchyNode, 
+    parent: GraphHierarchyNode | null, 
     root: GraphHierarchyNode, 
-    connectingEdge: GraphHierarchyNode, 
-    visitor, 
-    seen, 
-    ancestors, 
-    childHash, 
-    layer
+    connectingEdge: GraphHierarchyEdge | null, 
+    visitor: Function, 
+    seen: { [key: string]: GraphHierarchyNode }, 
+    ancestors: any, 
+    childHash: string | number, 
+    layer: number
   ) {
     // Explanation of custom hash set. Previously, the ancestors variable
     // was passed through the dfs as a HashSet. The ancestors were copied
@@ -607,7 +607,7 @@ class GraphHierarchyModel {
 
         for (let i = 0; i < outgoingEdges.length; i += 1) {
           const internalEdge = outgoingEdges[i];
-          const targetNode = internalEdge.target;
+          const targetNode = <GraphHierarchyNode>internalEdge.target;
 
           // Root check is O(|roots|)
           this.extendedDfs(

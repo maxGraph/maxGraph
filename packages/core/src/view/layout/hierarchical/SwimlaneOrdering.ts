@@ -8,11 +8,11 @@ import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import { remove } from '../../../util/arrayUtils';
 import CellPath from '../../cell/CellPath';
 import { clone } from '../../../util/cloneUtils';
-import HierarchicalLayout from '../HierarchicalLayout';
 import Cell from 'src/view/cell/Cell';
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
 import GraphHierarchyModel from './GraphHierarchyModel';
+import SwimlaneLayout from '../SwimlaneLayout';
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward
@@ -23,7 +23,7 @@ import GraphHierarchyModel from './GraphHierarchyModel';
  * Creates a cycle remover for the given internal model.
  */
 class SwimlaneOrdering extends HierarchicalLayoutStage {
-  constructor(layout: HierarchicalLayout) {
+  constructor(layout: SwimlaneLayout) {
     super();
 
     this.layout = layout;
@@ -32,7 +32,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
   /**
    * Reference to the enclosing <HierarchicalLayout>.
    */
-  layout: HierarchicalLayout;
+  layout: SwimlaneLayout;
 
   /**
    * Takes the graph detail and configuration information within the facade
