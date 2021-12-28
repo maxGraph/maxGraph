@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import PopupMenu from '../../gui/PopupMenu';
+import MaxPopupMenu from '../../gui/MaxPopupMenu';
 import InternalEvent from '../event/InternalEvent';
 import { getScrollOrigin } from '../../util/styleUtils';
 import { getMainEvent, isMultiTouchEvent } from '../../util/eventUtils';
@@ -22,7 +22,7 @@ import EventObject from '../event/EventObject';
  *
  * Constructs an event handler that creates a <mxPopupMenu>.
  */
-class PopupMenuHandler extends PopupMenu implements GraphPlugin {
+class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   static pluginId = 'PopupMenuHandler';
 
   constructor(graph: Graph) {

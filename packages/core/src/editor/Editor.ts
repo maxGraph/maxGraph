@@ -3,14 +3,14 @@
  * Copyright (c) 2006-2019, draw.io AG
  */
 
-import DefaultPopupMenu from './DefaultPopupMenu';
+import EditorPopupMenu from './EditorPopupMenu';
 import UndoManager from '../view/undoable_changes/UndoManager';
-import DefaultKeyHandler from './DefaultKeyHandler';
+import EditorKeyHandler from './EditorKeyHandler';
 import EventSource from '../view/event/EventSource';
 import Translations from '../util/Translations';
 import Client from '../Client';
 import CompactTreeLayout from '../view/layout/CompactTreeLayout';
-import DefaultToolbar from './DefaultToolbar';
+import EditorToolbar from './EditorToolbar';
 import StackLayout from '../view/layout/StackLayout';
 import EventObject from '../view/event/EventObject';
 import { getOffset } from '../util/styleUtils';
@@ -238,7 +238,7 @@ if (mxLoadResources) {
  *
  * ```javascript
  * <Editor>
- *   <DefaultPopupMenu as="popupHandler">
+ *   <EditorPopupMenu as="popupHandler">
  * 		<add as="cut" action="cut" icon="images/cut.gif"/>
  *      ...
  * ```
@@ -247,14 +247,14 @@ if (mxLoadResources) {
  * above configuration. Existing entries may be removed and changed by
  * modifying or removing the respective entries in the configuration.
  * The configuration is read by the {@link DefaultPopupMenuCodec}, the format of the
- * configuration is explained in {@link DefaultPopupMenu.decode}.
+ * configuration is explained in {@link EditorPopupMenu.decode}.
  *
- * The toolbar is defined in the DefaultToolbar section. Items can be added
+ * The toolbar is defined in the EditorToolbar section. Items can be added
  * and removed in this section.
  *
  * ```javascript
  * <Editor>
- *   <DefaultToolbar>
+ *   <EditorToolbar>
  *     <add as="save" action="save" icon="images/save.gif"/>
  *     <add as="Swimlane" template="swimlane" icon="images/swimlane.gif"/>
  *     ...
@@ -408,7 +408,7 @@ export class Editor extends EventSource {
     if (document.body != null) {
       // Defines instance fields
       this.cycleAttributeValues = [];
-      this.popupHandler = new DefaultPopupMenu();
+      this.popupHandler = new EditorPopupMenu();
       this.undoManager = new UndoManager();
 
       // Creates the graph and toolbar without the containers
@@ -416,7 +416,7 @@ export class Editor extends EventSource {
       this.toolbar = this.createToolbar();
 
       // Creates the global keyhandler (requires graph instance)
-      this.keyHandler = new DefaultKeyHandler(this);
+      this.keyHandler = new EditorKeyHandler(this);
 
       // Configures the editor using the URI
       // which was passed to the ctor
@@ -521,7 +521,7 @@ export class Editor extends EventSource {
   graphRenderHint: any = null;
 
   /**
-   * Holds a {@link DefaultToolbar} for displaying the toolbar. The
+   * Holds a {@link EditorToolbar} for displaying the toolbar. The
    * toolbar is created in {@link setToolbarContainer}.
    */
   toolbar: any = null;
@@ -533,9 +533,9 @@ export class Editor extends EventSource {
   status: any = null;
 
   /**
-   * Holds a {@link DefaultPopupMenu} for displaying popupmenus.
+   * Holds a {@link EditorPopupMenu} for displaying popupmenus.
    */
-  popupHandler: DefaultPopupMenu | null = null;
+  popupHandler: EditorPopupMenu | null = null;
 
   /**
    * Holds an {@link UndoManager} for the command history.
@@ -543,10 +543,10 @@ export class Editor extends EventSource {
   undoManager: UndoManager | null = null;
 
   /**
-   * Holds a {@link DefaultKeyHandler} for handling keyboard events.
+   * Holds a {@link EditorKeyHandler} for handling keyboard events.
    * The handler is created in {@link setGraphContainer}.
    */
-  keyHandler: DefaultKeyHandler | null = null;
+  keyHandler: EditorKeyHandler | null = null;
 
   /**
    * Maps from actionnames to actions, which are functions taking
@@ -603,7 +603,7 @@ export class Editor extends EventSource {
   /**
    * Specifies the function to be used for inserting new
    * cells into the graph. This is assigned from the
-   * {@link DefaultToolbar} if a vertex-tool is clicked.
+   * {@link EditorToolbar} if a vertex-tool is clicked.
    */
   insertFunction: Function | null = null;
 
@@ -1695,10 +1695,10 @@ export class Editor extends EventSource {
 
   /**
    * Creates the {@link toolbar} with no container.
-   * @returns DefaultToolbar instance
+   * @returns EditorToolbar instance
    */
-  createToolbar(): DefaultToolbar {
-    return new DefaultToolbar(null, this);
+  createToolbar(): EditorToolbar {
+    return new EditorToolbar(null, this);
   }
 
   /**
@@ -2446,7 +2446,7 @@ export class Editor extends EventSource {
    * @param evt
    */
   createPopupMenu(menu: any, cell: Cell | null, evt: any): void {
-    (<DefaultPopupMenu>this.popupHandler).createMenu(this, menu, cell, evt);
+    (<EditorPopupMenu>this.popupHandler).createMenu(this, menu, cell, evt);
   }
 
   /**

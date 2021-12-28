@@ -19,7 +19,7 @@ import Codec from 'src/serialization/Codec';
  * @Example
  * Bind the delete key to the delete action in an existing editor.
  * ```javascript
- * var keyHandler = new DefaultKeyHandler(editor);
+ * var keyHandler = new EditorKeyHandler(editor);
  * keyHandler.bindAction(46, 'delete');
  * ```
  *
@@ -30,7 +30,7 @@ import Codec from 'src/serialization/Codec';
  * See {@link mxKeyHandler}.
  * An {@link InternalEvent.ESCAPE} event is fired via the editor if the escape key is pressed.
  */
-export class DefaultKeyHandler {
+export class EditorKeyHandler {
   constructor(editor: Editor | null=null) {
     if (editor != null) {
       this.editor = editor;
@@ -90,14 +90,14 @@ export class DefaultKeyHandler {
 }
 
 /**
- * Custom codec for configuring <DefaultKeyHandler>s. This class is created
+ * Custom codec for configuring <EditorKeyHandler>s. This class is created
  * and registered dynamically at load time and used implicitly via
  * <Codec> and the <CodecRegistry>. This codec only reads configuration
  * data for existing key handlers, it does not encode or create key handlers.
  */
-export class DefaultKeyHandlerCodec extends ObjectCodec {
+export class EditorKeyHandlerCodec extends ObjectCodec {
   constructor() {
-    super(new DefaultKeyHandler());
+    super(new EditorKeyHandler());
   }
 
   /**
@@ -125,16 +125,16 @@ export class DefaultKeyHandlerCodec extends ObjectCodec {
    * Example:
    *
    * ```javascript
-   * <DefaultKeyHandler as="keyHandler">
+   * <EditorKeyHandler as="keyHandler">
    *   <add as="88" control="true" action="cut"/>
    *   <add as="67" control="true" action="copy"/>
    *   <add as="86" control="true" action="paste"/>
-   * </DefaultKeyHandler>
+   * </EditorKeyHandler>
    * ```
    *
    * The keycodes are for the x, c and v keys.
    *
-   * See also: <DefaultKeyHandler.bindAction>,
+   * See also: <EditorKeyHandler.bindAction>,
    * http://www.js-examples.com/page/tutorials__key_codes.html
    */
   decode(dec: Codec, _node: Element, into: any) {
@@ -157,5 +157,5 @@ export class DefaultKeyHandlerCodec extends ObjectCodec {
   }
 }
 
-CodecRegistry.register(new DefaultKeyHandlerCodec());
-export default DefaultKeyHandler;
+CodecRegistry.register(new EditorKeyHandlerCodec());
+export default EditorKeyHandler;

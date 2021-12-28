@@ -81,7 +81,7 @@ export default MYNAMEHERE;
 
         // Creates the second toolbar programmatically
         let container = document.getElementById('toolbar');
-        let toolbar = new DefaultToolbar(container, editor);
+        let toolbar = new EditorToolbar(container, editor);
 
         // Use eg. mxResources.get("delete") to translate tooltip
         toolbar.addItem('Show XML', 'images/icons48/gear.png', 'myFirstAction');

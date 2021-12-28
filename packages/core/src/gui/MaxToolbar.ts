@@ -7,7 +7,7 @@
 
 import InternalEvent from '../view/event/InternalEvent';
 import Point from '../view/geometry/Point';
-import PopupMenu from './PopupMenu';
+import MaxPopupMenu from './MaxPopupMenu';
 import EventSource from '../view/event/EventSource';
 import EventObject from '../view/event/EventObject';
 import Client from '../Client';
@@ -42,7 +42,7 @@ class MaxToolbar extends EventSource {
     this.container = container;
   }
 
-  menu: PopupMenu | null = null;
+  menu: MaxPopupMenu | null = null;
   currentImg: HTMLImageElementWithProps | HTMLButtonElement | null = null;
   selectedMode: HTMLImageElementWithProps | null = null;
   defaultMode: HTMLImageElementWithProps | HTMLButtonElement | null = null;
@@ -148,7 +148,7 @@ class MaxToolbar extends EventSource {
         // Popup Menu
         if (factoryMethod != null) {
           if (this.menu == null) {
-            this.menu = new PopupMenu();
+            this.menu = new MaxPopupMenu();
             this.menu.init();
           }
 

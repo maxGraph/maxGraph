@@ -36,7 +36,7 @@ import Codec from 'src/serialization/Codec';
  * into the graph.
  *
  * ```
- * var toolbar = new DefaultToolbar(container, editor);
+ * var toolbar = new EditorToolbar(container, editor);
  * toolbar.addItem('Copy', null, 'copy');
  *
  * var combo = toolbar.addActionCombo('More actions...');
@@ -49,7 +49,7 @@ import Codec from 'src/serialization/Codec';
  * data into an existing instance. See {@link DefaultToolbarCodec} for a
  * description of the configuration format.
  */
-export class DefaultToolbar {
+export class EditorToolbar {
   constructor(container: HTMLElement | null=null, editor: Editor | null=null) {
     this.editor = editor;
 
@@ -444,14 +444,14 @@ export class DefaultToolbar {
 }
 
 /**
- * Custom codec for configuring <DefaultToolbar>s. This class is created
+ * Custom codec for configuring <EditorToolbar>s. This class is created
  * and registered dynamically at load time and used implicitly via
  * <Codec> and the <CodecRegistry>. This codec only reads configuration
  * data for existing toolbars handlers, it does not encode or create toolbars.
  */
-export class DefaultToolbarCodec extends ObjectCodec {
+export class EditorToolbarCodec extends ObjectCodec {
   constructor() {
-    super(new DefaultToolbar());
+    super(new EditorToolbar());
   }
 
   /**
@@ -543,12 +543,12 @@ export class DefaultToolbarCodec extends ObjectCodec {
    * To add items to the toolbar:
    *
    * ```javascript
-   * <DefaultToolbar as="toolbar">
+   * <EditorToolbar as="toolbar">
    *   <add as="save" action="save" icon="images/save.gif"/>
    *   <br/><hr/>
    *   <add as="select" mode="select" icon="images/select.gif"/>
    *   <add as="connect" mode="connect" icon="images/connect.gif"/>
-   * </DefaultToolbar>
+   * </EditorToolbar>
    * ```
    */
   decode(dec: Codec, _node: Element, into: any) {
@@ -720,5 +720,5 @@ export class DefaultToolbarCodec extends ObjectCodec {
   }
 }
 
-CodecRegistry.register(new DefaultToolbarCodec());
-export default DefaultToolbar;
+CodecRegistry.register(new EditorToolbarCodec());
+export default EditorToolbar;

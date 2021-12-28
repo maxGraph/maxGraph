@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import Cell from '../view/cell/Cell';
-import PopupMenu from '../gui/PopupMenu';
+import MaxPopupMenu from '../gui/MaxPopupMenu';
 import { getTextContent } from '../util/domUtils';
 import Translations from '../util/Translations';
 import Editor from './Editor';
@@ -22,7 +22,7 @@ import { PopupMenuItem } from 'src/types';
  * @Codec
  * This class uses the {@link DefaultPopupMenuCodec} to read configuration data into an existing instance, however, the actual parsing is done by this class during program execution, so the format is described below.
  */
-export class DefaultPopupMenu {
+export class EditorPopupMenu {
   constructor(config: Element | null=null) {
     this.config = config;
   }
@@ -81,22 +81,22 @@ export class DefaultPopupMenu {
    * To add a new item for a given action to the popupmenu:
    *
    * ```
-   * <DefaultPopupMenu as="popupHandler">
+   * <EditorPopupMenu as="popupHandler">
    *   <add as="delete" action="delete" icon="images/delete.gif" if="cell"/>
-   * </DefaultPopupMenu>
+   * </EditorPopupMenu>
    * ```
    *
    * To add a new item for a custom function:
    *
    * ```
-   * <DefaultPopupMenu as="popupHandler">
+   * <EditorPopupMenu as="popupHandler">
    *   <add as="action1"><![CDATA[
    *		function (editor, cell, evt)
    *		{
    *			editor.execute('action1', cell, 'myArg');
    *		}
    *   ]]></add>
-   * </DefaultPopupMenu>
+   * </EditorPopupMenu>
    * ```
    *
    * The above example invokes action1 with an additional third argument via
@@ -135,7 +135,7 @@ export class DefaultPopupMenu {
    * @param cell - Optional {@link mxCell} which is under the mousepointer.
    * @param evt - Optional mouse event which triggered the menu.
    */
-  createMenu(editor: Editor, menu: PopupMenu, cell: Cell | null=null, evt: MouseEvent | null=null) {
+  createMenu(editor: Editor, menu: MaxPopupMenu, cell: Cell | null=null, evt: MouseEvent | null=null) {
     if (this.config != null) {
       const conditions = this.createConditions(editor, cell, evt);
       const item = <Element>this.config.firstChild;
@@ -156,7 +156,7 @@ export class DefaultPopupMenu {
    */
   addItems(
     editor: Editor, 
-    menu: PopupMenu, 
+    menu: MaxPopupMenu, 
     cell: Cell | null=null, 
     evt: MouseEvent | null=null, 
     conditions: any, 
@@ -238,7 +238,7 @@ export class DefaultPopupMenu {
    * Default is true.
    */
   addAction(
-    menu: PopupMenu,
+    menu: MaxPopupMenu,
     editor: Editor,
     lab: string,
     icon: string | null=null,
@@ -305,17 +305,17 @@ export class DefaultPopupMenu {
 }
 
 /**
- * Custom codec for configuring <DefaultPopupMenu>s. This class is created
+ * Custom codec for configuring <EditorPopupMenu>s. This class is created
  * and registered dynamically at load time and used implicitly via
  * <Codec> and the <CodecRegistry>. This codec only reads configuration
  * data for existing popup menus, it does not encode or create menus. Note
  * that this codec only passes the configuration node to the popup menu,
  * which uses the config to dynamically create menus. See
- * <DefaultPopupMenu.createMenu>.
+ * <EditorPopupMenu.createMenu>.
  */
-export class DefaultPopupMenuCodec extends ObjectCodec {
+export class EditorPopupMenuCodec extends ObjectCodec {
   constructor() {
-    super(new DefaultPopupMenu());
+    super(new EditorPopupMenu());
   }
 
   /**
@@ -326,7 +326,7 @@ export class DefaultPopupMenuCodec extends ObjectCodec {
   }
 
   /**
-   * Uses the given node as the config for <DefaultPopupMenu>.
+   * Uses the given node as the config for <EditorPopupMenu>.
    */
   decode(dec: Codec, node: Element, into: any) {
     const inc = node.getElementsByTagName('include')[0];
@@ -341,5 +341,5 @@ export class DefaultPopupMenuCodec extends ObjectCodec {
   }
 }
 
-CodecRegistry.register(new DefaultPopupMenuCodec());
-export default DefaultPopupMenu;
+CodecRegistry.register(new EditorPopupMenuCodec());
+export default EditorPopupMenu;

@@ -45,9 +45,9 @@ export { TerminalChange, TerminalChangeCodec } from './view/undoable_changes/Ter
 export { default as ValueChange } from './view/undoable_changes/ValueChange';
 export { default as VisibleChange } from './view/undoable_changes/VisibleChange';
 
-export { DefaultKeyHandler, DefaultKeyHandlerCodec } from './editor/DefaultKeyHandler';
-export { DefaultPopupMenu, DefaultPopupMenuCodec } from './editor/DefaultPopupMenu';
-export { DefaultToolbar, DefaultToolbarCodec } from './editor/DefaultToolbar';
+export { EditorKeyHandler, DefaultKeyHandlerCodec } from './editor/EditorKeyHandler';
+export { EditorPopupMenu, DefaultPopupMenuCodec } from './editor/EditorPopupMenu';
+export { EditorToolbar, DefaultToolbarCodec } from './editor/EditorToolbar';
 export { Editor, EditorCodec } from './editor/Editor';
 
 export { default as CellHighlight } from './view/cell/CellHighlight';
@@ -167,7 +167,7 @@ export { default as InternalMouseEvent } from './view/event/InternalMouseEvent';
 
 export { default as MaxForm } from './gui/MaxForm';
 export { default as MaxLog } from './gui/MaxLog';
-export { default as PopupMenu } from './gui/PopupMenu';
+export { default as MaxPopupMenu } from './gui/MaxPopupMenu';
 export { default as MaxToolbar } from './gui/MaxToolbar';
 export { default as MaxWindow } from './gui/MaxWindow';
 
