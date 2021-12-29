@@ -1,0 +1,1991 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> view/canvas/SvgCanvas2D.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>view/canvas/SvgCanvas2D.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright (c) 2006-2015, JGraph Ltd
+ * Copyright (c) 2006-2015, Gaudenz Alder
+ * Updated to ES9 syntax by David Morrissey 2021
+ * Type definitions from the typed-mxgraph project
+ */
+
+import { isNotNullish } from '../../util/utils';
+import { mod } from '../../util/mathUtils';
+import { getAlignmentAsPoint } from '../../util/styleUtils';
+import Client from '../../Client';
+import {
+  ABSOLUTE_LINE_HEIGHT,
+  ALIGN,
+  DEFAULT_FONTFAMILY,
+  DEFAULT_FONTSIZE,
+  DIRECTION,
+  FONT,
+  LINE_HEIGHT,
+  NONE,
+  NS_SVG,
+  NS_XLINK,
+  WORD_WRAP,
+} from '../../util/constants';
+import Rectangle from '../geometry/Rectangle';
+import AbstractCanvas2D from './AbstractCanvas2D';
+import { getXml } from '../../util/xmlUtils';
+import { isNode, write } from '../../util/domUtils';
+import { htmlEntities, trim } from '../../util/stringUtils';
+import {
+  AlignValue,
+  ColorValue,
+  DirectionValue,
+  Gradient,
+  GradientMap,
+  OverflowValue,
+  TextDirectionValue,
+  VAlignValue,
+} from '../../types';
+
+// Activates workaround for gradient ID resolution if base tag is used.
+const useAbsoluteIds =
+  typeof DOMParser === 'function' &amp;&amp;
+  !Client.IS_CHROMEAPP &amp;&amp;
+  !Client.IS_EDGE &amp;&amp;
+  document.getElementsByTagName('base').length > 0;
+
+/**
+ * Extends {@link mxAbstractCanvas2D} to implement a canvas for SVG. This canvas writes all calls as SVG output to the
+ * given SVG root node.
+ *
+ * ```javascript
+ * var svgDoc = mxUtils.createXmlDocument();
+ * var root = (svgDoc.createElementNS != null) ?
+ * 		svgDoc.createElementNS(mxConstants.NS_SVG, 'svg') : svgDoc.createElement('svg');
+ *
+ * if (svgDoc.createElementNS == null)
+ * {
+ *   root.setAttribute('xmlns', mxConstants.NS_SVG);
+ *   root.setAttribute('xmlns:xlink', mxConstants.NS_XLINK);
+ * }
+ * else
+ * {
+ *   root.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', mxConstants.NS_XLINK);
+ * }
+ *
+ * var bounds = graph.getGraphBounds();
+ * root.setAttribute('width', (bounds.x + bounds.width + 4) + 'px');
+ * root.setAttribute('height', (bounds.y + bounds.height + 4) + 'px');
+ * root.setAttribute('version', '1.1');
+ *
+ * svgDoc.appendChild(root);
+ *
+ * var svgCanvas = new mxSvgCanvas2D(root);
+ * ```
+ *
+ *
+ * To disable anti-aliasing in the output, use the following code.
+ * ```javascript
+ * graph.view.canvas.ownerSVGElement.setAttribute('shape-rendering', 'crispEdges');
+ * ```
+ * Or set the respective attribute in the SVG element directly.
+ */
+class SvgCanvas2D extends AbstractCanvas2D {
+  constructor(root: SVGElement, styleEnabled: boolean) {
+    super();
+
+    /**
+     * Variable: root
+     *
+     * Reference to the container for the SVG content.
+     */
+    this.root = root;
+
+    /**
+     * Variable: gradients
+     *
+     * Local cache of gradients for quick lookups.
+     */
+    this.gradients = {};
+
+    /**
+     * Variable: defs
+     *
+     * Reference to the defs section of the SVG document. Only for export.
+     */
+    this.defs = null;
+
+    /**
+     * Variable: styleEnabled
+     *
+     * Stores the value of styleEnabled passed to the constructor.
+     */
+    this.styleEnabled = styleEnabled != null ? styleEnabled : false;
+
+    let svg = null;
+
+    // Adds optional defs section for export
+    if (root.ownerDocument !== document) {
+      let node: HTMLElement | SVGElement | null = root;
+
+      // Finds owner SVG element in XML DOM
+      while (node &amp;&amp; node.nodeName !== 'svg') {
+        node = node.parentElement;
+      }
+
+      svg = node;
+    }
+
+    if (svg) {
+      // Tries to get existing defs section
+      const tmp = svg.getElementsByTagName('defs');
+
+      if (tmp.length > 0) {
+        this.defs = svg.getElementsByTagName('defs')[0];
+      }
+
+      // Adds defs section if none exists
+      if (!this.defs) {
+        this.defs = this.createElement('defs') as SVGDefsElement;
+
+        if (svg.firstChild != null) {
+          svg.insertBefore(this.defs, svg.firstChild);
+        } else {
+          svg.appendChild(this.defs);
+        }
+      }
+
+      // Adds stylesheet
+      if (this.styleEnabled) {
+        this.defs.appendChild(this.createStyle());
+      }
+    }
+  }
+
+  root: SVGElement | null;
+
+  gradients: GradientMap;
+
+  defs: SVGDefsElement | null = null;
+
+  styleEnabled = true;
+
+  /**
+   * Holds the current DOM node.
+   */
+  node: SVGElement | null = null;
+
+  /**
+   * Specifies if plain text output should match the vertical HTML alignment.
+   * @default true.
+   */
+  matchHtmlAlignment = true;
+
+  /**
+   * Specifies if text output should be enabled.
+   * @default true
+   */
+  textEnabled = true;
+
+  /**
+   * Specifies if use of foreignObject for HTML markup is allowed.
+   * @default true
+   */
+  foEnabled = true;
+
+  /**
+   * Specifies the fallback text for unsupported foreignObjects in exported documents.
+   * If this is set to `null` then no fallback text is added to the exported document.
+   * @default [Object]
+   */
+  foAltText = '[Object]';
+
+  /**
+   * Offset to be used for foreignObjects.
+   * @default 0
+   */
+  foOffset = 0;
+
+  /**
+   * Offset to be used for text elements.
+   * @default 0
+   */
+  textOffset = 0;
+
+  /**
+   * Offset to be used for image elements.
+   * @default 0
+   */
+  imageOffset = 0;
+
+  /**
+   * Adds transparent paths for strokes.
+   * @default 0
+   */
+  strokeTolerance = 0;
+
+  /**
+   * Minimum stroke width for output.
+   * @default 1
+   */
+  minStrokeWidth = 1;
+
+  /**
+   * Local counter for references in SVG export.
+   * @default 0
+   */
+  refCount = 0;
+
+  /**
+   * Correction factor for {@link mxConstants.LINE_HEIGHT} in HTML output.
+   * @default 1
+   */
+  lineHeightCorrection = 1;
+
+  /**
+   * Default value for active pointer events.
+   * @default all
+   */
+  pointerEventsValue = 'all';
+
+  /**
+   * Padding to be added for text that is not wrapped to account for differences in font metrics on different platforms in pixels.
+   * @default 10.
+   */
+  fontMetricsPadding = 10;
+
+  /**
+   * Specifies if offsetWidth and offsetHeight should be cached. This is used to speed up repaint of text in {@link updateText}.
+   * @default true
+   */
+  cacheOffsetSize = true;
+
+  originalRoot: SVGElement | null = null;
+
+  /**
+   * Updates existing DOM nodes for text rendering.
+   */
+  static createCss = (
+    w: number,
+    h: number,
+    align: AlignValue,
+    valign: string,
+    wrap: boolean,
+    overflow: string,
+    clip: boolean,
+    bg: ColorValue | null,
+    border: ColorValue | null,
+    flex: string,
+    block: string,
+    scale: number,
+    callback: (
+      dx: number,
+      dy: number,
+      flex: string,
+      item: string,
+      block: string,
+      ofl: string
+    ) => void
+  ) => {
+    let item = `box-sizing: border-box; font-size: 0; text-align: ${
+      align === ALIGN.LEFT ? 'left' : align === ALIGN.RIGHT ? 'right' : 'center'
+    }; `;
+    const pt = getAlignmentAsPoint(align, valign);
+    let ofl = 'overflow: hidden; ';
+    let fw = 'width: 1px; ';
+    let fh = 'height: 1px; ';
+    let dx = pt.x * w;
+    let dy = pt.y * h;
+
+    if (clip) {
+      fw = `width: ${Math.round(w)}px; `;
+      item += `max-height: ${Math.round(h)}px; `;
+      dy = 0;
+    } else if (overflow === 'fill') {
+      fw = `width: ${Math.round(w)}px; `;
+      fh = `height: ${Math.round(h)}px; `;
+      block += 'width: 100%; height: 100%; ';
+      item += fw + fh;
+    } else if (overflow === 'width') {
+      fw = `width: ${Math.round(w)}px; `;
+      block += 'width: 100%; ';
+      item += fw;
+      dy = 0;
+
+      if (h > 0) {
+        item += `max-height: ${Math.round(h)}px; `;
+      }
+    } else {
+      ofl = '';
+      dy = 0;
+    }
+
+    let bgc = '';
+
+    if (bg) {
+      bgc += `background-color: ${bg}; `;
+    }
+
+    if (border) {
+      bgc += `border: 1px solid ${border}; `;
+    }
+
+    if (ofl == '' || clip) {
+      block += bgc;
+    } else {
+      item += bgc;
+    }
+
+    if (wrap &amp;&amp; w > 0) {
+      block += `white-space: normal; word-wrap: ${WORD_WRAP}; `;
+      fw = `width: ${Math.round(w)}px; `;
+
+      if (ofl !== '' &amp;&amp; overflow !== 'fill') {
+        dy = 0;
+      }
+    } else {
+      block += 'white-space: nowrap; ';
+
+      if (ofl === '') {
+        dx = 0;
+      }
+    }
+
+    callback(dx, dy, flex + fw + fh, item + ofl, block, ofl);
+  };
+
+  /**
+   * Rounds all numbers to 2 decimal points.
+   */
+  format(value: number) {
+    return parseFloat(value.toFixed(2));
+  }
+
+  /**
+   * Returns the URL of the page without the hash part. This needs to use href to
+   * include any search part with no params (ie question mark alone). This is a
+   * workaround for the fact that window.location.search is empty if there is
+   * no search string behind the question mark.
+   */
+  getBaseUrl() {
+    let { href } = window.location;
+    const hash = href.lastIndexOf('#');
+
+    if (hash > 0) {
+      href = href.substring(0, hash);
+    }
+
+    return href;
+  }
+
+  /**
+   * Returns any offsets for rendering pixels.
+   */
+  reset() {
+    super.reset();
+    this.gradients = {};
+  }
+
+  /**
+   * Creates the optional style section.
+   */
+  createStyle() {
+    const style = this.createElement('style');
+    style.setAttribute('type', 'text/css');
+    write(
+      style,
+      `svg{font-family:${DEFAULT_FONTFAMILY};font-size:${DEFAULT_FONTSIZE};fill:none;stroke-miterlimit:10}`
+    );
+
+    return style;
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   */
+  createElement(tagName: string, namespace?: string) {
+    return this.root?.ownerDocument.createElementNS(
+      namespace || NS_SVG,
+      tagName
+    ) as SVGElement;
+  }
+
+  /**
+   * Returns the alternate text string for the given foreignObject.
+   */
+  getAlternateText(
+    fo: SVGForeignObjectElement,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    str: Element | string,
+    align: AlignValue,
+    valign: VAlignValue,
+    wrap: boolean,
+    format: string,
+    overflow: OverflowValue,
+    clip: boolean,
+    rotation: number
+  ) {
+    return isNotNullish(str) ? this.foAltText : null;
+  }
+
+  /**
+   * Returns the alternate content for the given foreignObject.
+   */
+  createAlternateContent(
+    fo: SVGForeignObjectElement,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    str: string,
+    align: AlignValue,
+    valign: VAlignValue,
+    wrap: boolean,
+    format: string,
+    overflow: OverflowValue,
+    clip: boolean,
+    rotation: number
+  ) {
+    const text = this.getAlternateText(
+      fo,
+      x,
+      y,
+      w,
+      h,
+      str,
+      align,
+      valign,
+      wrap,
+      format,
+      overflow,
+      clip,
+      rotation
+    );
+    const s = this.state;
+
+    if (isNotNullish(text) &amp;&amp; s.fontSize > 0) {
+      const dy = valign === ALIGN.TOP ? 1 : valign === ALIGN.BOTTOM ? 0 : 0.3;
+      const anchor =
+        align === ALIGN.RIGHT ? 'end' : align === ALIGN.LEFT ? 'start' : 'middle';
+
+      const alt = this.createElement('text');
+      alt.setAttribute('x', String(Math.round(x + s.dx)));
+      alt.setAttribute('y', String(Math.round(y + s.dy + dy * s.fontSize)));
+      alt.setAttribute('fill', s.fontColor || 'black');
+      alt.setAttribute('font-family', s.fontFamily);
+      alt.setAttribute('font-size', `${Math.round(s.fontSize)}px`);
+
+      // Text-anchor start is default in SVG
+      if (anchor !== 'start') {
+        alt.setAttribute('text-anchor', anchor);
+      }
+
+      if ((s.fontStyle &amp; FONT.BOLD) === FONT.BOLD) {
+        alt.setAttribute('font-weight', 'bold');
+      }
+
+      if ((s.fontStyle &amp; FONT.ITALIC) === FONT.ITALIC) {
+        alt.setAttribute('font-style', 'italic');
+      }
+
+      const txtDecor = [];
+
+      if ((s.fontStyle &amp; FONT.UNDERLINE) === FONT.UNDERLINE) {
+        txtDecor.push('underline');
+      }
+
+      if ((s.fontStyle &amp; FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
+        txtDecor.push('line-through');
+      }
+
+      if (txtDecor.length > 0) {
+        alt.setAttribute('text-decoration', txtDecor.join(' '));
+      }
+
+      write(alt, &lt;string>text);
+      return alt;
+    }
+    return null;
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   */
+  // createGradientId(start: string, end: string, alpha1: string, alpha2: string, direction: string): string;
+  createGradientId(
+    start: string,
+    end: string,
+    alpha1: number,
+    alpha2: number,
+    direction: DirectionValue
+  ) {
+    // Removes illegal characters from gradient ID
+    if (start.charAt(0) === '#') {
+      start = start.substring(1);
+    }
+
+    if (end.charAt(0) === '#') {
+      end = end.substring(1);
+    }
+
+    // Workaround for gradient IDs not working in Safari 5 / Chrome 6
+    // if they contain uppercase characters
+    start = `${start.toLowerCase()}-${alpha1}`;
+    end = `${end.toLowerCase()}-${alpha2}`;
+
+    // Wrong gradient directions possible?
+    let dir = null;
+
+    if (direction == null || direction === DIRECTION.SOUTH) {
+      dir = 's';
+    } else if (direction === DIRECTION.EAST) {
+      dir = 'e';
+    } else {
+      const tmp = start;
+      start = end;
+      end = tmp;
+
+      if (direction === DIRECTION.NORTH) {
+        dir = 's';
+      } else if (direction === DIRECTION.WEST) {
+        dir = 'e';
+      }
+    }
+
+    return `mx-gradient-${start}-${end}-${dir}`;
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   */
+  getSvgGradient(
+    start: string,
+    end: string,
+    alpha1: number,
+    alpha2: number,
+    direction: DirectionValue
+  ) {
+    if (!this.root) return;
+
+    const id = this.createGradientId(start, end, alpha1, alpha2, direction);
+    let gradient: Gradient | null = this.gradients[id];
+
+    if (!gradient) {
+      const svg = this.root.ownerSVGElement;
+
+      let counter = 0;
+      let tmpId = `${id}-${counter}`;
+
+      if (svg) {
+        gradient = &lt;Gradient>(&lt;unknown>svg.ownerDocument.getElementById(tmpId));
+
+        while (gradient &amp;&amp; gradient.ownerSVGElement !== svg) {
+          tmpId = `${id}-${counter++}`;
+          gradient = &lt;Gradient>(&lt;unknown>svg.ownerDocument.getElementById(tmpId));
+        }
+      } else {
+        // Uses shorter IDs for export
+        tmpId = `id${++this.refCount}`;
+      }
+
+      if (!gradient) {
+        gradient = this.createSvgGradient(start, end, alpha1, alpha2, direction);
+        gradient.setAttribute('id', tmpId);
+
+        if (this.defs) {
+          this.defs.appendChild(gradient);
+        } else if (svg) {
+          svg.appendChild(gradient);
+        }
+      }
+
+      this.gradients[id] = gradient;
+    }
+
+    return gradient.getAttribute('id');
+  }
+
+  /**
+   * Creates the given SVG gradient.
+   */
+  createSvgGradient(
+    start: string,
+    end: string,
+    alpha1: number,
+    alpha2: number,
+    direction: DirectionValue
+  ) {
+    const gradient = &lt;Gradient>this.createElement('linearGradient');
+    gradient.setAttribute('x1', '0%');
+    gradient.setAttribute('y1', '0%');
+    gradient.setAttribute('x2', '0%');
+    gradient.setAttribute('y2', '0%');
+
+    if (direction == null || direction === DIRECTION.SOUTH) {
+      gradient.setAttribute('y2', '100%');
+    } else if (direction === DIRECTION.EAST) {
+      gradient.setAttribute('x2', '100%');
+    } else if (direction === DIRECTION.NORTH) {
+      gradient.setAttribute('y1', '100%');
+    } else if (direction === DIRECTION.WEST) {
+      gradient.setAttribute('x1', '100%');
+    }
+
+    let op = alpha1 &lt; 1 ? `;stop-opacity:${alpha1}` : '';
+
+    let stop = this.createElement('stop');
+    stop.setAttribute('offset', '0%');
+    stop.setAttribute('style', `stop-color:${start}${op}`);
+    gradient.appendChild(stop);
+
+    op = alpha2 &lt; 1 ? `;stop-opacity:${alpha2}` : '';
+
+    stop = this.createElement('stop');
+    stop.setAttribute('offset', '100%');
+    stop.setAttribute('style', `stop-color:${end}${op}`);
+    gradient.appendChild(stop);
+
+    return gradient;
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   */
+  addNode(filled: boolean, stroked: boolean) {
+    if (!this.root) return;
+
+    const { node } = this;
+    const s = this.state;
+
+    if (node) {
+      if (node.nodeName === 'path') {
+        // Checks if the path is not empty
+        if (this.path &amp;&amp; this.path.length > 0) {
+          node.setAttribute('d', this.path.join(' '));
+        } else {
+          return;
+        }
+      }
+
+      if (filled &amp;&amp; s.fillColor !== NONE) {
+        this.updateFill();
+      } else if (!this.styleEnabled) {
+        // Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=814952
+        if (node.nodeName === 'ellipse' &amp;&amp; Client.IS_FF) {
+          node.setAttribute('fill', 'transparent');
+        } else {
+          node.setAttribute('fill', NONE);
+        }
+
+        // Sets the actual filled state for stroke tolerance
+        filled = false;
+      }
+
+      if (stroked &amp;&amp; s.strokeColor !== NONE) {
+        this.updateStroke();
+      } else if (!this.styleEnabled) {
+        node.setAttribute('stroke', NONE);
+      }
+
+      if (s.transform &amp;&amp; s.transform.length > 0) {
+        node.setAttribute('transform', s.transform);
+      }
+
+      if (s.shadow) {
+        this.root.appendChild(this.createShadow(node));
+      }
+
+      // Adds stroke tolerance
+      if (this.strokeTolerance > 0 &amp;&amp; !filled) {
+        this.root.appendChild(this.createTolerance(node));
+      }
+
+      // Adds pointer events
+      if (this.pointerEvents) {
+        node.setAttribute('pointer-events', this.pointerEventsValue);
+      }
+      // Enables clicks for nodes inside a link element
+      else if (!this.pointerEvents &amp;&amp; !this.originalRoot) {
+        node.setAttribute('pointer-events', NONE);
+      }
+
+      // Removes invisible nodes from output if they don't handle events
+      if (
+        (node.nodeName !== 'rect' &amp;&amp;
+          node.nodeName !== 'path' &amp;&amp;
+          node.nodeName !== 'ellipse') ||
+        (node.getAttribute('fill') !== NONE &amp;&amp;
+          node.getAttribute('fill') !== 'transparent') ||
+        node.getAttribute('stroke') !== NONE ||
+        node.getAttribute('pointer-events') !== NONE
+      ) {
+        // LATER: Update existing DOM for performance
+        this.root.appendChild(node);
+      }
+
+      this.node = null;
+    }
+  }
+
+  /**
+   * Transfers the stroke attributes from &lt;state> to &lt;node>.
+   */
+  updateFill() {
+    if (!this.node) return;
+
+    const s = this.state;
+
+    if (s.alpha &lt; 1 || s.fillAlpha &lt; 1) {
+      this.node.setAttribute('fill-opacity', String(s.alpha * s.fillAlpha));
+    }
+
+    if (s.fillColor !== NONE) {
+      if (s.gradientColor !== NONE) {
+        const id = this.getSvgGradient(
+          &lt;string>s.fillColor,
+          s.gradientColor,
+          s.gradientFillAlpha,
+          s.gradientAlpha,
+          s.gradientDirection
+        );
+
+        if (this.root?.ownerDocument === document &amp;&amp; useAbsoluteIds) {
+          // Workaround for no fill with base tag in page (escape brackets)
+          const base = this.getBaseUrl().replace(/([\(\)])/g, '\\$1');
+          this.node.setAttribute('fill', `url(${base}#${id})`);
+        } else {
+          this.node.setAttribute('fill', `url(#${id})`);
+        }
+      } else {
+        this.node.setAttribute('fill', (&lt;string>s.fillColor).toLowerCase());
+      }
+    }
+  }
+
+  /**
+   * Returns the current stroke width (>= 1), ie. max(1, this.format(this.state.strokeWidth * this.state.scale)).
+   */
+  // getCurrentStrokeWidth(): number;
+  getCurrentStrokeWidth() {
+    return Math.max(
+      this.minStrokeWidth,
+      Math.max(0.01, this.format(this.state.strokeWidth * this.state.scale))
+    );
+  }
+
+  /**
+   * Transfers the stroke attributes from {@link mxAbstractCanvas2D.state} to {@link node}.
+   */
+  updateStroke() {
+    if (!this.node) return;
+
+    const s = this.state;
+
+    if (s.strokeColor !== NONE)
+      this.node.setAttribute('stroke', s.strokeColor.toLowerCase());
+
+    if (s.alpha &lt; 1 || s.strokeAlpha &lt; 1) {
+      this.node.setAttribute('stroke-opacity', String(s.alpha * s.strokeAlpha));
+    }
+
+    const sw = this.getCurrentStrokeWidth();
+
+    if (sw !== 1) {
+      this.node.setAttribute('stroke-width', String(sw));
+    }
+
+    if (this.node.nodeName === 'path') {
+      this.updateStrokeAttributes();
+    }
+
+    if (s.dashed) {
+      this.node.setAttribute(
+        'stroke-dasharray',
+        this.createDashPattern((s.fixDash ? 1 : s.strokeWidth) * s.scale)
+      );
+    }
+  }
+
+  /**
+   * Transfers the stroke attributes from {@link mxAbstractCanvas2D.state} to {@link node}.
+   */
+  updateStrokeAttributes() {
+    if (!this.node) return;
+
+    const s = this.state;
+
+    // Linejoin miter is default in SVG
+    if (s.lineJoin &amp;&amp; s.lineJoin !== 'miter') {
+      this.node.setAttribute('stroke-linejoin', s.lineJoin);
+    }
+
+    if (s.lineCap) {
+      // flat is called butt in SVG
+      let value = s.lineCap;
+
+      if (value === 'flat') {
+        value = 'butt';
+      }
+
+      // Linecap butt is default in SVG
+      if (value !== 'butt') {
+        this.node.setAttribute('stroke-linecap', value);
+      }
+    }
+
+    // Miterlimit 10 is default in our document
+    if (s.miterLimit != null &amp;&amp; (!this.styleEnabled || s.miterLimit !== 10)) {
+      this.node.setAttribute('stroke-miterlimit', String(s.miterLimit));
+    }
+  }
+
+  /**
+   * Creates the SVG dash pattern for the given state.
+   */
+  createDashPattern(scale: number) {
+    const pat = [];
+
+    if (typeof this.state.dashPattern === 'string') {
+      const dash = this.state.dashPattern.split(' ');
+
+      if (dash.length > 0) {
+        for (let i = 0; i &lt; dash.length; i += 1) {
+          pat[i] = Number(dash[i]) * scale;
+        }
+      }
+    }
+
+    return pat.join(' ');
+  }
+
+  /**
+   * Creates a hit detection tolerance shape for the given node.
+   */
+  // createTolerance(node: Element): Element;
+  createTolerance(node: SVGElement) {
+    const tol = node.cloneNode(true) as SVGElement;
+    const sw = parseFloat(tol.getAttribute('stroke-width') || '1') + this.strokeTolerance;
+    tol.setAttribute('pointer-events', 'stroke');
+    tol.setAttribute('visibility', 'hidden');
+    tol.removeAttribute('stroke-dasharray');
+    tol.setAttribute('stroke-width', String(sw));
+    tol.setAttribute('fill', 'none');
+    tol.setAttribute('stroke', 'white');
+    return tol;
+  }
+
+  /**
+   * Creates a shadow for the given node.
+   */
+  createShadow(node: SVGElement) {
+    const shadow = node.cloneNode(true) as SVGElement;
+    const s = this.state;
+
+    // Firefox uses transparent for no fill in ellipses
+    if (
+      shadow.getAttribute('fill') !== 'none' &amp;&amp;
+      (!Client.IS_FF || shadow.getAttribute('fill') !== 'transparent')
+    ) {
+      shadow.setAttribute('fill', s.shadowColor);
+    }
+
+    if (shadow.getAttribute('stroke') !== 'none' &amp;&amp; s.shadowColor !== NONE) {
+      shadow.setAttribute('stroke', s.shadowColor);
+    }
+
+    shadow.setAttribute(
+      'transform',
+      `translate(${this.format(s.shadowDx * s.scale)},${this.format(
+        s.shadowDy * s.scale
+      )})${s.transform || ''}`
+    );
+    shadow.setAttribute('opacity', String(s.shadowAlpha));
+
+    return shadow;
+  }
+
+  /**
+   * Experimental implementation for hyperlinks.
+   */
+  setLink(link: string) {
+    if (!this.root) return;
+
+    if (!link) {
+      this.root = this.originalRoot;
+    } else {
+      this.originalRoot = this.root;
+
+      const node = this.createElement('a');
+
+      // Workaround for implicit namespace handling in HTML5 export, IE adds NS1 namespace so use code below
+      // in all IE versions except quirks mode. KNOWN: Adds xlink namespace to each image tag in output.
+      if (node.setAttributeNS == null || this.root.ownerDocument !== document) {
+        node.setAttribute('xlink:href', link);
+      } else {
+        node.setAttributeNS(NS_XLINK, 'xlink:href', link);
+      }
+
+      this.root.appendChild(node);
+      this.root = node;
+    }
+  }
+
+  /**
+   * Sets the rotation of the canvas. Note that rotation cannot be concatenated.
+   */
+  rotate(theta: number, flipH: boolean, flipV: boolean, cx: number, cy: number) {
+    if (theta !== 0 || flipH || flipV) {
+      const s = this.state;
+      cx += s.dx;
+      cy += s.dy;
+
+      cx *= s.scale;
+      cy *= s.scale;
+
+      s.transform = s.transform || '';
+
+      // This implementation uses custom scale/translate and built-in rotation
+      // Rotation state is part of the AffineTransform in state.transform
+      if (flipH &amp;&amp; flipV) {
+        theta += 180;
+      } else if (flipH !== flipV) {
+        const tx = flipH ? cx : 0;
+        const sx = flipH ? -1 : 1;
+
+        const ty = flipV ? cy : 0;
+        const sy = flipV ? -1 : 1;
+
+        s.transform +=
+          `translate(${this.format(tx)},${this.format(ty)})` +
+          `scale(${this.format(sx)},${this.format(sy)})` +
+          `translate(${this.format(-tx)},${this.format(-ty)})`;
+      }
+
+      if (flipH ? !flipV : flipV) {
+        theta *= -1;
+      }
+
+      if (theta !== 0) {
+        s.transform += `rotate(${this.format(theta)},${this.format(cx)},${this.format(
+          cy
+        )})`;
+      }
+
+      s.rotation += theta;
+      s.rotationCx = cx;
+      s.rotationCy = cy;
+    }
+  }
+
+  /**
+   * Extends superclass to create path.
+   */
+  // begin(): void;
+  begin() {
+    super.begin();
+    this.node = this.createElement('path');
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   */
+  rect(x: number, y: number, w: number, h: number) {
+    const s = this.state;
+    const n = this.createElement('rect');
+    n.setAttribute('x', String(this.format((x + s.dx) * s.scale)));
+    n.setAttribute('y', String(this.format((y + s.dy) * s.scale)));
+    n.setAttribute('width', String(this.format(w * s.scale)));
+    n.setAttribute('height', String(this.format(h * s.scale)));
+
+    this.node = n;
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   */
+  roundrect(x: number, y: number, w: number, h: number, dx: number, dy: number) {
+    if (!this.node) return;
+
+    this.rect(x, y, w, h);
+
+    if (dx > 0) {
+      this.node.setAttribute('rx', String(this.format(dx * this.state.scale)));
+    }
+
+    if (dy > 0) {
+      this.node.setAttribute('ry', String(this.format(dy * this.state.scale)));
+    }
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   */
+  ellipse(x: number, y: number, w: number, h: number) {
+    const s = this.state;
+    const n = this.createElement('ellipse');
+    // No rounding for consistent output with 1.x
+    n.setAttribute('cx', String(this.format((x + w / 2 + s.dx) * s.scale)));
+    n.setAttribute('cy', String(this.format((y + h / 2 + s.dy) * s.scale)));
+    n.setAttribute('rx', String((w / 2) * s.scale));
+    n.setAttribute('ry', String((h / 2) * s.scale));
+    this.node = n;
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   */
+  image(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    src: string,
+    aspect = true,
+    flipH = false,
+    flipV = false
+  ) {
+    if (!this.root) return;
+
+    src = this.converter.convert(src);
+
+    const s = this.state;
+    x += s.dx;
+    y += s.dy;
+
+    const node = this.createElement('image');
+    node.setAttribute('x', String(this.format(x * s.scale) + this.imageOffset));
+    node.setAttribute('y', String(this.format(y * s.scale) + this.imageOffset));
+    node.setAttribute('width', String(this.format(w * s.scale)));
+    node.setAttribute('height', String(this.format(h * s.scale)));
+
+    // Workaround for missing namespace support
+    if (!node.setAttributeNS) {
+      node.setAttribute('xlink:href', src);
+    } else {
+      node.setAttributeNS(NS_XLINK, 'xlink:href', src);
+    }
+
+    if (!aspect) {
+      node.setAttribute('preserveAspectRatio', 'none');
+    }
+
+    if (s.alpha &lt; 1 || s.fillAlpha &lt; 1) {
+      node.setAttribute('opacity', String(s.alpha * s.fillAlpha));
+    }
+
+    let tr = this.state.transform || '';
+
+    if (flipH || flipV) {
+      let sx = 1;
+      let sy = 1;
+      let dx = 0;
+      let dy = 0;
+
+      if (flipH) {
+        sx = -1;
+        dx = -w - 2 * x;
+      }
+
+      if (flipV) {
+        sy = -1;
+        dy = -h - 2 * y;
+      }
+
+      // Adds image tansformation to existing transform
+      tr += `scale(${sx},${sy})translate(${dx * s.scale},${dy * s.scale})`;
+    }
+
+    if (tr.length > 0) {
+      node.setAttribute('transform', tr);
+    }
+
+    if (!this.pointerEvents) {
+      node.setAttribute('pointer-events', 'none');
+    }
+
+    this.root.appendChild(node);
+  }
+
+  /**
+   * Converts the given HTML string to XHTML.
+   */
+  convertHtml(val: string) {
+    const doc = new DOMParser().parseFromString(val, 'text/html');
+
+    if (doc != null) {
+      val = new XMLSerializer().serializeToString(doc.body);
+
+      // Extracts body content from DOM
+      if (val.substring(0, 5) === '&lt;body') {
+        val = val.substring(val.indexOf('>', 5) + 1);
+      }
+
+      if (val.substring(val.length - 7, val.length) === '&lt;/body>') {
+        val = val.substring(0, val.length - 7);
+      }
+    }
+
+    return val;
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   * Note: signature changed in mxgraph 4.1.0
+   */
+  createDiv(str: string | HTMLElement) {
+    if (!this.root) return;
+
+    let val = str;
+
+    if (!isNode(val)) {
+      val = `&lt;div>&lt;div>${this.convertHtml(val as string)}&lt;/div>&lt;/div>`;
+    }
+
+    if (document.createElementNS) {
+      const div = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
+
+      if (isNode(val)) {
+        const n = val as HTMLElement;
+
+        const div2 = document.createElement('div');
+        const div3 = div2.cloneNode(false);
+
+        // Creates a copy for export
+        if (this.root.ownerDocument !== document) {
+          div2.appendChild(n.cloneNode(true));
+        } else {
+          div2.appendChild(n);
+        }
+
+        div3.appendChild(div2);
+        div.appendChild(div3);
+      } else {
+        div.innerHTML = val as string;
+      }
+
+      return div;
+    }
+    if (isNode(val)) {
+      val = `&lt;div>&lt;div>${getXml(&lt;Element>val)}&lt;/div>&lt;/div>`;
+    }
+
+    val = `&lt;div xmlns="http://www.w3.org/1999/xhtml">${val}&lt;/div>`;
+
+    // NOTE: FF 3.6 crashes if content CSS contains "height:100%"
+    return new DOMParser().parseFromString(val, 'text/xml').documentElement;
+  }
+
+  /**
+   * Updates existing DOM nodes for text rendering. LATER: Merge common parts with text function below.
+   */
+  updateText(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    align: AlignValue,
+    valign: VAlignValue,
+    wrap: boolean,
+    overflow: OverflowValue,
+    clip: boolean,
+    rotation: number,
+    node: SVGElement
+  ) {
+    if (node &amp;&amp; node.firstChild &amp;&amp; node.firstChild.firstChild) {
+      this.updateTextNodes(
+        x,
+        y,
+        w,
+        h,
+        align,
+        valign,
+        wrap,
+        overflow,
+        clip,
+        rotation,
+        node.firstChild as SVGElement
+      );
+    }
+  }
+
+  /**
+   * Creates a foreignObject for the given string and adds it to the given root.
+   */
+  addForeignObject(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    str: string,
+    align: AlignValue,
+    valign: VAlignValue,
+    wrap: boolean,
+    format: string,
+    overflow: OverflowValue,
+    clip: boolean,
+    rotation: number,
+    dir: TextDirectionValue,
+    div: HTMLElement,
+    root: SVGElement
+  ) {
+    const group = this.createElement('g');
+    const fo = this.createElement('foreignObject') as SVGForeignObjectElement;
+
+    // Workarounds for print clipping and static position in Safari
+    fo.setAttribute('style', 'overflow: visible; text-align: left;');
+    fo.setAttribute('pointer-events', 'none');
+
+    fo.appendChild(div);
+    group.appendChild(fo);
+
+    this.updateTextNodes(
+      x,
+      y,
+      w,
+      h,
+      align,
+      valign,
+      wrap,
+      overflow,
+      clip,
+      rotation,
+      group
+    );
+
+    // Alternate content if foreignObject not supported
+    if (this.root?.ownerDocument !== document) {
+      const alt = this.createAlternateContent(
+        fo,
+        x,
+        y,
+        w,
+        h,
+        str,
+        align,
+        valign,
+        wrap,
+        format,
+        overflow,
+        clip,
+        rotation
+      );
+
+      if (alt != null) {
+        fo.setAttribute(
+          'requiredFeatures',
+          'http://www.w3.org/TR/SVG11/feature#Extensibility'
+        );
+        const sw = this.createElement('switch');
+        sw.appendChild(fo);
+        sw.appendChild(alt);
+        group.appendChild(sw);
+      }
+    }
+
+    root.appendChild(group);
+  }
+
+  /**
+   * Updates existing DOM nodes for text rendering.
+   */
+  updateTextNodes(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    align: AlignValue,
+    valign: VAlignValue,
+    wrap: boolean,
+    overflow: OverflowValue,
+    clip: boolean,
+    rotation: number,
+    g: SVGElement
+  ) {
+    const s = this.state.scale;
+
+    SvgCanvas2D.createCss(
+      w + 2,
+      h,
+      align,
+      valign,
+      wrap,
+      overflow,
+      clip,
+      this.state.fontBackgroundColor != null ? this.state.fontBackgroundColor : null,
+      this.state.fontBorderColor != null ? this.state.fontBorderColor : null,
+      `display: flex; align-items: unsafe ${
+        valign === ALIGN.TOP
+          ? 'flex-start'
+          : valign === ALIGN.BOTTOM
+          ? 'flex-end'
+          : 'center'
+      }; ` +
+        `justify-content: unsafe ${
+          align === ALIGN.LEFT
+            ? 'flex-start'
+            : align === ALIGN.RIGHT
+            ? 'flex-end'
+            : 'center'
+        }; `,
+      this.getTextCss(),
+      s,
+      (dx, dy, flex, item, block) => {
+        x += this.state.dx;
+        y += this.state.dy;
+
+        const fo = g.firstChild as SVGElement;
+        const div = fo.firstChild as SVGElement;
+        const box = div.firstChild as SVGElement;
+        const text = box.firstChild as SVGElement;
+        const r =
+          (this.rotateHtml ? this.state.rotation : 0) + (rotation != null ? rotation : 0);
+        let t =
+          (this.foOffset !== 0 ? `translate(${this.foOffset} ${this.foOffset})` : '') +
+          (s !== 1 ? `scale(${s})` : '');
+
+        text.setAttribute('style', block);
+        box.setAttribute('style', item);
+
+        // Workaround for clipping in Webkit with scrolling and zoom
+        fo.setAttribute('width', `${Math.ceil((1 / Math.min(1, s)) * 100)}%`);
+        fo.setAttribute('height', `${Math.ceil((1 / Math.min(1, s)) * 100)}%`);
+        const yp = Math.round(y + dy);
+
+        // Allows for negative values which are causing problems with
+        // transformed content where the top edge of the foreignObject
+        // limits the text box being moved further up in the diagram.
+        // KNOWN: Possible clipping problems with zoom and scrolling
+        // but this is normally not used with scrollbars as the
+        // coordinates are always positive with scrollbars.
+        // Margin-top is ignored in Safari and no negative values allowed
+        // for padding.
+        if (yp &lt; 0) {
+          fo.setAttribute('y', String(yp));
+        } else {
+          fo.removeAttribute('y');
+          flex += `padding-top: ${yp}px; `;
+        }
+
+        div.setAttribute('style', `${flex}margin-left: ${Math.round(x + dx)}px;`);
+        t += r !== 0 ? `rotate(${r} ${x} ${y})` : '';
+
+        // Output allows for reflow but Safari cannot use absolute position,
+        // transforms or opacity. https://bugs.webkit.org/show_bug.cgi?id=23113
+        if (t !== '') {
+          g.setAttribute('transform', t);
+        } else {
+          g.removeAttribute('transform');
+        }
+
+        if (this.state.alpha !== 1) {
+          g.setAttribute('opacity', String(this.state.alpha));
+        } else {
+          g.removeAttribute('opacity');
+        }
+      }
+    );
+  }
+
+  /**
+   * Private helper function to create SVG elements
+   */
+  // getTextCss(): string;
+  getTextCss() {
+    const s = this.state;
+    const lh = ABSOLUTE_LINE_HEIGHT
+      ? `${s.fontSize * LINE_HEIGHT}px`
+      : LINE_HEIGHT * this.lineHeightCorrection;
+    let css =
+      `display: inline-block; font-size: ${s.fontSize}px; ` +
+      `font-family: ${s.fontFamily}; color: ${
+        s.fontColor
+      }; line-height: ${lh}; pointer-events: ${
+        this.pointerEvents ? this.pointerEventsValue : 'none'
+      }; `;
+
+    if ((s.fontStyle &amp; FONT.BOLD) === FONT.BOLD) {
+      css += 'font-weight: bold; ';
+    }
+
+    if ((s.fontStyle &amp; FONT.ITALIC) === FONT.ITALIC) {
+      css += 'font-style: italic; ';
+    }
+
+    const deco = [];
+
+    if ((s.fontStyle &amp; FONT.UNDERLINE) === FONT.UNDERLINE) {
+      deco.push('underline');
+    }
+
+    if ((s.fontStyle &amp; FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
+      deco.push('line-through');
+    }
+
+    if (deco.length > 0) {
+      css += `text-decoration: ${deco.join(' ')}; `;
+    }
+
+    return css;
+  }
+
+  /**
+   * Paints the given text. Possible values for format are empty string for plain
+   * text and html for HTML markup. Note that HTML markup is only supported if
+   * foreignObject is supported and &lt;foEnabled> is true. (This means IE9 and later
+   * does currently not support HTML text as part of shapes.)
+   */
+  text(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    str: string,
+    align: AlignValue,
+    valign: VAlignValue,
+    wrap: boolean,
+    format: string,
+    overflow: OverflowValue,
+    clip: boolean,
+    rotation = 0,
+    dir: TextDirectionValue
+  ) {
+    if (!this.root) return;
+
+    if (this.textEnabled &amp;&amp; str != null) {
+      rotation = rotation != null ? rotation : 0;
+
+      if (this.foEnabled &amp;&amp; format === 'html') {
+        const div = this.createDiv(str);
+
+        // Ignores invalid XHTML labels
+        if (div != null) {
+          if (dir != null) {
+            div.setAttribute('dir', dir);
+          }
+
+          this.addForeignObject(
+            x,
+            y,
+            w,
+            h,
+            str,
+            align,
+            valign,
+            wrap,
+            format,
+            overflow,
+            clip,
+            rotation,
+            dir,
+            div,
+            this.root
+          );
+        }
+      } else {
+        this.plainText(
+          x + this.state.dx,
+          y + this.state.dy,
+          w,
+          h,
+          str,
+          align,
+          valign,
+          wrap,
+          overflow,
+          clip,
+          rotation,
+          dir
+        );
+      }
+    }
+  }
+
+  /**
+   * Creates a clip for the given coordinates.
+   */
+  createClip(x: number, y: number, w: number, h: number) {
+    x = Math.round(x);
+    y = Math.round(y);
+    w = Math.round(w);
+    h = Math.round(h);
+
+    const id = `mx-clip-${x}-${y}-${w}-${h}`;
+
+    let counter = 0;
+    let tmp = `${id}-${counter}`;
+
+    // Resolves ID conflicts
+    while (document.getElementById(tmp) != null) {
+      tmp = `${id}-${++counter}`;
+    }
+
+    const clip = this.createElement('clipPath');
+    clip.setAttribute('id', tmp);
+
+    const rect = this.createElement('rect');
+    rect.setAttribute('x', String(x));
+    rect.setAttribute('y', String(y));
+    rect.setAttribute('width', String(w));
+    rect.setAttribute('height', String(h));
+
+    clip.appendChild(rect);
+
+    return clip;
+  }
+
+  /**
+   * Paints the given text. Possible values for format are empty string for
+   * plain text and html for HTML markup.
+   */
+  plainText(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    str: string,
+    align: AlignValue,
+    valign: VAlignValue,
+    wrap: boolean,
+    overflow: OverflowValue,
+    clip: boolean,
+    rotation = 0,
+    dir: TextDirectionValue
+  ) {
+    if (!this.root) return;
+
+    const s = this.state;
+    const size = s.fontSize;
+    const node = this.createElement('g');
+    let tr = s.transform || '';
+    this.updateFont(node);
+
+    // Ignores pointer events
+    if (!this.pointerEvents &amp;&amp; this.originalRoot == null) {
+      node.setAttribute('pointer-events', 'none');
+    }
+
+    // Non-rotated text
+    if (rotation !== 0) {
+      tr += `rotate(${rotation},${this.format(x * s.scale)},${this.format(y * s.scale)})`;
+    }
+
+    if (dir != null) {
+      node.setAttribute('direction', dir);
+    }
+
+    if (clip &amp;&amp; w > 0 &amp;&amp; h > 0) {
+      let cx = x;
+      let cy = y;
+
+      if (align === ALIGN.CENTER) {
+        cx -= w / 2;
+      } else if (align === ALIGN.RIGHT) {
+        cx -= w;
+      }
+
+      if (overflow !== 'fill') {
+        if (valign === ALIGN.MIDDLE) {
+          cy -= h / 2;
+        } else if (valign === ALIGN.BOTTOM) {
+          cy -= h;
+        }
+      }
+
+      // LATER: Remove spacing from clip rectangle
+      const c = this.createClip(
+        cx * s.scale - 2,
+        cy * s.scale - 2,
+        w * s.scale + 4,
+        h * s.scale + 4
+      );
+
+      if (this.defs != null) {
+        this.defs.appendChild(c);
+      } else {
+        // Makes sure clip is removed with referencing node
+        this.root.appendChild(c);
+      }
+
+      if (
+        !Client.IS_CHROMEAPP &amp;&amp;
+        !Client.IS_EDGE &amp;&amp;
+        this.root.ownerDocument === document
+      ) {
+        // Workaround for potential base tag
+        const base = this.getBaseUrl().replace(/([\(\)])/g, '\\$1');
+        node.setAttribute('clip-path', `url(${base}#${c.getAttribute('id')})`);
+      } else {
+        node.setAttribute('clip-path', `url(#${c.getAttribute('id')})`);
+      }
+    }
+
+    // Default is left
+    const anchor =
+      align === ALIGN.RIGHT ? 'end' : align === ALIGN.CENTER ? 'middle' : 'start';
+
+    // Text-anchor start is default in SVG
+    if (anchor !== 'start') {
+      node.setAttribute('text-anchor', anchor);
+    }
+
+    if (!this.styleEnabled || size !== DEFAULT_FONTSIZE) {
+      node.setAttribute('font-size', `${size * s.scale}px`);
+    }
+
+    if (tr.length > 0) {
+      node.setAttribute('transform', tr);
+    }
+
+    if (s.alpha &lt; 1) {
+      node.setAttribute('opacity', String(s.alpha));
+    }
+
+    const lines = str.split('\n');
+    const lh = Math.round(size * LINE_HEIGHT);
+    const textHeight = size + (lines.length - 1) * lh;
+
+    let cy = y + size - 1;
+
+    if (valign === ALIGN.MIDDLE) {
+      if (overflow === 'fill') {
+        cy -= h / 2;
+      } else {
+        const dy =
+          (this.matchHtmlAlignment &amp;&amp; clip &amp;&amp; h > 0
+            ? Math.min(textHeight, h)
+            : textHeight) / 2;
+        cy -= dy;
+      }
+    } else if (valign === ALIGN.BOTTOM) {
+      if (overflow === 'fill') {
+        cy -= h;
+      } else {
+        const dy =
+          this.matchHtmlAlignment &amp;&amp; clip &amp;&amp; h > 0 ? Math.min(textHeight, h) : textHeight;
+        cy -= dy + 1;
+      }
+    }
+
+    for (let i = 0; i &lt; lines.length; i += 1) {
+      const line = trim(lines[i]);
+
+      // Workaround for bounding box of empty lines and spaces
+      if (line) {
+        const text = this.createElement('text');
+        // LATER: Match horizontal HTML alignment
+        text.setAttribute('x', String(this.format(x * s.scale) + this.textOffset));
+        text.setAttribute('y', String(this.format(cy * s.scale) + this.textOffset));
+
+        write(text, line);
+        node.appendChild(text);
+      }
+
+      cy += lh;
+    }
+
+    this.root.appendChild(node);
+    this.addTextBackground(
+      node,
+      str,
+      x,
+      y,
+      w,
+      overflow === 'fill' ? h : textHeight,
+      align,
+      valign,
+      overflow
+    );
+  }
+
+  /**
+   * Updates the text properties for the given node. (NOTE: For this to work in
+   * IE, the given node must be a text or tspan element.)
+   */
+  updateFont(node: SVGElement) {
+    const s = this.state;
+
+    if (s.fontColor !== NONE) node.setAttribute('fill', s.fontColor);
+
+    if (!this.styleEnabled || s.fontFamily !== DEFAULT_FONTFAMILY) {
+      node.setAttribute('font-family', s.fontFamily);
+    }
+
+    if ((s.fontStyle &amp; FONT.BOLD) === FONT.BOLD) {
+      node.setAttribute('font-weight', 'bold');
+    }
+
+    if ((s.fontStyle &amp; FONT.ITALIC) === FONT.ITALIC) {
+      node.setAttribute('font-style', 'italic');
+    }
+
+    const txtDecor = [];
+
+    if ((s.fontStyle &amp; FONT.UNDERLINE) === FONT.UNDERLINE) {
+      txtDecor.push('underline');
+    }
+
+    if ((s.fontStyle &amp; FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
+      txtDecor.push('line-through');
+    }
+
+    if (txtDecor.length > 0) {
+      node.setAttribute('text-decoration', txtDecor.join(' '));
+    }
+  }
+
+  /**
+   * Background color and border
+   */
+  addTextBackground(
+    node: SVGElement,
+    str: string,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    align: AlignValue,
+    valign: VAlignValue,
+    overflow: OverflowValue
+  ) {
+    const s = this.state;
+
+    if (s.fontBackgroundColor != null || s.fontBorderColor != null) {
+      let bbox = null;
+
+      if (overflow === 'fill' || overflow === 'width') {
+        if (align === ALIGN.CENTER) {
+          x -= w / 2;
+        } else if (align === ALIGN.RIGHT) {
+          x -= w;
+        }
+
+        if (valign === ALIGN.MIDDLE) {
+          y -= h / 2;
+        } else if (valign === ALIGN.BOTTOM) {
+          y -= h;
+        }
+
+        bbox = new Rectangle(
+          (x + 1) * s.scale,
+          y * s.scale,
+          (w - 2) * s.scale,
+          (h + 2) * s.scale
+        );
+        // @ts-ignore check for getBBox
+      } else if (node.getBBox != null &amp;&amp; this.root.ownerDocument === document) {
+        // Uses getBBox only if inside document for correct size
+        try {
+          // @ts-ignore getBBox exists
+          bbox = node.getBBox();
+          bbox = new Rectangle(bbox.x, bbox.y + 1, bbox.width, bbox.height + 0);
+        } catch (e) {
+          // Ignores NS_ERROR_FAILURE in FF if container display is none.
+        }
+      }
+
+      if (bbox == null || bbox.width === 0 || bbox.height === 0) {
+        // Computes size if not in document or no getBBox available
+        const div = document.createElement('div');
+
+        // Wrapping and clipping can be ignored here
+        div.style.lineHeight = ABSOLUTE_LINE_HEIGHT
+          ? `${s.fontSize * LINE_HEIGHT}px`
+          : String(LINE_HEIGHT);
+        div.style.fontSize = `${s.fontSize}px`;
+        div.style.fontFamily = s.fontFamily;
+        div.style.whiteSpace = 'nowrap';
+        div.style.position = 'absolute';
+        div.style.visibility = 'hidden';
+        div.style.display = 'inline-block';
+
+        if ((s.fontStyle &amp; FONT.BOLD) === FONT.BOLD) {
+          div.style.fontWeight = 'bold';
+        }
+
+        if ((s.fontStyle &amp; FONT.ITALIC) === FONT.ITALIC) {
+          div.style.fontStyle = 'italic';
+        }
+
+        str = htmlEntities(str, false);
+        div.innerHTML = str.replace(/\n/g, '&lt;br/>');
+
+        document.body.appendChild(div);
+        const w = div.offsetWidth;
+        const h = div.offsetHeight;
+        document.body.removeChild(div);
+
+        if (align === ALIGN.CENTER) {
+          x -= w / 2;
+        } else if (align === ALIGN.RIGHT) {
+          x -= w;
+        }
+
+        if (valign === ALIGN.MIDDLE) {
+          y -= h / 2;
+        } else if (valign === ALIGN.BOTTOM) {
+          y -= h;
+        }
+
+        bbox = new Rectangle(
+          (x + 1) * s.scale,
+          (y + 2) * s.scale,
+          w * s.scale,
+          (h + 1) * s.scale
+        );
+      }
+
+      if (bbox != null) {
+        const n = this.createElement('rect');
+        n.setAttribute('fill', s.fontBackgroundColor || 'none');
+        n.setAttribute('stroke', s.fontBorderColor || 'none');
+        n.setAttribute('x', String(Math.floor(bbox.x - 1)));
+        n.setAttribute('y', String(Math.floor(bbox.y - 1)));
+        n.setAttribute('width', String(Math.ceil(bbox.width + 2)));
+        n.setAttribute('height', String(Math.ceil(bbox.height)));
+
+        const sw = s.fontBorderColor ? Math.max(1, this.format(s.scale)) : 0;
+        n.setAttribute('stroke-width', String(sw));
+
+        // Workaround for crisp rendering - only required if not exporting
+        if (this.root?.ownerDocument === document &amp;&amp; mod(sw, 2) === 1) {
+          n.setAttribute('transform', 'translate(0.5, 0.5)');
+        }
+
+        node.insertBefore(n, node.firstChild);
+      }
+    }
+  }
+
+  /**
+   * Paints the outline of the current path.
+   */
+  stroke() {
+    this.addNode(false, true);
+  }
+
+  /**
+   * Fills the current path.
+   */
+  fill() {
+    this.addNode(true, false);
+  }
+
+  /**
+   * Fills and paints the outline of the current path.
+   */
+  fillAndStroke() {
+    this.addNode(true, true);
+  }
+}
+
+export default SvgCanvas2D;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

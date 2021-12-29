@@ -1,0 +1,9045 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> SelectionHandler</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Class</p>
+                    <h1>SelectionHandler</h1>
+                </header>
+                
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>SelectionHandler<span class="signature">(graph)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Graph event handler that handles selection. Individual cells are handledseparately using <mxVertexHandler> or one of the edge handlers. Thesehandlers are created using <mxGraph.createHandler> in<mxGraphSelectionModel.cellAdded>.To avoid the container to scroll a moved cell into view, set<scrollAfterMove> to false.Constructor: mxGraphHandlerConstructs an event handler that creates handles for theselection cells.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
+
+
+    
+    <h4 class="name" id="SelectionHandler">
+        <a class="href-link" href="#SelectionHandler">#</a>
+        
+        <span class="code-name">
+            
+                new SelectionHandler<span class="signature">(graph)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>graph</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Reference to the enclosing <mxGraph>.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line37">line 37</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+<h4 class="name" id="allowLivePreview">
+    <a class="href-link" href="#allowLivePreview">#</a>
+    
+    <span class="code-name">
+        allowLivePreview
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Variable allowLivePreviewIf live preview is allowed on this system.  Default is true for systems with SVG support.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line151">line 151</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="allowLivePreview">
+    <a class="href-link" href="#allowLivePreview">#</a>
+    
+    <span class="code-name">
+        allowLivePreview
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Variable allowLivePreview
+
+If live preview is allowed on this system.  Default is true for systems with SVG support.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1463">line 1463</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="cloneEnabled">
+    <a class="href-link" href="#cloneEnabled">#</a>
+    
+    <span class="code-name">
+        cloneEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if cloning by control-drag is enabled. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line61">line 61</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="cloneEnabled">
+    <a class="href-link" href="#cloneEnabled">#</a>
+    
+    <span class="code-name">
+        cloneEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if cloning by control-drag is enabled. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1370">line 1370</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="connectOnDrop">
+    <a class="href-link" href="#connectOnDrop">#</a>
+    
+    <span class="code-name">
+        connectOnDrop
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if drop events are interpreted as new connections if no otherdrop action is defined. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line109">line 109</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="connectOnDrop">
+    <a class="href-link" href="#connectOnDrop">#</a>
+    
+    <span class="code-name">
+        connectOnDrop
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if drop events are interpreted as new connections if no other
+drop action is defined. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1419">line 1419</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="currentDx">
+    <a class="href-link" href="#currentDx">#</a>
+    
+    <span class="code-name">
+        currentDx
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Stores the x-coordinate of the current mouse move.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line82">line 82</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="currentDx">
+    <a class="href-link" href="#currentDx">#</a>
+    
+    <span class="code-name">
+        currentDx
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Stores the x-coordinate of the current mouse move.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1392">line 1392</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="currentDy">
+    <a class="href-link" href="#currentDy">#</a>
+    
+    <span class="code-name">
+        currentDy
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Stores the y-coordinate of the current mouse move.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line86">line 86</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="currentDy">
+    <a class="href-link" href="#currentDy">#</a>
+    
+    <span class="code-name">
+        currentDy
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Stores the y-coordinate of the current mouse move.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1396">line 1396</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="enabled">
+    <a class="href-link" href="#enabled">#</a>
+    
+    <span class="code-name">
+        enabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if events are handled. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line52">line 52</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="enabled">
+    <a class="href-link" href="#enabled">#</a>
+    
+    <span class="code-name">
+        enabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if events are handled. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1361">line 1361</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="Graph_.html">Graph</a></span>
+
+
+    </span>
+
+<h4 class="name" id="graph">
+    <a class="href-link" href="#graph">#</a>
+    
+    <span class="code-name">
+        graph
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Reference to the enclosing <mxGraph>.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1348">line 1348</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="guide">
+    <a class="href-link" href="#guide">#</a>
+    
+    <span class="code-name">
+        guide
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the <mxGuide> instance that is used for alignment.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line78">line 78</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="Guide.html">Guide</a></span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="guide">
+    <a class="href-link" href="#guide">#</a>
+    
+    <span class="code-name">
+        guide
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the <mxGuide> instance that is used for alignment.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1388">line 1388</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="guidesEnabled">
+    <a class="href-link" href="#guidesEnabled">#</a>
+    
+    <span class="code-name">
+        guidesEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if other cells should be used for snapping the right, center orleft side of the current selection. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line70">line 70</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="guidesEnabled">
+    <a class="href-link" href="#guidesEnabled">#</a>
+    
+    <span class="code-name">
+        guidesEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if other cells should be used for snapping the right, center or
+left side of the current selection. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1379">line 1379</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="handlesVisible">
+    <a class="href-link" href="#handlesVisible">#</a>
+    
+    <span class="code-name">
+        handlesVisible
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Whether the handles of the selection are currently visible.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line74">line 74</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="handlesVisible">
+    <a class="href-link" href="#handlesVisible">#</a>
+    
+    <span class="code-name">
+        handlesVisible
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Whether the handles of the selection are currently visible.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1383">line 1383</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="highlightEnabled">
+    <a class="href-link" href="#highlightEnabled">#</a>
+    
+    <span class="code-name">
+        highlightEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if drop targets under the mouse should be enabled. Default istrue.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line57">line 57</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="highlightEnabled">
+    <a class="href-link" href="#highlightEnabled">#</a>
+    
+    <span class="code-name">
+        highlightEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if drop targets under the mouse should be enabled. Default is
+true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1366">line 1366</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="htmlPreview">
+    <a class="href-link" href="#htmlPreview">#</a>
+    
+    <span class="code-name">
+        htmlPreview
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the graph container should be used for preview. If this is usedthen drop target detection relies entirely on <mxGraph.getCellAt> becausethe HTML preview does not "let events through". Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line129">line 129</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="htmlPreview">
+    <a class="href-link" href="#htmlPreview">#</a>
+    
+    <span class="code-name">
+        htmlPreview
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the graph container should be used for preview. If this is used
+then drop target detection relies entirely on <mxGraph.getCellAt> because
+the HTML preview does not "let events through". Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1440">line 1440</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="maxCells">
+    <a class="href-link" href="#maxCells">#</a>
+    
+    <span class="code-name">
+        maxCells
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Defines the maximum number of cells to paint subhandlesfor. Default is 50 for Firefox and 20 for IE. Set thisto 0 if you want an unlimited number of handles to bedisplayed. This is only recommended if the number ofcells in the graph is limited to a small number, eg.500.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line48">line 48</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="maxCells">
+    <a class="href-link" href="#maxCells">#</a>
+    
+    <span class="code-name">
+        maxCells
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Defines the maximum number of cells to paint subhandles
+for. Default is 50 for Firefox and 20 for IE. Set this
+to 0 if you want an unlimited number of handles to be
+displayed. This is only recommended if the number of
+cells in the graph is limited to a small number, eg.
+500.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1357">line 1357</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="maxLivePreview">
+    <a class="href-link" href="#maxLivePreview">#</a>
+    
+    <span class="code-name">
+        maxLivePreview
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Maximum number of cells for which live preview should be used.  Default is 0 which means no live preview.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line145">line 145</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="maxLivePreview">
+    <a class="href-link" href="#maxLivePreview">#</a>
+    
+    <span class="code-name">
+        maxLivePreview
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Maximum number of cells for which live preview should be used.  Default is 0 which means no live preview.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1457">line 1457</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="minimumSize">
+    <a class="href-link" href="#minimumSize">#</a>
+    
+    <span class="code-name">
+        minimumSize
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the minimum number of pixels for the width and height of aselection border. Default is 6.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line119">line 119</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="minimumSize">
+    <a class="href-link" href="#minimumSize">#</a>
+    
+    <span class="code-name">
+        minimumSize
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the minimum number of pixels for the width and height of a
+selection border. Default is 6.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1429">line 1429</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="moveEnabled">
+    <a class="href-link" href="#moveEnabled">#</a>
+    
+    <span class="code-name">
+        moveEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if moving is enabled. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line65">line 65</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="moveEnabled">
+    <a class="href-link" href="#moveEnabled">#</a>
+    
+    <span class="code-name">
+        moveEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if moving is enabled. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1374">line 1374</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="previewColor">
+    <a class="href-link" href="#previewColor">#</a>
+    
+    <span class="code-name">
+        previewColor
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the color of the preview shape. Default is black.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line123">line 123</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">ColorValue</span>
+
+
+    </span>
+
+<h4 class="name" id="previewColor">
+    <a class="href-link" href="#previewColor">#</a>
+    
+    <span class="code-name">
+        previewColor
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the color of the preview shape. Default is black.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1434">line 1434</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="removeCellsFromParent">
+    <a class="href-link" href="#removeCellsFromParent">#</a>
+    
+    <span class="code-name">
+        removeCellsFromParent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if cells may be moved out of their parents. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line99">line 99</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="removeCellsFromParent">
+    <a class="href-link" href="#removeCellsFromParent">#</a>
+    
+    <span class="code-name">
+        removeCellsFromParent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if cells may be moved out of their parents. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1409">line 1409</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="removeEmptyParents">
+    <a class="href-link" href="#removeEmptyParents">#</a>
+    
+    <span class="code-name">
+        removeEmptyParents
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    If empty parents should be removed from the model after all child cellshave been moved out. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line104">line 104</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="removeEmptyParents">
+    <a class="href-link" href="#removeEmptyParents">#</a>
+    
+    <span class="code-name">
+        removeEmptyParents
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    If empty parents should be removed from the model after all child cells
+have been moved out. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1414">line 1414</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="rotationEnabled">
+    <a class="href-link" href="#rotationEnabled">#</a>
+    
+    <span class="code-name">
+        rotationEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the bounding box should allow for rotation. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line141">line 141</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="rotationEnabled">
+    <a class="href-link" href="#rotationEnabled">#</a>
+    
+    <span class="code-name">
+        rotationEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the bounding box should allow for rotation. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1453">line 1453</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="scaleGrid">
+    <a class="href-link" href="#scaleGrid">#</a>
+    
+    <span class="code-name">
+        scaleGrid
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the grid should be scaled. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line137">line 137</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="scaleGrid">
+    <a class="href-link" href="#scaleGrid">#</a>
+    
+    <span class="code-name">
+        scaleGrid
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the grid should be scaled. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1449">line 1449</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="scrollOnMove">
+    <a class="href-link" href="#scrollOnMove">#</a>
+    
+    <span class="code-name">
+        scrollOnMove
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the view should be scrolled so that a moved cell isvisible. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line114">line 114</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="scrollOnMove">
+    <a class="href-link" href="#scrollOnMove">#</a>
+    
+    <span class="code-name">
+        scrollOnMove
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the view should be scrolled so that a moved cell is
+visible. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1424">line 1424</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="selectEnabled">
+    <a class="href-link" href="#selectEnabled">#</a>
+    
+    <span class="code-name">
+        selectEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if selecting is enabled. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line95">line 95</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="selectEnabled">
+    <a class="href-link" href="#selectEnabled">#</a>
+    
+    <span class="code-name">
+        selectEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if selecting is enabled. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1405">line 1405</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="shape">
+    <a class="href-link" href="#shape">#</a>
+    
+    <span class="code-name">
+        shape
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Reference to the <mxShape> that represents the preview.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line133">line 133</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="Shape.html">Shape</a></span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="shape">
+    <a class="href-link" href="#shape">#</a>
+    
+    <span class="code-name">
+        shape
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Reference to the <mxShape> that represents the preview.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1445">line 1445</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="updateCursor">
+    <a class="href-link" href="#updateCursor">#</a>
+    
+    <span class="code-name">
+        updateCursor
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if a move cursor should be shown if the mouse is over a movablecell. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line91">line 91</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="updateCursor">
+    <a class="href-link" href="#updateCursor">#</a>
+    
+    <span class="code-name">
+        updateCursor
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if a move cursor should be shown if the mouse is over a movable
+cell. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1401">line 1401</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="addStates">
+        <a class="href-link" href="#addStates">#</a>
+        
+        <span class="code-name">
+            
+                addStates<span class="signature">(cell, dict)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adds the states for the given cell recursively to the given dictionary.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dict</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line621">line 621</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="checkPreview">
+        <a class="href-link" href="#checkPreview">#</a>
+        
+        <span class="code-name">
+            
+                checkPreview<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates the preview if cloning state has changed.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line692">line 692</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="consumeMouseEvent">
+        <a class="href-link" href="#consumeMouseEvent">#</a>
+        
+        <span class="code-name">
+            
+                consumeMouseEvent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Consumes the given mouse event. NOTE: This may be used to enable clickevents for links in labels on iOS as follows as consuming the initialtouchStart disables firing the subsequent click evnent on the link.<code>consumeMouseEvent(evtName, me){  var source = mxEvent.getSource(me.getEvent());  if (!mxEvent.isTouchEvent(me.getEvent()) || source.nodeName != 'A')  {    me.consume();  }}</code>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line415">line 415</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createPreviewShape">
+        <a class="href-link" href="#createPreviewShape">#</a>
+        
+        <span class="code-name">
+            
+                createPreviewShape<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates the shape used to draw the preview for the given bounds.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line551">line 551</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="destroyShapes">
+        <a class="href-link" href="#destroyShapes">#</a>
+        
+        <span class="code-name">
+            
+                destroyShapes<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Destroy the preview and highlight shapes.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1283">line 1283</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getBoundingBox">
+        <a class="href-link" href="#getBoundingBox">#</a>
+        
+        <span class="code-name">
+            
+                getBoundingBox<span class="signature">(cells)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the union of the <mxCellStates> for the given array of <mxCells>.For vertices, this method uses the bounding box of the corresponding shapeif one exists. The bounding box of the corresponding text label and allcontrols and overlays are ignored. See also: <mxGraphView.getBounds> and<mxGraph.getBoundingBox>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cells</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Array of <mxCells> whose bounding box should be returned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line523">line 523</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getCells">
+        <a class="href-link" href="#getCells">#</a>
+        
+        <span class="code-name">
+            
+                getCells<span class="signature">(initialCell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the cells to be modified by this handler. This implementationreturns all selection cells that are movable, or the given initial cell ifthe given cell is not selected and movable. This handles the case of movingunselectable or unselected cells.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>initialCell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that triggered this handler.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line477">line 477</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getDelta">
+        <a class="href-link" href="#getDelta">#</a>
+        
+        <span class="code-name">
+            
+                getDelta<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns an <mxPoint> that represents the vector for moving the cellsfor the given <mxMouseEvent>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line663">line 663</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getGuideStates">
+        <a class="href-link" href="#getGuideStates">#</a>
+        
+        <span class="code-name">
+            
+                getGuideStates<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates an array of cell states which should be used as guides.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line461">line 461</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getInitialCellForEvent">
+        <a class="href-link" href="#getInitialCellForEvent">#</a>
+        
+        <span class="code-name">
+            
+                getInitialCellForEvent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook to return initial cell for the given event.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line324">line 324</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getPreviewBounds">
+        <a class="href-link" href="#getPreviewBounds">#</a>
+        
+        <span class="code-name">
+            
+                getPreviewBounds<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the <mxRectangle> used as the preview bounds formoving the given cells.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line487">line 487</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isCellMoving">
+        <a class="href-link" href="#isCellMoving">#</a>
+        
+        <span class="code-name">
+            
+                isCellMoving<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given cell is currently being moved.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line637">line 637</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isCloneEnabled">
+        <a class="href-link" href="#isCloneEnabled">#</a>
+        
+        <span class="code-name">
+            
+                isCloneEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <cloneEnabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line256">line 256</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isDelayedSelection">
+        <a class="href-link" href="#isDelayedSelection">#</a>
+        
+        <span class="code-name">
+            
+                isDelayedSelection<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook to return true for delayed selections.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line345">line 345</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isEnabled">
+        <a class="href-link" href="#isEnabled">#</a>
+        
+        <span class="code-name">
+            
+                isEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <enabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line244">line 244</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isMoveEnabled">
+        <a class="href-link" href="#isMoveEnabled">#</a>
+        
+        <span class="code-name">
+            
+                isMoveEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <moveEnabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line270">line 270</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isPropagateSelectionCell">
+        <a class="href-link" href="#isPropagateSelectionCell">#</a>
+        
+        <span class="code-name">
+            
+                isPropagateSelectionCell<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given cell and parent should propagateselection state to the parent.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line307">line 307</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isRemoveCellsFromParent">
+        <a class="href-link" href="#isRemoveCellsFromParent">#</a>
+        
+        <span class="code-name">
+            
+                isRemoveCellsFromParent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <removeCellsFromParent>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line294">line 294</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isSelectEnabled">
+        <a class="href-link" href="#isSelectEnabled">#</a>
+        
+        <span class="code-name">
+            
+                isSelectEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <selectEnabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line282">line 282</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isValidDropTarget">
+        <a class="href-link" href="#isValidDropTarget">#</a>
+        
+        <span class="code-name">
+            
+                isValidDropTarget<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given cell is a valid drop target.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line686">line 686</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="mouseDown">
+        <a class="href-link" href="#mouseDown">#</a>
+        
+        <span class="code-name">
+            
+                mouseDown<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Handles the event by selecing the given cell and creating a handle forit. By consuming the event all subsequent events of the gesture areredirected to this handler.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line423">line 423</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="mouseMove">
+        <a class="href-link" href="#mouseMove">#</a>
+        
+        <span class="code-name">
+            
+                mouseMove<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Handles the event by highlighting possible drop targets and updating thepreview.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line713">line 713</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="mouseUp">
+        <a class="href-link" href="#mouseUp">#</a>
+        
+        <span class="code-name">
+            
+                mouseUp<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Handles the event by applying the changes to the selection cells.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1110">line 1110</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="moveCells">
+        <a class="href-link" href="#moveCells">#</a>
+        
+        <span class="code-name">
+            
+                moveCells<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Moves the given cells by the specified amount.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1211">line 1211</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="onDestroy">
+        <a class="href-link" href="#onDestroy">#</a>
+        
+        <span class="code-name">
+            
+                onDestroy<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Destroys the handler and all its resources and DOM nodes.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1302">line 1302</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="redrawHandles">
+        <a class="href-link" href="#redrawHandles">#</a>
+        
+        <span class="code-name">
+            
+                redrawHandles<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Redraws the preview shape for the given states array.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line990">line 990</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="removeHint">
+        <a class="href-link" href="#removeHint">#</a>
+        
+        <span class="code-name">
+            
+                removeHint<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hooks for subclassers to hide details when the handler gets inactive.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line676">line 676</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="reset">
+        <a class="href-link" href="#reset">#</a>
+        
+        <span class="code-name">
+            
+                reset<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Resets the state of this handler.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1163">line 1163</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="resetLivePreview">
+        <a class="href-link" href="#resetLivePreview">#</a>
+        
+        <span class="code-name">
+            
+                resetLivePreview<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Resets the livew preview.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1044">line 1044</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="resetPreviewStates">
+        <a class="href-link" href="#resetPreviewStates">#</a>
+        
+        <span class="code-name">
+            
+                resetPreviewStates<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Resets the given preview states array.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1002">line 1002</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="resume">
+        <a class="href-link" href="#resume">#</a>
+        
+        <span class="code-name">
+            
+                resume<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Suspends the livew preview.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1027">line 1027</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="roundLength">
+        <a class="href-link" href="#roundLength">#</a>
+        
+        <span class="code-name">
+            
+                roundLength<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook for rounding the unscaled vector. This uses Math.round.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line680">line 680</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="selectCellForEvent">
+        <a class="href-link" href="#selectCellForEvent">#</a>
+        
+        <span class="code-name">
+            
+                selectCellForEvent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Selects the given cell for the given <mxMouseEvent>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line376">line 376</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="selectDelayed">
+        <a class="href-link" href="#selectDelayed">#</a>
+        
+        <span class="code-name">
+            
+                selectDelayed<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Implements the delayed selection for the given mouse event.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line362">line 362</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setCloneEnabled">
+        <a class="href-link" href="#setCloneEnabled">#</a>
+        
+        <span class="code-name">
+            
+                setCloneEnabled<span class="signature">(value)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets <cloneEnabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean that specifies the new clone enabled state.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line264">line 264</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setEnabled">
+        <a class="href-link" href="#setEnabled">#</a>
+        
+        <span class="code-name">
+            
+                setEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets <enabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line250">line 250</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setHandlesVisibleForCells">
+        <a class="href-link" href="#setHandlesVisibleForCells">#</a>
+        
+        <span class="code-name">
+            
+                setHandlesVisibleForCells<span class="signature">(cells, visible, force)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets wether the handles attached to the given cells are visible.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cells</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Array of <mxCells>.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>visible</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Boolean that specifies if the handles should be visible.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>force</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last">Forces an update of the handler regardless of the last used value.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1082">line 1082</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setHighlightColor">
+        <a class="href-link" href="#setHighlightColor">#</a>
+        
+        <span class="code-name">
+            
+                setHighlightColor<span class="signature">(color)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the color of the rectangle used to highlight drop targets.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>color</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">String that represents the new highlight color.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1102">line 1102</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setMoveEnabled">
+        <a class="href-link" href="#setMoveEnabled">#</a>
+        
+        <span class="code-name">
+            
+                setMoveEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets <moveEnabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line276">line 276</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setRemoveCellsFromParent">
+        <a class="href-link" href="#setRemoveCellsFromParent">#</a>
+        
+        <span class="code-name">
+            
+                setRemoveCellsFromParent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets <removeCellsFromParent>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line300">line 300</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setSelectEnabled">
+        <a class="href-link" href="#setSelectEnabled">#</a>
+        
+        <span class="code-name">
+            
+                setSelectEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets <selectEnabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line288">line 288</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="shouldRemoveCellsFromParent">
+        <a class="href-link" href="#shouldRemoveCellsFromParent">#</a>
+        
+        <span class="code-name">
+            
+                shouldRemoveCellsFromParent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given cells should be removed from the parent for the specifiedmousereleased event.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1191">line 1191</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="shouldRemoveParent">
+        <a class="href-link" href="#shouldRemoveParent">#</a>
+        
+        <span class="code-name">
+            
+                shouldRemoveParent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given parent should be removed after removal of child cells.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1272">line 1272</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="snap">
+        <a class="href-link" href="#snap">#</a>
+        
+        <span class="code-name">
+            
+                snap<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Snaps the given vector to the grid and returns the given mxPoint instance.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line653">line 653</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="start">
+        <a class="href-link" href="#start">#</a>
+        
+        <span class="code-name">
+            
+                start<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the handling of the mouse gesture.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line580">line 580</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="suspend">
+        <a class="href-link" href="#suspend">#</a>
+        
+        <span class="code-name">
+            
+                suspend<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Suspends the livew preview.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line1010">line 1010</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateHint">
+        <a class="href-link" href="#updateHint">#</a>
+        
+        <span class="code-name">
+            
+                updateHint<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook for subclassers do show details while the handler is active.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line672">line 672</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateLivePreview">
+        <a class="href-link" href="#updateLivePreview">#</a>
+        
+        <span class="code-name">
+            
+                updateLivePreview<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates the bounds of the preview shape.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line862">line 862</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updatePreview">
+        <a class="href-link" href="#updatePreview">#</a>
+        
+        <span class="code-name">
+            
+                updatePreview<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates the bounds of the preview shape.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line838">line 838</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updatePreviewShape">
+        <a class="href-link" href="#updatePreviewShape">#</a>
+        
+        <span class="code-name">
+            
+                updatePreviewShape<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates the bounds of the preview shape.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line853">line 853</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="useGuidesForEvent">
+        <a class="href-link" href="#useGuidesForEvent">#</a>
+        
+        <span class="code-name">
+            
+                useGuidesForEvent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the guides should be used for the given <mxMouseEvent>.This implementation returns <mxGuide.isEnabledForEvent>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_SelectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_SelectionHandler.ts.html">view/handler/SelectionHandler.ts</a>, <a href="view_handler_SelectionHandler.ts.html#line644">line 644</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

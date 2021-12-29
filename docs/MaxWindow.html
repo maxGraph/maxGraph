@@ -1,0 +1,5239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> MaxWindow</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Class</p>
+                    <h1>MaxWindow</h1>
+                </header>
+                
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>MaxWindow<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
+
+
+    
+    <h4 class="name" id="MaxWindow">
+        <a class="href-link" href="#MaxWindow">#</a>
+        
+        <span class="code-name">
+            
+                new MaxWindow<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Basic window inside a document.Creating a simple window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line20">line 20</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    
+        <pre class="prettyprint"><code>```javascriptvar tb = document.createElement('div');var wnd = new MaxWindow('Title', tb, 100, 100, 200, 200, true, true);wnd.setVisible(true);```Creating a window that contains an iframe.</code></pre>
+    
+
+    
+        <pre class="prettyprint"><code>```javascriptvar frame = document.createElement('iframe');frame.setAttribute('width', '192px');frame.setAttribute('height', '172px');frame.setAttribute('src', 'http://www.example.com/');frame.style.backgroundColor = 'white';var w = document.body.clientWidth;var h = (document.body.clientHeight || document.documentElement.clientHeight);var wnd = new MaxWindow('Title', frame, (w-200)/2, (h-200)/3, 200, 200);wnd.setVisible(true);```To limit the movement of a window, eg. to keep it from being moved beyondthe top, left corner the following method can be overridden (recommended):```javascriptwnd.setLocation(x, y){  x = Math.max(0, x);  y = Math.max(0, y);  setLocation.apply(this, arguments);};```Or the following event handler can be used:```javascriptwnd.addListener(mxEvent.MOVE, function(e){  wnd.setLocation(Math.max(0, wnd.getX()), Math.max(0, wnd.getY()));});```To keep a window inside the current window:```javascriptmxEvent.addListener(window, 'resize', mxUtils.bind(this, function(){  var iw = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;  var ih = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;  var x = this.window.getX();  var y = this.window.getY();  if (x + this.window.table.clientWidth > iw)  {    x = Math.max(0, iw - this.window.table.clientWidth);  }  if (y + this.window.table.clientHeight > ih)  {    y = Math.max(0, ih - this.window.table.clientHeight);  }  if (this.window.getX() != x || this.window.getY() != y)  {    this.window.setLocation(x, y);  }}));```### Event: mxEvent.MOVE_STARTFires before the window is moved. The &lt;code>event&lt;/code> property containsthe corresponding mouse event.### Event: mxEvent.MOVEFires while the window is being moved. The &lt;code>event&lt;/code> propertycontains the corresponding mouse event.### Event: mxEvent.MOVE_ENDFires after the window is moved. The &lt;code>event&lt;/code> property containsthe corresponding mouse event.### Event: mxEvent.RESIZE_STARTFires before the window is resized. The &lt;code>event&lt;/code> property containsthe corresponding mouse event.### Event: mxEvent.RESIZEFires while the window is being resized. The &lt;code>event&lt;/code> propertycontains the corresponding mouse event.### Event: mxEvent.RESIZE_ENDFires after the window is resized. The &lt;code>event&lt;/code> property containsthe corresponding mouse event.### Event: mxEvent.MAXIMIZEFires after the window is maximized. The &lt;code>event&lt;/code> propertycontains the corresponding mouse event.### Event: mxEvent.MINIMIZEFires after the window is minimized. The &lt;code>event&lt;/code> propertycontains the corresponding mouse event.### Event: mxEvent.NORMALIZEFires after the window is normalized, that is, it returned frommaximized or minimized state. The &lt;code>event&lt;/code> property contains thecorresponding mouse event.### Event: mxEvent.ACTIVATEFires after a window is activated. The &lt;code>previousWindow&lt;/code> propertycontains the previous window. The event sender is the active window.### Event: mxEvent.SHOWFires after the window is shown. This event has no properties.### Event: mxEvent.HIDEFires after the window is hidden. This event has no properties.### Event: mxEvent.CLOSEFires before the window is closed. The &lt;code>event&lt;/code> property containsthe corresponding mouse event.### Event: mxEvent.DESTROYFires before the window is destroyed. This event has no properties.</code></pre>
+    
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="EventSource.html">EventSource</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+<h4 class="name" id="closeImage">
+    <a class="href-link" href="#closeImage">#</a>
+    
+    <span class="code-name">
+        closeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the close icon in the titlebar.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line174">line 174</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="closeImage">
+    <a class="href-link" href="#closeImage">#</a>
+    
+    <span class="code-name">
+        closeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the close icon in the titlebar.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line875">line 875</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">HTMLElement</span>
+
+
+    </span>
+
+<h4 class="name" id="content">
+    <a class="href-link" href="#content">#</a>
+    
+    <span class="code-name">
+        content
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Reference to the DOM node that represents the window content.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line917">line 917</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="destroyOnClose">
+    <a class="href-link" href="#destroyOnClose">#</a>
+    
+    <span class="code-name">
+        destroyOnClose
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the window should be destroyed when it is closed. If thisis false then the window is hidden using <setVisible>. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line204">line 204</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="destroyOnClose">
+    <a class="href-link" href="#destroyOnClose">#</a>
+    
+    <span class="code-name">
+        destroyOnClose
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the window should be destroyed when it is closed. If this
+is false then the window is hidden using <setVisible>. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line907">line 907</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="eventListeners">
+    <a class="href-link" href="#eventListeners">#</a>
+    
+    <span class="code-name">
+        eventListeners
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the event names and associated listeners in an array. The arraycontains the event name followed by the respective listener for eachregistered listener.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="EventSource.html#eventListeners">EventSource#eventListeners</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line36">line 36</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="eventsEnabled">
+    <a class="href-link" href="#eventsEnabled">#</a>
+    
+    <span class="code-name">
+        eventsEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if events can be fired. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="EventSource.html#eventsEnabled">EventSource#eventsEnabled</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line40">line 40</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="eventSource">
+    <a class="href-link" href="#eventSource">#</a>
+    
+    <span class="code-name">
+        eventSource
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Optional source for events. Default is null.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="EventSource.html#eventSource">EventSource#eventSource</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line44">line 44</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="maximizeImage">
+    <a class="href-link" href="#maximizeImage">#</a>
+    
+    <span class="code-name">
+        maximizeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the maximize icon in the titlebar.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line186">line 186</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="maximizeImage">
+    <a class="href-link" href="#maximizeImage">#</a>
+    
+    <span class="code-name">
+        maximizeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the maximize icon in the titlebar.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line887">line 887</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="minimizeImage">
+    <a class="href-link" href="#minimizeImage">#</a>
+    
+    <span class="code-name">
+        minimizeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the minimize icon in the titlebar.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line178">line 178</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="minimizeImage">
+    <a class="href-link" href="#minimizeImage">#</a>
+    
+    <span class="code-name">
+        minimizeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the minimize icon in the titlebar.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line879">line 879</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="minimumSize">
+    <a class="href-link" href="#minimumSize">#</a>
+    
+    <span class="code-name">
+        minimumSize
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <mxRectangle> that specifies the minimum width and height of the window.Default is (50, 40).
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line199">line 199</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="minimumSize">
+    <a class="href-link" href="#minimumSize">#</a>
+    
+    <span class="code-name">
+        minimumSize
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <mxRectangle> that specifies the minimum width and height of the window.
+Default is (50, 40).
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line901">line 901</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="normalizeImage">
+    <a class="href-link" href="#normalizeImage">#</a>
+    
+    <span class="code-name">
+        normalizeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the normalize icon in the titlebar.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line182">line 182</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="normalizeImage">
+    <a class="href-link" href="#normalizeImage">#</a>
+    
+    <span class="code-name">
+        normalizeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the normalize icon in the titlebar.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line883">line 883</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="resizeImage">
+    <a class="href-link" href="#resizeImage">#</a>
+    
+    <span class="code-name">
+        resizeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the resize icon.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line190">line 190</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="resizeImage">
+    <a class="href-link" href="#resizeImage">#</a>
+    
+    <span class="code-name">
+        resizeImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    URL of the image to be used for the resize icon.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line891">line 891</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">HTMLElement</span>
+
+
+    </span>
+
+<h4 class="name" id="title">
+    <a class="href-link" href="#title">#</a>
+    
+    <span class="code-name">
+        title
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Reference to the DOM node (TD) that contains the title.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line912">line 912</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="visible">
+    <a class="href-link" href="#visible">#</a>
+    
+    <span class="code-name">
+        visible
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Boolean flag that represents the visible state of the window.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line194">line 194</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="visible">
+    <a class="href-link" href="#visible">#</a>
+    
+    <span class="code-name">
+        visible
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Boolean flag that represents the visible state of the window.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line896">line 896</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="activate">
+        <a class="href-link" href="#activate">#</a>
+        
+        <span class="code-name">
+            
+                activate<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Puts the window on top of all other windows.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line322">line 322</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="addListener">
+        <a class="href-link" href="#addListener">#</a>
+        
+        <span class="code-name">
+            
+                addListener<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Binds the specified function to the given event name. If no event nameis given, then the listener is registered for all events.The parameters of the listener are the sender and an <mxEventObject>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventSource.html#addListener">EventSource#addListener</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line77">line 77</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="destroy">
+        <a class="href-link" href="#destroy">#</a>
+        
+        <span class="code-name">
+            
+                destroy<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Destroys the window and removes all associated resources. Fires a<destroy> event prior to destroying the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line754">line 754</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="fireEvent">
+        <a class="href-link" href="#fireEvent">#</a>
+        
+        <span class="code-name">
+            
+                fireEvent<span class="signature">(evt, sender)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Dispatches the given event to the listeners which are registered forthe event. The sender argument is optional. The current execution scope("this") is used for the listener invocation (see <mxUtils.bind>).Example:```javascriptfireEvent(new mxEventObject("eventName", key1, val1, .., keyN, valN))```
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>evt</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><mxEventObject> that represents the event.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>sender</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          null
+      
+      </td>
+  
+
+  <td class="description last">Optional sender to be passed to the listener. Default value isthe return value of <getEventSource>.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventSource.html#fireEvent">EventSource#fireEvent</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line109">line 109</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="fit">
+        <a class="href-link" href="#fit">#</a>
+        
+        <span class="code-name">
+            
+                fit<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Makes sure the window is inside the client area of the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line347">line 347</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getElement">
+        <a class="href-link" href="#getElement">#</a>
+        
+        <span class="code-name">
+            
+                getElement<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returuns the outermost DOM node that makes up the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line341">line 341</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getEventSource">
+        <a class="href-link" href="#getEventSource">#</a>
+        
+        <span class="code-name">
+            
+                getEventSource<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <eventSource>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventSource.html#getEventSource">EventSource#getEventSource</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line62">line 62</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getMinimumSize">
+        <a class="href-link" href="#getMinimumSize">#</a>
+        
+        <span class="code-name">
+            
+                getMinimumSize<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns an <mxRectangle> that specifies the size for the minimized window.A width or height of 0 means keep the existing width or height. Thisimplementation returns the height of the window title and keeps the width.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line455">line 455</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getX">
+        <a class="href-link" href="#getX">#</a>
+        
+        <span class="code-name">
+            
+                getX<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the current position on the x-axis.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line649">line 649</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getY">
+        <a class="href-link" href="#getY">#</a>
+        
+        <span class="code-name">
+            
+                getY<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the current position on the y-axis.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line655">line 655</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="hide">
+        <a class="href-link" href="#hide">#</a>
+        
+        <span class="code-name">
+            
+                hide<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hides the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line746">line 746</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="init">
+        <a class="href-link" href="#init">#</a>
+        
+        <span class="code-name">
+            
+                init<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Initializes the DOM tree that represents the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line228">line 228</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="installCloseHandler">
+        <a class="href-link" href="#installCloseHandler">#</a>
+        
+        <span class="code-name">
+            
+                installCloseHandler<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adds the <closeImage> as a new image node in <closeImg> and installs the<close> event.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line662">line 662</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="installMaximizeHandler">
+        <a class="href-link" href="#installMaximizeHandler">#</a>
+        
+        <span class="code-name">
+            
+                installMaximizeHandler<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Installs the event listeners required for maximizing the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line524">line 524</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="installMinimizeHandler">
+        <a class="href-link" href="#installMinimizeHandler">#</a>
+        
+        <span class="code-name">
+            
+                installMinimizeHandler<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Installs the event listeners required for minimizing the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line461">line 461</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="installMoveHandler">
+        <a class="href-link" href="#installMoveHandler">#</a>
+        
+        <span class="code-name">
+            
+                installMoveHandler<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Installs the event listeners required for moving the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line609">line 609</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isEventsEnabled">
+        <a class="href-link" href="#isEventsEnabled">#</a>
+        
+        <span class="code-name">
+            
+                isEventsEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <eventsEnabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventSource.html#isEventsEnabled">EventSource#isEventsEnabled</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line50">line 50</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isResizable">
+        <a class="href-link" href="#isResizable">#</a>
+        
+        <span class="code-name">
+            
+                isResizable<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the window is resizable.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line353">line 353</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isVisible">
+        <a class="href-link" href="#isVisible">#</a>
+        
+        <span class="code-name">
+            
+                isVisible<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the window is visible.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line708">line 708</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="removeListener">
+        <a class="href-link" href="#removeListener">#</a>
+        
+        <span class="code-name">
+            
+                removeListener<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Removes all occurrences of the given listener from <eventListeners>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventSource.html#removeListener">EventSource#removeListener</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line83">line 83</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setClosable">
+        <a class="href-link" href="#setClosable">#</a>
+        
+        <span class="code-name">
+            
+                setClosable<span class="signature">(closable)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the image associated with the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>closable</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean specifying if the window should be closable.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line702">line 702</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setEventsEnabled">
+        <a class="href-link" href="#setEventsEnabled">#</a>
+        
+        <span class="code-name">
+            
+                setEventsEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets <eventsEnabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventSource.html#setEventsEnabled">EventSource#setEventsEnabled</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line56">line 56</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setEventSource">
+        <a class="href-link" href="#setEventSource">#</a>
+        
+        <span class="code-name">
+            
+                setEventSource<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets <eventSource>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="EventSource.html#setEventSource">EventSource#setEventSource</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_event_EventSource.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_event_EventSource.ts.html">view/event/EventSource.ts</a>, <a href="view_event_EventSource.ts.html#line68">line 68</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setImage">
+        <a class="href-link" href="#setImage">#</a>
+        
+        <span class="code-name">
+            
+                setImage<span class="signature">(image)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the image associated with the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>image</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">URL of the image to be used.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line687">line 687</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setLocation">
+        <a class="href-link" href="#setLocation">#</a>
+        
+        <span class="code-name">
+            
+                setLocation<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the upper, left corner of the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line642">line 642</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setMaximizable">
+        <a class="href-link" href="#setMaximizable">#</a>
+        
+        <span class="code-name">
+            
+                setMaximizable<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets if the window is maximizable.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line518">line 518</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setMinimizable">
+        <a class="href-link" href="#setMinimizable">#</a>
+        
+        <span class="code-name">
+            
+                setMinimizable<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets if the window is minimizable.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line447">line 447</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setResizable">
+        <a class="href-link" href="#setResizable">#</a>
+        
+        <span class="code-name">
+            
+                setResizable<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets if the window should be resizable. To avoid interference with somebuilt-in features of IE10 and later, the use of the following code isrecommended if there are resizable <MaxWindow>s in the page:```javascriptif (Client.IS_POINTER){  document.body.style.msTouchAction = 'none';}```
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line371">line 371</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setScrollable">
+        <a class="href-link" href="#setScrollable">#</a>
+        
+        <span class="code-name">
+            
+                setScrollable<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets if the window contents should be scrollable.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line308">line 308</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setSize">
+        <a class="href-link" href="#setSize">#</a>
+        
+        <span class="code-name">
+            
+                setSize<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the size of the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line434">line 434</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setTitle">
+        <a class="href-link" href="#setTitle">#</a>
+        
+        <span class="code-name">
+            
+                setTitle<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the window title to the given string. HTML markup inside the titlewill be escaped.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line292">line 292</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setVisible">
+        <a class="href-link" href="#setVisible">#</a>
+        
+        <span class="code-name">
+            
+                setVisible<span class="signature">(visible)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Shows or hides the window depending on the given flag.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>visible</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean indicating if the window should be made visible.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line720">line 720</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="show">
+        <a class="href-link" href="#show">#</a>
+        
+        <span class="code-name">
+            
+                show<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Shows the window.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="gui_MaxWindow.ts.html" class="button">View Source</a>
+            <span>
+                <a href="gui_MaxWindow.ts.html">gui/MaxWindow.ts</a>, <a href="gui_MaxWindow.ts.html#line733">line 733</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

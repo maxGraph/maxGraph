@@ -1,0 +1,840 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> editor/EditorToolbar.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>editor/EditorToolbar.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright (c) 2006-2015, JGraph Ltd
+ * Copyright (c) 2006-2015, Gaudenz Alder
+ * Updated to ES9 syntax by David Morrissey 2021
+ * Type definitions from the typed-mxgraph project
+ */
+
+import Client from '../Client';
+import MaxToolbar from '../gui/MaxToolbar';
+import Geometry from '../view/geometry/Geometry';
+import { convertPoint } from '../util/styleUtils';
+import InternalEvent from '../view/event/InternalEvent';
+import { getClientX, getClientY } from '../util/eventUtils';
+import { makeDraggable } from '../util/gestureUtils';
+import Editor from './Editor';
+import Cell from '../view/cell/Cell';
+import CellArray from '../view/cell/CellArray';
+import { Graph } from '../view/Graph';
+import EventObject from '../view/event/EventObject';
+import ObjectCodec from '../serialization/ObjectCodec';
+import CodecRegistry from '../serialization/CodecRegistry';
+import { getChildNodes, getTextContent } from '../util/domUtils';
+import { NODETYPE } from '../util/constants';
+import Translations from '../util/Translations';
+import MaxLog from '../gui/MaxLog';
+import Codec from '../serialization/Codec';
+
+/**
+ * Toolbar for the editor. This modifies the state of the graph
+ * or inserts new cells upon mouse clicks.
+ *
+ * @Example:
+ *
+ * Create a toolbar with a button to copy the selection into the clipboard,
+ * and a combo box with one action to paste the selection from the clipboard
+ * into the graph.
+ *
+ * ```
+ * var toolbar = new EditorToolbar(container, editor);
+ * toolbar.addItem('Copy', null, 'copy');
+ *
+ * var combo = toolbar.addActionCombo('More actions...');
+ * toolbar.addActionOption(combo, 'Paste', 'paste');
+ * ```
+ *
+ * @Codec:
+ *
+ * This class uses the {@link DefaultToolbarCodec} to read configuration
+ * data into an existing instance. See {@link DefaultToolbarCodec} for a
+ * description of the configuration format.
+ */
+export class EditorToolbar {
+  constructor(container: HTMLElement | null=null, editor: Editor | null=null) {
+    this.editor = editor;
+
+    if (container != null &amp;&amp; editor != null) {
+      this.init(container);
+    }
+  }
+
+  /**
+   * Reference to the enclosing {@link Editor}.
+   */
+  editor: Editor | null;
+
+  /**
+   * Holds the internal {@link MaxToolbar}.
+   */
+  toolbar: MaxToolbar | null = null;
+
+  /**
+   * Reference to the function used to reset the {@link toolbar}.
+   */
+  resetHandler: Function | null = null;
+
+  /**
+   * Defines the spacing between existing and new vertices in gridSize units when a new vertex is dropped on an existing cell.  Default is 4 (40 pixels).
+   *
+   * @Default is 4
+   */
+  spacing: number = 4;
+
+  /**
+   * Specifies if elements should be connected if new cells are dropped onto connectable elements.
+   *
+   * @Default is false.
+   */
+  connectOnDrop: boolean = false;
+
+  /**
+   * Constructs the {@link toolbar} for the given container and installs a listener that updates the {@link Editor.insertFunction} on {@link editor} if an item is selected in the toolbar.  This assumes that {@link editor} is not null.
+   */
+  init(container: HTMLElement): void {
+    if (container != null) {
+      this.toolbar = new MaxToolbar(container);
+
+      // Installs the insert function in the editor if an item is
+      // selected in the toolbar
+      this.toolbar.addListener(InternalEvent.SELECT, (sender: Element, evt: EventObject) => {
+        const funct = evt.getProperty('function');
+
+        if (funct != null) {
+          (&lt;Editor>this.editor).insertFunction = () => {
+            funct.apply(this, [container]);
+            (&lt;MaxToolbar>this.toolbar).resetMode();
+          };
+        } else {
+          (&lt;Editor>this.editor).insertFunction = null;
+        }
+      });
+
+      // Resets the selected tool after a doubleclick or escape keystroke
+      this.resetHandler = () => {
+        if (this.toolbar != null) {
+          this.toolbar.resetMode(true);
+        }
+      };
+
+      (&lt;Editor>this.editor).graph.addListener(InternalEvent.DOUBLE_CLICK, this.resetHandler);
+      (&lt;Editor>this.editor).addListener(InternalEvent.ESCAPE, this.resetHandler);
+    }
+  }
+
+  /**
+   * Adds a new item that executes the given action in {@link editor}. The title,
+   * icon and pressedIcon are used to display the toolbar item.
+   *
+   * @param title - String that represents the title (tooltip) for the item.
+   * @param icon - URL of the icon to be used for displaying the item.
+   * @param action - Name of the action to execute when the item is clicked.
+   * @param pressed - Optional URL of the icon for the pressed state.
+   */
+  addItem(title: string, icon: string, action: string, pressed?: string): any {
+    const clickHandler = () => {
+      if (action != null &amp;&amp; action.length > 0) {
+        (&lt;Editor>this.editor).execute(action);
+      }
+    };
+    return (&lt;MaxToolbar>this.toolbar).addItem(title, icon, clickHandler, pressed);
+  }
+
+  /**
+   * Adds a vertical separator using the optional icon.
+   *
+   * @param icon - Optional URL of the icon that represents the vertical separator. Default is {@link Client.imageBasePath} + ‘/separator.gif’.
+   */
+  addSeparator(icon?: string): void {
+    icon = icon || `${Client.imageBasePath}/separator.gif`;
+    (&lt;MaxToolbar>this.toolbar).addSeparator(icon);
+  }
+
+  /**
+   * Helper method to invoke {@link MaxToolbar.addCombo} on toolbar and return the resulting DOM node.
+   */
+  addCombo(): HTMLElement {
+    return (&lt;MaxToolbar>this.toolbar).addCombo();
+  }
+
+  /**
+   * Helper method to invoke &lt;MaxToolbar.addActionCombo> on &lt;toolbar> using
+   * the given title and return the resulting DOM node.
+   *
+   * @param title String that represents the title of the combo.
+   */
+  addActionCombo(title: string) {
+    return (&lt;MaxToolbar>this.toolbar).addActionCombo(title);
+  }
+
+  /**
+   * Binds the given action to a option with the specified label in the given combo.  Combo is an object returned from an earlier call to {@link addCombo} or {@link addActionCombo}.
+   *
+   * @param combo - DOM node that represents the combo box.
+   * @param title - String that represents the title of the combo.
+   * @param action - Name of the action to execute in {@link editor}.
+   */
+  addActionOption(combo: HTMLElement, title: string, action: string): void {
+    const clickHandler = () => {
+      (&lt;Editor>this.editor).execute(action);
+    };
+
+    this.addOption(combo, title, clickHandler);
+  }
+
+  /**
+   * Helper method to invoke {@link MaxToolbar.addOption} on {@link toolbar} and return the resulting DOM node that represents the option.
+   *
+   * @param combo - DOM node that represents the combo box.
+   * @param title - String that represents the title of the combo.
+   * @param value - Object that represents the value of the option.
+   */
+  addOption(combo: HTMLSelectElement, title: string, value: object): HTMLElement {
+    return (&lt;MaxToolbar>this.toolbar).addOption(combo, title, value);
+  }
+
+  /**
+   * Creates an item for selecting the given mode in the {@link editor}'s graph.
+   * Supported modenames are select, connect and pan.
+   *
+   * @param title - String that represents the title of the item.
+   * @param icon - URL of the icon that represents the item.
+   * @param mode - String that represents the mode name to be used in {@link Editor.setMode}.
+   * @param pressed - Optional URL of the icon that represents the pressed state.
+   * @param funct - Optional JavaScript function that takes the {@link Editor} as the first and only argument that is executed after the mode has been selected.
+   */
+  addMode(
+    title: string, 
+    icon: string, 
+    mode: string, 
+    pressed: string | null=null, 
+    funct: Function | null=null
+  ): any {
+    const clickHandler = () => {
+      (&lt;Editor>this.editor).setMode(mode);
+
+      if (funct != null) {
+        funct((&lt;Editor>this.editor));
+      }
+    };
+    return (&lt;MaxToolbar>this.toolbar).addSwitchMode(title, icon, clickHandler, pressed);
+  }
+
+  /**
+   * Creates an item for inserting a clone of the specified prototype cell into
+   * the &lt;editor>'s graph. The ptype may either be a cell or a function that
+   * returns a cell.
+   *
+   * @param title String that represents the title of the item.
+   * @param icon URL of the icon that represents the item.
+   * @param ptype Function or object that represents the prototype cell. If ptype
+   * is a function then it is invoked with no arguments to create new
+   * instances.
+   * @param pressed Optional URL of the icon that represents the pressed state.
+   * @param insert Optional JavaScript function that handles an insert of the new
+   * cell. This function takes the &lt;Editor>, new cell to be inserted, mouse
+   * event and optional &lt;Cell> under the mouse pointer as arguments.
+   * @param toggle Optional boolean that specifies if the item can be toggled.
+   * Default is true.
+   */
+  addPrototype(
+    title: string, 
+    icon: string, 
+    ptype: Function | Cell, 
+    pressed: string, 
+    insert, 
+    toggle: boolean=true
+  ): HTMLImageElement | HTMLButtonElement {
+    // Creates a wrapper function that is in charge of constructing
+    // the new cell instance to be inserted into the graph
+    const factory = () => {
+      if (typeof ptype === 'function') {
+        return ptype();
+      }
+      if (ptype != null) {
+        return (&lt;Editor>this.editor).graph.cloneCell(ptype);
+      }
+      return null;
+    };
+
+    // Defines the function for a click event on the graph
+    // after this item has been selected in the toolbar
+    const clickHandler = (evt: MouseEvent, cell: Cell) => {
+      if (typeof insert === 'function') {
+        insert((&lt;Editor>this.editor), factory(), evt, cell);
+      } else {
+        this.drop(factory(), evt, cell);
+      }
+
+      (&lt;MaxToolbar>this.toolbar).resetMode();
+      InternalEvent.consume(evt);
+    };
+
+    const img = (&lt;MaxToolbar>this.toolbar).addMode(title, icon, clickHandler, pressed, null, toggle);
+
+    // Creates a wrapper function that calls the click handler without
+    // the graph argument
+    const dropHandler = (graph: Graph, evt: MouseEvent, cell: Cell) => {
+      clickHandler(evt, cell);
+    };
+
+    this.installDropHandler(img, dropHandler);
+    return img;
+  }
+
+  /**
+   * Handles a drop from a toolbar item to the graph. The given vertex
+   * represents the new cell to be inserted. This invokes {@link insert} or
+   * {@link connect} depending on the given target cell.
+   *
+   * @param vertex - {@link Cell} to be inserted.
+   * @param evt - Mouse event that represents the drop.
+   * @param target - Optional {@link Cell} that represents the drop target.
+   */
+  drop(vertex: Cell, evt: MouseEvent, target: Cell | null=null): void {
+    const { graph } = (&lt;Editor>this.editor);
+    const model = graph.getModel();
+
+    if (
+      target == null ||
+      target.isEdge() ||
+      !this.connectOnDrop ||
+      !target.isConnectable()
+    ) {
+      while (target != null &amp;&amp; !graph.isValidDropTarget(target, new CellArray(vertex), evt)) {
+        target = target.getParent();
+      }
+      this.insert(vertex, evt, target);
+    } else {
+      this.connect(vertex, evt, target);
+    }
+  }
+
+  /**
+   * Handles a drop by inserting the given vertex into the given parent cell
+   * or the default parent if no parent is specified.
+   *
+   * @param vertex - {@link Cell} to be inserted.
+   * @param evt - Mouse event that represents the drop.
+   * @param target - Optional {@link Cell} that represents the parent.
+   */
+  insert(vertex: Cell, evt: MouseEvent, target: Cell | null=null): any {
+    const { graph } = (&lt;Editor>this.editor);
+
+    if (graph.canImportCell(vertex)) {
+      const x = getClientX(evt);
+      const y = getClientY(evt);
+      const pt = convertPoint(graph.container, x, y);
+
+      // Splits the target edge or inserts into target group
+      if (target &amp;&amp; graph.isSplitEnabled() &amp;&amp; graph.isSplitTarget(target, new CellArray(vertex), evt)) {
+        return graph.splitEdge(target, new CellArray(vertex), null, pt.x, pt.y);
+      }
+      return (&lt;Editor>this.editor).addVertex(target, vertex, pt.x, pt.y);
+    }
+    return null;
+  }
+
+  /**
+   * Handles a drop by connecting the given vertex to the given source cell.
+   *
+   * @param vertex - {@link Cell} to be inserted.
+   * @param evt - Mouse event that represents the drop.
+   * @param source - Optional {@link Cell} that represents the source terminal.
+   */
+  connect(vertex: Cell, evt: MouseEvent, source: Cell | null=null): void {
+    const { graph } = &lt;Editor>this.editor;
+    const model = graph.getModel();
+
+    if (
+      source != null &amp;&amp;
+      vertex.isConnectable() &amp;&amp;
+      graph.isEdgeValid(null, source, vertex)
+    ) {
+      let edge = null;
+
+      model.beginUpdate();
+      try {
+        const geo = &lt;Geometry>source.getGeometry();
+        const g = (&lt;Geometry>vertex.getGeometry()).clone();
+
+        // Moves the vertex away from the drop target that will
+        // be used as the source for the new connection
+        g.x = geo.x + (geo.width - g.width) / 2;
+        g.y = geo.y + (geo.height - g.height) / 2;
+
+        const step = this.spacing * graph.gridSize;
+        const dist = source.getDirectedEdgeCount(true) * 20;
+
+        if ((&lt;Editor>this.editor).horizontalFlow) {
+          g.x += (g.width + geo.width) / 2 + step + dist;
+        } else {
+          g.y += (g.height + geo.height) / 2 + step + dist;
+        }
+
+        vertex.setGeometry(g);
+
+        // Fires two add-events with the code below - should be fixed
+        // to only fire one add event for both inserts
+        const parent = source.getParent();
+        graph.addCell(vertex, parent);
+        graph.constrainChild(vertex);
+
+        // Creates the edge using the editor instance and calls
+        // the second function that fires an add event
+        edge = (&lt;Editor>this.editor).createEdge(source, vertex);
+
+        if (edge.getGeometry() == null) {
+          const edgeGeometry = new Geometry();
+          edgeGeometry.relative = true;
+
+          model.setGeometry(edge, edgeGeometry);
+        }
+
+        graph.addEdge(edge, parent, source, vertex);
+      } finally {
+        model.endUpdate();
+      }
+
+      graph.setSelectionCells(new CellArray(vertex, edge));
+      graph.scrollCellToVisible(vertex);
+    }
+  }
+
+  /**
+   * Makes the given img draggable using the given function for handling a drop event.
+   *
+   * @param img - DOM node that represents the image.
+   * @param dropHandler - Function that handles a drop of the image.
+   */
+  installDropHandler(img: HTMLElement, dropHandler: Function): void {
+    const sprite = document.createElement('img');
+    sprite.setAttribute('src', &lt;string>img.getAttribute('src'));
+
+    // Handles delayed loading of the images
+    const loader = (evt: InternalEvent) => {
+      // Preview uses the image node with double size. Later this can be
+      // changed to use a separate preview and guides, but for this the
+      // dropHandler must use the additional x- and y-arguments and the
+      // dragsource which makeDraggable returns much be configured to
+      // use guides via mxDragSource.isGuidesEnabled.
+      sprite.style.width = `${2 * img.offsetWidth}px`;
+      sprite.style.height = `${2 * img.offsetHeight}px`;
+
+      makeDraggable(img, (&lt;Editor>this.editor).graph, dropHandler, sprite);
+      InternalEvent.removeListener(sprite, 'load', loader);
+    };
+  }
+
+  /**
+   * Destroys the {@link toolbar} associated with this object and removes all installed listeners.
+   * This does normally not need to be called, the {@link toolbar} is destroyed automatically when the window unloads (in IE) by {@link Editor}.
+   */
+  destroy(): void {
+    if (this.resetHandler != null) {
+      (&lt;Editor>this.editor).graph.removeListener('dblclick', this.resetHandler);
+      (&lt;Editor>this.editor).removeListener('escape', this.resetHandler);
+      this.resetHandler = null;
+    }
+
+    if (this.toolbar != null) {
+      this.toolbar.destroy();
+      this.toolbar = null;
+    }
+  }
+}
+
+/**
+ * Custom codec for configuring &lt;EditorToolbar>s. This class is created
+ * and registered dynamically at load time and used implicitly via
+ * &lt;Codec> and the &lt;CodecRegistry>. This codec only reads configuration
+ * data for existing toolbars handlers, it does not encode or create toolbars.
+ */
+export class EditorToolbarCodec extends ObjectCodec {
+  constructor() {
+    super(new EditorToolbar());
+  }
+
+  /**
+   * Returns null.
+   */
+  encode(enc: any, obj: any) {
+    return null;
+  }
+
+  /**
+   * Reads a sequence of the following child nodes
+   * and attributes:
+   *
+   * Child Nodes:
+   *
+   * add - Adds a new item to the toolbar. See below for attributes.
+   * separator - Adds a vertical separator. No attributes.
+   * hr - Adds a horizontal separator. No attributes.
+   * br - Adds a linefeed. No attributes.
+   *
+   * Attributes:
+   *
+   * as - Resource key for the label.
+   * action - Name of the action to execute in enclosing editor.
+   * mode - Modename (see below).
+   * template - Template name for cell insertion.
+   * style - Optional style to override the template style.
+   * icon - Icon (relative/absolute URL).
+   * pressedIcon - Optional icon for pressed state (relative/absolute URL).
+   * id - Optional ID to be used for the created DOM element.
+   * toggle - Optional 0 or 1 to disable toggling of the element. Default is
+   * 1 (true).
+   *
+   * The action, mode and template attributes are mutually exclusive. The
+   * style can only be used with the template attribute. The add node may
+   * contain another sequence of add nodes with as and action attributes
+   * to create a combo box in the toolbar. If the icon is specified then
+   * a list of the child node is expected to have its template attribute
+   * set and the action is ignored instead.
+   *
+   * Nodes with a specified template may define a function to be used for
+   * inserting the cloned template into the graph. Here is an example of such
+   * a node:
+   *
+   * ```javascript
+   * &lt;add as="Swimlane" template="swimlane" icon="images/swimlane.gif">&lt;![CDATA[
+   *   function (editor, cell, evt, targetCell)
+   *   {
+   *     let pt = mxUtils.convertPoint(
+   *       editor.graph.container, mxEvent.getClientX(evt),
+   *         mxEvent.getClientY(evt));
+   *     return editor.addVertex(targetCell, cell, pt.x, pt.y);
+   *   }
+   * ]]>&lt;/add>
+   * ```
+   *
+   * In the above function, editor is the enclosing &lt;Editor> instance, cell
+   * is the clone of the template, evt is the mouse event that represents the
+   * drop and targetCell is the cell under the mousepointer where the drop
+   * occurred. The targetCell is retrieved using &lt;mxGraph.getCellAt>.
+   *
+   * Futhermore, nodes with the mode attribute may define a function to
+   * be executed upon selection of the respective toolbar icon. In the
+   * example below, the default edge style is set when this specific
+   * connect-mode is activated:
+   *
+   * ```javascript
+   * &lt;add as="connect" mode="connect">&lt;![CDATA[
+   *   function (editor)
+   *   {
+   *     if (editor.defaultEdge != null)
+   *     {
+   *       editor.defaultEdge.style = 'straightEdge';
+   *     }
+   *   }
+   * ]]>&lt;/add>
+   * ```
+   *
+   * Both functions require &lt;DefaultToolbarCodec.allowEval> to be set to true.
+   *
+   * Modes:
+   *
+   * select - Left mouse button used for rubberband- &amp; cell-selection.
+   * connect - Allows connecting vertices by inserting new edges.
+   * pan - Disables selection and switches to panning on the left button.
+   *
+   * Example:
+   *
+   * To add items to the toolbar:
+   *
+   * ```javascript
+   * &lt;EditorToolbar as="toolbar">
+   *   &lt;add as="save" action="save" icon="images/save.gif"/>
+   *   &lt;br/>&lt;hr/>
+   *   &lt;add as="select" mode="select" icon="images/select.gif"/>
+   *   &lt;add as="connect" mode="connect" icon="images/connect.gif"/>
+   * &lt;/EditorToolbar>
+   * ```
+   */
+  decode(dec: Codec, _node: Element, into: any) {
+    if (into != null) {
+      const editor: Editor = into.editor;
+      let node: Element | null = &lt;Element | null>_node.firstChild;
+
+      while (node != null) {
+        if (node.nodeType === NODETYPE.ELEMENT) {
+          if (!this.processInclude(dec, node, into)) {
+            if (node.nodeName === 'separator') {
+              into.addSeparator();
+            } else if (node.nodeName === 'br') {
+              into.toolbar.addBreak();
+            } else if (node.nodeName === 'hr') {
+              into.toolbar.addLine();
+            } else if (node.nodeName === 'add') {
+              let as = &lt;string>node.getAttribute('as');
+              as = Translations.get(as) || as;
+              const icon = node.getAttribute('icon');
+              const pressedIcon = node.getAttribute('pressedIcon');
+              const action = node.getAttribute('action');
+              const mode = node.getAttribute('mode');
+              const template = node.getAttribute('template');
+              const toggle = node.getAttribute('toggle') != '0';
+              const text = getTextContent(&lt;Text>&lt;unknown>node);
+              let elt = null;
+
+              if (action != null) {
+                elt = into.addItem(as, icon, action, pressedIcon);
+              } else if (mode != null) {
+                const funct = DefaultToolbarCodec.allowEval
+                  ? eval(text)
+                  : null;
+                elt = into.addMode(as, icon, mode, pressedIcon, funct);
+              } else if (
+                template != null ||
+                (text != null &amp;&amp; text.length > 0)
+              ) {
+                let cell = template ? editor.templates[template] : null;
+                const style = node.getAttribute('style');
+
+                if (cell != null &amp;&amp; style != null) {
+                  cell = editor.graph.cloneCell(cell);
+                  cell.setStyle(style);
+                }
+
+                let insertFunction = null;
+
+                if (
+                  text != null &amp;&amp;
+                  text.length > 0 &amp;&amp;
+                  DefaultToolbarCodec.allowEval
+                ) {
+                  insertFunction = eval(text);
+                }
+
+                elt = into.addPrototype(
+                  as,
+                  icon,
+                  cell,
+                  pressedIcon,
+                  insertFunction,
+                  toggle
+                );
+              } else {
+                const children = getChildNodes(node);
+
+                if (children.length > 0) {
+                  if (icon == null) {
+                    const combo = into.addActionCombo(as);
+
+                    for (let i = 0; i &lt; children.length; i += 1) {
+                      const child = &lt;Element>children[i];
+
+                      if (child.nodeName === 'separator') {
+                        into.addOption(combo, '---');
+                      } else if (child.nodeName === 'add') {
+                        const lab = child.getAttribute('as');
+                        const act = child.getAttribute('action');
+                        into.addActionOption(combo, lab, act);
+                      }
+                    }
+                  } else {
+                    let select: HTMLSelectElement;
+
+                    const create = () => {
+                      const template = editor.templates[select.value];
+
+                      if (template != null) {
+                        const clone = template.clone();
+                        const style =
+                          select.options[select.selectedIndex].cellStyle;
+
+                        if (style != null) {
+                          clone.setStyle(style);
+                        }
+
+                        return clone;
+                      }
+                      MaxLog.warn(`Template ${template} not found`);
+
+                      return null;
+                    };
+
+                    const img = into.addPrototype(
+                      as,
+                      icon,
+                      create,
+                      null,
+                      null,
+                      toggle
+                    );
+                    select = into.addCombo();
+
+                    // Selects the toolbar icon if a selection change
+                    // is made in the corresponding combobox.
+                    InternalEvent.addListener(select, 'change', () => {
+                      into.toolbar.selectMode(img, (evt: MouseEvent) => {
+                        const pt = convertPoint(
+                          editor.graph.container,
+                          getClientX(evt),
+                          getClientY(evt)
+                        );
+
+                        return editor.addVertex(null, funct(), pt.x, pt.y);
+                      });
+
+                      into.toolbar.noReset = false;
+                    });
+
+                    // Adds the entries to the combobox
+                    for (let i = 0; i &lt; children.length; i += 1) {
+                      const child = &lt;Element>children[i];
+
+                      if (child.nodeName === 'separator') {
+                        into.addOption(select, '---');
+                      } else if (child.nodeName === 'add') {
+                        const lab = child.getAttribute('as');
+                        const tmp = child.getAttribute('template');
+                        const option = into.addOption(
+                          select,
+                          lab,
+                          tmp || template
+                        );
+                        option.cellStyle = child.getAttribute('style');
+                      }
+                    }
+                  }
+                }
+              }
+
+              // Assigns an ID to the created element to access it later.
+              if (elt != null) {
+                const id = node.getAttribute('id');
+
+                if (id != null &amp;&amp; id.length > 0) {
+                  elt.setAttribute('id', id);
+                }
+              }
+            }
+          }
+        }
+
+        node = &lt;Element | null>node.nextSibling;
+      }
+    }
+    return into;
+  }
+}
+
+CodecRegistry.register(new EditorToolbarCodec());
+export default EditorToolbar;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

@@ -108,9 +108,7 @@ const OverlaysMixin: PartialType = {
           this.getCellRenderer().redraw(state);
         }
 
-        this.fireEvent(
-          new EventObject(InternalEvent.REMOVE_OVERLAY, { cell, overlay })
-        );
+        this.fireEvent(new EventObject(InternalEvent.REMOVE_OVERLAY, { cell, overlay }));
       } else {
         overlay = null;
       }

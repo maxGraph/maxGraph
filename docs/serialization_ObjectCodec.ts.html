@@ -1,0 +1,1011 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> serialization/ObjectCodec.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>serialization/ObjectCodec.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright (c) 2006-2015, JGraph Ltd
+ * Copyright (c) 2006-2015, Gaudenz Alder
+ * Updated to ES9 syntax by David Morrissey 2021
+ * Type definitions from the typed-mxgraph project
+ */
+
+import ObjectIdentity from '../util/ObjectIdentity';
+import MaxLog from '../gui/MaxLog';
+import Geometry from '../view/geometry/Geometry';
+import Point from '../view/geometry/Point';
+import { NODETYPE } from '../util/constants';
+import { isInteger, isNumeric } from '../util/mathUtils';
+import { getTextContent } from '../util/domUtils';
+import { load } from '../util/MaxXmlRequest';
+import Codec from './Codec';
+
+/**
+ * Generic codec for JavaScript objects that implements a mapping between
+ * JavaScript objects and XML nodes that maps each field or element to an
+ * attribute or child node, and vice versa.
+ *
+ * ### Atomic Values
+ *
+ * Consider the following example.
+ *
+ * ```javascript
+ * var obj = new Object();
+ * obj.foo = "Foo";
+ * obj.bar = "Bar";
+ * ```
+ *
+ * This object is encoded into an XML node using the following.
+ *
+ * ```javascript
+ * var enc = new Codec();
+ * var node = enc.encode(obj);
+ * ```
+ *
+ * The output of the encoding may be viewed using {@link MaxLog} as follows.
+ *
+ * ```javascript
+ * MaxLog.show();
+ * MaxLog.debug(mxUtils.getPrettyXml(node));
+ * ```
+ *
+ * Finally, the result of the encoding looks as follows.
+ *
+ * ```javascript
+ * &lt;Object foo="Foo" bar="Bar"/>
+ * ```
+ *
+ * In the above output, the foo and bar fields have been mapped to attributes
+ * with the same names, and the name of the constructor was used for the
+ * nodename.
+ *
+ * ### Booleans
+ *
+ * Since booleans are numbers in JavaScript, all boolean values are encoded
+ * into 1 for true and 0 for false. The decoder also accepts the string true
+ * and false for boolean values.
+ *
+ * ### Objects
+ *
+ * The above scheme is applied to all atomic fields, that is, to all non-object
+ * fields of an object. For object fields, a child node is created with a
+ * special attribute that contains the fieldname. This special attribute is
+ * called "as" and hence, as is a reserved word that should not be used for a
+ * fieldname.
+ *
+ * Consider the following example where foo is an object and bar is an atomic
+ * property of foo.
+ *
+ * ```javascript
+ * var obj = {foo: {bar: "Bar"}};
+ * ```
+ *
+ * This will be mapped to the following XML structure by ObjectCodec.
+ *
+ * ```javascript
+ * &lt;Object>
+ *   &lt;Object bar="Bar" as="foo"/>
+ * &lt;/Object>
+ * ```
+ *
+ * In the above output, the inner Object node contains the as-attribute that
+ * specifies the fieldname in the enclosing object. That is, the field foo was
+ * mapped to a child node with an as-attribute that has the value foo.
+ *
+ * ### Arrays
+ *
+ * Arrays are special objects that are either associative, in which case each
+ * key, value pair is treated like a field where the key is the fieldname, or
+ * they are a sequence of atomic values and objects, which is mapped to a
+ * sequence of child nodes. For object elements, the above scheme is applied
+ * without the use of the special as-attribute for creating each child. For
+ * atomic elements, a special add-node is created with the value stored in the
+ * value-attribute.
+ *
+ * For example, the following array contains one atomic value and one object
+ * with a field called bar. Furthermore it contains two associative entries
+ * called bar with an atomic value, and foo with an object value.
+ *
+ * ```javascript
+ * var obj = ["Bar", {bar: "Bar"}];
+ * obj["bar"] = "Bar";
+ * obj["foo"] = {bar: "Bar"};
+ * ```
+ *
+ * This array is represented by the following XML nodes.
+ *
+ * ```javascript
+ * &lt;Array bar="Bar">
+ *   &lt;add value="Bar"/>
+ *   &lt;Object bar="Bar"/>
+ *   &lt;Object bar="Bar" as="foo"/>
+ * &lt;/Array>
+ * ```
+ *
+ * The Array node name is the name of the constructor. The additional
+ * as-attribute in the last child contains the key of the associative entry,
+ * whereas the second last child is part of the array sequence and does not
+ * have an as-attribute.
+ *
+ * ### References
+ *
+ * Objects may be represented as child nodes or attributes with ID values,
+ * which are used to lookup the object in a table within {@link Codec}. The
+ * {@link isReference} function is in charge of deciding if a specific field should
+ * be encoded as a reference or not. Its default implementation returns true if
+ * the fieldname is in {@link idrefs}, an array of strings that is used to configure
+ * the {@link ObjectCodec}.
+ *
+ * Using this approach, the mapping does not guarantee that the referenced
+ * object itself exists in the document. The fields that are encoded as
+ * references must be carefully chosen to make sure all referenced objects
+ * exist in the document, or may be resolved by some other means if necessary.
+ *
+ * For example, in the case of the graph model all cells are stored in a tree
+ * whose root is referenced by the model's root field. A tree is a structure
+ * that is well suited for an XML representation, however, the additional edges
+ * in the graph model have a reference to a source and target cell, which are
+ * also contained in the tree. To handle this case, the source and target cell
+ * of an edge are treated as references, whereas the children are treated as
+ * objects. Since all cells are contained in the tree and no edge references a
+ * source or target outside the tree, this setup makes sure all referenced
+ * objects are contained in the document.
+ *
+ * In the case of a tree structure we must further avoid infinite recursion by
+ * ignoring the parent reference of each child. This is done by returning true
+ * in {@link isExcluded}, whose default implementation uses the array of excluded
+ * fieldnames passed to the ObjectCodec constructor.
+ *
+ * References are only used for cells in mxGraph. For defining other
+ * referencable object types, the codec must be able to work out the ID of an
+ * object. This is done by implementing {@link Codec.reference}. For decoding a
+ * reference, the XML node with the respective id-attribute is fetched from the
+ * document, decoded, and stored in a lookup table for later reference. For
+ * looking up external objects, {@link Codec.lookup} may be implemented.
+ *
+ * ### Expressions
+ *
+ * For decoding JavaScript expressions, the add-node may be used with a text
+ * content that contains the JavaScript expression. For example, the following
+ * creates a field called foo in the enclosing object and assigns it the value
+ * of {@link mxConstants.ALIGN_LEFT}.
+ *
+ * ```javascript
+ * &lt;Object>
+ *   &lt;add as="foo">mxConstants.ALIGN_LEFT&lt;/add>
+ * &lt;/Object>
+ * ```
+ *
+ * The resulting object has a field called foo with the value "left". Its XML
+ * representation looks as follows.
+ *
+ * ```javascript
+ * &lt;Object foo="left"/>
+ * ```
+ *
+ * This means the expression is evaluated at decoding time and the result of
+ * the evaluation is stored in the respective field. Valid expressions are all
+ * JavaScript expressions, including function definitions, which are mapped to
+ * functions on the resulting object.
+ *
+ * Expressions are only evaluated if {@link allowEval} is true.
+ *
+ * @class ObjectCodec
+ */
+class ObjectCodec {
+  constructor(
+    template: any, 
+    exclude: string[]=[], 
+    idrefs: string[]=[], 
+    mapping: { [key: string]: string }={}
+  ) {
+    this.template = template;
+
+    this.exclude = exclude;
+    this.idrefs = idrefs;
+    this.mapping = mapping;
+
+    this.reverse = {};
+
+    for (const i in this.mapping) {
+      this.reverse[this.mapping[i]] = i;
+    }
+  }
+
+  /**
+   * Static global switch that specifies if expressions in arrays are allowed.
+   * Default is false. NOTE: Enabling this carries a possible security risk.
+   * @static
+   */
+  static allowEval: boolean = false;
+
+  /**
+   * Holds the template object associated with this codec.
+   */
+  template: any;
+
+  /**
+   * Array containing the variable names that should be
+   * ignored by the codec.
+   */
+  exclude: string[];
+
+  /**
+   * Array containing the variable names that should be
+   * turned into or converted from references. See
+   * {@link Codec.getId} and {@link Codec.getObject}.
+   */
+  idrefs: string[];
+
+  /**
+   * Maps from from fieldnames to XML attribute names.
+   */
+  mapping: { [key: string]: string };
+
+  /**
+   * Maps from from XML attribute names to fieldnames.
+   */
+  reverse: { [key: string]: string };
+
+  /**
+   * Returns the name used for the nodenames and lookup of the codec when
+   * classes are encoded and nodes are decoded. For classes to work with
+   * this the codec registry automatically adds an alias for the classname
+   * if that is different than what this returns. The default implementation
+   * returns the classname of the template class.
+   */
+  getName(): string {
+    return this.template.constructor.name;
+  }
+
+  /**
+   * Returns a new instance of the template for this codec.
+   */
+  cloneTemplate(): any {
+    return new this.template.constructor();
+  }
+
+  /**
+   * Returns the fieldname for the given attributename.
+   * Looks up the value in the {@link reverse} mapping or returns
+   * the input if there is no reverse mapping for the
+   * given name.
+   */
+  getFieldName(attributename: string): string {
+    if (attributename != null) {
+      const mapped = this.reverse[attributename];
+
+      if (mapped != null) {
+        attributename = mapped;
+      }
+    }
+
+    return attributename;
+  }
+
+  /**
+   * Returns the attributename for the given fieldname.
+   * Looks up the value in the {@link mapping} or returns
+   * the input if there is no mapping for the
+   * given name.
+   */
+  getAttributeName(fieldname: string | null): string | null {
+    if (fieldname != null) {
+      const mapped = this.mapping[fieldname];
+
+      if (mapped != null) {
+        fieldname = mapped;
+      }
+    }
+    return fieldname;
+  }
+
+  /**
+   * Returns true if the given attribute is to be ignored by the codec. This
+   * implementation returns true if the given fieldname is in {@link exclude} or
+   * if the fieldname equals {@link ObjectIdentity.FIELD_NAME}.
+   *
+   * @param obj Object instance that contains the field.
+   * @param attr Fieldname of the field.
+   * @param value Value of the field.
+   * @param write Boolean indicating if the field is being encoded or decoded.
+   * Write is true if the field is being encoded, else it is being decoded.
+   */
+  isExcluded(obj: any, attr: string, value: any, write?: boolean): boolean {
+    return attr == ObjectIdentity.FIELD_NAME || this.exclude.indexOf(attr) >= 0;
+  }
+
+  /**
+   * Returns true if the given fieldname is to be treated
+   * as a textual reference (ID). This implementation returns
+   * true if the given fieldname is in {@link idrefs}.
+   *
+   * @param obj Object instance that contains the field.
+   * @param attr Fieldname of the field.
+   * @param value Value of the field.
+   * @param write Boolean indicating if the field is being encoded or decoded.
+   * Write is true if the field is being encoded, else it is being decoded.
+   */
+  isReference(obj: any, attr: string, value: any, write?: boolean): boolean {
+    return this.idrefs.indexOf(attr) >= 0;
+  }
+
+  /**
+   * Encodes the specified object and returns a node
+   * representing then given object. Calls {@link beforeEncode}
+   * after creating the node and {@link afterEncode} with the
+   * resulting node after processing.
+   *
+   * Enc is a reference to the calling encoder. It is used
+   * to encode complex objects and create references.
+   *
+   * This implementation encodes all variables of an
+   * object according to the following rules:
+   *
+   * - If the variable name is in {@link exclude} then it is ignored.
+   * - If the variable name is in {@link idrefs} then {@link Codec.getId}
+   * is used to replace the object with its ID.
+   * - The variable name is mapped using {@link mapping}.
+   * - If obj is an array and the variable name is numeric
+   * (ie. an index) then it is not encoded.
+   * - If the value is an object, then the codec is used to
+   * create a child node with the variable name encoded into
+   * the "as" attribute.
+   * - Else, if {@link encodeDefaults} is true or the value differs
+   * from the template value, then ...
+   * - ... if obj is not an array, then the value is mapped to
+   * an attribute.
+   * - ... else if obj is an array, the value is mapped to an
+   * add child with a value attribute or a text child node,
+   * if the value is a function.
+   *
+   * If no ID exists for a variable in {@link idrefs} or if an object
+   * cannot be encoded, a warning is issued using {@link MaxLog.warn}.
+   *
+   * Returns the resulting XML node that represents the given
+   * object.
+   *
+   * @param enc {@link Codec} that controls the encoding process.
+   * @param obj Object to be encoded.
+   */
+  encode(enc: Codec, obj: any): Element | null {
+    const node = enc.document.createElement(this.getName());
+
+    obj = this.beforeEncode(enc, obj, node);
+    this.encodeObject(enc, obj, node);
+
+    return this.afterEncode(enc, obj, node);
+  }
+
+  /**
+   * Encodes the value of each member in then given obj into the given node using
+   * {@link encodeValue}.
+   *
+   * @param enc {@link Codec} that controls the encoding process.
+   * @param obj Object to be encoded.
+   * @param node XML node that contains the encoded object.
+   */
+  encodeObject(enc: Codec, obj: any, node: Element): void {
+    enc.setAttribute(node, 'id', enc.getId(obj));
+
+    for (const i in obj) {
+      let name: string | null = i;
+      const value = obj[name];
+
+      if (value != null &amp;&amp; !this.isExcluded(obj, name, value, true)) {
+        if (isInteger(name)) {
+          name = null;
+        }
+
+        this.encodeValue(enc, obj, name, value, node);
+      }
+    }
+  }
+
+  /**
+   * Converts the given value according to the mappings
+   * and id-refs in this codec and uses {@link writeAttribute}
+   * to write the attribute into the given node.
+   *
+   * @param enc {@link Codec} that controls the encoding process.
+   * @param obj Object whose property is going to be encoded.
+   * @param name XML node that contains the encoded object.
+   * @param value Value of the property to be encoded.
+   * @param node XML node that contains the encoded object.
+   */
+  encodeValue(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
+    if (value != null) {
+      // TODO: What is the case where `name` can be `null`? =========================================================================
+      if (name != null &amp;&amp; this.isReference(obj, name, value, true)) {
+        const tmp = enc.getId(value);
+
+        if (tmp == null) {
+          MaxLog.warn(
+            `ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`
+          );
+          return; // exit
+        }
+
+        value = tmp;
+      }
+
+      // Checks if the value is a default value and
+      // the name is correct
+      if (name == null || enc.encodeDefaults || this.template[name] != value) {
+        name = this.getAttributeName(name);
+        this.writeAttribute(enc, obj, name, value, node);
+      }
+    }
+  }
+
+  /**
+   * Writes the given value into node using {@link writePrimitiveAttribute}
+   * or {@link writeComplexAttribute} depending on the type of the value.
+   */
+  writeAttribute(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
+    if (typeof value !== 'object' /* primitive type */) {
+      this.writePrimitiveAttribute(enc, obj, name, value, node);
+    } /* complex type */ else {
+      this.writeComplexAttribute(enc, obj, name, value, node);
+    }
+  }
+
+  /**
+   * Writes the given value as an attribute of the given node.
+   */
+  writePrimitiveAttribute(
+    enc: Codec, 
+    obj: any, 
+    name: string | null, 
+    value: any, 
+    node: Element
+  ): void {
+    value = this.convertAttributeToXml(enc, obj, name, value, node);  // TODO: params don't seem to match - is this a bug? ===================================
+    
+    if (name == null) {
+      const child = enc.document.createElement('add');
+
+      if (typeof value === 'function') {
+        child.appendChild(enc.document.createTextNode(value));
+      } else {
+        enc.setAttribute(child, 'value', value);
+      }
+
+      node.appendChild(child);
+    } else if (typeof value !== 'function') {
+      enc.setAttribute(node, name, value);
+    }
+  }
+
+  /**
+   * Writes the given value as a child node of the given node.
+   */
+  writeComplexAttribute(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
+    const child = enc.encode(value);
+
+    if (child != null) {
+      if (name != null) {
+        child.setAttribute('as', name);
+      }
+
+      node.appendChild(child);
+    } else {
+      MaxLog.warn(`ObjectCodec.encode: No node for ${this.getName()}.${name}: ${value}`);
+    }
+  }
+
+  /**
+   * Converts true to "1" and false to "0" is {@link isBooleanAttribute} returns true.
+   * All other values are not converted.
+   *
+   * @param enc {@link Codec} that controls the encoding process.
+   * @param obj Objec to convert the attribute for.
+   * @param name Name of the attribute to be converted.
+   * @param value Value to be converted.
+   */
+  convertAttributeToXml(enc: Codec, obj: any, name: string, value: any): any {
+    // Makes sure to encode boolean values as numeric values
+    if (this.isBooleanAttribute(enc, obj, name, value)) {
+      // Checks if the value is true (do not use the value as is, because
+      // this would check if the value is not null, so 0 would be true)
+      value = value == true ? '1' : '0';
+    }
+
+    return value;
+  }
+
+  /**
+   * Returns true if the given object attribute is a boolean value.
+   *
+   * @param enc {@link Codec} that controls the encoding process.
+   * @param obj Objec to convert the attribute for.
+   * @param name Name of the attribute to be converted.
+   * @param value Value of the attribute to be converted.
+   */
+  isBooleanAttribute(enc: Codec, obj: any, name: string, value: any): boolean {
+    return typeof value.length === 'undefined' &amp;&amp; (value == true || value == false);
+  }
+
+  /**
+   * Converts booleans and numeric values to the respective types. Values are
+   * numeric if {@link isNumericAttribute} returns true.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param attr XML attribute to be converted.
+   * @param obj Objec to convert the attribute for.
+   */
+  convertAttributeFromXml(dec: Codec, attr: any, obj: any): any {
+    let { value } = attr;
+
+    if (this.isNumericAttribute(dec, attr, obj)) {
+      value = parseFloat(value);
+
+      if (Number.isNaN(value) || !Number.isFinite(value)) {
+        value = 0;
+      }
+    }
+
+    return value;
+  }
+
+  /**
+   * Returns true if the given XML attribute is or should be a numeric value.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param attr XML attribute to be converted.
+   * @param obj Objec to convert the attribute for.
+   */
+  isNumericAttribute(dec: Codec, attr: any, obj: any): boolean {
+    // Handles known numeric attributes for generic objects
+    const result =
+      (obj.constructor === Geometry &amp;&amp;
+        (attr.name === 'x' ||
+          attr.name === 'y' ||
+          attr.name === 'width' ||
+          attr.name === 'height')) ||
+      (obj.constructor === Point &amp;&amp; (attr.name === 'x' || attr.name === 'y')) ||
+      isNumeric(attr.value);
+
+    return result;
+  }
+
+  /**
+   * Hook for subclassers to pre-process the object before
+   * encoding. This returns the input object. The return
+   * value of this function is used in {@link encode} to perform
+   * the default encoding into the given node.
+   *
+   * @param enc {@link Codec} that controls the encoding process.
+   * @param obj Object to be encoded.
+   * @param node XML node to encode the object into.
+   */
+  beforeEncode(enc: Codec, obj: any, node?: Element): any {
+    return obj;
+  }
+
+  /**
+   * Hook for subclassers to post-process the node
+   * for the given object after encoding and return the
+   * post-processed node. This implementation returns
+   * the input node. The return value of this method
+   * is returned to the encoder from {@link encode}.
+   *
+   * @param enc {@link Codec} that controls the encoding process.
+   * @param obj Object to be encoded.
+   * @param node XML node that represents the default encoding.
+   */
+  afterEncode(enc: Codec, obj: any, node: Element): Element {
+    return node;
+  }
+
+  /**
+   * Parses the given node into the object or returns a new object
+   * representing the given node.
+   *
+   * Dec is a reference to the calling decoder. It is used to decode
+   * complex objects and resolve references.
+   *
+   * If a node has an id attribute then the object cache is checked for the
+   * object. If the object is not yet in the cache then it is constructed
+   * using the constructor of {@link template} and cached in {@link Codec.objects}.
+   *
+   * This implementation decodes all attributes and childs of a node
+   * according to the following rules:
+   *
+   * - If the variable name is in {@link exclude} or if the attribute name is "id"
+   * or "as" then it is ignored.
+   * - If the variable name is in {@link idrefs} then {@link Codec.getObject} is used
+   * to replace the reference with an object.
+   * - The variable name is mapped using a reverse {@link mapping}.
+   * - If the value has a child node, then the codec is used to create a
+   * child object with the variable name taken from the "as" attribute.
+   * - If the object is an array and the variable name is empty then the
+   * value or child object is appended to the array.
+   * - If an add child has no value or the object is not an array then
+   * the child text content is evaluated using {@link eval}.
+   *
+   * For add nodes where the object is not an array and the variable name
+   * is defined, the default mechanism is used, allowing to override/add
+   * methods as follows:
+   *
+   * ```javascript
+   * &lt;Object>
+   *   &lt;add as="hello">&lt;![CDATA[
+   *     function(arg1) {
+   *       mxUtils.alert('Hello '+arg1);
+   *     }
+   *   ]]>&lt;/add>
+   * &lt;/Object>
+   * ```
+   *
+   * If no object exists for an ID in {@link idrefs} a warning is issued
+   * using {@link MaxLog.warn}.
+   *
+   * Returns the resulting object that represents the given XML node
+   * or the object given to the method as the into parameter.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param node XML node to be decoded.
+   * @param into Optional objec to encode the node into.
+   */
+  decode(dec: Codec, node: Element, into?: any): any {
+    const id = &lt;string>node.getAttribute('id');
+    let obj = dec.objects[id];
+
+    if (obj == null) {
+      obj = into || this.cloneTemplate();
+
+      if (id != null) {
+        dec.putObject(id, obj);
+      }
+    }
+
+    node = this.beforeDecode(dec, node, obj);
+    this.decodeNode(dec, node, obj);
+    return this.afterDecode(dec, node, obj);
+  }
+
+  /**
+   * Calls {@link decodeAttributes} and {@link decodeChildren} for the given node.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param node XML node to be decoded.
+   * @param obj Objec to encode the node into.
+   */
+  decodeNode(dec: Codec, node: Element, obj: any): void {
+    if (node != null) {
+      this.decodeAttributes(dec, node, obj);
+      this.decodeChildren(dec, node, obj);
+    }
+  }
+
+  /**
+   * Decodes all attributes of the given node using {@link decodeAttribute}.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param node XML node to be decoded.
+   * @param obj Objec to encode the node into.
+   */
+  decodeAttributes(dec: Codec, node: Element, obj: any): void {
+    const attrs = node.attributes;
+
+    if (attrs != null) {
+      for (let i = 0; i &lt; attrs.length; i += 1) {
+        this.decodeAttribute(dec, attrs[i], obj);
+      }
+    }
+  }
+
+  /**
+   * Returns true if the given attribute should be ignored. This implementation
+   * returns true if the attribute name is "as" or "id".
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param attr XML attribute to be decoded.
+   * @param obj Objec to encode the attribute into.
+   */
+  isIgnoredAttribute(dec: Codec, attr: any, obj?: any): boolean {
+    return attr.nodeName === 'as' || attr.nodeName === 'id';
+  }
+
+  /**
+   * Reads the given attribute into the specified object.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param attr XML attribute to be decoded.
+   * @param obj Objec to encode the attribute into.
+   */
+  decodeAttribute(dec: Codec, attr: any, obj?: any): void {
+    if (!this.isIgnoredAttribute(dec, attr, obj)) {
+      const name = attr.nodeName;
+
+      // Converts the string true and false to their boolean values.
+      // This may require an additional check on the obj to see if
+      // the existing field is a boolean value or uninitialized, in
+      // which case we may want to convert true and false to a string.
+      let value = this.convertAttributeFromXml(dec, attr, obj);
+      const fieldname = this.getFieldName(name);
+
+      if (this.isReference(obj, fieldname, value, false)) {
+        const tmp = dec.getObject(value);
+
+        if (tmp == null) {
+          MaxLog.warn(
+            `ObjectCodec.decode: No object for ${this.getName()}.${name}=${value}`
+          );
+          return; // exit
+        }
+
+        value = tmp;
+      }
+
+      if (!this.isExcluded(obj, name, value, false)) {
+        // MaxLog.debug(mxUtils.getFunctionName(obj.constructor)+'.'+name+'='+value);
+        obj[name] = value;
+      }
+    }
+  }
+
+  /**
+   * Decodes all children of the given node using {@link decodeChild}.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param node XML node to be decoded.
+   * @param obj Objec to encode the node into.
+   */
+  decodeChildren(dec: Codec, node: Element, obj?: any): void {
+    let child = &lt;Element>node.firstChild;
+    
+    while (child != null) {
+      const tmp = &lt;Element>child.nextSibling;
+
+      if (child.nodeType === NODETYPE.ELEMENT &amp;&amp; !this.processInclude(dec, child, obj)) {
+        this.decodeChild(dec, child, obj);
+      }
+
+      child = tmp;
+    }
+  }
+
+  /**
+   * Reads the specified child into the given object.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param child XML child element to be decoded.
+   * @param obj Objec to encode the node into.
+   */
+  decodeChild(dec: Codec, child: Element, obj: any): void {
+    const fieldname = this.getFieldName(&lt;string>child.getAttribute('as'));
+
+    if (fieldname == null || !this.isExcluded(obj, fieldname, child, false)) {
+      const template = this.getFieldTemplate(obj, fieldname, child);
+      let value = null;
+
+      if (child.nodeName === 'add') {
+        value = child.getAttribute('value');
+
+        if (value == null &amp;&amp; ObjectCodec.allowEval) {
+          value = eval(getTextContent(&lt;Text>&lt;unknown>child));
+        }
+      } else {
+        value = dec.decode(child, template);
+      }
+
+      try {
+        this.addObjectValue(obj, fieldname, value, template);
+      } catch (e: any) {
+        throw new Error(`${e.message} for ${child.nodeName}`);
+      }
+    }
+  }
+
+  /**
+   * Returns the template instance for the given field. This returns the
+   * value of the field, null if the value is an array or an empty collection
+   * if the value is a collection. The value is then used to populate the
+   * field for a new instance. For strongly typed languages it may be
+   * required to override this to return the correct collection instance
+   * based on the encoded child.
+   */
+  getFieldTemplate(obj: any, fieldname: string, child: Element): any {
+    let template = obj[fieldname];
+
+    // Non-empty arrays are replaced completely
+    if (template instanceof Array &amp;&amp; template.length > 0) {
+      template = null;
+    }
+
+    return template;
+  }
+
+  /**
+   * Sets the decoded child node as a value of the given object. If the
+   * object is a map, then the value is added with the given fieldname as a
+   * key. If the fieldname is not empty, then setFieldValue is called or
+   * else, if the object is a collection, the value is added to the
+   * collection. For strongly typed languages it may be required to
+   * override this with the correct code to add an entry to an object.
+   */
+  addObjectValue(obj: any, fieldname: string, value: any, template: any): void {
+    if (value != null &amp;&amp; value !== template) {
+      if (fieldname != null &amp;&amp; fieldname.length > 0) {
+        obj[fieldname] = value;
+      } else {
+        obj.push(value);
+      }
+      // MaxLog.debug('Decoded '+mxUtils.getFunctionName(obj.constructor)+'.'+fieldname+': '+value);
+    }
+  }
+
+  /**
+   * Returns true if the given node is an include directive and
+   * executes the include by decoding the XML document. Returns
+   * false if the given node is not an include directive.
+   *
+   * @param dec {@link Codec} that controls the encoding/decoding process.
+   * @param node XML node to be checked.
+   * @param into Optional object to pass-thru to the codec.
+   */
+  processInclude(dec: Codec, node: Element, into?: any): boolean {
+    if (node.nodeName === 'include') {
+      const name = node.getAttribute('name');
+      if (name != null) {
+        try {
+          const xml = load(name).getDocumentElement();
+          if (xml != null) {
+            dec.decode(xml, into);
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Hook for subclassers to pre-process the node for
+   * the specified object and return the node to be
+   * used for further processing by {@link decode}.
+   * The object is created based on the template in the
+   * calling method and is never null. This implementation
+   * returns the input node. The return value of this
+   * function is used in {@link decode} to perform
+   * the default decoding into the given object.
+   *
+   * @param dec {@link Codec} that controls the decoding process.
+   * @param node XML node to be decoded.
+   * @param obj Object to encode the node into.
+   */
+  beforeDecode(dec: Codec, node: Element, obj: any): Element | null {
+    return node;
+  }
+
+  /**
+   * Hook for subclassers to post-process the object after
+   * decoding. This implementation returns the given object
+   * without any changes. The return value of this method
+   * is returned to the decoder from {@link decode}.
+   *
+   * @param enc {@link Codec} that controls the encoding process.
+   * @param node XML node to be decoded.
+   * @param obj Object that represents the default decoding.
+   */
+  afterDecode(dec: Codec, node: Element, obj?: any): any {
+    return obj;
+  }
+}
+
+export default ObjectCodec;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

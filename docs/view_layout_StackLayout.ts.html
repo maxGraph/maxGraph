@@ -1,0 +1,615 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> view/layout/StackLayout.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>view/layout/StackLayout.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright (c) 2006-2015, JGraph Ltd
+ * Copyright (c) 2006-2015, Gaudenz Alder
+ * Updated to ES9 syntax by David Morrissey 2021
+ * Type definitions from the typed-mxgraph project
+ */
+import GraphLayout from './GraphLayout';
+import Rectangle from '../geometry/Rectangle';
+import { getValue } from '../../util/utils';
+import { getNumber } from '../../util/stringUtils';
+import { DEFAULT_STARTSIZE } from '../../util/constants';
+import { Graph } from '../Graph';
+import Cell from '../cell/Cell';
+import Geometry from '../geometry/Geometry';
+import CellArray from '../cell/CellArray';
+
+/**
+ * Extends &lt;mxGraphLayout> to create a horizontal or vertical stack of the
+ * child vertices. The children do not need to be connected for this layout
+ * to work.
+ *
+ * Example:
+ *
+ * ```javascript
+ * let layout = new mxStackLayout(graph, true);
+ * layout.execute(graph.getDefaultParent());
+ * ```
+ *
+ * Constructor: mxStackLayout
+ *
+ * Constructs a new stack layout layout for the specified graph,
+ * spacing, orientation and offset.
+ */
+class StackLayout extends GraphLayout {
+  constructor(
+    graph: Graph,
+    horizontal: boolean | null=null,
+    spacing: number | null=null,
+    x0: number | null=null,
+    y0: number | null=null,
+    border: number | null=null
+  ) {
+    super(graph);
+    this.horizontal = horizontal != null ? horizontal : true;
+    this.spacing = spacing != null ? spacing : 0;
+    this.x0 = x0 != null ? x0 : 0;
+    this.y0 = y0 != null ? y0 : 0;
+    this.border = border != null ? border : 0;
+  }
+
+  /**
+   * Specifies the orientation of the layout.
+   */
+  horizontal: boolean;
+
+  /**
+   * Specifies the spacing between the cells.
+   */
+  spacing: number;
+
+  /**
+   * Specifies the horizontal origin of the layout.
+   */
+  x0: number;
+
+  /**
+   * Specifies the vertical origin of the layout.
+   */
+  y0: number;
+
+  /**
+   * Border to be added if fill is true.
+   */
+  border: number = 0;
+
+  /**
+   * Top margin for the child area.
+   */
+  marginTop: number = 0;
+
+  /**
+   * Top margin for the child area.
+   */
+  marginLeft: number = 0;
+
+  /**
+   * Top margin for the child area.
+   */
+  marginRight: number = 0;
+
+  /**
+   * Top margin for the child area.
+   */
+  marginBottom: number = 0;
+
+  /**
+   * Boolean indicating if the location of the first cell should be kept, that is, it will not be moved to x0 or y0.
+   */
+  keepFirstLocation: boolean = false;
+
+  /**
+   * Boolean indicating if dimension should be changed to fill out the parent cell.
+   */
+  fill: boolean = false;
+
+  /**
+   * If the parent should be resized to match the width/height of the stack.
+   */
+  resizeParent: boolean = false;
+
+  /**
+   * Use maximum of existing value and new value for resize of parent.
+   */
+  resizeParentMax: boolean = false;
+
+  /**
+   * If the last element should be resized to fill out the parent.
+   */
+  resizeLast: boolean = false;
+
+  /**
+   * Value at which a new column or row should be created.
+   */
+  wrap: number | null = null;
+
+  /**
+   * If the strokeWidth should be ignored.
+   */
+  borderCollapse: boolean = true;
+
+  /**
+   * If gaps should be allowed in the stack.
+   */
+  allowGaps: boolean = false;
+
+  /**
+   * Grid size for alignment of position and size.
+   */
+  gridSize: number = 0;
+
+  /**
+   * Returns horizontal.
+   */
+  isHorizontal(): boolean {
+    return this.horizontal;
+  }
+
+  /**
+   * Implements mxGraphLayout.moveCell.
+   */
+  moveCell(cell: Cell, x: number, y: number): void {
+    const model = this.graph.getModel();
+    const parent = cell.getParent();
+    const horizontal = this.isHorizontal();
+
+    if (cell != null &amp;&amp; parent != null) {
+      let i = 0;
+      let last = 0;
+      const childCount = parent.getChildCount();
+      let value = horizontal ? x : y;
+      const pstate = this.graph.getView().getState(parent);
+
+      if (pstate != null) {
+        value -= horizontal ? pstate.x : pstate.y;
+      }
+
+      value /= this.graph.view.scale;
+
+      for (i = 0; i &lt; childCount; i += 1) {
+        const child = parent.getChildAt(i);
+
+        if (child !== cell) {
+          const bounds = child.getGeometry();
+
+          if (bounds != null) {
+            const tmp = horizontal
+              ? bounds.x + bounds.width / 2
+              : bounds.y + bounds.height / 2;
+
+            if (last &lt;= value &amp;&amp; tmp > value) {
+              break;
+            }
+
+            last = tmp;
+          }
+        }
+      }
+
+      // Changes child order in parent
+      let idx = parent.getIndex(cell);
+      idx = Math.max(0, i - (i > idx ? 1 : 0));
+
+      model.add(parent, cell, idx);
+    }
+  }
+
+  /**
+   * Returns the size for the parent container or the size of the graph container if the parent is a layer or the root of the model.
+   */
+  getParentSize(parent: Cell): Rectangle {
+    const model = this.graph.getModel();
+    let pgeo = &lt;Rectangle>parent.getGeometry();
+
+    // Handles special case where the parent is either a layer with no
+    // geometry or the current root of the view in which case the size
+    // of the graph's container will be used.
+    if (
+      this.graph.container != null &amp;&amp;
+      ((pgeo == null &amp;&amp; model.isLayer(parent)) ||
+        parent === this.graph.getView().currentRoot)
+    ) {
+      const width = this.graph.container.offsetWidth - 1;
+      const height = this.graph.container.offsetHeight - 1;
+      pgeo = new Rectangle(0, 0, width, height);
+    }
+    return pgeo;
+  }
+
+  /**
+   * Returns the cells to be layouted.
+   */
+  getLayoutCells(parent: Cell): CellArray {
+    const model = this.graph.getModel();
+    const childCount = parent.getChildCount();
+    const cells = new CellArray();
+
+    for (let i = 0; i &lt; childCount; i += 1) {
+      const child = parent.getChildAt(i);
+
+      if (!this.isVertexIgnored(child) &amp;&amp; this.isVertexMovable(child)) {
+        cells.push(child);
+      }
+    }
+
+    if (this.allowGaps) {
+      cells.sort((c1, c2) => {
+        const geo1 = &lt;Geometry>c1.getGeometry();
+        const geo2 = &lt;Geometry>c2.getGeometry();
+
+        return this.horizontal
+          ? geo1.x === geo2.x
+            ? 0
+            : (geo1.x > geo2.x &amp;&amp; geo2.x > 0)
+            ? 1
+            : -1
+          : geo1.y === geo2.y
+          ? 0
+          : (geo1.y > geo2.y &amp;&amp; geo2.y > 0)
+          ? 1
+          : -1;
+      });
+    }
+    return cells;
+  }
+
+  /**
+   * Snaps the given value to the grid size.
+   */
+  snap(value: number): number {
+    if (this.gridSize != null &amp;&amp; this.gridSize > 0) {
+      value = Math.max(value, this.gridSize);
+
+      if (value / this.gridSize > 1) {
+        const mod = value % this.gridSize;
+        value += mod > this.gridSize / 2 ? this.gridSize - mod : -mod;
+      }
+    }
+    return value;
+  }
+
+  /**
+   * Implements mxGraphLayout.execute.
+   */
+  execute(parent: Cell): void {
+    if (parent != null) {
+      const pgeo = this.getParentSize(parent);
+      const horizontal = this.isHorizontal();
+      const model = this.graph.getModel();
+      let fillValue = null;
+
+      if (pgeo != null) {
+        fillValue = horizontal
+          ? pgeo.height - this.marginTop - this.marginBottom
+          : pgeo.width - this.marginLeft - this.marginRight;
+        fillValue -= 2 * this.border;
+      }
+      
+      let x0 = this.x0 + this.border + this.marginLeft;
+      let y0 = this.y0 + this.border + this.marginTop;
+
+      // Handles swimlane start size
+      if (this.graph.isSwimlane(parent)) {
+        // Uses computed style to get latest
+        const style = this.graph.getCellStyle(parent);
+        let start = getNumber(style, 'startSize', DEFAULT_STARTSIZE);
+        const horz = getValue(style, 'horizontal', true) == 1;
+
+        if (pgeo != null) {
+          if (horz) {
+            start = Math.min(start, pgeo.height);
+          } else {
+            start = Math.min(start, pgeo.width);
+          }
+        }
+
+        if (horizontal === horz &amp;&amp; fillValue != null) {
+          fillValue -= start;
+        }
+
+        if (horz) {
+          y0 += start;
+        } else {
+          x0 += start;
+        }
+      }
+
+      model.beginUpdate();
+      try {
+        let tmp = 0;
+        let last = null;
+        let lastValue = 0;
+        let lastChild = null;
+        const cells = this.getLayoutCells(parent);
+
+        for (let i = 0; i &lt; cells.length; i += 1) {
+          const child = cells[i];
+          let geo = child.getGeometry();
+
+          if (geo != null) {
+            geo = geo.clone();
+
+            if (this.wrap != null &amp;&amp; last != null) {
+              if (
+                (horizontal &amp;&amp;
+                  last.x + last.width + geo.width + 2 * this.spacing > this.wrap) ||
+                (!horizontal &amp;&amp;
+                  last.y + last.height + geo.height + 2 * this.spacing > this.wrap)
+              ) {
+                last = null;
+
+                if (horizontal) {
+                  y0 += tmp + this.spacing;
+                } else {
+                  x0 += tmp + this.spacing;
+                }
+
+                tmp = 0;
+              }
+            }
+
+            tmp = Math.max(tmp, horizontal ? geo.height : geo.width);
+            let sw = 0;
+
+            if (!this.borderCollapse) {
+              const childStyle = this.graph.getCellStyle(child);
+              sw = getNumber(childStyle, 'strokeWidth', 1);
+            }
+
+            if (last != null) {
+              const temp = lastValue + this.spacing + Math.floor(sw / 2);
+
+              if (horizontal) {
+                geo.x =
+                  this.snap(
+                    (this.allowGaps ? Math.max(temp, geo.x) : temp) - this.marginLeft
+                  ) + this.marginLeft;
+              } else {
+                geo.y =
+                  this.snap(
+                    (this.allowGaps ? Math.max(temp, geo.y) : temp) - this.marginTop
+                  ) + this.marginTop;
+              }
+            } else if (!this.keepFirstLocation) {
+              if (horizontal) {
+                geo.x =
+                  this.allowGaps &amp;&amp; geo.x > x0
+                    ? Math.max(this.snap(geo.x - this.marginLeft) + this.marginLeft, x0)
+                    : x0;
+              } else {
+                geo.y =
+                  this.allowGaps &amp;&amp; geo.y > y0
+                    ? Math.max(this.snap(geo.y - this.marginTop) + this.marginTop, y0)
+                    : y0;
+              }
+            }
+
+            if (horizontal) {
+              geo.y = y0;
+            } else {
+              geo.x = x0;
+            }
+
+            if (this.fill &amp;&amp; fillValue != null) {
+              if (horizontal) {
+                geo.height = fillValue;
+              } else {
+                geo.width = fillValue;
+              }
+            }
+
+            if (horizontal) {
+              geo.width = this.snap(geo.width);
+            } else {
+              geo.height = this.snap(geo.height);
+            }
+
+            this.setChildGeometry(child, geo);
+            lastChild = child;
+            last = geo;
+
+            if (horizontal) {
+              lastValue = last.x + last.width + Math.floor(sw / 2);
+            } else {
+              lastValue = last.y + last.height + Math.floor(sw / 2);
+            }
+          }
+        }
+
+        if (this.resizeParent &amp;&amp; pgeo != null &amp;&amp; last != null &amp;&amp; !parent.isCollapsed()) {
+          this.updateParentGeometry(parent, pgeo, last);
+        } else if (this.resizeLast &amp;&amp; pgeo != null &amp;&amp; last != null &amp;&amp; lastChild != null) {
+          if (horizontal) {
+            last.width =
+              pgeo.width - last.x - this.spacing - this.marginRight - this.marginLeft;
+          } else {
+            last.height = pgeo.height - last.y - this.spacing - this.marginBottom;
+          }
+
+          this.setChildGeometry(lastChild, last);
+        }
+      } finally {
+        model.endUpdate();
+      }
+    }
+  }
+
+  /**
+   * Sets the specific geometry to the given child cell.
+   *
+   * @param child The given child of &lt;Cell>.
+   * @param geo The specific geometry of &lt;mxGeometry>.
+   */
+  setChildGeometry(child: Cell, geo: Geometry) {
+    const geo2 = child.getGeometry();
+
+    if (
+      geo2 == null ||
+      geo.x !== geo2.x ||
+      geo.y !== geo2.y ||
+      geo.width !== geo2.width ||
+      geo.height !== geo2.height
+    ) {
+      this.graph.getModel().setGeometry(child, geo);
+    }
+  }
+
+  /**
+   * Updates the geometry of the given parent cell.
+   *
+   * @param parent The given parent of &lt;Cell>.
+   * @param pgeo The new &lt;mxGeometry> for parent.
+   * @param last The last &lt;mxGeometry>.
+   */
+  updateParentGeometry(parent: Cell, pgeo: Geometry, last: Geometry) {
+    const horizontal = this.isHorizontal();
+    const model = this.graph.getModel();
+
+    const pgeo2 = pgeo.clone();
+
+    if (horizontal) {
+      const tmp = last.x + last.width + this.marginRight + this.border;
+
+      if (this.resizeParentMax) {
+        pgeo2.width = Math.max(pgeo2.width, tmp);
+      } else {
+        pgeo2.width = tmp;
+      }
+    } else {
+      const tmp = last.y + last.height + this.marginBottom + this.border;
+
+      if (this.resizeParentMax) {
+        pgeo2.height = Math.max(pgeo2.height, tmp);
+      } else {
+        pgeo2.height = tmp;
+      }
+    }
+
+    if (
+      pgeo.x !== pgeo2.x ||
+      pgeo.y !== pgeo2.y ||
+      pgeo.width !== pgeo2.width ||
+      pgeo.height !== pgeo2.height
+    ) {
+      model.setGeometry(parent, pgeo2);
+    }
+  }
+}
+
+export default StackLayout;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

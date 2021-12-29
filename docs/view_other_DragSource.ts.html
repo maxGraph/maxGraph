@@ -1,0 +1,778 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> view/other/DragSource.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>view/other/DragSource.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright (c) 2006-2015, JGraph Ltd
+ * Copyright (c) 2006-2015, Gaudenz Alder
+ * Updated to ES9 syntax by David Morrissey 2021
+ * Type definitions from the typed-mxgraph project
+ */
+import Rectangle from '../geometry/Rectangle';
+import CellHighlight from '../cell/CellHighlight';
+import {
+  getDocumentScrollOrigin,
+  getOffset,
+  getScrollOrigin,
+  setOpacity,
+} from '../../util/styleUtils';
+import InternalEvent from '../event/InternalEvent';
+import Client from '../../Client';
+import Guide from './Guide';
+import { DROP_TARGET_COLOR } from '../../util/constants';
+import Point from '../geometry/Point';
+import {
+  getClientX,
+  getClientY,
+  getSource,
+  isConsumed,
+  isMouseEvent,
+  isPenEvent,
+  isTouchEvent,
+} from '../../util/eventUtils';
+import EventSource from '../event/EventSource';
+import EventObject from '../event/EventObject';
+import { Graph } from '../Graph';
+import Cell from '../cell/Cell';
+import SelectionHandler from '../handler/SelectionHandler';
+
+export type DropHandler = (
+  graph: Graph,
+  evt: MouseEvent,
+  cell: Cell | null,
+  x?: number,
+  y?: number
+) => void;
+
+/**
+ * @class DragSource
+ *
+ * Wrapper to create a drag source from a DOM element so that the element can
+ * be dragged over a graph and dropped into the graph as a new cell.
+ *
+ * Problem is that in the dropHandler the current preview location is not
+ * available, so the preview and the dropHandler must match.
+ *
+ */
+class DragSource {
+  constructor(element: EventTarget, dropHandler: DropHandler) {
+    this.element = element;
+    this.dropHandler = dropHandler;
+
+    // Handles a drag gesture on the element
+    InternalEvent.addGestureListeners(element, (evt) => {
+      this.mouseDown(evt);
+    });
+
+    // Prevents native drag and drop
+    InternalEvent.addListener(element, 'dragstart', (evt: MouseEvent) => {
+      InternalEvent.consume(evt);
+    });
+
+    this.eventConsumer = (sender: EventSource, evt: EventObject) => {
+      const evtName = evt.getProperty('eventName');
+      const me = evt.getProperty('event');
+
+      if (evtName !== InternalEvent.MOUSE_DOWN) {
+        me.consume();
+      }
+    };
+  }
+
+  /**
+   * Reference to the DOM node which was made draggable.
+   */
+  element: EventTarget;
+
+  /**
+   * Holds the DOM node that is used to represent the drag preview. If this is
+   * null then the source element will be cloned and used for the drag preview.
+   */
+  dropHandler: DropHandler;
+
+  eventConsumer: (sender: EventSource, evt: EventObject) => void;
+
+  /**
+   * {@link Point} that specifies the offset of the {@link dragElement}. Default is null.
+   */
+  dragOffset: Point | null = null;
+
+  /**
+   * Holds the DOM node that is used to represent the drag preview. If this is
+   * null then the source element will be cloned and used for the drag preview.
+   */
+  dragElement: HTMLElement | null = null;
+
+  /**
+   * TODO - wrong description
+   * Optional {@link Rectangle} that specifies the unscaled size of the preview.
+   */
+  previewElement: HTMLElement | null = null;
+
+  /**
+   * Optional &lt;mxPoint> that specifies the offset of the preview in pixels.
+   */
+  previewOffset: Point | null = null;
+
+  /**
+   * Specifies if this drag source is enabled. Default is true.
+   */
+  enabled = true;
+
+  /**
+   * Reference to the {@link mxGraph} that is the current drop target.
+   */
+  currentGraph: Graph | null = null;
+
+  /**
+   * Holds the current drop target under the mouse.
+   */
+  currentDropTarget: Cell | null = null;
+
+  /**
+   * Holds the current drop location.
+   */
+  currentPoint: Point | null = null;
+
+  /**
+   * Holds an {@link mxGuide} for the {@link currentGraph} if {@link dragPreview} is not null.
+   */
+  currentGuide: Guide | null = null;
+
+  /**
+   * Holds an {@link mxGuide} for the {@link currentGraph} if {@link dragPreview} is not null.
+   * @note wrong doc
+   */
+  currentHighlight: CellHighlight | null = null;
+
+  /**
+   * Specifies if the graph should scroll automatically. Default is true.
+   */
+  autoscroll = true;
+
+  /**
+   * Specifies if {@link mxGuide} should be enabled. Default is true.
+   */
+  guidesEnabled = true;
+
+  /**
+   * Specifies if the grid should be allowed. Default is true.
+   */
+  gridEnabled = true;
+
+  /**
+   * Specifies if drop targets should be highlighted. Default is true.
+   */
+  highlightDropTargets = true;
+
+  /**
+   * ZIndex for the drag element. Default is 100.
+   */
+  dragElementZIndex = 100;
+
+  /**
+   * Opacity of the drag element in %. Default is 70.
+   */
+  dragElementOpacity = 70;
+
+  /**
+   * Whether the event source should be checked in {@link graphContainerEvent}. Default
+   * is true.
+   */
+  checkEventSource = true;
+
+  mouseMoveHandler: ((evt: MouseEvent) => void) | null = null;
+  mouseUpHandler: ((evt: MouseEvent) => void) | null = null;
+
+  eventSource: EventTarget | null = null;
+
+  /**
+   * Returns {@link enabled}.
+   */
+  isEnabled() {
+    return this.enabled;
+  }
+
+  /**
+   * Sets {@link enabled}.
+   */
+  setEnabled(value: boolean) {
+    this.enabled = value;
+  }
+
+  /**
+   * Returns {@link guidesEnabled}.
+   */
+  isGuidesEnabled() {
+    return this.guidesEnabled;
+  }
+
+  /**
+   * Sets {@link guidesEnabled}.
+   */
+  setGuidesEnabled(value: boolean) {
+    this.guidesEnabled = value;
+  }
+
+  /**
+   * Returns {@link gridEnabled}.
+   */
+  isGridEnabled() {
+    return this.gridEnabled;
+  }
+
+  /**
+   * Sets {@link gridEnabled}.
+   */
+  setGridEnabled(value: boolean) {
+    this.gridEnabled = value;
+  }
+
+  /**
+   * Returns the graph for the given mouse event. This implementation returns
+   * null.
+   */
+  getGraphForEvent(evt: MouseEvent) {
+    return null;
+  }
+
+  /**
+   * Returns the drop target for the given graph and coordinates. This
+   * implementation uses {@link mxGraph.getCellAt}.
+   */
+  getDropTarget(graph: Graph, x: number, y: number, evt: MouseEvent) {
+    return graph.getCellAt(x, y);
+  }
+
+  /**
+   * Creates and returns a clone of the {@link dragElementPrototype} or the {@link element}
+   * if the former is not defined.
+   */
+  createDragElement(evt: MouseEvent) {
+    return (this.element as HTMLElement).cloneNode(true) as HTMLElement;
+  }
+
+  /**
+   * Creates and returns an element which can be used as a preview in the given
+   * graph.
+   */
+  createPreviewElement(graph: Graph): HTMLElement | null {
+    return null;
+  }
+
+  /**
+   * Returns true if this drag source is active.
+   */
+  isActive() {
+    return !!this.mouseMoveHandler;
+  }
+
+  /**
+   * Stops and removes everything and restores the state of the object.
+   */
+  reset() {
+    if (this.currentGraph) {
+      this.dragExit(this.currentGraph);
+      this.currentGraph = null;
+    }
+
+    this.removeDragElement();
+    this.removeListeners();
+    this.stopDrag();
+  }
+
+  /**
+   * Returns the drop target for the given graph and coordinates. This
+   * implementation uses {@link mxGraph.getCellAt}.
+   *
+   * To ignore popup menu events for a drag source, this function can be
+   * overridden as follows.
+   *
+   * @example
+   * ```javascript
+   * var mouseDown = dragSource.mouseDown;
+   *
+   * dragSource.mouseDown(evt)
+   * {
+   *   if (!mxEvent.isPopupTrigger(evt))
+   *   {
+   *     mouseDown.apply(this, arguments);
+   *   }
+   * };
+   * ```
+   */
+  mouseDown(evt: MouseEvent) {
+    if (this.enabled &amp;&amp; !isConsumed(evt) &amp;&amp; this.mouseMoveHandler == null) {
+      this.startDrag(evt);
+      this.mouseMoveHandler = this.mouseMove.bind(this);
+      this.mouseUpHandler = this.mouseUp.bind(this);
+      InternalEvent.addGestureListeners(
+        document,
+        null,
+        this.mouseMoveHandler,
+        this.mouseUpHandler
+      );
+
+      if (Client.IS_TOUCH &amp;&amp; !isMouseEvent(evt)) {
+        this.eventSource = getSource(evt);
+
+        if (this.eventSource) {
+          InternalEvent.addGestureListeners(
+            this.eventSource,
+            null,
+            this.mouseMoveHandler,
+            this.mouseUpHandler
+          );
+        }
+      }
+    }
+  }
+
+  /**
+   * Creates the {@link dragElement} using {@link createDragElement}.
+   */
+  startDrag(evt: MouseEvent) {
+    this.dragElement = this.createDragElement(evt);
+    this.dragElement.style.position = 'absolute';
+    this.dragElement.style.zIndex = String(this.dragElementZIndex);
+    setOpacity(this.dragElement, this.dragElementOpacity);
+
+    if (this.checkEventSource &amp;&amp; Client.IS_SVG) {
+      this.dragElement.style.pointerEvents = 'none';
+    }
+  }
+
+  /**
+   * Invokes {@link removeDragElement}.
+   */
+  stopDrag() {
+    // LATER: This used to have a mouse event. If that is still needed we need to add another
+    // final call to the DnD protocol to add a cleanup step in the case of escape press, which
+    // is not associated with a mouse event and which currently calles this method.
+    this.removeDragElement();
+  }
+
+  /**
+   * Removes and destroys the {@link dragElement}.
+   */
+  removeDragElement() {
+    if (this.dragElement) {
+      if (this.dragElement.parentNode) {
+        this.dragElement.parentNode.removeChild(this.dragElement);
+      }
+
+      this.dragElement = null;
+    }
+  }
+
+  /**
+   * Returns the topmost element under the given event.
+   */
+  getElementForEvent(evt: MouseEvent) {
+    return isTouchEvent(evt) || isPenEvent(evt)
+      ? document.elementFromPoint(getClientX(evt), getClientY(evt))
+      : getSource(evt);
+  }
+
+  /**
+   * Returns true if the given graph contains the given event.
+   */
+  graphContainsEvent(graph: Graph, evt: MouseEvent) {
+    const x = getClientX(evt);
+    const y = getClientY(evt);
+    const offset = getOffset(graph.container);
+    const origin = getScrollOrigin();
+    let elt = this.getElementForEvent(evt);
+
+    if (this.checkEventSource) {
+      while (elt &amp;&amp; elt !== graph.container) {
+        // @ts-ignore parentNode may exist
+        elt = elt.parentNode;
+      }
+    }
+
+    // Checks if event is inside the bounds of the graph container
+    return (
+      !!elt &amp;&amp;
+      x >= offset.x - origin.x &amp;&amp;
+      y >= offset.y - origin.y &amp;&amp;
+      x &lt;= offset.x - origin.x + graph.container.offsetWidth &amp;&amp;
+      y &lt;= offset.y - origin.y + graph.container.offsetHeight
+    );
+  }
+
+  /**
+   * Gets the graph for the given event using {@link getGraphForEvent}, updates the
+   * {@link currentGraph}, calling {@link dragEnter} and {@link dragExit} on the new and old graph,
+   * respectively, and invokes {@link dragOver} if {@link currentGraph} is not null.
+   */
+  mouseMove(evt: MouseEvent) {
+    let graph = this.getGraphForEvent(evt);
+
+    // Checks if event is inside the bounds of the graph container
+    if (graph &amp;&amp; !this.graphContainsEvent(graph, evt)) {
+      graph = null;
+    }
+
+    if (graph !== this.currentGraph) {
+      if (this.currentGraph) {
+        this.dragExit(this.currentGraph, evt);
+      }
+
+      this.currentGraph = graph;
+
+      if (this.currentGraph) {
+        this.dragEnter(this.currentGraph, evt);
+      }
+    }
+
+    if (this.currentGraph) {
+      this.dragOver(this.currentGraph, evt);
+    }
+
+    if (
+      this.dragElement &amp;&amp;
+      (!this.previewElement || this.previewElement.style.visibility !== 'visible')
+    ) {
+      let x = getClientX(evt);
+      let y = getClientY(evt);
+
+      if (this.dragElement.parentNode == null) {
+        document.body.appendChild(this.dragElement);
+      }
+
+      this.dragElement.style.visibility = 'visible';
+
+      if (this.dragOffset) {
+        x += this.dragOffset.x;
+        y += this.dragOffset.y;
+      }
+
+      const offset = getDocumentScrollOrigin(document);
+
+      this.dragElement.style.left = `${x + offset.x}px`;
+      this.dragElement.style.top = `${y + offset.y}px`;
+    } else if (this.dragElement) {
+      this.dragElement.style.visibility = 'hidden';
+    }
+
+    InternalEvent.consume(evt);
+  }
+
+  /**
+   * Processes the mouse up event and invokes {@link drop}, {@link dragExit} and {@link stopDrag}
+   * as required.
+   */
+  mouseUp(evt: MouseEvent) {
+    if (this.currentGraph) {
+      if (
+        this.currentPoint &amp;&amp;
+        (!this.previewElement || this.previewElement.style.visibility !== 'hidden')
+      ) {
+        const { scale } = this.currentGraph.view;
+        const tr = this.currentGraph.view.translate;
+        const x = this.currentPoint.x / scale - tr.x;
+        const y = this.currentPoint.y / scale - tr.y;
+
+        this.drop(this.currentGraph, evt, this.currentDropTarget, x, y);
+      }
+
+      this.dragExit(this.currentGraph);
+      this.currentGraph = null;
+    }
+
+    this.stopDrag();
+    this.removeListeners();
+
+    InternalEvent.consume(evt);
+  }
+
+  /**
+   * Actives the given graph as a drop target.
+   */
+  // removeListeners(): void;
+  removeListeners() {
+    if (this.eventSource) {
+      InternalEvent.removeGestureListeners(
+        this.eventSource,
+        null,
+        this.mouseMoveHandler,
+        this.mouseUpHandler
+      );
+      this.eventSource = null;
+    }
+
+    InternalEvent.removeGestureListeners(
+      document,
+      null,
+      this.mouseMoveHandler,
+      this.mouseUpHandler
+    );
+    this.mouseMoveHandler = null;
+    this.mouseUpHandler = null;
+  }
+
+  /**
+   * Actives the given graph as a drop target.
+   */
+  dragEnter(graph: Graph, evt: MouseEvent) {
+    graph.isMouseDown = true;
+    graph.isMouseTrigger = isMouseEvent(evt);
+    this.previewElement = this.createPreviewElement(graph);
+
+    if (this.previewElement &amp;&amp; this.checkEventSource &amp;&amp; Client.IS_SVG) {
+      this.previewElement.style.pointerEvents = 'none';
+    }
+
+    // Guide is only needed if preview element is used
+    if (this.isGuidesEnabled() &amp;&amp; this.previewElement) {
+      const graphHandler = graph.getPlugin('SelectionHandler') as SelectionHandler;
+      this.currentGuide = new Guide(graph, graphHandler.getGuideStates());
+    }
+
+    if (this.highlightDropTargets) {
+      this.currentHighlight = new CellHighlight(graph, DROP_TARGET_COLOR);
+    }
+
+    // Consumes all events in the current graph before they are fired
+    graph.addListener(InternalEvent.FIRE_MOUSE_EVENT, this.eventConsumer);
+  }
+
+  /**
+   * Deactivates the given graph as a drop target.
+   */
+  dragExit(graph: Graph, evt?: MouseEvent) {
+    this.currentDropTarget = null;
+    this.currentPoint = null;
+    graph.isMouseDown = false;
+
+    // Consumes all events in the current graph before they are fired
+    graph.removeListener(this.eventConsumer);
+
+    if (this.previewElement) {
+      if (this.previewElement.parentNode) {
+        this.previewElement.parentNode.removeChild(this.previewElement);
+      }
+
+      this.previewElement = null;
+    }
+
+    if (this.currentGuide) {
+      this.currentGuide.destroy();
+      this.currentGuide = null;
+    }
+
+    if (this.currentHighlight) {
+      this.currentHighlight.destroy();
+      this.currentHighlight = null;
+    }
+  }
+
+  /**
+   * Implements autoscroll, updates the {@link currentPoint}, highlights any drop
+   * targets and updates the preview.
+   */
+  dragOver(graph: Graph, evt: MouseEvent) {
+    const offset = getOffset(graph.container);
+    const origin = getScrollOrigin(graph.container);
+    let x = getClientX(evt) - offset.x + origin.x - graph.getPanDx();
+    let y = getClientY(evt) - offset.y + origin.y - graph.getPanDy();
+
+    if (graph.isAutoScroll() &amp;&amp; (!this.autoscroll || this.autoscroll)) {
+      graph.scrollPointToVisible(x, y, graph.isAutoExtend());
+    }
+
+    // Highlights the drop target under the mouse
+    if (this.currentHighlight &amp;&amp; graph.isDropEnabled()) {
+      this.currentDropTarget = this.getDropTarget(graph, x, y, evt);
+
+      if (this.currentDropTarget) {
+        const state = graph.getView().getState(this.currentDropTarget);
+        this.currentHighlight.highlight(state);
+      }
+    }
+
+    // Updates the location of the preview
+    if (this.previewElement) {
+      if (!this.previewElement.parentNode) {
+        graph.container.appendChild(this.previewElement);
+
+        this.previewElement.style.zIndex = '3';
+        this.previewElement.style.position = 'absolute';
+      }
+
+      const gridEnabled = this.isGridEnabled() &amp;&amp; graph.isGridEnabledEvent(evt);
+      let hideGuide = true;
+
+      // Grid and guides
+      if (this.currentGuide &amp;&amp; this.currentGuide.isEnabledForEvent(evt)) {
+        // LATER: HTML preview appears smaller than SVG preview
+        const w = parseInt(this.previewElement.style.width);
+        const h = parseInt(this.previewElement.style.height);
+        const bounds = new Rectangle(0, 0, w, h);
+        let delta = new Point(x, y);
+        delta = this.currentGuide.move(bounds, delta, gridEnabled, true);
+        hideGuide = false;
+        x = delta.x;
+        y = delta.y;
+      } else if (gridEnabled) {
+        const { scale } = graph.view;
+        const tr = graph.view.translate;
+        const off = graph.getGridSize() / 2;
+        x = (graph.snap(x / scale - tr.x - off) + tr.x) * scale;
+        y = (graph.snap(y / scale - tr.y - off) + tr.y) * scale;
+      }
+
+      if (this.currentGuide &amp;&amp; hideGuide) {
+        this.currentGuide.hide();
+      }
+
+      if (this.previewOffset) {
+        x += this.previewOffset.x;
+        y += this.previewOffset.y;
+      }
+
+      this.previewElement.style.left = `${Math.round(x)}px`;
+      this.previewElement.style.top = `${Math.round(y)}px`;
+      this.previewElement.style.visibility = 'visible';
+    }
+
+    this.currentPoint = new Point(x, y);
+  }
+
+  /**
+   * Returns the drop target for the given graph and coordinates. This
+   * implementation uses {@link mxGraph.getCellAt}.
+   */
+  drop(
+    graph: Graph,
+    evt: MouseEvent,
+    dropTarget: Cell | null = null,
+    x: number,
+    y: number
+  ) {
+    this.dropHandler(graph, evt, dropTarget, x, y);
+
+    // Had to move this to after the insert because it will
+    // affect the scrollbars of the window in IE to try and
+    // make the complete container visible.
+    // LATER: Should be made optional.
+    if (graph.container.style.visibility !== 'hidden') {
+      graph.container.focus();
+    }
+  }
+}
+
+export default DragSource;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

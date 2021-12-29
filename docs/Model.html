@@ -1,0 +1,7624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Model</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Class</p>
+                    <h1>Model</h1>
+                </header>
+                
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>Model<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
+
+
+    
+    <h4 class="name" id="Model">
+        <a class="href-link" href="#Model">#</a>
+        
+        <span class="code-name">
+            
+                new Model<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Extends <a href="EventSource.html">EventSource</a> to implement a graph model. The graph model acts asa wrapper around the cells which are in charge of storing the actual graphdatastructure. The model acts as a transactional wrapper with eventnotification for all changes, whereas the cells contain the atomicoperations for updating the actual datastructure.### LayersThe cell hierarchy in the model must have a top-level root cell whichcontains the layers (typically one default layer), which in turn contain thetop-level cells of the layers. This means each cell is contained in a layer.If no layers are required, then all new cells should be added to the defaultlayer.Layers are useful for hiding and showing groups of cells, or for placinggroups of cells on top of other cells in the display. To identify a layer,the isLayer function is used. It returns true if the parent of the givencell is the root of the model.### EventsSee events section for more details. There is a new set of events fortracking transactional changes as they happen. The events are calledstartEdit for the initial beginUpdate, executed for each executed changeand endEdit for the terminal endUpdate. The executed event contains aproperty called change which represents the change after execution.### Encoding the model#### To encode a graph model, use the following code:```javascriptvar enc = new Codec();var node = enc.encode(graph.getModel());```This will create an XML node that contains all the model information.#### Encoding and decoding changes:For the encoding of changes, a graph model listener is required that encodeseach change from the given array of changes.```javascriptmodel.addListener(mxEvent.CHANGE, function(sender, evt){  var changes = evt.getProperty('edit').changes;  var nodes = [];  var codec = new Codec();  for (var i = 0; i < changes.length; i++)  {    nodes.push(codec.encode(changes[i]));  }  // do something with the nodes});```For the decoding and execution of changes, the codec needs a lookup functionthat allows it to resolve cell IDs as follows:```javascriptvar codec = new Codec();codec.lookup(id){  return model.getCell(id);}```For each encoded change (represented by a node), the following code can beused to carry out the decoding and create a change object.```javascriptvar changes = [];var change = codec.decode(node);change.model = model;change.execute();changes.push(change);```The changes can then be dispatched using the model as follows.```javascriptvar edit = new mxUndoableEdit(model, false);edit.changes = changes;edit.notify(){  edit.source.fireEvent(new mxEventObject(mxEvent.CHANGE,  	'edit', edit, 'changes', edit.changes));  edit.source.fireEvent(new mxEventObject(mxEvent.NOTIFY,  	'edit', edit, 'changes', edit.changes));}model.fireEvent(new mxEventObject(mxEvent.UNDO, 'edit', edit));model.fireEvent(new mxEventObject(mxEvent.CHANGE,   'edit', edit, 'changes', changes));```Event: mxEvent.CHANGEFires when an undoable edit is dispatched. The `edit` propertycontains the <a href="UndoableEdit.html">UndoableEdit</a>. The `changes` property containsthe array of atomic changes inside the undoable edit. The changes propertyis **deprecated**, please use edit.changes instead.### ExampleFor finding newly inserted cells, the following code can be used:```javascriptgraph.model.addListener(mxEvent.CHANGE, function(sender, evt){  var changes = evt.getProperty('edit').changes;  for (var i = 0; i < changes.length; i++)  {    var change = changes[i];    if (change instanceof mxChildChange &&      change.change.previous == null)    {      graph.startEditingAtCell(change.child);      break;    }  }});```Event: mxEvent.NOTIFYSame as <mxEvent.CHANGE>, this event can be used for classes that need toimplement a sync mechanism between this model and, say, a remote model. Insuch a setup, only local changes should trigger a notify event and allchanges should trigger a change event.Event: mxEvent.EXECUTEFires between begin- and endUpdate and after an atomic change was executedin the model. The `change` property contains the atomic changethat was executed.Event: mxEvent.EXECUTEDFires between START_EDIT and END_EDIT after an atomic change was executed.The `change` property contains the change that was executed.Event: mxEvent.BEGIN_UPDATEFires after the updateLevel was incremented in beginUpdate. This eventcontains no properties.Event: mxEvent.START_EDITFires after the updateLevel was changed from 0 to 1. This eventcontains no properties.Event: mxEvent.END_UPDATEFires after the updateLevel was decreased in endUpdate but before anynotification or change dispatching. The `edit` property containsthe currentEdit.Event: mxEvent.END_EDITFires after the updateLevel was changed from 1 to 0. This eventcontains no properties.Event: mxEvent.BEFORE_UNDOFires before the change is dispatched after the update level has reached 0in endUpdate. The `edit` property contains the curreneEdit.Event: mxEvent.UNDOFires after the change was dispatched in endUpdate. The `edit`property contains the currentEdit.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line26">line 26</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+<h4 class="name" id="cells">
+    <a class="href-link" href="#cells">#</a>
+    
+    <span class="code-name">
+        cells
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Maps from Ids to cells.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line219">line 219</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">any</span>
+
+
+    </span>
+
+<h4 class="name" id="cells">
+    <a class="href-link" href="#cells">#</a>
+    
+    <span class="code-name">
+        cells
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Maps from Ids to cells.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1132">line 1132</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="createIds">
+    <a class="href-link" href="#createIds">#</a>
+    
+    <span class="code-name">
+        createIds
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the model should automatically create Ids for new cells.Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line234">line 234</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="createIds">
+    <a class="href-link" href="#createIds">#</a>
+    
+    <span class="code-name">
+        createIds
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the model should automatically create Ids for new cells.
+Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1150">line 1150</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="currentEdit">
+    <a class="href-link" href="#currentEdit">#</a>
+    
+    <span class="code-name">
+        currentEdit
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the changes for the current transaction. If the transaction isclosed then a new object is created for this variable usingcreateUndoableEdit.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line253">line 253</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">any</span>
+
+
+    </span>
+
+<h4 class="name" id="currentEdit">
+    <a class="href-link" href="#currentEdit">#</a>
+    
+    <span class="code-name">
+        currentEdit
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the changes for the current transaction. If the transaction is
+closed then a new object is created for this variable using
+createUndoableEdit.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1172">line 1172</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="endingUpdate">
+    <a class="href-link" href="#endingUpdate">#</a>
+    
+    <span class="code-name">
+        endingUpdate
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    True if the program flow is currently inside endUpdate.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line264">line 264</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="endingUpdate">
+    <a class="href-link" href="#endingUpdate">#</a>
+    
+    <span class="code-name">
+        endingUpdate
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    True if the program flow is currently inside endUpdate.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1185">line 1185</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="ignoreRelativeEdgeParent">
+    <a class="href-link" href="#ignoreRelativeEdgeParent">#</a>
+    
+    <span class="code-name">
+        ignoreRelativeEdgeParent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if relative edge parents should be ignored for finding the nearestcommon ancestors of an edge's terminals. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line229">line 229</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="ignoreRelativeEdgeParent">
+    <a class="href-link" href="#ignoreRelativeEdgeParent">#</a>
+    
+    <span class="code-name">
+        ignoreRelativeEdgeParent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if relative edge parents should be ignored for finding the nearest
+common ancestors of an edge's terminals. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1144">line 1144</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="maintainEdgeParent">
+    <a class="href-link" href="#maintainEdgeParent">#</a>
+    
+    <span class="code-name">
+        maintainEdgeParent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if edges should automatically be moved into the nearest commonancestor of their terminals. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line224">line 224</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="maintainEdgeParent">
+    <a class="href-link" href="#maintainEdgeParent">#</a>
+    
+    <span class="code-name">
+        maintainEdgeParent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if edges should automatically be moved into the nearest common
+ancestor of their terminals. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1138">line 1138</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="nextId">
+    <a class="href-link" href="#nextId">#</a>
+    
+    <span class="code-name">
+        nextId
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the next Id to be created. Initial value is 0.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line247">line 247</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="nextId">
+    <a class="href-link" href="#nextId">#</a>
+    
+    <span class="code-name">
+        nextId
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the next Id to be created. Initial value is 0.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1165">line 1165</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="postfix">
+    <a class="href-link" href="#postfix">#</a>
+    
+    <span class="code-name">
+        postfix
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Defines the postfix of new Ids. Default is an empty string.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line242">line 242</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">string</span>
+
+
+    </span>
+
+<h4 class="name" id="postfix">
+    <a class="href-link" href="#postfix">#</a>
+    
+    <span class="code-name">
+        postfix
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Defines the postfix of new Ids. Default is an empty string.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1160">line 1160</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="prefix">
+    <a class="href-link" href="#prefix">#</a>
+    
+    <span class="code-name">
+        prefix
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Defines the prefix of new Ids. Default is an empty string.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line238">line 238</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">string</span>
+
+
+    </span>
+
+<h4 class="name" id="prefix">
+    <a class="href-link" href="#prefix">#</a>
+    
+    <span class="code-name">
+        prefix
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Defines the prefix of new Ids. Default is an empty string.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1155">line 1155</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="root">
+    <a class="href-link" href="#root">#</a>
+    
+    <span class="code-name">
+        root
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the root cell, which in turn contains the cells that represent thelayers of the diagram as child cells. That is, the actual elements of thediagram are supposed to live in the third generation of cells and below.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line215">line 215</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="root">
+    <a class="href-link" href="#root">#</a>
+    
+    <span class="code-name">
+        root
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the root cell, which in turn contains the cells that represent the
+layers of the diagram as child cells. That is, the actual elements of the
+diagram are supposed to live in the third generation of cells and below.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1127">line 1127</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="updateLevel">
+    <a class="href-link" href="#updateLevel">#</a>
+    
+    <span class="code-name">
+        updateLevel
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Counter for the depth of nested transactions. Each call to beginUpdatewill increment this number and each call to endUpdate will decrementit. When the counter reaches 0, the transaction is closed and therespective events are fired. Initial value is 0.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line260">line 260</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="updateLevel">
+    <a class="href-link" href="#updateLevel">#</a>
+    
+    <span class="code-name">
+        updateLevel
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Counter for the depth of nested transactions. Each call to beginUpdate
+will increment this number and each call to endUpdate will decrement
+it. When the counter reaches 0, the transaction is closed and the
+respective events are fired. Initial value is 0.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1180">line 1180</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="add">
+        <a class="href-link" href="#add">#</a>
+        
+        <span class="code-name">
+            
+                add<span class="signature">(parent, child, index)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adds the specified child to the parent at the given index using<a href="ChildChange.html">ChildChange</a> and adds the change to the current transaction. If noindex is specified then the child is appended to the parent's array ofchildren. Returns the inserted child.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>parent</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">that specifies the parent to contain the child.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>child</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">that specifies the child to be inserted.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>index</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          null
+      
+      </td>
+  
+
+  <td class="description last">Optional integer that specifies the index of the child.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line384">line 384</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="beginUpdate">
+        <a class="href-link" href="#beginUpdate">#</a>
+        
+        <span class="code-name">
+            
+                beginUpdate<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Increments the updateLevel by one. The event notificationis queued until updateLevel reaches 0 by use ofendUpdate.All changes on <a href="Model.html">Model</a> are transactional,that is, they are executed in a single undoable changeon the model (without transaction isolation).Therefore, if you want to combine anynumber of changes into a single undoable change,you should group any two or more API calls thatmodify the graph model between beginUpdateand endUpdate calls as shown here:```javascriptvar model = graph.getModel();var parent = graph.getDefaultParent();var index = model.getChildCount(parent);model.beginUpdate();try{  model.add(parent, v1, index);  model.add(parent, v2, index+1);}finally{  model.endUpdate();}```Of course there is a shortcut for appending asequence of cells into the default parent:```javascriptgraph.addCells([v1, v2]).```
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line895">line 895</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="cellAdded">
+        <a class="href-link" href="#cellAdded">#</a>
+        
+        <span class="code-name">
+            
+                cellAdded<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to update cells when a cell has been added. Thisimplementation resolves collisions by creating new Ids. To change theID of a cell after it was inserted into the model, use the followingcode:(codedelete model.cells[cell.getId()];cell.setId(newId);model.cells[cell.getId()] = cell;```If the change of the ID should be part of the command history, then thecell should be removed from the model and a clone with the new ID shouldbe reinserted into the model instead.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the cell that has been added.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line418">line 418</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="cellRemoved">
+        <a class="href-link" href="#cellRemoved">#</a>
+        
+        <span class="code-name">
+            
+                cellRemoved<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to update cells when a cell has been removed.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the cell that has been removed.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line562">line 562</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="clear">
+        <a class="href-link" href="#clear">#</a>
+        
+        <span class="code-name">
+            
+                clear<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets a new root using createRoot.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line276">line 276</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="cloneCell">
+        <a class="href-link" href="#cloneCell">#</a>
+        
+        <span class="code-name">
+            
+                cloneCell<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns a deep clone of the given <a href="Cell.html">Cell</a>` (includingthe children) which is created using cloneCells`.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          null
+      
+      </td>
+  
+
+  <td class="description last">to be cloned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line1040">line 1040</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="collapsedStateForCellChanged">
+        <a class="href-link" href="#collapsedStateForCellChanged">#</a>
+        
+        <span class="code-name">
+            
+                collapsedStateForCellChanged<span class="signature">(cell, collapsed)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to update the collapsed state of thegiven <a href="Cell.html">Cell</a> using <mxCell.setCollapsed> and returnthe previous collapsed state.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the cell to be updated.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>collapsed</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean that specifies the new collpased state.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line807">line 807</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="contains">
+        <a class="href-link" href="#contains">#</a>
+        
+        <span class="code-name">
+            
+                contains<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the model contains the given <a href="Cell.html">Cell</a>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the cell.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line371">line 371</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createId">
+        <a class="href-link" href="#createId">#</a>
+        
+        <span class="code-name">
+            
+                createId<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook method to create an Id for the specified cell. This implementationconcatenates prefix, id and postfix to create the Id and incrementsnextId. The cell is ignored by this implementation, but can be used inoverridden methods to prefix the Ids with eg. the cell type.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">to create the Id for.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line458">line 458</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createRoot">
+        <a class="href-link" href="#createRoot">#</a>
+        
+        <span class="code-name">
+            
+                createRoot<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates a new root cell with a default layer (child 0).
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line294">line 294</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createUndoableEdit">
+        <a class="href-link" href="#createUndoableEdit">#</a>
+        
+        <span class="code-name">
+            
+                createUndoableEdit<span class="signature">(significant)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates a new <a href="UndoableEdit.html">UndoableEdit</a> that implements thenotify function to fire a change and notify eventthrough the <a href="UndoableEdit.html">UndoableEdit</a>'s source.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>significant</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          true
+      
+      </td>
+  
+
+  <td class="description last">Optional boolean that specifies if the edit to be created issignificant. Default is true.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line944">line 944</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="endUpdate">
+        <a class="href-link" href="#endUpdate">#</a>
+        
+        <span class="code-name">
+            
+                endUpdate<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Decrements the updateLevel by one and fires an undoevent if the updateLevel reaches 0. This functionindirectly fires a change event by invoking the notifyfunction on the currentEdit und then creates a newcurrentEdit using createUndoableEdit.The undo event is fired only once per edit, whereasthe change event is fired whenever the notifyfunction is invoked, that is, on undo and redo ofthe edit.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line914">line 914</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="execute">
+        <a class="href-link" href="#execute">#</a>
+        
+        <span class="code-name">
+            
+                execute<span class="signature">(change)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Executes the given edit and fires events if required. The edit objectrequires an execute function which is invoked. The edit is added to thecurrentEdit between beginUpdate and endUpdate calls, so thatevents will be fired if this execute is an individual transaction, thatis, if no previous beginUpdate calls have been made without callingendUpdate. This implementation fires an execute event beforeexecuting the given change.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>change</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Object that described the change.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line849">line 849</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="geometryForCellChanged">
+        <a class="href-link" href="#geometryForCellChanged">#</a>
+        
+        <span class="code-name">
+            
+                geometryForCellChanged<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to update the <a href="Geometry.html">Geometry</a> of the given <a href="Cell.html">Cell</a> using<mxCell.setGeometry> and return the previous <a href="Geometry.html">Geometry</a>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line755">line 755</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getCell">
+        <a class="href-link" href="#getCell">#</a>
+        
+        <span class="code-name">
+            
+                getCell<span class="signature">(id)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the <a href="Cell.html">Cell</a> for the specified Id or null if no cell can befound for the given Id.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>id</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A string representing the Id of the cell.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line305">line 305</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getEdgesBetween">
+        <a class="href-link" href="#getEdgesBetween">#</a>
+        
+        <span class="code-name">
+            
+                getEdgesBetween<span class="signature">(source, target, directed)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns all edges between the given source and target pair. If directedis true, then only edges from the source to the target are returned,otherwise, all edges between the two cells are returned.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>source</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">that defines the source terminal of the edge to bereturned.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>target</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">that defines the target terminal of the edge to bereturned.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>directed</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last">Optional boolean that specifies if the direction of theedge should be taken into account. Default is false.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line678">line 678</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isCreateIds">
+        <a class="href-link" href="#isCreateIds">#</a>
+        
+        <span class="code-name">
+            
+                isCreateIds<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns createIds.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line282">line 282</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isLayer">
+        <a class="href-link" href="#isLayer">#</a>
+        
+        <span class="code-name">
+            
+                isLayer<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if isRoot returns true for the parent of the given cell.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that represents the possible layer.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line363">line 363</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isRoot">
+        <a class="href-link" href="#isRoot">#</a>
+        
+        <span class="code-name">
+            
+                isRoot<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given cell is the root of the model and a non-nullvalue.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          null
+      
+      </td>
+  
+
+  <td class="description last">that represents the possible root.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line355">line 355</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="mergeChildren">
+        <a class="href-link" href="#mergeChildren">#</a>
+        
+        <span class="code-name">
+            
+                mergeChildren<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Merges the children of the given cell into the given target cell insidethis model. All cells are cloned unless there is a corresponding cell inthe model with the same id, in which case the source cell is ignored andall edges are connected to the corresponding cell in this model. Edgesare considered to have no identity and are always cloned unless thecloneAllEdges flag is set to false, in which case edges with the sameid in the target model are reconnected to reflect the terminals of thesource edges.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line964">line 964</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="mergeChildrenImpl">
+        <a class="href-link" href="#mergeChildrenImpl">#</a>
+        
+        <span class="code-name">
+            
+                mergeChildrenImpl<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Clones the children of the source cell into the given target cell inthis model and adds an entry to the mapping that maps from the sourcecell to the target cell with the same id or the clone of the source cellthat was inserted into this model.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line997">line 997</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="parentForCellChanged">
+        <a class="href-link" href="#parentForCellChanged">#</a>
+        
+        <span class="code-name">
+            
+                parentForCellChanged<span class="signature">(cell, parent, index)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to update the parent of a cell using <mxCell.insert>on the parent and return the previous parent.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">to update the parent for.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>parent</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the new parent of the cell.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>index</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Optional integer that defines the index of the childin the parent's child array.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line585">line 585</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="remove">
+        <a class="href-link" href="#remove">#</a>
+        
+        <span class="code-name">
+            
+                remove<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Removes the specified cell from the model using <a href="ChildChange.html">ChildChange</a> and addsthe change to the current transaction. This operation will remove thecell and all of its children from the model. Returns the removed cell.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that should be removed.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line548">line 548</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="rootChanged">
+        <a class="href-link" href="#rootChanged">#</a>
+        
+        <span class="code-name">
+            
+                rootChanged<span class="signature">(root)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to change the root of the model and update the internaldatastructures, such as cells and nextId. Returns the previous root.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>root</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the new root.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line340">line 340</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setCollapsed">
+        <a class="href-link" href="#setCollapsed">#</a>
+        
+        <span class="code-name">
+            
+                setCollapsed<span class="signature">(cell, collapsed)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the collapsed state of the given <a href="Cell.html">Cell</a> using <a href="CollapseChange.html">CollapseChange</a>and adds the change to the current transaction.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">whose collapsed state should be changed.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>collapsed</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean that specifies the new collpased state.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line793">line 793</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setCreateIds">
+        <a class="href-link" href="#setCreateIds">#</a>
+        
+        <span class="code-name">
+            
+                setCreateIds<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets createIds.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line288">line 288</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setGeometry">
+        <a class="href-link" href="#setGeometry">#</a>
+        
+        <span class="code-name">
+            
+                setGeometry<span class="signature">(cell, geometry)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the <a href="Geometry.html">Geometry</a> of the given <a href="Cell.html">Cell</a>. The actual updateof the cell is carried out in geometryForCellChanged. The<a href="GeometryChange.html">GeometryChange</a> action is used to encapsulate the change.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">whose geometry should be changed.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>geometry</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Geometry.html">Geometry</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that defines the new geometry.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line745">line 745</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setRoot">
+        <a class="href-link" href="#setRoot">#</a>
+        
+        <span class="code-name">
+            
+                setRoot<span class="signature">(root)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the root of the model using <a href="RootChange.html">RootChange</a> and adds the change tothe current transaction. This resets all datastructures in the model andis the preferred way of clearing an existing model. Returns the newroot.Example:```javascriptvar root = new mxCell();root.insert(new mxCell());model.setRoot(root);```
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>root</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the new root.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line330">line 330</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setStyle">
+        <a class="href-link" href="#setStyle">#</a>
+        
+        <span class="code-name">
+            
+                setStyle<span class="signature">(cell, style)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the style of the given <a href="Cell.html">Cell</a> using <a href="StyleChange.html">StyleChange</a> andadds the change to the current transaction.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">whose style should be changed.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>style</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">String of the form [stylename;|key=value;] to specifythe new cell style.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line768">line 768</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setTerminal">
+        <a class="href-link" href="#setTerminal">#</a>
+        
+        <span class="code-name">
+            
+                setTerminal<span class="signature">(edge, terminal, isSource)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the source or target terminal of the given <a href="Cell.html">Cell</a> using<a href="TerminalChange.html">TerminalChange</a> and adds the change to the current transaction.This implementation updates the parent of the edge using updateEdgeParentif required.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>edge</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the edge.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>terminal</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the new terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>isSource</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean indicating if the terminal is the new source ortarget terminal of the edge.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line619">line 619</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setTerminals">
+        <a class="href-link" href="#setTerminals">#</a>
+        
+        <span class="code-name">
+            
+                setTerminals<span class="signature">(edge, source, target)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the source and target <a href="Cell.html">Cell</a> of the given <a href="Cell.html">Cell</a> in a singletransaction using setTerminal for each end of the edge.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>edge</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the edge.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>source</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the new source terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>target</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the new target terminal.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line636">line 636</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setValue">
+        <a class="href-link" href="#setValue">#</a>
+        
+        <span class="code-name">
+            
+                setValue<span class="signature">(cell, value)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the user object of then given <a href="Cell.html">Cell</a> using <a href="ValueChange.html">ValueChange</a>and adds the change to the current transaction.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">whose user object should be changed.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Object that defines the new user object.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line712">line 712</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setVisible">
+        <a class="href-link" href="#setVisible">#</a>
+        
+        <span class="code-name">
+            
+                setVisible<span class="signature">(cell, visible)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the visible state of the given <a href="Cell.html">Cell</a> using <a href="VisibleChange.html">VisibleChange</a> andadds the change to the current transaction.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">whose visible state should be changed.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>visible</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean that specifies the new visible state.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line819">line 819</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="styleForCellChanged">
+        <a class="href-link" href="#styleForCellChanged">#</a>
+        
+        <span class="code-name">
+            
+                styleForCellChanged<span class="signature">(cell, style)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to update the style of the given <a href="Cell.html">Cell</a>using <mxCell.setStyle> and return the previous style.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the cell to be updated.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>style</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">String of the form [stylename;|key=value;] to specifythe new cell style.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line781">line 781</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="terminalForCellChanged">
+        <a class="href-link" href="#terminalForCellChanged">#</a>
+        
+        <span class="code-name">
+            
+                terminalForCellChanged<span class="signature">(edge, terminal, isSource)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner helper function to update the terminal of the edge using<mxCell.insertEdge> and return the previous terminal.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>edge</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">that specifies the edge to be updated.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>terminal</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">that specifies the new terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>isSource</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last">Boolean indicating if the terminal is the new source ortarget terminal of the edge.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line656">line 656</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateEdgeParent">
+        <a class="href-link" href="#updateEdgeParent">#</a>
+        
+        <span class="code-name">
+            
+                updateEdgeParent<span class="signature">(edge, root)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to update the parent of the specified <a href="Cell.html">Cell</a> to thenearest-common-ancestor of its two terminals.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>edge</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the edge.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>root</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that represents the current root of the model.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line497">line 497</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateEdgeParents">
+        <a class="href-link" href="#updateEdgeParents">#</a>
+        
+        <span class="code-name">
+            
+                updateEdgeParents<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates the parent for all edges that are connected to cell or one ofits descendants using updateEdgeParent.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line467">line 467</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="valueForCellChanged">
+        <a class="href-link" href="#valueForCellChanged">#</a>
+        
+        <span class="code-name">
+            
+                valueForCellChanged<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to update the user object of the given <a href="Cell.html">Cell</a>using <mxCell.valueChanged> and return the previous value,that is, the return value of <mxCell.valueChanged>.To change a specific attribute in an XML node, the following code can beused.```javascriptgraph.getModel().valueForCellChanged(cell, value){  var previous = cell.value.getAttribute('label');  cell.value.setAttribute('label', value);  return previous;};```
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line734">line 734</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="visibleStateForCellChanged">
+        <a class="href-link" href="#visibleStateForCellChanged">#</a>
+        
+        <span class="code-name">
+            
+                visibleStateForCellChanged<span class="signature">(cell, visible)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Inner callback to update the visible state of thegiven <a href="Cell.html">Cell</a> using <mxCell.setCollapsed> and returnthe previous visible state.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">that specifies the cell to be updated.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>visible</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean that specifies the new visible state.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_other_Model.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_other_Model.ts.html">view/other/Model.ts</a>, <a href="view_other_Model.ts.html#line833">line 833</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

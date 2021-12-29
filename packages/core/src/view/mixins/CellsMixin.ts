@@ -2009,9 +2009,7 @@ export const CellsMixin: PartialType = {
           this.resetEdges(cells);
         }
 
-        this.fireEvent(
-          new EventObject(InternalEvent.CELLS_MOVED, { cells, dx, dy, disconnect })
-        );
+        this.fireEvent(new EventObject(InternalEvent.CELLS_MOVED, { cells, dx, dy, disconnect }));
       });
     }
   },
@@ -2057,7 +2055,6 @@ export const CellsMixin: PartialType = {
           geometry.offset.y = geometry.offset.y + dy;
         }
       }
-
       this.getModel().setGeometry(cell, geometry);
     }
   },
@@ -2231,7 +2228,6 @@ export const CellsMixin: PartialType = {
               geo.y += dy;
             }
           }
-
           this.getModel().setGeometry(cell, geo);
         }
       }

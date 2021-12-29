@@ -1,0 +1,9482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> ConnectionHandler</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Class</p>
+                    <h1>ConnectionHandler</h1>
+                </header>
+                
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>ConnectionHandler<span class="signature">(graph, factoryMethod)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Graph event handler that creates new connections. Uses <mxTerminalMarker>for finding and highlighting the source and target vertices and<factoryMethod> to create the edge instance. This handler is built-into<mxGraph.connectionHandler> and enabled using <mxGraph.setConnectable>.Example:```javascriptnew mxConnectionHandler(graph, (source, target, style)=>{  edge = new mxCell('', new mxGeometry());  edge.setEdge(true);  edge.setStyle(style);  edge.geometry.relative = true;  return edge;});```Here is an alternative solution that just sets a specific user object fornew edges by overriding <insertEdge>.```javascriptmxConnectionHandlerInsertEdge = insertEdge;insertEdge = (parent, id, value, source, target, style)=>{  value = 'Test';  return mxConnectionHandlerInsertEdge.apply(this, arguments);};```Using images to trigger connections:This handler uses mxTerminalMarker to find the source and target cell forthe new connection and creates a new edge using <connect>. The new edge iscreated using <createEdge> which in turn uses <factoryMethod> or creates anew default edge.The handler uses a "highlight-paradigm" for indicating if a cell is beingused as a source or target terminal, as seen in other diagramming products.In order to allow both, moving and connecting cells at the same time,<mxConstants.DEFAULT_HOTSPOT> is used in the handler to determine the hotspotof a cell, that is, the region of the cell which is used to trigger a newconnection. The constant is a value between 0 and 1 that specifies theamount of the width and height around the center to be used for the hotspotof a cell and its default value is 0.5. In addition,<mxConstants.MIN_HOTSPOT_SIZE> defines the minimum number of pixels for thewidth and height of the hotspot.This solution, while standards compliant, may be somewhat confusing becausethere is no visual indicator for the hotspot and the highlight is seen toswitch on and off while the mouse is being moved in and out. Furthermore,this paradigm does not allow to create different connections depending onthe highlighted hotspot as there is only one hotspot per cell and itnormally does not allow cells to be moved and connected at the same time asthere is no clear indication of the connectable area of the cell.To come across these issues, the handle has an additional <createIcons> hookwith a default implementation that allows to create one icon to be used totrigger new connections. If this icon is specified, then new connections canonly be created if the image is clicked while the cell is being highlighted.The <createIcons> hook may be overridden to create more than one<mxImageShape> for creating new connections, but the default implementationsupports one image and is used as follows:In order to display the "connect image" whenever the mouse is over the cell,an DEFAULT_HOTSPOT of 1 should be used:```javascriptmxConstants.DEFAULT_HOTSPOT = 1;```In order to avoid confusion with the highlighting, the highlight colorshould not be used with a connect image:```javascriptmxConstants.HIGHLIGHT_COLOR = null;```To install the image, the connectImage field of the mxConnectionHandler mustbe assigned a new <mxImage> instance:```javascriptconnectImage = new mxImage('images/green-dot.gif', 14, 14);```This will use the green-dot.gif with a width and height of 14 pixels as theimage to trigger new connections. In createIcons the icon field of thehandler will be set in order to remember the icon that has been clicked forcreating the new connection. This field will be available under selectedIconin the connect method, which may be overridden to take the icon thattriggered the new connection into account. This is useful if more than oneicon may be used to create a connection.Group: EventsEvent: mxEvent.STARTFires when a new connection is being created by the user. The <code>state</code>property contains the state of the source cell.Event: mxEvent.CONNECTFires between begin- and endUpdate in <connect>. The <code>cell</code>property contains the inserted edge, the <code>event</code> and <code>target</code>properties contain the respective arguments that were passed to <connect> (wheretarget corresponds to the dropTarget argument). Finally, the <code>terminal</code>property corresponds to the target argument in <connect> or the clone of the sourceterminal if <createTarget> is enabled.Note that the target is the cell under the mouse where the mouse button was released.Depending on the logic in the handler, this doesn't necessarily have to be the targetof the inserted edge. To print the source, target or any optional ports IDs that theedge is connected to, the following code can be used. To get more details about theactual connection point, <mxGraph.getConnectionConstraint> can be used. To resolvethe port IDs, use <Transactions.getCell>.```javascriptgraph.connectionHandler.addListener(mxEvent.CONNECT, (sender, evt)=>{  let edge = evt.getProperty('cell');  let source = graph.getModel().getTerminal(edge, true);  let target = graph.getModel().getTerminal(edge, false);  let style = graph.getCellStyle(edge);  let sourcePortId = style[mxConstants.STYLE_SOURCE_PORT];  let targetPortId = style[mxConstants.STYLE_TARGET_PORT];  MaxLog.show();  MaxLog.debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);});```Event: mxEvent.RESETFires when the <reset> method is invoked.Constructor: mxConnectionHandlerConstructs an event handler that connects vertices using the specifiedfactory method to create the new edges. Modify<mxConstants.ACTIVE_REGION> to setup the region on a cell which triggersthe creation of a new connection or use connect icons as explainedabove.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
+
+
+    
+    <h4 class="name" id="ConnectionHandler">
+        <a class="href-link" href="#ConnectionHandler">#</a>
+        
+        <span class="code-name">
+            
+                new ConnectionHandler<span class="signature">(graph, factoryMethod)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>graph</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Reference to the enclosing <mxGraph>.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>factoryMethod</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Optional function to create the edge. The function takesthe source and target <Cell> as the first and second argument and anoptional cell style from the preview as the third argument. It returnsthe <Cell> that represents the new edge.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line176">line 176</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">function</span>
+
+
+    </span>
+
+<h4 class="name" id="changeHandler">
+    <a class="href-link" href="#changeHandler">#</a>
+    
+    <span class="code-name">
+        changeHandler
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the change event listener for later removal.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1744">line 1744</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="connectIconOffset">
+    <a class="href-link" href="#connectIconOffset">#</a>
+    
+    <span class="code-name">
+        connectIconOffset
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the offset for connect icons during connection preview.Default is mxPoint(0, <mxConstants.TOOLTIP_VERTICAL_OFFSET>).Note that placing the icon under the mouse pointer with anoffset of (0,0) will affect hit detection.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line264">line 264</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="connectIconOffset">
+    <a class="href-link" href="#connectIconOffset">#</a>
+    
+    <span class="code-name">
+        connectIconOffset
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the offset for connect icons during connection preview.
+Default is mxPoint(0, <mxConstants.TOOLTIP_VERTICAL_OFFSET>).
+Note that placing the icon under the mouse pointer with an
+offset of (0,0) will affect hit detection.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1733">line 1733</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="connectImage">
+    <a class="href-link" href="#connectImage">#</a>
+    
+    <span class="code-name">
+        connectImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <mxImage> that is used to trigger the creation of a new connection. Thisis used in <createIcons>. Default is null.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line215">line 215</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">Image</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="connectImage">
+    <a class="href-link" href="#connectImage">#</a>
+    
+    <span class="code-name">
+        connectImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <mxImage> that is used to trigger the creation of a new connection. This
+is used in <createIcons>. Default is null.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1671">line 1671</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="ConstraintHandler.html">ConstraintHandler</a></span>
+
+
+    </span>
+
+<h4 class="name" id="constraintHandler">
+    <a class="href-link" href="#constraintHandler">#</a>
+    
+    <span class="code-name">
+        constraintHandler
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the <mxConstraintHandler> used for drawing and highlighting
+constraints.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1704">line 1704</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="createTarget">
+    <a class="href-link" href="#createTarget">#</a>
+    
+    <span class="code-name">
+        createTarget
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if <createTargetVertex> should be called if no target was under themouse for the new connection. Setting this to true means the connectionwill be drawn as valid if no target is under the mouse, and<createTargetVertex> will be called before the connection is created betweenthe source cell and the newly created vertex in <createTargetVertex>, whichcan be overridden to create a new target. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line237">line 237</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="createTarget">
+    <a class="href-link" href="#createTarget">#</a>
+    
+    <span class="code-name">
+        createTarget
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if <createTargetVertex> should be called if no target was under the
+mouse for the new connection. Setting this to true means the connection
+will be drawn as valid if no target is under the mouse, and
+<createTargetVertex> will be called before the connection is created between
+the source cell and the newly created vertex in <createTargetVertex>, which
+can be overridden to create a new target. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1693">line 1693</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="cursor">
+    <a class="href-link" href="#cursor">#</a>
+    
+    <span class="code-name">
+        cursor
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the cursor to be used while the handler is active. Default is null.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line295">line 295</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="cursor">
+    <a class="href-link" href="#cursor">#</a>
+    
+    <span class="code-name">
+        cursor
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the cursor to be used while the handler is active. Default is null.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1776">line 1776</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">function</span>
+
+
+    </span>
+
+<h4 class="name" id="drillHandler">
+    <a class="href-link" href="#drillHandler">#</a>
+    
+    <span class="code-name">
+        drillHandler
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the drill event listener for later removal.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1749">line 1749</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="edgeState">
+    <a class="href-link" href="#edgeState">#</a>
+    
+    <span class="code-name">
+        edgeState
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Optional <CellState> that represents the preview edge while thehandler is active. This is created in <createEdgeState>.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line269">line 269</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="CellState.html">CellState</a></span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="edgeState">
+    <a class="href-link" href="#edgeState">#</a>
+    
+    <span class="code-name">
+        edgeState
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Optional <CellState> that represents the preview edge while the
+handler is active. This is created in <createEdgeState>.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1739">line 1739</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="enabled">
+    <a class="href-link" href="#enabled">#</a>
+    
+    <span class="code-name">
+        enabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if events are handled. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line224">line 224</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="enabled">
+    <a class="href-link" href="#enabled">#</a>
+    
+    <span class="code-name">
+        enabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if events are handled. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1680">line 1680</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="error">
+    <a class="href-link" href="#error">#</a>
+    
+    <span class="code-name">
+        error
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the current validation error while connections are being created.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line241">line 241</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="error">
+    <a class="href-link" href="#error">#</a>
+    
+    <span class="code-name">
+        error
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the current validation error while connections are being created.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1709">line 1709</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="factoryMethod">
+    <a class="href-link" href="#factoryMethod">#</a>
+    
+    <span class="code-name">
+        factoryMethod
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Function that is used for creating new edges. The function takes thesource and target <Cell> as the first and second argument and returnsa new <Cell> that represents the edge. This is used in <createEdge>.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line197">line 197</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">FactoryMethod</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="factoryMethod">
+    <a class="href-link" href="#factoryMethod">#</a>
+    
+    <span class="code-name">
+        factoryMethod
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Function that is used for creating new edges. The function takes the
+source and target <Cell> as the first and second argument and returns
+a new <Cell> that represents the edge. This is used in <createEdge>.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1652">line 1652</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="first">
+    <a class="href-link" href="#first">#</a>
+    
+    <span class="code-name">
+        first
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the <mxPoint> where the mouseDown took place while the handler isactive.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line257">line 257</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="Point.html">Point</a></span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="first">
+    <a class="href-link" href="#first">#</a>
+    
+    <span class="code-name">
+        first
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the <mxPoint> where the mouseDown took place while the handler is
+active.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1726">line 1726</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="Graph_.html">Graph</a></span>
+
+
+    </span>
+
+<h4 class="name" id="graph">
+    <a class="href-link" href="#graph">#</a>
+    
+    <span class="code-name">
+        graph
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Reference to the enclosing <mxGraph>.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1645">line 1645</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="ignoreMouseDown">
+    <a class="href-link" href="#ignoreMouseDown">#</a>
+    
+    <span class="code-name">
+        ignoreMouseDown
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the connection handler should ignore the state of the mousebutton when highlighting the source. Default is false, that is, thehandler only highlights the source if no button is being pressed.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line252">line 252</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="ignoreMouseDown">
+    <a class="href-link" href="#ignoreMouseDown">#</a>
+    
+    <span class="code-name">
+        ignoreMouseDown
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the connection handler should ignore the state of the mouse
+button when highlighting the source. Default is false, that is, the
+handler only highlights the source if no button is being pressed.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1720">line 1720</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="insertBeforeSource">
+    <a class="href-link" href="#insertBeforeSource">#</a>
+    
+    <span class="code-name">
+        insertBeforeSource
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if new edges should be inserted before the source vertex in thecell hierarchy. Default is false for backwards compatibility.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line300">line 300</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="insertBeforeSource">
+    <a class="href-link" href="#insertBeforeSource">#</a>
+    
+    <span class="code-name">
+        insertBeforeSource
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if new edges should be inserted before the source vertex in the
+cell hierarchy. Default is false for backwards compatibility.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1781">line 1781</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="livePreview">
+    <a class="href-link" href="#livePreview">#</a>
+    
+    <span class="code-name">
+        livePreview
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the actual shape of the edge state should be used for the preview.Default is false. (Ignored if no edge state is created in <createEdgeState>.)
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line291">line 291</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="livePreview">
+    <a class="href-link" href="#livePreview">#</a>
+    
+    <span class="code-name">
+        livePreview
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the actual shape of the edge state should be used for the preview.
+Default is false. (Ignored if no edge state is created in <createEdgeState>.)
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1771">line 1771</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="CellMarker.html">CellMarker</a></span>
+
+
+    </span>
+
+<h4 class="name" id="marker">
+    <a class="href-link" href="#marker">#</a>
+    
+    <span class="code-name">
+        marker
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the <mxTerminalMarker> used for finding source and target cells.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1698">line 1698</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="mouseDownCounter">
+    <a class="href-link" href="#mouseDownCounter">#</a>
+    
+    <span class="code-name">
+        mouseDownCounter
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Counts the number of mouseDown events since the start. The initial mousedown event counts as 1.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line274">line 274</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="mouseDownCounter">
+    <a class="href-link" href="#mouseDownCounter">#</a>
+    
+    <span class="code-name">
+        mouseDownCounter
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Counts the number of mouseDown events since the start. The initial mouse
+down event counts as 1.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1754">line 1754</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="moveIconBack">
+    <a class="href-link" href="#moveIconBack">#</a>
+    
+    <span class="code-name">
+        moveIconBack
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if icons should be moved to the back of the overlay pane. This canbe set to true if the icons of the connection handler conflict with otherhandles, such as the vertex label move handle. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line210">line 210</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="moveIconBack">
+    <a class="href-link" href="#moveIconBack">#</a>
+    
+    <span class="code-name">
+        moveIconBack
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if icons should be moved to the back of the overlay pane. This can
+be set to true if the icons of the connection handler conflict with other
+handles, such as the vertex label move handle. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1665">line 1665</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="moveIconFront">
+    <a class="href-link" href="#moveIconFront">#</a>
+    
+    <span class="code-name">
+        moveIconFront
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if icons should be displayed inside the graph container insteadof the overlay pane. This is used for HTML labels on vertices which hidethe connect icon. This has precendence over <moveIconBack> when setto true. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line204">line 204</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="moveIconFront">
+    <a class="href-link" href="#moveIconFront">#</a>
+    
+    <span class="code-name">
+        moveIconFront
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if icons should be displayed inside the graph container instead
+of the overlay pane. This is used for HTML labels on vertices which hide
+the connect icon. This has precendence over <moveIconBack> when set
+to true. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1659">line 1659</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="movePreviewAway">
+    <a class="href-link" href="#movePreviewAway">#</a>
+    
+    <span class="code-name">
+        movePreviewAway
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Switch to enable moving the preview away from the mousepointer. This is required in browserswhere the preview cannot be made transparent to events and if the built-in hit detection onthe HTML elements in the page should be used. Default is the value of <Client.IS_VML>.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line280">line 280</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="movePreviewAway">
+    <a class="href-link" href="#movePreviewAway">#</a>
+    
+    <span class="code-name">
+        movePreviewAway
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Switch to enable moving the preview away from the mousepointer. This is required in browsers
+where the preview cannot be made transparent to events and if the built-in hit detection on
+the HTML elements in the page should be used. Default is the value of <Client.IS_VML>.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1760">line 1760</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="outlineConnect">
+    <a class="href-link" href="#outlineConnect">#</a>
+    
+    <span class="code-name">
+        outlineConnect
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if connections to the outline of a highlighted target should beenabled. This will allow to place the connection point along the outline ofthe highlighted target. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line286">line 286</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="outlineConnect">
+    <a class="href-link" href="#outlineConnect">#</a>
+    
+    <span class="code-name">
+        outlineConnect
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if connections to the outline of a highlighted target should be
+enabled. This will allow to place the connection point along the outline of
+the highlighted target. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1766">line 1766</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="select">
+    <a class="href-link" href="#select">#</a>
+    
+    <span class="code-name">
+        select
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if new edges should be selected. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line228">line 228</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="select">
+    <a class="href-link" href="#select">#</a>
+    
+    <span class="code-name">
+        select
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if new edges should be selected. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1684">line 1684</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="targetConnectImage">
+    <a class="href-link" href="#targetConnectImage">#</a>
+    
+    <span class="code-name">
+        targetConnectImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the connect icon should be centered on the target statewhile connections are being previewed. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line220">line 220</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="targetConnectImage">
+    <a class="href-link" href="#targetConnectImage">#</a>
+    
+    <span class="code-name">
+        targetConnectImage
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the connect icon should be centered on the target state
+while connections are being previewed. Default is false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1676">line 1676</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="waypointsEnabled">
+    <a class="href-link" href="#waypointsEnabled">#</a>
+    
+    <span class="code-name">
+        waypointsEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if single clicks should add waypoints on the new edge. Default isfalse.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line246">line 246</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="waypointsEnabled">
+    <a class="href-link" href="#waypointsEnabled">#</a>
+    
+    <span class="code-name">
+        waypointsEnabled
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if single clicks should add waypoints on the new edge. Default is
+false.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1714">line 1714</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="addWaypointForEvent">
+        <a class="href-link" href="#addWaypointForEvent">#</a>
+        
+        <span class="code-name">
+            
+                addWaypointForEvent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adds the waypoint for the given event to <waypoints>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1205">line 1205</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="checkConstraints">
+        <a class="href-link" href="#checkConstraints">#</a>
+        
+        <span class="code-name">
+            
+                checkConstraints<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the connection for the given constraints is valid. Thisimplementation returns true if the constraints are not pointing to thesame fixed connection point.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1225">line 1225</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="connect">
+        <a class="href-link" href="#connect">#</a>
+        
+        <span class="code-name">
+            
+                connect<span class="signature">(source, target, evt, dropTarget)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Connects the given source and target using a new edge. Thisimplementation uses <createEdge> to create the edge.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>source</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><Cell> that represents the source terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>target</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><Cell> that represents the target terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>evt</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Mousedown event of the connect gesture.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dropTarget</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          null
+      
+      </td>
+  
+
+  <td class="description last"><Cell> that represents the cell under the mouse when it wasreleased.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1359">line 1359</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="convertWaypoint">
+        <a class="href-link" href="#convertWaypoint">#</a>
+        
+        <span class="code-name">
+            
+                convertWaypoint<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Converts the given point from screen coordinates to model coordinates.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line866">line 866</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createEdge">
+        <a class="href-link" href="#createEdge">#</a>
+        
+        <span class="code-name">
+            
+                createEdge<span class="signature">(value, source, target, style)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates and returns a new edge using <factoryMethod> if one exists. Ifno factory method is defined, then a new default edge is returned. Thesource and target arguments are informal, the actual connection issetup later by the caller of this function.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Value to be used for creating the edge.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>source</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the source terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>target</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the target terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>style</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Optional style from the preview edge.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1564">line 1564</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createEdgeState">
+        <a class="href-link" href="#createEdgeState">#</a>
+        
+        <span class="code-name">
+            
+                createEdgeState<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook to return an <CellState> which may be used during the preview.This implementation returns null.Use the following code to create a preview for an existing edge style:```javascriptgraph.connectionHandler.createEdgeState(me){  var edge = graph.createEdge(null, null, null, null, null, 'edgeStyle=elbowEdgeStyle');  return new CellState(this.graph.view, edge, this.graph.getCellStyle(edge));};```
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line737">line 737</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createIcons">
+        <a class="href-link" href="#createIcons">#</a>
+        
+        <span class="code-name">
+            
+                createIcons<span class="signature">(state)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates the array <mxImageShapes> that represent the connect icons forthe given <CellState>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>state</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><CellState> whose connect icons should be returned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line570">line 570</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createMarker">
+        <a class="href-link" href="#createMarker">#</a>
+        
+        <span class="code-name">
+            
+                createMarker<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates and returns the <mxCellMarker> used in <marker>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line409">line 409</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createShape">
+        <a class="href-link" href="#createShape">#</a>
+        
+        <span class="code-name">
+            
+                createShape<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates the preview shape for new connections.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line384">line 384</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createTargetVertex">
+        <a class="href-link" href="#createTargetVertex">#</a>
+        
+        <span class="code-name">
+            
+                createTargetVertex<span class="signature">(evt, source)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook method for creating new vertices on the fly if no target wasunder the mouse. This is only called if <createTarget> is true andreturns null.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>evt</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Mousedown event of the connect gesture.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>source</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the source terminal.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1512">line 1512</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="destroyIcons">
+        <a class="href-link" href="#destroyIcons">#</a>
+        
+        <span class="code-name">
+            
+                destroyIcons<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Destroys the connect icons and resets the respective state.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line650">line 650</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="drawPreview">
+        <a class="href-link" href="#drawPreview">#</a>
+        
+        <span class="code-name">
+            
+                drawPreview<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Redraws the preview edge using the color and width returned by<getEdgeColor> and <getEdgeWidth>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1311">line 1311</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getAlignmentTolerance">
+        <a class="href-link" href="#getAlignmentTolerance">#</a>
+        
+        <span class="code-name">
+            
+                getAlignmentTolerance<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the tolerance for aligning new targets to sources. This returns the grid size / 2.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1548">line 1548</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getConnectImage">
+        <a class="href-link" href="#getConnectImage">#</a>
+        
+        <span class="code-name">
+            
+                getConnectImage<span class="signature">(state)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook to return the <mxImage> used for the connection icon of the given<CellState>. This implementation returns <connectImage>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>state</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><CellState> whose connect image should be returned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line549">line 549</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getEdgeColor">
+        <a class="href-link" href="#getEdgeColor">#</a>
+        
+        <span class="code-name">
+            
+                getEdgeColor<span class="signature">(valid)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the color used to draw the preview edge. This returns green ifthere is no edge validation error and red otherwise.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>valid</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean indicating if the color for a valid edge should bereturned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1336">line 1336</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getEdgeWidth">
+        <a class="href-link" href="#getEdgeWidth">#</a>
+        
+        <span class="code-name">
+            
+                getEdgeWidth<span class="signature">(valid)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the width used to draw the preview edge. This returns 3 ifthere is no edge validation error and 1 otherwise.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>valid</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean indicating if the width for a valid edge should bereturned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1346">line 1346</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getSourcePerimeterPoint">
+        <a class="href-link" href="#getSourcePerimeterPoint">#</a>
+        
+        <span class="code-name">
+            
+                getSourcePerimeterPoint<span class="signature">(state, next, me)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook to update the icon position(s) based on a mouseOver event. This isan empty implementation.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>state</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><CellState> that represents the target cell state.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>next</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><mxPoint> that represents the next point along the previewed edge.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>me</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><mxMouseEvent> that represents the mouse move.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1158">line 1158</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getTargetPerimeterPoint">
+        <a class="href-link" href="#getTargetPerimeterPoint">#</a>
+        
+        <span class="code-name">
+            
+                getTargetPerimeterPoint<span class="signature">(state, me)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the perimeter point for the given target state.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>state</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><CellState> that represents the target cell state.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>me</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><mxMouseEvent> that represents the mouse move.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1132">line 1132</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="insertEdge">
+        <a class="href-link" href="#insertEdge">#</a>
+        
+        <span class="code-name">
+            
+                insertEdge<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Creates, inserts and returns the new edge for the given parameters. Thisimplementation does only use <createEdge> if <factoryMethod> is defined,otherwise <mxGraph.insertEdge> will be used.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1496">line 1496</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isCellEnabled">
+        <a class="href-link" href="#isCellEnabled">#</a>
+        
+        <span class="code-name">
+            
+                isCellEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given cell does not allow new connections to be created.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line860">line 860</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isConnectableCell">
+        <a class="href-link" href="#isConnectableCell">#</a>
+        
+        <span class="code-name">
+            
+                isConnectableCell<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given cell is connectable. This is a hook todisable floating connections. This implementation returns true.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line403">line 403</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isConnecting">
+        <a class="href-link" href="#isConnecting">#</a>
+        
+        <span class="code-name">
+            
+                isConnecting<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the source terminal has been clicked and a newconnection is currently being previewed.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line507">line 507</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isCreateTarget">
+        <a class="href-link" href="#isCreateTarget">#</a>
+        
+        <span class="code-name">
+            
+                isCreateTarget<span class="signature">(evt)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <createTarget>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>evt</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Current active native pointer event.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line372">line 372</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isEnabled">
+        <a class="href-link" href="#isEnabled">#</a>
+        
+        <span class="code-name">
+            
+                isEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if events are handled. This implementationreturns <enabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line342">line 342</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isImmediateConnectSource">
+        <a class="href-link" href="#isImmediateConnectSource">#</a>
+        
+        <span class="code-name">
+            
+                isImmediateConnectSource<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if a tap on the given source state should immediately startconnecting. This implementation returns true if the state is not movablein the graph.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line719">line 719</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isInsertBefore">
+        <a class="href-link" href="#isInsertBefore">#</a>
+        
+        <span class="code-name">
+            
+                isInsertBefore<span class="signature">(edge, source, target, evt, dropTarget)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <insertBeforeSource> for non-loops and false for loops.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>edge</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the edge to be inserted.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>source</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the source terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>target</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the target terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>evt</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Mousedown event of the connect gesture.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dropTarget</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the cell under the mouse when it wasreleased.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line364">line 364</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isMoveIconToFrontForState">
+        <a class="href-link" href="#isMoveIconToFrontForState">#</a>
+        
+        <span class="code-name">
+            
+                isMoveIconToFrontForState<span class="signature">(state)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the state has a HTML label in the graph's container, otherwiseit returns <moveIconFront>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>state</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><CellState> whose connect icons should be returned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line558">line 558</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isOutlineConnectEvent">
+        <a class="href-link" href="#isOutlineConnectEvent">#</a>
+        
+        <span class="code-name">
+            
+                isOutlineConnectEvent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if <outlineConnect> is true and the source of the event is the outline shapeor shift is pressed.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line744">line 744</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isStartEvent">
+        <a class="href-link" href="#isStartEvent">#</a>
+        
+        <span class="code-name">
+            
+                isStartEvent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given mouse down event should start this handler. TheThis implementation returns true if the event does not force marqueeselection, and the currentConstraint and currentFocus of the<constraintHandler> are not null, or <previous> and <error> are not null and<icons> is null or <icons> and <icon> are not null.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line666">line 666</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isStopEvent">
+        <a class="href-link" href="#isStopEvent">#</a>
+        
+        <span class="code-name">
+            
+                isStopEvent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given mouse up event should stop this handler. Theconnection will be created if <error> is null. Note that this is onlycalled if <waypointsEnabled> is true. This implemtation returns trueif there is a cell state in the given event.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1199">line 1199</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isValidSource">
+        <a class="href-link" href="#isValidSource">#</a>
+        
+        <span class="code-name">
+            
+                isValidSource<span class="signature">(cell, me)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns <mxGraph.isValidSource> for the given source terminal.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the source terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>me</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><mxMouseEvent> that is associated with this call.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line516">line 516</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isValidTarget">
+        <a class="href-link" href="#isValidTarget">#</a>
+        
+        <span class="code-name">
+            
+                isValidTarget<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true. The call to <mxGraph.isValidTarget> is implicit by calling<mxGraph.getEdgeValidationError> in <validateConnection>. This is anadditional hook for disabling certain targets in this specific handler.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the target terminal.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line526">line 526</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="mouseDown">
+        <a class="href-link" href="#mouseDown">#</a>
+        
+        <span class="code-name">
+            
+                mouseDown<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Handles the event by initiating a new connection.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line676">line 676</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="mouseMove">
+        <a class="href-link" href="#mouseMove">#</a>
+        
+        <span class="code-name">
+            
+                mouseMove<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Handles the event by updating the preview edge or by highlightinga possible source or target terminal.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line894">line 894</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="mouseUp">
+        <a class="href-link" href="#mouseUp">#</a>
+        
+        <span class="code-name">
+            
+                mouseUp<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Handles the event by inserting the new connection.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1238">line 1238</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="onDestroy">
+        <a class="href-link" href="#onDestroy">#</a>
+        
+        <span class="code-name">
+            
+                onDestroy<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Destroys the handler and all its resources and DOM nodes. This should becalled on all instances. It is called automatically for the built-ininstance created for each <mxGraph>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1585">line 1585</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="redrawIcons">
+        <a class="href-link" href="#redrawIcons">#</a>
+        
+        <span class="code-name">
+            
+                redrawIcons<span class="signature">(icons)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Redraws the given array of <mxImageShapes>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>icons</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Array of <mxImageShapes> to be redrawn.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line618">line 618</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="reset">
+        <a class="href-link" href="#reset">#</a>
+        
+        <span class="code-name">
+            
+                reset<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Resets the state of this handler.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1285">line 1285</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="selectCells">
+        <a class="href-link" href="#selectCells">#</a>
+        
+        <span class="code-name">
+            
+                selectCells<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Selects the given edge after adding a new connection. The target argumentcontains the target vertex if one has been inserted.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1488">line 1488</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setCreateTarget">
+        <a class="href-link" href="#setCreateTarget">#</a>
+        
+        <span class="code-name">
+            
+                setCreateTarget<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets <createTarget>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line378">line 378</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setEnabled">
+        <a class="href-link" href="#setEnabled">#</a>
+        
+        <span class="code-name">
+            
+                setEnabled<span class="signature">(enabled)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Enables or disables event handling. This implementationupdates <enabled>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>enabled</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean that specifies the new enabled state.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line351">line 351</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="snapToPreview">
+        <a class="href-link" href="#snapToPreview">#</a>
+        
+        <span class="code-name">
+            
+                snapToPreview<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Called to snap the given point to the current preview. This snaps to thefirst point of the preview if alt is not pressed.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line876">line 876</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="start">
+        <a class="href-link" href="#start">#</a>
+        
+        <span class="code-name">
+            
+                start<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts a new connection for the given state and coordinates.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line492">line 492</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateCurrentState">
+        <a class="href-link" href="#updateCurrentState">#</a>
+        
+        <span class="code-name">
+            
+                updateCurrentState<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates the current state for a given mouse move event by usingthe <marker>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line769">line 769</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateEdgeState">
+        <a class="href-link" href="#updateEdgeState">#</a>
+        
+        <span class="code-name">
+            
+                updateEdgeState<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates <edgeState>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1089">line 1089</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateIcons">
+        <a class="href-link" href="#updateIcons">#</a>
+        
+        <span class="code-name">
+            
+                updateIcons<span class="signature">(state, icons, me)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Hook to update the icon position(s) based on a mouseOver event. This isan empty implementation.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>state</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><CellState> under the mouse.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>icons</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Array of currently displayed icons.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>me</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><mxMouseEvent> that contains the mouse event.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1190">line 1190</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updatePreview">
+        <a class="href-link" href="#updatePreview">#</a>
+        
+        <span class="code-name">
+            
+                updatePreview<span class="signature">(valid)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the color used to draw the preview edge. This returns green ifthere is no edge validation error and red otherwise.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>valid</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Boolean indicating if the color for a valid edge should bereturned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line1323">line 1323</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="validateConnection">
+        <a class="href-link" href="#validateConnection">#</a>
+        
+        <span class="code-name">
+            
+                validateConnection<span class="signature">(source, target)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the error message or an empty string if the connection for thegiven source target pair is not valid. Otherwise it returns null. Thisimplementation uses <mxGraph.getEdgeValidationError>.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>source</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the source terminal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>target</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> that represents the target terminal.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_handler_ConnectionHandler.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_handler_ConnectionHandler.ts.html">view/handler/ConnectionHandler.ts</a>, <a href="view_handler_ConnectionHandler.ts.html#line537">line 537</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

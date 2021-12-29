@@ -1,0 +1,1122 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> view/event/InternalEvent.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>view/event/InternalEvent.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright (c) 2006-2015, JGraph Ltd
+ * Copyright (c) 2006-2015, Gaudenz Alder
+ * Updated to ES9 syntax by David Morrissey 2021
+ * Type definitions from the typed-mxgraph project
+ */
+import InternalMouseEvent from './InternalMouseEvent';
+import Client from '../../Client';
+import { isConsumed, isMouseEvent } from '../../util/eventUtils';
+import CellState from '../cell/CellState';
+import {
+  EventCache,
+  GestureEvent,
+  KeyboardEventListener,
+  Listenable,
+  MouseEventListener,
+} from '../../types';
+import { Graph } from '../Graph';
+
+// Checks if passive event listeners are supported
+// see https://github.com/Modernizr/Modernizr/issues/1894
+let supportsPassive = false;
+
+try {
+  document.addEventListener(
+    'test',
+    () => {},
+    Object.defineProperty &amp;&amp;
+      Object.defineProperty({}, 'passive', {
+        get: () => {
+          supportsPassive = true;
+        },
+      })
+  );
+} catch (e) {
+  // ignore
+}
+
+/**
+ * @class InternalEvent
+ *
+ * Cross-browser DOM event support. For internal event handling,
+ * {@link mxEventSource} and the graph event dispatch loop in {@link graph} are used.
+ *
+ * ### Memory Leaks:
+ *
+ * Use this class for adding and removing listeners to/from DOM nodes. The
+ * {@link removeAllListeners} function is provided to remove all listeners that
+ * have been added using {@link addListener}. The function should be invoked when
+ * the last reference is removed in the JavaScript code, typically when the
+ * referenced DOM node is removed from the DOM.
+ */
+class InternalEvent {
+  /**
+   * Binds the function to the specified event on the given element. Use
+   * {@link mxUtils.bind} in order to bind the "this" keyword inside the function
+   * to a given execution scope.
+   */
+  static addListener(
+    element: Listenable,
+    eventName: string,
+    funct: MouseEventListener | KeyboardEventListener
+  ) {
+    element.addEventListener(
+      eventName,
+      funct as EventListener,
+      supportsPassive ? { passive: false } : false
+    );
+
+    if (!element.mxListenerList) {
+      element.mxListenerList = [];
+    }
+
+    const entry = { name: eventName, f: funct };
+    element.mxListenerList.push(entry);
+  }
+
+  /**
+   * Removes the specified listener from the given element.
+   */
+  static removeListener(
+    element: Listenable,
+    eventName: string,
+    funct: MouseEventListener | KeyboardEventListener
+  ) {
+    element.removeEventListener(eventName, funct as EventListener, false);
+
+    if (element.mxListenerList) {
+      const listenerCount = element.mxListenerList.length;
+
+      for (let i = 0; i &lt; listenerCount; i += 1) {
+        const entry = element.mxListenerList[i];
+
+        if (entry.f === funct) {
+          element.mxListenerList.splice(i, 1);
+          break;
+        }
+      }
+    }
+  }
+
+  /**
+   * Removes all listeners from the given element.
+   */
+  static removeAllListeners(element: Listenable) {
+    const list = element.mxListenerList;
+
+    if (list) {
+      while (list.length > 0) {
+        const entry = list[0];
+        InternalEvent.removeListener(element, entry.name, entry.f);
+      }
+    }
+  }
+
+  /**
+   * Adds the given listeners for touch, mouse and/or pointer events. If
+   * &lt;Client.IS_POINTER> is true then pointer events will be registered,
+   * else the respective mouse events will be registered. If &lt;Client.IS_POINTER>
+   * is false and &lt;Client.IS_TOUCH> is true then the respective touch events
+   * will be registered as well as the mouse events.
+   */
+  static addGestureListeners(
+    node: Listenable,
+    startListener: MouseEventListener | null = null,
+    moveListener: MouseEventListener | null = null,
+    endListener: MouseEventListener | null = null
+  ) {
+    if (startListener) {
+      InternalEvent.addListener(
+        node,
+        Client.IS_POINTER ? 'pointerdown' : 'mousedown',
+        startListener
+      );
+    }
+
+    if (moveListener) {
+      InternalEvent.addListener(
+        node,
+        Client.IS_POINTER ? 'pointermove' : 'mousemove',
+        moveListener
+      );
+    }
+
+    if (endListener) {
+      InternalEvent.addListener(
+        node,
+        Client.IS_POINTER ? 'pointerup' : 'mouseup',
+        endListener
+      );
+    }
+
+    if (!Client.IS_POINTER &amp;&amp; Client.IS_TOUCH) {
+      if (startListener) {
+        InternalEvent.addListener(node, 'touchstart', startListener);
+      }
+
+      if (moveListener) {
+        InternalEvent.addListener(node, 'touchmove', moveListener);
+      }
+
+      if (endListener) {
+        InternalEvent.addListener(node, 'touchend', endListener);
+      }
+    }
+  }
+
+  /**
+   * Removes the given listeners from mousedown, mousemove, mouseup and the
+   * respective touch events if &lt;Client.IS_TOUCH> is true.
+   */
+  static removeGestureListeners(
+    node: Listenable,
+    startListener: MouseEventListener | null,
+    moveListener: MouseEventListener | null,
+    endListener: MouseEventListener | null
+  ) {
+    if (startListener) {
+      InternalEvent.removeListener(
+        node,
+        Client.IS_POINTER ? 'pointerdown' : 'mousedown',
+        startListener
+      );
+    }
+
+    if (moveListener) {
+      InternalEvent.removeListener(
+        node,
+        Client.IS_POINTER ? 'pointermove' : 'mousemove',
+        moveListener
+      );
+    }
+
+    if (endListener) {
+      InternalEvent.removeListener(
+        node,
+        Client.IS_POINTER ? 'pointerup' : 'mouseup',
+        endListener
+      );
+    }
+
+    if (!Client.IS_POINTER &amp;&amp; Client.IS_TOUCH) {
+      if (startListener) {
+        InternalEvent.removeListener(node, 'touchstart', startListener);
+      }
+
+      if (moveListener) {
+        InternalEvent.removeListener(node, 'touchmove', moveListener);
+      }
+
+      if (endListener) {
+        InternalEvent.removeListener(node, 'touchend', endListener);
+      }
+    }
+  }
+
+  /**
+   * Redirects the mouse events from the given DOM node to the graph dispatch
+   * loop using the event and given state as event arguments. State can
+   * either be an instance of &lt;CellState> or a function that returns an
+   * &lt;CellState>. The down, move, up and dblClick arguments are optional
+   * functions that take the trigger event as arguments and replace the
+   * default behaviour.
+   */
+  static redirectMouseEvents(
+    node: Listenable,
+    graph: Graph,
+    state: CellState | ((evt: Event) => CellState | null) | null = null,
+    down: MouseEventListener | null = null,
+    move: MouseEventListener | null = null,
+    up: MouseEventListener | null = null,
+    dblClick: MouseEventListener | null = null
+  ) {
+    const getState = (evt: Event) => {
+      return typeof state === 'function' ? state(evt) : state;
+    };
+
+    InternalEvent.addGestureListeners(
+      node,
+      (evt) => {
+        if (down) {
+          down(evt);
+        } else if (!isConsumed(evt)) {
+          graph.fireMouseEvent(
+            InternalEvent.MOUSE_DOWN,
+            new InternalMouseEvent(evt, getState(evt))
+          );
+        }
+      },
+      (evt) => {
+        if (move) {
+          move(evt);
+        } else if (!isConsumed(evt)) {
+          graph.fireMouseEvent(
+            InternalEvent.MOUSE_MOVE,
+            new InternalMouseEvent(evt, getState(evt))
+          );
+        }
+      },
+      (evt) => {
+        if (up) {
+          up(evt);
+        } else if (!isConsumed(evt)) {
+          graph.fireMouseEvent(
+            InternalEvent.MOUSE_UP,
+            new InternalMouseEvent(evt, getState(evt))
+          );
+        }
+      }
+    );
+
+    InternalEvent.addListener(node, 'dblclick', (evt: MouseEvent) => {
+      if (dblClick) {
+        dblClick(evt);
+      } else if (!isConsumed(evt)) {
+        const tmp = getState(evt);
+        graph.dblClick(evt, tmp?.cell);
+      }
+    });
+  }
+
+  /**
+   * Removes the known listeners from the given DOM node and its descendants.
+   *
+   * @param element DOM node to remove the listeners from.
+   */
+  static release(element: Listenable) {
+    try {
+      InternalEvent.removeAllListeners(element);
+
+      // @ts-ignore
+      const children = element.childNodes;
+
+      if (children !== undefined) {
+        const childCount = children.length;
+        for (let i = 0; i &lt; childCount; i += 1) {
+          InternalEvent.release(children[i]);
+        }
+      }
+    } catch (e) {
+      // ignores errors as this is typically called in cleanup code
+    }
+  }
+
+  /**
+   * Installs the given function as a handler for mouse wheel events. The
+   * function has two arguments: the mouse event and a boolean that specifies
+   * if the wheel was moved up or down.
+   *
+   * This has been tested with IE 6 and 7, Firefox (all versions), Opera and
+   * Safari. It does currently not work on Safari for Mac.
+   *
+   * ### Example
+   *
+   * @example
+   * ```javascript
+   * mxEvent.addMouseWheelListener(function (evt, up)
+   * {
+   *   MaxLog.show();
+   *   MaxLog.debug('mouseWheel: up='+up);
+   * });
+   * ```
+   *
+   * @param funct Handler function that takes the event argument and a boolean up
+   * argument for the mousewheel direction.
+   * @param target Target for installing the listener in Google Chrome. See
+   * https://www.chromestatus.com/features/6662647093133312.
+   */
+  static addMouseWheelListener(
+    funct: (event: Event, up: boolean, force?: boolean, cx?: number, cy?: number) => void,
+    target: Listenable
+  ) {
+    if (funct != null) {
+      const wheelHandler = (evt: WheelEvent) => {
+        // To prevent window zoom on trackpad pinch
+        if (evt.ctrlKey) {
+          evt.preventDefault();
+        }
+
+        // Handles the event using the given function
+        if (Math.abs(evt.deltaX) > 0.5 || Math.abs(evt.deltaY) > 0.5) {
+          funct(evt, evt.deltaY == 0 ? -evt.deltaX > 0 : -evt.deltaY > 0);
+        }
+      };
+
+      target = target != null ? target : window;
+
+      if (Client.IS_SF &amp;&amp; !Client.IS_TOUCH) {
+        let scale = 1;
+
+        InternalEvent.addListener(target, 'gesturestart', (evt: GestureEvent) => {
+          InternalEvent.consume(evt);
+          scale = 1;
+        });
+
+        InternalEvent.addListener(target, 'gesturechange', ((evt: GestureEvent) => {
+          InternalEvent.consume(evt);
+
+          if (typeof evt.scale === 'number') {
+            const diff = scale - evt.scale;
+
+            if (Math.abs(diff) > 0.2) {
+              funct(evt, diff &lt; 0, true);
+              scale = evt.scale;
+            }
+          }
+        }) as EventListener);
+
+        InternalEvent.addListener(target, 'gestureend', (evt: GestureEvent) => {
+          InternalEvent.consume(evt);
+        });
+      } else {
+        let evtCache: EventCache = [];
+        let dx0 = 0;
+        let dy0 = 0;
+
+        // Adds basic listeners for graph event dispatching
+        InternalEvent.addGestureListeners(
+          target,
+          ((evt: GestureEvent) => {
+            if (!isMouseEvent(evt) &amp;&amp; evt.pointerId != null) {
+              evtCache.push(evt);
+            }
+          }) as EventListener,
+          ((evt: GestureEvent) => {
+            if (!isMouseEvent(evt) &amp;&amp; evtCache.length == 2) {
+              // Find this event in the cache and update its record with this event
+              for (let i = 0; i &lt; evtCache.length; i += 1) {
+                if (evt.pointerId == evtCache[i].pointerId) {
+                  evtCache[i] = evt;
+                  break;
+                }
+              }
+
+              // Calculate the distance between the two pointers
+              const dx = Math.abs(evtCache[0].clientX - evtCache[1].clientX);
+              const dy = Math.abs(evtCache[0].clientY - evtCache[1].clientY);
+              const tx = Math.abs(dx - dx0);
+              const ty = Math.abs(dy - dy0);
+
+              if (
+                tx > InternalEvent.PINCH_THRESHOLD ||
+                ty > InternalEvent.PINCH_THRESHOLD
+              ) {
+                const cx =
+                  evtCache[0].clientX + (evtCache[1].clientX - evtCache[0].clientX) / 2;
+                const cy =
+                  evtCache[0].clientY + (evtCache[1].clientY - evtCache[0].clientY) / 2;
+
+                funct(evtCache[0], tx > ty ? dx > dx0 : dy > dy0, true, cx, cy);
+
+                // Cache the distance for the next move event
+                dx0 = dx;
+                dy0 = dy;
+              }
+            }
+          }) as EventListener,
+          (evt) => {
+            evtCache = [];
+            dx0 = 0;
+            dy0 = 0;
+          }
+        );
+      }
+
+      InternalEvent.addListener(target, 'wheel', wheelHandler as EventListener);
+    }
+  }
+
+  /**
+   * Disables the context menu for the given element.
+   */
+  static disableContextMenu(element: Listenable) {
+    InternalEvent.addListener(element, 'contextmenu', (evt: MouseEvent) => {
+      if (evt.preventDefault) {
+        evt.preventDefault();
+      }
+      return false;
+    });
+  }
+
+  /**
+   * Consumes the given event.
+   *
+   * @param evt Native event to be consumed.
+   * @param {boolean} [preventDefault=true] Optional boolean to prevent the default for the event.
+   * Default is true.
+   * @param {boolean} [stopPropagation=true] Option boolean to stop event propagation. Default is
+   * true.
+   */
+  static consume(
+    evt: Event,
+    preventDefault: boolean = true,
+    stopPropagation: boolean = true
+  ) {
+    if (preventDefault) {
+      if (evt.preventDefault) {
+        if (stopPropagation) {
+          evt.stopPropagation();
+        }
+
+        evt.preventDefault();
+      } else if (stopPropagation) {
+        evt.cancelBubble = true;
+      }
+    }
+
+    // Opera
+    // @ts-ignore This is a non-standard property.
+    evt.isConsumed = true;
+
+    // Other browsers
+    if (!evt.preventDefault) {
+      evt.returnValue = false;
+    }
+  }
+
+  //
+  // Special handles in mouse events
+  //
+
+  /**
+   * Index for the label handle in an mxMouseEvent. This should be a negative
+   * value that does not interfere with any possible handle indices.
+   * @default -1
+   */
+  static LABEL_HANDLE = -1;
+
+  /**
+   * Index for the rotation handle in an mxMouseEvent. This should be a
+   * negative value that does not interfere with any possible handle indices.
+   * @default -2
+   */
+  static ROTATION_HANDLE = -2;
+
+  /**
+   * Start index for the custom handles in an mxMouseEvent. This should be a
+   * negative value and is the start index which is decremented for each
+   * custom handle.
+   * @default -100
+   */
+  static CUSTOM_HANDLE = -100;
+
+  /**
+   * Start index for the virtual handles in an mxMouseEvent. This should be a
+   * negative value and is the start index which is decremented for each
+   * virtual handle.
+   * This assumes that there are no more
+   * than VIRTUAL_HANDLE - CUSTOM_HANDLE custom handles.
+   *
+   * @default -100000
+   */
+  static VIRTUAL_HANDLE = -100000;
+
+  //
+  // Event names
+  //
+
+  /**
+   * Specifies the event name for mouseDown.
+   */
+  static MOUSE_DOWN = 'mouseDown';
+
+  /**
+   * Specifies the event name for mouseMove.
+   */
+  static MOUSE_MOVE = 'mouseMove';
+
+  /**
+   * Specifies the event name for mouseUp.
+   */
+  static MOUSE_UP = 'mouseUp';
+
+  /**
+   * Specifies the event name for activate.
+   */
+  static ACTIVATE = 'activate';
+
+  /**
+   * Specifies the event name for resizeStart.
+   */
+  static RESIZE_START = 'resizeStart';
+
+  /**
+   * Specifies the event name for resize.
+   */
+  static RESIZE = 'resize';
+
+  /**
+   * Specifies the event name for resizeEnd.
+   */
+  static RESIZE_END = 'resizeEnd';
+
+  /**
+   * Specifies the event name for moveStart.
+   */
+  static MOVE_START = 'moveStart';
+
+  /**
+   * Specifies the event name for move.
+   */
+  static MOVE = 'move';
+
+  /**
+   * Specifies the event name for moveEnd.
+   */
+  static MOVE_END = 'moveEnd';
+
+  /**
+   * Specifies the event name for panStart.
+   */
+  static PAN_START = 'panStart';
+
+  /**
+   * Specifies the event name for pan.
+   */
+  static PAN = 'pan';
+
+  /**
+   * Specifies the event name for panEnd.
+   */
+  static PAN_END = 'panEnd';
+
+  /**
+   * Specifies the event name for minimize.
+   */
+  static MINIMIZE = 'minimize';
+
+  /**
+   * Specifies the event name for normalize.
+   */
+  static NORMALIZE = 'normalize';
+
+  /**
+   * Specifies the event name for maximize.
+   */
+  static MAXIMIZE = 'maximize';
+
+  /**
+   * Specifies the event name for hide.
+   */
+  static HIDE = 'hide';
+
+  /**
+   * Specifies the event name for show.
+   */
+  static SHOW = 'show';
+
+  /**
+   * Specifies the event name for close.
+   */
+  static CLOSE = 'close';
+
+  /**
+   * Specifies the event name for destroy.
+   */
+  static DESTROY = 'destroy';
+
+  /**
+   * Specifies the event name for refresh.
+   */
+  static REFRESH = 'refresh';
+
+  /**
+   * Specifies the event name for size.
+   */
+  static SIZE = 'size';
+
+  /**
+   * Specifies the event name for select.
+   */
+  static SELECT = 'select';
+
+  /**
+   * Specifies the event name for fired.
+   */
+  static FIRED = 'fired';
+
+  /**
+   * Specifies the event name for fireMouseEvent.
+   */
+  static FIRE_MOUSE_EVENT = 'fireMouseEvent';
+
+  /**
+   * Specifies the event name for gesture.
+   */
+  static GESTURE = 'gesture';
+
+  /**
+   * Specifies the event name for tapAndHold.
+   */
+  static TAP_AND_HOLD = 'tapAndHold';
+
+  /**
+   * Specifies the event name for get.
+   */
+  static GET = 'get';
+
+  /**
+   * Specifies the event name for receive.
+   */
+  static RECEIVE = 'receive';
+
+  /**
+   * Specifies the event name for connect.
+   */
+  static CONNECT = 'connect';
+
+  /**
+   * Specifies the event name for disconnect.
+   */
+  static DISCONNECT = 'disconnect';
+
+  /**
+   * Specifies the event name for suspend.
+   */
+  static SUSPEND = 'suspend';
+
+  /**
+   * Specifies the event name for suspend.
+   */
+  static RESUME = 'resume';
+
+  /**
+   * Specifies the event name for mark.
+   */
+  static MARK = 'mark';
+
+  /**
+   * Specifies the event name for root.
+   */
+  static ROOT = 'root';
+
+  /**
+   * Specifies the event name for post.
+   */
+  static POST = 'post';
+
+  /**
+   * Specifies the event name for open.
+   */
+  static OPEN = 'open';
+
+  /**
+   * Specifies the event name for open.
+   */
+  static SAVE = 'save';
+
+  /**
+   * Specifies the event name for beforeAddVertex.
+   */
+  static BEFORE_ADD_VERTEX = 'beforeAddVertex';
+
+  /**
+   * Specifies the event name for addVertex.
+   */
+  static ADD_VERTEX = 'addVertex';
+
+  /**
+   * Specifies the event name for afterAddVertex.
+   */
+  static AFTER_ADD_VERTEX = 'afterAddVertex';
+
+  /**
+   * Specifies the event name for done.
+   */
+  static DONE = 'done';
+
+  /**
+   * Specifies the event name for execute.
+   */
+  static EXECUTE = 'execute';
+
+  /**
+   * Specifies the event name for executed.
+   */
+  static EXECUTED = 'executed';
+
+  /**
+   * Specifies the event name for beginUpdate.
+   */
+  static BEGIN_UPDATE = 'beginUpdate';
+
+  /**
+   * Specifies the event name for startEdit.
+   */
+  static START_EDIT = 'startEdit';
+
+  /**
+   * Specifies the event name for endUpdate.
+   */
+  static END_UPDATE = 'endUpdate';
+
+  /**
+   * Specifies the event name for endEdit.
+   */
+  static END_EDIT = 'endEdit';
+
+  /**
+   * Specifies the event name for beforeUndo.
+   */
+  static BEFORE_UNDO = 'beforeUndo';
+
+  /**
+   * Specifies the event name for undo.
+   */
+  static UNDO = 'undo';
+
+  /**
+   * Specifies the event name for redo.
+   */
+  static REDO = 'redo';
+
+  /**
+   * Specifies the event name for change.
+   */
+  static CHANGE = 'change';
+
+  /**
+   * Specifies the event name for notify.
+   */
+  static NOTIFY = 'notify';
+
+  /**
+   * Specifies the event name for layoutCells.
+   */
+  static LAYOUT_CELLS = 'layoutCells';
+
+  /**
+   * Specifies the event name for click.
+   */
+  static CLICK = 'click';
+
+  /**
+   * Specifies the event name for scale.
+   */
+  static SCALE = 'scale';
+
+  /**
+   * Specifies the event name for translate.
+   */
+  static TRANSLATE = 'translate';
+
+  /**
+   * Specifies the event name for scaleAndTranslate.
+   */
+  static SCALE_AND_TRANSLATE = 'scaleAndTranslate';
+
+  /**
+   * Specifies the event name for up.
+   */
+  static UP = 'up';
+
+  /**
+   * Specifies the event name for down.
+   */
+  static DOWN = 'down';
+
+  /**
+   * Specifies the event name for add.
+   */
+  static ADD = 'add';
+
+  /**
+   * Specifies the event name for remove.
+   */
+  static REMOVE = 'remove';
+
+  /**
+   * Specifies the event name for clear.
+   */
+  static CLEAR = 'clear';
+
+  /**
+   * Specifies the event name for addCells.
+   */
+  static ADD_CELLS = 'addCells';
+
+  /**
+   * Specifies the event name for cellsAdded.
+   */
+  static CELLS_ADDED = 'cellsAdded';
+
+  /**
+   * Specifies the event name for moveCells.
+   */
+  static MOVE_CELLS = 'moveCells';
+
+  /**
+   * Specifies the event name for cellsMoved.
+   */
+  static CELLS_MOVED = 'cellsMoved';
+
+  /**
+   * Specifies the event name for resizeCells.
+   */
+  static RESIZE_CELLS = 'resizeCells';
+
+  /**
+   * Specifies the event name for cellsResized.
+   */
+  static CELLS_RESIZED = 'cellsResized';
+
+  /**
+   * Specifies the event name for toggleCells.
+   */
+  static TOGGLE_CELLS = 'toggleCells';
+
+  /**
+   * Specifies the event name for cellsToggled.
+   */
+  static CELLS_TOGGLED = 'cellsToggled';
+
+  /**
+   * Specifies the event name for orderCells.
+   */
+  static ORDER_CELLS = 'orderCells';
+
+  /**
+   * Specifies the event name for cellsOrdered.
+   */
+  static CELLS_ORDERED = 'cellsOrdered';
+
+  /**
+   * Specifies the event name for removeCells.
+   */
+  static REMOVE_CELLS = 'removeCells';
+
+  /**
+   * Specifies the event name for cellsRemoved.
+   */
+  static CELLS_REMOVED = 'cellsRemoved';
+
+  /**
+   * Specifies the event name for groupCells.
+   */
+  static GROUP_CELLS = 'groupCells';
+
+  /**
+   * Specifies the event name for ungroupCells.
+   */
+  static UNGROUP_CELLS = 'ungroupCells';
+
+  /**
+   * Specifies the event name for removeCellsFromParent.
+   */
+  static REMOVE_CELLS_FROM_PARENT = 'removeCellsFromParent';
+
+  /**
+   * Specifies the event name for foldCells.
+   */
+  static FOLD_CELLS = 'foldCells';
+
+  /**
+   * Specifies the event name for cellsFolded.
+   */
+  static CELLS_FOLDED = 'cellsFolded';
+
+  /**
+   * Specifies the event name for alignCells.
+   */
+  static ALIGN_CELLS = 'alignCells';
+
+  /**
+   * Specifies the event name for labelChanged.
+   */
+  static LABEL_CHANGED = 'labelChanged';
+
+  /**
+   * Specifies the event name for connectCell.
+   */
+  static CONNECT_CELL = 'connectCell';
+
+  /**
+   * Specifies the event name for cellConnected.
+   */
+  static CELL_CONNECTED = 'cellConnected';
+
+  /**
+   * Specifies the event name for splitEdge.
+   */
+  static SPLIT_EDGE = 'splitEdge';
+
+  /**
+   * Specifies the event name for flipEdge.
+   */
+  static FLIP_EDGE = 'flipEdge';
+
+  /**
+   * Specifies the event name for startEditing.
+   */
+  static START_EDITING = 'startEditing';
+
+  /**
+   * Specifies the event name for editingStarted.
+   */
+  static EDITING_STARTED = 'editingStarted';
+
+  /**
+   * Specifies the event name for editingStopped.
+   */
+  static EDITING_STOPPED = 'editingStopped';
+
+  /**
+   * Specifies the event name for addOverlay.
+   */
+  static ADD_OVERLAY = 'addOverlay';
+
+  /**
+   * Specifies the event name for removeOverlay.
+   */
+  static REMOVE_OVERLAY = 'removeOverlay';
+
+  /**
+   * Specifies the event name for updateCellSize.
+   */
+  static UPDATE_CELL_SIZE = 'updateCellSize';
+
+  /**
+   * Specifies the event name for escape.
+   */
+  static ESCAPE = 'escape';
+
+  /**
+   * Specifies the event name for doubleClick.
+   */
+  static DOUBLE_CLICK = 'doubleClick';
+
+  /**
+   * Specifies the event name for start.
+   */
+  static START = 'start';
+
+  /**
+   * Specifies the event name for reset.
+   */
+  static RESET = 'reset';
+
+  /**
+   * Threshold for pinch gestures to fire a mouse wheel event.
+   * Default value is 10.
+   */
+  static PINCH_THRESHOLD = 10;
+}
+
+export default InternalEvent;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

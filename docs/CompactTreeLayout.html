@@ -1,0 +1,8594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> CompactTreeLayout</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AbstractCanvas2D.html">AbstractCanvas2D</a></li><li><a href="ActorShape.html">ActorShape</a></li><li><a href="Animation.html">Animation</a></li><li><a href="ArrowConnectorShape.html">ArrowConnectorShape</a></li><li><a href="ArrowShape.html">ArrowShape</a></li><li><a href="AutoSaveManager.html">AutoSaveManager</a></li><li><a href="Cell.html">Cell</a></li><li><a href="CellAttributeChange.html">CellAttributeChange</a></li><li><a href="CellCodec.html">CellCodec</a></li><li><a href="CellEditorHandler.html">CellEditorHandler</a></li><li><a href="CellHighlight.html">CellHighlight</a></li><li><a href="CellMarker.html">CellMarker</a></li><li><a href="CellOverlay.html">CellOverlay</a></li><li><a href="CellPath.html">CellPath</a></li><li><a href="CellRenderer.html">CellRenderer</a></li><li><a href="CellState.html">CellState</a></li><li><a href="CellStatePreview.html">CellStatePreview</a></li><li><a href="CellTracker.html">CellTracker</a></li><li><a href="ChildChange.html">ChildChange</a></li><li><a href="ChildChangeCodec.html">ChildChangeCodec</a></li><li><a href="CircleLayout.html">CircleLayout</a></li><li><a href="Client.html">Client</a></li><li><a href="Clipboard.html">Clipboard</a></li><li><a href="CloudShape.html">CloudShape</a></li><li><a href="Codec.html">Codec</a></li><li><a href="CodecRegistry.html">CodecRegistry</a></li><li><a href="CollapseChange.html">CollapseChange</a></li><li><a href="CompactTreeLayout.html">CompactTreeLayout</a></li><li><a href="CompositeLayout.html">CompositeLayout</a></li><li><a href="ConnectionConstraint.html">ConnectionConstraint</a></li><li><a href="ConnectionHandler.html">ConnectionHandler</a></li><li><a href="ConnectorShape.html">ConnectorShape</a></li><li><a href="ConstraintHandler.html">ConstraintHandler</a></li><li><a href="CoordinateAssignment.html">CoordinateAssignment</a></li><li><a href="CurrentRootChange.html">CurrentRootChange</a></li><li><a href="CylinderShape.html">CylinderShape</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DoubleEllipseShape.html">DoubleEllipseShape</a></li><li><a href="DragSource.html">DragSource</a></li><li><a href="EdgeHandler.html">EdgeHandler</a></li><li><a href="EdgeLabelLayout.html">EdgeLabelLayout</a></li><li><a href="EdgeStyle.html">EdgeStyle</a></li><li><a href="Editor.html">Editor</a></li><li><a href="EditorCodec.html">EditorCodec</a></li><li><a href="EditorKeyHandler.html">EditorKeyHandler</a></li><li><a href="EditorKeyHandlerCodec.html">EditorKeyHandlerCodec</a></li><li><a href="EditorPopupMenu.html">EditorPopupMenu</a></li><li><a href="EditorPopupMenuCodec.html">EditorPopupMenuCodec</a></li><li><a href="EditorToolbar.html">EditorToolbar</a></li><li><a href="EditorToolbarCodec.html">EditorToolbarCodec</a></li><li><a href="Effects.html">Effects</a></li><li><a href="ElbowEdgeHandler.html">ElbowEdgeHandler</a></li><li><a href="EllipseShape.html">EllipseShape</a></li><li><a href="EventObject.html">EventObject</a></li><li><a href="EventSource.html">EventSource</a></li><li><a href="GenericChangeCodec.html">GenericChangeCodec</a></li><li><a href="Geometry.html">Geometry</a></li><li><a href="GeometryChange.html">GeometryChange</a></li><li><a href="graph.html">graph</a></li><li><a href="GraphAbstractHierarchyCell.html">GraphAbstractHierarchyCell</a></li><li><a href="GraphCodec.html">GraphCodec</a></li><li><a href="GraphHierarchyEdge.html">GraphHierarchyEdge</a></li><li><a href="GraphHierarchyModel.html">GraphHierarchyModel</a></li><li><a href="GraphHierarchyNode.html">GraphHierarchyNode</a></li><li><a href="GraphLayout.html">GraphLayout</a></li><li><a href="GraphView.html">GraphView</a></li><li><a href="GraphViewCodec.html">GraphViewCodec</a></li><li><a href="Guide.html">Guide</a></li><li><a href="HexagonShape.html">HexagonShape</a></li><li><a href="HierarchicalLayout.html">HierarchicalLayout</a></li><li><a href="HierarchicalLayoutStage.html">HierarchicalLayoutStage</a></li><li><a href="ImageBox.html">ImageBox</a></li><li><a href="ImageBundle.html">ImageBundle</a></li><li><a href="ImageExport.html">ImageExport</a></li><li><a href="ImageShape.html">ImageShape</a></li><li><a href="InternalEvent.html">InternalEvent</a></li><li><a href="InternalMouseEvent.html">InternalMouseEvent</a></li><li><a href="KeyHandler.html">KeyHandler</a></li><li><a href="LabelShape.html">LabelShape</a></li><li><a href="LayoutManager.html">LayoutManager</a></li><li><a href="Line.html">Line</a></li><li><a href="MarkerShape.html">MarkerShape</a></li><li><a href="MaxForm.html">MaxForm</a></li><li><a href="MaxLog.html">MaxLog</a></li><li><a href="MaxPopupMenu.html">MaxPopupMenu</a></li><li><a href="MaxToolbar.html">MaxToolbar</a></li><li><a href="MaxWindow.html">MaxWindow</a></li><li><a href="MaxXmlRequest.html">MaxXmlRequest</a></li><li><a href="MedianCellSorter.html">MedianCellSorter</a></li><li><a href="MedianHybridCrossingReduction.html">MedianHybridCrossingReduction</a></li><li><a href="MinimumCycleRemover.html">MinimumCycleRemover</a></li><li><a href="Model.html">Model</a></li><li><a href="ModelCodec.html">ModelCodec</a></li><li><a href="Morphing.html">Morphing</a></li><li><a href="Multiplicity.html">Multiplicity</a></li><li><a href="MxFastOrganicLayout.html">MxFastOrganicLayout</a></li><li><a href="mxXmlCanvas2D.html">mxXmlCanvas2D</a></li><li><a href="ObjectCodec.html">ObjectCodec</a></li><li><a href="ObjectIdentity.html">ObjectIdentity</a></li><li><a href="Outline.html">Outline</a></li><li><a href="PanningHandler.html">PanningHandler</a></li><li><a href="PanningManager.html">PanningManager</a></li><li><a href="ParallelEdgeLayout.html">ParallelEdgeLayout</a></li><li><a href="PartitionLayout.html">PartitionLayout</a></li><li><a href="Perimeter.html">Perimeter</a></li><li><a href="Point.html">Point</a></li><li><a href="PolylineShape.html">PolylineShape</a></li><li><a href="PopupMenuHandler.html">PopupMenuHandler</a></li><li><a href="PrintPreview.html">PrintPreview</a></li><li><a href="RadialTreeLayout.html">RadialTreeLayout</a></li><li><a href="Rectangle.html">Rectangle</a></li><li><a href="RectangleShape.html">RectangleShape</a></li><li><a href="RhombusShape.html">RhombusShape</a></li><li><a href="RootChange.html">RootChange</a></li><li><a href="RootChangeCodec.html">RootChangeCodec</a></li><li><a href="RubberBandHandler.html">RubberBandHandler</a></li><li><a href="SelectionCellsHandler.html">SelectionCellsHandler</a></li><li><a href="SelectionChange.html">SelectionChange</a></li><li><a href="SelectionHandler.html">SelectionHandler</a></li><li><a href="Shape.html">Shape</a></li><li><a href="StackLayout.html">StackLayout</a></li><li><a href="StencilShape.html">StencilShape</a></li><li><a href="StencilShapeRegistry.html">StencilShapeRegistry</a></li><li><a href="StyleChange.html">StyleChange</a></li><li><a href="StyleRegistry.html">StyleRegistry</a></li><li><a href="Stylesheet.html">Stylesheet</a></li><li><a href="StylesheetCodec.html">StylesheetCodec</a></li><li><a href="SvgCanvas2D.html">SvgCanvas2D</a></li><li><a href="SwimlaneLayout.html">SwimlaneLayout</a></li><li><a href="SwimlaneManager.html">SwimlaneManager</a></li><li><a href="SwimlaneModel.html">SwimlaneModel</a></li><li><a href="SwimlaneOrdering.html">SwimlaneOrdering</a></li><li><a href="SwimlaneShape.html">SwimlaneShape</a></li><li><a href="TerminalChange.html">TerminalChange</a></li><li><a href="TerminalChangeCodec.html">TerminalChangeCodec</a></li><li><a href="TextShape.html">TextShape</a></li><li><a href="TooltipHandler.html">TooltipHandler</a></li><li><a href="Translations.html">Translations</a></li><li><a href="TriangleShape.html">TriangleShape</a></li><li><a href="UndoableEdit.html">UndoableEdit</a></li><li><a href="UndoManager.html">UndoManager</a></li><li><a href="UrlConverter.html">UrlConverter</a></li><li><a href="ValueChange.html">ValueChange</a></li><li><a href="VertexHandle.html">VertexHandle</a></li><li><a href="VertexHandler.html">VertexHandler</a></li><li><a href="VisibleChange.html">VisibleChange</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ABSOLUTE_LINE_HEIGHT">ABSOLUTE_LINE_HEIGHT</a></li><li><a href="global.html#addStylename">addStylename</a></li><li><a href="global.html#ALIGN">ALIGN</a></li><li><a href="global.html#arcToCurves">arcToCurves</a></li><li><a href="global.html#ARROW">ARROW</a></li><li><a href="global.html#ARROW_SIZE">ARROW_SIZE</a></li><li><a href="global.html#ARROW_SPACING">ARROW_SPACING</a></li><li><a href="global.html#ARROW_WIDTH">ARROW_WIDTH</a></li><li><a href="global.html#br">br</a></li><li><a href="global.html#button">button</a></li><li><a href="global.html#clearSelection">clearSelection</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CONNECT_HANDLE_FILLCOLOR">CONNECT_HANDLE_FILLCOLOR</a></li><li><a href="global.html#CONNECT_TARGET_COLOR">CONNECT_TARGET_COLOR</a></li><li><a href="global.html#contains">contains</a></li><li><a href="global.html#convertPoint">convertPoint</a></li><li><a href="global.html#createImage">createImage</a></li><li><a href="global.html#createXmlDocument">createXmlDocument</a></li><li><a href="global.html#CURSOR">CURSOR</a></li><li><a href="global.html#DEFAULT_FONTFAMILY">DEFAULT_FONTFAMILY</a></li><li><a href="global.html#DEFAULT_FONTSIZE">DEFAULT_FONTSIZE</a></li><li><a href="global.html#DEFAULT_FONTSTYLE">DEFAULT_FONTSTYLE</a></li><li><a href="global.html#DEFAULT_HOTSPOT">DEFAULT_HOTSPOT</a></li><li><a href="global.html#DEFAULT_IMAGESIZE">DEFAULT_IMAGESIZE</a></li><li><a href="global.html#DEFAULT_INVALID_COLOR">DEFAULT_INVALID_COLOR</a></li><li><a href="global.html#DEFAULT_MARKERSIZE">DEFAULT_MARKERSIZE</a></li><li><a href="global.html#DEFAULT_STARTSIZE">DEFAULT_STARTSIZE</a></li><li><a href="global.html#DEFAULT_TEXT_DIRECTION">DEFAULT_TEXT_DIRECTION</a></li><li><a href="global.html#DEFAULT_VALID_COLOR">DEFAULT_VALID_COLOR</a></li><li><a href="global.html#DIALECT">DIALECT</a></li><li><a href="global.html#DIRECTION_MASK">DIRECTION_MASK</a></li><li><a href="global.html#DROP_TARGET_COLOR">DROP_TARGET_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_COLOR">EDGE_SELECTION_COLOR</a></li><li><a href="global.html#EDGE_SELECTION_DASHED">EDGE_SELECTION_DASHED</a></li><li><a href="global.html#EDGE_SELECTION_STROKEWIDTH">EDGE_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#EDGESTYLE">EDGESTYLE</a></li><li><a href="global.html#ELBOW">ELBOW</a></li><li><a href="global.html#ENTITY_SEGMENT">ENTITY_SEGMENT</a></li><li><a href="global.html#equalEntries">equalEntries</a></li><li><a href="global.html#equalPoints">equalPoints</a></li><li><a href="global.html#error">error</a></li><li><a href="global.html#extractTextWithWhitespace">extractTextWithWhitespace</a></li><li><a href="global.html#findNearestSegment">findNearestSegment</a></li><li><a href="global.html#findNode">findNode</a></li><li><a href="global.html#findTreeRoots">findTreeRoots</a></li><li><a href="global.html#fit">fit</a></li><li><a href="global.html#FONT">FONT</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getAlignmentAsPoint">getAlignmentAsPoint</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getBoundingBox">getBoundingBox</a></li><li><a href="global.html#getChildNodes">getChildNodes</a></li><li><a href="global.html#getClientX">getClientX</a></li><li><a href="global.html#getClientY">getClientY</a></li><li><a href="global.html#getColor">getColor</a></li><li><a href="global.html#getCurrentStyle">getCurrentStyle</a></li><li><a href="global.html#getDirectedBounds">getDirectedBounds</a></li><li><a href="global.html#getDocumentScrollOrigin">getDocumentScrollOrigin</a></li><li><a href="global.html#getDocumentSize">getDocumentSize</a></li><li><a href="global.html#getFunctionName">getFunctionName</a></li><li><a href="global.html#getInnerHtml">getInnerHtml</a></li><li><a href="global.html#getNumber">getNumber</a></li><li><a href="global.html#getOffset">getOffset</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getPerimeterPoint">getPerimeterPoint</a></li><li><a href="global.html#getPortConstraints">getPortConstraints</a></li><li><a href="global.html#getPrettyXml">getPrettyXml</a></li><li><a href="global.html#getRotatedPoint">getRotatedPoint</a></li><li><a href="global.html#getScaleForPageCount">getScaleForPageCount</a></li><li><a href="global.html#getScrollOrigin">getScrollOrigin</a></li><li><a href="global.html#getSizeForString">getSizeForString</a></li><li><a href="global.html#getSource">getSource</a></li><li><a href="global.html#getStylename">getStylename</a></li><li><a href="global.html#getStylenames">getStylenames</a></li><li><a href="global.html#getTextContent">getTextContent</a></li><li><a href="global.html#getValue">getValue</a></li><li><a href="global.html#getXml">getXml</a></li><li><a href="global.html#GUIDE_COLOR">GUIDE_COLOR</a></li><li><a href="global.html#GUIDE_STROKEWIDTH">GUIDE_STROKEWIDTH</a></li><li><a href="global.html#HANDLE_FILLCOLOR">HANDLE_FILLCOLOR</a></li><li><a href="global.html#HANDLE_SIZE">HANDLE_SIZE</a></li><li><a href="global.html#HANDLE_STROKECOLOR">HANDLE_STROKECOLOR</a></li><li><a href="global.html#hasScrollbars">hasScrollbars</a></li><li><a href="global.html#HIGHLIGHT_COLOR">HIGHLIGHT_COLOR</a></li><li><a href="global.html#HIGHLIGHT_OPACITY">HIGHLIGHT_OPACITY</a></li><li><a href="global.html#HIGHLIGHT_SIZE">HIGHLIGHT_SIZE</a></li><li><a href="global.html#HIGHLIGHT_STROKEWIDTH">HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#htmlEntities">htmlEntities</a></li><li><a href="global.html#importNode">importNode</a></li><li><a href="global.html#importNodeImplementation">importNodeImplementation</a></li><li><a href="global.html#indexOfStylename">indexOfStylename</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#intersects">intersects</a></li><li><a href="global.html#intersectsHotspot">intersectsHotspot</a></li><li><a href="global.html#INVALID_COLOR">INVALID_COLOR</a></li><li><a href="global.html#INVALID_CONNECT_TARGET_COLOR">INVALID_CONNECT_TARGET_COLOR</a></li><li><a href="global.html#isAltDown">isAltDown</a></li><li><a href="global.html#isAncestorNode">isAncestorNode</a></li><li><a href="global.html#isConsumed">isConsumed</a></li><li><a href="global.html#isControlDown">isControlDown</a></li><li><a href="global.html#isInteger">isInteger</a></li><li><a href="global.html#isLeftMouseButton">isLeftMouseButton</a></li><li><a href="global.html#isMetaDown">isMetaDown</a></li><li><a href="global.html#isMiddleMouseButton">isMiddleMouseButton</a></li><li><a href="global.html#isMouseEvent">isMouseEvent</a></li><li><a href="global.html#isMultiTouchEvent">isMultiTouchEvent</a></li><li><a href="global.html#isNode">isNode</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#isPenEvent">isPenEvent</a></li><li><a href="global.html#isPopupTrigger">isPopupTrigger</a></li><li><a href="global.html#isRightMouseButton">isRightMouseButton</a></li><li><a href="global.html#isShiftDown">isShiftDown</a></li><li><a href="global.html#isTouchEvent">isTouchEvent</a></li><li><a href="global.html#LABEL_HANDLE_FILLCOLOR">LABEL_HANDLE_FILLCOLOR</a></li><li><a href="global.html#LABEL_HANDLE_SIZE">LABEL_HANDLE_SIZE</a></li><li><a href="global.html#LINE_ARCSIZE">LINE_ARCSIZE</a></li><li><a href="global.html#LINE_HEIGHT">LINE_HEIGHT</a></li><li><a href="global.html#link">link</a></li><li><a href="global.html#linkAction">linkAction</a></li><li><a href="global.html#linkInvoke">linkInvoke</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#LOCKED_HANDLE_FILLCOLOR">LOCKED_HANDLE_FILLCOLOR</a></li><li><a href="global.html#ltrim">ltrim</a></li><li><a href="global.html#makeDraggable">makeDraggable</a></li><li><a href="global.html#MAX_HOTSPOT_SIZE">MAX_HOTSPOT_SIZE</a></li><li><a href="global.html#MIN_HOTSPOT_SIZE">MIN_HOTSPOT_SIZE</a></li><li><a href="global.html#mod">mod</a></li><li><a href="global.html#NONE">NONE</a></li><li><a href="global.html#NS_SVG">NS_SVG</a></li><li><a href="global.html#NS_XLINK">NS_XLINK</a></li><li><a href="global.html#OUTLINE_COLOR">OUTLINE_COLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_FILLCOLOR">OUTLINE_HANDLE_FILLCOLOR</a></li><li><a href="global.html#OUTLINE_HANDLE_STROKECOLOR">OUTLINE_HANDLE_STROKECOLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_COLOR">OUTLINE_HIGHLIGHT_COLOR</a></li><li><a href="global.html#OUTLINE_HIGHLIGHT_STROKEWIDTH">OUTLINE_HIGHLIGHT_STROKEWIDTH</a></li><li><a href="global.html#OUTLINE_STROKEWIDTH">OUTLINE_STROKEWIDTH</a></li><li><a href="global.html#PAGE_FORMAT_A4_LANDSCAPE">PAGE_FORMAT_A4_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_A4_PORTRAIT">PAGE_FORMAT_A4_PORTRAIT</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_LANDSCAPE">PAGE_FORMAT_LETTER_LANDSCAPE</a></li><li><a href="global.html#PAGE_FORMAT_LETTER_PORTRAIT">PAGE_FORMAT_LETTER_PORTRAIT</a></li><li><a href="global.html#para">para</a></li><li><a href="global.html#parseCssNumber">parseCssNumber</a></li><li><a href="global.html#PERIMETER">PERIMETER</a></li><li><a href="global.html#popup">popup</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#printScreen">printScreen</a></li><li><a href="global.html#ptLineDist">ptLineDist</a></li><li><a href="global.html#ptSegDistSq">ptSegDistSq</a></li><li><a href="global.html#RECTANGLE_ROUNDING_FACTOR">RECTANGLE_ROUNDING_FACTOR</a></li><li><a href="global.html#rectangleIntersectsSegment">rectangleIntersectsSegment</a></li><li><a href="global.html#relativeCcw">relativeCcw</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#removeAllStylenames">removeAllStylenames</a></li><li><a href="global.html#removeCursors">removeCursors</a></li><li><a href="global.html#removeDuplicates">removeDuplicates</a></li><li><a href="global.html#removeStylename">removeStylename</a></li><li><a href="global.html#removeWhitespace">removeWhitespace</a></li><li><a href="global.html#RENDERING_HINT">RENDERING_HINT</a></li><li><a href="global.html#replaceTrailingNewlines">replaceTrailingNewlines</a></li><li><a href="global.html#reversePortConstraints">reversePortConstraints</a></li><li><a href="global.html#rtrim">rtrim</a></li><li><a href="global.html#setCellStyleFlags">setCellStyleFlags</a></li><li><a href="global.html#setCellStyles">setCellStyles</a></li><li><a href="global.html#setOpacity">setOpacity</a></li><li><a href="global.html#setPrefixedStyle">setPrefixedStyle</a></li><li><a href="global.html#setStyle">setStyle</a></li><li><a href="global.html#setStyleFlag">setStyleFlag</a></li><li><a href="global.html#setTextContent">setTextContent</a></li><li><a href="global.html#SHADOW_OFFSET_X">SHADOW_OFFSET_X</a></li><li><a href="global.html#SHADOW_OFFSET_Y">SHADOW_OFFSET_Y</a></li><li><a href="global.html#SHADOW_OPACITY">SHADOW_OPACITY</a></li><li><a href="global.html#SHADOWCOLOR">SHADOWCOLOR</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#sortCells">sortCells</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#TEXT_DIRECTION">TEXT_DIRECTION</a></li><li><a href="global.html#toDegree">toDegree</a></li><li><a href="global.html#TOOLTIP_VERTICAL_OFFSET">TOOLTIP_VERTICAL_OFFSET</a></li><li><a href="global.html#toRadians">toRadians</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#traverse">traverse</a></li><li><a href="global.html#trim">trim</a></li><li><a href="global.html#utils">utils</a></li><li><a href="global.html#VALID_COLOR">VALID_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_COLOR">VERTEX_SELECTION_COLOR</a></li><li><a href="global.html#VERTEX_SELECTION_DASHED">VERTEX_SELECTION_DASHED</a></li><li><a href="global.html#VERTEX_SELECTION_STROKEWIDTH">VERTEX_SELECTION_STROKEWIDTH</a></li><li><a href="global.html#WORD_WRAP">WORD_WRAP</a></li><li><a href="global.html#write">write</a></li><li><a href="global.html#writeln">writeln</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Class</p>
+                    <h1>CompactTreeLayout</h1>
+                </header>
+                
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>CompactTreeLayout<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
+
+
+    
+    <h4 class="name" id="CompactTreeLayout">
+        <a class="href-link" href="#CompactTreeLayout">#</a>
+        
+        <span class="code-name">
+            
+                new CompactTreeLayout<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line17">line 17</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="GraphLayout.html">GraphLayout</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+<h4 class="name" id="alignRanks">
+    <a class="href-link" href="#alignRanks">#</a>
+    
+    <span class="code-name">
+        alignRanks
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Whether or not the tops of cells in each rank should be alignedacross the rank
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line143">line 143</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="alignRanks">
+    <a class="href-link" href="#alignRanks">#</a>
+    
+    <span class="code-name">
+        alignRanks
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Whether or not the tops of cells in each rank should be aligned
+across the rank
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line925">line 925</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="channelBuffer">
+    <a class="href-link" href="#channelBuffer">#</a>
+    
+    <span class="code-name">
+        channelBuffer
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The size of the vertical buffer in the center of inter-rank channelswhere edge control points should not be placed.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line129">line 129</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="channelBuffer">
+    <a class="href-link" href="#channelBuffer">#</a>
+    
+    <span class="code-name">
+        channelBuffer
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The size of the vertical buffer in the center of inter-rank channels
+where edge control points should not be placed.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line908">line 908</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="edgeRouting">
+    <a class="href-link" href="#edgeRouting">#</a>
+    
+    <span class="code-name">
+        edgeRouting
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Whether or not to apply the internal tree edge routing.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line133">line 133</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="edgeRouting">
+    <a class="href-link" href="#edgeRouting">#</a>
+    
+    <span class="code-name">
+        edgeRouting
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Whether or not to apply the internal tree edge routing.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line913">line 913</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="Graph_.html">Graph</a></span>
+
+
+    </span>
+
+<h4 class="name" id="graph">
+    <a class="href-link" href="#graph">#</a>
+    
+    <span class="code-name">
+        graph
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Reference to the enclosing mxGraph.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#graph">GraphLayout#graph</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line355">line 355</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="groupPadding">
+    <a class="href-link" href="#groupPadding">#</a>
+    
+    <span class="code-name">
+        groupPadding
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>10</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line65">line 65</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="groupPadding">
+    <a class="href-link" href="#groupPadding">#</a>
+    
+    <span class="code-name">
+        groupPadding
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>10</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line831">line 831</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="groupPaddingBottom">
+    <a class="href-link" href="#groupPaddingBottom">#</a>
+    
+    <span class="code-name">
+        groupPaddingBottom
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Bottom padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>0</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line80">line 80</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="groupPaddingBottom">
+    <a class="href-link" href="#groupPaddingBottom">#</a>
+    
+    <span class="code-name">
+        groupPaddingBottom
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Bottom padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>0</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line849">line 849</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="groupPaddingLeft">
+    <a class="href-link" href="#groupPaddingLeft">#</a>
+    
+    <span class="code-name">
+        groupPaddingLeft
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Left padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>0</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line85">line 85</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="groupPaddingLeft">
+    <a class="href-link" href="#groupPaddingLeft">#</a>
+    
+    <span class="code-name">
+        groupPaddingLeft
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Left padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>0</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line855">line 855</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="groupPaddingRight">
+    <a class="href-link" href="#groupPaddingRight">#</a>
+    
+    <span class="code-name">
+        groupPaddingRight
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Right padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>0</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line75">line 75</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="groupPaddingRight">
+    <a class="href-link" href="#groupPaddingRight">#</a>
+    
+    <span class="code-name">
+        groupPaddingRight
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Right padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>0</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line843">line 843</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="groupPaddingTop">
+    <a class="href-link" href="#groupPaddingTop">#</a>
+    
+    <span class="code-name">
+        groupPaddingTop
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Top padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>0</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line70">line 70</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="groupPaddingTop">
+    <a class="href-link" href="#groupPaddingTop">#</a>
+    
+    <span class="code-name">
+        groupPaddingTop
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Top padding added to resized parents.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>0</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line837">line 837</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="horizontal">
+    <a class="href-link" href="#horizontal">#</a>
+    
+    <span class="code-name">
+        horizontal
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the orientation of the layout.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>true</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line42">line 42</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="horizontal">
+    <a class="href-link" href="#horizontal">#</a>
+    
+    <span class="code-name">
+        horizontal
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies the orientation of the layout.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>true</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line804">line 804</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="invert">
+    <a class="href-link" href="#invert">#</a>
+    
+    <span class="code-name">
+        invert
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if edge directions should be inverted.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>false.</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line47">line 47</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="invert">
+    <a class="href-link" href="#invert">#</a>
+    
+    <span class="code-name">
+        invert
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if edge directions should be inverted.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>false.</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line810">line 810</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="levelDistance">
+    <a class="href-link" href="#levelDistance">#</a>
+    
+    <span class="code-name">
+        levelDistance
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the levelDistance.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>10</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line101">line 101</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="levelDistance">
+    <a class="href-link" href="#levelDistance">#</a>
+    
+    <span class="code-name">
+        levelDistance
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the levelDistance.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>10</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line874">line 874</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="maintainParentLocation">
+    <a class="href-link" href="#maintainParentLocation">#</a>
+    
+    <span class="code-name">
+        maintainParentLocation
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the parent location should be maintained, so that thetop, left corner stays the same before and after execution ofthe layout. Default is false for backwards compatibility.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>false</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line60">line 60</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="maintainParentLocation">
+    <a class="href-link" href="#maintainParentLocation">#</a>
+    
+    <span class="code-name">
+        maintainParentLocation
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the parent location should be maintained, so that the
+top, left corner stays the same before and after execution of
+the layout. Default is false for backwards compatibility.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>false</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line825">line 825</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="maxRankHeight">
+    <a class="href-link" href="#maxRankHeight">#</a>
+    
+    <span class="code-name">
+        maxRankHeight
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    An array of the maximum height of cells (relative to the layout direction)per rank
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line148">line 148</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="CellArray.html">CellArray</a></span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="maxRankHeight">
+    <a class="href-link" href="#maxRankHeight">#</a>
+    
+    <span class="code-name">
+        maxRankHeight
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    An array of the maximum height of cells (relative to the layout direction)
+per rank
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line931">line 931</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="minEdgeJetty">
+    <a class="href-link" href="#minEdgeJetty">#</a>
+    
+    <span class="code-name">
+        minEdgeJetty
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The minimum distance for an edge jetty from a vertex.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line124">line 124</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="minEdgeJetty">
+    <a class="href-link" href="#minEdgeJetty">#</a>
+    
+    <span class="code-name">
+        minEdgeJetty
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The minimum distance for an edge jetty from a vertex.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line902">line 902</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="moveTree">
+    <a class="href-link" href="#moveTree">#</a>
+    
+    <span class="code-name">
+        moveTree
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the tree should be moved to the top, left cornerif it is inside a top-level layer.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>false</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line96">line 96</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="moveTree">
+    <a class="href-link" href="#moveTree">#</a>
+    
+    <span class="code-name">
+        moveTree
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if the tree should be moved to the top, left corner
+if it is inside a top-level layer.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>false</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line868">line 868</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="node">
+    <a class="href-link" href="#node">#</a>
+    
+    <span class="code-name">
+        node
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The internal node representation of the root cell. Do not set directly, this value is only exposed to assist with post-processing functionality
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line157">line 157</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">_mxCompactTreeLayoutNode</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="node">
+    <a class="href-link" href="#node">#</a>
+    
+    <span class="code-name">
+        node
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The internal node representation of the root cell. Do not set directly
+, this value is only exposed to assist with post-processing functionality
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line942">line 942</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="nodeDistance">
+    <a class="href-link" href="#nodeDistance">#</a>
+    
+    <span class="code-name">
+        nodeDistance
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the nodeDistance.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>20</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line106">line 106</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="nodeDistance">
+    <a class="href-link" href="#nodeDistance">#</a>
+    
+    <span class="code-name">
+        nodeDistance
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Holds the nodeDistance.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>20</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line880">line 880</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="parent">
+    <a class="href-link" href="#parent">#</a>
+    
+    <span class="code-name">
+        parent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The parent cell of the layout, if any
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GraphLayout.html#parent">GraphLayout#parent</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line36">line 36</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="parentsChanged">
+    <a class="href-link" href="#parentsChanged">#</a>
+    
+    <span class="code-name">
+        parentsChanged
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    A set of the parents that need updating based on childrenprocess as part of the layout.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line90">line 90</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">object</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="parentsChanged">
+    <a class="href-link" href="#parentsChanged">#</a>
+    
+    <span class="code-name">
+        parentsChanged
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    A set of the parents that need updating based on children
+process as part of the layout.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line861">line 861</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="prefHozEdgeSep">
+    <a class="href-link" href="#prefHozEdgeSep">#</a>
+    
+    <span class="code-name">
+        prefHozEdgeSep
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The preferred horizontal distance between edges exiting a vertex.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line116">line 116</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="prefHozEdgeSep">
+    <a class="href-link" href="#prefHozEdgeSep">#</a>
+    
+    <span class="code-name">
+        prefHozEdgeSep
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The preferred horizontal distance between edges exiting a vertex.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line892">line 892</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="prefVertEdgeOff">
+    <a class="href-link" href="#prefVertEdgeOff">#</a>
+    
+    <span class="code-name">
+        prefVertEdgeOff
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The preferred vertical offset between edges exiting a vertex.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line120">line 120</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">number</span>
+
+
+    </span>
+
+<h4 class="name" id="prefVertEdgeOff">
+    <a class="href-link" href="#prefVertEdgeOff">#</a>
+    
+    <span class="code-name">
+        prefVertEdgeOff
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The preferred vertical offset between edges exiting a vertex.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line897">line 897</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="resetEdges">
+    <a class="href-link" href="#resetEdges">#</a>
+    
+    <span class="code-name">
+        resetEdges
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if all edge points of traversed edges should be removed.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>true</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line112">line 112</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="resetEdges">
+    <a class="href-link" href="#resetEdges">#</a>
+    
+    <span class="code-name">
+        resetEdges
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if all edge points of traversed edges should be removed.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>true</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line887">line 887</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="resizeParent">
+    <a class="href-link" href="#resizeParent">#</a>
+    
+    <span class="code-name">
+        resizeParent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    If the parents should be resized to match the width/height of thechildren. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>true</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line53">line 53</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="resizeParent">
+    <a class="href-link" href="#resizeParent">#</a>
+    
+    <span class="code-name">
+        resizeParent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    If the parents should be resized to match the width/height of the
+children. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>true</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line817">line 817</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="root">
+    <a class="href-link" href="#root">#</a>
+    
+    <span class="code-name">
+        root
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The cell to use as the root of the tree
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line152">line 152</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="Cell.html">Cell</a></span>
+|
+
+<span class="param-type">null</span>
+
+
+    </span>
+
+<h4 class="name" id="root">
+    <a class="href-link" href="#root">#</a>
+    
+    <span class="code-name">
+        root
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    The cell to use as the root of the tree
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line936">line 936</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="sortEdges">
+    <a class="href-link" href="#sortEdges">#</a>
+    
+    <span class="code-name">
+        sortEdges
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if edges should be sorted according to the order of theiropposite terminal cell in the model.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line138">line 138</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="sortEdges">
+    <a class="href-link" href="#sortEdges">#</a>
+    
+    <span class="code-name">
+        sortEdges
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Specifies if edges should be sorted according to the order of their
+opposite terminal cell in the model.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line919">line 919</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="useBoundingBox">
+    <a class="href-link" href="#useBoundingBox">#</a>
+    
+    <span class="code-name">
+        useBoundingBox
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Boolean indicating if the bounding box of the label should be used ifits available. Default is true.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GraphLayout.html#useBoundingBox">GraphLayout#useBoundingBox</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line32">line 32</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="adjustParents">
+        <a class="href-link" href="#adjustParents">#</a>
+        
+        <span class="code-name">
+            
+                adjustParents<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adjust parent cells whose child geometries have changed. The defaultimplementation adjusts the group to just fit around the children witha padding.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line683">line 683</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="apply">
+        <a class="href-link" href="#apply">#</a>
+        
+        <span class="code-name">
+            
+                apply<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line640">line 640</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="arrangeGroups">
+        <a class="href-link" href="#arrangeGroups">#</a>
+        
+        <span class="code-name">
+            
+                arrangeGroups<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Shortcut to <mxGraph.updateGroupBounds> with moveGroup set to true.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#arrangeGroups">GraphLayout#arrangeGroups</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line337">line 337</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="attachParent">
+        <a class="href-link" href="#attachParent">#</a>
+        
+        <span class="code-name">
+            
+                attachParent<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line473">line 473</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createLine">
+        <a class="href-link" href="#createLine">#</a>
+        
+        <span class="code-name">
+            
+                createLine<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line670">line 670</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createNode">
+        <a class="href-link" href="#createNode">#</a>
+        
+        <span class="code-name">
+            
+                createNode<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line613">line 613</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="dfs">
+        <a class="href-link" href="#dfs">#</a>
+        
+        <span class="code-name">
+            
+                dfs<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Does a depth first search starting at the specified cell.Makes sure the specified parent is never left by thealgorithm.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line366">line 366</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="execute">
+        <a class="href-link" href="#execute">#</a>
+        
+        <span class="code-name">
+            
+                execute<span class="signature">(parent, root)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Implements GraphLayout.execute.If the parent has any connected edges, then it is used as the root ofthe tree. Else, mxGraph.findTreeRoots will be used to find a suitableroot node within the set of children of the given parent.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>parent</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell whose children should be laid out.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>root</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Optional mxCell that will be used as the root of the tree. Overrides root if specified.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GraphLayout.html#execute">GraphLayout#execute</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line186">line 186</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="findRankHeights">
+        <a class="href-link" href="#findRankHeights">#</a>
+        
+        <span class="code-name">
+            
+                findRankHeights<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Stores the maximum height (relative to the layoutdirection) of cells in each rank
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line335">line 335</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getConstraint">
+        <a class="href-link" href="#getConstraint">#</a>
+        
+        <span class="code-name">
+            
+                getConstraint<span class="signature">(key, cell, edge, source)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the constraint for the given key and cell. The optional edge andsource arguments are used to return inbound and outgoing routing-constraints for the given edge and vertex. This implementation alwaysreturns the value for the given key in the style of the given cell.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Key of the constraint to be returned.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell whose constraint should be returned.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>edge</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Optional mxCell that represents the connection whose constraintshould be returned. Default is null.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>source</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Optional boolean that specifies if the connection is incomingor outgoing. Default is null.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#getConstraint">GraphLayout#getConstraint</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line87">line 87</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getGraph">
+        <a class="href-link" href="#getGraph">#</a>
+        
+        <span class="code-name">
+            
+                getGraph<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns the graph that this layout operates on.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#getGraph">GraphLayout#getGraph</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line71">line 71</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getParentOffset">
+        <a class="href-link" href="#getParentOffset">#</a>
+        
+        <span class="code-name">
+            
+                getParentOffset<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Determines the offset of the given parent to the parentof the layout
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#getParentOffset">GraphLayout#getParentOffset</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line208">line 208</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getVertexBounds">
+        <a class="href-link" href="#getVertexBounds">#</a>
+        
+        <span class="code-name">
+            
+                getVertexBounds<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns an <a href="Rectangle.html">Rectangle</a> that defines the bounds of the given cell orthe bounding box if useBoundingBox is true.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#getVertexBounds">GraphLayout#getVertexBounds</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line306">line 306</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="horizontalLayout">
+        <a class="href-link" href="#horizontalLayout">#</a>
+        
+        <span class="code-name">
+            
+                horizontalLayout<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line431">line 431</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isAncestor">
+        <a class="href-link" href="#isAncestor">#</a>
+        
+        <span class="code-name">
+            
+                isAncestor<span class="signature">(parent, child, traverseAncestors)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns true if the given parent is an ancestor of the given child.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>parent</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell that specifies the parent.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>child</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell that specifies the child.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>traverseAncestors</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">boolean whether to</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#isAncestor">GraphLayout#isAncestor</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line148">line 148</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isEdgeIgnored">
+        <a class="href-link" href="#isEdgeIgnored">#</a>
+        
+        <span class="code-name">
+            
+                isEdgeIgnored<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns a boolean indicating if the given mxCell should be ignored bythe algorithm. This implementation returns false for all vertices.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell whose ignored state should be returned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#isEdgeIgnored">GraphLayout#isEdgeIgnored</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line185">line 185</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isHorizontal">
+        <a class="href-link" href="#isHorizontal">#</a>
+        
+        <span class="code-name">
+            
+                isHorizontal<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns horizontal.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line173">line 173</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isVertexIgnored">
+        <a class="href-link" href="#isVertexIgnored">#</a>
+        
+        <span class="code-name">
+            
+                isVertexIgnored<span class="signature">(vertex)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns a boolean indicating if the given mxCell should be ignored as avertex. This returns true if the cell has no connections.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>vertex</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell whose ignored state should be returned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="GraphLayout.html#isVertexIgnored">GraphLayout#isVertexIgnored</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line167">line 167</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="isVertexMovable">
+        <a class="href-link" href="#isVertexMovable">#</a>
+        
+        <span class="code-name">
+            
+                isVertexMovable<span class="signature">(cell)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Returns a boolean indicating if the given mxCell is movable orbendable by the algorithm. This implementation returns true if the givencell is movable in the graph.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell whose movable state should be returned.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#isVertexMovable">GraphLayout#isVertexMovable</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line167">line 167</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="join">
+        <a class="href-link" href="#join">#</a>
+        
+        <span class="code-name">
+            
+                join<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line498">line 498</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="layout">
+        <a class="href-link" href="#layout">#</a>
+        
+        <span class="code-name">
+            
+                layout<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line414">line 414</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="layoutLeaf">
+        <a class="href-link" href="#layoutLeaf">#</a>
+        
+        <span class="code-name">
+            
+                layoutLeaf<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line487">line 487</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="localEdgeProcessing">
+        <a class="href-link" href="#localEdgeProcessing">#</a>
+        
+        <span class="code-name">
+            
+                localEdgeProcessing<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Moves the specified node and all of its children by the given amount.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line693">line 693</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="merge">
+        <a class="href-link" href="#merge">#</a>
+        
+        <span class="code-name">
+            
+                merge<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line519">line 519</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="moveCell">
+        <a class="href-link" href="#moveCell">#</a>
+        
+        <span class="code-name">
+            
+                moveCell<span class="signature">(cell, x, y)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Notified when a cell is being moved in a parent that has automaticlayout to update the cell state (eg. index) so that the outcome of thelayout will position the vertex as close to the point (x, y) aspossible.Empty implementation.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell which has been moved.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>x</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">X-coordinate of the new cell location.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>y</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Y-coordinate of the new cell location.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#moveCell">GraphLayout#moveCell</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line51">line 51</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="moveNode">
+        <a class="href-link" href="#moveNode">#</a>
+        
+        <span class="code-name">
+            
+                moveNode<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Moves the specified node and all of its children by the given amount.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line300">line 300</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="offset">
+        <a class="href-link" href="#offset">#</a>
+        
+        <span class="code-name">
+            
+                offset<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line559">line 559</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="processNodeOutgoing">
+        <a class="href-link" href="#processNodeOutgoing">#</a>
+        
+        <span class="code-name">
+            
+                processNodeOutgoing<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Separates the x position of edges as they connect to vertices
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line704">line 704</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="resizeCell">
+        <a class="href-link" href="#resizeCell">#</a>
+        
+        <span class="code-name">
+            
+                resizeCell<span class="signature">(cell, bounds)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Notified when a cell is being resized in a parent that has automaticlayout to update the other cells in the layout.Empty implementation.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><Cell> which has been moved.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>bounds</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><mxRectangle> that represents the new cell bounds.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#resizeCell">GraphLayout#resizeCell</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line61">line 61</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setCellHeights">
+        <a class="href-link" href="#setCellHeights">#</a>
+        
+        <span class="code-name">
+            
+                setCellHeights<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Set the cells heights (relative to the layoutdirection) when the tops of each rank are to be aligned
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line350">line 350</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setEdgePoints">
+        <a class="href-link" href="#setEdgePoints">#</a>
+        
+        <span class="code-name">
+            
+                setEdgePoints<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Replaces the array of Point in the geometry of the given edgewith the given array of Point.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#setEdgePoints">GraphLayout#setEdgePoints</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line228">line 228</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setEdgeStyleEnabled">
+        <a class="href-link" href="#setEdgeStyleEnabled">#</a>
+        
+        <span class="code-name">
+            
+                setEdgeStyleEnabled<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Disables or enables the edge style of the given edge.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#setEdgeStyleEnabled">GraphLayout#setEdgeStyleEnabled</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line195">line 195</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setOrthogonalEdge">
+        <a class="href-link" href="#setOrthogonalEdge">#</a>
+        
+        <span class="code-name">
+            
+                setOrthogonalEdge<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Disables or enables orthogonal end segments of the given edge.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#setOrthogonalEdge">GraphLayout#setOrthogonalEdge</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line201">line 201</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setVertexLocation">
+        <a class="href-link" href="#setVertexLocation">#</a>
+        
+        <span class="code-name">
+            
+                setVertexLocation<span class="signature">(cell, x, y)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Sets the new position of the given cell taking into account the size ofthe bounding box if useBoundingBox is true. The change is only carriedout if the new location is not equal to the existing location, otherwisethe geometry is not replaced with an updated instance. The new or oldbounds are returned (including overlapping labels).
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>cell</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell whose geometry is to be set.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>x</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Integer that defines the x-coordinate of the new location.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>y</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Integer that defines the y-coordinate of the new location.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#setVertexLocation">GraphLayout#setVertexLocation</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line262">line 262</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="sortOutgoingEdges">
+        <a class="href-link" href="#sortOutgoingEdges">#</a>
+        
+        <span class="code-name">
+            
+                sortOutgoingEdges<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Called if sortEdges is true to sort the array of outgoing edges in place.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line313">line 313</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="traverse">
+        <a class="href-link" href="#traverse">#</a>
+        
+        <span class="code-name">
+            
+                traverse<span class="signature">(vertex, directed, func, edge, visited)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Traverses the (directed) graph invoking the given function for eachvisited vertex and edge. The function is invoked with the current vertexand the incoming edge as a parameter. This implementation makes sureeach vertex is only visited once. The function may return false if thetraversal should stop at the given vertex.Example:```javascriptMaxLog.show();var cell = graph.getSelectionCell();graph.traverse(cell, false, function(vertex, edge){  MaxLog.debug(graph.getLabel(vertex));});```
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>vertex</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">mxCell that represents the vertex where the traversal starts.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>directed</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Optional boolean indicating if edges should only be traversedfrom source to target. Default is true.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>func</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Visitor function that takes the current vertex and the incomingedge as arguments. The traversal stops if the function returns false.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>edge</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Optional mxCell that represents the incoming edge. This isnull for the first step of the traversal.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>visited</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Optional <a href="Dictionary.html">Dictionary</a> of cell paths for the visited cells.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="GraphLayout.html#traverse">GraphLayout#traverse</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_GraphLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_GraphLayout.ts.html">view/layout/GraphLayout.ts</a>, <a href="view_layout_GraphLayout.ts.html#line118">line 118</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="verticalLayout">
+        <a class="href-link" href="#verticalLayout">#</a>
+        
+        <span class="code-name">
+            
+                verticalLayout<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Starts the actual compact tree layout algorithmat the given node.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="view_layout_CompactTreeLayout.ts.html" class="button">View Source</a>
+            <span>
+                <a href="view_layout_CompactTreeLayout.ts.html">view/layout/CompactTreeLayout.ts</a>, <a href="view_layout_CompactTreeLayout.ts.html#line452">line 452</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
