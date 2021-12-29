@@ -105,7 +105,8 @@ const Template = ({ label, ...args }) => {
 
   let v1;
   const executeLayout = (change, post) => {
-    graph.batchUpdate(() => {
+    graph.getDataModel().beginUpdate();
+    try {
       if (change != null) {
         change();
       }
