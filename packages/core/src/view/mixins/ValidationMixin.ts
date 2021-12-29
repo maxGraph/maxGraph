@@ -52,12 +52,6 @@ type PartialType = PartialGraph & PartialValidation;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const ValidationMixin: PartialType = {
-  /**
-   * An array of {@link Multiplicity} describing the allowed
-   * connections in a graph.
-   */
-  multiplicities: [],
-
   /*****************************************************************************
    * Group: Validation
    *****************************************************************************/

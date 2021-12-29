@@ -22,9 +22,8 @@ type PartialImage = Pick<
 >;
 type PartialType = PartialImage;
 
+// @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const ImageMixin: PartialType = {
-  imageBundles: [],
-
   /**
    * Adds the specified {@link ImageBundle}.
    */

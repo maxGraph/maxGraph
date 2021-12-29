@@ -44,7 +44,10 @@ import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 import CodecRegistry from '../serialization/CodecRegistry';
 import ObjectCodec from '../serialization/ObjectCodec';
 
-import type { GraphPlugin, GraphPluginConstructor } from '../types';
+import type { GraphPlugin, GraphPluginConstructor, MouseListenerSet } from '../types';
+import Multiplicity from './other/Multiplicity';
+import CellArray from './cell/CellArray';
+import ImageBundle from './image/ImageBundle';
 
 export const defaultPlugins: GraphPluginConstructor[] = [
   CellEditorHandler,
@@ -81,6 +84,25 @@ class Graph extends EventSource {
   graphModelChangeListener: Function | null = null;
   paintBackground: Function | null = null;
   foldingEnabled: null | boolean = null;
+
+  /*****************************************************************************
+   * Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)
+   *****************************************************************************/
+
+  cells = new CellArray();
+
+  imageBundles: ImageBundle[] = [];
+
+  /**
+   * Holds the mouse event listeners. See {@link fireMouseEvent}.
+   */
+  mouseListeners: MouseListenerSet[] = [];
+
+  /**
+   * An array of {@link Multiplicity} describing the allowed
+   * connections in a graph.
+   */
+  multiplicities: Multiplicity[] = [];
 
   /*****************************************************************************
    * Group: Variables
@@ -386,6 +408,12 @@ class Graph extends EventSource {
     stylesheet: Stylesheet | null = null
   ) {
     super();
+
+    for (let k in this) {
+      if (this[k] && (Object.getPrototypeOf(this[k]) === Object.prototype || Array.isArray(this[k]))) {
+        this[k] = JSON.parse(JSON.stringify(this[k]));
+      }
+    }
 
     this.container = container ?? document.createElement('div');
     this.model = model ?? new Model();

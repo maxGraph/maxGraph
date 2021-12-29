@@ -143,8 +143,6 @@ type PartialType = PartialGraph & PartialCells;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const SelectionMixin: PartialType = {
-  cells: new CellArray(),
-
   /**
    * Specifies the resource key for the status message after a long operation.
    * If the resource for this key does not exist then the value is used as

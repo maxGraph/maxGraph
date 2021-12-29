@@ -391,7 +391,7 @@ const SwimlaneMixin: PartialType = {
   /**
    * Returns {@link swimlaneSelectionEnabled} as a boolean.
    */
-  isSwimlaneSelectionEnabled() {
+  isSwimlaneSelectionEnabled(): boolean {
     return this.swimlaneSelectionEnabled;
   },
 

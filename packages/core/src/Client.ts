@@ -35,7 +35,7 @@ class Client {
    */
   static mxResourceExtension = '.txt';
 
-  static setResourceExtension = value => {
+  static setResourceExtension = (value: string) => {
     Client.mxResourceExtension = value;
     
     // Removes dependency with mxResources.
@@ -58,7 +58,9 @@ class Client {
    */
   static mxLoadResources = true;
 
-  static setLoadResources = value => {};
+  static setLoadResources = (value: boolean) => {
+    Client.mxLoadResources = value;
+  };
 
   /**
    * Optional global config variable to force loading the JavaScript files in
@@ -74,7 +76,7 @@ class Client {
    */
   static mxForceIncludes = false;
 
-  static setForceIncludes = value => {
+  static setForceIncludes = (value: boolean) => {
     Client.mxForceIncludes = value;
   };
 
@@ -92,7 +94,7 @@ class Client {
    */
   static mxLoadStylesheets = true;
 
-  static setLoadStylesheets = value => {
+  static setLoadStylesheets = (value: boolean) => {
     Client.mxLoadStylesheets = value;
   };
 
@@ -113,7 +115,7 @@ class Client {
    */
   static basePath = '.';
 
-  static setBasePath = value => {
+  static setBasePath = (value: string) => {
     if (typeof value !== 'undefined' && value.length > 0) {
       // Adds a trailing slash if required
       if (value.substring(value.length - 1) === '/') {
@@ -142,7 +144,7 @@ class Client {
    */
   static imageBasePath = '.';
   
-  static setImageBasePath = value => {
+  static setImageBasePath = (value: string) => {
     if (typeof value !== 'undefined' && value.length > 0) {
       // Adds a trailing slash if required
       if (value.substring(value.length - 1) === '/') {
@@ -185,7 +187,7 @@ class Client {
    */
   static language = typeof window !== 'undefined' ? navigator.language : 'en';
 
-  static setLanguage = value => {
+  static setLanguage = (value: string | undefined | null) => {
     if (typeof value !== 'undefined' && value != null) {
       Client.language = value;
     } else {
@@ -210,7 +212,7 @@ class Client {
    */
   static defaultLanguage = 'en';
 
-  static setDefaultLanguage = value => {
+  static setDefaultLanguage = (value: string | undefined | null) => {
     if (typeof value !== 'undefined' && value != null) {
       Client.defaultLanguage = value;
     } else {
@@ -235,7 +237,7 @@ class Client {
    */
   static languages: string[] | null = null;
 
-  static setLanguages = value => {
+  static setLanguages = (value: string[] | null | undefined) => {
     if (typeof value !== 'undefined' && value != null) {
       Client.languages = value;
     }

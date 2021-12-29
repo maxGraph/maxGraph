@@ -116,7 +116,7 @@ declare module '../Graph' {
     setEnterStopsCellEditing: (value: boolean) => void;
     getCursorForMouseEvent: (me: InternalMouseEvent) => string | null;
 
-    isSwimlaneSelectionEnabled: any;
+    isSwimlaneSelectionEnabled: () => boolean;
   }
 }
 
@@ -235,11 +235,6 @@ type PartialType = PartialGraph & PartialEvents;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const EventsMixin: PartialType = {
-  /**
-   * Holds the mouse event listeners. See {@link fireMouseEvent}.
-   */
-  mouseListeners: [],
-
   // TODO: Document me!
   lastTouchEvent: null,
 
