@@ -6,6 +6,7 @@ import RootChange from '../undoable_changes/RootChange';
 import ChildChange from '../undoable_changes/ChildChange';
 import { Graph } from '../Graph';
 import { mixInto } from '../../util/utils';
+import GraphSelectionModel from '../GraphSelectionModel';
 
 declare module '../Graph' {
   interface Graph {
@@ -15,8 +16,8 @@ declare module '../Graph' {
     singleSelection: boolean;
     selectionModel: any | null;
 
-    getSelectionModel: () => any;
-    setSelectionModel: (selectionModel: any) => void;
+    getSelectionModel: () => GraphSelectionModel;
+    setSelectionModel: (selectionModel: GraphSelectionModel) => void;
     isCellSelected: (cell: Cell) => boolean;
     isSelectionEmpty: () => boolean;
     clearSelection: () => void;

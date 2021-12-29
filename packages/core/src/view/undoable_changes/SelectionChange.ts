@@ -31,22 +31,23 @@ class SelectionChange implements UndoableChange {
    * Changes the current root of the view.
    */
   execute() {
+    const selectionModel = this.graph.getSelectionModel();
     window.status =
-      Translations.get(this.graph.getUpdatingSelectionResource()) ||
-      this.graph.getUpdatingSelectionResource();
+      Translations.get(selectionModel.updatingSelectionResource) ||
+      selectionModel.updatingSelectionResource;
 
     for (const removed of this.removed) {
-      this.graph.cellRemoved(removed);
+      this.graph.getSelectionModel().cellRemoved(removed);
     }
 
     for (const added of this.added) {
-      this.graph.cellAdded(added);
+      this.graph.getSelectionModel().cellAdded(added);
     }
 
     [this.added, this.removed] = [this.removed, this.added];
 
     window.status =
-      Translations.get(this.graph.getDoneResource()) || this.graph.getDoneResource();
+      Translations.get(selectionModel.doneResource) || selectionModel.doneResource;
 
     this.graph.fireEvent(
       new EventObject(InternalEvent.CHANGE, { added: this.added, removed: this.removed })
