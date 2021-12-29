@@ -1,5 +1,5 @@
 import Cell from '../cell/Cell';
-import GraphModel from '../GraphModel';
+import GraphDataModel from '../GraphDataModel';
 import CodecRegistry from '../../serialization/CodecRegistry';
 import GenericChangeCodec from './GenericChangeCodec';
 
@@ -14,12 +14,12 @@ import type { UndoableChange } from '../../types';
  * specified model.
  */
 class VisibleChange implements UndoableChange {
-  model: GraphModel;
+  model: GraphDataModel;
   cell: Cell;
   visible: boolean;
   previous: boolean;
 
-  constructor(model: GraphModel, cell: Cell, visible: boolean) {
+  constructor(model: GraphDataModel, cell: Cell, visible: boolean) {
     this.model = model;
     this.cell = cell;
     this.visible = visible;

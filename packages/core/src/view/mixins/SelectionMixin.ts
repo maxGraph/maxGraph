@@ -1,11 +1,6 @@
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
 import Rectangle from '../geometry/Rectangle';
-import Client from '../../Client';
-import SelectionChange from '../undoable_changes/SelectionChange';
-import UndoableEdit from '../undoable_changes/UndoableEdit';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
 import Dictionary from '../../util/Dictionary';
 import RootChange from '../undoable_changes/RootChange';
 import ChildChange from '../undoable_changes/ChildChange';
@@ -20,25 +15,8 @@ declare module '../Graph' {
     singleSelection: boolean;
     selectionModel: any | null;
 
-    getDoneResource: () => string;
-    getUpdatingSelectionResource: () => string;
     getSelectionModel: () => any;
     setSelectionModel: (selectionModel: any) => void;
-    isSingleSelection: () => boolean;
-    setSingleSelection: (singleSelection: boolean) => void;
-    isSelected: (cell: Cell) => boolean;
-    isEmpty: () => boolean;
-    clear: () => void;
-    setCell: (cell: Cell | null) => void;
-    setCells: (cells: CellArray) => void;
-    getFirstSelectableCell: (cells: CellArray) => Cell | null;
-    addCellToSelection: (cell: Cell) => void;
-    addCellsToSelection: (cells: CellArray) => void;
-    removeCellFromSelection: (cell: Cell) => void;
-    removeCellsFromSelection: (cells: CellArray) => void;
-    changeSelection: (added: CellArray | null, removed: CellArray | null) => void;
-    cellAdded: (cell: Cell) => void;
-    cellRemoved: (cell: Cell) => void;
     isCellSelected: (cell: Cell) => boolean;
     isSelectionEmpty: () => boolean;
     clearSelection: () => void;
@@ -87,30 +65,10 @@ type PartialGraph = Pick<
 >;
 type PartialCells = Pick<
   Graph,
-  | 'cells'
-  | 'doneResource'
-  | 'updatingSelectionResource'
   | 'singleSelection'
   | 'selectionModel'
-  | 'getDoneResource'
-  | 'getUpdatingSelectionResource'
   | 'getSelectionModel'
   | 'setSelectionModel'
-  | 'isSingleSelection'
-  | 'setSingleSelection'
-  | 'isSelected'
-  | 'isEmpty'
-  | 'clear'
-  | 'setCell'
-  | 'setCells'
-  | 'getFirstSelectableCell'
-  | 'addCellToSelection'
-  | 'addCellsToSelection'
-  | 'removeCellFromSelection'
-  | 'removeCellsFromSelection'
-  | 'changeSelection'
-  | 'cellAdded'
-  | 'cellRemoved'
   | 'isCellSelected'
   | 'isSelectionEmpty'
   | 'clearSelection'
@@ -143,35 +101,7 @@ type PartialType = PartialGraph & PartialCells;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const SelectionMixin: PartialType = {
-  /**
-   * Specifies the resource key for the status message after a long operation.
-   * If the resource for this key does not exist then the value is used as
-   * the status message. Default is 'done'.
-   */
-  doneResource: Client.language !== 'none' ? 'done' : '',
-
-  /**
-   * Specifies the resource key for the status message while the selection is
-   * being updated. If the resource for this key does not exist then the
-   * value is used as the status message. Default is 'updatingSelection'.
-   */
-  updatingSelectionResource: Client.language !== 'none' ? 'updatingSelection' : '',
-
-  /**
-   * Specifies if only one selected item at a time is allowed.
-   * Default is false.
-   */
-  singleSelection: false,
-
   selectionModel: null,
-
-  getDoneResource() {
-    return this.doneResource;
-  },
-
-  getUpdatingSelectionResource() {
-    return this.updatingSelectionResource;
-  },
 
   /**
    * Returns the {@link mxGraphSelectionModel} that contains the selection.
@@ -187,200 +117,6 @@ const SelectionMixin: PartialType = {
     this.selectionModel = selectionModel;
   },
 
-  /**
-   * Returns {@link singleSelection} as a boolean.
-   */
-  isSingleSelection() {
-    return this.singleSelection;
-  },
-
-  /**
-   * Sets the {@link singleSelection} flag.
-   *
-   * @param {boolean} singleSelection Boolean that specifies the new value for
-   * {@link singleSelection}.
-   */
-  setSingleSelection(singleSelection) {
-    this.singleSelection = singleSelection;
-  },
-
-  /**
-   * Returns true if the given {@link Cell} is selected.
-   */
-  isSelected(cell) {
-    return this.cells.indexOf(cell) >= 0;
-  },
-
-  /**
-   * Returns true if no cells are currently selected.
-   */
-  isEmpty() {
-    return this.cells.length === 0;
-  },
-
-  /**
-   * Clears the selection and fires a {@link change} event if the selection was not
-   * empty.
-   */
-  clear() {
-    this.changeSelection(null, this.cells);
-  },
-
-  /**
-   * Selects the specified {@link Cell} using {@link setCells}.
-   *
-   * @param cell {@link mxCell} to be selected.
-   */
-  setCell(cell) {
-    this.setCells(cell ? new CellArray(cell) : new CellArray());
-  },
-
-  /**
-   * Selects the given array of {@link Cell} and fires a {@link change} event.
-   *
-   * @param cells Array of {@link Cell} to be selected.
-   */
-  setCells(cells) {
-    if (this.singleSelection) {
-      cells = new CellArray(<Cell>this.getFirstSelectableCell(cells));
-    }
-
-    const tmp = new CellArray();
-    for (let i = 0; i < cells.length; i += 1) {
-      if (this.isCellSelectable(cells[i])) {
-        tmp.push(cells[i]);
-      }
-    }
-
-    this.changeSelection(tmp, this.cells);
-  },
-
-  /**
-   * Returns the first selectable cell in the given array of cells.
-   */
-  getFirstSelectableCell(cells) {
-    for (let i = 0; i < cells.length; i += 1) {
-      if (this.isCellSelectable(cells[i])) {
-        return cells[i];
-      }
-    }
-
-    return null;
-  },
-
-  /**
-   * Adds the given {@link Cell} to the selection and fires a {@link select} event.
-   *
-   * @param cell {@link mxCell} to add to the selection.
-   */
-  addCellToSelection(cell) {
-    this.addCellsToSelection(new CellArray(cell));
-  },
-
-  /**
-   * Adds the given array of {@link Cell} to the selection and fires a {@link select}
-   * event.
-   *
-   * @param cells Array of {@link Cell} to add to the selection.
-   */
-  addCellsToSelection(cells) {
-    let remove = null;
-    if (this.singleSelection) {
-      remove = this.cells;
-
-      const selectableCell = this.getFirstSelectableCell(cells);
-
-      cells = selectableCell ? new CellArray(selectableCell) : new CellArray();
-    }
-
-    const tmp = new CellArray();
-    for (let i = 0; i < cells.length; i += 1) {
-      if (!this.isSelected(cells[i]) && this.isCellSelectable(cells[i])) {
-        tmp.push(cells[i]);
-      }
-    }
-
-    this.changeSelection(tmp, remove);
-  },
-
-  /**
-   * Removes the specified {@link Cell} from the selection and fires a {@link select}
-   * event for the remaining cells.
-   *
-   * @param cell {@link mxCell} to remove from the selection.
-   */
-  removeCellFromSelection(cell) {
-    this.removeCellsFromSelection(new CellArray(cell));
-  },
-
-  /**
-   * Removes the specified {@link Cell} from the selection and fires a {@link select}
-   * event for the remaining cells.
-   *
-   * @param cells {@link mxCell}s to remove from the selection.
-   */
-  removeCellsFromSelection(cells) {
-    const tmp = new CellArray();
-
-    for (let i = 0; i < cells.length; i += 1) {
-      if (this.isSelected(cells[i])) {
-        tmp.push(cells[i]);
-      }
-    }
-
-    this.changeSelection(null, tmp);
-  },
-
-  /**
-   * Adds/removes the specified arrays of {@link Cell} to/from the selection.
-   *
-   * @param added Array of {@link Cell} to add to the selection.
-   * @param remove Array of {@link Cell} to remove from the selection.
-   */
-  changeSelection(added = null, removed = null) {
-    if (
-      (added && added.length > 0 && added[0]) ||
-      (removed && removed.length > 0 && removed[0])
-    ) {
-      const change = new SelectionChange(
-        this as Graph,
-        added || new CellArray(),
-        removed || new CellArray()
-      );
-      change.execute();
-      const edit = new UndoableEdit(this as Graph, false);
-      edit.add(change);
-      this.fireEvent(new EventObject(InternalEvent.UNDO, { edit }));
-    }
-  },
-
-  /**
-   * Inner callback to add the specified {@link Cell} to the selection. No event
-   * is fired in this implementation.
-   *
-   * Paramters:
-   *
-   * @param cell {@link mxCell} to add to the selection.
-   */
-  cellAdded(cell) {
-    if (!this.isSelected(cell)) {
-      this.cells.push(cell);
-    }
-  },
-
-  /**
-   * Inner callback to remove the specified {@link Cell} from the selection. No
-   * event is fired in this implementation.
-   *
-   * @param cell {@link mxCell} to remove from the selection.
-   */
-  cellRemoved(cell) {
-    const index = this.cells.indexOf(cell);
-    if (index >= 0) {
-      this.cells.splice(index, 1);
-    }
-  },
-
   /*****************************************************************************
    * Selection
    *****************************************************************************/
@@ -391,42 +127,42 @@ const SelectionMixin: PartialType = {
    * @param cell {@link mxCell} for which the selection state should be returned.
    */
   isCellSelected(cell) {
-    return this.isSelected(cell);
+    return this.selectionModel.isSelected(cell);
   },
 
   /**
    * Returns true if the selection is empty.
    */
   isSelectionEmpty() {
-    return this.isEmpty();
+    return this.selectionModel.isEmpty();
   },
 
   /**
    * Clears the selection using {@link mxGraphSelectionModel.clear}.
    */
   clearSelection() {
-    this.clear();
+    this.selectionModel.clear();
   },
 
   /**
    * Returns the number of selected cells.
    */
   getSelectionCount() {
-    return this.cells.length;
+    return this.selectionModel.cells.length;
   },
 
   /**
    * Returns the first cell from the array of selected {@link Cell}.
    */
   getSelectionCell() {
-    return this.cells[0];
+    return this.selectionModel.cells[0];
   },
 
   /**
    * Returns the array of selected {@link Cell}.
    */
   getSelectionCells() {
-    return this.cells.slice();
+    return this.selectionModel.cells.slice();
   },
 
   /**
@@ -435,7 +171,7 @@ const SelectionMixin: PartialType = {
    * @param cell {@link mxCell} to be selected.
    */
   setSelectionCell(cell) {
-    this.setCell(cell);
+    this.selectionModel.setCell(cell);
   },
 
   /**
@@ -444,7 +180,7 @@ const SelectionMixin: PartialType = {
    * @param cells Array of {@link Cell} to be selected.
    */
   setSelectionCells(cells) {
-    this.setCells(cells);
+    this.selectionModel.setCells(cells);
   },
 
   /**
@@ -453,7 +189,7 @@ const SelectionMixin: PartialType = {
    * @param cell {@link mxCell} to be add to the selection.
    */
   addSelectionCell(cell) {
-    this.addCellToSelection(cell);
+    this.selectionModel.addCell(cell);
   },
 
   /**
@@ -462,7 +198,7 @@ const SelectionMixin: PartialType = {
    * @param cells Array of {@link Cell} to be added to the selection.
    */
   addSelectionCells(cells) {
-    this.addCellsToSelection(cells);
+    this.selectionModel.addCells(cells);
   },
 
   /**
@@ -471,7 +207,7 @@ const SelectionMixin: PartialType = {
    * @param cell {@link mxCell} to be removed from the selection.
    */
   removeSelectionCell(cell) {
-    this.removeCellFromSelection(cell);
+    this.selectionModel.removeCell(cell);
   },
 
   /**
@@ -480,7 +216,7 @@ const SelectionMixin: PartialType = {
    * @param cells Array of {@link Cell} to be removed from the selection.
    */
   removeSelectionCells(cells) {
-    this.removeCellsFromSelection(cells);
+    this.selectionModel.removeCells(cells);
   },
 
   /**
@@ -534,10 +270,10 @@ const SelectionMixin: PartialType = {
    * @param isChild Boolean indicating if the first child cell should be selected.
    */
   selectCell(isNext = false, isParent = false, isChild = false) {
-    const cell = this.cells.length > 0 ? this.cells[0] : null;
+    const cell = this.selectionModel.cells.length > 0 ? this.selectionModel.cells[0] : null;
 
-    if (this.cells.length > 1) {
-      this.clear();
+    if (this.selectionModel.cells.length > 1) {
+      this.selectionModel.clear();
     }
 
     const parent = cell ? (cell.getParent() as Cell) : this.getDefaultParent();

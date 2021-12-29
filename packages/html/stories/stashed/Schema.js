@@ -152,7 +152,7 @@ export default MYNAMEHERE;
         {
           if (value.name != null)
           {
-            return GraphModel.prototype.valueForCellChanged.apply(this, arguments);
+            return GraphDataModel.prototype.valueForCellChanged.apply(this, arguments);
           }
           else
           {

@@ -3982,7 +3982,7 @@ Sidebar.prototype.createVertexTemplateFromData = function(data, width, height, t
 	let doc = parseXml(Graph.decompress(data));
 	let codec = new Codec(doc);
 
-	let model = new GraphModel();
+	let model = new GraphDataModel();
 	codec.decode(doc.documentElement, model);
 	
 	let cells = this.graph.cloneCells(model.root.getChildAt(0).children);

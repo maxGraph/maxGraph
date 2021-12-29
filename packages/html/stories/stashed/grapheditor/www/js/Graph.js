@@ -121,7 +121,7 @@ TextShape.prototype.baseSpacingTop = 5;
 TextShape.prototype.baseSpacingBottom = 1;
 
 // Keeps edges between relative child cells inside parent
-GraphModel.prototype.ignoreRelativeEdgeParent = false;
+GraphDataModel.prototype.ignoreRelativeEdgeParent = false;
 
 // Defines grid properties
 mxGraphView.prototype.gridImage = (Client.IS_SVG) ? 'data:image/gif;base64,R0lGODlhCgAKAJEAAAAAAP///8zMzP///yH5BAEAAAMALAAAAAAKAAoAAAIJ1I6py+0Po2wFADs=' :
@@ -6366,7 +6366,7 @@ if (typeof VertexHandler != 'undefined')
 			dy = (dy != null) ? dy : 0;
 			
 			let codec = new Codec(node.ownerDocument);
-			let tempModel = new GraphModel();
+			let tempModel = new GraphDataModel();
 			codec.decode(node, tempModel);
 			let cells = []
 			
@@ -6468,7 +6468,7 @@ if (typeof VertexHandler != 'undefined')
 			}
 			
 			let codec = new Codec();
-			let model = new GraphModel();
+			let model = new GraphDataModel();
 			let parent = model.getRoot().getChildAt(0);
 			
 			for (let i = 0; i < clones.length; i++)

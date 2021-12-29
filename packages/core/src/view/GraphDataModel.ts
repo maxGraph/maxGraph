@@ -205,9 +205,9 @@ import type { FilterFunction } from '../types';
  * Fires after the change was dispatched in {@link endUpdate}. The `edit`
  * property contains the {@link currentEdit}.
  *
- * @class GraphModel
+ * @class GraphDataModel
  */
-export class GraphModel extends EventSource {
+export class GraphDataModel extends EventSource {
   /**
    * Holds the root cell, which in turn contains the cells that represent the
    * layers of the diagram as child cells. That is, the actual elements of the
@@ -949,7 +949,7 @@ export class GraphModel extends EventSource {
    * is queued until {@link updateLevel} reaches 0 by use of
    * {@link endUpdate}.
    *
-   * All changes on {@link GraphModel} are transactional,
+   * All changes on {@link GraphDataModel} are transactional,
    * that is, they are executed in a single undoable change
    * on the model (without transaction isolation).
    * Therefore, if you want to combine any
@@ -1164,7 +1164,7 @@ export class GraphModel extends EventSource {
  */
 export class ModelCodec extends ObjectCodec {
   constructor() {
-    super(new GraphModel());
+    super(new GraphDataModel());
   }
 
   /**
@@ -1181,9 +1181,9 @@ export class ModelCodec extends ObjectCodec {
   /**
    * Overrides decode child to handle special child nodes.
    */
-  decodeChild(dec: any, child: Element, obj: Cell | GraphModel) {
+  decodeChild(dec: any, child: Element, obj: Cell | GraphDataModel) {
     if (child.nodeName === 'root') {
-      this.decodeRoot(dec, child, <GraphModel>obj);
+      this.decodeRoot(dec, child, <GraphDataModel>obj);
     } else {
       this.decodeChild.apply(this, [dec, child, obj]);
     }
@@ -1193,7 +1193,7 @@ export class ModelCodec extends ObjectCodec {
    * Reads the cells into the graph model. All cells
    * are children of the root element in the node.
    */
-  decodeRoot(dec: any, root: Element, model: GraphModel) {
+  decodeRoot(dec: any, root: Element, model: GraphDataModel) {
     let rootCell = null;
     let tmp = root.firstChild;
 
@@ -1214,4 +1214,4 @@ export class ModelCodec extends ObjectCodec {
 }
 
 CodecRegistry.register(new ModelCodec());
-export default GraphModel;
+export default GraphDataModel;

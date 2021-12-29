@@ -1,5 +1,5 @@
 import Cell from '../cell/Cell';
-import GraphModel from '../GraphModel';
+import GraphDataModel from '../GraphDataModel';
 import CodecRegistry from '../../serialization/CodecRegistry';
 import GenericChangeCodec from './GenericChangeCodec';
 
@@ -11,12 +11,12 @@ import type { UndoableChange } from '../../types';
  * @class StyleChange
  */
 class StyleChange implements UndoableChange {
-  model: GraphModel;
+  model: GraphDataModel;
   cell: Cell;
   style: string | null;
   previous: string | null;
 
-  constructor(model: GraphModel, cell: Cell, style: string | null) {
+  constructor(model: GraphDataModel, cell: Cell, style: string | null) {
     this.model = model;
     this.cell = cell;
     this.style = style;

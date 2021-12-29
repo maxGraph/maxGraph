@@ -1647,7 +1647,7 @@ EditorUi.prototype.initClipboard = function()
 			// Uses temporary model to force new IDs to be assigned
 			// to avoid having to carry over the mapping from object
 			// ID to cell ID to the paste operation
-			let model = new GraphModel();
+			let model = new GraphDataModel();
 			let parent = model.getRoot().getChildAt(0);
 			
 			for (let i = 0; i < clones.length; i++)

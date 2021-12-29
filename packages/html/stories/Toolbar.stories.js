@@ -4,7 +4,7 @@ import {
   ConnectionHandler,
   ImageBox,
   MaxToolbar,
-  GraphModel,
+  GraphDataModel,
   KeyHandler,
   Cell,
   CellArray,
@@ -65,7 +65,7 @@ const Template = ({ label, ...args }) => {
 
   // Creates the model and the graph inside the container
   // using the fastest rendering available on the browser
-  const model = new GraphModel();
+  const model = new GraphDataModel();
   const graph = new Graph(container, model);
   graph.dropEnabled = true;
 

@@ -25,7 +25,7 @@ import './view/mixins/OrderMixin';
 
 export { Graph, GraphCodec } from './view/Graph';
 
-export { GraphModel, ModelCodec } from './view/GraphModel';
+export { GraphDataModel, ModelCodec } from './view/GraphDataModel';
 export { GraphView, GraphViewCodec } from './view/GraphView';
 export { default as LayoutManager } from './view/layout/LayoutManager';
 export { default as Outline } from './view/other/Outline';

@@ -23,7 +23,7 @@ import CellEditorHandler from './handler/CellEditorHandler';
 import Point from './geometry/Point';
 import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
 import Cell from './cell/Cell';
-import GraphModel from './GraphModel';
+import GraphDataModel from './GraphDataModel';
 import Stylesheet from './style/Stylesheet';
 import { PAGE_FORMAT_A4_PORTRAIT } from '../util/constants';
 
@@ -48,6 +48,7 @@ import type { GraphPlugin, GraphPluginConstructor, MouseListenerSet } from '../t
 import Multiplicity from './other/Multiplicity';
 import CellArray from './cell/CellArray';
 import ImageBundle from './image/ImageBundle';
+import GraphSelectionModel from './GraphSelectionModel';
 
 export const defaultPlugins: GraphPluginConstructor[] = [
   CellEditorHandler,
@@ -109,9 +110,9 @@ class Graph extends EventSource {
    *****************************************************************************/
 
   /**
-   * Holds the {@link GraphModel} that contains the cells to be displayed.
+   * Holds the {@link GraphDataModel} that contains the cells to be displayed.
    */
-  model: GraphModel;
+  model: GraphDataModel;
 
   plugins: GraphPluginConstructor[];
   pluginsMap: Record<string, GraphPlugin> = {};
@@ -403,20 +404,14 @@ class Graph extends EventSource {
 
   constructor(
     container: HTMLElement,
-    model?: GraphModel,
+    model?: GraphDataModel,
     plugins: GraphPluginConstructor[] = defaultPlugins,
     stylesheet: Stylesheet | null = null
   ) {
     super();
 
-    for (let k in this) {
-      if (this[k] && (Object.getPrototypeOf(this[k]) === Object.prototype || Array.isArray(this[k]))) {
-        this[k] = JSON.parse(JSON.stringify(this[k]));
-      }
-    }
-
     this.container = container ?? document.createElement('div');
-    this.model = model ?? new GraphModel();
+    this.model = model ?? new GraphDataModel();
     this.plugins = plugins;
     this.cellRenderer = this.createCellRenderer();
     this.setStylesheet(stylesheet != null ? stylesheet : this.createStylesheet());
@@ -426,7 +421,6 @@ class Graph extends EventSource {
     this.graphModelChangeListener = (sender: any, evt: EventObject) => {
       this.graphModelChanged(evt.getProperty('edit').changes);
     };
-
     this.getModel().addListener(InternalEvent.CHANGE, this.graphModelChangeListener);
 
     // Initializes the container using the view
@@ -435,15 +429,18 @@ class Graph extends EventSource {
     // Updates the size of the container for the current graph
     this.sizeDidChange();
 
+    // Set the selection model
+    this.setSelectionModel(this.createSelectionModel());
+
     // Initiailzes plugins
     this.plugins.forEach((p: GraphPluginConstructor) => {
       this.pluginsMap[p.pluginId] = new p(this);
     });
-    //this.setSelectionModel(this.getPlugin(''));
 
     this.view.revalidate();
   }
 
+  createSelectionModel = () => new GraphSelectionModel(this);
   getContainer = () => this.container;
   getPlugin = (id: string) => this.pluginsMap[id] as unknown;
   getCellRenderer = () => this.cellRenderer;
@@ -508,7 +505,7 @@ class Graph extends EventSource {
   }
 
   /**
-   * Returns the {@link GraphModel} that contains the cells.
+   * Returns the {@link GraphDataModel} that contains the cells.
    */
   getModel() {
     return this.model;
@@ -1057,8 +1054,8 @@ class Graph extends EventSource {
 
   /**
    * Returns the offset to be used for the cells inside the given cell. The
-   * root and layer cells may be identified using {@link GraphModel.isRoot} and
-   * {@link GraphModel.isLayer}. For all other current roots, the
+   * root and layer cells may be identified using {@link GraphDataModel.isRoot} and
+   * {@link GraphDataModel.isLayer}. For all other current roots, the
    * {@link GraphView.currentRoot} field points to the respective cell, so that
    * the following holds: cell == this.view.currentRoot. This implementation
    * returns null.
@@ -1422,7 +1419,7 @@ class Graph extends EventSource {
 
   /**
    * Returns {@link defaultParent} or {@link GraphView.currentRoot} or the first child
-   * child of {@link GraphModel.root} if both are null. The value returned by
+   * child of {@link GraphDataModel.root} if both are null. The value returned by
    * this function should be used as the parent for new cells (aka default
    * layer).
    */

@@ -1,5 +1,5 @@
 import Cell from '../cell/Cell';
-import GraphModel from '../GraphModel';
+import GraphDataModel from '../GraphDataModel';
 import CodecRegistry from '../../serialization/CodecRegistry';
 import GenericChangeCodec from './GenericChangeCodec';
 
@@ -14,12 +14,12 @@ import type { UndoableChange } from '../../types';
  * @class ValueChange
  */
 class ValueChange implements UndoableChange {
-  model: GraphModel;
+  model: GraphDataModel;
   cell: Cell;
   value: unknown;
   previous: unknown;
 
-  constructor(model: GraphModel, cell: Cell, value: unknown) {
+  constructor(model: GraphDataModel, cell: Cell, value: unknown) {
     this.model = model;
     this.cell = cell;
     this.value = value;

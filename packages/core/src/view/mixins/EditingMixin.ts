@@ -109,7 +109,7 @@ const EditingMixin: PartialType = {
   /**
    * Returns the initial value for in-place editing. This implementation
    * returns {@link convertValueToString} for the given cell. If this function is
-   * overridden, then {@link GraphModel.valueForCellChanged} should take care
+   * overridden, then {@link GraphDataModel.valueForCellChanged} should take care
    * of correctly storing the actual new value inside the user object.
    *
    * @param cell {@link mxCell} for which the initial editing value should be returned.
@@ -163,7 +163,7 @@ const EditingMixin: PartialType = {
    * In the following example, the function is extended to map changes to
    * attributes in an XML node, as shown in {@link convertValueToString}.
    * Alternatively, the handling of this can be implemented as shown in
-   * {@link GraphModel.valueForCellChanged} without the need to clone the
+   * {@link GraphDataModel.valueForCellChanged} without the need to clone the
    * user object.
    *
    * ```javascript
