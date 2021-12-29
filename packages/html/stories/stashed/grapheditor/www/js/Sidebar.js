@@ -2753,7 +2753,7 @@ Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInse
 	
 						if (allowCellsInserted && (evt == null || !mxEvent.isShiftDown(evt)))
 						{
-							graph.fireEvent(new EventObject('cellsInserted', 'cells', select));
+							graph.fireEvent(new EventObject('cellsInserted', { cells: select }));
 						}
 					}
 					catch (e)
@@ -2951,7 +2951,7 @@ Sidebar.prototype.dropAndConnect = function(source, targets, direction, dropCell
 			
 			if (evt == null || !mxEvent.isShiftDown(evt))
 			{
-				graph.fireEvent(new EventObject('cellsInserted', 'cells', targets));
+				graph.fireEvent(new EventObject('cellsInserted', { cells: targets }));
 			}
 		}
 		catch (e)

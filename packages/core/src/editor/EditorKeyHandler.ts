@@ -44,7 +44,7 @@ export class EditorKeyHandler {
       this.handler.escape = (evt) => {
         old.apply(handler, [evt]);
         editor.hideProperties();
-        editor.fireEvent(new EventObject(InternalEvent.ESCAPE, 'event', evt));
+        editor.fireEvent(new EventObject(InternalEvent.ESCAPE, { event: evt }));
       };
     }
   }

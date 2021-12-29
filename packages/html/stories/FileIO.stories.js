@@ -103,13 +103,7 @@ const Template = ({ label, ...args }) => {
       }
 
       graph.dblClick = function (evt, cell) {
-        const mxe = new EventObject(
-          InternalEvent.DOUBLE_CLICK,
-          'event',
-          evt,
-          'cell',
-          cell
-        );
+        const mxe = new EventObject(InternalEvent.DOUBLE_CLICK, { event: evt, cell });
         this.fireEvent(mxe);
 
         if (

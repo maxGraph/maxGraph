@@ -93,14 +93,14 @@ const EditingMixin: PartialType = {
         }
       } else {
         this.fireEvent(
-          new EventObject(InternalEvent.START_EDITING, 'cell', cell, 'event', evt)
+          new EventObject(InternalEvent.START_EDITING, { cell, event: evt })
         );
 
         const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
         cellEditor.startEditing(cell, evt);
 
         this.fireEvent(
-          new EventObject(InternalEvent.EDITING_STARTED, 'cell', cell, 'event', evt)
+          new EventObject(InternalEvent.EDITING_STARTED, { cell, event: evt })
         );
       }
     }
@@ -128,8 +128,7 @@ const EditingMixin: PartialType = {
   stopEditing(cancel = false) {
     const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
     cellEditor.stopEditing(cancel);
-
-    this.fireEvent(new EventObject(InternalEvent.EDITING_STOPPED, 'cancel', cancel));
+    this.fireEvent(new EventObject(InternalEvent.EDITING_STOPPED, { cancel }));
   },
 
   /**

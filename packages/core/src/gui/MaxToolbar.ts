@@ -400,7 +400,7 @@ class MaxToolbar extends EventSource {
         this.selectedMode.className = `${this.selectedMode.initialClassName}Selected`;
       }
 
-      this.fireEvent(new EventObject(InternalEvent.SELECT, 'function', funct));
+      this.fireEvent(new EventObject(InternalEvent.SELECT, { function: funct }));
     }
   }
 

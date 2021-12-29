@@ -893,8 +893,7 @@ Menus.prototype.createStyleChangeFunction = function(keys, values)
 				post();
 			}
 			
-			this.editorUi.fireEvent(new EventObject('styleChanged',
-				'keys', keys, 'values', values, 'cells', cells));
+			this.editorUi.fireEvent(new EventObject('styleChanged', { keys, values, cells }));
 		}
 		finally
 		{
@@ -1009,8 +1008,11 @@ Menus.prototype.toggleStyle = function(key, defaultValue)
 {
 	let graph = this.editorUi.editor.graph;
 	let value = graph.toggleCellStyles(key, defaultValue);
-	this.editorUi.fireEvent(new EventObject('styleChanged', 'keys', [key], 'values', [value],
-			'cells', graph.getSelectionCells()));
+	this.editorUi.fireEvent(new EventObject('styleChanged', {
+		keys: [key],
+		values: [value],
+		cells: graph.getSelectionCells(),
+	}));
 };
 
 /**

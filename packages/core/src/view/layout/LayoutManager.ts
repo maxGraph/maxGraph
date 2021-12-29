@@ -365,7 +365,7 @@ class LayoutManager extends EventSource {
           }
         }
 
-        this.fireEvent(new EventObject(InternalEvent.LAYOUT_CELLS, 'cells', cells));
+        this.fireEvent(new EventObject(InternalEvent.LAYOUT_CELLS, { cells }));
       } finally {
         model.endUpdate();
       }

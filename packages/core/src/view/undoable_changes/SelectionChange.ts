@@ -49,7 +49,7 @@ class SelectionChange implements UndoableChange {
       Translations.get(this.graph.getDoneResource()) || this.graph.getDoneResource();
 
     this.graph.fireEvent(
-      new EventObject(InternalEvent.CHANGE, 'added', this.added, 'removed', this.removed)
+      new EventObject(InternalEvent.CHANGE, { added: this.added, removed: this.removed })
     );
   }
 }

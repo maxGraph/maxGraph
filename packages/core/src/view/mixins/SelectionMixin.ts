@@ -352,7 +352,7 @@ const SelectionMixin: PartialType = {
       change.execute();
       const edit = new UndoableEdit(this as Graph, false);
       edit.add(change);
-      this.fireEvent(new EventObject(InternalEvent.UNDO, 'edit', edit));
+      this.fireEvent(new EventObject(InternalEvent.UNDO, { edit }));
     }
   },
 

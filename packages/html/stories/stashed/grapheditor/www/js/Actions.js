@@ -516,7 +516,7 @@ Actions.prototype.init = function()
             		try
             		{
         	    		linkCell = graph.addCell(linkCell);
-        	    		graph.fireEvent(new EventObject('cellsInserted', 'cells', [linkCell]));
+        	    		graph.fireEvent(new EventObject('cellsInserted', { cells: [linkCell] }));
             	    }
             		finally
             		{

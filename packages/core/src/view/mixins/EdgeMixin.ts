@@ -308,7 +308,7 @@ const EdgeMixin: PartialType = {
 
         // Removes all existing control points
         this.resetEdge(edge);
-        this.fireEvent(new EventObject(InternalEvent.FLIP_EDGE, 'edge', edge));
+        this.fireEvent(new EventObject(InternalEvent.FLIP_EDGE, { edge }));
       });
     }
     return edge;

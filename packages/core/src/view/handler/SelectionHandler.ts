@@ -473,11 +473,9 @@ class SelectionHandler implements GraphPlugin {
           const cellEditor = this.graph.getPlugin('CellEditorHandler') as CellEditorHandler;
           return cellEditor.getEditingCell() !== c;
         }
-
         c = c.getParent();
       }
     }
-
     return this.graph.isToggleEvent(me.getEvent()) && !isAltDown(me.getEvent());
   }
 
@@ -489,11 +487,9 @@ class SelectionHandler implements GraphPlugin {
 
     if (!popupMenuHandler.isPopupTrigger(me)) {
       let cell = me.getCell();
-
       if (cell === null) {
         cell = this.cell;
       }
-
       if (cell) this.selectCellForEvent(cell, me);
     }
   }
@@ -521,11 +517,9 @@ class SelectionHandler implements GraphPlugin {
             parent = cell.getParent();
           }
         }
-
         this.graph.selectCellForEvent(cell, me.getEvent());
       }
     }
-
     return cell;
   }
 
@@ -828,10 +822,8 @@ class SelectionHandler implements GraphPlugin {
    */
   snap(vector: Point) {
     const scale = this.scaleGrid ? this.graph.view.scale : 1;
-
     vector.x = this.graph.snap(vector.x / scale) * scale;
     vector.y = this.graph.snap(vector.y / scale) * scale;
-
     return vector;
   }
 

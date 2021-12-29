@@ -59,7 +59,7 @@ class CurrentRootChange implements UndoableChange {
     const name = this.isUp ? InternalEvent.UP : InternalEvent.DOWN;
 
     this.view.fireEvent(
-      new EventObject(name, 'root', this.view.currentRoot, 'previous', this.previous)
+      new EventObject(name, { root: this.view.currentRoot, previous: this.previous })
     );
 
     this.isUp = !this.isUp;

@@ -1868,7 +1868,7 @@ export class Editor extends EventSource {
       this.readGraphModel(xml.documentElement);
       this.filename = filename;
 
-      this.fireEvent(new EventObject(InternalEvent.OPEN, 'filename', filename));
+      this.fireEvent(new EventObject(InternalEvent.OPEN, { filename }));
     }
   }
 
@@ -1919,7 +1919,7 @@ export class Editor extends EventSource {
     }
 
     // Dispatches a save event
-    this.fireEvent(new EventObject(InternalEvent.SAVE, 'url', url));
+    this.fireEvent(new EventObject(InternalEvent.SAVE, { url }));
   }
 
   /**
@@ -1951,9 +1951,7 @@ export class Editor extends EventSource {
     }
 
     post(url, `${this.postParameterName}=${data}`, (req: string) => {
-      this.fireEvent(
-        new EventObject(InternalEvent.POST, 'request', req, 'url', url, 'data', data)
-      );
+      this.fireEvent(new EventObject(InternalEvent.POST, { request: req, url, data }));
     });
   }
 
@@ -2589,7 +2587,7 @@ export class Editor extends EventSource {
 
     this.cycleAttribute(vertex);
     this.fireEvent(
-      new EventObject(InternalEvent.BEFORE_ADD_VERTEX, 'vertex', vertex, 'parent', parent)
+      new EventObject(InternalEvent.BEFORE_ADD_VERTEX, { vertex: vertex, parent: parent })
     );
 
     model.beginUpdate();
@@ -2599,7 +2597,7 @@ export class Editor extends EventSource {
       if (vertex != null) {
         this.graph.constrainChild(vertex);
 
-        this.fireEvent(new EventObject(InternalEvent.ADD_VERTEX, 'vertex', vertex));
+        this.fireEvent(new EventObject(InternalEvent.ADD_VERTEX, { vertex: vertex }));
       }
     } finally {
       model.endUpdate();
@@ -2608,7 +2606,7 @@ export class Editor extends EventSource {
     if (vertex != null) {
       this.graph.setSelectionCell(vertex);
       this.graph.scrollCellToVisible(vertex);
-      this.fireEvent(new EventObject(InternalEvent.AFTER_ADD_VERTEX, 'vertex', vertex));
+      this.fireEvent(new EventObject(InternalEvent.AFTER_ADD_VERTEX, { vertex: vertex }));
     }
     return vertex;
   }

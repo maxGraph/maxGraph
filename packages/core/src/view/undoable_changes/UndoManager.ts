@@ -129,7 +129,7 @@ class UndoManager extends EventSource {
       edit.undo();
 
       if (edit.isSignificant()) {
-        this.fireEvent(new EventObject(InternalEvent.UNDO, 'edit', edit));
+        this.fireEvent(new EventObject(InternalEvent.UNDO, { edit }));
         break;
       }
     }
@@ -153,7 +153,7 @@ class UndoManager extends EventSource {
       edit.redo();
 
       if (edit.isSignificant()) {
-        this.fireEvent(new EventObject(InternalEvent.REDO, 'edit', edit));
+        this.fireEvent(new EventObject(InternalEvent.REDO, { edit }));
         break;
       }
     }
@@ -171,7 +171,7 @@ class UndoManager extends EventSource {
 
     this.history.push(undoableEdit);
     this.indexOfNextAdd = this.history.length;
-    this.fireEvent(new EventObject(InternalEvent.ADD, 'edit', undoableEdit));
+    this.fireEvent(new EventObject(InternalEvent.ADD, { edit: undoableEdit }));
   }
 
   /**

@@ -146,15 +146,7 @@ const GroupingMixin: PartialType = {
         this.cellsResized(new CellArray(group), [bounds], false);
 
         this.fireEvent(
-          new EventObject(
-            InternalEvent.GROUP_CELLS,
-            'group',
-            group,
-            'border',
-            border,
-            'cells',
-            cells
-          )
+          new EventObject(InternalEvent.GROUP_CELLS, { group, border, cells })
         );
       } finally {
         this.getModel().endUpdate();
@@ -280,7 +272,7 @@ const GroupingMixin: PartialType = {
         }
 
         this.removeCellsAfterUngroup(cells);
-        this.fireEvent(new EventObject(InternalEvent.UNGROUP_CELLS, 'cells', cells));
+        this.fireEvent(new EventObject(InternalEvent.UNGROUP_CELLS, { cells }));
       } finally {
         this.getModel().endUpdate();
       }
@@ -331,7 +323,7 @@ const GroupingMixin: PartialType = {
 
       this.cellsAdded(cells, parent, index, null, null, true);
       this.fireEvent(
-        new EventObject(InternalEvent.REMOVE_CELLS_FROM_PARENT, 'cells', cells)
+        new EventObject(InternalEvent.REMOVE_CELLS_FROM_PARENT, { cells })
       );
     } finally {
       this.getModel().endUpdate();

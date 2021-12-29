@@ -75,7 +75,7 @@ const OrderMixin: PartialType = {
       }
 
       this.fireEvent(
-        new EventObject(InternalEvent.CELLS_ORDERED, 'back', back, 'cells', cells)
+        new EventObject(InternalEvent.CELLS_ORDERED, { back, cells })
       );
     });
   },

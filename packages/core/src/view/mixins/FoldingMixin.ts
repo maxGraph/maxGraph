@@ -249,15 +249,7 @@ const FoldingMixin: PartialType = {
         }
 
         this.fireEvent(
-          new EventObject(
-            InternalEvent.CELLS_FOLDED,
-            'cells',
-            cells,
-            'collapse',
-            collapse,
-            'recurse',
-            recurse
-          )
+          new EventObject(InternalEvent.CELLS_FOLDED, { cells, collapse, recurse })
         );
       } finally {
         this.getModel().endUpdate();

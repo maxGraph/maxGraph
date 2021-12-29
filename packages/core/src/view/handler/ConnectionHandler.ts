@@ -620,7 +620,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
     this.marker.markedState = state;
     this.marker.mark();
 
-    this.fireEvent(new EventObject(InternalEvent.START, 'state', this.previous));
+    this.fireEvent(new EventObject(InternalEvent.START, { state: this.previous }));
   }
 
   /**
@@ -869,7 +869,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
         this.edgeState.cell.geometry.setTerminalPoint(pt, true);
       }
 
-      this.fireEvent(new EventObject(InternalEvent.START, 'state', this.previous));
+      this.fireEvent(new EventObject(InternalEvent.START, { state: this.previous }));
 
       me.consume();
     }

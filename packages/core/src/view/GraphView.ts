@@ -237,7 +237,7 @@ export class GraphView extends EventSource {
       }
     }
     this.fireEvent(
-      new EventObject(InternalEvent.SCALE, 'scale', value, 'previousScale', previousScale)
+      new EventObject(InternalEvent.SCALE, { scale: value, previousScale })
     );
   }
 
@@ -383,7 +383,7 @@ export class GraphView extends EventSource {
       const edit = new UndoableEdit(this, true);
       edit.add(change);
 
-      this.fireEvent(new EventObject(InternalEvent.UNDO, 'edit', edit));
+      this.fireEvent(new EventObject(InternalEvent.UNDO, { edit }));
       this.graph.sizeDidChange();
 
       this.currentRoot = root;
@@ -415,10 +415,10 @@ export class GraphView extends EventSource {
     }
 
     this.fireEvent(
-      new EventObject(InternalEvent.SCALE_AND_TRANSLATE, {
-        scale: scale,
-        previousScale: previousScale,
-        translate: this.translate,
+      new EventObject(InternalEvent.SCALE_AND_TRANSLATE, { 
+        scale, 
+        previousScale, 
+        translate: this.translate, 
         previousTranslate: previousTranslate,
       })
     );

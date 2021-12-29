@@ -50,13 +50,13 @@ const Template = ({ label, ...args }) => {
         shape.node,
         Client.IS_POINTER ? 'pointerdown' : 'mousedown',
         (evt) => {
-          overlay.fireEvent(new EventObject('pointerdown', 'event', evt, 'state', state));
+          overlay.fireEvent(new EventObject('pointerdown', { event: evt, state }));
         }
       );
 
       if (!Client.IS_POINTER && Client.IS_TOUCH) {
         InternalEvent.addListener(shape.node, 'touchstart', (evt) => {
-          overlay.fireEvent(new EventObject('pointerdown', 'event', evt, 'state', state));
+          overlay.fireEvent(new EventObject('pointerdown', { event: evt, state }));
         });
       }
     }

@@ -68,7 +68,7 @@ const OverlaysMixin: PartialType = {
     }
 
     this.fireEvent(
-      new EventObject(InternalEvent.ADD_OVERLAY, 'cell', cell, 'overlay', overlay)
+      new EventObject(InternalEvent.ADD_OVERLAY, { cell, overlay })
     );
     return overlay;
   },
@@ -109,7 +109,7 @@ const OverlaysMixin: PartialType = {
         }
 
         this.fireEvent(
-          new EventObject(InternalEvent.REMOVE_OVERLAY, 'cell', cell, 'overlay', overlay)
+          new EventObject(InternalEvent.REMOVE_OVERLAY, { cell, overlay })
         );
       } else {
         overlay = null;

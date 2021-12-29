@@ -66,7 +66,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
       if (evtName === InternalEvent.MOUSE_DOWN && this.isForcePanningEvent(me)) {
         this.start(me);
         this.active = true;
-        this.fireEvent(new EventObject(InternalEvent.PAN_START, 'event', me));
+        this.fireEvent(new EventObject(InternalEvent.PAN_START, { event: me }));
         me.consume();
       }
     };
@@ -344,7 +344,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
         this.graph.panGraph(this.dx + this.dx0, this.dy + this.dy0);
       }
 
-      this.fireEvent(new EventObject(InternalEvent.PAN, 'event', me));
+      this.fireEvent(new EventObject(InternalEvent.PAN, { event: me }));
     } else if (this.panningTrigger) {
       const tmp = this.active;
 
@@ -355,7 +355,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
         Math.abs(this.dy) > this.graph.getSnapTolerance();
 
       if (!tmp && this.active) {
-        this.fireEvent(new EventObject(InternalEvent.PAN_START, 'event', me));
+        this.fireEvent(new EventObject(InternalEvent.PAN_START, { event: me }));
       }
     }
 
@@ -385,7 +385,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
         me.consume();
       }
 
-      this.fireEvent(new EventObject(InternalEvent.PAN_END, 'event', me));
+      this.fireEvent(new EventObject(InternalEvent.PAN_END, { event: me }));
     }
 
     this.reset();

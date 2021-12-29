@@ -396,7 +396,7 @@ const EventsMixin: PartialType = {
    * @param evt Mouseevent that represents the keystroke.
    */
   escape(evt) {
-    this.fireEvent(new EventObject(InternalEvent.ESCAPE, 'event', evt));
+    this.fireEvent(new EventObject(InternalEvent.ESCAPE, { event: evt }));
   },
 
   /**
@@ -428,7 +428,7 @@ const EventsMixin: PartialType = {
   click(me) {
     const evt = me.getEvent();
     let cell = me.getCell();
-    const mxe = new EventObject(InternalEvent.CLICK, 'event', evt, 'cell', cell);
+    const mxe = new EventObject(InternalEvent.CLICK, { event: evt, cell });
 
     if (me.isConsumed()) {
       mxe.consume();
@@ -540,7 +540,7 @@ const EventsMixin: PartialType = {
    * @param cell Optional {@link Cell} under the mousepointer.
    */
   dblClick(evt, cell = null) {
-    const mxe = new EventObject(InternalEvent.DOUBLE_CLICK, { event: evt, cell: cell });
+    const mxe = new EventObject(InternalEvent.DOUBLE_CLICK, { event: evt, cell });
     this.fireEvent(mxe);
 
     // Handles the event if it has not been consumed
@@ -566,13 +566,7 @@ const EventsMixin: PartialType = {
   tapAndHold(me) {
     console.log('tapAndHold');
     const evt = me.getEvent();
-    const mxe = new EventObject(
-      InternalEvent.TAP_AND_HOLD,
-      'event',
-      evt,
-      'cell',
-      me.getCell()
-    );
+    const mxe = new EventObject(InternalEvent.TAP_AND_HOLD, { event: evt, cell: me.getCell() });
 
     const panningHandler = this.getPlugin('PanningHandler') as PanningHandler;
     const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
@@ -606,7 +600,7 @@ const EventsMixin: PartialType = {
           connectionHandler.edgeState = connectionHandler.createEdgeState(me);
           connectionHandler.previous = state;
           connectionHandler.fireEvent(
-            new EventObject(InternalEvent.START, 'state', connectionHandler.previous)
+            new EventObject(InternalEvent.START, { state: connectionHandler.previous })
           );
         }
       }
@@ -965,7 +959,7 @@ const EventsMixin: PartialType = {
       // Updates the event state via getEventState
       me.state = state ? this.getEventState(state) : null;
       this.fireEvent(
-        new EventObject(InternalEvent.FIRE_MOUSE_EVENT, 'eventName', evtName, 'event', me)
+        new EventObject(InternalEvent.FIRE_MOUSE_EVENT, { eventName: evtName, event: me })
       );
 
       if (
@@ -1119,7 +1113,7 @@ const EventsMixin: PartialType = {
   fireGestureEvent(evt, cell = null) {
     // Resets double tap event handling when gestures take place
     this.lastTouchTime = 0;
-    this.fireEvent(new EventObject(InternalEvent.GESTURE, 'event', evt, 'cell', cell));
+    this.fireEvent(new EventObject(InternalEvent.GESTURE, { event: evt, cell }));
   },
 
   /**
@@ -1179,7 +1173,7 @@ const EventsMixin: PartialType = {
 
     this.updatePageBreaks(this.isPageBreaksVisible(), width, height);
 
-    this.fireEvent(new EventObject(InternalEvent.SIZE, 'bounds', bounds));
+    this.fireEvent(new EventObject(InternalEvent.SIZE, { bounds }));
   },
 
   /*****************************************************************************

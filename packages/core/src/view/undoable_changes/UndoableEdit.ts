@@ -141,7 +141,7 @@ class UndoableEdit {
         }
 
         // New global executed event
-        this.source.fireEvent(new EventObject(InternalEvent.EXECUTED, 'change', change));
+        this.source.fireEvent(new EventObject(InternalEvent.EXECUTED, { change }));
       }
 
       this.undone = true;
@@ -170,7 +170,7 @@ class UndoableEdit {
         }
 
         // New global executed event
-        this.source.fireEvent(new EventObject(InternalEvent.EXECUTED, 'change', change));
+        this.source.fireEvent(new EventObject(InternalEvent.EXECUTED, { change }));
       }
 
       this.undone = false;

@@ -938,9 +938,9 @@ export class Model extends EventSource {
     change.execute();
     this.beginUpdate();
     this.currentEdit.add(change);
-    this.fireEvent(new EventObject(InternalEvent.EXECUTE, 'change', change));
+    this.fireEvent(new EventObject(InternalEvent.EXECUTE, { change }));
     // New global executed event
-    this.fireEvent(new EventObject(InternalEvent.EXECUTED, 'change', change));
+    this.fireEvent(new EventObject(InternalEvent.EXECUTED, { change }));
     this.endUpdate();
   }
 
@@ -1011,17 +1011,17 @@ export class Model extends EventSource {
 
     if (!this.endingUpdate) {
       this.endingUpdate = this.updateLevel === 0;
-      this.fireEvent(new EventObject(InternalEvent.END_UPDATE, 'edit', this.currentEdit));
+      this.fireEvent(new EventObject(InternalEvent.END_UPDATE, { edit: this.currentEdit }));
 
       try {
         if (this.endingUpdate && !this.currentEdit.isEmpty()) {
           this.fireEvent(
-            new EventObject(InternalEvent.BEFORE_UNDO, 'edit', this.currentEdit)
+            new EventObject(InternalEvent.BEFORE_UNDO, { edit: this.currentEdit })
           );
           const tmp = this.currentEdit;
           this.currentEdit = this.createUndoableEdit();
           tmp.notify();
-          this.fireEvent(new EventObject(InternalEvent.UNDO, 'edit', tmp));
+          this.fireEvent(new EventObject(InternalEvent.UNDO, { edit: tmp }));
         }
       } finally {
         this.endingUpdate = false;
@@ -1042,12 +1042,8 @@ export class Model extends EventSource {
 
     edit.notify = () => {
       // LATER: Remove changes property (deprecated)
-      edit.source.fireEvent(
-        new EventObject(InternalEvent.CHANGE, 'edit', edit, 'changes', edit.changes)
-      );
-      edit.source.fireEvent(
-        new EventObject(InternalEvent.NOTIFY, 'edit', edit, 'changes', edit.changes)
-      );
+      edit.source.fireEvent(new EventObject(InternalEvent.CHANGE, { edit, changes: edit.changes }));
+      edit.source.fireEvent(new EventObject(InternalEvent.NOTIFY, { edit, changes: edit.changes }));
     };
 
     return edit;
