@@ -1,4 +1,4 @@
-import Model from '../other/Model';
+import GraphModel from '../GraphModel';
 import Cell from '../cell/Cell';
 import ObjectCodec from '../../serialization/ObjectCodec';
 import CodecRegistry from '../../serialization/CodecRegistry';
@@ -18,7 +18,7 @@ import Codec from '../../serialization/Codec';
  * @class ChildChange
  */
 export class ChildChange implements UndoableChange {
-  model: Model;
+  model: GraphModel;
   parent: Cell | null;
   child: Cell;
   previous: Cell | null;
@@ -26,7 +26,7 @@ export class ChildChange implements UndoableChange {
   previousIndex: number;
 
   constructor(
-    model: Model,
+    model: GraphModel,
     parent: Cell | null,
     child: Cell,
     index: number = 0

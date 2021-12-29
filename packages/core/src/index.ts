@@ -25,7 +25,7 @@ import './view/mixins/OrderMixin';
 
 export { Graph, GraphCodec } from './view/Graph';
 
-export { Model, ModelCodec } from './view/other/Model';
+export { GraphModel, ModelCodec } from './view/GraphModel';
 export { GraphView, GraphViewCodec } from './view/GraphView';
 export { default as LayoutManager } from './view/layout/LayoutManager';
 export { default as Outline } from './view/other/Outline';
@@ -172,6 +172,7 @@ export { default as MaxLog } from './gui/MaxLog';
 export { default as MaxPopupMenu } from './gui/MaxPopupMenu';
 export { default as MaxToolbar } from './gui/MaxToolbar';
 export { default as MaxWindow } from './gui/MaxWindow';
+export { popup, error } from './gui/MaxWindow';
 
 export { default as ImageBox } from './view/image/ImageBox';
 export { default as ImageBundle } from './view/image/ImageBundle';

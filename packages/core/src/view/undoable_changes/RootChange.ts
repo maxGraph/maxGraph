@@ -1,5 +1,5 @@
 import Cell from '../cell/Cell';
-import Model from '../other/Model';
+import GraphModel from '../GraphModel';
 import CodecRegistry from '../../serialization/CodecRegistry';
 import { NODETYPE } from '../../util/constants';
 import ObjectCodec from '../../serialization/ObjectCodec';
@@ -18,11 +18,11 @@ import Codec from '../../serialization/Codec';
  * @class RootChange
  */
 export class RootChange implements UndoableChange {
-  model: Model;
+  model: GraphModel;
   root: Cell | null;
   previous: Cell | null;
 
-  constructor(model: Model, root: Cell | null) {
+  constructor(model: GraphModel, root: Cell | null) {
     this.model = model;
     this.root = root;
     this.previous = root;

@@ -1,5 +1,5 @@
 import Cell from '../cell/Cell';
-import Model from '../other/Model';
+import GraphModel from '../GraphModel';
 import CodecRegistry from '../../serialization/CodecRegistry';
 import GenericChangeCodec from './GenericChangeCodec';
 
@@ -14,12 +14,12 @@ import type { UndoableChange } from '../../types';
  * specified model.
  */
 class CollapseChange implements UndoableChange {
-  model: Model;
+  model: GraphModel;
   cell: Cell;
   collapsed: boolean;
   previous: boolean;
 
-  constructor(model: Model, cell: Cell, collapsed: boolean) {
+  constructor(model: GraphModel, cell: Cell, collapsed: boolean) {
     this.model = model;
     this.cell = cell;
     this.collapsed = collapsed;

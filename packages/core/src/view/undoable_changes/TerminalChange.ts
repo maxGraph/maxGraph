@@ -1,5 +1,5 @@
 import Cell from '../cell/Cell';
-import Model from '../other/Model';
+import GraphModel from '../GraphModel';
 import ObjectCodec from '../../serialization/ObjectCodec';
 import CodecRegistry from '../../serialization/CodecRegistry';
 
@@ -15,14 +15,14 @@ import Codec from '../../serialization/Codec';
  * specified model.
  */
 export class TerminalChange implements UndoableChange {
-  model: Model;
+  model: GraphModel;
   cell: Cell;
   terminal: Cell | null;
   previous: Cell | null;
   source: boolean;
 
   constructor(
-    model: Model,
+    model: GraphModel,
     cell: Cell,
     terminal: Cell | null,
     source: boolean

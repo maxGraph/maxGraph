@@ -17,7 +17,7 @@ import Dictionary from './Dictionary';
 import CellPath from '../view/cell/CellPath';
 import Rectangle from '../view/geometry/Rectangle';
 import Cell from '../view/cell/Cell';
-import Model from '../view/other/Model';
+import GraphModel from '../view/GraphModel';
 import CellArray from '../view/cell/CellArray';
 
 /**
@@ -425,7 +425,7 @@ export const removeAllStylenames = (style: string) => {
  * @param value New value for the given key.
  */
 export const setCellStyles = (
-  model: Model,
+  model: GraphModel,
   cells: CellArray,
   key: string,
   value: any
@@ -519,7 +519,7 @@ export const setStyle = (style: string | null, key: string, value: any) => {
  * @param value Optional boolean value for the flag.
  */
 export const setCellStyleFlags = (
-  model: Model,
+  model: GraphModel,
   cells: CellArray,
   key: string,
   flag: number,

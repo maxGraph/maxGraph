@@ -23,7 +23,7 @@ import CellEditorHandler from './handler/CellEditorHandler';
 import Point from './geometry/Point';
 import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
 import Cell from './cell/Cell';
-import Model from './other/Model';
+import GraphModel from './GraphModel';
 import Stylesheet from './style/Stylesheet';
 import { PAGE_FORMAT_A4_PORTRAIT } from '../util/constants';
 
@@ -109,9 +109,9 @@ class Graph extends EventSource {
    *****************************************************************************/
 
   /**
-   * Holds the {@link Model} that contains the cells to be displayed.
+   * Holds the {@link GraphModel} that contains the cells to be displayed.
    */
-  model: Model;
+  model: GraphModel;
 
   plugins: GraphPluginConstructor[];
   pluginsMap: Record<string, GraphPlugin> = {};
@@ -403,7 +403,7 @@ class Graph extends EventSource {
 
   constructor(
     container: HTMLElement,
-    model?: Model,
+    model?: GraphModel,
     plugins: GraphPluginConstructor[] = defaultPlugins,
     stylesheet: Stylesheet | null = null
   ) {
@@ -416,7 +416,7 @@ class Graph extends EventSource {
     }
 
     this.container = container ?? document.createElement('div');
-    this.model = model ?? new Model();
+    this.model = model ?? new GraphModel();
     this.plugins = plugins;
     this.cellRenderer = this.createCellRenderer();
     this.setStylesheet(stylesheet != null ? stylesheet : this.createStylesheet());
@@ -439,6 +439,7 @@ class Graph extends EventSource {
     this.plugins.forEach((p: GraphPluginConstructor) => {
       this.pluginsMap[p.pluginId] = new p(this);
     });
+    //this.setSelectionModel(this.getPlugin(''));
 
     this.view.revalidate();
   }
@@ -507,7 +508,7 @@ class Graph extends EventSource {
   }
 
   /**
-   * Returns the {@link Model} that contains the cells.
+   * Returns the {@link GraphModel} that contains the cells.
    */
   getModel() {
     return this.model;
@@ -1056,8 +1057,8 @@ class Graph extends EventSource {
 
   /**
    * Returns the offset to be used for the cells inside the given cell. The
-   * root and layer cells may be identified using {@link Model.isRoot} and
-   * {@link Model.isLayer}. For all other current roots, the
+   * root and layer cells may be identified using {@link GraphModel.isRoot} and
+   * {@link GraphModel.isLayer}. For all other current roots, the
    * {@link GraphView.currentRoot} field points to the respective cell, so that
    * the following holds: cell == this.view.currentRoot. This implementation
    * returns null.
@@ -1421,7 +1422,7 @@ class Graph extends EventSource {
 
   /**
    * Returns {@link defaultParent} or {@link GraphView.currentRoot} or the first child
-   * child of {@link Model.root} if both are null. The value returned by
+   * child of {@link GraphModel.root} if both are null. The value returned by
    * this function should be used as the parent for new cells (aka default
    * layer).
    */
