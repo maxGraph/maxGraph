@@ -7,7 +7,7 @@ import {
   eventUtils,
   Client,
   Codec,
-  Model,
+  GraphModel,
   styleUtils,
   stringUtils,
 } from '@maxgraph/core';
@@ -47,7 +47,7 @@ const Template = ({ label, ...args }) => {
   // Public helper method for shared clipboard.
   Clipboard.cellsToString = function (cells) {
     const codec = new Codec();
-    const model = new Model();
+    const model = new GraphModel();
     const parent = model.getRoot().getChildAt(0);
 
     for (let i = 0; i < cells.length; i++) {
@@ -181,7 +181,7 @@ const Template = ({ label, ...args }) => {
       const node = doc.documentElement;
 
       if (node != null) {
-        const model = new Model();
+        const model = new GraphModel();
         const codec = new Codec(node.ownerDocument);
         codec.decode(node, model);
 

@@ -121,7 +121,7 @@ TextShape.prototype.baseSpacingTop = 5;
 TextShape.prototype.baseSpacingBottom = 1;
 
 // Keeps edges between relative child cells inside parent
-Model.prototype.ignoreRelativeEdgeParent = false;
+GraphModel.prototype.ignoreRelativeEdgeParent = false;
 
 // Defines grid properties
 mxGraphView.prototype.gridImage = (Client.IS_SVG) ? 'data:image/gif;base64,R0lGODlhCgAKAJEAAAAAAP///8zMzP///yH5BAEAAAMALAAAAAAKAAoAAAIJ1I6py+0Po2wFADs=' :
@@ -1096,7 +1096,7 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 			let graph = state.view.graph;
 
 			return source && (graph.isCellSelected(state.cell) || (graph.isTableRow(state.cell) &&
-				graph.selectionCellsHandler.isHandled(state.cell.getParent())));
+				graph.getPlugin('SelectionCellsHandler').isHandled(state.cell.getParent())));
 		};
 		
 		// Updates constraint handler if the selection changes
@@ -4137,8 +4137,8 @@ HoverIcons.prototype.init = function()
 	    			me.getGraphX(), me.getGraphY());
 	    	}
 	    	
-	    	if (this.graph.connectionHandler != null &&
-	    		this.graph.connectionHandler.shape != null)
+	    	if (this.graph.getPlugin('ConnectionHandler') != null &&
+	    		this.graph.getPlugin('ConnectionHandler').shape != null)
 	    	{
 	    		connectionHandlerActive = true;
 	    	}
@@ -4243,7 +4243,7 @@ HoverIcons.prototype.createArrow = function(img, tooltip)
 	    		mxUtils.setOpacity(this.activeArrow, this.inactiveOpacity);
 	    	}
 
-			this.graph.connectionHandler.constraintHandler.reset();
+			this.graph.getPlugin('ConnectionHandler').constraintHandler.reset();
 			mxUtils.setOpacity(arrow, 100);
 			this.activeArrow = arrow;
 		}
@@ -4345,18 +4345,18 @@ HoverIcons.prototype.isActive = function()
  */
 HoverIcons.prototype.drag = function(evt, x, y)
 {
-	this.graph.popupMenuHandler.hideMenu();
+	this.graph.getPlugin('PopupMenuHandler').hideMenu();
 	this.graph.stopEditing(false);
 
 	// Checks if state was removed in call to stopEditing above
 	if (this.currentState != null)
 	{
-		this.graph.connectionHandler.start(this.currentState, x, y);
+		this.graph.getPlugin('ConnectionHandler').start(this.currentState, x, y);
 		this.graph.isMouseTrigger = mxEvent.isMouseEvent(evt);
 		this.graph.isMouseDown = true;
 		
 		// Hides handles for selection cell
-		let handler = this.graph.selectionCellsHandler.getHandler(this.currentState.cell);
+		let handler = this.graph.getPlugin('SelectionCellsHandler').getHandler(this.currentState.cell);
 		
 		if (handler != null)
 		{
@@ -4364,7 +4364,7 @@ HoverIcons.prototype.drag = function(evt, x, y)
 		}
 		
 		// Ctrl+shift drag sets source constraint
-		let es = this.graph.connectionHandler.edgeState;
+		let es = this.graph.getPlugin('ConnectionHandler').edgeState;
 
 		if (evt != null && mxEvent.isShiftDown(evt) && mxEvent.isControlDown(evt) && es != null &&
 			mxUtils.getValue(es.style, 'edge', null) === 'orthogonalEdgeStyle')
@@ -4465,11 +4465,11 @@ HoverIcons.prototype.repaint = function()
 			bds.grow(this.graph.tolerance);
 			bds.grow(this.arrowSpacing);
 			
-			let handler = this.graph.selectionCellsHandler.getHandler(this.currentState.cell);
+			let handler = this.graph.getPlugin('SelectionCellsHandler').getHandler(this.currentState.cell);
 			
 			if (this.graph.isTableRow(this.currentState.cell))
 			{
-				handler = this.graph.selectionCellsHandler.getHandler(
+				handler = this.graph.getPlugin('SelectionCellsHandler').getHandler(
 					this.currentState.cell.getParent());
 			}
 			
@@ -4587,7 +4587,7 @@ HoverIcons.prototype.repaint = function()
 				this.arrowDown.style.visibility = 'visible';
 			}
 			
-			if (this.graph.tooltipHandler.isEnabled())
+			if (this.graph.getPlugin('TooltipHandler').isEnabled())
 			{
 				this.arrowLeft.setAttribute('title', Translations.get('plusTooltip'));
 				this.arrowRight.setAttribute('title', Translations.get('plusTooltip'));
@@ -4730,7 +4730,7 @@ HoverIcons.prototype.update = function(state, x, y)
 				this.updateThread = window.setTimeout(mxUtils.bind(this, function()
 				{
 					if (!this.isActive() && !this.graph.isMouseDown &&
-						!this.graph.panningHandler.isActive())
+						!this.graph.getPlugin('PanningHandler').isActive())
 					{
 						this.prev = state;
 						this.update(state, x, y);
@@ -4762,9 +4762,9 @@ HoverIcons.prototype.update = function(state, x, y)
 					this.repaint();
 					
 					// Resets connection points on other focused cells
-					if (this.graph.connectionHandler.constraintHandler.currentFocus != state)
+					if (this.graph.getPlugin('ConnectionHandler').constraintHandler.currentFocus != state)
 					{
-						this.graph.connectionHandler.constraintHandler.reset();
+						this.graph.getPlugin('ConnectionHandler').constraintHandler.reset();
 					}
 				}
 				else
@@ -6366,7 +6366,7 @@ if (typeof VertexHandler != 'undefined')
 			dy = (dy != null) ? dy : 0;
 			
 			let codec = new Codec(node.ownerDocument);
-			let tempModel = new Model();
+			let tempModel = new GraphModel();
 			codec.decode(node, tempModel);
 			let cells = []
 			
@@ -6468,7 +6468,7 @@ if (typeof VertexHandler != 'undefined')
 			}
 			
 			let codec = new Codec();
-			let model = new Model();
+			let model = new GraphModel();
 			let parent = model.getRoot().getChildAt(0);
 			
 			for (let i = 0; i < clones.length; i++)
@@ -7897,9 +7897,9 @@ if (typeof VertexHandler != 'undefined')
 			    		}
 			    		else
 			    		{
-				    		if (graph.tooltipHandler != null && this.currentLink != null && this.currentState != null)
+				    		if (graph.getPlugin('TooltipHandler') != null && this.currentLink != null && this.currentState != null)
 				    		{
-				    			graph.tooltipHandler.reset(me, true, this.currentState);
+				    			graph.getPlugin('TooltipHandler').reset(me, true, this.currentState);
 				    		}
 				    		
 					    	if (this.currentState != null && (me.getState() == this.currentState || me.sourceState == null) &&
@@ -7992,9 +7992,9 @@ if (typeof VertexHandler != 'undefined')
 			    		this.highlight.hide();
 			    	}
 			    	
-			    	if (graph.tooltipHandler != null)
+			    	if (graph.getPlugin('TooltipHandler') != null)
 		    		{
-		    			graph.tooltipHandler.hide();
+		    			graph.getPlugin('TooltipHandler').hide();
 		    		}
 			    }
 			};
@@ -9300,7 +9300,7 @@ if (typeof VertexHandler != 'undefined')
 			// Disables new connections via "hotspot"
 			this.connectionHandler.marker.isEnabled = function()
 			{
-				return this.graph.connectionHandler.first != null;
+				return this.graph.getPlugin('ConnectionHandler').first != null;
 			};
 		
 			// Hides menu when editing starts
@@ -10419,7 +10419,7 @@ if (typeof VertexHandler != 'undefined')
 								else if (!self.blockDelayedSelection)
 								{
 									let temp = graph.getCellAt(me.getGraphX(), me.getGraphY()) || tableState.cell;
-									graph.graphHandler.selectCellForEvent(temp, me);
+									graph.getPlugin('SelectionHandler').selectCellForEvent(temp, me);
 								}
 								
 								dx = 0;
@@ -10482,7 +10482,7 @@ if (typeof VertexHandler != 'undefined')
 								else if (!self.blockDelayedSelection)
 								{
 									let temp = graph.getCellAt(me.getGraphX(), me.getGraphY()) || tableState.cell;
-									graph.graphHandler.selectCellForEvent(temp, me);
+									graph.getPlugin('SelectionHandler').selectCellForEvent(temp, me);
 								}
 								
 								dy = 0;
@@ -10566,7 +10566,7 @@ if (typeof VertexHandler != 'undefined')
 						
 						mxEvent.addGestureListeners(moveHandle, mxUtils.bind(this, function(evt)
 						{
-							this.graph.popupMenuHandler.hideMenu();
+							this.graph.getPlugin('PopupMenuHandler').hideMenu();
 							this.graph.stopEditing(false);
 							
 							if (this.graph.isToggleEvent(evt) ||
@@ -10577,10 +10577,10 @@ if (typeof VertexHandler != 'undefined')
 							
 							if (!mxEvent.isPopupTrigger(evt))
 							{
-								this.graph.graphHandler.start(this.state.cell,
+								this.graph.getPlugin('SelectionHandler').start(this.state.cell,
 									mxEvent.getClientX(evt), mxEvent.getClientY(evt),
 									this.graph.getSelectionCells());
-								this.graph.graphHandler.cellWasClicked = true;
+								this.graph.getPlugin('SelectionHandler').cellWasClicked = true;
 								this.graph.isMouseTrigger = mxEvent.isMouseEvent(evt);
 								this.graph.isMouseDown = true;
 							}
@@ -10590,7 +10590,7 @@ if (typeof VertexHandler != 'undefined')
 						{
 							if (mxEvent.isPopupTrigger(evt))
 							{
-								this.graph.popupMenuHandler.popup(mxEvent.getClientX(evt),
+								this.graph.getPlugin('PopupMenuHandler').popup(mxEvent.getClientX(evt),
 									mxEvent.getClientY(evt), rowState.cell, evt);
 								mxEvent.consume(evt);
 							}
@@ -10759,7 +10759,7 @@ if (typeof VertexHandler != 'undefined')
 			edgeHandlerMouseMove.apply(this, arguments);
 			
 			if (this.linkHint != null && this.linkHint.style.display != 'none' &&
-				this.graph.graphHandler != null && this.graph.graphHandler.first != null)
+				this.graph.getPlugin('SelectionHandler') != null && this.graph.getPlugin('SelectionHandler').first != null)
 			{
 				this.linkHint.style.display = 'none';
 			}
@@ -11393,7 +11393,7 @@ if (typeof VertexHandler != 'undefined')
 		{
 			vertexHandlerMouseMove.apply(this, arguments);
 			
-			if (this.graph.graphHandler.first != null)
+			if (this.graph.getPlugin('SelectionHandler').first != null)
 			{
 				if (this.rotationShape != null && this.rotationShape.node != null)
 				{
@@ -11466,7 +11466,7 @@ if (typeof VertexHandler != 'undefined')
 				if (this.specialHandle != null)
 				{
 					this.specialHandle.node.style.display = (this.graph.isEnabled() &&
-						this.graph.getSelectionCount() < this.graph.graphHandler.maxCells) ?
+						this.graph.getSelectionCount() < this.graph.getPlugin('SelectionHandler').maxCells) ?
 						'' : 'none';
 				}
 				
@@ -11606,7 +11606,7 @@ if (typeof VertexHandler != 'undefined')
 			// Disables connection points
 			this.constraintHandler.isEnabled = mxUtils.bind(this, function()
 			{
-				return this.state.view.graph.connectionHandler.isEnabled();
+				return this.state.view.graph.getPlugin('ConnectionHandler').isEnabled();
 			});
 			
 			let update = mxUtils.bind(this, function()
@@ -11619,7 +11619,7 @@ if (typeof VertexHandler != 'undefined')
 				if (this.labelShape != null)
 				{
 					this.labelShape.node.style.display = (this.graph.isEnabled() &&
-						this.graph.getSelectionCount() < this.graph.graphHandler.maxCells) ?
+						this.graph.getSelectionCount() < this.graph.getPlugin('SelectionHandler').maxCells) ?
 						'' : 'none';
 				}
 			});
@@ -11654,7 +11654,7 @@ if (typeof VertexHandler != 'undefined')
 			
 			this.constraintHandler.isEnabled = mxUtils.bind(this, function()
 			{
-				return this.graph.connectionHandler.isEnabled();
+				return this.graph.getPlugin('ConnectionHandler').isEnabled();
 			});
 		};
 	

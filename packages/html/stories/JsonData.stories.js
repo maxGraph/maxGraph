@@ -8,7 +8,7 @@ import {
   Codec,
   domUtils,
   xmlUtils,
-  MaxWindow,
+  popup,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -85,7 +85,7 @@ const Template = ({ label, ...args }) => {
     DomHelpers.button('Show JSON', function () {
       const encoder = new Codec();
       const node = encoder.encode(graph.getModel());
-      MaxWindow.popup(xmlUtils.getXml(node), true);
+      popup(xmlUtils.getXml(node), true);
     })
   );
 

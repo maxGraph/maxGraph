@@ -212,8 +212,8 @@ class Codec extends React.Component {
             style.edge = mxEdgeStyle.ElbowConnector;
 
             // Enables panning with left mouse button
-            graph.panningHandler.useLeftButtonForPanning = true;
-            graph.panningHandler.ignoreCell = true;
+            graph.getPlugin('PanningHandler').useLeftButtonForPanning = true;
+            graph.getPlugin('PanningHandler').ignoreCell = true;
             graph.container.style.cursor = 'move';
             graph.setPanning(true);
 

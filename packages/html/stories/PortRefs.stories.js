@@ -234,7 +234,7 @@ const Template = ({ label, ...args }) => {
       return mxUtilsGetPortConstraints.apply(this, arguments);
     };
     // Connect preview
-    graph.connectionHandler.createEdgeState = function(me)
+    graph.getPlugin('ConnectionHandler').createEdgeState = function(me)
     {
       let edge = graph.createEdge(null, null, null, null, null);
 

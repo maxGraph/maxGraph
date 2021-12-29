@@ -40,7 +40,7 @@ const Template = ({ label, ...args }) => {
       graph.setEnabled(false);
       graph.setPanning(true);
       graph.setTooltips(true);
-      graph.panningHandler.useLeftButtonForPanning = true;
+      graph.getPlugin('PanningHandler').useLeftButtonForPanning = true;
 
       // Adds a highlight on the cell under the mousepointer
       new CellTracker(graph);

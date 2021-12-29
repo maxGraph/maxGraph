@@ -1,7 +1,7 @@
 import {
   Graph,
   KeyHandler,
-  utils,
+  mathUtils,
   domUtils,
   cloneUtils,
   eventUtils,
@@ -77,7 +77,7 @@ const Template = ({ label, ...args }) => {
       // a mouse event
       if (evt != null) {
         // Finds the relative coordinates inside the cell
-        const point = utils.convertPoint(
+        const point = mathUtils.convertPoint(
           this.container,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)

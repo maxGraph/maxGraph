@@ -136,7 +136,7 @@ export default ShowRegion;
         {
           if (this.div != null && mxEvent.isPopupTrigger(me.getEvent()))
           {
-            if (!graph.popupMenuHandler.isMenuShowing())
+            if (!graph.getPlugin('PopupMenuHandler').isMenuShowing())
             {
               let origin = mxUtils.getScrollOrigin();
               this.popupMenu.popup(me.getX() + origin.x + 1, me.getY() + origin.y + 1, null, me.getEvent());

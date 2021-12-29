@@ -176,10 +176,10 @@ export default MenuStyle;
         graph.addCellOverlay(v1, overlay);
 
         // Configures automatic expand on mouseover
-        graph.popupMenuHandler.autoExpand = true;
+        graph.getPlugin('PopupMenuHandler').autoExpand = true;
 
           // Installs context menu
-        graph.popupMenuHandler.factoryMethod = function(menu, cell, evt)
+        graph.getPlugin('PopupMenuHandler').factoryMethod = function(menu, cell, evt)
         {
           menu.addItem('Item 1', null, function()
             {

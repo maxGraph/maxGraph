@@ -660,7 +660,7 @@ let EditDiagramDialog = function(editorUi)
 			try
 			{
 				let doc = parseXml(data);
-				let model = new Model();
+				let model = new GraphModel();
 				let codec = new Codec(doc);
 				codec.decode(doc.documentElement, model);
 				

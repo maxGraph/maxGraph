@@ -421,7 +421,7 @@ Editor.prototype.createGraph = function(themes, model)
 Editor.prototype.resetGraph = function()
 {
 	this.graph.gridEnabled = !this.isChromelessView() || urlParams['grid'] == '1';
-	this.graph.graphHandler.guidesEnabled = true;
+	this.graph.getPlugin('SelectionHandler').guidesEnabled = true;
 	this.graph.setTooltips(true);
 	this.graph.setConnectable(true);
 	this.graph.foldingEnabled = true;
@@ -446,7 +446,7 @@ Editor.prototype.readGraphState = function(node)
 {
 	this.graph.gridEnabled = node.getAttribute('grid') != '0' && (!this.isChromelessView() || urlParams['grid'] == '1');
 	this.graph.gridSize = parseFloat(node.getAttribute('gridSize')) || graph.prototype.gridSize;
-	this.graph.graphHandler.guidesEnabled = node.getAttribute('guides') != '0';
+	this.graph.getPlugin('SelectionHandler').guidesEnabled = node.getAttribute('guides') != '0';
 	this.graph.setTooltips(node.getAttribute('tooltips') != '0');
 	this.graph.setConnectable(node.getAttribute('connect') != '0');
 	this.graph.connectionArrowsEnabled = node.getAttribute('arrows') != '0';
@@ -595,9 +595,9 @@ Editor.prototype.getGraphXml = function(ignoreSelection)
 	
 	node.setAttribute('grid', (this.graph.isGridEnabled()) ? '1' : '0');
 	node.setAttribute('gridSize', this.graph.gridSize);
-	node.setAttribute('guides', (this.graph.graphHandler.guidesEnabled) ? '1' : '0');
-	node.setAttribute('tooltips', (this.graph.tooltipHandler.isEnabled()) ? '1' : '0');
-	node.setAttribute('connect', (this.graph.connectionHandler.isEnabled()) ? '1' : '0');
+	node.setAttribute('guides', (this.graph.getPlugin('SelectionHandler').guidesEnabled) ? '1' : '0');
+	node.setAttribute('tooltips', (this.graph.getPlugin('TooltipHandler').isEnabled()) ? '1' : '0');
+	node.setAttribute('connect', (this.graph.getPlugin('ConnectionHandler').isEnabled()) ? '1' : '0');
 	node.setAttribute('arrows', (this.graph.connectionArrowsEnabled) ? '1' : '0');
 	node.setAttribute('fold', (this.graph.foldingEnabled) ? '1' : '0');
 	node.setAttribute('page', (this.graph.pageVisible) ? '1' : '0');
@@ -2341,9 +2341,9 @@ FilenameDialog.createFileTypes = function(editorUi, nameInput, types)
 							((evt) =>
 							{
 								// Hides the tooltip if mouse is outside container
-								if (graph.tooltipHandler != null && graph.tooltipHandler.isHideOnHover())
+								if (graph.getPlugin('TooltipHandler') != null && graph.getPlugin('TooltipHandler').isHideOnHover())
 								{
-									graph.tooltipHandler.hide();
+									graph.getPlugin('TooltipHandler').hide();
 								}
 								
 								if (graph.isMouseDown && !mxEvent.isConsumed(evt))
@@ -2721,7 +2721,7 @@ FilenameDialog.createFileTypes = function(editorUi, nameInput, types)
 					table = table.getParent();
 				}
 				
-				result = !this.graph.selectionCellsHandler.isHandled(table) ||
+				result = !this.graph.getPlugin('SelectionCellsHandler').isHandled(table) ||
 					(this.graph.isCellSelected(table) && this.graph.isToggleEvent(me.getEvent())) ||
 					(this.graph.isCellSelected(cell) && !this.graph.isToggleEvent(me.getEvent())) ||
 					(this.graph.isTableCell(cell) && this.graph.isCellSelected(parent));

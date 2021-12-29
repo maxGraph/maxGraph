@@ -1047,7 +1047,7 @@ Toolbar.prototype.addMenuHandler = function(elt, showLabels, funct, showAll)
 		{
 			if (show && (elt.enabled == null || elt.enabled))
 			{
-				graph.popupMenuHandler.hideMenu();
+				graph.getPlugin('PopupMenuHandler').hideMenu();
 				menu = new mxPopupMenu(funct);
 				menu.div.className += ' geToolbarMenu';
 				menu.showDisabled = showAll;

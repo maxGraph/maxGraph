@@ -1172,7 +1172,7 @@ Menus.prototype.addPopupMenuCellItems = function(menu, cell, evt)
 		if (cell.isEdge() && getValue(state.style, 'edge', null) != 'entityRelationEdgeStyle' &&
 			getValue(state.style, 'shape', null) != 'arrow')
 		{
-			let handler = graph.selectionCellsHandler.getHandler(cell);
+			let handler = graph.getPlugin('SelectionCellsHandler').getHandler(cell);
 			let isWaypoint = false;
 			
 			if (handler instanceof mxEdgeHandler && handler.bends != null && handler.bends.length > 2)
@@ -1330,7 +1330,7 @@ Menubar.prototype.addMenuHandler = function(elt, funct)
 		{
 			if (show && elt.enabled == null || elt.enabled)
 			{
-				this.editorUi.editor.graph.popupMenuHandler.hideMenu();
+				this.editorUi.editor.graph.getPlugin('PopupMenuHandler').hideMenu();
 				let menu = new mxPopupMenu(funct);
 				menu.div.className += ' geMenubarMenu';
 				menu.smartSeparators = true;

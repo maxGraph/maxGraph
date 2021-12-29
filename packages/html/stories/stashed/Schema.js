@@ -109,7 +109,7 @@ export default MYNAMEHERE;
         graph.setAllowDanglingEdges(false);
 
         // Forces use of default edge in mxConnectionHandler
-        graph.connectionHandler.factoryMethod = null;
+        graph.getPlugin('ConnectionHandler').factoryMethod = null;
 
         // Only tables are resizable
         graph.isCellResizable = function(cell)
@@ -152,7 +152,7 @@ export default MYNAMEHERE;
         {
           if (value.name != null)
           {
-            return Model.prototype.valueForCellChanged.apply(this, arguments);
+            return GraphModel.prototype.valueForCellChanged.apply(this, arguments);
           }
           else
           {
@@ -265,7 +265,7 @@ export default MYNAMEHERE;
         };
 
         // Installs a popupmenu handler using local function (see below).
-        graph.popupMenuHandler.factoryMethod = function(menu, cell, evt)
+        graph.getPlugin('PopupMenuHandler').factoryMethod = function(menu, cell, evt)
         {
           createPopupMenu(editor, graph, menu, cell, evt);
         };

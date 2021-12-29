@@ -103,7 +103,7 @@ const Template = ({ label, ...args }) => {
   class MyCustomEdgeHandler extends EdgeHandler {
     // Disables floating connections (only use with no connect image)
     isConnectableCell(cell) {
-      return graph.connectionHandler.isConnectableCell(cell);
+      return graph.getPlugin('ConnectionHandler').isConnectableCell(cell);
     }
   }
 
@@ -191,7 +191,7 @@ const Template = ({ label, ...args }) => {
   });
 
   // Use this code to snap the source point for new connections without a connect preview,
-  // ie. without an overridden graph.connectionHandler.createEdgeState
+  // ie. without an overridden graph.getPlugin('ConnectionHandler').createEdgeState
   /*
     let mxConnectionHandlerMouseMove = ConnectionHandler.prototype.mouseMove;
     ConnectionHandler.prototype.mouseMove = function(sender, me)

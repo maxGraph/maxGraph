@@ -559,7 +559,6 @@ const EventsMixin: PartialType = {
    * @param state Optional {@link CellState} that is associated with the event.
    */
   tapAndHold(me) {
-    console.log('tapAndHold');
     const evt = me.getEvent();
     const mxe = new EventObject(InternalEvent.TAP_AND_HOLD, { event: evt, cell: me.getCell() });
 
@@ -854,7 +853,6 @@ const EventsMixin: PartialType = {
    * @param sender Optional sender argument. Default is `this`.
    */
   fireMouseEvent(evtName, me, sender) {
-    console.log('fireMouseEvent', evtName, me, sender);
     sender = sender ?? (this as Graph);
 
     if (this.isEventSourceIgnored(evtName, me)) {
@@ -862,7 +860,6 @@ const EventsMixin: PartialType = {
       if (tooltipHandler) {
         tooltipHandler.hide();
       }
-      console.log('fireMouseEvent ignoring because event source ignored', evtName, me, sender);
       return;
     }
 
@@ -909,7 +906,6 @@ const EventsMixin: PartialType = {
 
           if (doubleClickFired) {
             InternalEvent.consume(me.getEvent());
-            console.log('fireMouseEvent doubleClickFired', evtName, me, sender);
             return;
           }
         } else if (!this.lastTouchEvent || this.lastTouchEvent !== me.getEvent()) {
@@ -943,7 +939,6 @@ const EventsMixin: PartialType = {
         } else {
           InternalEvent.consume(me.getEvent());
         }
-        console.log('fireMouseEvent returning MouseUp', evtName, me, sender);
         return;
       }
     }
@@ -993,8 +988,6 @@ const EventsMixin: PartialType = {
         if (!me.getEvent().preventDefault) {
           me.getEvent().returnValue = true;
         }
-
-        console.log('fireMouseEvent process mouseListeners', evtName, me, sender, mouseListeners);
 
         for (const l of mouseListeners) {
           if (evtName === InternalEvent.MOUSE_DOWN) {

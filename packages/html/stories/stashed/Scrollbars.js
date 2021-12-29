@@ -269,7 +269,7 @@ export default Scrollbars;
 
         // Adds a new function to update the currentRow based on the given event
         // and return the DOM node for that row
-        graph.connectionHandler.updateRow = function(target)
+        graph.getPlugin('ConnectionHandler').updateRow = function(target)
         {
           while (target != null && target.nodeName != 'TR')
           {
@@ -303,7 +303,7 @@ export default Scrollbars;
         };
 
         // Adds placement of the connect icon based on the mouse event target (row)
-        graph.connectionHandler.updateIcons = function(state, icons, me)
+        graph.getPlugin('ConnectionHandler').updateIcons = function(state, icons, me)
         {
           let target = me.getSource();
           target = this.updateRow(target);
@@ -329,8 +329,8 @@ export default Scrollbars;
         };
 
         // Updates the targetRow in the preview edge State
-        let oldMouseMove = graph.connectionHandler.mouseMove;
-        graph.connectionHandler.mouseMove = function(sender, me)
+        let oldMouseMove = graph.getPlugin('ConnectionHandler').mouseMove;
+        graph.getPlugin('ConnectionHandler').mouseMove = function(sender, me)
         {
           if (this.edgeState != null)
           {
@@ -353,7 +353,7 @@ export default Scrollbars;
         };
 
         // Creates the edge state that may be used for preview
-        graph.connectionHandler.createEdgeState = function(me)
+        graph.getPlugin('ConnectionHandler').createEdgeState = function(me)
         {
           let relation = doc.createElement('Relation');
           relation.setAttribute('sourceRow', this.currentRow || '0');

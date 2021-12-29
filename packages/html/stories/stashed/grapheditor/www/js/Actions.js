@@ -141,8 +141,8 @@ Actions.prototype.init = function()
 					
 					if (bb != null)
 					{
-						let x = Math.round(graph.snap(graph.popupMenuHandler.triggerX / s - dx));
-						let y = Math.round(graph.snap(graph.popupMenuHandler.triggerY / s - dy));
+						let x = Math.round(graph.snap(graph.getPlugin('PopupMenuHandler').triggerX / s - dx));
+						let y = Math.round(graph.snap(graph.getPlugin('PopupMenuHandler').triggerY / s - dy));
 						
 						graph.cellsMoved(cells, x - bb.x, y - bb.y);
 					}
@@ -894,20 +894,20 @@ Actions.prototype.init = function()
 	
 	action = this.addAction('guides', function()
 	{
-		graph.graphHandler.guidesEnabled = !graph.graphHandler.guidesEnabled;
+		graph.getPlugin('SelectionHandler').guidesEnabled = !graph.getPlugin('SelectionHandler').guidesEnabled;
 		ui.fireEvent(new EventObject('guidesEnabledChanged'));
 	});
 	action.setToggleAction(true);
-	action.setSelectedCallback(function() { return graph.graphHandler.guidesEnabled; });
+	action.setSelectedCallback(function() { return graph.getPlugin('SelectionHandler').guidesEnabled; });
 	action.setEnabled(false);
 	
 	action = this.addAction('tooltips', function()
 	{
-		graph.tooltipHandler.setEnabled(!graph.tooltipHandler.isEnabled());
+		graph.getPlugin('TooltipHandler').setEnabled(!graph.getPlugin('TooltipHandler').isEnabled());
 		ui.fireEvent(new EventObject('tooltipsEnabledChanged'));
 	});
 	action.setToggleAction(true);
-	action.setSelectedCallback(function() { return graph.tooltipHandler.isEnabled(); });
+	action.setSelectedCallback(function() { return graph.getPlugin('TooltipHandler').isEnabled(); });
 	
 	action = this.addAction('collapseExpand', function()
 	{
@@ -942,18 +942,18 @@ Actions.prototype.init = function()
 	action.setSelectedCallback(function() { return graph.connectionArrowsEnabled; });
 	action = this.addAction('connectionPoints', function()
 	{
-		graph.setConnectable(!graph.connectionHandler.isEnabled());
+		graph.setConnectable(!graph.getPlugin('ConnectionHandler').isEnabled());
 		ui.fireEvent(new EventObject('connectionPointsChanged'));
 	}, null, null, 'Alt+Shift+P');
 	action.setToggleAction(true);
-	action.setSelectedCallback(function() { return graph.connectionHandler.isEnabled(); });
+	action.setSelectedCallback(function() { return graph.getPlugin('ConnectionHandler').isEnabled(); });
 	action = this.addAction('copyConnect', function()
 	{
-		graph.connectionHandler.setCreateTarget(!graph.connectionHandler.isCreateTarget());
+		graph.getPlugin('ConnectionHandler').setCreateTarget(!graph.getPlugin('ConnectionHandler').isCreateTarget());
 		ui.fireEvent(new EventObject('copyConnectChanged'));
 	});
 	action.setToggleAction(true);
-	action.setSelectedCallback(function() { return graph.connectionHandler.isCreateTarget(); });
+	action.setSelectedCallback(function() { return graph.getPlugin('ConnectionHandler').isCreateTarget(); });
 	action.isEnabled = isGraphEnabled;
 	action = this.addAction('autosave', function()
 	{
@@ -1246,7 +1246,7 @@ Actions.prototype.init = function()
 		
 		if (cell != null && cell.isEdge())
 		{
-			let handler = editor.graph.selectionCellsHandler.getHandler(cell);
+			let handler = editor.graph.getPlugin('SelectionCellsHandler').getHandler(cell);
 			
 			if (handler instanceof mxEdgeHandler)
 			{
@@ -1267,8 +1267,8 @@ Actions.prototype.init = function()
 					pgeo = parent.getGeometry();
 				}
 				
-				let x = Math.round(graph.snap(graph.popupMenuHandler.triggerX / s - dx));
-				let y = Math.round(graph.snap(graph.popupMenuHandler.triggerY / s - dy));
+				let x = Math.round(graph.snap(graph.getPlugin('PopupMenuHandler').triggerX / s - dx));
+				let y = Math.round(graph.snap(graph.getPlugin('PopupMenuHandler').triggerY / s - dy));
 				
 				handler.addPointAt(handler.state, x, y);
 			}

@@ -1,7 +1,7 @@
 import {
   Graph,
   RubberBandHandler,
-  utils,
+  mathUtils,
   eventUtils,
   InternalEvent,
   Client,
@@ -68,7 +68,7 @@ const Template = ({ label, ...args }) => {
         evt.preventDefault();
 
         // Gets drop location point for vertex
-        const pt = utils.convertPoint(
+        const pt = mathUtils.convertPoint(
           graph.container,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)

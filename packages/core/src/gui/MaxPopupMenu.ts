@@ -418,7 +418,7 @@ class MaxPopupMenu extends EventSource implements Partial<PopupMenuItem> {
    * Example:
    *
    * ```javascript
-   * graph.panningHandler.popup(x, y, cell, evt)
+   * graph.getPlugin('PanningHandler').popup(x, y, cell, evt)
    * {
    *   mxUtils.alert('Hello, World!');
    * }

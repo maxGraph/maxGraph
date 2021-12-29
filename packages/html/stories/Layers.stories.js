@@ -1,4 +1,4 @@
-import { Graph, DomHelpers, Cell, Model, Point } from '@maxgraph/core';
+import { Graph, DomHelpers, Cell, GraphModel, Point } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -27,7 +27,7 @@ const Template = ({ label, ...args }) => {
   const root = new Cell();
   const layer0 = root.insert(new Cell());
   const layer1 = root.insert(new Cell());
-  const model = new Model(root);
+  const model = new GraphModel(root);
 
   const graph = new Graph(container, model);
 

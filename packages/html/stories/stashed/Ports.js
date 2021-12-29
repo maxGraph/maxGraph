@@ -103,13 +103,13 @@ export default Ports;
         graph.setDropEnabled(false);
 
         // Uses the port icon while connections are previewed
-        graph.connectionHandler.getConnectImage = function(state)
+        graph.getPlugin('ConnectionHandler').getConnectImage = function(state)
         {
           return new Image(state.style.image, 16, 16);
         };
 
         // Centers the port icon on the target port
-        graph.connectionHandler.targetConnectImage = true;
+        graph.getPlugin('ConnectionHandler').targetConnectImage = true;
 
         // Does not allow dangling edges
         graph.setAllowDanglingEdges(false);
@@ -447,7 +447,7 @@ export default Ports;
       });
 
       graph.setEnabled(false);
-      graph.tooltipHandler.hide();
+      graph.getPlugin('TooltipHandler').hide();
       wnd.setVisible(true);
     };
 

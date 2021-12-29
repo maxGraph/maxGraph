@@ -6221,7 +6221,7 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 		// Connection points
 		div.appendChild(this.createOption(Translations.get('connectionPoints'), function()
 		{
-			return graph.connectionHandler.isEnabled();
+			return graph.getPlugin('ConnectionHandler').isEnabled();
 		}, function(checked)
 		{
 			ui.actions.get('connectionPoints').funct();
@@ -6231,7 +6231,7 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 			{
 				this.listener = function()
 				{
-					apply(graph.connectionHandler.isEnabled());
+					apply(graph.getPlugin('ConnectionHandler').isEnabled());
 				};
 				
 				ui.addListener('connectionPointsChanged', this.listener);
@@ -6245,7 +6245,7 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 		// Guides
 		div.appendChild(this.createOption(Translations.get('guides'), function()
 		{
-			return graph.graphHandler.guidesEnabled;
+			return graph.getPlugin('SelectionHandler').guidesEnabled;
 		}, function(checked)
 		{
 			ui.actions.get('guides').funct();
@@ -6255,7 +6255,7 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 			{
 				this.listener = function()
 				{
-					apply(graph.graphHandler.guidesEnabled);
+					apply(graph.getPlugin('SelectionHandler').guidesEnabled);
 				};
 				
 				ui.addListener('guidesEnabledChanged', this.listener);

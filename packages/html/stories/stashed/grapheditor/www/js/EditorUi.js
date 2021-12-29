@@ -58,7 +58,7 @@ EditorUi = function(editor, container, lightbox)
 	{
 		this.footerHeight = 0;
 		graph.isEnabled = function() { return false; };
-		graph.panningHandler.isForcePanningEvent = function(me)
+		graph.getPlugin('PanningHandler').isForcePanningEvent = function(me)
 		{
 			return !mxEvent.isPopupTrigger(me.getEvent());
 		};
@@ -140,7 +140,7 @@ EditorUi = function(editor, container, lightbox)
 		}
 		else
 		{
-			graph.panningHandler.usePopupTrigger = false;
+			graph.getPlugin('PanningHandler').usePopupTrigger = false;
 		}
 	
 		// Contains the main graph instance inside the given panel
@@ -161,11 +161,11 @@ EditorUi = function(editor, container, lightbox)
 		this.hoverIcons = this.createHoverIcons();
 		
 		// Hides hover icons when cells are moved
-		if (graph.graphHandler != null)
+		if (graph.getPlugin('SelectionHandler') != null)
 		{
-			let graphHandlerStart = graph.graphHandler.start;
+			let graphHandlerStart = graph.getPlugin('SelectionHandler').start;
 			
-			graph.graphHandler.start = function()
+			graph.getPlugin('SelectionHandler').start = function()
 			{
 				if (ui.hoverIcons != null)
 				{
@@ -234,8 +234,8 @@ EditorUi = function(editor, container, lightbox)
 		mxEvent.addListener(document, 'keyup', this.keyupHandler);
 	    
 	    // Forces panning for middle and right mouse buttons
-		let panningHandlerIsForcePanningEvent = graph.panningHandler.isForcePanningEvent;
-		graph.panningHandler.isForcePanningEvent = function(me)
+		let panningHandlerIsForcePanningEvent = graph.getPlugin('PanningHandler').isForcePanningEvent;
+		graph.getPlugin('PanningHandler').isForcePanningEvent = function(me)
 		{
 			// Ctrl+left button is reported as right button in FF on Mac
 			return panningHandlerIsForcePanningEvent.apply(this, arguments) ||
@@ -410,12 +410,12 @@ EditorUi = function(editor, container, lightbox)
 	   	};
 	
 	   	// Configures automatic expand on mouseover
-		graph.popupMenuHandler.autoExpand = true;
+		graph.getPlugin('PopupMenuHandler').autoExpand = true;
 	
 	    // Installs context menu
 		if (this.menus != null)
 		{
-			graph.popupMenuHandler.factoryMethod = ((menu, cell, evt) =>
+			graph.getPlugin('PopupMenuHandler').factoryMethod = ((menu, cell, evt) =>
 			{
 				this.menus.createPopupMenu(menu, cell, evt);
 			});
@@ -424,7 +424,7 @@ EditorUi = function(editor, container, lightbox)
 		// Hides context menu
 		mxEvent.addGestureListeners(document, ((evt) =>
 		{
-			graph.popupMenuHandler.hideMenu();
+			graph.getPlugin('PopupMenuHandler').hideMenu();
 		}));
 	
 	    // Create handler for key events
@@ -660,7 +660,7 @@ EditorUi = function(editor, container, lightbox)
 		
 		this.insertHandler = insertHandler;
 		
-		graph.connectionHandler.addListener(mxEvent.CONNECT, function(sender, evt)
+		graph.getPlugin('ConnectionHandler').addListener(mxEvent.CONNECT, function(sender, evt)
 		{
 			let cells = [evt.getProperty('cell')];
 			
@@ -1064,18 +1064,18 @@ EditorUi.prototype.init = function()
 		// Hides tooltips and connection points when scrolling
 		mxEvent.addListener(graph.container, 'scroll', (() =>
 		{
-			graph.tooltipHandler.hide();
+			graph.getPlugin('TooltipHandler').hide();
 			
-			if (graph.connectionHandler != null && graph.connectionHandler.constraintHandler != null)
+			if (graph.getPlugin('ConnectionHandler') != null && graph.getPlugin('ConnectionHandler').constraintHandler != null)
 			{
-				graph.connectionHandler.constraintHandler.reset();
+				graph.getPlugin('ConnectionHandler').constraintHandler.reset();
 			}
 		}));
 		
 		// Hides tooltip on escape
 		graph.addListener(mxEvent.ESCAPE, (() =>
 		{
-			graph.tooltipHandler.hide();
+			graph.getPlugin('TooltipHandler').hide();
 			let rb = graph.getRubberband();
 			
 			if (rb != null)
@@ -1165,9 +1165,9 @@ EditorUi.prototype.installShapePicker = function()
 	}));
 	
 	// Counts as popup menu
-	let popupMenuHandlerIsMenuShowing = graph.popupMenuHandler.isMenuShowing;
+	let popupMenuHandlerIsMenuShowing = graph.getPlugin('PopupMenuHandler').isMenuShowing;
 	 
-	graph.popupMenuHandler.isMenuShowing = function()
+	graph.getPlugin('PopupMenuHandler').isMenuShowing = function()
 	{
 		return popupMenuHandlerIsMenuShowing.apply(this, arguments) || ui.shapePicker != null;
 	};
@@ -1349,8 +1349,8 @@ EditorUi.prototype.showShapePicker = function(x, y, source, callback, direction)
 			ui.hoverIcons.reset();
 		}
 		
-		graph.popupMenuHandler.hideMenu();
-		graph.tooltipHandler.hideTooltip();
+		graph.getPlugin('PopupMenuHandler').hideMenu();
+		graph.getPlugin('TooltipHandler').hideTooltip();
 		this.hideCurrentMenu();
 		this.hideShapePicker();
 		
@@ -1647,7 +1647,7 @@ EditorUi.prototype.initClipboard = function()
 			// Uses temporary model to force new IDs to be assigned
 			// to avoid having to carry over the mapping from object
 			// ID to cell ID to the paste operation
-			let model = new Model();
+			let model = new GraphModel();
 			let parent = model.getRoot().getChildAt(0);
 			
 			for (let i = 0; i < clones.length; i++)
@@ -2674,7 +2674,7 @@ EditorUi.prototype.initCanvas = function()
 				{
 					if (source == graph.container)
 					{
-						graph.tooltipHandler.hideTooltip();
+						graph.getPlugin('TooltipHandler').hideTooltip();
 						cursorPosition = (cx != null && cy!= null) ? new Point(cx, cy) :
 							new Point(mxEvent.getClientX(evt), mxEvent.getClientY(evt));
 						forcedZoom = force;
@@ -2691,7 +2691,7 @@ EditorUi.prototype.initCanvas = function()
 	}), graph.container);
 	
 	// Uses fast zoom for pinch gestures on iOS
-	graph.panningHandler.zoomGraph = function(evt)
+	graph.getPlugin('PanningHandler').zoomGraph = function(evt)
 	{
 		graph.cumulativeZoomFactor = evt.scale;
 		graph.lazyZoom(evt.scale > 0, true);
@@ -2906,7 +2906,7 @@ EditorUi.prototype.open = function()
  */
 EditorUi.prototype.showPopupMenu = function(fn, x, y, evt)
 {
-	this.editor.graph.popupMenuHandler.hideMenu();
+	this.editor.graph.getPlugin('PopupMenuHandler').hideMenu();
 	
 	let menu = new mxPopupMenu(fn);
 	menu.div.className += ' geMenubarMenu';
@@ -4052,7 +4052,7 @@ EditorUi.prototype.showError = function(title, msg, btn, fn, retry, btn2, fn2, b
  */
 EditorUi.prototype.showDialog = function(elt, w, h, modal, closable, onClose, noScroll, transparent, onResize, ignoreBgClick)
 {
-	this.editor.graph.tooltipHandler.hideTooltip();
+	this.editor.graph.getPlugin('TooltipHandler').hideTooltip();
 	
 	if (this.dialogs == null)
 	{

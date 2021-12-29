@@ -3,7 +3,7 @@ import {
   InternalEvent,
   RubberBandHandler,
   eventUtils,
-  utils,
+  mathUtils,
   domUtils,
   VertexHandler,
 } from '@maxgraph/core';
@@ -114,7 +114,7 @@ const Template = ({ label, ...args }) => {
       img.style.height = '16px';
 
       InternalEvent.addGestureListeners(img, (evt) => {
-        const pt = utils.convertPoint(
+        const pt = mathUtils.convertPoint(
           this.graph.container,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)

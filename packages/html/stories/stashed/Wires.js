@@ -118,7 +118,7 @@ export default MYNAMEHERE;
 
       // Panning handler consumed right click so this must be
       // disabled if right click should stop connection handler.
-      graph.panningHandler.isPopupTrigger = function() { return false; };
+      graph.getPlugin('PanningHandler').isPopupTrigger = function() { return false; };
 
       // Enables return key to stop editing (use shift-enter for newlines)
       graph.setEnterStopsCellEditing(true);
@@ -145,7 +145,7 @@ export default MYNAMEHERE;
       };
 
       // Makes sure non-relative cells can only be connected via constraints
-      graph.connectionHandler.isConnectableCell = function(cell)
+      graph.getPlugin('ConnectionHandler').isConnectableCell = function(cell)
       {
         if (this.graph.getModel().isEdge(cell))
         {
@@ -160,7 +160,7 @@ export default MYNAMEHERE;
       };
       mxEdgeHandler.prototype.isConnectableCell = function(cell)
       {
-        return graph.connectionHandler.isConnectableCell(cell);
+        return graph.getPlugin('ConnectionHandler').isConnectableCell(cell);
       };
 
       // Adds a special tooltip for edges
@@ -424,16 +424,16 @@ export default MYNAMEHERE;
       mxUtils.write(document.body, 'Wire Mode');
 
       // Starts connections on the background in wire-mode
-      let connectionHandlerIsStartEvent = graph.connectionHandler.isStartEvent;
-      graph.connectionHandler.isStartEvent = function(me)
+      let connectionHandlerIsStartEvent = graph.getPlugin('ConnectionHandler').isStartEvent;
+      graph.getPlugin('ConnectionHandler').isStartEvent = function(me)
       {
         return checkbox.checked || connectionHandlerIsStartEvent.apply(this, arguments);
       };
 
       // Avoids any connections for gestures within tolerance except when in wire-mode
       // or when over a port
-      let connectionHandlerMouseUp = graph.connectionHandler.mouseUp;
-      graph.connectionHandler.mouseUp = function(sender, me)
+      let connectionHandlerMouseUp = graph.getPlugin('ConnectionHandler').mouseUp;
+      graph.getPlugin('ConnectionHandler').mouseUp = function(sender, me)
       {
         if (this.first != null && this.previous != null)
         {
@@ -761,7 +761,7 @@ export default MYNAMEHERE;
       let marker = mxEdgeHandlerCreateMarker.apply(this, arguments);
 
       // Adds in-place highlighting when reconnecting existing edges
-      marker.highlight.highlight = this.graph.connectionHandler.marker.highlight.highlight;
+      marker.highlight.highlight = this.graph.getPlugin('ConnectionHandler').marker.highlight.highlight;
 
       return marker;
     }

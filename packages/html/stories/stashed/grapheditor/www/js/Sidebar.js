@@ -2570,7 +2570,7 @@ Sidebar.prototype.createItem = function(cells, title, showLabel, showTitle, widt
 		// Uses guides for vertices only if enabled in graph
 		ds.isGuidesEnabled = (() =>
 		{
-			return this.editorUi.editor.graph.graphHandler.guidesEnabled;
+			return this.editorUi.editor.graph.getPlugin('SelectionHandler').guidesEnabled;
 		});
 	}
 	else if (cells[0] != null && cells[0].edge)
@@ -3583,7 +3583,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 				bds.grow(this.graph.tolerance);
 				bds.grow(HoverIcons.prototype.arrowSpacing);
 				
-				let handler = this.graph.selectionCellsHandler.getHandler(currentTargetState.cell);
+				let handler = this.graph.getPlugin('SelectionCellsHandler').getHandler(currentTargetState.cell);
 				
 				if (handler != null)
 				{
@@ -3708,7 +3708,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 					bds.grow(this.graph.tolerance);
 					bds.grow(HoverIcons.prototype.arrowSpacing);
 					
-					let handler = this.graph.selectionCellsHandler.getHandler(state.cell);
+					let handler = this.graph.getPlugin('SelectionCellsHandler').getHandler(state.cell);
 					
 					if (handler != null)
 					{
@@ -3752,7 +3752,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 				// Hides handle for cell under mouse
 				if (state != null)
 				{
-					currentStateHandle = graph.selectionCellsHandler.getHandler(state.cell);
+					currentStateHandle = graph.getPlugin('SelectionCellsHandler').getHandler(state.cell);
 					
 					if (currentStateHandle != null && currentStateHandle.setHandlesVisible != null)
 					{
@@ -3982,7 +3982,7 @@ Sidebar.prototype.createVertexTemplateFromData = function(data, width, height, t
 	let doc = parseXml(Graph.decompress(data));
 	let codec = new Codec(doc);
 
-	let model = new Model();
+	let model = new GraphModel();
 	codec.decode(doc.documentElement, model);
 	
 	let cells = this.graph.cloneCells(model.root.getChildAt(0).children);

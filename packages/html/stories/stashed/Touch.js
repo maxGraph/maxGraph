@@ -107,15 +107,15 @@ export default Touch;
         // Creates rubberband selection
           let rubberband = new mxRubberband(graph);
 
-        graph.popupMenuHandler.autoExpand = true;
+        graph.getPlugin('PopupMenuHandler').autoExpand = true;
 
-        graph.popupMenuHandler.isSelectOnPopup = function(me)
+        graph.getPlugin('PopupMenuHandler').isSelectOnPopup = function(me)
         {
           return mxEvent.isMouseEvent(me.getEvent());
         };
 
           // Installs context menu
-        graph.popupMenuHandler.factoryMethod = function(menu, cell, evt)
+        graph.getPlugin('PopupMenuHandler').factoryMethod = function(menu, cell, evt)
         {
           menu.addItem('Item 1', null, function()
             {
@@ -151,14 +151,14 @@ export default Touch;
 
             cellSelected = this.isCellSelected(me.getCell());
             selectionEmpty = this.isSelectionEmpty();
-            menuShowing = graph.popupMenuHandler.isMenuShowing();
+            menuShowing = graph.getPlugin('PopupMenuHandler').isMenuShowing();
           }
 
           mxGraph.prototype.fireMouseEvent.apply(this, arguments);
         };
 
         // Shows popup menu if cell was selected or selection was empty and background was clicked
-        graph.popupMenuHandler.mouseUp = function(sender, me)
+        graph.getPlugin('PopupMenuHandler').mouseUp = function(sender, me)
         {
           this.popupTrigger = !graph.isEditing() && (this.popupTrigger || (!menuShowing &&
               !graph.isEditing() && !mxEvent.isMouseEvent(me.getEvent()) &&
@@ -226,9 +226,9 @@ export default Touch;
         }
 
         // Disables new connections via "hotspot"
-        graph.connectionHandler.marker.isEnabled = function()
+        graph.getPlugin('ConnectionHandler').marker.isEnabled = function()
         {
-          return this.graph.connectionHandler.first != null;
+          return this.graph.getPlugin('ConnectionHandler').first != null;
         };
 
         // Adds custom hit detection if native hit detection found no cell
@@ -358,7 +358,7 @@ export default Touch;
         vertexHandlerInit.apply(this, arguments);
 
         // Only show connector image on one cell and do not show on containers
-        if (this.graph.connectionHandler.isEnabled() &&
+        if (this.graph.getPlugin('ConnectionHandler').isEnabled() &&
           this.state.cell.isConnectable() &&
           this.graph.getSelectionCount() == 1)
         {
@@ -378,12 +378,12 @@ export default Touch;
           mxEvent.addGestureListeners(this.connectorImg,
             ((evt) =>
             {
-              this.graph.popupMenuHandler.hideMenu();
+              this.graph.getPlugin('PopupMenuHandler').hideMenu();
               this.graph.stopEditing(false);
 
               let pt = convertPoint(this.graph.container,
                   mxEvent.getClientX(evt), mxEvent.getClientY(evt));
-              this.graph.connectionHandler.start(this.state, pt.x, pt.y);
+              this.graph.getPlugin('ConnectionHandler').start(this.state, pt.x, pt.y);
               this.graph.isMouseDown = true;
               this.graph.isMouseTrigger = mxEvent.isMouseEvent(evt);
               mxEvent.consume(evt);

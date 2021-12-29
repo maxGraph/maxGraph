@@ -151,16 +151,16 @@ export default MYNAMEHERE;
           {
             if (this.isContainerEvent(evt))
             {
-              graph.popupMenuHandler.hideMenu();
+              graph.getPlugin('PopupMenuHandler').hideMenu();
             }
           }),
           ((evt) =>
           {
             // Hides the tooltip if mouse is outside container
-            if (graph.tooltipHandler != null &&
-              graph.tooltipHandler.isHideOnHover())
+            if (graph.getPlugin('TooltipHandler') != null &&
+              graph.getPlugin('TooltipHandler').isHideOnHover())
             {
-              graph.tooltipHandler.hide();
+              graph.getPlugin('TooltipHandler').hide();
             }
 
             if (this.captureDocumentGesture &&

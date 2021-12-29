@@ -12,6 +12,7 @@ import {
   Morphing,
   EventObject,
   eventUtils,
+  mathUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -172,7 +173,7 @@ const Template = ({ label, ...args }) => {
 
       graph.stopEditing(false);
 
-      const pt = utils.convertPoint(
+      const pt = mathUtils.convertPoint(
         graph.container,
         eventUtils.getClientX(evt2),
         eventUtils.getClientY(evt2)

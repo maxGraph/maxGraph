@@ -165,7 +165,7 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  * the port IDs, use <Transactions.getCell>.
  *
  * ```javascript
- * graph.connectionHandler.addListener(mxEvent.CONNECT, (sender, evt)=>
+ * graph.getPlugin('ConnectionHandler').addListener(mxEvent.CONNECT, (sender, evt)=>
  * {
  *   let edge = evt.getProperty('cell');
  *   let source = graph.getModel().getTerminal(edge, true);
@@ -894,7 +894,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Use the following code to create a preview for an existing edge style:
    *
    * ```javascript
-   * graph.connectionHandler.createEdgeState(me)
+   * graph.getPlugin('ConnectionHandler').createEdgeState(me)
    * {
    *   var edge = graph.createEdge(null, null, null, null, null, 'edgeStyle=elbowEdgeStyle');
    *
