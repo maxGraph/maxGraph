@@ -196,8 +196,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds the root vertex of the tree
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const w = graph.container.offsetWidth;
     const v1 = graph.insertVertex(
       parent,
@@ -211,10 +210,7 @@ const Template = ({ label, ...args }) => {
     );
     graph.updateCellSize(v1);
     addOverlays(graph, v1, false);
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   const content = document.createElement('div');
   content.style.padding = '4px';

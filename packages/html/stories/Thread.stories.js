@@ -34,15 +34,11 @@ const Template = ({ label, ...args }) => {
   let e1;
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
     v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
     e1 = graph.insertEdge(parent, null, '', v1, v2);
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   // Function to switch the overlay every 5 secs
   const f = () => {

@@ -60,8 +60,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(
       parent,
       null,
@@ -73,10 +72,7 @@ const Template = ({ label, ...args }) => {
       'shape=label;image=images/plus.png;imageWidth=16;imageHeight=16;spacingBottom=10;' +
         'fillColor=#adc5ff;gradientColor=#7d85df;glass=1;rounded=1;shadow=1;'
     );
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   return container;
 };

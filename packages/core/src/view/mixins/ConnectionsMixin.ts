@@ -290,9 +290,7 @@ const ConnectionsMixin: PartialType = {
    */
   setConnectionConstraint(edge, terminal, source = false, constraint = null) {
     if (constraint) {
-      this.getDataModel().beginUpdate();
-
-      try {
+      this.batchUpdate(() => {
         if (!constraint || !constraint.point) {
           this.setCellStyles(source ? 'exitX' : 'entryX', null, new CellArray(edge));
           this.setCellStyles(source ? 'exitY' : 'entryY', null, new CellArray(edge));
@@ -340,9 +338,7 @@ const ConnectionsMixin: PartialType = {
             );
           }
         }
-      } finally {
-        this.getDataModel().endUpdate();
-      }
+      });
     }
   },
 

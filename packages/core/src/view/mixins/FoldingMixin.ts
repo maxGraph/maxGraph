@@ -190,8 +190,7 @@ const FoldingMixin: PartialType = {
 
     this.stopEditing(false);
 
-    this.getDataModel().beginUpdate();
-    try {
+    this.batchUpdate(() => {
       this.cellsFolded(cells, collapse, recurse, checkFoldable);
       this.fireEvent(
         new EventObject(
@@ -204,9 +203,7 @@ const FoldingMixin: PartialType = {
           cells
         )
       );
-    } finally {
-      this.getDataModel().endUpdate();
-    }
+    });
     return cells;
   },
 
@@ -225,8 +222,7 @@ const FoldingMixin: PartialType = {
   // cellsFolded(cells: mxCellArray, collapse: boolean, recurse: boolean, checkFoldable?: boolean): void;
   cellsFolded(cells = null, collapse = false, recurse = false, checkFoldable = false) {
     if (cells != null && cells.length > 0) {
-      this.getDataModel().beginUpdate();
-      try {
+      this.batchUpdate(() => {
         for (let i = 0; i < cells.length; i += 1) {
           if (
             (!checkFoldable || this.isCellFoldable(cells[i], collapse)) &&
@@ -251,9 +247,7 @@ const FoldingMixin: PartialType = {
         this.fireEvent(
           new EventObject(InternalEvent.CELLS_FOLDED, { cells, collapse, recurse })
         );
-      } finally {
-        this.getDataModel().endUpdate();
-      }
+      });
     }
   },
 

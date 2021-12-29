@@ -475,12 +475,9 @@ class Graph extends EventSource {
 
   // TODO: Document me!!
   batchUpdate(fn: Function) {
-    this.getDataModel().beginUpdate();
-    try {
+    this.batchUpdate(() => {
       fn();
-    } finally {
-      this.getDataModel().endUpdate();
-    }
+    });
   }
 
   /**

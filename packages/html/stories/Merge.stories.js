@@ -60,8 +60,7 @@ const Template = ({ label, ...args }) => {
   const w = 40;
   const h = 40;
 
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const a = graph.insertVertex(parent, 'a', 'A', 20, 20, w, h, 'fillColor=blue');
     const b = graph.insertVertex(parent, 'b', 'B', 20, 200, w, h, 'fillColor=blue');
     const c = graph.insertVertex(parent, 'c', 'C', 200, 20, w, h, 'fillColor=red');
@@ -90,10 +89,7 @@ const Template = ({ label, ...args }) => {
       d,
       'strokeColor=blue;verticalAlign=bottom'
     );
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   // Creates the second graph model (without a container)
   const graph2 = new Graph();
@@ -104,8 +100,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the target model in a single step
   // using custom ids for the vertices
-  graph2.getDataModel().beginUpdate();
-  try {
+  graph2.batchUpdate(() => {
     const c = graph2.insertVertex(parent2, 'c', 'C', 200, 20, w, h, 'fillColor=green');
     const d = graph2.insertVertex(parent2, 'd', 'D', 200, 200, w, h, 'fillColor=green');
     const e = graph2.insertVertex(parent2, 'e', 'E', 400, 20, w, h, 'fillColor=green');
@@ -134,10 +129,7 @@ const Template = ({ label, ...args }) => {
       d,
       'strokeColor=green;verticalAlign=bottom'
     );
-  } finally {
-    // Updates the display
-    graph2.getDataModel().endUpdate();
-  }
+  });
 
   // Merges the model from the second graph into the model of
   // the first graph. Note: If you add a false to the parameter

@@ -106,18 +106,14 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Doubleclick', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'Right-/Shiftclick', 200, 150, 120, 30);
     const v3 = graph.insertVertex(parent, null, 'Connect/Reconnect', 200, 20, 120, 30);
     const v4 = graph.insertVertex(parent, null, 'Control-Drag', 20, 150, 100, 30);
     const e1 = graph.insertEdge(parent, null, 'Tooltips', v1, v2);
     const e2 = graph.insertEdge(parent, null, '', v2, v3);
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   return container;
 };

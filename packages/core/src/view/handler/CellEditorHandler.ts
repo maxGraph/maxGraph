@@ -872,8 +872,7 @@ class CellEditorHandler implements GraphPlugin {
         this.prepareTextarea();
         const value = this.getCurrentValue(state);
 
-        this.graph.getDataModel().beginUpdate();
-        try {
+        this.graph.batchUpdate(() => {
           if (value !== null) {
             this.applyValue(state, value);
           }
@@ -881,9 +880,7 @@ class CellEditorHandler implements GraphPlugin {
           if (this.align !== null) {
             this.graph.setCellStyles('align', this.align, new CellArray(state.cell));
           }
-        } finally {
-          this.graph.getDataModel().endUpdate();
-        }
+        });
       }
 
       // Forces new instance on next edit for undo history reset

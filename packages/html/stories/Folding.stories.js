@@ -81,8 +81,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const col1 = graph.insertVertex(parent, null, '', 0, 0, 120, 0, 'column');
 
     const v1 = graph.insertVertex(col1, null, '1', 0, 0, 100, 30);
@@ -127,10 +126,7 @@ const Template = ({ label, ...args }) => {
     graph.insertEdge(parent, null, '', v12, v311);
     graph.insertEdge(parent, null, '', v12, v312);
     graph.insertEdge(parent, null, '', v12, v32);
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   return container;
 };

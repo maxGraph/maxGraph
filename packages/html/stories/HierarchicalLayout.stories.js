@@ -85,8 +85,7 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(button);
 
   // Load cells and layouts the graph
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, '1', 0, 0, 80, 30);
     const v2 = graph.insertVertex(parent, null, '2', 0, 0, 80, 30);
     const v3 = graph.insertVertex(parent, null, '3', 0, 0, 80, 30);
@@ -113,10 +112,7 @@ const Template = ({ label, ...args }) => {
 
     // Executes the layout
     layout.execute(parent);
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   return div;
 };

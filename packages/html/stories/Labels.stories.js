@@ -96,8 +96,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'vertexLabelsMovable', 20, 20, 80, 30);
 
     // Places sublabels inside the vertex
@@ -119,10 +118,7 @@ const Template = ({ label, ...args }) => {
     // Places sublabels inside the vertex
     const label21 = graph.insertVertex(v2, null, 'Label1', 0.5, 1, 0, 0, null, true);
     const label22 = graph.insertVertex(v2, null, 'Label2', 0.5, 0, 0, 0, null, true);
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   return container;
 };

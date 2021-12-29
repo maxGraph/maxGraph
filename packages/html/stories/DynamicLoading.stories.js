@@ -81,8 +81,7 @@ const Template = ({ label, ...args }) => {
       const parent = graph.getDefaultParent();
 
       // Adds cells to the model in a single step
-      graph.getDataModel().beginUpdate();
-      try {
+      graph.batchUpdate(() => {
         const xml = server(cell.id);
         const doc = xmlUtils.parseXml(xml);
         const dec = new Codec(doc);
@@ -154,10 +153,7 @@ const Template = ({ label, ...args }) => {
             graph.getDataModel().setGeometry(vertices[i], geo);
           }
         }
-      } finally {
-        // Updates the display
-        graph.getDataModel().endUpdate();
-      }
+      });
     }
   }
 
@@ -176,8 +172,7 @@ const Template = ({ label, ...args }) => {
     const parent = graph.getDefaultParent();
 
     // Adds cells to the model in a single step
-    graph.getDataModel().beginUpdate();
-    try {
+    graph.batchUpdate(() => {
       const v0 = graph.insertVertex(parent, cellId, 'Dummy', 0, 0, 60, 40);
       const cellCount = parseInt(Math.random() * 16) + 4;
 
@@ -187,10 +182,7 @@ const Template = ({ label, ...args }) => {
         const v = graph.insertVertex(parent, id, id, 0, 0, 60, 40);
         const e = graph.insertEdge(parent, null, `Link ${i}`, v0, v);
       }
-    } finally {
-      // Updates the display
-      graph.getDataModel().endUpdate();
-    }
+    });
 
     const enc = new Codec();
     const node = enc.encode(graph.getDataModel());

@@ -212,8 +212,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(
       parent,
       null,
@@ -224,10 +223,7 @@ const Template = ({ label, ...args }) => {
       120,
       'shape=myShape;whiteSpace=wrap;overflow=hidden;pos1=30;pos2=80;'
     );
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);

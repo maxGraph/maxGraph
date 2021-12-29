@@ -70,16 +70,12 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  let v1;
-  try {
+  graph.batchUpdate(() => {
+    let v1;
     v1 = graph.insertVertex(parent, null, 'Hello,', 20, 40, 80, 70);
     const v2 = graph.insertVertex(parent, null, 'World!', 200, 140, 80, 40);
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   // Handles cursor keys
   const nudge = function (keyCode) {

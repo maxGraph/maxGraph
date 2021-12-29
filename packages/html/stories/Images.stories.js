@@ -45,8 +45,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     var v1 = graph.insertVertex(
       parent,
       null,
@@ -88,10 +87,7 @@ const Template = ({ label, ...args }) => {
       60,
       'left'
     );
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   function configureStylesheet(graph) {
     let style = {};

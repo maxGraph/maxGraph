@@ -1193,8 +1193,7 @@ class VertexHandler {
         this.state.view.validate();
       }
 
-      this.graph.getDataModel().beginUpdate();
-      try {
+      this.graph.batchUpdate(() => {
         if (index <= InternalEvent.CUSTOM_HANDLE) {
           if (this.customHandles != null) {
             // Creates style before changing cell state
@@ -1252,9 +1251,7 @@ class VertexHandler {
             recurse
           );
         }
-      } finally {
-        this.graph.getDataModel().endUpdate();
-      }
+      });
 
       me.consume();
       this.reset();

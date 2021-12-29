@@ -83,8 +83,7 @@ const Template = ({ label, ...args }) => {
       );
 
       // Load cells and layouts the graph
-      graph.getDataModel().beginUpdate();
-      try {
+      graph.batchUpdate(() => {
         // Loads the custom file format (TXT file)
         parse(graph, 'fileio.txt');
 
@@ -97,10 +96,7 @@ const Template = ({ label, ...args }) => {
 
         // Executes the layout
         layout.execute(parent);
-      } finally {
-        // Updates the display
-        graph.getDataModel().endUpdate();
-      }
+      });
 
       graph.dblClick = function (evt, cell) {
         const mxe = new EventObject(InternalEvent.DOUBLE_CLICK, { event: evt, cell });
@@ -135,8 +131,7 @@ const Template = ({ label, ...args }) => {
     const vertices = [];
 
     // Parses all lines (vertices must be first in the file)
-    graph.getDataModel().beginUpdate();
-    try {
+    graph.batchUpdate(() => {
       for (let i = 0; i < lines.length; i++) {
         // Ignores comments (starting with #)
         const colon = lines[i].indexOf(':');
@@ -167,9 +162,7 @@ const Template = ({ label, ...args }) => {
           }
         }
       }
-    } finally {
-      graph.getDataModel().endUpdate();
-    }
+    });
   }
 
   // Parses the Graph XML file format

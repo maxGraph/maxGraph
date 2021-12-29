@@ -652,8 +652,7 @@ const EdgeMixin: PartialType = {
       dict.put(cells[i], true);
     }
 
-    this.getDataModel().beginUpdate();
-    try {
+    this.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
         const edges = cells[i].getEdges();
 
@@ -675,9 +674,7 @@ const EdgeMixin: PartialType = {
 
         this.resetEdges(cells[i].getChildren());
       }
-    } finally {
-      this.getDataModel().endUpdate();
-    }
+    });
   },
 
   /**

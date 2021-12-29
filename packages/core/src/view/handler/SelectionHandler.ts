@@ -1561,8 +1561,7 @@ class SelectionHandler implements GraphPlugin {
     // Cloning into locked cells is not allowed
     clone = !!clone && !this.graph.isCellLocked(target || this.graph.getDefaultParent());
 
-    this.graph.getDataModel().beginUpdate();
-    try {
+    this.graph.batchUpdate(() => {
       const parents = [];
 
       // Removes parent if all child cells are removed
@@ -1599,9 +1598,7 @@ class SelectionHandler implements GraphPlugin {
       }
 
       this.graph.removeCells(new CellArray(...temp), false);
-    } finally {
-      this.graph.getDataModel().endUpdate();
-    }
+    });
 
     // Selects the new cells if cells have been cloned
     if (clone) {

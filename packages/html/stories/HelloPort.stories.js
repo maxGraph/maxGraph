@@ -79,8 +79,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello', 20, 80, 80, 30);
     v1.setConnectable(false);
     const v11 = graph.insertVertex(v1, null, '', 1, 1, 10, 10);
@@ -93,10 +92,7 @@ const Template = ({ label, ...args }) => {
     const v3 = graph.insertVertex(parent, null, 'World2', 200, 20, 80, 30);
     var e1 = graph.insertEdge(parent, null, '', v11, v2);
     var e1 = graph.insertEdge(parent, null, '', v12, v3);
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   const controller = document.createElement('div');
   div.appendChild(controller);

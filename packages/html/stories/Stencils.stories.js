@@ -170,8 +170,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'A1', 20, 20, 40, 80, 'shape=and');
     const v2 = graph.insertVertex(parent, null, 'A2', 20, 220, 40, 80, 'shape=and');
     const v3 = graph.insertVertex(parent, null, 'X1', 160, 110, 80, 80, 'shape=xor');
@@ -232,10 +231,7 @@ const Template = ({ label, ...args }) => {
 
     const e7 = graph.insertEdge(parent, null, '', v7, v5);
     e7.geometry.points = [new Point(290, 370)];
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
@@ -265,8 +261,7 @@ const Template = ({ label, ...args }) => {
         let geo = cell.getGeometry();
 
         if (geo != null) {
-          graph.getDataModel().beginUpdate();
-          try {
+          graph.batchUpdate(() => {
             // Rotates the size and position in the geometry
             geo = geo.clone();
             geo.x += geo.width / 2 - geo.height / 2;
@@ -294,9 +289,7 @@ const Template = ({ label, ...args }) => {
 
               graph.setCellStyles('direction', dir, [cell]);
             }
-          } finally {
-            graph.getDataModel().endUpdate();
-          }
+          });
         }
       }
     })

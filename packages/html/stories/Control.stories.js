@@ -135,8 +135,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getDataModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex({
       parent,
       value: 'Hello,',
@@ -154,10 +153,7 @@ const Template = ({ label, ...args }) => {
       source: v1,
       target: v2,
     });
-  } finally {
-    // Updates the display
-    graph.getDataModel().endUpdate();
-  }
+  });
 
   graph.centerZoom = false;
 
