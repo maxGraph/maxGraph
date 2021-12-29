@@ -138,6 +138,10 @@ class Geometry extends Rectangle {
    */
   relative = false;
 
+  setRelative(isRelative: boolean) {
+    this.relative = isRelative;
+  }
+
   /**
    * Swaps the x, y, width and height with the values stored in
    * {@link alternateBounds} and puts the previous values into {@link alternateBounds} as

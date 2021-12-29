@@ -451,8 +451,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
 
     for (let i = 0; i < rank.length; i += 1) {
       const currentCell = rank[i];
-      weightedValues[i] = new WeightedCellSorter();
-      weightedValues[i].cell = currentCell;
+      weightedValues[i] = new WeightedCellSorter(currentCell);
       weightedValues[i].rankIndex = i;
       cellMap[<string>currentCell.id] = weightedValues[i];
       let nextLayerConnectedCells = null;

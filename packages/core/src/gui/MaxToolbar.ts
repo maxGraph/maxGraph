@@ -149,7 +149,7 @@ class MaxToolbar extends EventSource {
         if (factoryMethod != null) {
           if (this.menu == null) {
             this.menu = new MaxPopupMenu();
-            this.menu.init();
+            //this.menu.init();
           }
 
           const last = this.currentImg;
@@ -169,6 +169,7 @@ class MaxToolbar extends EventSource {
             // Sets and overrides to restore classname
             if (this.menu.isMenuShowing()) {
               img.className = `${initialClassName}Selected`;
+              const hideMenu = this.menu.hideMenu;
 
               this.menu.hideMenu = () => {
                 hideMenu.apply(this);

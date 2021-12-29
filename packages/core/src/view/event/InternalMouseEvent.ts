@@ -100,7 +100,7 @@ class InternalMouseEvent {
    * Returns the target DOM element using <mxEvent.getSource> for <evt>.
    */
   getSource() {
-    return getSource(this.evt);
+    return <Element>getSource(this.evt);
   }
 
   /**

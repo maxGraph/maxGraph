@@ -39,15 +39,13 @@ import type {
  */
 class AbstractCanvas2D {
   constructor() {
-    /**
-     * Variable: converter
-     *
-     * Holds the <UrlConverter> to convert image URLs.
-     */
     this.converter = this.createUrlConverter();
     this.reset();
   }
 
+  /**
+   * Holds the <UrlConverter> to convert image URLs.
+   */
   converter: UrlConverter;
 
   /**

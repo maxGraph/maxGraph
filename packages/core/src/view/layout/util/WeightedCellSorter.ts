@@ -6,10 +6,10 @@
  * (x.equals(y))
  *
  */
-import { _mxCompactTreeLayoutNode } from "./CompactTreeLayout";
+import { _mxCompactTreeLayoutNode } from "../CompactTreeLayout";
 
 class WeightedCellSorter {
-  constructor(cell: _mxCompactTreeLayoutNode, weightedValue: number) {
+  constructor(cell: _mxCompactTreeLayoutNode, weightedValue: number=0) {
     this.cell = cell;
     this.weightedValue = weightedValue;
   }

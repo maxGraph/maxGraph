@@ -1480,7 +1480,8 @@ class Graph extends EventSource {
  * - editor
  * - selection
  */
-export class GraphCodec extends ObjectCodec {
+
+/*export class GraphCodec extends ObjectCodec {
   constructor() {
     // TODO: Register every possible plugin (i.e. all not being excluded via tree-shaking(?))
     super(new Graph(), [
@@ -1493,7 +1494,7 @@ export class GraphCodec extends ObjectCodec {
       'selection',
     ]);
   }
-}
+}*/
 
 //CodecRegistry.register(new GraphCodec());
 export { Graph };

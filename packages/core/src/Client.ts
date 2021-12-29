@@ -291,8 +291,11 @@ class Client {
    */
   static IS_CHROMEAPP =
     typeof window !== 'undefined' &&
+    // @ts-ignore
     window.chrome != null &&
+    // @ts-ignore
     chrome.app != null &&
+    // @ts-ignore
     chrome.app.runtime != null;
 
   /**

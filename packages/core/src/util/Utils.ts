@@ -20,8 +20,7 @@
  * ```
  */
 export const utils = {
-  /* Variable: errorResource
-   *
+  /* 
    * Specifies the resource key for the title of the error window. If the
    * resource for this key does not exist then the value is used as
    * the title. Default is 'error'.

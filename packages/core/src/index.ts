@@ -23,7 +23,8 @@ import './view/mixins/PageBreaksMixin';
 import './view/mixins/GroupingMixin';
 import './view/mixins/OrderMixin';
 
-export { Graph, GraphCodec } from './view/Graph';
+// GraphCodec
+export { Graph } from './view/Graph';
 
 export { GraphDataModel, ModelCodec } from './view/GraphDataModel';
 export { GraphView, GraphViewCodec } from './view/GraphView';

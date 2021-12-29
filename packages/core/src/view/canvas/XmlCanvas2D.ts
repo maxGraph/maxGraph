@@ -44,18 +44,16 @@ import { DirectionValue, TextDirectionValue } from '../../types';
 class mxXmlCanvas2D extends AbstractCanvas2D {
   constructor(root: SVGElement) {
     super();
-
-    /**
-     * Variable: root
-     *
-     * Reference to the container for the SVG content.
-     */
+    
     this.root = root;
 
     // Writes default settings;
     this.writeDefaults();
   }
 
+  /**
+   * Reference to the container for the SVG content.
+   */
   root: SVGElement;
 
   /**

@@ -103,17 +103,8 @@ export const getViewXml = (
  * &#xa;
  */
 export const getXml = (node: Element, linefeed: string='&#xa;'): string => {
-  let xml = '';
-
-  if (window.XMLSerializer != null) {
-    const xmlSerializer = new XMLSerializer();
-    xml = xmlSerializer.serializeToString(node);
-  } else if (node.xml != null) {
-    xml = node.xml
-      .replace(/\r\n\t[\t]*/g, '')
-      .replace(/>\r\n/g, '>')
-      .replace(/\r\n/g, '\n');
-  }
+  const xmlSerializer = new XMLSerializer();
+  let xml = xmlSerializer.serializeToString(node);
 
   // Replaces linefeeds with HTML Entities.
   linefeed = linefeed || '&#xa;';
