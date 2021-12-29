@@ -14,7 +14,7 @@ import TooltipHandler from './handler/TooltipHandler';
 import Client from '../Client';
 import SelectionCellsHandler from './handler/SelectionCellsHandler';
 import ConnectionHandler from './handler/ConnectionHandler';
-import GraphHandler from './handler/GraphHandler';
+import SelectionHandler from './handler/SelectionHandler';
 import PanningHandler from './handler/PanningHandler';
 import PopupMenuHandler from './handler/PopupMenuHandler';
 import GraphView from './GraphView';
@@ -52,7 +52,7 @@ export const defaultPlugins: GraphPluginConstructor[] = [
   SelectionCellsHandler,
   PopupMenuHandler,
   ConnectionHandler,
-  GraphHandler,
+  SelectionHandler,
   PanningHandler,
 ];
 
@@ -67,7 +67,7 @@ export const defaultPlugins: GraphPluginConstructor[] = [
  * - tooltipHandler: {@link TooltipHandler} that displays tooltips
  * - panningHandler: {@link PanningHandler} for panning and popup menus
  * - connectionHandler: {@link ConnectionHandler} for creating connections
- * - graphHandler: {@link GraphHandler} for moving and cloning cells
+ * - graphHandler: {@link SelectionHandler} for moving and cloning cells
  *
  * These listeners will be called in the above order if they are enabled.
  * @class graph
@@ -1469,5 +1469,5 @@ export class GraphCodec extends ObjectCodec {
   }
 }
 
-CodecRegistry.register(new GraphCodec());
+//CodecRegistry.register(new GraphCodec());
 export { Graph };

@@ -58,7 +58,7 @@ export { default as ConstraintHandler } from './view/handler/ConstraintHandler';
 export { default as EdgeHandler } from './view/handler/EdgeHandler';
 export { default as EdgeSegmentHandler } from './view/handler/EdgeSegmentHandler';
 export { default as ElbowEdgeHandler } from './view/handler/ElbowEdgeHandler';
-export { default as GraphHandler } from './view/handler/GraphHandler';
+export { default as SelectionHandler } from './view/handler/SelectionHandler';
 export { default as VertexHandle } from './view/cell/VertexHandle';
 export { default as KeyHandler } from './view/handler/KeyHandler';
 export { default as PanningHandler } from './view/handler/PanningHandler';
@@ -135,6 +135,8 @@ export * as eventUtils from './util/eventUtils';
 export * as gestureUtils from './util/gestureUtils';
 export * as stringUtils from './util/stringUtils';
 export * as xmlUtils from './util/xmlUtils';
+export * as styleUtils from './util/styleUtils';
+export * as mathUtils from './util/mathUtils';
 
 export { default as Animation } from './view/animate/Animation';
 export { default as Effects } from './view/animate/Effects';
@@ -177,6 +179,7 @@ export { default as ImageExport } from './view/image/ImageExport';
 
 export { default as UrlConverter } from './util/UrlConverter';
 export { default as MaxXmlRequest } from './util/MaxXmlRequest';
+export { load, get, getAll, post, submit } from './util/MaxXmlRequest';
 
 export { default as AutoSaveManager } from './view/other/AutoSaveManager';
 export { default as Clipboard } from './util/Clipboard';
@@ -191,6 +194,7 @@ export { default as CellPath } from './view/cell/CellPath';
 export { default as CellRenderer } from './view/cell/CellRenderer';
 export { default as CellState } from './view/cell/CellState';
 export { default as CellStatePreview } from './view/cell/CellStatePreview';
+export { default as CellArray } from './view/cell/CellArray';
 export { default as TemporaryCellStates } from './view/cell/TemporaryCellStates';
 export { default as ConnectionConstraint } from './view/other/ConnectionConstraint';
 export { default as Multiplicity } from './view/other/Multiplicity';

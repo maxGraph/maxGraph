@@ -61,8 +61,8 @@ import type { ColorValue, GraphPlugin } from '../../types';
  *
  * @param graph Reference to the enclosing <mxGraph>.
  */
-class GraphHandler implements GraphPlugin {
-  static pluginId = 'GraphHandler';
+class SelectionHandler implements GraphPlugin {
+  static pluginId = 'SelectionHandler';
 
   constructor(graph: Graph) {
     this.graph = graph;
@@ -661,7 +661,6 @@ class GraphHandler implements GraphPlugin {
         bounds.height = Math.ceil(bounds.height);
       }
     }
-
     return bounds;
   }
 
@@ -700,7 +699,6 @@ class GraphHandler implements GraphPlugin {
         }
       }
     }
-
     return result;
   }
 
@@ -729,7 +727,6 @@ class GraphHandler implements GraphPlugin {
         };
       }
     }
-
     return shape;
   }
 
@@ -805,7 +802,6 @@ class GraphHandler implements GraphPlugin {
         count += this.addStates(cell.getChildAt(i), dict);
       }
     }
-
     return count;
   }
 
@@ -1681,4 +1677,4 @@ class GraphHandler implements GraphPlugin {
   }
 }
 
-export default GraphHandler;
+export default SelectionHandler;

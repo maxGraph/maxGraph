@@ -32,7 +32,7 @@ const Template = ({ label, ...args }) => {
 
   new KeyHandler(graph);
 
-  const graphHandler = graph.getPlugin('GraphHandler');
+  const graphHandler = graph.getPlugin('SelectionHandler');
 
   // Do not allow removing labels from parents
   graphHandler.removeCellsFromParent = false;

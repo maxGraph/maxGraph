@@ -4,6 +4,7 @@ import {
   RubberBandHandler,
   eventUtils,
   utils,
+  domUtils,
   VertexHandler,
 } from '@maxgraph/core';
 
@@ -48,7 +49,7 @@ const Template = ({ label, ...args }) => {
 
       // Workaround for event redirection via image tag in quirks and IE8
       const createImage = (src) => {
-        return utils.createImage(src);
+        return domUtils.createImage(src);
       };
 
       // Delete
@@ -89,7 +90,7 @@ const Template = ({ label, ...args }) => {
       img.style.width = '16px';
       img.style.height = '16px';
 
-      const graphHandler = graph.getPlugin('GraphHandler');
+      const graphHandler = graph.getPlugin('SelectionHandler');
       const connectionHandler = graph.getPlugin('ConnectionHandler');
 
       InternalEvent.addGestureListeners(img, (evt) => {

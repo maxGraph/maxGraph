@@ -106,7 +106,7 @@ export default Scrollbars;
         Client.NO_FO = true;
 
         // Enables move preview in HTML to appear on top
-        GraphHandler.prototype.htmlPreview = true;
+        SelectionHandler.prototype.htmlPreview = true;
 
         // Enables connect icons to appear on top of HTML
         ConnectionHandler.prototype.moveIconFront = true;

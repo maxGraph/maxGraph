@@ -14,6 +14,7 @@ import {
   StencilShapeRegistry,
   CellRenderer,
   utils,
+  load,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -83,7 +84,6 @@ const Template = ({ label, ...args }) => {
     shape.strokewidth = this.getSelectionStrokeWidth();
     shape.isDashed = this.isSelectionDashed();
     shape.isShadow = false;
-
     return shape;
   };
 
@@ -128,7 +128,7 @@ const Template = ({ label, ...args }) => {
   let shape = root.firstChild;
 
   while (shape != null) {
-    if (shape.nodeType === constants.NODETYPE_ELEMENT) {
+    if (shape.nodeType === constants.NODETYPE.ELEMENT) {
       StencilShapeRegistry.addStencil(
         shape.getAttribute('name'),
         new StencilShape(shape)
@@ -262,7 +262,7 @@ const Template = ({ label, ...args }) => {
       const cell = graph.getSelectionCell();
 
       if (cell != null) {
-        let geo = graph.getCellGeometry(cell);
+        let geo = cell.getGeometry();
 
         if (geo != null) {
           graph.getModel().beginUpdate();

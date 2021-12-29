@@ -188,7 +188,7 @@ const Template = ({ label, ...args }) => {
     style.strokeColor = '#808080';
     style.fillColor = 'white';
     style.gradientColor = 'white';
-    style.gradientDirection = constants.DIRECTION_EAST;
+    style.gradientDirection = constants.DIRECTION.EAST;
     style.rounded = true;
     style.shadow = true;
     style.fontStyle = 1;
@@ -200,7 +200,7 @@ const Template = ({ label, ...args }) => {
     style.shadow = true;
 
     style = [];
-    style.shape = constants.SHAPE_SWIMLANE;
+    style.shape = constants.SHAPE.SWIMLANE;
     style.perimiter = Perimeter.RectanglePerimeter;
     style.strokeColor = '#a0a0a0';
     style.fontColor = '#606060';
@@ -217,26 +217,26 @@ const Template = ({ label, ...args }) => {
     graph.getStylesheet().putCellStyle('swimlane', style);
 
     style = [];
-    style.shape = constants.SHAPE_RHOMBUS;
+    style.shape = constants.SHAPE.RHOMBUS;
     style.perimiter = Perimeter.RhombusPerimeter;
     style.strokeColor = '#91BCC0';
     style.fontColor = 'gray';
     style.fillColor = '#91BCC0';
     style.gradientColor = 'white';
-    style.align = constants.ALIGN_CENTER;
-    style.verticalAlign = constants.ALIGN_MIDDLE;
+    style.align = constants.ALIGN.CENTER;
+    style.verticalAlign = constants.ALIGN.MIDDLE;
     style.fontSize = 16;
     graph.getStylesheet().putCellStyle('step', style);
 
     style = [];
-    style.shape = constants.SHAPE_ELLIPSE;
+    style.shape = constants.SHAPE.ELLIPSE;
     style.perimiter = Perimeter.EllipsePerimeter;
     style.fontColor = 'gray';
     style.fillColor = '#A0C88F';
     style.gradientColor = 'white';
     style.strokeColor = '#A0C88F';
-    style.align = constants.ALIGN_CENTER;
-    style.verticalAlign = constants.ALIGN_MIDDLE;
+    style.align = constants.ALIGN.CENTER;
+    style.verticalAlign = constants.ALIGN.MIDDLE;
     style.fontSize = 16;
     graph.getStylesheet().putCellStyle('start', style);
 

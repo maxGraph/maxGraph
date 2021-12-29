@@ -7,7 +7,7 @@ import {
   Client,
   Codec,
   domUtils,
-  utils,
+  xmlUtils,
   MaxWindow,
 } from '@maxgraph/core';
 
@@ -85,7 +85,7 @@ const Template = ({ label, ...args }) => {
     DomHelpers.button('Show JSON', function () {
       const encoder = new Codec();
       const node = encoder.encode(graph.getModel());
-      MaxWindow.popup(utils.getXml(node), true);
+      MaxWindow.popup(xmlUtils.getXml(node), true);
     })
   );
 

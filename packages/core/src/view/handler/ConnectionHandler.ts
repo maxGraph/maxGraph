@@ -610,6 +610,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Starts a new connection for the given state and coordinates.
    */
   start(state: CellState, x: number, y: number, edgeState: CellState) {
+    console.log("ConnectionHandler start");
     this.previous = state;
     this.first = new Point(x, y);
     this.edgeState = edgeState ?? this.createEdgeState();

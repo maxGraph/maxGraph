@@ -689,7 +689,7 @@ const EdgeMixin: PartialType = {
     let geo = edge.getGeometry();
 
     // Resets the control points
-    if (geo && (<Point[]>geo.points).length > 0) {
+    if (geo && geo.points && (<Point[]>geo.points).length > 0) {
       geo = geo.clone();
       geo.points = [];
       this.getModel().setGeometry(edge, geo);

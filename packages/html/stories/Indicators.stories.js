@@ -44,7 +44,7 @@ const Template = ({ label, ...args }) => {
   style = graph.getStylesheet().getDefaultEdgeStyle();
 
   style.edge = EdgeStyle.ElbowConnector;
-  style.elbow = constants.ELBOW_VERTICAL;
+  style.elbow = constants.ELBOW.VERTICAL;
   style.rounded = true;
 
   // Gets the default parent for inserting new cells. This

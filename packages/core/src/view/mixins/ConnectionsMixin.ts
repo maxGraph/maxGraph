@@ -120,6 +120,7 @@ type PartialConnections = Pick<
   | 'isAllowDanglingEdges'
   | 'isConnectableEdges'
   | 'getPlugin'
+  | 'batchUpdate'
 >;
 type PartialType = PartialGraph & PartialConnections;
 
@@ -170,7 +171,6 @@ const ConnectionsMixin: PartialType = {
       }
 
       const alpha = toRadians(terminalState.shape.getShapeRotation());
-
       if (alpha !== 0) {
         const cos = Math.cos(-alpha);
         const sin = Math.sin(-alpha);
@@ -250,7 +250,6 @@ const ConnectionsMixin: PartialType = {
    */
   getConnectionConstraint(edge, terminal, source = false) {
     let point: Point | null = null;
-
     const x = edge.style[source ? 'exitX' : 'entryX'];
 
     if (x !== undefined) {
@@ -275,7 +274,6 @@ const ConnectionsMixin: PartialType = {
       dx = Number.isFinite(dx) ? dx : 0;
       dy = Number.isFinite(dy) ? dy : 0;
     }
-
     return new ConnectionConstraint(point, perimeter, null, dx, dy);
   },
 
@@ -460,8 +458,7 @@ const ConnectionsMixin: PartialType = {
    * connection.
    */
   connectCell(edge, terminal = null, source = false, constraint = null) {
-    this.getModel().beginUpdate();
-    try {
+    this.batchUpdate(() => {
       const previous = edge.getTerminal(source);
       this.cellConnected(edge, terminal, source, constraint);
       this.fireEvent(
@@ -477,9 +474,7 @@ const ConnectionsMixin: PartialType = {
           previous
         )
       );
-    } finally {
-      this.getModel().endUpdate();
-    }
+    });
     return edge;
   },
 
@@ -494,8 +489,7 @@ const ConnectionsMixin: PartialType = {
    * @param constraint {@link mxConnectionConstraint} to be used for this connection.
    */
   cellConnected(edge, terminal, source = false, constraint = null) {
-    this.getModel().beginUpdate();
-    try {
+    this.batchUpdate(() => {
       const previous = edge.getTerminal(source);
 
       // Updates the constraint
@@ -535,9 +529,7 @@ const ConnectionsMixin: PartialType = {
           previous
         )
       );
-    } finally {
-      this.getModel().endUpdate();
-    }
+    });
   },
 
   /**
@@ -547,8 +539,7 @@ const ConnectionsMixin: PartialType = {
    * @param cells Array of {@link Cell} to be disconnected.
    */
   disconnectGraph(cells) {
-    this.getModel().beginUpdate();
-    try {
+    this.batchUpdate(() => {
       const { scale, translate: tr } = this.getView();
 
       // Fast lookup for finding cells in array
@@ -616,9 +607,7 @@ const ConnectionsMixin: PartialType = {
           }
         }
       }
-    } finally {
-      this.getModel().endUpdate();
-    }
+    });
   },
 
   /**
@@ -774,7 +763,6 @@ const ConnectionsMixin: PartialType = {
    */
   setConnectable(connectable) {
     const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
-
     connectionHandler.setEnabled(connectable);
   },
 
@@ -783,7 +771,6 @@ const ConnectionsMixin: PartialType = {
    */
   isConnectable() {
     const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
-
     return connectionHandler.isEnabled();
   },
 };

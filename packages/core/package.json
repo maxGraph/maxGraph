@@ -18,5 +18,5 @@
   "devDependencies": {
     "circular-dependency-plugin": "^5.2.2"
   },
-  "sideEffects": false
+  "sideEffects": true
 }

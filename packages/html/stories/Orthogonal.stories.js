@@ -2,7 +2,7 @@ import {
   Graph,
   RubberBandHandler,
   ConnectionHandler,
-  GraphHandler,
+  SelectionHandler,
   Guide,
   Point,
   CellState,
@@ -30,7 +30,7 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Enables guides
-  GraphHandler.prototype.guidesEnabled = true;
+  SelectionHandler.prototype.guidesEnabled = true;
 
   // Alt disables guides
   Guide.prototype.isEnabledForEvent = function (evt) {

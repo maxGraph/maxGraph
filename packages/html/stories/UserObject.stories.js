@@ -87,7 +87,6 @@ const Template = ({ label, ...args }) => {
         return `${cell.value.nodeName} (Since ${cell.getAttribute('since', '')})`;
       }
     }
-
     return '';
   };
 
@@ -119,7 +118,6 @@ const Template = ({ label, ...args }) => {
     if (domUtils.isNode(cell.value) && cell.value.nodeName.toLowerCase() == 'person') {
       const firstName = cell.getAttribute('firstName', '');
       const lastName = cell.getAttribute('lastName', '');
-
       return `${firstName} ${lastName}`;
     }
   };
@@ -133,10 +131,8 @@ const Template = ({ label, ...args }) => {
     if (cell.isEdge()) {
       const src = this.getLabel(cell.getTerminal(true));
       const trg = this.getLabel(cell.getTerminal(false));
-
       return `${src} ${cell.value.nodeName} ${trg}`;
     }
-
     return getTooltipForCell.apply(this, arguments);
   };
 
@@ -184,15 +180,11 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, person1, 40, 40, 80, 30);
     const v2 = graph.insertVertex(parent, null, person2, 200, 150, 80, 30);
     const e1 = graph.insertEdge(parent, null, relation, v1, v2);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   // Implements a properties panel that uses
   // CellAttributeChange to change properties
@@ -228,7 +220,6 @@ const Template = ({ label, ...args }) => {
 
       // Creates the form from the attributes of the user object
       const form = new MaxForm();
-
       const attrs = cell.value.attributes;
 
       for (let i = 0; i < attrs.length; i++) {
@@ -251,15 +242,11 @@ const Template = ({ label, ...args }) => {
       const oldValue = cell.getAttribute(attribute.nodeName, '');
 
       if (newValue != oldValue) {
-        graph.getModel().beginUpdate();
-
-        try {
+        graph.batchUpdate(() => {
           const edit = new CellAttributeChange(cell, attribute.nodeName, newValue);
           graph.getModel().execute(edit);
           graph.updateCellSize(cell);
-        } finally {
-          graph.getModel().endUpdate();
-        }
+        });
       }
     };
 
@@ -278,7 +265,6 @@ const Template = ({ label, ...args }) => {
     // explicitely where we do the graph.focus above.
     InternalEvent.addListener(input, 'blur', applyHandler);
   }
-
   return div;
 };
 

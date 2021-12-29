@@ -33,18 +33,18 @@ const Template = ({ label, ...args }) => {
 
   // Makes all cells round with a white, bold label
   let style = graph.stylesheet.getDefaultVertexStyle();
-  style.shape = constants.SHAPE_ELLIPSE;
+  style.shape = constants.SHAPE.ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   style.fontColor = 'white';
   style.gradientColor = 'white';
-  style.fontStyle = constants.FONT_BOLD;
+  style.fontStyle = constants.FONT.BOLD;
   style.fontSize = 14;
   style.shadow = true;
 
   // Makes all edge labels gray with a white background
   style = graph.stylesheet.getDefaultEdgeStyle();
   style.fontColor = 'gray';
-  style.fontStyle = constants.FONT_BOLD;
+  style.fontStyle = constants.FONT.BOLD;
   style.fontColor = 'black';
   style.strokeWidth = 2;
 

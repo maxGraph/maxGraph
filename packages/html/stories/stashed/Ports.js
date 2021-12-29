@@ -80,7 +80,7 @@ export default Ports;
         mxConstants.DEFAULT_HOTSPOT = 1;
 
         // Enables guides
-        GraphHandler.prototype.guidesEnabled = true;
+        SelectionHandler.prototype.guidesEnabled = true;
 
           // Alt disables guides
           mxGuide.prototype.isEnabledForEvent = function(evt)

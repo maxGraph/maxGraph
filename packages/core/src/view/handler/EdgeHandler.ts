@@ -59,7 +59,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import Cell from '../cell/Cell';
 import ImageBox from '../image/ImageBox';
 import EventSource from '../event/EventSource';
-import GraphHandler from './GraphHandler';
+import SelectionHandler from './SelectionHandler';
 import { equalPoints } from '../../util/arrayUtils';
 
 /**
@@ -301,7 +301,7 @@ class EdgeHandler {
       }
     }
 
-    const graphHandler = this.graph.getPlugin('GraphHandler') as GraphHandler;
+    const graphHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
 
     // Creates bends for the non-routed absolute points
     // or bends that don't correspond to points
@@ -873,7 +873,6 @@ class EdgeHandler {
 
     if (handle !== null && this.bends[handle]) {
       const b = this.bends[handle].bounds;
-
       if (b) this.snapPoint = new Point(b.getCenterX(), b.getCenterY());
     }
 
@@ -892,10 +891,8 @@ class EdgeHandler {
         if (handle <= InternalEvent.VIRTUAL_HANDLE) {
           setOpacity(this.virtualBends[InternalEvent.VIRTUAL_HANDLE - handle].node, 100);
         }
-
         this.start(me.getX(), me.getY(), handle);
       }
-
       me.consume();
     }
   }
@@ -1038,12 +1035,10 @@ class EdgeHandler {
       if (!overrideX) {
         point.x = (this.graph.snap(point.x / scale - tr.x) + tr.x) * scale;
       }
-
       if (!overrideY) {
         point.y = (this.graph.snap(point.y / scale - tr.y) + tr.y) * scale;
       }
     }
-
     return point;
   }
 

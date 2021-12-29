@@ -6,7 +6,6 @@ import {
   constants,
   Perimeter,
   Codec,
-  utils,
   xmlUtils,
 } from '@maxgraph/core';
 
@@ -50,7 +49,7 @@ const Template = ({ label, ...args }) => {
 
   // Changes the default vertex style in-place
   const style = graph.getStylesheet().getDefaultVertexStyle();
-  style.shape = constants.SHAPE_ELLIPSE;
+  style.shape = constants.SHAPE.ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   style.gradientColor = 'white';
 
@@ -196,7 +195,7 @@ const Template = ({ label, ...args }) => {
     const enc = new Codec();
     const node = enc.encode(graph.getModel());
 
-    return utils.getXml(node);
+    return xmlUtils.getXml(node);
   }
 
   load(graph, cell);

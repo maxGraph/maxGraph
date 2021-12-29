@@ -36,7 +36,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import CellArray from '../cell/CellArray';
 import EdgeHandler from './EdgeHandler';
 import EventSource from '../event/EventSource';
-import GraphHandler from './GraphHandler';
+import SelectionHandler from './SelectionHandler';
 import SelectionCellsHandler from './SelectionCellsHandler';
 
 /**
@@ -222,7 +222,7 @@ class VertexHandler {
       this.selectionBorder.setCursor(CURSOR.MOVABLE_VERTEX);
     }
 
-    const graphHandler = this.graph.getPlugin('GraphHandler') as GraphHandler;
+    const graphHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
 
     // Adds the sizer handles
     if (
@@ -327,7 +327,7 @@ class VertexHandler {
    * Returns true if the rotation handle should be showing.
    */
   isRotationHandleVisible() {
-    const graphHandler = this.graph.getPlugin('GraphHandler') as GraphHandler;
+    const graphHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
 
     return (
       this.graph.isEnabled() &&

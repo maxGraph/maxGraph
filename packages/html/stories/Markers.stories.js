@@ -1,7 +1,7 @@
 import {
   Graph,
   EdgeHandler,
-  GraphHandler,
+  SelectionHandler,
   CellRenderer,
   MarkerShape,
   CylinderShape,
@@ -28,7 +28,7 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Enables guides
-  GraphHandler.prototype.guidesEnabled = true;
+  SelectionHandler.prototype.guidesEnabled = true;
   EdgeHandler.prototype.snapToTerminals = true;
 
   // Registers and defines the custom marker

@@ -87,8 +87,8 @@ const Template = ({ label, ...args }) => {
   let style = graph.getStylesheet().getDefaultVertexStyle();
   style.shape = 'label';
 
-  style.verticalAlign = constants.ALIGN_MIDDLE;
-  style.align = constants.ALIGN_LEFT;
+  style.verticalAlign = constants.ALIGN.MIDDLE;
+  style.align = constants.ALIGN.LEFT;
   style.spacingLeft = 54;
 
   style.gradientColor = '#7d85df';
@@ -301,7 +301,7 @@ const Template = ({ label, ...args }) => {
   function addOverlays(graph, cell, addDeleteIcon) {
     let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
     overlay.cursor = 'hand';
-    overlay.align = constants.ALIGN_CENTER;
+    overlay.align = constants.ALIGN.CENTER;
     overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
       addChild(graph, cell);
     });
@@ -312,8 +312,8 @@ const Template = ({ label, ...args }) => {
       overlay = new CellOverlay(new ImageBox('images/close.png', 30, 30), 'Delete');
       overlay.cursor = 'hand';
       overlay.offset = new Point(-4, 8);
-      overlay.align = constants.ALIGN_RIGHT;
-      overlay.verticalAlign = constants.ALIGN_TOP;
+      overlay.align = constants.ALIGN.RIGHT;
+      overlay.verticalAlign = constants.ALIGN.TOP;
       overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
         deleteSubtree(graph, cell);
       });

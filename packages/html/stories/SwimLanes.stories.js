@@ -52,12 +52,12 @@ const Template = ({ label, ...args }) => {
   graph.getView().translate = new Point(graph.border / 2, graph.border / 2);
   graph.setResizeContainer(true);
 
-  const graphHandler = graph.getPlugin('GraphHandler');
+  const graphHandler = graph.getPlugin('SelectionHandler');
   graphHandler.setRemoveCellsFromParent(false);
 
   // Changes the default vertex style in-place
   let style = graph.getStylesheet().getDefaultVertexStyle();
-  style.shape = constants.SHAPE_SWIMLANE;
+  style.shape = constants.SHAPE.SWIMLANE;
   style.verticalAlign = 'middle';
   style.labelBackgroundColor = 'white';
   style.fontSize = 11;
@@ -68,7 +68,7 @@ const Template = ({ label, ...args }) => {
   // delete style.fillColor;
 
   style = cloneUtils.clone(style);
-  style.shape = constants.SHAPE_RECTANGLE;
+  style.shape = constants.SHAPE.RECTANGLE;
   style.fontSize = 10;
   style.rounded = true;
   style.horizontal = true;
@@ -78,13 +78,13 @@ const Template = ({ label, ...args }) => {
   graph.getStylesheet().putCellStyle('process', style);
 
   style = cloneUtils.clone(style);
-  style.shape = constants.SHAPE_ELLIPSE;
+  style.shape = constants.SHAPE.ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   delete style.rounded;
   graph.getStylesheet().putCellStyle('state', style);
 
   style = cloneUtils.clone(style);
-  style.shape = constants.SHAPE_RHOMBUS;
+  style.shape = constants.SHAPE.RHOMBUS;
   style.perimiter = Perimeter.RhombusPerimeter;
   style.verticalAlign = 'top';
   style.spacingTop = 40;
@@ -92,7 +92,7 @@ const Template = ({ label, ...args }) => {
   graph.getStylesheet().putCellStyle('condition', style);
 
   style = cloneUtils.clone(style);
-  style.shape = constants.SHAPE_DOUBLE_ELLIPSE;
+  style.shape = constants.SHAPE.DOUBLE_ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   style.spacingTop = 28;
   style.fontSize = 14;
@@ -102,15 +102,15 @@ const Template = ({ label, ...args }) => {
 
   style = graph.getStylesheet().getDefaultEdgeStyle();
   style.edge = EdgeStyle.ElbowConnector;
-  style.endArrow = constants.ARROW_BLOCK;
+  style.endArrow = constants.ARROW.BLOCK;
   style.rounded = true;
   style.fontColor = 'black';
   style.strokeColor = 'black';
 
   style = cloneUtils.clone(style);
   style.dashed = true;
-  style.endArrow = constants.ARROW_OPEN;
-  style.startArrow = constants.ARROW_OVAL;
+  style.endArrow = constants.ARROW.OPEN;
+  style.startArrow = constants.ARROW.OVAL;
   graph.getStylesheet().putCellStyle('crossover', style);
 
   // Installs double click on middle control point and

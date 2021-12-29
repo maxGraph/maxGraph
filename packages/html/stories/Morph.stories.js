@@ -72,12 +72,12 @@ const Template = ({ label, ...args }) => {
 
       graph.getModel().beginUpdate();
       try {
-        let geo = graph.getCellGeometry(v1);
+        let geo = v1.getGeometry();
         geo = geo.clone();
         geo.x += 180 * mult;
         graph.getModel().setGeometry(v1, geo);
 
-        geo = graph.getCellGeometry(v2);
+        geo = v2.getGeometry();
         geo = geo.clone();
         geo.x -= 180 * mult;
         graph.getModel().setGeometry(v2, geo);

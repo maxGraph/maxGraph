@@ -53,7 +53,7 @@ const Template = ({ label, ...args }) => {
   // Removes header and footer from page height
   graph.pageFormat.height -= headerSize + footerSize;
 
-  const graphHandler = graph.getPlugin('GraphHandler');
+  const graphHandler = graph.getPlugin('SelectionHandler');
 
   // Takes zoom into account for moving cells
   graphHandler.scaleGrid = true;

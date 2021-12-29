@@ -2691,7 +2691,7 @@ FilenameDialog.createFileTypes = function(editorUi, nameInput, types)
 	/**
 	 * Selects tables before cells and rows.
 	 */
-	let mxGraphHandlerIsPropagateSelectionCell = GraphHandler.prototype.isPropagateSelectionCell;
+	let mxGraphHandlerIsPropagateSelectionCell = SelectionHandler.prototype.isPropagateSelectionCell;
 	mxGraphHandler.prototype.isPropagateSelectionCell = function(cell, immediate, me)
 	{
 		let result = false;

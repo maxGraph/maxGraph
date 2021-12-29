@@ -3,7 +3,7 @@ import {
   InternalEvent,
   RubberBandHandler,
   Point,
-  GraphHandler,
+  SelectionHandler,
   utils,
 } from '@maxgraph/core';
 
@@ -138,7 +138,7 @@ const Template = ({ label, ...args }) => {
   style.fontStyle = 1;
   graph.getStylesheet().putDefaultVertexStyle(style);
 
-  const graphHandler = graph.getPlugin('GraphHandler');
+  const graphHandler = graph.getPlugin('SelectionHandler');
 
   // Replaces move preview for relative children
   graphHandler.getDelta = function (me) {
@@ -169,7 +169,7 @@ const Template = ({ label, ...args }) => {
     return (
       cells.length === 0 &&
       !cells[0].geometry.relative &&
-      GraphHandler.prototype.shouldRemoveCellsFromParent.apply(this, arguments)
+      SelectionHandler.prototype.shouldRemoveCellsFromParent.apply(this, arguments)
     );
   };
 

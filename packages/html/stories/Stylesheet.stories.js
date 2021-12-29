@@ -52,27 +52,27 @@ const Template = ({ label, ...args }) => {
 
   // Creates the default style for vertices
   let style = [];
-  style.shape = constants.SHAPE_RECTANGLE;
+  style.shape = constants.SHAPE.RECTANGLE;
   style.perimiter = Perimeter.RectanglePerimeter;
   style.strokeColor = 'gray';
   style.rounded = true;
   style.fillColor = '#EEEEEE';
   style.gradientColor = 'white';
   style.fontColor = '#774400';
-  style.align = constants.ALIGN_CENTER;
-  style.verticalAlign = constants.ALIGN_MIDDLE;
+  style.align = constants.ALIGN.CENTER;
+  style.verticalAlign = constants.ALIGN.MIDDLE;
   style.fontSize = '12';
   style.fontStyle = 1;
   graph.getStylesheet().putDefaultVertexStyle(style);
 
   // Creates the default style for edges
   style = [];
-  style.shape = constants.SHAPE_CONNECTOR;
+  style.shape = constants.SHAPE.CONNECTOR;
   style.strokeColor = '#6482B9';
-  style.align = constants.ALIGN_CENTER;
-  style.verticalAlign = constants.ALIGN_MIDDLE;
+  style.align = constants.ALIGN.CENTER;
+  style.verticalAlign = constants.ALIGN.MIDDLE;
   style.edge = EdgeStyle.ElbowConnector;
-  style.endArrow = constants.ARROW_CLASSIC;
+  style.endArrow = constants.ARROW.CLASSIC;
   style.fontSize = '10';
   graph.getStylesheet().putDefaultEdgeStyle(style);
 

@@ -218,10 +218,9 @@ const EditingMixin: PartialType = {
    *
    * @param cell {@link mxCell} whose editable state should be returned.
    */
-  isCellEditable(cell) {
+  isCellEditable(cell): boolean {
     const style = this.getCurrentCellStyle(cell);
-
-    return this.isCellsEditable() && !this.isCellLocked(cell) && style.editable;
+    return this.isCellsEditable() && !this.isCellLocked(cell) && (style.editable || false);
   },
 
   /**

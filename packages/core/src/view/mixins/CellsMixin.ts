@@ -1868,7 +1868,7 @@ export const CellsMixin: PartialType = {
     clone = false,
     target = null,
     evt = null,
-    mapping = null
+    mapping = {}
   ) {
     if (dx !== 0 || dy !== 0 || clone || target) {
       // Removes descendants with ancestors in cells to avoid multiple moving
@@ -2726,7 +2726,6 @@ export const CellsMixin: PartialType = {
    */
   isCellMovable(cell) {
     const style = this.getCurrentCellStyle(cell);
-
     return this.isCellsMovable() && !this.isCellLocked(cell) && !style.movable;
   },
 
@@ -2757,10 +2756,9 @@ export const CellsMixin: PartialType = {
    */
   isCellResizable(cell) {
     const style = this.getCurrentCellStyle(cell);
-
-    const r =
-      this.isCellsResizable() && !this.isCellLocked(cell) && (style.resizable ?? true);
-
+    const r = this.isCellsResizable() && 
+              !this.isCellLocked(cell) && 
+              (style.resizable ?? true);
     return r;
   },
 
@@ -2791,7 +2789,6 @@ export const CellsMixin: PartialType = {
    */
   isCellBendable(cell) {
     const style = this.getCurrentCellStyle(cell);
-
     return this.isCellsBendable() && !this.isCellLocked(cell) && !!style.bendable;
   },
 
@@ -2823,7 +2820,6 @@ export const CellsMixin: PartialType = {
    */
   isAutoSizeCell(cell) {
     const style = this.getCurrentCellStyle(cell);
-
     return this.isAutoSizeCells() || !!style.autosize;
   },
 
@@ -2999,7 +2995,6 @@ export const CellsMixin: PartialType = {
       if (includeEdges || cell.isVertex()) {
         // Computes the bounding box for the points in the geometry
         const geo = cell.getGeometry();
-
         if (geo) {
           let bbox = null;
 
@@ -3073,10 +3068,8 @@ export const CellsMixin: PartialType = {
             }
 
             const style = this.getCurrentCellStyle(cell);
-
             if (bbox) {
               const angle = style.rotation ?? 0;
-
               if (angle !== 0) {
                 bbox = getBoundingBox(bbox, angle);
               }

@@ -1,6 +1,6 @@
 import {
   Graph,
-  GraphHandler,
+  SelectionHandler,
   InternalEvent,
   constants,
   EdgeHandler,
@@ -31,10 +31,10 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Enables guides
-  GraphHandler.prototype.guidesEnabled = true;
+  SelectionHandler.prototype.guidesEnabled = true;
 
   // Alt disables guides
-  GraphHandler.prototype.useGuidesForEvent = function (me) {
+  SelectionHandler.prototype.useGuidesForEvent = function (me) {
     return !InternalEvent.isAltDown(me.getEvent());
   };
 

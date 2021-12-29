@@ -300,8 +300,8 @@ export default Touch;
       };
 
       // Don't clear selection if multiple cells selected
-      let graphHandlerMouseDown = GraphHandler.prototype.mouseDown;
-      GraphHandler.prototype.mouseDown = function(sender, me)
+      let graphHandlerMouseDown = SelectionHandler.prototype.mouseDown;
+      SelectionHandler.prototype.mouseDown = function(sender, me)
       {
         graphHandlerMouseDown.apply(this, arguments);
 

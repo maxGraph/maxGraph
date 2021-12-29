@@ -47,7 +47,7 @@ const Template = ({ label, ...args }) => {
 
       // Changes the default vertex style in-place
       let style = graph.getStylesheet().getDefaultVertexStyle();
-      style.shape = constants.SHAPE_ROUNDED;
+      style.shape = constants.SHAPE.ROUNDED;
       style.perimiter = Perimeter.RectanglePerimeter;
       style.gradientColor = 'white';
       style.perimeterSpacing = 4;
@@ -57,7 +57,7 @@ const Template = ({ label, ...args }) => {
       style.labelBackgroundColor = 'white';
 
       style = clone(style);
-      style.startArrow = constants.ARROW_CLASSIC;
+      style.startArrow = constants.ARROW.CLASSIC;
       graph.getStylesheet().putCellStyle('2way', style);
 
       graph.isHtmlLabel = function (cell) {

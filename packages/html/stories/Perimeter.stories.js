@@ -1,4 +1,4 @@
-import { Graph, RubberBandHandler, GraphView, utils } from '@maxgraph/core';
+import { Graph, RubberBandHandler, GraphView, mathUtils } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -36,7 +36,7 @@ const Template = ({ label, ...args }) => {
         const b = terminal.text.boundingBox.clone();
         b.grow(3);
 
-        if (utils.rectangleIntersectsSegment(b, point, next)) {
+        if (mathUtils.rectangleIntersectsSegment(b, point, next)) {
           point = perimeter(b, terminal, next, orthogonal);
         }
       }

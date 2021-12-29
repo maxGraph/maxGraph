@@ -24,6 +24,10 @@ export const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);
 };
 
+export const parseXml = (xmlString: string): HTMLElement => {
+  return new DOMParser().parseFromString(xmlString, 'text/xml').documentElement;
+}
+
 export const getViewXml = (
   graph: Graph, 
   scale: number=1, 

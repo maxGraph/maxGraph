@@ -724,9 +724,9 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 		// Changes color of move preview for black backgrounds
 		this.graphHandler.createPreviewShape = function(bounds)
 		{
-			this.previewColor = (this.graph.background == '#000000') ? '#ffffff' : GraphHandler.prototype.previewColor;
+			this.previewColor = (this.graph.background == '#000000') ? '#ffffff' : SelectionHandler.prototype.previewColor;
 			
-			return GraphHandler.prototype.createPreviewShape.apply(this, arguments);
+			return SelectionHandler.prototype.createPreviewShape.apply(this, arguments);
 		};
 
 		// Handles parts of cells by checking if part=1 is in the style and returning the parent
@@ -6099,7 +6099,7 @@ if (typeof VertexHandler != 'undefined')
 		mxGraphHandler.prototype.guidesEnabled = true;
 		
 		// Removes parents where all child cells are moved out
-		GraphHandler.prototype.removeEmptyParents = true;
+		SelectionHandler.prototype.removeEmptyParents = true;
 	
 		// Enables fading of rubberband
 		RubberBand.prototype.fadeOut = true;
@@ -10024,7 +10024,7 @@ if (typeof VertexHandler != 'undefined')
 		/**
 		 * Hold Alt to ignore drop target.
 		 */
-		mxGraphHandlerIsValidDropTarget = GraphHandler.prototype.isValidDropTarget;
+		mxGraphHandlerIsValidDropTarget = SelectionHandler.prototype.isValidDropTarget;
 		mxGraphHandler.prototype.isValidDropTarget = function(target, me)
 		{
 			return mxGraphHandlerIsValidDropTarget.apply(this, arguments) &&
@@ -10069,7 +10069,7 @@ if (typeof VertexHandler != 'undefined')
 		/**
 		 * Updates the hint for the current operation.
 		 */
-		GraphHandler.prototype.updateHint = function(me)
+		SelectionHandler.prototype.updateHint = function(me)
 		{
 			if (this.pBounds != null && (this.shape != null || this.livePreviewActive))
 			{
@@ -10097,7 +10097,7 @@ if (typeof VertexHandler != 'undefined')
 		/**
 		 * Updates the hint for the current operation.
 		 */
-		GraphHandler.prototype.removeHint = function()
+		SelectionHandler.prototype.removeHint = function()
 		{
 			if (this.hint != null)
 			{
@@ -10891,7 +10891,7 @@ if (typeof VertexHandler != 'undefined')
 		VertexHandler.prototype.rotationEnabled = true;
 		VertexHandler.prototype.manageSizers = true;
 		VertexHandler.prototype.livePreview = true;
-		GraphHandler.prototype.maxLivePreview = 16;
+		SelectionHandler.prototype.maxLivePreview = 16;
 	
 		// Increases default rubberband opacity (default is 20)
 		RubberBand.prototype.defaultOpacity = 30;
@@ -10956,7 +10956,7 @@ if (typeof VertexHandler != 'undefined')
 			
 			// Don't clear selection if multiple cells selected
 			let graphHandlerMouseDown = mxGraphHandler.prototype.mouseDown;
-			GraphHandler.prototype.mouseDown = function(sender, me)
+			SelectionHandler.prototype.mouseDown = function(sender, me)
 			{
 				graphHandlerMouseDown.apply(this, arguments);
 	
@@ -11286,7 +11286,7 @@ if (typeof VertexHandler != 'undefined')
 		
 		// Special case for single edge label handle moving in which case the text bounding box is used
 		let mxGraphHandlerGetBoundingBox = mxGraphHandler.prototype.getBoundingBox;
-		GraphHandler.prototype.getBoundingBox = function(cells)
+		SelectionHandler.prototype.getBoundingBox = function(cells)
 		{
 			if (cells != null && cells.length == 1)
 			{
@@ -11310,7 +11310,7 @@ if (typeof VertexHandler != 'undefined')
 		};
 
 		// Ignores child cells with part style as guides
-		let mxGraphHandlerGetGuideStates = GraphHandler.prototype.getGuideStates;
+		let mxGraphHandlerGetGuideStates = SelectionHandler.prototype.getGuideStates;
 		
 		mxGraphHandler.prototype.getGuideStates = function()
 		{

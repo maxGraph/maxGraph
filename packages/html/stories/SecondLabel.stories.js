@@ -101,20 +101,20 @@ const Template = ({ label, ...args }) => {
         state.secondLabel = new TextShape(
           secondLabel,
           new Rectangle(),
-          constants.ALIGN_LEFT,
-          constants.ALIGN_BOTTOM
+          constants.ALIGN.LEFT,
+          constants.ALIGN.BOTTOM
         );
 
         // Styles the label
         state.secondLabel.color = 'black';
         state.secondLabel.family = 'Verdana';
         state.secondLabel.size = 8;
-        state.secondLabel.fontStyle = constants.FONT_ITALIC;
+        state.secondLabel.fontStyle = constants.FONT.ITALIC;
         state.secondLabel.background = 'yellow';
         state.secondLabel.border = 'black';
         state.secondLabel.valign = 'bottom';
         state.secondLabel.dialect = state.shape.dialect;
-        state.secondLabel.dialect = constants.DIALECT_STRICTHTML;
+        state.secondLabel.dialect = constants.DIALECT.STRICTHTML;
         state.secondLabel.wrap = true;
         graph.cellRenderer.initializeLabel(state, state.secondLabel);
       }

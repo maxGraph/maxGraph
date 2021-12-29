@@ -3,10 +3,9 @@ import {
   domUtils,
   RubberBandHandler,
   DragSource,
-  utils,
   gestureUtils,
   EdgeHandler,
-  GraphHandler,
+  SelectionHandler,
   Guide,
   eventUtils,
   Cell,
@@ -41,7 +40,7 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  class MyCustomGraphHandler extends GraphHandler {
+  class MyCustomGraphHandler extends SelectionHandler {
     // Enables guides
     guidesEnabled = true;
 
@@ -145,7 +144,7 @@ const Template = ({ label, ...args }) => {
   };
 
   // Creates a DOM node that acts as the drag source
-  const img = utils.createImage('images/icons48/gear.png');
+  const img = domUtils.createImage('images/icons48/gear.png');
   img.style.width = '48px';
   img.style.height = '48px';
   container.appendChild(img);

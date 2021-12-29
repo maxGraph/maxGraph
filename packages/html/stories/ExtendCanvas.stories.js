@@ -4,7 +4,7 @@ import {
   RubberBandHandler,
   Rectangle,
   Point,
-  utils,
+  styleUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -105,7 +105,7 @@ const Template = ({ label, ...args }) => {
     }
 
     sizeDidChange() {
-      if (this.container != null && utils.hasScrollbars(this.container)) {
+      if (this.container != null && styleUtils.hasScrollbars(this.container)) {
         const pages = this.getPageLayout();
         const pad = this.getPagePadding();
         const size = this.getPageSize();
@@ -180,7 +180,7 @@ const Template = ({ label, ...args }) => {
    */
   const graphViewValidate = graph.view.validate;
   graph.view.validate = function () {
-    if (this.graph.container != null && utils.hasScrollbars(this.graph.container)) {
+    if (this.graph.container != null && styleUtils.hasScrollbars(this.graph.container)) {
       const pad = this.graph.getPagePadding();
       const size = this.graph.getPageSize();
 

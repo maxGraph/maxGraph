@@ -1,4 +1,4 @@
-import { Graph, InternalEvent, GraphHandler, RubberBandHandler } from '@maxgraph/core';
+import { Graph, InternalEvent, SelectionHandler, RubberBandHandler } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -29,7 +29,7 @@ const Template = ({ label, ...args }) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  class MyCustomGraphHandler extends GraphHandler {
+  class MyCustomGraphHandler extends SelectionHandler {
     /**
      * Redirects start drag to parent.
      */

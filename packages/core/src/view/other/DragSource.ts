@@ -30,7 +30,7 @@ import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
-import GraphHandler from '../handler/GraphHandler';
+import SelectionHandler from '../handler/SelectionHandler';
 
 export type DropHandler = (
   graph: Graph,
@@ -522,7 +522,7 @@ class DragSource {
 
     // Guide is only needed if preview element is used
     if (this.isGuidesEnabled() && this.previewElement) {
-      const graphHandler = graph.getPlugin('GraphHandler') as GraphHandler;
+      const graphHandler = graph.getPlugin('SelectionHandler') as SelectionHandler;
       this.currentGuide = new Guide(graph, graphHandler.getGuideStates());
     }
 

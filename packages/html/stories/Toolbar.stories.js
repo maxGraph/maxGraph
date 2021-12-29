@@ -7,6 +7,7 @@ import {
   Model,
   KeyHandler,
   Cell,
+  CellArray,
   Geometry,
   DragSource,
   DomHelpers,
@@ -142,7 +143,7 @@ const Template = ({ label, ...args }) => {
       vertex.geometry.x = pt.x;
       vertex.geometry.y = pt.y;
 
-      graph.setSelectionCells(graph.importCells([vertex], 0, 0, cell));
+      graph.setSelectionCells(graph.importCells(new CellArray(vertex), 0, 0, cell));
     };
 
     // Creates the image which is used as the drag icon (preview)

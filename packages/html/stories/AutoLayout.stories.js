@@ -100,7 +100,7 @@ const Template = ({ label, ...args }) => {
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
-  const layout = new HierarchicalLayout(graph, constants.DIRECTION_WEST);
+  const layout = new HierarchicalLayout(graph, constants.DIRECTION.WEST);
 
   let v1;
   const executeLayout = (change, post) => {
@@ -136,7 +136,7 @@ const Template = ({ label, ...args }) => {
     // Installs a handler for clicks on the overlay
     overlay.addListener(InternalEvent.CLICK, (sender, evt2) => {
       graph.clearSelection();
-      const geo = graph.getCellGeometry(cell);
+      const geo = cell.getGeometry();
 
       let v2;
 

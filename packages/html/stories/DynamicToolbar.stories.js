@@ -10,6 +10,7 @@ import {
   Geometry,
   InternalEvent,
   utils,
+  styleUtils,
   gestureUtils,
 } from '@maxgraph/core';
 
@@ -93,7 +94,7 @@ const Template = ({ label, ...args }) => {
 
     graph.getSelectionModel().addListener(InternalEvent.CHANGE, () => {
       const tmp = graph.isSelectionEmpty();
-      utils.setOpacity(img, tmp ? 100 : 20);
+      styleUtils.setOpacity(img, tmp ? 100 : 20);
       img.enabled = tmp;
     });
   }

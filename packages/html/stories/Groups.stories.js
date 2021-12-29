@@ -1,4 +1,4 @@
-import { Graph, RubberBandHandler, GraphHandler, PopupMenuHandler } from '@maxgraph/core';
+import { Graph, RubberBandHandler, SelectionHandler, PopupMenuHandler } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -28,8 +28,8 @@ const Template = ({ label, ...args }) => {
   };
 
   // Don't clear selection if multiple cells selected
-  const graphHandlerMouseDown = GraphHandler.prototype.mouseDown;
-  GraphHandler.prototype.mouseDown = function (sender, me) {
+  const graphHandlerMouseDown = SelectionHandler.prototype.mouseDown;
+  SelectionHandler.prototype.mouseDown = function (sender, me) {
     graphHandlerMouseDown.apply(this, arguments);
 
     if (this.graph.isCellSelected(me.getCell()) && this.graph.getSelectionCount() > 1) {
@@ -39,8 +39,8 @@ const Template = ({ label, ...args }) => {
 
   // Selects descendants before children selection mode
   const graphHandlerGetInitialCellForEvent =
-    GraphHandler.prototype.getInitialCellForEvent;
-  GraphHandler.prototype.getInitialCellForEvent = function (me) {
+    SelectionHandler.prototype.getInitialCellForEvent;
+  SelectionHandler.prototype.getInitialCellForEvent = function (me) {
     const model = this.graph.getModel();
     const psel = this.graph.getSelectionCell().getParent();
     let cell = graphHandlerGetInitialCellForEvent.apply(this, arguments);
@@ -62,8 +62,8 @@ const Template = ({ label, ...args }) => {
   };
 
   // Selection is delayed to mouseup if child selected
-  const graphHandlerIsDelayedSelection = GraphHandler.prototype.isDelayedSelection;
-  GraphHandler.prototype.isDelayedSelection = function (cell) {
+  const graphHandlerIsDelayedSelection = SelectionHandler.prototype.isDelayedSelection;
+  SelectionHandler.prototype.isDelayedSelection = function (cell) {
     let result = graphHandlerIsDelayedSelection.apply(this, arguments);
     const model = this.graph.getModel();
     const psel = this.graph.getSelectionCell().getParent();
@@ -83,7 +83,7 @@ const Template = ({ label, ...args }) => {
   };
 
   // Delayed selection of parent group
-  GraphHandler.prototype.selectDelayed = function (me) {
+  SelectionHandler.prototype.selectDelayed = function (me) {
     let cell = me.getCell();
 
     if (cell == null) {

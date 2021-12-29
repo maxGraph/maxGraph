@@ -3,11 +3,12 @@ import {
   InternalEvent,
   RubberBandHandler,
   Clipboard,
-  utils,
+  xmlUtils,
   eventUtils,
   Client,
   Codec,
   Model,
+  styleUtils,
   stringUtils,
 } from '@maxgraph/core';
 
@@ -52,13 +53,12 @@ const Template = ({ label, ...args }) => {
     for (let i = 0; i < cells.length; i++) {
       model.add(parent, cells[i]);
     }
-
-    return utils.getXml(codec.encode(model));
+    return xmlUtils.getXml(codec.encode(model));
   };
 
   // Focused but invisible textarea during control or meta key events
   const textInput = document.createElement('textarea');
-  utils.setOpacity(textInput, 0);
+  styleUtils.setOpacity(textInput, 0);
   textInput.style.width = '1px';
   textInput.style.height = '1px';
   let restoreFocus = false;
@@ -132,7 +132,7 @@ const Template = ({ label, ...args }) => {
         const state = graph.view.getState(cells[i]);
 
         if (state != null) {
-          const geo = graph.getCellGeometry(clones[i]);
+          const geo = clones[i].getGeometry();
 
           if (geo != null && geo.relative) {
             geo.relative = false;
