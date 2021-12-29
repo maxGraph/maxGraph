@@ -135,7 +135,7 @@ export default MYNAMEHERE;
 
          if ((geo != null ? !geo.relative : false) &&
            terminal.cell.isVertex() &&
-           this.getModel().getChildCount(terminal.cell) == 0)
+           this.getDataModel().getChildCount(terminal.cell) == 0)
          {
           return [new mxConnectionConstraint(new mxPoint(0, 0.5), false),
               new mxConnectionConstraint(new mxPoint(1, 0.5), false)];
@@ -147,7 +147,7 @@ export default MYNAMEHERE;
       // Makes sure non-relative cells can only be connected via constraints
       graph.getPlugin('ConnectionHandler').isConnectableCell = function(cell)
       {
-        if (this.graph.getModel().isEdge(cell))
+        if (this.graph.getDataModel().isEdge(cell))
         {
           return true;
         }
@@ -173,14 +173,14 @@ export default MYNAMEHERE;
 
         if (cell != null)
         {
-          let src = this.getModel().getTerminal(cell, true);
+          let src = this.getDataModel().getTerminal(cell, true);
 
           if (src != null)
           {
             tip += this.getTooltipForCell(src) + ' ';
           }
 
-          let parent = this.getModel().getParent(cell);
+          let parent = this.getDataModel().getParent(cell);
 
           if (parent.isVertex())
           {
@@ -189,7 +189,7 @@ export default MYNAMEHERE;
 
           tip += getTooltipForCell.apply(this, arguments);
 
-          let trg = this.getModel().getTerminal(cell, false);
+          let trg = this.getDataModel().getTerminal(cell, false);
 
           if (trg != null)
           {
@@ -257,7 +257,7 @@ export default MYNAMEHERE;
 
       let parent = graph.getDefaultParent();
 
-      graph.getModel().beginUpdate();
+      graph.getDataModel().beginUpdate();
       try
       {
         var v1 = graph.insertVertex(parent, null, 'J1', 80, 40, 40, 80,
@@ -332,7 +332,7 @@ export default MYNAMEHERE;
          v22.geometry.relative = true;
          v22.geometry.offset = new mxPoint(-10, -1);*/
 
-        var v3 = graph.addCell(graph.getModel().cloneCell(v1));
+        var v3 = graph.addCell(graph.getDataModel().cloneCell(v1));
         v3.value = 'J3';
         v3.geometry.x = 420;
         v3.geometry.y = 340;
@@ -378,7 +378,7 @@ export default MYNAMEHERE;
       }
       finally
       {
-        graph.getModel().endUpdate();
+        graph.getDataModel().endUpdate();
       }
 
       document.body.appendChild(mxUtils.button('Zoom In', function()
@@ -397,7 +397,7 @@ export default MYNAMEHERE;
       {
         undoManager.undoableEditHappened(evt.getProperty('edit'));
       };
-      graph.getModel().addListener(mxEvent.UNDO, listener);
+      graph.getDataModel().addListener(mxEvent.UNDO, listener);
       graph.getView().addListener(mxEvent.UNDO, listener);
 
       document.body.appendChild(mxUtils.button('Undo', function()
@@ -445,7 +445,7 @@ export default MYNAMEHERE;
           {
             // Selects edges in non-wire mode for single clicks, but starts
             // connecting for non-edges regardless of wire-mode
-            if (!checkbox.checked && this.graph.getModel().isEdge(this.previous.cell))
+            if (!checkbox.checked && this.graph.getDataModel().isEdge(this.previous.cell))
             {
               this.reset();
             }
@@ -635,7 +635,7 @@ export default MYNAMEHERE;
         clone.cell.geometry = clone.cell.geometry.clone();
 
         // Sets the terminal point of an edge if we're moving one of the endpoints
-        if (this.graph.getModel().isEdge(clone.cell))
+        if (this.graph.getDataModel().isEdge(clone.cell))
         {
           // TODO: Only set this if the target or source terminal is an edge
           clone.cell.geometry.setTerminalPoint(point, this.isSource);
@@ -653,7 +653,7 @@ export default MYNAMEHERE;
     mxEdgeHandler.prototype.connect = function(edge, terminal, isSource, isClone, me)
     {
       let result = null;
-      let model = this.graph.getModel();
+      let model = this.graph.getDataModel();
       let parent = model.getParent(edge);
 
       model.beginUpdate();
@@ -674,7 +674,7 @@ export default MYNAMEHERE;
             pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
 
             let pstate = this.graph.getView().getState(
-                this.graph.getModel().getParent(edge));
+                this.graph.getDataModel().getParent(edge));
 
             if (pstate != null)
             {

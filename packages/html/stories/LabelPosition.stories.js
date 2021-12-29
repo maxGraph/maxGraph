@@ -33,7 +33,7 @@ const Template = ({ label, ...args }) => {
   // and horizontal label position styles can be combined.
   // Note: Alternatively, vertex labels can be set be overriding
   // CellRenderer.getLabelBounds.
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     graph.insertVertex(
       parent,
@@ -77,7 +77,7 @@ const Template = ({ label, ...args }) => {
     );
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

@@ -170,7 +170,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, 'A1', 20, 20, 40, 80, 'shape=and');
     const v2 = graph.insertVertex(parent, null, 'A2', 20, 220, 40, 80, 'shape=and');
@@ -234,7 +234,7 @@ const Template = ({ label, ...args }) => {
     e7.geometry.points = [new Point(290, 370)];
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   const buttons = document.createElement('div');
@@ -265,7 +265,7 @@ const Template = ({ label, ...args }) => {
         let geo = cell.getGeometry();
 
         if (geo != null) {
-          graph.getModel().beginUpdate();
+          graph.getDataModel().beginUpdate();
           try {
             // Rotates the size and position in the geometry
             geo = geo.clone();
@@ -274,7 +274,7 @@ const Template = ({ label, ...args }) => {
             const tmp = geo.width;
             geo.width = geo.height;
             geo.height = tmp;
-            graph.getModel().setGeometry(cell, geo);
+            graph.getDataModel().setGeometry(cell, geo);
 
             // Reads the current direction and advances by 90 degrees
             const state = graph.view.getState(cell);
@@ -295,7 +295,7 @@ const Template = ({ label, ...args }) => {
               graph.setCellStyles('direction', dir, [cell]);
             }
           } finally {
-            graph.getModel().endUpdate();
+            graph.getDataModel().endUpdate();
           }
         }
       }
@@ -336,7 +336,7 @@ const Template = ({ label, ...args }) => {
         const style = utils.prompt('Style', cell.getStyle());
 
         if (style != null) {
-          graph.getModel().setStyle(cell, style);
+          graph.getDataModel().setStyle(cell, style);
         }
       }
     })

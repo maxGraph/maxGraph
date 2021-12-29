@@ -216,7 +216,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
     isClone: boolean,
     me: InternalMouseEvent
   ) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let geo = edge.getGeometry();
     let result: Point[] | null = null;
 

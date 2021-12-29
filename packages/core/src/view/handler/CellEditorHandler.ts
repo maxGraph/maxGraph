@@ -61,7 +61,7 @@ import TooltipHandler from './TooltipHandler';
  * {
  *   let result = getEditorBounds.apply(this, arguments);
  *
- *   if (this.graph.getModel().isEdge(state.cell))
+ *   if (this.graph.getDataModel().isEdge(state.cell))
  *   {
  *     result.x = state.getCenterX() - result.width / 2;
  *     result.y = state.getCenterY() - result.height / 2;
@@ -170,7 +170,7 @@ class CellEditorHandler implements GraphPlugin {
 
     this.graph.getView().addListener(InternalEvent.SCALE, this.zoomHandler);
     this.graph.getView().addListener(InternalEvent.SCALE_AND_TRANSLATE, this.zoomHandler);
-    this.graph.getModel().addListener(InternalEvent.CHANGE, this.changeHandler);
+    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.changeHandler);
   }
 
   // TODO: Document me!
@@ -872,7 +872,7 @@ class CellEditorHandler implements GraphPlugin {
         this.prepareTextarea();
         const value = this.getCurrentValue(state);
 
-        this.graph.getModel().beginUpdate();
+        this.graph.getDataModel().beginUpdate();
         try {
           if (value !== null) {
             this.applyValue(state, value);
@@ -882,7 +882,7 @@ class CellEditorHandler implements GraphPlugin {
             this.graph.setCellStyles('align', this.align, new CellArray(state.cell));
           }
         } finally {
-          this.graph.getModel().endUpdate();
+          this.graph.getDataModel().endUpdate();
         }
       }
 
@@ -1074,7 +1074,7 @@ class CellEditorHandler implements GraphPlugin {
       this.textarea = null;
     }
 
-    this.graph.getModel().removeListener(this.changeHandler);
+    this.graph.getDataModel().removeListener(this.changeHandler);
     this.graph.getView().removeListener(this.zoomHandler);
   }
 }

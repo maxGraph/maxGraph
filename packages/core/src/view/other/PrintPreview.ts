@@ -758,7 +758,7 @@ class PrintPreview {
   getRoot(): Cell | null {
     let root = this.graph.view.currentRoot;
     if (root == null) {
-      root = this.graph.getModel().getRoot();
+      root = this.graph.getDataModel().getRoot();
     }
     return root;
   }

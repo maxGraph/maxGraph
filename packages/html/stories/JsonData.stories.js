@@ -66,7 +66,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
     v1.data = new CustomData('v1');
@@ -75,7 +75,7 @@ const Template = ({ label, ...args }) => {
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   const buttons = document.createElement('div');
@@ -84,7 +84,7 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(
     DomHelpers.button('Show JSON', function () {
       const encoder = new Codec();
-      const node = encoder.encode(graph.getModel());
+      const node = encoder.encode(graph.getDataModel());
       popup(xmlUtils.getXml(node), true);
     })
   );

@@ -78,7 +78,7 @@ class PartitionLayout extends GraphLayout {
    * @memberof mxPartitionLayout
    */
   moveCell(cell: Cell, x: number, y: number): void {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const parent = cell.getParent();
 
     if (cell != null && parent != null) {
@@ -117,7 +117,7 @@ class PartitionLayout extends GraphLayout {
    */
   execute(parent: Cell): void {
     const horizontal = this.isHorizontal();
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let pgeo = <Rectangle>parent.getGeometry();
 
     // Handles special case where the parent is either a layer with no

@@ -39,7 +39,7 @@ declare module '../Graph' {
 
 type PartialGraph = Pick<
   Graph,
-  | 'getModel'
+  | 'getDataModel'
   | 'fireEvent'
   | 'getView'
   | 'getDefaultParent'
@@ -116,12 +116,12 @@ const GroupingMixin: PartialType = {
         parent = <Cell>cells[0].getParent();
       }
 
-      this.getModel().beginUpdate();
+      this.getDataModel().beginUpdate();
       try {
         // Checks if the group has a geometry and
         // creates one if one does not exist
         if (group.getGeometry() == null) {
-          this.getModel().setGeometry(group, new Geometry());
+          this.getDataModel().setGeometry(group, new Geometry());
         }
 
         // Adds the group into the parent
@@ -149,7 +149,7 @@ const GroupingMixin: PartialType = {
           new EventObject(InternalEvent.GROUP_CELLS, { group, border, cells })
         );
       } finally {
-        this.getModel().endUpdate();
+        this.getDataModel().endUpdate();
       }
     }
     return group;
@@ -241,7 +241,7 @@ const GroupingMixin: PartialType = {
     }
 
     if (cells != null && cells.length > 0) {
-      this.getModel().beginUpdate();
+      this.getDataModel().beginUpdate();
       try {
         for (let i = 0; i < cells.length; i += 1) {
           let children = cells[i].getChildren();
@@ -265,7 +265,7 @@ const GroupingMixin: PartialType = {
                 geo.y = (<Point>state.origin).y;
                 geo.relative = false;
 
-                this.getModel().setGeometry(child, geo);
+                this.getDataModel().setGeometry(child, geo);
               }
             }
           }
@@ -274,7 +274,7 @@ const GroupingMixin: PartialType = {
         this.removeCellsAfterUngroup(cells);
         this.fireEvent(new EventObject(InternalEvent.UNGROUP_CELLS, { cells }));
       } finally {
-        this.getModel().endUpdate();
+        this.getDataModel().endUpdate();
       }
     }
     return result;
@@ -316,7 +316,7 @@ const GroupingMixin: PartialType = {
     if (cells == null) {
       cells = this.getSelectionCells();
     }
-    this.getModel().beginUpdate();
+    this.getDataModel().beginUpdate();
     try {
       const parent = this.getDefaultParent();
       const index = parent.getChildCount();
@@ -326,7 +326,7 @@ const GroupingMixin: PartialType = {
         new EventObject(InternalEvent.REMOVE_CELLS_FROM_PARENT, { cells })
       );
     } finally {
-      this.getModel().endUpdate();
+      this.getDataModel().endUpdate();
     }
     return cells;
   },
@@ -399,7 +399,7 @@ const GroupingMixin: PartialType = {
               bounds.height + 2 * border + size.y + topBorder + bottomBorder + size.height
             );
 
-            this.getModel().setGeometry(cells[i], geo);
+            this.getDataModel().setGeometry(cells[i], geo);
             this.moveCells(
               children,
               border + size.x - bounds.x + leftBorder,
@@ -438,7 +438,7 @@ const GroupingMixin: PartialType = {
    * hierarchy.
    */
   exitGroup() {
-    const root = this.getModel().getRoot();
+    const root = this.getDataModel().getRoot();
     const current = this.getCurrentRoot();
 
     if (current != null) {

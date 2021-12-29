@@ -158,7 +158,7 @@ class LayoutManager extends EventSource {
    */
   setGraph(graph: Graph | null) {
     if (this.graph) {
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
       model.removeListener(this.undoHandler);
       this.graph.removeListener(this.moveHandler);
       this.graph.removeListener(this.resizeHandler);
@@ -167,7 +167,7 @@ class LayoutManager extends EventSource {
     this.graph = graph!;
 
     if (this.graph) {
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
       model.addListener(InternalEvent.BEFORE_UNDO, this.undoHandler);
       this.graph.addListener(InternalEvent.MOVE_CELLS, this.moveHandler);
       this.graph.addListener(InternalEvent.RESIZE_CELLS, this.resizeHandler);
@@ -352,7 +352,7 @@ class LayoutManager extends EventSource {
   layoutCells(cells: CellArray, bubble: boolean = false) {
     if (cells.length > 0) {
       // Invokes the layouts while removing duplicates
-      const model = this.getGraph().getModel();
+      const model = this.getGraph().getDataModel();
 
       model.beginUpdate();
       try {

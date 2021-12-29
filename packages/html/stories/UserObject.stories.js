@@ -149,7 +149,7 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(
     DomHelpers.button('View XML', function () {
       const encoder = new Codec();
-      const node = encoder.encode(graph.getModel());
+      const node = encoder.encode(graph.getDataModel());
       popup(utils.getPrettyXml(node), true);
     })
   );
@@ -244,7 +244,7 @@ const Template = ({ label, ...args }) => {
       if (newValue != oldValue) {
         graph.batchUpdate(() => {
           const edit = new CellAttributeChange(cell, attribute.nodeName, newValue);
-          graph.getModel().execute(edit);
+          graph.getDataModel().execute(edit);
           graph.updateCellSize(cell);
         });
       }

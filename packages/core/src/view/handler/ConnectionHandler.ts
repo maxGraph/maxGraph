@@ -168,8 +168,8 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  * graph.getPlugin('ConnectionHandler').addListener(mxEvent.CONNECT, (sender, evt)=>
  * {
  *   let edge = evt.getProperty('cell');
- *   let source = graph.getModel().getTerminal(edge, true);
- *   let target = graph.getModel().getTerminal(edge, false);
+ *   let source = graph.getDataModel().getTerminal(edge, true);
+ *   let target = graph.getDataModel().getTerminal(edge, false);
  *
  *   let style = graph.getCellStyle(edge);
  *   let sourcePortId = style[mxConstants.STYLE_SOURCE_PORT];
@@ -397,7 +397,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
       }
     };
 
-    this.graph.getModel().addListener(InternalEvent.CHANGE, this.changeHandler);
+    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.changeHandler);
     this.graph.getView().addListener(InternalEvent.SCALE, this.changeHandler);
     this.graph.getView().addListener(InternalEvent.TRANSLATE, this.changeHandler);
     this.graph
@@ -1719,7 +1719,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
     if (target || this.isCreateTarget(evt) || this.graph.isAllowDanglingEdges()) {
       // Uses the common parent of source and target or
       // the default parent to insert the edge
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
       let terminalInserted = false;
       let edge: Cell | null = null;
 
@@ -2044,7 +2044,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
     }
 
     if (this.changeHandler) {
-      this.graph.getModel().removeListener(this.changeHandler);
+      this.graph.getDataModel().removeListener(this.changeHandler);
       this.graph.getView().removeListener(this.changeHandler);
     }
 

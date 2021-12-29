@@ -68,9 +68,9 @@ const Template = ({ label, ...args }) => {
     };
 
     // Adds cells to the model in a single step
-    graph.getModel().beginUpdate();
+    graph.getDataModel().beginUpdate();
     try {
-      graph.getModel().setRoot(graph.getModel().createRoot());
+      graph.getDataModel().setRoot(graph.getDataModel().createRoot());
       const parent = graph.getDefaultParent();
 
       const v1 = graph.insertVertex(
@@ -106,7 +106,7 @@ const Template = ({ label, ...args }) => {
       const e1 = graph.insertEdge(parent, null, null, v1, v2, 'strokeColor=#FF1A00');
     } finally {
       // Updates the display
-      graph.getModel().endUpdate();
+      graph.getDataModel().endUpdate();
     }
   };
 
@@ -119,9 +119,9 @@ const Template = ({ label, ...args }) => {
     };
 
     // Adds cells to the model in a single step
-    graph.getModel().beginUpdate();
+    graph.getDataModel().beginUpdate();
     try {
-      graph.getModel().setRoot(graph.getModel().createRoot());
+      graph.getDataModel().setRoot(graph.getDataModel().createRoot());
       const parent = graph.getDefaultParent();
 
       const v1 = graph.insertVertex(
@@ -157,7 +157,7 @@ const Template = ({ label, ...args }) => {
       const e1 = graph.insertEdge(parent, null, null, v1, v2, 'strokeColor=#008C00');
     } finally {
       // Updates the display
-      graph.getModel().endUpdate();
+      graph.getDataModel().endUpdate();
     }
   };
 

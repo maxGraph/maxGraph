@@ -195,7 +195,7 @@ export default MYNAMEHERE;
         let parent = graph.getDefaultParent();
 
         // Adds cells to the model in a single step
-        graph.getModel().beginUpdate();
+        graph.getDataModel().beginUpdate();
         try
         {
           var v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 300, 240,
@@ -207,7 +207,7 @@ export default MYNAMEHERE;
         finally
         {
           // Updates the display
-          graph.getModel().endUpdate();
+          graph.getDataModel().endUpdate();
         }
 
         document.body.appendChild(mxUtils.button('+', function()

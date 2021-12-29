@@ -170,7 +170,7 @@ export default Map;
       let parent = graph.getDefaultParent();
 
       // Adds cells to the model in a single step
-      graph.getModel().beginUpdate();
+      graph.getDataModel().beginUpdate();
       try
       {
         var n1 = graph.insertVertex(parent, null, {label:'Seattle'}, 23, 23, 10, 10);
@@ -209,24 +209,24 @@ export default Map;
       finally
       {
         // Updates the display
-        graph.getModel().endUpdate();
+        graph.getDataModel().endUpdate();
       }
 
       // Writes some random numbers on the connections
       window.setInterval(function()
       {
-        graph.getModel().beginUpdate();
+        graph.getDataModel().beginUpdate();
         try
         {
           for (let i = 0; i < e.length; i++)
           {
             let rnd = Math.random();
-            graph.getModel().setValue(e[i], Math.round(rnd * 100));
+            graph.getDataModel().setValue(e[i], Math.round(rnd * 100));
           }
         }
         finally
         {
-          graph.getModel().endUpdate();
+          graph.getDataModel().endUpdate();
         }
       }, 1000);
 

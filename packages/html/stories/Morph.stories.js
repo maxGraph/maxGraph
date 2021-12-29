@@ -49,7 +49,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   let v1;
   var v2;
   try {
@@ -58,7 +58,7 @@ const Template = ({ label, ...args }) => {
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   let mult = 1;
@@ -70,22 +70,22 @@ const Template = ({ label, ...args }) => {
     DomHelpers.button('Morph', function () {
       graph.clearSelection();
 
-      graph.getModel().beginUpdate();
+      graph.getDataModel().beginUpdate();
       try {
         let geo = v1.getGeometry();
         geo = geo.clone();
         geo.x += 180 * mult;
-        graph.getModel().setGeometry(v1, geo);
+        graph.getDataModel().setGeometry(v1, geo);
 
         geo = v2.getGeometry();
         geo = geo.clone();
         geo.x -= 180 * mult;
-        graph.getModel().setGeometry(v2, geo);
+        graph.getDataModel().setGeometry(v2, geo);
       } finally {
         // Arguments are number of steps, ease and delay
         const morph = new Morphing(graph, 20, 1.2, 20);
         morph.addListener(InternalEvent.DONE, function () {
-          graph.getModel().endUpdate();
+          graph.getDataModel().endUpdate();
         });
         morph.startAnimation();
       }

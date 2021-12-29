@@ -71,7 +71,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * 1993
    */
   execute(parent: any) {
-    const model = <GraphHierarchyModel>this.layout.getModel();
+    const model = <GraphHierarchyModel>this.layout.getDataModel();
     let ranks = <GraphAbstractHierarchyCell[][]>model.ranks;
 
     // Stores initial ordering as being the best one found so far

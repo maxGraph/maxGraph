@@ -102,7 +102,7 @@ class CellHighlight {
     this.graph
       .getView()
       .addListener(InternalEvent.SCALE_AND_TRANSLATE, this.repaintHandler);
-    this.graph.getModel().addListener(InternalEvent.CHANGE, this.repaintHandler);
+    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.repaintHandler);
 
     // Hides the marker if the current root changes
     this.resetHandler = () => {
@@ -260,7 +260,7 @@ class CellHighlight {
     const graph = this.graph;
     graph.getView().removeListener(this.resetHandler);
     graph.getView().removeListener(this.repaintHandler);
-    graph.getModel().removeListener(this.repaintHandler);
+    graph.getDataModel().removeListener(this.repaintHandler);
 
     if (this.shape) {
       this.shape.destroy();

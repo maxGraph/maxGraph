@@ -427,7 +427,7 @@ export default Scrollbars;
         // Adds cells to the model in a single step
         let width = 160;
         let height = 230;
-        graph.getModel().beginUpdate();
+        graph.getDataModel().beginUpdate();
         try
         {
           var v1 = graph.insertVertex(parent, null, '', 20, 20, width, height);
@@ -441,7 +441,7 @@ export default Scrollbars;
         finally
         {
           // Updates the display
-          graph.getModel().endUpdate();
+          graph.getDataModel().endUpdate();
         }
 
         var btn1 = button('+', function()

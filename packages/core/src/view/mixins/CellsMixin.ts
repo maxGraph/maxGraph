@@ -259,7 +259,7 @@ type PartialGraph = Pick<
   | 'getView'
   | 'getStylesheet'
   | 'batchUpdate'
-  | 'getModel'
+  | 'getDataModel'
   | 'fireEvent'
   | 'getDefaultParent'
   | 'getCurrentRoot'
@@ -630,7 +630,7 @@ export const CellsMixin: PartialType = {
 
     this.batchUpdate(() => {
       for (const cell of cells!) {
-        this.getModel().setStyle(cell, style);
+        this.getDataModel().setStyle(cell, style);
       }
     });
   },
@@ -696,7 +696,7 @@ export const CellsMixin: PartialType = {
   setCellStyles(key, value, cells) {
     cells = cells ?? this.getSelectionCells();
 
-    setCellStyles(this.getModel(), cells, key, value);
+    setCellStyles(this.getDataModel(), cells, key, value);
   },
 
   /**
@@ -734,7 +734,7 @@ export const CellsMixin: PartialType = {
         const current = (style[key] as number) || 0;
         value = !((current & flag) === flag);
       }
-      setCellStyleFlags(this.getModel(), cells, key, flag, value);
+      setCellStyleFlags(this.getDataModel(), cells, key, flag, value);
     }
   },
 
@@ -1070,7 +1070,7 @@ export const CellsMixin: PartialType = {
               geo.y = Math.max(0, geo.y);
             }
 
-            this.getModel().setGeometry(cell, geo);
+            this.getDataModel().setGeometry(cell, geo);
           }
         }
 
@@ -1080,7 +1080,7 @@ export const CellsMixin: PartialType = {
           index--;
         }
 
-        this.getModel().add(parent, cell, index + i);
+        this.getDataModel().add(parent, cell, index + i);
 
         if (this.autoSizeCellsOnAdd) {
           this.autoSizeCell(cell, true);
@@ -1270,8 +1270,8 @@ export const CellsMixin: PartialType = {
                   }
                 }
 
-                this.getModel().setGeometry(edge, geo);
-                this.getModel().setTerminal(edge, null, source);
+                this.getDataModel().setGeometry(edge, geo);
+                this.getDataModel().setTerminal(edge, null, source);
               }
             }
           };
@@ -1284,7 +1284,7 @@ export const CellsMixin: PartialType = {
             }
           }
 
-          this.getModel().remove(cell);
+          this.getDataModel().remove(cell);
         }
 
         this.fireEvent(new EventObject(InternalEvent.CELLS_REMOVED, { cells }));
@@ -1335,7 +1335,7 @@ export const CellsMixin: PartialType = {
     if (cells.length > 0) {
       this.batchUpdate(() => {
         for (const cell of cells) {
-          this.getModel().setVisible(cell, show);
+          this.getDataModel().setVisible(cell, show);
         }
       });
     }
@@ -1403,7 +1403,7 @@ export const CellsMixin: PartialType = {
             geo.height = size.height;
           }
 
-          this.getModel().setStyle(cell, cellStyle);
+          this.getDataModel().setStyle(cell, cellStyle);
         } else {
           const state = this.getView().createState(cell);
           const align = state.style.align ?? ALIGN.CENTER;
@@ -1601,7 +1601,7 @@ export const CellsMixin: PartialType = {
    *   {
    *     for (var i = 0; i < cells.length; i++)
    *     {
-   *       if (graph.getModel().getChildCount(cells[i]) > 0)
+   *       if (graph.getDataModel().getChildCount(cells[i]) > 0)
    *       {
    *         var geo = cells[i].getGeometry();
    *
@@ -1614,7 +1614,7 @@ export const CellsMixin: PartialType = {
    *           geo.width = Math.max(geo.width, bounds.width);
    *           geo.height = Math.max(geo.height, bounds.height);
    *
-   *           graph.getModel().setGeometry(cells[i], geo);
+   *           graph.getDataModel().setGeometry(cells[i], geo);
    *         }
    *       }
    *     }
@@ -1699,7 +1699,7 @@ export const CellsMixin: PartialType = {
           this.resizeChildCells(cell, geo);
         }
 
-        this.getModel().setGeometry(cell, geo);
+        this.getDataModel().setGeometry(cell, geo);
         this.constrainChildCells(cell);
       });
     }
@@ -1787,7 +1787,7 @@ export const CellsMixin: PartialType = {
       if (cell.isVertex()) {
         this.cellResized(cell, geo, true, recurse);
       } else {
-        this.getModel().setGeometry(cell, geo);
+        this.getDataModel().setGeometry(cell, geo);
       }
     }
   },
@@ -1959,9 +1959,9 @@ export const CellsMixin: PartialType = {
                 geo.relative &&
                 parent &&
                 parent.isEdge() &&
-                this.getModel().contains(parent)
+                this.getDataModel().contains(parent)
               ) {
-                this.getModel().add(parent, cell);
+                this.getDataModel().add(parent, cell);
               }
             });
           }
@@ -2055,7 +2055,7 @@ export const CellsMixin: PartialType = {
           geometry.offset.y = geometry.offset.y + dy;
         }
       }
-      this.getModel().setGeometry(cell, geometry);
+      this.getDataModel().setGeometry(cell, geometry);
     }
   },
 
@@ -2228,7 +2228,7 @@ export const CellsMixin: PartialType = {
               geo.y += dy;
             }
           }
-          this.getModel().setGeometry(cell, geo);
+          this.getDataModel().setGeometry(cell, geo);
         }
       }
     }
@@ -2287,7 +2287,7 @@ export const CellsMixin: PartialType = {
       parent = this.getCurrentRoot();
 
       if (!parent) {
-        parent = this.getModel().getRoot();
+        parent = this.getDataModel().getRoot();
       }
     }
 
@@ -2346,7 +2346,7 @@ export const CellsMixin: PartialType = {
     includeDescendants = false
   ) {
     if (width > 0 || height > 0 || intersection) {
-      const model = this.getModel();
+      const model = this.getDataModel();
       const right = x + width;
       const bottom = y + height;
 
@@ -2541,7 +2541,7 @@ export const CellsMixin: PartialType = {
    * Returns the cells which may be exported in the given array of cells.
    */
   getCloneableCells(cells) {
-    return this.getModel().filterCells(cells, (cell: Cell) => {
+    return this.getDataModel().filterCells(cells, (cell: Cell) => {
       return this.isCellCloneable(cell);
     });
   },
@@ -2581,7 +2581,7 @@ export const CellsMixin: PartialType = {
    * Returns the cells which may be exported in the given array of cells.
    */
   getExportableCells(cells) {
-    return this.getModel().filterCells(cells, (cell: Cell) => {
+    return this.getDataModel().filterCells(cells, (cell: Cell) => {
       return this.canExportCell(cell);
     });
   },
@@ -2600,7 +2600,7 @@ export const CellsMixin: PartialType = {
    * Returns the cells which may be imported in the given array of cells.
    */
   getImportableCells(cells) {
-    return this.getModel().filterCells(cells, (cell: Cell) => {
+    return this.getDataModel().filterCells(cells, (cell: Cell) => {
       return this.canImportCell(cell);
     });
   },
@@ -2660,7 +2660,7 @@ export const CellsMixin: PartialType = {
    * Returns the cells which may be exported in the given array of cells.
    */
   getDeletableCells(cells) {
-    return this.getModel().filterCells(cells, (cell: Cell) => {
+    return this.getDataModel().filterCells(cells, (cell: Cell) => {
       return this.isCellDeletable(cell);
     });
   },
@@ -2708,7 +2708,7 @@ export const CellsMixin: PartialType = {
    * Returns the cells which are movable in the given array of cells.
    */
   getMovableCells(cells) {
-    return this.getModel().filterCells(cells, (cell: Cell) => {
+    return this.getDataModel().filterCells(cells, (cell: Cell) => {
       return this.isCellMovable(cell);
     });
   },

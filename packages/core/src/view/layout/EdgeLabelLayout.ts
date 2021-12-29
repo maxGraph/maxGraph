@@ -35,7 +35,7 @@ class EdgeLabelLayout extends GraphLayout {
    */
   execute(parent: Cell): void {
     const { view } = this.graph;
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     // Gets all vertices and edges inside the parent
     const edges = [];
@@ -64,7 +64,7 @@ class EdgeLabelLayout extends GraphLayout {
    * @param e   edges
    */
   placeLabels(v: CellState[], e: CellState[]): void {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     // Moves the vertices to build a circle. Makes sure the
     // radius is large enough for the vertices to not
@@ -93,7 +93,7 @@ class EdgeLabelLayout extends GraphLayout {
    * Places the labels of the given edges.
    */
   avoid(edge: CellState, vertex: CellState): void {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const labRect = <Rectangle>(<TextShape>edge.text).boundingBox;
 
     if (intersects(labRect, vertex)) {

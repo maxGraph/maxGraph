@@ -38,7 +38,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
    * use.
    */
   execute(parent: Cell): void {
-    const model = <GraphHierarchyModel>this.layout.getModel();
+    const model = <GraphHierarchyModel>this.layout.getDataModel();
     const seenNodes: { [key: string]: GraphHierarchyNode } = {};
     const unseenNodesArray = model.vertexMapper.getValues();
     const unseenNodes: { [key: string]: GraphHierarchyNode } = {};

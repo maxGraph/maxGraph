@@ -160,7 +160,7 @@ class HierarchicalLayout extends GraphLayout {
   /**
    * Returns the internal <GraphHierarchyModel> for this layout algorithm.
    */
-  getModel(): GraphHierarchyModel | null {
+  getDataModel(): GraphHierarchyModel | null {
     return this.model;
   }
 

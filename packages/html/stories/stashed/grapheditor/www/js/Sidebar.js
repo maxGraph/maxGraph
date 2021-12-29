@@ -2504,7 +2504,7 @@ Sidebar.prototype.createThumb = function(cells, width, height, parent, title, sh
 		node.innerHTML = this.graph.container.innerHTML;
 	}
 	
-	this.graph.getModel().clear();
+	this.graph.getDataModel().clear();
 	Client.NO_FO = fo;
 
 	node.style.position = 'relative';
@@ -2625,7 +2625,7 @@ Sidebar.prototype.updateShapes = function(source, targets)
 				(targetCell.isEdge() == source.isEdge()))
 			{
 				let style = graph.getCurrentCellStyle(targets[i]);
-				graph.getModel().setStyle(targetCell, cellStyle);
+				graph.getDataModel().setStyle(targetCell, cellStyle);
 				
 				// Removes all children of composite cells
 				if (getValue(style, 'composite', '0') == '1')
@@ -3785,7 +3785,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		let target = ((!mxEvent.isAltDown(evt) || mxEvent.isShiftDown(evt)) &&
 			!(currentStyleTarget != null && activeArrow == styleTarget)) ?
 			DragSource.prototype.getDropTarget.apply(this, arguments) : null;
-		let model = graph.getModel();
+		let model = graph.getDataModel();
 		
 		if (target != null)
 		{

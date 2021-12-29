@@ -71,7 +71,7 @@ Format.prototype.init = function()
 	graph.getSelectionModel().addListener(mxEvent.CHANGE, this.update);
 	graph.addListener(mxEvent.EDITING_STARTED, this.update);
 	graph.addListener(mxEvent.EDITING_STOPPED, this.update);
-	graph.getModel().addListener(mxEvent.CHANGE, this.update);
+	graph.getDataModel().addListener(mxEvent.CHANGE, this.update);
 	graph.addListener(mxEvent.ROOT, (() =>
 	{
 		this.refresh();
@@ -718,7 +718,7 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 				graph.stopEditing(true);
 			}
 			
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				let cells = graph.getSelectionCells();
@@ -747,7 +747,7 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 		
@@ -1049,7 +1049,7 @@ BaseFormatPanel.prototype.createCellOption = function(label, key, defaultValue, 
 		}
 		else
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				let value = (checked) ? enabledValue : disabledValue;
@@ -1065,7 +1065,7 @@ BaseFormatPanel.prototype.createCellOption = function(label, key, defaultValue, 
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 	},
@@ -1083,11 +1083,11 @@ BaseFormatPanel.prototype.createCellOption = function(label, key, defaultValue, 
 				}
 			};
 			
-			graph.getModel().addListener(mxEvent.CHANGE, this.listener);
+			graph.getDataModel().addListener(mxEvent.CHANGE, this.listener);
 		},
 		destroy: function()
 		{
-			graph.getModel().removeListener(this.listener);
+			graph.getDataModel().removeListener(this.listener);
 		}
 	});
 };
@@ -1241,7 +1241,7 @@ BaseFormatPanel.prototype.createCellColorOption = function(label, colorKey, defa
 		return null;
 	}, function(color)
 	{
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			graph.setCellStyles(colorKey, color, graph.getSelectionCells());
@@ -1256,7 +1256,7 @@ BaseFormatPanel.prototype.createCellColorOption = function(label, colorKey, defa
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	}, defaultColor || mxConstants.NONE,
 	{
@@ -1273,11 +1273,11 @@ BaseFormatPanel.prototype.createCellColorOption = function(label, colorKey, defa
 				}
 			};
 			
-			graph.getModel().addListener(mxEvent.CHANGE, this.listener);
+			graph.getDataModel().addListener(mxEvent.CHANGE, this.listener);
 		},
 		destroy: function()
 		{
-			graph.getModel().removeListener(this.listener);
+			graph.getDataModel().removeListener(this.listener);
 		}
 	}, callbackFn);
 };
@@ -1436,8 +1436,8 @@ BaseFormatPanel.prototype.createRelativeOption = function(label, key, width, han
 			}
 		});
 		
-		graph.getModel().addListener(mxEvent.CHANGE, listener);
-		this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+		graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+		this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 		listener();
 	}
 
@@ -2088,8 +2088,8 @@ ArrangePanel.prototype.addAngle = function(div)
 		update = this.installInputHandler(input, 'rotation', 0, 0, 360, '°', null, true);
 		this.addKeyHandler(input, listener);
 	
-		graph.getModel().addListener(mxEvent.CHANGE, listener);
-		this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+		graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+		this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 		listener();
 	}
 
@@ -2371,8 +2371,8 @@ ArrangePanel.prototype.addGeometry = function(container)
 	this.addKeyHandler(left, listener);
 	this.addKeyHandler(top, listener);
 
-	graph.getModel().addListener(mxEvent.CHANGE, listener);
-	this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
 	
 	leftUpdate = this.addGeometryHandler(left, function(geo, value)
@@ -2430,7 +2430,7 @@ ArrangePanel.prototype.addGeometryHandler = function(input, fn)
 			}
 			else if (value != initialValue)
 			{
-				graph.getModel().beginUpdate();
+				graph.getDataModel().beginUpdate();
 				try
 				{
 					let cells = graph.getSelectionCells();
@@ -2454,7 +2454,7 @@ ArrangePanel.prototype.addGeometryHandler = function(input, fn)
 										graph.resizeChildCells(cells[i], geo);
 									}
 									
-									graph.getModel().setGeometry(cells[i], geo);
+									graph.getDataModel().setGeometry(cells[i], geo);
 									graph.constrainChildCells(cells[i]);
 								}
 							}
@@ -2463,7 +2463,7 @@ ArrangePanel.prototype.addGeometryHandler = function(input, fn)
 				}
 				finally
 				{
-					graph.getModel().endUpdate();
+					graph.getDataModel().endUpdate();
 				}
 				
 				initialValue = value;
@@ -2502,7 +2502,7 @@ ArrangePanel.prototype.addEdgeGeometryHandler = function(input, fn)
             }
             else if (value != initialValue)
             {
-                graph.getModel().beginUpdate();
+                graph.getDataModel().beginUpdate();
                 try
                 {
                     let cells = graph.getSelectionCells();
@@ -2518,14 +2518,14 @@ ArrangePanel.prototype.addEdgeGeometryHandler = function(input, fn)
                                 geo = geo.clone();
                                 fn(geo, value);
 
-                                graph.getModel().setGeometry(cells[i], geo);
+                                graph.getDataModel().setGeometry(cells[i], geo);
                             }
                         }
                     }
                 }
                 finally
                 {
-                    graph.getModel().endUpdate();
+                    graph.getDataModel().endUpdate();
                 }
 
                 initialValue = value;
@@ -2722,8 +2722,8 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 		geo.targetPoint.y = value;
 	});
 
-	graph.getModel().addListener(mxEvent.CHANGE, listener);
-	this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
 };
 
@@ -3044,7 +3044,7 @@ TextFormatPanel.prototype.addFont = function(container)
 		
 		mxEvent.addListener(positionSelect, 'change', function(evt)
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				let vals = lset[positionSelect.value];
@@ -3059,7 +3059,7 @@ TextFormatPanel.prototype.addFont = function(container)
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 			
 			mxEvent.consume(evt);
@@ -3895,8 +3895,8 @@ TextFormatPanel.prototype.addFont = function(container)
 	this.addKeyHandler(bottomSpacing, listener);
 	this.addKeyHandler(leftSpacing, listener);
 
-	graph.getModel().addListener(mxEvent.CHANGE, listener);
-	this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
 	
 	if (graph.cellEditor.isContentEditing())
@@ -4517,8 +4517,8 @@ StyleFormatPanel.prototype.addFill = function(container)
 		}
 	});
 	
-	graph.getModel().addListener(mxEvent.CHANGE, listener);
-	this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
 
 	mxEvent.addListener(gradientSelect, 'change', function(evt)
@@ -4603,7 +4603,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	
 	mxEvent.addListener(styleSelect, 'change', function(evt)
 	{
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			let keys = ['rounded', 'curved'];
@@ -4629,7 +4629,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 		
 		mxEvent.consume(evt);
@@ -5250,8 +5250,8 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	this.addKeyHandler(endSpacing, listener);
 	this.addKeyHandler(perimeterSpacing, listener);
 
-	graph.getModel().addListener(mxEvent.CHANGE, listener);
-	this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
 
 	return container;
@@ -5299,7 +5299,7 @@ StyleFormatPanel.prototype.addLineJumps = function(container)
 		
 		mxEvent.addListener(styleSelect, 'change', function(evt)
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				graph.setCellStyles('jumpStyle', styleSelect.value, graph.getSelectionCells());
@@ -5308,7 +5308,7 @@ StyleFormatPanel.prototype.addLineJumps = function(container)
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 			
 			mxEvent.consume(evt);
@@ -5346,8 +5346,8 @@ StyleFormatPanel.prototype.addLineJumps = function(container)
 
 		this.addKeyHandler(jumpSize, listener);
 
-		graph.getModel().addListener(mxEvent.CHANGE, listener);
-		this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+		graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+		this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 		listener();
 	}
 	else
@@ -5435,8 +5435,8 @@ StyleFormatPanel.prototype.addEffects = function(div)
 		addOption(Translations.get('sketch'), 'sketch', 0);
 	});
 	
-	graph.getModel().addListener(mxEvent.CHANGE, listener);
-	this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
 
 	return div;
@@ -5493,7 +5493,7 @@ DiagramStylePanel.prototype.addView = function(div)
 	let ui = this.editorUi;
 	let editor = ui.editor;
 	let graph = editor.graph;
-	let model = graph.getModel();
+	let model = graph.getDataModel();
 
 	div.style.whiteSpace = 'normal';
 
@@ -6486,8 +6486,8 @@ DiagramFormatPanel.prototype.addPaperSize = function(div)
 	ui.addListener('pageFormatChanged', listener);
 	this.listeners.push({destroy: function() { ui.removeListener(listener); }});
 	
-	graph.getModel().addListener(mxEvent.CHANGE, listener);
-	this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
+	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
+	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	
 	return div;
 };

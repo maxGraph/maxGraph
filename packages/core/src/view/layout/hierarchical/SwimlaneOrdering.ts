@@ -40,7 +40,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
    * use.
    */
   execute(parent: Cell) {
-    const model = <GraphHierarchyModel>this.layout.getModel();
+    const model = <GraphHierarchyModel>this.layout.getDataModel();
     const seenNodes: { [key: string]: Cell } = {};
     const unseenNodes = clone(model.vertexMapper, null, true);
 

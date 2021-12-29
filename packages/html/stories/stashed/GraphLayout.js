@@ -98,7 +98,7 @@ export default GraphLayout;
         this.el2.insertBefore(mxUtils.button('Circle Layout',
           function(evt)
           {
-            graph.getModel().beginUpdate();
+            graph.getDataModel().beginUpdate();
             try
             {
               // Creates a layout algorithm to be used
@@ -117,14 +117,14 @@ export default GraphLayout;
                 let morph = new Morphing(graph);
                 morph.addListener(mxEvent.DONE, function()
                 {
-                  graph.getModel().endUpdate();
+                  graph.getDataModel().endUpdate();
                 });
 
                 morph.startAnimation();
               }
               else
               {
-                graph.getModel().endUpdate();
+                graph.getDataModel().endUpdate();
               }
             }
           }
@@ -134,7 +134,7 @@ export default GraphLayout;
         document.body.insertBefore(mxUtils.button('Organic Layout',
           function(evt)
           {
-            graph.getModel().beginUpdate();
+            graph.getDataModel().beginUpdate();
             try
             {
               layout.execute(parent);
@@ -151,20 +151,20 @@ export default GraphLayout;
                 let morph = new Morphing(graph, 10, 1.7, 20);
                 morph.addListener(mxEvent.DONE, function()
                 {
-                  graph.getModel().endUpdate();
+                  graph.getDataModel().endUpdate();
                 });
                 morph.startAnimation();
               }
               else
               {
-                graph.getModel().endUpdate();
+                graph.getDataModel().endUpdate();
               }
             }
           }
         ), document.body.firstChild);
 
         // Adds cells to the model in a single step
-        graph.getModel().beginUpdate();
+        graph.getDataModel().beginUpdate();
         let w = 30;
         let h = 30;
         try
@@ -194,7 +194,7 @@ export default GraphLayout;
         finally
         {
           // Updates the display
-          graph.getModel().endUpdate();
+          graph.getDataModel().endUpdate();
         }
       }
     };

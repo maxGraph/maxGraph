@@ -97,7 +97,7 @@ export default Ports;
         // of the UI are custom in this example.
         let editor = new Editor();
         let graph = editor.graph;
-        let model = graph.getModel();
+        let model = graph.getDataModel();
 
         // Disable highlight of cells when dragging from toolbar
         graph.setDropEnabled(false);
@@ -339,7 +339,7 @@ export default Ports;
           textarea.style.width = '400px';
           textarea.style.height = '400px';
           let enc = new Codec(createXmlDocument());
-          let node = enc.encode(editor.graph.getModel());
+          let node = enc.encode(editor.graph.getDataModel());
           textarea.value = getPrettyXml(node);
           showModalWindow(graph, 'XML', textarea, 410, 440);
         });
@@ -459,7 +459,7 @@ export default Ports;
       let funct = function(graph, evt, cell, x, y)
       {
         let parent = graph.getDefaultParent();
-        let model = graph.getModel();
+        let model = graph.getDataModel();
 
         var v1 = null;
 

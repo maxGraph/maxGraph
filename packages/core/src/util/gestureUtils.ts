@@ -20,14 +20,14 @@ import Cell from '../view/cell/Cell';
  *     let parent = graph.getDefaultParent();
  *     let vertex = null;
  *
- *     graph.getModel().beginUpdate();
+ *     graph.getDataModel().beginUpdate();
  *     try
  *     {
  *        vertex = graph.insertVertex(parent, null, 'Hello', x, y, 80, 30);
  *     }
  *     finally
  *     {
- *       graph.getModel().endUpdate();
+ *       graph.getDataModel().endUpdate();
  *     }
  *
  *     graph.setSelectionCell(vertex);

@@ -28,7 +28,7 @@ type PartialGraph = Pick<
   Graph,
   | 'convertValueToString'
   | 'batchUpdate'
-  | 'getModel'
+  | 'getDataModel'
   | 'getSelectionCell'
   | 'fireEvent'
   | 'isAutoSizeCell'
@@ -185,7 +185,7 @@ const EditingMixin: PartialType = {
    */
   cellLabelChanged(cell, value, autoSize = false) {
     this.batchUpdate(() => {
-      this.getModel().setValue(cell, value);
+      this.getDataModel().setValue(cell, value);
 
       if (autoSize) {
         this.cellSizeUpdated(cell, false);

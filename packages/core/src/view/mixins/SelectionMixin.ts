@@ -55,7 +55,7 @@ declare module '../Graph' {
 
 type PartialGraph = Pick<
   Graph,
-  | 'getModel'
+  | 'getDataModel'
   | 'getView'
   | 'isCellSelectable'
   | 'fireEvent'
@@ -455,7 +455,7 @@ const SelectionMixin: PartialType = {
     const cells: CellArray = new CellArray();
 
     const addCell = (cell: Cell) => {
-      if (!dict.get(cell) && this.getModel().contains(cell)) {
+      if (!dict.get(cell) && this.getDataModel().contains(cell)) {
         if (cell.isEdge() || cell.isVertex()) {
           dict.put(cell, true);
           cells.push(cell);
@@ -497,7 +497,7 @@ const SelectionMixin: PartialType = {
     const removed = new CellArray();
 
     for (const cell of cells) {
-      if (!this.getModel().contains(cell) || !cell.isVisible()) {
+      if (!this.getDataModel().contains(cell) || !cell.isVisible()) {
         removed.push(cell);
       } else {
         let par = cell.getParent();

@@ -78,7 +78,7 @@ declare module '../Graph' {
   }
 }
 
-type PartialGraph = Pick<Graph, 'getView' | 'getModel' | 'isPortsEnabled'>;
+type PartialGraph = Pick<Graph, 'getView' | 'getDataModel' | 'isPortsEnabled'>;
 type PartialConnections = Pick<
   Graph,
   | 'constrainChildren'
@@ -290,7 +290,7 @@ const ConnectionsMixin: PartialType = {
    */
   setConnectionConstraint(edge, terminal, source = false, constraint = null) {
     if (constraint) {
-      this.getModel().beginUpdate();
+      this.getDataModel().beginUpdate();
 
       try {
         if (!constraint || !constraint.point) {
@@ -341,7 +341,7 @@ const ConnectionsMixin: PartialType = {
           }
         }
       } finally {
-        this.getModel().endUpdate();
+        this.getDataModel().endUpdate();
       }
     }
   },
@@ -510,7 +510,7 @@ const ConnectionsMixin: PartialType = {
         this.setCellStyles(key, id, new CellArray(edge));
       }
 
-      this.getModel().setTerminal(edge, terminal, source);
+      this.getDataModel().setTerminal(edge, terminal, source);
 
       if (this.isResetEdgesOnConnect()) {
         this.resetEdge(edge);
@@ -577,7 +577,7 @@ const ConnectionsMixin: PartialType = {
                     new Point(pts[0].x / scale - tr.x + dx, pts[0].y / scale - tr.y + dy),
                     true
                   );
-                  this.getModel().setTerminal(cell, null, true);
+                  this.getDataModel().setTerminal(cell, null, true);
                 }
               }
 
@@ -597,12 +597,12 @@ const ConnectionsMixin: PartialType = {
                       new Point(p.x / scale - tr.x + dx, p.y / scale - tr.y + dy),
                       false
                     );
-                    this.getModel().setTerminal(cell, null, false);
+                    this.getDataModel().setTerminal(cell, null, false);
                   }
                 }
               }
 
-              this.getModel().setGeometry(cell, geo);
+              this.getDataModel().setGeometry(cell, geo);
             }
           }
         }

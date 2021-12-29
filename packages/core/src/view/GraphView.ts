@@ -461,7 +461,7 @@ export class GraphView extends EventSource {
    */
   clear(cell?: Cell | null, force = false, recurse = true) {
     if (!cell) {
-      cell = this.graph.getModel().getRoot();
+      cell = this.graph.getDataModel().getRoot();
     }
 
     if (cell) {
@@ -487,7 +487,7 @@ export class GraphView extends EventSource {
    * model.
    */
   invalidate(cell: Cell | null = null, recurse = true, includeEdges = true) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     cell = cell ?? model.getRoot();
 
     if (cell) {
@@ -540,7 +540,7 @@ export class GraphView extends EventSource {
 
     this.resetValidationState();
 
-    const c = cell || (this.currentRoot ?? this.graph.getModel().getRoot());
+    const c = cell || (this.currentRoot ?? this.graph.getDataModel().getRoot());
 
     if (c) {
       const graphBounds = this.getBoundingBox(
@@ -1442,7 +1442,7 @@ export class GraphView extends EventSource {
     const id = state.style[key];
 
     if (id) {
-      const cell = this.graph.getModel().getCell(id);
+      const cell = this.graph.getDataModel().getCell(id);
 
       if (cell) {
         const tmp = this.getState(cell, false);
@@ -1551,7 +1551,7 @@ export class GraphView extends EventSource {
    * var oldGetPerimeterBounds = getPerimeterBounds;
    * getPerimeterBounds(terminal, edge, isSource)
    * {
-   *   var model = this.graph.getModel();
+   *   var model = this.graph.getDataModel();
    *   var childCount = model.getChildCount(terminal.cell);
    *
    *   if (childCount > 0)
@@ -1645,7 +1645,7 @@ export class GraphView extends EventSource {
    * should be returned.
    */
   getVisibleTerminal(edge: Cell, source: boolean) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let result = edge.getTerminal(source);
     let best = result;
 
@@ -2338,7 +2338,7 @@ export class GraphViewCodec extends ObjectCodec {
    * top-level graph node of the recursive encoding.
    */
   encode(enc: any, view: GraphView) {
-    return this.encodeCell(enc, view, <Cell>view.graph.getModel().getRoot());
+    return this.encodeCell(enc, view, <Cell>view.graph.getDataModel().getRoot());
   }
 
   /**
@@ -2361,7 +2361,7 @@ export class GraphViewCodec extends ObjectCodec {
    */
   encodeCell(enc: any, view: GraphView, cell: Cell) {
     let node;
-    const model = view.graph.getModel();
+    const model = view.graph.getDataModel();
     const state = view.getState(cell);
     const parent = cell.getParent();
 

@@ -60,7 +60,7 @@ import type { FilterFunction } from '../types';
  *
  * ```javascript
  * var enc = new Codec();
- * var node = enc.encode(graph.getModel());
+ * var node = enc.encode(graph.getDataModel());
  * ```
  *
  * This will create an XML node that contains all the model information.
@@ -801,7 +801,7 @@ export class GraphDataModel extends EventSource {
    * used.
    *
    * ```javascript
-   * graph.getModel().valueForCellChanged(cell, value)
+   * graph.getDataModel().valueForCellChanged(cell, value)
    * {
    *   var previous = cell.value.getAttribute('label');
    *   cell.value.setAttribute('label', value);
@@ -959,7 +959,7 @@ export class GraphDataModel extends EventSource {
    * and {@link endUpdate} calls as shown here:
    *
    * ```javascript
-   * var model = graph.getModel();
+   * var model = graph.getDataModel();
    * var parent = graph.getDefaultParent();
    * var index = model.getChildCount(parent);
    * model.beginUpdate();

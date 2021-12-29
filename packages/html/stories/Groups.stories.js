@@ -41,7 +41,7 @@ const Template = ({ label, ...args }) => {
   const graphHandlerGetInitialCellForEvent =
     SelectionHandler.prototype.getInitialCellForEvent;
   SelectionHandler.prototype.getInitialCellForEvent = function (me) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const psel = this.graph.getSelectionCell().getParent();
     let cell = graphHandlerGetInitialCellForEvent.apply(this, arguments);
     let parent = cell.getParent();
@@ -65,7 +65,7 @@ const Template = ({ label, ...args }) => {
   const graphHandlerIsDelayedSelection = SelectionHandler.prototype.isDelayedSelection;
   SelectionHandler.prototype.isDelayedSelection = function (cell) {
     let result = graphHandlerIsDelayedSelection.apply(this, arguments);
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const psel = this.graph.getSelectionCell().getParent();
     const parent = cell.getParent();
 
@@ -90,7 +90,7 @@ const Template = ({ label, ...args }) => {
       cell = this.cell;
     }
 
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let parent = cell.getParent();
 
     while (
@@ -108,7 +108,7 @@ const Template = ({ label, ...args }) => {
   // Returns last selected ancestor
   PopupMenuHandler.prototype.getCellForPopupEvent = function (me) {
     let cell = me.getCell();
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let parent = cell.getParent();
 
     while (parent.isVertex() && !this.graph.isValidRoot(parent)) {
@@ -140,13 +140,13 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 120, 60);
     const v2 = graph.insertVertex(v1, null, 'World!', 90, 20, 60, 20);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

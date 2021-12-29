@@ -106,7 +106,7 @@ const Template = ({ label, ...args }) => {
     const funct = (graph, evt, cell, x, y) => {
       graph.stopEditing(false);
 
-      const vertex = graph.getModel().cloneCell(prototype);
+      const vertex = graph.getDataModel().cloneCell(prototype);
       vertex.geometry.x = x;
       vertex.geometry.y = y;
 

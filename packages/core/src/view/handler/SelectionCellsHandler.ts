@@ -52,7 +52,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
     };
 
     this.graph.addListener(InternalEvent.CHANGE, this.refreshHandler);
-    this.graph.getModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
+    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
     this.graph.getView().addListener(InternalEvent.SCALE, this.refreshHandler);
     this.graph.getView().addListener(InternalEvent.TRANSLATE, this.refreshHandler);
     this.graph
@@ -262,7 +262,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   onDestroy() {
     this.graph.removeMouseListener(this);
     this.graph.removeListener(this.refreshHandler);
-    this.graph.getModel().removeListener(this.refreshHandler);
+    this.graph.getDataModel().removeListener(this.refreshHandler);
     this.graph.getView().removeListener(this.refreshHandler);
   }
 }

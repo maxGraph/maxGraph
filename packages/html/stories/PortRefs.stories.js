@@ -184,7 +184,7 @@ const Template = ({ label, ...args }) => {
   };
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, 'A', 20, 20, 100, 40);
     const v2 = graph.insertVertex(
@@ -211,7 +211,7 @@ const Template = ({ label, ...args }) => {
     const e2 = graph.insertEdge(parent, null, '', v1, v3, 'sourcePort=e;targetPort=out3');
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   // Comming soon... Integration with orthogonal edge style

@@ -196,7 +196,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds the root vertex of the tree
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const w = graph.container.offsetWidth;
     const v1 = graph.insertVertex(
@@ -213,7 +213,7 @@ const Template = ({ label, ...args }) => {
     addOverlays(graph, v1, false);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   const content = document.createElement('div');
@@ -250,7 +250,7 @@ const Template = ({ label, ...args }) => {
 
   // Function to create the entries in the popupmenu
   function createPopupMenu(graph, menu, cell, evt) {
-    const model = graph.getModel();
+    const model = graph.getDataModel();
 
     if (cell != null) {
       if (cell.isVertex()) {
@@ -323,7 +323,7 @@ const Template = ({ label, ...args }) => {
   }
 
   function addChild(graph, cell) {
-    const model = graph.getModel();
+    const model = graph.getDataModel();
     const parent = graph.getDefaultParent();
     let vertex;
 

@@ -69,7 +69,7 @@ class CompositeLayout extends GraphLayout {
    * single transaction.
    */
   execute(parent: Cell): void {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     model.beginUpdate();
     try {

@@ -14,7 +14,7 @@ declare module '../Graph' {
 
 type PartialGraph = Pick<
   Graph,
-  'fireEvent' | 'batchUpdate' | 'getModel' | 'getSelectionCells'
+  'fireEvent' | 'batchUpdate' | 'getDataModel' | 'getSelectionCells'
 >;
 type PartialOrder = Pick<Graph, 'orderCells' | 'cellsOrdered'>;
 type PartialType = PartialGraph & PartialOrder;
@@ -68,9 +68,9 @@ const OrderMixin: PartialType = {
         const parent = cells[i].getParent();
 
         if (back) {
-          this.getModel().add(parent, cells[i], i);
+          this.getDataModel().add(parent, cells[i], i);
         } else {
-          this.getModel().add(parent, cells[i], parent ? parent.getChildCount() - 1 : 0);
+          this.getDataModel().add(parent, cells[i], parent ? parent.getChildCount() - 1 : 0);
         }
       }
 

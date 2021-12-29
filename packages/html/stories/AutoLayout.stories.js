@@ -105,7 +105,7 @@ const Template = ({ label, ...args }) => {
 
   let v1;
   const executeLayout = (change, post) => {
-    graph.getModel().beginUpdate();
+    graph.getDataModel().beginUpdate();
     try {
       if (change != null) {
         change();
@@ -117,7 +117,7 @@ const Template = ({ label, ...args }) => {
       // New API for animating graph layout results asynchronously
       const morph = new Morphing(graph);
       morph.addListener(InternalEvent.DONE, () => {
-        graph.getModel().endUpdate();
+        graph.getDataModel().endUpdate();
         if (post != null) {
           post();
         }

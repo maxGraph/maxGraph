@@ -292,7 +292,7 @@ export class EditorToolbar {
    */
   drop(vertex: Cell, evt: MouseEvent, target: Cell | null=null): void {
     const { graph } = (<Editor>this.editor);
-    const model = graph.getModel();
+    const model = graph.getDataModel();
 
     if (
       target == null ||
@@ -343,7 +343,7 @@ export class EditorToolbar {
    */
   connect(vertex: Cell, evt: MouseEvent, source: Cell | null=null): void {
     const { graph } = <Editor>this.editor;
-    const model = graph.getModel();
+    const model = graph.getDataModel();
 
     if (
       source != null &&

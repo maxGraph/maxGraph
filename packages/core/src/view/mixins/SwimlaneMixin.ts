@@ -45,7 +45,7 @@ type PartialGraph = Pick<
   Graph,
   | 'getDefaultParent'
   | 'getCurrentRoot'
-  | 'getModel'
+  | 'getDataModel'
   | 'getView'
   | 'getContainer'
   | 'getCurrentCellStyle'
@@ -125,7 +125,7 @@ const SwimlaneMixin: PartialType = {
       parent = this.getCurrentRoot();
 
       if (!parent) {
-        parent = this.getModel().getRoot();
+        parent = this.getDataModel().getRoot();
       }
     }
 
@@ -279,7 +279,7 @@ const SwimlaneMixin: PartialType = {
    * @param ignoreState Optional boolean that specifies if the cell state should be ignored.
    */
   isSwimlane(cell, ignoreState = false) {
-    if (cell && cell.getParent() !== this.getModel().getRoot() && !cell.isEdge()) {
+    if (cell && cell.getParent() !== this.getDataModel().getRoot() && !cell.isEdge()) {
       return this.getCurrentCellStyle(cell, ignoreState).shape === SHAPE.SWIMLANE;
     }
     return false;
@@ -355,7 +355,7 @@ const SwimlaneMixin: PartialType = {
     while (
       cell &&
       !this.isValidDropTarget(cell, cells, evt) &&
-      !this.getModel().isLayer(cell)
+      !this.getDataModel().isLayer(cell)
     ) {
       cell = cell.getParent();
     }
@@ -368,7 +368,7 @@ const SwimlaneMixin: PartialType = {
       }
     }
 
-    return !this.getModel().isLayer(<Cell>cell) && !parent ? cell : null;
+    return !this.getDataModel().isLayer(<Cell>cell) && !parent ? cell : null;
   },
 
   /**

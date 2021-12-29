@@ -57,7 +57,7 @@ Editor = function(chromeless, themes, model, graph, editable)
 		}
 	};
 	
-	this.graph.getModel().addListener(mxEvent.CHANGE, (() =>
+	this.graph.getDataModel().addListener(mxEvent.CHANGE, (() =>
 	{
 		this.graphChangeListener.apply(this, arguments);
 	}));
@@ -530,7 +530,7 @@ Editor.prototype.setGraphXml = function(node)
 				this.graph.view.scale = 1;
 				this.readGraphState(node);
 				this.updateGraphComponents();
-				dec.decode(node, this.graph.getModel());
+				dec.decode(node, this.graph.getDataModel());
 			}
 			finally
 			{
@@ -547,7 +547,7 @@ Editor.prototype.setGraphXml = function(node)
 			let wrapper = dec.document.createElement('mxGraphModel');
 			wrapper.appendChild(node);
 			
-			dec.decode(wrapper, this.graph.getModel());
+			dec.decode(wrapper, this.graph.getDataModel());
 			this.updateGraphComponents();
 			this.fireEvent(new EventObject('resetGraphView'));
 		}
@@ -579,7 +579,7 @@ Editor.prototype.getGraphXml = function(ignoreSelection)
 	if (ignoreSelection)
 	{
 		let enc = new Codec(createXmlDocument());
-		node = enc.encode(this.graph.getModel());
+		node = enc.encode(this.graph.getDataModel());
 	}
 	else
 	{
@@ -664,7 +664,7 @@ Editor.prototype.createUndoManager = function()
 		this.undoListener.apply(this, arguments);
 	});
 	
-	graph.getModel().addListener(mxEvent.UNDO, listener);
+	graph.getDataModel().addListener(mxEvent.UNDO, listener);
 	graph.getView().addListener(mxEvent.UNDO, listener);
 
 	// Keeps the selection in sync with the history
@@ -678,7 +678,7 @@ Editor.prototype.createUndoManager = function()
 		
 		if (cand.length > 0)
 		{
-			let model = graph.getModel();
+			let model = graph.getDataModel();
 			let cells = [];
 			
 			for (let i = 0; i < cand.length; i++)
@@ -2737,7 +2737,7 @@ FilenameDialog.createFileTypes = function(editorUi, nameInput, types)
 	PopupMenuHandler.prototype.getCellForPopupEvent = function(me)
 	{
 		let cell = me.getCell();
-		let model = this.graph.getModel();
+		let model = this.graph.getDataModel();
 		let parent = cell.getParent();
 		let state = this.graph.view.getState(parent);
 		let selected = this.graph.isCellSelected(cell);

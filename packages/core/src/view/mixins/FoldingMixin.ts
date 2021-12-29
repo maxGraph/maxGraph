@@ -66,7 +66,7 @@ type GraphFoldingOptions = {
 
 type PartialGraph = Pick<
   Graph,
-  | 'getModel'
+  | 'getDataModel'
   | 'fireEvent'
   | 'getCurrentCellStyle'
   | 'isExtendParent'
@@ -125,7 +125,7 @@ const FoldingMixin: PartialType = {
    * Returns the cells which are movable in the given array of cells.
    */
   getFoldableCells(cells, collapse = false) {
-    return this.getModel().filterCells(cells, (cell: Cell) => {
+    return this.getDataModel().filterCells(cells, (cell: Cell) => {
       return this.isCellFoldable(cell, collapse);
     });
   },
@@ -190,7 +190,7 @@ const FoldingMixin: PartialType = {
 
     this.stopEditing(false);
 
-    this.getModel().beginUpdate();
+    this.getDataModel().beginUpdate();
     try {
       this.cellsFolded(cells, collapse, recurse, checkFoldable);
       this.fireEvent(
@@ -205,7 +205,7 @@ const FoldingMixin: PartialType = {
         )
       );
     } finally {
-      this.getModel().endUpdate();
+      this.getDataModel().endUpdate();
     }
     return cells;
   },
@@ -225,14 +225,14 @@ const FoldingMixin: PartialType = {
   // cellsFolded(cells: mxCellArray, collapse: boolean, recurse: boolean, checkFoldable?: boolean): void;
   cellsFolded(cells = null, collapse = false, recurse = false, checkFoldable = false) {
     if (cells != null && cells.length > 0) {
-      this.getModel().beginUpdate();
+      this.getDataModel().beginUpdate();
       try {
         for (let i = 0; i < cells.length; i += 1) {
           if (
             (!checkFoldable || this.isCellFoldable(cells[i], collapse)) &&
             collapse !== cells[i].isCollapsed()
           ) {
-            this.getModel().setCollapsed(cells[i], collapse);
+            this.getDataModel().setCollapsed(cells[i], collapse);
             this.swapBounds(cells[i], collapse);
 
             if (this.isExtendParent(cells[i])) {
@@ -252,7 +252,7 @@ const FoldingMixin: PartialType = {
           new EventObject(InternalEvent.CELLS_FOLDED, { cells, collapse, recurse })
         );
       } finally {
-        this.getModel().endUpdate();
+        this.getDataModel().endUpdate();
       }
     }
   },
@@ -273,7 +273,7 @@ const FoldingMixin: PartialType = {
       this.updateAlternateBounds(cell, geo, willCollapse);
       geo.swap();
 
-      this.getModel().setGeometry(cell, geo);
+      this.getDataModel().setGeometry(cell, geo);
     }
   },
 

@@ -96,7 +96,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, 'vertexLabelsMovable', 20, 20, 80, 30);
 
@@ -121,7 +121,7 @@ const Template = ({ label, ...args }) => {
     const label22 = graph.insertVertex(v2, null, 'Label2', 0.5, 0, 0, 0, null, true);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

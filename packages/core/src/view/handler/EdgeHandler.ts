@@ -1520,7 +1520,7 @@ class EdgeHandler {
           index > InternalEvent.VIRTUAL_HANDLE
         ) {
           if (this.customHandles != null) {
-            const model = this.graph.getModel();
+            const model = this.graph.getDataModel();
 
             model.beginUpdate();
             try {
@@ -1558,7 +1558,7 @@ class EdgeHandler {
           }
 
           if (terminal) {
-            const model = this.graph.getModel();
+            const model = this.graph.getDataModel();
             const parent = edge.getParent();
 
             model.beginUpdate();
@@ -1712,7 +1712,7 @@ class EdgeHandler {
    * @param y Integer that specifies the y-coordinate of the new location.
    */
   moveLabel(edgeState: CellState, x: number, y: number) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let geometry = edgeState.cell.getGeometry();
 
     if (geometry != null) {
@@ -1774,7 +1774,7 @@ class EdgeHandler {
     isClone: boolean,
     me: InternalMouseEvent
   ) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const parent = edge.getParent();
 
     model.beginUpdate();
@@ -1797,7 +1797,7 @@ class EdgeHandler {
    * Changes the terminal point of the given edge.
    */
   changeTerminalPoint(edge: Cell, point: Point, isSource: boolean, clone: boolean) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     model.beginUpdate();
     try {
@@ -1828,7 +1828,7 @@ class EdgeHandler {
    * Changes the control points of the given edge in the graph model.
    */
   changePoints(edge: Cell, points: Point[], clone: boolean) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     model.beginUpdate();
     try {
       if (clone) {
@@ -1896,7 +1896,7 @@ class EdgeHandler {
         geo.points.splice(index, 0, pt);
       }
 
-      this.graph.getModel().setGeometry(state.cell, geo);
+      this.graph.getDataModel().setGeometry(state.cell, geo);
       this.refresh();
       this.redraw();
     }
@@ -1912,7 +1912,7 @@ class EdgeHandler {
       if (geo != null && geo.points != null) {
         geo = geo.clone();
         (geo.points || []).splice(index - 1, 1);
-        this.graph.getModel().setGeometry(state.cell, geo);
+        this.graph.getDataModel().setGeometry(state.cell, geo);
         this.refresh();
         this.redraw();
       }

@@ -182,7 +182,7 @@ export default MYNAMEHERE;
         {
           undoManager.undoableEditHappened(evt.getProperty('edit'));
         };
-        graph.getModel().addListener(mxEvent.UNDO, listener);
+        graph.getDataModel().addListener(mxEvent.UNDO, listener);
         graph.getView().addListener(mxEvent.UNDO, listener);
 
         document.body.appendChild(mxUtils.button('Undo', function()

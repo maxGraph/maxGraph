@@ -780,7 +780,7 @@ Menus.prototype.edgeStyleChange = function(menu, label, keys, values, sprite, pa
 		let graph = this.editorUi.editor.graph;
 		graph.stopEditing(false);
 		
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			let cells = graph.getSelectionCells();
@@ -801,7 +801,7 @@ Menus.prototype.edgeStyleChange = function(menu, label, keys, values, sprite, pa
 						{
 							geo = geo.clone();
 							geo.points = null;
-							graph.getModel().setGeometry(cell, geo);
+							graph.getDataModel().setGeometry(cell, geo);
 						}
 					}
 					
@@ -819,7 +819,7 @@ Menus.prototype.edgeStyleChange = function(menu, label, keys, values, sprite, pa
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	}), parent, sprite);
 };
@@ -856,7 +856,7 @@ Menus.prototype.createStyleChangeFunction = function(keys, values)
 		let graph = this.editorUi.editor.graph;
 		graph.stopEditing(false);
 		
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			let cells = graph.getSelectionCells();
@@ -897,7 +897,7 @@ Menus.prototype.createStyleChangeFunction = function(keys, values)
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	});
 };
@@ -922,7 +922,7 @@ Menus.prototype.promptChange = function(menu, label, hint, defaultValue, key, pa
 		{
 			if (newValue != null && newValue.length > 0)
 			{
-				graph.getModel().beginUpdate();
+				graph.getDataModel().beginUpdate();
 				try
 				{
 					graph.stopEditing(false);
@@ -930,7 +930,7 @@ Menus.prototype.promptChange = function(menu, label, hint, defaultValue, key, pa
 				}
 				finally
 				{
-					graph.getModel().endUpdate();
+					graph.getDataModel().endUpdate();
 				}
 				
 				if (fn != null)

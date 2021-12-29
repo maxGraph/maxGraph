@@ -131,7 +131,7 @@ const Template = ({ label, ...args }) => {
   // Populates the graph
   const parent = graph.getDefaultParent();
 
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, 'v1', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'v2', 440, 20, 80, 30);
@@ -198,7 +198,7 @@ const Template = ({ label, ...args }) => {
       'shape=link;labelBackgroundColor=#FFFFFF;'
     );
   } finally {
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

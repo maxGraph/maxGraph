@@ -139,7 +139,7 @@ const Template = ({ label, ...args }) => {
       graph.stopEditing(false);
 
       const pt = graph.getPointForEvent(evt);
-      const vertex = graph.getModel().cloneCell(prototype);
+      const vertex = graph.getDataModel().cloneCell(prototype);
       vertex.geometry.x = pt.x;
       vertex.geometry.y = pt.y;
 

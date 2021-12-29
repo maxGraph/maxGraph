@@ -37,7 +37,7 @@ export const getViewXml = (
 ) => {
   
   if (cells == null) {
-    const model = graph.getModel();
+    const model = graph.getDataModel();
     cells = new CellArray(<Cell>model.getRoot());
   }
 

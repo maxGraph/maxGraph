@@ -133,7 +133,7 @@ class SelectionHandler implements GraphPlugin {
       }, 0);
     };
 
-    this.graph.getModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
+    this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
     this.graph.addListener(InternalEvent.REFRESH, this.refreshHandler);
 
     this.keyHandler = (e: KeyboardEvent) => {
@@ -1561,7 +1561,7 @@ class SelectionHandler implements GraphPlugin {
     // Cloning into locked cells is not allowed
     clone = !!clone && !this.graph.isCellLocked(target || this.graph.getDefaultParent());
 
-    this.graph.getModel().beginUpdate();
+    this.graph.getDataModel().beginUpdate();
     try {
       const parents = [];
 
@@ -1600,7 +1600,7 @@ class SelectionHandler implements GraphPlugin {
 
       this.graph.removeCells(new CellArray(...temp), false);
     } finally {
-      this.graph.getModel().endUpdate();
+      this.graph.getDataModel().endUpdate();
     }
 
     // Selects the new cells if cells have been cloned
@@ -1658,7 +1658,7 @@ class SelectionHandler implements GraphPlugin {
     this.graph.removeListener(this.panHandler);
     this.graph.removeListener(this.escapeHandler);
 
-    this.graph.getModel().removeListener(this.refreshHandler);
+    this.graph.getDataModel().removeListener(this.refreshHandler);
     this.graph.removeListener(this.refreshHandler);
 
     InternalEvent.removeListener(document, 'keydown', this.keyHandler);

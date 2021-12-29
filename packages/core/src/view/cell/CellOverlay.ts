@@ -133,7 +133,7 @@ class CellOverlay extends EventSource {
    * {
    *   var bounds = getBounds.apply(this, arguments);
    *
-   *   if (state.view.graph.getModel().isEdge(state.cell))
+   *   if (state.view.graph.getDataModel().isEdge(state.cell))
    *   {
    *     var pt = state.view.getPoint(state, {x: 0, y: 0, relative: true});
    *

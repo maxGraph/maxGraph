@@ -169,7 +169,7 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * Returns the internal <mxSwimlaneModel> for this layout algorithm.
    */
-  getModel() {
+  getDataModel() {
     return this.model;
   }
 

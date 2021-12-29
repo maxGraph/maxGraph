@@ -221,7 +221,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds the root vertex of the tree
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const w = graph.container.offsetWidth;
     const root = graph.insertVertex(parent, 'treeRoot', 'Root', w / 2 - 30, 20, 60, 40);
@@ -257,7 +257,7 @@ const Template = ({ label, ...args }) => {
     graph.insertEdge(parent, null, '', v3, v31);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

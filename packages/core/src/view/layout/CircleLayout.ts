@@ -76,7 +76,7 @@ class CircleLayout extends GraphLayout {
    * Implements <mxGraphLayout.execute>.
    */
   execute(parent: Cell) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     // Moves the vertices to build a circle. Makes sure the
     // radius is large enough for the vertices to not

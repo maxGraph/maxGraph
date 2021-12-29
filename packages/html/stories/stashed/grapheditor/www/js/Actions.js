@@ -107,7 +107,7 @@ Actions.prototype.init = function()
 	{
 		if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent()))
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				let cells = mxClipboard.paste(graph);
@@ -150,7 +150,7 @@ Actions.prototype.init = function()
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 	});
@@ -174,7 +174,7 @@ Actions.prototype.init = function()
 	{
 		if (graph.isEnabled() && !graph.isSelectionEmpty() && ui.copiedSize != null)
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			
 			try
 			{
@@ -192,14 +192,14 @@ Actions.prototype.init = function()
 							geo.width = ui.copiedSize.width;
 							geo.height = ui.copiedSize.height;
 							
-							graph.getModel().setGeometry(cells[i], geo);
+							graph.getDataModel().setGeometry(cells[i], geo);
 						}
 					}
 				}
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 	}, null, null, 'Alt+Shift+V');
@@ -224,7 +224,7 @@ Actions.prototype.init = function()
 	{
 		if (!graph.isSelectionEmpty())
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				let cells = graph.getSelectionCells();
@@ -236,7 +236,7 @@ Actions.prototype.init = function()
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 	});
@@ -244,7 +244,7 @@ Actions.prototype.init = function()
 	{
 		if (!graph.isSelectionEmpty())
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				let cells = graph.getSelectionCells();
@@ -256,7 +256,7 @@ Actions.prototype.init = function()
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 	}, null, null, Editor.ctrlKey + '+Delete');
@@ -284,7 +284,7 @@ Actions.prototype.init = function()
 	{
 		if (!graph.isSelectionEmpty())
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				let defaultValue = graph.isCellMovable(graph.getSelectionCell()) ? 1 : 0;
@@ -297,7 +297,7 @@ Actions.prototype.init = function()
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 	}, null, null, Editor.ctrlKey + '+L');
@@ -404,7 +404,7 @@ Actions.prototype.init = function()
 	}, null, null, 'F2/Enter');
 	this.addAction('editData...', function()
 	{
-		let cell = graph.getSelectionCell() || graph.getModel().getRoot();
+		let cell = graph.getSelectionCell() || graph.getDataModel().getRoot();
 		ui.showDataDialog(cell);
 	}, null, null, Editor.ctrlKey + '+M');
 	this.addAction('editTooltip...', function()
@@ -512,7 +512,7 @@ Actions.prototype.init = function()
             	    graph.setLinkForCell(linkCell, link);
             	    graph.cellSizeUpdated(linkCell, true);
 
-            		graph.getModel().beginUpdate();
+            		graph.getDataModel().beginUpdate();
             		try
             		{
         	    		linkCell = graph.addCell(linkCell);
@@ -520,7 +520,7 @@ Actions.prototype.init = function()
             	    }
             		finally
             		{
-            			graph.getModel().endUpdate();
+            			graph.getDataModel().endUpdate();
             		}
             		
             	    graph.setSelectionCell(linkCell);
@@ -590,7 +590,7 @@ Actions.prototype.init = function()
 		
 		if (cells != null)
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				for (let i = 0; i < cells.length; i++)
@@ -611,7 +611,7 @@ Actions.prototype.init = function()
 						{
 							geo = geo.clone();
 							geo.height = state.text.boundingBox.height / graph.view.scale;
-							graph.getModel().setGeometry(cell, geo);
+							graph.getDataModel().setGeometry(cell, geo);
 						}
 						else
 						{
@@ -622,7 +622,7 @@ Actions.prototype.init = function()
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 	}, null, null, Editor.ctrlKey + '+Shift+Y');
@@ -635,7 +635,7 @@ Actions.prototype.init = function()
 	    	graph.stopEditing();
     		let value = (refState.style.html == '1') ? null : '1';
 			
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				let cells = graph.getSelectionCells();
@@ -690,7 +690,7 @@ Actions.prototype.init = function()
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
     	}
 	});
@@ -1005,7 +1005,7 @@ Actions.prototype.init = function()
 			{
 				graph.stopEditing(false);
 				
-				graph.getModel().beginUpdate();
+				graph.getDataModel().beginUpdate();
 				try
 				{
 					let cells = graph.getSelectionCells();
@@ -1059,7 +1059,7 @@ Actions.prototype.init = function()
 				}
 				finally
 				{
-					graph.getModel().endUpdate();
+					graph.getDataModel().endUpdate();
 				}
 			}
 		}, null, null, shortcut);
@@ -1082,7 +1082,7 @@ Actions.prototype.init = function()
 	this.addAction('shadow', function() { ui.menus.toggleStyle('shadow'); });
 	this.addAction('solid', function()
 	{
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			graph.setCellStyles('dashed', null);
@@ -1092,12 +1092,12 @@ Actions.prototype.init = function()
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	});
 	this.addAction('dashed', function()
 	{
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			graph.setCellStyles('dashed', '1');
@@ -1107,12 +1107,12 @@ Actions.prototype.init = function()
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	});
 	this.addAction('dotted', function()
 	{
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			graph.setCellStyles('dashed', '1');
@@ -1122,12 +1122,12 @@ Actions.prototype.init = function()
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	});
 	this.addAction('sharp', function()
 	{
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			graph.setCellStyles('rounded', '0');
@@ -1137,12 +1137,12 @@ Actions.prototype.init = function()
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	});
 	this.addAction('rounded', function()
 	{
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			graph.setCellStyles('rounded', '1');
@@ -1152,14 +1152,14 @@ Actions.prototype.init = function()
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	});
 	this.addAction('toggleRounded', function()
 	{
 		if (!graph.isSelectionEmpty() && graph.isEnabled())
 		{
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				let cells = graph.getSelectionCells();
@@ -1173,13 +1173,13 @@ Actions.prototype.init = function()
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 	});
 	this.addAction('curved', function()
 	{
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			graph.setCellStyles('rounded', '0');
@@ -1189,7 +1189,7 @@ Actions.prototype.init = function()
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	});
 	this.addAction('collapsible', function()
@@ -1212,7 +1212,7 @@ Actions.prototype.init = function()
 		
 		if (cells != null && cells.length > 0)
 		{
-			let model = graph.getModel();
+			let model = graph.getDataModel();
 			
 	    	let dlg = new TextareaDialog(this.editorUi, Translations.get('editStyle') + ':',
 				cells[0].getStyle() || '', function(newValue)
@@ -1293,7 +1293,7 @@ Actions.prototype.init = function()
 		{
 			cells = graph.addAllEdges(cells);
 			
-			graph.getModel().beginUpdate();
+			graph.getDataModel().beginUpdate();
 			try
 			{
 				for (let i = 0; i < cells.length; i++)
@@ -1308,14 +1308,14 @@ Actions.prototype.init = function()
 						{
 							geo = geo.clone();
 							geo.points = null;
-							graph.getModel().setGeometry(cell, geo);
+							graph.getDataModel().setGeometry(cell, geo);
 						}
 					}
 				}
 			}
 			finally
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 			}
 		}
 	}, null, null, 'Alt+Shift+C');
@@ -1373,7 +1373,7 @@ Actions.prototype.init = function()
 					{
 						let select = null;
 						
-						graph.getModel().beginUpdate();
+						graph.getDataModel().beginUpdate();
 			        	try
 			        	{
 			        		// Inserts new cell if no cell is selected
@@ -1415,14 +1415,14 @@ Actions.prototype.init = function()
 					        			geo = geo.clone();
 						        		geo.width = w;
 						        		geo.height = h;
-						        		graph.getModel().setGeometry(cell, geo);
+						        		graph.getDataModel().setGeometry(cell, geo);
 					        		}
 					        	}
 				        	}
 			        	}
 			        	finally
 			        	{
-			        		graph.getModel().endUpdate();
+			        		graph.getDataModel().endUpdate();
 			        	}
 			        	
 			        	if (select != null)

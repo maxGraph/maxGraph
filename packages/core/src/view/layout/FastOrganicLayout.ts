@@ -160,7 +160,7 @@ class MxFastOrganicLayout extends GraphLayout {
    * given parent where <isVertexIgnored> returns false.
    */
   execute(parent: Cell) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     this.vertexArray = new CellArray();
     let cells = this.graph.getChildVertices(parent);
 

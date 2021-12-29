@@ -107,7 +107,7 @@ class Outline {
     };
 
     // Updates the scale of the outline after a change of the main graph
-    this.source.getModel().addListener(InternalEvent.CHANGE, this.updateHandler);
+    this.source.getDataModel().addListener(InternalEvent.CHANGE, this.updateHandler);
     this.outline.addMouseListener(this);
 
     // Adds listeners to keep the outline in sync with the source graph
@@ -310,7 +310,7 @@ class Outline {
   createGraph(container: HTMLElement): Graph {
     const graph = new Graph(
       container,
-      this.source.getModel(),
+      this.source.getDataModel(),
       defaultPlugins,
       this.source.getStylesheet()
     );
@@ -733,7 +733,7 @@ class Outline {
       // @ts-ignore
       this.source.removeListener(this.refreshHandler);
       // @ts-ignore
-      this.source.getModel().removeListener(this.updateHandler);
+      this.source.getDataModel().removeListener(this.updateHandler);
       // @ts-ignore
       this.source.getView().removeListener(this.updateHandler);
       // @ts-ignore

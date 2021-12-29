@@ -39,7 +39,7 @@ const Template = ({ label, ...args }) => {
   graph.setTooltips(true);
   graph.getTooltip = function (state) {
     const { cell } = state;
-    const model = this.getModel();
+    const model = this.getDataModel();
 
     if (modcellel.isEdge()) {
       const source = this.getLabel(cell.getTerminal(true));
@@ -81,7 +81,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, 'Interval 1', 20, 20, 180, 30);
     const v2 = graph.insertVertex(parent, null, 'Interval 2', 140, 80, 280, 30);
@@ -100,7 +100,7 @@ const Template = ({ label, ...args }) => {
     e5.getGeometry().points = [{ x: 380, y: 180 }];
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

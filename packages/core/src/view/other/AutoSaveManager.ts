@@ -109,13 +109,13 @@ class AutoSaveManager extends EventSource {
    */
   setGraph(graph: Graph | null): void {
     if (this.graph != null) {
-      this.graph.getModel().removeListener(this.changeHandler);
+      this.graph.getDataModel().removeListener(this.changeHandler);
     }
 
     this.graph = graph;
 
     if (this.graph != null) {
-      this.graph.getModel().addListener(InternalEvent.CHANGE, this.changeHandler);
+      this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.changeHandler);
     }
   }
 

@@ -158,7 +158,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 30, 40, 80, 30);
     // Alternative solution of creating a second label by creating a realtive child vertex
@@ -196,7 +196,7 @@ const Template = ({ label, ...args }) => {
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   const buttons = document.createElement('div');

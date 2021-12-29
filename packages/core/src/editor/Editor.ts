@@ -1475,7 +1475,7 @@ export class Editor extends EventSource {
     const self = this; // closure
     layoutMgr.getLayout = (cell: Cell) => {
       let layout = null;
-      const model = self.graph.getModel();
+      const model = self.graph.getDataModel();
 
       if (cell.getParent() != null) {
         // Executes the swimlane layout if a child of
@@ -1558,7 +1558,7 @@ export class Editor extends EventSource {
       (<UndoManager>this.undoManager).undoableEditHappened(edit);
     };
 
-    graph.getModel().addListener(InternalEvent.UNDO, listener);
+    graph.getDataModel().addListener(InternalEvent.UNDO, listener);
     graph.getView().addListener(InternalEvent.UNDO, listener);
 
     // Keeps the selection state in sync
@@ -1618,7 +1618,7 @@ export class Editor extends EventSource {
       }
     };
 
-    graph.getModel().addListener(InternalEvent.CHANGE, listener);
+    graph.getDataModel().addListener(InternalEvent.CHANGE, listener);
   }
 
   /**
@@ -1803,7 +1803,7 @@ export class Editor extends EventSource {
    * Returns the string value of the root cell in {@link graph.model}.
    */
   getRootTitle(): string {
-    const root = <Cell>this.graph.getModel().getRoot();
+    const root = <Cell>this.graph.getDataModel().getRoot();
     return this.graph.convertValueToString(root);
   }
 
@@ -1838,7 +1838,7 @@ export class Editor extends EventSource {
    * @returns Cell
    */
   createGroup(): Cell {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     return <Cell>model.cloneCell(this.defaultGroup);
   }
 
@@ -1879,7 +1879,7 @@ export class Editor extends EventSource {
    */
   readGraphModel(node: any): void {
     const dec = new Codec(node.ownerDocument);
-    dec.decode(node, this.graph.getModel());
+    dec.decode(node, this.graph.getDataModel());
     this.resetHistory();
   }
 
@@ -1963,7 +1963,7 @@ export class Editor extends EventSource {
    * @example
    * ```javascript
    * var enc = new Codec();
-   * var node = enc.encode(this.graph.getModel());
+   * var node = enc.encode(this.graph.getDataModel());
    * return mxUtils.getXml(node, this.linefeed);
    * ```
    *
@@ -1972,7 +1972,7 @@ export class Editor extends EventSource {
   writeGraphModel(linefeed: string): string {
     linefeed = linefeed != null ? linefeed : this.linefeed;
     const enc = new Codec();
-    const node = <Element>enc.encode(this.graph.getModel());
+    const node = <Element>enc.encode(this.graph.getDataModel());
     return getXml(node, linefeed);
   }
 
@@ -2028,7 +2028,7 @@ export class Editor extends EventSource {
       cell = this.graph.getCurrentRoot();
 
       if (cell == null) {
-        cell = this.graph.getModel().getRoot();
+        cell = this.graph.getDataModel().getRoot();
       }
     }
 
@@ -2094,7 +2094,7 @@ export class Editor extends EventSource {
    * node attributes in a form.
    */
   createProperties(cell: Cell): HTMLTableElement | null {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const value = cell.getValue();
 
     if (isNode(value)) {
@@ -2272,7 +2272,7 @@ export class Editor extends EventSource {
         this.createTasks(div);
       };
 
-      this.graph.getModel().addListener(InternalEvent.CHANGE, funct);
+      this.graph.getDataModel().addListener(InternalEvent.CHANGE, funct);
       this.graph.getSelectionModel().addListener(InternalEvent.CHANGE, funct);
       this.graph.addListener(InternalEvent.ROOT, funct);
 
@@ -2459,7 +2459,7 @@ export class Editor extends EventSource {
     let e: Cell;
 
     if (this.defaultEdge != null) {
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
       e = <Cell>model.cloneCell(this.defaultEdge);
     } else {
       e = new Cell('');
@@ -2527,7 +2527,7 @@ export class Editor extends EventSource {
    * @param y
    */
   addVertex(parent: Cell | null, vertex: Cell, x: number, y: number): any {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     while (parent != null && !this.graph.isValidDropTarget(parent)) {
       parent = parent.getParent();

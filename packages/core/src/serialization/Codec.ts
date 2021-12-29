@@ -35,7 +35,7 @@ const createXmlDocument = () => {
  *
  * ```javascript
  * var encoder = new Codec();
- * var result = encoder.encode(graph.getModel());
+ * var result = encoder.encode(graph.getDataModel());
  * var xml = mxUtils.getXml(result);
  * ```
  *
@@ -49,7 +49,7 @@ const createXmlDocument = () => {
  * ```javascript
  * var doc = mxUtils.parseXml(xmlString);
  * var codec = new Codec(doc);
- * codec.decode(doc.documentElement, graph.getModel());
+ * codec.decode(doc.documentElement, graph.getDataModel());
  * ```
  *
  * #### Example

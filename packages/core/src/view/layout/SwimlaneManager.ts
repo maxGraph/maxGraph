@@ -202,7 +202,7 @@ class SwimlaneManager extends EventSource {
    */
   cellsAdded(cells: CellArray) {
     if (cells.length > 0) {
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
 
       model.beginUpdate();
       try {
@@ -255,7 +255,7 @@ class SwimlaneManager extends EventSource {
    */
   cellsResized(cells: CellArray) {
     if (cells.length > 0) {
-      const model = this.getGraph().getModel();
+      const model = this.getGraph().getDataModel();
 
       model.beginUpdate();
       try {
@@ -300,7 +300,7 @@ class SwimlaneManager extends EventSource {
    * @param swimlane {@link mxCell} whose size has changed.
    */
   resizeSwimlane(swimlane: Cell, w: number, h: number, parentHorizontal: boolean) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     model.beginUpdate();
     try {

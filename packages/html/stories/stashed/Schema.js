@@ -434,7 +434,7 @@ export default MYNAMEHERE;
           textarea.style.width = '400px';
           textarea.style.height = '400px';
           let enc = new Codec(createXmlDocument());
-          let node = enc.encode(editor.graph.getModel());
+          let node = enc.encode(editor.graph.getDataModel());
           textarea.value = getPrettyXml(node);
           showModalWindow('XML', textarea, 410, 440);
         });
@@ -546,7 +546,7 @@ export default MYNAMEHERE;
         let pt = graph.getPointForEvent(evt);
 
         let parent = graph.getDefaultParent();
-        let model = graph.getModel();
+        let model = graph.getDataModel();
 
         let isTable = graph.isSwimlane(prototype);
         let name = null;

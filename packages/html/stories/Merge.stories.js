@@ -60,7 +60,7 @@ const Template = ({ label, ...args }) => {
   const w = 40;
   const h = 40;
 
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const a = graph.insertVertex(parent, 'a', 'A', 20, 20, w, h, 'fillColor=blue');
     const b = graph.insertVertex(parent, 'b', 'B', 20, 200, w, h, 'fillColor=blue');
@@ -92,7 +92,7 @@ const Template = ({ label, ...args }) => {
     );
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   // Creates the second graph model (without a container)
@@ -104,7 +104,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the target model in a single step
   // using custom ids for the vertices
-  graph2.getModel().beginUpdate();
+  graph2.getDataModel().beginUpdate();
   try {
     const c = graph2.insertVertex(parent2, 'c', 'C', 200, 20, w, h, 'fillColor=green');
     const d = graph2.insertVertex(parent2, 'd', 'D', 200, 200, w, h, 'fillColor=green');
@@ -136,7 +136,7 @@ const Template = ({ label, ...args }) => {
     );
   } finally {
     // Updates the display
-    graph2.getModel().endUpdate();
+    graph2.getDataModel().endUpdate();
   }
 
   // Merges the model from the second graph into the model of
@@ -145,7 +145,7 @@ const Template = ({ label, ...args }) => {
   // edges are assumed to have an identity, and hence the edge
   // "bd" will be changed to point from f to d, as specified in
   // the edge for the same id in the second graph.
-  graph.getModel().mergeChildren(parent2, parent /* , false */);
+  graph.getDataModel().mergeChildren(parent2, parent /* , false */);
 
   return container;
 };

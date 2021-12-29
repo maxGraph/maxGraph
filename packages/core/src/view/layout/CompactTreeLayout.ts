@@ -245,7 +245,7 @@ export class CompactTreeLayout extends GraphLayout {
    */
   execute(parent: Cell, root?: Cell): void {
     this.parent = parent;
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     if (root == null) {
       // Takes the parent as the root if it has outgoing edges
@@ -470,7 +470,7 @@ export class CompactTreeLayout extends GraphLayout {
       this.visited[id] = cell;
       node = this.createNode(cell);
 
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
       let prev = null;
       const out = this.graph.getEdges(
         cell,
@@ -814,7 +814,7 @@ export class CompactTreeLayout extends GraphLayout {
    * at the given node.
    */
   apply(node: _mxCompactTreeLayoutNode, bounds: Rectangle | null=null): Rectangle | null {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const cell = <Cell>node.cell;
     let g: Rectangle = <Rectangle>cell.getGeometry();
 

@@ -1193,7 +1193,7 @@ class VertexHandler {
         this.state.view.validate();
       }
 
-      this.graph.getModel().beginUpdate();
+      this.graph.getDataModel().beginUpdate();
       try {
         if (index <= InternalEvent.CUSTOM_HANDLE) {
           if (this.customHandles != null) {
@@ -1253,7 +1253,7 @@ class VertexHandler {
           );
         }
       } finally {
-        this.graph.getModel().endUpdate();
+        this.graph.getDataModel().endUpdate();
       }
 
       me.consume();
@@ -1284,7 +1284,7 @@ class VertexHandler {
    */
   rotateCell(cell: Cell, angle: number, parent?: Cell) {
     if (angle !== 0) {
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
 
       if (cell.isVertex() || cell.isEdge()) {
         if (!cell.isEdge()) {
@@ -1440,7 +1440,7 @@ class VertexHandler {
    * Moves the children of the given cell by the given vector.
    */
   moveChildren(cell: Cell, dx: number, dy: number) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {

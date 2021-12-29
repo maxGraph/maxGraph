@@ -1845,7 +1845,7 @@ Graph.prototype.init = function(container)
 			
 			if (parent == null)
 			{
-				parent = this.getModel().getRoot();
+				parent = this.getDataModel().getRoot();
 			}
 		}
 
@@ -2774,7 +2774,7 @@ Graph.prototype.createLayersDialog = function()
 	let div = document.createElement('div');
 	div.style.position = 'absolute';
 	
-	let model = this.getModel();
+	let model = this.getDataModel();
 	let childCount = model.root.getChildCount();
 	
 	for (let i = 0; i < childCount; i++)
@@ -4657,7 +4657,7 @@ HoverIcons.prototype.getState = function(state)
 	{
 		let cell = state.cell;
 		
-		if (!this.graph.getModel().contains(cell))
+		if (!this.graph.getDataModel().contains(cell))
 		{
 			state = null;
 		}
@@ -4943,7 +4943,7 @@ Graph.prototype.isTable = function(cell)
 Graph.prototype.setTableRowHeight = function(row, dy, extend)
 {
 	extend = (extend != null) ? extend : true;
-	let model = this.getModel();
+	let model = this.getDataModel();
 	
 	model.beginUpdate();
 	try
@@ -5019,7 +5019,7 @@ Graph.prototype.setTableColumnWidth = function(col, dx, extend)
 {
 	extend = (extend != null) ? extend : false;
 	
-	let model = this.getModel();
+	let model = this.getDataModel();
 	let row = col.getParent();
 	let table = row.getParent();
 	let cells = model.getChildCells(row, true);
@@ -5176,7 +5176,7 @@ TableLayout.prototype.getRowLayout = function(row, width)
  */
 TableLayout.prototype.layoutRow = function(row, positions, height, tw)
 {
-	let model = this.graph.getModel();
+	let model = this.graph.getDataModel();
 	let cells = model.getChildCells(row, true);
 	let off = this.graph.getActualStartSize(row, true);
 	let x = off.x;
@@ -5248,7 +5248,7 @@ TableLayout.prototype.execute = function(parent)
 			'resizeLast', '0') == '1';
 		let fixedRows = mxUtils.getValue(style,
 			'fixedRows', '0') == '1';
-		let model = this.graph.getModel();
+		let model = this.graph.getDataModel();
 		let sw = 0;
 		
 		model.beginUpdate();
@@ -7066,7 +7066,7 @@ if (typeof VertexHandler != 'undefined')
 		 */
 		Graph.prototype.turnShapes = function(cells, backwards)
 		{
-			let model = this.getModel();
+			let model = this.getDataModel();
 			let select = [];
 			
 			model.beginUpdate();
@@ -7536,7 +7536,7 @@ if (typeof VertexHandler != 'undefined')
 		let graphGetDropTarget = Graph.prototype.getDropTarget;
 		Graph.prototype.getDropTarget = function(cells, evt, cell, clone)
 		{
-			let model = this.getModel();
+			let model = this.getDataModel();
 			
 			// Disables drop into group if alt is pressed
 			if (mxEvent.isAltDown(evt))
@@ -7758,7 +7758,7 @@ if (typeof VertexHandler != 'undefined')
 				label.style += 'autosize=1;'
 			}
 
-			this.getModel().beginUpdate();
+			this.getDataModel().beginUpdate();
 			try
 			{
 				this.addCells([label], (state != null) ? state.cell : null);
@@ -7769,7 +7769,7 @@ if (typeof VertexHandler != 'undefined')
 			}
 			finally
 			{
-				this.getModel().endUpdate();
+				this.getDataModel().endUpdate();
 			}
 
 			return label;
@@ -8028,7 +8028,7 @@ if (typeof VertexHandler != 'undefined')
 			
 			cells = this.model.getTopmostCells(cells);
 			
-			let model = this.getModel();
+			let model = this.getDataModel();
 			let s = this.gridSize;
 			let select = [];
 			
@@ -8251,7 +8251,7 @@ if (typeof VertexHandler != 'undefined')
 					min = min / s - ((horizontal) ? t.x : t.y);
 					max = max / s - ((horizontal) ? t.x : t.y);
 					
-					this.getModel().beginUpdate();
+					this.getDataModel().beginUpdate();
 					try
 					{
 						let dt = (max - min) / (vertices.length - 1);
@@ -8276,13 +8276,13 @@ if (typeof VertexHandler != 'undefined')
 									geo.y = Math.round(t0 - geo.height / 2) - pstate.origin.y;
 								}
 								
-								this.getModel().setGeometry(vertices[i].cell, geo);
+								this.getDataModel().setGeometry(vertices[i].cell, geo);
 							}
 						}
 					}
 					finally
 					{
-						this.getModel().endUpdate();
+						this.getDataModel().endUpdate();
 					}
 				}
 			}
@@ -8821,7 +8821,7 @@ if (typeof VertexHandler != 'undefined')
 		 */
 		Graph.prototype.insertTableColumn = function(cell, before)
 		{
-			let model = this.getModel();
+			let model = this.getDataModel();
 			model.beginUpdate();
 			
 			try
@@ -8897,7 +8897,7 @@ if (typeof VertexHandler != 'undefined')
 		 */
 		Graph.prototype.insertTableRow = function(cell, before)
 		{
-			let model = this.getModel();
+			let model = this.getDataModel();
 			model.beginUpdate();
 			
 			try
@@ -8967,7 +8967,7 @@ if (typeof VertexHandler != 'undefined')
 		 */
 		Graph.prototype.deleteTableColumn = function(cell)
 		{
-			let model = this.getModel();
+			let model = this.getDataModel();
 			model.beginUpdate();
 			
 			try
@@ -9051,7 +9051,7 @@ if (typeof VertexHandler != 'undefined')
 		 */
 		Graph.prototype.deleteTableRow = function(cell)
 		{
-			let model = this.getModel();
+			let model = this.getDataModel();
 			model.beginUpdate();
 			
 			try
@@ -9971,7 +9971,7 @@ if (typeof VertexHandler != 'undefined')
 		CellEditorHandler.prototype.applyValue = function(state, value)
 		{
 			// Removes empty relative child labels in edges
-			this.graph.getModel().beginUpdate();
+			this.graph.getDataModel().beginUpdate();
 			
 			try
 			{
@@ -9986,7 +9986,7 @@ if (typeof VertexHandler != 'undefined')
 			}
 			finally
 			{
-				this.graph.getModel().endUpdate();
+				this.graph.getDataModel().endUpdate();
 			}
 		};
 		
@@ -11290,7 +11290,7 @@ if (typeof VertexHandler != 'undefined')
 		{
 			if (cells != null && cells.length == 1)
 			{
-				let model = this.graph.getModel();
+				let model = this.graph.getDataModel();
 				let parent = cells[0].getParent();
 				let geo = cells[0].getGeometry();
 				
@@ -11333,7 +11333,7 @@ if (typeof VertexHandler != 'undefined')
 		let mxVertexHandlerGetSelectionBounds = VertexHandler.prototype.getSelectionBounds;
 		VertexHandler.prototype.getSelectionBounds = function(state)
 		{
-			let model = this.graph.getModel();
+			let model = this.graph.getDataModel();
 			let parent = state.cell.getParent();
 			let geo = state.cell.getGeometry();
 			
@@ -11354,7 +11354,7 @@ if (typeof VertexHandler != 'undefined')
 		let mxVertexHandlerMouseDown = VertexHandler.prototype.mouseDown;
 		VertexHandler.prototype.mouseDown = function(sender, me)
 		{
-			let model = this.graph.getModel();
+			let model = this.graph.getDataModel();
 			let parent = this.state.cell.getParent();
 			let geo = this.state.cell.getGeometry();
 			
@@ -11481,7 +11481,7 @@ if (typeof VertexHandler != 'undefined')
 			});
 			
 			this.graph.getSelectionModel().addListener(mxEvent.CHANGE, this.changeHandler);
-			this.graph.getModel().addListener(mxEvent.CHANGE, this.changeHandler);
+			this.graph.getDataModel().addListener(mxEvent.CHANGE, this.changeHandler);
 			
 			// Repaint needed when editing stops and no change event is fired
 			this.editingHandler = mxUtils.bind(this, function(sender, evt)
@@ -11633,7 +11633,7 @@ if (typeof VertexHandler != 'undefined')
 			});
 
 			this.graph.getSelectionModel().addListener(mxEvent.CHANGE, this.changeHandler);
-			this.graph.getModel().addListener(mxEvent.CHANGE, this.changeHandler);
+			this.graph.getDataModel().addListener(mxEvent.CHANGE, this.changeHandler);
 	
 			let link = this.graph.getLinkForCell(this.state.cell);
 			let links = this.graph.getLinksForState(this.state);
@@ -11781,7 +11781,7 @@ if (typeof VertexHandler != 'undefined')
 			if  (this.changeHandler != null)
 			{
 				this.graph.getSelectionModel().removeListener(this.changeHandler);
-				this.graph.getModel().removeListener(this.changeHandler);
+				this.graph.getDataModel().removeListener(this.changeHandler);
 				this.changeHandler = null;
 			}
 			
@@ -11841,7 +11841,7 @@ if (typeof VertexHandler != 'undefined')
 	
 			if  (this.changeHandler != null)
 			{
-				this.graph.getModel().removeListener(this.changeHandler);
+				this.graph.getDataModel().removeListener(this.changeHandler);
 				this.graph.getSelectionModel().removeListener(this.changeHandler);
 				this.changeHandler = null;
 			}

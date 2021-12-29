@@ -224,7 +224,7 @@ class Codec extends React.Component {
               graph.border = 20;
             }
 
-            decoder.decode(node, graph.getModel());
+            decoder.decode(node, graph.getDataModel());
             graph.resizeContainer = false;
 
             // Adds zoom buttons in top, left corner

@@ -52,7 +52,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Load cells and layouts the graph
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, '1', 500, 500, 80, 30);
     const v2 = graph.insertVertex(parent, null, '2.1', 0, 0, 80, 30);
@@ -93,7 +93,7 @@ const Template = ({ label, ...args }) => {
     layout.execute(parent);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

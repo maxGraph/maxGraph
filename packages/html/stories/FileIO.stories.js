@@ -83,7 +83,7 @@ const Template = ({ label, ...args }) => {
       );
 
       // Load cells and layouts the graph
-      graph.getModel().beginUpdate();
+      graph.getDataModel().beginUpdate();
       try {
         // Loads the custom file format (TXT file)
         parse(graph, 'fileio.txt');
@@ -99,7 +99,7 @@ const Template = ({ label, ...args }) => {
         layout.execute(parent);
       } finally {
         // Updates the display
-        graph.getModel().endUpdate();
+        graph.getDataModel().endUpdate();
       }
 
       graph.dblClick = function (evt, cell) {
@@ -120,7 +120,7 @@ const Template = ({ label, ...args }) => {
 
   // Custom parser for simple file format
   function parse(graph, filename) {
-    const model = graph.getModel();
+    const model = graph.getDataModel();
 
     // Gets the default parent for inserting new cells. This
     // is normally the first child of the root (ie. layer 0).
@@ -135,7 +135,7 @@ const Template = ({ label, ...args }) => {
     const vertices = [];
 
     // Parses all lines (vertices must be first in the file)
-    graph.getModel().beginUpdate();
+    graph.getDataModel().beginUpdate();
     try {
       for (let i = 0; i < lines.length; i++) {
         // Ignores comments (starting with #)
@@ -168,7 +168,7 @@ const Template = ({ label, ...args }) => {
         }
       }
     } finally {
-      graph.getModel().endUpdate();
+      graph.getDataModel().endUpdate();
     }
   }
 
@@ -178,7 +178,7 @@ const Template = ({ label, ...args }) => {
     const root = req.getDocumentElement();
     const dec = new Codec(root.ownerDocument);
 
-    dec.decode(root, graph.getModel());
+    dec.decode(root, graph.getDataModel());
   }
 
   return div;

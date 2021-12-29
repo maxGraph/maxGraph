@@ -216,7 +216,7 @@ class GraphLayout {
    * @param cell {@link mxCell} whose ignored state should be returned.
    */
   isEdgeIgnored(edge: Cell): boolean {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     return (
       !edge.isEdge() ||
@@ -248,7 +248,7 @@ class GraphLayout {
     const result = new Point();
 
     if (parent != null && parent !== this.parent) {
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
 
       if (this.parent && this.parent.isAncestor(parent)) {
         let parentGeo = <Geometry>parent.getGeometry();
@@ -308,7 +308,7 @@ class GraphLayout {
    * @param y Integer that defines the y-coordinate of the new location.
    */
   setVertexLocation(cell: Cell, x: number, y: number): Rectangle | null {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let geometry = cell.getGeometry();
     let result = null;
 

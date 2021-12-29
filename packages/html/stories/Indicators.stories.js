@@ -52,7 +52,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     graph.insertVertex(parent, null, 'Bottom Label', 80, 80, 80, 60);
     graph.insertVertex(
@@ -77,7 +77,7 @@ const Template = ({ label, ...args }) => {
     );
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

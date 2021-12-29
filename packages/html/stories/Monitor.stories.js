@@ -79,7 +79,7 @@ const Template = ({ label, ...args }) => {
     '</root></Transactions>';
   const doc = xmlUtils.parseXml(xml);
   const codec = new Codec(doc);
-  codec.decode(doc.documentElement, graph.getModel());
+  codec.decode(doc.documentElement, graph.getDataModel());
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
@@ -105,7 +105,7 @@ const Template = ({ label, ...args }) => {
       const doc = xmlUtils.parseXml(xml);
 
       if (doc != null && doc.documentElement != null) {
-        const model = graph.getModel();
+        const model = graph.getDataModel();
         const nodes = doc.documentElement.getElementsByTagName('update');
 
         if (nodes != null && nodes.length > 0) {

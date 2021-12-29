@@ -269,7 +269,7 @@ export class EditorPopupMenu {
    */
   createConditions(editor: Editor, cell: Cell | null=null, evt: MouseEvent | null=null): void {
     // Creates array with conditions
-    const model = editor.graph.getModel();
+    const model = editor.graph.getDataModel();
     const childCount = cell ? cell.getChildCount() : 0;
 
     // Adds some frequently used conditions

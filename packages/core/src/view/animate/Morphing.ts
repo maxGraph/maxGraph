@@ -17,7 +17,7 @@ import CellArray from '../cell/CellArray';
  * using this class for animating the result of a layout algorithm:
  *
  * ```javascript
- * graph.getModel().beginUpdate();
+ * graph.getDataModel().beginUpdate();
  * try
  * {
  *   let circleLayout = new mxCircleLayout(graph);
@@ -28,7 +28,7 @@ import CellArray from '../cell/CellArray';
  *   let morph = new Morphing(graph);
  *   morph.addListener(mxEvent.DONE, ()=>
  *   {
- *     graph.getModel().endUpdate();
+ *     graph.getDataModel().endUpdate();
  *   });
  *
  *   morph.startAnimation();
@@ -95,7 +95,7 @@ class Morphing extends Animation {
     } else {
       // Animates all changed cells by using recursion to find
       // the changed cells but not for the animation itself
-      this.animateCell(<Cell>this.graph.getModel().getRoot(), move, true);
+      this.animateCell(<Cell>this.graph.getDataModel().getRoot(), move, true);
     }
 
     this.show(move);

@@ -91,7 +91,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, '', 40, 40, 40, 30);
     v1.setConnectable(false);
@@ -134,15 +134,15 @@ const Template = ({ label, ...args }) => {
     );
     v13.geometry.offset = new Point(0, -5);
 
-    const v2 = graph.addCell(graph.getModel().cloneCell(v1));
+    const v2 = graph.addCell(graph.getDataModel().cloneCell(v1));
     v2.geometry.x = 200;
     v2.geometry.y = 60;
 
-    const v3 = graph.addCell(graph.getModel().cloneCell(v1));
+    const v3 = graph.addCell(graph.getDataModel().cloneCell(v1));
     v3.geometry.x = 40;
     v3.geometry.y = 150;
 
-    const v4 = graph.addCell(graph.getModel().cloneCell(v1));
+    const v4 = graph.addCell(graph.getDataModel().cloneCell(v1));
     v4.geometry.x = 200;
     v4.geometry.y = 170;
 
@@ -151,7 +151,7 @@ const Template = ({ label, ...args }) => {
     graph.insertEdge(parent, null, '', v3.getChildAt(2), v4.getChildAt(1));
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

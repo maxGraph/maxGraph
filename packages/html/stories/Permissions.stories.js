@@ -180,7 +180,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'Hello,', 200, 20, 80, 30);
@@ -188,7 +188,7 @@ const Template = ({ label, ...args }) => {
     const e1 = graph.insertEdge(parent, null, 'Connection', v1, v3);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return div;

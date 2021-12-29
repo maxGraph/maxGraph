@@ -421,7 +421,7 @@ class Graph extends EventSource {
     this.graphModelChangeListener = (sender: any, evt: EventObject) => {
       this.graphModelChanged(evt.getProperty('edit').changes);
     };
-    this.getModel().addListener(InternalEvent.CHANGE, this.graphModelChangeListener);
+    this.getDataModel().addListener(InternalEvent.CHANGE, this.graphModelChangeListener);
 
     // Initializes the container using the view
     this.view.init();
@@ -475,11 +475,11 @@ class Graph extends EventSource {
 
   // TODO: Document me!!
   batchUpdate(fn: Function) {
-    this.getModel().beginUpdate();
+    this.getDataModel().beginUpdate();
     try {
       fn();
     } finally {
-      this.getModel().endUpdate();
+      this.getDataModel().endUpdate();
     }
   }
 
@@ -507,7 +507,7 @@ class Graph extends EventSource {
   /**
    * Returns the {@link GraphDataModel} that contains the cells.
    */
-  getModel() {
+  getDataModel() {
     return this.model;
   }
 
@@ -582,7 +582,7 @@ class Graph extends EventSource {
 
       if (
         newParent &&
-        (!this.getModel().contains(newParent) || newParent.isCollapsed())
+        (!this.getDataModel().contains(newParent) || newParent.isCollapsed())
       ) {
         this.view.invalidate(change.child, true, true);
         this.removeStateForCell(change.child);
@@ -1430,7 +1430,7 @@ class Graph extends EventSource {
       parent = this.defaultParent;
 
       if (!parent) {
-        const root = <Cell>this.getModel().getRoot();
+        const root = <Cell>this.getDataModel().getRoot();
         parent = root.getChildAt(0);
       }
     }
@@ -1458,7 +1458,7 @@ class Graph extends EventSource {
       this.view.destroy();
 
       if (this.model && this.graphModelChangeListener) {
-        this.getModel().removeListener(this.graphModelChangeListener);
+        this.getDataModel().removeListener(this.graphModelChangeListener);
         this.graphModelChangeListener = null;
       }
     }

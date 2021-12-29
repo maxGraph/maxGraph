@@ -297,7 +297,7 @@ export default MYNAMEHERE;
         //MaxLog.show();
 
         // Adds cells to the model in a single step
-        graph.getModel().beginUpdate();
+        graph.getDataModel().beginUpdate();
         try
         {
           var v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
@@ -307,7 +307,7 @@ export default MYNAMEHERE;
         finally
         {
           // Updates the display
-          graph.getModel().endUpdate();
+          graph.getDataModel().endUpdate();
         }
       }
     };

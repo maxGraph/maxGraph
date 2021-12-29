@@ -103,14 +103,14 @@ const Template = ({ label, ...args }) => {
     graph.validateGraph();
   };
 
-  graph.getModel().addListener(InternalEvent.CHANGE, listener);
+  graph.getDataModel().addListener(InternalEvent.CHANGE, listener);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
+  graph.getDataModel().beginUpdate();
   try {
     const v1 = graph.insertVertex(parent, null, sourceNode, 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, targetNode, 200, 20, 80, 30);
@@ -145,7 +145,7 @@ const Template = ({ label, ...args }) => {
     // var e4 = graph.insertEdge(parent, null, '', v1, v4);
   } finally {
     // Updates the display
-    graph.getModel().endUpdate();
+    graph.getDataModel().endUpdate();
   }
 
   return container;

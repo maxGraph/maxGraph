@@ -45,7 +45,7 @@ const Template = ({ label, ...args }) => {
   const editor = new Editor(null);
   editor.setGraphContainer(container);
   const { graph } = editor;
-  const model = graph.getModel();
+  const model = graph.getDataModel();
 
   // Auto-resizes the container
   graph.border = 80;
@@ -165,7 +165,7 @@ const Template = ({ label, ...args }) => {
         return true;
       }
 
-      const model = this.getModel();
+      const model = this.getDataModel();
       let lane = false;
       let pool = false;
       let cell = false;
@@ -188,7 +188,7 @@ const Template = ({ label, ...args }) => {
 
     // Adds new method for identifying a pool
     graph.isPool = function (cell) {
-      const model = this.getModel();
+      const model = this.getDataModel();
       const parent = cell.getParent();
 
       return parent != null && parent.getParent() == model.getRoot();

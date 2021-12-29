@@ -82,7 +82,7 @@ type PartialGraph = Pick<
   Graph,
   | 'batchUpdate'
   | 'fireEvent'
-  | 'getModel'
+  | 'getDataModel'
   | 'getView'
   | 'getChildCells'
   | 'isValidAncestor'
@@ -301,9 +301,9 @@ const EdgeMixin: PartialType = {
         const style = edge.getStyle();
 
         if (!style || style.length === 0) {
-          this.getModel().setStyle(edge, this.alternateEdgeStyle);
+          this.getDataModel().setStyle(edge, this.alternateEdgeStyle);
         } else {
-          this.getModel().setStyle(edge, null);
+          this.getDataModel().setStyle(edge, null);
         }
 
         // Removes all existing control points
@@ -353,7 +353,7 @@ const EdgeMixin: PartialType = {
           if (geo) {
             geo = geo.clone();
             geo.points = (<Point[]>geo.points).slice(idx);
-            this.getModel().setGeometry(edge, geo);
+            this.getDataModel().setGeometry(edge, geo);
           }
         }
       }
@@ -652,7 +652,7 @@ const EdgeMixin: PartialType = {
       dict.put(cells[i], true);
     }
 
-    this.getModel().beginUpdate();
+    this.getDataModel().beginUpdate();
     try {
       for (let i = 0; i < cells.length; i += 1) {
         const edges = cells[i].getEdges();
@@ -676,7 +676,7 @@ const EdgeMixin: PartialType = {
         this.resetEdges(cells[i].getChildren());
       }
     } finally {
-      this.getModel().endUpdate();
+      this.getDataModel().endUpdate();
     }
   },
 
@@ -692,7 +692,7 @@ const EdgeMixin: PartialType = {
     if (geo && geo.points && (<Point[]>geo.points).length > 0) {
       geo = geo.clone();
       geo.points = [];
-      this.getModel().setGeometry(edge, geo);
+      this.getDataModel().setGeometry(edge, geo);
     }
 
     return edge;

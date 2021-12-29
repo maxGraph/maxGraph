@@ -300,7 +300,7 @@ ColorDialog.prototype.createApplyFunction = function()
 	{
 		let graph = this.editorUi.editor.graph;
 		
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			graph.setCellStyles(this.currentColorKey, color);
@@ -309,7 +309,7 @@ ColorDialog.prototype.createApplyFunction = function()
 		}
 		finally
 		{
-			graph.getModel().endUpdate();
+			graph.getDataModel().endUpdate();
 		}
 	});
 };
@@ -1391,7 +1391,7 @@ let EditDataDialog = function(ui, cell)
 	};
 	
 	let temp = [];
-	let isLayer = cell.getParent() == graph.getModel().getRoot();
+	let isLayer = cell.getParent() == graph.getDataModel().getRoot();
 
 	for (let i = 0; i < attrs.length; i++)
 	{
@@ -1568,7 +1568,7 @@ let EditDataDialog = function(ui, cell)
 			}
 			
 			// Updates the value of the cell (undoable)
-			graph.getModel().setValue(cell, value);
+			graph.getDataModel().setValue(cell, value);
 		}
 		catch (e)
 		{
@@ -2302,7 +2302,7 @@ let LayersWindow = function(editorUi, x, y, w, h)
 				{
 					let value = null;
 					
-					graph.getModel().beginUpdate();
+					graph.getDataModel().beginUpdate();
 					try
 					{
 			    		value = (getValue(style, 'locked', '0') == '1') ? null : '1';
@@ -2310,12 +2310,12 @@ let LayersWindow = function(editorUi, x, y, w, h)
 					}
 					finally
 					{
-						graph.getModel().endUpdate();
+						graph.getDataModel().endUpdate();
 					}
 
 					if (value == '1')
 					{
-						graph.removeSelectionCells(graph.getModel().getDescendants(child));
+						graph.removeSelectionCells(graph.getDataModel().getDescendants(child));
 					}
 					
 					mxEvent.consume(evt);

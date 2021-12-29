@@ -61,7 +61,7 @@ const Template = ({ label, ...args }) => {
     // Returns the relative position of the given child
     getRelativePosition(state, dx, dy) {
       if (state != null) {
-        const model = graph.getModel();
+        const model = graph.getDataModel();
         const geo = state.cell.getGeometry();
 
         if (geo != null && geo.relative && !state.cell.isEdge()) {

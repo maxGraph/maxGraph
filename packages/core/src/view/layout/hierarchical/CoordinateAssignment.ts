@@ -191,7 +191,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * Utility method to display current positions
    */
   printStatus() {
-    const model = <GraphHierarchyModel>this.layout.getModel();
+    const model = <GraphHierarchyModel>this.layout.getDataModel();
     const ranks = <GraphAbstractHierarchyCell[][]>model.ranks;
     
     MaxLog.show();
@@ -215,7 +215,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    */
   execute(parent: any) {
     this.jettyPositions = Object();
-    const model = <GraphHierarchyModel>this.layout.getModel();
+    const model = <GraphHierarchyModel>this.layout.getDataModel();
     this.currentXDelta = 0.0;
 
     this.initialCoords(this.layout.getGraph(), model);

@@ -46,7 +46,7 @@ import { write } from './domUtils';
  * @example
  * ```JavaScript
  * var encoder = new Codec();
- * var result = encoder.encode(graph.getModel());
+ * var result = encoder.encode(graph.getDataModel());
  * var xml = encodeURIComponent(mxUtils.getXml(result));
  * new MaxXmlRequest(url, 'xml='+xml).send();
  * ```
@@ -431,7 +431,7 @@ export const load = (url: string) => {
  * {
  *   let node = req.getDocumentElement();
  *   let dec = new Codec(node.ownerDocument);
- *   dec.decode(node, graph.getModel());
+ *   dec.decode(node, graph.getDataModel());
  * });
  * ```
  *

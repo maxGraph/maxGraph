@@ -33,7 +33,7 @@ import Geometry from '../geometry/Geometry';
  *
  * graph.addListener(mxEvent.CELL_CONNECTED, (sender, evt)=>
  * {
- *   let model = graph.getModel();
+ *   let model = graph.getDataModel();
  *   let edge = evt.getProperty('edge');
  *   let src = model.getTerminal(edge, true);
  *   let trg = model.getTerminal(edge, false);
@@ -115,7 +115,7 @@ class ParallelEdgeLayout extends GraphLayout {
         addCell(cells[i]);
       }
     } else {
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
       const childCount = parent.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -170,7 +170,7 @@ class ParallelEdgeLayout extends GraphLayout {
   layout(parallels: CellArray) {
     const edge = parallels[0];
     const view = this.graph.getView();
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const src = <Geometry>(<Cell>view.getVisibleTerminal(edge, true)).getGeometry();
     const trg = <Geometry>(<Cell>view.getVisibleTerminal(edge, false)).getGeometry();
 

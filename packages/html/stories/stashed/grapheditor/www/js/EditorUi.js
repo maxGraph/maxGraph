@@ -559,7 +559,7 @@ EditorUi = function(editor, container, lightbox)
 		// Implements a global current style for edges and vertices that is applied to new cells
 		let insertHandler = function(cells, asText, model)
 		{
-			model = (model != null) ? model : graph.getModel();
+			model = (model != null) ? model : graph.getDataModel();
 			
 			model.beginUpdate();
 			try
@@ -873,7 +873,7 @@ EditorUi = function(editor, container, lightbox)
 			});
 			
 		    graph.getSelectionModel().addListener(mxEvent.CHANGE, update);
-		    graph.getModel().addListener(mxEvent.CHANGE, update);
+		    graph.getDataModel().addListener(mxEvent.CHANGE, update);
 		}
 		
 		// Makes sure the current layer is visible when cells are added
@@ -882,9 +882,9 @@ EditorUi = function(editor, container, lightbox)
 			let cells = evt.getProperty('cells');
 			let parent = evt.getProperty('parent');
 			
-			if (graph.getModel().isLayer(parent) && !parent.isVisible() && cells != null && cells.length > 0)
+			if (graph.getDataModel().isLayer(parent) && !parent.isVisible() && cells != null && cells.length > 0)
 			{
-				graph.getModel().setVisible(parent, true);
+				graph.getDataModel().setVisible(parent, true);
 			}
 		});
 		
@@ -1103,7 +1103,7 @@ EditorUi.prototype.init = function()
 			this.updateActionStates();
 		}));
 		
-		graph.getModel().addListener(mxEvent.CHANGE, (() =>
+		graph.getDataModel().addListener(mxEvent.CHANGE, (() =>
 		{
 			this.updateActionStates();
 		}));
@@ -1159,7 +1159,7 @@ EditorUi.prototype.installShapePicker = function()
 		ui.hideShapePicker(true);
 	}));
 	
-	graph.getModel().addListener(mxEvent.CHANGE, (() =>
+	graph.getDataModel().addListener(mxEvent.CHANGE, (() =>
 	{
 		ui.hideShapePicker(true);
 	}));
@@ -2130,7 +2130,7 @@ EditorUi.prototype.initCanvas = function()
 				}), Editor.layersLargeImage, Translations.get('layers'));
 				
 				// Shows/hides layers button depending on content
-				let model = graph.getModel();
+				let model = graph.getDataModel();
 	
 				model.addListener(mxEvent.CHANGE, function()
 				{
@@ -2810,7 +2810,7 @@ EditorUi.prototype.lightboxFit = function(maxHeight)
  */
 EditorUi.prototype.isDiagramEmpty = function()
 {
-	let model = this.editor.graph.getModel();
+	let model = this.editor.graph.getDataModel();
 	
 	return model.getChildCount(model.root) == 1 && model.root.getChildAt(0).getChildCount() == 0;
 };
@@ -4353,7 +4353,7 @@ EditorUi.prototype.executeLayout = function(exec, animate, post)
 
 	if (graph.isEnabled())
 	{
-		graph.getModel().beginUpdate();
+		graph.getDataModel().beginUpdate();
 		try
 		{
 			exec();
@@ -4373,7 +4373,7 @@ EditorUi.prototype.executeLayout = function(exec, animate, post)
 				let morph = new Morphing(graph);
 				morph.addListener(mxEvent.DONE, (() =>
 				{
-					graph.getModel().endUpdate();
+					graph.getDataModel().endUpdate();
 					
 					if (post != null)
 					{
@@ -4385,7 +4385,7 @@ EditorUi.prototype.executeLayout = function(exec, animate, post)
 			}
 			else
 			{
-				graph.getModel().endUpdate();
+				graph.getDataModel().endUpdate();
 				
 				if (post != null)
 				{
@@ -4598,7 +4598,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 				if (resize)
 				{
 					// Resizes all selected vertices
-					graph.getModel().beginUpdate();
+					graph.getDataModel().beginUpdate();
 					try
 					{
 						let cells = graph.getSelectionCells();
@@ -4630,14 +4630,14 @@ EditorUi.prototype.createKeyHandler = function(editor)
 										geo.height += stepSize;
 									}
 									
-									graph.getModel().setGeometry(cells[i], geo);
+									graph.getDataModel().setGeometry(cells[i], geo);
 								}
 							}
 						}
 					}
 					finally
 					{
-						graph.getModel().endUpdate();
+						graph.getDataModel().endUpdate();
 					}
 				}
 				else
@@ -4730,7 +4730,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 		{
 			if (queue.length > 0)
 			{
-				graph.getModel().beginUpdate();
+				graph.getDataModel().beginUpdate();
 				
 				try
 				{
@@ -4743,7 +4743,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 				}
 				finally
 				{
-					graph.getModel().endUpdate();
+					graph.getDataModel().endUpdate();
 				}
 			}
 		}, 200);

@@ -149,7 +149,7 @@ class StackLayout extends GraphLayout {
    * Implements mxGraphLayout.moveCell.
    */
   moveCell(cell: Cell, x: number, y: number): void {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const parent = cell.getParent();
     const horizontal = this.isHorizontal();
 
@@ -198,7 +198,7 @@ class StackLayout extends GraphLayout {
    * Returns the size for the parent container or the size of the graph container if the parent is a layer or the root of the model.
    */
   getParentSize(parent: Cell): Rectangle {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let pgeo = <Rectangle>parent.getGeometry();
 
     // Handles special case where the parent is either a layer with no
@@ -220,7 +220,7 @@ class StackLayout extends GraphLayout {
    * Returns the cells to be layouted.
    */
   getLayoutCells(parent: Cell): CellArray {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const childCount = parent.getChildCount();
     const cells = new CellArray();
 
@@ -275,7 +275,7 @@ class StackLayout extends GraphLayout {
     if (parent != null) {
       const pgeo = this.getParentSize(parent);
       const horizontal = this.isHorizontal();
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
       let fillValue = null;
 
       if (pgeo != null) {
@@ -450,7 +450,7 @@ class StackLayout extends GraphLayout {
       geo.width !== geo2.width ||
       geo.height !== geo2.height
     ) {
-      this.graph.getModel().setGeometry(child, geo);
+      this.graph.getDataModel().setGeometry(child, geo);
     }
   }
 
@@ -463,7 +463,7 @@ class StackLayout extends GraphLayout {
    */
   updateParentGeometry(parent: Cell, pgeo: Geometry, last: Geometry) {
     const horizontal = this.isHorizontal();
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     const pgeo2 = pgeo.clone();
 

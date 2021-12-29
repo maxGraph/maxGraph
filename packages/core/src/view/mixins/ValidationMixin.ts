@@ -26,7 +26,7 @@ declare module '../Graph' {
 
 type PartialGraph = Pick<
   Graph,
-  | 'getModel'
+  | 'getDataModel'
   | 'isAllowLoops'
   | 'isMultigraph'
   | 'getView'
@@ -138,7 +138,7 @@ const ValidationMixin: PartialType = {
       // Checks if the cells are already connected
       // and adds an error message if required
       if (!this.isMultigraph()) {
-        const tmp = this.getModel().getEdgesBetween(source, target, true);
+        const tmp = this.getDataModel().getEdgesBetween(source, target, true);
 
         // Checks if the source and target are not connected by another edge
         if (tmp.length > 1 || (tmp.length === 1 && tmp[0] !== edge)) {
@@ -209,7 +209,7 @@ const ValidationMixin: PartialType = {
    * @param context Object that represents the global validation state.
    */
   validateGraph(cell: Cell | null=null, context) {
-    cell = cell ?? this.getModel().getRoot();
+    cell = cell ?? this.getDataModel().getRoot();
 
     if (!cell) {
       return 'The root does not exist!';
