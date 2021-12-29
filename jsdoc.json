@@ -11,10 +11,18 @@
         "allowUnknownTags": ["optional", "category", "warning"]
     },
     "plugins": [
-        "node_modules/better-docs/typescript"
+        "node_modules/better-docs/typescript",
+        "plugins/markdown",
+        "jsdoc-mermaid",
+        "node_modules/better-docs/category"
     ],
     "source": {
         "include": ["./packages/core/src"],
         "includePattern": "\\.(jsx|js|ts|tsx)$"
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "search": true
     }
 }
