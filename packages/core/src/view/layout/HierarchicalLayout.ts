@@ -170,7 +170,7 @@ class HierarchicalLayout extends GraphLayout {
    * @param parent Parent <Cell> that contains the children to be laid out.
    * @param roots Optional starting roots of the layout.
    */
-  execute(parent: Cell, roots: Cell[] | null=null): void {
+  execute(parent: Cell, roots: CellArray | null=null): void {
     this.parent = parent;
     const { model } = this.graph;
     this.edgesCache = new Dictionary();
@@ -178,7 +178,7 @@ class HierarchicalLayout extends GraphLayout {
     this.edgesTargetTermCache = new Dictionary();
 
     if (roots != null && !(roots instanceof Array)) {
-      roots = [roots];
+      roots = new CellArray(roots);
     }
 
     // If the roots are set and the parent is set, only
@@ -257,7 +257,7 @@ class HierarchicalLayout extends GraphLayout {
    * @param parent <Cell> whose children should be checked.
    * @param vertices array of vertices to limit search to
    */
-  findRoots(parent: Cell, vertices: Cell[]): CellArray {
+  findRoots(parent: Cell, vertices: CellArray): CellArray {
     const roots = new CellArray();
 
     if (parent != null && vertices != null) {

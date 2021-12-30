@@ -357,8 +357,8 @@ class SwimlaneLayout extends GraphLayout {
    * @param parent <Cell> whose children should be checked.
    * @param vertices array of vertices to limit search to
    */
-  findRoots(parent: Cell, vertices: { [key: string]: Cell }): Cell[] {
-    const roots = [];
+  findRoots(parent: Cell, vertices: { [key: string]: Cell }): CellArray {
+    const roots = new CellArray();
 
     if (parent != null && vertices != null) {
       const { model } = this.graph;
@@ -588,7 +588,7 @@ class SwimlaneLayout extends GraphLayout {
       }
     } else {
       // Find vertex set as directed traversal from roots
-      const roots = <Cell[]>this.roots;
+      const roots = <CellArray>this.roots;
 
       for (let i = 0; i < roots.length; i += 1) {
         const vertexSet = Object();

@@ -123,7 +123,7 @@ class CellArray extends Array<Cell> {
    * Returns an array that represents the set (no duplicates) of all parents
    * for the given array of cells.
    */
-  getParents(): Cell[] {
+  getParents(): CellArray {
     const parents = [];
     const dict = new Dictionary();
 
@@ -134,7 +134,7 @@ class CellArray extends Array<Cell> {
         parents.push(parent);
       }
     }
-    return parents;
+    return new CellArray(...parents);
   }
 
   /**
