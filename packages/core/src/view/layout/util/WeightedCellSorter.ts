@@ -7,9 +7,10 @@
  *
  */
 import { _mxCompactTreeLayoutNode } from "../CompactTreeLayout";
+import GraphAbstractHierarchyCell from "../datatypes/GraphAbstractHierarchyCell";
 
 class WeightedCellSorter {
-  constructor(cell: _mxCompactTreeLayoutNode, weightedValue: number=0) {
+  constructor(cell: _mxCompactTreeLayoutNode | GraphAbstractHierarchyCell, weightedValue: number=0) {
     this.cell = cell;
     this.weightedValue = weightedValue;
   }
@@ -37,7 +38,7 @@ class WeightedCellSorter {
   /**
    * The cell whose median value is being calculated.
    */
-  cell: _mxCompactTreeLayoutNode;
+  cell: _mxCompactTreeLayoutNode | GraphAbstractHierarchyCell;
 
   /**
    * Compares two WeightedCellSorters.

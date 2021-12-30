@@ -301,7 +301,7 @@ class Client {
   /**
    * True if the current browser is Firefox.
    */
-  static IS_FF = typeof window !== 'undefined' && typeof InstallTrigger !== 'undefined';
+  static IS_FF = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
   /**
    * True if -moz-transform is available as a CSS style. This is the case

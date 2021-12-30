@@ -124,10 +124,10 @@ const GroupingMixin: PartialType = {
         }
 
         // Adds the group into the parent
-        let index = parent.getChildCount();
+        let index = (<Cell>parent).getChildCount();
         this.cellsAdded(
           new CellArray(group),
-          parent,
+          <Cell>parent,
           index,
           null,
           null,
@@ -138,8 +138,8 @@ const GroupingMixin: PartialType = {
 
         // Adds the children into the group and moves
         index = group.getChildCount();
-        this.cellsAdded(cells, group, index, null, null, false, false, false);
-        this.cellsMoved(cells, -bounds.x, -bounds.y, false, false, false);
+        this.cellsAdded(<CellArray>cells, group, index, null, null, false, false, false);
+        this.cellsMoved(<CellArray>cells, -bounds.x, -bounds.y, false, false, false);
 
         // Resizes the group
         this.cellsResized(new CellArray(group), [bounds], false);
@@ -239,12 +239,14 @@ const GroupingMixin: PartialType = {
 
     if (cells != null && cells.length > 0) {
       this.batchUpdate(() => {
-        for (let i = 0; i < cells.length; i += 1) {
-          let children = cells[i].getChildren();
+        const _cells = <CellArray>cells;
+
+        for (let i = 0; i < _cells.length; i += 1) {
+          let children = _cells[i].getChildren();
 
           if (children != null && children.length > 0) {
             children = children.slice();
-            const parent = <Cell>cells[i].getParent();
+            const parent = <Cell>_cells[i].getParent();
             const index = parent.getChildCount();
 
             this.cellsAdded(children, parent, index, null, null, true);
@@ -267,7 +269,7 @@ const GroupingMixin: PartialType = {
           }
         }
 
-        this.removeCellsAfterUngroup(cells);
+        this.removeCellsAfterUngroup(_cells);
         this.fireEvent(new EventObject(InternalEvent.UNGROUP_CELLS, { cells }));
       });
     }
@@ -314,7 +316,7 @@ const GroupingMixin: PartialType = {
       const parent = this.getDefaultParent();
       const index = parent.getChildCount();
 
-      this.cellsAdded(cells, parent, index, null, null, true);
+      this.cellsAdded(<CellArray>cells, parent, index, null, null, true);
       this.fireEvent(
         new EventObject(InternalEvent.REMOVE_CELLS_FROM_PARENT, { cells })
       );

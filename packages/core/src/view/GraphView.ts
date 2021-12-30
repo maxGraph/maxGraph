@@ -108,15 +108,15 @@ export class GraphView extends EventSource {
   EMPTY_POINT = new Point();
 
   // @ts-ignore Cannot be null
-  canvas: SVGElement;
+  canvas: SVGElement | HTMLElement;
   // @ts-ignore Cannot be null
-  backgroundPane: SVGElement;
+  backgroundPane: SVGElement | HTMLElement;
   // @ts-ignore Cannot be null
-  drawPane: SVGElement;
+  drawPane: SVGElement | HTMLElement;
   // @ts-ignore Cannot be null
-  overlayPane: SVGElement;
+  overlayPane: SVGElement | HTMLElement;
   // @ts-ignore Cannot be null
-  decoratorPane: SVGElement;
+  decoratorPane: SVGElement | HTMLElement;
 
   /**
    * Specifies the resource key for the status message after a long operation.
@@ -2261,6 +2261,82 @@ export class GraphView extends EventSource {
   }
 
   /**
+   * Function: createHtml
+   *
+   * Creates the DOM nodes for the HTML display.
+   */
+  createHtml() {
+    var container = this.graph.container;
+    
+    if (container != null) {
+      this.canvas = this.createHtmlPane('100%', '100%');
+      this.canvas.style.overflow = 'hidden';
+    
+      // Uses minimal size for inner DIVs on Canvas. This is required
+      // for correct event processing in IE. If we have an overlapping
+      // DIV then the events on the cells are only fired for labels.
+      this.backgroundPane = this.createHtmlPane('1px', '1px');
+      this.drawPane = this.createHtmlPane('1px', '1px');
+      this.overlayPane = this.createHtmlPane('1px', '1px');
+      this.decoratorPane = this.createHtmlPane('1px', '1px');
+      
+      this.canvas.appendChild(this.backgroundPane);
+      this.canvas.appendChild(this.drawPane);
+      this.canvas.appendChild(this.overlayPane);
+      this.canvas.appendChild(this.decoratorPane);
+
+      container.appendChild(this.canvas);
+      this.updateContainerStyle(container);      
+    }
+  };
+
+  /**
+   * Function: updateHtmlCanvasSize
+   * 
+   * Updates the size of the HTML canvas.
+   */
+  updateHtmlCanvasSize(width: number, height: number) {
+    if (this.graph.container != null) {
+      var ow = this.graph.container.offsetWidth;
+      var oh = this.graph.container.offsetHeight;
+
+      if (ow < width) {
+        this.canvas.style.width = width + 'px';
+      } else {
+        this.canvas.style.width = '100%';
+      }
+
+      if (oh < height) {
+        this.canvas.style.height = height + 'px';
+      } else {
+        this.canvas.style.height = '100%';
+      }
+    }
+  };
+
+  /**
+   * Function: createHtmlPane
+   * 
+   * Creates and returns a drawing pane in HTML (DIV).
+   */
+  createHtmlPane(width: string, height: string) {
+    var pane = document.createElement('DIV');
+    
+    if (width != null && height != null) {
+      pane.style.position = 'absolute';
+      pane.style.left = '0px';
+      pane.style.top = '0px';
+
+      pane.style.width = width;
+      pane.style.height = height;
+
+    } else {
+      pane.style.position = 'relative';
+    }
+    return pane;
+  };
+
+  /**
    * Updates the style of the container after installing the SVG DOM elements.
    */
   updateContainerStyle(container: HTMLElement) {
@@ -2281,7 +2357,11 @@ export class GraphView extends EventSource {
    * Destroys the view and all its resources.
    */
   destroy() {
-    let root = this.canvas ? (this.canvas.ownerSVGElement as SVGElement) : null;
+    let root: SVGElement | HTMLElement | null=null; 
+    
+    if (this.canvas && this.canvas instanceof SVGElement) {
+      root = this.canvas.ownerSVGElement as SVGElement;
+    }
 
     if (!root) {
       root = this.canvas;

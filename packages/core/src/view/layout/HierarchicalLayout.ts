@@ -198,7 +198,7 @@ class HierarchicalLayout extends GraphLayout {
     this.parentY = null;
 
     if (
-      parent !== this.root &&
+      parent !== this.graph.getDataModel().root &&
       parent.isVertex() != null &&
       this.maintainParentLocation
     ) {
@@ -589,11 +589,12 @@ class HierarchicalLayout extends GraphLayout {
    * null for the first step of the traversal.
    * @param allVertices Array of cell paths for the visited cells.
    */
+  // @ts-ignore
   traverse(
     vertex: Cell,
-    directed: boolean,
-    edge: Cell | null,
-    allVertices: { [key: string]: Cell },
+    directed: boolean=false,
+    edge: Cell | null=null,
+    allVertices: { [key: string]: Cell } | null=null,
     currentComp: { [key: string]: (Cell | null) },
     hierarchyVertices: GraphHierarchyNode[],
     filledVertexSet: { [key: string]: Cell } | null=null

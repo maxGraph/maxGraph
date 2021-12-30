@@ -11,7 +11,6 @@ import { clone } from '../../../util/cloneUtils';
 import Cell from '../../../view/cell/Cell';
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
-import GraphHierarchyModel from './GraphHierarchyModel';
 import SwimlaneLayout from '../SwimlaneLayout';
 import SwimlaneModel from './SwimlaneModel';
 
@@ -54,7 +53,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
       rootsArray = [];
 
       for (let i = 0; i < modelRoots.length; i += 1) {
-        rootsArray[i] = model.vertexMapper.get(modelRoots[i]);
+        rootsArray[i] = <GraphHierarchyNode>model.vertexMapper.get(modelRoots[i]);
       }
     }
 

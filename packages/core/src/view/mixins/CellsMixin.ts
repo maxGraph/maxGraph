@@ -2555,7 +2555,8 @@ export const CellsMixin: PartialType = {
    */
   isCellCloneable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return this.isCellsCloneable() && style.cloneable;
+    const cloneable = style.cloneable == null ? true : style.cloneable;
+    return this.isCellsCloneable() && cloneable;
   },
 
   /**
@@ -2674,7 +2675,8 @@ export const CellsMixin: PartialType = {
    */
   isCellDeletable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return this.isCellsDeletable() && style.deletable;
+    const deletable = style.deletable == null ? true : style.deletable;
+    return this.isCellsDeletable() && deletable;
   },
 
   /**
@@ -2701,7 +2703,8 @@ export const CellsMixin: PartialType = {
    */
   isCellRotatable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return style.rotatable;
+    const rotatable = style.rotatable == null ? true : style.rotatable;
+    return rotatable;
   },
 
   /**

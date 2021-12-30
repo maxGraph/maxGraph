@@ -35,6 +35,11 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   cell: Cell;
 
   /**
+   * The object identities of the wrapped cells
+   */
+  ids: string[] = [];
+
+  /**
    * The object identity of the wrapped cell
    */
   id: string;

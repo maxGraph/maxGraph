@@ -310,7 +310,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
 
     while (nodeList.length > 0 && count <= maxTries) {
       const cellWrapper = <WeightedCellSorter>nodeList.shift();
-      const cell: GraphAbstractHierarchyCell = cellWrapper.cell;
+      const cell: GraphAbstractHierarchyCell = <GraphAbstractHierarchyCell>cellWrapper.cell;
 
       const rankValue = cellWrapper.weightedValue;
       const rankIndex = parseInt(String(cellWrapper.rankIndex));
@@ -475,7 +475,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
 
     for (let i = 0; i < weightedValues.length; i += 1) {
       let numConnectionsNextLevel = 0;
-      const { cell } = weightedValues[i];
+      const cell = <GraphHierarchyNode><unknown>weightedValues[i].cell;
       let nextLayerConnectedCells = null;
       let medianNextLevel = 0;
 
@@ -512,7 +512,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         const weightedValue = cellMap[<string>rank[j].id];
 
         if (weightedValue != null) {
-          const leftCell = weightedValue.cell;
+          const leftCell = <GraphHierarchyNode><unknown>weightedValue.cell;
 
           if (weightedValue.visited) {
             // The left limit is the right hand limit of that
@@ -543,7 +543,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         const weightedValue = cellMap[<string>rank[j].id];
 
         if (weightedValue != null) {
-          const rightCell = weightedValue.cell;
+          const rightCell = <GraphHierarchyNode><unknown>weightedValue.cell;
 
           if (weightedValue.visited) {
             // The left limit is the right hand limit of that
@@ -1093,7 +1093,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
               const connectedEdges = [];
               // Calculate width requirements for all connected edges
               for (let j = 0; j < sortedCells.length; j++) {
-                const innerCell = sortedCells[j].cell;
+                const innerCell = <GraphHierarchyNode>sortedCells[j].cell;
                 var connections;
 
                 if (innerCell.isVertex()) {

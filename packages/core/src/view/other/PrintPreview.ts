@@ -166,7 +166,7 @@ class PrintPreview {
   constructor(
     graph: Graph,
     scale: number | null=null,
-    pageFormat: string | null=null,
+    pageFormat: Rectangle | null=null,
     border: number | null=null,
     x0: number=0,
     y0: number=0,
@@ -343,7 +343,12 @@ class PrintPreview {
    * @param targetWindow Optional window that should be used for rendering. If
    * this is specified then no HEAD tag, CSS and BODY tag will be written.
    */
-  open(css?: string, targetWindow?: Window, forcePageBreaks?: boolean, keepOpen?: boolean): Window {
+  open(
+    css: string | null=null, 
+    targetWindow: Window | null=null, 
+    forcePageBreaks: boolean=false, 
+    keepOpen: boolean=false
+  ): Window | null {
     // Closing the window while the page is being rendered may cause an
     // exception in IE. This and any other exceptions are simply ignored.
     const previousInitializeOverlay = this.graph.cellRenderer.initializeOverlay;
@@ -367,6 +372,7 @@ class PrintPreview {
         ) => {
           control.dialect = state.view.graph.dialect;
           control.init(state.view.getDrawPane());
+          return null;
         };
       }
 
@@ -378,6 +384,9 @@ class PrintPreview {
         this.wnd = window.open();
       }
 
+      if (!this.wnd) {
+        throw new Error("Create new window not allowed");
+      }
       const doc = this.wnd.document;
 
       if (isNewWindow) {
@@ -394,7 +403,9 @@ class PrintPreview {
         doc.writeln('<html>');
 
         doc.writeln('<head>');
-        this.writeHead(doc, css);
+        if (css) {
+          this.writeHead(doc, css);
+        }
         doc.writeln('</head>');
         doc.writeln('<body class="mxPage">');
       }
@@ -469,15 +480,15 @@ class PrintPreview {
           // fillcolor properties and fill children, so the div
           // must be removed afterwards to keep the fillcolors.
           doc.writeln(div.outerHTML);
-          div.parentNode.removeChild(div);
+          (<Element>div.parentNode).removeChild(div);
         } else if (Client.IS_EDGE) {
           let clone = doc.createElement('div');
           clone.innerHTML = div.outerHTML;
           clone = clone.getElementsByTagName('div')[0];
           doc.body.appendChild(clone);
-          div.parentNode.removeChild(div);
+          (<Element>div.parentNode).removeChild(div);
         } else {
-          div.parentNode.removeChild(div);
+          (<Element>div.parentNode).removeChild(div);
           doc.body.appendChild(div);
         }
 
@@ -641,6 +652,9 @@ class PrintPreview {
    * Creates the page selector table.
    */
   createPageSelector(vpages: number, hpages: number): HTMLTableElement {
+    if (!this.wnd) {
+      throw new Error("Popup window not created");
+    }
     const doc = this.wnd.document;
     const table = doc.createElement('table');
     table.className = 'mxPageSelector';
@@ -663,16 +677,13 @@ class PrintPreview {
           a.setAttribute('onclick', js);
         }
 
-        write(a, pageNum, doc);
+        write(a, String(pageNum));
         cell.appendChild(a);
         row.appendChild(cell);
       }
-
       tbody.appendChild(row);
     }
-
     table.appendChild(tbody);
-
     return table;
   }
 
@@ -690,8 +701,7 @@ class PrintPreview {
    * @param pageNumber Integer representing the page number.
    */
   renderPage(w: number, h: number, dx: number, dy: number, content: (div: HTMLDivElement) => void, pageNumber?: number): HTMLDivElement{
-    const doc = this.wnd.document;
-    let div = document.createElement('div');
+    let div: HTMLDivElement | null = document.createElement('div');
     let arg = null;
 
     try {
@@ -741,14 +751,14 @@ class PrintPreview {
         arg = innerDiv;
       }
     } catch (e) {
-      div.parentNode.removeChild(div);
+      if (div && div.parentNode) {
+        div.parentNode.removeChild(div);
+      }
       div = null;
-
       throw e;
     }
 
     content(arg);
-
     return div;
   }
 
@@ -798,7 +808,7 @@ class PrintPreview {
 
       // Uses CSS transform for scaling
       if (this.useCssTransforms()) {
-        const g = view.getDrawPane().parentNode;
+        const g = <Element>view.getDrawPane().parentNode;
         const prev = g.getAttribute('transform');
         g.setAttribute('transformOrigin', '0 0');
         g.setAttribute(
@@ -878,10 +888,10 @@ class PrintPreview {
       });
     } finally {
       // Removes everything but the SVG node
-      let tmp = div.firstChild;
+      let tmp = <HTMLElement>div.firstChild;
 
       while (tmp != null) {
-        const next = tmp.nextSibling;
+        const next = <HTMLElement>tmp.nextSibling;
         const name = tmp.nodeName.toLowerCase();
 
         // Note: Width and height are required in FF 11
@@ -889,14 +899,14 @@ class PrintPreview {
           tmp.style.overflow = 'hidden';
           tmp.style.position = 'relative';
           tmp.style.top = `${this.marginTop}px`;
-          tmp.setAttribute('width', clip.width);
-          tmp.setAttribute('height', clip.height);
+          tmp.setAttribute('width', String(clip.width));
+          tmp.setAttribute('height', String(clip.height));
           tmp.style.width = '';
           tmp.style.height = '';
         }
         // Tries to fetch all text labels and only text labels
         else if (tmp.style.cursor !== 'default' && name !== 'div') {
-          tmp.parentNode.removeChild(tmp);
+          (<Element>tmp.parentNode).removeChild(tmp);
         }
 
         tmp = next;
@@ -912,7 +922,7 @@ class PrintPreview {
       }
 
       // Completely removes the overlay pane to remove more handles
-      view.overlayPane.parentNode.removeChild(view.overlayPane);
+      (<Element>view.overlayPane.parentNode).removeChild(view.overlayPane);
 
       // Restores the state of the view
       this.graph.setEnabled(graphEnabled);
@@ -923,7 +933,9 @@ class PrintPreview {
       view.drawPane = drawPane;
       view.overlayPane = overlayPane;
       view.translate = translate;
-      temp.destroy();
+      if (temp) {
+        temp.destroy();
+      }
       view.setEventsEnabled(eventsEnabled);
     }
   }
@@ -957,14 +969,14 @@ class PrintPreview {
   /**
    * Returns the pages to be added before the print output. This returns null.
    */
-  getCoverPages(): any {
+  getCoverPages(width: number, height: number): any {
     return null;
   }
 
   /**
    * Returns the pages to be added after the print output. This returns null.
    */
-  getAppendices(): any {
+  getAppendices(width: number, height: number): any {
     return null;
   }
 

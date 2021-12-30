@@ -265,7 +265,7 @@ class MaxToolbar extends EventSource {
   addSwitchMode(
     title: string, 
     icon: string, funct: () => void, 
-    pressedIcon: string, 
+    pressedIcon: string | null=null, 
     style: string='mxToolbarMode'
   ) {
     const img = <HTMLImageElementWithProps>document.createElement('img');

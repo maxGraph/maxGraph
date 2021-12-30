@@ -20,6 +20,7 @@ import {
   NONE,
   NS_SVG,
   NS_XLINK,
+  SHADOWCOLOR,
   WORD_WRAP,
 } from '../../util/constants';
 import Rectangle from '../geometry/Rectangle';
@@ -871,7 +872,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       shadow.getAttribute('fill') !== 'none' &&
       (!Client.IS_FF || shadow.getAttribute('fill') !== 'transparent')
     ) {
-      shadow.setAttribute('fill', s.shadowColor);
+      shadow.setAttribute('fill', <string>(s.shadowColor ? s.shadow : SHADOWCOLOR));
     }
 
     if (shadow.getAttribute('stroke') !== 'none' && s.shadowColor && s.shadowColor !== NONE) {

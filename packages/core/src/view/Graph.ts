@@ -85,6 +85,7 @@ class Graph extends EventSource {
   graphModelChangeListener: Function | null = null;
   paintBackground: Function | null = null;
   foldingEnabled: null | boolean = null;
+  isConstrainedMoving: boolean = false;
 
   /*****************************************************************************
    * Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)

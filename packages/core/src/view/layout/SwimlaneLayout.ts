@@ -179,7 +179,7 @@ class SwimlaneLayout extends GraphLayout {
    * @param parent Parent <Cell> that contains the children to be laid out.
    * @param swimlanes Ordered array of swimlanes to be laid out
    */
-  execute(parent: Cell, swimlanes: CellArray): void {
+  execute(parent: Cell, swimlanes: CellArray | null=null): void {
     this.parent = parent;
     const { model } = this.graph;
     this.edgesCache = new Dictionary();
@@ -199,7 +199,7 @@ class SwimlaneLayout extends GraphLayout {
     }
 
     if (parent == null) {
-      parent = swimlanes[0].getParent();
+      parent = <Cell>swimlanes[0].getParent();
     }
 
     //  Maintaining parent location
@@ -207,7 +207,7 @@ class SwimlaneLayout extends GraphLayout {
     this.parentY = null;
 
     if (
-      parent !== this.root &&
+      parent !== this.graph.getDataModel().root &&
       parent.isVertex() != null &&
       this.maintainParentLocation
     ) {
@@ -593,7 +593,7 @@ class SwimlaneLayout extends GraphLayout {
       for (let i = 0; i < roots.length; i += 1) {
         const vertexSet = Object();
         hierarchyVertices.push(vertexSet);
-        this.traverse(roots[i], true, null, allVertexSet, vertexSet, hierarchyVertices, null);
+        this.traverse(roots[i], true, null, allVertexSet, vertexSet, hierarchyVertices, null, i);  // CHECK THIS PARAM!! ====================
       }
     }
 
@@ -697,14 +697,15 @@ class SwimlaneLayout extends GraphLayout {
    * @param allVertices Array of cell paths for the visited cells.
    * @param swimlaneIndex the laid out order index of the swimlane vertex is contained in
    */
+  // @ts-ignore
   traverse(
-    vertex: Cell,
+    vertex: Cell | null=null,
     directed: boolean,
     edge: Cell | null,
-    allVertices: { [key: string]: Cell },
+    allVertices: { [key: string]: Cell } | null=null,
     currentComp: { [key: string]: Cell },
     hierarchyVertices: GraphHierarchyNode[],
-    filledVertexSet: { [key: string]: Cell } | null,
+    filledVertexSet: { [key: string]: Cell } | null=null,
     swimlaneIndex: number
   ) {
     if (vertex != null && allVertices != null) {

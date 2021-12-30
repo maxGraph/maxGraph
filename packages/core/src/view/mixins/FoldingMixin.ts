@@ -75,6 +75,7 @@ type PartialGraph = Pick<
   | 'getPreferredSizeForCell'
   | 'getSelectionCells'
   | 'stopEditing'
+  | 'batchUpdate'
 >;
 type PartialFolding = Pick<
   Graph,

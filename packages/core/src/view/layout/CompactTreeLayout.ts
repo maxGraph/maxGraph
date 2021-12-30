@@ -946,7 +946,7 @@ export class CompactTreeLayout extends GraphLayout {
     child = node.child;
 
     for (let j = 0; j < sortedCells.length; j++) {
-      const childCell = <Cell>sortedCells[j].cell.cell;
+      const childCell = <Cell>(<_mxCompactTreeLayoutNode>sortedCells[j].cell).cell;
       const childBounds = this.getVertexBounds(childCell);
       const edges = this.graph.getEdgesBetween(parentCell, childCell, false);
 

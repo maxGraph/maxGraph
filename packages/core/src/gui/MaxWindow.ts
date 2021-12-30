@@ -990,10 +990,16 @@ export const popup = (content: string, isInternalWindow: boolean=false) => {
     // Wraps up the XML content in a textarea
     if (Client.IS_NS) {
       const wnd = window.open();
+      if (!wnd) {
+        throw new Error('Permission not granted to open popup window');
+      }
       wnd.document.writeln(`<pre>${htmlEntities(content)}</pre`);
       wnd.document.close();
     } else {
       const wnd = window.open();
+      if (!wnd) {
+        throw new Error('Permission not granted to open popup window');
+      }
       const pre = wnd.document.createElement('pre');
       pre.innerHTML = htmlEntities(content, false)
         .replace(/\n/g, '<br>')

@@ -24,6 +24,7 @@ import { NODETYPE } from '../util/constants';
 import Translations from '../util/Translations';
 import MaxLog from '../gui/MaxLog';
 import Codec from '../serialization/Codec';
+import { DropHandler } from 'src/view/other/DragSource';
 
 /**
  * Toolbar for the editor. This modifies the state of the graph
@@ -173,7 +174,7 @@ export class EditorToolbar {
    * @param title - String that represents the title of the combo.
    * @param action - Name of the action to execute in {@link editor}.
    */
-  addActionOption(combo: HTMLElement, title: string, action: string): void {
+  addActionOption(combo: HTMLSelectElement, title: string, action: string): void {
     const clickHandler = () => {
       (<Editor>this.editor).execute(action);
     };
@@ -188,7 +189,7 @@ export class EditorToolbar {
    * @param title - String that represents the title of the combo.
    * @param value - Object that represents the value of the option.
    */
-  addOption(combo: HTMLSelectElement, title: string, value: object): HTMLElement {
+  addOption(combo: HTMLSelectElement, title: string, value: string | ((evt: any) => void) | null): HTMLElement {
     return (<MaxToolbar>this.toolbar).addOption(combo, title, value);
   }
 
@@ -241,7 +242,7 @@ export class EditorToolbar {
     icon: string, 
     ptype: Function | Cell, 
     pressed: string, 
-    insert, 
+    insert: (editor: Editor, cell: Cell, me: MouseEvent, cellUnderMousePointer?: Cell | null) => void, 
     toggle: boolean=true
   ): HTMLImageElement | HTMLButtonElement {
     // Creates a wrapper function that is in charge of constructing
@@ -258,7 +259,7 @@ export class EditorToolbar {
 
     // Defines the function for a click event on the graph
     // after this item has been selected in the toolbar
-    const clickHandler = (evt: MouseEvent, cell: Cell) => {
+    const clickHandler = (evt: MouseEvent, cell: Cell | null) => {
       if (typeof insert === 'function') {
         insert((<Editor>this.editor), factory(), evt, cell);
       } else {
@@ -273,7 +274,7 @@ export class EditorToolbar {
 
     // Creates a wrapper function that calls the click handler without
     // the graph argument
-    const dropHandler = (graph: Graph, evt: MouseEvent, cell: Cell) => {
+    const dropHandler: DropHandler = (graph: Graph, evt: MouseEvent, cell: Cell | null) => {
       clickHandler(evt, cell);
     };
 
@@ -406,7 +407,7 @@ export class EditorToolbar {
    * @param img - DOM node that represents the image.
    * @param dropHandler - Function that handles a drop of the image.
    */
-  installDropHandler(img: HTMLElement, dropHandler: Function): void {
+  installDropHandler(img: HTMLElement, dropHandler: DropHandler): void {
     const sprite = document.createElement('img');
     sprite.setAttribute('src', <string>img.getAttribute('src'));
 
@@ -431,8 +432,8 @@ export class EditorToolbar {
    */
   destroy(): void {
     if (this.resetHandler != null) {
-      (<Editor>this.editor).graph.removeListener('dblclick', this.resetHandler);
-      (<Editor>this.editor).removeListener('escape', this.resetHandler);
+      (<Editor>this.editor).graph.removeListener(this.resetHandler);
+      (<Editor>this.editor).removeListener(this.resetHandler);
       this.resetHandler = null;
     }
 
@@ -576,11 +577,12 @@ export class EditorToolbarCodec extends ObjectCodec {
               const toggle = node.getAttribute('toggle') != '0';
               const text = getTextContent(<Text><unknown>node);
               let elt = null;
+              let funct: any;
 
               if (action != null) {
                 elt = into.addItem(as, icon, action, pressedIcon);
               } else if (mode != null) {
-                const funct = DefaultToolbarCodec.allowEval
+                funct = EditorToolbarCodec.allowEval
                   ? eval(text)
                   : null;
                 elt = into.addMode(as, icon, mode, pressedIcon, funct);
@@ -601,7 +603,7 @@ export class EditorToolbarCodec extends ObjectCodec {
                 if (
                   text != null &&
                   text.length > 0 &&
-                  DefaultToolbarCodec.allowEval
+                  EditorToolbarCodec.allowEval
                 ) {
                   insertFunction = eval(text);
                 }
@@ -640,8 +642,8 @@ export class EditorToolbarCodec extends ObjectCodec {
 
                       if (template != null) {
                         const clone = template.clone();
-                        const style =
-                          select.options[select.selectedIndex].cellStyle;
+                        // @ts-ignore
+                        const style = select.options[select.selectedIndex].cellStyle;
 
                         if (style != null) {
                           clone.setStyle(style);

@@ -229,7 +229,7 @@ export const show = (
     while (node != null) {
       const clone = node.cloneNode(true);
 
-      if (node == graph.view.drawPane.ownerSVGElement) {
+      if (node == (<SVGElement>graph.view.drawPane).ownerSVGElement) {
         outer.appendChild(clone);
         svg = clone as SVGElement;
       } else {

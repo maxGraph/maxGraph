@@ -164,7 +164,7 @@ class SwimlaneModel {
   /**
    * An array of the number of ranks within each swimlane
    */
-  ranksPerGroup: { [key: number]: number } | null = null;
+  ranksPerGroup: number[] | null = null;
 
   /**
    * Creates all edges in the internal model

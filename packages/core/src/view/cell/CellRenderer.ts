@@ -625,7 +625,7 @@ class CellRenderer {
     control: Shape,
     handleEvents: boolean,
     clickHandler: EventListener
-  ): Element {
+  ): Element | null {
     const graph = <Graph>state.view.graph;
 
     // In the special case where the label is in HTML and the display is SVG the image

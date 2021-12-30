@@ -268,7 +268,6 @@ class MaxXmlRequest {
       }
 
       if (
-        document.documentMode == null &&
         window.XMLHttpRequest &&
         timeout != null &&
         ontimeout != null
@@ -341,10 +340,8 @@ class MaxXmlRequest {
     form.style.display = 'none';
     form.style.visibility = 'hidden';
 
-    const pars =
-      this.params.indexOf('&') > 0
-        ? this.params.split('&')
-        : this.params.split();
+    const params = <string>this.params;
+    const pars = params.indexOf('&') > 0 ? params.split('&') : params.split(' ');
 
     // Adds the parameters as textareas to the form
     for (let i = 0; i < pars.length; i += 1) {
@@ -458,16 +455,7 @@ export const get = (
 
   if (headers) {
     req.setRequestHeaders = (request, params) => {
-      setRequestHeaders.apply(this, [
-        url,
-        onload,
-        onerror,
-        binary,
-        timeout,
-        ontimeout,
-        headers,
-      ]);
-
+      setRequestHeaders.apply(this, [request, params]);
       for (const key in headers) {
         request.setRequestHeader(key, headers[key]);
       }
@@ -491,15 +479,18 @@ export const get = (
  * @param onload Callback with array of <mxXmlRequests>.
  * @param onerror Optional function to execute on error.
  */
-export const getAll = (urls, onload, onerror) => {
+export const getAll = (
+  urls: string[], 
+  onload: (arg0: any) => void, 
+  onerror: () => void
+) => {
   let remain = urls.length;
-  const result = [];
+  const result: MaxXmlRequest[] = [];
   let errors = 0;
   const err = () => {
     if (errors == 0 && onerror != null) {
       onerror();
     }
-
     errors++;
   };
 
@@ -507,7 +498,7 @@ export const getAll = (urls, onload, onerror) => {
     ((url, index) => {
       get(
         url,
-        req => {
+        (req: MaxXmlRequest) => {
           const status = req.getStatus();
 
           if (status < 200 || status > 299) {

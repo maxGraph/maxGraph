@@ -498,14 +498,13 @@ class ObjectCodec {
    * @param name Name of the attribute to be converted.
    * @param value Value to be converted.
    */
-  convertAttributeToXml(enc: Codec, obj: any, name: string, value: any): any {
+  convertAttributeToXml(enc: Codec, obj: any, name: string | null, value: any, node: Element): any {
     // Makes sure to encode boolean values as numeric values
     if (this.isBooleanAttribute(enc, obj, name, value)) {
       // Checks if the value is true (do not use the value as is, because
       // this would check if the value is not null, so 0 would be true)
       value = value == true ? '1' : '0';
     }
-
     return value;
   }
 
@@ -517,7 +516,7 @@ class ObjectCodec {
    * @param name Name of the attribute to be converted.
    * @param value Value of the attribute to be converted.
    */
-  isBooleanAttribute(enc: Codec, obj: any, name: string, value: any): boolean {
+  isBooleanAttribute(enc: Codec, obj: any, name: string | null, value: any): boolean {
     return typeof value.length === 'undefined' && (value == true || value == false);
   }
 
@@ -655,9 +654,9 @@ class ObjectCodec {
       }
     }
 
-    node = this.beforeDecode(dec, node, obj);
-    this.decodeNode(dec, node, obj);
-    return this.afterDecode(dec, node, obj);
+    let _node = this.beforeDecode(dec, node, obj);
+    this.decodeNode(dec, _node, obj);
+    return this.afterDecode(dec, _node, obj);
   }
 
   /**
@@ -667,7 +666,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Objec to encode the node into.
    */
-  decodeNode(dec: Codec, node: Element, obj: any): void {
+  decodeNode(dec: Codec, node: Element | null, obj: any): void {
     if (node != null) {
       this.decodeAttributes(dec, node, obj);
       this.decodeChildren(dec, node, obj);
@@ -887,7 +886,7 @@ class ObjectCodec {
    * @param node XML node to be decoded.
    * @param obj Object that represents the default decoding.
    */
-  afterDecode(dec: Codec, node: Element, obj?: any): any {
+  afterDecode(dec: Codec, node: Element | null, obj?: any): any {
     return obj;
   }
 }

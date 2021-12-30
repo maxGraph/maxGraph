@@ -56,7 +56,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
       rootsArray = [];
 
       for (let i = 0; i < modelRoots.length; i += 1) {
-        rootsArray[i] = model.vertexMapper.get(modelRoots[i]);
+        rootsArray[i] = <GraphHierarchyNode>model.vertexMapper.get(modelRoots[i]);
       }
     }
 
@@ -103,7 +103,7 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
         seenNodes[node.id] = node;
         delete unseenNodes[node.id];
       },
-      unseenNodes,
+      Object.values(unseenNodes),
       true,
       seenNodesCopy
     );

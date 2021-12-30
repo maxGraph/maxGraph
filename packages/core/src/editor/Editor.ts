@@ -37,7 +37,7 @@ import PopupMenuHandler from '../view/handler/PopupMenuHandler';
 import RubberBandHandler from '../view/handler/RubberBandHandler';
 import InternalEvent from '../view/event/InternalEvent';
 import InternalMouseEvent from '../view/event/InternalMouseEvent';
-import { MouseListenerSet } from '../types';
+import { CellStateStyles, MouseListenerSet } from '../types';
 import ConnectionHandler from '../view/handler/ConnectionHandler';
 import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
@@ -1518,6 +1518,8 @@ export class Editor extends EventSource {
     if (this.graph.container == null) {
       // Creates the graph instance inside the given container and render hint
       // this.graph = new mxGraph(container, null, this.graphRenderHint);
+
+      // @ts-ignore  TODO: FIXME!! ==============================================================================================
       this.graph.init(container);
 
       // Install rubberband selection as the last
@@ -2002,11 +2004,14 @@ export class Editor extends EventSource {
    * @param first
    * @param second
    */
-  swapStyles(first: string, second: string): void {
+  swapStyles(first: keyof CellStateStyles, second: string): void {
+    // @ts-ignore
     const style = this.graph.getStylesheet().styles[second];
     this.graph
       .getView()
+      // @ts-ignore
       .getStylesheet()
+      // @ts-ignore
       .putCellStyle(second, this.graph.getStylesheet().styles[first]);
     this.graph.getStylesheet().putCellStyle(first, style);
     this.graph.refresh();
@@ -2823,7 +2828,8 @@ export class EditorCodec extends ObjectCodec {
         } else if (as === 'status') {
           editor.setStatusContainer(element);
         } else if (as === 'map') {
-          editor.setMapContainer(element);
+          throw new Error("Unimplemented");
+          //editor.setMapContainer(element);
         }
       } else if (tmp.nodeName === 'resource') {
         Translations.add(<string>tmp.getAttribute('basename'));

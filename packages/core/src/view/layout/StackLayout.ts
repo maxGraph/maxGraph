@@ -197,9 +197,9 @@ class StackLayout extends GraphLayout {
   /**
    * Returns the size for the parent container or the size of the graph container if the parent is a layer or the root of the model.
    */
-  getParentSize(parent: Cell): Rectangle {
+  getParentSize(parent: Cell): Geometry {
     const model = this.graph.getDataModel();
-    let pgeo = <Rectangle>parent.getGeometry();
+    let pgeo = <Geometry>parent.getGeometry();
 
     // Handles special case where the parent is either a layer with no
     // geometry or the current root of the view in which case the size
@@ -211,7 +211,7 @@ class StackLayout extends GraphLayout {
     ) {
       const width = this.graph.container.offsetWidth - 1;
       const height = this.graph.container.offsetHeight - 1;
-      pgeo = new Rectangle(0, 0, width, height);
+      pgeo = new Geometry(0, 0, width, height);
     }
     return pgeo;
   }
