@@ -48,8 +48,8 @@ import TooltipHandler from './TooltipHandler';
 
 /**
  * In-place editor for the graph. To control this editor, use
- * <mxGraph.invokesStopCellEditing>, <mxGraph.enterStopsCellEditing> and
- * <mxGraph.escapeEnabled>. If <mxGraph.enterStopsCellEditing> is true then
+ * {@link Graph#invokesStopCellEditing}, {@link Graph#enterStopsCellEditing} and
+ * {@link Graph#escapeEnabled}. If {@link Graph#enterStopsCellEditing} is true then
  * ctrl-enter or shift-enter can be used to create a linefeed. The F2 and
  * escape keys can always be used to stop editing.
  *
@@ -72,7 +72,7 @@ import TooltipHandler from './TooltipHandler';
  * ```
  *
  * Note that this hook is only called if <autoSize> is false. If <autoSize> is true,
- * then <mxShape.getLabelBounds> is used to compute the current bounds of the textbox.
+ * then {@link Shape#getLabelBounds} is used to compute the current bounds of the textbox.
  *
  * The textarea uses the mxCellEditor CSS class. You can modify this class in
  * your custom CSS. Note: You should modify the CSS after loading the client
@@ -146,7 +146,7 @@ import TooltipHandler from './TooltipHandler';
  *
  * Constructs a new in-place editor for the specified graph.
  *
- * @param graph Reference to the enclosing <mxGraph>.
+ * @param graph Reference to the enclosing {@link Graph}.
  */
 class CellEditorHandler implements GraphPlugin {
   static pluginId = 'CellEditorHandler';
@@ -187,7 +187,7 @@ class CellEditorHandler implements GraphPlugin {
   textDirection: '' | 'auto' | 'ltr' | 'rtl' | null = null;
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
@@ -293,7 +293,7 @@ class CellEditorHandler implements GraphPlugin {
 
   /**
    * Creates the <textarea> and installs the event listeners. The key handler
-   * updates the <modified> state.
+   * updates the {@link odified} state.
    */
   init() {
     this.textarea = document.createElement('div');
@@ -310,7 +310,7 @@ class CellEditorHandler implements GraphPlugin {
   }
 
   /**
-   * Called in <stopEditing> if cancel is false to invoke <mxGraph.labelChanged>.
+   * Called in <stopEditing> if cancel is false to invoke {@link Graph#labelChanged}.
    */
   // applyValue(state: CellState, value: string): void;
   applyValue(state: CellState, value: any) {
@@ -461,7 +461,7 @@ class CellEditorHandler implements GraphPlugin {
 
   /**
    * Returns true if the given keydown event should stop cell editing. This
-   * returns true if F2 is pressed of if <mxGraph.enterStopsCellEditing> is true
+   * returns true if F2 is pressed of if {@link Graph#enterStopsCellEditing} is true
    * and enter is pressed without control or shift.
    */
   isStopEditingEvent(evt: KeyboardEvent) {
@@ -482,7 +482,7 @@ class CellEditorHandler implements GraphPlugin {
   }
 
   /**
-   * Returns <modified>.
+   * Returns {@link odified}.
    */
   resize() {
     const state = this.editingCell
@@ -926,7 +926,7 @@ class CellEditorHandler implements GraphPlugin {
   }
 
   /**
-   * Returns the <mxRectangle> that defines the bounds of the editor.
+   * Returns the {@link Rectangle} that defines the bounds of the editor.
    */
   getEditorBounds(state: CellState) {
     const isEdge = state.cell.isEdge();

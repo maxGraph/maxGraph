@@ -18,9 +18,9 @@ import type { GraphPlugin } from '../../types';
 import EventSource from '../event/EventSource';
 
 /**
- * Graph event handler that displays tooltips. <mxGraph.getTooltip> is used to
+ * Graph event handler that displays tooltips. {@link Graph#getTooltip} is used to
  * get the tooltip for a cell or handle. This handler is built-into
- * <mxGraph.tooltipHandler> and enabled using <mxGraph.setTooltips>.
+ * {@link Graph#tooltipHandler} and enabled using {@link Graph#setTooltips}.
  *
  * Example:
  *
@@ -34,7 +34,7 @@ import EventSource from '../event/EventSource';
  * delay (in milliseconds). If no delay is specified then a default delay
  * of 500 ms (0.5 sec) is used.
  *
- * @param graph Reference to the enclosing <mxGraph>.
+ * @param graph Reference to the enclosing {@link Graph}.
  * @param delay Optional delay in milliseconds.
  */
 class TooltipHandler implements GraphPlugin {
@@ -80,7 +80,7 @@ class TooltipHandler implements GraphPlugin {
   zIndex = 10005;
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 

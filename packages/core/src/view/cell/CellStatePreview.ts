@@ -24,12 +24,12 @@ class CellStatePreview {
   }
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   deltas: Dictionary<Cell, { point: Point; state: CellState }>;
 

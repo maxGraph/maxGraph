@@ -124,7 +124,7 @@ import CellArray from '../view/cell/CellArray';
 
 
 /**
- * Returns the client size for the current document as an <mxRectangle>.
+ * Returns the client size for the current document as an {@link Rectangle}.
  */
 export const getDocumentSize = () => {
   const b = document.body;
@@ -170,7 +170,7 @@ export const fit = (node: HTMLElement) => {
 };
 
 /**
- * Returns the offset for the specified container as an <mxPoint>. The
+ * Returns the offset for the specified container as an {@link Point}. The
  * offset is the distance from the top left corner of the container to the
  * top left corner of the document.
  *
@@ -236,7 +236,7 @@ export const getDocumentScrollOrigin = (doc: Document) => {
 };
 
 /**
- * Returns the top, left corner of the viewrect as an <mxPoint>.
+ * Returns the top, left corner of the viewrect as an {@link Point}.
  *
  * @param node DOM node whose scroll origin should be returned.
  * @param includeAncestors Whether the scroll origin of the ancestors should be
@@ -282,7 +282,7 @@ export const getScrollOrigin = (
 
 /**
  * Converts the specified point (x, y) using the offset of the specified
- * container and returns a new <mxPoint> with the result.
+ * container and returns a new {@link Point} with the result.
  *
  * ```javascript
  * let pt = mxUtils.convertPoint(graph.container,
@@ -420,7 +420,7 @@ export const removeAllStylenames = (style: string) => {
  * removes the key from the styles if the value is null.
  *
  * @param model <Transactions> to execute the transaction in.
- * @param cells Array of <mxCells> to be updated.
+ * @param cells Array of {@link Cells} to be updated.
  * @param key Key of the style to be changed.
  * @param value New value for the given key.
  */
@@ -513,7 +513,7 @@ export const setStyle = (style: string | null, key: string, value: any) => {
  * Toggles the bold font style.
  *
  * @param model <Transactions> that contains the cells.
- * @param cells Array of <mxCells> to change the style for.
+ * @param cells Array of {@link Cells} to change the style for.
  * @param key Key of the style to be changed.
  * @param flag Integer for the bit to be changed.
  * @param value Optional boolean value for the flag.
@@ -612,7 +612,7 @@ export const setStyleFlag = (
 };
 
 /**
- * Returns an <mxRectangle> with the size (width and height in pixels) of
+ * Returns an {@link Rectangle} with the size (width and height in pixels) of
  * the given string. The string may contain HTML markup. Newlines should be
  * converted to <br> before calling this method. The caller is responsible
  * for sanitizing the HTML markup.
@@ -626,9 +626,9 @@ export const setStyleFlag = (
  *
  * @param text String whose size should be returned.
  * @param fontSize Integer that specifies the font size in pixels. Default is
- * <mxConstants.DEFAULT_FONTSIZE>.
+ * {@link Constants#DEFAULT_FONTSIZE}.
  * @param fontFamily String that specifies the name of the font family. Default
- * is <mxConstants.DEFAULT_FONTFAMILY>.
+ * is {@link Constants#DEFAULT_FONTFAMILY}.
  * @param textWidth Optional width for text wrapping.
  * @param fontStyle Optional font style.
  */
@@ -725,7 +725,7 @@ export const setStyleFlag = (
 };
 
 /**
- * Returns an <mxPoint> that represents the horizontal and vertical alignment
+ * Returns an {@link Point} that represents the horizontal and vertical alignment
  * for numeric computations. X is -0.5 for center, -1 for right and 0 for
  * left alignment. Y is -0.5 for middle, -1 for bottom and 0 for top
  * alignment. Default values for missing arguments is top, left.

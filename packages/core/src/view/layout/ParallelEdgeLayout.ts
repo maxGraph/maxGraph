@@ -14,7 +14,7 @@ import Cell from '../cell/Cell';
 import Geometry from '../geometry/Geometry';
 
 /**
- * Extends <mxGraphLayout> for arranging parallel edges. This layout works
+ * Extends {@link GraphLayout} for arranging parallel edges. This layout works
  * on edges for all pairs of vertices where there is more than one edge
  * connecting the latter.
  *
@@ -71,7 +71,7 @@ class ParallelEdgeLayout extends GraphLayout {
   checkOverlap: boolean = false;
 
   /**
-   * Implements <mxGraphLayout.execute>.
+   * Implements {@link GraphLayout#execute}.
    */
   execute(parent: Cell, cells: CellArray | null=null): void {
     const lookup = this.findParallels(parent, cells);

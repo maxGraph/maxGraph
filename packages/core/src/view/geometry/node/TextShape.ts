@@ -390,7 +390,7 @@ class TextShape extends Shape {
 
   /**
    * Used to determine the automatic text direction. Returns
-   * <mxConstants.TEXT_DIRECTION_LTR> or <mxConstants.TEXT_DIRECTION_RTL>
+   * {@link Constants#TEXT_DIRECTION_LTR} or {@link Constants#TEXT_DIRECTION_RTL}
    * depending on the contents of <value>. This is not invoked for HTML, wrapped
    * content or if <value> is a DOM node.
    */
@@ -540,7 +540,7 @@ class TextShape extends Shape {
   }
 
   /**
-   * Inverts the bounds if <mxShape.isBoundsInverted> returns true or if the
+   * Inverts the bounds if {@link Shape#isBoundsInverted} returns true or if the
    * horizontal style is false.
    */
   isPaintBoundsInverted() {
@@ -907,14 +907,14 @@ class TextShape extends Shape {
   }
 
   /**
-   * Returns the spacing as an <mxPoint>.
+   * Returns the spacing as an {@link Point}.
    */
   updateMargin() {
     this.margin = getAlignmentAsPoint(this.align, this.valign);
   }
 
   /**
-   * Returns the spacing as an <mxPoint>.
+   * Returns the spacing as an {@link Point}.
    */
   getSpacing() {
     let dx = 0;

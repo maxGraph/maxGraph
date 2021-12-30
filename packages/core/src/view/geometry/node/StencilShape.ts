@@ -57,7 +57,7 @@ class StencilShape extends Shape {
   desc: Element;
 
   /**
-   * Holds an array of <mxConnectionConstraints> as defined in the shape.
+   * Holds an array of {@link ConnectionConstraints} as defined in the shape.
    */
   constraints: ConnectionConstraint[] = [];
 
@@ -137,7 +137,7 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Parses the given XML node and returns its <mxConnectionConstraint>.
+   * Parses the given XML node and returns its {@link ConnectionConstraint}.
    */
   parseConstraint(node: Element) {
     const x = Number(node.getAttribute('x'));
@@ -150,7 +150,7 @@ class StencilShape extends Shape {
 
   /**
    * Gets the given attribute as a text. The return value from <evaluateAttribute>
-   * is used as a key to <mxResources.get> if the localized attribute in the text
+   * is used as a key to {@link Resources#get} if the localized attribute in the text
    * node is 1 or if <defaultLocalized> is true.
    */
   evaluateTextAttribute(node: Element, attribute: string, shape: Shape) {
@@ -275,10 +275,10 @@ class StencilShape extends Shape {
   /**
    * Returns a rectangle that contains the offset in x and y and the horizontal
    * and vertical scale in width and height used to draw this shape inside the
-   * given <mxRectangle>.
+   * given {@link Rectangle}.
    *
-   * @param shape <mxShape> to be drawn.
-   * @param bounds <mxRectangle> that should contain the stencil.
+   * @param shape {@link Shape} to be drawn.
+   * @param bounds {@link Rectangle} that should contain the stencil.
    * @param direction Optional direction of the shape to be darwn.
    */
   computeAspect(

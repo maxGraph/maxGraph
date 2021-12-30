@@ -378,7 +378,7 @@ class MaxXmlRequest {
 
 /**
  * Loads the specified URL *synchronously* and returns the <MaxXmlRequest>.
- * Throws an exception if the file cannot be loaded. See <mxUtils.get> for
+ * Throws an exception if the file cannot be loaded. See {@link Utils#get} for
  * an asynchronous implementation.
  *
  * Example:
@@ -408,7 +408,7 @@ export const load = (url: string) => {
  * Loads the specified URL *asynchronously* and invokes the given functions
  * depending on the request status. Returns the <MaxXmlRequest> in use. Both
  * functions take the <MaxXmlRequest> as the only parameter. See
- * <mxUtils.load> for a synchronous implementation.
+ * {@link Utils#load} for a synchronous implementation.
  *
  * Example:
  *
@@ -476,7 +476,7 @@ export const get = (
  * once on the first error or invalid response.
  *
  * @param urls Array of URLs to be loaded.
- * @param onload Callback with array of <mxXmlRequests>.
+ * @param onload Callback with array of {@link XmlRequests}.
  * @param onerror Optional function to execute on error.
  */
 export const getAll = (

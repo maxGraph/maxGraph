@@ -45,7 +45,7 @@ class Client {
 
   /**
    * Optional global config variable to toggle loading of the two resource files
-   * in <mxGraph> and <Editor>. Default is true. NOTE: This is a global variable,
+   * in {@link Graph} and <Editor>. Default is true. NOTE: This is a global variable,
    * not a variable of Client. If this is false, you can use <Client.loadResources>
    * with its callback to load the default bundles asynchronously.
    *
@@ -159,7 +159,7 @@ class Client {
   /**
    * Defines the language of the client, eg. en for english, de for german etc.
    * The special value 'none' will disable all built-in internationalization and
-   * resource loading. See <mxResources.getSpecialBundle> for handling identifiers
+   * resource loading. See {@link Resources#getSpecialBundle} for handling identifiers
    * with and without a dash.
    *
    * Set mxLanguage prior to loading the Client library as follows to override
@@ -178,12 +178,12 @@ class Client {
    * <Editor.askZoomResource>, <Editor.lastSavedResource>,
    * <Editor.currentFileResource>, <Editor.propertiesResource>,
    * <Editor.tasksResource>, <Editor.helpResource>, <Editor.outlineResource>,
-   * <mxElbowEdgeHandler.doubleClickOrientationResource>, <mxUtils.errorResource>,
-   * <mxUtils.closeResource>, <mxGraphSelectionModel.doneResource>,
-   * <mxGraphSelectionModel.updatingSelectionResource>, <mxGraphView.doneResource>,
-   * <mxGraphView.updatingDocumentResource>, <mxCellRenderer.collapseExpandResource>,
-   * <mxGraph.containsValidationErrorsResource> and
-   * <mxGraph.alreadyConnectedResource>.
+   * {@link ElbowEdgeHandler#doubleClickOrientationResource}, {@link Utils#errorResource},
+   * {@link Utils#closeResource}, {@link GraphSelectionModel#doneResource},
+   * {@link GraphSelectionModel#updatingSelectionResource}, {@link GraphView#doneResource},
+   * {@link GraphView#updatingDocumentResource}, {@link CellRenderer#collapseExpandResource},
+   * {@link Graph#containsValidationErrorsResource} and
+   * {@link Graph#alreadyConnectedResource}.
    */
   static language = typeof window !== 'undefined' ? navigator.language : 'en';
 
@@ -223,7 +223,7 @@ class Client {
   /**
    * Defines the optional array of all supported language extensions. The default
    * language does not have to be part of this list. See
-   * <mxResources.isLanguageSupported>.
+   * {@link Resources#isLanguageSupported}.
    *
    * ```javascript
    * <script type="text/javascript">

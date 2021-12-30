@@ -116,13 +116,13 @@ export const DEFAULT_INVALID_COLOR = '#FF0000';
 
 /**
  * Specifies the default highlight color for shape outlines.
- * Default is #0000FF. This is used in <mxEdgeHandler>.
+ * Default is #0000FF. This is used in {@link EdgeHandler}.
  */
 export const OUTLINE_HIGHLIGHT_COLOR = '#00FF00';
 
 /**
  * Defines the strokewidth to be used for shape outlines.
- * Default is 5. This is used in <mxEdgeHandler>.
+ * Default is 5. This is used in {@link EdgeHandler}.
  */
 export const OUTLINE_HIGHLIGHT_STROKEWIDTH = 5;
 
@@ -524,7 +524,7 @@ export const enum DIRECTION {
  * this value to use the default text direction of the operating system.
  *
  * Constant for text direction automatic. Default is auto. Use this value
- * to find the direction for a given text with <mxText.getAutoDirection>.
+ * to find the direction for a given text with {@link Text#getAutoDirection}.
 *
  * Constant for text direction left to right. Default is ltr. Use this
  * value for left to right text direction.
@@ -595,97 +595,97 @@ export const enum PERIMETER {
 
 export const enum SHAPE {
     /**
-     * Name under which <mxRectangleShape> is registered in <mxCellRenderer>.
+     * Name under which {@link RectangleShape} is registered in {@link CellRenderer}.
      * Default is rectangle.
      */
     RECTANGLE = 'rectangle',
 
     /**
-     * Name under which <mxEllipse> is registered in <mxCellRenderer>.
+     * Name under which {@link Ellipse} is registered in {@link CellRenderer}.
      * Default is ellipse.
      */
     ELLIPSE = 'ellipse',
 
     /**
-     * Name under which <mxDoubleEllipse> is registered in <mxCellRenderer>.
+     * Name under which {@link DoubleEllipse} is registered in {@link CellRenderer}.
      * Default is doubleEllipse.
      */
     DOUBLE_ELLIPSE = 'doubleEllipse',
 
     /**
-     * Name under which <mxRhombus> is registered in <mxCellRenderer>.
+     * Name under which {@link Rhombus} is registered in {@link CellRenderer}.
      * Default is rhombus.
      */
     RHOMBUS = 'rhombus',
 
     /**
-     * Name under which <mxLine> is registered in <mxCellRenderer>.
+     * Name under which {@link Line} is registered in {@link CellRenderer}.
      * Default is line.
      */
     LINE = 'line',
 
     /**
-     * Name under which <mxImageShape> is registered in <mxCellRenderer>.
+     * Name under which {@link ImageShape} is registered in {@link CellRenderer}.
      * Default is image.
      */
     IMAGE = 'image',
 
     /**
-     * Name under which <mxArrow> is registered in <mxCellRenderer>.
+     * Name under which {@link Arrow} is registered in {@link CellRenderer}.
      * Default is arrow.
      */
     ARROW = 'arrow',
 
     /**
-     * Name under which <mxArrowConnector> is registered in <mxCellRenderer>.
+     * Name under which {@link ArrowConnector} is registered in {@link CellRenderer}.
      * Default is arrowConnector.
      */
     ARROW_CONNECTOR = 'arrowConnector',
 
     /**
-     * Name under which <mxLabel> is registered in <mxCellRenderer>.
+     * Name under which {@link Label} is registered in {@link CellRenderer}.
      * Default is label.
      */
     LABEL = 'label',
 
     /**
-     * Name under which <mxCylinder> is registered in <mxCellRenderer>.
+     * Name under which {@link Cylinder} is registered in {@link CellRenderer}.
      * Default is cylinder.
      */
     CYLINDER = 'cylinder',
 
     /**
-     * Name under which <mxSwimlane> is registered in <mxCellRenderer>.
+     * Name under which {@link Swimlane} is registered in {@link CellRenderer}.
      * Default is swimlane.
      */
     SWIMLANE = 'swimlane',
 
     /**
-     * Name under which <mxConnector> is registered in <mxCellRenderer>.
+     * Name under which {@link Connector} is registered in {@link CellRenderer}.
      * Default is connector.
      */
     CONNECTOR = 'connector',
 
     /**
-     * Name under which <mxActor> is registered in <mxCellRenderer>.
+     * Name under which {@link Actor} is registered in {@link CellRenderer}.
      * Default is actor.
      */
     ACTOR = 'actor',
 
     /**
-     * Name under which <mxCloud> is registered in <mxCellRenderer>.
+     * Name under which {@link Cloud} is registered in {@link CellRenderer}.
      * Default is cloud.
      */
     CLOUD = 'cloud',
 
     /**
-     * Name under which <mxTriangle> is registered in <mxCellRenderer>.
+     * Name under which {@link Triangle} is registered in {@link CellRenderer}.
      * Default is triangle. 
      */
     TRIANGLE = 'triangle',
 
     /**
-     * Name under which <mxHexagon> is registered in <mxCellRenderer>.
+     * Name under which {@link Hexagon} is registered in {@link CellRenderer}.
      * Default is hexagon.
      */
     HEXAGON = 'hexagon',

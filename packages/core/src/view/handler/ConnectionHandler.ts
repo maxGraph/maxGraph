@@ -47,10 +47,10 @@ import CellArray from '../cell/CellArray';
 type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) => Cell;
 
 /**
- * Graph event handler that creates new connections. Uses <mxTerminalMarker>
+ * Graph event handler that creates new connections. Uses {@link TerminalMarker}
  * for finding and highlighting the source and target vertices and
  * <factoryMethod> to create the edge instance. This handler is built-into
- * <mxGraph.connectionHandler> and enabled using <mxGraph.setConnectable>.
+ * {@link Graph#connectionHandler} and enabled using {@link Graph#setConnectable}.
  *
  * Example:
  *
@@ -88,12 +88,12 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  * The handler uses a "highlight-paradigm" for indicating if a cell is being
  * used as a source or target terminal, as seen in other diagramming products.
  * In order to allow both, moving and connecting cells at the same time,
- * <mxConstants.DEFAULT_HOTSPOT> is used in the handler to determine the hotspot
+ * {@link Constants#DEFAULT_HOTSPOT} is used in the handler to determine the hotspot
  * of a cell, that is, the region of the cell which is used to trigger a new
  * connection. The constant is a value between 0 and 1 that specifies the
  * amount of the width and height around the center to be used for the hotspot
  * of a cell and its default value is 0.5. In addition,
- * <mxConstants.MIN_HOTSPOT_SIZE> defines the minimum number of pixels for the
+ * {@link Constants#MIN_HOTSPOT_SIZE} defines the minimum number of pixels for the
  * width and height of the hotspot.
  *
  * This solution, while standards compliant, may be somewhat confusing because
@@ -109,7 +109,7 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  * trigger new connections. If this icon is specified, then new connections can
  * only be created if the image is clicked while the cell is being highlighted.
  * The <createIcons> hook may be overridden to create more than one
- * <mxImageShape> for creating new connections, but the default implementation
+ * {@link ImageShape} for creating new connections, but the default implementation
  * supports one image and is used as follows:
  *
  * In order to display the "connect image" whenever the mouse is over the cell,
@@ -127,7 +127,7 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  * ```
  *
  * To install the image, the connectImage field of the mxConnectionHandler must
- * be assigned a new <mxImage> instance:
+ * be assigned a new {@link Image} instance:
  *
  * ```javascript
  * connectImage = new mxImage('images/green-dot.gif', 14, 14);
@@ -161,7 +161,7 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  * Depending on the logic in the handler, this doesn't necessarily have to be the target
  * of the inserted edge. To print the source, target or any optional ports IDs that the
  * edge is connected to, the following code can be used. To get more details about the
- * actual connection point, <mxGraph.getConnectionConstraint> can be used. To resolve
+ * actual connection point, {@link Graph#getConnectionConstraint} can be used. To resolve
  * the port IDs, use <Transactions.getCell>.
  *
  * ```javascript
@@ -188,11 +188,11 @@ type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) 
  *
  * Constructs an event handler that connects vertices using the specified
  * factory method to create the new edges. Modify
- * <mxConstants.ACTIVE_REGION> to setup the region on a cell which triggers
+ * {@link Constants#ACTIVE_REGION} to setup the region on a cell which triggers
  * the creation of a new connection or use connect icons as explained
  * above.
  *
- * @param graph Reference to the enclosing <mxGraph>.
+ * @param graph Reference to the enclosing {@link Graph}.
  * @param factoryMethod Optional function to create the edge. The function takes
  * the source and target <Cell> as the first and second argument and an
  * optional cell style from the preview as the third argument. It returns
@@ -216,7 +216,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   waypoints: Point[] = [];
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
@@ -230,7 +230,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Specifies if icons should be displayed inside the graph container instead
    * of the overlay pane. This is used for HTML labels on vertices which hide
-   * the connect icon. This has precendence over <moveIconBack> when set
+   * the connect icon. This has precendence over {@link oveIconBack} when set
    * to true. Default is false.
    */
   moveIconFront = false;
@@ -243,7 +243,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   moveIconBack = false;
 
   /**
-   * <mxImage> that is used to trigger the creation of a new connection. This
+   * {@link Image} that is used to trigger the creation of a new connection. This
    * is used in <createIcons>. Default is null.
    */
 
@@ -276,12 +276,12 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   createTarget = false;
 
   /**
-   * Holds the <mxTerminalMarker> used for finding source and target cells.
+   * Holds the {@link TerminalMarker} used for finding source and target cells.
    */
   marker: CellMarker;
 
   /**
-   * Holds the <mxConstraintHandler> used for drawing and highlighting
+   * Holds the {@link ConstraintHandler} used for drawing and highlighting
    * constraints.
    */
   constraintHandler: ConstraintHandler;
@@ -305,14 +305,14 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   ignoreMouseDown = false;
 
   /**
-   * Holds the <mxPoint> where the mouseDown took place while the handler is
+   * Holds the {@link Point} where the mouseDown took place while the handler is
    * active.
    */
   first: Point | null = null;
 
   /**
    * Holds the offset for connect icons during connection preview.
-   * Default is mxPoint(0, <mxConstants.TOOLTIP_VERTICAL_OFFSET>).
+   * Default is mxPoint(0, {@link Constants#TOOLTIP_VERTICAL_OFFSET}).
    * Note that placing the icon under the mouse pointer with an
    * offset of (0,0) will affect hit detection.
    */
@@ -506,7 +506,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Creates and returns the <mxCellMarker> used in <marker>.
+   * Creates and returns the {@link CellMarker} used in {@link arker}.
    */
   createMarker() {
     const self = this;
@@ -632,18 +632,18 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Returns <mxGraph.isValidSource> for the given source terminal.
+   * Returns {@link Graph#isValidSource} for the given source terminal.
    *
    * @param cell <Cell> that represents the source terminal.
-   * @param me <mxMouseEvent> that is associated with this call.
+   * @param me {@link MouseEvent} that is associated with this call.
    */
   isValidSource(cell: Cell, me: InternalMouseEvent) {
     return this.graph.isValidSource(cell);
   }
 
   /**
-   * Returns true. The call to <mxGraph.isValidTarget> is implicit by calling
-   * <mxGraph.getEdgeValidationError> in <validateConnection>. This is an
+   * Returns true. The call to {@link Graph#isValidTarget} is implicit by calling
+   * {@link Graph#getEdgeValidationError} in <validateConnection>. This is an
    * additional hook for disabling certain targets in this specific handler.
    *
    * @param cell <Cell> that represents the target terminal.
@@ -655,7 +655,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Returns the error message or an empty string if the connection for the
    * given source target pair is not valid. Otherwise it returns null. This
-   * implementation uses <mxGraph.getEdgeValidationError>.
+   * implementation uses {@link Graph#getEdgeValidationError}.
    *
    * @param source <Cell> that represents the source terminal.
    * @param target <Cell> that represents the target terminal.
@@ -668,7 +668,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Hook to return the <mxImage> used for the connection icon of the given
+   * Hook to return the {@link Image} used for the connection icon of the given
    * <CellState>. This implementation returns <connectImage>.
    *
    * @param state <CellState> whose connect image should be returned.
@@ -679,7 +679,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
 
   /**
    * Returns true if the state has a HTML label in the graph's container, otherwise
-   * it returns <moveIconFront>.
+   * it returns {@link oveIconFront}.
    *
    * @param state <CellState> whose connect icons should be returned.
    */
@@ -691,7 +691,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Creates the array <mxImageShapes> that represent the connect icons for
+   * Creates the array {@link ImageShapes} that represent the connect icons for
    * the given <CellState>.
    *
    * @param state <CellState> whose connect icons should be returned.
@@ -754,9 +754,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Redraws the given array of <mxImageShapes>.
+   * Redraws the given array of {@link ImageShapes}.
    *
-   * @param icons Array of <mxImageShapes> to be redrawn.
+   * @param icons Array of {@link ImageShapes} to be redrawn.
    */
   redrawIcons(icons: ImageShape[], state: CellState) {
     if (icons[0] && icons[0].bounds) {
@@ -940,7 +940,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
 
   /**
    * Updates the current state for a given mouse move event by using
-   * the <marker>.
+   * the {@link arker}.
    */
   updateCurrentState(me: InternalMouseEvent, point: Point): void {
     this.constraintHandler.update(
@@ -1423,7 +1423,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Returns the perimeter point for the given target state.
    *
    * @param state <CellState> that represents the target cell state.
-   * @param me <mxMouseEvent> that represents the mouse move.
+   * @param me {@link MouseEvent} that represents the mouse move.
    */
   getTargetPerimeterPoint(state: CellState, me: InternalMouseEvent) {
     let result: Point | null = null;
@@ -1457,8 +1457,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * an empty implementation.
    *
    * @param state <CellState> that represents the target cell state.
-   * @param next <mxPoint> that represents the next point along the previewed edge.
-   * @param me <mxMouseEvent> that represents the mouse move.
+   * @param next {@link Point} that represents the next point along the previewed edge.
+   * @param me {@link MouseEvent} that represents the mouse move.
    */
   getSourcePerimeterPoint(state: CellState, next: Point, me: InternalMouseEvent) {
     let result = null;
@@ -1506,7 +1506,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    *
    * @param state <CellState> under the mouse.
    * @param icons Array of currently displayed icons.
-   * @param me <mxMouseEvent> that contains the mouse event.
+   * @param me {@link MouseEvent} that contains the mouse event.
    */
   updateIcons(state: CellState, icons: ImageShape[], me: InternalMouseEvent) {
     // empty
@@ -1906,7 +1906,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Creates, inserts and returns the new edge for the given parameters. This
    * implementation does only use <createEdge> if <factoryMethod> is defined,
-   * otherwise <mxGraph.insertEdge> will be used.
+   * otherwise {@link Graph#insertEdge} will be used.
    */
   insertEdge(
     parent: Cell,
@@ -2023,7 +2023,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Destroys the handler and all its resources and DOM nodes. This should be
    * called on all instances. It is called automatically for the built-in
-   * instance created for each <mxGraph>.
+   * instance created for each {@link Graph}.
    */
   onDestroy() {
     this.graph.removeMouseListener(this);

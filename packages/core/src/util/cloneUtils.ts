@@ -2,7 +2,7 @@ import ObjectIdentity from './ObjectIdentity';
 
 /**
  * Recursively clones the specified object ignoring all fieldnames in the
- * given array of transient fields. <mxObjectIdentity.FIELD_NAME> is always
+ * given array of transient fields. {@link ObjectIdentity#FIELD_NAME} is always
  * ignored by this function.
  *
  * @param obj Object to be cloned.

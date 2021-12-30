@@ -134,7 +134,7 @@ class Shape {
 
   /**
    * Holds the dialect in which the shape is to be painted.
-   * This can be one of the DIALECT constants in <mxConstants>.
+   * This can be one of the DIALECT constants in {@link Constants}.
    */
   dialect: string | null = null;
 
@@ -154,7 +154,7 @@ class Shape {
   minSvgStrokeWidth = 1;
 
   /**
-   * Holds the <mxRectangle> that specifies the bounds of this shape.
+   * Holds the {@link Rectangle} that specifies the bounds of this shape.
    */
   bounds: Rectangle | null = null;
 
@@ -185,7 +185,7 @@ class Shape {
   boundingBox: Rectangle | null = null;
 
   /**
-   * Holds the <mxStencil> that defines the shape.
+   * Holds the {@link Stencil} that defines the shape.
    */
   stencil: StencilShape | null = null;
 
@@ -372,7 +372,7 @@ class Shape {
   }
 
   /**
-   * Returns the <mxRectangle> for the label bounds of this shape, based on the
+   * Returns the {@link Rectangle} for the label bounds of this shape, based on the
    * given scaled and translated bounds of the shape. This method should not
    * change the rectangle in-place. This implementation returns the given rect.
    */
@@ -418,7 +418,7 @@ class Shape {
 
   /**
    * Returns the scaled top, left, bottom and right margin to be used for
-   * computing the label bounds as an <mxRectangle>, where the bottom and right
+   * computing the label bounds as an {@link Rectangle}, where the bottom and right
    * margin are defined in the width and height of the rectangle, respectively.
    */
   getLabelMargins(rect: Rectangle | null): Rectangle | null {
@@ -915,8 +915,8 @@ class Shape {
    * - <'gradientColor'> => gradient
    * - <'gradientDirection'> => gradientDirection
    * - <'opacity'> => opacity
-   * - <mxConstants.STYLE_FILL_OPACITY> => fillOpacity
-   * - <mxConstants.STYLE_STROKE_OPACITY> => strokeOpacity
+   * - {@link Constants#STYLE_FILL_OPACITY} => fillOpacity
+   * - {@link Constants#STYLE_STROKE_OPACITY} => strokeOpacity
    * - <'strokeColor'> => stroke
    * - <'strokeWidth'> => strokewidth
    * - <'shadow'> => isShadow
@@ -1163,7 +1163,7 @@ class Shape {
 
   /**
    * Destroys the shape by removing it from the DOM and releasing the DOM
-   * node associated with the shape using <mxEvent.release>.
+   * node associated with the shape using {@link Event#release}.
    */
   destroy() {
     InternalEvent.release(this.node);

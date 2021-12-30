@@ -10,8 +10,8 @@ import { isNode } from '../../util/domUtils';
 import Codec from '../../serialization/Codec';
 
 /**
- * Codec for <mxValueChange>s, <mxStyleChange>s, <mxGeometryChange>s,
- * <mxCollapseChange>s and <mxVisibleChange>s. This class is created
+ * Codec for {@link ValueChange}s, {@link StyleChange}s, {@link GeometryChange}s,
+ * {@link CollapseChange}s and {@link VisibleChange}s. This class is created
  * and registered dynamically at load time and used implicitly
  * via <Codec> and the <CodecRegistry>.
  *

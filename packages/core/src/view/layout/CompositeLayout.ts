@@ -11,7 +11,7 @@ import GraphLayout from './GraphLayout';
 /**
  * Allows to compose multiple layouts into a single layout. The master layout
  * is the layout that handles move operations if another layout than the first
- * element in <layouts> should be used. The <master> layout is not executed as
+ * element in <layouts> should be used. The {@link aster} layout is not executed as
  * the code assumes that it is part of <layouts>.
  *
  * Example:
@@ -29,8 +29,8 @@ import GraphLayout from './GraphLayout';
  *
  * Arguments:
  *
- * graph - Reference to the enclosing <mxGraph>.
- * layouts - Array of <mxGraphLayouts>.
+ * graph - Reference to the enclosing {@link Graph}.
+ * layouts - Array of {@link GraphLayouts}.
  * master - Optional layout that handles moves. If no layout is given then
  * the first layout of the above array is used to handle moves.
  */
@@ -42,18 +42,18 @@ class CompositeLayout extends GraphLayout {
   }
 
   /**
-   * Holds the array of <mxGraphLayouts> that this layout contains.
+   * Holds the array of {@link GraphLayouts} that this layout contains.
    */
   layouts: GraphLayout[];
 
   /**
-   * Reference to the <mxGraphLayouts> that handles moves. If this is null
+   * Reference to the {@link GraphLayouts} that handles moves. If this is null
    * then the first layout in <layouts> is used.
    */
   master?: GraphLayout;
 
   /**
-   * Implements <mxGraphLayout.moveCell> by calling move on <master> or the first
+   * Implements {@link GraphLayout#moveCell} by calling move on {@link aster} or the first
    * layout in <layouts>.
    */
   moveCell(cell: Cell, x: number, y: number) {
@@ -65,7 +65,7 @@ class CompositeLayout extends GraphLayout {
   }
 
   /**
-   * Implements <mxGraphLayout.execute> by executing all <layouts> in a
+   * Implements {@link GraphLayout#execute} by executing all <layouts> in a
    * single transaction.
    */
   execute(parent: Cell): void {

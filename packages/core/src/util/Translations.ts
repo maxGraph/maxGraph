@@ -34,7 +34,7 @@ import MaxXmlRequest, { get, load } from './MaxXmlRequest';
  *
  * Values may contain placeholders of the form {1}...{n} where each placeholder
  * is replaced with the value of the corresponding array element in the params
- * argument passed to <mxResources.get>. The placeholder {1} maps to the first
+ * argument passed to {@link Resources#get}. The placeholder {1} maps to the first
  * element in the array (at index 0).
  *
  * See <Client.language> for more information on specifying the default
@@ -54,8 +54,8 @@ import MaxXmlRequest, { get, load } from './MaxXmlRequest';
  * Asynchronous loading
  *
  * By default, the core adds two resource files synchronously at load time.
- * To load these files asynchronously, set <mxLoadResources> to false
- * before loading Client.js and use <mxResources.loadResources> instead.
+ * To load these files asynchronously, set {@link LoadResources} to false
+ * before loading Client.js and use {@link Resources#loadResources} instead.
  */
 class Translations {
   /*
@@ -64,7 +64,7 @@ class Translations {
   static resources: { [key: string]: string } = {};
 
   /**
-   * Specifies the extension used for language files. Default is <mxResourceExtension>.
+   * Specifies the extension used for language files. Default is {@link ResourceExtension}.
    */
   static extension = '.txt';
 
@@ -122,12 +122,12 @@ class Translations {
    * implementation returns basename + '_' + lan + <extension> or null if
    * <loadSpecialBundle> is false or lan equals <Client.defaultLanguage>.
    *
-   * If <mxResources.languages> is not null and <Client.language> contains
+   * If {@link Resources#languages} is not null and <Client.language> contains
    * a dash, then this method checks if <isLanguageSupported> returns true
    * for the full language (including the dash). If that returns false the
    * first part of the language (up to the dash) will be tried as an extension.
    *
-   * If <mxResources.language> is null then the first part of the language is
+   * If {@link Resources#language} is null then the first part of the language is
    * used to maintain backwards compatibility.
    *
    * @param basename The basename for which the file should be loaded.
@@ -353,7 +353,7 @@ class Translations {
 
   /**
    * Loads all required resources asynchronously. Use this to load the graph and
-   * editor resources if <mxLoadResources> is false.
+   * editor resources if {@link LoadResources} is false.
    *
    * @param callback Callback function for asynchronous loading.
    */

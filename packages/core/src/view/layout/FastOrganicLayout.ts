@@ -11,7 +11,7 @@ import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
 
 /**
- * Extends <mxGraphLayout> to implement a fast organic layout algorithm.
+ * Extends {@link GraphLayout} to implement a fast organic layout algorithm.
  * The vertices need to be connected for this layout to work, vertices
  * with no connections are ignored.
  *
@@ -156,7 +156,7 @@ class MxFastOrganicLayout extends GraphLayout {
   }
 
   /**
-   * Implements <mxGraphLayout.execute>. This operates on all children of the
+   * Implements {@link GraphLayout#execute}. This operates on all children of the
    * given parent where <isVertexIgnored> returns false.
    */
   execute(parent: Cell) {

@@ -145,9 +145,9 @@ export const arcToCurves = (
 /**
  * Returns the bounding box for the rotated rectangle.
  *
- * @param rect <mxRectangle> to be rotated.
+ * @param rect {@link Rectangle} to be rotated.
  * @param angle Number that represents the angle (in degrees).
- * @param cx Optional <mxPoint> that represents the rotation center. If no
+ * @param cx Optional {@link Point} that represents the rotation center. If no
  * rotation center is given then the center of rect is used.
  */
 export const getBoundingBox = (
@@ -202,7 +202,7 @@ export const getRotatedPoint = (pt: Point, cos: number, sin: number, c = new Poi
  * @param defaultValue Default value to return if the key is undefined.
  * @return the mask of port constraint directions
  *
- * @param terminal <mxCelState> that represents the terminal.
+ * @param terminal {@link CelState} that represents the terminal.
  * @param edge <CellState> that represents the edge.
  * @param source Boolean that specifies if the terminal is the source terminal.
  * @param defaultValue Default value to be returned.
@@ -462,9 +462,9 @@ export const getPerimeterPoint = (pts: Point[], center: Point, point: Point) => 
 /**
  * Returns true if the given rectangle intersects the given segment.
  *
- * @param bounds <mxRectangle> that represents the rectangle.
- * @param p1 <mxPoint> that represents the first point of the segment.
- * @param p2 <mxPoint> that represents the second point of the segment.
+ * @param bounds {@link Rectangle} that represents the rectangle.
+ * @param p1 {@link Point} that represents the first point of the segment.
+ * @param p2 {@link Point} that represents the second point of the segment.
  */
 export const rectangleIntersectsSegment = (bounds: Rectangle, p1: Point, p2: Point) => {
   const top = bounds.y;
@@ -533,7 +533,7 @@ export const rectangleIntersectsSegment = (bounds: Rectangle, p1: Point, p2: Poi
 /**
  * Returns true if the specified point (x, y) is contained in the given rectangle.
  *
- * @param bounds <mxRectangle> that represents the area.
+ * @param bounds {@link Rectangle} that represents the area.
  * @param x X-coordinate of the point.
  * @param y Y-coordinate of the point.
  */
@@ -549,8 +549,8 @@ export const contains = (bounds: Rectangle, x: number, y: number) => {
 /**
  * Returns true if the two rectangles intersect.
  *
- * @param a <mxRectangle> to be checked for intersection.
- * @param b <mxRectangle> to be checked for intersection.
+ * @param a {@link Rectangle} to be checked for intersection.
+ * @param b {@link Rectangle} to be checked for intersection.
  */
 export const intersects = (a: Rectangle, b: Rectangle) => {
   let tw = a.width;
@@ -679,7 +679,7 @@ export const mod = (n: number, m: number) => {
 };
 
 /**
- * Returns the intersection of two lines as an <mxPoint>.
+ * Returns the intersection of two lines as an {@link Point}.
  *
  * @param x0 X-coordinate of the first line's startpoint.
  * @param y0 X-coordinate of the first line's startpoint.
@@ -722,7 +722,7 @@ export const intersection = (
 /**
  * Returns the square distance between a segment and a point. To get the
  * distance between a point and a line (with infinite length) use
- * <mxUtils.ptLineDist>.
+ * {@link Utils#ptLineDist}.
  *
  * @param x1 X-coordinate of the startpoint of the segment.
  * @param y1 Y-coordinate of the startpoint of the segment.
@@ -774,7 +774,7 @@ export const ptSegDistSq = (
 /**
  * Returns the distance between a line defined by two points and a point.
  * To get the distance between a point and a segment (with a specific
- * length) use <mxUtils.ptSeqDistSq>.
+ * length) use {@link Utils#ptSeqDistSq}.
  *
  * @param x1 X-coordinate of point 1 of the line.
  * @param y1 Y-coordinate of point 1 of the line.

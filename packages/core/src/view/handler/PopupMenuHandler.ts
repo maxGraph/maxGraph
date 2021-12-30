@@ -20,7 +20,7 @@ import EventObject from '../event/EventObject';
  *
  * Constructor: mxPopupMenuHandler
  *
- * Constructs an event handler that creates a <mxPopupMenu>.
+ * Constructs an event handler that creates a {@link PopupMenu}.
  */
 class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   static pluginId = 'PopupMenuHandler';
@@ -47,7 +47,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   popupTrigger = false;
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
@@ -96,7 +96,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   }
 
   /**
-   * Hook for returning if a cell should be selected for a given <mxMouseEvent>.
+   * Hook for returning if a cell should be selected for a given {@link MouseEvent}.
    * This implementation returns <selectOnPopup>.
    */
   isSelectOnPopup(me: InternalMouseEvent): boolean {

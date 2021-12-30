@@ -41,7 +41,7 @@ type ImageMap = {
  * If you are using mxOutline, you should use the same image bundles in the
  * graph that renders the outline.
  *
- * The keys for images are resolved in <mxGraph.postProcessCellStyle> and
+ * The keys for images are resolved in {@link Graph#postProcessCellStyle} and
  * turned into a data URI if the returned value has a short data URI format
  * as specified above.
  *

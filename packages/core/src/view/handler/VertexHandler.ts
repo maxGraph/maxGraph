@@ -41,7 +41,7 @@ import SelectionCellsHandler from './SelectionCellsHandler';
 
 /**
  * Event handler for resizing cells. This handler is automatically created in
- * <mxGraph.createHandler>.
+ * {@link Graph#createHandler}.
  *
  * Constructor: mxVertexHandler
  *
@@ -57,7 +57,7 @@ class VertexHandler {
   selectionBorder: RectangleShape;
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
@@ -86,7 +86,7 @@ class VertexHandler {
   allowHandleBoundsCheck: boolean = true;
 
   /**
-   * Optional <mxImage> to be used as handles. Default is null.
+   * Optional {@link Image} to be used as handles. Default is null.
    */
   handleImage: Image | null = null;
 
@@ -152,13 +152,13 @@ class VertexHandler {
 
   /**
    * The horizontal offset for the handles. This is updated in <redrawHandles>
-   * if <manageSizers> is true and the sizers are offset horizontally.
+   * if {@link anageSizers} is true and the sizers are offset horizontally.
    */
   horizontalOffset: number = 0;
 
   /**
    * The horizontal offset for the handles. This is updated in <redrawHandles>
-   * if <manageSizers> is true and the sizers are offset vertically.
+   * if {@link anageSizers} is true and the sizers are offset vertically.
    */
   verticalOffset: number = 0;
 
@@ -420,21 +420,21 @@ class VertexHandler {
   }
 
   /**
-   * Returns <mxConstants.VERTEX_SELECTION_COLOR>.
+   * Returns {@link Constants#VERTEX_SELECTION_COLOR}.
    */
   getSelectionColor() {
     return VERTEX_SELECTION_COLOR;
   }
 
   /**
-   * Returns <mxConstants.VERTEX_SELECTION_STROKEWIDTH>.
+   * Returns {@link Constants#VERTEX_SELECTION_STROKEWIDTH}.
    */
   getSelectionStrokeWidth() {
     return VERTEX_SELECTION_STROKEWIDTH;
   }
 
   /**
-   * Returns <mxConstants.VERTEX_SELECTION_DASHED>.
+   * Returns {@link Constants#VERTEX_SELECTION_DASHED}.
    */
   isSelectionDashed() {
     return VERTEX_SELECTION_DASHED;
@@ -442,7 +442,7 @@ class VertexHandler {
 
   /**
    * Creates a sizer handle for the specified cursor and index and returns
-   * the new <mxRectangleShape> that represents the handle.
+   * the new {@link RectangleShape} that represents the handle.
    */
   createSizer(
     cursor: string,
@@ -517,7 +517,7 @@ class VertexHandler {
   }
 
   /**
-   * Helper method to create an <mxRectangle> around the given centerpoint
+   * Helper method to create an {@link Rectangle} around the given centerpoint
    * with a width and height of 2*s or 6, if no s is given.
    */
   moveSizerTo(shape: Shape, x: number, y: number) {
@@ -534,7 +534,7 @@ class VertexHandler {
 
   /**
    * Returns the index of the handle for the given event. This returns the index
-   * of the sizer from where the event originated or <mxEvent.LABEL_INDEX>.
+   * of the sizer from where the event originated or {@link Event#LABEL_INDEX}.
    */
   getHandleForEvent(me: InternalMouseEvent) {
     // Connection highlight may consume events before they reach sizer handle
@@ -762,7 +762,7 @@ class VertexHandler {
 
   /**
    * Checks if the coordinates for the given event are within the
-   * <mxGraph.tolerance>. If the event is a mouse event then the tolerance is
+   * {@link Graph#tolerance}. If the event is a mouse event then the tolerance is
    * ignored.
    */
   checkTolerance(me: InternalMouseEvent) {
@@ -1375,7 +1375,7 @@ class VertexHandler {
 
   /**
    * Uses the given vector to change the bounds of the given cell
-   * in the graph using <mxGraph.resizeCell>.
+   * in the graph using {@link Graph#resizeCell}.
    */
   resizeCell(
     cell: Cell,
@@ -1888,7 +1888,7 @@ class VertexHandler {
   }
 
   /**
-   * Returns an <mxPoint> that defines the rotation handle position.
+   * Returns an {@link Point} that defines the rotation handle position.
    */
   getRotationHandlePosition() {
     return new Point(

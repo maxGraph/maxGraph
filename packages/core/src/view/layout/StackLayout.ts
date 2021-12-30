@@ -15,7 +15,7 @@ import Geometry from '../geometry/Geometry';
 import CellArray from '../cell/CellArray';
 
 /**
- * Extends <mxGraphLayout> to create a horizontal or vertical stack of the
+ * Extends {@link GraphLayout} to create a horizontal or vertical stack of the
  * child vertices. The children do not need to be connected for this layout
  * to work.
  *
@@ -438,7 +438,7 @@ class StackLayout extends GraphLayout {
    * Sets the specific geometry to the given child cell.
    *
    * @param child The given child of <Cell>.
-   * @param geo The specific geometry of <mxGeometry>.
+   * @param geo The specific geometry of {@link Geometry}.
    */
   setChildGeometry(child: Cell, geo: Geometry) {
     const geo2 = child.getGeometry();
@@ -458,8 +458,8 @@ class StackLayout extends GraphLayout {
    * Updates the geometry of the given parent cell.
    *
    * @param parent The given parent of <Cell>.
-   * @param pgeo The new <mxGeometry> for parent.
-   * @param last The last <mxGeometry>.
+   * @param pgeo The new {@link Geometry} for parent.
+   * @param last The last {@link Geometry}.
    */
   updateParentGeometry(parent: Cell, pgeo: Geometry, last: Geometry) {
     const horizontal = this.isHorizontal();

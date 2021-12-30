@@ -56,7 +56,7 @@ class Animation extends EventSource {
   }
 
   /**
-   * Stops the animation by deleting the timer and fires an <mxEvent.DONE>.
+   * Stops the animation by deleting the timer and fires an {@link Event#DONE}.
    */
   stopAnimation(): void {
     if (this.thread != null) {

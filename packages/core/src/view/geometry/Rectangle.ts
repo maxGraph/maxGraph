@@ -8,7 +8,7 @@
 import Point from './Point';
 
 /**
- * Extends <mxPoint> to implement a 2-dimensional rectangle with double
+ * Extends {@link Point} to implement a 2-dimensional rectangle with double
  * precision coordinates.
  *
  * Constructor: mxRectangle
@@ -61,7 +61,7 @@ class Rectangle extends Point {
   }
 
   /**
-   * Returns a new <mxRectangle> which is a copy of the given rectangle.
+   * Returns a new {@link Rectangle} which is a copy of the given rectangle.
    */
   static fromRectangle = (rect: Rectangle) => {
     return new Rectangle(rect.x, rect.y, rect.width, rect.height);
@@ -135,7 +135,7 @@ class Rectangle extends Point {
   }
 
   /**
-   * Returns the top, left corner as a new <mxPoint>.
+   * Returns the top, left corner as a new {@link Point}.
    */
   getPoint() {
     return new Point(this.x, this.y);

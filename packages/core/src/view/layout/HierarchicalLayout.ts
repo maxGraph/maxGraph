@@ -27,7 +27,7 @@ import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
  *
  * Arguments:
  *
- * graph - Reference to the enclosing <mxGraph>.
+ * graph - Reference to the enclosing {@link Graph}.
  * orientation - Optional constant that defines the orientation of this
  * layout.
  * deterministic - Optional boolean that specifies if this layout should be
@@ -153,7 +153,7 @@ class HierarchicalLayout extends GraphLayout {
 
   /**
    * The style to apply between cell layers to edge segments.
-   * Default is <mxHierarchicalEdgeStyle.POLYLINE>.
+   * Default is {@link HierarchicalEdgeStyle#POLYLINE}.
    */
   edgeStyle = HierarchicalEdgeStyle.POLYLINE;
 

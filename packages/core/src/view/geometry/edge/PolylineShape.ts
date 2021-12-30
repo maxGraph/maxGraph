@@ -11,16 +11,16 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { ColorValue } from '../../../types';
 
 /**
- * Extends <mxShape> to implement a polyline (a line with multiple points).
- * This shape is registered under <mxConstants.SHAPE_POLYLINE> in
- * <mxCellRenderer>.
+ * Extends {@link Shape} to implement a polyline (a line with multiple points).
+ * This shape is registered under {@link Constants#SHAPE_POLYLINE} in
+ * {@link CellRenderer}.
  *
  * Constructor: mxPolyline
  *
  * Constructs a new polyline shape.
  *
  * @param points Array of <Point> that define the points. This is stored in
- * <mxShape.points>.
+ * {@link Shape#points}.
  * @param stroke String that defines the stroke color. Default is 'black'. This is
  * stored in <stroke>.
  * @param strokewidth Optional integer that defines the stroke width. Default is

@@ -790,7 +790,7 @@ class PrintPreview {
    * @param scale Scale for the diagram.
    * @param pageNumber Number of the page to be rendered.
    * @param div Div that contains the output.
-   * @param clip Contains the clipping rectangle as an <mxRectangle>.
+   * @param clip Contains the clipping rectangle as an {@link Rectangle}.
    */
   addGraphFragment(dx: number, dy: number, scale: number, pageNumber: number, div: HTMLDivElement, clip: Rectangle) {
     const view = this.graph.getView();

@@ -50,18 +50,18 @@ import Cell from './Cell';
  *
  * Constructs a new cell marker.
  *
- * @param graph Reference to the enclosing <mxGraph>.
+ * @param graph Reference to the enclosing {@link Graph}.
  * @param validColor Optional marker color for valid states. Default is
- * <mxConstants.DEFAULT_VALID_COLOR>.
+ * {@link Constants#DEFAULT_VALID_COLOR}.
  * @param invalidColor Optional marker color for invalid states. Default is
- * <mxConstants.DEFAULT_INVALID_COLOR>.
+ * {@link Constants#DEFAULT_INVALID_COLOR}.
  * @param hotspot Portion of the width and hight where a state intersects a
  * given coordinate pair. A value of 0 means always highlight. Default is
- * <mxConstants.DEFAULT_HOTSPOT>.
+ * {@link Constants#DEFAULT_HOTSPOT}.
  */
 class CellMarker extends EventSource {
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
@@ -186,7 +186,7 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Returns the <markedState>.
+   * Returns the {@link arkedState}.
    */
   getMarkedState() {
     return this.markedState;
@@ -207,7 +207,7 @@ class CellMarker extends EventSource {
   /**
    * Processes the given event and cell and marks the state returned by
    * <getState> with the color returned by <getMarkerColor>. If the
-   * markerColor is not null, then the state is stored in <markedState>. If
+   * markerColor is not null, then the state is stored in {@link arkedState}. If
    * <isValidState> returns true, then the state is stored in <validState>
    * regardless of the marker color. The state is returned regardless of the
    * marker color and valid state.
@@ -263,7 +263,7 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Marks the <markedState> and fires a <mark> event.
+   * Marks the {@link arkedState} and fires a {@link ark} event.
    */
   mark() {
     this.highlight.setHighlightColor(this.currentColor);
@@ -272,7 +272,7 @@ class CellMarker extends EventSource {
   }
 
   /**
-   * Hides the marker and fires a <mark> event.
+   * Hides the marker and fires a {@link ark} event.
    */
   unmark(): void {
     this.mark();
@@ -297,7 +297,7 @@ class CellMarker extends EventSource {
 
   /**
    * Uses <getCell>, <getStateToMark> and <intersects> to return the
-   * <CellState> for the given <mxMouseEvent>.
+   * <CellState> for the given {@link MouseEvent}.
    */
   getState(me: InternalMouseEvent) {
     const view = this.graph.getView();

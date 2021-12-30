@@ -31,7 +31,7 @@ import type {
 
 /**
  * Base class for all canvases. A description of the public API is available in <mxXmlCanvas2D>.
- * All color values of <mxConstants.NONE> will be converted to null in the state.
+ * All color values of {@link Constants#NONE} will be converted to null in the state.
  *
  * Constructor: D
  *
@@ -194,7 +194,7 @@ class AbstractCanvas2D {
   };
 
   /**
-   * Rotates the given point and returns the result as an <mxPoint>.
+   * Rotates the given point and returns the result as an {@link Point}.
    */
   rotatePoint(x: number, y: number, theta: number, cx: number, cy: number) {
     const rad = theta * (Math.PI / 180);

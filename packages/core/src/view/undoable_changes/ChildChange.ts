@@ -108,7 +108,7 @@ export class ChildChange implements UndoableChange {
 }
 
 /**
- * Codec for <mxChildChange>s. This class is created and registered
+ * Codec for {@link ChildChange}s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec> and
  * the <CodecRegistry>.
  *

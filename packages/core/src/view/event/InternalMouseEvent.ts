@@ -68,13 +68,13 @@ class InternalMouseEvent {
 
   /**
    * Holds the x-coordinate of the event in the graph. This value is set in
-   * <mxGraph.fireMouseEvent>.
+   * {@link Graph#fireMouseEvent}.
    */
   graphX: number;
 
   /**
    * Holds the y-coordinate of the event in the graph. This value is set in
-   * <mxGraph.fireMouseEvent>.
+   * {@link Graph#fireMouseEvent}.
    */
   graphY: number;
 
@@ -85,7 +85,7 @@ class InternalMouseEvent {
 
   /**
    * Holds the <CellState> that was passed to the constructor. This can be
-   * different from <state> depending on the result of <mxGraph.getEventState>.
+   * different from <state> depending on the result of {@link Graph#getEventState}.
    */
   sourceState: CellState | null;
 
@@ -97,14 +97,14 @@ class InternalMouseEvent {
   }
 
   /**
-   * Returns the target DOM element using <mxEvent.getSource> for <evt>.
+   * Returns the target DOM element using {@link Event#getSource} for <evt>.
    */
   getSource() {
     return <Element>getSource(this.evt);
   }
 
   /**
-   * Returns true if the given <mxShape> is the source of <evt>.
+   * Returns true if the given {@link Shape} is the source of <evt>.
    */
   isSource(shape: Shape | null) {
     return shape ? isAncestorNode(shape.node, this.getSource()) : false;

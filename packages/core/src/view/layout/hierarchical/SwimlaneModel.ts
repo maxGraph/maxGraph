@@ -170,9 +170,9 @@ class SwimlaneModel {
    * Creates all edges in the internal model
    *
    * @param layout Reference to the <HierarchicalLayout> algorithm.
-   * @param vertices Array of <mxCells> that represent the vertices whom are to
+   * @param vertices Array of {@link Cells} that represent the vertices whom are to
    * have an internal representation created.
-   * @param internalVertices The array of <mxGraphHierarchyNodes> to have their
+   * @param internalVertices The array of {@link GraphHierarchyNodes} to have their
    * information filled in using the real vertices.
    */
   createInternalCells(

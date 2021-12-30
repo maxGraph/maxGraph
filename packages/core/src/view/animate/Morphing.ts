@@ -39,7 +39,7 @@ import CellArray from '../cell/CellArray';
  *
  * Constructs an animation.
  *
- * @param graph Reference to the enclosing <mxGraph>.
+ * @param graph Reference to the enclosing {@link Graph}.
  * @param steps Optional number of steps in the morphing animation. Default is 6.
  * @param ease Optional easing constant for the animation. Default is 1.5.
  * @param delay Optional delay between the animation steps. Passed to <Animation>.

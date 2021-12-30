@@ -15,16 +15,16 @@ import { ColorValue } from '../../../types';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
- * Extends <mxShape> to implement an image shape with a label.
- * This shape is registered under <mxConstants.SHAPE_LABEL> in
- * <mxCellRenderer>.
+ * Extends {@link Shape} to implement an image shape with a label.
+ * This shape is registered under {@link Constants#SHAPE_LABEL} in
+ * {@link CellRenderer}.
  *
  * Constructor: mxLabel
  *
  * Constructs a new label shape.
  *
- * @param bounds <mxRectangle> that defines the bounds. This is stored in
- * <mxShape.bounds>.
+ * @param bounds {@link Rectangle} that defines the bounds. This is stored in
+ * {@link Shape#bounds}.
  * @param fill String that defines the fill color. This is stored in <fill>.
  * @param stroke String that defines the stroke color. This is stored in <stroke>.
  * @param strokewidth Optional integer that defines the stroke width. Default is

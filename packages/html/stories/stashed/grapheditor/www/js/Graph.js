@@ -5233,7 +5233,7 @@ TableLayout.prototype.layoutRow = function(row, positions, height, tw)
 };
 
 /**
- * Implements <mxGraphLayout.execute>.
+ * Implements {@link GraphLayout#execute}.
  */
 TableLayout.prototype.execute = function(parent)
 {
@@ -8206,7 +8206,7 @@ if (typeof VertexHandler != 'undefined')
 		 * horizontal or vertical space.
 		 * 
 		 * @param horizontal Boolean that specifies the direction of the distribution.
-		 * @param cells Optional array of <mxCells> to be distributed. Edges are ignored.
+		 * @param cells Optional array of {@link Cells} to be distributed. Edges are ignored.
 		 */
 		Graph.prototype.distributeCells = function(horizontal, cells)
 		{

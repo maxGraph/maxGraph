@@ -30,7 +30,7 @@ import { DirectionValue, TextDirectionValue } from '../../types';
  *   <setFontFamily>, <setFontStyle>
  * - <setShadow>, <setShadowColor>, <setShadowAlpha>, <setShadowOffset>
  * - <rect>, <roundrect>, <ellipse>, <image>, <text>
- * - <begin>, <moveTo>, <lineTo>, <quadTo>, <curveTo>
+ * - <begin>, {@link oveTo}, <lineTo>, <quadTo>, <curveTo>
  * - <stroke>, <fill>, <fillAndStroke>
  *
  * <AbstractCanvas2D.arcTo> is an additional method for drawing paths. This is
@@ -271,8 +271,8 @@ class mxXmlCanvas2D extends AbstractCanvas2D {
    * @param y y-coordinate of the gradient region.
    * @param w Width of the gradient region.
    * @param h Height of the gradient region.
-   * @param direction One of <mxConstants.DIRECTION_NORTH>, <mxConstants.DIRECTION_EAST>,
-   * <mxConstants.DIRECTION_SOUTH> or <mxConstants.DIRECTION_WEST>.
+   * @param direction One of {@link Constants#DIRECTION_NORTH}, {@link Constants#DIRECTION_EAST},
+   * {@link Constants#DIRECTION_SOUTH} or {@link Constants#DIRECTION_WEST}.
    * @param alpha1 Optional alpha of the start color. Default is 1. Possible values
    * are between 1 (opaque) and 0 (transparent).
    * @param alpha2 Optional alpha of the end color. Default is 1. Possible values

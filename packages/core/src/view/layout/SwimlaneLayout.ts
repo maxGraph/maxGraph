@@ -30,7 +30,7 @@ import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
  *
  * Arguments:
  *
- * graph - Reference to the enclosing <mxGraph>.
+ * graph - Reference to the enclosing {@link Graph}.
  * orientation - Optional constant that defines the orientation of this
  * layout.
  * deterministic - Optional boolean that specifies if this layout should be
@@ -110,7 +110,7 @@ class SwimlaneLayout extends GraphLayout {
 
   /**
    * The position of the root node(s) relative to the laid out graph in.
-   * Default is <mxConstants.DIRECTION_NORTH>.
+   * Default is {@link Constants#DIRECTION_NORTH}.
    */
   orientation: DIRECTION = DIRECTION.NORTH;
 
@@ -141,7 +141,7 @@ class SwimlaneLayout extends GraphLayout {
   traverseAncestors = true;
 
   /**
-   * The internal <mxSwimlaneModel> formed of the layout.
+   * The internal {@link SwimlaneModel} formed of the layout.
    */
   model: SwimlaneModel | null = null;
 
@@ -162,12 +162,12 @@ class SwimlaneLayout extends GraphLayout {
 
   /**
    * The style to apply between cell layers to edge segments.
-   * Default is <mxHierarchicalEdgeStyle.POLYLINE>.
+   * Default is {@link HierarchicalEdgeStyle#POLYLINE}.
    */
   edgeStyle = HierarchicalEdgeStyle.POLYLINE;
 
   /**
-   * Returns the internal <mxSwimlaneModel> for this layout algorithm.
+   * Returns the internal {@link SwimlaneModel} for this layout algorithm.
    */
   getDataModel() {
     return this.model;

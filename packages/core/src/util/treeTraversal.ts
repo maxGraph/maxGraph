@@ -96,7 +96,7 @@ export function findTreeRoots(
  * edge as arguments. The traversal stops if the function returns false.
  * @param edge Optional <Cell> that represents the incoming edge. This is
  * null for the first step of the traversal.
- * @param visited Optional <mxDictionary> from cells to true for the visited cells.
+ * @param visited Optional {@link Dictionary} from cells to true for the visited cells.
  * @param inverse Optional boolean to traverse in inverse direction. Default is false.
  * This is ignored if directed is false.
  */

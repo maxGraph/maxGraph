@@ -1126,7 +1126,7 @@ export class GraphView extends EventSource {
    * @param edge <CellState> whose terminal point should be updated.
    * @param terminal <CellState> which represents the actual terminal.
    * @param source Boolean that specifies if the terminal is the source.
-   * @param constraint <mxConnectionConstraint> that specifies the connection.
+   * @param constraint {@link ConnectionConstraint} that specifies the connection.
    */
   updateFixedTerminalPoint(
     edge: CellState,
@@ -1146,7 +1146,7 @@ export class GraphView extends EventSource {
    * @param edge <CellState> whose terminal point should be returned.
    * @param terminal <CellState> which represents the actual terminal.
    * @param source Boolean that specifies if the terminal is the source.
-   * @param constraint <mxConnectionConstraint> that specifies the connection.
+   * @param constraint {@link ConnectionConstraint} that specifies the connection.
    */
   getFixedTerminalPoint(
     edge: CellState,
@@ -2399,7 +2399,7 @@ export class GraphView extends EventSource {
 }
 
 /**
- * Custom encoder for <mxGraphView>s. This class is created
+ * Custom encoder for {@link GraphView}s. This class is created
  * and registered dynamically at load time and used implicitly via
  * <Codec> and the <CodecRegistry>. This codec only writes views
  * into a XML format that can be used to create an image for
@@ -2413,7 +2413,7 @@ export class GraphViewCodec extends ObjectCodec {
   }
 
   /**
-   * Encodes the given <mxGraphView> using <encodeCell>
+   * Encodes the given {@link GraphView} using <encodeCell>
    * starting at the model's root. This returns the
    * top-level graph node of the recursive encoding.
    */
@@ -2430,7 +2430,7 @@ export class GraphViewCodec extends ObjectCodec {
    * <Transactions.isVertex> returns true for the cell,
    * then vertex is used for the nodename.
    *
-   * <mxGraph.getLabel> is used to create the label
+   * {@link Graph#getLabel} is used to create the label
    * attribute for the cell. For graph nodes and vertices
    * the bounds are encoded into x, y, width and height.
    * For edges the points are encoded into a points

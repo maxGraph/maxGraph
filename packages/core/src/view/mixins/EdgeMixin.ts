@@ -317,11 +317,11 @@ const EdgeMixin: PartialType = {
   /**
    * Splits the given edge by adding the newEdge between the previous source
    * and the given cell and reconnecting the source of the given edge to the
-   * given cell. This method fires <mxEvent.SPLIT_EDGE> while the transaction
+   * given cell. This method fires {@link Event#SPLIT_EDGE} while the transaction
    * is in progress. Returns the new edge that was inserted.
    *
    * @param edge <Cell> that represents the edge to be splitted.
-   * @param cells <mxCells> that represents the cells to insert into the edge.
+   * @param cells {@link Cells} that represents the cells to insert into the edge.
    * @param newEdge <Cell> that represents the edge to be inserted.
    * @param dx Optional integer that specifies the vector to move the cells.
    * @param dy Optional integer that specifies the vector to move the cells.

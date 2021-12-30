@@ -644,7 +644,7 @@ export class Editor extends EventSource {
 
   /**
    * Default size for the border of new groups. If null,
-   * then then <mxGraph.gridSize> is used. Default is null.
+   * then then {@link Graph#gridSize} is used. Default is null.
    * @default null
    */
   groupBorderSize: any = null;
@@ -2711,7 +2711,7 @@ export class EditorCodec extends ObjectCodec {
    * width - Width for the new window.
    * height - Optional height for the new window.
    * name - Name of the stylesheet (absolute/relative URL).
-   * basename - Basename of the resource bundle (see <mxResources>).
+   * basename - Basename of the resource bundle (see {@link Resources}).
    *
    * The x, y, width and height attributes are used to create a new
    * <MaxWindow> if the element attribute is not specified in an add

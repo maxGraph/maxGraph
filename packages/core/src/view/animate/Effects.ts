@@ -38,7 +38,7 @@ class Effects {
    * });
    * ```
    *
-   * @param graph - <mxGraph> that received the changes.
+   * @param graph - {@link Graph} that received the changes.
    * @param changes - Array of changes to be animated.
    * @param done - Optional function argument that is invoked after the
    * last step of the animation.
@@ -115,7 +115,7 @@ class Effects {
   /**
    * Sets the opacity on the given cell and its descendants.
    *
-   * @param graph - <mxGraph> that contains the cells.
+   * @param graph - {@link Graph} that contains the cells.
    * @param cell - <Cell> to set the opacity for.
    * @param opacity - New value for the opacity in %.
    */

@@ -13,7 +13,7 @@ import Point from '../geometry/Point';
  */
 class ConnectionConstraint {
   /**
-   * <mxPoint> that specifies the fixed location of the connection point.
+   * {@link Point} that specifies the fixed location of the connection point.
    */
   point: Point | null;
 

@@ -68,7 +68,7 @@ class GraphLayout {
    * Empty implementation.
    *
    * @param cell <Cell> which has been moved.
-   * @param bounds <mxRectangle> that represents the new cell bounds.
+   * @param bounds {@link Rectangle} that represents the new cell bounds.
    */
   resizeCell(cell: Cell, bounds: Rectangle, prev?: Cell) {}
 
@@ -405,7 +405,7 @@ class GraphLayout {
   }
 
   /**
-   * Shortcut to <mxGraph.updateGroupBounds> with moveGroup set to true.
+   * Shortcut to {@link Graph#updateGroupBounds} with moveGroup set to true.
    */
   arrangeGroups(
     cells: CellArray,

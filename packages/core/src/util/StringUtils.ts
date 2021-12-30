@@ -169,7 +169,7 @@ export const getNumber = (array: any, key: string, defaultValue: number) => {
 /**
  * Returns the color value for the given key in the given associative
  * array or the given default value if the value is null. If the value
- * is <mxConstants.NONE> then null is returned.
+ * is {@link Constants#NONE} then null is returned.
  *
  * @param array Associative array that contains the value for the key.
  * @param key Key whose value should be returned.

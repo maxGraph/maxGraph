@@ -12,11 +12,11 @@ import ImageBox from '../image/ImageBox';
 import CellState from './CellState';
 
 /**
- * Extends <mxEventSource> to implement a graph overlay, represented by an icon
+ * Extends {@link EventSource} to implement a graph overlay, represented by an icon
  * and a tooltip. Overlays can handle and fire <click> events and are added to
- * the graph using <mxGraph.addCellOverlay>, and removed using
- * <mxGraph.removeCellOverlay>, or <mxGraph.removeCellOverlays> to remove all overlays.
- * The <mxGraph.getCellOverlays> function returns the array of overlays for a given
+ * the graph using {@link Graph#addCellOverlay}, and removed using
+ * {@link Graph#removeCellOverlay}, or {@link Graph#removeCellOverlays} to remove all overlays.
+ * The {@link Graph#getCellOverlays} function returns the array of overlays for a given
  * cell in a graph. If multiple overlays exist for the same cell, then
  * <getBounds> should be overridden in at least one of the overlays.
  *
@@ -39,7 +39,7 @@ import CellState from './CellState';
  * });
  * ```
  *
- * For cell overlays to be printed use <mxPrintPreview.printOverlays>.
+ * For cell overlays to be printed use {@link PrintPreview#printOverlays}.
  *
  * Event: mxEvent.CLICK
  *
@@ -52,7 +52,7 @@ import CellState from './CellState';
  *
  * Constructs a new overlay using the given image and tooltip.
  *
- * @param image <mxImage> that represents the icon to be displayed.
+ * @param image {@link Image} that represents the icon to be displayed.
  * @param tooltip Optional string that specifies the tooltip.
  * @param align Optional horizontal alignment for the overlay. Possible
  * values are <ALIGN_LEFT>, <ALIGN_CENTER> and <ALIGN_RIGHT>
@@ -79,7 +79,7 @@ class CellOverlay extends EventSource {
   }
 
   /**
-   * Holds the <mxImage> to be used as the icon.
+   * Holds the {@link Image} to be used as the icon.
    */
   image: ImageBox;
 
@@ -90,20 +90,20 @@ class CellOverlay extends EventSource {
 
   /**
    * Holds the horizontal alignment for the overlay. Default is
-   * <mxConstants.ALIGN_RIGHT>. For edges, the overlay always appears in the
+   * {@link Constants#ALIGN_RIGHT}. For edges, the overlay always appears in the
    * center of the edge.
    */
   align: 'left' | 'center' | 'right' = 'right';
 
   /**
    * Holds the vertical alignment for the overlay. Default is
-   * <mxConstants.ALIGN_BOTTOM>. For edges, the overlay always appears in the
+   * {@link Constants#ALIGN_BOTTOM}. For edges, the overlay always appears in the
    * center of the edge.
    */
   verticalAlign: 'top' | 'middle' | 'bottom' = 'bottom';
 
   /**
-   * Holds the offset as an <mxPoint>. The offset will be scaled according to the
+   * Holds the offset as an {@link Point}. The offset will be scaled according to the
    * current scale.
    */
   offset = new Point();
@@ -121,7 +121,7 @@ class CellOverlay extends EventSource {
 
   /**
    * Returns the bounds of the overlay for the given <CellState> as an
-   * <mxRectangle>. This should be overridden when using multiple overlays
+   * {@link Rectangle}. This should be overridden when using multiple overlays
    * per cell so that the overlays do not overlap.
    *
    * The following example will place the overlay along an edge (where

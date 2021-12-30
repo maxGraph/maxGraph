@@ -75,14 +75,14 @@ const VertexMixin: PartialType = {
 
   /**
    * Adds a new vertex into the given parent <Cell> using value as the user
-   * object and the given coordinates as the <mxGeometry> of the new vertex.
+   * object and the given coordinates as the {@link Geometry} of the new vertex.
    * The id and style are used for the respective properties of the new
    * <Cell>, which is returned.
    *
    * When adding new vertices from a mouse event, one should take into
    * account the offset of the graph container and the scale and translation
    * of the view in order to find the correct unscaled, untranslated
-   * coordinates using <mxGraph.getPointForEvent> as follows:
+   * coordinates using {@link Graph#getPointForEvent} as follows:
    *
    * ```javascript
    * let pt = graph.getPointForEvent(evt);
@@ -97,7 +97,7 @@ const VertexMixin: PartialType = {
    * stylename;image=imageUrl
    * ```
    *
-   * See <mxGraph> for more information on using images.
+   * See {@link Graph} for more information on using images.
    *
    * @param parent <Cell> that specifies the parent of the new vertex.
    * @param id Optional string that defines the Id of the new vertex.

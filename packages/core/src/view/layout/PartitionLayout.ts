@@ -11,7 +11,7 @@ import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 
 /**
- * Extends <mxGraphLayout> for partitioning the parent cell vertically or
+ * Extends {@link GraphLayout} for partitioning the parent cell vertically or
  * horizontally by filling the complete area with the child cells. A horizontal
  * layout partitions the height of the given parent whereas a a non-horizontal
  * layout partitions the width. If the parent is a layer (that is, a child of
@@ -112,7 +112,7 @@ class PartitionLayout extends GraphLayout {
   }
 
   /**
-   * Implements <mxGraphLayout.execute>. All children where <isVertexIgnored>
+   * Implements {@link GraphLayout#execute}. All children where <isVertexIgnored>
    * returns false and <isVertexMovable> returns true are modified.
    */
   execute(parent: Cell): void {

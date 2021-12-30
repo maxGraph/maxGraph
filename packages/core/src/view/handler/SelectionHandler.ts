@@ -47,9 +47,9 @@ import type { ColorValue, GraphPlugin } from '../../types';
 
 /**
  * Graph event handler that handles selection. Individual cells are handled
- * separately using <mxVertexHandler> or one of the edge handlers. These
- * handlers are created using <mxGraph.createHandler> in
- * <mxGraphSelectionModel.cellAdded>.
+ * separately using {@link VertexHandler} or one of the edge handlers. These
+ * handlers are created using {@link Graph#createHandler} in
+ * {@link GraphSelectionModel#cellAdded}.
  *
  * To avoid the container to scroll a moved cell into view, set
  * <scrollAfterMove> to false.
@@ -59,7 +59,7 @@ import type { ColorValue, GraphPlugin } from '../../types';
  * Constructs an event handler that creates handles for the
  * selection cells.
  *
- * @param graph Reference to the enclosing <mxGraph>.
+ * @param graph Reference to the enclosing {@link Graph}.
  */
 class SelectionHandler implements GraphPlugin {
   static pluginId = 'SelectionHandler';
@@ -163,7 +163,7 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
@@ -216,7 +216,7 @@ class SelectionHandler implements GraphPlugin {
   handlesVisible = true;
 
   /**
-   * Holds the <mxGuide> instance that is used for alignment.
+   * Holds the {@link Guide} instance that is used for alignment.
    */
   guide: Guide | null = null;
 
@@ -277,13 +277,13 @@ class SelectionHandler implements GraphPlugin {
 
   /**
    * Specifies if the graph container should be used for preview. If this is used
-   * then drop target detection relies entirely on <mxGraph.getCellAt> because
+   * then drop target detection relies entirely on {@link Graph#getCellAt} because
    * the HTML preview does not "let events through". Default is false.
    */
   htmlPreview = false;
 
   /**
-   * Reference to the <mxShape> that represents the preview.
+   * Reference to the {@link Shape} that represents the preview.
    */
   shape: Shape | null = null;
 
@@ -362,14 +362,14 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Returns <moveEnabled>.
+   * Returns {@link oveEnabled}.
    */
   isMoveEnabled() {
     return this.moveEnabled;
   }
 
   /**
-   * Sets <moveEnabled>.
+   * Sets {@link oveEnabled}.
    */
   setMoveEnabled(value: boolean) {
     this.moveEnabled = value;
@@ -495,7 +495,7 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Selects the given cell for the given <mxMouseEvent>.
+   * Selects the given cell for the given {@link MouseEvent}.
    */
   selectCellForEvent(cell: Cell, me: InternalMouseEvent) {
     const state = this.graph.view.getState(cell);
@@ -626,7 +626,7 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Returns the <mxRectangle> used as the preview bounds for
+   * Returns the {@link Rectangle} used as the preview bounds for
    * moving the given cells.
    */
   getPreviewBounds(cells: CellArray) {
@@ -659,13 +659,13 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Returns the union of the <mxCellStates> for the given array of <mxCells>.
+   * Returns the union of the {@link CellStates} for the given array of {@link Cells}.
    * For vertices, this method uses the bounding box of the corresponding shape
    * if one exists. The bounding box of the corresponding text label and all
-   * controls and overlays are ignored. See also: <mxGraphView.getBounds> and
-   * <mxGraph.getBoundingBox>.
+   * controls and overlays are ignored. See also: {@link GraphView#getBounds} and
+   * {@link Graph#getBoundingBox}.
    *
-   * @param cells Array of <mxCells> whose bounding box should be returned.
+   * @param cells Array of {@link Cells} whose bounding box should be returned.
    */
   getBoundingBox(cells: CellArray) {
     let result = null;
@@ -807,8 +807,8 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Returns true if the guides should be used for the given <mxMouseEvent>.
-   * This implementation returns <mxGuide.isEnabledForEvent>.
+   * Returns true if the guides should be used for the given {@link MouseEvent}.
+   * This implementation returns {@link Guide#isEnabledForEvent}.
    */
   useGuidesForEvent(me: InternalMouseEvent) {
     return this.guide
@@ -828,8 +828,8 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Returns an <mxPoint> that represents the vector for moving the cells
-   * for the given <mxMouseEvent>.
+   * Returns an {@link Point} that represents the vector for moving the cells
+   * for the given {@link MouseEvent}.
    */
   getDelta(me: InternalMouseEvent) {
     const point = convertPoint(this.graph.container, me.getX(), me.getY());
@@ -1354,7 +1354,7 @@ class SelectionHandler implements GraphPlugin {
   /**
    * Sets wether the handles attached to the given cells are visible.
    *
-   * @param cells Array of <mxCells>.
+   * @param cells Array of {@link Cells}.
    * @param visible Boolean that specifies if the handles should be visible.
    * @param force Forces an update of the handler regardless of the last used value.
    */

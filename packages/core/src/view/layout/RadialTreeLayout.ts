@@ -116,10 +116,10 @@ class RadialTreeLayout extends CompactTreeLayout {
   }
 
   /**
-   * Implements <mxGraphLayout.execute>.
+   * Implements {@link GraphLayout#execute}.
    *
    * If the parent has any connected edges, then it is used as the root of
-   * the tree. Else, <mxGraph.findTreeRoots> will be used to find a suitable
+   * the tree. Else, {@link Graph#findTreeRoots} will be used to find a suitable
    * root node within the set of children of the given parent.
    *
    * @param parent    {@link mxCell} whose children should be laid out.

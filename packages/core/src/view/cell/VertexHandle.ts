@@ -44,7 +44,7 @@ class VertexHandle implements CellHandle {
   cursor = 'default';
 
   /**
-   * Specifies the <mxImage> to be used to render the handle. Default is null.
+   * Specifies the {@link Image} to be used to render the handle. Default is null.
    */
   image: ImageBox | null = null;
 
@@ -94,7 +94,7 @@ class VertexHandle implements CellHandle {
   }
 
   /**
-   * Processes the given <mxMouseEvent> and invokes <setPosition>.
+   * Processes the given {@link MouseEvent} and invokes <setPosition>.
    */
   processEvent(me: InternalMouseEvent): void {
     const { scale } = this.graph.view;
@@ -125,7 +125,7 @@ class VertexHandle implements CellHandle {
 
   /**
    * Should be called after <setPosition> in <processEvent>.
-   * This repaints the state using <mxCellRenderer>.
+   * This repaints the state using {@link CellRenderer}.
    */
   positionChanged(): void {
     if (this.state.text != null) {

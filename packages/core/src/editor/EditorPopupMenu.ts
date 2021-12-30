@@ -147,7 +147,7 @@ export class EditorPopupMenu {
    * Recursively adds the given items and all of its children into the given menu.
    *
    * @param editor Enclosing <Editor> instance.
-   * @param menu <mxPopupMenu> that is used for adding items and separators.
+   * @param menu {@link PopupMenu} that is used for adding items and separators.
    * @param cell Optional <Cell> which is under the mousepointer.
    * @param evt Optional mouse event which triggered the menu.
    * @param conditions Array of names boolean conditions.
@@ -223,7 +223,7 @@ export class EditorPopupMenu {
   /**
    * Helper method to bind an action to a new menu item.
    *
-   * @param menu <mxPopupMenu> that is used for adding items and separators.
+   * @param menu {@link PopupMenu} that is used for adding items and separators.
    * @param editor Enclosing <Editor> instance.
    * @param lab String that represents the label of the menu item.
    * @param icon Optional URL that represents the icon of the menu item.

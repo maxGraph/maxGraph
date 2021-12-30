@@ -15,7 +15,7 @@ import TextShape from '../geometry/node/TextShape';
 import Rectangle from '../geometry/Rectangle';
 
 /**
- * Extends <mxGraphLayout> to implement an edge label layout. This layout
+ * Extends {@link GraphLayout} to implement an edge label layout. This layout
  * makes use of cell states, which means the graph must be validated in
  * a graph view (so that the label bounds are available) before this layout
  * can be executed.

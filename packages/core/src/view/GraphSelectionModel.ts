@@ -34,23 +34,23 @@ import InternalEvent from "./event/InternalEvent";
  * Event: mxEvent.UNDO
  * 
  * Fires after the selection was changed in <changeSelection>. The
- * <code>edit</code> property contains the <mxUndoableEdit> which contains the
- * <mxSelectionChange>.
+ * <code>edit</code> property contains the {@link UndoableEdit} which contains the
+ * {@link SelectionChange}.
  * 
  * Event: mxEvent.CHANGE
  * 
- * Fires after the selection changes by executing an <mxSelectionChange>. The
+ * Fires after the selection changes by executing an {@link SelectionChange}. The
  * <code>added</code> and <code>removed</code> properties contain arrays of
  * cells that have been added to or removed from the selection, respectively.
  * The names are inverted due to historic reasons. This cannot be changed.
  * 
  * Constructor: mxGraphSelectionModel
  *
- * Constructs a new graph selection model for the given <mxGraph>.
+ * Constructs a new graph selection model for the given {@link Graph}.
  * 
  * Parameters:
  * 
- * graph - Reference to the enclosing <mxGraph>.
+ * graph - Reference to the enclosing {@link Graph}.
  */
 class GraphSelectionModel extends EventSource {
   constructor(graph: Graph) {

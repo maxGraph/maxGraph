@@ -6,8 +6,8 @@ import Cell from '../view/cell/Cell';
 
 /**
  * Configures the given DOM element to act as a drag source for the
- * specified graph. Returns a a new <mxDragSource>. If
- * <mxDragSource.guideEnabled> is enabled then the x and y arguments must
+ * specified graph. Returns a a new {@link DragSource}. If
+ * {@link DragSource#guideEnabled} is enabled then the x and y arguments must
  * be used in funct to match the preview location.
  *
  * Example:
@@ -50,8 +50,8 @@ import Cell from '../view/cell/Cell';
  * ```
  *
  * @param element DOM element to make draggable.
- * @param graphF <mxGraph> that acts as the drop target or a function that takes a
- * mouse event and returns the current <mxGraph>.
+ * @param graphF {@link Graph} that acts as the drop target or a function that takes a
+ * mouse event and returns the current {@link Graph}.
  * @param funct Function to execute on a successful drop.
  * @param dragElement Optional DOM node to be used for the drag preview.
  * @param dx Optional horizontal offset between the cursor and the drag

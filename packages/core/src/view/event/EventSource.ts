@@ -25,7 +25,7 @@ type EventListenerObject = {
  *
  * Known Subclasses:
  *
- * <Transactions>, <mxGraph>, <mxGraphView>, <Editor>, <CellOverlay>,
+ * <Transactions>, {@link Graph}, {@link GraphView}, <Editor>, <CellOverlay>,
  * <MaxToolbar>, <MaxWindow>
  *
  * Constructor: mxEventSource
@@ -86,7 +86,7 @@ class EventSource {
    * Binds the specified function to the given event name. If no event name
    * is given, then the listener is registered for all events.
    *
-   * The parameters of the listener are the sender and an <mxEventObject>.
+   * The parameters of the listener are the sender and an {@link EventObject}.
    */
   addListener(name: string, funct: Function) {
     this.eventListeners.push({ name, funct });
@@ -110,7 +110,7 @@ class EventSource {
   /**
    * Dispatches the given event to the listeners which are registered for
    * the event. The sender argument is optional. The current execution scope
-   * ("this") is used for the listener invocation (see <mxUtils.bind>).
+   * ("this") is used for the listener invocation (see {@link Utils#bind}).
    *
    * Example:
    *
@@ -118,7 +118,7 @@ class EventSource {
    * fireEvent(new mxEventObject("eventName", key1, val1, .., keyN, valN))
    * ```
    *
-   * @param evt <mxEventObject> that represents the event.
+   * @param evt {@link EventObject} that represents the event.
    * @param sender Optional sender to be passed to the listener. Default value is
    * the return value of <getEventSource>.
    */

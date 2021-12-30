@@ -17,7 +17,7 @@ type Visitor<MapKey, U> = (key: MapKey, value: U) => void;
 
 /**
  * A wrapper class for an associative array with object keys. Note: This
- * implementation uses <mxObjectIdentitiy> to turn object keys into strings.
+ * implementation uses {@link ObjectIdentitiy} to turn object keys into strings.
  *
  * Constructor: mxEventSource
  *

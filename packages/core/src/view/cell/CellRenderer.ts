@@ -91,23 +91,23 @@ class CellRenderer {
   /**
    * Static array that contains the globally registered shapes which are
    * known to all instances of this class. For adding new shapes you should
-   * use the static <mxCellRenderer.registerShape> function.
+   * use the static {@link CellRenderer#registerShape} function.
    */
   static defaultShapes: { [key: string]: typeof Shape } = {};
 
   /**
-   * Defines the default shape for edges. Default is <mxConnector>.
+   * Defines the default shape for edges. Default is {@link Connector}.
    */
   // @ts-expect-error The constructors for Shape and Connector are different.
   defaultEdgeShape: typeof Shape = ConnectorShape;
 
   /**
-   * Defines the default shape for vertices. Default is <mxRectangleShape>.
+   * Defines the default shape for vertices. Default is {@link RectangleShape}.
    */
   defaultVertexShape: typeof RectangleShape = RectangleShape;
 
   /**
-   * Defines the default shape for labels. Default is <mxText>.
+   * Defines the default shape for labels. Default is {@link Text}.
    */
   defaultTextShape: typeof TextShape = TextShape;
 
@@ -521,7 +521,7 @@ class CellRenderer {
    * Initializes the given overlay.
    *
    * @param state <CellState> for which the overlay should be created.
-   * @param overlay <mxImageShape> that represents the overlay.
+   * @param overlay {@link ImageShape} that represents the overlay.
    */
   initializeOverlay(state: CellState, overlay: ImageShape) {
     overlay.init(state.view.getOverlayPane());
@@ -529,7 +529,7 @@ class CellRenderer {
 
   /**
    * Installs the listeners for the given <CellState>, <CellOverlay> and
-   * <mxShape> that represents the overlay.
+   * {@link Shape} that represents the overlay.
    */
   installCellOverlayListeners(state: CellState, overlay: CellOverlay, shape: Shape) {
     const graph = <Graph>state.view.graph;
@@ -616,7 +616,7 @@ class CellRenderer {
    * Initializes the given control and returns the corresponding DOM node.
    *
    * @param state <CellState> for which the control should be initialized.
-   * @param control <mxShape> to be initialized.
+   * @param control {@link Shape} to be initialized.
    * @param handleEvents Boolean indicating if mousedown and mousemove should fire events via the graph.
    * @param clickHandler Optional function to implement clicks on the control.
    */
@@ -892,7 +892,7 @@ class CellRenderer {
    * Returns true if the style for the text shape has changed.
    *
    * @param state <CellState> whose label should be checked.
-   * @param shape <mxText> shape to be checked.
+   * @param shape {@link Text} shape to be checked.
    */
   isTextShapeInvalid(state: CellState, shape: TextShape): boolean {
     function check(property: string, stylename: string, defaultValue: any) {
@@ -940,7 +940,7 @@ class CellRenderer {
   /**
    * Called to invoked redraw on the given text shape.
    *
-   * @param shape <mxText> shape to be redrawn.
+   * @param shape {@link Text} shape to be redrawn.
    */
   redrawLabelShape(shape: TextShape): void {
     shape.redraw();
@@ -1033,7 +1033,7 @@ class CellRenderer {
    * applies the alignment and offsets.
    *
    * @param state <CellState> whose label bounds should be rotated.
-   * @param bounds <mxRectangle> the rectangle to be rotated.
+   * @param bounds {@link Rectangle} the rectangle to be rotated.
    */
   rotateLabelBounds(state: CellState, bounds: Rectangle): void {
     bounds.y -= state.text!.margin!.y * bounds.height;
@@ -1242,9 +1242,9 @@ class CellRenderer {
   }
 
   /**
-   * Inserts the given array of <mxShapes> after the given nodes in the DOM.
+   * Inserts the given array of {@link Shapes} after the given nodes in the DOM.
    *
-   * @param shapes Array of <mxShapes> to be inserted.
+   * @param shapes Array of {@link Shapes} to be inserted.
    * @param node Node in <drawPane> after which the shapes should be inserted.
    * @param htmlNode Node in the graph container after which the shapes should be inserted that
    * will not go into the <drawPane> (eg. HTML labels without foreignObjects).
@@ -1322,7 +1322,7 @@ class CellRenderer {
   }
 
   /**
-   * Returns the <mxShapes> for the given cell state in the order in which they should
+   * Returns the {@link Shapes} for the given cell state in the order in which they should
    * appear in the DOM.
    *
    * @param state <CellState> whose shapes should be returned.

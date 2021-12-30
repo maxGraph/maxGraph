@@ -5,9 +5,9 @@ class StyleMap implements Record<string, any> {
   /**
    * Defines the key for the perimeter style. This is a function that defines
    * the perimeter around a particular shape. Possible values are the
-   * functions defined in <mxPerimeter>. Alternatively, the constants in this
+   * functions defined in {@link Perimeter}. Alternatively, the constants in this
    * class that start with "PERIMETER_" may be used to access
-   * perimeter styles in <mxStyleRegistry>. Value is "perimeter".
+   * perimeter styles in {@link StyleRegistry}. Value is "perimeter".
    */
   perimeter: any;
 
@@ -98,7 +98,7 @@ class StyleMap implements Record<string, any> {
    * 'visible' will show the complete label. A value of 'hidden' will clip
    * the label so that it does not overlap the vertex bounds. A value of
    * 'fill' will use the vertex bounds and a value of 'width' will use the
-   * vertex width for the label. See <mxGraph.isLabelClipped>. Note that
+   * vertex width for the label. See {@link Graph#isLabelClipped}. Note that
    * the vertical alignment is ignored for overflow fill and for horizontal
    * alignment, left should be used to avoid pixel offsets in Internet Explorer
    * 11 and earlier or if foreignObjects are disabled. Value is "overflow".
@@ -109,7 +109,7 @@ class StyleMap implements Record<string, any> {
    * Defines if the connection points on either end of the edge should be
    * computed so that the edge is vertical or horizontal if possible and
    * if the point is not at a fixed location. Default is false. This is
-   * used in <mxGraph.isOrthogonal>, which also returns true if the edgeStyle
+   * used in {@link Graph#isOrthogonal}, which also returns true if the edgeStyle
    * of the edge is an elbow or entity. Value is "orthogonal".
    */
   orthogonal: any;
@@ -183,7 +183,7 @@ class StyleMap implements Record<string, any> {
    * 'nowrap' means the text will never wrap to the next line until a
    * linefeed is encountered. A value of 'wrap' means text will wrap when
    * necessary. This style is only used for HTML labels.
-   * See <mxGraph.isWrapping>. Value is "whiteSpace".
+   * See {@link Graph#isWrapping}. Value is "whiteSpace".
    */
   whiteSpace: any;
 
@@ -203,7 +203,7 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Specifies if pointer events should be fired on transparent backgrounds.
-   * This style is currently only supported in <mxRectangleShape>. Default
+   * This style is currently only supported in {@link RectangleShape}. Default
    * is true. Value is "pointerEvents". This is typically set to
    * false in groups where the transparent part should allow any underlying
    * cells to be clickable.
@@ -332,7 +332,7 @@ class StyleMap implements Record<string, any> {
   /**
    * Defines the key for the image aspect style. Possible values are 0 (do
    * not preserve aspect) or 1 (keep aspect). This is only used in
-   * <mxImageShape>. Default is 1. Value is "imageAspect".
+   * {@link ImageShape}. Default is 1. Value is "imageAspect".
    */
   imageAspect: any;
 
@@ -354,7 +354,7 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Defines the key for the glass style. Possible values are 0 (disabled) and
-   * 1(enabled). The default value is 0. This is used in <mxLabel>. Value is
+   * 1(enabled). The default value is 0. This is used in {@link Label}. Value is
    * "glass".
    */
   glass: any;
@@ -385,21 +385,21 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Defines the key for the image background color. This style is only used
-   * in <mxImageShape>. Possible values are all HTML color names or HEX
+   * in {@link ImageShape}. Possible values are all HTML color names or HEX
    * codes. Value is "imageBackground".
    */
   imageBackground: any;
 
   /**
    * Defines the key for the image border color. This style is only used in
-   * <mxImageShape>. Possible values are all HTML color names or HEX codes.
+   * {@link ImageShape}. Possible values are all HTML color names or HEX codes.
    * Value is "imageBorder".
    */
   imageBorder: any;
 
   /**
    * Defines the key for the horizontal image flip. This style is only used
-   * in <mxImageShape>. Possible values are 0 and 1. Default is 0. Value is
+   * in {@link ImageShape}. Possible values are 0 and 1. Default is 0. Value is
    * "flipH".
    */
   flipH: any;
@@ -443,7 +443,7 @@ class StyleMap implements Record<string, any> {
   labelPadding: any;
 
   /**
-   * Defines the key for the indicator shape used within an <mxLabel>.
+   * Defines the key for the indicator shape used within an {@link Label}.
    * Possible values are all SHAPE_* constants or the names of any new
    * shapes. The indicatorShape has precedence over the indicatorImage.
    * Value is "indicatorShape".
@@ -451,7 +451,7 @@ class StyleMap implements Record<string, any> {
   indicatorShape: any;
 
   /**
-   * Defines the key for the indicator image used within an <mxLabel>.
+   * Defines the key for the indicator image used within an {@link Label}.
    * Possible values are all image URLs. The indicatorShape has
    * precedence over the indicatorImage. Value is "indicatorImage".
    */
@@ -466,7 +466,7 @@ class StyleMap implements Record<string, any> {
   indicatorColor: any;
 
   /**
-   * Defines the key for the indicator stroke color in <mxLabel>.
+   * Defines the key for the indicator stroke color in {@link Label}.
    * Possible values are all color codes. Value is "indicatorStrokeColor".
    */
   indicatorStrokeColor: any;
@@ -480,7 +480,7 @@ class StyleMap implements Record<string, any> {
 
   /**
    * The defines the key for the spacing between the label and the
-   * indicator in <mxLabel>. Possible values are in pixels. Value is
+   * indicator in {@link Label}. Possible values are in pixels. Value is
    * "indicatorSpacing".
    */
   indicatorSpacing: any;
@@ -499,7 +499,7 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Defines the key for the indicatorDirection style. The direction style is
-   * used to specify the direction of certain shapes (eg. <mxTriangle>).
+   * used to specify the direction of certain shapes (eg. {@link Triangle}).
    * Possible values are <DIRECTION_EAST> (default), <DIRECTION_WEST>,
    * <DIRECTION_NORTH> and <DIRECTION_SOUTH>. Value is "indicatorDirection".
    */
@@ -520,7 +520,7 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Defines the key for the end arrow marker. Possible values are all
-   * constants with an ARROW-prefix. This is only used in <mxConnector>.
+   * constants with an ARROW-prefix. This is only used in {@link Connector}.
    * Value is "endArrow".
    *
    * Example:
@@ -532,7 +532,7 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Defines the key for the start arrow marker. Possible values are all
-   * constants with an ARROW-prefix. This is only used in <mxConnector>.
+   * constants with an ARROW-prefix. This is only used in {@link Connector}.
    * See <STYLE_ENDARROW>. Value is "startArrow".
    */
   startArrow: any;
@@ -561,14 +561,14 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Defines the key for the endFill style. Use 0 for no fill or 1 (default)
-   * for fill. (This style is only exported via <mxImageExport>.) Value is
+   * for fill. (This style is only exported via {@link ImageExport}.) Value is
    * "endFill".
    */
   endFill: any;
 
   /**
    * Defines the key for the startFill style. Use 0 for no fill or 1 (default)
-   * for fill. (This style is only exported via <mxImageExport>.) Value is
+   * for fill. (This style is only exported via {@link ImageExport}.) Value is
    * "startFill".
    */
   startFill: any;
@@ -587,7 +587,7 @@ class StyleMap implements Record<string, any> {
    * space between the dashes. The lengths are relative to the line width: a
    * length of "1" is equal to the line width. VML ignores this style and
    * uses dashStyle instead as defined in the VML specification. This style
-   * is only used in the <mxConnector> shape. Value is "dashPattern".
+   * is only used in the {@link Connector} shape. Value is "dashPattern".
    */
   dashPattern: any;
 
@@ -621,7 +621,7 @@ class StyleMap implements Record<string, any> {
    * is not specified then RECTANGLE_ROUNDING_FACTOR * 100 is used. For
    * edges, this defines the absolute size of rounded corners in pixels. If
    * this values is not specified then LINE_ARCSIZE is used.
-   * (This style is only exported via <mxImageExport>.) Value is "arcSize".
+   * (This style is only exported via {@link ImageExport}.) Value is "arcSize".
    */
   arcSize: any;
 
@@ -707,7 +707,7 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Defines the key for the direction style. The direction style is used
-   * to specify the direction of certain shapes (eg. <mxTriangle>).
+   * to specify the direction of certain shapes (eg. {@link Triangle}).
    * Possible values are <DIRECTION_EAST> (default), <DIRECTION_WEST>,
    * <DIRECTION_NORTH> and <DIRECTION_SOUTH>. Value is "direction".
    */
@@ -767,7 +767,7 @@ class StyleMap implements Record<string, any> {
   /**
    * Defines the key for the autosize style. This specifies if a cell should be
    * resized automatically if the value has changed. Possible values are 0 or 1.
-   * Default is 0. See <mxGraph.isAutoSizeCell>. This is normally combined with
+   * Default is 0. See {@link Graph#isAutoSizeCell}. This is normally combined with
    * <STYLE_RESIZABLE> to disable manual sizing. Value is "autosize".
    */
   autosize: any;
@@ -775,14 +775,14 @@ class StyleMap implements Record<string, any> {
   /**
    * Defines the key for the foldable style. This specifies if a cell is foldable
    * using a folding icon. Possible values are 0 or 1. Default is 1. See
-   * <mxGraph.isCellFoldable>. Value is "foldable".
+   * {@link Graph#isCellFoldable}. Value is "foldable".
    */
   foldable: any;
 
   /**
    * Defines the key for the editable style. This specifies if the value of
    * a cell can be edited using the in-place editor. Possible values are 0 or
-   * 1. Default is 1. See <mxGraph.isCellEditable>. Value is "editable".
+   * 1. Default is 1. See {@link Graph#isCellEditable}. Value is "editable".
    */
   editable: any;
 
@@ -796,21 +796,21 @@ class StyleMap implements Record<string, any> {
   /**
    * Defines the key for the bendable style. This specifies if the control
    * points of an edge can be moved. Possible values are 0 or 1. Default is
-   * 1. See <mxGraph.isCellBendable>. Value is "bendable".
+   * 1. See {@link Graph#isCellBendable}. Value is "bendable".
    */
   bendable: any;
 
   /**
    * Defines the key for the movable style. This specifies if a cell can
    * be moved. Possible values are 0 or 1. Default is 1. See
-   * <mxGraph.isCellMovable>. Value is "movable".
+   * {@link Graph#isCellMovable}. Value is "movable".
    */
   movable: any;
 
   /**
    * Defines the key for the resizable style. This specifies if a cell can
    * be resized. Possible values are 0 or 1. Default is 1. See
-   * <mxGraph.isCellResizable>. Value is "resizable".
+   * {@link Graph#isCellResizable}. Value is "resizable".
    */
   resizable: any;
 
@@ -835,21 +835,21 @@ class StyleMap implements Record<string, any> {
   /**
    * Defines the key for the rotatable style. This specifies if a cell can
    * be rotated. Possible values are 0 or 1. Default is 1. See
-   * <mxGraph.isCellRotatable>. Value is "rotatable".
+   * {@link Graph#isCellRotatable}. Value is "rotatable".
    */
   rotatable: any;
 
   /**
    * Defines the key for the cloneable style. This specifies if a cell can
    * be cloned. Possible values are 0 or 1. Default is 1. See
-   * <mxGraph.isCellCloneable>. Value is "cloneable".
+   * {@link Graph#isCellCloneable}. Value is "cloneable".
    */
   cloneable: any;
 
   /**
    * Defines the key for the deletable style. This specifies if a cell can be
    * deleted. Possible values are 0 or 1. Default is 1. See
-   * <mxGraph.isCellDeletable>. Value is "deletable".
+   * {@link Graph#isCellDeletable}. Value is "deletable".
    */
   deletable: any;
 
@@ -861,12 +861,12 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Defines the key for the edge style. Possible values are the functions
-   * defined in <mxEdgeStyle>. Value is "edgeStyle".
+   * defined in {@link EdgeStyle}. Value is "edgeStyle".
    */
   edgeStyle: any;
 
   /**
-   * Defines the key for the jetty size in <mxEdgeStyle.OrthConnector>.
+   * Defines the key for the jetty size in {@link EdgeStyle#OrthConnector}.
    * Default is 10. Possible values are all numeric values or "auto".
    * Jetty size is the minimum length of the orthogonal segment before
    * it attaches to a shape.
@@ -875,14 +875,14 @@ class StyleMap implements Record<string, any> {
   jettySize: any;
 
   /**
-   * Defines the key for the jetty size in <mxEdgeStyle.OrthConnector>.
+   * Defines the key for the jetty size in {@link EdgeStyle#OrthConnector}.
    * Default is 10. Possible values are numeric values or "auto". This has
    * precedence over <STYLE_JETTY_SIZE>. Value is "sourceJettySize".
    */
   sourceJettySize: any;
 
   /**
-   * Defines the key for the jetty size in <mxEdgeStyle.OrthConnector>.
+   * Defines the key for the jetty size in {@link EdgeStyle#OrthConnector}.
    * Default is 10. Possible values are numeric values or "auto". This has
    * precedence over <STYLE_JETTY_SIZE>. Value is "targetJettySize".
    */
@@ -890,8 +890,8 @@ class StyleMap implements Record<string, any> {
 
   /**
    * Defines the key for the loop style. Possible values are the functions
-   * defined in <mxEdgeStyle>. Value is "loopStyle". Default is
-   * <mxGraph.defaultLoopStylean>.
+   * defined in {@link EdgeStyle}. Value is "loopStyle". Default is
+   * {@link Graph#defaultLoopStylean}.
    */
   loopStyle: any;
 

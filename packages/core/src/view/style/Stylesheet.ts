@@ -237,7 +237,7 @@ export class Stylesheet {
 }
 
 /**
- * Codec for <mxStylesheet>s. This class is created and registered
+ * Codec for {@link Stylesheet}s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec>
  * and the <CodecRegistry>.
  */
@@ -316,7 +316,7 @@ export class StylesheetCodec extends ObjectCodec {
    * Each node contains another sequence of add and remove nodes with the following
    * attributes:
    *
-   * as - Name of the style (see <mxConstants>).
+   * as - Name of the style (see {@link Constants}).
    * value - Value for the style.
    *
    * Instead of the value-attribute, one can put Javascript expressions into

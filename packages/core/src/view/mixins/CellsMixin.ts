@@ -990,10 +990,10 @@ export const CellsMixin: PartialType = {
   /**
    * Adds the cells to the parent at the given index, connecting each cell to
    * the optional source and target terminal. The change is carried out using
-   * <cellsAdded>. This method fires <mxEvent.ADD_CELLS> while the
+   * <cellsAdded>. This method fires {@link Event#ADD_CELLS} while the
    * transaction is in progress. Returns the cells that were added.
    *
-   * @param cells Array of <mxCells> to be inserted.
+   * @param cells Array of {@link Cells} to be inserted.
    * @param parent <Cell> that represents the new parent. If no parent is
    * given then the default parent is used.
    * @param index Optional index to insert the cells at. Default is to append.
@@ -1025,7 +1025,7 @@ export const CellsMixin: PartialType = {
 
   /**
    * Adds the specified cells to the given parent. This method fires
-   * <mxEvent.CELLS_ADDED> while the transaction is in progress.
+   * {@link Event#CELLS_ADDED} while the transaction is in progress.
    */
   cellsAdded(
     cells,
@@ -1844,7 +1844,7 @@ export const CellsMixin: PartialType = {
    * Moves or clones the specified cells and moves the cells or clones by the
    * given amount, adding them to the optional target cell. The evt is the
    * mouse event as the mouse was released. The change is carried out using
-   * <cellsMoved>. This method fires <mxEvent.MOVE_CELLS> while the
+   * <cellsMoved>. This method fires {@link Event#MOVE_CELLS} while the
    * transaction is in progress. Returns the cells that were moved.
    *
    * Use the following code to move all cells in the graph.
@@ -1853,7 +1853,7 @@ export const CellsMixin: PartialType = {
    * graph.moveCells(graph.getChildCells(null, true, true), 10, 10);
    * ```
    *
-   * @param cells Array of <mxCells> to be moved, cloned or added to the target.
+   * @param cells Array of {@link Cells} to be moved, cloned or added to the target.
    * @param dx Integer that specifies the x-coordinate of the vector. Default is 0.
    * @param dy Integer that specifies the y-coordinate of the vector. Default is 0.
    * @param clone Boolean indicating if the cells should be cloned. Default is false.
@@ -1986,7 +1986,7 @@ export const CellsMixin: PartialType = {
   /**
    * Moves the specified cells by the given vector, disconnecting the cells
    * using disconnectGraph is disconnect is true. This method fires
-   * <mxEvent.CELLS_MOVED> while the transaction is in progress.
+   * {@link Event#CELLS_MOVED} while the transaction is in progress.
    */
   cellsMoved(cells, dx, dy, disconnect = false, constrain = false, extend = false) {
     if (dx !== 0 || dy !== 0) {

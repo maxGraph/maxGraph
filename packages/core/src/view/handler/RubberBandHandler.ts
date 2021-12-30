@@ -133,7 +133,7 @@ class RubberBandHandler implements GraphPlugin {
   }
 
   /**
-   * Returns true if the given <mxMouseEvent> should start rubberband selection.
+   * Returns true if the given {@link MouseEvent} should start rubberband selection.
    * This implementation returns true if the alt key is pressed.
    */
   isForceRubberbandEvent(me: InternalMouseEvent) {
@@ -264,7 +264,7 @@ class RubberBandHandler implements GraphPlugin {
 
   /**
    * Handles the event by selecting the region of the rubberband using
-   * <mxGraph.selectRegion>.
+   * {@link Graph#selectRegion}.
    */
   mouseUp(sender: EventSource, me: InternalMouseEvent) {
     const active = this.isActive();

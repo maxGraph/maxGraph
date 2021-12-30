@@ -143,7 +143,7 @@ class MaxPopupMenu extends EventSource implements Partial<PopupMenuItem> {
    * Returns true if the given event is a popupmenu trigger for the optional
    * given cell.
    *
-   * @param me <mxMouseEvent> that represents the mouse event.
+   * @param me {@link MouseEvent} that represents the mouse event.
    */
   isPopupTrigger(me: InternalMouseEvent) {
     return (

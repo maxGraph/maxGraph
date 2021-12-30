@@ -176,10 +176,10 @@ class LayoutManager extends EventSource {
 
   /**
    * Returns true if the given cell has a layout. This implementation invokes
-   * <getLayout> with <mxEvent.LAYOUT_CELLS> as the eventName. Override this
+   * <getLayout> with {@link Event#LAYOUT_CELLS} as the eventName. Override this
    * if creating layouts in <getLayout> is expensive and return true if
    * <getLayout> will return a layout for the given cell for
-   * <mxEvent.BEGIN_UPDATE> or <mxEvent.END_UPDATE>.
+   * {@link Event#BEGIN_UPDATE} or {@link Event#END_UPDATE}.
    */
   hasLayout(cell: Cell | null) {
     return !!this.getLayout(cell, InternalEvent.LAYOUT_CELLS);

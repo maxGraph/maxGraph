@@ -10,7 +10,7 @@ import CellArray from '../cell/CellArray';
 import Cell from '../cell/Cell';
 
 /**
- * Extends <mxGraphLayout> to implement a circular layout for a given radius.
+ * Extends {@link GraphLayout} to implement a circular layout for a given radius.
  * The vertices do not need to be connected for this layout to work and all
  * connections between vertices are not taken into account.
  *
@@ -27,7 +27,7 @@ import Cell from '../cell/Cell';
  *
  * Arguments:
  *
- * graph - <mxGraph> that contains the cells.
+ * graph - {@link Graph} that contains the cells.
  * radius - Optional radius as an int. Default is 100.
  */
 class CircleLayout extends GraphLayout {
@@ -73,7 +73,7 @@ class CircleLayout extends GraphLayout {
   disableEdgeStyle: boolean = true;
 
   /**
-   * Implements <mxGraphLayout.execute>.
+   * Implements {@link GraphLayout#execute}.
    */
   execute(parent: Cell) {
     const model = this.graph.getDataModel();

@@ -39,7 +39,7 @@ export class RootChange implements UndoableChange {
 }
 
 /**
- * Codec for <mxRootChange>s. This class is created and registered
+ * Codec for {@link RootChange}s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec> and
  * the <CodecRegistry>.
  *

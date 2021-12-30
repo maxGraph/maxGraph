@@ -327,7 +327,7 @@ class MaxWindow extends EventSource {
   visible: boolean = false;
 
   /**
-   * <mxRectangle> that specifies the minimum width and height of the window.
+   * {@link Rectangle} that specifies the minimum width and height of the window.
    * Default is (50, 40).
    */
   minimumSize = new Rectangle(0, 0, 50, 40);
@@ -544,7 +544,7 @@ class MaxWindow extends EventSource {
   }
 
   /**
-   * Returns an <mxRectangle> that specifies the size for the minimized window.
+   * Returns an {@link Rectangle} that specifies the size for the minimized window.
    * A width or height of 0 means keep the existing width or height. This
    * implementation returns the height of the window title and keeps the width.
    */
@@ -1013,7 +1013,7 @@ export const popup = (content: string, isInternalWindow: boolean=false) => {
  * Displays the given error message in a new <MaxWindow> of the given width.
  * If close is true then an additional close button is added to the window.
  * The optional icon specifies the icon to be used for the window. Default
- * is <mxUtils.errorImage>.
+ * is {@link Utils#errorImage}.
  *
  * @param message String specifying the message to be displayed.
  * @param width Integer specifying the width of the window.

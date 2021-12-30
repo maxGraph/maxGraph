@@ -158,7 +158,7 @@ import type { FilterFunction } from '../types';
  *
  * Event: mxEvent.NOTIFY
  *
- * Same as <mxEvent.CHANGE>, this event can be used for classes that need to
+ * Same as {@link Event#CHANGE}, this event can be used for classes that need to
  * implement a sync mechanism between this model and, say, a remote model. In
  * such a setup, only local changes should trigger a notify event and all
  * changes should trigger a change event.
@@ -638,7 +638,7 @@ export class GraphDataModel extends EventSource {
   }
 
   /**
-   * Inner callback to update the parent of a cell using <mxCell.insert>
+   * Inner callback to update the parent of a cell using {@link Cell#insert}
    * on the parent and return the previous parent.
    *
    * @param {Cell} cell  to update the parent for.
@@ -713,7 +713,7 @@ export class GraphDataModel extends EventSource {
 
   /**
    * Inner helper function to update the terminal of the edge using
-   * <mxCell.insertEdge> and return the previous terminal.
+   * {@link Cell#insertEdge} and return the previous terminal.
    *
    * @param {Cell} edge  that specifies the edge to be updated.
    * @param {Cell} terminal  that specifies the new terminal.
@@ -794,8 +794,8 @@ export class GraphDataModel extends EventSource {
 
   /**
    * Inner callback to update the user object of the given {@link Cell}
-   * using <mxCell.valueChanged> and return the previous value,
-   * that is, the return value of <mxCell.valueChanged>.
+   * using {@link Cell#valueChanged} and return the previous value,
+   * that is, the return value of {@link Cell#valueChanged}.
    *
    * To change a specific attribute in an XML node, the following code can be
    * used.
@@ -831,7 +831,7 @@ export class GraphDataModel extends EventSource {
 
   /**
    * Inner callback to update the {@link Geometry} of the given {@link Cell} using
-   * <mxCell.setGeometry> and return the previous {@link Geometry}.
+   * {@link Cell#setGeometry} and return the previous {@link Geometry}.
    */
   geometryForCellChanged(cell: Cell, geometry: Geometry | null): Geometry | null {
     const previous = cell.getGeometry();
@@ -855,7 +855,7 @@ export class GraphDataModel extends EventSource {
 
   /**
    * Inner callback to update the style of the given {@link Cell}
-   * using <mxCell.setStyle> and return the previous style.
+   * using {@link Cell#setStyle} and return the previous style.
    *
    * @param {Cell} cell  that specifies the cell to be updated.
    * @param style  String of the form [stylename;|key=value;] to specify
@@ -883,7 +883,7 @@ export class GraphDataModel extends EventSource {
 
   /**
    * Inner callback to update the collapsed state of the
-   * given {@link Cell} using <mxCell.setCollapsed> and return
+   * given {@link Cell} using {@link Cell#setCollapsed} and return
    * the previous collapsed state.
    *
    * @param {Cell} cell  that specifies the cell to be updated.
@@ -911,7 +911,7 @@ export class GraphDataModel extends EventSource {
 
   /**
    * Inner callback to update the visible state of the
-   * given {@link Cell} using <mxCell.setCollapsed> and return
+   * given {@link Cell} using {@link Cell#setCollapsed} and return
    * the previous visible state.
    *
    * @param {Cell} cell  that specifies the cell to be updated.

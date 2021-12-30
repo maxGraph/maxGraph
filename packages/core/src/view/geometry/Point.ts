@@ -59,7 +59,7 @@ class Point {
   }
 
   /**
-   * Returns a clone of this <mxPoint>.
+   * Returns a clone of this {@link Point}.
    */
   clone() {
     return new Point(this.x, this.y);

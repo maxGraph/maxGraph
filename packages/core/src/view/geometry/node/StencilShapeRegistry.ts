@@ -39,7 +39,7 @@ class StencilShapeRegistry {
   static stencils: Stencils = {};
 
   /**
-   * Adds the given <mxStencil>.
+   * Adds the given {@link Stencil}.
    * @static
    * @param {string} name
    * @param {StencilShape} stencil
@@ -49,7 +49,7 @@ class StencilShapeRegistry {
   }
 
   /**
-   * Returns the <mxStencil> for the given name.
+   * Returns the {@link Stencil} for the given name.
    * @static
    * @param {string} name
    * @returns {StencilShape}

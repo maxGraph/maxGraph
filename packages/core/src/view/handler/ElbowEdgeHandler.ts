@@ -22,9 +22,9 @@ import CellState from '../cell/CellState';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and
- * the edge label location. Uses <mxTerminalMarker> for finding and
+ * the edge label location. Uses {@link TerminalMarker} for finding and
  * highlighting new source and target vertices. This handler is automatically
- * created in <mxGraph.createHandler>. It extends <mxEdgeHandler>.
+ * created in {@link Graph#createHandler}. It extends {@link EdgeHandler}.
  *
  * Constructor: mxEdgeHandler
  *
@@ -39,7 +39,7 @@ class ElbowEdgeHandler extends EdgeHandler {
 
   /**
    * Specifies if a double click on the middle handle should call
-   * <mxGraph.flipEdge>. Default is true.
+   * {@link Graph#flipEdge}. Default is true.
    */
   flipEnabled = true;
 
@@ -54,7 +54,7 @@ class ElbowEdgeHandler extends EdgeHandler {
     Client.language !== 'none' ? 'doubleClickOrientation' : '';
 
   /**
-   * Overrides <mxEdgeHandler.createBends> to create custom bends.
+   * Overrides {@link EdgeHandler#createBends} to create custom bends.
    */
   createBends() {
     const bends = [];
@@ -88,7 +88,7 @@ class ElbowEdgeHandler extends EdgeHandler {
 
   /**
    * Creates a virtual bend that supports double clicking and calls
-   * <mxGraph.flipEdge>.
+   * {@link Graph#flipEdge}.
    */
   createVirtualBend(dblClickHandler?: (evt: MouseEvent) => void) {
     const bend = this.createHandleShape();
@@ -136,7 +136,7 @@ class ElbowEdgeHandler extends EdgeHandler {
    * Converts the given point in-place from screen to unscaled, untranslated
    * graph coordinates and applies the grid.
    *
-   * @param point <mxPoint> to be converted.
+   * @param point {@link Point} to be converted.
    * @param gridEnabled Boolean that specifies if the grid should be applied.
    */
   convertPoint(point: Point, gridEnabled: boolean) {
@@ -158,8 +158,8 @@ class ElbowEdgeHandler extends EdgeHandler {
   /**
    * Updates and redraws the inner bends.
    *
-   * @param p0 <mxPoint> that represents the location of the first point.
-   * @param pe <mxPoint> that represents the location of the last point.
+   * @param p0 {@link Point} that represents the location of the first point.
+   * @param pe {@link Point} that represents the location of the last point.
    */
   redrawInnerBends(p0: Point, pe: Point) {
     const g = this.state.cell.getGeometry();

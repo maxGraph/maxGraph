@@ -39,7 +39,7 @@ class AutoSaveManager extends EventSource {
   }
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph | null = null;
 

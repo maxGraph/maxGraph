@@ -773,7 +773,7 @@ class Graph extends EventSource {
   /**
    * Scales the graph such that the complete diagram fits into <container> and
    * returns the current scale in the view. To fit an initial graph prior to
-   * rendering, set <mxGraphView.rendering> to false prior to changing the model
+   * rendering, set {@link GraphView#rendering} to false prior to changing the model
    * and execute the following after changing the model.
    *
    * ```javascript
@@ -1467,7 +1467,7 @@ class Graph extends EventSource {
 }
 
 /**
- * Codec for <mxGraph>s. This class is created and registered
+ * Codec for {@link Graph}s. This class is created and registered
  * dynamically at load time and used implicitly via <Codec>
  * and the <CodecRegistry>.
  *

@@ -104,7 +104,7 @@ export class Cell {
   value: any = null;
 
   /**
-   * Holds the <mxGeometry>. Default is null.
+   * Holds the {@link Geometry}. Default is null.
    */
   geometry: Geometry | null = null;
 
@@ -166,7 +166,7 @@ export class Cell {
 
   /**
    * List of members that should not be cloned inside <clone>. This field is
-   * passed to <mxUtils.clone> and is not made persistent in <CellCodec>.
+   * passed to {@link Utils#clone} and is not made persistent in <CellCodec>.
    * This is not a convention for all classes, it is only used in this class
    * to mark transient fields since transient modifiers are not supported by
    * the language.
@@ -224,14 +224,14 @@ export class Cell {
   }
 
   /**
-   * Returns the <mxGeometry> that describes the <geometry>.
+   * Returns the {@link Geometry} that describes the <geometry>.
    */
   getGeometry(): Geometry | null {
     return this.geometry;
   }
 
   /**
-   * Sets the <mxGeometry> to be used as the <geometry>.
+   * Sets the {@link Geometry} to be used as the <geometry>.
    */
   setGeometry(geometry: Geometry | null) {
     this.geometry = geometry;
@@ -593,7 +593,7 @@ export class Cell {
 
   /**
    * Returns a clone of the cell. Uses <cloneValue> to clone
-   * the user object. All fields in <mxTransient> are ignored
+   * the user object. All fields in {@link Transient} are ignored
    * during the cloning.
    */
   clone(): Cell {

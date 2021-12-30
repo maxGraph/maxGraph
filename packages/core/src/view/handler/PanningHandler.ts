@@ -27,27 +27,27 @@ import type { Graph } from '../Graph';
  * mousebutton for panning without interfering with cell moving and
  * resizing, use <isUseLeftButton> and <isIgnoreCell>. For grid size
  * steps while panning, use <useGrid>. This handler is built-into
- * <mxGraph.panningHandler> and enabled using <mxGraph.setPanning>.
+ * {@link Graph#panningHandler} and enabled using {@link Graph#setPanning}.
  *
  * Constructor: mxPanningHandler
  *
- * Constructs an event handler that creates a <mxPopupMenu>
+ * Constructs an event handler that creates a {@link PopupMenu}
  * and pans the graph.
  *
  * Event: mxEvent.PAN_START
  *
  * Fires when the panning handler changes its <active> state to true. The
- * <code>event</code> property contains the corresponding <mxMouseEvent>.
+ * <code>event</code> property contains the corresponding {@link MouseEvent}.
  *
  * Event: mxEvent.PAN
  *
  * Fires while handle is processing events. The <code>event</code> property contains
- * the corresponding <mxMouseEvent>.
+ * the corresponding {@link MouseEvent}.
  *
  * Event: mxEvent.PAN_END
  *
  * Fires when the panning handler changes its <active> state to false. The
- * <code>event</code> property contains the corresponding <mxMouseEvent>.
+ * <code>event</code> property contains the corresponding {@link MouseEvent}.
  */
 class PanningHandler extends EventSource implements GraphPlugin {
   static pluginId = 'PanningHandler';
@@ -111,7 +111,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
@@ -121,12 +121,12 @@ class PanningHandler extends EventSource implements GraphPlugin {
 
   /**
    * Specifies if panning should be active for the left mouse button.
-   * Setting this to true may conflict with <mxRubberband>. Default is false.
+   * Setting this to true may conflict with {@link Rubberband}. Default is false.
    */
   useLeftButtonForPanning = false;
 
   /**
-   * Specifies if <mxEvent.isPopupTrigger> should also be used for panning.
+   * Specifies if {@link Event#isPopupTrigger} should also be used for panning.
    */
   usePopupTrigger = true;
 
@@ -254,7 +254,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Returns true if the given <mxMouseEvent> should start panning. This
+   * Returns true if the given {@link MouseEvent} should start panning. This
    * implementation always returns true if <ignoreCell> is true or for
    * multi touch events.
    */
@@ -297,8 +297,8 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Consumes the given <mxMouseEvent> if it was a panning trigger in
-   * <mouseDown>. The default is to invoke <mxMouseEvent.consume>. Note that this
+   * Consumes the given {@link MouseEvent} if it was a panning trigger in
+   * {@link ouseDown}. The default is to invoke {@link MouseEvent#consume}. Note that this
    * will block any further event processing. If you haven't disabled built-in
    * context menus and require immediate selection of the cell on mouseDown in
    * Safari and/or on the Mac, then use the following code:
