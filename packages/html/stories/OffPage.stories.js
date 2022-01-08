@@ -1,4 +1,4 @@
-import { Graph, CellTracker, Constants, InternalEvent } from '@maxgraph/core';
+import { Graph, CellTracker, constants, InternalEvent } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -19,7 +19,7 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Use complete cell as highlight region
-  Constants.ACTIVE_REGION = 1;
+  constants.ACTIVE_REGION = 1;
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -68,9 +68,8 @@ const Template = ({ label, ...args }) => {
     };
 
     // Adds cells to the model in a single step
-    graph.getModel().beginUpdate();
-    try {
-      graph.getModel().setRoot(graph.getModel().createRoot());
+    graph.batchUpdate(() => {
+      graph.getDataModel().setRoot(graph.getDataModel().createRoot());
       const parent = graph.getDefaultParent();
 
       const v1 = graph.insertVertex(
@@ -104,10 +103,7 @@ const Template = ({ label, ...args }) => {
         'shape=triangle;align=left;fillColor=#C3D9FF;strokeColor=#4096EE'
       );
       const e1 = graph.insertEdge(parent, null, null, v1, v2, 'strokeColor=#FF1A00');
-    } finally {
-      // Updates the display
-      graph.getModel().endUpdate();
-    }
+    });
   };
 
   second = function () {
@@ -119,9 +115,8 @@ const Template = ({ label, ...args }) => {
     };
 
     // Adds cells to the model in a single step
-    graph.getModel().beginUpdate();
-    try {
-      graph.getModel().setRoot(graph.getModel().createRoot());
+    graph.batchUpdate(() => {
+      graph.getDataModel().setRoot(graph.getDataModel().createRoot());
       const parent = graph.getDefaultParent();
 
       const v1 = graph.insertVertex(
@@ -155,10 +150,7 @@ const Template = ({ label, ...args }) => {
         'shape=triangle;align=right;fillColor=#C3D9FF;strokeColor=#4096EE;direction=west'
       );
       const e1 = graph.insertEdge(parent, null, null, v1, v2, 'strokeColor=#008C00');
-    } finally {
-      // Updates the display
-      graph.getModel().endUpdate();
-    }
+    });
   };
 
   first();

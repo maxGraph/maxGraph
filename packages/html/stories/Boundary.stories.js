@@ -1,10 +1,10 @@
 import {
   Graph,
   InternalEvent,
-  RubberBand,
+  RubberBandHandler,
   Point,
-  GraphHandler,
-  utils,
+  SelectionHandler,
+  mathUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -61,7 +61,7 @@ const Template = ({ label, ...args }) => {
     // Returns the relative position of the given child
     getRelativePosition(state, dx, dy) {
       if (state != null) {
-        const model = graph.getModel();
+        const model = graph.getDataModel();
         const geo = state.cell.getGeometry();
 
         if (geo != null && geo.relative && !state.cell.isEdge()) {
@@ -138,11 +138,11 @@ const Template = ({ label, ...args }) => {
   style.fontStyle = 1;
   graph.getStylesheet().putDefaultVertexStyle(style);
 
-  const graphHandler = graph.getPlugin('GraphHandler');
+  const graphHandler = graph.getPlugin('SelectionHandler');
 
   // Replaces move preview for relative children
   graphHandler.getDelta = function (me) {
-    const point = utils.convertPoint(this.graph.container, me.getX(), me.getY());
+    const point = mathUtils.convertPoint(this.graph.container, me.getX(), me.getY());
     let delta = new Point(point.x - this.first.x, point.y - this.first.y);
 
     if (this.cells != null && this.cells.length > 0 && this.cells[0] != null) {
@@ -169,12 +169,12 @@ const Template = ({ label, ...args }) => {
     return (
       cells.length === 0 &&
       !cells[0].geometry.relative &&
-      GraphHandler.prototype.shouldRemoveCellsFromParent.apply(this, arguments)
+      SelectionHandler.prototype.shouldRemoveCellsFromParent.apply(this, arguments)
     );
   };
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
@@ -195,6 +195,13 @@ const Template = ({ label, ...args }) => {
       position: [0, 0.5],
       size: [20, 20],
       style: 'fontSize=9;shape=ellipse;resizable=0;',
+      /*style: {
+        fontSize: 9, 
+        shape: 'ellipse', 
+        resizable: false, 
+        top: 0,    left: 0.5, 
+        width: 20, height: 20
+      },*/
     });
     v2.geometry.offset = new Point(-10, -10);
     v2.geometry.relative = true;

@@ -1,4 +1,4 @@
-import { Graph, utils } from '@maxgraph/core';
+import { Graph, mathUtils } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -30,7 +30,7 @@ const Template = ({ label, ...args }) => {
         // them here. Storing them in the event means the overridden
         // method doesn't have to do this again.
         if (me.graphX == null || me.graphY == null) {
-          const pt = utils.convertPoint(container, me.getX(), me.getY());
+          const pt = mathUtils.convertPoint(container, me.getX(), me.getY());
 
           me.graphX = pt.x;
           me.graphY = pt.y;
@@ -57,10 +57,10 @@ const Template = ({ label, ...args }) => {
     dblClick(evt, cell) {
       // Overrides double click handling to use the tolerance
       if (cell == null) {
-        const pt = utils.convertPoint(
+        const pt = mathUtils.convertPoint(
           el,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         cell = this.getCellAt(pt.x, pt.y);
       }

@@ -6,8 +6,6 @@
  */
 
 /**
- * Class: mxImage
- *
  * Encapsulates the URL, width and height of an image.
  *
  * Constructor: mxImage
@@ -22,22 +20,16 @@ class ImageBox {
   }
 
   /**
-   * Variable: src
-   *
    * String that specifies the URL of the image.
    */
   src: string;
 
   /**
-   * Variable: width
-   *
    * Integer that specifies the width of the image.
    */
   width: number;
 
   /**
-   * Variable: height
-   *
    * Integer that specifies the height of the image.
    */
   height: number;

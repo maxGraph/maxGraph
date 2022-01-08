@@ -7,8 +7,9 @@
 
 import Point from './Point';
 import Rectangle from './Rectangle';
-import { equalPoints, getRotatedPoint, toRadians } from '../../util/Utils';
-import { clone } from '../../util/CloneUtils';
+import { getRotatedPoint, toRadians } from '../../util/mathUtils';
+import { equalPoints } from '../../util/arrayUtils';
+import { clone } from '../../util/cloneUtils';
 
 /**
  * @class Geometry
@@ -106,12 +107,12 @@ class Geometry extends Rectangle {
   targetPoint: Point | null = null;
 
   /**
-   * Array of {@link mxPoints} which specifies the control points along the edge.
+   * Array of {@link Point} which specifies the control points along the edge.
    * These points are the intermediate points on the edge, for the endpoints
    * use {@link targetPoint} and {@link sourcePoint} or set the terminals of the edge to
    * a non-null value. Default is null.
    */
-  points: Point[] = [];
+  points: Point[] | null = null;
 
   /**
    * For edges, this holds the offset (in pixels) from the position defined
@@ -136,6 +137,10 @@ class Geometry extends Rectangle {
    * Default is false.
    */
   relative = false;
+
+  setRelative(isRelative: boolean) {
+    this.relative = isRelative;
+  }
 
   /**
    * Swaps the x, y, width and height with the values stored in
@@ -300,10 +305,12 @@ class Geometry extends Rectangle {
     }
 
     // Translate the control points
-    for (let i = 0; i < this.points.length; i += 1) {
-      if (this.points[i]) {
-        this.points[i].x = this.points[i].x * sx;
-        this.points[i].y = this.points[i].y * sy;
+    if (this.points) {
+      for (let i = 0; i < this.points.length; i += 1) {
+        if (this.points[i]) {
+          this.points[i].x = this.points[i].x * sx;
+          this.points[i].y = this.points[i].y * sy;
+        }
       }
     }
 

@@ -1,18 +1,18 @@
 import {
   Graph,
-  Constants,
+  constants,
   InternalEvent,
-  mxClient,
+  Client,
   Point,
   Outline,
   EdgeStyle,
-  mxKeyHandler,
+  KeyHandler,
   CompactTreeLayout,
   LayoutManager,
   CellOverlay,
   ImageBox,
   utils,
-  mxToolbar,
+  MaxToolbar,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -42,17 +42,17 @@ const Template = ({ label, ...args }) => {
 
   // Should we allow overriding constants?
   // Makes the shadow brighter
-  //Constants.SHADOWCOLOR = '#C0C0C0';
+  //constants.SHADOWCOLOR = '#C0C0C0';
 
   const outline = document.getElementById('outlineContainer');
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Sets a gradient background
-  if (mxClient.IS_GC || mxClient.IS_SF) {
+  if (Client.IS_GC || Client.IS_SF) {
     container.style.background =
       '-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#E7E7E7))';
-  } else if (mxClient.IS_NS) {
+  } else if (Client.IS_NS) {
     container.style.background = '-moz-linear-gradient(top, #FFFFFF, #E7E7E7)';
   }
 
@@ -81,14 +81,14 @@ const Template = ({ label, ...args }) => {
   const outln = new Outline(graph, outline);
 
   // Disables tooltips on touch devices
-  graph.setTooltips(!mxClient.IS_TOUCH);
+  graph.setTooltips(!Client.IS_TOUCH);
 
   // Set some stylesheet options for the visual appearance of vertices
   let style = graph.getStylesheet().getDefaultVertexStyle();
   style.shape = 'label';
 
-  style.verticalAlign = Constants.ALIGN_MIDDLE;
-  style.align = Constants.ALIGN_LEFT;
+  style.verticalAlign = constants.ALIGN.MIDDLE;
+  style.align = constants.ALIGN.LEFT;
   style.spacingLeft = 54;
 
   style.gradientColor = '#7d85df';
@@ -124,7 +124,7 @@ const Template = ({ label, ...args }) => {
   style.edge = EdgeStyle.TopToBottom;
 
   // Stops editing on enter or escape keypress
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   // Enables automatic layout on the graph and installs
   // a tree layout for all groups who's children are
@@ -196,8 +196,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds the root vertex of the tree
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const w = graph.container.offsetWidth;
     const v1 = graph.insertVertex(
       parent,
@@ -211,15 +210,12 @@ const Template = ({ label, ...args }) => {
     );
     graph.updateCellSize(v1);
     addOverlays(graph, v1, false);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   const content = document.createElement('div');
   content.style.padding = '4px';
   div.appendChild(content);
-  const tb = new mxToolbar(content);
+  const tb = new MaxToolbar(content);
 
   tb.addItem('Zoom In', 'images/zoom_in32.png', function (evt) {
     graph.zoomIn();
@@ -250,7 +246,7 @@ const Template = ({ label, ...args }) => {
 
   // Function to create the entries in the popupmenu
   function createPopupMenu(graph, menu, cell, evt) {
-    const model = graph.getModel();
+    const model = graph.getDataModel();
 
     if (cell != null) {
       if (cell.isVertex()) {
@@ -301,7 +297,7 @@ const Template = ({ label, ...args }) => {
   function addOverlays(graph, cell, addDeleteIcon) {
     let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
     overlay.cursor = 'hand';
-    overlay.align = Constants.ALIGN_CENTER;
+    overlay.align = constants.ALIGN.CENTER;
     overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
       addChild(graph, cell);
     });
@@ -312,8 +308,8 @@ const Template = ({ label, ...args }) => {
       overlay = new CellOverlay(new ImageBox('images/close.png', 30, 30), 'Delete');
       overlay.cursor = 'hand';
       overlay.offset = new Point(-4, 8);
-      overlay.align = Constants.ALIGN_RIGHT;
-      overlay.verticalAlign = Constants.ALIGN_TOP;
+      overlay.align = constants.ALIGN.RIGHT;
+      overlay.verticalAlign = constants.ALIGN.TOP;
       overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
         deleteSubtree(graph, cell);
       });
@@ -323,7 +319,7 @@ const Template = ({ label, ...args }) => {
   }
 
   function addChild(graph, cell) {
-    const model = graph.getModel();
+    const model = graph.getDataModel();
     const parent = graph.getDefaultParent();
     let vertex;
 

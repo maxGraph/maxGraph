@@ -5,16 +5,11 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { intersection } from '../../util/Utils';
+import { intersection } from '../../util/mathUtils';
 import Point from '../geometry/Point';
-import {
-  DIRECTION_EAST,
-  DIRECTION_NORTH,
-  DIRECTION_SOUTH,
-  DIRECTION_WEST,
-} from '../../util/Constants';
+import { DIRECTION } from '../../util/constants';
 import Rectangle from '../geometry/Rectangle';
-import CellState from '../cell/datatypes/CellState';
+import CellState from '../cell/CellState';
 import { CellStateStyles } from '../../types';
 
 /**
@@ -26,14 +21,12 @@ import { CellStateStyles } from '../../types';
  *
  * ### Example
  *
- * @example
  * ```javascript
  * <add as="perimeter">mxPerimeter.RectanglePerimeter</add>
  * ```
  *
  * ### Or programmatically
  *
- * @example
  * ```javascript
  * style.perimiter = mxPerimeter.RectanglePerimeter;
  * ```
@@ -41,7 +34,6 @@ import { CellStateStyles } from '../../types';
  * When adding new perimeter functions, it is recommended to use the
  * mxPerimeter-namespace as follows:
  *
- * @example
  * ```javascript
  * mxPerimeter.CustomPerimeter = function (bounds, vertex, next, orthogonal)
  * {
@@ -53,14 +45,12 @@ import { CellStateStyles } from '../../types';
  * ```
  *
  * #### The new perimeter should then be registered in the {@link mxStyleRegistry} as follows
- * @example
  * ```javascript
  * mxStyleRegistry.putValue('customPerimeter', mxPerimeter.CustomPerimeter);
  * ```
  *
  * #### The custom perimeter above can now be used in a specific vertex as follows:
  *
- * @example
  * ```javascript
  * model.setStyle(vertex, 'perimeter=customPerimeter');
  * ```
@@ -72,7 +62,6 @@ import { CellStateStyles } from '../../types';
  *
  * #### Or it can be used for all vertices in the graph as follows:
  *
- * @example
  * ```javascript
  * var style = graph.getStylesheet().getDefaultVertexStyle();
  * style.perimiter = mxPerimeter.CustomPerimeter;
@@ -90,7 +79,7 @@ class Perimeter {
    *
    * @param bounds {@link mxRectangle} that represents the absolute bounds of the
    * vertex.
-   * @param vertex {@link mxCellState} that represents the vertex.
+   * @param vertex {@link CellState} that represents the vertex.
    * @param next {@link mxPoint} that represents the nearest neighbour point on the
    * given edge.
    * @param orthogonal Boolean that specifies if the orthogonal projection onto
@@ -311,7 +300,7 @@ class Perimeter {
     orthogonal: boolean = false
   ): Point | null {
     const direction = vertex != null ? vertex.style.direction : null;
-    const vertical = direction === DIRECTION_NORTH || direction === DIRECTION_SOUTH;
+    const vertical = direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH;
 
     const { x } = bounds;
     const { y } = bounds;
@@ -325,14 +314,14 @@ class Perimeter {
     let corner = new Point(x + w, cy);
     let end = new Point(x, y + h);
 
-    if (direction === DIRECTION_NORTH) {
+    if (direction === DIRECTION.NORTH) {
       start = end;
       corner = new Point(cx, y);
       end = new Point(x + w, y + h);
-    } else if (direction === DIRECTION_SOUTH) {
+    } else if (direction === DIRECTION.SOUTH) {
       corner = new Point(cx, y + h);
       end = new Point(x + w, y);
-    } else if (direction === DIRECTION_WEST) {
+    } else if (direction === DIRECTION.WEST) {
       start = new Point(x + w, y);
       corner = new Point(x, cy);
       end = new Point(x + w, y + h);
@@ -346,7 +335,7 @@ class Perimeter {
 
     let base = false;
 
-    if (direction === DIRECTION_NORTH || direction === DIRECTION_WEST) {
+    if (direction === DIRECTION.NORTH || direction === DIRECTION.WEST) {
       base = alpha > -t && alpha < t;
     } else {
       base = alpha < -Math.PI + t || alpha > Math.PI - t;
@@ -365,11 +354,11 @@ class Perimeter {
         } else {
           result = new Point(start.x, next.y);
         }
-      } else if (direction === DIRECTION_NORTH) {
+      } else if (direction === DIRECTION.NORTH) {
         result = new Point(x + w / 2 + (h * Math.tan(alpha)) / 2, y + h);
-      } else if (direction === DIRECTION_SOUTH) {
+      } else if (direction === DIRECTION.SOUTH) {
         result = new Point(x + w / 2 - (h * Math.tan(alpha)) / 2, y);
-      } else if (direction === DIRECTION_WEST) {
+      } else if (direction === DIRECTION.WEST) {
         result = new Point(x + w, y + h / 2 + (w * Math.tan(alpha)) / 2);
       } else {
         result = new Point(x, y + h / 2 - (w * Math.tan(alpha)) / 2);
@@ -379,11 +368,11 @@ class Perimeter {
         const pt = new Point(cx, cy);
 
         if (next.y >= y && next.y <= y + h) {
-          pt.x = vertical ? cx : direction === DIRECTION_WEST ? x + w : x;
+          pt.x = vertical ? cx : direction === DIRECTION.WEST ? x + w : x;
           pt.y = next.y;
         } else if (next.x >= x && next.x <= x + w) {
           pt.x = next.x;
-          pt.y = !vertical ? cy : direction === DIRECTION_NORTH ? y + h : y;
+          pt.y = !vertical ? cy : direction === DIRECTION.NORTH ? y + h : y;
         }
 
         // Compute angle
@@ -445,9 +434,9 @@ class Perimeter {
 
     const direction =
       vertex != null
-        ? Perimeter.getValue(vertex.style, 'direction', DIRECTION_EAST)
-        : DIRECTION_EAST;
-    const vertical = direction === DIRECTION_NORTH || direction === DIRECTION_SOUTH;
+        ? Perimeter.getValue(vertex.style, 'direction', DIRECTION.EAST)
+        : DIRECTION.EAST;
+    const vertical = direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH;
     let a = new Point();
     let b = new Point();
 

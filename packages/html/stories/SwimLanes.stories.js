@@ -1,11 +1,11 @@
 import {
-  mxEditor,
+  Editor,
   ConnectionHandler,
   ImageBox,
   Perimeter,
   Point,
-  Constants,
-  CloneUtils,
+  constants,
+  cloneUtils,
   EdgeStyle,
   InternalEvent,
   SwimlaneManager,
@@ -41,23 +41,23 @@ const Template = ({ label, ...args }) => {
   // const config = utils
   //   .load('editors/config/keyhandler-commons.xml')
   //   .getDocumentElement();
-  // const editor = new mxEditor(config);
-  const editor = new mxEditor(null);
+  // const editor = new Editor(config);
+  const editor = new Editor(null);
   editor.setGraphContainer(container);
   const { graph } = editor;
-  const model = graph.getModel();
+  const model = graph.getDataModel();
 
   // Auto-resizes the container
   graph.border = 80;
   graph.getView().translate = new Point(graph.border / 2, graph.border / 2);
   graph.setResizeContainer(true);
 
-  const graphHandler = graph.getPlugin('GraphHandler');
+  const graphHandler = graph.getPlugin('SelectionHandler');
   graphHandler.setRemoveCellsFromParent(false);
 
   // Changes the default vertex style in-place
   let style = graph.getStylesheet().getDefaultVertexStyle();
-  style.shape = Constants.SHAPE_SWIMLANE;
+  style.shape = constants.SHAPE.SWIMLANE;
   style.verticalAlign = 'middle';
   style.labelBackgroundColor = 'white';
   style.fontSize = 11;
@@ -67,8 +67,8 @@ const Template = ({ label, ...args }) => {
   style.strokeColor = 'black';
   // delete style.fillColor;
 
-  style = CloneUtils.clone(style);
-  style.shape = Constants.SHAPE_RECTANGLE;
+  style = cloneUtils.clone(style);
+  style.shape = constants.SHAPE.RECTANGLE;
   style.fontSize = 10;
   style.rounded = true;
   style.horizontal = true;
@@ -77,22 +77,22 @@ const Template = ({ label, ...args }) => {
   style.labelBackgroundColor = 'none';
   graph.getStylesheet().putCellStyle('process', style);
 
-  style = CloneUtils.clone(style);
-  style.shape = Constants.SHAPE_ELLIPSE;
+  style = cloneUtils.clone(style);
+  style.shape = constants.SHAPE.ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   delete style.rounded;
   graph.getStylesheet().putCellStyle('state', style);
 
-  style = CloneUtils.clone(style);
-  style.shape = Constants.SHAPE_RHOMBUS;
+  style = cloneUtils.clone(style);
+  style.shape = constants.SHAPE.RHOMBUS;
   style.perimiter = Perimeter.RhombusPerimeter;
   style.verticalAlign = 'top';
   style.spacingTop = 40;
   style.spacingRight = 64;
   graph.getStylesheet().putCellStyle('condition', style);
 
-  style = CloneUtils.clone(style);
-  style.shape = Constants.SHAPE_DOUBLE_ELLIPSE;
+  style = cloneUtils.clone(style);
+  style.shape = constants.SHAPE.DOUBLE_ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   style.spacingTop = 28;
   style.fontSize = 14;
@@ -102,15 +102,15 @@ const Template = ({ label, ...args }) => {
 
   style = graph.getStylesheet().getDefaultEdgeStyle();
   style.edge = EdgeStyle.ElbowConnector;
-  style.endArrow = Constants.ARROW_BLOCK;
+  style.endArrow = constants.ARROW.BLOCK;
   style.rounded = true;
   style.fontColor = 'black';
   style.strokeColor = 'black';
 
-  style = CloneUtils.clone(style);
+  style = cloneUtils.clone(style);
   style.dashed = true;
-  style.endArrow = Constants.ARROW_OPEN;
-  style.startArrow = Constants.ARROW_OVAL;
+  style.endArrow = constants.ARROW.OPEN;
+  style.startArrow = constants.ARROW.OVAL;
   graph.getStylesheet().putCellStyle('crossover', style);
 
   // Installs double click on middle control point and
@@ -165,7 +165,7 @@ const Template = ({ label, ...args }) => {
         return true;
       }
 
-      const model = this.getModel();
+      const model = this.getDataModel();
       let lane = false;
       let pool = false;
       let cell = false;
@@ -188,7 +188,7 @@ const Template = ({ label, ...args }) => {
 
     // Adds new method for identifying a pool
     graph.isPool = function (cell) {
-      const model = this.getModel();
+      const model = this.getDataModel();
       const parent = cell.getParent();
 
       return parent != null && parent.getParent() == model.getRoot();

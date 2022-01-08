@@ -17,5 +17,6 @@
   "license": "ISC",
   "devDependencies": {
     "circular-dependency-plugin": "^5.2.2"
-  }
+  },
+  "sideEffects": true
 }

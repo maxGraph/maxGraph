@@ -1,7 +1,7 @@
 import {
   Graph,
   InternalEvent,
-  RubberBand,
+  RubberBandHandler,
   ConnectionHandler,
   ConnectionConstraint,
   Geometry,
@@ -37,7 +37,6 @@ const Template = ({ label, ...args }) => {
   class MyCustomConnectionHandler extends ConnectionHandler {
     // Enables connect preview for the default edge style
     createEdgeState(me) {
-      console.log('here')
       const edge = graph.createEdge(null, null, null, null, null);
       return new CellState(this.graph.view, edge, this.graph.getCellStyle(edge));
     }
@@ -92,7 +91,7 @@ const Template = ({ label, ...args }) => {
   graph.getStylesheet().getDefaultEdgeStyle().edgeStyle = 'orthogonalEdgeStyle';
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

@@ -1,13 +1,13 @@
 import {
   Graph,
   CylinderShape,
-  mxDomHelpers,
+  DomHelpers,
   CellRenderer,
   Point,
   Rectangle,
   VertexHandler,
   InternalEvent,
-  RubberBand,
+  RubberBandHandler,
   utils,
   VertexHandle,
 } from '@maxgraph/core';
@@ -205,15 +205,14 @@ const Template = ({ label, ...args }) => {
   graph.centerZoom = false;
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(
       parent,
       null,
@@ -224,21 +223,18 @@ const Template = ({ label, ...args }) => {
       120,
       'shape=myShape;whiteSpace=wrap;overflow=hidden;pos1=30;pos2=80;'
     );
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('+', function () {
+    DomHelpers.button('+', function () {
       graph.zoomIn();
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('-', function () {
+    DomHelpers.button('-', function () {
       graph.zoomOut();
     })
   );

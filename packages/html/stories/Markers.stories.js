@@ -1,7 +1,7 @@
 import {
   Graph,
   EdgeHandler,
-  GraphHandler,
+  SelectionHandler,
   CellRenderer,
   MarkerShape,
   CylinderShape,
@@ -28,7 +28,7 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Enables guides
-  GraphHandler.prototype.guidesEnabled = true;
+  SelectionHandler.prototype.guidesEnabled = true;
   EdgeHandler.prototype.snapToTerminals = true;
 
   // Registers and defines the custom marker
@@ -131,8 +131,7 @@ const Template = ({ label, ...args }) => {
   // Populates the graph
   const parent = graph.getDefaultParent();
 
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'v1', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'v2', 440, 20, 80, 30);
     const e1 = graph.insertEdge(
@@ -197,9 +196,7 @@ const Template = ({ label, ...args }) => {
       v6,
       'shape=link;labelBackgroundColor=#FFFFFF;'
     );
-  } finally {
-    graph.getModel().endUpdate();
-  }
+  });
 
   return container;
 };

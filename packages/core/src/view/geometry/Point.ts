@@ -6,8 +6,6 @@
  */
 
 /**
- * Class: mxPoint
- *
  * Implements a 2-dimensional vector with double precision coordinates.
  *
  * Constructor: mxPoint
@@ -22,15 +20,11 @@ class Point {
   }
 
   /**
-   * Variable: x
-   *
    * Holds the x-coordinate of the point. Default is 0.
    */
   _x = 0;
 
   /**
-   * Variable: y
-   *
    * Holds the y-coordinate of the point. Default is 0.
    */
   _y = 0;
@@ -56,8 +50,6 @@ class Point {
   }
 
   /**
-   * Function: equals
-   *
    * Returns true if the given object equals this point.
    */
   equals(p: Point | null) {
@@ -67,9 +59,7 @@ class Point {
   }
 
   /**
-   * Function: clone
-   *
-   * Returns a clone of this <mxPoint>.
+   * Returns a clone of this {@link Point}.
    */
   clone() {
     return new Point(this.x, this.y);

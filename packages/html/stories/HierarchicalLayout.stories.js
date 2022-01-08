@@ -1,12 +1,12 @@
 import {
   Graph,
-  DomUtils,
+  domUtils,
   FastOrganicLayout,
-  mxHierarchicalLayout,
+  HierarchicalLayout,
   Perimeter,
   InternalEvent,
-  RubberBand,
-  Constants,
+  RubberBandHandler,
+  constants,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -42,7 +42,7 @@ const Template = ({ label, ...args }) => {
   const graph = new Graph(container);
 
   // Adds rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Changes the default vertex style in-place
   let style = graph.getStylesheet().getDefaultVertexStyle();
@@ -57,7 +57,7 @@ const Template = ({ label, ...args }) => {
 
   // Creates a layout algorithm to be used
   // with the graph
-  const layout = new mxHierarchicalLayout(graph);
+  const layout = new HierarchicalLayout(graph);
   const organic = new FastOrganicLayout(graph);
   organic.forceConstant = 120;
 
@@ -68,7 +68,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   let button = document.createElement('button');
-  DomUtils.write(button, 'Hierarchical');
+  domUtils.write(button, 'Hierarchical');
   InternalEvent.addListener(button, 'click', function (evt) {
     layout.execute(parent);
   });
@@ -76,7 +76,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   button = document.createElement('button');
-  DomUtils.write(button, 'Organic');
+  domUtils.write(button, 'Organic');
 
   InternalEvent.addListener(button, 'click', function (evt) {
     organic.execute(parent);
@@ -85,8 +85,7 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(button);
 
   // Load cells and layouts the graph
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, '1', 0, 0, 80, 30);
     const v2 = graph.insertVertex(parent, null, '2', 0, 0, 80, 30);
     const v3 = graph.insertVertex(parent, null, '3', 0, 0, 80, 30);
@@ -113,10 +112,7 @@ const Template = ({ label, ...args }) => {
 
     // Executes the layout
     layout.execute(parent);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return div;
 };

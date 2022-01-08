@@ -4,9 +4,9 @@ import {
   CellRenderer,
   GraphView,
   ImageBox,
-  mxClient,
+  Client,
   EdgeStyle,
-  mxKeyHandler,
+  KeyHandler,
   CompactTreeLayout,
   LayoutManager,
   Rectangle,
@@ -31,7 +31,7 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   /*
     Defines a custom shape for the tree node that includes the
@@ -117,9 +117,9 @@ const Template = ({ label, ...args }) => {
   class MyCustomGraph extends Graph {
     // Sets the collapse and expand icons. The values below are the default
     // values, but this is how to replace them if you need to.
-    collapsedImage = new ImageBox(`${mxClient.imageBasePath}/collapsed.gif`, 9, 9);
+    collapsedImage = new ImageBox(`${Client.imageBasePath}/collapsed.gif`, 9, 9);
 
-    expandedImage = new ImageBox(`${mxClient.imageBasePath}/expanded.gif`, 9, 9);
+    expandedImage = new ImageBox(`${Client.imageBasePath}/expanded.gif`, 9, 9);
 
     isCellFoldable(cell) {
       // Defines the condition for showing the folding icon
@@ -197,7 +197,7 @@ const Template = ({ label, ...args }) => {
   panningHandler.useLeftButtonForPanning = true;
 
   // Stops editing on enter or escape keypress
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   // Enables automatic layout on the graph and installs
   // a tree layout for all groups who's children are
@@ -221,8 +221,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds the root vertex of the tree
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const w = graph.container.offsetWidth;
     const root = graph.insertVertex(parent, 'treeRoot', 'Root', w / 2 - 30, 20, 60, 40);
 
@@ -255,10 +254,7 @@ const Template = ({ label, ...args }) => {
 
     const v31 = graph.insertVertex(parent, 'v31', 'Child 3.1', 0, 0, 60, 40);
     graph.insertEdge(parent, null, '', v3, v31);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return container;
 };

@@ -1,9 +1,10 @@
 import {
   Graph,
   InternalEvent,
-  RubberBand,
-  EventUtils,
-  utils,
+  RubberBandHandler,
+  eventUtils,
+  mathUtils,
+  domUtils,
   VertexHandler,
 } from '@maxgraph/core';
 
@@ -48,7 +49,7 @@ const Template = ({ label, ...args }) => {
 
       // Workaround for event redirection via image tag in quirks and IE8
       const createImage = (src) => {
-        return utils.createImage(src);
+        return domUtils.createImage(src);
       };
 
       // Delete
@@ -75,9 +76,9 @@ const Template = ({ label, ...args }) => {
       img.style.height = '16px';
 
       InternalEvent.addGestureListeners(img, (evt) => {
-        this.start(EventUtils.getClientX(evt), EventUtils.getClientY(evt), 7);
+        this.start(eventUtils.getClientX(evt), eventUtils.getClientY(evt), 7);
         this.graph.isMouseDown = true;
-        this.graph.isMouseTrigger = EventUtils.isMouseEvent(evt);
+        this.graph.isMouseTrigger = eventUtils.isMouseEvent(evt);
         InternalEvent.consume(evt);
       });
       this.domNode.appendChild(img);
@@ -89,18 +90,18 @@ const Template = ({ label, ...args }) => {
       img.style.width = '16px';
       img.style.height = '16px';
 
-      const graphHandler = graph.getPlugin('GraphHandler');
+      const graphHandler = graph.getPlugin('SelectionHandler');
       const connectionHandler = graph.getPlugin('ConnectionHandler');
 
       InternalEvent.addGestureListeners(img, (evt) => {
         graphHandler.start(
           this.state.cell,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         graphHandler.cellWasClicked = true;
         this.graph.isMouseDown = true;
-        this.graph.isMouseTrigger = EventUtils.isMouseEvent(evt);
+        this.graph.isMouseTrigger = eventUtils.isMouseEvent(evt);
         InternalEvent.consume(evt);
       });
       this.domNode.appendChild(img);
@@ -113,14 +114,14 @@ const Template = ({ label, ...args }) => {
       img.style.height = '16px';
 
       InternalEvent.addGestureListeners(img, (evt) => {
-        const pt = utils.convertPoint(
+        const pt = mathUtils.convertPoint(
           this.graph.container,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         connectionHandler.start(this.state, pt.x, pt.y);
         this.graph.isMouseDown = true;
-        this.graph.isMouseTrigger = EventUtils.isMouseEvent(evt);
+        this.graph.isMouseTrigger = eventUtils.isMouseEvent(evt);
         InternalEvent.consume(evt);
       });
       this.domNode.appendChild(img);
@@ -173,7 +174,7 @@ const Template = ({ label, ...args }) => {
   // graph.setResizeContainer(true);
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

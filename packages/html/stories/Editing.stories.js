@@ -1,10 +1,10 @@
 import {
   Graph,
-  mxKeyHandler,
-  utils,
-  DomUtils,
-  CloneUtils,
-  EventUtils,
+  KeyHandler,
+  mathUtils,
+  domUtils,
+  cloneUtils,
+  eventUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -48,14 +48,14 @@ const Template = ({ label, ...args }) => {
       td1.style.textAlign = 'center';
       td1.style.fontSize = '12px';
       td1.style.color = '#774400';
-      DomUtils.write(td1, cell.value.first);
+      domUtils.write(td1, cell.value.first);
 
       const tr2 = document.createElement('tr');
       const td2 = document.createElement('td');
       td2.style.textAlign = 'center';
       td2.style.fontSize = '12px';
       td2.style.color = '#774400';
-      DomUtils.write(td2, cell.value.second);
+      domUtils.write(td2, cell.value.second);
 
       tr1.appendChild(td1);
       tr2.appendChild(td2);
@@ -77,10 +77,10 @@ const Template = ({ label, ...args }) => {
       // a mouse event
       if (evt != null) {
         // Finds the relative coordinates inside the cell
-        const point = utils.convertPoint(
+        const point = mathUtils.convertPoint(
           this.container,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         const state = this.getView().getState(cell);
 
@@ -104,7 +104,7 @@ const Template = ({ label, ...args }) => {
       if (name != null) {
         // Clones the user object for correct undo and puts
         // the new value in the correct field.
-        const value = CloneUtils.clone(cell.value);
+        const value = cloneUtils.clone(cell.value);
         value[name] = newValue;
         newValue = value;
 
@@ -118,7 +118,7 @@ const Template = ({ label, ...args }) => {
   graph.setHtmlLabels(true);
 
   // Adds handling of return and escape keystrokes for editing
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   // Sample user objects with 2 fields
   const value = {};

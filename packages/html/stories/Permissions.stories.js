@@ -2,9 +2,9 @@ import {
   Graph,
   ConnectionHandler,
   ImageBox,
-  RubberBand,
-  mxKeyHandler,
-  mxDomHelpers,
+  RubberBandHandler,
+  KeyHandler,
+  DomHelpers,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -44,9 +44,9 @@ const Template = ({ label, ...args }) => {
   graph.setAllowLoops(true);
 
   // Enables rubberband selection and key handling
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   // Assigns the delete key
   keyHandler.bindKey(46, function (evt) {
@@ -76,37 +76,37 @@ const Template = ({ label, ...args }) => {
   const buttons = document.createElement('div');
   div.appendChild(buttons);
 
-  let button = mxDomHelpers.button('Allow All', function (evt) {
+  let button = DomHelpers.button('Allow All', function (evt) {
     apply(new Permission());
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Connect Only', function (evt) {
+  button = DomHelpers.button('Connect Only', function (evt) {
     apply(new Permission(false, true, false, false, true));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Edges Only', function (evt) {
+  button = DomHelpers.button('Edges Only', function (evt) {
     apply(new Permission(false, false, true, false, false));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Vertices Only', function (evt) {
+  button = DomHelpers.button('Vertices Only', function (evt) {
     apply(new Permission(false, false, false, true, false));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Select Only', function (evt) {
+  button = DomHelpers.button('Select Only', function (evt) {
     apply(new Permission(false, false, false, false, false));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Locked', function (evt) {
+  button = DomHelpers.button('Locked', function (evt) {
     apply(new Permission(true, false));
   });
   buttons.appendChild(button);
 
-  button = mxDomHelpers.button('Disabled', function (evt) {
+  button = DomHelpers.button('Disabled', function (evt) {
     graph.clearSelection();
     graph.setEnabled(false);
     graph.setTooltips(false);
@@ -180,16 +180,12 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'Hello,', 200, 20, 80, 30);
     const v3 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
     const e1 = graph.insertEdge(parent, null, 'Connection', v1, v3);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return div;
 };

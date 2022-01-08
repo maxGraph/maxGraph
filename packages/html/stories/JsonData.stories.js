@@ -1,14 +1,14 @@
 import {
   Graph,
-  mxObjectCodec,
-  mxDomHelpers,
-  mxCodecRegistry,
+  ObjectCodec,
+  DomHelpers,
+  CodecRegistry,
   InternalEvent,
-  mxClient,
-  mxCodec,
-  DomUtils,
-  utils,
-  mxWindow,
+  Client,
+  Codec,
+  domUtils,
+  xmlUtils,
+  popup,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -21,7 +21,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   const div = document.createElement('div');
 
@@ -38,19 +38,19 @@ const Template = ({ label, ...args }) => {
   function CustomData(value) {
     this.value = value;
   }
-  const codec = new mxObjectCodec(new CustomData());
+  const codec = new ObjectCodec(new CustomData());
   codec.encode = function (enc, obj) {
     const node = enc.document.createElement('CustomData');
-    DomUtils.setTextContent(node, JSON.stringify(obj));
+    domUtils.setTextContent(node, JSON.stringify(obj));
     return node;
   };
   codec.decode = function (dec, node, into) {
-    const obj = JSON.parse(DomUtils.getTextContent(node));
+    const obj = JSON.parse(domUtils.getTextContent(node));
     obj.constructor = CustomData;
 
     return obj;
   };
-  mxCodecRegistry.register(codec);
+  CodecRegistry.register(codec);
 
   // Disables the built-in context menu
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
@@ -59,33 +59,29 @@ const Template = ({ label, ...args }) => {
   const graph = new Graph(container);
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
     v1.data = new CustomData('v1');
     const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
     v2.data = new CustomData('v2');
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('Show JSON', function () {
-      const encoder = new mxCodec();
-      const node = encoder.encode(graph.getModel());
-      mxWindow.popup(utils.getXml(node), true);
+    DomHelpers.button('Show JSON', function () {
+      const encoder = new Codec();
+      const node = encoder.encode(graph.getDataModel());
+      popup(xmlUtils.getXml(node), true);
     })
   );
 

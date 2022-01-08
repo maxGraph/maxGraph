@@ -1,4 +1,4 @@
-import { Graph, InternalEvent, GraphHandler, RubberBand } from '@maxgraph/core';
+import { Graph, InternalEvent, SelectionHandler, RubberBandHandler } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -29,7 +29,7 @@ const Template = ({ label, ...args }) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  class MyCustomGraphHandler extends GraphHandler {
+  class MyCustomGraphHandler extends SelectionHandler {
     /**
      * Redirects start drag to parent.
      */
@@ -69,7 +69,7 @@ const Template = ({ label, ...args }) => {
   const graph = new MyCustomGraph(container);
 
   // Enables rubberband selection
-  new RubberBand(graph);
+  new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

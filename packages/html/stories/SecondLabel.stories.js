@@ -1,11 +1,11 @@
 import {
   Graph,
   RectangleShape,
-  mxDomHelpers,
+  DomHelpers,
   TextShape,
   Point,
   Rectangle,
-  Constants,
+  constants,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -101,20 +101,20 @@ const Template = ({ label, ...args }) => {
         state.secondLabel = new TextShape(
           secondLabel,
           new Rectangle(),
-          Constants.ALIGN_LEFT,
-          Constants.ALIGN_BOTTOM
+          constants.ALIGN.LEFT,
+          constants.ALIGN.BOTTOM
         );
 
         // Styles the label
         state.secondLabel.color = 'black';
         state.secondLabel.family = 'Verdana';
         state.secondLabel.size = 8;
-        state.secondLabel.fontStyle = Constants.FONT_ITALIC;
+        state.secondLabel.fontStyle = constants.FONT.ITALIC;
         state.secondLabel.background = 'yellow';
         state.secondLabel.border = 'black';
         state.secondLabel.valign = 'bottom';
         state.secondLabel.dialect = state.shape.dialect;
-        state.secondLabel.dialect = Constants.DIALECT_STRICTHTML;
+        state.secondLabel.dialect = constants.DIALECT.STRICTHTML;
         state.secondLabel.wrap = true;
         graph.cellRenderer.initializeLabel(state, state.secondLabel);
       }
@@ -158,8 +158,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 30, 40, 80, 30);
     // Alternative solution of creating a second label by creating a realtive child vertex
     // with size (0, 0). This will not be selectable and only the label colors can be used
@@ -194,17 +193,14 @@ const Template = ({ label, ...args }) => {
     v21.geometry.offset = new Point(-8, -8);
     graph.updateCellSize(v21);
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
 
   // Adds a button to execute the layout
   buttons.appendChild(
-    mxDomHelpers.button('Toggle Child Vertices', function (evt) {
+    DomHelpers.button('Toggle Child Vertices', function (evt) {
       relativeChildVerticesVisible = !relativeChildVerticesVisible;
       graph.refresh();
     })
@@ -212,7 +208,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   buttons.appendChild(
-    mxDomHelpers.button('Toggle IDs', function (evt) {
+    DomHelpers.button('Toggle IDs', function (evt) {
       secondLabelVisible = !secondLabelVisible;
       graph.refresh();
     })

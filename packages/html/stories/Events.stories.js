@@ -1,13 +1,13 @@
 import {
   Graph,
   InternalEvent,
-  RubberBand,
+  RubberBandHandler,
   ConnectionHandler,
   LayoutManager,
   ParallelEdgeLayout,
   ImageBox,
-  mxKeyHandler,
-  Constants,
+  KeyHandler,
+  constants,
   EdgeStyle,
 } from '@maxgraph/core';
 
@@ -62,7 +62,7 @@ const Template = ({ label, ...args }) => {
   // Optionally you can enable panning, tooltips and connections
   // using graph.setPanning(), setTooltips() & setConnectable().
   // To enable rubberband selection and basic keyboard events,
-  // use new RubberBand(graph) and new mxKeyHandler(graph).
+  // use new RubberBandHandler(graph) and new KeyHandler(graph).
   const graph = new MyCustomGraph(container);
 
   // Enables tooltips, new connections and panning
@@ -82,8 +82,8 @@ const Template = ({ label, ...args }) => {
 
   // Enables rubberband (marquee) selection and a handler
   // for basic keystrokes (eg. return, escape during editing).
-  const rubberband = new RubberBand(graph);
-  const keyHandler = new mxKeyHandler(graph);
+  const rubberband = new RubberBandHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
   // Changes the default style for edges "in-place" and assigns
   // an alternate edge style which is applied in Graph.flip
@@ -106,18 +106,14 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Doubleclick', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'Right-/Shiftclick', 200, 150, 120, 30);
     const v3 = graph.insertVertex(parent, null, 'Connect/Reconnect', 200, 20, 120, 30);
     const v4 = graph.insertVertex(parent, null, 'Control-Drag', 20, 150, 100, 30);
     const e1 = graph.insertEdge(parent, null, 'Tooltips', v1, v2);
     const e2 = graph.insertEdge(parent, null, '', v2, v3);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return container;
 };

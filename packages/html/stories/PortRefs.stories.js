@@ -1,15 +1,15 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   Point,
   EdgeHandler,
   ConstraintHandler,
   ImageBox,
   Shape,
   TriangleShape,
-  Constants,
+  constants,
   ConnectionConstraint,
-  mxClient,
+  Client,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -22,7 +22,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   const container = document.createElement('div');
   container.style.position = 'relative';
@@ -44,7 +44,7 @@ const Template = ({ label, ...args }) => {
   graph.setPortsEnabled(false);
 
   // Enables rubberband selection
-  new RubberBand(graph);
+  new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
@@ -184,8 +184,7 @@ const Template = ({ label, ...args }) => {
   };
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'A', 20, 20, 100, 40);
     const v2 = graph.insertVertex(
       parent,
@@ -209,10 +208,7 @@ const Template = ({ label, ...args }) => {
     );
     const e1 = graph.insertEdge(parent, null, '', v1, v2, 'sourcePort=s;targetPort=nw');
     const e2 = graph.insertEdge(parent, null, '', v1, v3, 'sourcePort=e;targetPort=out3');
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   // Comming soon... Integration with orthogonal edge style
   // Sets default edge style to use port constraints (needs to be moved up when uncommented)
@@ -220,7 +216,7 @@ const Template = ({ label, ...args }) => {
   /* let mxUtilsGetPortConstraints = utils.getPortConstraints;
     utils.getPortConstraints = function(terminal, edge, source, defaultValue)
     {
-      let key = (source) ? Constants.STYLE_SOURCE_PORT : Constants.STYLE_TARGET_PORT;
+      let key = (source) ? constants.STYLE_SOURCE_PORT : constants.STYLE_TARGET_PORT;
       let id = edge.style[key];
 
       let port = terminal.shape.getPorts()[id];
@@ -234,7 +230,7 @@ const Template = ({ label, ...args }) => {
       return mxUtilsGetPortConstraints.apply(this, arguments);
     };
     // Connect preview
-    graph.connectionHandler.createEdgeState = function(me)
+    graph.getPlugin('ConnectionHandler').createEdgeState = function(me)
     {
       let edge = graph.createEdge(null, null, null, null, null);
 

@@ -1,8 +1,8 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   Rectangle,
-  Constants,
+  constants,
   utils,
   LabelShape,
 } from '@maxgraph/core';
@@ -31,8 +31,8 @@ const Template = ({ label, ...args }) => {
 
   // Overrides the image bounds code to change the position
   LabelShape.prototype.getImageBounds = function (x, y, w, h) {
-    const iw = utils.getValue(this.style, 'imageWidth', Constants.DEFAULT_IMAGESIZE);
-    const ih = utils.getValue(this.style, 'imageHeight', Constants.DEFAULT_IMAGESIZE);
+    const iw = utils.getValue(this.style, 'imageWidth', constants.DEFAULT_IMAGESIZE);
+    const ih = utils.getValue(this.style, 'imageHeight', constants.DEFAULT_IMAGESIZE);
 
     // Places the icon
     const ix = (w - iw) / 2;
@@ -43,7 +43,7 @@ const Template = ({ label, ...args }) => {
 
   // Should we allow overriding constants?
   // Makes the shadow brighter
-  //Constants.SHADOWCOLOR = '#C0C0C0';
+  //constants.SHADOWCOLOR = '#C0C0C0';
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -53,15 +53,14 @@ const Template = ({ label, ...args }) => {
   // graph.setResizeContainer(true);
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(
       parent,
       null,
@@ -73,10 +72,7 @@ const Template = ({ label, ...args }) => {
       'shape=label;image=images/plus.png;imageWidth=16;imageHeight=16;spacingBottom=10;' +
         'fillColor=#adc5ff;gradientColor=#7d85df;glass=1;rounded=1;shadow=1;'
     );
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return container;
 };

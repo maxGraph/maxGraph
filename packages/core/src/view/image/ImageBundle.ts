@@ -13,8 +13,6 @@ type ImageMap = {
 };
 
 /**
- * Class: mxImageBundle
- *
  * Maps from keys to base64 encoded images or file locations. All values must
  * be URLs or use the format data:image/format followed by a comma and the base64
  * encoded image data, eg. "data:image/gif,XYZ", where XYZ is the base64 encoded
@@ -22,7 +20,7 @@ type ImageMap = {
  *
  * To add a new image bundle to an existing graph, the following code is used:
  *
- * (code)
+ * ```javascript
  * let bundle = new mxImageBundle(alt);
  * bundle.putImage('myImage', 'data:image/gif,R0lGODlhEAAQAMIGAAAAAICAAICAgP' +
  *   '//AOzp2O3r2////////yH+FUNyZWF0ZWQgd2l0aCBUaGUgR0lNUAAh+QQBCgAHACwAAAAA' +
@@ -34,7 +32,7 @@ type ImageMap = {
  *   '<stop offset="90%" stop-color="#fcc"/></linearGradient>' +
  *   '<rect fill="url(#gradient)" width="100%" height="100%"/></svg>'), fallback);
  * graph.addImageBundle(bundle);
- * (end);
+ * ```;
  *
  * Alt is an optional boolean (default is false) that specifies if the value
  * or the fallback should be returned in <getImage>.
@@ -43,7 +41,7 @@ type ImageMap = {
  * If you are using mxOutline, you should use the same image bundles in the
  * graph that renders the outline.
  *
- * The keys for images are resolved in <mxGraph.postProcessCellStyle> and
+ * The keys for images are resolved in {@link Graph#postProcessCellStyle} and
  * turned into a data URI if the returned value has a short data URI format
  * as specified above.
  *
@@ -64,22 +62,16 @@ class ImageBundle {
   }
 
   /**
-   * Variable: images
-   *
    * Maps from keys to images.
    */
   images: ImageMap;
 
   /**
-   * Variable: alt
-   *
    * Specifies if the fallback representation should be returned.
    */
   alt: boolean;
 
   /**
-   * Function: putImage
-   *
    * Adds the specified entry to the map. The entry is an object with a value and
    * fallback property as specified in the arguments.
    */
@@ -88,8 +80,6 @@ class ImageBundle {
   }
 
   /**
-   * Function: getImage
-   *
    * Returns the value for the given key. This returns the value
    * or fallback, depending on <alt>. The fallback is returned if
    * <alt> is true, the value is returned otherwise.

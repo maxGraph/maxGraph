@@ -1,4 +1,4 @@
-import { Graph, RubberBand, GraphHandler, PopupMenuHandler } from '@maxgraph/core';
+import { Graph, RubberBandHandler, SelectionHandler, PopupMenuHandler } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -28,8 +28,8 @@ const Template = ({ label, ...args }) => {
   };
 
   // Don't clear selection if multiple cells selected
-  const graphHandlerMouseDown = GraphHandler.prototype.mouseDown;
-  GraphHandler.prototype.mouseDown = function (sender, me) {
+  const graphHandlerMouseDown = SelectionHandler.prototype.mouseDown;
+  SelectionHandler.prototype.mouseDown = function (sender, me) {
     graphHandlerMouseDown.apply(this, arguments);
 
     if (this.graph.isCellSelected(me.getCell()) && this.graph.getSelectionCount() > 1) {
@@ -39,9 +39,9 @@ const Template = ({ label, ...args }) => {
 
   // Selects descendants before children selection mode
   const graphHandlerGetInitialCellForEvent =
-    GraphHandler.prototype.getInitialCellForEvent;
-  GraphHandler.prototype.getInitialCellForEvent = function (me) {
-    const model = this.graph.getModel();
+    SelectionHandler.prototype.getInitialCellForEvent;
+  SelectionHandler.prototype.getInitialCellForEvent = function (me) {
+    const model = this.graph.getDataModel();
     const psel = this.graph.getSelectionCell().getParent();
     let cell = graphHandlerGetInitialCellForEvent.apply(this, arguments);
     let parent = cell.getParent();
@@ -62,10 +62,10 @@ const Template = ({ label, ...args }) => {
   };
 
   // Selection is delayed to mouseup if child selected
-  const graphHandlerIsDelayedSelection = GraphHandler.prototype.isDelayedSelection;
-  GraphHandler.prototype.isDelayedSelection = function (cell) {
+  const graphHandlerIsDelayedSelection = SelectionHandler.prototype.isDelayedSelection;
+  SelectionHandler.prototype.isDelayedSelection = function (cell) {
     let result = graphHandlerIsDelayedSelection.apply(this, arguments);
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     const psel = this.graph.getSelectionCell().getParent();
     const parent = cell.getParent();
 
@@ -83,14 +83,14 @@ const Template = ({ label, ...args }) => {
   };
 
   // Delayed selection of parent group
-  GraphHandler.prototype.selectDelayed = function (me) {
+  SelectionHandler.prototype.selectDelayed = function (me) {
     let cell = me.getCell();
 
     if (cell == null) {
       cell = this.cell;
     }
 
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let parent = cell.getParent();
 
     while (
@@ -108,7 +108,7 @@ const Template = ({ label, ...args }) => {
   // Returns last selected ancestor
   PopupMenuHandler.prototype.getCellForPopupEvent = function (me) {
     let cell = me.getCell();
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
     let parent = cell.getParent();
 
     while (parent.isVertex() && !this.graph.isValidRoot(parent)) {
@@ -133,21 +133,17 @@ const Template = ({ label, ...args }) => {
   // graph.setResizeContainer(true);
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 120, 60);
     const v2 = graph.insertVertex(v1, null, 'World!', 90, 20, 60, 20);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return container;
 };

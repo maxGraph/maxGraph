@@ -1,4 +1,4 @@
-import { Graph, utils, Constants, RubberBand } from '@maxgraph/core';
+import { Graph, utils, constants, RubberBandHandler } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -29,7 +29,7 @@ const Template = ({ label, ...args }) => {
   graph.edgeLabelsMovable = false;
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Needs to set a flag to check for dynamic style changes,
   // that is, changes to styles on cells where the style was

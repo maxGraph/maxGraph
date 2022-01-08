@@ -1,14 +1,14 @@
 import {
   Graph,
-  RubberBand,
-  utils,
-  EventUtils,
+  RubberBandHandler,
+  mathUtils,
+  eventUtils,
   InternalEvent,
-  mxClient,
+  Client,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { getXml, parseXml } from '@maxgraph/core/util/XmlUtils';
+import { getXml, parseXml } from '@maxgraph/core/util/xmlUtils';
 
 export default {
   title: 'DnD_CopyPaste/Drop',
@@ -42,7 +42,7 @@ const Template = ({ label, ...args }) => {
   const fileSupport =
     window.File != null && window.FileReader != null && window.FileList != null;
 
-  if (!fileSupport || !mxClient.isBrowserSupported()) {
+  if (!fileSupport || !Client.isBrowserSupported()) {
     // Displays an error message if the browser is not supported.
     utils.error('Browser is not supported!', 200, false);
   } else {
@@ -53,7 +53,7 @@ const Template = ({ label, ...args }) => {
     const graph = new Graph(container);
 
     // Enables rubberband selection
-    if (args.rubberBand) new RubberBand(graph);
+    if (args.rubberBand) new RubberBandHandler(graph);
 
     InternalEvent.addListener(container, 'dragover', function (evt) {
       if (graph.isEnabled()) {
@@ -68,10 +68,10 @@ const Template = ({ label, ...args }) => {
         evt.preventDefault();
 
         // Gets drop location point for vertex
-        const pt = utils.convertPoint(
+        const pt = mathUtils.convertPoint(
           graph.container,
-          EventUtils.getClientX(evt),
-          EventUtils.getClientY(evt)
+          eventUtils.getClientX(evt),
+          eventUtils.getClientY(evt)
         );
         const tr = graph.view.translate;
         const { scale } = graph.view;

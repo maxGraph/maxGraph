@@ -1,12 +1,12 @@
 import {
   Graph,
-  mxWindow,
-  mxKeyHandler,
-  RubberBand,
+  MaxWindow,
+  KeyHandler,
+  RubberBandHandler,
   InternalEvent,
-  mxLog,
-  DomUtils,
-  mxClient,
+  MaxLog,
+  domUtils,
+  Client,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -27,7 +27,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   const container = document.createElement('div');
   container.style.position = 'relative';
@@ -39,7 +39,7 @@ const Template = ({ label, ...args }) => {
 
   // Note that we're using the container scrollbars for the graph so that the
   // container extends to the parent div inside the window
-  let wnd = new mxWindow(
+  let wnd = new MaxWindow(
     'Scrollable, resizable, given height',
     container,
     50,
@@ -57,9 +57,9 @@ const Template = ({ label, ...args }) => {
   graph.setTooltips(true);
   graph.setPanning(true);
 
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
-  new mxKeyHandler(graph);
+  new KeyHandler(graph);
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
@@ -68,15 +68,11 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   wnd.setMaximizable(true);
   wnd.setResizable(true);
@@ -85,9 +81,9 @@ const Template = ({ label, ...args }) => {
   const lorem =
     'Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ';
   let content = document.createElement('div');
-  DomUtils.write(content, lorem + lorem + lorem);
+  domUtils.write(content, lorem + lorem + lorem);
 
-  wnd = new mxWindow(
+  wnd = new MaxWindow(
     'Scrollable, resizable, auto height',
     content,
     300,
@@ -105,7 +101,7 @@ const Template = ({ label, ...args }) => {
   content = content.cloneNode(true);
   content.style.width = '400px';
 
-  wnd = new mxWindow(
+  wnd = new MaxWindow(
     'Scrollable, resizable, fixed content',
     content,
     520,
@@ -120,7 +116,7 @@ const Template = ({ label, ...args }) => {
   wnd.setResizable(true);
   wnd.setVisible(true);
 
-  mxLog.show();
+  MaxLog.show();
 
   return container;
 };

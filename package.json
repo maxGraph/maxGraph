@@ -19,7 +19,8 @@
   "scripts": {
     "dev": "node ./scripts/dev",
     "bootstrap": "lerna bootstrap",
-    "postinstall": "lerna bootstrap"
+    "postinstall": "lerna bootstrap",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -29,16 +30,20 @@
     "@babel/preset-typescript": "^7.16.0",
     "@lerna/filter-options": "^4.0.0",
     "babel-loader": "^8.2.3",
+    "better-docs": "^2.3.2",
     "cross-env": "^7.0.3",
     "css-loader": "^6.5.1",
     "file-loader": "^6.2.0",
+    "jsdoc": "^3.6.7",
     "lerna": "^4.0.0",
     "prettier": "^2.5.0",
     "style-loader": "^3.3.1",
+    "typedoc": "^0.22.10",
     "typescript": "^4.5.2",
     "url-loader": "^4.1.1",
     "webpack": "^5.64.4",
     "webpack-cli": "^4.9.1",
     "webpack-merge": "^5.8.0"
-  }
+  },
+  "sideEffects": true
 }

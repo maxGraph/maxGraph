@@ -7,13 +7,12 @@
 
 import Point from '../geometry/Point';
 import Dictionary from '../../util/Dictionary';
-import CellState from './datatypes/CellState';
-import Cell from './datatypes/Cell';
+import CellState from './CellState';
+import Cell from './Cell';
 import { Graph } from '../Graph';
-import GraphView from '../view/GraphView';
+import GraphView from '../GraphView';
 
 /**
- *
  * @class CellStatePreview
  *
  * Implements a live preview for moving cells.
@@ -25,12 +24,12 @@ class CellStatePreview {
   }
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
   /**
-   * Reference to the enclosing <mxGraph>.
+   * Reference to the enclosing {@link Graph}.
    */
   deltas: Dictionary<Cell, { point: Point; state: CellState }>;
 
@@ -47,8 +46,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
@@ -86,8 +84,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {Function} visitor
    * @memberof mxCellStatePreview
    */
@@ -102,8 +99,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
@@ -135,8 +131,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
@@ -183,8 +178,7 @@ class CellStatePreview {
   }
 
   /**
-   *
-   *
+     *
    * @param {CellState} state
    * @memberof mxCellStatePreview
    */

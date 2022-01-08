@@ -1,16 +1,16 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   EdgeStyle,
   Point,
-  Constants,
-  mxDomHelpers,
-  mxClient,
+  constants,
+  DomHelpers,
+  Client,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { popup } from '@maxgraph/core/util/gui/mxWindow';
-import { getPrettyXml } from '@maxgraph/core/util/XmlUtils';
+import { popup } from '@maxgraph/core/gui/MaxWindow';
+import { getPrettyXml } from '@maxgraph/core/util/xmlUtils';
 
 export default {
   title: 'Connections/HelloPort',
@@ -24,7 +24,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  mxClient.setImageBasePath('/images');
+  Client.setImageBasePath('/images');
 
   const div = document.createElement('div');
 
@@ -72,15 +72,14 @@ const Template = ({ label, ...args }) => {
   };
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello', 20, 80, 80, 30);
     v1.setConnectable(false);
     const v11 = graph.insertVertex(v1, null, '', 1, 1, 10, 10);
@@ -93,17 +92,14 @@ const Template = ({ label, ...args }) => {
     const v3 = graph.insertVertex(parent, null, 'World2', 200, 20, 80, 30);
     var e1 = graph.insertEdge(parent, null, '', v11, v2);
     var e1 = graph.insertEdge(parent, null, '', v12, v3);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   const controller = document.createElement('div');
   div.appendChild(controller);
 
-  const button = mxDomHelpers.button('View XML', function () {
-    const encoder = new mxCodec();
-    const node = encoder.encode(graph.getModel());
+  const button = DomHelpers.button('View XML', function () {
+    const encoder = new Codec();
+    const node = encoder.encode(graph.getDataModel());
     popup(getPrettyXml(node), true);
   });
 

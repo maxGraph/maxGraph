@@ -1,6 +1,6 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   ConnectionHandler,
   ConnectionConstraint,
   ConstraintHandler,
@@ -10,7 +10,7 @@ import {
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { intersects } from '@maxgraph/core/util/Utils';
+import { intersects } from '@maxgraph/core/util/mathUtils';
 
 export default {
   title: 'Connections/FixedPoints',
@@ -103,7 +103,7 @@ const Template = ({ label, ...args }) => {
   class MyCustomEdgeHandler extends EdgeHandler {
     // Disables floating connections (only use with no connect image)
     isConnectableCell(cell) {
-      return graph.connectionHandler.isConnectableCell(cell);
+      return graph.getPlugin('ConnectionHandler').isConnectableCell(cell);
     }
   }
 
@@ -142,7 +142,7 @@ const Template = ({ label, ...args }) => {
   graph.setConnectable(true);
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
@@ -191,7 +191,7 @@ const Template = ({ label, ...args }) => {
   });
 
   // Use this code to snap the source point for new connections without a connect preview,
-  // ie. without an overridden graph.connectionHandler.createEdgeState
+  // ie. without an overridden graph.getPlugin('ConnectionHandler').createEdgeState
   /*
     let mxConnectionHandlerMouseMove = ConnectionHandler.prototype.mouseMove;
     ConnectionHandler.prototype.mouseMove = function(sender, me)

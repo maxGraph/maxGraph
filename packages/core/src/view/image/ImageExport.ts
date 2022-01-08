@@ -5,16 +5,17 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import AbstractCanvas2D from '../../util/canvas/AbstractCanvas2D';
-import CellState from '../cell/datatypes/CellState';
-import Shape from '../geometry/shape/Shape';
+import AbstractCanvas2D from '../canvas/AbstractCanvas2D';
+import CellState from '../cell/CellState';
+import Shape from '../geometry/Shape';
+import { Graph } from '../Graph';
 
 /**
  * Creates a new image export instance to be used with an export canvas. Here
  * is an example that uses this class to create an image via a backend using
- * <mxXmlExportCanvas>.
+ * {@link XmlExportCanvas}.
  *
- * (code)
+ * ```javascript
  * var xmlDoc = mxUtils.createXmlDocument();
  * var root = xmlDoc.createElement('output');
  * xmlDoc.appendChild(root);
@@ -28,10 +29,10 @@ import Shape from '../geometry/shape/Shape';
  * var h = Math.ceil(bounds.y + bounds.height);
  *
  * var xml = mxUtils.getXml(root);
- * new mxXmlRequest('export', 'format=png&w=' + w +
+ * new MaxXmlRequest('export', 'format=png&w=' + w +
  * 		'&h=' + h + '&bg=#F9F7ED&xml=' + encodeURIComponent(xml))
  * 		.simulate(document, '_blank');
- * (end)
+ * ```
  *
  * @class ImageExport
  */
@@ -62,15 +63,13 @@ class ImageExport {
   }
 
   /**
-   * Function: visitStatesRecursive
-   *
    * Visits the given state and all its descendants to the given canvas recursively.
    */
   visitStatesRecursive(state: CellState, canvas: AbstractCanvas2D, visitor: Function) {
     if (state) {
       visitor(state, canvas);
 
-      const { graph } = state.view;
+      const graph = <Graph>state.view.graph;
       const childCount = state.cell.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -109,8 +108,6 @@ class ImageExport {
   }
 
   /**
-   * Function: drawShape
-   *
    * Draws the shape of the given state.
    */
   drawShape(state: CellState, canvas: AbstractCanvas2D): void {
@@ -141,8 +138,6 @@ class ImageExport {
   }
 
   /**
-   * Function: drawOverlays
-   *
    * Draws the overlays for the given state. This is called if <includeOverlays>
    * is true.
    */

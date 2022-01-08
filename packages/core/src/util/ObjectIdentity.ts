@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { getFunctionName } from './StringUtils';
+import { getFunctionName } from './stringUtils';
 
 const FIELD_NAME = 'mxObjectId';
 
@@ -53,10 +53,8 @@ class ObjectIdentity {
           obj[FIELD_NAME] = `Function#${ObjectIdentity.counter++}`;
         }
       }
-
       return obj[FIELD_NAME] as string;
     }
-
     return null;
   }
 

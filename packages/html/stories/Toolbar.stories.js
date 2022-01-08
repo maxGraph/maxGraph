@@ -1,16 +1,17 @@
 import {
   Graph,
-  RubberBand,
+  RubberBandHandler,
   ConnectionHandler,
   ImageBox,
-  mxToolbar,
-  Model,
-  mxKeyHandler,
+  MaxToolbar,
+  GraphDataModel,
+  KeyHandler,
   Cell,
+  CellArray,
   Geometry,
   DragSource,
-  mxDomHelpers,
-  GestureUtils,
+  DomHelpers,
+  gestureUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -59,12 +60,12 @@ const Template = ({ label, ...args }) => {
   div.appendChild(tbContainer);
 
   // Creates new toolbar without event processing
-  const toolbar = new mxToolbar(tbContainer);
+  const toolbar = new MaxToolbar(tbContainer);
   toolbar.enabled = false;
 
   // Creates the model and the graph inside the container
   // using the fastest rendering available on the browser
-  const model = new Model();
+  const model = new GraphDataModel();
   const graph = new Graph(container, model);
   graph.dropEnabled = true;
 
@@ -82,9 +83,9 @@ const Template = ({ label, ...args }) => {
   graph.setMultigraph(false);
 
   // Stops editing on enter or escape keypress
-  const keyHandler = new mxKeyHandler(graph);
+  const keyHandler = new KeyHandler(graph);
 
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   const addVertex = (icon, w, h, style) => {
     const vertex = new Cell(null, new Geometry(0, 0, w, h), style);
@@ -103,7 +104,7 @@ const Template = ({ label, ...args }) => {
   addVertex('/images/actor.gif', 30, 40, 'shape=actor');
   toolbar.addLine();
 
-  const button = mxDomHelpers.button('Create toolbar entry from selection', (evt) => {
+  const button = DomHelpers.button('Create toolbar entry from selection', (evt) => {
     if (!graph.isSelectionEmpty()) {
       // Creates a copy of the selection array to preserve its state
       const cells = graph.getSelectionCells();
@@ -124,7 +125,7 @@ const Template = ({ label, ...args }) => {
 
       // Creates the image which is used as the drag icon (preview)
       const img = toolbar.addMode(null, '/images/outline.gif', funct);
-      GestureUtils.makeDraggable(img, graph, funct);
+      gestureUtils.makeDraggable(img, graph, funct);
     }
   });
 
@@ -138,16 +139,16 @@ const Template = ({ label, ...args }) => {
       graph.stopEditing(false);
 
       const pt = graph.getPointForEvent(evt);
-      const vertex = graph.getModel().cloneCell(prototype);
+      const vertex = graph.getDataModel().cloneCell(prototype);
       vertex.geometry.x = pt.x;
       vertex.geometry.y = pt.y;
 
-      graph.setSelectionCells(graph.importCells([vertex], 0, 0, cell));
+      graph.setSelectionCells(graph.importCells(new CellArray(vertex), 0, 0, cell));
     };
 
     // Creates the image which is used as the drag icon (preview)
     const img = toolbar.addMode(null, image, funct);
-    GestureUtils.makeDraggable(img, graph, funct);
+    gestureUtils.makeDraggable(img, graph, funct);
   }
 
   return div;

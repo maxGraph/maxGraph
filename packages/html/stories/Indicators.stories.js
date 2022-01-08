@@ -1,4 +1,4 @@
-import { Graph, EdgeStyle, Constants, mxKeyHandler } from '@maxgraph/core';
+import { Graph, EdgeStyle, constants, KeyHandler } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -21,7 +21,7 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given container
   const graph = new Graph(container);
   graph.setConnectable(true);
-  new mxKeyHandler(graph);
+  new KeyHandler(graph);
 
   // Enables moving of vertex labels
   graph.vertexLabelsMovable = true;
@@ -44,7 +44,7 @@ const Template = ({ label, ...args }) => {
   style = graph.getStylesheet().getDefaultEdgeStyle();
 
   style.edge = EdgeStyle.ElbowConnector;
-  style.elbow = Constants.ELBOW_VERTICAL;
+  style.elbow = constants.ELBOW.VERTICAL;
   style.rounded = true;
 
   // Gets the default parent for inserting new cells. This
@@ -52,8 +52,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     graph.insertVertex(parent, null, 'Bottom Label', 80, 80, 80, 60);
     graph.insertVertex(
       parent,
@@ -75,10 +74,7 @@ const Template = ({ label, ...args }) => {
       60,
       'indicatorShape=cloud;indicatorWidth=40;indicatorColor=#00FFFF;imageVerticalAlign=center;verticalAlign=middle;imageAlign=left;align=left;spacingLeft=44'
     );
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return container;
 };

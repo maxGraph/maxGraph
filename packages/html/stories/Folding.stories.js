@@ -1,4 +1,4 @@
-import { Graph, Constants, EdgeStyle, StackLayout, LayoutManager } from '@maxgraph/core';
+import { Graph, constants, EdgeStyle, StackLayout, LayoutManager } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -20,7 +20,7 @@ const Template = ({ label, ...args }) => {
 
   // Should we allow overriding constant values?
   // Enables crisp rendering of rectangles in SVG
-  // Constants.ENTITY_SEGMENT = 20;
+  // constants.ENTITY_SEGMENT = 20;
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -45,7 +45,7 @@ const Template = ({ label, ...args }) => {
   style.startSize = 30;
 
   style = [];
-  style.shape = Constants.SHAPE_RECTANGLE;
+  style.shape = constants.SHAPE_RECTANGLE;
   style.strokeColor = 'none';
   style.fillColor = 'none';
   style.foldable = false;
@@ -81,8 +81,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const col1 = graph.insertVertex(parent, null, '', 0, 0, 120, 0, 'column');
 
     const v1 = graph.insertVertex(col1, null, '1', 0, 0, 100, 30);
@@ -127,10 +126,7 @@ const Template = ({ label, ...args }) => {
     graph.insertEdge(parent, null, '', v12, v311);
     graph.insertEdge(parent, null, '', v12, v312);
     graph.insertEdge(parent, null, '', v12, v32);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return container;
 };

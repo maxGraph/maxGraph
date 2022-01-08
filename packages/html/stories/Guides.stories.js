@@ -1,11 +1,11 @@
 import {
   Graph,
-  GraphHandler,
+  SelectionHandler,
   InternalEvent,
-  Constants,
+  constants,
   EdgeHandler,
   EdgeStyle,
-  RubberBand,
+  RubberBandHandler,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -31,18 +31,18 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Enables guides
-  GraphHandler.prototype.guidesEnabled = true;
+  SelectionHandler.prototype.guidesEnabled = true;
 
   // Alt disables guides
-  GraphHandler.prototype.useGuidesForEvent = function (me) {
+  SelectionHandler.prototype.useGuidesForEvent = function (me) {
     return !InternalEvent.isAltDown(me.getEvent());
   };
 
   // Defines the guides to be red (default)
-  // Constants.GUIDE_COLOR = '#FF0000';
+  // constants.GUIDE_COLOR = '#FF0000';
 
   // Defines the guides to be 1 pixel (default)
-  // Constants.GUIDE_STROKEWIDTH = 1;
+  // constants.GUIDE_STROKEWIDTH = 1;
 
   // Enables snapping waypoints to terminals
   EdgeHandler.prototype.snapToTerminals = true;
@@ -63,23 +63,19 @@ const Template = ({ label, ...args }) => {
   graph.alternateEdgeStyle = 'elbow=vertical';
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  let v1;
-  try {
+  graph.batchUpdate(() => {
+    let v1;
     v1 = graph.insertVertex(parent, null, 'Hello,', 20, 40, 80, 70);
     const v2 = graph.insertVertex(parent, null, 'World!', 200, 140, 80, 40);
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   // Handles cursor keys
   const nudge = function (keyCode) {
@@ -104,7 +100,7 @@ const Template = ({ label, ...args }) => {
     graph.container.focus();
 
     // Handles keystroke events
-    const keyHandler = new mxKeyHandler(graph);
+    const keyHandler = new KeyHandler(graph);
 
     // Ignores enter keystroke. Remove this line if you want the
     // enter keystroke to stop editing

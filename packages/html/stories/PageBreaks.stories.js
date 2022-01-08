@@ -1,8 +1,8 @@
 import {
   Graph,
   Rectangle,
-  RubberBand,
-  mxDomHelpers,
+  RubberBandHandler,
+  DomHelpers,
   InternalEvent,
 } from '@maxgraph/core';
 
@@ -53,21 +53,20 @@ const Template = ({ label, ...args }) => {
   // Removes header and footer from page height
   graph.pageFormat.height -= headerSize + footerSize;
 
-  const graphHandler = graph.getPlugin('GraphHandler');
+  const graphHandler = graph.getPlugin('SelectionHandler');
 
   // Takes zoom into account for moving cells
   graphHandler.scaleGrid = true;
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 10, 10, 280, 330);
     const v2 = graph.insertVertex(
       parent,
@@ -79,41 +78,38 @@ const Template = ({ label, ...args }) => {
       330
     );
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('Toggle Page Breaks', function (evt) {
+    DomHelpers.button('Toggle Page Breaks', function (evt) {
       graph.pageBreaksVisible = !graph.pageBreaksVisible;
       graph.sizeDidChange();
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Zoom In', function (evt) {
+    DomHelpers.button('Zoom In', function (evt) {
       graph.zoomIn();
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Zoom Out', function (evt) {
+    DomHelpers.button('Zoom Out', function (evt) {
       graph.zoomOut();
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Print', function (evt) {
+    DomHelpers.button('Print', function (evt) {
       // Matches actual printer paper size and avoids blank pages
       const scale = 0.5;
 
       // Applies scale to page
       const pf = Rectangle.fromRectangle(
-        graph.pageFormat || Constants.PAGE_FORMAT_A4_PORTRAIT
+        graph.pageFormat || constants.PAGE_FORMAT_A4_PORTRAIT
       );
       pf.width = Math.round(pf.width * scale * graph.pageScale);
       pf.height = Math.round(pf.height * scale * graph.pageScale);
@@ -170,7 +166,7 @@ const Template = ({ label, ...args }) => {
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('Reset View', function (evt) {
+    DomHelpers.button('Reset View', function (evt) {
       graph.view.scaleAndTranslate(0.15, 0, 0);
     })
   );

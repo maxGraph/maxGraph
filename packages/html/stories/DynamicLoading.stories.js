@@ -1,13 +1,12 @@
 import {
   Graph,
   TextShape,
-  mxEffects,
+  Effects,
   InternalEvent,
-  Constants,
+  constants,
   Perimeter,
-  mxCodec,
-  utils,
-  XmlUtils,
+  Codec,
+  xmlUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -50,7 +49,7 @@ const Template = ({ label, ...args }) => {
 
   // Changes the default vertex style in-place
   const style = graph.getStylesheet().getDefaultVertexStyle();
-  style.shape = Constants.SHAPE_ELLIPSE;
+  style.shape = constants.SHAPE.ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   style.gradientColor = 'white';
 
@@ -64,9 +63,9 @@ const Template = ({ label, ...args }) => {
   const cell = graph.insertVertex(parent, '0-0', '0-0', cx - 20, cy - 15, 60, 40);
 
   // Animates the changes in the graph model
-  graph.getModel().addListener(InternalEvent.CHANGE, function (sender, evt) {
+  graph.getDataModel().addListener(InternalEvent.CHANGE, function (sender, evt) {
     const { changes } = evt.getProperty('edit');
-    mxEffects.animateChanges(graph, changes);
+    Effects.animateChanges(graph, changes);
   });
 
   // Loads the links for the given cell into the given graph
@@ -82,16 +81,15 @@ const Template = ({ label, ...args }) => {
       const parent = graph.getDefaultParent();
 
       // Adds cells to the model in a single step
-      graph.getModel().beginUpdate();
-      try {
+      graph.batchUpdate(() => {
         const xml = server(cell.id);
-        const doc = XmlUtils.parseXml(xml);
-        const dec = new mxCodec(doc);
+        const doc = xmlUtils.parseXml(xml);
+        const dec = new Codec(doc);
         const model = dec.decode(doc.documentElement);
 
         // Removes all cells which are not in the response
-        for (var key in graph.getModel().cells) {
-          const tmp = graph.getModel().getCell(key);
+        for (var key in graph.getDataModel().cells) {
+          const tmp = graph.getDataModel().getCell(key);
 
           if (tmp != cell && tmp.isVertex()) {
             graph.removeCells([tmp]);
@@ -99,7 +97,7 @@ const Template = ({ label, ...args }) => {
         }
 
         // Merges the response model with the client model
-        graph.getModel().mergeChildren(graph.getModel().getRoot().getChildAt(0), parent);
+        graph.getDataModel().mergeChildren(graph.getDataModel().getRoot().getChildAt(0), parent);
 
         // Moves the given cell to the center
         let geo = cell.getGeometry();
@@ -109,7 +107,7 @@ const Template = ({ label, ...args }) => {
           geo.x = cx - geo.width / 2;
           geo.y = cy - geo.height / 2;
 
-          graph.getModel().setGeometry(cell, geo);
+          graph.getDataModel().setGeometry(cell, geo);
         }
 
         // Creates a list of the new vertices, if there is more
@@ -118,8 +116,8 @@ const Template = ({ label, ...args }) => {
         // the target model before calling mergeChildren above
         const vertices = [];
 
-        for (var key in graph.getModel().cells) {
-          const tmp = graph.getModel().getCell(key);
+        for (var key in graph.getDataModel().cells) {
+          const tmp = graph.getDataModel().getCell(key);
 
           if (tmp != cell && tmp.isVertex()) {
             vertices.push(tmp);
@@ -152,13 +150,10 @@ const Template = ({ label, ...args }) => {
             geo.x += r * Math.sin(i * phi);
             geo.y += r * Math.cos(i * phi);
 
-            graph.getModel().setGeometry(vertices[i], geo);
+            graph.getDataModel().setGeometry(vertices[i], geo);
           }
         }
-      } finally {
-        // Updates the display
-        graph.getModel().endUpdate();
-      }
+      });
     }
   }
 
@@ -177,8 +172,7 @@ const Template = ({ label, ...args }) => {
     const parent = graph.getDefaultParent();
 
     // Adds cells to the model in a single step
-    graph.getModel().beginUpdate();
-    try {
+    graph.batchUpdate(() => {
       const v0 = graph.insertVertex(parent, cellId, 'Dummy', 0, 0, 60, 40);
       const cellCount = parseInt(Math.random() * 16) + 4;
 
@@ -188,15 +182,12 @@ const Template = ({ label, ...args }) => {
         const v = graph.insertVertex(parent, id, id, 0, 0, 60, 40);
         const e = graph.insertEdge(parent, null, `Link ${i}`, v0, v);
       }
-    } finally {
-      // Updates the display
-      graph.getModel().endUpdate();
-    }
+    });
 
-    const enc = new mxCodec();
-    const node = enc.encode(graph.getModel());
+    const enc = new Codec();
+    const node = enc.encode(graph.getDataModel());
 
-    return utils.getXml(node);
+    return xmlUtils.getXml(node);
   }
 
   load(graph, cell);

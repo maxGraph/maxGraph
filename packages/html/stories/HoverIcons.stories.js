@@ -1,10 +1,12 @@
 import {
   Graph,
   InternalEvent,
-  RubberBand,
+  RubberBandHandler,
   ImageBox,
   Rectangle,
-  utils,
+  CellArray,
+  mathUtils,
+  domUtils,
   ConnectionHandler,
 } from '@maxgraph/core';
 
@@ -41,7 +43,7 @@ const Template = ({ label, ...args }) => {
       const { graph } = state.view;
 
       // Icon1
-      let img = utils.createImage('images/copy.png');
+      let img = domUtils.createImage('images/copy.png');
       img.setAttribute('title', 'Duplicate');
       Object.assign(img.style, {
         cursor: 'pointer',
@@ -54,7 +56,7 @@ const Template = ({ label, ...args }) => {
 
       InternalEvent.addGestureListeners(img, (evt) => {
         const s = graph.gridSize;
-        graph.setSelectionCells(graph.moveCells([state.cell], s, s, true));
+        graph.setSelectionCells(graph.moveCells(new CellArray(state.cell), s, s, true));
         InternalEvent.consume(evt);
         this.destroy();
       });
@@ -63,7 +65,7 @@ const Template = ({ label, ...args }) => {
       this.images.push(img);
 
       // Delete
-      img = utils.createImage('images/delete2.png');
+      img = domUtils.createImage('images/delete2.png');
       img.setAttribute('title', 'Delete');
       Object.assign(img.style, {
         cursor: 'pointer',
@@ -80,7 +82,7 @@ const Template = ({ label, ...args }) => {
       });
 
       InternalEvent.addListener(img, 'click', (evt) => {
-        graph.removeCells([state.cell]);
+        graph.removeCells(new CellArray(state.cell));
         InternalEvent.consume(evt);
         this.destroy();
       });
@@ -104,7 +106,7 @@ const Template = ({ label, ...args }) => {
   graph.setConnectable(true);
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Defines the tolerance before removing the icons
   const ICON_TOLERANCE = 20;
@@ -134,7 +136,7 @@ const Template = ({ label, ...args }) => {
           2 * tol,
           2 * tol
         );
-        if (utils.intersects(tmp, this.currentState)) {
+        if (mathUtils.intersects(tmp, this.currentState)) {
           return;
         }
       }

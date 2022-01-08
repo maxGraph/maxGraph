@@ -1,4 +1,4 @@
-import { Graph, RubberBand, GraphView, utils } from '@maxgraph/core';
+import { Graph, RubberBandHandler, GraphView, mathUtils } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -36,7 +36,7 @@ const Template = ({ label, ...args }) => {
         const b = terminal.text.boundingBox.clone();
         b.grow(3);
 
-        if (utils.rectangleIntersectsSegment(b, point, next)) {
+        if (mathUtils.rectangleIntersectsSegment(b, point, next)) {
           point = perimeter(b, terminal, next, orthogonal);
         }
       }
@@ -55,15 +55,14 @@ const Template = ({ label, ...args }) => {
   // graph.setResizeContainer(true);
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(
       parent,
       null,
@@ -96,10 +95,7 @@ const Template = ({ label, ...args }) => {
     );
     var e1 = graph.insertEdge(parent, null, '', v1, v2);
     var e1 = graph.insertEdge(parent, null, '', v1, v3);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return container;
 };

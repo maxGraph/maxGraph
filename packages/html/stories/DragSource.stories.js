@@ -1,15 +1,15 @@
 import {
   Graph,
-  DomUtils,
-  RubberBand,
+  domUtils,
+  RubberBandHandler,
   DragSource,
-  utils,
-  GestureUtils,
+  gestureUtils,
   EdgeHandler,
-  GraphHandler,
+  SelectionHandler,
   Guide,
-  EventUtils,
+  eventUtils,
   Cell,
+  CellArray,
   Geometry,
 } from '@maxgraph/core';
 
@@ -37,11 +37,11 @@ const Template = ({ label, ...args }) => {
   class MyCustomGuide extends Guide {
     isEnabledForEvent(evt) {
       // Alt disables guides
-      return !EventUtils.isAltDown(evt);
+      return !eventUtils.isAltDown(evt);
     }
   }
 
-  class MyCustomGraphHandler extends GraphHandler {
+  class MyCustomGraphHandler extends SelectionHandler {
     // Enables guides
     guidesEnabled = true;
 
@@ -76,7 +76,6 @@ const Template = ({ label, ...args }) => {
     subContainer.style.height = '241px';
     subContainer.style.background = "url('/images/grid.gif')";
     subContainer.style.cursor = 'default';
-
     container.appendChild(subContainer);
 
     const graph = new MyCustomGraph(subContainer);
@@ -87,7 +86,7 @@ const Template = ({ label, ...args }) => {
     // graph.setResizeContainer(true);
 
     // Enables rubberband selection
-    if (args.rubberBand) new RubberBand(graph);
+    if (args.rubberBand) new RubberBandHandler(graph);
 
     // Gets the default parent for inserting new cells. This
     // is normally the first child of the root (ie. layer 0).
@@ -119,16 +118,15 @@ const Template = ({ label, ...args }) => {
 
   // Returns the graph under the mouse
   const graphF = (evt) => {
-    const x = EventUtils.getClientX(evt);
-    const y = EventUtils.getClientY(evt);
+    const x = eventUtils.getClientX(evt);
+    const y = eventUtils.getClientY(evt);
     const elt = document.elementFromPoint(x, y);
 
     for (const graph of graphs) {
-      if (DomUtils.isAncestorNode(graph.container, elt)) {
+      if (domUtils.isAncestorNode(graph.container, elt)) {
         return graph;
       }
     }
-
     return null;
   };
 
@@ -136,7 +134,7 @@ const Template = ({ label, ...args }) => {
   const funct = (graph, evt, target, x, y) => {
     const cell = new Cell('Test', new Geometry(0, 0, 120, 40));
     cell.vertex = true;
-    const cells = graph.importCells([cell], x, y, target);
+    const cells = graph.importCells(new CellArray(cell), x, y, target);
 
     if (cells != null && cells.length > 0) {
       graph.scrollCellToVisible(cells[0]);
@@ -145,7 +143,7 @@ const Template = ({ label, ...args }) => {
   };
 
   // Creates a DOM node that acts as the drag source
-  const img = utils.createImage('images/icons48/gear.png');
+  const img = domUtils.createImage('images/icons48/gear.png');
   img.style.width = '48px';
   img.style.height = '48px';
   container.appendChild(img);
@@ -160,16 +158,7 @@ const Template = ({ label, ...args }) => {
   // if scalePreview (last) argument is true. Dx and dy are null to force
   // the use of the defaults. Note that dx and dy are only used for the
   // drag icon but not for the preview.
-  const ds = GestureUtils.makeDraggable(
-    img,
-    graphF,
-    funct,
-    dragElt,
-    null,
-    null,
-    graphs[0].autoscroll,
-    true
-  );
+  const ds = gestureUtils.makeDraggable(img, graphF, funct, dragElt, null, null, graphs[0].autoscroll, true);
 
   // Redirects feature to global switch. Note that this feature should only be used
   // if the the x and y arguments are used in funct to insert the cell.

@@ -1,19 +1,20 @@
 import {
   Graph,
   ConnectionHandler,
-  mxDomHelpers,
+  DomHelpers,
   EdgeHandler,
   InternalEvent,
   Point,
   CellHighlight,
-  Constants,
+  constants,
   VertexHandler,
-  RubberBand,
+  RubberBandHandler,
   Shape,
   StencilShape,
   StencilShapeRegistry,
   CellRenderer,
   utils,
+  load,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -47,13 +48,13 @@ const Template = ({ label, ...args }) => {
 
   // Allow overriding constants?
   // Sets the global shadow color
-  // Constants.SHADOWCOLOR = '#C0C0C0';
-  // Constants.SHADOW_OPACITY = 0.5;
-  // Constants.SHADOW_OFFSET_X = 4;
-  // Constants.SHADOW_OFFSET_Y = 4;
-  // Constants.HANDLE_FILLCOLOR = '#99ccff';
-  // Constants.HANDLE_STROKECOLOR = '#0088cf';
-  // Constants.VERTEX_SELECTION_COLOR = '#00a8ff';
+  // constants.SHADOWCOLOR = '#C0C0C0';
+  // constants.SHADOW_OPACITY = 0.5;
+  // constants.SHADOW_OFFSET_X = 4;
+  // constants.SHADOW_OFFSET_Y = 4;
+  // constants.HANDLE_FILLCOLOR = '#99ccff';
+  // constants.HANDLE_STROKECOLOR = '#0088cf';
+  // constants.VERTEX_SELECTION_COLOR = '#00a8ff';
 
   // Enables connections along the outline
   ConnectionHandler.prototype.outlineConnect = true;
@@ -79,11 +80,10 @@ const Template = ({ label, ...args }) => {
 
     shape.outline = true;
     shape.bounds = bounds;
-    shape.stroke = Constants.HANDLE_STROKECOLOR;
+    shape.stroke = constants.HANDLE_STROKECOLOR;
     shape.strokewidth = this.getSelectionStrokeWidth();
     shape.isDashed = this.isSelectionDashed();
     shape.isShadow = false;
-
     return shape;
   };
 
@@ -128,7 +128,7 @@ const Template = ({ label, ...args }) => {
   let shape = root.firstChild;
 
   while (shape != null) {
-    if (shape.nodeType === Constants.NODETYPE_ELEMENT) {
+    if (shape.nodeType === constants.NODETYPE.ELEMENT) {
       StencilShapeRegistry.addStencil(
         shape.getAttribute('name'),
         new StencilShape(shape)
@@ -163,15 +163,14 @@ const Template = ({ label, ...args }) => {
   style.shadow = '1';
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'A1', 20, 20, 40, 80, 'shape=and');
     const v2 = graph.insertVertex(parent, null, 'A2', 20, 220, 40, 80, 'shape=and');
     const v3 = graph.insertVertex(parent, null, 'X1', 160, 110, 80, 80, 'shape=xor');
@@ -232,22 +231,19 @@ const Template = ({ label, ...args }) => {
 
     const e7 = graph.insertEdge(parent, null, '', v7, v5);
     e7.geometry.points = [new Point(290, 370)];
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
 
   buttons.appendChild(
-    mxDomHelpers.button('FlipH', function () {
+    DomHelpers.button('FlipH', function () {
       graph.toggleCellStyles('flipH');
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('FlipV', function () {
+    DomHelpers.button('FlipV', function () {
       graph.toggleCellStyles('flipV');
     })
   );
@@ -258,15 +254,14 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(document.createTextNode('\u00a0'));
 
   buttons.appendChild(
-    mxDomHelpers.button('Rotate', function () {
+    DomHelpers.button('Rotate', function () {
       const cell = graph.getSelectionCell();
 
       if (cell != null) {
-        let geo = graph.getCellGeometry(cell);
+        let geo = cell.getGeometry();
 
         if (geo != null) {
-          graph.getModel().beginUpdate();
-          try {
+          graph.batchUpdate(() => {
             // Rotates the size and position in the geometry
             geo = geo.clone();
             geo.x += geo.width / 2 - geo.height / 2;
@@ -274,7 +269,7 @@ const Template = ({ label, ...args }) => {
             const tmp = geo.width;
             geo.width = geo.height;
             geo.height = tmp;
-            graph.getModel().setGeometry(cell, geo);
+            graph.getDataModel().setGeometry(cell, geo);
 
             // Reads the current direction and advances by 90 degrees
             const state = graph.view.getState(cell);
@@ -294,9 +289,7 @@ const Template = ({ label, ...args }) => {
 
               graph.setCellStyles('direction', dir, [cell]);
             }
-          } finally {
-            graph.getModel().endUpdate();
-          }
+          });
         }
       }
     })
@@ -308,17 +301,17 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(document.createTextNode('\u00a0'));
 
   buttons.appendChild(
-    mxDomHelpers.button('And', function () {
+    DomHelpers.button('And', function () {
       graph.setCellStyles('shape', 'and');
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('Or', function () {
+    DomHelpers.button('Or', function () {
       graph.setCellStyles('shape', 'or');
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('Xor', function () {
+    DomHelpers.button('Xor', function () {
       graph.setCellStyles('shape', 'xor');
     })
   );
@@ -329,26 +322,26 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(document.createTextNode('\u00a0'));
 
   buttons.appendChild(
-    mxDomHelpers.button('Style', function () {
+    DomHelpers.button('Style', function () {
       const cell = graph.getSelectionCell();
 
       if (cell != null) {
         const style = utils.prompt('Style', cell.getStyle());
 
         if (style != null) {
-          graph.getModel().setStyle(cell, style);
+          graph.getDataModel().setStyle(cell, style);
         }
       }
     })
   );
 
   buttons.appendChild(
-    mxDomHelpers.button('+', function () {
+    DomHelpers.button('+', function () {
       graph.zoomIn();
     })
   );
   buttons.appendChild(
-    mxDomHelpers.button('-', function () {
+    DomHelpers.button('-', function () {
       graph.zoomOut();
     })
   );

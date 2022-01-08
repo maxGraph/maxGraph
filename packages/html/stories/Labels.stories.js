@@ -1,4 +1,4 @@
-import { Graph, RubberBand, mxKeyHandler, Constants, Rectangle } from '@maxgraph/core';
+import { Graph, RubberBandHandler, KeyHandler, constants, Rectangle } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -28,11 +28,11 @@ const Template = ({ label, ...args }) => {
   graph.htmlLabels = true;
   graph.vertexLabelsMovable = true;
 
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
-  new mxKeyHandler(graph);
+  new KeyHandler(graph);
 
-  const graphHandler = graph.getPlugin('GraphHandler');
+  const graphHandler = graph.getPlugin('SelectionHandler');
 
   // Do not allow removing labels from parents
   graphHandler.removeCellsFromParent = false;
@@ -64,7 +64,7 @@ const Template = ({ label, ...args }) => {
       geometry.width >= 2
     ) {
       const style = this.getCellStyle(cell);
-      const fontSize = style.fontSize || Constants.DEFAULT_FONTSIZE;
+      const fontSize = style.fontSize || constants.DEFAULT_FONTSIZE;
       const max = geometry.width / (fontSize * 0.625);
 
       if (max < label.length) {
@@ -96,8 +96,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'vertexLabelsMovable', 20, 20, 80, 30);
 
     // Places sublabels inside the vertex
@@ -119,10 +118,7 @@ const Template = ({ label, ...args }) => {
     // Places sublabels inside the vertex
     const label21 = graph.insertVertex(v2, null, 'Label1', 0.5, 1, 0, 0, null, true);
     const label22 = graph.insertVertex(v2, null, 'Label2', 0.5, 0, 0, 0, null, true);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   return container;
 };

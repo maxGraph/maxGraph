@@ -10,8 +10,8 @@ import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
 import { Graph } from '../Graph';
 import EventObject from '../event/EventObject';
-import Cell from '../cell/datatypes/Cell';
-import CellArray from '../cell/datatypes/CellArray';
+import Cell from '../cell/Cell';
+import CellArray from '../cell/CellArray';
 
 /**
  * @class SwimlaneManager
@@ -202,7 +202,7 @@ class SwimlaneManager extends EventSource {
    */
   cellsAdded(cells: CellArray) {
     if (cells.length > 0) {
-      const model = this.graph.getModel();
+      const model = this.graph.getDataModel();
 
       model.beginUpdate();
       try {
@@ -255,7 +255,7 @@ class SwimlaneManager extends EventSource {
    */
   cellsResized(cells: CellArray) {
     if (cells.length > 0) {
-      const model = this.getGraph().getModel();
+      const model = this.getGraph().getDataModel();
 
       model.beginUpdate();
       try {
@@ -300,7 +300,7 @@ class SwimlaneManager extends EventSource {
    * @param swimlane {@link mxCell} whose size has changed.
    */
   resizeSwimlane(swimlane: Cell, w: number, h: number, parentHorizontal: boolean) {
-    const model = this.graph.getModel();
+    const model = this.graph.getDataModel();
 
     model.beginUpdate();
     try {

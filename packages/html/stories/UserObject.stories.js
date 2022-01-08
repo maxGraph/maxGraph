@@ -1,16 +1,16 @@
 import {
   Graph,
   Rectangle,
-  mxDomHelpers,
-  mxKeyHandler,
+  DomHelpers,
+  KeyHandler,
   InternalEvent,
-  XmlUtils,
-  mxCodec,
-  Constants,
+  xmlUtils,
+  Codec,
+  constants,
   utils,
   EdgeStyle,
-  DomUtils,
-  mxForm,
+  domUtils,
+  MaxForm,
   CellAttributeChange,
 } from '@maxgraph/core';
 
@@ -37,7 +37,7 @@ const Template = ({ label, ...args }) => {
 
   // Note that these XML nodes will be enclosing the
   // Cell nodes for the model cells in the output
-  const doc = XmlUtils.createXmlDocument();
+  const doc = xmlUtils.createXmlDocument();
 
   const person1 = doc.createElement('Person');
   person1.setAttribute('firstName', 'Daffy');
@@ -63,7 +63,7 @@ const Template = ({ label, ...args }) => {
   graph.setBorder(60);
 
   // Stops editing on enter key, handles escape
-  new mxKeyHandler(graph);
+  new KeyHandler(graph);
 
   // Overrides method to disallow edge label editing
   graph.isCellEditable = function (cell) {
@@ -72,7 +72,7 @@ const Template = ({ label, ...args }) => {
 
   // Overrides method to provide a cell label in the display
   graph.convertValueToString = function (cell) {
-    if (DomUtils.isNode(cell.value)) {
+    if (domUtils.isNode(cell.value)) {
       if (cell.value.nodeName.toLowerCase() == 'person') {
         const firstName = cell.getAttribute('firstName', '');
         const lastName = cell.getAttribute('lastName', '');
@@ -87,14 +87,13 @@ const Template = ({ label, ...args }) => {
         return `${cell.value.nodeName} (Since ${cell.getAttribute('since', '')})`;
       }
     }
-
     return '';
   };
 
   // Overrides method to store a cell label in the model
   const { cellLabelChanged } = graph;
   graph.cellLabelChanged = function (cell, newValue, autoSize) {
-    if (DomUtils.isNode(cell.value) && cell.value.nodeName.toLowerCase() == 'person') {
+    if (domUtils.isNode(cell.value) && cell.value.nodeName.toLowerCase() == 'person') {
       const pos = newValue.indexOf(' ');
 
       const firstName = pos > 0 ? newValue.substring(0, pos) : newValue;
@@ -116,10 +115,9 @@ const Template = ({ label, ...args }) => {
   // Overrides method to create the editing value
   const { getEditingValue } = graph;
   graph.getEditingValue = function (cell) {
-    if (DomUtils.isNode(cell.value) && cell.value.nodeName.toLowerCase() == 'person') {
+    if (domUtils.isNode(cell.value) && cell.value.nodeName.toLowerCase() == 'person') {
       const firstName = cell.getAttribute('firstName', '');
       const lastName = cell.getAttribute('lastName', '');
-
       return `${firstName} ${lastName}`;
     }
   };
@@ -133,15 +131,13 @@ const Template = ({ label, ...args }) => {
     if (cell.isEdge()) {
       const src = this.getLabel(cell.getTerminal(true));
       const trg = this.getLabel(cell.getTerminal(false));
-
       return `${src} ${cell.value.nodeName} ${trg}`;
     }
-
     return getTooltipForCell.apply(this, arguments);
   };
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
@@ -151,9 +147,9 @@ const Template = ({ label, ...args }) => {
 
   // Adds an option to view the XML of the graph
   buttons.appendChild(
-    mxDomHelpers.button('View XML', function () {
-      const encoder = new mxCodec();
-      const node = encoder.encode(graph.getModel());
+    DomHelpers.button('View XML', function () {
+      const encoder = new Codec();
+      const node = encoder.encode(graph.getDataModel());
       popup(utils.getPrettyXml(node), true);
     })
   );
@@ -184,15 +180,11 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.getModel().beginUpdate();
-  try {
+  graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, person1, 40, 40, 80, 30);
     const v2 = graph.insertVertex(parent, null, person2, 200, 150, 80, 30);
     const e1 = graph.insertEdge(parent, null, relation, v1, v2);
-  } finally {
-    // Updates the display
-    graph.getModel().endUpdate();
-  }
+  });
 
   // Implements a properties panel that uses
   // CellAttributeChange to change properties
@@ -218,17 +210,16 @@ const Template = ({ label, ...args }) => {
     const cell = graph.getSelectionCell();
 
     if (cell == null) {
-      DomUtils.writeln(div, 'Nothing selected.');
+      domUtils.writeln(div, 'Nothing selected.');
     } else {
       // Writes the title
       const center = document.createElement('center');
-      DomUtils.writeln(center, `${cell.value.nodeName} (${cell.id})`);
+      domUtils.writeln(center, `${cell.value.nodeName} (${cell.id})`);
       div.appendChild(center);
-      DomUtils.br(div);
+      domUtils.br(div);
 
       // Creates the form from the attributes of the user object
-      const form = new mxForm();
-
+      const form = new MaxForm();
       const attrs = cell.value.attributes;
 
       for (let i = 0; i < attrs.length; i++) {
@@ -236,7 +227,7 @@ const Template = ({ label, ...args }) => {
       }
 
       div.appendChild(form.getTable());
-      DomUtils.br(div);
+      domUtils.br(div);
     }
   }
 
@@ -251,15 +242,11 @@ const Template = ({ label, ...args }) => {
       const oldValue = cell.getAttribute(attribute.nodeName, '');
 
       if (newValue != oldValue) {
-        graph.getModel().beginUpdate();
-
-        try {
+        graph.batchUpdate(() => {
           const edit = new CellAttributeChange(cell, attribute.nodeName, newValue);
-          graph.getModel().execute(edit);
+          graph.getDataModel().execute(edit);
           graph.updateCellSize(cell);
-        } finally {
-          graph.getModel().endUpdate();
-        }
+        });
       }
     };
 
@@ -278,7 +265,6 @@ const Template = ({ label, ...args }) => {
     // explicitely where we do the graph.focus above.
     InternalEvent.addListener(input, 'blur', applyHandler);
   }
-
   return div;
 };
 

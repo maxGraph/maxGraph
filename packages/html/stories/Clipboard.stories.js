@@ -1,14 +1,15 @@
 import {
   Graph,
   InternalEvent,
-  RubberBand,
+  RubberBandHandler,
   Clipboard,
-  utils,
-  EventUtils,
-  mxClient,
-  mxCodec,
-  Model,
-  StringUtils,
+  xmlUtils,
+  eventUtils,
+  Client,
+  Codec,
+  GraphDataModel,
+  styleUtils,
+  stringUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -45,20 +46,19 @@ const Template = ({ label, ...args }) => {
 
   // Public helper method for shared clipboard.
   Clipboard.cellsToString = function (cells) {
-    const codec = new mxCodec();
-    const model = new Model();
+    const codec = new Codec();
+    const model = new GraphDataModel();
     const parent = model.getRoot().getChildAt(0);
 
     for (let i = 0; i < cells.length; i++) {
       model.add(parent, cells[i]);
     }
-
-    return utils.getXml(codec.encode(model));
+    return xmlUtils.getXml(codec.encode(model));
   };
 
   // Focused but invisible textarea during control or meta key events
   const textInput = document.createElement('textarea');
-  utils.setOpacity(textInput, 0);
+  styleUtils.setOpacity(textInput, 0);
   textInput.style.width = '1px';
   textInput.style.height = '1px';
   let restoreFocus = false;
@@ -73,7 +73,7 @@ const Template = ({ label, ...args }) => {
   // Shows a textare when control/cmd is pressed to handle native clipboard actions
   InternalEvent.addListener(document, 'keydown', function (evt) {
     // No dialog visible
-    const source = EventUtils.getSource(evt);
+    const source = eventUtils.getSource(evt);
 
     if (
       graph.isEnabled() &&
@@ -83,8 +83,8 @@ const Template = ({ label, ...args }) => {
     ) {
       if (
         evt.keyCode === 224 /* FF */ ||
-        (!mxClient.IS_MAC && evt.keyCode === 17) /* Control */ ||
-        (mxClient.IS_MAC &&
+        (!Client.IS_MAC && evt.keyCode === 17) /* Control */ ||
+        (Client.IS_MAC &&
           (evt.keyCode === 91 || evt.keyCode === 93)) /* Left/Right Meta */
       ) {
         // Cannot use parentNode for check in IE
@@ -132,7 +132,7 @@ const Template = ({ label, ...args }) => {
         const state = graph.view.getState(cells[i]);
 
         if (state != null) {
-          const geo = graph.getCellGeometry(clones[i]);
+          const geo = clones[i].getGeometry();
 
           if (geo != null && geo.relative) {
             geo.relative = false;
@@ -181,8 +181,8 @@ const Template = ({ label, ...args }) => {
       const node = doc.documentElement;
 
       if (node != null) {
-        const model = new Model();
-        const codec = new mxCodec(node.ownerDocument);
+        const model = new GraphDataModel();
+        const codec = new Codec(node.ownerDocument);
         codec.decode(node, model);
 
         const childCount = model.getRoot().getChildCount();
@@ -228,7 +228,7 @@ const Template = ({ label, ...args }) => {
 
   // Parses and inserts XML into graph
   const pasteText = function (text) {
-    const xml = StringUtils.trim(text);
+    const xml = stringUtils.trim(text);
     const x = graph.container.scrollLeft / graph.view.scale - graph.view.translate.x;
     const y = graph.container.scrollTop / graph.view.scale - graph.view.translate.y;
 
@@ -294,7 +294,7 @@ const Template = ({ label, ...args }) => {
   });
 
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBand(graph);
+  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

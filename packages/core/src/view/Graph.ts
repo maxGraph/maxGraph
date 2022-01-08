@@ -10,46 +10,53 @@ import EventObject from './event/EventObject';
 import EventSource from './event/EventSource';
 import InternalEvent from './event/InternalEvent';
 import Rectangle from './geometry/Rectangle';
-import TooltipHandler from './tooltip/TooltipHandler';
-import mxClient from '../mxClient';
-import SelectionCellsHandler from './selection/SelectionCellsHandler';
-import ConnectionHandler from './connection/ConnectionHandler';
-import GraphHandler from './GraphHandler';
-import PanningHandler from './panning/PanningHandler';
-import PopupMenuHandler from './popups_menus/PopupMenuHandler';
-import GraphView from './view/GraphView';
+import TooltipHandler from './handler/TooltipHandler';
+import Client from '../Client';
+import SelectionCellsHandler from './handler/SelectionCellsHandler';
+import ConnectionHandler from './handler/ConnectionHandler';
+import SelectionHandler from './handler/SelectionHandler';
+import PanningHandler from './handler/PanningHandler';
+import PopupMenuHandler from './handler/PopupMenuHandler';
+import GraphView from './GraphView';
 import CellRenderer from './cell/CellRenderer';
-import CellEditor from './editing/CellEditor';
+import CellEditorHandler from './handler/CellEditorHandler';
 import Point from './geometry/Point';
-import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/Utils';
-import Cell from './cell/datatypes/Cell';
-import Model from './model/Model';
+import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
+import Cell from './cell/Cell';
+import GraphDataModel from './GraphDataModel';
 import Stylesheet from './style/Stylesheet';
-import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants';
+import { PAGE_FORMAT_A4_PORTRAIT } from '../util/constants';
 
-import ChildChange from './model/ChildChange';
-import GeometryChange from './geometry/GeometryChange';
-import RootChange from './model/RootChange';
-import StyleChange from './style/StyleChange';
-import TerminalChange from './cell/edge/TerminalChange';
-import ValueChange from './cell/ValueChange';
-import CellState from './cell/datatypes/CellState';
-import { isNode } from '../util/DomUtils';
+import ChildChange from './undoable_changes/ChildChange';
+import GeometryChange from './undoable_changes/GeometryChange';
+import RootChange from './undoable_changes/RootChange';
+import StyleChange from './undoable_changes/StyleChange';
+import TerminalChange from './undoable_changes/TerminalChange';
+import ValueChange from './undoable_changes/ValueChange';
+import CellState from './cell/CellState';
+import { isNode } from '../util/domUtils';
 import EdgeStyle from './style/EdgeStyle';
-import EdgeHandler from './cell/edge/EdgeHandler';
-import VertexHandler from './cell/vertex/VertexHandler';
-import EdgeSegmentHandler from './cell/edge/EdgeSegmentHandler';
-import ElbowEdgeHandler from './cell/edge/ElbowEdgeHandler';
+import EdgeHandler from './handler/EdgeHandler';
+import VertexHandler from './handler/VertexHandler';
+import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
+import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 
-import type { GraphPlugin, GraphPluginConstructor } from '../types';
+import CodecRegistry from '../serialization/CodecRegistry';
+import ObjectCodec from '../serialization/ObjectCodec';
 
-const defaultPlugins: GraphPluginConstructor[] = [
-  CellEditor,
+import type { GraphPlugin, GraphPluginConstructor, MouseListenerSet } from '../types';
+import Multiplicity from './other/Multiplicity';
+import CellArray from './cell/CellArray';
+import ImageBundle from './image/ImageBundle';
+import GraphSelectionModel from './GraphSelectionModel';
+
+export const defaultPlugins: GraphPluginConstructor[] = [
+  CellEditorHandler,
   TooltipHandler,
   SelectionCellsHandler,
   PopupMenuHandler,
   ConnectionHandler,
-  GraphHandler,
+  SelectionHandler,
   PanningHandler,
 ];
 
@@ -64,7 +71,7 @@ const defaultPlugins: GraphPluginConstructor[] = [
  * - tooltipHandler: {@link TooltipHandler} that displays tooltips
  * - panningHandler: {@link PanningHandler} for panning and popup menus
  * - connectionHandler: {@link ConnectionHandler} for creating connections
- * - graphHandler: {@link GraphHandler} for moving and cloning cells
+ * - graphHandler: {@link SelectionHandler} for moving and cloning cells
  *
  * These listeners will be called in the above order if they are enabled.
  * @class graph
@@ -77,15 +84,36 @@ class Graph extends EventSource {
 
   graphModelChangeListener: Function | null = null;
   paintBackground: Function | null = null;
+  foldingEnabled: null | boolean = null;
+  isConstrainedMoving: boolean = false;
+
+  /*****************************************************************************
+   * Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)
+   *****************************************************************************/
+
+  cells = new CellArray();
+
+  imageBundles: ImageBundle[] = [];
+
+  /**
+   * Holds the mouse event listeners. See {@link fireMouseEvent}.
+   */
+  mouseListeners: MouseListenerSet[] = [];
+
+  /**
+   * An array of {@link Multiplicity} describing the allowed
+   * connections in a graph.
+   */
+  multiplicities: Multiplicity[] = [];
 
   /*****************************************************************************
    * Group: Variables
    *****************************************************************************/
 
   /**
-   * Holds the {@link Model} that contains the cells to be displayed.
+   * Holds the {@link GraphDataModel} that contains the cells to be displayed.
    */
-  model: Model;
+  model: GraphDataModel;
 
   plugins: GraphPluginConstructor[];
   pluginsMap: Record<string, GraphPlugin> = {};
@@ -104,7 +132,7 @@ class Graph extends EventSource {
    * ```javascript
    * var req = mxUtils.load('stylesheet.xml');
    * var root = req.getDocumentElement();
-   * var dec = new mxCodec(root.ownerDocument);
+   * var dec = new Codec(root.ownerDocument);
    * dec.decode(root, graph.stylesheet);
    * ```
    */
@@ -347,12 +375,12 @@ class Graph extends EventSource {
 
   /**
    * Specifies the {@link Image} for the image to be used to display a warning
-   * overlay. See {@link setCellWarning}. Default value is mxClient.imageBasePath +
+   * overlay. See {@link setCellWarning}. Default value is Client.imageBasePath +
    * '/warning'.  The extension for the image depends on the platform. It is
    * '.png' on the Mac and '.gif' on all other platforms.
    */
   warningImage: Image = new Image(
-    `${mxClient.imageBasePath}/warning${mxClient.IS_MAC ? '.png' : '.gif'}`,
+    `${Client.imageBasePath}/warning${Client.IS_MAC ? '.png' : '.gif'}`,
     16,
     16
   );
@@ -364,7 +392,7 @@ class Graph extends EventSource {
    * @default 'alreadyConnected'
    */
   alreadyConnectedResource: string =
-    mxClient.language != 'none' ? 'alreadyConnected' : '';
+    Client.language != 'none' ? 'alreadyConnected' : '';
 
   /**
    * Specifies the resource key for the warning message to be displayed when
@@ -373,18 +401,18 @@ class Graph extends EventSource {
    * @default 'containsValidationErrors'
    */
   containsValidationErrorsResource: string =
-    mxClient.language != 'none' ? 'containsValidationErrors' : '';
+    Client.language != 'none' ? 'containsValidationErrors' : '';
 
   constructor(
     container: HTMLElement,
-    model?: Model,
+    model?: GraphDataModel,
     plugins: GraphPluginConstructor[] = defaultPlugins,
     stylesheet: Stylesheet | null = null
   ) {
     super();
 
     this.container = container ?? document.createElement('div');
-    this.model = model ?? new Model();
+    this.model = model ?? new GraphDataModel();
     this.plugins = plugins;
     this.cellRenderer = this.createCellRenderer();
     this.setStylesheet(stylesheet != null ? stylesheet : this.createStylesheet());
@@ -394,14 +422,16 @@ class Graph extends EventSource {
     this.graphModelChangeListener = (sender: any, evt: EventObject) => {
       this.graphModelChanged(evt.getProperty('edit').changes);
     };
-
-    this.getModel().addListener(InternalEvent.CHANGE, this.graphModelChangeListener);
+    this.getDataModel().addListener(InternalEvent.CHANGE, this.graphModelChangeListener);
 
     // Initializes the container using the view
     this.view.init();
 
     // Updates the size of the container for the current graph
     this.sizeDidChange();
+
+    // Set the selection model
+    this.setSelectionModel(this.createSelectionModel());
 
     // Initiailzes plugins
     this.plugins.forEach((p: GraphPluginConstructor) => {
@@ -411,38 +441,22 @@ class Graph extends EventSource {
     this.view.revalidate();
   }
 
+  createSelectionModel = () => new GraphSelectionModel(this);
   getContainer = () => this.container;
-
   getPlugin = (id: string) => this.pluginsMap[id] as unknown;
-
-  getCellRenderer() {
-    return this.cellRenderer;
-  }
-
+  getCellRenderer = () => this.cellRenderer;
   getDialect = () => this.dialect;
-
   isPageVisible = () => this.pageVisible;
-
   isPageBreaksVisible = () => this.pageBreaksVisible;
-
   getPageBreakColor = () => this.pageBreakColor;
-
   isPageBreakDashed = () => this.pageBreakDashed;
-
   getMinPageBreakDist = () => this.minPageBreakDist;
-
   isPreferPageSize = () => this.preferPageSize;
-
   getPageFormat = () => this.pageFormat;
-
   getPageScale = () => this.pageScale;
-
   isExportEnabled = () => this.exportEnabled;
-
   isImportEnabled = () => this.importEnabled;
-
   isIgnoreScrollbars = () => this.ignoreScrollbars;
-
   isTranslateToScrollPosition = () => this.translateToScrollPosition;
 
   getMinimumGraphSize = () => this.minimumGraphSize;
@@ -462,11 +476,11 @@ class Graph extends EventSource {
 
   // TODO: Document me!!
   batchUpdate(fn: Function) {
-    this.getModel().beginUpdate();
+    this.getDataModel().beginUpdate();
     try {
       fn();
     } finally {
-      this.getModel().endUpdate();
+      this.getDataModel().endUpdate();
     }
   }
 
@@ -492,9 +506,9 @@ class Graph extends EventSource {
   }
 
   /**
-   * Returns the {@link Model} that contains the cells.
+   * Returns the {@link GraphDataModel} that contains the cells.
    */
-  getModel() {
+  getDataModel() {
     return this.model;
   }
 
@@ -569,7 +583,7 @@ class Graph extends EventSource {
 
       if (
         newParent &&
-        (!this.getModel().contains(newParent) || newParent.isCollapsed())
+        (!this.getDataModel().contains(newParent) || newParent.isCollapsed())
       ) {
         this.view.invalidate(change.child, true, true);
         this.removeStateForCell(change.child);
@@ -757,22 +771,20 @@ class Graph extends EventSource {
   }
 
   /**
-   * Function: fit
-   *
    * Scales the graph such that the complete diagram fits into <container> and
    * returns the current scale in the view. To fit an initial graph prior to
-   * rendering, set <mxGraphView.rendering> to false prior to changing the model
+   * rendering, set {@link GraphView#rendering} to false prior to changing the model
    * and execute the following after changing the model.
    *
-   * (code)
+   * ```javascript
    * graph.fit();
    * graph.view.rendering = true;
    * graph.refresh();
-   * (end)
+   * ```
    *
    * To fit and center the graph, the following code can be used.
    *
-   * (code)
+   * ```javascript
    * let margin = 2;
    * let max = 3;
    *
@@ -786,21 +798,19 @@ class Graph extends EventSource {
    * graph.view.scaleAndTranslate(s,
    *   (margin + cw - w * s) / (2 * s) - bounds.x / graph.view.scale,
    *   (margin + ch - h * s) / (2 * s) - bounds.y / graph.view.scale);
-   * (end)
+   * ```
    *
-   * Parameters:
-   *
-   * border - Optional number that specifies the border. Default is <border>.
-   * keepOrigin - Optional boolean that specifies if the translate should be
+   * @param border Optional number that specifies the border. Default is <border>.
+   * @param keepOrigin Optional boolean that specifies if the translate should be
    * changed. Default is false.
-   * margin - Optional margin in pixels. Default is 0.
-   * enabled - Optional boolean that specifies if the scale should be set or
+   * @param margin Optional margin in pixels. Default is 0.
+   * @param enabled Optional boolean that specifies if the scale should be set or
    * just returned. Default is true.
-   * ignoreWidth - Optional boolean that specifies if the width should be
+   * @param ignoreWidth Optional boolean that specifies if the width should be
    * ignored. Default is false.
-   * ignoreHeight - Optional boolean that specifies if the height should be
+   * @param ignoreHeight Optional boolean that specifies if the height should be
    * ignored. Default is false.
-   * maxHeight - Optional maximum height.
+   * @param maxHeight Optional maximum height.
    */
   fit(
     border: number = this.getBorder(),
@@ -922,7 +932,7 @@ class Graph extends EventSource {
    * returns a new {@link EdgeHandler} of the corresponding cell is an edge,
    * otherwise it returns an {@link VertexHandler}.
    *
-   * @param state {@link mxCellState} whose handler should be created.
+   * @param state {@link CellState} whose handler should be created.
    */
   createHandler(state: CellState) {
     let result: EdgeHandler | VertexHandler | null = null;
@@ -934,7 +944,7 @@ class Graph extends EventSource {
 
       const edgeStyle = this.getView().getEdgeStyle(
         state,
-        geo ? geo.points : undefined,
+        geo ? (geo.points || undefined) : undefined,
         source,
         target
       );
@@ -948,7 +958,7 @@ class Graph extends EventSource {
   /**
    * Hooks to create a new {@link VertexHandler} for the given {@link CellState}.
    *
-   * @param state {@link mxCellState} to create the handler for.
+   * @param state {@link CellState} to create the handler for.
    */
   createVertexHandler(state: CellState): VertexHandler {
     return new VertexHandler(state);
@@ -957,7 +967,7 @@ class Graph extends EventSource {
   /**
    * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
    *
-   * @param state {@link mxCellState} to create the handler for.
+   * @param state {@link CellState} to create the handler for.
    */
   createEdgeHandler(state: CellState, edgeStyle: any) {
     let result = null;
@@ -983,7 +993,7 @@ class Graph extends EventSource {
   /**
    * Hooks to create a new {@link EdgeSegmentHandler} for the given {@link CellState}.
    *
-   * @param state {@link mxCellState} to create the handler for.
+   * @param state {@link CellState} to create the handler for.
    */
   createEdgeSegmentHandler(state: CellState) {
     return new EdgeSegmentHandler(state);
@@ -992,7 +1002,7 @@ class Graph extends EventSource {
   /**
    * Hooks to create a new {@link ElbowEdgeHandler} for the given {@link CellState}.
    *
-   * @param state {@link mxCellState} to create the handler for.
+   * @param state {@link CellState} to create the handler for.
    */
   createElbowEdgeHandler(state: CellState) {
     return new ElbowEdgeHandler(state);
@@ -1045,8 +1055,8 @@ class Graph extends EventSource {
 
   /**
    * Returns the offset to be used for the cells inside the given cell. The
-   * root and layer cells may be identified using {@link Model.isRoot} and
-   * {@link Model.isLayer}. For all other current roots, the
+   * root and layer cells may be identified using {@link GraphDataModel.isRoot} and
+   * {@link GraphDataModel.isLayer}. For all other current roots, the
    * {@link GraphView.currentRoot} field points to the respective cell, so that
    * the following holds: cell == this.view.currentRoot. This implementation
    * returns null.
@@ -1184,7 +1194,7 @@ class Graph extends EventSource {
    * Returns true if perimeter points should be computed such that the
    * resulting edge has only horizontal or vertical segments.
    *
-   * @param edge {@link mxCellState} that represents the edge.
+   * @param edge {@link CellState} that represents the edge.
    */
   isOrthogonal(edge: CellState): boolean {
     /*
@@ -1195,13 +1205,11 @@ class Graph extends EventSource {
     entity.
      */
     const orthogonal = edge.style.orthogonal;
-
-    if (orthogonal !== null) {
+    if (orthogonal != null) {
       return orthogonal;
     }
 
     const tmp = this.view.getEdgeStyle(edge);
-
     return (
       tmp === EdgeStyle.SegmentConnector ||
       tmp === EdgeStyle.ElbowConnector ||
@@ -1367,7 +1375,7 @@ class Graph extends EventSource {
   /**
    * Returns {@link recursiveResize}.
    *
-   * @param state {@link mxCellState} that is being resized.
+   * @param state {@link CellState} that is being resized.
    */
   isRecursiveResize(state: CellState | null = null) {
     return this.recursiveResize;
@@ -1412,7 +1420,7 @@ class Graph extends EventSource {
 
   /**
    * Returns {@link defaultParent} or {@link GraphView.currentRoot} or the first child
-   * child of {@link Model.root} if both are null. The value returned by
+   * child of {@link GraphDataModel.root} if both are null. The value returned by
    * this function should be used as the parent for new cells (aka default
    * layer).
    */
@@ -1423,7 +1431,7 @@ class Graph extends EventSource {
       parent = this.defaultParent;
 
       if (!parent) {
-        const root = <Cell>this.getModel().getRoot();
+        const root = <Cell>this.getDataModel().getRoot();
         parent = root.getChildAt(0);
       }
     }
@@ -1451,11 +1459,43 @@ class Graph extends EventSource {
       this.view.destroy();
 
       if (this.model && this.graphModelChangeListener) {
-        this.getModel().removeListener(this.graphModelChangeListener);
+        this.getDataModel().removeListener(this.graphModelChangeListener);
         this.graphModelChangeListener = null;
       }
     }
   }
 }
 
+/**
+ * Codec for {@link Graph}s. This class is created and registered
+ * dynamically at load time and used implicitly via <Codec>
+ * and the <CodecRegistry>.
+ *
+ * Transient Fields:
+ *
+ * - graphListeners
+ * - eventListeners
+ * - view
+ * - container
+ * - cellRenderer
+ * - editor
+ * - selection
+ */
+
+/*export class GraphCodec extends ObjectCodec {
+  constructor() {
+    // TODO: Register every possible plugin (i.e. all not being excluded via tree-shaking(?))
+    super(new Graph(), [
+      'graphListeners',
+      'eventListeners',
+      'view',
+      'container',
+      'cellRenderer',
+      'editor',
+      'selection',
+    ]);
+  }
+}*/
+
+//CodecRegistry.register(new GraphCodec());
 export { Graph };
