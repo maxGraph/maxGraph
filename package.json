@@ -19,8 +19,8 @@
   "scripts": {
     "build-dev": "npx lerna run build-dev --stream --scope @maxgraph/core",
     "dev": "node ./scripts/dev",
-    "bootstrap": "lerna bootstrap",
-    "postinstall": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --no-ci",
+    "postinstall": "lerna bootstrap --no-ci",
     "docs": "jsdoc -c jsdoc.json"
   },
   "devDependencies": {
