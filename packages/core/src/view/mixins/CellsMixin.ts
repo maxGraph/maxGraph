@@ -1,6 +1,6 @@
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import {
   contains,
   getBoundingBox,
@@ -21,14 +21,14 @@ import {
   DEFAULT_IMAGESIZE,
   DIRECTION,
   SHAPE,
-} from '../../util/constants';
+} from '../../util/Constants';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
 import Dictionary from '../../util/Dictionary';
 import Point from '../geometry/Point';
-import { htmlEntities } from '../../util/stringUtils';
+import { htmlEntities } from '../../util/StringUtils';
 import CellState from '../cell/CellState';
 import { Graph } from '../Graph';
 

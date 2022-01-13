@@ -10,7 +10,7 @@ import EventObject from '../view/event/EventObject';
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
 import { write } from '../util/domUtils';
-import { isLeftMouseButton } from '../util/eventUtils';
+import { isLeftMouseButton } from '../util/EventUtils';
 import Cell from '../view/cell/Cell';
 import InternalMouseEvent from '../view/event/InternalMouseEvent';
 import { PopupMenuItem } from '../types';

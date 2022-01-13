@@ -4,7 +4,7 @@ import { isNode } from '../../util/domUtils';
 import CellState from '../cell/CellState';
 import Multiplicity from '../other/Multiplicity';
 import { Graph } from '../Graph';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 
 declare module '../Graph' {
   interface Graph {

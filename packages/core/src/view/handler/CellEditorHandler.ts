@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { getValue } from '../../util/utils';
+import { getValue } from '../../util/Utils';
 import {
   getAlignmentAsPoint,
   setPrefixedStyle,
@@ -24,21 +24,21 @@ import {
   LINE_HEIGHT,
   NONE,
   WORD_WRAP,
-} from '../../util/constants';
+} from '../../util/Constants';
 import TextShape from '../geometry/node/TextShape';
 import Cell from '../cell/Cell';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/domUtils';
-import { getStringValue, htmlEntities, replaceTrailingNewlines } from '../../util/stringUtils';
+import { getStringValue, htmlEntities, replaceTrailingNewlines } from '../../util/StringUtils';
 import {
   getSource,
   isConsumed,
   isControlDown,
   isMetaDown,
   isShiftDown,
-} from '../../util/eventUtils';
+} from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 
 import type { Graph } from '../Graph';

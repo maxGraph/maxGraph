@@ -5,7 +5,7 @@ import Dictionary from '../../util/Dictionary';
 import RootChange from '../undoable_changes/RootChange';
 import ChildChange from '../undoable_changes/ChildChange';
 import { Graph } from '../Graph';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import GraphSelectionModel from '../GraphSelectionModel';
 
 declare module '../Graph' {

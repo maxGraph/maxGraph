@@ -1,4 +1,4 @@
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
 import { Graph } from '../Graph';

@@ -15,15 +15,15 @@ import {
   isPopupTrigger,
   isShiftDown,
   isTouchEvent,
-} from '../../util/eventUtils';
+} from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import Cell from '../cell/Cell';
 import PanningHandler from '../handler/PanningHandler';
 import ConnectionHandler from '../handler/ConnectionHandler';
 import Point from '../geometry/Point';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import { convertPoint } from '../../util/styleUtils';
-import { NONE } from '../../util/constants';
+import { NONE } from '../../util/Constants';
 import Client from '../../Client';
 import EventSource from '../event/EventSource';
 import CellEditorHandler from '../handler/CellEditorHandler';

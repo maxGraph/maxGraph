@@ -6,7 +6,7 @@
  */
 import Shape from '../Shape';
 import Point from '../Point';
-import { LINE_ARCSIZE } from '../../../util/constants';
+import { LINE_ARCSIZE } from '../../../util/Constants';
 import Rectangle from '../Rectangle';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 

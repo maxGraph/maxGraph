@@ -24,7 +24,7 @@ import {
   NONE,
   OUTLINE_HIGHLIGHT_COLOR,
   OUTLINE_HIGHLIGHT_STROKEWIDTH,
-} from '../../util/constants';
+} from '../../util/Constants';
 import {
   contains,
   findNearestSegment,
@@ -50,7 +50,7 @@ import {
   isAltDown,
   isMouseEvent,
   isShiftDown,
-} from '../../util/eventUtils';
+} from '../../util/EventUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';

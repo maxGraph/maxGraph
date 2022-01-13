@@ -8,10 +8,10 @@
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
 import { getInnerHtml, write } from '../util/domUtils';
-import { toString } from '../util/stringUtils';
+import { toString } from '../util/StringUtils';
 import MaxWindow, { popup } from './MaxWindow';
 import { KeyboardEventListener, MouseEventListener } from '../types';
-import { copyTextToClipboard } from '../util/utils';
+import { copyTextToClipboard } from '../util/Utils';
 
 /**
  * A singleton class that implements a simple console.

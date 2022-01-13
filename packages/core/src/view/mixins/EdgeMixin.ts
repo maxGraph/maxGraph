@@ -1,6 +1,6 @@
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import { removeDuplicates } from '../../util/arrayUtils';
 import { findNearestSegment } from '../../util/mathUtils';
 import Geometry from '../geometry/Geometry';

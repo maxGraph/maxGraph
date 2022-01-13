@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import Rectangle from './Rectangle';
-import { isNotNullish } from '../../util/utils';
+import { isNotNullish } from '../../util/Utils';
 import {
   getBoundingBox,
   getDirectedBounds,
@@ -18,7 +18,7 @@ import {
   RECTANGLE_ROUNDING_FACTOR,
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
-} from '../../util/constants';
+} from '../../util/Constants';
 import Point from './Point';
 import AbstractCanvas2D from '../canvas/AbstractCanvas2D';
 import SvgCanvas2D from '../canvas/SvgCanvas2D';

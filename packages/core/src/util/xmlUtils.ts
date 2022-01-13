@@ -5,12 +5,12 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { DIALECT, NODETYPE, NS_SVG } from './constants';
+import { DIALECT, NODETYPE, NS_SVG } from './Constants';
 import Point from '../view/geometry/Point';
 import Cell from '../view/cell/Cell';
 import CellArray from '../view/cell/CellArray';
 import { Graph } from '../view/Graph';
-import { htmlEntities, trim } from './stringUtils';
+import { htmlEntities, trim } from './StringUtils';
 import TemporaryCellStates from '../view/cell/TemporaryCellStates';
 
 import type { StyleValue } from '../types';
@@ -29,13 +29,13 @@ export const parseXml = (xmlString: string): HTMLElement => {
 }
 
 export const getViewXml = (
-  graph: Graph, 
-  scale: number=1, 
-  cells: CellArray | null=null, 
-  x0: number=0, 
+  graph: Graph,
+  scale: number=1,
+  cells: CellArray | null=null,
+  x0: number=0,
   y0: number=0
 ) => {
-  
+
   if (cells == null) {
     const model = graph.getDataModel();
     cells = new CellArray(<Cell>model.getRoot());
@@ -161,7 +161,7 @@ export const getPrettyXml = (node: Element, tab: string, indent: string, newline
       }
     } else if (node.nodeType === NODETYPE.TEXT) {
       const value = trim(getTextContent(<Text><unknown>node));
-      
+
       if (value && value.length > 0) {
         result.push(indent + htmlEntities(value, false) + newline);
       }

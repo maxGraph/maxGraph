@@ -1,4 +1,4 @@
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import { Graph } from '../Graph';
 import ImageBundle from '../image/ImageBundle';
 

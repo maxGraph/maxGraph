@@ -10,7 +10,7 @@ import {
   getSource,
   isMouseEvent,
   isPopupTrigger,
-} from '../../util/eventUtils';
+} from '../../util/EventUtils';
 import { isAncestorNode } from '../../util/domUtils';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';

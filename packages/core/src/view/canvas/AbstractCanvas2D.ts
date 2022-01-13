@@ -14,7 +14,7 @@ import {
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
   SHADOW_OPACITY,
-} from '../../util/constants';
+} from '../../util/Constants';
 import UrlConverter from '../../util/UrlConverter';
 import Point from '../geometry/Point';
 import { clone } from '../../util/cloneUtils';

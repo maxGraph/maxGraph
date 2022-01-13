@@ -15,7 +15,7 @@ import {
   HANDLE_FILLCOLOR,
   HANDLE_SIZE,
   HANDLE_STROKECOLOR,
-} from '../../util/constants';
+} from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';

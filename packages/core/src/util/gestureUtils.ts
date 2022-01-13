@@ -1,6 +1,6 @@
 import DragSource, { DropHandler } from '../view/other/DragSource';
 import Point from '../view/geometry/Point';
-import { TOOLTIP_VERTICAL_OFFSET } from './constants';
+import { TOOLTIP_VERTICAL_OFFSET } from './Constants';
 import { Graph } from '../view/Graph';
 import Cell from '../view/cell/Cell';
 

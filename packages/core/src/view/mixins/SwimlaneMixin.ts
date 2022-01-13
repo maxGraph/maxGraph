@@ -1,15 +1,15 @@
 import Cell from '../cell/Cell';
 import Rectangle from '../geometry/Rectangle';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import { convertPoint } from '../../util/styleUtils';
 import { mod } from '../../util/mathUtils';
 import {
   DEFAULT_STARTSIZE,
   DIRECTION,
   SHAPE,
-} from '../../util/constants';
+} from '../../util/Constants';
 import CellArray from '../cell/CellArray';
-import { getClientX, getClientY } from '../../util/eventUtils';
+import { getClientX, getClientY } from '../../util/EventUtils';
 import { Graph } from '../Graph';
 
 import { CellStateStyles, DirectionValue } from '../../types';

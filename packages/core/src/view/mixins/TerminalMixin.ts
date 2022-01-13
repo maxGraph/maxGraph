@@ -2,7 +2,7 @@ import CellArray from '../cell/CellArray';
 import Cell from '../cell/Cell';
 import Dictionary from '../../util/Dictionary';
 import { Graph } from '../Graph';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 
 declare module '../Graph' {
   interface Graph {

@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import { DIRECTION } from '../../../util/constants';
+import { DIRECTION } from '../../../util/Constants';
 import MaxLog from '../../../gui/MaxLog';
 import WeightedCellSorter from '../util/WeightedCellSorter';
 import Dictionary from '../../../util/Dictionary';

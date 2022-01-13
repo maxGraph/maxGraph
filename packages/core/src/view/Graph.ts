@@ -25,7 +25,7 @@ import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUti
 import Cell from './cell/Cell';
 import GraphDataModel from './GraphDataModel';
 import Stylesheet from './style/Stylesheet';
-import { PAGE_FORMAT_A4_PORTRAIT } from '../util/constants';
+import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants';
 
 import ChildChange from './undoable_changes/ChildChange';
 import GeometryChange from './undoable_changes/GeometryChange';

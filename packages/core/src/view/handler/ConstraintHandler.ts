@@ -12,13 +12,13 @@ import {
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_SIZE,
   HIGHLIGHT_STROKEWIDTH,
-} from '../../util/constants';
+} from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import { intersects } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
-import { isShiftDown } from '../../util/eventUtils';
+import { isShiftDown } from '../../util/EventUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';

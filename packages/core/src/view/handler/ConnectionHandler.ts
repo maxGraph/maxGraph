@@ -18,7 +18,7 @@ import {
   OUTLINE_HIGHLIGHT_STROKEWIDTH,
   TOOLTIP_VERTICAL_OFFSET,
   VALID_COLOR,
-} from '../../util/constants';
+} from '../../util/Constants';
 import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import { convertPoint, getOffset } from '../../util/styleUtils';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -35,7 +35,7 @@ import {
   isAltDown,
   isConsumed,
   isShiftDown,
-} from '../../util/eventUtils';
+} from '../../util/EventUtils';
 import Image from '../image/ImageBox';
 import CellState from '../cell/CellState';
 import { Graph } from '../Graph';

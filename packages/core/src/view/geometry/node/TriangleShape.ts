@@ -7,7 +7,7 @@
 
 import Point from '../Point';
 import ActorShape from '../ActorShape';
-import { LINE_ARCSIZE } from '../../../util/constants';
+import { LINE_ARCSIZE } from '../../../util/Constants';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**

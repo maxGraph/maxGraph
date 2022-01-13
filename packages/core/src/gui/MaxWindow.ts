@@ -11,12 +11,12 @@ import EventSource from '../view/event/EventSource';
 import { fit, getCurrentStyle } from '../util/styleUtils';
 import InternalEvent from '../view/event/InternalEvent';
 import Client from '../Client';
-import { NODETYPE } from '../util/constants';
+import { NODETYPE } from '../util/Constants';
 import { br, write } from '../util/domUtils';
 import Translations from '../util/Translations';
-import { getClientX, getClientY } from '../util/eventUtils';
-import { htmlEntities } from '../util/stringUtils';
-import { utils } from '../util/utils';
+import { getClientX, getClientY } from '../util/EventUtils';
+import { htmlEntities } from '../util/StringUtils';
+import { utils } from '../util/Utils';
 
 /**
  * Basic window inside a document.

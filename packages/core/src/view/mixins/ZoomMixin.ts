@@ -1,5 +1,5 @@
 import Rectangle from '../geometry/Rectangle';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import { hasScrollbars } from '../../util/styleUtils';
 import { Graph } from '../Graph';
 

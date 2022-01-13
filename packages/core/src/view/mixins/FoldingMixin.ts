@@ -6,7 +6,7 @@ import CellArray from '../cell/CellArray';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Geometry from '../geometry/Geometry';
-import { getValue, mixInto } from '../../util/utils';
+import { getValue, mixInto } from '../../util/Utils';
 import { toRadians } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
 import { Graph } from '../Graph';

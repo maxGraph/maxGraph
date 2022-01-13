@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import Shape from '../Shape';
-import { LINE_ARCSIZE } from '../../../util/constants';
+import { LINE_ARCSIZE } from '../../../util/Constants';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { ColorValue } from '../../../types';

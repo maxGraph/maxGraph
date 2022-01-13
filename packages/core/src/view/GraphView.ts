@@ -11,7 +11,7 @@ import Dictionary from '../util/Dictionary';
 import EventSource from './event/EventSource';
 import EventObject from './event/EventObject';
 import RectangleShape from './geometry/node/RectangleShape';
-import { ALIGN } from '../util/constants';
+import { ALIGN } from '../util/Constants';
 import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
 import {
@@ -38,7 +38,7 @@ import Shape from './geometry/Shape';
 import Geometry from './geometry/Geometry';
 import ConnectionConstraint from './other/ConnectionConstraint';
 import PopupMenuHandler from './handler/PopupMenuHandler';
-import { getClientX, getClientY, getSource, isConsumed } from '../util/eventUtils';
+import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
 import { clone } from '../util/cloneUtils';
 import CellArray from './cell/CellArray';
 import type { Graph } from './Graph';

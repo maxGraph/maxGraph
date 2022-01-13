@@ -5,8 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { getValue } from '../../util/utils';
-import { getNumber } from '../../util/stringUtils';
+import { getValue } from '../../util/Utils';
+import { getNumber } from '../../util/StringUtils';
 import {
   contains,
   getBoundingBox,
@@ -22,7 +22,7 @@ import {
   ELBOW,
   ENTITY_SEGMENT,
   NONE,
-} from '../../util/constants';
+} from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import Geometry from '../geometry/Geometry';
 
@@ -483,7 +483,7 @@ class EdgeStyle {
    * edge.
    */
   static SegmentConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
-    
+
     // Creates array of all way- and terminalpoints
     // TODO: Figure out what to do when there are nulls in `pts`!
     const pts = <Point[]><unknown>EdgeStyle.scalePointArray(<Point[]><unknown>state.absolutePoints, state.view.scale);

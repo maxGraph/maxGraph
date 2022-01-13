@@ -5,17 +5,17 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { NODETYPE } from '../../util/constants';
+import { NODETYPE } from '../../util/Constants';
 import Geometry from '../geometry/Geometry';
 import CellOverlay from './CellOverlay';
 import { clone } from '../../util/cloneUtils';
 import Point from '../geometry/Point';
 import CellPath from './CellPath';
 import CellArray from './CellArray';
-import { isNotNullish } from '../../util/utils';
+import { isNotNullish } from '../../util/Utils';
 import ObjectCodec from '../../serialization/ObjectCodec';
 import CodecRegistry from '../../serialization/CodecRegistry';
-import { removeWhitespace } from '../../util/stringUtils';
+import { removeWhitespace } from '../../util/StringUtils';
 import { importNode } from '../../util/domUtils';
 import Codec from '../../serialization/Codec';
 
