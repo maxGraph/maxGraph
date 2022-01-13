@@ -17,6 +17,7 @@
   },
   "main": "./javascript/dist/build.js",
   "scripts": {
+    "build-dev": "npx lerna run build-dev --stream --scope @maxgraph/core",
     "dev": "node ./scripts/dev",
     "bootstrap": "lerna bootstrap",
     "postinstall": "lerna bootstrap",

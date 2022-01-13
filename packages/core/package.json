@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "dev": "webpack --watch --mode=development",
+    "build-dev": "webpack --mode=development",
     "build": "NODE_ENV=production webpack --mode=production",
     "postinstall": "webpack --mode=development"
   },
