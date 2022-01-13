@@ -36,7 +36,5 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: Install dependencies
+      - name: Install dependencies and build @maxgraph/core
         run: npm install
-      - name: Build Application
-        run: npm run build-dev
