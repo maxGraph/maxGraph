@@ -1,0 +1,40 @@
+on:
+  push:
+    branches:
+      - development
+    paths:
+      - '.github/workflows/build.yml'
+      - 'packages/**/*'
+      - 'scripts/**/*'
+      - 'babel.config.js'
+      - 'package.json'
+      - 'webpack.config.js'
+  pull_request:
+    branches:
+      - development
+    paths:
+      - '.github/workflows/build.yml'
+      - 'packages/**/*'
+      - 'scripts/**/*'
+      - 'babel.config.js'
+      - 'package.json'
+      - 'webpack.config.js'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      # we want to run the full build on all os: don't cancel running jobs even if one fails
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-20.04', 'macos-11', 'windows-2019']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm install
+      - name: Build Application
+        run: npm run build-dev
