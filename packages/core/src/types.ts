@@ -1,3 +1,4 @@
+import { EDGESTYLE } from './util/Constants';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
 import EventSource from './view/event/EventSource';
@@ -42,6 +43,7 @@ export type CellStateStyles = {
   defaultVertex?: CellStateStyles;
   deletable?: boolean;
   direction?: DirectionValue;
+  edge?: string;
   edgeStyle?: string;
   editable?: boolean;
   elbow?: string;
@@ -220,7 +222,7 @@ export type GradientMap = {
 };
 
 export interface GraphPluginConstructor {
-  new (graph: Graph): GraphPlugin;
+  new(graph: Graph): GraphPlugin;
   pluginId: string;
 }
 
