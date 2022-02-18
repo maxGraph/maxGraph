@@ -107,8 +107,8 @@ class ElbowEdgeHandler extends EdgeHandler {
    * Returns the cursor to be used for the bend.
    */
   getCursorForBend() {
-    return this.state.style.edge === EDGESTYLE.TOPTOBOTTOM ||
-      (this.state.style.edge === EDGESTYLE.ELBOW &&
+    return this.state.style.edgeStyle === EDGESTYLE.TOPTOBOTTOM ||
+      (this.state.style.edgeStyle === EDGESTYLE.ELBOW &&
         this.state.style.elbow === ELBOW.VERTICAL)
       ? 'row-resize'
       : 'col-resize';
@@ -179,9 +179,9 @@ class ElbowEdgeHandler extends EdgeHandler {
     } else {
       pt = new Point(
         this.graph.getView().scale *
-          (pt.x + this.graph.getView().translate.x + this.state.origin.x),
+        (pt.x + this.graph.getView().translate.x + this.state.origin.x),
         this.graph.getView().scale *
-          (pt.y + this.graph.getView().translate.y + this.state.origin.y)
+        (pt.y + this.graph.getView().translate.y + this.state.origin.y)
       );
     }
 
