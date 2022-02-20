@@ -415,8 +415,8 @@ class EdgeHandler {
   isVirtualBendsEnabled(evt?: Event) {
     return (
       this.virtualBendsEnabled &&
-      (this.state.style.edge == null ||
-        this.state.style.edge === NONE ||
+      (this.state.style.edgeStyle == null ||
+        this.state.style.edgeStyle === NONE ||
         this.state.style.noEdgeStyle) &&
       this.state.style.shape !== 'arrow'
     );
@@ -958,12 +958,12 @@ class EdgeHandler {
    * Hook for subclassers do show details while the handler is active.
    */
 
-  updateHint(me: InternalMouseEvent, point: Point) {}
+  updateHint(me: InternalMouseEvent, point: Point) { }
 
   /**
    * Hooks for subclassers to hide details when the handler gets inactive.
    */
-  removeHint() {}
+  removeHint() { }
 
   /**
    * Hook for rounding the unscaled width or height. This uses Math.round.
