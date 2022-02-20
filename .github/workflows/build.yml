@@ -38,3 +38,5 @@ jobs:
           node-version: '16'
       - name: Install dependencies and build @maxgraph/core
         run: npm install
+      - name: Generate TypeScript declaration files
+        run: tsc -p packages/core/tsconfig.json
