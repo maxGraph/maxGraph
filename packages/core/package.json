@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "webpack --watch --mode=development",
     "build": "NODE_ENV=production webpack --mode=production",
-    "postinstall": "webpack --mode=development"
+    "postinstall": "webpack --mode=development",
+    "generate-types": "tsc --emitDeclarationOnly"
   },
   "author": "",
   "license": "ISC",
