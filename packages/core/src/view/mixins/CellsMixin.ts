@@ -2787,7 +2787,9 @@ export const CellsMixin: PartialType = {
    * @param cell {@link mxCell} whose bendable state should be returned.
    */
   isCellBendable(cell) {
+   
     const style = this.getCurrentCellStyle(cell);
+            
     return this.isCellsBendable() && !this.isCellLocked(cell) && !!style.bendable;
   },
 

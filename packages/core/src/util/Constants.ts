@@ -107,7 +107,7 @@ export const TOOLTIP_VERTICAL_OFFSET = 16;
 /**
  * Specifies the default valid color. Default is #0000FF.
  */
-export const DEFAULT_VALID_COLOR = '#00FF00';
+export const DEFAULT_VALID_COLOR = '#a66300';
 
 /**
  * Specifies the default invalid color. Default is #FF0000.
@@ -118,7 +118,7 @@ export const DEFAULT_INVALID_COLOR = '#FF0000';
  * Specifies the default highlight color for shape outlines.
  * Default is #0000FF. This is used in {@link EdgeHandler}.
  */
-export const OUTLINE_HIGHLIGHT_COLOR = '#00FF00';
+export const OUTLINE_HIGHLIGHT_COLOR = '#a66300';
 
 /**
  * Defines the strokewidth to be used for shape outlines.
@@ -200,7 +200,7 @@ export const DROP_TARGET_COLOR = '#0000FF';
  * Defines the color to be used for the coloring valid connection
  * previews. Use 'none' for no color. Default is #FF0000.
  */
-export const VALID_COLOR = '#00FF00';
+export const VALID_COLOR = '#06050a';
 
 /**
  * Defines the color to be used for the coloring invalid connection

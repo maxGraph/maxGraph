@@ -42,7 +42,7 @@ export type CellStateStyles = {
   defaultVertex?: CellStateStyles;
   deletable?: boolean;
   direction?: DirectionValue;
-  edge?: string;
+  edgeStyle?: string;
   editable?: boolean;
   elbow?: string;
   endArrow?: ArrowType;

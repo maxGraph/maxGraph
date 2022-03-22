@@ -143,11 +143,11 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
     const tmp = sortCells(this.getHandledSelectionCells(), false);
 
     // Destroys or updates old handlers
-    for (let i = 0; i < tmp.length; i += 1) {
-      const state = this.graph.view.getState(tmp[i]);
+    for (let f = 0; f < tmp.length; f++) {
+      const state = this.graph.view.getState(tmp[f]);
 
       if (state) {
-        let handler = oldHandlers.remove(tmp[i]);
+        let handler = oldHandlers.remove(tmp[f]);
 
         if (handler) {
           if (handler.state !== state) {
@@ -162,7 +162,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
         }
 
         if (handler) {
-          this.handlers.put(tmp[i], handler);
+          this.handlers.put(tmp[f], handler);
         }
       }
     }
@@ -174,16 +174,17 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
     });
 
     // Creates new handlers and updates parent highlight on existing handlers
-    for (let i = 0; i < tmp.length; i += 1) {
-      const state = this.graph.view.getState(tmp[i]);
+    for (let j = 0; j < tmp.length; j++) {
+      const state = this.graph.view.getState(tmp[j]);
 
       if (state) {
-        let handler = this.handlers.get(tmp[i]);
+        let handler = this.handlers.get(tmp[j]);
 
         if (!handler) {
           handler = this.graph.createHandler(state);
           this.fireEvent(new EventObject(InternalEvent.ADD, { state }));
-          this.handlers.put(tmp[i], handler);
+          this.handlers.put(tmp[j], handler);
+          console.log(handler)
         } else {
           handler.updateParentHighlight();
         }

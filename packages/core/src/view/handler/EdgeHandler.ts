@@ -833,7 +833,7 @@ class EdgeHandler {
       }
     }
 
-    if (this.isAddVirtualBendEvent(me)) {
+    if (this.virtualBends && this.isAddVirtualBendEvent(me)) {
       for (let i = 0; i < this.virtualBends.length; i += 1) {
         if (checkShape(this.virtualBends[i])) {
           result = InternalEvent.VIRTUAL_HANDLE - i;
@@ -2227,14 +2227,20 @@ class EdgeHandler {
       this.abspoints = this.getSelectionPoints(this.state);
       this.points = [];
 
+      if (this.bends.length){
       this.destroyBends(this.bends);
       this.bends = this.createBends();
+      }
 
+      if (this.virtualBends.length){
       this.destroyBends(this.virtualBends);
       this.virtualBends = this.createVirtualBends();
+      }
 
+      if (this.customHandles.length){
       this.destroyBends(this.customHandles);
       this.customHandles = this.createCustomHandles();
+      }
 
       // Puts label node on top of bends
       if (

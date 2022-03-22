@@ -300,7 +300,7 @@ class SelectionHandler implements GraphPlugin {
   /**
    * Maximum number of cells for which live preview should be used.  Default is 0 which means no live preview.
    */
-  maxLivePreview = 0;
+  maxLivePreview = 50;
 
   /**
    * Variable allowLivePreview
@@ -326,8 +326,8 @@ class SelectionHandler implements GraphPlugin {
   target: Cell | null = null;
 
   suspended = false;
-  livePreviewActive = false;
-  livePreviewUsed = false;
+  livePreviewActive = true;
+  livePreviewUsed = true;
 
   highlight: CellHighlight | null = null;
 

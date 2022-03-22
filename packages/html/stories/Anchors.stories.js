@@ -4,13 +4,23 @@ import {
   RubberBandHandler,
   ConnectionHandler,
   ConnectionConstraint,
-  Geometry,
+  Shape,
   PolylineShape,
   Point,
   CellState,
+  Client
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
+
+import SelectionCellsHandler from '../../core/src/view/handler/SelectionCellsHandler';
+
+import SelectionHandler from '../../core/src/view/handler/SelectionHandler';
+import PanningHandler from '../../core/src/view/handler/PanningHandler';
+import PopupMenuHandler from '../../core/src/view/handler/PopupMenuHandler';
+import CellEditorHandler from '../../core/src/view/handler/CellEditorHandler';
+import TooltipHandler from '../../core/src/view/handler/TooltipHandler';
+
 
 export default {
   title: 'Connections/Anchors',
@@ -32,6 +42,7 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
+  Client.imageBasePath = '../../../images'
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   class MyCustomConnectionHandler extends ConnectionHandler {
@@ -39,9 +50,24 @@ const Template = ({ label, ...args }) => {
     createEdgeState(me) {
       const edge = graph.createEdge(null, null, null, null, null);
       return new CellState(this.graph.view, edge, this.graph.getCellStyle(edge));
-    }
+    }    
   }
 
+    // Defines the default constraints for the vertices
+    Shape.prototype.constraints = [
+      new ConnectionConstraint(new Point(0.25, 0), true),
+      new ConnectionConstraint(new Point(0.5, 0), true),
+      new ConnectionConstraint(new Point(0.75, 0), true),
+      new ConnectionConstraint(new Point(0, 0.25), true),
+      new ConnectionConstraint(new Point(0, 0.5), true),
+      new ConnectionConstraint(new Point(0, 0.75), true),
+      new ConnectionConstraint(new Point(1, 0.25), true),
+      new ConnectionConstraint(new Point(1, 0.5), true),
+      new ConnectionConstraint(new Point(1, 0.75), true),
+      new ConnectionConstraint(new Point(0.25, 1), true),
+      new ConnectionConstraint(new Point(0.5, 1), true),
+      new ConnectionConstraint(new Point(0.75, 1), true),
+    ];
   class MyCustomGraph extends Graph {
     getAllConnectionConstraints(terminal, source) {
       // Overridden to define per-shape connection points
@@ -62,33 +88,28 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  class MyCustomGeometryClass extends Geometry {
-    // Defines the default constraints for the vertices
-    constraints = [
-      new ConnectionConstraint(new Point(0.25, 0), true),
-      new ConnectionConstraint(new Point(0.5, 0), true),
-      new ConnectionConstraint(new Point(0.75, 0), true),
-      new ConnectionConstraint(new Point(0, 0.25), true),
-      new ConnectionConstraint(new Point(0, 0.5), true),
-      new ConnectionConstraint(new Point(0, 0.75), true),
-      new ConnectionConstraint(new Point(1, 0.25), true),
-      new ConnectionConstraint(new Point(1, 0.5), true),
-      new ConnectionConstraint(new Point(1, 0.75), true),
-      new ConnectionConstraint(new Point(0.25, 1), true),
-      new ConnectionConstraint(new Point(0.5, 1), true),
-      new ConnectionConstraint(new Point(0.75, 1), true),
-    ];
-  }
-
+  const plugins = [
+    CellEditorHandler,
+    TooltipHandler,
+    SelectionCellsHandler,
+    PopupMenuHandler,
+    MyCustomConnectionHandler,
+    SelectionHandler,
+    PanningHandler,
+  ];
+  
   // Edges have no connection points
   PolylineShape.prototype.constraints = null;
 
   // Creates the graph inside the given container
-  const graph = new MyCustomGraph(container);
+  const graph = new MyCustomGraph(container, null, plugins);
   graph.setConnectable(true);
 
   // Specifies the default edge style
   graph.getStylesheet().getDefaultEdgeStyle().edgeStyle = 'orthogonalEdgeStyle';
+  graph.getStylesheet().getDefaultEdgeStyle().bendable = true;
+
+
 
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);
@@ -104,20 +125,20 @@ const Template = ({ label, ...args }) => {
       value: 'Hello,',
       position: [20, 20],
       size: [80, 30],
-      geometryClass: MyCustomGeometryClass,
+//      geometryClass: MyCustomGeometryClass,
     });
     const v2 = graph.insertVertex({
       parent,
       value: 'World!',
       position: [200, 150],
       size: [80, 30],
-      geometryClass: MyCustomGeometryClass,
+//      geometryClass: MyCustomGeometryClass,
     });
     const e1 = graph.insertEdge({
       parent,
       value: '',
-      position: v1,
-      size: v2,
+      source: v1,
+      target: v2,
     });
   });
 

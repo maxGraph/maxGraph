@@ -1371,7 +1371,7 @@ class Graph extends EventSource {
   setAllowLoops(value: boolean) {
     this.allowLoops = value;
   }
-
+  
   /**
    * Returns {@link recursiveResize}.
    *
