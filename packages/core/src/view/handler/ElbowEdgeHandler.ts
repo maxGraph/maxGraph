@@ -107,8 +107,8 @@ class ElbowEdgeHandler extends EdgeHandler {
    * Returns the cursor to be used for the bend.
    */
   getCursorForBend() {
-    return this.state.style.edge === EDGESTYLE.TOPTOBOTTOM ||
-      (this.state.style.edge === EDGESTYLE.ELBOW &&
+    return this.state.style.edgeStyle === EDGESTYLE.TOPTOBOTTOM ||
+      (this.state.style.edgeStyle === EDGESTYLE.ELBOW &&
         this.state.style.elbow === ELBOW.VERTICAL)
       ? 'row-resize'
       : 'col-resize';

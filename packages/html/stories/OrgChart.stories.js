@@ -121,7 +121,7 @@ const Template = ({ label, ...args }) => {
   style.entryPerimeter = 0; // disabled
 
   // Disable the following for straight lines
-  style.edge = EdgeStyle.TopToBottom;
+  style.edgeStyle = EdgeStyle.TopToBottom;
 
   // Stops editing on enter or escape keypress
   const keyHandler = new KeyHandler(graph);

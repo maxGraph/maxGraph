@@ -594,7 +594,7 @@ export default Ports;
       style.labelBackgroundColor = '#FFFFFF';
       style.strokeWidth = '2';
       style.rounded = true;
-      style.edge = mxEdgeStyle.EntityRelation;
+      style.edgeStyle = mxEdgeStyle.EntityRelation;
     };
   </script>
 </head>

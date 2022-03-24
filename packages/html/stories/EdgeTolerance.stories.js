@@ -70,7 +70,7 @@ const Template = ({ label, ...args }) => {
 
   // Creates the graph inside the given container
   const graph = new MyCustomGraph(container);
-  graph.setEventTolerance(20);
+  graph.setEventTolerance(200);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
@@ -94,13 +94,13 @@ const Template = ({ label, ...args }) => {
       parent,
       source: v1,
       target: v2,
-      style: 'edgeStyle=orthogonalEdgeStyle;',
+      style: 'edgeStyle=orthogonalEdgeStyle;bendable=true',
     });
     const e2 = graph.insertEdge({
       parent,
       source: v2,
       target: v1,
-      style: 'edgeStyle=orthogonalEdgeStyle;',
+      style: 'edgeStyle=orthogonalEdgeStyle;bendable=true',
     });
   });
 

@@ -7,10 +7,13 @@ import {
   Point,
   CellState,
   EdgeHandler,
+  Client
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 import { intersects } from '@maxgraph/core/util/mathUtils';
+
+
 
 export default {
   title: 'Connections/FixedPoints',
@@ -30,7 +33,9 @@ const Template = ({ label, ...args }) => {
   container.style.width = `${args.width}px`;
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  container.style.cursor = 'default';  
+  
+  Client.imageBasePath = '../../../images'
 
   class MyCustomConstraintHandler extends ConstraintHandler {
     // Snaps to fixed points

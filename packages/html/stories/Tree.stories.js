@@ -185,7 +185,7 @@ const Template = ({ label, ...args }) => {
   style.shadow = true;
 
   style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = EdgeStyle.TopToBottom;
+  style.edgeStyle = EdgeStyle.TopToBottom;
   style.rounded = true;
 
   // Enables automatic sizing for vertices after editing and

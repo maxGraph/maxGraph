@@ -59,7 +59,7 @@ const Template = ({ label, ...args }) => {
   // if the horizontal style is true.
   const style = graph.getStylesheet().getDefaultEdgeStyle();
   style.rounded = true;
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
   graph.alternateEdgeStyle = 'elbow=vertical';
 
   // Enables rubberband selection

@@ -194,7 +194,7 @@ const Template = ({ label, ...args }) => {
     style.fontStyle = 1;
 
     style = graph.getStylesheet().getDefaultEdgeStyle();
-    style.edge = EdgeStyle.ElbowConnector;
+    style.edgeStyle = EdgeStyle.ElbowConnector;
     style.strokeColor = '#808080';
     style.rounded = true;
     style.shadow = true;

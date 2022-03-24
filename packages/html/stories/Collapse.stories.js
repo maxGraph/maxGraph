@@ -1,4 +1,4 @@
-import { Graph, Rectangle } from '@maxgraph/core';
+import { Graph, Rectangle,Client } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -17,6 +17,8 @@ const Template = ({ label, ...args }) => {
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
+
+  Client.imageBasePath = '../../../images'
 
   const graph = new Graph(container);
   const parent = graph.getDefaultParent();

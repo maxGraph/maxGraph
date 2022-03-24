@@ -156,7 +156,7 @@ const Template = ({ label, ...args }) => {
 
   // Changes default styles
   let style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = 'orthogonalEdgeStyle';
+  style.edgeStyle = 'orthogonalEdgeStyle';
   style = graph.getStylesheet().getDefaultVertexStyle();
   style.fillColor = '#adc5ff';
   style.gradientColor = '#7d85df';

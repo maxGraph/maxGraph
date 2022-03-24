@@ -42,7 +42,7 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
-  Client.imageBasePath = '../../../images'
+  Client.imageBasePath = '/images'
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   class MyCustomConnectionHandler extends ConnectionHandler {

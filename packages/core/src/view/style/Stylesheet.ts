@@ -46,7 +46,7 @@ import Codec from '../../serialization/Codec';
  * var vertexStyle = stylesheet.getDefaultVertexStyle();
  * vertexStyle.rounded = true;
  * var edgeStyle = stylesheet.getDefaultEdgeStyle();
- * edgeStyle.edge = mxEdgeStyle.EntityRelation;
+ * edgeStyle.edgeStyle = mxEdgeStyle.EntityRelation;
  * ```
  *
  * Modifies the built-in default styles.

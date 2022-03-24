@@ -693,7 +693,7 @@ export default MYNAMEHERE;
       style.labelBackgroundColor = '#FFFFFF';
       style.strokeWidth = '2';
       style.rounded = true;
-      style.edge = EdgeStyle.EntityRelation;
+      style.edgeStyle = EdgeStyle.EntityRelation;
     };
 
     // Function to create the entries in the popupmenu

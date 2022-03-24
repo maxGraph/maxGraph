@@ -71,7 +71,7 @@ const Template = ({ label, ...args }) => {
   style.strokeColor = '#6482B9';
   style.align = constants.ALIGN.CENTER;
   style.verticalAlign = constants.ALIGN.MIDDLE;
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
   style.endArrow = constants.ARROW.CLASSIC;
   style.fontSize = '10';
   graph.getStylesheet().putDefaultEdgeStyle(style);

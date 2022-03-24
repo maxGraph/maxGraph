@@ -415,8 +415,8 @@ class EdgeHandler {
   isVirtualBendsEnabled(evt?: Event) {
     return (
       this.virtualBendsEnabled &&
-      (this.state.style.edge == null ||
-        this.state.style.edge === NONE ||
+      (this.state.style.edgeStyle == null ||
+        this.state.style.edgeStyle === NONE ||
         this.state.style.noEdgeStyle) &&
       this.state.style.shape !== 'arrow'
     );
