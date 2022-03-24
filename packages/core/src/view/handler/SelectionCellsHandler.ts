@@ -184,7 +184,6 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
           handler = this.graph.createHandler(state);
           this.fireEvent(new EventObject(InternalEvent.ADD, { state }));
           this.handlers.put(tmp[j], handler);
-          console.log(handler)
         } else {
           handler.updateParentHighlight();
         }
