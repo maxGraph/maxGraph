@@ -305,7 +305,7 @@ class CellEditorHandler implements GraphPlugin {
       this.textarea.style.minHeight = '1em';
     }
 
-    this.textarea.style.position = 'relative';
+    this.textarea.style.position = 'absolute';
     this.installListeners(this.textarea);
   }
 
@@ -791,7 +791,7 @@ class CellEditorHandler implements GraphPlugin {
       if (
         this.autoSize &&
         // @ts-ignore
-        (this.graph.model.isEdge(state.cell) || state.style.overflow !== 'fill')
+        (state.cell.isEdge() || state.style.overflow !== 'fill')
       ) {
         window.setTimeout(() => {
           this.resize();
