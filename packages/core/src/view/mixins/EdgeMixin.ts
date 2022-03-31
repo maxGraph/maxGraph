@@ -561,23 +561,14 @@ const EdgeMixin: PartialType = {
 
     for (let i = 0; i < edges.length; i += 1) {
       const state = this.getView().getState(edges[i]);
-
-      const source = state
-        ? state.getVisibleTerminal(true)
-        : this.getView().getVisibleTerminal(edges[i], true);
-      const target = state
-        ? state.getVisibleTerminal(false)
-        : this.getView().getVisibleTerminal(edges[i], false);
+      const source =  this.getView().getVisibleTerminal(edges[i], true);
+      const target =  this.getView().getVisibleTerminal(edges[i], false);
 
       if (
-        (includeLoops && source === target) ||
+        (includeLoops && source && target && source === target) ||
         (source !== target &&
-          ((incoming &&
-            target === cell &&
-            (!parent || this.isValidAncestor(<Cell>source, parent, recurse))) ||
-            (outgoing &&
-              source === cell &&
-              (!parent || this.isValidAncestor(<Cell>target, parent, recurse)))))
+          ((incoming && target === cell && (!parent || this.isValidAncestor(<Cell>source, parent, recurse))) ||
+            (outgoing && source === cell && (!parent || this.isValidAncestor(<Cell>target, parent, recurse)))))
       ) {
         result.push(edges[i]);
       }

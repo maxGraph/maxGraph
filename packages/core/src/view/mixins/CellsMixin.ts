@@ -2496,7 +2496,7 @@ export const CellsMixin: PartialType = {
    * @param recurse boolean whether or not to recurse the child ancestors
    */
   isValidAncestor(cell, parent, recurse = false) {
-    return recurse ? parent.isAncestor(cell) : cell.getParent() === parent;
+    return recurse ? parent.isAncestor(cell) : cell?.getParent() === parent;
   },
 
   /*****************************************************************************
