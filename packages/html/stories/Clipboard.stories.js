@@ -17,15 +17,7 @@ import { globalTypes } from '../.storybook/preview';
 export default {
   title: 'DnD_CopyPaste/Clipboard',
   argTypes: {
-    ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...globalTypes
   },
 };
 
@@ -69,12 +61,11 @@ const Template = ({ label, ...args }) => {
 
   // Workaround for no copy event in IE/FF if empty
   textInput.value = ' ';
-
-  // Shows a textare when control/cmd is pressed to handle native clipboard actions
+  // Shows a textarea when control/cmd is pressed to handle native clipboard actions
   InternalEvent.addListener(document, 'keydown', function (evt) {
     // No dialog visible
-    const source = eventUtils.getSource(evt);
 
+    const source = eventUtils.getSource(evt);
     if (
       graph.isEnabled() &&
       !graph.isMouseDown &&
@@ -82,6 +73,7 @@ const Template = ({ label, ...args }) => {
       source.nodeName !== 'INPUT'
     ) {
       if (
+        
         evt.keyCode === 224 /* FF */ ||
         (!Client.IS_MAC && evt.keyCode === 17) /* Control */ ||
         (Client.IS_MAC &&
@@ -154,7 +146,7 @@ const Template = ({ label, ...args }) => {
     if (graph.isEnabled() && !graph.isSelectionEmpty()) {
       copyCells(
         graph,
-        utils.sortCells(graph.model.getTopmostCells(graph.getSelectionCells()))
+        styleUtils.sortCells(graph.getSelectionCells().getTopmostCells())
       );
       dx = 0;
       dy = 0;
@@ -175,54 +167,52 @@ const Template = ({ label, ...args }) => {
     dx = dx != null ? dx : 0;
     dy = dy != null ? dy : 0;
     let cells = [];
-
-    try {
-      const doc = utils.parseXml(xml);
-      const node = doc.documentElement;
+    
+    
+      const node = xmlUtils.parseXml(xml);
 
       if (node != null) {
         const model = new GraphDataModel();
         const codec = new Codec(node.ownerDocument);
+   
         codec.decode(node, model);
 
         const childCount = model.getRoot().getChildCount();
         const targetChildCount = graph.model.getRoot().getChildCount();
-
         // Merges existing layers and adds new layers
         graph.model.beginUpdate();
-        try {
-          for (let i = 0; i < childCount; i++) {
-            let parent = model.getRoot().getChildAt(i);
-
+							
+        
+          for (var i = 0; i < childCount; i++)
+          {
+            var parent = model.getRoot().getChildAt(i);
+            
             // Adds cells to existing layers if not locked
-            if (targetChildCount > i) {
+            if (targetChildCount > i)
+            {
               // Inserts into active layer if only one layer is being pasted
-              const target =
-                childCount === 1
-                  ? graph.getDefaultParent()
-                  : graph.model.getRoot().getChildAt(i);
-
-              if (!graph.isCellLocked(target)) {
-                const children = parent.getChildren();
+              var target = (childCount == 1) ? graph.getDefaultParent() : graph.model.getRoot().getChildAt(i);
+              
+              if (!graph.isCellLocked(target))
+              {								
+                var children = parent.getChildren();
                 cells = cells.concat(graph.importCells(children, dx, dy, target));
               }
-            } else {
+            }
+            else
+            {
               // Delta is non cascading, needs separate move for layers
               parent = graph.importCells([parent], 0, 0, graph.model.getRoot())[0];
-              const children = parent.getChildren();
+              var children = graph.model.getChildren(parent);
               graph.moveCells(children, dx, dy);
               cells = cells.concat(children);
             }
           }
-        } finally {
+   
           graph.model.endUpdate();
-        }
-      }
-    } catch (e) {
-      alert(e);
-      throw e;
-    }
-
+         
+      
+    } 
     return cells;
   };
 
@@ -242,11 +232,12 @@ const Template = ({ label, ...args }) => {
         dy += gs;
       }
 
+
       // Standard paste via control-v
-      if (xml.substring(0, 14) === '<Transactions>') {
+    //  if (xml.substring(0, 14) === '<Transactions>') {
         graph.setSelectionCells(importXml(xml, dx, dy));
         graph.scrollCellToVisible(graph.getSelectionCell());
-      }
+    //  }
     }
   };
 
@@ -261,7 +252,7 @@ const Template = ({ label, ...args }) => {
         data =
           provider.types.indexOf('text/html') >= 0 ? provider.getData('text/html') : null;
 
-        if (provider.types.indexOf('text/plain') && (data == null || data.length === 0)) {
+        if (provider.types.indexOf('text/plain' && (data == null || data.length === 0))) {
           data = provider.getData('text/plain');
         }
       }
@@ -316,7 +307,6 @@ const Template = ({ label, ...args }) => {
     });
     const e1 = graph.insertEdge({ parent, source: v1, target: v2 });
   });
-
   return container;
 };
 

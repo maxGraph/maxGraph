@@ -70,6 +70,7 @@ import CellEditorHandler from './CellEditorHandler';
  */
 class KeyHandler {
   constructor(graph: Graph, target: Element | null=null) {
+    
     if (graph != null) {
       this.graph = graph;
       this.target = target || document.documentElement;
@@ -207,7 +208,7 @@ class KeyHandler {
       }
       if (isShiftDown(evt)) {
         return this.shiftKeys[evt.keyCode];
-      }
+      }  
       return this.normalKeys[evt.keyCode];
     }
 
@@ -250,6 +251,7 @@ class KeyHandler {
    * @param evt Key event that represents the keystroke.
    */
   keyDown(evt: KeyboardEvent) {
+    
     if (this.isEnabledForEvent(evt)) {
       // Cancels the editing if escape is pressed
       if (evt.keyCode === 27 /* Escape */) {
@@ -259,7 +261,6 @@ class KeyHandler {
       // Invokes the function for the keystroke
       else if (!this.isEventIgnored(evt)) {
         const boundFunction = this.getFunction(evt);
-
         if (boundFunction != null) {
           boundFunction(evt);
           InternalEvent.consume(evt);

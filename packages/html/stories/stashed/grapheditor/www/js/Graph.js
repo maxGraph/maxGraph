@@ -243,6 +243,7 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
     					}
     					else
     					{
+							console.log(this)
 			    			let handler = this.selectionCellsHandler.getHandler(state.cell);
 
 			    			if (handler != null && handler.bends != null && handler.bends.length > 0)
