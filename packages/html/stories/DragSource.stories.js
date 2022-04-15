@@ -163,7 +163,7 @@ const Template = ({ label, ...args }) => {
   // Redirects feature to global switch. Note that this feature should only be used
   // if the the x and y arguments are used in funct to insert the cell.
   ds.isGuidesEnabled = () => {
-    return graphs[0].graphHandler.guidesEnabled;
+    return graphs[0].pluginsMap['SelectionHandler'].guidesEnabled;
   };
 
   // Restores original drag icon while outside of graph
