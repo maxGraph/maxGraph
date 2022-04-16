@@ -1445,8 +1445,6 @@ class EdgeStyle {
       );
     }
 
-    // console.log(result);
-
     // Removes duplicates
     let index = 1;
 
