@@ -71,7 +71,6 @@ import { Listenable } from '../../types';
 class Outline {
   constructor(source: Graph, container: HTMLElement | null = null) {
     this.source = source;
-    console.log(container)
     if (container != null) {
       this.init(container);
       

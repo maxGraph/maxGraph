@@ -126,7 +126,6 @@ const Template = ({ label, ...args }) => {
     keyHandler.bindKey(40, function () {
       nudge(40);
     });
-    console.log(graph)
 
   return container;
 };

@@ -1579,10 +1579,13 @@ class EdgeHandler {
 
                 edge = cloned;
               }
-
               edge = this.connect(edge, terminal, this.isSource, clone, me);
+
             } finally {
+                                      
+
               model.endUpdate();
+
             }
           } else if (this.graph.isAllowDanglingEdges()) {
             const pt = this.abspoints[
