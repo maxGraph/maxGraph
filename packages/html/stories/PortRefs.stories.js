@@ -12,6 +12,7 @@ import {
   Client,
 } from '@maxgraph/core';
 
+
 import { globalTypes } from '../.storybook/preview';
 
 export default {
@@ -33,8 +34,6 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Replaces the port image
-  ConstraintHandler.prototype.pointImage = new ImageBox('/images/dot.gif', 10, 10);
-
   const graph = new Graph(container);
   graph.setConnectable(true);
 
@@ -63,19 +62,28 @@ const Template = ({ label, ...args }) => {
   ports.sw = { x: 0, y: 1, perimeter: true, constraint: 'south west' };
   ports.se = { x: 1, y: 1, perimeter: true, constraint: 'south east' };
 
+  /*ports.w = {x: 0, y: 0.5, perimeter: true, constraint: 'west'};
+			ports.e = {x: 1, y: 0.5, perimeter: true, constraint: 'east'};
+			ports.n = {x: 0.5, y: 0, perimeter: true, constraint: 'north'};
+			ports.s = {x: 0.5, y: 1, perimeter: true, constraint: 'south'};
+			ports.nw = {x: 0, y: 0, perimeter: true, constraint: 'north west'};
+			ports.ne = {x: 1, y: 0, perimeter: true, constraint: 'north east'};
+			ports.sw= {x: 0, y: 1, perimeter: true, constraint: 'south west'};
+			ports.se = {x: 1, y: 1, perimeter: true, constraint: 'south east'};
+*/
   // ... except for triangles
   const ports2 = new Array();
 
   // NOTE: Constraint is used later for orthogonal edge routing (currently ignored)
   ports2.in1 = { x: 0, y: 0, perimeter: true, constraint: 'west' };
-  ports2.in2 = { x: 0, y: 0.25, perimeter: true, constraint: 'west' };
-  ports2.in3 = { x: 0, y: 0.5, perimeter: true, constraint: 'west' };
-  ports2.in4 = { x: 0, y: 0.75, perimeter: true, constraint: 'west' };
-  ports2.in5 = { x: 0, y: 1, perimeter: true, constraint: 'west' };
+  ports2.in2 = { x: 0.25, y: 0, perimeter: true, constraint: 'west' };
+  ports2.in3 = { x: 0.5, y: 0, perimeter: true, constraint: 'west' };
+  ports2.in4 = { x: 0.75, y: 0, perimeter: true, constraint: 'west' };
+  ports2.in5 = { x: 1, y: 0, perimeter: true, constraint: 'west' };
 
   ports2.out1 = {
-    x: 0.5,
-    y: 0,
+    x: 0,
+    y: 0.5,
     perimeter: true,
     constraint: 'north east',
   };
@@ -86,7 +94,17 @@ const Template = ({ label, ...args }) => {
     perimeter: true,
     constraint: 'south east',
   };
+  /*
+  ports2.in1 = {x: 0, y: 0, perimeter: true, constraint: 'west'};
+  ports2.in2 = {x: 0, y: 0.25, perimeter: true, constraint: 'west'};
+  ports2.in3 = {x: 0, y: 0.5, perimeter: true, constraint: 'west'};
+  ports2.in4 = {x: 0, y: 0.75, perimeter: true, constraint: 'west'};
+  ports2.in5 = {x: 0, y: 1, perimeter: true, constraint: 'west'};
 
+  ports2.out1 = {x: 0.5, y: 0, perimeter: true, constraint: 'north east'};
+  ports2.out2 = {x: 1, y: 0.5, perimeter: true, constraint: 'east'};
+  ports2.out3 = {x: 0.5, y: 1, perimeter: true, constraint: 'south east'};
+*/
   // Extends shapes classes to return their ports
   Shape.prototype.getPorts = function () {
     return ports;
@@ -97,7 +115,7 @@ const Template = ({ label, ...args }) => {
   };
 
   const connectionHandler = graph.getPlugin('ConnectionHandler');
-
+  connectionHandler.constraintHandler.pointImage=new ImageBox('/images/dot.gif', 10, 10);
   // Disables floating connections (only connections via ports allowed)
   connectionHandler.isConnectableCell = function (cell) {
     return false;
@@ -160,7 +178,7 @@ const Template = ({ label, ...args }) => {
     const id = edge.style[key];
 
     if (id != null) {
-      const c = new ConnectionConstraint(null, null);
+      const c = new ConnectionConstraint(null);
       c.id = id;
 
       return c;
@@ -176,7 +194,7 @@ const Template = ({ label, ...args }) => {
       const port = vertex.shape.getPorts()[constraint.id];
 
       if (port != null) {
-        constraint = new ConnectionConstraint(new Point(port.x, port.y), port.perimeter);
+        arguments[1] = new ConnectionConstraint(new Point(port.x, port.y), port.perimeter);
       }
     }
 
@@ -207,7 +225,7 @@ const Template = ({ label, ...args }) => {
       'shape=triangle;perimeter=trianglePerimeter;direction=south'
     );
     const e1 = graph.insertEdge(parent, null, '', v1, v2, 'sourcePort=s;targetPort=nw');
-    const e2 = graph.insertEdge(parent, null, '', v1, v3, 'sourcePort=e;targetPort=out3');
+    const e2 = graph.insertEdge(parent, null, '', v1, v3, 'sourcePort=e;targetPort=out1');
   });
 
   // Comming soon... Integration with orthogonal edge style
