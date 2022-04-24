@@ -45,7 +45,7 @@ const Template = ({ label, ...args }) => {
     if (cell != null) {
       const overlays = graph.getCellOverlays(cell);
 
-      if (overlays == null) {
+      if (overlays.length==0) {
         // Creates a new overlay with an image and a tooltip
         const overlay = new CellOverlay(
           new ImageBox('/images/check.png', 16, 16),
@@ -54,7 +54,7 @@ const Template = ({ label, ...args }) => {
 
         // Installs a handler for clicks on the overlay
         overlay.addListener(InternalEvent.CLICK, (sender, evt2) => {
-          utils.alert('Overlay clicked');
+          alert('Overlay clicked');
         });
 
         // Sets the overlay for the cell in the graph
