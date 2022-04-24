@@ -84,6 +84,7 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given this.el
   const graph = new MyCustomGraph(container);
   graph.setPanning(true);
+  graph.getStylesheet().getDefaultEdgeStyle().bendable = true;
 
   const panningHandler = graph.getPlugin('PanningHandler');
   panningHandler.useLeftButtonForPanning = true;
