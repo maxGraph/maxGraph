@@ -71,10 +71,11 @@ import { Listenable } from '../../types';
 class Outline {
   constructor(source: Graph, container: HTMLElement | null = null) {
     this.source = source;
-
     if (container != null) {
       this.init(container);
+      
     }
+    
   }
 
   /**

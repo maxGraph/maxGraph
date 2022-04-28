@@ -488,6 +488,7 @@ export const setStyle = (style: string | null, key: string, value: any) => {
           next < 0 ? ';' : style.substring(next)
         }`;
       } else {
+        
         style = style.substring(0, index) + (next < 0 ? ';' : style.substring(next));
       }
     }

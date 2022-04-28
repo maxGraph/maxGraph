@@ -13,6 +13,9 @@ import MaxLog from '../gui/MaxLog';
 import { getFunctionName } from '../util/StringUtils';
 import { importNode, isNode } from '../util/domUtils';
 import ObjectCodec from './ObjectCodec';
+import GraphDataModel from '../view/GraphDataModel';
+import Geometry from '../view/geometry/Geometry';
+import Point from '../view/geometry/Point';
 
 const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);
@@ -339,6 +342,12 @@ class Codec {
    * @param into Optional object to be decodec into.
    */
   decode(node: Element, into?: any): any {
+
+    const classMap = {
+      "GraphDataModel": GraphDataModel,
+      "Geometry": Geometry,
+      "Point":Point
+  }; 
     this.updateElements();
     let obj = null;
 
@@ -347,11 +356,10 @@ class Codec {
 
       try {
         // @ts-ignore
-        ctor = window[node.nodeName];
+        ctor = classMap[node.nodeName]
       } catch (err) {
         // ignore
       }
-
       const dec = CodecRegistry.getCodec(ctor);
 
       if (dec != null) {

@@ -43,7 +43,7 @@ const Template = ({ label, ...args }) => {
   // Creates a style with an indicator
   style = graph.getStylesheet().getDefaultEdgeStyle();
 
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
   style.elbow = constants.ELBOW.VERTICAL;
   style.rounded = true;
 

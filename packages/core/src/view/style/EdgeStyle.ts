@@ -34,7 +34,7 @@ import Geometry from '../geometry/Geometry';
  *
  * ```javascript
  * let style = stylesheet.getDefaultEdgeStyle();
- * style.edge = mxEdgeStyle.ElbowConnector;
+ * style.edgeStyle = mxEdgeStyle.ElbowConnector;
  * ```
  *
  * Sets the default edge style to <ElbowConnector>.
@@ -87,7 +87,7 @@ import Geometry from '../geometry/Geometry';
  *
  * ```javascript
  * let style = graph.getStylesheet().getDefaultEdgeStyle();
- * style.edge = mxEdgeStyle.MyStyle;
+ * style.edgeStyle = mxEdgeStyle.MyStyle;
  * ```
  *
  * Note that the object can be used directly when programmatically setting
@@ -1498,8 +1498,6 @@ class EdgeStyle {
         )
       );
     }
-
-    // console.log(result);
 
     // Removes duplicates
     let index = 1;

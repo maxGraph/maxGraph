@@ -43,7 +43,7 @@ const Template = ({ label, ...args }) => {
   const getStyle = function () {
     // TODO super cannot be used here
     // let style = super.getStyle();
-    let style;
+    let style = this.style;
 
     if (this.isEdge()) {
       const target = this.getTerminal(false);

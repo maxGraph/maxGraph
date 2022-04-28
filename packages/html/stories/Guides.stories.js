@@ -2,11 +2,15 @@ import {
   Graph,
   SelectionHandler,
   InternalEvent,
+  
   constants,
   EdgeHandler,
   EdgeStyle,
+  KeyHandler,
   RubberBandHandler,
 } from '@maxgraph/core';
+import {isAltDown} from '../../core/src/util/eventUtils'
+import { brotliDecompressSync } from 'zlib';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -14,10 +18,10 @@ export default {
   title: 'Misc/Guides',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    //rubberBand: {
+    //  type: 'boolean',
+    //  defaultValue: true,
+    //},
   },
 };
 
@@ -35,14 +39,14 @@ const Template = ({ label, ...args }) => {
 
   // Alt disables guides
   SelectionHandler.prototype.useGuidesForEvent = function (me) {
-    return !InternalEvent.isAltDown(me.getEvent());
+    return !isAltDown(me.getEvent());
   };
 
   // Defines the guides to be red (default)
-  // constants.GUIDE_COLOR = '#FF0000';
+   ////constants.GUIDE_COLOR = '#FF0000';
 
   // Defines the guides to be 1 pixel (default)
-  // constants.GUIDE_STROKEWIDTH = 1;
+   //constants.GUIDE_STROKEWIDTH = 1;
 
   // Enables snapping waypoints to terminals
   EdgeHandler.prototype.snapToTerminals = true;
@@ -50,8 +54,7 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given container
   const graph = new Graph(container);
   graph.setConnectable(true);
-  graph.gridSize = 30;
-
+  graph.gridSize = 10;
   // Changes the default style for edges "in-place" and assigns
   // an alternate edge style which is applied in Graph.flip
   // when the user double clicks on the adjustment control point
@@ -59,7 +62,7 @@ const Template = ({ label, ...args }) => {
   // if the horizontal style is true.
   const style = graph.getStylesheet().getDefaultEdgeStyle();
   style.rounded = true;
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
   graph.alternateEdgeStyle = 'elbow=vertical';
 
   // Enables rubberband selection
@@ -79,6 +82,7 @@ const Template = ({ label, ...args }) => {
 
   // Handles cursor keys
   const nudge = function (keyCode) {
+
     if (!graph.isSelectionEmpty()) {
       let dx = 0;
       let dy = 0;
@@ -95,13 +99,14 @@ const Template = ({ label, ...args }) => {
 
       graph.moveCells(graph.getSelectionCells(), dx, dy);
     }
+  }
 
     // Transfer initial focus to graph container for keystroke handling
     graph.container.focus();
 
     // Handles keystroke events
-    const keyHandler = new KeyHandler(graph);
-
+   const keyHandler = new KeyHandler(graph);
+ 
     // Ignores enter keystroke. Remove this line if you want the
     // enter keystroke to stop editing
     keyHandler.enter = function () {};
@@ -121,7 +126,6 @@ const Template = ({ label, ...args }) => {
     keyHandler.bindKey(40, function () {
       nudge(40);
     });
-  };
 
   return container;
 };

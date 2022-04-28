@@ -67,8 +67,10 @@ const Template = ({ label, ...args }) => {
   };
 
   // Changes the default edge style
-  graph.getStylesheet().getDefaultEdgeStyle().edgeStyle = 'orthogonalEdgeStyle';
-  delete graph.getStylesheet().getDefaultEdgeStyle().endArrow;
+  const style = graph.getStylesheet().getDefaultEdgeStyle();
+  style.edgeStyle  = 'orthogonalEdgeStyle'
+  delete style.endArrow;
+  style.bendable=true
 
   const connectionHandler = graph.getPlugin('ConnectionHandler');
 

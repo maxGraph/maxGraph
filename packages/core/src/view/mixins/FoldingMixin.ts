@@ -92,7 +92,7 @@ type PartialFolding = Pick<
   | 'updateAlternateBounds'
 >;
 type PartialType = PartialGraph & PartialFolding;
-
+Client.imageBasePath = '/images'
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const FoldingMixin: PartialType = {
   options: {

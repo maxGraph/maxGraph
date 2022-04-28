@@ -25,11 +25,11 @@ export const clone = function _clone(obj: any, transients: string[] | null=null,
         i != ObjectIdentity.FIELD_NAME &&
         (transients == null || transients.indexOf(i) < 0)
       ) {
-        if (!shallow && typeof obj[i] === 'object') {
+       if (!shallow && typeof obj[i] === 'object') {
           clone[i] = _clone(obj[i]);
         } else {
           clone[i] = obj[i];
-        }
+      }
       }
     }
   }

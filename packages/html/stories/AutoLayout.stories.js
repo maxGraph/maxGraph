@@ -14,6 +14,7 @@ import {
   eventUtils,
   mathUtils,
 } from '@maxgraph/core';
+import { convertPoint } from '../../core/src/util/styleUtils';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -83,6 +84,7 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given this.el
   const graph = new MyCustomGraph(container);
   graph.setPanning(true);
+  graph.getStylesheet().getDefaultEdgeStyle().bendable = true;
 
   const panningHandler = graph.getPlugin('PanningHandler');
   panningHandler.useLeftButtonForPanning = true;
@@ -173,7 +175,7 @@ const Template = ({ label, ...args }) => {
 
       graph.stopEditing(false);
 
-      const pt = mathUtils.convertPoint(
+      const pt = convertPoint(
         graph.container,
         eventUtils.getClientX(evt2),
         eventUtils.getClientY(evt2)

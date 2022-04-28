@@ -44,7 +44,8 @@ const Template = ({ label, ...args }) => {
 
   // Sets the default edge style
   const style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
+  style.bendable=true
 
   // Ports are not used as terminals for edges, they are
   // only used to compute the graphical connection point

@@ -2193,7 +2193,7 @@ export class GraphView extends EventSource {
       }
     };
 
-    this.endHandler = (evt: MouseEvent) => {
+    this.endHandler = (evt: MouseEvent) => {      
       if (
         this.captureDocumentGesture &&
         graph.isMouseDown &&

@@ -42,7 +42,7 @@ const Template = ({ label, ...args }) => {
     SelectionHandler.prototype.getInitialCellForEvent;
   SelectionHandler.prototype.getInitialCellForEvent = function (me) {
     const model = this.graph.getDataModel();
-    const psel = this.graph.getSelectionCell().getParent();
+    const psel = this.graph.getSelectionCell()?.getParent() ||null;
     let cell = graphHandlerGetInitialCellForEvent.apply(this, arguments);
     let parent = cell.getParent();
 
@@ -66,7 +66,7 @@ const Template = ({ label, ...args }) => {
   SelectionHandler.prototype.isDelayedSelection = function (cell) {
     let result = graphHandlerIsDelayedSelection.apply(this, arguments);
     const model = this.graph.getDataModel();
-    const psel = this.graph.getSelectionCell().getParent();
+    const psel = this.graph.getSelectionCell()?.getParent() || null;
     const parent = cell.getParent();
 
     if (psel == null || (psel != cell && psel != parent)) {

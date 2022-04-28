@@ -1,5 +1,5 @@
 import {
-  Editor,
+  Graph,
   ConnectionHandler,
   ImageBox,
   Perimeter,
@@ -11,6 +11,7 @@ import {
   SwimlaneManager,
   StackLayout,
   LayoutManager,
+  Client
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -31,6 +32,7 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
+ 
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
   ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
@@ -42,11 +44,11 @@ const Template = ({ label, ...args }) => {
   //   .load('editors/config/keyhandler-commons.xml')
   //   .getDocumentElement();
   // const editor = new Editor(config);
-  const editor = new Editor(null);
-  editor.setGraphContainer(container);
-  const { graph } = editor;
+  //const editor = new Editor(null);
+  //editor.setGraphContainer(container);
+  const graph= new Graph(container)
   const model = graph.getDataModel();
-
+  
   // Auto-resizes the container
   graph.border = 80;
   graph.getView().translate = new Point(graph.border / 2, graph.border / 2);
@@ -65,7 +67,8 @@ const Template = ({ label, ...args }) => {
   style.horizontal = false;
   style.fontColor = 'black';
   style.strokeColor = 'black';
-  // delete style.fillColor;
+  style.foldable=true
+  style.fillColor='none';
 
   style = cloneUtils.clone(style);
   style.shape = constants.SHAPE.RECTANGLE;
@@ -74,21 +77,23 @@ const Template = ({ label, ...args }) => {
   style.horizontal = true;
   style.verticalAlign = 'middle';
   delete style.startSize;
-  style.labelBackgroundColor = 'none';
+  style.foldable=false;
+  style.labelBackgroundColor = 'blue';
   graph.getStylesheet().putCellStyle('process', style);
 
   style = cloneUtils.clone(style);
   style.shape = constants.SHAPE.ELLIPSE;
   style.perimiter = Perimeter.EllipsePerimeter;
   delete style.rounded;
+  style.foldable=false;
   graph.getStylesheet().putCellStyle('state', style);
-
   style = cloneUtils.clone(style);
   style.shape = constants.SHAPE.RHOMBUS;
   style.perimiter = Perimeter.RhombusPerimeter;
   style.verticalAlign = 'top';
   style.spacingTop = 40;
   style.spacingRight = 64;
+  style.foldable=false;
   graph.getStylesheet().putCellStyle('condition', style);
 
   style = cloneUtils.clone(style);
@@ -98,12 +103,14 @@ const Template = ({ label, ...args }) => {
   style.fontSize = 14;
   style.fontStyle = 1;
   delete style.spacingRight;
+  style.foldable=false;
   graph.getStylesheet().putCellStyle('end', style);
 
   style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
   style.endArrow = constants.ARROW.BLOCK;
   style.rounded = true;
+  style.bendable=true;
   style.fontColor = 'black';
   style.strokeColor = 'black';
 
@@ -214,7 +221,7 @@ const Template = ({ label, ...args }) => {
   const getStyle = function () {
     // TODO super cannot be used here
     // let style = super.getStyle();
-    let style;
+    let style = this.style;
     if (this.isCollapsed()) {
       if (style != null) {
         style += ';';

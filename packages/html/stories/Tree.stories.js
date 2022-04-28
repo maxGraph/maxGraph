@@ -13,6 +13,8 @@ import {
   Point,
 } from '@maxgraph/core';
 
+import{traverse} from '../../core/src/util/treeTraversal'
+
 import { globalTypes } from '../.storybook/preview';
 
 export default {
@@ -55,10 +57,10 @@ const Template = ({ label, ...args }) => {
       const { graph } = this.state.view;
       const hasChildren = graph.getOutgoingEdges(this.state.cell).length > 0;
 
-      if (isForeground) {
+      if (isForeground) {      
         if (hasChildren) {
           // Painting outside of vertex bounds is used here
-          path.moveTo(w / 2, h + this.segment);
+          path.moveTo(w / 2, h + TreeNodeShape.segment);
           path.lineTo(w / 2, h);
           path.end();
         }
@@ -136,18 +138,15 @@ const Template = ({ label, ...args }) => {
 
     foldCells(collapse, recurse, cells) {
       // Implements the click on a folding icon
-      this.model.beginUpdate();
-      try {
-        this.toggleSubtree(this, cells[0], !collapse);
+      graph.batchUpdate(()=>{
+        this.toggleSubtree(cells[0], !collapse);
         this.model.setCollapsed(cells[0], collapse);
 
         // Executes the layout for the new graph since
         // changes to visiblity and collapsed state do
         // not trigger a layout in the current manager.
         layout.execute(this.getDefaultParent());
-      } finally {
-        this.model.endUpdate();
-      }
+      }) 
     }
 
     toggleSubtree(cell, show) {
@@ -156,13 +155,13 @@ const Template = ({ label, ...args }) => {
       show = show != null ? show : true;
       const cells = [];
 
-      this.traverse(cell, true, function (vertex) {
+    traverse(cell, true, function (vertex) {
         if (vertex !== cell) {
           cells.push(vertex);
         }
 
         // Stops recursion if a collapsed cell is seen
-        return vertex === cell || !this.isCellCollapsed(vertex);
+        return vertex === cell || !vertex.isCollapsed();
       });
 
       this.toggleCells(show, cells, true);
@@ -185,7 +184,7 @@ const Template = ({ label, ...args }) => {
   style.shadow = true;
 
   style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = EdgeStyle.TopToBottom;
+  style.edgeStyle = EdgeStyle.TopToBottom;
   style.rounded = true;
 
   // Enables automatic sizing for vertices after editing and

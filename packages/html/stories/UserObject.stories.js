@@ -170,7 +170,7 @@ const Template = ({ label, ...args }) => {
   style = graph.getStylesheet().getDefaultEdgeStyle();
   style.strokeColor = '#0C0C0C';
   style.labelBackgroundColor = 'white';
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
   style.rounded = true;
   style.fontColor = 'black';
   style.fontSize = '10';

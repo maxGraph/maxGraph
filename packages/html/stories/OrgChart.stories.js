@@ -13,6 +13,7 @@ import {
   ImageBox,
   utils,
   MaxToolbar,
+  MaxWindow
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -30,21 +31,23 @@ export default {
 
 const Template = ({ label, ...args }) => {
   const div = document.createElement('div');
-
+  const outlineCont = document.createElement('div');
+  outlineCont.style="z-index:1;position:absolute;overflow:hidden;top:0px;right:0px;width:160px;height:120px;background:transparent;border-style:solid;border-color:lightgray;"
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'hidden';
   container.style.width = `${args.width}px`;
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
   div.appendChild(container);
+  div.appendChild(outlineCont);
+  Client.imageBasePath = '/images'
 
   // Should we allow overriding constants?
   // Makes the shadow brighter
   //constants.SHADOWCOLOR = '#C0C0C0';
 
-  const outline = document.getElementById('outlineContainer');
+ 
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
@@ -75,10 +78,9 @@ const Template = ({ label, ...args }) => {
   // do not select the cell when the popup menu
   // is displayed
   panningHandler.popupMenuHandler = false;
-
   // Creates the outline (navigator, overview) for moving
   // around the graph in the top, right corner of the window.
-  const outln = new Outline(graph, outline);
+  const outln = new Outline(graph, outlineCont);
 
   // Disables tooltips on touch devices
   graph.setTooltips(!Client.IS_TOUCH);
@@ -86,6 +88,7 @@ const Template = ({ label, ...args }) => {
   // Set some stylesheet options for the visual appearance of vertices
   let style = graph.getStylesheet().getDefaultVertexStyle();
   style.shape = 'label';
+  style.editable=true
 
   style.verticalAlign = constants.ALIGN.MIDDLE;
   style.align = constants.ALIGN.LEFT;
@@ -97,7 +100,7 @@ const Template = ({ label, ...args }) => {
 
   style.fontColor = '#1d258f';
   style.fontFamily = 'Verdana';
-  style.fontSize = '12';
+  style.fontSize = 12;
   style.fontStyle = '1';
 
   style.shadow = '1';
@@ -105,8 +108,8 @@ const Template = ({ label, ...args }) => {
   style.glass = '1';
 
   style.image = '/images/dude3.png';
-  style.imageWidth = '48';
-  style.imageHeight = '48';
+  style.imageWidth = 48;
+  style.imageHeight = 48;
   style.spacing = 8;
 
   // Sets the default style for edges
@@ -121,7 +124,7 @@ const Template = ({ label, ...args }) => {
   style.entryPerimeter = 0; // disabled
 
   // Disable the following for straight lines
-  style.edge = EdgeStyle.TopToBottom;
+  style.edgeStyle = EdgeStyle.TopToBottom;
 
   // Stops editing on enter or escape keypress
   const keyHandler = new KeyHandler(graph);
@@ -202,7 +205,7 @@ const Template = ({ label, ...args }) => {
       parent,
       'treeRoot',
       'Organization',
-      w / 2 - 30,
+      w,
       20,
       140,
       60,
@@ -214,7 +217,7 @@ const Template = ({ label, ...args }) => {
 
   const content = document.createElement('div');
   content.style.padding = '4px';
-  div.appendChild(content);
+  
   const tb = new MaxToolbar(content);
 
   tb.addItem('Zoom In', 'images/zoom_in32.png', function (evt) {
@@ -243,10 +246,14 @@ const Template = ({ label, ...args }) => {
       preview.open();
     }
   });
+   const wnd = new MaxWindow('Tools', content, 0, 0, 200, 66, false);
+				wnd.setMaximizable(false);
+				wnd.setScrollable(false);
+				wnd.setResizable(false);
+				wnd.setVisible(true);
 
   // Function to create the entries in the popupmenu
   function createPopupMenu(graph, menu, cell, evt) {
-    const model = graph.getDataModel();
 
     if (cell != null) {
       if (cell.isVertex()) {
@@ -355,9 +362,10 @@ const Template = ({ label, ...args }) => {
   }
 
   function deleteSubtree(graph, cell) {
+    
     // Gets the subtree from cell downwards
     const cells = [];
-    graph.traverse(cell, true, function (vertex) {
+    layout.traverse(cell, true, function (vertex) {
       cells.push(vertex);
 
       return true;
