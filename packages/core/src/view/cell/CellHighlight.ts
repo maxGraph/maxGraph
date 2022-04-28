@@ -9,7 +9,7 @@ import {
   DIALECT,
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_STROKEWIDTH,
-} from '../../util/constants';
+} from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
 import CellState from './CellState';

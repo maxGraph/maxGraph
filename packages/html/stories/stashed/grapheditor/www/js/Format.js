@@ -1958,7 +1958,7 @@ ArrangePanel.prototype.addFlip = function(div)
 	btn.style.marginRight = '2px';
 	div.appendChild(btn);
 	
-	let btn = button(Translations.get('vertical'), function(evt)
+	btn = button(Translations.get('vertical'), function(evt)
 	{
 		graph.toggleCellStyles('flipV', false);
 	})
@@ -1993,7 +1993,7 @@ ArrangePanel.prototype.addDistribute = function(div)
 	btn.style.marginRight = '2px';
 	div.appendChild(btn);
 	
-	let btn = button(Translations.get('vertical'), function(evt)
+	btn = button(Translations.get('vertical'), function(evt)
 	{
 		graph.distributeCells(false);
 	})

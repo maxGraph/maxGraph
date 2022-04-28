@@ -15,7 +15,7 @@ import {
   isMultiTouchEvent,
   isPopupTrigger,
   isShiftDown,
-} from '../../util/eventUtils';
+} from '../../util/EventUtils';
 import PanningManager from '../other/PanningManager';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 

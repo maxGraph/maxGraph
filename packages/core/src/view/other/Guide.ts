@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { DIALECT, GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/constants';
+import { DIALECT, GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/Constants';
 import Point from '../geometry/Point';
 import PolylineShape from '../geometry/edge/PolylineShape';
 import CellState from '../cell/CellState';

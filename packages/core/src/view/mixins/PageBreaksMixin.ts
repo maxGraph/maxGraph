@@ -2,7 +2,7 @@ import Rectangle from '../geometry/Rectangle';
 import Point from '../geometry/Point';
 import PolylineShape from '../geometry/edge/PolylineShape';
 import { Graph } from '../Graph';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 
 declare module '../Graph' {
   interface Graph {

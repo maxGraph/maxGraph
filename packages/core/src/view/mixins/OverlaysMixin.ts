@@ -5,7 +5,7 @@ import InternalEvent from '../event/InternalEvent';
 import Image from '../image/ImageBox';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import { Graph } from '../Graph';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 
 declare module '../Graph' {
   interface Graph {

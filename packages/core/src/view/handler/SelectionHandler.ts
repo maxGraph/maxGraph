@@ -24,11 +24,11 @@ import {
   INVALID_CONNECT_TARGET_COLOR,
   NONE,
   VALID_COLOR,
-} from '../../util/constants';
+} from '../../util/Constants';
 import Dictionary from '../../util/Dictionary';
 import CellHighlight from '../cell/CellHighlight';
 import Rectangle from '../geometry/Rectangle';
-import { getClientX, getClientY, isAltDown, isMultiTouchEvent } from '../../util/eventUtils';
+import { getClientX, getClientY, isAltDown, isMultiTouchEvent } from '../../util/EventUtils';
 import { Graph } from '../Graph';
 import Guide from '../other/Guide';
 import Shape from '../geometry/Shape';

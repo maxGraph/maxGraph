@@ -3,6 +3,8 @@ javascript/dist
 .jshintrc
 javascript/examples/**/dist
 .idea/
+.vscode/
+*.iml
 dist
 package-lock.json
 

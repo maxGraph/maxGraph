@@ -15,7 +15,7 @@ import Point from '../geometry/Point';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import Client from '../../Client';
 import Rectangle from '../geometry/Rectangle';
-import { isAltDown, isMultiTouchEvent } from '../../util/eventUtils';
+import { isAltDown, isMultiTouchEvent } from '../../util/EventUtils';
 import { clearSelection } from '../../util/domUtils';
 import { Graph } from '../Graph';
 import { GraphPlugin } from '../../types';

@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { getFunctionName } from './stringUtils';
+import { getFunctionName } from './StringUtils';
 
 const FIELD_NAME = 'mxObjectId';
 

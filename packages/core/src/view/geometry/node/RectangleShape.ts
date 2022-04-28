@@ -9,7 +9,7 @@ import {
   LINE_ARCSIZE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
-} from '../../../util/constants';
+} from '../../../util/Constants';
 import Shape from '../Shape';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Rectangle from '../Rectangle';

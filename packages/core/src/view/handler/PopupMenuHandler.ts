@@ -7,7 +7,7 @@
 import MaxPopupMenu from '../../gui/MaxPopupMenu';
 import InternalEvent from '../event/InternalEvent';
 import { getScrollOrigin } from '../../util/styleUtils';
-import { getMainEvent, isMultiTouchEvent } from '../../util/eventUtils';
+import { getMainEvent, isMultiTouchEvent } from '../../util/EventUtils';
 import { Graph } from '../Graph';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import { GraphPlugin } from '../../types';

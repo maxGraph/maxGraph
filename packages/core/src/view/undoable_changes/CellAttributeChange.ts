@@ -1,4 +1,4 @@
-import { isNullish } from '../../util/utils';
+import { isNullish } from '../../util/Utils';
 import Cell from '../cell/Cell';
 import CodecRegistry from '../../serialization/CodecRegistry';
 import GenericChangeCodec from './GenericChangeCodec';

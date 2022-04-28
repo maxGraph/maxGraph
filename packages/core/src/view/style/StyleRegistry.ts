@@ -8,7 +8,7 @@
 import {
   EDGESTYLE,
   PERIMETER,
-} from '../../util/constants';
+} from '../../util/Constants';
 import EdgeStyle from './EdgeStyle';
 import Perimeter from './Perimeter';
 

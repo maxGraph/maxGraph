@@ -15,7 +15,7 @@ import {
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import Guide from './Guide';
-import { DROP_TARGET_COLOR } from '../../util/constants';
+import { DROP_TARGET_COLOR } from '../../util/Constants';
 import Point from '../geometry/Point';
 import {
   getClientX,
@@ -25,7 +25,7 @@ import {
   isMouseEvent,
   isPenEvent,
   isTouchEvent,
-} from '../../util/eventUtils';
+} from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';
 import { Graph } from '../Graph';

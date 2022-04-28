@@ -1,4 +1,4 @@
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
 import { Graph } from '../Graph';

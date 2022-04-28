@@ -20,7 +20,7 @@ import MaxForm from '../gui/MaxForm';
 import Outline from '../view/other/Outline';
 import Cell from '../view/cell/Cell';
 import Geometry from '../view/geometry/Geometry';
-import { ALIGN, FONT } from '../util/constants';
+import { ALIGN, FONT } from '../util/Constants';
 import { Graph } from '../view/Graph';
 import SwimlaneManager from '../view/layout/SwimlaneManager';
 import LayoutManager from '../view/layout/LayoutManager';

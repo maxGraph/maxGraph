@@ -29,14 +29,14 @@ import {
   DIALECT,
   NONE,
   SHAPE,
-} from '../../util/constants';
+} from '../../util/Constants';
 import {
   getRotatedPoint,
   mod,
   toRadians,
 } from '../../util/mathUtils';
 import { convertPoint } from '../../util/styleUtils';
-import { 
+import {
   equalEntries,
   equalPoints,
 } from '../../util/arrayUtils';
@@ -52,7 +52,7 @@ import Shape from '../geometry/Shape';
 import CellState from './CellState';
 import Cell from './Cell';
 import CellOverlay from './CellOverlay';
-import { getClientX, getClientY, getSource } from '../../util/eventUtils';
+import { getClientX, getClientY, getSource } from '../../util/EventUtils';
 import { isNode } from '../../util/domUtils';
 import { CellStateStyles } from '../../types';
 import CellArray from './CellArray';

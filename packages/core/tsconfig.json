@@ -20,7 +20,7 @@
     "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules", "e2e", "**/*.json", "**/*.spec.ts"],
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["src/**/*.ts", "./*.ts"],
   "typedocOptions": {
     "out": "../../docs/api",
     "readme": "none",

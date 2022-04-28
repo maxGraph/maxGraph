@@ -18,9 +18,10 @@
   "main": "./javascript/dist/build.js",
   "scripts": {
     "dev": "node ./scripts/dev",
-    "bootstrap": "lerna bootstrap",
-    "postinstall": "lerna bootstrap",
-    "docs": "jsdoc -c jsdoc.json"
+    "bootstrap": "lerna bootstrap --no-ci",
+    "postinstall": "lerna bootstrap --no-ci",
+    "docs": "jsdoc -c jsdoc.json",
+    "generate-types": "lerna run generate-types"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -31,7 +32,6 @@
     "@lerna/filter-options": "^4.0.0",
     "babel-loader": "^8.2.3",
     "better-docs": "^2.3.2",
-    "cross-env": "^7.0.3",
     "css-loader": "^6.5.1",
     "file-loader": "^6.2.0",
     "jsdoc": "^3.6.7",

@@ -19,7 +19,7 @@ import {
   TEXT_DIRECTION,
   WORD_WRAP,
   LINE_HEIGHT,
-} from '../../../util/constants';
+} from '../../../util/Constants';
 import { getBoundingBox } from '../../../util/mathUtils';
 import { getAlignmentAsPoint } from '../../../util/styleUtils';
 import Point from '../Point';
@@ -31,7 +31,7 @@ import {
   htmlEntities,
   replaceTrailingNewlines,
   trim,
-} from '../../../util/stringUtils';
+} from '../../../util/StringUtils';
 import { isNode } from '../../../util/domUtils';
 import {
   AlignValue,

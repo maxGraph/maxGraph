@@ -12,7 +12,7 @@ import {
   LINE_ARCSIZE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
-} from '../../../util/constants';
+} from '../../../util/Constants';
 import { ColorValue } from '../../../types';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 

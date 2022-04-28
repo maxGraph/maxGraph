@@ -8,14 +8,14 @@ import Rectangle from './Rectangle';
 import Shape from './Shape';
 import SvgCanvas2D from '../canvas/SvgCanvas2D';
 import { ColorValue } from '../../types';
-import { NONE } from '../../util/constants';
+import { NONE } from '../../util/Constants';
 
 /**
  * Extends {@link Shape} to implement an actor shape. If a custom shape with one
  * filled area is needed, then this shape's {@link redrawPath} method should be overridden.
  *
- * This shape is registered under {@link mxConstants.SHAPE_ACTOR} in {@link cellRenderer}.
- * 
+ * This shape is registered under {@link Constants.SHAPE_ACTOR} in {@link cellRenderer}.
+ *
  * ```javascript
  * function SampleShape() { }
  *

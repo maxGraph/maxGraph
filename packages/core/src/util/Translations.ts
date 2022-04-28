@@ -3,7 +3,7 @@
  * Copyright (c) 2006-2016, Gaudenz Alder
  */
 import Client from '../Client';
-import { NONE } from './constants';
+import { NONE } from './Constants';
 import MaxXmlRequest, { get, load } from './MaxXmlRequest';
 
 /**

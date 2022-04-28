@@ -4,16 +4,15 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
- import {
-   DIRECTION,
-   DIRECTION_MASK,
- } from './constants';
- import Point from '../view/geometry/Point';
- import Rectangle from '../view/geometry/Rectangle';
- import CellState from '../view/cell/CellState';
- 
- import type { CellStateStyles } from '../types'; 
-import { getValue, isNullish } from './utils';
+import {
+  DIRECTION,
+  DIRECTION_MASK,
+} from './Constants';
+import Point from '../view/geometry/Point';
+import Rectangle from '../view/geometry/Rectangle';
+import CellState from '../view/cell/CellState';
+import type { CellStateStyles } from '../types';
+import { getValue, isNullish } from './Utils';
 
 /**
  * Converts the given degree to radians.

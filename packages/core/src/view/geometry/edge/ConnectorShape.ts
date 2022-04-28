@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { DEFAULT_MARKERSIZE, NONE } from '../../../util/constants';
+import { DEFAULT_MARKERSIZE, NONE } from '../../../util/Constants';
 import PolylineShape from './PolylineShape';
 import MarkerShape from './MarkerShape';
 import Point from '../Point';

@@ -1,11 +1,11 @@
 import {
   NODETYPE,
   NONE,
-} from './constants';
+} from './Constants';
 import { getTextContent } from './domUtils';
 
 import type { Properties } from '../types';
- 
+
 
 /**
  * Strips all whitespaces from the beginning of the string. Without the

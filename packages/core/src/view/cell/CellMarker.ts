@@ -12,7 +12,7 @@ import {
   MAX_HOTSPOT_SIZE,
   MIN_HOTSPOT_SIZE,
   NONE,
-} from '../../util/constants';
+} from '../../util/Constants';
 import CellHighlight from './CellHighlight';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';

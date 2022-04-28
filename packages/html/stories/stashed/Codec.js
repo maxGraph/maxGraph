@@ -1,5 +1,7 @@
 /**
  * Copyright (c) 2006-2013, JGraph Ltd
+ * 
+ * Codec
  */
 
 import React from 'react';
@@ -10,278 +12,266 @@ import mxUtils from '../mxgraph/util/mxUtils';
 import mxConstants from '../mxgraph/util/mxConstants';
 import mxEdgeStyle from '../mxgraph/view/mxEdgeStyle';
 
-class Codec extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  render = () => {
-    // Contains a graph description which will be converted
-    return (
-      <>
-        <h1>Codec</h1>
-        This example demonstrates dynamically creating a graph from XML and
-        encoding the model into XML, as well as changing the default style for
-        edges in-place. This graph is embedded in the page.
-        <div className="mxgraph" style="position:relative;overflow:auto;">
-          &lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell
-          id="1" parent="0"/&gt;&lt;mxCell id="2" vertex="1" parent="1"
-          value="Interval 1"&gt;&lt;mxGeometry x="380" y="0" width="140"
-          height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="3"
-          vertex="1" parent="1" value="Interval 2"&gt;&lt;mxGeometry x="200"
-          y="80" width="380" height="30"
-          as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="4" vertex="1"
-          parent="1" value="Interval 3"&gt;&lt;mxGeometry x="40" y="140"
-          width="260" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="5" vertex="1" parent="1" value="Interval 4"&gt;&lt;mxGeometry
-          x="120" y="200" width="240" height="30"
-          as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="6" vertex="1"
-          parent="1" value="Interval 5"&gt;&lt;mxGeometry x="420" y="260"
-          width="80" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="7" edge="1" source="2" target="3" parent="1"
-          value="Transfer1"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="420"
-          y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="8" edge="1" source="2" target="6" parent="1"
-          value=""&gt;&lt;mxGeometry as="geometry" relative="1"
-          y="-30"&gt;&lt;Array as="points"&gt;&lt;Object x="600"
-          y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="9" edge="1" source="3" target="4" parent="1"
-          value="Transfer3"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="260"
-          y="120"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="10" edge="1" source="4" target="5" parent="1"
-          value="Transfer4"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="200"
-          y="180"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="11" edge="1" source="4" target="6" parent="1"
-          value="Transfer5"&gt;&lt;mxGeometry as="geometry" relative="1"
-          y="-10"&gt;&lt;Array as="points"&gt;&lt;Object x="460"
-          y="155"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;
-        </div>
-        This graph is embedded in the page.
-        <div
-          className="mxgraph"
-          style="position:relative;background:#eeeeee;border:1px solid gray;overflow:auto;width:400px;height:200px;"
-        >
-          &lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell
-          id="1" parent="0"/&gt;&lt;mxCell id="2" vertex="1" parent="1"
-          value="Interval 1"&gt;&lt;mxGeometry x="380" y="0" width="140"
-          height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="3"
-          vertex="1" parent="1" value="Interval 2"&gt;&lt;mxGeometry x="200"
-          y="80" width="380" height="30"
-          as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="4" vertex="1"
-          parent="1" value="Interval 3"&gt;&lt;mxGeometry x="40" y="140"
-          width="260" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="5" vertex="1" parent="1" value="Interval 4"&gt;&lt;mxGeometry
-          x="120" y="200" width="240" height="30"
-          as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="6" vertex="1"
-          parent="1" value="Interval 5"&gt;&lt;mxGeometry x="420" y="260"
-          width="80" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="7" edge="1" source="2" target="3" parent="1"
-          value="Transfer1"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="420"
-          y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="8" edge="1" source="2" target="6" parent="1"
-          value=""&gt;&lt;mxGeometry as="geometry" relative="1"
-          y="-30"&gt;&lt;Array as="points"&gt;&lt;Object x="600"
-          y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="9" edge="1" source="3" target="4" parent="1"
-          value="Transfer3"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="260"
-          y="120"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="10" edge="1" source="4" target="5" parent="1"
-          value="Transfer4"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="200"
-          y="180"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="11" edge="1" source="4" target="6" parent="1"
-          value="Transfer5"&gt;&lt;mxGeometry as="geometry" relative="1"
-          y="-10"&gt;&lt;Array as="points"&gt;&lt;Object x="460"
-          y="155"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;
-        </div>
-        This graph is embedded in the page.
-        <div
-          className="mxgraph"
-          style="position:relative;background:#eeeeee;border:6px solid gray;overflow:auto;width:400px;height:200px;"
-        >
-          &lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell
-          id="1" parent="0"/&gt;&lt;mxCell id="2" vertex="1" parent="1"
-          value="Interval 1"&gt;&lt;mxGeometry x="380" y="20" width="140"
-          height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="3"
-          vertex="1" parent="1" value="Interval 2"&gt;&lt;mxGeometry x="200"
-          y="80" width="380" height="30"
-          as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="4" vertex="1"
-          parent="1" value="Interval 3"&gt;&lt;mxGeometry x="40" y="140"
-          width="260" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="5" vertex="1" parent="1" value="Interval 4"&gt;&lt;mxGeometry
-          x="120" y="200" width="240" height="30"
-          as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="6" vertex="1"
-          parent="1" value="Interval 5"&gt;&lt;mxGeometry x="420" y="260"
-          width="80" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="7" edge="1" source="2" target="3" parent="1"
-          value="Transfer1"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="420"
-          y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="8" edge="1" source="2" target="6" parent="1"
-          value="Transfer2"&gt;&lt;mxGeometry as="geometry" relative="1"
-          y="0"&gt;&lt;Array as="points"&gt;&lt;Object x="600"
-          y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="9" edge="1" source="3" target="4" parent="1"
-          value="Transfer3"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="260"
-          y="120"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="10" edge="1" source="4" target="5" parent="1"
-          value="Transfer4"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="200"
-          y="180"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="11" edge="1" source="4" target="6" parent="1"
-          value="Transfer5"&gt;&lt;mxGeometry as="geometry" relative="1"
-          y="-10"&gt;&lt;Array as="points"&gt;&lt;Object x="460"
-          y="155"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;
-        </div>
-        This graph is embedded in the page.
-        <div
-          className="mxgraph"
-          style="position:relative;overflow:hidden;border:6px solid gray;"
-        >
-          &lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell
-          id="1" parent="0"/&gt;&lt;mxCell id="2" vertex="1" parent="1"
-          value="Interval 1"&gt;&lt;mxGeometry x="380" y="20" width="140"
-          height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="3"
-          vertex="1" parent="1" value="Interval 2"&gt;&lt;mxGeometry x="200"
-          y="80" width="380" height="30"
-          as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="4" vertex="1"
-          parent="1" value="Interval 3"&gt;&lt;mxGeometry x="40" y="140"
-          width="260" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="5" vertex="1" parent="1" value="Interval 4"&gt;&lt;mxGeometry
-          x="120" y="200" width="240" height="30"
-          as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="6" vertex="1"
-          parent="1" value="Interval 5"&gt;&lt;mxGeometry x="420" y="260"
-          width="80" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="7" edge="1" source="2" target="3" parent="1"
-          value="Transfer1"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="420"
-          y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="8" edge="1" source="2" target="6" parent="1"
-          value="Transfer2"&gt;&lt;mxGeometry as="geometry" relative="1"
-          y="0"&gt;&lt;Array as="points"&gt;&lt;Object x="600"
-          y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="9" edge="1" source="3" target="4" parent="1"
-          value="Transfer3"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="260"
-          y="120"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="10" edge="1" source="4" target="5" parent="1"
-          value="Transfer4"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
-          as="points"&gt;&lt;Object x="200"
-          y="180"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
-          id="11" edge="1" source="4" target="6" parent="1"
-          value="Transfer5"&gt;&lt;mxGeometry as="geometry" relative="1"
-          y="-10"&gt;&lt;Array as="points"&gt;&lt;Object x="460"
-          y="155"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;
-        </div>
-        This graph is embedded in the page.
-      </>
-    );
-  };
+// Contains a graph description which will be converted
+const HTML_TEMPLATE = `
+<h1>Codec</h1>
 
-  componentDidMount = () => {
-    const divs = document.getElementsByTagName('*');
+This example demonstrates dynamically creating a graph from XML and
+encoding the model into XML, as well as changing the default style for
+edges in-place. This graph is embedded in the page.
+<div className="mxgraph" style="position:relative;overflow:auto;">
+  &lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell
+  id="1" parent="0"/&gt;&lt;mxCell id="2" vertex="1" parent="1"
+  value="Interval 1"&gt;&lt;mxGeometry x="380" y="0" width="140"
+  height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="3"
+  vertex="1" parent="1" value="Interval 2"&gt;&lt;mxGeometry x="200"
+  y="80" width="380" height="30"
+  as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="4" vertex="1"
+  parent="1" value="Interval 3"&gt;&lt;mxGeometry x="40" y="140"
+  width="260" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="5" vertex="1" parent="1" value="Interval 4"&gt;&lt;mxGeometry
+  x="120" y="200" width="240" height="30"
+  as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="6" vertex="1"
+  parent="1" value="Interval 5"&gt;&lt;mxGeometry x="420" y="260"
+  width="80" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="7" edge="1" source="2" target="3" parent="1"
+  value="Transfer1"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="420"
+  y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="8" edge="1" source="2" target="6" parent="1"
+  value=""&gt;&lt;mxGeometry as="geometry" relative="1"
+  y="-30"&gt;&lt;Array as="points"&gt;&lt;Object x="600"
+  y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="9" edge="1" source="3" target="4" parent="1"
+  value="Transfer3"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="260"
+  y="120"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="10" edge="1" source="4" target="5" parent="1"
+  value="Transfer4"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="200"
+  y="180"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="11" edge="1" source="4" target="6" parent="1"
+  value="Transfer5"&gt;&lt;mxGeometry as="geometry" relative="1"
+  y="-10"&gt;&lt;Array as="points"&gt;&lt;Object x="460"
+  y="155"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;
+</div>
+This graph is embedded in the page.
+<div
+  className="mxgraph"
+  style="position:relative;background:#eeeeee;border:1px solid gray;overflow:auto;width:400px;height:200px;"
+>
+  &lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell
+  id="1" parent="0"/&gt;&lt;mxCell id="2" vertex="1" parent="1"
+  value="Interval 1"&gt;&lt;mxGeometry x="380" y="0" width="140"
+  height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="3"
+  vertex="1" parent="1" value="Interval 2"&gt;&lt;mxGeometry x="200"
+  y="80" width="380" height="30"
+  as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="4" vertex="1"
+  parent="1" value="Interval 3"&gt;&lt;mxGeometry x="40" y="140"
+  width="260" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="5" vertex="1" parent="1" value="Interval 4"&gt;&lt;mxGeometry
+  x="120" y="200" width="240" height="30"
+  as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="6" vertex="1"
+  parent="1" value="Interval 5"&gt;&lt;mxGeometry x="420" y="260"
+  width="80" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="7" edge="1" source="2" target="3" parent="1"
+  value="Transfer1"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="420"
+  y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="8" edge="1" source="2" target="6" parent="1"
+  value=""&gt;&lt;mxGeometry as="geometry" relative="1"
+  y="-30"&gt;&lt;Array as="points"&gt;&lt;Object x="600"
+  y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="9" edge="1" source="3" target="4" parent="1"
+  value="Transfer3"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="260"
+  y="120"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="10" edge="1" source="4" target="5" parent="1"
+  value="Transfer4"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="200"
+  y="180"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="11" edge="1" source="4" target="6" parent="1"
+  value="Transfer5"&gt;&lt;mxGeometry as="geometry" relative="1"
+  y="-10"&gt;&lt;Array as="points"&gt;&lt;Object x="460"
+  y="155"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;
+</div>
+This graph is embedded in the page.
+<div
+  className="mxgraph"
+  style="position:relative;background:#eeeeee;border:6px solid gray;overflow:auto;width:400px;height:200px;"
+>
+  &lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell
+  id="1" parent="0"/&gt;&lt;mxCell id="2" vertex="1" parent="1"
+  value="Interval 1"&gt;&lt;mxGeometry x="380" y="20" width="140"
+  height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="3"
+  vertex="1" parent="1" value="Interval 2"&gt;&lt;mxGeometry x="200"
+  y="80" width="380" height="30"
+  as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="4" vertex="1"
+  parent="1" value="Interval 3"&gt;&lt;mxGeometry x="40" y="140"
+  width="260" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="5" vertex="1" parent="1" value="Interval 4"&gt;&lt;mxGeometry
+  x="120" y="200" width="240" height="30"
+  as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="6" vertex="1"
+  parent="1" value="Interval 5"&gt;&lt;mxGeometry x="420" y="260"
+  width="80" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="7" edge="1" source="2" target="3" parent="1"
+  value="Transfer1"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="420"
+  y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="8" edge="1" source="2" target="6" parent="1"
+  value="Transfer2"&gt;&lt;mxGeometry as="geometry" relative="1"
+  y="0"&gt;&lt;Array as="points"&gt;&lt;Object x="600"
+  y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="9" edge="1" source="3" target="4" parent="1"
+  value="Transfer3"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="260"
+  y="120"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="10" edge="1" source="4" target="5" parent="1"
+  value="Transfer4"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="200"
+  y="180"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="11" edge="1" source="4" target="6" parent="1"
+  value="Transfer5"&gt;&lt;mxGeometry as="geometry" relative="1"
+  y="-10"&gt;&lt;Array as="points"&gt;&lt;Object x="460"
+  y="155"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;
+</div>
+This graph is embedded in the page.
+<div
+  className="mxgraph"
+  style="position:relative;overflow:hidden;border:6px solid gray;"
+>
+  &lt;mxGraphModel&gt;&lt;root&gt;&lt;mxCell id="0"/&gt;&lt;mxCell
+  id="1" parent="0"/&gt;&lt;mxCell id="2" vertex="1" parent="1"
+  value="Interval 1"&gt;&lt;mxGeometry x="380" y="20" width="140"
+  height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="3"
+  vertex="1" parent="1" value="Interval 2"&gt;&lt;mxGeometry x="200"
+  y="80" width="380" height="30"
+  as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="4" vertex="1"
+  parent="1" value="Interval 3"&gt;&lt;mxGeometry x="40" y="140"
+  width="260" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="5" vertex="1" parent="1" value="Interval 4"&gt;&lt;mxGeometry
+  x="120" y="200" width="240" height="30"
+  as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell id="6" vertex="1"
+  parent="1" value="Interval 5"&gt;&lt;mxGeometry x="420" y="260"
+  width="80" height="30" as="geometry"/&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="7" edge="1" source="2" target="3" parent="1"
+  value="Transfer1"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="420"
+  y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="8" edge="1" source="2" target="6" parent="1"
+  value="Transfer2"&gt;&lt;mxGeometry as="geometry" relative="1"
+  y="0"&gt;&lt;Array as="points"&gt;&lt;Object x="600"
+  y="60"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="9" edge="1" source="3" target="4" parent="1"
+  value="Transfer3"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="260"
+  y="120"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="10" edge="1" source="4" target="5" parent="1"
+  value="Transfer4"&gt;&lt;mxGeometry as="geometry"&gt;&lt;Array
+  as="points"&gt;&lt;Object x="200"
+  y="180"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell
+  id="11" edge="1" source="4" target="6" parent="1"
+  value="Transfer5"&gt;&lt;mxGeometry as="geometry" relative="1"
+  y="-10"&gt;&lt;Array as="points"&gt;&lt;Object x="460"
+  y="155"/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;
+</div>
+This graph is embedded in the page.`
 
-    for (let i = 0; i < divs.length; i += 1) {
-      if (divs[i].className.toString().indexOf('mxgraph') >= 0) {
-        (function(container) {
-          const xml = mxUtils.getTextContent(container);
-          const xmlDocument = mxUtils.parseXml(xml);
 
-          if (
-            xmlDocument.documentElement != null &&
-            xmlDocument.documentElement.nodeName === 'mxGraphModel'
-          ) {
-            const decoder = new Codec(xmlDocument);
-            const node = xmlDocument.documentElement;
+const divs = document.getElementsByTagName('*');
 
-            container.innerHTML = '';
+for (let i = 0; i < divs.length; i += 1) {
+  if (divs[i].className.toString().indexOf('mxgraph') >= 0) {
+    (function(container) {
+      const xml = mxUtils.getTextContent(container);
+      const xmlDocument = mxUtils.parseXml(xml);
 
-            const graph = new mxGraph(container);
-            graph.centerZoom = false;
-            graph.setTooltips(false);
-            graph.setEnabled(false);
+      if (
+        xmlDocument.documentElement != null &&
+        xmlDocument.documentElement.nodeName === 'mxGraphModel'
+      ) {
+        const decoder = new Codec(xmlDocument);
+        const node = xmlDocument.documentElement;
 
-            // Changes the default style for edges "in-place"
-            const style = graph.getStylesheet().getDefaultEdgeStyle();
-            style.edgeStyle = mxEdgeStyle.ElbowConnector;
+        container.innerHTML = '';
 
-            // Enables panning with left mouse button
-            graph.getPlugin('PanningHandler').useLeftButtonForPanning = true;
-            graph.getPlugin('PanningHandler').ignoreCell = true;
-            graph.container.style.cursor = 'move';
-            graph.setPanning(true);
+        const graph = new mxGraph(container);
+        graph.centerZoom = false;
+        graph.setTooltips(false);
+        graph.setEnabled(false);
 
-            if (divs[i].style.width === '' && divs[i].style.height === '') {
-              graph.resizeContainer = true;
-            } else {
-              // Adds border for fixed size boxes
-              graph.border = 20;
-            }
+        // Changes the default style for edges "in-place"
+        const style = graph.getStylesheet().getDefaultEdgeStyle();
+        style.edge = mxEdgeStyle.ElbowConnector;
 
-            decoder.decode(node, graph.getDataModel());
-            graph.resizeContainer = false;
+        // Enables panning with left mouse button
+        graph.getPlugin('PanningHandler').useLeftButtonForPanning = true;
+        graph.getPlugin('PanningHandler').ignoreCell = true;
+        graph.container.style.cursor = 'move';
+        graph.setPanning(true);
 
-            // Adds zoom buttons in top, left corner
-            const buttons = document.createElement('div');
-            buttons.style.position = 'absolute';
-            buttons.style.overflow = 'visible';
+        if (divs[i].style.width === '' && divs[i].style.height === '') {
+          graph.resizeContainer = true;
+        } else {
+          // Adds border for fixed size boxes
+          graph.border = 20;
+        }
 
-            const bs = graph.getBorderSizes();
-            buttons.style.top = `${container.offsetTop + bs.y}px`;
-            buttons.style.left = `${container.offsetLeft + bs.x}px`;
+        decoder.decode(node, graph.getDataModel());
+        graph.resizeContainer = false;
 
-            let left = 0;
-            const bw = 16;
-            const bh = 16;
+        // Adds zoom buttons in top, left corner
+        const buttons = document.createElement('div');
+        buttons.style.position = 'absolute';
+        buttons.style.overflow = 'visible';
 
-            function addButton(label, funct) {
-              const btn = document.createElement('div');
-              mxUtils.write(btn, label);
-              btn.style.position = 'absolute';
-              btn.style.backgroundColor = 'transparent';
-              btn.style.border = '1px solid gray';
-              btn.style.textAlign = 'center';
-              btn.style.fontSize = '10px';
-              btn.style.cursor = 'hand';
-              btn.style.width = `${bw}px`;
-              btn.style.height = `${bh}px`;
-              btn.style.left = `${left}px`;
-              btn.style.top = '0px';
+        const bs = graph.getBorderSizes();
+        buttons.style.top = `${container.offsetTop + bs.y}px`;
+        buttons.style.left = `${container.offsetLeft + bs.x}px`;
 
-              mxEvent.addListener(btn, 'click', function(evt) {
-                funct();
-                mxEvent.consume(evt);
-              });
+        let left = 0;
+        const bw = 16;
+        const bh = 16;
 
-              left += bw;
+        function addButton(label, funct) {
+          const btn = document.createElement('div');
+          mxUtils.write(btn, label);
+          btn.style.position = 'absolute';
+          btn.style.backgroundColor = 'transparent';
+          btn.style.border = '1px solid gray';
+          btn.style.textAlign = 'center';
+          btn.style.fontSize = '10px';
+          btn.style.cursor = 'hand';
+          btn.style.width = `${bw}px`;
+          btn.style.height = `${bh}px`;
+          btn.style.left = `${left}px`;
+          btn.style.top = '0px';
 
-              buttons.appendChild(btn);
-            }
+          mxEvent.addListener(btn, 'click', function(evt) {
+            funct();
+            mxEvent.consume(evt);
+          });
 
-            addButton('+', function() {
-              graph.zoomIn();
-            });
+          left += bw;
 
-            addButton('-', function() {
-              graph.zoomOut();
-            });
+          buttons.appendChild(btn);
+        }
 
-            if (container.nextSibling != null) {
-              container.parentNode.insertBefore(buttons, container.nextSibling);
-            } else {
-              container.appendChild(buttons);
-            }
-          }
-        })(divs[i]);
+        addButton('+', function() {
+          graph.zoomIn();
+        });
+
+        addButton('-', function() {
+          graph.zoomOut();
+        });
+
+        if (container.nextSibling != null) {
+          container.parentNode.insertBefore(buttons, container.nextSibling);
+        } else {
+          container.appendChild(buttons);
+        }
       }
-    }
-  };
+    })(divs[i]);
+  }
 }
-
-export default Codec;

@@ -6,7 +6,7 @@
  */
 import InternalMouseEvent from './InternalMouseEvent';
 import Client from '../../Client';
-import { isConsumed, isMouseEvent } from '../../util/eventUtils';
+import { isConsumed, isMouseEvent } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import {
   EventCache,

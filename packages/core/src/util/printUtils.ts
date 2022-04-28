@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import Client from '../Client';
-import { PAGE_FORMAT_A4_PORTRAIT } from './constants';
+import { PAGE_FORMAT_A4_PORTRAIT } from './Constants';
 import Rectangle from '../view/geometry/Rectangle';
 import { getOuterHtml } from './domUtils';
 import { Graph } from '../view/Graph';

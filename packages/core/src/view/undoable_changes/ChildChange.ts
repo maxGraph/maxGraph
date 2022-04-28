@@ -2,7 +2,7 @@ import GraphDataModel from '../GraphDataModel';
 import Cell from '../cell/Cell';
 import ObjectCodec from '../../serialization/ObjectCodec';
 import CodecRegistry from '../../serialization/CodecRegistry';
-import { NODETYPE } from '../../util/constants';
+import { NODETYPE } from '../../util/Constants';
 
 import type { UndoableChange } from '../../types';
 import Codec from '../../serialization/Codec';
