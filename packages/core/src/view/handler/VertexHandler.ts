@@ -17,7 +17,7 @@ import {
   VERTEX_SELECTION_COLOR,
   VERTEX_SELECTION_DASHED,
   VERTEX_SELECTION_STROKEWIDTH,
-} from '../../util/constants';
+} from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ImageShape from '../geometry/node/ImageShape';
@@ -25,7 +25,7 @@ import EllipseShape from '../geometry/node/EllipseShape';
 import Point from '../geometry/Point';
 import { getRotatedPoint, intersects, mod, toRadians } from '../../util/mathUtils';
 import Client from '../../Client';
-import { isMouseEvent, isShiftDown } from '../../util/eventUtils';
+import { isMouseEvent, isShiftDown } from '../../util/EventUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Image from '../image/ImageBox';

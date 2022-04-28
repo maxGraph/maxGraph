@@ -6,9 +6,9 @@
  */
 import GraphLayout from './GraphLayout';
 import Rectangle from '../geometry/Rectangle';
-import { getValue } from '../../util/utils';
-import { getNumber } from '../../util/stringUtils';
-import { DEFAULT_STARTSIZE } from '../../util/constants';
+import { getValue } from '../../util/Utils';
+import { getNumber } from '../../util/StringUtils';
+import { DEFAULT_STARTSIZE } from '../../util/Constants';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 import Geometry from '../geometry/Geometry';

@@ -9,7 +9,7 @@ import {
   ALIGN,
   DEFAULT_IMAGESIZE,
   NONE,
-} from '../../../util/constants';
+} from '../../../util/Constants';
 import RectangleShape from './RectangleShape';
 import { ColorValue } from '../../../types';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';

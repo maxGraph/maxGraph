@@ -11,7 +11,7 @@ import {
   DEFAULT_FONTSIZE,
   FONT,
   LINE_HEIGHT,
-} from './constants';
+} from './Constants';
 import Point from '../view/geometry/Point';
 import Dictionary from './Dictionary';
 import CellPath from '../view/cell/CellPath';
@@ -30,18 +30,18 @@ import CellArray from '../view/cell/CellArray';
     if (element.style) {
       element.style.cursor = '';
     }
-  
+
     const children = element.children;
-  
+
     if (children) {
       const childCount = children.length;
-  
+
       for (let i = 0; i < childCount; i += 1) {
         removeCursors(children[i] as HTMLElement);
       }
     }
   };
-  
+
   /**
    * Function: getCurrentStyle
    *
@@ -52,7 +52,7 @@ import CellArray from '../view/cell/CellArray';
   export const getCurrentStyle = (element: HTMLElement) => {
     return element ? window.getComputedStyle(element, '') : null;
   };
-  
+
   /**
    * Function: parseCssNumber
    *
@@ -67,16 +67,16 @@ import CellArray from '../view/cell/CellArray';
     } else if (value === 'thick') {
       value = '6';
     }
-  
+
     let n = parseFloat(value);
-  
+
     if (Number.isNaN(n)) {
       n = 0;
     }
-  
+
     return n;
   };
-  
+
   /**
    * Function: setPrefixedStyle
    *
@@ -93,21 +93,21 @@ import CellArray from '../view/cell/CellArray';
     value: string
   ) => {
     let prefix = null;
-  
+
     if (Client.IS_SF || Client.IS_GC) {
       prefix = 'Webkit';
     } else if (Client.IS_MT) {
       prefix = 'Moz';
     }
-  
+
     style.setProperty(name, value);
-  
+
     if (prefix !== null && name.length > 0) {
       name = prefix + name.substring(0, 1).toUpperCase() + name.substring(1);
       style.setProperty(name, value);
     }
   };
-  
+
   /**
    * Function: hasScrollbars
    *
@@ -118,7 +118,7 @@ import CellArray from '../view/cell/CellArray';
    */
   export const hasScrollbars = (node: HTMLElement) => {
     const style = getCurrentStyle(node);
-  
+
     return !!style && (style.overflow === 'scroll' || style.overflow === 'auto');
   };
 

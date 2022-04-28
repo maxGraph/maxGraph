@@ -5,8 +5,8 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { getValue } from '../../util/utils';
-import { getNumber } from '../../util/stringUtils';
+import { getValue } from '../../util/Utils';
+import { getNumber } from '../../util/StringUtils';
 import {
   contains,
   getBoundingBox,
@@ -22,7 +22,7 @@ import {
   ELBOW,
   ENTITY_SEGMENT,
   NONE,
-} from '../../util/constants';
+} from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import Geometry from '../geometry/Geometry';
 
@@ -113,7 +113,13 @@ class EdgeStyle {
    * @param result Array of <Point> that represent the actual points of the
    * edge.
    */
-  static EntityRelation(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
+  static EntityRelation(
+    state: CellState,
+    source: CellState,
+    target: CellState,
+    points: Point[],
+    result: Point[]
+  ) {
     const { view } = state;
     const { graph } = view;
     const segment = getValue(state.style, 'segment', ENTITY_SEGMENT) * view.scale;
@@ -218,7 +224,13 @@ class EdgeStyle {
   /**
    * Implements a self-reference, aka. loop.
    */
-  static Loop(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
+  static Loop(
+    state: CellState,
+    source: CellState,
+    target: CellState,
+    points: Point[],
+    result: Point[]
+  ) {
     const pts = state.absolutePoints;
 
     const p0 = pts[0];
@@ -295,7 +307,13 @@ class EdgeStyle {
    * unspecified. See <EntityRelation> for a description of the
    * parameters.
    */
-  static ElbowConnector(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
+  static ElbowConnector(
+    state: CellState,
+    source: CellState,
+    target: CellState,
+    points: Point[],
+    result: Point[]
+  ) {
     let pt = points != null && points.length > 0 ? points[0] : null;
 
     let vertical = false;
@@ -312,7 +330,6 @@ class EdgeStyle {
         pt = <Point>state.view.transformControlPoint(state, pt);
         vertical = pt.y < top || pt.y > bottom;
         horizontal = pt.x < left || pt.x > right;
-
       } else {
         const left = Math.max(source.x, target.x);
         const right = Math.min(source.x + source.width, target.x + target.width);
@@ -338,7 +355,13 @@ class EdgeStyle {
    * Implements a vertical elbow edge. See <EntityRelation> for a description
    * of the parameters.
    */
-  static SideToSide(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
+  static SideToSide(
+    state: CellState,
+    source: CellState,
+    target: CellState,
+    points: Point[],
+    result: Point[]
+  ) {
     const { view } = state;
     let pt = points != null && points.length > 0 ? points[0] : null;
     const pts = state.absolutePoints;
@@ -407,7 +430,13 @@ class EdgeStyle {
    * Implements a horizontal elbow edge. See <EntityRelation> for a
    * description of the parameters.
    */
-  static TopToBottom(state: CellState, source: CellState, target: CellState, points: Point[], result: Point[]) {
+  static TopToBottom(
+    state: CellState,
+    source: CellState,
+    target: CellState,
+    points: Point[],
+    result: Point[]
+  ) {
     const { view } = state;
     let pt = points != null && points.length > 0 ? points[0] : null;
     const pts = state.absolutePoints;
@@ -482,11 +511,23 @@ class EdgeStyle {
    * @param result Array of <Point> that represent the actual points of the
    * edge.
    */
-  static SegmentConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
-    
+  static SegmentConnector(
+    state: CellState,
+    sourceScaled: CellState,
+    targetScaled: CellState,
+    controlHints: Point[],
+    result: Point[]
+  ) {
     // Creates array of all way- and terminalpoints
     // TODO: Figure out what to do when there are nulls in `pts`!
-    const pts = <Point[]><unknown>EdgeStyle.scalePointArray(<Point[]><unknown>state.absolutePoints, state.view.scale);
+    const pts = <Point[]>(
+      (<unknown>(
+        EdgeStyle.scalePointArray(
+          <Point[]>(<unknown>state.absolutePoints),
+          state.view.scale
+        )
+      ))
+    );
     const source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
     const target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
     const tol = 1;
@@ -952,10 +993,19 @@ class EdgeStyle {
    * @param result Array of <Point> that represent the actual points of the
    * edge.
    */
-  static OrthConnector(state: CellState, sourceScaled: CellState, targetScaled: CellState, controlHints: Point[], result: Point[]) {
-
+  static OrthConnector(
+    state: CellState,
+    sourceScaled: CellState,
+    targetScaled: CellState,
+    controlHints: Point[],
+    result: Point[]
+  ) {
     // TODO: Figure out what to do when there are nulls in `pts`!
-    const pts = <Point[]><unknown>EdgeStyle.scalePointArray(<Point[]>state.absolutePoints, state.view.scale);
+    const pts = <Point[]>(
+      (<unknown>(
+        EdgeStyle.scalePointArray(<Point[]>state.absolutePoints, state.view.scale)
+      ))
+    );
     let source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
     let target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
 
@@ -1022,9 +1072,11 @@ class EdgeStyle {
       // console.log('source rotation', rotation);
 
       if (rotation !== 0) {
-        const newRect = <Rectangle>getBoundingBox(
-          new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
-          rotation
+        const newRect = <Rectangle>(
+          getBoundingBox(
+            new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
+            rotation
+          )
         );
         sourceX = newRect.x;
         sourceY = newRect.y;
@@ -1040,9 +1092,11 @@ class EdgeStyle {
       // console.log('target rotation', rotation);
 
       if (rotation !== 0) {
-        const newRect = <Rectangle>getBoundingBox(
-          new Rectangle(targetX, targetY, targetWidth, targetHeight),
-          rotation
+        const newRect = <Rectangle>(
+          getBoundingBox(
+            new Rectangle(targetX, targetY, targetWidth, targetHeight),
+            rotation
+          )
         );
         targetX = newRect.x;
         targetY = newRect.y;
@@ -1462,7 +1516,12 @@ class EdgeStyle {
     }
   }
 
-  static getRoutePattern(dir: number[], quad: number, dx: number, dy: number): number[] | null {
+  static getRoutePattern(
+    dir: number[],
+    quad: number,
+    dx: number,
+    dy: number
+  ): number[] | null {
     let sourceIndex = dir[0] === DIRECTION_MASK.EAST ? 3 : dir[0];
     let targetIndex = dir[1] === DIRECTION_MASK.EAST ? 3 : dir[1];
 
@@ -1476,7 +1535,8 @@ class EdgeStyle {
       targetIndex += 4;
     }
 
-    let result: number[] | null = EdgeStyle.routePatterns[sourceIndex - 1][targetIndex - 1];
+    let result: number[] | null =
+      EdgeStyle.routePatterns[sourceIndex - 1][targetIndex - 1];
 
     if (dx === 0 || dy === 0) {
       if (EdgeStyle.inlineRoutePatterns[sourceIndex - 1][targetIndex - 1] != null) {

@@ -10,14 +10,14 @@ import {
   EDGESTYLE,
   ELBOW,
   HANDLE_SIZE,
-} from '../../util/constants';
+} from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import Translations from '../../util/Translations';
 import Rectangle from '../geometry/Rectangle';
 import { intersects } from '../../util/mathUtils';
 import Client from '../../Client';
-import { isConsumed } from '../../util/eventUtils';
+import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 
 /**
@@ -179,9 +179,9 @@ class ElbowEdgeHandler extends EdgeHandler {
     } else {
       pt = new Point(
         this.graph.getView().scale *
-          (pt.x + this.graph.getView().translate.x + this.state.origin.x),
+        (pt.x + this.graph.getView().translate.x + this.state.origin.x),
         this.graph.getView().scale *
-          (pt.y + this.graph.getView().translate.y + this.state.origin.y)
+        (pt.y + this.graph.getView().translate.y + this.state.origin.y)
       );
     }
 

@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { isNotNullish } from '../../util/utils';
+import { isNotNullish } from '../../util/Utils';
 import { mod } from '../../util/mathUtils';
 import { getAlignmentAsPoint } from '../../util/styleUtils';
 import Client from '../../Client';
@@ -22,12 +22,12 @@ import {
   NS_XLINK,
   SHADOWCOLOR,
   WORD_WRAP,
-} from '../../util/constants';
+} from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import AbstractCanvas2D from './AbstractCanvas2D';
 import { getXml } from '../../util/xmlUtils';
 import { isNode, write } from '../../util/domUtils';
-import { htmlEntities, trim } from '../../util/stringUtils';
+import { htmlEntities, trim } from '../../util/StringUtils';
 import {
   AlignValue,
   ColorValue,

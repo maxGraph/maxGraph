@@ -1,12 +1,12 @@
 import CellState from '../cell/CellState';
-import { htmlEntities } from '../../util/stringUtils';
+import { htmlEntities } from '../../util/StringUtils';
 import Translations from '../../util/Translations';
 import Shape from '../geometry/Shape';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
 import SelectionCellsHandler from '../handler/SelectionCellsHandler';
 import TooltipHandler from '../handler/TooltipHandler';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 
 declare module '../Graph' {
   interface Graph {

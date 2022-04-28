@@ -1,4 +1,4 @@
-import { NODETYPE } from './constants';
+import { NODETYPE } from './Constants';
 
 /**
  * Returns the text content of the specified node.
@@ -326,7 +326,7 @@ export const importNodeImplementation = (doc: Document, node: Element, allChildr
 export const clearSelection = () => {
   // @ts-ignore
   const sel = window.getSelection ? window.getSelection() : document.selection;
-  
+
   if (sel) {
     if (sel.removeAllRanges) {
       sel.removeAllRanges();

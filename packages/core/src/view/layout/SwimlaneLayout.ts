@@ -6,7 +6,7 @@
  */
 
 import GraphLayout from './GraphLayout';
-import { DIRECTION } from '../../util/constants';
+import { DIRECTION } from '../../util/Constants';
 import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
 import Dictionary from '../../util/Dictionary';
 import Rectangle from '../geometry/Rectangle';

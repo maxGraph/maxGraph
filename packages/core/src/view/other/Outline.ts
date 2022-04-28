@@ -12,7 +12,7 @@ import {
   OUTLINE_HANDLE_FILLCOLOR,
   OUTLINE_HANDLE_STROKECOLOR,
   OUTLINE_STROKEWIDTH,
-} from '../../util/constants';
+} from '../../util/Constants';
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
 import RectangleShape from '../geometry/node/RectangleShape';
@@ -21,7 +21,7 @@ import ImageShape from '../geometry/node/ImageShape';
 import InternalEvent from '../event/InternalEvent';
 import Image from '../image/ImageBox';
 import EventObject from '../event/EventObject';
-import { getSource, isMouseEvent } from '../../util/eventUtils';
+import { getSource, isMouseEvent } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 import { hasScrollbars } from '../../util/styleUtils';
 import { Listenable } from '../../types';

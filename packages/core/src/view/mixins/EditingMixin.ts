@@ -1,10 +1,10 @@
 import Cell from '../cell/Cell';
-import { isMultiTouchEvent } from '../../util/eventUtils';
+import { isMultiTouchEvent } from '../../util/EventUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import { Graph } from '../Graph';
-import { mixInto } from '../../util/utils';
+import { mixInto } from '../../util/Utils';
 import CellEditorHandler from '../handler/CellEditorHandler';
 
 declare module '../Graph' {

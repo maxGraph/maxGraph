@@ -220,7 +220,7 @@ export type GradientMap = {
 };
 
 export interface GraphPluginConstructor {
-  new (graph: Graph): GraphPlugin;
+  new(graph: Graph): GraphPlugin;
   pluginId: string;
 }
 

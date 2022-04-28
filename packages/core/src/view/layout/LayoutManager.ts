@@ -17,7 +17,7 @@ import StyleChange from '../undoable_changes/StyleChange';
 import EventObject from '../event/EventObject';
 import Cell from '../cell/Cell';
 import Rectangle from '../geometry/Rectangle';
-import { getClientX, getClientY } from '../../util/eventUtils';
+import { getClientX, getClientY } from '../../util/EventUtils';
 import CellArray from '../cell/CellArray';
 import { Graph } from '../Graph';
 import GraphLayout from './GraphLayout';

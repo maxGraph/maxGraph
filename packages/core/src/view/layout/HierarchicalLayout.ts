@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import GraphLayout from './GraphLayout';
-import { DIRECTION } from '../../util/constants';
+import { DIRECTION } from '../../util/Constants';
 import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
 import Dictionary from '../../util/Dictionary';
 import GraphHierarchyModel from './hierarchical/GraphHierarchyModel';
@@ -35,8 +35,8 @@ import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
  */
 class HierarchicalLayout extends GraphLayout {
   constructor(
-    graph: Graph, 
-    orientation: DIRECTION=DIRECTION.NORTH, 
+    graph: Graph,
+    orientation: DIRECTION=DIRECTION.NORTH,
     deterministic: boolean=true
   ) {
     super(graph);

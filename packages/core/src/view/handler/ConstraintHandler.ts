@@ -12,19 +12,21 @@ import {
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_SIZE,
   HIGHLIGHT_STROKEWIDTH,
-} from '../../util/constants';
+} from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import { intersects } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
-import { isShiftDown } from '../../util/eventUtils';
+import { isShiftDown } from '../../util/EventUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import Point from '../geometry/Point';
 import Cell from '../cell/Cell';
+
+import pointImg from '../../../images/point.gif';
 
 /**
  * Handles constraints on connection targets. This class is in charge of
@@ -38,7 +40,7 @@ class ConstraintHandler {
    * {@link Image} to be used as the image for fixed connection points.
    */
   // pointImage: mxImage;
-  pointImage = new Image(`${Client.imageBasePath}/point.gif`, 5, 5);
+  pointImage = new Image(pointImg, 5, 5);
 
   /**
    * Reference to the enclosing {@link mxGraph}.
@@ -81,8 +83,8 @@ class ConstraintHandler {
     // Adds a graph model listener to update the current focus on changes
     this.resetHandler = () => {
       if (
-        this.currentFocus != null &&
-        this.graph.view.getState(this.currentFocus.cell) == null
+        this.currentFocus  &&
+        !this.graph.view.getState(this.currentFocus.cell)
       ) {
         this.reset();
       } else {
@@ -211,15 +213,15 @@ class ConstraintHandler {
 
     // Gets cell under actual point if different from event location
     if (
-      cell == null &&
-      point != null &&
+      !cell  &&
+      point &&
       (me.getGraphX() !== point.x || me.getGraphY() !== point.y)
     ) {
       cell = this.graph.getCellAt(point.x, point.y);
     }
 
     // Uses connectable parent vertex if one exists
-    if (cell != null && !cell.isConnectable()) {
+    if (cell && !cell.isConnectable()) {
       const parent = cell.getParent();
 
       if (parent && parent.isVertex() && parent.isConnectable()) {
@@ -246,7 +248,7 @@ class ConstraintHandler {
   ) {
     if (this.isEnabled() && !this.isEventIgnored(me)) {
       // Lazy installation of mouseleave handler
-      if (this.mouseleaveHandler == null && this.graph.container != null) {
+      if (!this.mouseleaveHandler && this.graph.container ) {
         this.mouseleaveHandler = () => {
           this.reset();
         };
@@ -255,8 +257,8 @@ class ConstraintHandler {
       }
 
       const tol = this.getTolerance(me);
-      const x = point != null ? point.x : me.getGraphX();
-      const y = point != null ? point.y : me.getGraphY();
+      const x = point  ? point.x : me.getGraphX();
+      const y = point ? point.y : me.getGraphY();
       const grid = new Rectangle(x - tol, y - tol, 2 * tol, 2 * tol);
       const mouse = new Rectangle(
         me.getGraphX() - tol,
@@ -270,8 +272,8 @@ class ConstraintHandler {
       // Keeps focus icons visible while over vertex bounds and no other cell under mouse or shift is pressed
       if (
         !this.isKeepFocusEvent(me) &&
-        (this.currentFocusArea == null ||
-          this.currentFocus == null ||
+        (!this.currentFocusArea ||
+          !this.currentFocus  ||
           state ||
           !this.currentFocus.cell.isVertex() ||
           !intersects(this.currentFocusArea, mouse)) &&
@@ -289,9 +291,9 @@ class ConstraintHandler {
       let tmp;
 
       if (
-        this.focusIcons != null &&
-        this.constraints != null &&
-        (state == null || this.currentFocus === state)
+        this.focusIcons.length > 0 &&
+        this.constraints  &&
+        (!state  || this.currentFocus === state)
       ) {
         const cx = mouse.getCenterX();
         const cy = mouse.getCenterY();
@@ -303,9 +305,9 @@ class ConstraintHandler {
 
           if (
             (this.intersects(this.focusIcons[i], mouse, source, existingEdge) ||
-              (point != null &&
+              (point  &&
                 this.intersects(this.focusIcons[i], grid, source, existingEdge))) &&
-            (minDistSq == null || tmp < minDistSq)
+            (minDistSq === null || tmp < minDistSq)
           ) {
             this.currentConstraint = this.constraints[i];
             this.currentPoint = this.focusPoints[i];
@@ -316,7 +318,7 @@ class ConstraintHandler {
             tmp.width -= 1;
             tmp.height -= 1;
 
-            if (this.focusHighlight == null) {
+            if (!this.focusHighlight) {
               const hl = this.createHighlightShape();
               hl.dialect = DIALECT.SVG;
               hl.pointerEvents = false;
@@ -325,7 +327,7 @@ class ConstraintHandler {
               this.focusHighlight = hl;
 
               const getState = () => {
-                return this.currentFocus != null ? this.currentFocus : state;
+                return this.currentFocus  ? this.currentFocus : state;
               };
 
               InternalEvent.redirectMouseEvents(hl.node, this.graph, getState);
@@ -337,7 +339,7 @@ class ConstraintHandler {
         }
       }
 
-      if (this.currentConstraint == null) {
+      if (!this.currentConstraint) {
         this.destroyFocusHighlight();
       }
     } else {
@@ -354,9 +356,9 @@ class ConstraintHandler {
    */
   redraw() {
     if (
-      this.currentFocus != null &&
-      this.constraints != null &&
-      this.focusIcons != null
+      this.currentFocus &&
+      this.constraints  &&
+      this.focusIcons.length > 0
     ) {
       const state = this.graph.view.getState(this.currentFocus.cell) as CellState;
       this.currentFocus = state;
@@ -423,12 +425,12 @@ class ConstraintHandler {
         icon.init(this.graph.getView().getDecoratorPane());
 
         // Move the icon behind all other overlays
-        if (icon.node.previousSibling != null) {
+        if (icon.node.previousSibling) {
           icon.node.parentNode?.insertBefore(icon.node, icon.node.parentNode.firstChild);
         }
 
         const getState = () => {
-          return this.currentFocus != null ? this.currentFocus : state;
+          return this.currentFocus  ? this.currentFocus : state;
         };
 
         icon.redraw();
@@ -480,7 +482,7 @@ class ConstraintHandler {
     this.graph.view.removeListener(this.resetHandler);
     this.graph.removeListener(this.resetHandler);
 
-    if (this.mouseleaveHandler != null && this.graph.container != null) {
+    if (this.mouseleaveHandler && this.graph.container) {
       InternalEvent.removeListener(
         this.graph.container,
         'mouseleave',

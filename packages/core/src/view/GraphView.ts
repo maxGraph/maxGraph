@@ -11,20 +11,11 @@ import Dictionary from '../util/Dictionary';
 import EventSource from './event/EventSource';
 import EventObject from './event/EventObject';
 import RectangleShape from './geometry/node/RectangleShape';
-import { ALIGN } from '../util/constants';
+import { ALIGN } from '../util/Constants';
 import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
-import {
-  convertPoint,
-  getCurrentStyle,
-  getOffset,
-} from '../util/styleUtils';
-import {
-  getRotatedPoint,
-  ptSegDistSq,
-  relativeCcw,
-  toRadians,
-} from '../util/mathUtils';
+import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils';
+import { getRotatedPoint, ptSegDistSq, relativeCcw, toRadians } from '../util/mathUtils';
 import MaxLog from '../gui/MaxLog';
 import Translations from '../util/Translations';
 import CellState from './cell/CellState';
@@ -38,7 +29,7 @@ import Shape from './geometry/Shape';
 import Geometry from './geometry/Geometry';
 import ConnectionConstraint from './other/ConnectionConstraint';
 import PopupMenuHandler from './handler/PopupMenuHandler';
-import { getClientX, getClientY, getSource, isConsumed } from '../util/eventUtils';
+import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
 import { clone } from '../util/cloneUtils';
 import CellArray from './cell/CellArray';
 import type { Graph } from './Graph';
@@ -48,7 +39,6 @@ import { MouseEventListener } from '../types';
 
 import ObjectCodec from '../serialization/ObjectCodec';
 import CodecRegistry from '../serialization/CodecRegistry';
-
 
 /**
  * @class GraphView
@@ -236,9 +226,7 @@ export class GraphView extends EventSource {
         this.viewStateChanged();
       }
     }
-    this.fireEvent(
-      new EventObject(InternalEvent.SCALE, { scale: value, previousScale })
-    );
+    this.fireEvent(new EventObject(InternalEvent.SCALE, { scale: value, previousScale }));
   }
 
   /**
@@ -415,10 +403,10 @@ export class GraphView extends EventSource {
     }
 
     this.fireEvent(
-      new EventObject(InternalEvent.SCALE_AND_TRANSLATE, { 
-        scale, 
-        previousScale, 
-        translate: this.translate, 
+      new EventObject(InternalEvent.SCALE_AND_TRANSLATE, {
+        scale,
+        previousScale,
+        translate: this.translate,
         previousTranslate: previousTranslate,
       })
     );
@@ -1326,9 +1314,11 @@ export class GraphView extends EventSource {
     // Converts string values to objects
     if (typeof edgeStyle === 'string') {
       let tmp = StyleRegistry.getValue(edgeStyle);
+
       if (!tmp && this.isAllowEval()) {
         tmp = eval(edgeStyle);
       }
+
       edgeStyle = tmp;
     }
 
@@ -2267,11 +2257,11 @@ export class GraphView extends EventSource {
    */
   createHtml() {
     var container = this.graph.container;
-    
+
     if (container != null) {
       this.canvas = this.createHtmlPane('100%', '100%');
       this.canvas.style.overflow = 'hidden';
-    
+
       // Uses minimal size for inner DIVs on Canvas. This is required
       // for correct event processing in IE. If we have an overlapping
       // DIV then the events on the cells are only fired for labels.
@@ -2279,20 +2269,20 @@ export class GraphView extends EventSource {
       this.drawPane = this.createHtmlPane('1px', '1px');
       this.overlayPane = this.createHtmlPane('1px', '1px');
       this.decoratorPane = this.createHtmlPane('1px', '1px');
-      
+
       this.canvas.appendChild(this.backgroundPane);
       this.canvas.appendChild(this.drawPane);
       this.canvas.appendChild(this.overlayPane);
       this.canvas.appendChild(this.decoratorPane);
 
       container.appendChild(this.canvas);
-      this.updateContainerStyle(container);      
+      this.updateContainerStyle(container);
     }
-  };
+  }
 
   /**
    * Function: updateHtmlCanvasSize
-   * 
+   *
    * Updates the size of the HTML canvas.
    */
   updateHtmlCanvasSize(width: number, height: number) {
@@ -2312,16 +2302,16 @@ export class GraphView extends EventSource {
         this.canvas.style.height = '100%';
       }
     }
-  };
+  }
 
   /**
    * Function: createHtmlPane
-   * 
+   *
    * Creates and returns a drawing pane in HTML (DIV).
    */
   createHtmlPane(width: string, height: string) {
     var pane = document.createElement('DIV');
-    
+
     if (width != null && height != null) {
       pane.style.position = 'absolute';
       pane.style.left = '0px';
@@ -2329,12 +2319,11 @@ export class GraphView extends EventSource {
 
       pane.style.width = width;
       pane.style.height = height;
-
     } else {
       pane.style.position = 'relative';
     }
     return pane;
-  };
+  }
 
   /**
    * Updates the style of the container after installing the SVG DOM elements.
@@ -2357,8 +2346,8 @@ export class GraphView extends EventSource {
    * Destroys the view and all its resources.
    */
   destroy() {
-    let root: SVGElement | HTMLElement | null=null; 
-    
+    let root: SVGElement | HTMLElement | null = null;
+
     if (this.canvas && this.canvas instanceof SVGElement) {
       root = this.canvas.ownerSVGElement as SVGElement;
     }

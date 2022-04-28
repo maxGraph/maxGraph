@@ -24,7 +24,7 @@ import {
   NONE,
   OUTLINE_HIGHLIGHT_COLOR,
   OUTLINE_HIGHLIGHT_STROKEWIDTH,
-} from '../../util/constants';
+} from '../../util/Constants';
 import {
   contains,
   findNearestSegment,
@@ -50,7 +50,7 @@ import {
   isAltDown,
   isMouseEvent,
   isShiftDown,
-} from '../../util/eventUtils';
+} from '../../util/EventUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
@@ -958,12 +958,12 @@ class EdgeHandler {
    * Hook for subclassers do show details while the handler is active.
    */
 
-  updateHint(me: InternalMouseEvent, point: Point) {}
+  updateHint(me: InternalMouseEvent, point: Point) { }
 
   /**
    * Hooks for subclassers to hide details when the handler gets inactive.
    */
-  removeHint() {}
+  removeHint() { }
 
   /**
    * Hook for rounding the unscaled width or height. This uses Math.round.

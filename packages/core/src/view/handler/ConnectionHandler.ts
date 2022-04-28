@@ -18,7 +18,7 @@ import {
   OUTLINE_HIGHLIGHT_STROKEWIDTH,
   TOOLTIP_VERTICAL_OFFSET,
   VALID_COLOR,
-} from '../../util/constants';
+} from '../../util/Constants';
 import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import { convertPoint, getOffset } from '../../util/styleUtils';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -35,7 +35,7 @@ import {
   isAltDown,
   isConsumed,
   isShiftDown,
-} from '../../util/eventUtils';
+} from '../../util/EventUtils';
 import Image from '../image/ImageBox';
 import CellState from '../cell/CellState';
 import { Graph } from '../Graph';
@@ -610,7 +610,6 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Starts a new connection for the given state and coordinates.
    */
   start(state: CellState, x: number, y: number, edgeState: CellState) {
-    console.log("ConnectionHandler start");
     this.previous = state;
     this.first = new Point(x, y);
     this.edgeState = edgeState ?? this.createEdgeState();
@@ -1191,9 +1190,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
         // Uses edge state to compute the terminal points
         if (this.edgeState) {
           this.updateEdgeState(current, constraint);
-          current = this.edgeState.absolutePoints[
-            this.edgeState.absolutePoints.length - 1
-          ];
+          current =
+            this.edgeState.absolutePoints[this.edgeState.absolutePoints.length - 1];
           pt2 = this.edgeState.absolutePoints[0];
         } else {
           if (this.currentState) {
@@ -1225,9 +1223,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
           let tmp = pt2;
 
           if (this.edgeState && this.edgeState.absolutePoints.length >= 2) {
-            const tmp2 = this.edgeState.absolutePoints[
-              this.edgeState.absolutePoints.length - 2
-            ];
+            const tmp2 =
+              this.edgeState.absolutePoints[this.edgeState.absolutePoints.length - 2];
 
             if (tmp2) {
               tmp = tmp2;

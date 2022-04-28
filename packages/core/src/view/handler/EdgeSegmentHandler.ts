@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import Point from '../geometry/Point';
-import { CURSOR } from '../../util/constants';
+import { CURSOR } from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import { contains } from '../../util/mathUtils';
 import { setOpacity } from '../../util/styleUtils';

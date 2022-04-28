@@ -9,7 +9,7 @@ import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
 import Translations from '../../../util/Translations';
-import { getValue, isNotNullish } from '../../../util/utils';
+import { getValue, isNotNullish } from '../../../util/Utils';
 import {
   ALIGN,
   DIRECTION,
@@ -17,13 +17,13 @@ import {
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
   TEXT_DIRECTION,
-} from '../../../util/constants';
+} from '../../../util/Constants';
 import StencilShapeRegistry from './StencilShapeRegistry';
 import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
-import { getNumber } from '../../../util/stringUtils';
+import { getNumber } from '../../../util/StringUtils';
 
 /**
  * Implements a generic shape which is based on a XML node as a description.

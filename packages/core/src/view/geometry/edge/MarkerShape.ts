@@ -6,7 +6,7 @@
  */
 import { ArrowType } from '../../../types';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import { ARROW } from '../../../util/constants';
+import { ARROW } from '../../../util/Constants';
 import Point from '../Point';
 import Shape from '../Shape';
 

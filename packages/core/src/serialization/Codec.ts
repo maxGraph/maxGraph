@@ -7,10 +7,10 @@
 
 import CellPath from '../view/cell/CellPath';
 import CodecRegistry from './CodecRegistry';
-import { NODETYPE } from '../util/constants';
+import { NODETYPE } from '../util/Constants';
 import Cell from '../view/cell/Cell';
 import MaxLog from '../gui/MaxLog';
-import { getFunctionName } from '../util/stringUtils';
+import { getFunctionName } from '../util/StringUtils';
 import { importNode, isNode } from '../util/domUtils';
 import ObjectCodec from './ObjectCodec';
 import GraphDataModel from '../view/GraphDataModel';

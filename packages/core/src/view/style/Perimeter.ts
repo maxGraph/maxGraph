@@ -7,7 +7,7 @@
 
 import { intersection } from '../../util/mathUtils';
 import Point from '../geometry/Point';
-import { DIRECTION } from '../../util/constants';
+import { DIRECTION } from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import CellState from '../cell/CellState';
 import { CellStateStyles } from '../../types';
