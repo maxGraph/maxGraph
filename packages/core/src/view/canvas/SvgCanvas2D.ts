@@ -991,8 +991,9 @@ class SvgCanvas2D extends AbstractCanvas2D {
    */
   roundrect(x: number, y: number, w: number, h: number, dx: number, dy: number) {
    
-
     this.rect(x, y, w, h); //creates this.node
+
+    if(!this.node)return
 
     if (dx > 0) {
       this.node.setAttribute('rx', String(this.format(dx * this.state.scale)));
