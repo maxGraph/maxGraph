@@ -11,7 +11,7 @@ import MaxPopupMenu from './MaxPopupMenu';
 import EventSource from '../view/event/EventSource';
 import EventObject from '../view/event/EventObject';
 import Client from '../Client';
-import { br, write, writeln } from '../util/domUtils';
+import { br, write, writeln } from '../util/DomUtils';
 import Cell from '../view/cell/Cell';
 import { KeyboardEventListener, MouseEventListener, PopupMenuItem } from '../types';
 

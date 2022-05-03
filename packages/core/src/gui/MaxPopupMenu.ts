@@ -5,11 +5,11 @@
  * Type definitions from the typed-mxgraph project
  */
 import EventSource from '../view/event/EventSource';
-import { fit, getDocumentScrollOrigin } from '../util/styleUtils';
+import { fit, getDocumentScrollOrigin } from '../util/StyleUtils';
 import EventObject from '../view/event/EventObject';
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
-import { write } from '../util/domUtils';
+import { write } from '../util/DomUtils';
 import { isLeftMouseButton } from '../util/EventUtils';
 import Cell from '../view/cell/Cell';
 import InternalMouseEvent from '../view/event/InternalMouseEvent';

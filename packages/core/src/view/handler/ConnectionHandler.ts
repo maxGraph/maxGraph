@@ -19,8 +19,8 @@ import {
   TOOLTIP_VERTICAL_OFFSET,
   VALID_COLOR,
 } from '../../util/Constants';
-import { getRotatedPoint, toRadians } from '../../util/mathUtils';
-import { convertPoint, getOffset } from '../../util/styleUtils';
+import { getRotatedPoint, toRadians } from '../../util/MathUtils';
+import { convertPoint, getOffset } from '../../util/StyleUtils';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import ImageShape from '../geometry/node/ImageShape';
 import CellMarker from '../cell/CellMarker';

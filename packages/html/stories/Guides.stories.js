@@ -9,7 +9,7 @@ import {
   KeyHandler,
   RubberBandHandler,
 } from '@maxgraph/core';
-import {isAltDown} from '../../core/src/util/eventUtils'
+import {isAltDown} from '../../core/src/util/EventUtils'
 import { brotliDecompressSync } from 'zlib';
 
 import { globalTypes } from '../.storybook/preview';

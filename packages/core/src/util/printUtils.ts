@@ -7,9 +7,9 @@
 import Client from '../Client';
 import { PAGE_FORMAT_A4_PORTRAIT } from './Constants';
 import Rectangle from '../view/geometry/Rectangle';
-import { getOuterHtml } from './domUtils';
+import { getOuterHtml } from './DomUtils';
 import { Graph } from '../view/Graph';
-import { removeCursors } from './styleUtils';
+import { removeCursors } from './StyleUtils';
 
 /**
  * Returns the scale to be used for printing the graph with the given

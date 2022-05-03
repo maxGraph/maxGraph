@@ -7,7 +7,7 @@
 
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
-import { write, writeln } from "../util/domUtils";
+import { write, writeln } from "../util/DomUtils";
 import Translations from "../util/Translations";
 
 /**

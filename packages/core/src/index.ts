@@ -130,14 +130,14 @@ export * as constants from './util/Constants';
 export { default as Guide } from './view/other/Guide';
 export { default as Translations } from './util/Translations';
 export * as utils from './util/Utils';
-export * as cloneUtils from './util/cloneUtils';
-export * as domUtils from './util/domUtils';
+export * as cloneUtils from './util/CloneUtils';
+export * as domUtils from './util/DomUtils';
 export * as eventUtils from './util/EventUtils';
-export * as gestureUtils from './util/gestureUtils';
+export * as gestureUtils from './util/GestureUtils';
 export * as stringUtils from './util/StringUtils';
-export * as xmlUtils from './util/xmlUtils';
-export * as styleUtils from './util/styleUtils';
-export * as mathUtils from './util/mathUtils';
+export * as xmlUtils from './util/XmlUtils';
+export * as styleUtils from './util/StyleUtils';
+export * as mathUtils from './util/MathUtils';
 
 export { default as Animation } from './view/animate/Animation';
 export { default as Effects } from './view/animate/Effects';
@@ -158,7 +158,7 @@ export { default as Perimeter } from './view/style/Perimeter';
 export { default as StyleRegistry } from './view/style/StyleRegistry';
 export { Stylesheet, StylesheetCodec } from './view/style/Stylesheet';
 
-export * as DomHelpers from './util/domHelpers';
+export * as DomHelpers from './util/DomHelpers';
 
 export { default as DragSource } from './view/other/DragSource';
 export { default as PanningManager } from './view/other/PanningManager';

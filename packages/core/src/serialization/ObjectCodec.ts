@@ -10,8 +10,8 @@ import MaxLog from '../gui/MaxLog';
 import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
 import { NODETYPE } from '../util/Constants';
-import { isInteger, isNumeric } from '../util/mathUtils';
-import { getTextContent } from '../util/domUtils';
+import { isInteger, isNumeric } from '../util/MathUtils';
+import { getTextContent } from '../util/DomUtils';
 import { load } from '../util/MaxXmlRequest';
 import Codec from './Codec';
 

@@ -14,7 +14,7 @@ import {
   eventUtils,
   mathUtils,
 } from '@maxgraph/core';
-import { convertPoint } from '../../core/src/util/styleUtils';
+import { convertPoint } from '../../core/src/util/StyleUtils';
 
 import { globalTypes } from '../.storybook/preview';
 

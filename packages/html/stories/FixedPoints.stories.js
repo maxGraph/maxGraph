@@ -6,12 +6,19 @@ import {
   ConstraintHandler,
   Point,
   CellState,
-  EdgeHandler,
+  ElbowEdgeHandler,
   Client
 } from '@maxgraph/core';
 
+import SelectionCellsHandler from '../../core/src/view/handler/SelectionCellsHandler';
+import SelectionHandler from '../../core/src/view/handler/SelectionHandler';
+import PanningHandler from '../../core/src/view/handler/PanningHandler';
+import PopupMenuHandler from '../../core/src/view/handler/PopupMenuHandler';
+import CellEditorHandler from '../../core/src/view/handler/CellEditorHandler';
+import TooltipHandler from '../../core/src/view/handler/TooltipHandler';
+
 import { globalTypes } from '../.storybook/preview';
-import { intersects } from '@maxgraph/core/util/mathUtils';
+import { intersects } from '@maxgraph/core/util/MathUtils';
 
 
 
@@ -36,6 +43,8 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';  
   
   Client.imageBasePath = '../../../images'
+
+  
 
   class MyCustomConstraintHandler extends ConstraintHandler {
     // Snaps to fixed points
@@ -82,7 +91,7 @@ const Template = ({ label, ...args }) => {
         }
 
         // In case the edge style must be changed during the preview:
-        // this.edgeState.style.edgeStyle = 'orthogonalEdgeStyle';
+         //this.edgeState.style.edgeStyle = 'orthogonalEdgeStyle';
         // And to use the new edge style in the new edge inserted into the graph,
         // update the cell style as follows:
         // this.edgeState.cell.style = utils.setStyle(this.edgeState.cell.style, 'edgeStyle', this.edgeState.style.edgeStyle);
@@ -105,19 +114,29 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  class MyCustomEdgeHandler extends EdgeHandler {
+  class MyCustomEdgeHandler extends ElbowEdgeHandler {
     // Disables floating connections (only use with no connect image)
     isConnectableCell(cell) {
       return graph.getPlugin('ConnectionHandler').isConnectableCell(cell);
     }
   }
 
+  const plugins = [
+    CellEditorHandler,
+    TooltipHandler,
+    SelectionCellsHandler,
+    PopupMenuHandler,
+    MyCustomConnectionHandler,
+    SelectionHandler,
+    PanningHandler,
+  ];
+
   class MyCustomGraph extends Graph {
-    createConnectionHandler() {
-      const r = new MyCustomConnectionHandler();
-      r.constraintHandler = new MyCustomConstraintHandler(this);
-      return r;
-    }
+   // createConnectionHandler() {
+   //   const r = new MyCustomConnectionHandler();
+   //   r.constraintHandler = new MyCustomConstraintHandler(this);
+   //   return r;
+   // }
 
     createEdgeHandler(state, edgeStyle) {
       const r = new MyCustomEdgeHandler(state, edgeStyle);
@@ -143,8 +162,10 @@ const Template = ({ label, ...args }) => {
   }
 
   // Creates the graph inside the given container
-  const graph = new MyCustomGraph(container);
+  const graph = new MyCustomGraph(container, null, plugins);
   graph.setConnectable(true);
+  
+ // graph.getPlugin('ConnectionHandler').constraintHandler = new MyCustomConstraintHandler(this);
 
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);
@@ -182,7 +203,7 @@ const Template = ({ label, ...args }) => {
       target: v2,
       style:
         'edgeStyle=elbowEdgeStyle;elbow=horizontal;' +
-        'exitX=0.5;exitY=1;exitPerimeter=1;entryX=0;entryY=0;entryPerimeter=1;',
+        'exitX=0.5;exitY=1;exitPerimeter=1;entryX=0;entryY=0;entryPerimeter=1;bendable=true',
     });
     const e2 = graph.insertEdge({
       parent,
@@ -191,7 +212,7 @@ const Template = ({ label, ...args }) => {
       target: v2,
       style:
         'edgeStyle=elbowEdgeStyle;elbow=horizontal;orthogonal=0;' +
-        'entryX=0;entryY=0;entryPerimeter=1;',
+        'entryX=0;entryY=0;entryPerimeter=1;bendable=true',
     });
   });
 

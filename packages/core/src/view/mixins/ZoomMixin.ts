@@ -1,6 +1,6 @@
 import Rectangle from '../geometry/Rectangle';
 import { mixInto } from '../../util/Utils';
-import { hasScrollbars } from '../../util/styleUtils';
+import { hasScrollbars } from '../../util/StyleUtils';
 import { Graph } from '../Graph';
 
 declare module '../Graph' {

@@ -6,7 +6,7 @@
  */
 
 import Translations from '../../util/Translations';
-import { isNode } from '../../util/domUtils';
+import { isNode } from '../../util/DomUtils';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
 

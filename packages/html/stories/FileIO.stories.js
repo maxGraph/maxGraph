@@ -1,8 +1,8 @@
 import { Graph, constants } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { clone } from '@maxgraph/core/util/cloneUtils';
-import { button } from '@maxgraph/core/util/domHelpers';
+import { clone } from '@maxgraph/core/util/CloneUtils';
+import { button } from '@maxgraph/core/util/DomHelpers';
 import { load } from '@maxgraph/core/util/MaxXmlRequest';
 
 export default {

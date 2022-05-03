@@ -34,12 +34,12 @@ import {
   getRotatedPoint,
   mod,
   toRadians,
-} from '../../util/mathUtils';
-import { convertPoint } from '../../util/styleUtils';
+} from '../../util/MathUtils';
+import { convertPoint } from '../../util/StyleUtils';
 import {
   equalEntries,
   equalPoints,
-} from '../../util/arrayUtils';
+} from '../../util/ArrayUtils';
 import Rectangle from '../geometry/Rectangle';
 import StencilShapeRegistry from '../geometry/node/StencilShapeRegistry';
 import InternalEvent from '../event/InternalEvent';
@@ -53,7 +53,7 @@ import CellState from './CellState';
 import Cell from './Cell';
 import CellOverlay from './CellOverlay';
 import { getClientX, getClientY, getSource } from '../../util/EventUtils';
-import { isNode } from '../../util/domUtils';
+import { isNode } from '../../util/DomUtils';
 import { CellStateStyles } from '../../types';
 import CellArray from './CellArray';
 import SelectionCellsHandler from '../handler/SelectionCellsHandler';

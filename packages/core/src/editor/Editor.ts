@@ -13,7 +13,7 @@ import CompactTreeLayout from '../view/layout/CompactTreeLayout';
 import EditorToolbar from './EditorToolbar';
 import StackLayout from '../view/layout/StackLayout';
 import EventObject from '../view/event/EventObject';
-import { getOffset } from '../util/styleUtils';
+import { getOffset } from '../util/StyleUtils';
 import Codec from '../serialization/Codec';
 import MaxWindow, { error } from '../gui/MaxWindow';
 import MaxForm from '../gui/MaxForm';
@@ -30,8 +30,8 @@ import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
 import PrintPreview from '../view/other/PrintPreview';
 import mxClipboard from '../util/Clipboard';
 import MaxLog from '../gui/MaxLog';
-import { isNode } from '../util/domUtils';
-import { getViewXml, getXml } from '../util/xmlUtils';
+import { isNode } from '../util/DomUtils';
+import { getViewXml, getXml } from '../util/XmlUtils';
 import { load, post, submit } from '../util/MaxXmlRequest';
 import PopupMenuHandler from '../view/handler/PopupMenuHandler';
 import RubberBandHandler from '../view/handler/RubberBandHandler';
@@ -39,11 +39,11 @@ import InternalEvent from '../view/event/InternalEvent';
 import InternalMouseEvent from '../view/event/InternalMouseEvent';
 import { CellStateStyles, MouseListenerSet } from '../types';
 import ConnectionHandler from '../view/handler/ConnectionHandler';
-import { show } from '../util/printUtils';
+import { show } from '../util/PrintUtils';
 import PanningHandler from '../view/handler/PanningHandler';
 import ObjectCodec from '../serialization/ObjectCodec';
 import CodecRegistry from '../serialization/CodecRegistry';
-import { getChildNodes } from '../util/domUtils';
+import { getChildNodes } from '../util/DomUtils';
 
 /**
  * Installs the required language resources at class

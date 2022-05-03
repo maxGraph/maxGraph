@@ -12,8 +12,8 @@ import {
   getRotatedPoint,
   isNumeric,
   toRadians,
-} from '../../util/mathUtils';
-import { convertPoint } from '../../util/styleUtils';
+} from '../../util/MathUtils';
+import { convertPoint } from '../../util/StyleUtils';
 import RectangleShape from '../geometry/node/RectangleShape';
 import mxGuide from '../other/Guide';
 import Point from '../geometry/Point';

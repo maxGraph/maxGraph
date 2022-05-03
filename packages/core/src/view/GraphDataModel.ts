@@ -8,7 +8,7 @@ import EventSource from './event/EventSource';
 import UndoableEdit from './undoable_changes/UndoableEdit';
 import CellPath from './cell/CellPath';
 import Cell from './cell/Cell';
-import { isNumeric } from '../util/mathUtils';
+import { isNumeric } from '../util/MathUtils';
 import EventObject from './event/EventObject';
 import InternalEvent from './event/InternalEvent';
 import ChildChange from './undoable_changes/ChildChange';

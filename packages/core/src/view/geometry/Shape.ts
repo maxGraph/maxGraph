@@ -10,7 +10,7 @@ import {
   getBoundingBox,
   getDirectedBounds,
   mod,
-} from '../../util/mathUtils';
+} from '../../util/MathUtils';
 import {
   DIRECTION,
   LINE_ARCSIZE,

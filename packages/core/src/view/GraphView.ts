@@ -14,8 +14,8 @@ import RectangleShape from './geometry/node/RectangleShape';
 import { ALIGN } from '../util/Constants';
 import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
-import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils';
-import { getRotatedPoint, ptSegDistSq, relativeCcw, toRadians } from '../util/mathUtils';
+import { convertPoint, getCurrentStyle, getOffset } from '../util/StyleUtils';
+import { getRotatedPoint, ptSegDistSq, relativeCcw, toRadians } from '../util/MathUtils';
 import MaxLog from '../gui/MaxLog';
 import Translations from '../util/Translations';
 import CellState from './cell/CellState';
@@ -30,7 +30,7 @@ import Geometry from './geometry/Geometry';
 import ConnectionConstraint from './other/ConnectionConstraint';
 import PopupMenuHandler from './handler/PopupMenuHandler';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
-import { clone } from '../util/cloneUtils';
+import { clone } from '../util/CloneUtils';
 import CellArray from './cell/CellArray';
 import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
@@ -1216,7 +1216,7 @@ export class GraphView extends EventSource {
     pts.push((<Point[]>edge.absolutePoints)[0]);
     const edgeStyle = this.getEdgeStyle(edge, points, source, target);
 
-    if (edgeStyle && source) {
+    if (edgeStyle) {
       // target can be null
       const src = this.getTerminalPort(edge, source, true);
       const trg = target ? this.getTerminalPort(edge, target, false) : null;
@@ -1387,7 +1387,7 @@ export class GraphView extends EventSource {
    */
   getFloatingTerminalPoint(
     edge: CellState,
-    start: CellState,
+    start: CellState| null,
     end: CellState | null,
     source: boolean
   ) {
@@ -1395,8 +1395,8 @@ export class GraphView extends EventSource {
     let next = this.getNextPoint(edge, end, source);
 
     const orth = this.graph.isOrthogonal(edge);
-    const alpha = toRadians(start.style.rotation ?? 0);
-    const center = new Point(start.getCenterX(), start.getCenterY());
+    const alpha = toRadians(start?.style.rotation ?? 0);
+    const center = new Point(start?.getCenterX(), start?.getCenterY());
 
     if (alpha !== 0) {
       const cos = Math.cos(-alpha);
@@ -1427,7 +1427,7 @@ export class GraphView extends EventSource {
    * @param terminal {@link CellState} that represents the terminal.
    * @param source Boolean indicating if the given terminal is the source terminal.
    */
-  getTerminalPort(state: CellState, terminal: CellState, source: boolean = false) {
+  getTerminalPort(state: CellState, terminal: CellState|null, source: boolean = false) {
     const key = source ? 'sourcePort' : 'targetPort';
     const id = state.style[key];
 
@@ -1460,7 +1460,7 @@ export class GraphView extends EventSource {
    * @param border Optional border between the perimeter and the shape.
    */
   getPerimeterPoint(
-    terminal: CellState,
+    terminal: CellState|null,
     next: Point,
     orthogonal: boolean,
     border = 0

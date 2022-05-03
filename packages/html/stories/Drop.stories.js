@@ -8,7 +8,7 @@ import {
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { getXml, parseXml } from '@maxgraph/core/util/xmlUtils';
+import { getXml, parseXml } from '@maxgraph/core/util/XmlUtils';
 
 export default {
   title: 'DnD_CopyPaste/Drop',

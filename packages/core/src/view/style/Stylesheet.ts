@@ -11,14 +11,14 @@ import {
   SHAPE,
 } from '../../util/Constants';
 import Perimeter from './Perimeter';
-import { clone } from '../../util/cloneUtils';
-import { isNumeric } from '../../util/mathUtils';
+import { clone } from '../../util/CloneUtils';
+import { isNumeric } from '../../util/MathUtils';
 import CodecRegistry from '../../serialization/CodecRegistry';
 import { NODETYPE } from '../../util/Constants';
 import MaxLog from '../../gui/MaxLog';
 import StyleRegistry from './StyleRegistry';
 import ObjectCodec from '../../serialization/ObjectCodec';
-import { getTextContent } from '../../util/domUtils';
+import { getTextContent } from '../../util/DomUtils';
 
 import type { CellStateStyles } from '../../types';
 import Codec from '../../serialization/Codec';

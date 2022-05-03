@@ -1,8 +1,8 @@
 import Cell from '../cell/Cell';
 import Rectangle from '../geometry/Rectangle';
 import { mixInto } from '../../util/Utils';
-import { convertPoint } from '../../util/styleUtils';
-import { mod } from '../../util/mathUtils';
+import { convertPoint } from '../../util/StyleUtils';
+import { mod } from '../../util/MathUtils';
 import {
   DEFAULT_STARTSIZE,
   DIRECTION,

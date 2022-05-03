@@ -30,12 +30,12 @@ import {
   findNearestSegment,
   intersects,
   ptSegDistSq,
-} from '../../util/mathUtils';
+} from '../../util/MathUtils';
 import {
   convertPoint,
   getOffset,
   setOpacity,
-} from '../../util/styleUtils';
+} from '../../util/StyleUtils';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ConnectionConstraint from '../other/ConnectionConstraint';
@@ -60,7 +60,7 @@ import Cell from '../cell/Cell';
 import ImageBox from '../image/ImageBox';
 import EventSource from '../event/EventSource';
 import SelectionHandler from './SelectionHandler';
-import { equalPoints } from '../../util/arrayUtils';
+import { equalPoints } from '../../util/ArrayUtils';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and the edge
@@ -1468,7 +1468,7 @@ class EdgeHandler {
 
           // Sets the color of the preview to valid or invalid, updates the
           // points of the preview and redraws
-          const color =
+          const color = 
             this.error == null ? this.marker.validColor : this.marker.invalidColor;
           this.setPreviewColor(color);
           this.abspoints = clone.absolutePoints;

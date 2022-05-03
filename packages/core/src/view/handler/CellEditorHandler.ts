@@ -9,7 +9,7 @@ import { getValue } from '../../util/Utils';
 import {
   getAlignmentAsPoint,
   setPrefixedStyle,
-} from '../../util/styleUtils';
+} from '../../util/StyleUtils';
 import Rectangle from '../geometry/Rectangle';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
@@ -30,7 +30,7 @@ import Cell from '../cell/Cell';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
-import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/domUtils';
+import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/DomUtils';
 import { getStringValue, htmlEntities, replaceTrailingNewlines } from '../../util/StringUtils';
 import {
   getSource,
