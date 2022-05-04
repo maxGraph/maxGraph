@@ -1,23 +1,32 @@
 {
   "name": "@maxgraph/core",
-  "version": "1.0.0",
-  "description": "",
-  "module": "./src/index.ts",
-  "main": "./dist/maxgraph.js",
-  "types": "./dist/maxgraph.d.ts",
+  "license": "Apache-2.0",
+  "version": "0.1.0",
+  "description": "maxGraph is a fully client side JavaScript diagramming library that uses SVG and HTML for rendering.",
+  "main": "dist/maxgraph.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
   "files": [
-    "./dist"
+    "dist"
   ],
+  "homepage": "https://github.com/maxGraph/maxGraph",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxGraph/maxGraph"
+  },
+  "bugs": {
+    "url": "https://github.com/maxGraph/maxGraph/issues"
+  },
   "scripts": {
     "dev": "webpack --watch --mode=development",
     "build": "NODE_ENV=production webpack --mode=production",
-    "postinstall": "webpack --mode=development",
-    "generate-types": "tsc --emitDeclarationOnly"
+    "generate-types": "tsc --emitDeclarationOnly",
+    "generate-esm": "tsc --emitDeclarationOnly false --declaration false --declarationDir null",
+    "prepack": "run-s generate-types generate-esm build"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "circular-dependency-plugin": "^5.2.2"
+    "circular-dependency-plugin": "^5.2.2",
+    "npm-run-all": "~4.1.5"
   },
   "sideEffects": true
 }

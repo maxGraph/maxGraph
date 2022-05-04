@@ -1,13 +1,9 @@
 {
   "name": "maxgraph",
-  "description": "max-graph is a fully client side JavaScript diagramming library that uses SVG and HTML for rendering.",
-  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "version": "0.1.0",
+  "description": "maxGraph is a fully client side JavaScript diagramming library that uses SVG and HTML for rendering.",
   "homepage": "https://github.com/maxGraph/maxGraph",
-  "author": {
-    "name": "",
-    "email": ""
-  },
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maxGraph/maxGraph"
@@ -15,13 +11,13 @@
   "bugs": {
     "url": "https://github.com/maxGraph/maxGraph/issues"
   },
-  "main": "./javascript/dist/build.js",
   "scripts": {
     "dev": "node ./scripts/dev",
     "bootstrap": "lerna bootstrap --no-ci",
     "postinstall": "lerna bootstrap --no-ci",
     "docs": "jsdoc -c jsdoc.json",
-    "generate-types": "lerna run generate-types"
+    "generate-types": "lerna run generate-types",
+    "generate-esm": "lerna run generate-esm"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -44,6 +40,5 @@
     "webpack": "^5.64.4",
     "webpack-cli": "^4.9.1",
     "webpack-merge": "^5.8.0"
-  },
-  "sideEffects": true
+  }
 }

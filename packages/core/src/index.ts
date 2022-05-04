@@ -48,7 +48,11 @@ export { default as VisibleChange } from './view/undoable_changes/VisibleChange'
 
 export { EditorKeyHandler, EditorKeyHandlerCodec } from './editor/EditorKeyHandler';
 export { EditorPopupMenu, EditorPopupMenuCodec } from './editor/EditorPopupMenu';
-export { EditorToolbar, EditorToolbarCodec } from './editor/EditorToolbar';
+// TODO restore EditorToolbarCodec if needed
+// currently, the following error occurs when running vitejs build
+// [ERROR] No matching export in "../core/dist/esm/editor/EditorToolbar.js" for import "EditorToolbarCodec"
+// export { EditorToolbar, EditorToolbarCodec } from './editor/EditorToolbar';
+export { EditorToolbar } from './editor/EditorToolbar';
 export { Editor, EditorCodec } from './editor/Editor';
 
 export { default as CellHighlight } from './view/cell/CellHighlight';
@@ -156,7 +160,11 @@ export { default as Rectangle } from './view/geometry/Rectangle';
 export { default as EdgeStyle } from './view/style/EdgeStyle';
 export { default as Perimeter } from './view/style/Perimeter';
 export { default as StyleRegistry } from './view/style/StyleRegistry';
-export { Stylesheet, StylesheetCodec } from './view/style/Stylesheet';
+// TODO restore StylesheetCodec if needed
+// currently, the following error occurs when running vitejs build
+// [ERROR] No matching export in "../core/dist/esm/view/style/Stylesheet.js" for import "StylesheetCodec"
+// export { Stylesheet, StylesheetCodec } from './view/style/Stylesheet';
+export { Stylesheet } from './view/style/Stylesheet';
 
 export * as DomHelpers from './util/domHelpers';
 
@@ -200,3 +208,6 @@ export { default as CellArray } from './view/cell/CellArray';
 export { default as TemporaryCellStates } from './view/cell/TemporaryCellStates';
 export { default as ConnectionConstraint } from './view/other/ConnectionConstraint';
 export { default as Multiplicity } from './view/other/Multiplicity';
+
+// Ensure types are exported in the type definitions
+export * from './types';
