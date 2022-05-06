@@ -79,6 +79,7 @@ export type CellStateStyles = {
   imageBorder?: ColorValue;
   imageHeight?: number;
   imageWidth?: number;
+  imageVerticalAlign?: VAlignValue;
   indicatorColor?: ColorValue;
   indicatorDirection?: DirectionValue;
   indicatorHeight?: number;

@@ -154,7 +154,7 @@ class LabelShape extends RectangleShape {
    */
   getImageBounds(x: number, y: number, w: number, h: number) {
     const align = this.style?.imageAlign ?? ALIGN.LEFT;
-    const valign = this.style?.verticalAlign ?? ALIGN.MIDDLE;
+    const valign = this.style?.imageVerticalAlign ?? ALIGN.MIDDLE;
     const width = this.style?.imageWidth ?? DEFAULT_IMAGESIZE;
     const height = this.style?.imageHeight ?? DEFAULT_IMAGESIZE;
     const spacing = this.style?.spacing ?? this.spacing + 5;
