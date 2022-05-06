@@ -32,9 +32,6 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
-  // Defines an icon for creating new connections in the connection handler.
-  // This will automatically disable the highlighting of the source vertex.
-  ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
 
   // Defines a new class for all icons
   class mxIconSet {
@@ -103,6 +100,11 @@ const Template = ({ label, ...args }) => {
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
+    // Defines an icon for creating new connections in the connection handler.
+  // This will automatically disable the highlighting of the source vertex.
+
+  const connectionHandler = graph.getPlugin('ConnectionHandler');
+  connectionHandler.connectImage = new ImageBox('images/connector.gif', 16, 16);
   graph.setConnectable(true);
 
   // Enables rubberband selection
