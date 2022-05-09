@@ -15,9 +15,7 @@
     "dev": "node ./scripts/dev",
     "bootstrap": "lerna bootstrap --no-ci",
     "postinstall": "lerna bootstrap --no-ci",
-    "docs": "jsdoc -c jsdoc.json",
-    "generate-types": "lerna run generate-types",
-    "generate-esm": "lerna run generate-esm"
+    "docs": "jsdoc -c jsdoc.json"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
