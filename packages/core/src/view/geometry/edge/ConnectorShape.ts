@@ -100,7 +100,7 @@ class ConnectorShape extends PolylineShape {
 
       // Allow for stroke width in the end point used and the
       // orthogonal vectors describing the direction of the marker
-      const filled = !(source ? this.style.startFill : this.style.endFill);
+      const filled = Boolean(source ? this.style.startFill : this.style.endFill);
 
       result = MarkerShape.createMarker(
         c,

@@ -1556,7 +1556,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       tr += `rotate(${rotation},${this.format(x * s.scale)},${this.format(y * s.scale)})`;
     }
 
-    if (dir != null) {
+    if (dir != '') {
       node.setAttribute('direction', dir);
     }
 
@@ -1816,9 +1816,9 @@ class SvgCanvas2D extends AbstractCanvas2D {
         }
 
         bbox = new Rectangle(
-          (x + 1) * s.scale,
+          x  * s.scale,
           (y + 2) * s.scale,
-          w * s.scale,
+          (w +1) * s.scale,
           (h + 1) * s.scale
         );
       }
@@ -1832,7 +1832,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
         n.setAttribute('width', String(Math.ceil(bbox.width + 2)));
         n.setAttribute('height', String(Math.ceil(bbox.height)));
 
-        const sw = s.fontBorderColor ? Math.max(1, this.format(s.scale)) : 0;
+        const sw = s.fontBorderColor !== 'none' ? Math.max(1, this.format(s.scale)) : 0;
         n.setAttribute('stroke-width', String(sw));
 
         // Workaround for crisp rendering - only required if not exporting

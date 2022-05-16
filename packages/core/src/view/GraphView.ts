@@ -857,14 +857,13 @@ export class GraphView extends EventSource {
    * @param state {@link CellState} to be updated.
    */
   updateCellState(state: CellState) {
-    const absoluteOffset = state.absoluteOffset;
-    const origin = state.origin;
+  const origin = state.origin;
 
-    absoluteOffset.x = 0;
-    absoluteOffset.y = 0;
-    origin.x = 0;
-    origin.y = 0;
-    state.length = 0;
+  state.absoluteOffset.x = 0;
+  state.y = 0;
+  state.x = 0;
+  state.y = 0;
+  state.length = 0;
 
     if (state.cell !== this.currentRoot) {
       const parent = state.cell.getParent();
@@ -893,23 +892,23 @@ export class GraphView extends EventSource {
               const origin = this.getPoint(pState, geo);
 
               if (origin) {
-                origin.x += origin.x / this.scale - pState.origin.x - this.translate.x;
-                origin.y += origin.y / this.scale - pState.origin.y - this.translate.y;
+                state.origin.x += (origin.x / this.scale) - pState.origin.x - this.translate.x;
+                state.origin.y += (origin.y / this.scale) - pState.origin.y - this.translate.y;
               }
             } else {
-              origin.x += geo.x * pState.unscaledWidth + offset.x;
-              origin.y += geo.y * pState.unscaledHeight + offset.y;
+              state.origin.x += geo.x * pState.unscaledWidth + offset.x;
+              state.origin.y += geo.y * pState.unscaledHeight + offset.y;
             }
           } else {
-            absoluteOffset.x = this.scale * offset.x;
-            absoluteOffset.y = this.scale * offset.y;
+            state.absoluteOffset.x = this.scale * offset.x;
+            state.absoluteOffset.y = this.scale * offset.y;
             origin.x += geo.x;
             origin.y += geo.y;
           }
         }
 
-        state.x = this.scale * (this.translate.x + origin.x);
-        state.y = this.scale * (this.translate.y + origin.y);
+        state.x = this.scale * (this.translate.x + state.origin.x);
+        state.y = this.scale * (this.translate.y + state.origin.y);
         state.width = this.scale * geo.width;
         state.unscaledWidth = geo.width;
         state.height = this.scale * geo.height;
