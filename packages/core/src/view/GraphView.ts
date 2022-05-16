@@ -801,7 +801,7 @@ export class GraphView extends EventSource {
 
     if (cell) {
       state = this.getState(cell);
-
+      if (cell.value=='0-0') console.log(state)
       if (state) {
         if (state.invalid) {
           state.invalid = false;
@@ -857,12 +857,13 @@ export class GraphView extends EventSource {
    * @param state {@link CellState} to be updated.
    */
   updateCellState(state: CellState) {
+  const absoluteOffset = state.absoluteOffset;
   const origin = state.origin;
 
-  state.absoluteOffset.x = 0;
-  state.y = 0;
-  state.x = 0;
-  state.y = 0;
+  absoluteOffset.x = 0;
+  absoluteOffset.y = 0;
+  origin.x = 0;
+  origin.y = 0;
   state.length = 0;
 
     if (state.cell !== this.currentRoot) {
@@ -889,26 +890,26 @@ export class GraphView extends EventSource {
 
           if (geo.relative && pState) {
             if (pState.cell.isEdge()) {
-              const origin = this.getPoint(pState, geo);
+              const originP = this.getPoint(pState, geo);
 
-              if (origin) {
-                state.origin.x += (origin.x / this.scale) - pState.origin.x - this.translate.x;
-                state.origin.y += (origin.y / this.scale) - pState.origin.y - this.translate.y;
+              if (originP) {
+                origin.x += (originP.x / this.scale) - pState.origin.x - this.translate.x;
+                origin.y += (originP.y / this.scale) - pState.origin.y - this.translate.y;
               }
             } else {
-              state.origin.x += geo.x * pState.unscaledWidth + offset.x;
-              state.origin.y += geo.y * pState.unscaledHeight + offset.y;
+              origin.x += geo.x * pState.unscaledWidth + offset.x;
+              origin.y += geo.y * pState.unscaledHeight + offset.y;
             }
           } else {
-            state.absoluteOffset.x = this.scale * offset.x;
-            state.absoluteOffset.y = this.scale * offset.y;
+            absoluteOffset.x = this.scale * offset.x;
+            absoluteOffset.y = this.scale * offset.y;
             origin.x += geo.x;
             origin.y += geo.y;
           }
         }
 
-        state.x = this.scale * (this.translate.x + state.origin.x);
-        state.y = this.scale * (this.translate.y + state.origin.y);
+        state.x = this.scale * (this.translate.x + origin.x);
+        state.y = this.scale * (this.translate.y + origin.y);
         state.width = this.scale * geo.width;
         state.unscaledWidth = geo.width;
         state.height = this.scale * geo.height;
