@@ -62,6 +62,7 @@ const Template = ({ label, ...args }) => {
   // if the horizontal style is true.
   const style = graph.getStylesheet().getDefaultEdgeStyle();
   style.rounded = true;
+  style.bendable = true;
   style.edgeStyle = EdgeStyle.ElbowConnector;
   graph.alternateEdgeStyle = 'elbow=vertical';
 

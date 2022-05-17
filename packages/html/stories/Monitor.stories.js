@@ -1,6 +1,7 @@
 import {
   Graph,
   EdgeStyle,
+  InternalEvent,
   DomHelpers,
   xmlUtils,
   Perimeter,
@@ -8,6 +9,7 @@ import {
   constants,
   cloneUtils,
   Codec,
+  CellOverlay
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -27,7 +29,6 @@ const Template = ({ label, ...args }) => {
   container.style.overflow = 'hidden';
   container.style.width = `${args.width}px`;
   container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
   div.appendChild(container);
 
@@ -39,7 +40,7 @@ const Template = ({ label, ...args }) => {
 
   // Creates a process display using the activity names as IDs to refer to the elements
   const xml =
-    '<Transactions><root><Cell id="0"/><Cell id="1" parent="0"/>' +
+    '<GraphDataModel><root><Cell id="0"/><Cell id="1" parent="0"/>' +
     '<Cell id="2" value="Claim Handling Process" style="swimlane" vertex="1" parent="1"><Geometry x="1" width="850" height="400" as="geometry"/></Cell>' +
     '<Cell id="3" value="Claim Manager" style="swimlane" vertex="1" parent="2"><Geometry x="30" width="820" height="200" as="geometry"/></Cell>' +
     '<Cell id="5" value="" style="start" vertex="1" parent="3"><Geometry x="40" y="85" width="30" height="30" as="geometry"/></Cell>' +
@@ -76,10 +77,10 @@ const Template = ({ label, ...args }) => {
     '<Cell id="29" value="" edge="1" parent="2" source="22" target="EnterAccountingData"><Geometry relative="1" as="geometry"><Array as="points"><Point x="469" y="40"/></Array></Geometry></Cell>' +
     '<Cell id="30" value="" edge="1" parent="2" source="27" target="EnterAccountingData"><Geometry relative="1" as="geometry"><Array as="points"><Point x="469" y="40"/></Array></Geometry></Cell>' +
     '<Cell id="33" value="" edge="1" parent="2" source="6" target="EnterAccountingData"><Geometry relative="1" as="geometry"><Array as="points"><Point x="255" y="200"/></Array></Geometry></Cell>' +
-    '</root></Transactions>';
+    '</root></GraphDataModel>';
   const doc = xmlUtils.parseXml(xml);
   const codec = new Codec(doc);
-  codec.decode(doc.documentElement, graph.getDataModel());
+  codec.decode(doc, graph.getDataModel());
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
@@ -104,9 +105,9 @@ const Template = ({ label, ...args }) => {
     if (xml != null && xml.length > 0) {
       const doc = xmlUtils.parseXml(xml);
 
-      if (doc != null && doc.documentElement != null) {
+      if (doc != null ) {
         const model = graph.getDataModel();
-        const nodes = doc.documentElement.getElementsByTagName('update');
+        const nodes = doc.getElementsByTagName('update');
 
         if (nodes != null && nodes.length > 0) {
           model.beginUpdate();
@@ -198,6 +199,7 @@ const Template = ({ label, ...args }) => {
     style.strokeColor = '#808080';
     style.rounded = true;
     style.shadow = true;
+    style.endFill=1;
 
     style = [];
     style.shape = constants.SHAPE.SWIMLANE;
