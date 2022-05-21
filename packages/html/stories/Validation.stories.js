@@ -13,10 +13,10 @@ export default {
   title: 'Misc/Validation',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+   // rubberBand: {
+   //   type: 'boolean',
+   //   defaultValue: true,
+   // },
   },
 };
 
@@ -88,6 +88,9 @@ const Template = ({ label, ...args }) => {
 
   // Enables rubberband selection
   new RubberBandHandler(graph);
+
+  // Transfer initial focus to graph container for keystroke handling
+  graph.container.focus();
 
   // Removes cells when [DELETE] is pressed
   const keyHandler = new KeyHandler(graph);
