@@ -854,7 +854,6 @@ class CellEditorHandler implements GraphPlugin {
       const initial = this.initialValue;
       this.initialValue = null;
       this.editingCell = null;
-      this.trigger = null;
       this.bounds = null;
       textarea.blur();
       clearSelection();
@@ -888,6 +887,7 @@ class CellEditorHandler implements GraphPlugin {
 
       this.textarea = null;
       this.align = null;
+      this.trigger = null;
     }
   }
 
