@@ -801,7 +801,7 @@ export class GraphView extends EventSource {
 
     if (cell) {
       state = this.getState(cell);
-      if (cell.value=='0-0') console.log(state)
+      
       if (state) {
         if (state.invalid) {
           state.invalid = false;
