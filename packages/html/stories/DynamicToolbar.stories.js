@@ -46,7 +46,7 @@ const Template = ({ label, ...args }) => {
   tbContainer.style.overflow = 'hidden';
   tbContainer.style.padding = '2px';
   tbContainer.style.left = '0px';
-  tbContainer.style.top = '0px';
+  tbContainer.style.top = '10px';
   tbContainer.style.width = '24px';
   tbContainer.style.bottom = '0px';
 
