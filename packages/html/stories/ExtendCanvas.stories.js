@@ -6,6 +6,7 @@ import {
   Point,
   styleUtils,
 } from '@maxgraph/core';
+import {hasScrollbars} from '../../core/src/util/StyleUtils';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -97,6 +98,8 @@ const Template = ({ label, ...args }) => {
       return new Rectangle(x0, y0, w0, h0);
     }
 
+    //------overrides
+
     getPreferredPageSize(bounds, width, height) {
       const pages = this.getPageLayout();
       const size = this.getPageSize();
@@ -105,7 +108,7 @@ const Template = ({ label, ...args }) => {
     }
 
     sizeDidChange() {
-      if (this.container != null && styleUtils.hasScrollbars(this.container)) {
+      if (this.container != null ){//&& hasScrollbars(this.container)) {
         const pages = this.getPageLayout();
         const pad = this.getPagePadding();
         const size = this.getPageSize();
