@@ -32,6 +32,7 @@ import {
   replaceTrailingNewlines,
   trim,
 } from '../../../util/StringUtils';
+import {svgBBox} from '../../../util/Utils';
 import { isNode } from '../../../util/DomUtils';
 import {
   AlignValue,
@@ -469,12 +470,13 @@ class TextShape extends Shape {
       } else {
         try {
           const b = node.getBBox();
-
+         
           // Workaround for bounding box of empty string
           if (typeof this.value === 'string' && trim(this.value)?.length === 0) {
             this.boundingBox = null;
           } else if (b.width === 0 && b.height === 0) {
-            this.boundingBox = null;
+            const box = svgBBox(node);
+            this.boundingBox = new Rectangle(box.x, box.y, box.width, box.height);
           } else {
             this.boundingBox = new Rectangle(b.x, b.y, b.width, b.height);
           }
