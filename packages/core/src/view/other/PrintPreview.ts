@@ -403,9 +403,9 @@ class PrintPreview {
         doc.writeln('<html>');
 
         doc.writeln('<head>');
-        if (css) {
-          this.writeHead(doc, css);
-        }
+        
+        this.writeHead(doc, css);
+        
         doc.writeln('</head>');
         doc.writeln('<body class="mxPage">');
       }
@@ -577,7 +577,7 @@ class PrintPreview {
    */
   addPageBreak(doc: Document): void {
     const hr = doc.createElement('hr');
-    hr.className = 'mxPageBreak';
+    hr.className = 'PageBreak';
     doc.body.appendChild(hr);
   }
 
@@ -606,7 +606,7 @@ class PrintPreview {
    * Writes the HEAD section into the given document, without the opening
    * and closing HEAD tags.
    */
-  writeHead(doc: Document, css: string): void {
+  writeHead(doc: Document, css: string|null): void {
     if (this.title != null) {
       doc.writeln(`<title>${this.title}</title>`);
     }
@@ -852,7 +852,7 @@ class PrintPreview {
 
       // Checks clipping rectangle for speedup
       // Must create terminal states for edge clipping even if terminal outside of clip
-      this.graph.cellRenderer.redraw = (state, force, rendering) => {
+      this.graph.cellRenderer.redraw = function(state, force, rendering)  {
         if (state != null) {
           // Gets original state from graph to find bounding box
           const orig = states.get(state.cell);
