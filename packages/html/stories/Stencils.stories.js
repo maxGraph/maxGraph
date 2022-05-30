@@ -326,7 +326,7 @@ const Template = ({ label, ...args }) => {
       const cell = graph.getSelectionCell();
 
       if (cell != null) {
-        const style = utils.prompt('Style', cell.getStyle());
+        const style = prompt('Style', cell.getStyle());
 
         if (style != null) {
           graph.getDataModel().setStyle(cell, style);
