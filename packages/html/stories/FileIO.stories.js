@@ -1,9 +1,10 @@
-import { Graph, constants } from '@maxgraph/core';
+import { Graph, constants, Client, CellTracker, Perimeter, FastOrganicLayout , EventObject, InternalEvent,EventUtils} from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 import { clone } from '@maxgraph/core/util/CloneUtils';
 import { button } from '@maxgraph/core/util/DomHelpers';
 import { load } from '@maxgraph/core/util/MaxXmlRequest';
+import { isConsumed } from '../../core/src/util/EventUtils'
 
 export default {
   title: 'Xml_Json/FileIO',
@@ -17,17 +18,14 @@ const Template = ({ label, ...args }) => {
 
   const container = document.createElement('div');
   container.style.position = 'relative';
-  container.style.overflow = 'hidden';
+  container.style.overflow = 'auto';
   container.style.width = `${args.width}px`;
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
   div.appendChild(container);
 
-  // Program starts here. Creates a sample graph in the
-  // DOM node with the specified ID. This function is invoked
-  // from the onLoad event handler of the document (see below).
-  function main(container) {
+
     // Checks if browser is supported
     if (!Client.isBrowserSupported()) {
       // Displays an error message if the browser is
@@ -37,7 +35,7 @@ const Template = ({ label, ...args }) => {
       // Creates the graph inside the given container
       const graph = new Graph(container);
 
-      graph.setEnabled(false);
+      graph.setEnabled(true);
       graph.setPanning(true);
       graph.setTooltips(true);
       graph.getPlugin('PanningHandler').useLeftButtonForPanning = true;
@@ -69,13 +67,13 @@ const Template = ({ label, ...args }) => {
 
       // Creates a layout algorithm to be used
       // with the graph
-      const layout = new MxFastOrganicLayout(graph);
+      const layout = new FastOrganicLayout(graph);
 
       // Moves stuff wider apart than usual
       layout.forceConstant = 140;
 
       // Adds a button to execute the layout
-      this.el2.appendChild(
+      div.appendChild(
         button('Arrange', function (evt) {
           const parent = graph.getDefaultParent();
           layout.execute(parent);
@@ -104,7 +102,7 @@ const Template = ({ label, ...args }) => {
 
         if (
           this.isEnabled() &&
-          !InternalEvent.isConsumed(evt) &&
+          !isConsumed(evt) &&
           !mxe.isConsumed() &&
           cell != null
         ) {
@@ -112,7 +110,7 @@ const Template = ({ label, ...args }) => {
         }
       };
     }
-  }
+  
 
   // Custom parser for simple file format
   function parse(graph, filename) {

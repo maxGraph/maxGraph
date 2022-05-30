@@ -6,6 +6,7 @@ import {
   constants,
   DomHelpers,
   Client,
+  Codec
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';

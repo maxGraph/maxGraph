@@ -61,7 +61,7 @@ const Template = ({ label, ...args }) => {
   let style = graph.getStylesheet().getDefaultVertexStyle();
   style.shape = constants.SHAPE.SWIMLANE;
   style.verticalAlign = 'middle';
-  style.labelBackgroundColor = 'white';
+  style.labelBackgroundColor = 'none';
   style.fontSize = 11;
   style.startSize = 22;
   style.horizontal = false;
@@ -78,7 +78,7 @@ const Template = ({ label, ...args }) => {
   style.verticalAlign = 'middle';
   delete style.startSize;
   style.foldable=false;
-  style.labelBackgroundColor = 'blue';
+  style.labelBackgroundColor = 'none';
   graph.getStylesheet().putCellStyle('process', style);
 
   style = cloneUtils.clone(style);
