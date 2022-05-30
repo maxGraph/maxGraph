@@ -13,6 +13,7 @@ import {
   MaxForm,
   CellAttributeChange,
 } from '@maxgraph/core';
+import { popup } from '@maxgraph/core/gui/MaxWindow';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -31,7 +32,7 @@ const Template = ({ label, ...args }) => {
   container.style.overflow = 'hidden';
   container.style.width = `${args.width}px`;
   container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
+  container.style.border = 'solid 1px black';
   container.style.cursor = 'default';
   div.appendChild(container);
 
@@ -109,11 +110,10 @@ const Template = ({ label, ...args }) => {
       autoSize = true;
     }
 
-    cellLabelChanged.apply(this, arguments);
+    cellLabelChanged.apply(this, [cell,newValue,autoSize]);
   };
 
   // Overrides method to create the editing value
-  const { getEditingValue } = graph;
   graph.getEditingValue = function (cell) {
     if (domUtils.isNode(cell.value) && cell.value.nodeName.toLowerCase() == 'person') {
       const firstName = cell.getAttribute('firstName', '');
@@ -150,7 +150,7 @@ const Template = ({ label, ...args }) => {
     DomHelpers.button('View XML', function () {
       const encoder = new Codec();
       const node = encoder.encode(graph.getDataModel());
-      popup(utils.getPrettyXml(node), true);
+      popup(xmlUtils.getPrettyXml(node), true);
     })
   );
 
@@ -163,7 +163,7 @@ const Template = ({ label, ...args }) => {
   style.fillColor = '#DFDFDF';
   style.gradientColor = 'white';
   style.fontColor = 'black';
-  style.fontSize = '12';
+  style.fontSize = 12;
   style.spacing = 4;
 
   // Creates the default style for edges
@@ -171,9 +171,10 @@ const Template = ({ label, ...args }) => {
   style.strokeColor = '#0C0C0C';
   style.labelBackgroundColor = 'white';
   style.edgeStyle = EdgeStyle.ElbowConnector;
+  style.bendable=true;
   style.rounded = true;
   style.fontColor = 'black';
-  style.fontSize = '10';
+  style.fontSize = 10;
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

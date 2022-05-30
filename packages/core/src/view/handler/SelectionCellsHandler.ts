@@ -51,7 +51,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
       }
     };
 
-    this.graph.addListener(InternalEvent.CHANGE, this.refreshHandler);
+    this.graph.getSelectionModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
     this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
     this.graph.getView().addListener(InternalEvent.SCALE, this.refreshHandler);
     this.graph.getView().addListener(InternalEvent.TRANSLATE, this.refreshHandler);

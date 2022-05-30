@@ -89,7 +89,7 @@ const Template = ({ label, ...args }) => {
     const img = addToolbarItem(graph, toolbar, vertex, icon);
     img.enabled = true;
 
-    graph.getSelectionModel().addListener(InternalEvent.CHANGE, () => {
+    graph.getSelectionModel().addListener(InternalEvent.CHANGE, function () {
       const tmp = graph.isSelectionEmpty();
       styleUtils.setOpacity(img, tmp ? 100 : 20);
       img.enabled = tmp;
