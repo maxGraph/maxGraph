@@ -177,7 +177,7 @@ class MaxWindow extends EventSource {
     minimizable: boolean=true,
     movable: boolean=true,
     replaceNode: HTMLElement | null=null,
-    style: string=''
+    style: string | undefined =undefined
   ) {
     super();
 
