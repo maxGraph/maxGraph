@@ -223,13 +223,11 @@ const Template = ({ label, ...args }) => {
     // let style = super.getStyle();
     let style = this.style;
     if (this.isCollapsed()) {
-      if (style != null) {
-        style += ';';
-      } else {
-        style = '';
-      }
-      style += 'horizontal=1;align=left;spacingLeft=14;';
+      style.horizontal = 1;
+      style.align = 'left';
+      style.spacingLeft = 14;
     }
+
     return style;
   };
 
@@ -337,14 +335,14 @@ const Template = ({ label, ...args }) => {
       parent: lane1a,
       position: [40, 40],
       size: [30, 30],
-      style: 'state',
+      style: { baseStyleNames: ['state'] },
     });
     const end1 = insertVertex({
       parent: lane1a,
       value: 'A',
       position: [560, 40],
       size: [30, 30],
-      style: 'end',
+      style: { baseStyleNames: ['end'] },
     });
 
     const step1 = insertVertex({
@@ -352,28 +350,28 @@ const Template = ({ label, ...args }) => {
       value: 'Contact\nProvider',
       position: [90, 30],
       size: [80, 50],
-      style: 'process',
+      style: { baseStyleNames: ['process'] },
     });
     const step11 = insertVertex({
       parent: lane1a,
       value: 'Complete\nAppropriate\nRequest',
       position: [190, 30],
       size: [80, 50],
-      style: 'process',
+      style: { baseStyleNames: ['process'] },
     });
     const step111 = insertVertex({
       parent: lane1a,
       value: 'Receive and\nAcknowledge',
       position: [385, 30],
       size: [80, 50],
-      style: 'process',
+      style: { baseStyleNames: ['process'] },
     });
 
     const start2 = insertVertex({
       parent: lane2b,
       position: [40, 40],
       size: [30, 30],
-      style: 'state',
+      style: { baseStyleNames: ['state'] },
     });
 
     const step2 = insertVertex({
@@ -381,14 +379,14 @@ const Template = ({ label, ...args }) => {
       value: 'Receive\nRequest',
       position: [90, 30],
       size: [80, 50],
-      style: 'process',
+      style: { baseStyleNames: ['process'] },
     });
     const step22 = insertVertex({
       parent: lane2b,
       value: 'Refer to Tap\nSystems\nCoordinator',
       position: [190, 30],
       size: [80, 50],
-      style: 'process',
+      style: { baseStyleNames: ['process'] },
     });
 
     const step3 = insertVertex({
@@ -396,14 +394,14 @@ const Template = ({ label, ...args }) => {
       value: 'Request 1st-\nGate\nInformation',
       position: [190, 30],
       size: [80, 50],
-      style: 'process',
+      style: { baseStyleNames: ['process'] },
     });
     const step33 = insertVertex({
       parent: lane1b,
       value: 'Receive 1st-\nGate\nInformation',
       position: [290, 30],
       size: [80, 50],
-      style: 'process',
+      style: { baseStyleNames: ['process'] },
     });
 
     const step4 = insertVertex({
@@ -411,21 +409,21 @@ const Template = ({ label, ...args }) => {
       value: 'Receive and\nAcknowledge',
       position: [290, 20],
       size: [80, 50],
-      style: 'process',
+      style: { baseStyleNames: ['process'] },
     });
     const step44 = insertVertex({
       parent: lane2a,
       value: 'Contract\nConstraints?',
       position: [400, 20],
       size: [50, 50],
-      style: 'condition',
+      style: { baseStyleNames: ['condition'] },
     });
     const step444 = insertVertex({
       parent: lane2a,
       value: 'Tap for gas\ndelivery?',
       position: [480, 20],
       size: [50, 50],
-      style: 'condition',
+      style: { baseStyleNames: ['condition'] },
     });
 
     const end2 = insertVertex({
@@ -433,14 +431,14 @@ const Template = ({ label, ...args }) => {
       value: 'B',
       position: [560, 30],
       size: [30, 30],
-      style: 'end',
+      style: { baseStyleNames: ['end'] },
     });
     const end3 = insertVertex({
       parent: lane2a,
       value: 'C',
       position: [560, 84],
       size: [30, 30],
-      style: 'end',
+      style: { baseStyleNames: ['end'] },
     });
 
     let e = null;
@@ -492,14 +490,14 @@ const Template = ({ label, ...args }) => {
       value: 'No',
       source: step44,
       target: step444,
-      style: 'verticalAlign=bottom',
+      style: { verticalAlign: 'bottom' },
     });
     insertEdge({
       parent,
       value: 'Yes',
       source: step44,
       target: step111,
-      style: 'verticalAlign=bottom;horizontal=0;labelBackgroundColor=white;',
+      style: { verticalAlign: 'bottom', horizontal: 0, labelBackgroundColor: 'white' },
     });
 
     insertEdge({
@@ -507,14 +505,14 @@ const Template = ({ label, ...args }) => {
       value: 'Yes',
       source: step444,
       target: end2,
-      style: 'verticalAlign=bottom',
+      style: { verticalAlign: 'bottom' },
     });
     e = insertEdge({
       parent: lane2a,
       value: 'No',
       source: step444,
       target: end3,
-      style: 'verticalAlign=top',
+      style: { verticalAlign: 'top' },
     });
 
     e.geometry.points = [
@@ -528,19 +526,19 @@ const Template = ({ label, ...args }) => {
       parent,
       source: step1,
       target: step2,
-      style: 'crossover',
+      style: { baseStyleNames: ['crossover'] },
     });
     insertEdge({
       parent,
       source: step3,
       target: step11,
-      style: 'crossover',
+      style: { baseStyleNames: ['crossover'] },
     });
     e = insertEdge({
       parent: lane1a,
       source: step11,
       target: step33,
-      style: 'crossover',
+      style: { baseStyleNames: ['crossover'] },
     });
 
     e.geometry.points = [

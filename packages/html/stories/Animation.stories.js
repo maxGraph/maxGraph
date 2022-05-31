@@ -24,11 +24,7 @@ const Template = ({ label, ...args }) => {
   graph.setEnabled(false);
   const parent = graph.getDefaultParent();
 
-  const vertexStyle =
-    'shape=cylinder;strokeWidth=2;fillColor=#ffffff;strokeColor=black;' +
-    'gradientColor=#a0a0a0;fontColor=black;fontStyle=1;spacingTop=14;';
-
-  /*const vertexStyle = {
+  const vertexStyle = {
     shape: 'cylinder',
     strokeWidth: 2,
     fillColor: '#ffffff',
@@ -37,7 +33,7 @@ const Template = ({ label, ...args }) => {
     fontColor: 'black',
     fontStyle: 1,
     spacingTop: 14,
-  };*/
+  };
 
   let e1;
   graph.batchUpdate(() => {
@@ -59,8 +55,14 @@ const Template = ({ label, ...args }) => {
       parent,
       source: v1,
       target: v2,
-      style:
-        'strokeWidth=3;endArrow=block;endSize=2;endFill=1;strokeColor=black;rounded=1;',
+      style: {
+        strokeWidth: 3,
+        endArrow: 'block',
+        endSize: 2,
+        endFill: 1,
+        strokeColor: 'black',
+        rounded: 1,
+      },
     });
     e1.geometry.points = [new Point(230, 50)];
     graph.orderCells(true, [e1]);

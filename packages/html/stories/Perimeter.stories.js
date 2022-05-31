@@ -63,36 +63,15 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(
-      parent,
-      null,
-      'Label',
-      20,
-      20,
-      80,
-      30,
-      'verticalLabelPosition=bottom'
-    );
-    const v2 = graph.insertVertex(
-      parent,
-      null,
-      'Label',
-      200,
-      20,
-      80,
-      30,
-      'verticalLabelPosition=bottom'
-    );
-    const v3 = graph.insertVertex(
-      parent,
-      null,
-      'Label',
-      20,
-      150,
-      80,
-      30,
-      'verticalLabelPosition=bottom'
-    );
+    const v1 = graph.insertVertex(parent, null, 'Label', 20, 20, 80, 30, {
+      verticalLabelPosition: 'bottom',
+    });
+    const v2 = graph.insertVertex(parent, null, 'Label', 200, 20, 80, 30, {
+      verticalLabelPosition: 'bottom',
+    });
+    const v3 = graph.insertVertex(parent, null, 'Label', 20, 150, 80, 30, {
+      verticalLabelPosition: 'bottom',
+    });
     var e1 = graph.insertEdge(parent, null, '', v1, v2);
     var e1 = graph.insertEdge(parent, null, '', v1, v3);
   });

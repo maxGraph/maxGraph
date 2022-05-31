@@ -4,20 +4,17 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import {
-  DIRECTION,
-  DIRECTION_MASK,
-} from './Constants';
+import { DIRECTION, DIRECTION_MASK } from './Constants';
 import Point from '../view/geometry/Point';
 import Rectangle from '../view/geometry/Rectangle';
 import CellState from '../view/cell/CellState';
-import type { CellStateStyles } from '../types';
+import type { CellStateStyle } from '../types';
 import { getValue, isNullish } from './Utils';
 
 /**
  * Converts the given degree to radians.
  */
- export const toRadians = (deg: number) => {
+export const toRadians = (deg: number) => {
   return (Math.PI * deg) / 180;
 };
 
@@ -367,7 +364,7 @@ export const findNearestSegment = (state: CellState, x: number, y: number) => {
 export const getDirectedBounds = (
   rect: Rectangle,
   m: Rectangle,
-  style: CellStateStyles | null,
+  style: CellStateStyle | null,
   flipH: boolean,
   flipV: boolean
 ) => {
@@ -651,7 +648,7 @@ export const intersectsHotspot = (
  *
  * @param n String representing the possibly numeric value.
  */
- export const isNumeric = (n: any) => {
+export const isNumeric = (n: any) => {
   return (
     !Number.isNaN(parseFloat(n)) &&
     isFinite(+n) &&
@@ -837,5 +834,3 @@ export const relativeCcw = (
 
   return ccw < 0.0 ? -1 : ccw > 0.0 ? 1 : 0;
 };
-
-

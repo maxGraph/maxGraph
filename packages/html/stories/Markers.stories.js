@@ -134,68 +134,47 @@ const Template = ({ label, ...args }) => {
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'v1', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'v2', 440, 20, 80, 30);
-    const e1 = graph.insertEdge(
-      parent,
-      null,
-      '',
-      v1,
-      v2,
-      'dashed=1;' +
-        'startArrow=oval;endArrow=block;sourcePerimeterSpacing=4;startFill=0;endFill=0;'
-    );
-    const e11 = graph.insertVertex(
-      e1,
-      null,
-      'Label',
-      0,
-      0,
-      20,
-      14,
-      'shape=message;labelBackgroundColor=#ffffff;labelPosition=left;spacingRight=2;align=right;fontStyle=0;'
-    );
+    const e1 = graph.insertEdge(parent, null, '', v1, v2, {
+      dashed: 1,
+      startArrow: 'oval',
+      endArrow: 'block',
+      sourcePerimeterSpacing: 4,
+      startFill: 0,
+      endFill: 0,
+    });
+    const e11 = graph.insertVertex(e1, null, 'Label', 0, 0, 20, 14, {
+      shape: 'message',
+      labelBackgroundColor: '#ffffff',
+      labelPosition: 'left',
+      spacingRight: 2,
+      align: 'right',
+      fontStyle: 0,
+    });
     e11.geometry.offset = new Point(-10, -7);
     e11.geometry.relative = true;
     e11.connectable = false;
 
     const v3 = graph.insertVertex(parent, null, 'v3', 20, 120, 80, 30);
     const v4 = graph.insertVertex(parent, null, 'v4', 440, 120, 80, 30);
-    const e2 = graph.insertEdge(
-      parent,
-      null,
-      'Label',
-      v3,
-      v4,
-      'startArrow=dash;startSize=12;endArrow=block;labelBackgroundColor=#FFFFFF;'
-    );
+    const e2 = graph.insertEdge(parent, null, 'Label', v3, v4, {
+      startArrow: 'dash',
+      startSize: 12,
+      endArrow: 'block',
+      labelBackgroundColor: '#FFFFFF',
+    });
 
-    const v5 = graph.insertVertex(
-      parent,
-      null,
-      'v5',
-      40,
-      220,
-      40,
-      40,
-      'shape=ellipse;perimeter=ellipsePerimeter;'
-    );
-    const v6 = graph.insertVertex(
-      parent,
-      null,
-      'v6',
-      460,
-      220,
-      40,
-      40,
-      'shape=doubleEllipse;perimeter=ellipsePerimeter;'
-    );
-    const e3 = graph.insertEdge(
-      parent,
-      null,
-      'Link',
-      v5,
-      v6,
-      'shape=link;labelBackgroundColor=#FFFFFF;'
-    );
+    const v5 = graph.insertVertex(parent, null, 'v5', 40, 220, 40, 40, {
+      shape: 'ellipse',
+      perimeter: 'ellipsePerimeter',
+    });
+    const v6 = graph.insertVertex(parent, null, 'v6', 460, 220, 40, 40, {
+      shape: 'doubleEllipse',
+      perimeter: 'ellipsePerimeter',
+    });
+    const e3 = graph.insertEdge(parent, null, 'Link', v5, v6, {
+      shape: 'link',
+      labelBackgroundColor: '#FFFFFF',
+    });
   });
 
   return container;

@@ -53,13 +53,13 @@ const Template = ({ label, ...args }) => {
         const fill = utils.getValue(targetStyle, 'fillColor');
 
         if (fill != null) {
-          style += `;strokeColor=${fill}`;
+          style.strokeColor = fill;
         }
       }
     } else if (this.isVertex()) {
       const geometry = this.getGeometry();
       if (geometry != null && geometry.width > 80) {
-        style += ';fillColor=green';
+        style.fillColor = 'green';
       }
     }
     return style;
@@ -76,7 +76,7 @@ const Template = ({ label, ...args }) => {
       value: 'Hello,',
       position: [20, 20],
       size: [80, 30],
-      style: 'fillColor=green',
+      style: { fillColor: 'green' },
     });
     v1.getStyle = getStyle;
 
@@ -85,7 +85,7 @@ const Template = ({ label, ...args }) => {
       value: 'World!',
       position: [200, 150],
       size: [80, 30],
-      style: 'fillColor=blue',
+      style: { fillColor: 'blue' },
     });
     v2.getStyle = getStyle;
 
@@ -94,7 +94,7 @@ const Template = ({ label, ...args }) => {
       value: 'World!',
       position: [20, 150],
       size: [80, 30],
-      style: 'fillColor=red',
+      style: { fillColor: 'red' },
     });
     v3.getStyle = getStyle;
 
@@ -103,7 +103,12 @@ const Template = ({ label, ...args }) => {
       value: 'Connect',
       source: v1,
       target: v2,
-      style: 'perimeterSpacing=4;strokeWidth=4;labelBackgroundColor=white;fontStyle=1',
+      style: {
+        perimeterSpacing: 4,
+        strokeWidth: 4,
+        labelBackgroundColor: 'white',
+        fontStyle: 1,
+      },
     });
     e1.getStyle = getStyle;
   });

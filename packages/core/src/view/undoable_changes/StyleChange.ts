@@ -3,7 +3,7 @@ import GraphDataModel from '../GraphDataModel';
 import CodecRegistry from '../../serialization/CodecRegistry';
 import GenericChangeCodec from './GenericChangeCodec';
 
-import type { UndoableChange } from '../../types';
+import type { CellStyle, UndoableChange } from '../../types';
 
 /**
  * Action to change a cell's style in a model.
@@ -13,10 +13,10 @@ import type { UndoableChange } from '../../types';
 class StyleChange implements UndoableChange {
   model: GraphDataModel;
   cell: Cell;
-  style: string | null;
-  previous: string | null;
+  style: CellStyle;
+  previous: CellStyle;
 
-  constructor(model: GraphDataModel, cell: Cell, style: string | null) {
+  constructor(model: GraphDataModel, cell: Cell, style: CellStyle) {
     this.model = model;
     this.cell = cell;
     this.style = style;

@@ -26,7 +26,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Defines the common part of all cell styles as a string-prefix
-  const prefix = 'shape=image;image=images/icons48/keys.png;';
+  const prefix = { shape: 'image', image: 'images/icons48/keys.png' };
 
   // Adds cells to the model in a single step and set the vertex
   // label positions using the label position styles. Vertical
@@ -34,46 +34,26 @@ const Template = ({ label, ...args }) => {
   // Note: Alternatively, vertex labels can be set be overriding
   // CellRenderer.getLabelBounds.
   graph.batchUpdate(() => {
-    graph.insertVertex(
-      parent,
-      null,
-      'Bottom',
-      60,
-      60,
-      60,
-      60,
-      `${prefix}verticalLabelPosition=bottom;verticalAlign=top`
-    );
-    graph.insertVertex(
-      parent,
-      null,
-      'Top',
-      140,
-      60,
-      60,
-      60,
-      `${prefix}verticalLabelPosition=top;verticalAlign=bottom`
-    );
-    graph.insertVertex(
-      parent,
-      null,
-      'Left',
-      60,
-      160,
-      60,
-      60,
-      `${prefix}labelPosition=left;align=right`
-    );
-    graph.insertVertex(
-      parent,
-      null,
-      'Right',
-      140,
-      160,
-      60,
-      60,
-      `${prefix}labelPosition=right;align=left`
-    );
+    graph.insertVertex(parent, null, 'Bottom', 60, 60, 60, 60, {
+      ...prefix,
+      verticalLabelPosition: 'bottom',
+      verticalAlign: 'top',
+    });
+    graph.insertVertex(parent, null, 'Top', 140, 60, 60, 60, {
+      ...prefix,
+      verticalLabelPosition: 'top',
+      verticalAlign: 'bottom',
+    });
+    graph.insertVertex(parent, null, 'Left', 60, 160, 60, 60, {
+      ...prefix,
+      labelPosition: 'left',
+      align: 'right',
+    });
+    graph.insertVertex(parent, null, 'Right', 140, 160, 60, 60, {
+      ...prefix,
+      labelPosition: 'right',
+      align: 'left',
+    });
   });
 
   return container;

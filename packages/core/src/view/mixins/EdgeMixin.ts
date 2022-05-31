@@ -9,6 +9,7 @@ import InternalEvent from '../event/InternalEvent';
 import Dictionary from '../../util/Dictionary';
 import { Graph } from '../Graph';
 import Point from '../geometry/Point';
+import { CellStyle } from 'src/types';
 
 declare module '../Graph' {
   interface Graph {
@@ -18,7 +19,7 @@ declare module '../Graph' {
     connectableEdges: boolean;
     allowDanglingEdges: boolean;
     cloneInvalidEdges: boolean;
-    alternateEdgeStyle: string | null;
+    alternateEdgeStyle: CellStyle;
     edgeLabelsMovable: boolean;
 
     isResetEdgesOnMove: () => boolean;
@@ -50,7 +51,7 @@ declare module '../Graph' {
       value: any,
       source: Cell | null,
       target: Cell | null,
-      style: any
+      style: CellStyle
     ) => Cell;
     addEdge: (
       edge: Cell,
@@ -180,16 +181,16 @@ const EdgeMixin: PartialType = {
   /**
    * Specifies if edges that are cloned should be validated and only inserted
    * if they are valid.
-   * @default true
+   * @default false
    */
   cloneInvalidEdges: false,
 
   /**
    * Specifies the alternate edge style to be used if the main control point
    * on an edge is being double clicked.
-   * @default null
+   * @default {}
    */
-  alternateEdgeStyle: null,
+  alternateEdgeStyle: {},
 
   /**
    * Specifies the return value for edges in {@link isLabelMovable}.
@@ -300,10 +301,10 @@ const EdgeMixin: PartialType = {
       this.batchUpdate(() => {
         const style = edge.getStyle();
 
-        if (!style || style.length === 0) {
+        if (Object.keys(style).length) {
           this.getDataModel().setStyle(edge, this.alternateEdgeStyle);
         } else {
-          this.getDataModel().setStyle(edge, null);
+          this.getDataModel().setStyle(edge, {});
         }
 
         // Removes all existing control points
@@ -395,7 +396,7 @@ const EdgeMixin: PartialType = {
    * @param value JavaScript object to be used as the user object.
    * @param source {@link mxCell} that defines the source of the edge.
    * @param target {@link mxCell} that defines the target of the edge.
-   * @param style Optional string that defines the cell style.
+   * @param style Optional object that defines the cell style.
    */
   insertEdge(...args) {
     let parent: Cell;
@@ -403,7 +404,7 @@ const EdgeMixin: PartialType = {
     let value: any; // note me - can be a string or a class instance!!!
     let source: Cell;
     let target: Cell;
-    let style: string = ''; // TODO: Also allow for an object or class instance??
+    let style: CellStyle;
 
     if (args.length === 1) {
       // If only a single parameter, treat as an object
@@ -420,6 +421,9 @@ const EdgeMixin: PartialType = {
       [parent, id, value, source, target, style] = args;
     }
 
+    if (typeof style === 'string')
+      throw new Error(`String-typed style is no longer supported: ${style}`);
+
     const edge = this.createEdge(parent, id, value, source, target, style);
     return this.addEdge(edge, parent, source, target);
   },
@@ -430,7 +434,14 @@ const EdgeMixin: PartialType = {
    * are set when the edge is added to the model.
    *
    */
-  createEdge(parent = null, id, value, source = null, target = null, style) {
+  createEdge(
+    parent = null,
+    id,
+    value,
+    source = null,
+    target = null,
+    style: CellStyle = {}
+  ) {
     // Creates the edge
     const edge = new Cell(value, new Geometry(), style);
     edge.setId(id);

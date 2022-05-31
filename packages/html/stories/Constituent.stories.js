@@ -1,4 +1,9 @@
-import { Graph, InternalEvent, SelectionHandler, RubberBandHandler } from '@maxgraph/core';
+import {
+  Graph,
+  InternalEvent,
+  SelectionHandler,
+  RubberBandHandler,
+} from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -87,7 +92,9 @@ const Template = ({ label, ...args }) => {
       value: 'Constituent',
       position: [20, 20],
       size: [80, 30],
-      style: 'constituent=1;',
+      style: {
+        constituent: 1,
+      },
     });
   });
 

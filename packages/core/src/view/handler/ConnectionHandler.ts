@@ -41,10 +41,14 @@ import CellState from '../cell/CellState';
 import { Graph } from '../Graph';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import Shape from '../geometry/Shape';
-import { GraphPlugin, Listenable } from '../../types';
+import { CellStyle, GraphPlugin, Listenable } from '../../types';
 import CellArray from '../cell/CellArray';
 
-type FactoryMethod = (source: Cell | null, target: Cell | null, style?: string) => Cell;
+type FactoryMethod = (
+  source: Cell | null,
+  target: Cell | null,
+  style?: CellStyle
+) => Cell;
 
 /**
  * Graph event handler that creates new connections. Uses {@link TerminalMarker}
@@ -1780,11 +1784,11 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
         // Uses the value of the preview edge state for inserting
         // the new edge into the graph
         let value = null;
-        let style = '';
+        let style = {};
 
         if (this.edgeState) {
           value = this.edgeState.cell.value;
-          style = this.edgeState.cell.style ?? '';
+          style = this.edgeState.cell.style ?? {};
         }
 
         edge = this.insertEdge(parent as Cell, '', value, source, target, style);
@@ -1911,7 +1915,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
     value: any,
     source: Cell | null,
     target: Cell | null,
-    style: string
+    style: CellStyle
   ): Cell {
     if (!this.factoryMethod) {
       return this.graph.insertEdge(parent, id, value, source, target, style);
@@ -1996,7 +2000,12 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * @param target <Cell> that represents the target terminal.
    * @param style Optional style from the preview edge.
    */
-  createEdge(value: any, source: Cell | null, target: Cell | null, style: string = '') {
+  createEdge(
+    value: any,
+    source: Cell | null,
+    target: Cell | null,
+    style: CellStyle = {}
+  ) {
     let edge = null;
 
     // Creates a new edge using the factoryMethod

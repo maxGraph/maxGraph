@@ -171,59 +171,35 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(parent, null, 'A1', 20, 20, 40, 80, 'shape=and');
-    const v2 = graph.insertVertex(parent, null, 'A2', 20, 220, 40, 80, 'shape=and');
-    const v3 = graph.insertVertex(parent, null, 'X1', 160, 110, 80, 80, 'shape=xor');
+    const v1 = graph.insertVertex(parent, null, 'A1', 20, 20, 40, 80, { shape: 'and' });
+    const v2 = graph.insertVertex(parent, null, 'A2', 20, 220, 40, 80, { shape: 'and' });
+    const v3 = graph.insertVertex(parent, null, 'X1', 160, 110, 80, 80, { shape: 'xor' });
     const e1 = graph.insertEdge(parent, null, '', v1, v3);
     e1.geometry.points = [new Point(90, 60), new Point(90, 130)];
     const e2 = graph.insertEdge(parent, null, '', v2, v3);
     e2.geometry.points = [new Point(90, 260), new Point(90, 170)];
 
-    const v4 = graph.insertVertex(
-      parent,
-      null,
-      'A3',
-      520,
-      20,
-      40,
-      80,
-      'shape=customShape;flipH=1'
-    );
-    const v5 = graph.insertVertex(
-      parent,
-      null,
-      'A4',
-      520,
-      220,
-      40,
-      80,
-      'shape=and;flipH=1'
-    );
-    const v6 = graph.insertVertex(
-      parent,
-      null,
-      'X2',
-      340,
-      110,
-      80,
-      80,
-      'shape=xor;flipH=1'
-    );
+    const v4 = graph.insertVertex(parent, null, 'A3', 520, 20, 40, 80, {
+      shape: 'customShape',
+      flipH: true,
+    });
+    const v5 = graph.insertVertex(parent, null, 'A4', 520, 220, 40, 80, {
+      shape: 'and',
+      flipH: true,
+    });
+    const v6 = graph.insertVertex(parent, null, 'X2', 340, 110, 80, 80, {
+      shape: 'xor',
+      flipH: true,
+    });
     const e3 = graph.insertEdge(parent, null, '', v4, v6);
     e3.geometry.points = [new Point(490, 60), new Point(130, 130)];
     const e4 = graph.insertEdge(parent, null, '', v5, v6);
     e4.geometry.points = [new Point(490, 260), new Point(130, 170)];
 
-    const v7 = graph.insertVertex(
-      parent,
-      null,
-      'O1',
-      250,
-      260,
-      80,
-      60,
-      'shape=or;direction=south'
-    );
+    const v7 = graph.insertVertex(parent, null, 'O1', 250, 260, 80, 60, {
+      shape: 'or',
+      direction: 'south',
+    });
     const e5 = graph.insertEdge(parent, null, '', v6, v7);
     e5.geometry.points = [new Point(310, 150)];
     const e6 = graph.insertEdge(parent, null, '', v3, v7);

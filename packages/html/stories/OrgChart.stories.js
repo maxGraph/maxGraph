@@ -209,7 +209,7 @@ const Template = ({ label, ...args }) => {
       20,
       140,
       60,
-      'image=/images/house.png'
+      { image: '/images/house.png' }
     );
     graph.updateCellSize(v1);
     addOverlays(graph, v1, false);

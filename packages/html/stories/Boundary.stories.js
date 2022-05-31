@@ -195,14 +195,11 @@ const Template = ({ label, ...args }) => {
       value: 'in',
       position: [0, 0.5],
       size: [20, 20],
-      style: 'fontSize=9;shape=ellipse;resizable=0;',
-      /*style: {
-        fontSize: 9, 
-        shape: 'ellipse', 
-        resizable: false, 
-        top: 0,    left: 0.5, 
-        width: 20, height: 20
-      },*/
+      style: {
+        fontSize: 9,
+        shape: 'ellipse',
+        resizable: false,
+      },
     });
     v2.geometry.offset = new Point(-10, -10);
     v2.geometry.relative = true;
@@ -212,7 +209,7 @@ const Template = ({ label, ...args }) => {
       value: 'out',
       position: [1, 0.5],
       size: [20, 20],
-      style: 'fontSize=9;shape=ellipse;resizable=0;',
+      style: { fontSize: 9, shape: 'ellipse', resizable: false },
     });
     v3.geometry.offset = new Point(-10, -10);
     v3.geometry.relative = true;

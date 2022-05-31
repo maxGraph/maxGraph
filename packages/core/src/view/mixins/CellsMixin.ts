@@ -32,7 +32,7 @@ import { htmlEntities } from '../../util/StringUtils';
 import CellState from '../cell/CellState';
 import { Graph } from '../Graph';
 
-import type { CellStateStyles } from '../../types';
+import type { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from '../../types';
 
 declare module '../Graph' {
   interface Graph {
@@ -52,32 +52,32 @@ declare module '../Graph' {
 
     getBoundingBox: (cells: CellArray) => Rectangle | null;
     removeStateForCell: (cell: Cell) => void;
-    getCurrentCellStyle: (cell: Cell, ignoreState?: boolean) => CellStateStyles;
-    getCellStyle: (cell: Cell) => CellStateStyles;
-    postProcessCellStyle: (style: CellStateStyles) => CellStateStyles;
-    setCellStyle: (style: keyof CellStateStyles, cells: CellArray) => void;
+    getCurrentCellStyle: (cell: Cell, ignoreState?: boolean) => CellStateStyle;
+    getCellStyle: (cell: Cell) => CellStateStyle;
+    postProcessCellStyle: (style: CellStateStyle) => CellStateStyle;
+    setCellStyle: (style: CellStyle, cells: CellArray) => void;
     toggleCellStyle: (
-      key: keyof CellStateStyles,
+      key: keyof CellStateStyle,
       defaultValue: boolean,
       cell: Cell
     ) => boolean | null;
     toggleCellStyles: (
-      key: keyof CellStateStyles,
+      key: keyof CellStateStyle,
       defaultValue: boolean,
       cells: CellArray
     ) => boolean | null;
     setCellStyles: (
-      key: keyof CellStateStyles,
-      value: CellStateStyles[keyof CellStateStyles],
+      key: keyof CellStateStyle,
+      value: CellStateStyle[keyof CellStateStyle],
       cells?: CellArray
     ) => void;
     toggleCellStyleFlags: (
-      key: keyof CellStateStyles,
+      key: NumericCellStateStyleKeys,
       flag: number,
       cells?: CellArray | null
     ) => void;
     setCellStyleFlags: (
-      key: keyof CellStateStyles,
+      key: NumericCellStateStyleKeys,
       flag: number,
       value?: boolean | null,
       cells?: CellArray | null
@@ -557,26 +557,18 @@ export const CellsMixin: PartialType = {
    * @param cell {@link mxCell} whose style should be returned as an array.
    */
   getCellStyle(cell) {
-    const stylename = cell.getStyle();
-    let style;
+    const cellStyle = cell.getStyle();
     const stylesheet = this.getStylesheet();
 
     // Gets the default style for the cell
-    if (cell.isEdge()) {
-      style = stylesheet.getDefaultEdgeStyle();
-    } else {
-      style = stylesheet.getDefaultVertexStyle();
-    }
+    const defaultStyle = cell.isEdge()
+      ? stylesheet.getDefaultEdgeStyle()
+      : stylesheet.getDefaultVertexStyle();
 
     // Resolves the stylename using the above as the default
-    if (style && stylename) {
-      style = this.postProcessCellStyle(stylesheet.getCellStyle(stylename, style));
-    }
-
-    // Returns a non-null value if no style can be found
-    if (!style) {
-      style = {} as CellStateStyles;
-    }
+    const style = this.postProcessCellStyle(
+      stylesheet.getCellStyle(cellStyle, defaultStyle ?? {})
+    );
 
     return style;
   },
@@ -615,6 +607,7 @@ export const CellsMixin: PartialType = {
 
       style.image = image;
     }
+
     return style;
   },
 
@@ -1382,12 +1375,8 @@ export const CellsMixin: PartialType = {
           const style = this.getCellStyle(cell);
           let cellStyle = cell.getStyle();
 
-          if (cellStyle == null) {
-            cellStyle = '';
-          }
-
           if (style.horizontal ?? true) {
-            cellStyle = setStyle(cellStyle, 'startSize', size.height + 8);
+            cellStyle.startSize = size.height + 8;
 
             if (collapsed) {
               geo.height = size.height + 8;
@@ -1395,7 +1384,7 @@ export const CellsMixin: PartialType = {
 
             geo.width = size.width;
           } else {
-            cellStyle = setStyle(cellStyle, 'startSize', size.width + 8);
+            cellStyle.startSize = size.width + 8;
 
             if (collapsed) {
               geo.width = size.width + 8;

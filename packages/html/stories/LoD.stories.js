@@ -52,15 +52,15 @@ const Template = ({ label, ...args }) => {
     v4.lod = 3;
     v4.isVisible = isVisible;
 
-    const e1 = graph.insertEdge(parent, null, '2', v1, v2, 'strokeWidth=2');
+    const e1 = graph.insertEdge(parent, null, '2', v1, v2, { strokeWidth: 2 });
     e1.lod = 2;
     e1.isVisible = isVisible;
 
-    const e2 = graph.insertEdge(parent, null, '2', v3, v4, 'strokeWidth=2');
+    const e2 = graph.insertEdge(parent, null, '2', v3, v4, { strokeWidth: 2 });
     e2.lod = 2;
     e2.isVisible = isVisible;
 
-    const e3 = graph.insertEdge(parent, null, '3', v1, v4, 'strokeWidth=1');
+    const e3 = graph.insertEdge(parent, null, '3', v1, v4, { strokeWidth: 1 });
     e3.lod = 3;
     e3.isVisible = isVisible;
   });

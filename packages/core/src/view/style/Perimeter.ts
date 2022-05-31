@@ -10,7 +10,7 @@ import Point from '../geometry/Point';
 import { DIRECTION } from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import CellState from '../cell/CellState';
-import { CellStateStyles } from '../../types';
+import { CellStateStyle } from '../../types';
 
 /**
  * @class Perimeter
@@ -711,7 +711,7 @@ class Perimeter {
   }
 
   private static getValue(
-    style: CellStateStyles,
+    style: CellStateStyle,
     direction: string,
     DIRECTION_EAST: string
   ) {

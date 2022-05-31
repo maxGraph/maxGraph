@@ -94,13 +94,19 @@ const Template = ({ label, ...args }) => {
       parent,
       source: v1,
       target: v2,
-      style: 'edgeStyle=orthogonalEdgeStyle;bendable=true',
+      style: {
+        edgeStyle: 'orthogonalEdgeStyle',
+        bendable: true
+      },
     });
     const e2 = graph.insertEdge({
       parent,
       source: v2,
       target: v1,
-      style: 'edgeStyle=orthogonalEdgeStyle;bendable=true',
+      style: {
+        edgeStyle: 'orthogonalEdgeStyle',
+        bendable: true
+      },
     });
   });
 

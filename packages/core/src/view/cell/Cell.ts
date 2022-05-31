@@ -19,7 +19,7 @@ import { removeWhitespace } from '../../util/StringUtils';
 import { importNode } from '../../util/domUtils';
 import Codec from '../../serialization/Codec';
 
-import type { FilterFunction } from '../../types';
+import type { CellStyle, FilterFunction } from '../../types';
 
 /**
  * Cells are the elements of the graph model. They represent the state
@@ -68,7 +68,7 @@ export class Cell {
   constructor(
     value: any = null,
     geometry: Geometry | null = null,
-    style: string | null = null
+    style: CellStyle = {}
   ) {
     this.value = value;
     this.setGeometry(geometry);
@@ -112,7 +112,7 @@ export class Cell {
    * Holds the style as a string of the form [(stylename|key=value);]. Default is
    * null.
    */
-  style: string | null = null;
+  style: CellStyle = {};
 
   /**
    * Specifies whether the cell is a vertex. Default is false.
@@ -240,14 +240,14 @@ export class Cell {
   /**
    * Returns a string that describes the <style>.
    */
-  getStyle(): string | null {
+  getStyle() {
     return this.style;
   }
 
   /**
    * Sets the string to be used as the <style>.
    */
-  setStyle(style: string | null) {
+  setStyle(style: CellStyle) {
     this.style = style;
   }
 
@@ -936,9 +936,7 @@ export class CellCodec extends ObjectCodec {
    * Overidden to disable conversion of value to number.
    */
   isNumericAttribute(dec: Codec, attr: Element, obj: any) {
-    return (
-      attr.nodeName !== 'value' && super.isNumericAttribute(dec, attr, obj)
-    );
+    return attr.nodeName !== 'value' && super.isNumericAttribute(dec, attr, obj);
   }
 
   /**

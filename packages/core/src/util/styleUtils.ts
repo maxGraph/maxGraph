@@ -19,6 +19,7 @@ import Rectangle from '../view/geometry/Rectangle';
 import Cell from '../view/cell/Cell';
 import GraphDataModel from '../view/GraphDataModel';
 import CellArray from '../view/cell/CellArray';
+import { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from 'src/types';
 
 /**
  * Removes the cursors from the style of the given DOM node and its
@@ -26,102 +27,101 @@ import CellArray from '../view/cell/CellArray';
  *
  * @param element DOM node to remove the cursor style from.
  */
- export const removeCursors = (element: HTMLElement) => {
-    if (element.style) {
-      element.style.cursor = '';
+export const removeCursors = (element: HTMLElement) => {
+  if (element.style) {
+    element.style.cursor = '';
+  }
+
+  const children = element.children;
+
+  if (children) {
+    const childCount = children.length;
+
+    for (let i = 0; i < childCount; i += 1) {
+      removeCursors(children[i] as HTMLElement);
     }
+  }
+};
 
-    const children = element.children;
+/**
+ * Function: getCurrentStyle
+ *
+ * Returns the current style of the specified element.
+ *
+ * @param element DOM node whose current style should be returned.
+ */
+export const getCurrentStyle = (element: HTMLElement) => {
+  return element ? window.getComputedStyle(element, '') : null;
+};
 
-    if (children) {
-      const childCount = children.length;
+/**
+ * Function: parseCssNumber
+ *
+ * Parses the given CSS numeric value adding handling for the values thin,
+ * medium and thick (2, 4 and 6).
+ */
+export const parseCssNumber = (value: string) => {
+  if (value === 'thin') {
+    value = '2';
+  } else if (value === 'medium') {
+    value = '4';
+  } else if (value === 'thick') {
+    value = '6';
+  }
 
-      for (let i = 0; i < childCount; i += 1) {
-        removeCursors(children[i] as HTMLElement);
-      }
-    }
-  };
+  let n = parseFloat(value);
 
-  /**
-   * Function: getCurrentStyle
-   *
-   * Returns the current style of the specified element.
-   *
-   * @param element DOM node whose current style should be returned.
-   */
-  export const getCurrentStyle = (element: HTMLElement) => {
-    return element ? window.getComputedStyle(element, '') : null;
-  };
+  if (Number.isNaN(n)) {
+    n = 0;
+  }
 
-  /**
-   * Function: parseCssNumber
-   *
-   * Parses the given CSS numeric value adding handling for the values thin,
-   * medium and thick (2, 4 and 6).
-   */
-  export const parseCssNumber = (value: string) => {
-    if (value === 'thin') {
-      value = '2';
-    } else if (value === 'medium') {
-      value = '4';
-    } else if (value === 'thick') {
-      value = '6';
-    }
+  return n;
+};
 
-    let n = parseFloat(value);
+/**
+ * Function: setPrefixedStyle
+ *
+ * Adds the given style with the standard name and an optional vendor prefix for the current
+ * browser.
+ *
+ * ```javascript
+ * mxUtils.setPrefixedStyle(node.style, 'transformOrigin', '0% 0%');
+ * ```
+ */
+export const setPrefixedStyle = (
+  style: CSSStyleDeclaration,
+  name: string,
+  value: string
+) => {
+  let prefix = null;
 
-    if (Number.isNaN(n)) {
-      n = 0;
-    }
+  if (Client.IS_SF || Client.IS_GC) {
+    prefix = 'Webkit';
+  } else if (Client.IS_MT) {
+    prefix = 'Moz';
+  }
 
-    return n;
-  };
+  style.setProperty(name, value);
 
-  /**
-   * Function: setPrefixedStyle
-   *
-   * Adds the given style with the standard name and an optional vendor prefix for the current
-   * browser.
-   *
-   * ```javascript
-   * mxUtils.setPrefixedStyle(node.style, 'transformOrigin', '0% 0%');
-   * ```
-   */
-  export const setPrefixedStyle = (
-    style: CSSStyleDeclaration,
-    name: string,
-    value: string
-  ) => {
-    let prefix = null;
-
-    if (Client.IS_SF || Client.IS_GC) {
-      prefix = 'Webkit';
-    } else if (Client.IS_MT) {
-      prefix = 'Moz';
-    }
-
+  if (prefix !== null && name.length > 0) {
+    name = prefix + name.substring(0, 1).toUpperCase() + name.substring(1);
     style.setProperty(name, value);
+  }
+};
 
-    if (prefix !== null && name.length > 0) {
-      name = prefix + name.substring(0, 1).toUpperCase() + name.substring(1);
-      style.setProperty(name, value);
-    }
-  };
+/**
+ * Function: hasScrollbars
+ *
+ * Returns true if the overflow CSS property of the given node is either
+ * scroll or auto.
+ *
+ * @param node DOM node whose style should be checked for scrollbars.
+ */
+export const hasScrollbars = (node: HTMLElement) => {
+  const style = getCurrentStyle(node);
 
-  /**
-   * Function: hasScrollbars
-   *
-   * Returns true if the overflow CSS property of the given node is either
-   * scroll or auto.
-   *
-   * @param node DOM node whose style should be checked for scrollbars.
-   */
-  export const hasScrollbars = (node: HTMLElement) => {
-    const style = getCurrentStyle(node);
-
-    return !!style && (style.overflow === 'scroll' || style.overflow === 'auto');
-  };
-
+  return !!style && (style.overflow === 'scroll' || style.overflow === 'auto');
+};
 
 /**
  * Returns the client size for the current document as an {@link Rectangle}.
@@ -178,7 +178,7 @@ export const fit = (node: HTMLElement) => {
  * @param scollOffset Optional boolean to add the scroll offset of the document.
  * Default is false.
  */
- export const getOffset = (container: HTMLElement, scrollOffset = false) => {
+export const getOffset = (container: HTMLElement, scrollOffset = false) => {
   let offsetLeft = 0;
   let offsetTop = 0;
 
@@ -309,7 +309,7 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
  *
  * @param style String of the form [(stylename|key=value);].
  */
- export const getStylename = (style: string) => {
+export const getStylename = (style: string) => {
   const pairs = style.split(';');
   const stylename = pairs[0];
 
@@ -427,7 +427,7 @@ export const removeAllStylenames = (style: string) => {
 export const setCellStyles = (
   model: GraphDataModel,
   cells: CellArray,
-  key: string,
+  key: keyof CellStateStyle,
   value: any
 ) => {
   if (cells.length > 0) {
@@ -437,7 +437,9 @@ export const setCellStyles = (
         const cell = cells[i];
 
         if (cell) {
-          const style = setStyle(cell.getStyle(), key, value);
+          const style = cell.getStyle();
+          style[key] = value;
+
           model.setStyle(cell, style);
         }
       }
@@ -522,7 +524,7 @@ export const setStyle = (style: string | null, key: string, value: any) => {
 export const setCellStyleFlags = (
   model: GraphDataModel,
   cells: CellArray,
-  key: string,
+  key: NumericCellStateStyleKeys,
   flag: number,
   value: boolean
 ) => {
@@ -553,49 +555,22 @@ export const setCellStyleFlags = (
  * @param value Optional boolean value for the given flag.
  */
 export const setStyleFlag = (
-  style: string | null,
-  key: string,
+  style: CellStyle,
+  key: NumericCellStateStyleKeys,
   flag: number,
-  value: boolean
+  value?: boolean
 ) => {
-  if (style == null || style.length == 0) {
-    if (value || value == null) {
-      style = `${key}=${flag}`;
-    } else {
-      style = `${key}=0`;
-    }
+  const v = style[key];
+
+  if (v === undefined) {
+    style[key] = value === undefined ? flag : 0;
   } else {
-    const index = style.indexOf(`${key}=`);
-
-    if (index < 0) {
-      const sep = style.charAt(style.length - 1) == ';' ? '' : ';';
-
-      if (value || value == null) {
-        style = `${style + sep + key}=${flag}`;
-      } else {
-        style = `${style + sep + key}=0`;
-      }
+    if (value === undefined) {
+      style[key] = v ^ flag;
+    } else if (value) {
+      style[key] = v | flag;
     } else {
-      const cont = style.indexOf(';', index);
-      let tmp = '';
-
-      if (cont < 0) {
-        tmp = style.substring(index + key.length + 1);
-      } else {
-        tmp = style.substring(index + key.length + 1, cont);
-      }
-
-      if (value == null) {
-        tmp = String(parseInt(tmp) ^ flag);
-      } else if (value) {
-        tmp = String(parseInt(tmp) | flag);
-      } else {
-        tmp = String(parseInt(tmp) & ~flag);
-      }
-
-      style = `${style.substring(0, index) + key}=${tmp}${
-        cont >= 0 ? style.substring(cont) : ''
-      }`;
+      style[key] = v & ~flag;
     }
   }
 
@@ -608,7 +583,7 @@ export const setStyleFlag = (
  * @param node DOM node to set the opacity for.
  * @param value Opacity in %. Possible values are between 0 and 100.
  */
- export const setOpacity = (node: HTMLElement | SVGElement, value: number) => {
+export const setOpacity = (node: HTMLElement | SVGElement, value: number) => {
   node.style.opacity = String(value / 100);
 };
 
@@ -633,7 +608,7 @@ export const setStyleFlag = (
  * @param textWidth Optional width for text wrapping.
  * @param fontStyle Optional font style.
  */
- export const getSizeForString = (
+export const getSizeForString = (
   text: string,
   fontSize = DEFAULT_FONTSIZE,
   fontFamily = DEFAULT_FONTFAMILY,
@@ -699,7 +674,7 @@ export const setStyleFlag = (
  * Sorts the given cells according to the order in the cell hierarchy.
  * Ascending is optional and defaults to true.
  */
- export const sortCells = (cells: CellArray, ascending = true): CellArray => {
+export const sortCells = (cells: CellArray, ascending = true): CellArray => {
   const lookup = new Dictionary<Cell, string[]>();
 
   cells.sort((o1, o2) => {

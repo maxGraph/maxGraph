@@ -221,7 +221,7 @@ const Template = ({ label, ...args }) => {
       20,
       240,
       120,
-      'shape=myShape;whiteSpace=wrap;overflow=hidden;pos1=30;pos2=80;'
+      { shape: 'myShape', whiteSpace: 'wrap', overflow: 'hidden', pos1: 30, pos2: 80 }
     );
   });
 

@@ -1028,8 +1028,6 @@ class EdgeStyle {
     let sourceBuffer = EdgeStyle.getJettySize(state, true);
     let targetBuffer = EdgeStyle.getJettySize(state, false);
 
-    // console.log('sourceBuffer', sourceBuffer);
-    // console.log('targetBuffer', targetBuffer);
     // Workaround for loop routing within buffer zone
     if (source != null && target === source) {
       targetBuffer = Math.max(sourceBuffer, targetBuffer);
@@ -1037,7 +1035,7 @@ class EdgeStyle {
     }
 
     const totalBuffer = targetBuffer + sourceBuffer;
-    // console.log('totalBuffer', totalBuffer);
+
     let tooShort = false;
 
     // Checks minimum distance for fixed points and falls back to segment connector
@@ -1069,8 +1067,6 @@ class EdgeStyle {
       portConstraint[0] = getPortConstraints(source, state, true, DIRECTION_MASK.ALL);
       rotation = source.style.rotation ?? 0;
 
-      // console.log('source rotation', rotation);
-
       if (rotation !== 0) {
         const newRect = <Rectangle>(
           getBoundingBox(
@@ -1089,8 +1085,6 @@ class EdgeStyle {
       portConstraint[1] = getPortConstraints(target, state, false, DIRECTION_MASK.ALL);
       rotation = target.style.rotation ?? 0;
 
-      // console.log('target rotation', rotation);
-
       if (rotation !== 0) {
         const newRect = <Rectangle>(
           getBoundingBox(
@@ -1104,9 +1098,6 @@ class EdgeStyle {
         targetHeight = newRect.height;
       }
     }
-
-    // console.log('source' , sourceX, sourceY, sourceWidth, sourceHeight);
-    // console.log('targetX' , targetX, targetY, targetWidth, targetHeight);
 
     const dir = [0, 0];
 
@@ -1156,8 +1147,6 @@ class EdgeStyle {
         quad = 2;
       }
     }
-
-    // console.log('quad', quad);
 
     // Check for connection constraints
     let currentTerm = null;
@@ -1350,8 +1339,6 @@ class EdgeStyle {
     }
 
     const routePattern = EdgeStyle.routePatterns[sourceIndex - 1][targetIndex - 1];
-
-    // console.log('routePattern', routePattern);
 
     EdgeStyle.wayPoints1[0][0] = geo[0][0];
     EdgeStyle.wayPoints1[0][1] = geo[0][1];

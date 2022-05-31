@@ -104,7 +104,7 @@ const Template = ({ label, ...args }) => {
       0,
       10,
       40,
-      'portConstraint=northsouth;',
+      { portConstraint: 'northsouth' },
       true
     );
     v11.geometry.offset = new Point(-5, -5);
@@ -116,8 +116,14 @@ const Template = ({ label, ...args }) => {
       0.5,
       10,
       10,
-      'portConstraint=west;shape=triangle;direction=west;perimeter=none;' +
-        'routingCenterX=-0.5;routingCenterY=0;',
+      {
+        portConstraint: 'west',
+        shape: 'triangle',
+        direction: 'west',
+        perimeter: 'none',
+        routingCenterX: -0.5,
+        routingCenterY: 0,
+      },
       true
     );
     v12.geometry.offset = new Point(-10, -5);
@@ -129,8 +135,14 @@ const Template = ({ label, ...args }) => {
       0.5,
       10,
       10,
-      'portConstraint=east;shape=triangle;direction=east;perimeter=none;' +
-        'routingCenterX=0.5;routingCenterY=0;',
+      {
+        portConstraint: 'east',
+        shape: 'triangle',
+        direction: 'east',
+        perimeter: 'none',
+        routingCenterX: 0.5,
+        routingCenterY: 0,
+      },
       true
     );
     v13.geometry.offset = new Point(0, -5);

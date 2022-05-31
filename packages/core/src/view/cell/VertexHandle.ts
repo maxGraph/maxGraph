@@ -24,7 +24,7 @@ import CellState from './CellState';
 import CellArray from './CellArray';
 
 import type { Graph } from '../Graph';
-import type { CellHandle, CellStateStyles } from '../../types';
+import type { CellHandle, CellStateStyle } from '../../types';
 
 /**
  * Implements a single custom handle for vertices.
@@ -89,7 +89,7 @@ class VertexHandle implements CellHandle {
   /**
    * Sets the cell style with the given name to the corresponding value in <state>.
    */
-  copyStyle(key: keyof CellStateStyles) {
+  copyStyle(key: keyof CellStateStyle) {
     this.graph.setCellStyles(key, this.state.style[key], new CellArray(this.state.cell));
   }
 

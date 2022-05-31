@@ -29,9 +29,14 @@ const Template = ({ label, ...args }) => {
     // let style = super.getStyle();
     let style = this.style;
     if (this.isCollapsed()) {
-      style =
-        `${style};shape=image;image=http://www.jgraph.com/images/mxgraph.gif;` +
-        `noLabel=1;imageBackground=#C3D9FF;imageBorder=#6482B9`;
+      style = {
+        ...style,
+        shape: 'image',
+        image: 'http://www.jgraph.com/images/mxgraph.gif',
+        noLabel: 1,
+        imageBackground: '#C3D9FF',
+        imageBorder: '#6482B9',
+      };
     }
     return style;
   };

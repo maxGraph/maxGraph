@@ -142,7 +142,10 @@ function handleDrop(graph, file, x, y) {
             graph.insertVertex({
               position: [x, y],
               size: [w, h],
-              style: `shape=image;image=${data};`,
+              style: {
+                shape: 'image',
+                image: data,
+              },
             });
           }
         }
@@ -163,7 +166,7 @@ function handleDrop(graph, file, x, y) {
           graph.insertVertex({
             position: [x, y],
             size: [w, h],
-            style: `shape=image;image=${data};`,
+            style: { shape: 'image', image: data },
           });
         };
 

@@ -61,17 +61,18 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(
-      parent,
-      null,
-      'Fixed icon',
-      20,
-      20,
-      80,
-      50,
-      'shape=label;image=images/plus.png;imageWidth=16;imageHeight=16;spacingBottom=10;' +
-        'fillColor=#adc5ff;gradientColor=#7d85df;glass=1;rounded=1;shadow=1;'
-    );
+    const v1 = graph.insertVertex(parent, null, 'Fixed icon', 20, 20, 80, 50, {
+      shape: 'label',
+      image: 'images/plus.png',
+      imageWidth: 16,
+      imageHeight: 16,
+      spacingBottom: 10,
+      fillColor: '#adc5ff',
+      gradientColor: '#7d85df',
+      glass: true,
+      rounded: true,
+      shadow: true,
+    });
   });
 
   return container;
