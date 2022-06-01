@@ -1,7 +1,7 @@
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
 import { mixInto } from '../../util/Utils';
-import { removeDuplicates } from '../../util/ArrayUtils';
+import { removeDuplicates } from '../../util/arrayUtils';
 import { findNearestSegment } from '../../util/MathUtils';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';

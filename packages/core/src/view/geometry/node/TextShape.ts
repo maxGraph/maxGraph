@@ -33,7 +33,7 @@ import {
   trim,
 } from '../../../util/StringUtils';
 import {svgBBox} from '../../../util/Utils';
-import { isNode } from '../../../util/DomUtils';
+import { isNode } from '../../../util/domUtils';
 import {
   AlignValue,
   ColorValue,

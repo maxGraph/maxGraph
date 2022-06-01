@@ -11,7 +11,7 @@ import {
   isMouseEvent,
   isPopupTrigger,
 } from '../../util/EventUtils';
-import { isAncestorNode } from '../../util/DomUtils';
+import { isAncestorNode } from '../../util/domUtils';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 

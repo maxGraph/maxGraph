@@ -5,9 +5,9 @@
  * Type definitions from the typed-mxgraph project
  */
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import { remove } from '../../../util/ArrayUtils';
+import { remove } from '../../../util/arrayUtils';
 import CellPath from '../../cell/CellPath';
-import { clone } from '../../../util/CloneUtils';
+import { clone } from '../../../util/cloneUtils';
 import Cell from '../../../view/cell/Cell';
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';

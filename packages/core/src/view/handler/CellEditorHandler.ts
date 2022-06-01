@@ -30,7 +30,7 @@ import Cell from '../cell/Cell';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
-import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/DomUtils';
+import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/domUtils';
 import { getStringValue, htmlEntities, replaceTrailingNewlines } from '../../util/StringUtils';
 import {
   getSource,

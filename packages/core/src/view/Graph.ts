@@ -34,7 +34,7 @@ import StyleChange from './undoable_changes/StyleChange';
 import TerminalChange from './undoable_changes/TerminalChange';
 import ValueChange from './undoable_changes/ValueChange';
 import CellState from './cell/CellState';
-import { isNode } from '../util/DomUtils';
+import { isNode } from '../util/domUtils';
 import EdgeStyle from './style/EdgeStyle';
 import EdgeHandler from './handler/EdgeHandler';
 import VertexHandler from './handler/VertexHandler';

@@ -8,8 +8,8 @@
 import Point from './Point';
 import Rectangle from './Rectangle';
 import { getRotatedPoint, toRadians } from '../../util/MathUtils';
-import { equalPoints } from '../../util/ArrayUtils';
-import { clone } from '../../util/CloneUtils';
+import { equalPoints } from '../../util/arrayUtils';
+import { clone } from '../../util/cloneUtils';
 
 /**
  * @class Geometry

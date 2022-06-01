@@ -1,6 +1,6 @@
 import Cell from '../cell/Cell';
 import Translations from '../../util/Translations';
-import { isNode } from '../../util/DomUtils';
+import { isNode } from '../../util/domUtils';
 import CellState from '../cell/CellState';
 import Multiplicity from '../other/Multiplicity';
 import { Graph } from '../Graph';

@@ -10,7 +10,7 @@ import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import { intersects } from '../../util/MathUtils';
 import { DIALECT } from '../../util/Constants';
-import { write } from '../../util/DomUtils';
+import { write } from '../../util/domUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import CellArray from '../cell/CellArray';

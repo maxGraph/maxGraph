@@ -11,7 +11,7 @@ import { NODETYPE } from '../util/Constants';
 import Cell from '../view/cell/Cell';
 import MaxLog from '../gui/MaxLog';
 import { getFunctionName } from '../util/StringUtils';
-import { importNode, isNode } from '../util/DomUtils';
+import { importNode, isNode } from '../util/domUtils';
 import ObjectCodec from './ObjectCodec';
 import GraphDataModel from '../view/GraphDataModel';
 import Geometry from '../view/geometry/Geometry';

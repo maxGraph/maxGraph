@@ -19,7 +19,7 @@ import {
   TEXT_DIRECTION,
 } from '../../../util/Constants';
 import StencilShapeRegistry from './StencilShapeRegistry';
-import { getChildNodes, getTextContent } from '../../../util/DomUtils';
+import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';

@@ -26,7 +26,7 @@ import {
 import Rectangle from '../geometry/Rectangle';
 import AbstractCanvas2D from './AbstractCanvas2D';
 import { getXml } from '../../util/XmlUtils';
-import { isNode, write } from '../../util/DomUtils';
+import { isNode, write } from '../../util/domUtils';
 import { htmlEntities, trim } from '../../util/StringUtils';
 import {
   AlignValue,

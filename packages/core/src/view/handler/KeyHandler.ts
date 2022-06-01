@@ -7,7 +7,7 @@
 
 import { Graph } from '../Graph';
 import InternalEvent from '../event/InternalEvent';
-import { isAncestorNode } from '../../util/DomUtils';
+import { isAncestorNode } from '../../util/domUtils';
 import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isShiftDown } from '../../util/EventUtils';
 import CellEditorHandler from './CellEditorHandler';
 

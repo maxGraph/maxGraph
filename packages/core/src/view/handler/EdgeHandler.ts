@@ -60,7 +60,7 @@ import Cell from '../cell/Cell';
 import ImageBox from '../image/ImageBox';
 import EventSource from '../event/EventSource';
 import SelectionHandler from './SelectionHandler';
-import { equalPoints } from '../../util/ArrayUtils';
+import { equalPoints } from '../../util/arrayUtils';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and the edge

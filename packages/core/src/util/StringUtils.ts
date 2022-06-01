@@ -2,7 +2,7 @@ import {
   NODETYPE,
   NONE,
 } from './Constants';
-import { getTextContent } from './DomUtils';
+import { getTextContent } from './domUtils';
 
 import type { Properties } from '../types';
 

@@ -14,7 +14,7 @@ import { sortCells } from '../../util/StyleUtils';
 import WeightedCellSorter from './util/WeightedCellSorter';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
-import { findTreeRoots } from '../../util/TreeTraversal';
+import { findTreeRoots } from '../../util/treeTraversal';
 import CellArray from '../cell/CellArray';
 
 export interface _mxCompactTreeLayoutNode {

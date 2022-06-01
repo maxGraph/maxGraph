@@ -14,7 +14,7 @@ import {
   SHADOW_OFFSET_Y,
   SHADOW_OPACITY,
 } from '../../util/Constants';
-import { getOuterHtml, isNode } from '../../util/DomUtils';
+import { getOuterHtml, isNode } from '../../util/domUtils';
 import { DirectionValue, TextDirectionValue } from '../../types';
 
 /**
