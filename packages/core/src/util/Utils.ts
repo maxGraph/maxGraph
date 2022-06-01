@@ -62,7 +62,7 @@ export const mixInto = (dest: any) => (mixin: any) => {
 
 //getBBox of SVG element before rendered in DOM
 
-export function svgBBox (svgEl){
+export function svgBBox (svgEl: SVGGElement){
   let tempDiv = document.createElement('div')
   tempDiv.setAttribute('style', "position:absolute; visibility:hidden; width:0, height:0")
   document.body.appendChild(tempDiv)
@@ -70,7 +70,7 @@ export function svgBBox (svgEl){
   tempDiv.appendChild(tempSvg)
   let tempEl = svgEl.cloneNode(true)
   tempSvg.appendChild(tempEl)
-  let bb = tempEl.getBBox()
+  let bb = (<SVGGElement>tempEl).getBBox()
   document.body.removeChild(tempDiv)
   return bb 
 
