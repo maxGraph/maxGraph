@@ -1,4 +1,4 @@
-import { Graph, RubberBandHandler, DomHelpers } from '@maxgraph/core';
+import { Graph, RubberBandHandler, DomHelpers, Cell} from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -43,7 +43,7 @@ const Template = ({ label, ...args }) => {
   const isVisible = function () {
     // TODO super cannot be used here
     // let result = super.isVisible();
-    let result;
+    let result=Cell.prototype.isVisible.apply(this, arguments);
     if (result && this.value != null) {
       result =
         (showOne && this.value == '1') ||

@@ -6,6 +6,7 @@ import {
   cloneUtils,
   eventUtils,
 } from '@maxgraph/core';
+import { convertPoint } from '../../core/src/util/StyleUtils';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -77,7 +78,7 @@ const Template = ({ label, ...args }) => {
       // a mouse event
       if (evt != null) {
         // Finds the relative coordinates inside the cell
-        const point = mathUtils.convertPoint(
+        const point = convertPoint(
           this.container,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)
@@ -128,6 +129,14 @@ const Template = ({ label, ...args }) => {
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
+
+  let style = graph.getStylesheet().getDefaultEdgeStyle();
+  
+  style.bendable=true;
+  style.editable=true
+  
+  style = graph.getStylesheet().getDefaultVertexStyle();
+  style.editable=true;
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {

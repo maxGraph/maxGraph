@@ -8,7 +8,7 @@ import EventSource from '../event/EventSource';
 import Dictionary from '../../util/Dictionary';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import { sortCells } from '../../util/styleUtils';
+import { sortCells } from '../../util/StyleUtils';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 import CellState from '../cell/CellState';
@@ -51,7 +51,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
       }
     };
 
-    this.graph.addListener(InternalEvent.CHANGE, this.refreshHandler);
+    this.graph.getSelectionModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
     this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
     this.graph.getView().addListener(InternalEvent.SCALE, this.refreshHandler);
     this.graph.getView().addListener(InternalEvent.TRANSLATE, this.refreshHandler);

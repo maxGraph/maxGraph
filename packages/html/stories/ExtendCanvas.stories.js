@@ -6,13 +6,13 @@ import {
   Point,
   styleUtils,
 } from '@maxgraph/core';
+import {hasScrollbars} from '../../core/src/util/StyleUtils';
 
 import { globalTypes } from '../.storybook/preview';
 
 export default {
   title: 'Backgrounds/ExtendCanvas',
   argTypes: {
-    ...globalTypes,
     contextMenu: {
       type: 'boolean',
       defaultValue: false,
@@ -28,8 +28,8 @@ const Template = ({ label, ...args }) => {
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'auto';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
+  container.style.width = '321px';
+  container.style.height = '241px';
   container.style.cursor = 'default';
   container.style.background = 'url(/images/grid.gif)';
 
@@ -50,8 +50,8 @@ const Template = ({ label, ...args }) => {
      */
     getPagePadding() {
       return new Point(
-        Math.max(0, Math.round(this.container.offsetWidth - 34)),
-        Math.max(0, Math.round(this.container.offsetHeight - 34))
+        Math.max(0, Math.round(321 - 34)),
+        Math.max(0, Math.round(241 - 34))
       );
     }
 
@@ -97,6 +97,7 @@ const Template = ({ label, ...args }) => {
       return new Rectangle(x0, y0, w0, h0);
     }
 
+
     getPreferredPageSize(bounds, width, height) {
       const pages = this.getPageLayout();
       const size = this.getPageSize();
@@ -104,8 +105,9 @@ const Template = ({ label, ...args }) => {
       return new Rectangle(0, 0, pages.width * size.width, pages.height * size.height);
     }
 
-    sizeDidChange() {
-      if (this.container != null && styleUtils.hasScrollbars(this.container)) {
+    
+    sizeDidChange() {   
+      if (this.container != null ){//&& hasScrollbars(this.container)) {
         const pages = this.getPageLayout();
         const pad = this.getPagePadding();
         const size = this.getPageSize();

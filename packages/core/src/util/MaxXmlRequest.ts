@@ -2,7 +2,7 @@
  * Copyright (c) 2006-2020, JGraph Ltd
  * Copyright (c) 2006-2020, draw.io AG
  */
-import { write } from './domUtils';
+import { write } from './DomUtils';
 
 /**
  * XML HTTP request wrapper. See also: {@link mxUtils.get}, {@link mxUtils.post} and

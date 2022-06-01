@@ -21,6 +21,7 @@ import GraphDataModel from '../view/GraphDataModel';
 import CellArray from '../view/cell/CellArray';
 import { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from 'src/types';
 
+
 /**
  * Removes the cursors from the style of the given DOM node and its
  * descendants.

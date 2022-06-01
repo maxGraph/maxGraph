@@ -8,13 +8,13 @@ import {
   intersects,
   ptSegDistSq,
   toRadians,
-} from '../../util/mathUtils';
+} from '../../util/MathUtils';
 import {
   setCellStyleFlags,
   setCellStyles,
   setStyle,
   getSizeForString,
-} from '../../util/styleUtils';
+} from '../../util/StyleUtils';
 import {
   ALIGN,
   DEFAULT_FONTSIZE,
@@ -842,7 +842,7 @@ export const CellsMixin: PartialType = {
    * be updated to reflect the lost parent cell. Default is `false`.
    */
   // cloneCell(cell: mxCell, allowInvalidEdges?: boolean, mapping?: any, keepPosition?: boolean): mxCellArray;
-  cloneCell(cell, allowInvalidEdges = false, mapping = null, keepPosition = false) {
+  cloneCell(cell, allowInvalidEdges = false, mapping = {}, keepPosition = false) {
     return this.cloneCells(
       new CellArray(cell),
       allowInvalidEdges,

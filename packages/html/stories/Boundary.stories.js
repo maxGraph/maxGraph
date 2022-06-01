@@ -8,7 +8,7 @@ import {
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { convertPoint } from '../../core/src/util/styleUtils';
+import { convertPoint } from '../../core/src/util/StyleUtils';
 
 export default {
   title: 'Events/Boundary',

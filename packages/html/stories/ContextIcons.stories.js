@@ -3,10 +3,10 @@ import {
   InternalEvent,
   RubberBandHandler,
   eventUtils,
-  mathUtils,
   domUtils,
   VertexHandler,
 } from '@maxgraph/core';
+import { convertPoint } from '../../core/src/util/StyleUtils';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -30,15 +30,20 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
-  class mxVertexToolHandler extends VertexHandler {
+  class MyVertexToolHandler extends VertexHandler {
     // Defines a subclass for VertexHandler that adds a set of clickable
     // icons to every selected vertex.
-
-    domNode = null;
+    
+    constructor(state){
+      if (state){
+        super(state)
+        this.state=state
+        this.domNode = null;
+        this.init()
+      }
+    }
 
     init() {
-      super.init();
-
       // In this example we force the use of DIVs for images in IE. This
       // handles transparency in PNG images properly in IE and fixes the
       // problem that IE routes all mouse events for a gesture via the
@@ -114,7 +119,7 @@ const Template = ({ label, ...args }) => {
       img.style.height = '16px';
 
       InternalEvent.addGestureListeners(img, (evt) => {
-        const pt = mathUtils.convertPoint(
+        const pt = convertPoint(
           this.graph.container,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)
@@ -143,8 +148,8 @@ const Template = ({ label, ...args }) => {
       }
     }
 
-    destroy(sender, me) {
-      super.destroy(sender, me);
+    onDestroy(sender, me) {
+      super.onDestroy(sender, me);
 
       if (this.domNode != null) {
         this.domNode.parentNode.removeChild(this.domNode);
@@ -156,7 +161,7 @@ const Template = ({ label, ...args }) => {
   class MyCustomGraph extends Graph {
     createHandler(state) {
       if (state != null && state.cell.isVertex()) {
-        return new mxVertexToolHandler(state);
+        return new MyVertexToolHandler(state);
       }
       return super.createHandler(state);
     }

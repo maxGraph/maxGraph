@@ -14,7 +14,7 @@ import { htmlEntities, trim } from './StringUtils';
 import TemporaryCellStates from '../view/cell/TemporaryCellStates';
 
 import type { StyleValue } from '../types';
-import { getTextContent } from './domUtils';
+import { getTextContent } from './DomUtils';
 import Codec from '../serialization/Codec';
 
 /**

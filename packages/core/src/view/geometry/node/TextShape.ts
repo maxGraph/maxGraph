@@ -20,8 +20,8 @@ import {
   WORD_WRAP,
   LINE_HEIGHT,
 } from '../../../util/Constants';
-import { getBoundingBox } from '../../../util/mathUtils';
-import { getAlignmentAsPoint } from '../../../util/styleUtils';
+import { getBoundingBox } from '../../../util/MathUtils';
+import { getAlignmentAsPoint } from '../../../util/StyleUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Shape from '../Shape';
@@ -32,7 +32,8 @@ import {
   replaceTrailingNewlines,
   trim,
 } from '../../../util/StringUtils';
-import { isNode } from '../../../util/domUtils';
+import {svgBBox} from '../../../util/Utils';
+import { isNode } from '../../../util/DomUtils';
 import {
   AlignValue,
   ColorValue,
@@ -373,10 +374,9 @@ class TextShape extends Shape {
         (this.style.spacingRight ?? this.spacingRight - old) + this.spacing;
       this.spacingBottom =
         (this.style.spacingBottom ?? this.spacingBottom - old) + this.spacing;
-      this.spacingLeft =
-        (this.style.spacingLeft ?? this.spacingLeft - old) + this.spacing;
+      this.spacingLeft = (this.style.spacingLeft ?? this.spacingLeft - old) + this.spacing;
       this.horizontal = this.style.horizontal ?? this.horizontal;
-      this.background = this.style.backgroundColor ?? this.background;
+      this.background = this.style.labelBackgroundColor ?? this.background;
       this.border = this.style.labelBorderColor ?? this.border;
       this.textDirection = this.style.textDirection ?? DEFAULT_TEXT_DIRECTION;
       this.opacity = this.style.textOpacity ?? 100;
@@ -470,12 +470,13 @@ class TextShape extends Shape {
       } else {
         try {
           const b = node.getBBox();
-
+         
           // Workaround for bounding box of empty string
           if (typeof this.value === 'string' && trim(this.value)?.length === 0) {
             this.boundingBox = null;
           } else if (b.width === 0 && b.height === 0) {
-            this.boundingBox = null;
+            const box = svgBBox(node);
+            this.boundingBox = new Rectangle(box.x, box.y, box.width, box.height);
           } else {
             this.boundingBox = new Rectangle(b.x, b.y, b.width, b.height);
           }

@@ -11,7 +11,7 @@ import { NODETYPE } from '../util/Constants';
 import Cell from '../view/cell/Cell';
 import MaxLog from '../gui/MaxLog';
 import { getFunctionName } from '../util/StringUtils';
-import { importNode, isNode } from '../util/domUtils';
+import { importNode, isNode } from '../util/DomUtils';
 import ObjectCodec from './ObjectCodec';
 import GraphDataModel from '../view/GraphDataModel';
 import Geometry from '../view/geometry/Geometry';
@@ -343,10 +343,18 @@ class Codec {
    */
   decode(node: Element, into?: any): any {
 
+
+    //****Edit note - there may be other classes needed here????******
     const classMap = {
       "GraphDataModel": GraphDataModel,
       "Geometry": Geometry,
-      "Point":Point
+      "Point":Point,
+      "Array": Array,
+      "Object": Object,
+      "Boolean": Boolean,
+      
+
+
   }; 
     this.updateElements();
     let obj = null;
@@ -357,8 +365,9 @@ class Codec {
       try {
         // @ts-ignore
         ctor = classMap[node.nodeName]
+        if (ctor == undefined) console.log(node.nodeName)
       } catch (err) {
-        // ignore
+        console.log(err)// ignore
       }
       const dec = CodecRegistry.getCodec(ctor);
 

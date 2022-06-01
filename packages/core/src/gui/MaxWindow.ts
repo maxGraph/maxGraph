@@ -8,11 +8,11 @@
 import Rectangle from '../view/geometry/Rectangle';
 import EventObject from '../view/event/EventObject';
 import EventSource from '../view/event/EventSource';
-import { fit, getCurrentStyle } from '../util/styleUtils';
+import { fit, getCurrentStyle } from '../util/StyleUtils';
 import InternalEvent from '../view/event/InternalEvent';
 import Client from '../Client';
 import { NODETYPE } from '../util/Constants';
-import { br, write } from '../util/domUtils';
+import { br, write } from '../util/DomUtils';
 import Translations from '../util/Translations';
 import { getClientX, getClientY } from '../util/EventUtils';
 import { htmlEntities } from '../util/StringUtils';
@@ -177,7 +177,7 @@ class MaxWindow extends EventSource {
     minimizable: boolean=true,
     movable: boolean=true,
     replaceNode: HTMLElement | null=null,
-    style: string=''
+    style: string | undefined =undefined
   ) {
     super();
 

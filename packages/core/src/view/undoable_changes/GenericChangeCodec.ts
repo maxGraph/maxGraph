@@ -6,7 +6,7 @@
  */
 
 import ObjectCodec from '../../serialization/ObjectCodec';
-import { isNode } from '../../util/domUtils';
+import { isNode } from '../../util/DomUtils';
 import Codec from '../../serialization/Codec';
 
 /**

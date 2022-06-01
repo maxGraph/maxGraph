@@ -60,6 +60,22 @@ export const mixInto = (dest: any) => (mixin: any) => {
   }
 };
 
+//getBBox of SVG element before rendered in DOM
+
+export function svgBBox (svgEl){
+  let tempDiv = document.createElement('div')
+  tempDiv.setAttribute('style', "position:absolute; visibility:hidden; width:0, height:0")
+  document.body.appendChild(tempDiv)
+  let tempSvg = document.createElementNS("http://www.w3.org/2000/svg", 'svg')
+  tempDiv.appendChild(tempSvg)
+  let tempEl = svgEl.cloneNode(true)
+  tempSvg.appendChild(tempEl)
+  let bb = tempEl.getBBox()
+  document.body.removeChild(tempDiv)
+  return bb 
+
+}
+
 /**
  * Returns the value for the given key in the given associative array or
  * the given default value if the value is null.

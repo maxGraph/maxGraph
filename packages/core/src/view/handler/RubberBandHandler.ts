@@ -9,14 +9,14 @@ import {
   getScrollOrigin,
   setOpacity,
   setPrefixedStyle,
-} from '../../util/styleUtils';
+} from '../../util/StyleUtils';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import Client from '../../Client';
 import Rectangle from '../geometry/Rectangle';
 import { isAltDown, isMultiTouchEvent } from '../../util/EventUtils';
-import { clearSelection } from '../../util/domUtils';
+import { clearSelection } from '../../util/DomUtils';
 import { Graph } from '../Graph';
 import { GraphPlugin } from '../../types';
 import EventObject from '../event/EventObject';

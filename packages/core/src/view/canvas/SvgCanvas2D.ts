@@ -6,8 +6,8 @@
  */
 
 import { isNotNullish } from '../../util/Utils';
-import { mod } from '../../util/mathUtils';
-import { getAlignmentAsPoint } from '../../util/styleUtils';
+import { mod } from '../../util/MathUtils';
+import { getAlignmentAsPoint } from '../../util/StyleUtils';
 import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
@@ -25,8 +25,8 @@ import {
 } from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import AbstractCanvas2D from './AbstractCanvas2D';
-import { getXml } from '../../util/xmlUtils';
-import { isNode, write } from '../../util/domUtils';
+import { getXml } from '../../util/XmlUtils';
+import { isNode, write } from '../../util/DomUtils';
 import { htmlEntities, trim } from '../../util/StringUtils';
 import {
   AlignValue,
@@ -1560,7 +1560,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       tr += `rotate(${rotation},${this.format(x * s.scale)},${this.format(y * s.scale)})`;
     }
 
-    if (dir != null) {
+    if (dir != '') {
       node.setAttribute('direction', dir);
     }
 
@@ -1820,9 +1820,9 @@ class SvgCanvas2D extends AbstractCanvas2D {
         }
 
         bbox = new Rectangle(
-          (x + 1) * s.scale,
+          x  * s.scale,
           (y + 2) * s.scale,
-          w * s.scale,
+          (w +1) * s.scale,
           (h + 1) * s.scale
         );
       }
@@ -1836,7 +1836,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
         n.setAttribute('width', String(Math.ceil(bbox.width + 2)));
         n.setAttribute('height', String(Math.ceil(bbox.height)));
 
-        const sw = s.fontBorderColor ? Math.max(1, this.format(s.scale)) : 0;
+        const sw = s.fontBorderColor !== 'none' ? Math.max(1, this.format(s.scale)) : 0;
         n.setAttribute('stroke-width', String(sw));
 
         // Workaround for crisp rendering - only required if not exporting

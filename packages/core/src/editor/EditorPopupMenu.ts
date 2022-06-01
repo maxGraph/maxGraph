@@ -6,7 +6,7 @@
  */
 import Cell from '../view/cell/Cell';
 import MaxPopupMenu from '../gui/MaxPopupMenu';
-import { getTextContent } from '../util/domUtils';
+import { getTextContent } from '../util/DomUtils';
 import Translations from '../util/Translations';
 import Editor from './Editor';
 import CodecRegistry from '../serialization/CodecRegistry';

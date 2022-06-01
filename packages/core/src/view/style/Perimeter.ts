@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { intersection } from '../../util/mathUtils';
+import { intersection } from '../../util/MathUtils';
 import Point from '../geometry/Point';
 import { DIRECTION } from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';

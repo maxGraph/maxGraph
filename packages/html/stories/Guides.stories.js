@@ -9,7 +9,7 @@ import {
   KeyHandler,
   RubberBandHandler,
 } from '@maxgraph/core';
-import {isAltDown} from '../../core/src/util/eventUtils'
+import {isAltDown} from '../../core/src/util/EventUtils'
 import { brotliDecompressSync } from 'zlib';
 
 import { globalTypes } from '../.storybook/preview';
@@ -62,6 +62,7 @@ const Template = ({ label, ...args }) => {
   // if the horizontal style is true.
   const style = graph.getStylesheet().getDefaultEdgeStyle();
   style.rounded = true;
+  style.bendable = true;
   style.edgeStyle = EdgeStyle.ElbowConnector;
   graph.alternateEdgeStyle = 'elbow=vertical';
 

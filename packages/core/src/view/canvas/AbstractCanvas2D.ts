@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { arcToCurves, getRotatedPoint } from '../../util/mathUtils';
+import { arcToCurves, getRotatedPoint } from '../../util/MathUtils';
 import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
@@ -17,7 +17,7 @@ import {
 } from '../../util/Constants';
 import UrlConverter from '../../util/UrlConverter';
 import Point from '../geometry/Point';
-import { clone } from '../../util/cloneUtils';
+import { clone } from '../../util/CloneUtils';
 
 import type {
   AlignValue,

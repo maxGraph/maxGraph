@@ -74,15 +74,16 @@ const Template = ({ label, ...args }) => {
   let relativeChildVerticesVisible = true;
 
   // Overrides method to hide relative child vertices
-  // TODO this function is not used
   const isVisible = function () {
     return (
-      !cell.isVertex() ||
-      cell.geometry == null ||
-      !cell.geometry.relative ||
-      cell.geometry.relative == relativeChildVerticesVisible
+      !this.isVertex() ||
+      this.geometry == null ||
+      !this.geometry.relative ||
+      this.geometry.relative == relativeChildVerticesVisible
     );
   };
+
+
 
   // Creates the shape for the shape number and puts it into the draw pane
   const { redrawShape } = graph.cellRenderer;
@@ -163,6 +164,7 @@ const Template = ({ label, ...args }) => {
     // Alternative solution of creating a second label by creating a realtive child vertex
     // with size (0, 0). This will not be selectable and only the label colors can be used
     // for coloring as the actual shape will have zero size.
+    v1.isVisible=isVisible
     const v11 = graph.insertVertex(
       v1,
       null,
@@ -179,6 +181,7 @@ const Template = ({ label, ...args }) => {
       },
       true
     );
+    v11.isVisible=isVisible
     v11.geometry.offset = new Point(-8, -8);
     const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
     // Another alternative solution of creating a second label as a relative child vertex
@@ -203,6 +206,7 @@ const Template = ({ label, ...args }) => {
       true
     );
     v21.geometry.offset = new Point(-8, -8);
+    v21.isVisible=isVisible
     graph.updateCellSize(v21);
     const e1 = graph.insertEdge(parent, null, '', v1, v2);
   });

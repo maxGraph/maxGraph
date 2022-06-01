@@ -4,7 +4,10 @@ import {
   RubberBandHandler,
   DomHelpers,
   InternalEvent,
+  PrintPreview
 } from '@maxgraph/core';
+
+import { write } from '../../core/src/util/DomUtils';
 
 import { globalTypes } from '../.storybook/preview';
 

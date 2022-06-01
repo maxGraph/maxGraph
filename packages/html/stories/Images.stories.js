@@ -94,8 +94,8 @@ const Template = ({ label, ...args }) => {
   function configureStylesheet(graph) {
     let style = {};
     style.shape = constants.SHAPE.IMAGE;
-    style.perimiter = Perimeter.RectanglePerimeter;
-    style.image = 'images/icons48/keys.png';
+    style.perimeter = Perimeter.RectanglePerimeter;
+    style.image = 'images/keys.png';
     style.fontColor = '#FFFFFF';
     graph.getStylesheet().putCellStyle('image', style);
 
@@ -106,16 +106,16 @@ const Template = ({ label, ...args }) => {
     style.verticalAlign = constants.ALIGN.TOP;
     style.imageAlign = constants.ALIGN.CENTER;
     style.imageVerticalAlign = constants.ALIGN.TOP;
-    style.image = 'images/icons48/gear.png';
-    style.imageWidth = '48';
-    style.imageHeight = '48';
-    style.spacingTop = '56';
-    style.spacing = '8';
+    style.image = 'images/gear.png';
+    style.imageWidth = 48;
+    style.imageHeight = 48;
+    style.spacingTop = 56;
+    style.spacing = 8;
     graph.getStylesheet().putCellStyle('bottom', style);
 
     style = cloneUtils.clone(style);
     style.imageVerticalAlign = constants.ALIGN.BOTTOM;
-    style.image = 'images/icons48/server.png';
+    style.image = 'images/server.png';
     delete style.spacingTop;
     graph.getStylesheet().putCellStyle('top', style);
 
@@ -124,16 +124,16 @@ const Template = ({ label, ...args }) => {
     style.imageAlign = constants.ALIGN.LEFT;
     style.verticalAlign = constants.ALIGN.MIDDLE;
     style.imageVerticalAlign = constants.ALIGN.MIDDLE;
-    style.image = 'images/icons48/earth.png';
-    style.spacingLeft = '55';
-    style.spacing = '4';
+    style.image = 'images/earth.png';
+    style.spacingLeft = 55;
+    style.spacing = 4;
     graph.getStylesheet().putCellStyle('right', style);
 
     style = cloneUtils.clone(style);
     style.align = constants.ALIGN.RIGHT;
     style.imageAlign = constants.ALIGN.RIGHT;
     delete style.spacingLeft;
-    style.spacingRight = '55';
+    style.spacingRight = 55;
     graph.getStylesheet().putCellStyle('left', style);
   }
 

@@ -10,11 +10,11 @@ import Point from '../geometry/Point';
 import GraphLayout from './GraphLayout';
 import CellPath from '../cell/CellPath';
 import Rectangle from '../geometry/Rectangle';
-import { sortCells } from '../../util/styleUtils';
+import { sortCells } from '../../util/StyleUtils';
 import WeightedCellSorter from './util/WeightedCellSorter';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
-import { findTreeRoots } from '../../util/treeTraversal';
+import { findTreeRoots } from '../../util/TreeTraversal';
 import CellArray from '../cell/CellArray';
 
 export interface _mxCompactTreeLayoutNode {

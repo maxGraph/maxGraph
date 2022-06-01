@@ -23,7 +23,7 @@ import Image from '../image/ImageBox';
 import EventObject from '../event/EventObject';
 import { getSource, isMouseEvent } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
-import { hasScrollbars } from '../../util/styleUtils';
+import { hasScrollbars } from '../../util/StyleUtils';
 import { Listenable } from '../../types';
 
 /**

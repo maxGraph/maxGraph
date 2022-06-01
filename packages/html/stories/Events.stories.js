@@ -39,7 +39,6 @@ const Template = ({ label, ...args }) => {
 
   class MyCustomConnectionHandler extends ConnectionHandler {
     // Sets the image to be used for creating new connections
-    connectImage = new ImageBox('/images/green-dot.gif', 14, 14);
   }
 
   // Disables built-in context menu
@@ -64,6 +63,9 @@ const Template = ({ label, ...args }) => {
   // To enable rubberband selection and basic keyboard events,
   // use new RubberBandHandler(graph) and new KeyHandler(graph).
   const graph = new MyCustomGraph(container);
+
+  const connectionHandler = graph.getPlugin('ConnectionHandler');
+  connectionHandler.connectImage = new ImageBox('/images/green-dot.gif', 16, 16);
 
   // Enables tooltips, new connections and panning
   graph.setPanning(true);
@@ -90,9 +92,14 @@ const Template = ({ label, ...args }) => {
   // when the user double clicks on the adjustment control point
   // of the edge. The ElbowConnector edge style switches to TopToBottom
   // if the horizontal style is true.
-  const style = graph.getStylesheet().getDefaultEdgeStyle();
+  let style = graph.getStylesheet().getDefaultEdgeStyle();
   style.rounded = true;
+  style.bendable=true;
+  style.editable=true
   style.edgeStyle = EdgeStyle.ElbowConnector;
+
+  style = graph.getStylesheet().getDefaultVertexStyle();
+  style.editable=true;
 
   const popupMenuHandler = graph.getPlugin('PopupMenuHandler');
 

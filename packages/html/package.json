@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "start-storybook -p 8901"
+    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 8901 ./public"
   },
   "author": "",
   "license": "ISC",

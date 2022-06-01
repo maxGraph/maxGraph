@@ -7,7 +7,7 @@
 
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
-import { getInnerHtml, write } from '../util/domUtils';
+import { getInnerHtml, write } from '../util/DomUtils';
 import { toString } from '../util/StringUtils';
 import MaxWindow, { popup } from './MaxWindow';
 import { KeyboardEventListener, MouseEventListener } from '../types';
