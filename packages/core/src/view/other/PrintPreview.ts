@@ -8,7 +8,7 @@ import Rectangle from '../geometry/Rectangle';
 import TemporaryCellStates from '../cell/TemporaryCellStates';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
-import { intersects } from '../../util/MathUtils';
+import { intersects } from '../../util/mathUtils';
 import { DIALECT } from '../../util/Constants';
 import { write } from '../../util/domUtils';
 import { Graph } from '../Graph';

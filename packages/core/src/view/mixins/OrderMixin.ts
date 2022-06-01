@@ -1,6 +1,6 @@
 import CellArray from '../cell/CellArray';
 import { mixInto } from '../../util/Utils';
-import { sortCells } from '../../util/StyleUtils';
+import { sortCells } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import { Graph } from '../Graph';

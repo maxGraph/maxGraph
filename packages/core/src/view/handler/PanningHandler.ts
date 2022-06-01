@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import EventSource from '../event/EventSource';
-import { hasScrollbars } from '../../util/StyleUtils';
+import { hasScrollbars } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import {

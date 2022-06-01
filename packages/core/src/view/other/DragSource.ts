@@ -11,7 +11,7 @@ import {
   getOffset,
   getScrollOrigin,
   setOpacity,
-} from '../../util/StyleUtils';
+} from '../../util/styleUtils';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import Guide from './Guide';

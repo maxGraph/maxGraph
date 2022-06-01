@@ -6,8 +6,8 @@
  */
 
 import { isNotNullish } from '../../util/Utils';
-import { mod } from '../../util/MathUtils';
-import { getAlignmentAsPoint } from '../../util/StyleUtils';
+import { mod } from '../../util/mathUtils';
+import { getAlignmentAsPoint } from '../../util/styleUtils';
 import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
@@ -25,7 +25,7 @@ import {
 } from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import AbstractCanvas2D from './AbstractCanvas2D';
-import { getXml } from '../../util/XmlUtils';
+import { getXml } from '../../util/xmlUtils';
 import { isNode, write } from '../../util/domUtils';
 import { htmlEntities, trim } from '../../util/StringUtils';
 import {

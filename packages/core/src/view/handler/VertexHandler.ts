@@ -23,7 +23,7 @@ import RectangleShape from '../geometry/node/RectangleShape';
 import ImageShape from '../geometry/node/ImageShape';
 import EllipseShape from '../geometry/node/EllipseShape';
 import Point from '../geometry/Point';
-import { getRotatedPoint, intersects, mod, toRadians } from '../../util/MathUtils';
+import { getRotatedPoint, intersects, mod, toRadians } from '../../util/mathUtils';
 import Client from '../../Client';
 import { isMouseEvent, isShiftDown } from '../../util/EventUtils';
 import { Graph } from '../Graph';

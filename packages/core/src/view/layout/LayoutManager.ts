@@ -7,7 +7,7 @@
 
 import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
-import { convertPoint, sortCells } from '../../util/StyleUtils';
+import { convertPoint, sortCells } from '../../util/styleUtils';
 import RootChange from '../undoable_changes/RootChange';
 import ChildChange from '../undoable_changes/ChildChange';
 import TerminalChange from '../undoable_changes/TerminalChange';

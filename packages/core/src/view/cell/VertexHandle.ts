@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 
-import { getRotatedPoint, toRadians } from '../../util/MathUtils';
+import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import Point from '../geometry/Point';
 import ImageShape from '../geometry/node/ImageShape';
 import Rectangle from '../geometry/Rectangle';

@@ -15,7 +15,7 @@ import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import Translations from '../../util/Translations';
 import Rectangle from '../geometry/Rectangle';
-import { intersects } from '../../util/MathUtils';
+import { intersects } from '../../util/mathUtils';
 import Client from '../../Client';
 import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';

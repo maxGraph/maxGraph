@@ -1,8 +1,8 @@
 import { Graph, constants, Client, CellTracker, Perimeter, FastOrganicLayout , EventObject, InternalEvent,EventUtils} from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
-import { clone } from '@maxgraph/core/util/CloneUtils';
-import { button } from '@maxgraph/core/util/DomHelpers';
+import { clone } from '@maxgraph/core/util/cloneUtils';
+import { button } from '@maxgraph/core/util/domHelpers';
 import { load } from '@maxgraph/core/util/MaxXmlRequest';
 import { isConsumed } from '../../core/src/util/EventUtils'
 

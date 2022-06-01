@@ -30,12 +30,12 @@ import {
   findNearestSegment,
   intersects,
   ptSegDistSq,
-} from '../../util/MathUtils';
+} from '../../util/mathUtils';
 import {
   convertPoint,
   getOffset,
   setOpacity,
-} from '../../util/StyleUtils';
+} from '../../util/styleUtils';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ConnectionConstraint from '../other/ConnectionConstraint';

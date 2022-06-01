@@ -9,7 +9,7 @@ import { getValue } from '../../util/Utils';
 import {
   getAlignmentAsPoint,
   setPrefixedStyle,
-} from '../../util/StyleUtils';
+} from '../../util/styleUtils';
 import Rectangle from '../geometry/Rectangle';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';

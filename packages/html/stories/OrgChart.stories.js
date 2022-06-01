@@ -16,7 +16,7 @@ import {
   PrintPreview
 } from '@maxgraph/core';
 
-import {getScaleForPageCount}from '../../core/src/util/PrintUtils'
+import {getScaleForPageCount}from '../../core/src/util/printUtils'
 
 import { globalTypes } from '../.storybook/preview';
 

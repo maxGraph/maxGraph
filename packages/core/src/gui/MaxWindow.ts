@@ -8,7 +8,7 @@
 import Rectangle from '../view/geometry/Rectangle';
 import EventObject from '../view/event/EventObject';
 import EventSource from '../view/event/EventSource';
-import { fit, getCurrentStyle } from '../util/StyleUtils';
+import { fit, getCurrentStyle } from '../util/styleUtils';
 import InternalEvent from '../view/event/InternalEvent';
 import Client from '../Client';
 import { NODETYPE } from '../util/Constants';

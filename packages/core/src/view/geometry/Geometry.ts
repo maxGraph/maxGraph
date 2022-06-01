@@ -7,7 +7,7 @@
 
 import Point from './Point';
 import Rectangle from './Rectangle';
-import { getRotatedPoint, toRadians } from '../../util/MathUtils';
+import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import { equalPoints } from '../../util/arrayUtils';
 import { clone } from '../../util/cloneUtils';
 

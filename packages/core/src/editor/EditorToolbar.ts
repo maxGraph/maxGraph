@@ -8,7 +8,7 @@
 import Client from '../Client';
 import MaxToolbar from '../gui/MaxToolbar';
 import Geometry from '../view/geometry/Geometry';
-import { convertPoint } from '../util/StyleUtils';
+import { convertPoint } from '../util/styleUtils';
 import InternalEvent from '../view/event/InternalEvent';
 import { getClientX, getClientY } from '../util/EventUtils';
 import { makeDraggable } from '../util/gestureUtils';

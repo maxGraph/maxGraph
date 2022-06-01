@@ -4,7 +4,7 @@
  * Updated to ES9 syntax by David Morrissey 2021
  * Type definitions from the typed-mxgraph project
  */
-import { setOpacity } from '../../util/StyleUtils';
+import { setOpacity } from '../../util/styleUtils';
 import GeometryChange from '../undoable_changes/GeometryChange';
 import TerminalChange from '../undoable_changes/TerminalChange';
 import ValueChange from '../undoable_changes/ValueChange';

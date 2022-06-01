@@ -9,7 +9,7 @@ import { PAGE_FORMAT_A4_PORTRAIT } from './Constants';
 import Rectangle from '../view/geometry/Rectangle';
 import { getOuterHtml } from './domUtils';
 import { Graph } from '../view/Graph';
-import { removeCursors } from './StyleUtils';
+import { removeCursors } from './styleUtils';
 
 /**
  * Returns the scale to be used for printing the graph with the given

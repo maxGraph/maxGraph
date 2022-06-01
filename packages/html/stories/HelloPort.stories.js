@@ -11,7 +11,7 @@ import {
 
 import { globalTypes } from '../.storybook/preview';
 import { popup } from '@maxgraph/core/gui/MaxWindow';
-import { getPrettyXml } from '@maxgraph/core/util/XmlUtils';
+import { getPrettyXml } from '@maxgraph/core/util/xmlUtils';
 
 export default {
   title: 'Connections/HelloPort',

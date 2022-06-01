@@ -18,7 +18,7 @@ import CellEditorHandler from '../../core/src/view/handler/CellEditorHandler';
 import TooltipHandler from '../../core/src/view/handler/TooltipHandler';
 
 import { globalTypes } from '../.storybook/preview';
-import { intersects } from '@maxgraph/core/util/MathUtils';
+import { intersects } from '@maxgraph/core/util/mathUtils';
 
 
 

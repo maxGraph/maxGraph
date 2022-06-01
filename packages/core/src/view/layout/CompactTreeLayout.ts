@@ -10,7 +10,7 @@ import Point from '../geometry/Point';
 import GraphLayout from './GraphLayout';
 import CellPath from '../cell/CellPath';
 import Rectangle from '../geometry/Rectangle';
-import { sortCells } from '../../util/StyleUtils';
+import { sortCells } from '../../util/styleUtils';
 import WeightedCellSorter from './util/WeightedCellSorter';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';

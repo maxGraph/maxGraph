@@ -5,7 +5,7 @@ import ConnectionConstraint from '../other/ConnectionConstraint';
 import Rectangle from '../geometry/Rectangle';
 import { DIRECTION } from '../../util/Constants';
 import { mixInto } from '../../util/Utils';
-import { getRotatedPoint, toRadians } from '../../util/MathUtils';
+import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import Cell from '../cell/Cell';
 import CellArray from '../cell/CellArray';
 import EventObject from '../event/EventObject';

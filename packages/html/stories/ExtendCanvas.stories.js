@@ -6,7 +6,7 @@ import {
   Point,
   styleUtils,
 } from '@maxgraph/core';
-import {hasScrollbars} from '../../core/src/util/StyleUtils';
+import {hasScrollbars} from '../../core/src/util/styleUtils';
 
 import { globalTypes } from '../.storybook/preview';
 

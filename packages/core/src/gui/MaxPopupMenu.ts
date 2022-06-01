@@ -5,7 +5,7 @@
  * Type definitions from the typed-mxgraph project
  */
 import EventSource from '../view/event/EventSource';
-import { fit, getDocumentScrollOrigin } from '../util/StyleUtils';
+import { fit, getDocumentScrollOrigin } from '../util/styleUtils';
 import EventObject from '../view/event/EventObject';
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';

@@ -8,13 +8,13 @@ import {
   intersects,
   ptSegDistSq,
   toRadians,
-} from '../../util/MathUtils';
+} from '../../util/mathUtils';
 import {
   setCellStyleFlags,
   setCellStyles,
   setStyle,
   getSizeForString,
-} from '../../util/StyleUtils';
+} from '../../util/styleUtils';
 import {
   ALIGN,
   DEFAULT_FONTSIZE,

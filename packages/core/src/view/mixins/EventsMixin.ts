@@ -22,7 +22,7 @@ import PanningHandler from '../handler/PanningHandler';
 import ConnectionHandler from '../handler/ConnectionHandler';
 import Point from '../geometry/Point';
 import { mixInto } from '../../util/Utils';
-import { convertPoint } from '../../util/StyleUtils';
+import { convertPoint } from '../../util/styleUtils';
 import { NONE } from '../../util/Constants';
 import Client from '../../Client';
 import EventSource from '../event/EventSource';

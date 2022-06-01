@@ -13,7 +13,7 @@ import {
   Point,
 } from '@maxgraph/core';
 
-import{traverse} from '../../core/src/util/TreeTraversal'
+import{traverse} from '../../core/src/util/treeTraversal'
 
 import { globalTypes } from '../.storybook/preview';
 

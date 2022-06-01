@@ -7,7 +7,7 @@ import {
   PrintPreview
 } from '@maxgraph/core';
 
-import { write } from '../../core/src/util/DomUtils';
+import { write } from '../../core/src/util/domUtils';
 
 import { globalTypes } from '../.storybook/preview';
 

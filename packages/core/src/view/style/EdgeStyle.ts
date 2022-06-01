@@ -12,7 +12,7 @@ import {
   getBoundingBox,
   getPortConstraints,
   reversePortConstraints,
-} from '../../util/MathUtils';
+} from '../../util/mathUtils';
 import Point from '../geometry/Point';
 import CellState from '../cell/CellState';
 import {

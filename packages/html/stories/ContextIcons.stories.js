@@ -6,7 +6,7 @@ import {
   domUtils,
   VertexHandler,
 } from '@maxgraph/core';
-import { convertPoint } from '../../core/src/util/StyleUtils';
+import { convertPoint } from '../../core/src/util/styleUtils';
 
 import { globalTypes } from '../.storybook/preview';
 
