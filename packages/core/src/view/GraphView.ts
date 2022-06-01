@@ -30,7 +30,7 @@ import Geometry from './geometry/Geometry';
 import ConnectionConstraint from './other/ConnectionConstraint';
 import PopupMenuHandler from './handler/PopupMenuHandler';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
-import { clone } from '../util/CloneUtils';
+import { clone } from '../util/cloneUtils';
 import CellArray from './cell/CellArray';
 import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';

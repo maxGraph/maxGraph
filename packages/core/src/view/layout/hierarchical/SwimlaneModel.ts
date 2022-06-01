@@ -10,7 +10,7 @@ import CellPath from "../../cell/CellPath";
 import Dictionary from "../../../util/Dictionary";
 import CellArray from "../../cell/CellArray";
 import Cell from "../../cell/Cell";
-import { clone } from "../../../util/CloneUtils";
+import { clone } from "../../../util/cloneUtils";
 import SwimlaneLayout from "../SwimlaneLayout";
 
 /**

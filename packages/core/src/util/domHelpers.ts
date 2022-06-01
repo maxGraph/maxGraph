@@ -1,7 +1,7 @@
 import Editor from '../editor/Editor';
 import { KeyboardEventListener, MouseEventListener } from '../types';
 import InternalEvent from "../view/event/InternalEvent";
-import { write } from "./DomUtils";
+import { write } from "./domUtils";
 
 /**
  * Adds a hyperlink to the specified parent that invokes action on the

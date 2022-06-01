@@ -7,7 +7,7 @@
 import Client from '../Client';
 import { PAGE_FORMAT_A4_PORTRAIT } from './Constants';
 import Rectangle from '../view/geometry/Rectangle';
-import { getOuterHtml } from './DomUtils';
+import { getOuterHtml } from './domUtils';
 import { Graph } from '../view/Graph';
 import { removeCursors } from './StyleUtils';
 

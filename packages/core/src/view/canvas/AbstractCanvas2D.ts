@@ -17,7 +17,7 @@ import {
 } from '../../util/Constants';
 import UrlConverter from '../../util/UrlConverter';
 import Point from '../geometry/Point';
-import { clone } from '../../util/CloneUtils';
+import { clone } from '../../util/cloneUtils';
 
 import type {
   AlignValue,
