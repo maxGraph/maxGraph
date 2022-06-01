@@ -154,7 +154,8 @@ const Template = ({ label, ...args }) => {
 
               // Uses the special 2-way style for 2-way labels
               if (value.indexOf('2-Way') >= 0) {
-                e.style = '2way';
+                const style = 
+                graph.getDataModel().setStyle(e, {baseStyleName:'2way'});
               }
             }
           }

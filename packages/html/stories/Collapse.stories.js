@@ -47,7 +47,11 @@ const Template = ({ label, ...args }) => {
       value: 'Container',
       position: [20, 20],
       size: [200, 200],
-      style: 'shape=swimlane;startSize=20;foldable=true',
+      style: {
+        shape: 'swimlane',
+        startSize: 20,
+        foldable: true,
+      }
     });
     v1.geometry.alternateBounds = new Rectangle(0, 0, 110, 70);
     v1.getStyle = getStyle;

@@ -25,8 +25,11 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
+  const divlayout = document.createElement('div');
   const div = document.createElement('div');
-
+  div.style.display= 'flex';
+  const divtable = document.createElement('div');
+  divtable.setAttribute('div', 'divtable')
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'hidden';
@@ -34,7 +37,9 @@ const Template = ({ label, ...args }) => {
   container.style.height = `${args.height}px`;
   container.style.border = 'solid 1px black';
   container.style.cursor = 'default';
+  divlayout.appendChild(div)
   div.appendChild(container);
+  div.appendChild(divtable);
 
   // Note that these XML nodes will be enclosing the
   // Cell nodes for the model cells in the output
@@ -140,7 +145,7 @@ const Template = ({ label, ...args }) => {
   if (args.rubberBand) new RubberBandHandler(graph);
 
   const buttons = document.createElement('div');
-  div.appendChild(buttons);
+  divlayout.appendChild(buttons);
 
   // Adds an option to view the XML of the graph
   buttons.appendChild(
@@ -196,25 +201,25 @@ const Template = ({ label, ...args }) => {
    * Updates the properties panel
    */
   function selectionChanged(graph) {
-    const div = document.getElementById('properties');
+    //const div = document.getElementById('properties');
 
     // Forces focusout in IE
     graph.container.focus();
 
     // Clears the DIV the non-DOM way
-    div.innerHTML = '';
+    divtable.innerHTML = '';
 
     // Gets the selection cell
     const cell = graph.getSelectionCell();
 
     if (cell == null) {
-      domUtils.writeln(div, 'Nothing selected.');
+      domUtils.writeln(divtable, 'Nothing selected.');
     } else {
       // Writes the title
       const center = document.createElement('center');
       domUtils.writeln(center, `${cell.value.nodeName} (${cell.id})`);
-      div.appendChild(center);
-      domUtils.br(div);
+      divtable.appendChild(center);
+      domUtils.br(divtable);
 
       // Creates the form from the attributes of the user object
       const form = new MaxForm();
@@ -223,9 +228,10 @@ const Template = ({ label, ...args }) => {
       for (let i = 0; i < attrs.length; i++) {
         createTextField(graph, form, cell, attrs[i]);
       }
-
-      div.appendChild(form.getTable());
-      domUtils.br(div);
+      const table= form.getTable()
+      table.setAttribute('id','properties');
+      divtable.appendChild(table);
+      domUtils.br(divtable);
     }
   }
 
@@ -263,7 +269,7 @@ const Template = ({ label, ...args }) => {
     // explicitely where we do the graph.focus above.
     InternalEvent.addListener(input, 'blur', applyHandler);
   }
-  return div;
+  return divlayout;
 };
 
 export const Default = Template.bind({});

@@ -19,6 +19,7 @@ import Rectangle from '../view/geometry/Rectangle';
 import Cell from '../view/cell/Cell';
 import GraphDataModel from '../view/GraphDataModel';
 import CellArray from '../view/cell/CellArray';
+import {clone} from './cloneUtils'
 import { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from 'src/types';
 
 
@@ -439,9 +440,10 @@ export const setCellStyles = (
 
         if (cell) {
           const style = cell.getStyle();
-          style[key] = value;
+          const styleClone =clone(style)
+          styleClone[key] = value;
 
-          model.setStyle(cell, style);
+          model.setStyle(cell, styleClone);
         }
       }
     } finally {
