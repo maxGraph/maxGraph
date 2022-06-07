@@ -55,7 +55,8 @@ git remote set-head origin -a
 # Transition to Apache 2.0 license
 
 This project is published under the terms of a [Modified-Apache-2.0](LICENSE) license and currently preparing to move back to the standard Apache 2.0 license.  
-From now on, all contributions to this project must be under the terms of the Apaches 2.0 license as stated in https://www.apache.org/licenses/LICENSE-2.0 .
+From now on, all contributions to this project must be under the terms of the Apaches 2.0 license as stated in https://www.apache.org/licenses/LICENSE-2.0.  
+See https://github.com/maxGraph/maxGraph/issues/89 for more details.
 
 # Original Readme below
 
