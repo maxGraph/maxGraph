@@ -580,10 +580,8 @@ class Graph extends EventSource {
       const newParent = change.child.getParent();
       this.view.invalidate(change.child, true, true);
 
-      if (
-        newParent &&
-        (!this.getDataModel().contains(newParent) || newParent.isCollapsed())
-      ) {
+      if (newParent == null || !this.getDataModel().contains(newParent) || newParent.isCollapsed())
+       {
         this.view.invalidate(change.child, true, true);
         this.removeStateForCell(change.child);
 
@@ -1370,7 +1368,7 @@ class Graph extends EventSource {
   setAllowLoops(value: boolean) {
     this.allowLoops = value;
   }
-
+  
   /**
    * Returns {@link recursiveResize}.
    *

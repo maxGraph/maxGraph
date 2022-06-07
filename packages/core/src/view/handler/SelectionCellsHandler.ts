@@ -51,7 +51,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
       }
     };
 
-    this.graph.addListener(InternalEvent.CHANGE, this.refreshHandler);
+    this.graph.getSelectionModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
     this.graph.getDataModel().addListener(InternalEvent.CHANGE, this.refreshHandler);
     this.graph.getView().addListener(InternalEvent.SCALE, this.refreshHandler);
     this.graph.getView().addListener(InternalEvent.TRANSLATE, this.refreshHandler);
@@ -143,7 +143,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
     const tmp = sortCells(this.getHandledSelectionCells(), false);
 
     // Destroys or updates old handlers
-    for (let i = 0; i < tmp.length; i += 1) {
+    for (let i= 0; i < tmp.length; i++) {
       const state = this.graph.view.getState(tmp[i]);
 
       if (state) {
@@ -174,7 +174,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
     });
 
     // Creates new handlers and updates parent highlight on existing handlers
-    for (let i = 0; i < tmp.length; i += 1) {
+    for (let i = 0; i < tmp.length; i++) {
       const state = this.graph.view.getState(tmp[i]);
 
       if (state) {

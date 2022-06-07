@@ -28,20 +28,20 @@ const Template = ({ label, ...args }) => {
   // a supercall to use the default implementation.
   graph.getLabel = function (cell) {
     const label = Graph.prototype.getLabel.apply(this, arguments);
-
     if (cell.isEdge()) {
       return `Transfer ${label}`;
     }
     return label;
+
   };
 
   // Installs a custom global tooltip
   graph.setTooltips(true);
   graph.getTooltip = function (state) {
     const { cell } = state;
-    const model = this.getDataModel();
+   // const model = this.getDataModel();
 
-    if (modcellel.isEdge()) {
+    if (cell.isEdge()) {
       const source = this.getLabel(cell.getTerminal(true));
       const target = this.getLabel(cell.getTerminal(false));
 
@@ -53,7 +53,7 @@ const Template = ({ label, ...args }) => {
   // Creates the default style for vertices
   let style = [];
   style.shape = constants.SHAPE.RECTANGLE;
-  style.perimiter = Perimeter.RectanglePerimeter;
+  style.perimeter = Perimeter.RectanglePerimeter;
   style.strokeColor = 'gray';
   style.rounded = true;
   style.fillColor = '#EEEEEE';
@@ -61,7 +61,7 @@ const Template = ({ label, ...args }) => {
   style.fontColor = '#774400';
   style.align = constants.ALIGN.CENTER;
   style.verticalAlign = constants.ALIGN.MIDDLE;
-  style.fontSize = '12';
+  style.fontSize = 12;
   style.fontStyle = 1;
   graph.getStylesheet().putDefaultVertexStyle(style);
 
@@ -71,9 +71,9 @@ const Template = ({ label, ...args }) => {
   style.strokeColor = '#6482B9';
   style.align = constants.ALIGN.CENTER;
   style.verticalAlign = constants.ALIGN.MIDDLE;
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
   style.endArrow = constants.ARROW.CLASSIC;
-  style.fontSize = '10';
+  style.fontSize = 10;
   graph.getStylesheet().putDefaultEdgeStyle(style);
 
   // Gets the default parent for inserting new cells. This
@@ -82,7 +82,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(parent, null, 'Interval 1', 20, 20, 180, 30);
+    const v1 = graph.insertVertex({parent, value:'Interval 1', position:[20, 20], size:[180, 30]});
     const v2 = graph.insertVertex(parent, null, 'Interval 2', 140, 80, 280, 30);
     const v3 = graph.insertVertex(parent, null, 'Interval 3', 200, 140, 360, 30);
     const v4 = graph.insertVertex(parent, null, 'Interval 4', 480, 200, 120, 30);

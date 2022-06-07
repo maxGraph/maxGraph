@@ -14,7 +14,6 @@ import { globalTypes } from '../.storybook/preview';
 export default {
   title: 'Windows/Windows',
   argTypes: {
-    ...globalTypes,
     contextMenu: {
       type: 'boolean',
       defaultValue: false,
@@ -30,12 +29,14 @@ const Template = ({ label, ...args }) => {
   Client.setImageBasePath('/images');
 
   const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
+  container.style.position = 'absolute';
+  container.style.overflow = 'auto';
+  container.style.width = '100%';
+  container.style.height = '100%';
+  container.style.background = 'lightyellow';
   container.style.cursor = 'default';
+
+  
 
   // Note that we're using the container scrollbars for the graph so that the
   // container extends to the parent div inside the window
@@ -118,7 +119,7 @@ const Template = ({ label, ...args }) => {
 
   MaxLog.show();
 
-  return container;
+  return document.createElement('div');
 };
 
 export const Default = Template.bind({});

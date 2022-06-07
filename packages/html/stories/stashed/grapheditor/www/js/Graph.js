@@ -157,6 +157,8 @@ Shape.prototype.getConstraints = function (style, w, h) {
 /**
  * Defines graph class.
  */
+
+
 Graph = function (container, model, renderHint, stylesheet, themes, standalone) {
   graph.call(this, container, model, renderHint, stylesheet);
 
@@ -1196,6 +1198,7 @@ Graph = function (container, model, renderHint, stylesheet, themes, standalone) 
 
   //Create a unique offset object for each graph instance.
   this.currentTranslate = new Point(0, 0);
+
 };
 
 /**

@@ -13,7 +13,6 @@ import {
   StencilShape,
   StencilShapeRegistry,
   CellRenderer,
-  utils,
   load,
 } from '@maxgraph/core';
 
@@ -156,7 +155,7 @@ const Template = ({ label, ...args }) => {
 
   // Changes default styles
   let style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = 'orthogonalEdgeStyle';
+  style.edgeStyle = 'orthogonalEdgeStyle';
   style = graph.getStylesheet().getDefaultVertexStyle();
   style.fillColor = '#adc5ff';
   style.gradientColor = '#7d85df';
@@ -302,10 +301,13 @@ const Template = ({ label, ...args }) => {
       const cell = graph.getSelectionCell();
 
       if (cell != null) {
-        const style = utils.prompt('Style', cell.getStyle());
-
+        let style = cell.getStyle();
+        let sstyle= JSON.stringify(style)
+        let pstyle = prompt('Style', sstyle)
+let rstyle=JSON.parse(pstyle)
+        
         if (style != null) {
-          graph.getDataModel().setStyle(cell, style);
+          graph.getDataModel().setStyle(cell, rstyle);
         }
       }
     })

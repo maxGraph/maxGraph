@@ -80,7 +80,7 @@ const Template = ({ label, ...args }) => {
 
   class MyCustomVertexHandler extends VertexHandler {
     livePreview = true;
-
+    
     rotationEnabled = true;
 
     createCustomHandles() {

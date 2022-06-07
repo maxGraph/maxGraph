@@ -132,7 +132,7 @@ class Multiplicity {
    */
   check(
     graph: Graph,
-    edge: Cell,
+    edge: Cell|null,
     source: Cell,
     target: Cell,
     sourceOut: number,
@@ -172,7 +172,7 @@ class Multiplicity {
    * Checks if there are any valid neighbours in {@link validNeighbors}. This is only
    * called if {@link validNeighbors} is a non-empty array.
    */
-  checkNeighbors(graph: Graph, edge: Cell, source: Cell, target: Cell): boolean {
+  checkNeighbors(graph: Graph, edge: Cell|null, source: Cell, target: Cell): boolean {
     const sourceValue = source.getValue();
     const targetValue = target.getValue();
     let isValid = !this.validNeighborsAllowed;
@@ -196,7 +196,7 @@ class Multiplicity {
    * given cell is the source or target of the given edge, depending on
    * {@link source}. This implementation uses {@link checkType} on the terminal's value.
    */
-  checkTerminal(graph: Graph, edge: Cell, terminal: Cell): boolean {
+  checkTerminal(graph: Graph, terminal: Cell, edge: Cell|null): boolean {
     const value = terminal.getValue();
 
     return this.checkType(graph, value, this.type, this.attr, this.value);

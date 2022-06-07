@@ -24,7 +24,6 @@ const Template = ({ label, ...args }) => {
   container.style.overflow = 'hidden';
   container.style.width = `${args.width}px`;
   container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
   // Enables guides
@@ -125,8 +124,8 @@ const Template = ({ label, ...args }) => {
   style.fontColor = '#000000';
   style.fontStyle = '0';
   style.fontStyle = '0';
-  style.startSize = '8';
-  style.endSize = '8';
+  style.startSize = 8;
+  style.endSize = 8;
 
   // Populates the graph
   const parent = graph.getDefaultParent();
@@ -161,6 +160,7 @@ const Template = ({ label, ...args }) => {
       startSize: 12,
       endArrow: 'block',
       labelBackgroundColor: '#FFFFFF',
+      endFill: 1
     });
 
     const v5 = graph.insertVertex(parent, null, 'v5', 40, 220, 40, 40, {

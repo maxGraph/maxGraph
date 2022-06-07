@@ -154,7 +154,7 @@ class LabelShape extends RectangleShape {
    */
   getImageBounds(x: number, y: number, w: number, h: number) {
     const align = this.style?.imageAlign ?? ALIGN.LEFT;
-    const valign = this.style?.verticalAlign ?? ALIGN.MIDDLE;
+    const valign = this.style?.imageVerticalAlign ?? ALIGN.MIDDLE;
     const width = this.style?.imageWidth ?? DEFAULT_IMAGESIZE;
     const height = this.style?.imageHeight ?? DEFAULT_IMAGESIZE;
     const spacing = this.style?.spacing ?? this.spacing + 5;
@@ -217,7 +217,7 @@ class LabelShape extends RectangleShape {
    */
   getIndicatorBounds(x: number, y: number, w: number, h: number) {
     const align = this.style?.imageAlign ?? ALIGN.LEFT;
-    const valign = this.style?.verticalAlign ?? ALIGN.MIDDLE;
+    const valign = this.style?.imageVerticalAlign ?? ALIGN.MIDDLE;
     const width = this.style?.indicatorWidth ?? this.indicatorSize;
     const height = this.style?.indicatorHeight ?? this.indicatorSize;
     const spacing = this.spacing + 5;

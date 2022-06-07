@@ -208,7 +208,7 @@ class SelectionHandler implements GraphPlugin {
    * Specifies if other cells should be used for snapping the right, center or
    * left side of the current selection. Default is false.
    */
-  guidesEnabled = false;
+  guidesEnabled = true;
 
   /**
    * Whether the handles of the selection are currently visible.
@@ -300,7 +300,7 @@ class SelectionHandler implements GraphPlugin {
   /**
    * Maximum number of cells for which live preview should be used.  Default is 0 which means no live preview.
    */
-  maxLivePreview = 0;
+  maxLivePreview = 50;
 
   /**
    * Variable allowLivePreview
@@ -326,8 +326,8 @@ class SelectionHandler implements GraphPlugin {
   target: Cell | null = null;
 
   suspended = false;
-  livePreviewActive = false;
-  livePreviewUsed = false;
+  livePreviewActive = true;
+  livePreviewUsed = true;
 
   highlight: CellHighlight | null = null;
 
@@ -743,8 +743,8 @@ class SelectionHandler implements GraphPlugin {
     for (let i = 0; i < this.cells.length; i += 1) {
       this.cellCount += this.addStates(this.cells[i], this.allCells);
     }
-
     if (this.guidesEnabled) {
+     
       this.guide = this.createGuide();
       const parent = cell.getParent() as Cell;
       const ignore = parent.getChildCount() < 2;

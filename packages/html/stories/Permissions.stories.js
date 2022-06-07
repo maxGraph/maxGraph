@@ -32,12 +32,12 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
   div.appendChild(container);
 
-  // Defines an icon for creating new connections in the connection handler.
-  // This will automatically disable the highlighting of the source vertex.
-  ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
+
+  const connectionHandler = graph.getPlugin('ConnectionHandler');
+  connectionHandler.connectImage = new ImageBox('images/connector.gif', 16, 16);
 
   // Enable tooltips, disables mutligraphs, enable loops
   graph.setMultigraph(false);

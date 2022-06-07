@@ -44,7 +44,7 @@ const Template = ({ label, ...args }) => {
   const f = () => {
     const overlays = graph.getCellOverlays(v1);
 
-    if (overlays == null) {
+    if (!overlays.length) {
       graph.removeCellOverlays(v2);
       graph.setCellWarning(v1, 'Tooltip');
     } else {
@@ -53,7 +53,7 @@ const Template = ({ label, ...args }) => {
     }
   };
 
-  window.setInterval(f, 1000);
+  window.setInterval(f, 5000);
   f();
 
   return container;

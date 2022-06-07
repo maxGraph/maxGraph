@@ -15,8 +15,7 @@ const Template = ({ label, ...args }) => {
   container.style.overflow = 'hidden';
   container.style.width = `${args.width}px`;
   container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+ 
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -30,6 +29,8 @@ const Template = ({ label, ...args }) => {
   let style = graph.getStylesheet().getDefaultVertexStyle();
 
   style.shape = 'label';
+  style.fillColor= 'none';
+  style.strokeColor= 'none';
   style.verticalAlign = 'bottom';
   style.indicatorShape = 'ellipse';
   style.indicatorWidth = 34;
@@ -43,9 +44,10 @@ const Template = ({ label, ...args }) => {
   // Creates a style with an indicator
   style = graph.getStylesheet().getDefaultEdgeStyle();
 
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
   style.elbow = constants.ELBOW.VERTICAL;
   style.rounded = true;
+  style.bendable = true;
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

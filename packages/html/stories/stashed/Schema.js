@@ -520,6 +520,7 @@ function addSidebarIcon(graph, sidebar, prototype, image) {
       pt.x -= pstate.x;
       pt.y -= pstate.y;
 
+
       let columnCount = parent.getChildCount()+1;
       name = prompt('Enter name for new column', 'COLUMN'+columnCount);
     } else {

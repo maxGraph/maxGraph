@@ -1,4 +1,5 @@
 import { Graph, constants, EdgeStyle, StackLayout, LayoutManager } from '@maxgraph/core';
+import { skipPartiallyEmittedExpressions } from 'typescript';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -27,22 +28,27 @@ const Template = ({ label, ...args }) => {
   graph.setDropEnabled(true);
 
   // Disables global features
-  graph.collapseToPreferredSize = false;
+  graph.options.collapseToPreferredSize = false;
   graph.constrainChildren = false;
   graph.cellsSelectable = false;
-  graph.extendParentsOnAdd = false;
+  graph.extendParentsOnAdd = true;
   graph.extendParents = false;
   graph.border = 10;
 
   // Sets global styles
   let style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = EdgeStyle.EntityRelation;
-  style.rounded = true;
+  style.edgeStyle = EdgeStyle.EntityRelation;
+  style.rounded=true;
+  
 
   style = graph.getStylesheet().getDefaultVertexStyle();
   style.fillColor = '#ffffff';
   style.shape = 'swimlane';
   style.startSize = 30;
+  style.foldable=true;
+  
+  
+  
 
   style = [];
   style.shape = constants.SHAPE_RECTANGLE;

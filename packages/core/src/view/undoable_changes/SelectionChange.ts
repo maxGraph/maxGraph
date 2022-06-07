@@ -49,7 +49,7 @@ class SelectionChange implements UndoableChange {
     window.status =
       Translations.get(selectionModel.doneResource) || selectionModel.doneResource;
 
-    this.graph.fireEvent(
+    this.graph.getSelectionModel().fireEvent(
       new EventObject(InternalEvent.CHANGE, { added: this.added, removed: this.removed })
     );
   }

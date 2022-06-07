@@ -37,15 +37,9 @@ const Template = ({ label, ...args }) => {
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
+  container.style.marginLeft='10px'
+  container.style.marginTop='10px'
   div.appendChild(container);
-
-  // Defines an icon for creating new connections in the connection handler.
-  // This will automatically disable the highlighting of the source vertex.
-  ConnectionHandler.prototype.connectImage = new ImageBox(
-    '/images/connector.gif',
-    16,
-    16
-  );
 
   // Creates the div for the toolbar
   const tbContainer = document.createElement('div');
@@ -53,7 +47,7 @@ const Template = ({ label, ...args }) => {
   tbContainer.style.overflow = 'hidden';
   tbContainer.style.padding = '2px';
   tbContainer.style.left = '0px';
-  tbContainer.style.top = '0px';
+  tbContainer.style.top = '50px';
   tbContainer.style.width = '24px';
   tbContainer.style.bottom = '0px';
 
@@ -79,6 +73,10 @@ const Template = ({ label, ...args }) => {
   };
 
   // Enables new connections in the graph
+  // Defines an icon for creating new connections in the connection handler.
+  // This will automatically disable the highlighting of the source vertex.
+  const connectionHandler = graph.getPlugin('ConnectionHandler');
+  connectionHandler.connectImage = new ImageBox('images/connector.gif', 16, 16);
   graph.setConnectable(true);
   graph.setMultigraph(false);
 
@@ -129,7 +127,7 @@ const Template = ({ label, ...args }) => {
     }
   });
 
-  tbContainer.appendChild(button);
+  div.insertBefore(button, container);
 
   function addToolbarItem(graph, toolbar, prototype, image) {
     // Function that is executed when the image is dropped on

@@ -100,10 +100,12 @@ const Template = ({ label, ...args }) => {
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
-
+  const style = graph.getStylesheet().getDefaultVertexStyle();
+  style.foldable=true;
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'vertexLabelsMovable', 20, 20, 80, 30);
+    
 
     // Places sublabels inside the vertex
     const label11 = graph.insertVertex(
