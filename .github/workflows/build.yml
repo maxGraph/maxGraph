@@ -35,7 +35,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm install
       - name: Build @maxgraph/core - umd
