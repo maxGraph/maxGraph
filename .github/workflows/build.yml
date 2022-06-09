@@ -47,3 +47,6 @@ jobs:
       - name: Generate @maxgraph/core types
         working-directory: packages/core
         run: npm run generate-types
+      - name: Build ts-example
+        working-directory: packages/ts-example
+        run: npm run build
