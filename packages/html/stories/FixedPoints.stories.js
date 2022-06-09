@@ -87,14 +87,9 @@ const Template = ({ label, ...args }) => {
 
     createEdgeState(me) {
       // Connect preview
-      const edge = this.graph.createEdge(
-        null,
-        null,
-        null,
-        null,
-        null,
-        'edgeStyle=orthogonalEdgeStyle'
-      );
+      const edge = this.graph.createEdge(null, null, null, null, null, {
+        edgeStyle: 'orthogonalEdgeStyle',
+      });
 
       return new CellState(this.graph.view, edge, this.graph.getCellStyle(edge));
     }
@@ -155,14 +150,14 @@ const Template = ({ label, ...args }) => {
       value: 'Hello,',
       position: [20, 20],
       size: [80, 60],
-      style: 'shape=triangle;perimeter=trianglePerimeter',
+      style: { shape: 'triangle', perimeter: 'trianglePerimeter' },
     });
     const v2 = graph.insertVertex({
       parent,
       value: 'World!',
       position: [200, 150],
       size: [80, 60],
-      style: 'shape=ellipse;perimeter=ellipsePerimeter',
+      style: { shape: 'ellipse', perimeter: 'ellipsePerimeter' },
     });
     const v3 = graph.insertVertex({
       parent,
@@ -175,18 +170,30 @@ const Template = ({ label, ...args }) => {
       value: '',
       source: v1,
       target: v2,
-      style:
-        'edgeStyle=elbowEdgeStyle;elbow=horizontal;' +
-        'exitX=0.5;exitY=1;exitPerimeter=1;entryX=0;entryY=0;entryPerimeter=1;',
+      style: {
+        edgeStyle: 'elbowEdgeStyle',
+        elbow: 'horizontal',
+        exitX: 0.5,
+        exitY: 1,
+        exitPerimeter: 1,
+        entryX: 0,
+        entryY: 0,
+        entryPerimeter: 1,
+      },
     });
     const e2 = graph.insertEdge({
       parent,
       value: '',
       source: v3,
       target: v2,
-      style:
-        'edgeStyle=elbowEdgeStyle;elbow=horizontal;orthogonal=0;' +
-        'entryX=0;entryY=0;entryPerimeter=1;',
+      style: {
+        edgeStyle: 'elbowEdgeStyle',
+        elbow: 'horizontal',
+        orthogonal: 0,
+        entryX: 0,
+        entryY: 0,
+        entryPerimeter: 1,
+      },
     });
   });
 

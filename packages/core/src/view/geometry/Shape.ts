@@ -6,11 +6,7 @@
  */
 import Rectangle from './Rectangle';
 import { isNotNullish } from '../../util/Utils';
-import {
-  getBoundingBox,
-  getDirectedBounds,
-  mod,
-} from '../../util/mathUtils';
+import { getBoundingBox, getDirectedBounds, mod } from '../../util/mathUtils';
 import {
   DIRECTION,
   LINE_ARCSIZE,
@@ -31,7 +27,7 @@ import ImageBox from '../image/ImageBox';
 
 import type {
   ArrowType,
-  CellStateStyles,
+  CellStateStyle,
   ColorValue,
   DirectionValue,
   GradientMap,
@@ -176,7 +172,7 @@ class Shape {
   /**
    * Optional reference to the style of the corresponding <CellState>.
    */
-  style: CellStateStyles | null = null;
+  style: CellStateStyle | null = null;
 
   /**
    * Contains the bounding box of the shape, that is, the smallest rectangle

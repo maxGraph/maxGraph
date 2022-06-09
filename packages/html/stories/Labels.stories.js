@@ -1,4 +1,10 @@
-import { Graph, RubberBandHandler, KeyHandler, constants, Rectangle } from '@maxgraph/core';
+import {
+  Graph,
+  RubberBandHandler,
+  KeyHandler,
+  constants,
+  Rectangle,
+} from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -100,8 +106,28 @@ const Template = ({ label, ...args }) => {
     const v1 = graph.insertVertex(parent, null, 'vertexLabelsMovable', 20, 20, 80, 30);
 
     // Places sublabels inside the vertex
-    const label11 = graph.insertVertex(v1, null, 'Label1', 0.5, 1, 0, 0, null, true);
-    const label12 = graph.insertVertex(v1, null, 'Label2', 0.5, 0, 0, 0, null, true);
+    const label11 = graph.insertVertex(
+      v1,
+      null,
+      'Label1',
+      0.5,
+      1,
+      0,
+      0,
+      { baseStyleNames: [] },
+      true
+    );
+    const label12 = graph.insertVertex(
+      v1,
+      null,
+      'Label2',
+      0.5,
+      0,
+      0,
+      0,
+      { baseStyleNames: [] },
+      true
+    );
 
     const v2 = graph.insertVertex(
       parent,
@@ -116,8 +142,28 @@ const Template = ({ label, ...args }) => {
     const e1 = graph.insertEdge(parent, null, 'edgeLabelsMovable', v1, v2);
 
     // Places sublabels inside the vertex
-    const label21 = graph.insertVertex(v2, null, 'Label1', 0.5, 1, 0, 0, null, true);
-    const label22 = graph.insertVertex(v2, null, 'Label2', 0.5, 0, 0, 0, null, true);
+    const label21 = graph.insertVertex(
+      v2,
+      null,
+      'Label1',
+      0.5,
+      1,
+      0,
+      0,
+      { baseStyleNames: [] },
+      true
+    );
+    const label22 = graph.insertVertex(
+      v2,
+      null,
+      'Label2',
+      0.5,
+      0,
+      0,
+      0,
+      { baseStyleNames: [] },
+      true
+    );
   });
 
   return container;

@@ -3,16 +3,12 @@ import Rectangle from '../geometry/Rectangle';
 import { mixInto } from '../../util/Utils';
 import { convertPoint } from '../../util/styleUtils';
 import { mod } from '../../util/mathUtils';
-import {
-  DEFAULT_STARTSIZE,
-  DIRECTION,
-  SHAPE,
-} from '../../util/Constants';
+import { DEFAULT_STARTSIZE, DIRECTION, SHAPE } from '../../util/Constants';
 import CellArray from '../cell/CellArray';
 import { getClientX, getClientY } from '../../util/EventUtils';
 import { Graph } from '../Graph';
 
-import { CellStateStyles, DirectionValue } from '../../types';
+import { CellStateStyle, DirectionValue } from '../../types';
 
 declare module '../Graph' {
   interface Graph {
@@ -24,10 +20,14 @@ declare module '../Graph' {
     getSwimlaneAt: (x: number, y: number, parent?: Cell | null) => Cell | null;
     hitsSwimlaneContent: (swimlane: Cell, x: number, y: number) => boolean;
     getStartSize: (swimlane: Cell, ignoreState?: boolean) => Rectangle;
-    getSwimlaneDirection: (style: CellStateStyles) => DirectionValue;
+    getSwimlaneDirection: (style: CellStateStyle) => DirectionValue;
     getActualStartSize: (swimlane: Cell, ignoreState: boolean) => Rectangle;
     isSwimlane: (cell: Cell, ignoreState?: boolean) => boolean;
-    isValidDropTarget: (cell: Cell, cells?: CellArray, evt?: MouseEvent | null) => boolean;
+    isValidDropTarget: (
+      cell: Cell,
+      cells?: CellArray,
+      evt?: MouseEvent | null
+    ) => boolean;
     getDropTarget: (
       cells: CellArray,
       evt: MouseEvent,

@@ -136,7 +136,7 @@ const Template = ({ label, ...args }) => {
       value,
       position: [100, 60],
       size: [120, 80],
-      style: 'overflow=fill;',
+      style: { overflow: 'fill' },
     });
   });
 

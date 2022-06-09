@@ -1,3 +1,4 @@
+import { DIRECTION } from './util/Constants';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
 import EventSource from './view/event/EventSource';
@@ -24,7 +25,9 @@ export type Properties = {
   [k: string]: any;
 };
 
-export type CellStateStyles = {
+export type CellStyle = CellStateStyle & { baseStyleNames?: string[] };
+
+export type CellStateStyle = {
   absoluteArcSize?: number;
   align?: AlignValue;
   anchorPointDirection?: boolean;
@@ -38,8 +41,8 @@ export type CellStateStyles = {
   curved?: boolean;
   dashed?: boolean;
   dashPattern?: string;
-  defaultEdge?: CellStateStyles;
-  defaultVertex?: CellStateStyles;
+  defaultEdge?: CellStateStyle;
+  defaultVertex?: CellStateStyle;
   deletable?: boolean;
   direction?: DirectionValue;
   edgeStyle?: string;
@@ -86,12 +89,14 @@ export type CellStateStyles = {
   indicatorShape?: string;
   indicatorStrokeColor?: ColorValue;
   indicatorWidth?: number;
+  jettySize?: number | 'auto';
   labelBackgroundColor?: ColorValue;
   labelBorderColor?: ColorValue;
   labelPadding?: number;
   labelPosition?: AlignValue;
   labelWidth?: number;
   loop?: Function;
+  loopStyle?: Function;
   margin?: number;
   movable?: boolean;
   noEdgeStyle?: boolean;
@@ -103,6 +108,8 @@ export type CellStateStyles = {
   perimeter?: Function | string | null;
   perimeterSpacing?: number;
   pointerEvents?: boolean;
+  portConstraint?: DIRECTION;
+  portConstraintRotation?: DIRECTION;
   resizable?: boolean;
   resizeHeight?: boolean;
   resizeWidth?: boolean;
@@ -111,11 +118,14 @@ export type CellStateStyles = {
   rounded?: boolean;
   routingCenterX?: number;
   routingCenterY?: number;
+  segment?: number;
   separatorColor?: ColorValue;
   shadow?: boolean;
   shape?: ShapeValue;
+  sourceJettySize?: number | 'auto';
   sourcePerimeterSpacing?: number;
   sourcePort?: string;
+  sourcePortConstraint?: DIRECTION;
   spacing?: number;
   spacingBottom?: number;
   spacingLeft?: number;
@@ -129,14 +139,22 @@ export type CellStateStyles = {
   strokeWidth?: number;
   swimlaneFillColor?: ColorValue;
   swimlaneLine?: boolean;
+  targetJettySize?: number | 'auto';
   targetPerimeterSpacing?: number;
   targetPort?: string;
+  targetPortConstraint?: DIRECTION;
   textDirection?: TextDirectionValue;
   textOpacity?: number;
   verticalAlign?: VAlignValue;
   verticalLabelPosition?: VAlignValue;
   whiteSpace?: WhiteSpaceValue;
 };
+
+export type NumericCellStateStyleKeys = NonNullable<
+  {
+    [k in keyof CellStateStyle]: CellStateStyle[k] extends number | undefined ? k : never;
+  }[keyof CellStateStyle]
+>;
 
 export type ColorValue = string;
 export type DirectionValue = 'north' | 'south' | 'east' | 'west';
@@ -181,12 +199,12 @@ export type CanvasState = {
   alpha: number;
   fillAlpha: number;
   strokeAlpha: number;
-  fillColor: ColorValue | null;
+  fillColor: ColorValue;
   gradientFillAlpha: number;
   gradientColor: ColorValue;
   gradientAlpha: number;
   gradientDirection: DirectionValue;
-  strokeColor: ColorValue | null;
+  strokeColor: ColorValue;
   strokeWidth: number;
   dashed: boolean;
   dashPattern: string;
@@ -194,14 +212,14 @@ export type CanvasState = {
   lineCap: string;
   lineJoin: string;
   miterLimit: number;
-  fontColor: ColorValue | null;
-  fontBackgroundColor: ColorValue | null;
-  fontBorderColor: ColorValue | null;
+  fontColor: ColorValue;
+  fontBackgroundColor: ColorValue;
+  fontBorderColor: ColorValue;
   fontSize: number;
   fontFamily: string;
   fontStyle: number;
   shadow: boolean;
-  shadowColor: ColorValue | null;
+  shadowColor: ColorValue;
   shadowAlpha: number;
   shadowDx: number;
   shadowDy: number;
@@ -220,7 +238,7 @@ export type GradientMap = {
 };
 
 export interface GraphPluginConstructor {
-  new(graph: Graph): GraphPlugin;
+  new (graph: Graph): GraphPlugin;
   pluginId: string;
 }
 

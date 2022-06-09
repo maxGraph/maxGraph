@@ -186,28 +186,23 @@ const Template = ({ label, ...args }) => {
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'A', 20, 20, 100, 40);
-    const v2 = graph.insertVertex(
-      parent,
-      null,
-      'B',
-      80,
-      100,
-      100,
-      100,
-      'shape=ellipse;perimeter=ellipsePerimeter'
-    );
-    const v3 = graph.insertVertex(
-      parent,
-      null,
-      'C',
-      190,
-      30,
-      100,
-      60,
-      'shape=triangle;perimeter=trianglePerimeter;direction=south'
-    );
-    const e1 = graph.insertEdge(parent, null, '', v1, v2, 'sourcePort=s;targetPort=nw');
-    const e2 = graph.insertEdge(parent, null, '', v1, v3, 'sourcePort=e;targetPort=out3');
+    const v2 = graph.insertVertex(parent, null, 'B', 80, 100, 100, 100, {
+      shape: 'ellipse',
+      perimeter: 'ellipsePerimeter',
+    });
+    const v3 = graph.insertVertex(parent, null, 'C', 190, 30, 100, 60, {
+      shape: 'triangle',
+      perimeter: 'trianglePerimeter',
+      direction: 'south',
+    });
+    const e1 = graph.insertEdge(parent, null, '', v1, v2, {
+      sourcePort: 's',
+      targetPort: 'nw',
+    });
+    const e2 = graph.insertEdge(parent, null, '', v1, v3, {
+      sourcePort: 'e',
+      targetPort: 'out3',
+    });
   });
 
   // Comming soon... Integration with orthogonal edge style

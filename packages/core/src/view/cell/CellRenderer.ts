@@ -30,16 +30,9 @@ import {
   NONE,
   SHAPE,
 } from '../../util/Constants';
-import {
-  getRotatedPoint,
-  mod,
-  toRadians,
-} from '../../util/mathUtils';
+import { getRotatedPoint, mod, toRadians } from '../../util/mathUtils';
 import { convertPoint } from '../../util/styleUtils';
-import {
-  equalEntries,
-  equalPoints,
-} from '../../util/arrayUtils';
+import { equalEntries, equalPoints } from '../../util/arrayUtils';
 import Rectangle from '../geometry/Rectangle';
 import StencilShapeRegistry from '../geometry/node/StencilShapeRegistry';
 import InternalEvent from '../event/InternalEvent';
@@ -54,7 +47,7 @@ import Cell from './Cell';
 import CellOverlay from './CellOverlay';
 import { getClientX, getClientY, getSource } from '../../util/EventUtils';
 import { isNode } from '../../util/domUtils';
-import { CellStateStyles } from '../../types';
+import { CellStateStyle } from '../../types';
 import CellArray from './CellArray';
 import SelectionCellsHandler from '../handler/SelectionCellsHandler';
 import { Graph } from '../Graph';
@@ -267,7 +260,7 @@ class CellRenderer {
     // LATER: Check if the color has actually changed
     if (state.style) {
       const values = ['inherit', 'swimlane', 'indicated'];
-      const styles: (keyof CellStateStyles)[] = [
+      const styles: (keyof CellStateStyle)[] = [
         'fillColor',
         'strokeColor',
         'gradientColor',
@@ -815,8 +808,7 @@ class CellRenderer {
     const value = this.getLabelValue(state);
     const wrapping = graph.isWrapping(state.cell);
     const clipping = graph.isLabelClipped(state.cell);
-    const isForceHtml =
-    graph.isHtmlLabel(state.cell) || (value && isNode(value));
+    const isForceHtml = graph.isHtmlLabel(state.cell) || (value && isNode(value));
     const dialect = isForceHtml ? DIALECT.STRICTHTML : graph.dialect;
     const overflow = state.style.overflow ?? 'visible';
 
@@ -1395,7 +1387,9 @@ class CellRenderer {
         this.installListeners(state);
 
         // Forces a refresh of the handler if one exists
-        const selectionCellsHandler = graph.getPlugin('SelectionCellsHandler') as SelectionCellsHandler;
+        const selectionCellsHandler = graph.getPlugin(
+          'SelectionCellsHandler'
+        ) as SelectionCellsHandler;
         selectionCellsHandler.updateHandler(state);
       }
     } else if (
@@ -1407,7 +1401,9 @@ class CellRenderer {
       state.shape.resetStyles();
       this.configureShape(state);
       // LATER: Ignore update for realtime to fix reset of current gesture
-      const selectionCellsHandler = graph.getPlugin('SelectionCellsHandler') as SelectionCellsHandler;
+      const selectionCellsHandler = graph.getPlugin(
+        'SelectionCellsHandler'
+      ) as SelectionCellsHandler;
       selectionCellsHandler.updateHandler(state);
       force = true;
     }

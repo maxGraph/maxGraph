@@ -24,7 +24,7 @@ import CellArray from './cell/CellArray';
 import ObjectCodec from '../serialization/ObjectCodec';
 import CodecRegistry from '../serialization/CodecRegistry';
 
-import type { FilterFunction } from '../types';
+import type { CellStyle, FilterFunction } from '../types';
 
 /**
  * Extends {@link EventSource} to implement a graph model. The graph model acts as
@@ -847,7 +847,7 @@ export class GraphDataModel extends EventSource {
    * @param style  String of the form [stylename;|key=value;] to specify
    * the new cell style.
    */
-  setStyle(cell: Cell, style: string | null) {
+  setStyle(cell: Cell, style: CellStyle) {
     if (style !== cell.getStyle()) {
       this.execute(new StyleChange(this, cell, style));
     }
@@ -861,7 +861,7 @@ export class GraphDataModel extends EventSource {
    * @param style  String of the form [stylename;|key=value;] to specify
    * the new cell style.
    */
-  styleForCellChanged(cell: Cell, style: string | null) {
+  styleForCellChanged(cell: Cell, style: CellStyle) {
     const previous = cell.getStyle();
     cell.setStyle(style);
     return previous;
@@ -1011,7 +1011,9 @@ export class GraphDataModel extends EventSource {
 
     if (!this.endingUpdate) {
       this.endingUpdate = this.updateLevel === 0;
-      this.fireEvent(new EventObject(InternalEvent.END_UPDATE, { edit: this.currentEdit }));
+      this.fireEvent(
+        new EventObject(InternalEvent.END_UPDATE, { edit: this.currentEdit })
+      );
 
       try {
         if (this.endingUpdate && !this.currentEdit.isEmpty()) {
@@ -1042,8 +1044,12 @@ export class GraphDataModel extends EventSource {
 
     edit.notify = () => {
       // LATER: Remove changes property (deprecated)
-      edit.source.fireEvent(new EventObject(InternalEvent.CHANGE, { edit, changes: edit.changes }));
-      edit.source.fireEvent(new EventObject(InternalEvent.NOTIFY, { edit, changes: edit.changes }));
+      edit.source.fireEvent(
+        new EventObject(InternalEvent.CHANGE, { edit, changes: edit.changes })
+      );
+      edit.source.fireEvent(
+        new EventObject(InternalEvent.NOTIFY, { edit, changes: edit.changes })
+      );
     };
 
     return edit;
@@ -1149,7 +1155,7 @@ export class GraphDataModel extends EventSource {
    *
    * @param {Cell} cell  to be cloned.
    */
-  cloneCell(cell: Cell | null=null, includeChildren: boolean=true): Cell | null {
+  cloneCell(cell: Cell | null = null, includeChildren: boolean = true): Cell | null {
     if (cell != null) {
       return new CellArray(cell).cloneCells(includeChildren)[0];
     }

@@ -72,37 +72,21 @@ const Template = ({ label, ...args }) => {
       graph.getDataModel().setRoot(graph.getDataModel().createRoot());
       const parent = graph.getDefaultParent();
 
-      const v1 = graph.insertVertex(
-        parent,
-        null,
-        'Click',
-        30,
-        20,
-        80,
-        30,
-        'fillColor=#FFFF88;strokeColor=#FF1A00'
-      );
-      const v2 = graph.insertVertex(
-        parent,
-        null,
-        'Next',
-        20,
-        150,
-        100,
-        30,
-        'fillColor=#FFFF88;strokeColor=#FF1A00'
-      );
-      const v3 = graph.insertVertex(
-        parent,
-        null,
-        value,
-        200,
-        150,
-        40,
-        40,
-        'shape=triangle;align=left;fillColor=#C3D9FF;strokeColor=#4096EE'
-      );
-      const e1 = graph.insertEdge(parent, null, null, v1, v2, 'strokeColor=#FF1A00');
+      const v1 = graph.insertVertex(parent, null, 'Click', 30, 20, 80, 30, {
+        fillColor: '#FFFF88',
+        strokeColor: '#FF1A00',
+      });
+      const v2 = graph.insertVertex(parent, null, 'Next', 20, 150, 100, 30, {
+        fillColor: '#FFFF88',
+        strokeColor: '#FF1A00',
+      });
+      const v3 = graph.insertVertex(parent, null, value, 200, 150, 40, 40, {
+        shape: 'triangle',
+        align: 'left',
+        fillColor: '#C3D9FF',
+        strokeColor: '#4096EE',
+      });
+      const e1 = graph.insertEdge(parent, null, null, v1, v2, { strokeColor: '#FF1A00' });
     });
   };
 
@@ -119,37 +103,22 @@ const Template = ({ label, ...args }) => {
       graph.getDataModel().setRoot(graph.getDataModel().createRoot());
       const parent = graph.getDefaultParent();
 
-      const v1 = graph.insertVertex(
-        parent,
-        null,
-        'Click',
-        30,
-        20,
-        80,
-        30,
-        'fillColor=#CDEB8B;strokeColor=#008C00'
-      );
-      const v2 = graph.insertVertex(
-        parent,
-        null,
-        'Prev',
-        220,
-        20,
-        100,
-        30,
-        'fillColor=#CDEB8B;strokeColor=#008C00'
-      );
-      const v3 = graph.insertVertex(
-        parent,
-        null,
-        value,
-        30,
-        150,
-        40,
-        40,
-        'shape=triangle;align=right;fillColor=#C3D9FF;strokeColor=#4096EE;direction=west'
-      );
-      const e1 = graph.insertEdge(parent, null, null, v1, v2, 'strokeColor=#008C00');
+      const v1 = graph.insertVertex(parent, null, 'Click', 30, 20, 80, 30, {
+        fillColor: '#CDEB8B',
+        strokeColor: '#008C00',
+      });
+      const v2 = graph.insertVertex(parent, null, 'Prev', 220, 20, 100, 30, {
+        fillColor: '#CDEB8B',
+        strokeColor: '#008C00',
+      });
+      const v3 = graph.insertVertex(parent, null, value, 30, 150, 40, 40, {
+        shape: 'triangle',
+        align: 'right',
+        fillColor: '#C3D9FF',
+        strokeColor: '#4096EE',
+        direction: 'west',
+      });
+      const e1 = graph.insertEdge(parent, null, null, v1, v2, { strokeColor: '#008C00' });
     });
   };
 

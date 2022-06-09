@@ -41,48 +41,25 @@ const Template = ({ label, ...args }) => {
   // Adds cells to the model in a single step
   model.beginUpdate();
   try {
-    const v1 = graph.insertVertex(
-      layer1,
-      null,
-      'Hello,',
-      20,
-      20,
-      80,
-      30,
-      'fillColor=#C0C0C0'
-    );
-    const v2 = graph.insertVertex(
-      layer1,
-      null,
-      'Hello,',
-      200,
-      20,
-      80,
-      30,
-      'fillColor=#C0C0C0'
-    );
+    const v1 = graph.insertVertex(layer1, null, 'Hello,', 20, 20, 80, 30, {
+      fillColor: '#C0C0C0',
+    });
+    const v2 = graph.insertVertex(layer1, null, 'Hello,', 200, 20, 80, 30, {
+      fillColor: '#C0C0C0',
+    });
     const v3 = graph.insertVertex(layer0, null, 'World!', 110, 150, 80, 30);
-    const e1 = graph.insertEdge(layer1, null, '', v1, v3, 'strokeColor=#0C0C0C');
+    const e1 = graph.insertEdge(layer1, null, '', v1, v3, { strokeColor: '#0C0C0C' });
     e1.geometry.points = [new Point(60, 165)];
     const e2 = graph.insertEdge(layer0, null, '', v2, v3);
     e2.geometry.points = [new Point(240, 165)];
-    const e3 = graph.insertEdge(
-      layer0,
-      null,
-      '',
-      v1,
-      v2,
-      'edgeStyle=topToBottomEdgeStyle'
-    );
+    const e3 = graph.insertEdge(layer0, null, '', v1, v2, {
+      edgeStyle: 'topToBottomEdgeStyle',
+    });
     e3.geometry.points = [new Point(150, 30)];
-    const e4 = graph.insertEdge(
-      layer1,
-      null,
-      '',
-      v2,
-      v1,
-      'strokeColor=#0C0C0C;edgeStyle=topToBottomEdgeStyle'
-    );
+    const e4 = graph.insertEdge(layer1, null, '', v2, v1, {
+      strokeColor: '#0C0C0C',
+      edgeStyle: 'topToBottomEdgeStyle',
+    });
     e4.geometry.points = [new Point(150, 40)];
   } finally {
     // Updates the display

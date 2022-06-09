@@ -37,7 +37,7 @@ import PopupMenuHandler from '../view/handler/PopupMenuHandler';
 import RubberBandHandler from '../view/handler/RubberBandHandler';
 import InternalEvent from '../view/event/InternalEvent';
 import InternalMouseEvent from '../view/event/InternalMouseEvent';
-import { CellStateStyles, MouseListenerSet } from '../types';
+import { CellStateStyle, MouseListenerSet } from '../types';
 import ConnectionHandler from '../view/handler/ConnectionHandler';
 import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
@@ -433,15 +433,15 @@ export class Editor extends EventSource {
     }
   }
 
-  onInit: Function | null=null;
-  lastSnapshot: number | null=null;
-  ignoredChanges: number | null=null;
+  onInit: Function | null = null;
+  lastSnapshot: number | null = null;
+  ignoredChanges: number | null = null;
   swimlaneLayout: any;
   diagramLayout: any;
-  rubberband: RubberBandHandler | null=null;
-  isActive: boolean | null=null;
+  rubberband: RubberBandHandler | null = null;
+  isActive: boolean | null = null;
   properties: any;
-  destroyed: boolean=false;
+  destroyed: boolean = false;
 
   /**
    * Specifies the resource key for the zoom dialog. If the resource for this
@@ -1235,11 +1235,14 @@ export class Editor extends EventSource {
 
     this.addAction('zoom', (editor: Editor) => {
       const current = editor.graph.getView().scale * 100;
-      const preInput = prompt((Translations.get(editor.askZoomResource) || editor.askZoomResource), String(current));
-      
+      const preInput = prompt(
+        Translations.get(editor.askZoomResource) || editor.askZoomResource,
+        String(current)
+      );
+
       if (preInput) {
         const scale = parseFloat(preInput) / 100;
-        
+
         if (!isNaN(scale)) {
           editor.graph.getView().setScale(scale);
         }
@@ -1351,7 +1354,7 @@ export class Editor extends EventSource {
    * @param cell
    * @param evt
    */
-  execute(actionname: string, cell: Cell | null=null, evt: Event | null=null): void {
+  execute(actionname: string, cell: Cell | null = null, evt: Event | null = null): void {
     const action = this.actions[actionname];
 
     if (action != null) {
@@ -1433,7 +1436,10 @@ export class Editor extends EventSource {
     // new connections in the diagram
     const connectionHandler = <ConnectionHandler>graph.getPlugin('ConnectionHandler');
 
-    connectionHandler.factoryMethod = (source: Cell | null, target: Cell | null): Cell => {
+    connectionHandler.factoryMethod = (
+      source: Cell | null,
+      target: Cell | null
+    ): Cell => {
       return this.createEdge(source, target);
     };
 
@@ -1727,7 +1733,9 @@ export class Editor extends EventSource {
       this.addListener(InternalEvent.SAVE, () => {
         const tstamp = new Date().toLocaleString();
         this.setStatus(
-          `${Translations.get(this.lastSavedResource) || this.lastSavedResource}: ${tstamp}`
+          `${
+            Translations.get(this.lastSavedResource) || this.lastSavedResource
+          }: ${tstamp}`
         );
       });
 
@@ -1907,7 +1915,7 @@ export class Editor extends EventSource {
    * @param url
    * @param linefeed
    */
-  save(url: string | null=null, linefeed: string=this.linefeed): void {
+  save(url: string | null = null, linefeed: string = this.linefeed): void {
     // Gets the URL to post the data to
     url = url || this.getUrlPost();
 
@@ -2004,7 +2012,7 @@ export class Editor extends EventSource {
    * @param first
    * @param second
    */
-  swapStyles(first: keyof CellStateStyles, second: string): void {
+  swapStyles(first: keyof CellStateStyle, second: string): void {
     // @ts-ignore
     const style = this.graph.getStylesheet().styles[second];
     this.graph
@@ -2023,7 +2031,7 @@ export class Editor extends EventSource {
    * {@link createProperties}.
    * @param cell
    */
-  showProperties(cell: Cell | null=null): void {
+  showProperties(cell: Cell | null = null): void {
     cell = cell || this.graph.getSelectionCell();
 
     // Uses the root node for the properties dialog
@@ -2142,11 +2150,9 @@ export class Editor extends EventSource {
         // Creates a textarea with more lines for
         // the cell label
         const val = attrs[i].value;
-        texts.push(form.addTextarea(
-          attrs[i].nodeName,
-          val,
-          attrs[i].nodeName === 'label' ? 4 : 2
-        ));
+        texts.push(
+          form.addTextarea(attrs[i].nodeName, val, attrs[i].nodeName === 'label' ? 4 : 2)
+        );
       }
 
       // Adds an OK and Cancel button to the dialog
@@ -2163,11 +2169,12 @@ export class Editor extends EventSource {
         // XML structure / XML node attribute changes.
         model.beginUpdate();
         try {
-          if (geo != null && 
-              xField != null && 
-              yField != null && 
-              widthField != null && 
-              heightField != null
+          if (
+            geo != null &&
+            xField != null &&
+            yField != null &&
+            widthField != null &&
+            heightField != null
           ) {
             geo = geo.clone();
 
@@ -2181,9 +2188,10 @@ export class Editor extends EventSource {
 
           // Applies the style
           if (style.value.length > 0) {
+            // @ts-expect-error TODO - style is no longer a string
             model.setStyle(cell, style.value);
           } else {
-            model.setStyle(cell, null);
+            model.setStyle(cell, {});
           }
 
           // Creates an undoable change for each
@@ -2325,7 +2333,7 @@ export class Editor extends EventSource {
    * is undefined.
    * @param tasks
    */
-  showHelp(tasks: any | null=null): void {
+  showHelp(tasks: any | null = null): void {
     if (this.help == null) {
       const frame = document.createElement('iframe');
       frame.setAttribute('src', <string>(Translations.get('urlHelp') || this.urlHelp));
@@ -2393,7 +2401,12 @@ export class Editor extends EventSource {
 
       const wnd = new MaxWindow(
         Translations.get(this.outlineResource) || this.outlineResource,
-        div, 600, 480, 200, 200, false
+        div,
+        600,
+        480,
+        200,
+        200,
+        false
       );
 
       // Creates the outline in the specified div
@@ -2427,7 +2440,9 @@ export class Editor extends EventSource {
    * @param modename
    */
   setMode(modename: any): void {
-    const panningHandler: PanningHandler = <PanningHandler>this.graph.getPlugin('PanningHandler');
+    const panningHandler: PanningHandler = <PanningHandler>(
+      this.graph.getPlugin('PanningHandler')
+    );
 
     if (modename === 'select') {
       panningHandler.useLeftButtonForPanning = false;
@@ -2489,7 +2504,7 @@ export class Editor extends EventSource {
    * The function is used in {@link createEdge} when new edges
    * are created in the graph.
    */
-  getEdgeStyle(): string {
+  getEdgeStyle() {
     return this.defaultEdgeStyle;
   }
 
@@ -2518,6 +2533,7 @@ export class Editor extends EventSource {
       const value = this.consumeCycleAttribute(cell);
 
       if (value != null) {
+        // @ts-expect-error TODO - style is no longer a string
         cell.setStyle(`${cell.getStyle()};${this.cycleAttributeName}=${value}`);
       }
     }
@@ -2828,7 +2844,7 @@ export class EditorCodec extends ObjectCodec {
         } else if (as === 'status') {
           editor.setStatusContainer(element);
         } else if (as === 'map') {
-          throw new Error("Unimplemented");
+          throw new Error('Unimplemented');
           //editor.setMapContainer(element);
         }
       } else if (tmp.nodeName === 'resource') {

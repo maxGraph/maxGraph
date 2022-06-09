@@ -27,9 +27,14 @@ const Template = ({ label, ...args }) => {
     // let style = super.getStyle();
     let style = '';
     if (this.isCollapsed()) {
-      style =
-        `${style};shape=image;image=http://www.jgraph.com/images/mxgraph.gif;` +
-        `noLabel=1;imageBackground=#C3D9FF;imageBorder=#6482B9`;
+      style = {
+        ...style,
+        shape: 'image',
+        image: 'http://www.jgraph.com/images/mxgraph.gif',
+        noLabel: 1,
+        imageBackground: '#C3D9FF',
+        imageBorder: '#6482B9',
+      };
     }
     return style;
   };
@@ -40,7 +45,7 @@ const Template = ({ label, ...args }) => {
       value: 'Container',
       position: [20, 20],
       size: [200, 200],
-      style: 'shape=swimlane;startSize=20;',
+      style: { shape: 'swimlane', startSize: 20 },
     });
     v1.geometry.alternateBounds = new Rectangle(0, 0, 110, 70);
     v1.getStyle = getStyle;

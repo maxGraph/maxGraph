@@ -728,7 +728,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     if (s.fillColor !== NONE) {
       if (s.gradientColor !== NONE) {
         const id = this.getSvgGradient(
-          <string>s.fillColor,
+          s.fillColor,
           s.gradientColor,
           s.gradientFillAlpha,
           s.gradientAlpha,
@@ -743,7 +743,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
           this.node.setAttribute('fill', `url(#${id})`);
         }
       } else {
-        this.node.setAttribute('fill', (<string>s.fillColor).toLowerCase());
+        this.node.setAttribute('fill', s.fillColor.toLowerCase());
       }
     }
   }
@@ -875,7 +875,11 @@ class SvgCanvas2D extends AbstractCanvas2D {
       shadow.setAttribute('fill', <string>(s.shadowColor ? s.shadow : SHADOWCOLOR));
     }
 
-    if (shadow.getAttribute('stroke') !== 'none' && s.shadowColor && s.shadowColor !== NONE) {
+    if (
+      shadow.getAttribute('stroke') !== 'none' &&
+      s.shadowColor &&
+      s.shadowColor !== NONE
+    ) {
       shadow.setAttribute('stroke', s.shadowColor);
     }
 

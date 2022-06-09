@@ -3,6 +3,7 @@ import Geometry from '../geometry/Geometry';
 import { Graph } from '../Graph';
 import CellArray from '../cell/CellArray';
 import { mixInto } from '../../util/Utils';
+import { CellStyle } from 'src/types';
 
 declare module '../Graph' {
   interface Graph {
@@ -20,7 +21,7 @@ declare module '../Graph' {
       y: number,
       width: number,
       height: number,
-      style: any,
+      style: CellStyle,
       relative: boolean,
       geometryClass: typeof Geometry
     ) => Cell;
@@ -106,7 +107,7 @@ const VertexMixin: PartialType = {
    * @param y Integer that defines the y coordinate of the vertex.
    * @param width Integer that defines the width of the vertex.
    * @param height Integer that defines the height of the vertex.
-   * @param style Optional string that defines the cell style.
+   * @param style Optional object that defines the cell style.
    * @param relative Optional boolean that specifies if the geometry is relative.
    * Default is false.
    * @param geometryClass Optional class reference to a class derived from mxGeometry.
@@ -120,7 +121,7 @@ const VertexMixin: PartialType = {
     let y;
     let width;
     let height;
-    let style;
+    let style: CellStyle;
     let relative;
     let geometryClass;
 
@@ -144,6 +145,9 @@ const VertexMixin: PartialType = {
       // Otherwise treat as arguments
       [parent, id, value, x, y, width, height, style, relative, geometryClass] = args;
     }
+
+    if (typeof style === 'string')
+      throw new Error(`String-typed style is no longer supported: ${style}`);
 
     const vertex = this.createVertex(
       parent,

@@ -40,21 +40,21 @@ const Template = ({ label, ...args }) => {
       value: 'Cum Caesar vidisset, portum plenum esse, iuxta navigavit.',
       position: [20, 20],
       size: [100, 70],
-      style: 'whiteSpace=wrap;',
+      style: { whiteSpace: 'wrap' },
     });
     const v2 = graph.insertVertex({
       parent,
       value: 'Cum Caesar vidisset, portum plenum esse, iuxta navigavit.',
       position: [220, 150],
       size: [80, 70],
-      style: 'whiteSpace=wrap;',
+      style: { whiteSpace: 'wrap' },
     });
     const e1 = graph.insertEdge({
       parent,
       value: 'Cum Caesar vidisset, portum plenum esse, iuxta navigavit.',
       source: v1,
       target: v2,
-      style: 'whiteSpace=wrap;',
+      style: { whiteSpace: 'wrap' },
     });
     e1.geometry.width = 100;
   });

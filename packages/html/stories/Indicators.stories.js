@@ -54,26 +54,23 @@ const Template = ({ label, ...args }) => {
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
     graph.insertVertex(parent, null, 'Bottom Label', 80, 80, 80, 60);
-    graph.insertVertex(
-      parent,
-      null,
-      'Top Label',
-      200,
-      80,
-      60,
-      60,
-      'indicatorShape=actor;indicatorWidth=28;indicatorColor=blue;imageVerticalAlign=bottom;verticalAlign=top'
-    );
-    graph.insertVertex(
-      parent,
-      null,
-      'Right Label',
-      300,
-      80,
-      120,
-      60,
-      'indicatorShape=cloud;indicatorWidth=40;indicatorColor=#00FFFF;imageVerticalAlign=center;verticalAlign=middle;imageAlign=left;align=left;spacingLeft=44'
-    );
+    graph.insertVertex(parent, null, 'Top Label', 200, 80, 60, 60, {
+      indicatorShape: 'actor',
+      indicatorWidth: 28,
+      indicatorColor: 'blue',
+      imageVerticalAlign: 'bottom',
+      verticalAlign: 'top',
+    });
+    graph.insertVertex(parent, null, 'Right Label', 300, 80, 120, 60, {
+      indicatorShape: 'cloud',
+      indicatorWidth: 40,
+      indicatorColor: '#00FFFF',
+      imageVerticalAlign: 'center',
+      verticalAlign: 'middle',
+      imageAlign: 'left',
+      align: 'left',
+      spacingLeft: 44,
+    });
   });
 
   return container;

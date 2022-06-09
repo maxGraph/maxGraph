@@ -171,7 +171,12 @@ const Template = ({ label, ...args }) => {
       1,
       0,
       0,
-      'align=left;verticalAlign=top;labelBackgroundColor=red;labelBorderColor=black',
+      {
+        align: 'left',
+        verticalAlign: 'top',
+        labelBackgroundColor: 'red',
+        labelBorderColor: 'black',
+      },
       true
     );
     v11.geometry.offset = new Point(-8, -8);
@@ -187,7 +192,14 @@ const Template = ({ label, ...args }) => {
       1,
       0,
       0,
-      'align=left;verticalAlign=top;fillColor=red;rounded=1;spacingLeft=4;spacingRight=4',
+      {
+        align: 'left',
+        verticalAlign: 'top',
+        fillColor: 'red',
+        rounded: true,
+        spacingLeft: 4,
+        spacingRight: 4,
+      },
       true
     );
     v21.geometry.offset = new Point(-8, -8);

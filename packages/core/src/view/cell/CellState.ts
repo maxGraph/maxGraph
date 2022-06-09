@@ -13,7 +13,7 @@ import Shape from '../geometry/Shape';
 import TextShape from '../geometry/node/TextShape';
 import Dictionary from '../../util/Dictionary';
 import { ALIGN, NONE } from '../../util/Constants';
-import { CellStateStyles } from '../../types';
+import { CellStateStyle } from '../../types';
 import RectangleShape from '../geometry/node/RectangleShape';
 import CellOverlay from './CellOverlay';
 import { Graph } from '../Graph';
@@ -70,7 +70,7 @@ class CellState extends Rectangle {
    * Contains an array of key, value pairs that represent the style of the
    * cell.
    */
-  style!: CellStateStyles;
+  style!: CellStateStyle;
 
   /**
    * Specifies if the style is invalid. Default is false.
@@ -152,9 +152,13 @@ class CellState extends Rectangle {
 
   point: Point | null = null;
 
-  constructor(view: GraphView | null=null, cell: Cell | null=null, style: CellStateStyles | null=null) {
+  constructor(
+    view: GraphView | null = null,
+    cell: Cell | null = null,
+    style: CellStateStyle | null = null
+  ) {
     super();
-    
+
     if (view) {
       this.view = view;
     }

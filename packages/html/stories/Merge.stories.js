@@ -61,34 +61,23 @@ const Template = ({ label, ...args }) => {
   const h = 40;
 
   graph.batchUpdate(() => {
-    const a = graph.insertVertex(parent, 'a', 'A', 20, 20, w, h, 'fillColor=blue');
-    const b = graph.insertVertex(parent, 'b', 'B', 20, 200, w, h, 'fillColor=blue');
-    const c = graph.insertVertex(parent, 'c', 'C', 200, 20, w, h, 'fillColor=red');
-    const d = graph.insertVertex(parent, 'd', 'D', 200, 200, w, h, 'fillColor=red');
-    const ac = graph.insertEdge(
-      parent,
-      'ac',
-      'ac',
-      a,
-      c,
-      'strokeColor=blue;verticalAlign=bottom'
-    );
-    const ad = graph.insertEdge(
-      parent,
-      'ad',
-      'ad',
-      a,
-      d,
-      'strokeColor=blue;align=left;verticalAlign=bottom'
-    );
-    const bd = graph.insertEdge(
-      parent,
-      'bd',
-      'bd',
-      b,
-      d,
-      'strokeColor=blue;verticalAlign=bottom'
-    );
+    const a = graph.insertVertex(parent, 'a', 'A', 20, 20, w, h, { fillColor: 'blue' });
+    const b = graph.insertVertex(parent, 'b', 'B', 20, 200, w, h, { fillColor: 'blue' });
+    const c = graph.insertVertex(parent, 'c', 'C', 200, 20, w, h, { fillColor: 'red' });
+    const d = graph.insertVertex(parent, 'd', 'D', 200, 200, w, h, { fillColor: 'red' });
+    const ac = graph.insertEdge(parent, 'ac', 'ac', a, c, {
+      strokeColor: 'blue',
+      verticalAlign: 'bottom',
+    });
+    const ad = graph.insertEdge(parent, 'ad', 'ad', a, d, {
+      strokeColor: 'blue',
+      align: 'left',
+      verticalAlign: 'bottom',
+    });
+    const bd = graph.insertEdge(parent, 'bd', 'bd', b, d, {
+      strokeColor: 'blue',
+      verticalAlign: 'bottom',
+    });
   });
 
   // Creates the second graph model (without a container)
@@ -101,34 +90,31 @@ const Template = ({ label, ...args }) => {
   // Adds cells to the target model in a single step
   // using custom ids for the vertices
   graph2.batchUpdate(() => {
-    const c = graph2.insertVertex(parent2, 'c', 'C', 200, 20, w, h, 'fillColor=green');
-    const d = graph2.insertVertex(parent2, 'd', 'D', 200, 200, w, h, 'fillColor=green');
-    const e = graph2.insertVertex(parent2, 'e', 'E', 400, 20, w, h, 'fillColor=green');
-    const f = graph2.insertVertex(parent2, 'f', 'F', 400, 200, w, h, 'fillColor=green');
-    const ce = graph2.insertEdge(
-      parent2,
-      'ce',
-      'ce',
-      c,
-      e,
-      'strokeColor=green;verticalAlign=bottom'
-    );
-    const ed = graph2.insertEdge(
-      parent2,
-      'ed',
-      'ed',
-      e,
-      d,
-      'strokeColor=green;align=right;verticalAlign=bottom'
-    );
-    const fd = graph2.insertEdge(
-      parent2,
-      'bd',
-      'fd',
-      f,
-      d,
-      'strokeColor=green;verticalAlign=bottom'
-    );
+    const c = graph2.insertVertex(parent2, 'c', 'C', 200, 20, w, h, {
+      fillColor: 'green',
+    });
+    const d = graph2.insertVertex(parent2, 'd', 'D', 200, 200, w, h, {
+      fillColor: 'green',
+    });
+    const e = graph2.insertVertex(parent2, 'e', 'E', 400, 20, w, h, {
+      fillColor: 'green',
+    });
+    const f = graph2.insertVertex(parent2, 'f', 'F', 400, 200, w, h, {
+      fillColor: 'green',
+    });
+    const ce = graph2.insertEdge(parent2, 'ce', 'ce', c, e, {
+      strokeColor: 'green',
+      verticalAlign: 'bottom',
+    });
+    const ed = graph2.insertEdge(parent2, 'ed', 'ed', e, d, {
+      strokeColor: 'green',
+      align: 'right',
+      verticalAlign: 'bottom',
+    });
+    const fd = graph2.insertEdge(parent2, 'bd', 'fd', f, d, {
+      strokeColor: 'green',
+      verticalAlign: 'bottom',
+    });
   });
 
   // Merges the model from the second graph into the model of

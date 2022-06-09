@@ -391,8 +391,7 @@ class Graph extends EventSource {
    * for this key does not exist then the value is used as the error message.
    * @default 'alreadyConnected'
    */
-  alreadyConnectedResource: string =
-    Client.language != 'none' ? 'alreadyConnected' : '';
+  alreadyConnectedResource: string = Client.language != 'none' ? 'alreadyConnected' : '';
 
   /**
    * Specifies the resource key for the warning message to be displayed when
@@ -944,7 +943,7 @@ class Graph extends EventSource {
 
       const edgeStyle = this.getView().getEdgeStyle(
         state,
-        geo ? (geo.points || undefined) : undefined,
+        geo ? geo.points || undefined : undefined,
         source,
         target
       );

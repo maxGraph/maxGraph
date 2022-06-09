@@ -82,7 +82,9 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const col1 = graph.insertVertex(parent, null, '', 0, 0, 120, 0, 'column');
+    const col1 = graph.insertVertex(parent, null, '', 0, 0, 120, 0, {
+      baseStyleNames: ['column'],
+    });
 
     const v1 = graph.insertVertex(col1, null, '1', 0, 0, 100, 30);
     v1.collapsed = true;
@@ -95,7 +97,9 @@ const Template = ({ label, ...args }) => {
 
     const v12 = graph.insertVertex(v1, null, '1.2', 0, 0, 80, 30);
 
-    const col2 = graph.insertVertex(parent, null, '', 0, 0, 120, 0, 'column');
+    const col2 = graph.insertVertex(parent, null, '', 0, 0, 120, 0, {
+      baseStyleNames: ['column'],
+    });
 
     const v2 = graph.insertVertex(col2, null, '2', 0, 0, 100, 30);
     v2.collapsed = true;

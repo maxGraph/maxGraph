@@ -26,14 +26,27 @@ export default {
 const Template = ({ label, ...args }) => {
   const div = document.createElement('div');
 
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
-  div.appendChild(container);
+  const table = document.createElement('table');
+  table.style.position = 'relative';
+
+  table.innerHTML = `
+    <tr>
+      <td>
+        <div 
+          id="graphContainer"
+          style="border:solid 1px black;overflow:hidden;width:321px;height:241px;cursor:default"
+        ></div>
+      </td>
+      <td valign="top">
+        <div 
+          id="properties" 
+          style="border:solid 1px black;padding:10px"
+        ></div>
+    </tr>
+  `;
+  div.appendChild(table);
+
+  const container = document.getElementById('graphContainer');
 
   // Note that these XML nodes will be enclosing the
   // Cell nodes for the model cells in the output
@@ -142,9 +155,6 @@ const Template = ({ label, ...args }) => {
   const buttons = document.createElement('div');
   div.appendChild(buttons);
 
-  const properties = document.createElement('div');
-  div.appendChild(properties);
-
   // Adds an option to view the XML of the graph
   buttons.appendChild(
     DomHelpers.button('View XML', function () {
@@ -198,7 +208,7 @@ const Template = ({ label, ...args }) => {
    * Updates the properties panel
    */
   function selectionChanged(graph) {
-    const div = properties;
+    const div = document.getElementById('properties');
 
     // Forces focusout in IE
     graph.container.focus();
