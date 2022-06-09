@@ -11,6 +11,6 @@
     "@maxgraph/core": "*"
   },
   "devDependencies": {
-    "vite": "~2.9.8"
+    "vite": "~2.9.10"
   }
 }
