@@ -9,7 +9,7 @@ import InternalEvent from '../event/InternalEvent';
 import Dictionary from '../../util/Dictionary';
 import { Graph } from '../Graph';
 import Point from '../geometry/Point';
-import { CellStyle } from 'src/types';
+import type { CellStyle } from '../../types';
 
 declare module '../Graph' {
   interface Graph {

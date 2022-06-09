@@ -19,7 +19,7 @@ import Rectangle from '../view/geometry/Rectangle';
 import Cell from '../view/cell/Cell';
 import GraphDataModel from '../view/GraphDataModel';
 import CellArray from '../view/cell/CellArray';
-import { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from 'src/types';
+import type { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from '../types';
 
 /**
  * Removes the cursors from the style of the given DOM node and its
