@@ -14,6 +14,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
+    // TODO currently required as some type definitions in @maxgraph/core package references src/types which is not available in the dist/ folder
     "skipLibCheck": true
   },
   "include": ["src"]
