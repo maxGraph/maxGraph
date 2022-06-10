@@ -42,7 +42,7 @@ Assuming your page defines an element with the id `graph-container`, the followi
 ```typescript
 import {type CellStyle, Graph, InternalEvent} from '@maxgraph/core';
 
-const container = document.getElementById('graph-container') as HTMLElement;
+const container = <HTMLElement>document.getElementById('graph-container');
 // Disables the built-in context menu
 InternalEvent.disableContextMenu(container);
 
