@@ -5,22 +5,9 @@
 
 class Client {
   /**
-   * Class: Client
-   *
-   * Bootstrapping mechanism for the mxGraph thin client. The production version
-   * of this file contains all code required to run the mxGraph thin client, as
-   * well as global constants to identify the browser and operating system in
-   * use. You may have to load chrome://global/content/contentAreaUtils.js in
-   * your page to disable certain security restrictions in Mozilla.
-   *
-   * Contains the current version of the mxGraph library. The strings that
-   * communicate versions of mxGraph use the following format.
-   *
-   * versionMajor.versionMinor.buildNumber.revisionNumber
-   *
-   * Current version is 4.2.2.
+   * Contains the current version of the maxGraph library.
    */
-  static VERSION = '4.2.2';
+  static VERSION = '0.1.0';
 
   /**
    * Optional global config variable to specify the extension of resource files.
@@ -37,7 +24,7 @@ class Client {
 
   static setResourceExtension = (value: string) => {
     Client.mxResourceExtension = value;
-    
+
     // Removes dependency with mxResources.
     // Client.mxResourceExtension can be used instead.
     // mxResources.extension = value;
@@ -143,7 +130,7 @@ class Client {
    * contains the assignment. Trailing slashes are automatically removed.
    */
   static imageBasePath = '.';
-  
+
   static setImageBasePath = (value: string) => {
     if (typeof value !== 'undefined' && value.length > 0) {
       // Adds a trailing slash if required
@@ -416,9 +403,9 @@ class Client {
    * @param id unique id for the link element to check if it already exists
    */
   static link = (
-    rel: string, 
-    href: string, 
-    doc: Document | null=null, 
+    rel: string,
+    href: string,
+    doc: Document | null=null,
     id: string | null=null
   ) => {
     doc = doc || document;
