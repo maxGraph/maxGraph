@@ -4,21 +4,32 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
+h1 {
+  text-align: center;
+  margin-top: 3rem;
+}
+
 footer {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
   z-index: 1;
-}
-
-.title {
-  text-align: center;
-  margin-top: 3rem;
+  font-weight: 800;
 }
 
 #graph-container {
-  border-style: solid;
-  border-color: #B0B0B0;
-  border-width: 1px;
+  border: #B0B0B0 1px solid;
   height: 70vh;
+  overflow: hidden;
+}
+
+/* For rubber band selection as we don't have access to the maxGraph CSS files in the project */
+div.mxRubberband {
+  position: absolute;
+  overflow: hidden;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #b18426;
+  background: #db9b0b;
 }
