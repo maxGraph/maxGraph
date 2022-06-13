@@ -349,3 +349,37 @@ export const clearSelection = () => {
   imageNode.setAttribute('border', '0');
   return imageNode;
 };
+
+/**
+ * Adds a link node to the head of the document.
+ *
+ * The charset is hardcoded to `UTF-8` and the type is `text/css`.
+ *
+ * @param rel String that represents the rel attribute of the link node.
+ * @param href String that represents the href attribute of the link node.
+ * @param doc Optional parent document of the link node.
+ * @param id unique id for the link element to check if it already exists
+ */
+export const addLinkToHead = (
+  rel: string,
+  href: string,
+  doc: Document | null=null,
+  id: string | null=null
+) => {
+  doc = doc || document;
+
+  // Workaround for Operation Aborted in IE6 if base tag is used in head
+  const link = doc.createElement('link');
+
+  link.setAttribute('rel', rel);
+  link.setAttribute('href', href);
+  link.setAttribute('charset', 'UTF-8');
+  link.setAttribute('type', 'text/css');
+
+  if (id) {
+    link.setAttribute('id', id);
+  }
+
+  const head = doc.getElementsByTagName('head')[0];
+  head.appendChild(link);
+};

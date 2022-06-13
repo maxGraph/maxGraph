@@ -10,7 +10,7 @@ import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import { intersects } from '../../util/mathUtils';
 import { DIALECT } from '../../util/Constants';
-import { write } from '../../util/domUtils';
+import { addLinkToHead, write } from '../../util/domUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import CellArray from '../cell/CellArray';
@@ -344,9 +344,9 @@ class PrintPreview {
    * this is specified then no HEAD tag, CSS and BODY tag will be written.
    */
   open(
-    css: string | null=null, 
-    targetWindow: Window | null=null, 
-    forcePageBreaks: boolean=false, 
+    css: string | null=null,
+    targetWindow: Window | null=null,
+    forcePageBreaks: boolean=false,
     keepOpen: boolean=false
   ): Window | null {
     // Closing the window while the page is being rendered may cause an
@@ -612,7 +612,7 @@ class PrintPreview {
     }
 
     // Adds all required stylesheets
-    Client.link('stylesheet', `${Client.basePath}/css/common.css`, doc);
+    addLinkToHead('stylesheet', `${Client.basePath}/css/common.css`, doc);
 
     // Removes horizontal rules and page selector from print output
     doc.writeln('<style type="text/css">');
