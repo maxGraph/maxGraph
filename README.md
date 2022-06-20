@@ -88,15 +88,15 @@ Until we provide a complete documentation, you can check the mxGraph resources
 
 `maxGraph` APIs are not fully compatible with mxGraph APIs. The concepts are the same, so experienced mxGraph users should be able to switch from mxGraph to maxGraph without issues.
 
-The main changes is the Internet Explorer support removal (including VML support).
+The main changes are the support removal of Internet Explorer (including VML support) and Legacy Edge.
 
-### Migrating JavaScript
+### Migrating JavaScript projects
 
 - The names of mxGraph objects were all prefixed by `mx`. The prefix has been dropped in maxGraph.
 - Most names remain the same
 - Some utility functions, whose implementation is natively available in modern versions of ECMAScript, have been removed.
 
-### Migrating TypeScript
+### Migrating TypeScript projects
 
 Remove the 
 - `@typed-mxgraph/typed-mxgraph` dependency in the `package.json` file
