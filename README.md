@@ -5,12 +5,14 @@
 -->
 [![build status](https://github.com/maxGraph/maxGraph/workflows/Build/badge.svg)](https://github.com/maxGraph/maxGraph/actions/workflows/build.yml)
 
-`maxGraph` is a client side TypeScript diagramming library that uses SVG and HTML for rendering.
+maxGraph is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides: 
+- **Nodes**, also known as **vertices** which are typically represented by shapes like rectangles.
+- **Edges** which can be lines and arrows which normally point between one node and another.
+
+It provides many of the diagramming features which would be expected by a piece of presentation software like Microsoft® PowerPoint™ or LibreOffice® Impress such as being able to resize, move or rotate nodes, but has a stronger focus on automatic layout algorithms and applications of [Graph Theory](https://en.wikipedia.org/wiki/Graph_theory). It is suited towards software which requires finer-grained customization of functionality than off-the-shelf packages.
+
 
 The `maxGraph` library uses no third-party software, it requires no plugins and can be integrated in virtually any framework (it's vanilla JS).
-
-**Browser support**: Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....)
-on **mobile** and **desktop**.
 
 `maxGraph` is the successor of [mxGraph](https://github.com/jgraph/mxgraph) which is now end of life.
 At first, it provides the same features as mxGraph and adds
@@ -20,6 +22,10 @@ At first, it provides the same features as mxGraph and adds
 
 New features will follow.
 
+
+## Browser support
+
+Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) on mobile and desktop.
 
 ## Project status
 
@@ -123,8 +129,8 @@ The project was then [renamed on 2021-06-02](https://github.com/maxGraph/maxGrap
 Starting from the mxGraph 4.2.2 release, we
 - moved code to ES9
 - removed Internet Explorer specific code
-- migrated to TypeScript
-- migrated the examples to [Storybook](https://storybook.js.org/).
+- migrated to TypeScript, based on the work initiated in [typed-mxgraph](https://github.com/typed-mxgraph/typed-mxgraph)
+- migrated the examples to [Storybook](https://storybook.js.org/)
 
 
 ## Development
