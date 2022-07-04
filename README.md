@@ -25,7 +25,7 @@ New features will follow.
 
 ## Browser support
 
-Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) on mobile and desktop.
+Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) for mobile and desktop.
 
 ## Project status
 
