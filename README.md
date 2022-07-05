@@ -1,6 +1,139 @@
-# mxGraph
+# maxGraph
 
-## Getting started
+<!-- next to come: npm and releases badge
+[![npm version](https://img.shields.io/npm/v/xxx.svg?style=flat)](https://www.npmjs.com/package/xxx)
+-->
+[![build status](https://github.com/maxGraph/maxGraph/workflows/Build/badge.svg)](https://github.com/maxGraph/maxGraph/actions/workflows/build.yml)
+
+maxGraph is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides: 
+- **Nodes**, also known as **vertices** which are typically represented by shapes like rectangles.
+- **Edges** which can be lines and arrows which normally point between one node and another.
+
+It provides many of the diagramming features which would be expected by a piece of presentation software like Microsoft® PowerPoint™ or LibreOffice® Impress such as being able to resize, move or rotate nodes, but has a stronger focus on automatic layout algorithms and applications of [Graph Theory](https://en.wikipedia.org/wiki/Graph_theory). It is suited towards software which requires finer-grained customization of functionality than off-the-shelf packages.
+
+
+The `maxGraph` library uses no third-party software, it requires no plugins and can be integrated in virtually any framework (it's vanilla JS).
+
+`maxGraph` is the successor of [mxGraph](https://github.com/jgraph/mxgraph) which is now end of life.
+At first, it provides the same features as mxGraph and adds
+- TypeScript support
+- maintained npm package
+- modern modular, tree shakable, version of mxGraph to reduce the whole package size
+
+New features will follow.
+
+
+## Browser support
+
+Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) for mobile and desktop.
+
+## Project status
+
+maxGraph is under active development. An alpha version will be released soon with the npm package once [licensing](#license)
+and [versioning](https://github.com/maxGraph/maxGraph/issues/92) issues have been resolved.
+
+In the meantime, you can test the project by running the [Storybook examples](#development).
+
+
+## <a id="license"></a> Transition to Apache 2.0 license
+
+This project is published under the terms of a [Modified-Apache-2.0](LICENSE) license and currently preparing to move back to the standard Apache 2.0 license.  
+From now on, all contributions to this project must be under the terms of the Apaches 2.0 license as stated in https://www.apache.org/licenses/LICENSE-2.0.  
+See https://github.com/maxGraph/maxGraph/issues/89 for more details.
+
+
+## Getting Started
+
+Assuming your page defines an element with the id `graph-container`, the following will display a rectangle connected to an orange circle.
+```typescript
+import {type CellStyle, Graph, InternalEvent} from '@maxgraph/core';
+
+const container = <HTMLElement>document.getElementById('graph-container');
+// Disables the built-in context menu
+InternalEvent.disableContextMenu(container);
+
+// Gets the default parent for inserting new cells. This
+// is normally the first child of the root (ie. layer 0).
+const parent = graph.getDefaultParent();
+graph.setPanning(true); // Use mouse right button for panning
+
+// Adds cells to the model in a single step
+graph.batchUpdate(() => {
+  const vertex01 = graph.insertVertex(parent, null, 'a regular rectangle', 10, 10, 100, 100);
+  const vertex02 = graph.insertVertex(parent, null, 'a regular ellipse', 350, 90, 50, 50, <CellStyle>{shape: 'ellipse', fillColor: 'orange'});
+  graph.insertEdge(parent, null, 'a regular edge', vertex01, vertex02);
+});
+```
+
+You will see something like in the following:
+
+![maxGraph panning demo](docs/maxgraph_demo.gif "maxGraph panning demo")
+
+For more details, have a look at the [storybook stories](packages/html/stories).
+
+
+## Support
+
+For usage question, please open a new [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a) on GitHub. You can also use
+[GitHub discussions](https://github.com/maxGraph/maxGraph/discussions) for other topics like `maxGraph` development or to get the latest news.
+
+Until we provide a complete documentation, you can check the mxGraph resources
+- mxGraph documentation: [Github pages branch](https://jgraph.github.io/mxgraph/). The key resources are the JavaScript user manual, the JavaScript examples and the JavaScript API specification.
+- [mxgraph tag on Stack Overflow](http://stackoverflow.com/questions/tagged/mxgraph). Please ensure your questions adhere to the [SO guidelines](http://stackoverflow.com/help/on-topic), otherwise it is likely to be closed.
+
+
+## Migrating from mxGraph
+
+**NOTE**: the following is only an indication of the migration. A more complete guide will be written in the future.
+
+`maxGraph` APIs are not fully compatible with mxGraph APIs. The concepts are the same, so experienced mxGraph users should be able to switch from mxGraph to maxGraph without issues.
+
+The main changes are the support removal of Internet Explorer (including VML support) and Legacy Edge.
+
+### Migrating JavaScript projects
+
+- The names of mxGraph objects were all prefixed by `mx`. The prefix has been dropped in maxGraph.
+- Most names remain the same
+- Some utility functions, whose implementation is natively available in modern versions of ECMAScript, have been removed.
+
+### Migrating TypeScript projects
+
+Remove the 
+- `@typed-mxgraph/typed-mxgraph` dependency in the `package.json` file
+- `typeroots` settings related to `typed-mxgraph` in the `tsconfig.json` file
+- the mxGraph initialization code using the `factory` function
+
+As an example, you can check [this project](https://github.com/tbouffard/maxgraph-integration-examples/tree/main/projects/rollup-ts) which has been migrated
+from a [typed-mxgraph example](https://github.com/typed-mxgraph/typed-mxgraph-example-bundled-with-rollup).
+
+
+## History
+
+On 2020-11-09, the development on `mxGraph` stopped and `mxGraph` became effectively end of life.
+
+On 2020-11-12, a fork of the `mxGraph` was created with a call to Contributors.
+
+> 12 Nov 2020.
+> 
+> If you are interested in becoming a maintainer of mxGraph please comment on issue [#1](https://github.com/maxGraph/maxGraph/issues/1)
+> 
+> Initial objectives:
+> 
+> - The first priority is to maintain a working version of mxGraph and its **npm package**
+> - The ambitious stretch goal is to refactor the codebase to create a modern modular, tree shakable, version of mxGraph to reduce the whole package size.
+> 
+> -- Colin Claverie
+
+The project was then [renamed on 2021-06-02](https://github.com/maxGraph/maxGraph/discussions/47) into `maxGraph` due to [licensing issue](https://github.com/maxGraph/maxGraph/discussions/23).
+
+Starting from the mxGraph 4.2.2 release, we
+- moved code to ES9
+- removed Internet Explorer specific code
+- migrated to TypeScript, based on the work initiated in [typed-mxgraph](https://github.com/typed-mxgraph/typed-mxgraph)
+- migrated the examples to [Storybook](https://storybook.js.org/)
+
+
+## Development
 
 ### Setting up local development environment
 
@@ -18,7 +151,7 @@ $ npm run dev
 
 and select `@mxgraph/core`.
 
-To run the html(vanilla-js) version of storybook, execute
+To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), execute
 
 ```sh
 $ npm run dev
@@ -28,70 +161,7 @@ and select `@mxgraph/html`.
 
 Since both commands are in watch mode, so it's recommended to open two terminals and run them separately. When a file is saved from the core package, the html storybook will be automatically updated.
 
-===
 
-# Looking for maintainers
+### Building the npm package for local usage
 
-12 Nov 2020.
-
-If you are interested in becoming a maintainer of mxGraph please comment on issue #1 https://github.com/jsGraph/mxgraph/issues/1
-
-Initial objectives:
-
-- The first priority is to maintain a working version of mxGraph and its **npm package**
-- The ambitious stretch goal is to refactor the codebase to create a modern modular, tree shakable, version of mxGraph to reduce the whole package size.
-
--- Colin Claverie
-
-Note that the original default branch was `master`, and this has now been renamed `main`. If you had a checkout with the old branch name then follow these instructions to get the new branch name:
-
-```
-git branch -m master main
-git fetch origin
-git branch -u origin/main main
-git remote set-head origin -a
-```
-
-# Transition to Apache 2.0 license
-
-This project is published under the terms of a [Modified-Apache-2.0](LICENSE) license and currently preparing to move back to the standard Apache 2.0 license.  
-From now on, all contributions to this project must be under the terms of the Apaches 2.0 license as stated in https://www.apache.org/licenses/LICENSE-2.0.  
-See https://github.com/maxGraph/maxGraph/issues/89 for more details.
-
-# Original Readme below
-
-_NOTE 09.11.2020_ : Development on mxGraph has now stopped, this repo is effectively end of life.
-
-Known forks:
-
-https://github.com/jsGraph/mxgraph
-
-https://github.com/process-analytics/mxgraph
-
-# mxGraph
-
-mxGraph is a fully client side JavaScript diagramming library that uses SVG and HTML for rendering.
-
-The PHP model was deprecated after release 4.0.3 and the archive can be found [here](https://github.com/jgraph/mxgraph-php).
-
-The unmaintained npm build is [here](https://www.npmjs.com/package/mxgraph)
-
-We don't support Typescript, but there is a [project to implement this](https://github.com/process-analytics/mxgraph-road-to-DefinitelyTyped), with [this repo](https://github.com/hungtcs/mxgraph-type-definitions) currently used as the lead repo.
-
-The mxGraph library uses no third-party software, it requires no plugins and can be integrated in virtually any framework (it's vanilla JS).
-
-# Getting Started
-
-In the root folder there is an index.html file that contains links to all resources. You can view the documentation online on the [Github pages branch](https://jgraph.github.io/mxgraph/). The key resources are the JavaScript user manual, the JavaScript examples and the JavaScript API specificiation.
-
-# Support
-
-There is a [mxgraph tag on Stack Overflow](http://stackoverflow.com/questions/tagged/mxgraph). Please ensure your questions adhere to the [SO guidelines](http://stackoverflow.com/help/on-topic), otherwise it is likely to be closed.
-
-If you are looking for active support, your better route is one of the commercial diagramming tools, like [yFiles](https://www.yworks.com/products/yfiles-for-html) or [GoJS](https://gojs.net/latest/index.html).
-
-# History
-
-We created mxGraph in 2005 as a commercial project and it ran through to 2016 that way. Our USP was the support for non-SVG browsers, when that advantage expired we moved onto commercial activity around draw.io. mxGraph is pretty much feature complete, production tested in many large enterprises and stable for many years.
-
-Over time you can expect this codebase will break features against new browser releases, it's not advised to start new projects against this codebase for that reason.
+Will be documented soon.
