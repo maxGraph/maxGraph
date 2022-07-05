@@ -9,4 +9,3 @@ Run `npm run dev` and go to http://localhost:3000/
 
 If you want to bundle the application, run `npm run build` and then run `npm run preview` to access to a preview of the
 bundle application.
-
