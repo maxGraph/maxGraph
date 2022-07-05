@@ -52,10 +52,11 @@ const container = <HTMLElement>document.getElementById('graph-container');
 // Disables the built-in context menu
 InternalEvent.disableContextMenu(container);
 
+const graph = new Graph(container);
+graph.setPanning(true); // Use mouse right button for panning
 // Gets the default parent for inserting new cells. This
 // is normally the first child of the root (ie. layer 0).
 const parent = graph.getDefaultParent();
-graph.setPanning(true); // Use mouse right button for panning
 
 // Adds cells to the model in a single step
 graph.batchUpdate(() => {
@@ -65,7 +66,7 @@ graph.batchUpdate(() => {
 });
 ```
 
-You will see something like in the following:
+You will see something like in the following _maxGraph panning_ demo:
 
 ![maxGraph panning demo](docs/maxgraph_demo.gif "maxGraph panning demo")
 
@@ -169,3 +170,5 @@ Run
 - then, from the `packages/core` folder: `npm pack`
 
 The `packages/core` folder or the generated `packages/core/maxgraph-core-***.tgz` file are now ready for use in an external project, using [npm link](https://docs.npmjs.com/cli/v8/commands/npm-link) or `npm install`.
+
+Examples of use can be found in this [repository].(https://github.com/tbouffard/maxgraph-integration-examples).
