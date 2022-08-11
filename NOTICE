@@ -2,16 +2,16 @@ maxGraph contributors
 
 
 ==========
-The initial contributions on maxGraph were done under a modified version of the Apache License, Version 2.0 
-The following contributors re-licensed their commits under the Apache License, Version 2.0
-See https://github.com/maxGraph/maxGraph/issues/89 for more details
-  - 7fa2b43 by CD Yang https:////github.com/cd-yang
-  - 5d4f197, 82321b3, a5ac1ab and c85074e by David Benson https://github.com/davidjgraph
-  - (all commits) Dave Morrissey https://github.com/mcyph
-  - (all commits) Junsik Shim https://github.com/junsikshim
-  - fb7819f, 14f5815, a2a718b, 443ebf7, 3a1b08c, 760cbd3 Thomas Bouffard https://github.com/tbouffard
+The initial contributions to maxGraph were made under a modified version of the Apache License, Version 2.0.
+The following contributors (arbitrarily sorted according to their names) re-licensed their commits under the Apache License, Version 2.0. See https://github.com/maxGraph/maxGraph/issues/89 for more details.
+  - 7fa2b43 by CD Yang (https://github.com/cd-yang)
+  - 5d4f197, 82321b3, a5ac1ab and c85074e by David Benson (https://github.com/davidjgraph)
+  - (all commits) Dave Morrissey (https://github.com/mcyph)
+  - 07d1b62 Gary Kaganas (https://github.com/Seebiscuit)
+  - (all commits) Junsik Shim (https://github.com/junsikshim)
+  - fb7819f, 14f5815, a2a718b, 443ebf7, 3a1b08c, 760cbd3 Thomas Bouffard (https://github.com/tbouffard)
 
-The TypeScript involved involved the reuse of types taken from the typed-mgraph project, released under the MIT license (https://github.com/typed-mxgraph/typed-mxgraph)
+The TypeScript migration of the mxGraph javascript code involved the reuse of types taken from the typed-mxgraph project, released under the MIT license (https://github.com/typed-mxgraph/typed-mxgraph).
 
 
 ==========
