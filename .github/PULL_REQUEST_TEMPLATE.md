@@ -16,7 +16,7 @@ If this is a bug fix, your description should include "fixes #xxxx", or
 <!--
 Thanks for submitting a pull request!
 
-All contributions to this project must be under the terms of the Apache 2.0 license as stated in https://www.apache.org/licenses/LICENSE-2.0
+All contributions to this project are done under the terms of the Apache 2.0 license as stated in https://www.apache.org/licenses/LICENSE-2.0
 
 Please make sure you read github's contributing guidelines;
 https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/getting-started-with-github-desktop#part-3-contributing-to-projects-with-github-desktop
