@@ -29,17 +29,10 @@ Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) for 
 
 ## Project status
 
-maxGraph is under active development. An alpha version will be released soon with the npm package once [licensing](#license)
+maxGraph is under active development. An alpha version will be released soon with the npm package once [licensing](https://github.com/maxGraph/maxGraph/issues/89)
 and [versioning](https://github.com/maxGraph/maxGraph/issues/92) issues have been resolved.
 
 In the meantime, you can test the project by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package).
-
-
-## <a id="license"></a> Transition to Apache 2.0 license
-
-This project is published under the terms of a [Modified-Apache-2.0](LICENSE) license and currently preparing to move back to the standard Apache 2.0 license.  
-From now on, all contributions to this project must be under the terms of the Apaches 2.0 license as stated in https://www.apache.org/licenses/LICENSE-2.0.  
-See https://github.com/maxGraph/maxGraph/issues/89 for more details.
 
 
 ## Getting Started
