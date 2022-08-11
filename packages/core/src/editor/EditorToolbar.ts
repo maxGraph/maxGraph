@@ -24,7 +24,7 @@ import { NODETYPE } from '../util/Constants';
 import Translations from '../util/Translations';
 import MaxLog from '../gui/MaxLog';
 import Codec from '../serialization/Codec';
-import { DropHandler } from 'src/view/other/DragSource';
+import type { DropHandler } from '../view/other/DragSource';
 
 /**
  * Toolbar for the editor. This modifies the state of the graph
@@ -204,10 +204,10 @@ export class EditorToolbar {
    * @param funct - Optional JavaScript function that takes the {@link Editor} as the first and only argument that is executed after the mode has been selected.
    */
   addMode(
-    title: string, 
-    icon: string, 
-    mode: string, 
-    pressed: string | null=null, 
+    title: string,
+    icon: string,
+    mode: string,
+    pressed: string | null=null,
     funct: Function | null=null
   ): any {
     const clickHandler = () => {
@@ -238,11 +238,11 @@ export class EditorToolbar {
    * Default is true.
    */
   addPrototype(
-    title: string, 
-    icon: string, 
-    ptype: Function | Cell, 
-    pressed: string, 
-    insert: (editor: Editor, cell: Cell, me: MouseEvent, cellUnderMousePointer?: Cell | null) => void, 
+    title: string,
+    icon: string,
+    ptype: Function | Cell,
+    pressed: string,
+    insert: (editor: Editor, cell: Cell, me: MouseEvent, cellUnderMousePointer?: Cell | null) => void,
     toggle: boolean=true
   ): HTMLImageElement | HTMLButtonElement {
     // Creates a wrapper function that is in charge of constructing

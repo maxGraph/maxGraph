@@ -31,12 +31,22 @@ jobs:
       matrix:
         os: ['ubuntu-20.04', 'macos-11', 'windows-2019']
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
-      - name: Install dependencies and build @maxgraph/core
+          node-version-file: '.nvmrc'
+      - name: Install dependencies
         run: npm install
-      - name: Generate TypeScript declaration files
+      - name: Build @maxgraph/core - umd
+        working-directory: packages/core
+        run: npm run build
+      - name: Build @maxgraph/core - esm
+        working-directory: packages/core
+        run: npm run generate-esm
+      - name: Generate @maxgraph/core types
+        working-directory: packages/core
         run: npm run generate-types
+      - name: Build ts-example
+        working-directory: packages/ts-example
+        run: npm run build

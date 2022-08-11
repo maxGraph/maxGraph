@@ -30,7 +30,7 @@ import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
 import PrintPreview from '../view/other/PrintPreview';
 import mxClipboard from '../util/Clipboard';
 import MaxLog from '../gui/MaxLog';
-import { isNode } from '../util/domUtils';
+import { addLinkToHead, isNode } from '../util/domUtils';
 import { getViewXml, getXml } from '../util/xmlUtils';
 import { load, post, submit } from '../util/MaxXmlRequest';
 import PopupMenuHandler from '../view/handler/PopupMenuHandler';
@@ -2850,7 +2850,7 @@ export class EditorCodec extends ObjectCodec {
       } else if (tmp.nodeName === 'resource') {
         Translations.add(<string>tmp.getAttribute('basename'));
       } else if (tmp.nodeName === 'stylesheet') {
-        Client.link('stylesheet', <string>tmp.getAttribute('name'));
+        addLinkToHead('stylesheet', <string>tmp.getAttribute('name'));
       }
 
       tmp = <Element>tmp.nextSibling;

@@ -26,8 +26,6 @@ import ConnectionConstraint from '../other/ConnectionConstraint';
 import Point from '../geometry/Point';
 import Cell from '../cell/Cell';
 
-import pointImg from '../../../images/point.gif';
-
 /**
  * Handles constraints on connection targets. This class is in charge of
  * showing fixed points when the mouse is over a vertex and handles constraints
@@ -39,8 +37,7 @@ class ConstraintHandler {
   /**
    * {@link Image} to be used as the image for fixed connection points.
    */
-  // pointImage: mxImage;
-  pointImage = new Image(pointImg, 5, 5);
+  pointImage = new Image(`${Client.imageBasePath}/point.gif`, 5, 5);
 
   /**
    * Reference to the enclosing {@link mxGraph}.

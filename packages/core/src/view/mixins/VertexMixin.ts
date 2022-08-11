@@ -3,7 +3,7 @@ import Geometry from '../geometry/Geometry';
 import { Graph } from '../Graph';
 import CellArray from '../cell/CellArray';
 import { mixInto } from '../../util/Utils';
-import { CellStyle } from 'src/types';
+import type { CellStyle } from '../../types';
 
 declare module '../Graph' {
   interface Graph {

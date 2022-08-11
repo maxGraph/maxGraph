@@ -5,113 +5,15 @@
 
 class Client {
   /**
-   * Class: Client
-   *
-   * Bootstrapping mechanism for the mxGraph thin client. The production version
-   * of this file contains all code required to run the mxGraph thin client, as
-   * well as global constants to identify the browser and operating system in
-   * use. You may have to load chrome://global/content/contentAreaUtils.js in
-   * your page to disable certain security restrictions in Mozilla.
-   *
-   * Contains the current version of the mxGraph library. The strings that
-   * communicate versions of mxGraph use the following format.
-   *
-   * versionMajor.versionMinor.buildNumber.revisionNumber
-   *
-   * Current version is 4.2.2.
+   * Contains the current version of the maxGraph library.
    */
-  static VERSION = '4.2.2';
+  static VERSION = '0.1.0';
 
   /**
-   * Optional global config variable to specify the extension of resource files.
-   * Default is true. NOTE: This is a global variable, not a variable of Client.
+   * Base path for all URLs in the core without trailing slash.
    *
-   * ```javascript
-   * <script type="text/javascript">
-   *     let mxResourceExtension = '.txt';
-   * </script>
-   * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * ```
-   */
-  static mxResourceExtension = '.txt';
-
-  static setResourceExtension = (value: string) => {
-    Client.mxResourceExtension = value;
-    
-    // Removes dependency with mxResources.
-    // Client.mxResourceExtension can be used instead.
-    // mxResources.extension = value;
-  };
-
-  /**
-   * Optional global config variable to toggle loading of the two resource files
-   * in {@link Graph} and <Editor>. Default is true. NOTE: This is a global variable,
-   * not a variable of Client. If this is false, you can use <Client.loadResources>
-   * with its callback to load the default bundles asynchronously.
-   *
-   * ```javascript
-   * <script type="text/javascript">
-   *     let mxLoadResources = false;
-   * </script>
-   * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * ```
-   */
-  static mxLoadResources = true;
-
-  static setLoadResources = (value: boolean) => {
-    Client.mxLoadResources = value;
-  };
-
-  /**
-   * Optional global config variable to force loading the JavaScript files in
-   * development mode. Default is undefined. NOTE: This is a global variable,
-   * not a variable of Client.
-   *
-   * ```javascript
-   * <script type="text/javascript">
-   *     let mxForceIncludes = false;
-   * </script>
-   * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * ```
-   */
-  static mxForceIncludes = false;
-
-  static setForceIncludes = (value: boolean) => {
-    Client.mxForceIncludes = value;
-  };
-
-  /**
-   * Optional global config variable to toggle loading of the CSS files when
-   * the library is initialized. Default is true. NOTE: This is a global variable,
-   * not a variable of Client.
-   *
-   * ```javascript
-   * <script type="text/javascript">
-   *     let mxLoadStylesheets = false;
-   * </script>
-   * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * ```
-   */
-  static mxLoadStylesheets = true;
-
-  static setLoadStylesheets = (value: boolean) => {
-    Client.mxLoadStylesheets = value;
-  };
-
-  /**
-   * Basepath for all URLs in the core without trailing slash. Default is '.'.
-   * Set mxBasePath prior to loading the Client library as follows to override
-   * this setting:
-   *
-   * ```javascript
-   * <script type="text/javascript">
-   *     mxBasePath = '/path/to/core/directory';
-   * </script>
-   * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * ```
-   *
-   * When using a relative path, the path is relative to the URL of the page that
-   * contains the assignment. Trailing slashes are automatically removed.
+   * When using a relative path, the path is relative to the URL of the page that contains the assignment. Trailing slashes are automatically removed.
+   * @default '.'
    */
   static basePath = '.';
 
@@ -128,22 +30,14 @@ class Client {
   };
 
   /**
-   * Basepath for all images URLs in the core without trailing slash. Default is
-   * <Client.basePath> + '/images'. Set mxImageBasePath prior to loading the
-   * Client library as follows to override this setting:
-   *
-   * ```javascript
-   * <script type="text/javascript">
-   *     mxImageBasePath = '/path/to/image/directory';
-   * </script>
-   * <script type="text/javascript" src="/path/to/core/directory/js/Client.js"></script>
-   * ```
+   * Base path for all images URLs in the core without trailing slash.
    *
    * When using a relative path, the path is relative to the URL of the page that
    * contains the assignment. Trailing slashes are automatically removed.
+   * @default '.'
    */
   static imageBasePath = '.';
-  
+
   static setImageBasePath = (value: string) => {
     if (typeof value !== 'undefined' && value.length > 0) {
       // Adds a trailing slash if required
@@ -157,27 +51,17 @@ class Client {
   };
 
   /**
-   * Defines the language of the client, eg. en for english, de for german etc.
-   * The special value 'none' will disable all built-in internationalization and
+   * Defines the language of the client, eg. `en` for english, `de` for german etc.
+   * The special value `none` will disable all built-in internationalization and
    * resource loading. See {@link Resources#getSpecialBundle} for handling identifiers
    * with and without a dash.
-   *
-   * Set mxLanguage prior to loading the Client library as follows to override
-   * this setting:
-   *
-   * ```javascript
-   * <script type="text/javascript">
-   *     mxLanguage = 'en';
-   * </script>
-   * <script type="text/javascript" src="js/Client.js"></script>
-   * ```
    *
    * If internationalization is disabled, then the following variables should be
    * overridden to reflect the current language of the system. These variables are
    * cleared when i18n is disabled.
-   * <Editor.askZoomResource>, <Editor.lastSavedResource>,
-   * <Editor.currentFileResource>, <Editor.propertiesResource>,
-   * <Editor.tasksResource>, <Editor.helpResource>, <Editor.outlineResource>,
+   * {@link Editor.askZoomResource}, {@link Editor.lastSavedResource},
+   * {@link Editor.currentFileResource}, {@link Editor.propertiesResource},
+   * {@link Editor.tasksResource}, {@link Editor.helpResource}, {@link Editor.outlineResource},
    * {@link ElbowEdgeHandler#doubleClickOrientationResource}, {@link Utils#errorResource},
    * {@link Utils#closeResource}, {@link GraphSelectionModel#doneResource},
    * {@link GraphSelectionModel#updatingSelectionResource}, {@link GraphView#doneResource},
@@ -198,17 +82,8 @@ class Client {
   /**
    * Defines the default language which is used in the common resource files. Any
    * resources for this language will only load the common resource file, but not
-   * the language-specific resource file. Default is 'en'.
-   *
-   * Set mxDefaultLanguage prior to loading the Client library as follows to override
-   * this setting:
-   *
-   * ```javascript
-   * <script type="text/javascript">
-   *     mxDefaultLanguage = 'de';
-   * </script>
-   * <script type="text/javascript" src="js/Client.js"></script>
-   * ```
+   * the language-specific resource file.
+   * @default 'en'
    */
   static defaultLanguage = 'en';
 
@@ -223,17 +98,11 @@ class Client {
   /**
    * Defines the optional array of all supported language extensions. The default
    * language does not have to be part of this list. See
-   * {@link Resources#isLanguageSupported}.
-   *
-   * ```javascript
-   * <script type="text/javascript">
-   *     mxLanguages = ['de', 'it', 'fr'];
-   * </script>
-   * <script type="text/javascript" src="js/Client.js"></script>
-   * ```
+   * {@link Translations#isLanguageSupported}.
    *
    * This is used to avoid unnecessary requests to language files, ie. if a 404
    * will be returned.
+   * @default null
    */
   static languages: string[] | null = null;
 
@@ -399,45 +268,6 @@ class Client {
     return Client.IS_SVG;
   };
 
-  /**
-   * Adds a link node to the head of the document. Use this
-   * to add a stylesheet to the page as follows:
-   *
-   * ```javascript
-   * Client.link('stylesheet', filename);
-   * ```
-   *
-   * where filename is the (relative) URL of the stylesheet. The charset
-   * is hardcoded to ISO-8859-1 and the type is text/css.
-   *
-   * @param rel String that represents the rel attribute of the link node.
-   * @param href String that represents the href attribute of the link node.
-   * @param doc Optional parent document of the link node.
-   * @param id unique id for the link element to check if it already exists
-   */
-  static link = (
-    rel: string, 
-    href: string, 
-    doc: Document | null=null, 
-    id: string | null=null
-  ) => {
-    doc = doc || document;
-
-    // Workaround for Operation Aborted in IE6 if base tag is used in head
-    const link = doc.createElement('link');
-
-    link.setAttribute('rel', rel);
-    link.setAttribute('href', href);
-    link.setAttribute('charset', 'UTF-8');
-    link.setAttribute('type', 'text/css');
-
-    if (id) {
-      link.setAttribute('id', id);
-    }
-
-    const head = doc.getElementsByTagName('head')[0];
-    head.appendChild(link);
-  };
-};
+}
 
 export default Client;

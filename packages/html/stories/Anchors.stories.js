@@ -1,4 +1,5 @@
 import {
+  Client,
   Graph,
   InternalEvent,
   RubberBandHandler,
@@ -24,6 +25,8 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
+  Client.setImageBasePath('/images');
+
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'hidden';

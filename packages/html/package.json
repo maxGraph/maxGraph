@@ -1,13 +1,13 @@
 {
   "name": "@maxgraph/html",
-  "version": "1.0.0",
-  "description": "",
+  "license": "Apache-2.0",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Storybook stories",
   "main": "index.js",
   "scripts": {
     "dev": "start-storybook -p 8901"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@maxgraph/core": "*"
   },

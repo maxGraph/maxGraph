@@ -64,7 +64,8 @@ class Translations {
   static resources: { [key: string]: string } = {};
 
   /**
-   * Specifies the extension used for language files. Default is {@link ResourceExtension}.
+   * Specifies the extension used for language files.
+   * @default '.txt'
    */
   static extension = '.txt';
 
@@ -112,22 +113,22 @@ class Translations {
       Translations.loadDefaultBundle ||
       !Translations.isLanguageSupported(lan)
     ) {
-      return basename + (Translations.extension ?? Client.mxResourceExtension);
+      return basename + Translations.extension;
     }
     return null;
   };
 
   /**
    * Hook for subclassers to return the URL for the special bundle. This
-   * implementation returns basename + '_' + lan + <extension> or null if
-   * <loadSpecialBundle> is false or lan equals <Client.defaultLanguage>.
+   * implementation returns `basename + '_' + lan + <extension>` or `null` if
+   * {@link Translations.loadSpecialBundle} is `false` or `lan` equals {@link Client.defaultLanguage}.
    *
-   * If {@link Resources#languages} is not null and <Client.language> contains
-   * a dash, then this method checks if <isLanguageSupported> returns true
+   * If {@link Translations#languages} is not null and {@link Client.language} contains
+   * a dash, then this method checks if {@link Translations.isLanguageSupported} returns `true`
    * for the full language (including the dash). If that returns false the
    * first part of the language (up to the dash) will be tried as an extension.
    *
-   * If {@link Resources#language} is null then the first part of the language is
+   * If {@link Translations#language} is null then the first part of the language is
    * used to maintain backwards compatibility.
    *
    * @param basename The basename for which the file should be loaded.
@@ -147,9 +148,7 @@ class Translations {
       Translations.isLanguageSupported(lan) &&
       lan != Client.defaultLanguage
     ) {
-      return `${basename}_${lan}${
-        Translations.extension ?? Client.mxResourceExtension
-      }`;
+      return `${basename}_${lan}${Translations.extension}`;
     }
     return null;
   };
