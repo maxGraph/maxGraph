@@ -1,7 +1,21 @@
-/**
- * Copyright (c) 2006-2020, JGraph Ltd
- * Copyright (c) 2006-2020, draw.io AG
- */
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2020, JGraph Ltd
+Copyright (c) 2006-2020, draw.io AG
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import { write } from './domUtils';
 
 /**
@@ -70,11 +84,11 @@ import { write } from './domUtils';
  */
 class MaxXmlRequest {
   constructor(
-    url: string, 
-    params: string | null=null, 
-    method: 'GET' | 'POST'='POST', 
-    async: boolean=true, 
-    username: string | null=null, 
+    url: string,
+    params: string | null=null,
+    method: 'GET' | 'POST'='POST',
+    async: boolean=true,
+    username: string | null=null,
     password: string | null=null
   ) {
     this.url = url;
@@ -237,9 +251,9 @@ class MaxXmlRequest {
    * @param ontimeout Optional function to execute on timeout.
    */
   send(
-    onload: Function | null=null, 
-    onerror: Function | null=null, 
-    timeout: number | null=null, 
+    onload: Function | null=null,
+    onerror: Function | null=null,
+    timeout: number | null=null,
     ontimeout: Function | null=null
   ): void {
     this.request = this.create();
@@ -442,12 +456,12 @@ export const load = (url: string) => {
  * @param headers Optional with headers, eg. {'Authorization': 'token xyz'}
  */
 export const get = (
-  url: string, 
-  onload: Function | null=null, 
-  onerror: Function | null=null, 
-  binary: boolean=false, 
-  timeout: number | null=null, 
-  ontimeout: Function | null=null, 
+  url: string,
+  onload: Function | null=null,
+  onerror: Function | null=null,
+  binary: boolean=false,
+  timeout: number | null=null,
+  ontimeout: Function | null=null,
   headers: { [key: string]: string } | null=null
 ) => {
   const req = new MaxXmlRequest(url, null, 'GET');
@@ -480,8 +494,8 @@ export const get = (
  * @param onerror Optional function to execute on error.
  */
 export const getAll = (
-  urls: string[], 
-  onload: (arg0: any) => void, 
+  urls: string[],
+  onload: (arg0: any) => void,
   onerror: () => void
 ) => {
   let remain = urls.length;
@@ -545,9 +559,9 @@ export const getAll = (
  * @param onerror Optional function to execute on error.
  */
 export const post = (
-  url: string, 
-  params: string | null=null, 
-  onload: Function, 
+  url: string,
+  params: string | null=null,
+  onload: Function,
   onerror: Function | null=null
 ) => {
   return new MaxXmlRequest(url, params).send(onload, onerror);

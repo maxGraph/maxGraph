@@ -1,9 +1,20 @@
-/**
- * Copyright (c) 2006-2015, JGraph Ltd
- * Copyright (c) 2006-2015, Gaudenz Alder
- * Updated to ES9 syntax by David Morrissey 2021
- * Type definitions from the typed-mxgraph project
- */
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2015, JGraph Ltd
+Copyright (c) 2006-2015, Gaudenz Alder
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 
 /**
  * Defines the portion of the cell which is to be used as a connectable
@@ -484,7 +495,7 @@ export const enum ARROW {
     BLOCK = 'block',
     BLOCK_THIN = 'blockThin',
     OPEN = 'open',
-    OPEN_THIN = 'openThin',    
+    OPEN_THIN = 'openThin',
     OVAL = 'oval',
     DIAMOND = 'diamond',
     DIAMOND_THIN = 'diamondThin',
@@ -528,7 +539,7 @@ export const enum DIRECTION {
 *
  * Constant for text direction left to right. Default is ltr. Use this
  * value for left to right text direction.
- * 
+ *
  * Constant for text direction right to left. Default is rtl. Use this
  * value for right to left text direction.
  */
@@ -680,7 +691,7 @@ export const enum SHAPE {
 
     /**
      * Name under which {@link Triangle} is registered in {@link CellRenderer}.
-     * Default is triangle. 
+     * Default is triangle.
      */
     TRIANGLE = 'triangle',
 
