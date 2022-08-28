@@ -1,9 +1,20 @@
-/**
- * Copyright (c) 2006-2018, JGraph Ltd
- * Copyright (c) 2006-2018, Gaudenz Alder
- * Updated to ES9 syntax by David Morrissey 2021
- * Type definitions from the typed-mxgraph project
- */
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2018, JGraph Ltd
+Copyright (c) 2006-2018, Gaudenz Alder
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 
 import Dictionary from '../../util/Dictionary';
 import Point from '../geometry/Point';
@@ -571,10 +582,10 @@ export class CompactTreeLayout extends GraphLayout {
    * at the given node.
    */
   verticalLayout(
-    node: _mxCompactTreeLayoutNode, 
-    parent: _mxCompactTreeLayoutNode | null, 
-    x0: number, 
-    y0: number, 
+    node: _mxCompactTreeLayoutNode,
+    parent: _mxCompactTreeLayoutNode | null,
+    x0: number,
+    y0: number,
     bounds: Rectangle | null=null
   ): Rectangle | null {
     node.x = <number>node.x + x0 + <number>node.offsetY;
@@ -755,11 +766,11 @@ export class CompactTreeLayout extends GraphLayout {
   }
 
   bridge(
-    line1: _mxCompactTreeLayoutLine, 
-    x1: number, 
-    y1: number, 
-    line2: _mxCompactTreeLayoutLine, 
-    x2: number, 
+    line1: _mxCompactTreeLayoutLine,
+    x1: number,
+    y1: number,
+    line2: _mxCompactTreeLayoutLine,
+    x2: number,
     y2: number
   ) {
     const dx = x2 + line2.dx - x1;
@@ -854,8 +865,8 @@ export class CompactTreeLayout extends GraphLayout {
    */
   createLine(dx: number, dy: number, next: any=null): _mxCompactTreeLayoutLine {
     let line: _mxCompactTreeLayoutLine = {
-      dx, 
-      dy, 
+      dx,
+      dy,
       next
     };
     return line;

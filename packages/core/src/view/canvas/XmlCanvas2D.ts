@@ -1,9 +1,21 @@
-/**
- * Copyright (c) 2006-2015, JGraph Ltd
- * Copyright (c) 2006-2015, Gaudenz Alder
- * Updated to ES9 syntax by David Morrissey 2021
- * Type definitions from the typed-mxgraph project
- */
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2015, JGraph Ltd
+Copyright (c) 2006-2015, Gaudenz Alder
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import AbstractCanvas2D from './AbstractCanvas2D';
 import {
   DEFAULT_FONTFAMILY,
@@ -44,7 +56,7 @@ import { DirectionValue, TextDirectionValue } from '../../types';
 class mxXmlCanvas2D extends AbstractCanvas2D {
   constructor(root: SVGElement) {
     super();
-    
+
     this.root = root;
 
     // Writes default settings;
@@ -279,14 +291,14 @@ class mxXmlCanvas2D extends AbstractCanvas2D {
    * are between 1 (opaque) and 0 (transparent).
    */
   setGradient(
-    color1: string | null, 
-    color2: string | null, 
-    x: number, 
-    y: number, 
-    w: number, 
-    h: number, 
-    direction: DirectionValue, 
-    alpha1: number=1.0, 
+    color1: string | null,
+    color2: string | null,
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    direction: DirectionValue,
+    alpha1: number=1.0,
     alpha2: number=1.0
   ) {
     if (color1 != null && color2 != null) {
@@ -753,13 +765,13 @@ class mxXmlCanvas2D extends AbstractCanvas2D {
    * @param flipV Boolean indicating if the image should be flipped vertically.
    */
   image(
-    x: number, 
-    y: number, 
-    w: number, 
-    h: number, 
-    src: string, 
-    aspect: boolean, 
-    flipH: boolean, 
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    src: string,
+    aspect: boolean,
+    flipH: boolean,
     flipV: boolean
   ) {
     src = this.converter.convert(src);
@@ -887,18 +899,18 @@ class mxXmlCanvas2D extends AbstractCanvas2D {
    * @param dir Optional string that specifies the text direction. Possible values are rtl and ltr.
    */
   text(
-    x: number, 
-    y: number, 
-    w: number, 
-    h: number, 
-    str: string | HTMLElement, 
-    align: string | null=null, 
-    valign: string | null=null, 
-    wrap: boolean | null=null, 
-    format: string | null=null, 
-    overflow: string | null=null, 
-    clip: boolean | null=null, 
-    rotation: number | null=null, 
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    str: string | HTMLElement,
+    align: string | null=null,
+    valign: string | null=null,
+    wrap: boolean | null=null,
+    format: string | null=null,
+    overflow: string | null=null,
+    clip: boolean | null=null,
+    rotation: number | null=null,
     dir: TextDirectionValue | null=null
   ): void {
     if (this.textEnabled && str != null) {

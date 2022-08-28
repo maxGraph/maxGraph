@@ -1,9 +1,21 @@
-/**
- * Copyright (c) 2006-2018, JGraph Ltd
- * Copyright (c) 2006-2018, Gaudenz Alder
- * Updated to ES9 syntax by David Morrissey 2021
- * Type definitions from the typed-mxgraph project
- */
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2018, JGraph Ltd
+Copyright (c) 2006-2018, Gaudenz Alder
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import { DIRECTION } from '../../../util/Constants';
 import MaxLog from '../../../gui/MaxLog';
@@ -193,7 +205,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   printStatus() {
     const model = <GraphHierarchyModel>this.layout.getDataModel();
     const ranks = <GraphAbstractHierarchyCell[][]>model.ranks;
-    
+
     MaxLog.show();
     MaxLog.writeln('======Coord assignment debug=======');
 
@@ -436,8 +448,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * relative to
    */
   rankMedianPosition(
-    rankValue: number, 
-    model: GraphHierarchyModel, 
+    rankValue: number,
+    model: GraphHierarchyModel,
     nextRankValue: number
   ) {
     const ranks = <GraphAbstractHierarchyCell[][]>model.ranks;

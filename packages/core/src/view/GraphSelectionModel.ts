@@ -1,7 +1,20 @@
 /*
- * Copyright (c) 2006-2015, JGraph Ltd
- * Copyright (c) 2006-2015, Gaudenz Alder
- */
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2015, JGraph Ltd
+Copyright (c) 2006-2015, Gaudenz Alder
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 
 import Client from "../Client";
 import CellArray from "./cell/CellArray"
@@ -18,38 +31,38 @@ import InternalEvent from "./event/InternalEvent";
  *
  * Implements the selection model for a graph. Here is a listener that handles
  * all removed selection cells.
- * 
+ *
  * (code)
  * graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender, evt)
  * {
  *   var cells = evt.getProperty('added');
- *   
+ *
  *   for (var i = 0; i < cells.length; i++)
  *   {
  *     // Handle cells[i]...
  *   }
  * });
  * (end)
- * 
+ *
  * Event: mxEvent.UNDO
- * 
+ *
  * Fires after the selection was changed in <changeSelection>. The
  * <code>edit</code> property contains the {@link UndoableEdit} which contains the
  * {@link SelectionChange}.
- * 
+ *
  * Event: mxEvent.CHANGE
- * 
+ *
  * Fires after the selection changes by executing an {@link SelectionChange}. The
  * <code>added</code> and <code>removed</code> properties contain arrays of
  * cells that have been added to or removed from the selection, respectively.
  * The names are inverted due to historic reasons. This cannot be changed.
- * 
+ *
  * Constructor: mxGraphSelectionModel
  *
  * Constructs a new graph selection model for the given {@link Graph}.
- * 
+ *
  * Parameters:
- * 
+ *
  * graph - Reference to the enclosing {@link Graph}.
  */
 class GraphSelectionModel extends EventSource {
@@ -75,7 +88,7 @@ class GraphSelectionModel extends EventSource {
     * value is used as the status message. Default is 'updatingSelection'.
     */
   updatingSelectionResource = Client.language !== 'none' ? 'updatingSelection' : '';
- 
+
   /**
     * Specifies if only one selected item at a time is allowed.
     * Default is false.
@@ -98,7 +111,7 @@ class GraphSelectionModel extends EventSource {
   setSingleSelection(singleSelection: boolean) {
     this.singleSelection = singleSelection;
   }
-  
+
   /**
    * Returns true if the given {@link Cell} is selected.
    */
