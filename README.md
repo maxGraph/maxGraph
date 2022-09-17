@@ -66,7 +66,7 @@ You will see something like in the following _maxGraph panning_ demo:
 For more details, have a look at the [storybook stories](packages/html/stories).
 
 
-## Typescript
+## TypeScript
 
 maxGraph is written in TypeScript and provides type definitions so maxGraph can be easily integrated into TypeScript projects.
 
