@@ -591,8 +591,7 @@ class Graph extends EventSource {
       this.view.invalidate(change.child, true, true);
 
       if (
-        newParent &&
-        (!this.getDataModel().contains(newParent) || newParent.isCollapsed())
+        !newParent || !this.getDataModel().contains(newParent) || newParent.isCollapsed()
       ) {
         this.view.invalidate(change.child, true, true);
         this.removeStateForCell(change.child);
