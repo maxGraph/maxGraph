@@ -15,7 +15,9 @@
     "dev": "node ./scripts/dev",
     "bootstrap": "lerna bootstrap --no-ci",
     "postinstall": "lerna bootstrap --no-ci",
-    "docs": "jsdoc -c jsdoc.json"
+    "docs": "jsdoc -c jsdoc.json",    
+    "lint": "eslint packages/**/**.ts",
+    "lint:fix": "eslint --fix packages/**/**.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -24,10 +26,14 @@
     "@babel/preset-react": "^7.16.0",
     "@babel/preset-typescript": "^7.16.0",
     "@lerna/filter-options": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
     "babel-loader": "^8.2.3",
     "better-docs": "^2.3.2",
-    "css-loader": "^6.5.1",
     "cross-env": "~7.0.3",
+    "css-loader": "^6.5.1",
+    "eslint": "^8.24.0",
+    "eslint-plugin-import": "^2.26.0",
     "file-loader": "^6.2.0",
     "jsdoc": "^3.6.7",
     "lerna": "^4.0.0",

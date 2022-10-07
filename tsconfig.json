@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "ES2020",
+    "lib": ["dom", "es5"],
+    "moduleResolution": "node",
+    "strict": true,
+    "target": "ES2020",
+  },
+  "paths": {
+    "@maxgraph/core": ["packages/core/src/index.ts"],
+    "@maxgraph/ts-example": ["packages/ts-example/src/main.ts"]
+  },
+  "exclude": ["node_modules", "e2e", "**/*.json", "**/*.spec.ts"],
+  "include": ["packages/*/src"]
+}
