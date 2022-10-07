@@ -10,68 +10,19 @@
     ],
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "project": "tsconfig.json"
     },
     "rules": {
-        "key-spacing": "warn",        
-        "space-in-parens": "warn",
         "no-misleading-character-class": "warn",
-        "no-multi-spaces": "warn",
         "no-dupe-else-if": "warn",
         "no-warning-comments": "warn",
-        "no-irregular-whitespace": "warn",
-        "no-trailing-spaces": "warn",
-        "indent": [
-            "error",
-            2
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-multiple-empty-lines": [
-            "warn",
-            {
-                "max": 2
-            }
-        ],
-        "padding-line-between-statements": [
-            "warn",
-            {
-                "blankLine": "always",
-                "prev": "*",
-                "next": "function"
-            },
-            {
-                "blankLine": "always",
-                "prev": "*",
-                "next": "block"
-            }
-        ],
-
-        "@typescript-eslint/no-unnecessary-condition": "warn",
-        "@typescript-eslint/comma-spacing": "warn",
-        "@typescript-eslint/method-signature-style": "warn",
-        "@typescript-eslint/comma-dangle": "warn",
-        "@typescript-eslint/func-call-spacing": "warn",
-        "@typescript-eslint/lines-between-class-members": [
-            "warn",
-            { "exceptAfterOverload": true }
-        ],
-        "@typescript-eslint/space-before-blocks": "warn",
-        "@typescript-eslint/brace-style": "warn",
-        "@typescript-eslint/space-infix-ops": "warn",
-        "@typescript-eslint/member-delimiter-style": "warn",
-        "@typescript-eslint/type-annotation-spacing": "warn",
-
+        "import/no-absolute-path": "warn",
+        
         "@typescript-eslint/no-explicit-any": "off",        
         "@typescript-eslint/ban-ts-comment": "off",      
         "@typescript-eslint/ban-types": "off",      
