@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "module": "ES2020",
-    "lib": ["dom", "es5"],
+    "module": "es6",
+    "lib": ["dom", "es6"],
+    "target": "es6",
     "moduleResolution": "node",
     "strict": true,
-    "target": "ES2020",
+    "esModuleInterop": true,
+    "isolatedModules": true
   },
   "paths": {
     "@maxgraph/core": ["packages/core/src/index.ts"],
     "@maxgraph/ts-example": ["packages/ts-example/src/main.ts"]
   },
-  "exclude": ["node_modules", "e2e", "**/*.json", "**/*.spec.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"],
   "include": ["packages/*/src"]
 }

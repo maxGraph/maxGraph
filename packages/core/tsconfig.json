@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
@@ -6,19 +7,11 @@
     "declarationDir": "./dist/types",
     "declarationMap": false,
     "emitDeclarationOnly": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "module": "ES2020",
-    "lib": ["dom"],
-    "moduleResolution": "node",
     "outDir": "./dist/esm",
-    "strict": true,
-    "target": "ES2020",
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node_modules", "e2e", "**/*.json", "**/*.spec.ts"],
-  "include": ["src/**/*.ts", "./*.ts"],
+  "include": ["src/**/*.ts"],
   "typedocOptions": {
     "out": "../../docs/api",
     "readme": "none",
