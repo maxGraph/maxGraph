@@ -1,0 +1,14 @@
+{
+  "name": "@maxgraph/ts-support",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "tsc --version && tsc"
+  },
+  "dependencies": {
+    "@maxgraph/core": "../core"
+  },
+  "devDependencies": {
+    "typescript": "3.8.2"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "ES2015",
+    "target": "ES2015",
+    "lib": [
+      "ES2015",
+      "DOM"
+    ],
+    "moduleResolution": "Node",
+    "strict": true,
+    "noEmit": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+}

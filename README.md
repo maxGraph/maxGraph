@@ -70,6 +70,7 @@ For more details, have a look at the [storybook stories](packages/html/stories).
 
 maxGraph is written in TypeScript and provides type definitions so maxGraph can be easily integrated into TypeScript projects.
 
+`maxGraph` requires **TypeScript 3.8** or greater.
 
 ## Support
 
