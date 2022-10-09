@@ -13,10 +13,6 @@
         "plugin:@typescript-eslint/recommended",
         "prettier"
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "project": "tsconfig.json"
-    },
     "rules": {
         "no-misleading-character-class": "warn",
         "no-dupe-else-if": "warn",
