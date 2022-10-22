@@ -29,7 +29,7 @@ import { removeWhitespace } from '../../util/StringUtils';
 import { importNode } from '../../util/domUtils';
 import Codec from '../../serialization/Codec';
 
-import type { CellStyle, FilterFunction } from '../../types';
+import type { CellStyle, FilterFunction, IdentityObject } from '../../types';
 
 /**
  * Cells are the elements of the graph model. They represent the state
@@ -74,7 +74,7 @@ import type { CellStyle, FilterFunction } from '../../types';
  * ```
  * @class Cell
  */
-export class Cell {
+export class Cell implements IdentityObject {
   constructor(
     value: any = null,
     geometry: Geometry | null = null,
@@ -83,7 +83,6 @@ export class Cell {
     this.value = value;
     this.setGeometry(geometry);
     this.setStyle(style);
-
     if (this.onInit) {
       this.onInit();
     }

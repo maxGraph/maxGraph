@@ -21,6 +21,7 @@ import Rectangle from '../geometry/Rectangle';
 import EventSource from '../event/EventSource';
 import ImageBox from '../image/ImageBox';
 import CellState from './CellState';
+import ObjectIdentity from '../../util/ObjectIdentity';
 
 /**
  * Extends {@link EventSource} to implement a graph overlay, represented by an icon
@@ -72,7 +73,7 @@ import CellState from './CellState';
  * values are <ALIGN_TOP>, <ALIGN_MIDDLE> and <ALIGN_BOTTOM>
  * (default).
  */
-class CellOverlay extends EventSource {
+class CellOverlay extends EventSource implements ObjectIdentity {
   constructor(
     image: ImageBox,
     tooltip: string | null = null,
