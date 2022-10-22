@@ -6,7 +6,7 @@
     "test": "tsc --version && tsc"
   },
   "dependencies": {
-    "@maxgraph/core": "../core"
+    "@maxgraph/core": "*"
   },
   "devDependencies": {
     "typescript": "3.8.2"
