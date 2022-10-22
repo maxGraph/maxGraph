@@ -16,6 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { IdentityFunction, IdentityObject } from '../types';
 import ObjectIdentity from './ObjectIdentity';
 
 //type Dictionary<T, U> = {
@@ -34,7 +35,7 @@ type Visitor<MapKey, U> = (key: MapKey, value: U) => void;
  *
  * Constructs a new dictionary which allows object to be used as keys.
  */
-class Dictionary<T, U> {
+class Dictionary<T extends IdentityObject | IdentityFunction | null, U> {
   constructor() {
     this.clear();
   }

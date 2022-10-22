@@ -18,8 +18,7 @@ limitations under the License.
 import {
   Graph,
   SelectionHandler,
-  InternalEvent,
-  constants,
+  eventUtils,
   EdgeHandler,
   EdgeStyle,
   RubberBandHandler,
@@ -47,12 +46,9 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
-  // Enables guides
-  SelectionHandler.prototype.guidesEnabled = true;
-
   // Alt disables guides
   SelectionHandler.prototype.useGuidesForEvent = function (me) {
-    return !InternalEvent.isAltDown(me.getEvent());
+    return !eventUtils.isAltDown(me.getEvent());
   };
 
   // Defines the guides to be red (default)
@@ -68,6 +64,11 @@ const Template = ({ label, ...args }) => {
   const graph = new Graph(container);
   graph.setConnectable(true);
   graph.gridSize = 30;
+
+  // Enables guides
+  const selectionHandler = graph.getPlugin('SelectionHandler');
+  if (selectionHandler)
+    selectionHandler.guidesEnabled = true;
 
   // Changes the default style for edges "in-place" and assigns
   // an alternate edge style which is applied in Graph.flip

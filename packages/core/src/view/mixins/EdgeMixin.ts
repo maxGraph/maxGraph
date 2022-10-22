@@ -29,7 +29,7 @@ import type { CellStyle } from '../../types';
 declare module '../Graph' {
   interface Graph {
     resetEdgesOnResize: boolean;
-    resetEdgesOnMove: false;
+    resetEdgesOnMove: boolean;
     resetEdgesOnConnect: boolean;
     connectableEdges: boolean;
     allowDanglingEdges: boolean;

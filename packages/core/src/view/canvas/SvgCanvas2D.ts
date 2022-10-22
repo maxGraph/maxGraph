@@ -508,7 +508,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Private helper function to create SVG elements
    */
-  // createGradientId(start: string, end: string, alpha1: string, alpha2: string, direction: string): string;
   createGradientId(
     start: string,
     end: string,
@@ -562,13 +561,11 @@ class SvgCanvas2D extends AbstractCanvas2D {
     alpha2: number,
     direction: DirectionValue
   ) {
-    if (!this.root) return;
-
     const id = this.createGradientId(start, end, alpha1, alpha2, direction);
     let gradient: Gradient | null = this.gradients[id];
 
     if (!gradient) {
-      const svg = this.root.ownerSVGElement;
+      const svg = this.root!.ownerSVGElement;
 
       let counter = 0;
       let tmpId = `${id}-${counter}`;
@@ -649,8 +646,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Private helper function to create SVG elements
    */
   addNode(filled: boolean, stroked: boolean) {
-    if (!this.root) return;
-
     const { node } = this;
     const s = this.state;
 
@@ -689,12 +684,12 @@ class SvgCanvas2D extends AbstractCanvas2D {
       }
 
       if (s.shadow) {
-        this.root.appendChild(this.createShadow(node));
+        this.root!.appendChild(this.createShadow(node));
       }
 
       // Adds stroke tolerance
       if (this.strokeTolerance > 0 && !filled) {
-        this.root.appendChild(this.createTolerance(node));
+        this.root!.appendChild(this.createTolerance(node));
       }
 
       // Adds pointer events
@@ -717,7 +712,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
         node.getAttribute('pointer-events') !== NONE
       ) {
         // LATER: Update existing DOM for performance
-        this.root.appendChild(node);
+        this.root!.appendChild(node);
       }
 
       this.node = null;
@@ -728,12 +723,10 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Transfers the stroke attributes from <state> to <node>.
    */
   updateFill() {
-    if (!this.node) return;
-
     const s = this.state;
 
     if (s.alpha < 1 || s.fillAlpha < 1) {
-      this.node.setAttribute('fill-opacity', String(s.alpha * s.fillAlpha));
+      this.node!.setAttribute('fill-opacity', String(s.alpha * s.fillAlpha));
     }
 
     if (s.fillColor !== NONE) {
@@ -749,12 +742,12 @@ class SvgCanvas2D extends AbstractCanvas2D {
         if (this.root?.ownerDocument === document && useAbsoluteIds) {
           // Workaround for no fill with base tag in page (escape brackets)
           const base = this.getBaseUrl().replace(/([\(\)])/g, '\\$1');
-          this.node.setAttribute('fill', `url(${base}#${id})`);
+          this.node!.setAttribute('fill', `url(${base}#${id})`);
         } else {
-          this.node.setAttribute('fill', `url(#${id})`);
+          this.node!.setAttribute('fill', `url(#${id})`);
         }
       } else {
-        this.node.setAttribute('fill', s.fillColor.toLowerCase());
+        this.node!.setAttribute('fill', s.fillColor.toLowerCase());
       }
     }
   }
@@ -762,7 +755,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Returns the current stroke width (>= 1), ie. max(1, this.format(this.state.strokeWidth * this.state.scale)).
    */
-  // getCurrentStrokeWidth(): number;
   getCurrentStrokeWidth() {
     return Math.max(
       this.minStrokeWidth,
@@ -774,29 +766,27 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Transfers the stroke attributes from {@link mxAbstractCanvas2D.state} to {@link node}.
    */
   updateStroke() {
-    if (!this.node) return;
-
     const s = this.state;
 
     if (s.strokeColor && s.strokeColor !== NONE) {
-      this.node.setAttribute('stroke', s.strokeColor.toLowerCase());
+      this.node!.setAttribute('stroke', s.strokeColor.toLowerCase());
     }
 
     if (s.alpha < 1 || s.strokeAlpha < 1) {
-      this.node.setAttribute('stroke-opacity', String(s.alpha * s.strokeAlpha));
+      this.node!.setAttribute('stroke-opacity', String(s.alpha * s.strokeAlpha));
     }
 
     const sw = this.getCurrentStrokeWidth();
     if (sw !== 1) {
-      this.node.setAttribute('stroke-width', String(sw));
+      this.node!.setAttribute('stroke-width', String(sw));
     }
 
-    if (this.node.nodeName === 'path') {
+    if (this.node!.nodeName === 'path') {
       this.updateStrokeAttributes();
     }
 
     if (s.dashed) {
-      this.node.setAttribute(
+      this.node!.setAttribute(
         'stroke-dasharray',
         this.createDashPattern((s.fixDash ? 1 : s.strokeWidth) * s.scale)
       );
@@ -807,13 +797,11 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Transfers the stroke attributes from {@link mxAbstractCanvas2D.state} to {@link node}.
    */
   updateStrokeAttributes() {
-    if (!this.node) return;
-
     const s = this.state;
 
     // Linejoin miter is default in SVG
     if (s.lineJoin && s.lineJoin !== 'miter') {
-      this.node.setAttribute('stroke-linejoin', s.lineJoin);
+      this.node!.setAttribute('stroke-linejoin', s.lineJoin);
     }
 
     if (s.lineCap) {
@@ -826,13 +814,13 @@ class SvgCanvas2D extends AbstractCanvas2D {
 
       // Linecap butt is default in SVG
       if (value !== 'butt') {
-        this.node.setAttribute('stroke-linecap', value);
+        this.node!.setAttribute('stroke-linecap', value);
       }
     }
 
     // Miterlimit 10 is default in our document
     if (s.miterLimit != null && (!this.styleEnabled || s.miterLimit !== 10)) {
-      this.node.setAttribute('stroke-miterlimit', String(s.miterLimit));
+      this.node!.setAttribute('stroke-miterlimit', String(s.miterLimit));
     }
   }
 
@@ -858,7 +846,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Creates a hit detection tolerance shape for the given node.
    */
-  // createTolerance(node: Element): Element;
   createTolerance(node: SVGElement) {
     const tol = node.cloneNode(true) as SVGElement;
     const sw = parseFloat(tol.getAttribute('stroke-width') || '1') + this.strokeTolerance;
@@ -909,8 +896,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Experimental implementation for hyperlinks.
    */
   setLink(link: string) {
-    if (!this.root) return;
-
     if (!link) {
       this.root = this.originalRoot;
     } else {
@@ -920,13 +905,13 @@ class SvgCanvas2D extends AbstractCanvas2D {
 
       // Workaround for implicit namespace handling in HTML5 export, IE adds NS1 namespace so use code below
       // in all IE versions except quirks mode. KNOWN: Adds xlink namespace to each image tag in output.
-      if (node.setAttributeNS == null || this.root.ownerDocument !== document) {
+      if (node.setAttributeNS == null || this.root!.ownerDocument !== document) {
         node.setAttribute('xlink:href', link);
       } else {
         node.setAttributeNS(NS_XLINK, 'xlink:href', link);
       }
 
-      this.root.appendChild(node);
+      this.root!.appendChild(node);
       this.root = node;
     }
   }
@@ -981,7 +966,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Extends superclass to create path.
    */
-  // begin(): void;
   begin() {
     super.begin();
     this.node = this.createElement('path');
@@ -1005,16 +989,14 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Private helper function to create SVG elements
    */
   roundrect(x: number, y: number, w: number, h: number, dx: number, dy: number) {
-    if (!this.node) return;
-
     this.rect(x, y, w, h);
 
     if (dx > 0) {
-      this.node.setAttribute('rx', String(this.format(dx * this.state.scale)));
+      this.node!.setAttribute('rx', String(this.format(dx * this.state.scale)));
     }
 
     if (dy > 0) {
-      this.node.setAttribute('ry', String(this.format(dy * this.state.scale)));
+      this.node!.setAttribute('ry', String(this.format(dy * this.state.scale)));
     }
   }
 
@@ -1045,8 +1027,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
     flipH = false,
     flipV = false
   ) {
-    if (!this.root) return;
-
     src = this.converter.convert(src);
 
     const s = this.state;
@@ -1092,7 +1072,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
         dy = -h - 2 * y;
       }
 
-      // Adds image tansformation to existing transform
+      // Adds image transformation to existing transform
       tr += `scale(${sx},${sy})translate(${dx * s.scale},${dy * s.scale})`;
     }
 
@@ -1104,7 +1084,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       node.setAttribute('pointer-events', 'none');
     }
 
-    this.root.appendChild(node);
+    this.root!.appendChild(node);
   }
 
   /**
@@ -1134,8 +1114,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Note: signature changed in mxgraph 4.1.0
    */
   createDiv(str: string | HTMLElement) {
-    if (!this.root) return;
-
     let val = str;
 
     if (!isNode(val)) {
@@ -1152,7 +1130,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
         const div3 = div2.cloneNode(false);
 
         // Creates a copy for export
-        if (this.root.ownerDocument !== document) {
+        if (this.root!.ownerDocument !== document) {
           div2.appendChild(n.cloneNode(true));
         } else {
           div2.appendChild(n);
@@ -1390,7 +1368,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Private helper function to create SVG elements
    */
-  // getTextCss(): string;
   getTextCss() {
     const s = this.state;
     const lh = ABSOLUTE_LINE_HEIGHT
@@ -1450,8 +1427,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
     rotation = 0,
     dir: TextDirectionValue
   ) {
-    if (!this.root) return;
-
     if (this.textEnabled && str != null) {
       rotation = rotation != null ? rotation : 0;
 
@@ -1479,7 +1454,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
             rotation,
             dir,
             div,
-            this.root
+            this.root!
           );
         }
       } else {
@@ -1552,8 +1527,6 @@ class SvgCanvas2D extends AbstractCanvas2D {
     rotation = 0,
     dir: TextDirectionValue
   ) {
-    if (!this.root) return;
-
     const s = this.state;
     const size = s.fontSize;
     const node = this.createElement('g');
@@ -1604,13 +1577,13 @@ class SvgCanvas2D extends AbstractCanvas2D {
         this.defs.appendChild(c);
       } else {
         // Makes sure clip is removed with referencing node
-        this.root.appendChild(c);
+        this.root!.appendChild(c);
       }
 
       if (
         !Client.IS_CHROMEAPP &&
         !Client.IS_EDGE &&
-        this.root.ownerDocument === document
+        this.root!.ownerDocument === document
       ) {
         // Workaround for potential base tag
         const base = this.getBaseUrl().replace(/([\(\)])/g, '\\$1');
@@ -1684,7 +1657,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       cy += lh;
     }
 
-    this.root.appendChild(node);
+    this.root!.appendChild(node);
     this.addTextBackground(
       node,
       str,

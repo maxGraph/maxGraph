@@ -22,6 +22,7 @@ import Geometry from '../geometry/Geometry';
 import Point from '../geometry/Point';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
+import { GraphLayoutTraverseArgs } from './types';
 
 /**
  * @class GraphLayout
@@ -141,13 +142,7 @@ class GraphLayout {
    * null for the first step of the traversal.
    * @param visited Optional {@link Dictionary} of cell paths for the visited cells.
    */
-  traverse(
-    vertex: Cell,
-    directed?: boolean,
-    func?: Function,
-    edge?: Cell,
-    visited?: Dictionary<Cell, boolean>
-  ): void {
+  traverse({vertex, directed, func, edge, visited}: GraphLayoutTraverseArgs): void {
     if (func != null && vertex != null) {
       directed = directed != null ? directed : true;
       visited = visited || new Dictionary();
@@ -161,12 +156,18 @@ class GraphLayout {
 
           if (edgeCount > 0) {
             for (let i = 0; i < edgeCount; i += 1) {
-              const e = vertex.getEdgeAt(i);
+              const e: Cell = vertex.getEdgeAt(i);
               const isSource = e.getTerminal(true) === vertex;
 
               if (!directed || isSource) {
                 const next = this.graph.view.getVisibleTerminal(e, !isSource);
-                this.traverse(<Cell>next, directed, func, e, visited);
+                this.traverse({
+                  vertex: next,
+                  directed,
+                  func,
+                  edge: e,
+                  visited
+                });
               }
             }
           }

@@ -60,7 +60,7 @@ const Template = ({ label, ...args }) => {
   const isVisible = function () {
     // TODO super cannot be used here
     // let result = super.isVisible();
-    let result;
+    let result = true;
     if (result && this.value != null) {
       result =
         (showOne && this.value == '1') ||
