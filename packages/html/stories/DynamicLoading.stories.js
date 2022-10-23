@@ -99,7 +99,7 @@ const Template = ({ label, ...args }) => {
       // Adds cells to the model in a single step
       graph.batchUpdate(() => {
         const xml = server(cell.id);
-        const doc = xmlUtils.parseXml(xml);        
+        const doc = xmlUtils.parseXml(xml);
         const dec = new Codec(doc);
 
         const model = dec.decode(doc.documentElement);
