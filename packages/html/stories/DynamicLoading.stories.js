@@ -66,7 +66,7 @@ const Template = ({ label, ...args }) => {
   // Changes the default vertex style in-place
   const style = graph.getStylesheet().getDefaultVertexStyle();
   style.shape = constants.SHAPE.ELLIPSE;
-  style.perimiter = Perimeter.EllipsePerimeter;
+  style.perimeter = Perimeter.EllipsePerimeter;
   style.gradientColor = 'white';
 
   // Gets the default parent for inserting new cells. This
