@@ -1,0 +1,27 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "eslint-plugin-import"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "rules": {
+        "no-misleading-character-class": "warn",
+        "no-dupe-else-if": "warn",
+        "no-warning-comments": "warn",
+        "import/no-absolute-path": "warn",
+        
+        "@typescript-eslint/no-explicit-any": "off",        
+        "@typescript-eslint/ban-ts-comment": "off",      
+        "@typescript-eslint/ban-types": "off",      
+        "@typescript-eslint/no-unused-vars": "off"
+    }
+}

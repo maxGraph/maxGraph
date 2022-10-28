@@ -64,6 +64,12 @@ export const enum DIALECT {
 };
 
 /**
+ * Name of the field to be used to store the object ID. Default is
+ * <code>mxObjectId</code>.
+ */
+export const IDENTITY_FIELD_NAME = 'mxObjectId';
+
+/**
  * Defines the SVG namespace.
  */
 export const NS_SVG = 'http://www.w3.org/2000/svg';

@@ -27,7 +27,7 @@ import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingRe
 import CoordinateAssignment from './hierarchical/CoordinateAssignment';
 import { Graph } from '../../view/Graph';
 import Cell from '../../view/cell/Cell';
-import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
+import { HierarchicalGraphLayoutTraverseArgs } from './types';
 
 /**
  * A hierarchical layout algorithm.
@@ -444,15 +444,17 @@ class HierarchicalLayout extends GraphLayout {
           const vertexSet = Object();
           hierarchyVertices.push(vertexSet);
 
-          this.traverse(
-            candidateRoots[i],
-            true,
-            null,
-            allVertexSet,
-            vertexSet,
-            hierarchyVertices,
-            filledVertexSet
-          );
+          this.traverse({
+            vertex: candidateRoots[i],
+            directed: true,
+            edge: null,
+            allVertices: allVertexSet,
+            currentComp: vertexSet,
+            hierarchyVertices: hierarchyVertices,
+            filledVertexSet: filledVertexSet,
+            func: null,
+            visited: null
+          });
         }
 
         for (let i = 0; i < candidateRoots.length; i += 1) {
@@ -477,15 +479,17 @@ class HierarchicalLayout extends GraphLayout {
         const vertexSet = Object();
         hierarchyVertices.push(vertexSet);
 
-        this.traverse(
-          roots[i],
-          true,
-          null,
-          allVertexSet,
-          vertexSet,
-          hierarchyVertices,
-          null
-        );
+        this.traverse({
+          vertex: roots[i],
+          directed: true,
+          edge: null,
+          allVertices: allVertexSet,
+          currentComp: vertexSet,
+          hierarchyVertices: hierarchyVertices,
+          filledVertexSet: null,
+          func: null,
+          visited: null
+        });
       }
     }
 
@@ -600,16 +604,14 @@ class HierarchicalLayout extends GraphLayout {
    * null for the first step of the traversal.
    * @param allVertices Array of cell paths for the visited cells.
    */
-  // @ts-ignore
-  traverse(
-    vertex: Cell,
-    directed: boolean = false,
-    edge: Cell | null = null,
-    allVertices: { [key: string]: Cell } | null = null,
-    currentComp: { [key: string]: Cell | null },
-    hierarchyVertices: GraphHierarchyNode[],
-    filledVertexSet: { [key: string]: Cell } | null = null
-  ) {
+  traverse({
+    vertex,
+    directed,
+    allVertices,
+    currentComp,
+    hierarchyVertices,
+    filledVertexSet
+  }: HierarchicalGraphLayoutTraverseArgs) {
     if (vertex != null && allVertices != null) {
       // Has this vertex been seen before in any traversal
       // And if the filled vertex set is populated, only
@@ -666,15 +668,17 @@ class HierarchicalLayout extends GraphLayout {
             }
 
             if (netCount >= 0) {
-              currentComp = this.traverse(
-                <Cell>next,
+              currentComp = this.traverse({
+                vertex: next,
                 directed,
-                edges[i],
+                edge: edges[i],
                 allVertices,
                 currentComp,
                 hierarchyVertices,
-                filledVertexSet
-              );
+                filledVertexSet,
+                func: null,
+                visited: null
+              });
             }
           }
         }

@@ -29,8 +29,7 @@ class CustomRectangleShape extends RectangleShape {
 
     constructor(bounds: Rectangle, fill: ColorValue, stroke: ColorValue) {
         super(bounds, fill, stroke, 3);
-        // TODO if set, the shape is not painted
-        // this.isRounded = true; // force rounded shape
+        this.isRounded = true; // force rounded shape
     }
 
     paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number): void {
