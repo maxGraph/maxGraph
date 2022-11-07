@@ -349,22 +349,13 @@ class Codec {
    * @param node XML node to be decoded.
    * @param into Optional object to be decodec into.
    */
-  decode(node: Element, into?: any): any {
+  decode(node: Element | null, into?: any): any {
     this.updateElements();
     let obj = null;
 
     if (node != null && node.nodeType === NODETYPE.ELEMENT) {
-      let ctor: any = null;
-
-      try {
-        // @ts-ignore
-        ctor = window[node.nodeName];
-      } catch (err) {
-        // ignore
-      }
-
-      const dec = CodecRegistry.getCodec(ctor);
-
+      const dec = CodecRegistry.getCodecByName(node.nodeName);
+      
       if (dec != null) {
         obj = dec.decode(this, node, into);
       } else {
