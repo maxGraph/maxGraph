@@ -29,8 +29,7 @@ Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) for 
 
 ## Project status
 
-maxGraph is under active development. An alpha version will be released soon (along with the npm package) once the [versioning](https://github.com/maxGraph/maxGraph/issues/92)
-issue has been resolved.
+maxGraph is under active development. An alpha version will be released soon (along with the npm package).
 
 In the meantime, you can test the project by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package).
 
