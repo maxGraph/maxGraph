@@ -134,6 +134,13 @@ Starting from the mxGraph 4.2.2 release, we
 
 ## Development
 
+### Clean former mxGraph tags
+
+Ensure you don't have the former mxGraph tags locally (see [#92](https://github.com/maxGraph/maxGraph/issues/92) fore more details):
+```
+git fetch --all --tags --prune
+```
+
 ### Setting up local development environment
 
 In the project root directory, execute
