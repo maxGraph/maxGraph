@@ -1,8 +1,6 @@
 # maxGraph
 
-<!-- next to come: npm and releases badge
-[![npm version](https://img.shields.io/npm/v/xxx.svg?style=flat)](https://www.npmjs.com/package/xxx)
--->
+[![npm version](https://img.shields.io/npm/v/@maxgraph/core?color=blue&style=flat)](https://www.npmjs.com/package/@maxgraph/core)
 [![build status](https://github.com/maxGraph/maxGraph/workflows/Build/badge.svg)](https://github.com/maxGraph/maxGraph/actions/workflows/build.yml)
 
 maxGraph is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides: 
@@ -32,10 +30,29 @@ Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) for 
 
 ## Project status
 
-maxGraph is under active development. An alpha version will be released soon (along with the npm package).
+`maxGraph` is under active development and is in **alpha**. Please try it in your application and [submit an issue](https://github.com/maxGraph/maxGraph/issues)
+if you think that something is not working.
 
-In the meantime, you can test the project by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package).
+You can also test the project by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
 
+## Install
+
+Install the latest version of `maxGraph` from the [npm registry](https://www.npmjs.com/package/@maxgraph/core).
+
+npm
+```
+npm install @maxgraph/core
+```
+
+yarn
+```
+yarn add @maxgraph/core
+```
+
+pnpm
+```
+pnpm add @maxgraph/core
+```
 
 ## Getting Started
 
@@ -68,7 +85,7 @@ You will see something like in the following _maxGraph panning_ demo:
 For more details, have a look at the [storybook stories](packages/html/stories).
 
 
-## TypeScript
+## TypeScript support
 
 maxGraph is written in TypeScript and provides type definitions so maxGraph can be easily integrated into TypeScript projects.
 
