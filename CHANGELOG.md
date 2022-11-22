@@ -1,8 +1,12 @@
-# Change Log
+# `maxGraph` Change Log
 
 ## UNRELEASED
 
-Initial mxGraph implementation. This is an alpha version.
+N/A
+
+## 0.1.0
+
+Initial `mxGraph` implementation. This is an **alpha** version.
 
 Starting from the mxGraph 4.2.2 release, we
 - moved code to ES9
@@ -10,8 +14,10 @@ Starting from the mxGraph 4.2.2 release, we
 - migrated to TypeScript, based on the work initiated in [typed-mxgraph](https://github.com/typed-mxgraph/typed-mxgraph)
 - migrated the examples to [Storybook](https://storybook.js.org/)
 
+For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) in the GitHub releases page.
 
-## mxGraph Change Log
+
+## `mxGraph` Change Log
 
 The `maxGraph`implementation is derived from the `mxGraph v4.2.2` implementation.
 
@@ -19,10 +25,10 @@ The mxGraph change log can be found at the following addresses:
   - https://github.com/jgraph/mxgraph/blob/v4.2.2/ChangeLog
   - https://github.com/maxGraph/maxGraph/blob/f9d757548ea8fb924c1ac47117d1e5b05bc58a6b/ChangeLog
 
-This repository previously stored the mxGraph tags, they have been removed to only keep the maxGraph tags. See discussions
+This repository previously stored the `mxGraph` tags, they have been removed to only keep the `maxGraph` tags. See discussions
 in [#92](https://github.com/maxGraph/maxGraph/issues/92) for more details.
 
-The former mxGraph tags can be found in https://github.com/jgraph/mxgraph, or you can find their related commit in the list below: 
+The former `mxGraph` tags can be found in https://github.com/jgraph/mxgraph, or you can find their related commit in the list below: 
 - vpages-test-1700-24092012 09639c08cf28cb1b418bd1b05c9e6f93f61aaf88
 - vdeployment_test 09639c08cf28cb1b418bd1b05c9e6f93f61aaf88
 - v4.2.2 81dcd5cc86d48792c194ebaa3437a7ebb7a2f9d1
