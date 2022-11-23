@@ -26,6 +26,7 @@ import {
   KeyboardEventListener,
   Listenable,
   MouseEventListener,
+  TouchEventListener,
 } from '../../types';
 import { Graph } from '../Graph';
 
@@ -73,7 +74,7 @@ class InternalEvent {
   static addListener(
     element: Listenable,
     eventName: string,
-    funct: MouseEventListener | KeyboardEventListener
+    funct: MouseEventListener | TouchEventListener | KeyboardEventListener
   ) {
     element.addEventListener(
       eventName,
@@ -95,7 +96,7 @@ class InternalEvent {
   static removeListener(
     element: Listenable,
     eventName: string,
-    funct: MouseEventListener | KeyboardEventListener
+    funct: MouseEventListener | TouchEventListener | KeyboardEventListener
   ) {
     element.removeEventListener(eventName, funct as EventListener, false);
 
@@ -321,9 +322,6 @@ class InternalEvent {
    * function has two arguments: the mouse event and a boolean that specifies
    * if the wheel was moved up or down.
    *
-   * This has been tested with IE 6 and 7, Firefox (all versions), Opera and
-   * Safari. It does currently not work on Safari for Mac.
-   *
    * ### Example
    *
    * @example
@@ -345,7 +343,58 @@ class InternalEvent {
     target: Listenable
   ) {
     if (funct != null) {
-      const wheelHandler = (evt: WheelEvent) => {
+      let touches: TouchList | null = null;
+      let startTouches: TouchList | null = null;
+
+      target = target != null ? target : window;
+
+      const getTouchDistance = (touches: TouchList) => {
+        var a = touches[0].clientX - touches[1].clientX;
+        var b = touches[0].clientY - touches[1].clientY;
+        return Math.sqrt(a * a + b * b);
+      }
+
+      // Adds basic mouse listeners for graph event dispatching
+      if (Client.IS_TOUCH) {
+        // If a touch device, use the touch events
+        // TODO: Should this only happen on mobile?
+        //       What if a user prefers using their mouse on touch-capable devices?
+        InternalEvent.addListener(target, 'touchstart', (evt: TouchEvent) => {
+          if (evt.touches && evt.touches.length > 1) {
+            InternalEvent.consume(evt);
+            startTouches = evt.touches;
+          }
+        });
+        InternalEvent.addListener(target, 'touchmove', (evt: TouchEvent) => {
+          if (!startTouches && evt.touches && evt.touches.length > 1) {
+            startTouches = evt.touches;
+          }
+          if (startTouches && evt.touches && evt.touches.length > 1) {
+            InternalEvent.consume(evt);
+            touches = evt.touches;
+
+            const diff = getTouchDistance(touches) - getTouchDistance(startTouches);
+            if (Math.abs(diff) > InternalEvent.PINCH_THRESHOLD) {
+              funct(evt, diff < 0, true);
+              startTouches = evt.touches;
+            }
+          }
+        })
+        InternalEvent.addListener(target, 'touchend', (evt: TouchEvent) => {
+          InternalEvent.consume(evt);
+          touches = null;
+          startTouches = null;
+        });
+      }
+
+      // Fall back to standard mouse wheel if touch events not in progress, or not a touch device
+      InternalEvent.addListener(target, 'wheel', ((evt: WheelEvent) => {
+        if (startTouches) {
+          // If being handled by touch events, ignore
+          evt.preventDefault();
+          return;
+        }
+
         // To prevent window zoom on trackpad pinch
         if (evt.ctrlKey) {
           evt.preventDefault();
@@ -355,89 +404,7 @@ class InternalEvent {
         if (Math.abs(evt.deltaX) > 0.5 || Math.abs(evt.deltaY) > 0.5) {
           funct(evt, evt.deltaY == 0 ? -evt.deltaX > 0 : -evt.deltaY > 0);
         }
-      };
-
-      target = target != null ? target : window;
-
-      if (Client.IS_SF && !Client.IS_TOUCH) {
-        let scale = 1;
-
-        InternalEvent.addListener(target, 'gesturestart', (evt: GestureEvent) => {
-          InternalEvent.consume(evt);
-          scale = 1;
-        });
-
-        InternalEvent.addListener(target, 'gesturechange', ((evt: GestureEvent) => {
-          InternalEvent.consume(evt);
-
-          if (typeof evt.scale === 'number') {
-            const diff = scale - evt.scale;
-
-            if (Math.abs(diff) > 0.2) {
-              funct(evt, diff < 0, true);
-              scale = evt.scale;
-            }
-          }
-        }) as EventListener);
-
-        InternalEvent.addListener(target, 'gestureend', (evt: GestureEvent) => {
-          InternalEvent.consume(evt);
-        });
-      } else {
-        let evtCache: EventCache = [];
-        let dx0 = 0;
-        let dy0 = 0;
-
-        // Adds basic listeners for graph event dispatching
-        InternalEvent.addGestureListeners(
-          target,
-          ((evt: GestureEvent) => {
-            if (!isMouseEvent(evt) && evt.pointerId != null) {
-              evtCache.push(evt);
-            }
-          }) as EventListener,
-          ((evt: GestureEvent) => {
-            if (!isMouseEvent(evt) && evtCache.length == 2) {
-              // Find this event in the cache and update its record with this event
-              for (let i = 0; i < evtCache.length; i += 1) {
-                if (evt.pointerId == evtCache[i].pointerId) {
-                  evtCache[i] = evt;
-                  break;
-                }
-              }
-
-              // Calculate the distance between the two pointers
-              const dx = Math.abs(evtCache[0].clientX - evtCache[1].clientX);
-              const dy = Math.abs(evtCache[0].clientY - evtCache[1].clientY);
-              const tx = Math.abs(dx - dx0);
-              const ty = Math.abs(dy - dy0);
-
-              if (
-                tx > InternalEvent.PINCH_THRESHOLD ||
-                ty > InternalEvent.PINCH_THRESHOLD
-              ) {
-                const cx =
-                  evtCache[0].clientX + (evtCache[1].clientX - evtCache[0].clientX) / 2;
-                const cy =
-                  evtCache[0].clientY + (evtCache[1].clientY - evtCache[0].clientY) / 2;
-
-                funct(evtCache[0], tx > ty ? dx > dx0 : dy > dy0, true, cx, cy);
-
-                // Cache the distance for the next move event
-                dx0 = dx;
-                dy0 = dy;
-              }
-            }
-          }) as EventListener,
-          (evt) => {
-            evtCache = [];
-            dx0 = 0;
-            dy0 = 0;
-          }
-        );
-      }
-
-      InternalEvent.addListener(target, 'wheel', wheelHandler as EventListener);
+      }) as EventListener);
     }
   }
 
