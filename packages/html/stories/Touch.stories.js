@@ -28,6 +28,7 @@ import CellEditorHandler from "@maxgraph/core/src/view/handler/CellEditorHandler
 import TooltipHandler from "@maxgraph/core/src/view/handler/TooltipHandler";
 import SelectionCellsHandler from "@maxgraph/core/src/view/handler/SelectionCellsHandler";
 import {globalTypes} from "../.storybook/preview";
+import ConnectionHandlerCellMarker from "@maxgraph/core/src/view/handler/ConnectionHandlerCellMarker";
 
 export default {
   title: 'DnD_CopyPaste/Touch',
