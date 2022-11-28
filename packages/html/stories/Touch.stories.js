@@ -129,6 +129,7 @@ const Template = ({ label, ...args }) => {
   }
 
   class MyEdgeHandler extends EdgeHandler {
+    // TODO: Integrate this, potentially with the other cases in Graph.ts's createEdgeHandler (ts conversion)
     tolerance = edgeHandlerTolerance;
     handleImage = touchHandle
   }
@@ -296,7 +297,7 @@ const Template = ({ label, ...args }) => {
 
   class MyConnectionHandler extends ConnectionHandler {
     createMarker() {
-      class MyMarker extends ConnectionHandlerCellMarker {  // TODO: export this currently private class (ts conversion)
+      class MyMarker extends ConnectionHandlerCellMarker {
         // Disable new connections via "hotspot"
         isEnabled() {
           return this.graph.getPlugin('ConnectionHandler').first != null;
@@ -316,7 +317,7 @@ const Template = ({ label, ...args }) => {
   }
 
   class MyCustomGraph extends Graph {
-    tolerance = graphTolerance;  // TODO: Check this works with the mixins (ts conversion)
+    tolerance = graphTolerance;
 
     createVertexHandler(state) {
       return new MyVertexHandler(state);
