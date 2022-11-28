@@ -7,10 +7,16 @@
  * mouse and pointer events.
  */
 
-import { convertPoint } from '@maxgraph/core/src/util/styleUtils';
-import { createImage } from '@maxgraph/core/src/util/domUtils';
-import { getRotatedPoint, toRadians } from '@maxgraph/core/src/util/mathUtils';
+import { globalTypes } from "../.storybook/preview";
 import { getValue } from '@maxgraph/core/src/util/Utils';
+import * as Constants from "@maxgraph/core/src/util/Constants";
+import { createImage } from '@maxgraph/core/src/util/domUtils';
+import { convertPoint } from '@maxgraph/core/src/util/styleUtils';
+import TooltipHandler from "@maxgraph/core/src/view/handler/TooltipHandler";
+import { getRotatedPoint, toRadians } from '@maxgraph/core/src/util/mathUtils';
+import CellEditorHandler from "@maxgraph/core/src/view/handler/CellEditorHandler";
+import SelectionCellsHandler from "@maxgraph/core/src/view/handler/SelectionCellsHandler";
+import ConnectionHandlerCellMarker from "@maxgraph/core/src/view/handler/ConnectionHandlerCellMarker";
 import {
   ConnectionHandler, EdgeHandler,
   Graph, Outline,
@@ -19,16 +25,10 @@ import {
   PopupMenuHandler,
   SelectionHandler, Translations,
   VertexHandler,
-  Client, 
+  Client,
   RubberBandHandler,
   InternalEvent
 } from "@maxgraph/core/src";
-import * as Constants from "@maxgraph/core/src/util/Constants";
-import CellEditorHandler from "@maxgraph/core/src/view/handler/CellEditorHandler";
-import TooltipHandler from "@maxgraph/core/src/view/handler/TooltipHandler";
-import SelectionCellsHandler from "@maxgraph/core/src/view/handler/SelectionCellsHandler";
-import {globalTypes} from "../.storybook/preview";
-import ConnectionHandlerCellMarker from "@maxgraph/core/src/view/handler/ConnectionHandlerCellMarker";
 
 export default {
   title: 'DnD_CopyPaste/Touch',
@@ -249,7 +249,7 @@ const Template = ({ label, ...args }) => {
         }
 
         let alpha = toRadians(getValue(s.style, 'rotation', 0));
-        if (alpha != 0) {
+        if (alpha !== 0) {
           let cos = Math.cos(alpha);
           let sin = Math.sin(alpha);
 
@@ -305,7 +305,7 @@ const Template = ({ label, ...args }) => {
       return new MyMarker(this.graph, this);
     }
 
-    // On connect the target is selected and we clone the cell of the preview edge for insert
+    // On connect the target is selected, and we clone the cell of the preview edge for insert
     selectCells(edge, target) {
       if (target != null) {
         this.graph.setSelectionCell(target);
