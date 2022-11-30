@@ -39,7 +39,8 @@ export default {
   },
 };
 
-const HTML_TEMPLATE = `
+// TODO: Centralize to global MaxGraph CSS or assign these styles explicitly
+const MENU_STYLES = `
 <style type="text/css">
   body div.mxPopupMenu {
     position: absolute;
@@ -67,15 +68,6 @@ const HTML_TEMPLATE = `
     font-size: 4pt;
   }
 </style>
-
-<!-- Page passes the container for the graph to the program -->
-<body onload="main(document.getElementById('graphContainer'))">
-
-  <!-- Creates a container for the graph with a grid wallpaper -->
-  <div id="graphContainer"
-    style="position:relative;overflow:hidden;width:640px;height:480px;background:url('editors/images/grid.gif');cursor:default;">
-  </div>
-</body>
 `
 
 const Template = ({ label, ...args }) => {
@@ -91,6 +83,13 @@ const Template = ({ label, ...args }) => {
   container.onselectstart = textEditing;
   container.onmousedown = textEditing;
   container.oncontextmenu = textEditing;
+
+  container.style.position = 'relative';
+  container.style.overflow = 'hidden';
+  container.style.width = `${args.width}px`;
+  container.style.height = `${args.height}px`;
+  container.style.background = 'url(/images/grid.gif)';
+  container.style.cursor = 'default';
 
   // Rounded edge and vertex handles
   let touchHandle = new Image('images/handle-main.png', 17, 17);
