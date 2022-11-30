@@ -75,7 +75,7 @@ class InternalEvent {
     element: Listenable,
     eventName: string,
     funct: MouseEventListener | TouchEventListener | KeyboardEventListener,
-    capture: boolean = false,
+    capture = false,
   ) {
     element.addEventListener(
       eventName,
@@ -350,8 +350,8 @@ class InternalEvent {
       target = target != null ? target : window;
 
       const getTouchDistance = (touches: TouchList) => {
-        let a = touches[0].clientX - touches[1].clientX;
-        let b = touches[0].clientY - touches[1].clientY;
+        const a = touches[0].clientX - touches[1].clientX;
+        const b = touches[0].clientY - touches[1].clientY;
         return Math.sqrt(a * a + b * b);
       }
 
