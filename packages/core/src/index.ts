@@ -78,6 +78,7 @@ export { default as CellHighlight } from './view/cell/CellHighlight';
 export { default as CellMarker } from './view/cell/CellMarker';
 export { default as CellTracker } from './view/cell/CellTracker';
 export { default as ConnectionHandler } from './view/handler/ConnectionHandler';
+export { default as ConnectionHandlerCellMarker } from './view/handler/ConnectionHandlerCellMarker';
 export { default as ConstraintHandler } from './view/handler/ConstraintHandler';
 export { default as EdgeHandler } from './view/handler/EdgeHandler';
 export { default as EdgeSegmentHandler } from './view/handler/EdgeSegmentHandler';

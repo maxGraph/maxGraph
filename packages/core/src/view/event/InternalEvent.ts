@@ -357,8 +357,6 @@ class InternalEvent {
       // Adds basic mouse listeners for graph event dispatching
       if (Client.IS_TOUCH) {
         // If a touch device, use the touch events
-        // TODO: Should this only happen on mobile?
-        //       What if a user prefers using their mouse on touch-capable devices?
         InternalEvent.addListener(target, 'touchstart', (evt: TouchEvent) => {
           if (evt.touches && evt.touches.length > 1) {
             InternalEvent.consume(evt);
@@ -375,7 +373,7 @@ class InternalEvent {
 
             const diff = getTouchDistance(touches) - getTouchDistance(startTouches);
             if (Math.abs(diff) > InternalEvent.PINCH_THRESHOLD) {
-              funct(evt, diff < 0, true);
+              funct(evt, diff > 0, true);
               startTouches = evt.touches;
             }
           }

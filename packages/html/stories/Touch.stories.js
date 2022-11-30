@@ -7,17 +7,21 @@
  * mouse and pointer events.
  */
 
-import { globalTypes } from "../.storybook/preview";
-import { getValue } from '@maxgraph/core/src/util/Utils';
-import * as Constants from "@maxgraph/core/src/util/Constants";
-import { createImage } from '@maxgraph/core/src/util/domUtils';
-import { convertPoint } from '@maxgraph/core/src/util/styleUtils';
-import TooltipHandler from "@maxgraph/core/src/view/handler/TooltipHandler";
-import { getRotatedPoint, toRadians } from '@maxgraph/core/src/util/mathUtils';
-import CellEditorHandler from "@maxgraph/core/src/view/handler/CellEditorHandler";
-import SelectionCellsHandler from "@maxgraph/core/src/view/handler/SelectionCellsHandler";
-import ConnectionHandlerCellMarker from "@maxgraph/core/src/view/handler/ConnectionHandlerCellMarker";
+//import { getValue } from '@maxgraph/core/src/util/Utils';
+//import * as constants from "@maxgraph/core/src/util/constants";
+//import { createImage } from '@maxgraph/core/src/util/domUtils';
+//import TooltipHandler from "@maxgraph/core/src/view/handler/TooltipHandler";
+//import { getRotatedPoint, toRadians } from '@maxgraph/core/src/util/mathUtils';
+//import CellEditorHandler from "@maxgraph/core/src/view/handler/CellEditorHandler";
+//import SelectionCellsHandler from "@maxgraph/core/src/view/handler/SelectionCellsHandler";
+//import ConnectionHandlerCellMarker from "@maxgraph/core/src/view/handler/ConnectionHandlerCellMarker";
 import {
+  utils,
+  domUtils,
+  styleUtils,
+  mathUtils,
+  eventUtils,
+  constants,
   ConnectionHandler, EdgeHandler,
   Graph, Outline,
   PanningHandler,
@@ -27,17 +31,19 @@ import {
   VertexHandler,
   Client,
   RubberBandHandler,
-  InternalEvent
-} from "@maxgraph/core/src";
+  InternalEvent,
+  CellEditorHandler,
+  TooltipHandler,
+  SelectionCellsHandler,
+  ConnectionHandlerCellMarker,
+} from "@maxgraph/core";
+
+import { globalTypes } from "../.storybook/preview";
 
 export default {
   title: 'DnD_CopyPaste/Touch',
   argTypes: {
     ...globalTypes,
-    /*rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },*/
   },
 };
 
@@ -103,8 +109,8 @@ const Template = ({ label, ...args }) => {
 
   // Sets constants for touch style
   // TODO: Find a means of altering these constants (ts conversion)
-  //Constants.HANDLE_SIZE = 16;
-  //Constants.LABEL_HANDLE_SIZE = 7;
+  //constants.HANDLE_SIZE = 16;
+  //constants.LABEL_HANDLE_SIZE = 7;
 
   // Context menu trigger implementation depending on current selection state
   // combined with support for normal popup trigger.
@@ -138,7 +144,7 @@ const Template = ({ label, ...args }) => {
     autoExpand = true;
 
     isSelectOnPopup(me) {
-      return InternalEvent.isMouseEvent(me.getEvent());
+      return eventUtils.isMouseEvent(me.getEvent());
     };
 
     // Installs context menu
@@ -160,10 +166,10 @@ const Template = ({ label, ...args }) => {
     // Shows popup menu if cell was selected or selection was empty and background was clicked
     mouseUp(sender, me) {
       this.popupTrigger = !graph.isEditing() && (this.popupTrigger || (!menuShowing &&
-          !graph.isEditing() && !InternalEvent.isMouseEvent(me.getEvent()) &&
+          !graph.isEditing() && !eventUtils.isMouseEvent(me.getEvent()) &&
           ((selectionEmpty && me.getCell() == null && graph.isSelectionEmpty()) ||
               (cellSelected && graph.isCellSelected(me.getCell())))));
-      super.apply(this, arguments);
+      super.mouseUp.apply(this, arguments);
     };
   }
 
@@ -177,7 +183,7 @@ const Template = ({ label, ...args }) => {
     init() {
       // TODO: Use 4 sizers, move outside of shape
       //this.singleSizer = this.state.width < 30 && this.state.height < 30;
-      super.apply(this, arguments);
+      super.init.apply(this, arguments);
 
       // Only show connector image on one cell and do not show on containers
       if (
@@ -185,7 +191,7 @@ const Template = ({ label, ...args }) => {
           this.state.cell.isConnectable() &&
           this.graph.getSelectionCount() === 1
       ) {
-        this.connectorImg = createImage(connectorSrc);
+        this.connectorImg = domUtils.createImage(connectorSrc);
         this.connectorImg.style.cursor = 'pointer';
         this.connectorImg.style.width = '29px';
         this.connectorImg.style.height = '29px';
@@ -202,11 +208,11 @@ const Template = ({ label, ...args }) => {
               this.graph.getPlugin('PopupMenuHandler').hideMenu();
               this.graph.stopEditing(false);
 
-              let pt = convertPoint(this.graph.container,
+              let pt = styleUtils.convertPoint(this.graph.container,
                   InternalEvent.getClientX(evt), InternalEvent.getClientY(evt));
               this.graph.getPlugin('ConnectionHandler').start(this.state, pt.x, pt.y);
               this.graph.isMouseDown = true;
-              this.graph.isMouseTrigger = InternalEvent.isMouseEvent(evt);
+              this.graph.isMouseTrigger = eventUtils.isMouseEvent(evt);
               InternalEvent.consume(evt);
             })
         );
@@ -218,7 +224,7 @@ const Template = ({ label, ...args }) => {
     };
 
     hideSizers() {
-      super.apply(this, arguments);
+      super.hideSizers.apply(this, arguments);
 
       if (this.connectorImg != null) {
         this.connectorImg.style.visibility = 'hidden';
@@ -226,7 +232,7 @@ const Template = ({ label, ...args }) => {
     };
 
     reset() {
-      super.apply(this, arguments);
+      super.reset.apply(this, arguments);
 
       if (this.connectorImg != null) {
         this.connectorImg.style.visibility = '';
@@ -234,7 +240,7 @@ const Template = ({ label, ...args }) => {
     };
 
     redrawHandles() {
-      super.apply(this);
+      super.redrawHandles.apply(this);
 
       if (this.state != null && this.connectorImg != null) {
         let pt = new Point();
@@ -245,17 +251,17 @@ const Template = ({ label, ...args }) => {
           pt.x = s.x + s.width - this.connectorImg.offsetWidth / 2;
           pt.y = s.y - this.connectorImg.offsetHeight / 2;
         } else {
-          pt.x = s.x + s.width + Constants.HANDLE_SIZE / 2 + 4 + this.connectorImg.offsetWidth / 2;
+          pt.x = s.x + s.width + constants.HANDLE_SIZE / 2 + 4 + this.connectorImg.offsetWidth / 2;
           pt.y = s.y + s.height / 2;
         }
 
-        let alpha = toRadians(getValue(s.style, 'rotation', 0));
+        let alpha = mathUtils.toRadians(utils.getValue(s.style, 'rotation', 0));
         if (alpha !== 0) {
           let cos = Math.cos(alpha);
           let sin = Math.sin(alpha);
 
           let ct = new Point(s.getCenterX(), s.getCenterY());
-          pt = getRotatedPoint(pt, cos, sin, ct);
+          pt = mathUtils.getRotatedPoint(pt, cos, sin, ct);
         }
 
         this.connectorImg.style.left = (pt.x - this.connectorImg.offsetWidth / 2) + 'px';
@@ -264,7 +270,7 @@ const Template = ({ label, ...args }) => {
     };
 
     destroy(sender, me) {
-      super.apply(this, arguments);
+      super.destroy.apply(this, arguments);
 
       if (this.connectorImg != null) {
         this.connectorImg.parentNode.removeChild(this.connectorImg);
@@ -278,7 +284,7 @@ const Template = ({ label, ...args }) => {
     isPanningTrigger(me) {
       let evt = me.getEvent();
 
-      return (me.getState() == null && !InternalEvent.isMouseEvent(evt)) ||
+      return (me.getState() == null && !eventUtils.isMouseEvent(evt)) ||
           (InternalEvent.isPopupTrigger(evt) && (me.getState() == null ||
               InternalEvent.isControlDown(evt) || InternalEvent.isShiftDown(evt)));
     };
@@ -286,8 +292,8 @@ const Template = ({ label, ...args }) => {
 
   class MySelectionHandler extends SelectionHandler {
     // Don't clear selection if multiple cells selected
-    mouseDown = function (sender, me) {
-      super.apply(this, arguments);
+    mouseDown(sender, me) {
+      super.mouseDown.apply(this, arguments);
 
       if (this.graph.isCellSelected(me.getCell()) && this.graph.getSelectionCount() > 1) {
         this.delayedSelection = false;
@@ -332,12 +338,12 @@ const Template = ({ label, ...args }) => {
         selectionEmpty = this.isSelectionEmpty();
         menuShowing = graph.getPlugin('PopupMenuHandler').isMenuShowing();
       }
-      this.fireMouseEvent.apply(this, arguments);
+      super.fireMouseEvent.apply(this, arguments);
     };
 
     // Adds custom hit detection if native hit detection found no cell
     updateMouseEvent(me) {
-      me = super.apply(this, arguments);
+      me = super.updateMouseEvent.apply(this, arguments);
 
       if (me.getState() == null) {
         let cell = this.getCellAt(me.graphX, me.graphY);
@@ -361,11 +367,11 @@ const Template = ({ label, ...args }) => {
     // Overrides double click handling to use the tolerance
     dblClick(evt, cell) {
       if (cell == null) {
-        let pt = convertPoint(this.container,
+        let pt = styleUtils.convertPoint(this.container,
             InternalEvent.getClientX(evt), InternalEvent.getClientY(evt));
         cell = this.getCellAt(pt.x, pt.y);
       }
-      super.call(this, evt, cell);
+      super.dblClick.call(this, evt, cell);
     };
   }
 
@@ -395,7 +401,7 @@ const Template = ({ label, ...args }) => {
       let cell = evt.getProperty('cell');
 
       if (cell == null) {
-        let pt = convertPoint(this.container,
+        let pt = styleUtils.convertPoint(this.container,
             InternalEvent.getClientX(me), InternalEvent.getClientY(me));
         rubberband.start(pt.x, pt.y);
       } else if (graph.getSelectionCount() > 1 && graph.isCellSelected(cell)) {
