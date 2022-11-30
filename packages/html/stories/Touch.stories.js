@@ -7,14 +7,6 @@
  * mouse and pointer events.
  */
 
-//import { getValue } from '@maxgraph/core/src/util/Utils';
-//import * as constants from "@maxgraph/core/src/util/constants";
-//import { createImage } from '@maxgraph/core/src/util/domUtils';
-//import TooltipHandler from "@maxgraph/core/src/view/handler/TooltipHandler";
-//import { getRotatedPoint, toRadians } from '@maxgraph/core/src/util/mathUtils';
-//import CellEditorHandler from "@maxgraph/core/src/view/handler/CellEditorHandler";
-//import SelectionCellsHandler from "@maxgraph/core/src/view/handler/SelectionCellsHandler";
-//import ConnectionHandlerCellMarker from "@maxgraph/core/src/view/handler/ConnectionHandlerCellMarker";
 import {
   utils,
   domUtils,
