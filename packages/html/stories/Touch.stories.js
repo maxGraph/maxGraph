@@ -145,7 +145,7 @@ const Template = ({ label, ...args }) => {
       });
       menu.addSeparator();
 
-      var submenu1 = menu.addItem('Submenu 1', null, null);
+      let submenu1 = menu.addItem('Submenu 1', null, null);
       menu.addItem('Subitem 1', null, function () {
         alert('Subitem 1');
       }, submenu1);
@@ -419,9 +419,9 @@ const Template = ({ label, ...args }) => {
     // is normally the first child of the root (ie. layer 0).
     let parent = graph.getDefaultParent();
 
-    var v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-    var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-    var e1 = graph.insertEdge(parent, null, '', v1, v2);
+    let v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
+    let v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+    let e1 = graph.insertEdge(parent, null, '', v1, v2);
   });
 
   // Pre-fetches touch handle+connector image
