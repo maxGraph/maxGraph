@@ -350,8 +350,8 @@ class InternalEvent {
       target = target != null ? target : window;
 
       const getTouchDistance = (touches: TouchList) => {
-        var a = touches[0].clientX - touches[1].clientX;
-        var b = touches[0].clientY - touches[1].clientY;
+        let a = touches[0].clientX - touches[1].clientX;
+        let b = touches[0].clientY - touches[1].clientY;
         return Math.sqrt(a * a + b * b);
       }
 
