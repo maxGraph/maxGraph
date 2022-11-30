@@ -74,12 +74,13 @@ class InternalEvent {
   static addListener(
     element: Listenable,
     eventName: string,
-    funct: MouseEventListener | TouchEventListener | KeyboardEventListener
+    funct: MouseEventListener | TouchEventListener | KeyboardEventListener,
+    capture: boolean = false,
   ) {
     element.addEventListener(
       eventName,
       funct as EventListener,
-      supportsPassive ? { passive: false } : false
+      supportsPassive ? { passive: false, capture: capture } : capture
     );
 
     if (!element.mxListenerList) {
@@ -362,7 +363,7 @@ class InternalEvent {
             InternalEvent.consume(evt);
             startTouches = evt.touches;
           }
-        });
+        }, true);
         InternalEvent.addListener(target, 'touchmove', (evt: TouchEvent) => {
           if (!startTouches && evt.touches && evt.touches.length > 1) {
             startTouches = evt.touches;
@@ -377,12 +378,23 @@ class InternalEvent {
               startTouches = evt.touches;
             }
           }
-        })
+        }, true)
         InternalEvent.addListener(target, 'touchend', (evt: TouchEvent) => {
           InternalEvent.consume(evt);
           touches = null;
           startTouches = null;
-        });
+        }, true);
+
+        InternalEvent.addListener(target, 'mousemove', (evt: TouchEvent) => {
+          if (startTouches) {
+            InternalEvent.consume(evt);
+          }
+        }, true);
+        InternalEvent.addListener(target, 'pointermove', (evt: TouchEvent) => {
+          if (startTouches) {
+            InternalEvent.consume(evt);
+          }
+        }, true);
       }
 
       // Fall back to standard mouse wheel if touch events not in progress, or not a touch device
