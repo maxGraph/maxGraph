@@ -85,31 +85,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
 
     this.graph.addListener(InternalEvent.FIRE_MOUSE_EVENT, this.forcePanningHandler);
 
-    // Handles pinch gestures
-    this.gestureHandler = (sender: EventSource, eo: EventObject) => {
-      if (this.isPinchEnabled()) {
-        const evt = eo.getProperty('event');
-
-        if (!isConsumed(evt) && evt.type === 'gesturestart') {
-          this.initialScale = this.graph.view.scale;
-
-          // Forces start of panning when pinch gesture starts
-          if (!this.active && this.mouseDownEvent) {
-            this.start(this.mouseDownEvent);
-            this.mouseDownEvent = null;
-          }
-        } else if (evt.type === 'gestureend' && this.initialScale !== 0) {
-          this.initialScale = 0;
-        }
-
-        if (this.initialScale !== 0) {
-          this.zoomGraph(evt);
-        }
-      }
-    };
-
-    this.graph.addListener(InternalEvent.GESTURE, this.gestureHandler);
-
     this.mouseUpListener = () => {
       if (this.active) {
         this.reset();

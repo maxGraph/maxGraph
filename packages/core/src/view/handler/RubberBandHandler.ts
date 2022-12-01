@@ -70,20 +70,10 @@ class RubberBandHandler implements GraphPlugin {
     };
 
     this.graph.addListener(InternalEvent.PAN, this.panHandler);
-
-    // Does not show menu if any touch gestures take place after the trigger
-    this.gestureHandler = (sender: EventSource, eo: EventObject) => {
-      if (this.first) {
-        this.reset();
-      }
-    };
-
-    this.graph.addListener(InternalEvent.GESTURE, this.gestureHandler);
   }
 
   forceRubberbandHandler: Function;
   panHandler: Function;
-  gestureHandler: Function;
   graph: Graph;
   first: Point | null = null;
   destroyed = false;

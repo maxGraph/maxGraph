@@ -167,7 +167,8 @@ const Template = ({ label, ...args }) => {
   class MyVertexHandler extends VertexHandler {
     rotationEnabled = true;  // Enables rotation handle
     manageSizers = true;  // Enables managing of sizers
-    livePreview = true;  // Enables live preview
+    // TODO: It appears live preview is broken on Safari/iOS (iPhone) when resizing nodes!
+    //livePreview = true;  // Enables live preview
     handleImage = touchHandle;
     tolerance = vertexHandlerTolerance;
 
@@ -276,8 +277,8 @@ const Template = ({ label, ...args }) => {
       let evt = me.getEvent();
 
       return (me.getState() == null && !eventUtils.isMouseEvent(evt)) ||
-          (InternalEvent.isPopupTrigger(evt) && (me.getState() == null ||
-              InternalEvent.isControlDown(evt) || InternalEvent.isShiftDown(evt)));
+          (eventUtils.isPopupTrigger(evt) && (me.getState() == null ||
+              eventUtils.isControlDown(evt) || eventUtils.isShiftDown(evt)));
     };
   }
 
@@ -387,13 +388,13 @@ const Template = ({ label, ...args }) => {
   // Tap and hold on background starts rubberband for multiple selected
   // cells the cell associated with the event is deselected
   graph.addListener(InternalEvent.TAP_AND_HOLD, function (sender, evt) {
-    if (!InternalEvent.isMultiTouchEvent(evt)) {
+    if (!eventUtils.isMultiTouchEvent(evt)) {
       let me = evt.getProperty('event');
       let cell = evt.getProperty('cell');
 
       if (cell == null) {
         let pt = styleUtils.convertPoint(this.container,
-            InternalEvent.getClientX(me), InternalEvent.getClientY(me));
+            eventUtils.getClientX(me), eventUtils.getClientY(me));
         rubberband.start(pt.x, pt.y);
       } else if (graph.getSelectionCount() > 1 && graph.isCellSelected(cell)) {
         graph.removeSelectionCell(cell);
@@ -430,5 +431,9 @@ const Template = ({ label, ...args }) => {
 
   return container;
 };
+
+window.onerror = function(a, b, c, d, e) {
+  alert(a+'\n'+b+'\n'+c+'\n'+d+'\n'+e+'\n'+e.stack)
+}
 
 export const Default = Template.bind({});

@@ -115,7 +115,6 @@ declare module '../Graph' {
       me: InternalMouseEvent,
       sender: EventSource
     ) => void;
-    fireGestureEvent: (evt: MouseEvent, cell?: Cell | null) => void;
     sizeDidChange: () => void;
     isCloneEvent: (evt: MouseEvent) => boolean;
     isTransparentClickEvent: (evt: MouseEvent) => boolean;
@@ -230,7 +229,6 @@ type PartialEvents = Pick<
   | 'getEventState'
   | 'fireMouseEvent'
   | 'consumeMouseEvent'
-  | 'fireGestureEvent'
   | 'sizeDidChange'
   | 'isCloneEvent'
   | 'isTransparentClickEvent'
@@ -1082,43 +1080,6 @@ const EventsMixin: PartialType = {
     if (evtName === InternalEvent.MOUSE_DOWN && isTouchEvent(me.getEvent())) {
       me.consume(false);
     }
-  },
-
-  /**
-   * Dispatches a {@link InternalEvent.GESTURE} event. The following example will resize the
-   * cell under the mouse based on the scale property of the native touch event.
-   *
-   * ```javascript
-   * graph.addListener(mxEvent.GESTURE, function(sender, eo)
-   * {
-   *   var evt = eo.getProperty('event');
-   *   var state = graph.view.getState(eo.getProperty('cell'));
-   *
-   *   if (graph.isEnabled() && graph.isCellResizable(state.cell) && Math.abs(1 - evt.scale) > 0.2)
-   *   {
-   *     var scale = graph.view.scale;
-   *     var tr = graph.view.translate;
-   *
-   *     var w = state.width * evt.scale;
-   *     var h = state.height * evt.scale;
-   *     var x = state.x - (w - state.width) / 2;
-   *     var y = state.y - (h - state.height) / 2;
-   *
-   *     var bounds = new mxRectangle(graph.snap(x / scale) - tr.x,
-   *     		graph.snap(y / scale) - tr.y, graph.snap(w / scale), graph.snap(h / scale));
-   *     graph.resizeCell(state.cell, bounds);
-   *     eo.consume();
-   *   }
-   * });
-   * ```
-   *
-   * @param evt Gestureend event that represents the gesture.
-   * @param cell Optional {@link Cell} associated with the gesture.
-   */
-  fireGestureEvent(evt, cell = null) {
-    // Resets double tap event handling when gestures take place
-    this.lastTouchTime = 0;
-    this.fireEvent(new EventObject(InternalEvent.GESTURE, { event: evt, cell }));
   },
 
   /**

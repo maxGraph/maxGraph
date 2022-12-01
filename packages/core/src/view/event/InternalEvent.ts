@@ -341,18 +341,29 @@ class InternalEvent {
    */
   static addMouseWheelListener(
     funct: (event: Event, up: boolean, force?: boolean, cx?: number, cy?: number) => void,
-    target: Listenable
+    target?: Listenable
   ) {
     if (funct != null) {
-      let touches: TouchList | null = null;
-      let startTouches: TouchList | null = null;
+      type TouchArray = { clientX: number, clientY: number }[];
+      let touches: TouchArray | null = null;
+      let startTouches: TouchArray | null = null;
 
       target = target != null ? target : window;
 
-      const getTouchDistance = (touches: TouchList) => {
+      const getTouchDistance = (touches: TouchArray) => {
         const a = touches[0].clientX - touches[1].clientX;
         const b = touches[0].clientY - touches[1].clientY;
         return Math.sqrt(a * a + b * b);
+      }
+
+      const touchesToArray = (touches: TouchList): TouchArray => {
+        // Safari seems to use the same TouchList object unless
+        // the values are copied, so copy+output the values we need
+        const out = [];
+        for (let i=0; i<touches.length; i++) {
+          out.push({ clientX: touches[i].clientX, clientY: touches[i].clientY });
+        }
+        return out;
       }
 
       // Adds basic mouse listeners for graph event dispatching
@@ -361,31 +372,33 @@ class InternalEvent {
         InternalEvent.addListener(target, 'touchstart', (evt: TouchEvent) => {
           if (evt.touches && evt.touches.length > 1) {
             InternalEvent.consume(evt);
-            startTouches = evt.touches;
+            startTouches = touchesToArray(evt.touches);
           }
         }, true);
         InternalEvent.addListener(target, 'touchmove', (evt: TouchEvent) => {
           if (!startTouches && evt.touches && evt.touches.length > 1) {
-            startTouches = evt.touches;
+            startTouches = touchesToArray(evt.touches);
           }
           if (startTouches && evt.touches && evt.touches.length > 1) {
             InternalEvent.consume(evt);
-            touches = evt.touches;
+            touches = touchesToArray(evt.touches);
 
             const diff = getTouchDistance(touches) - getTouchDistance(startTouches);
             if (Math.abs(diff) > InternalEvent.PINCH_THRESHOLD) {
               funct(evt, diff > 0, true);
-              startTouches = evt.touches;
+              startTouches = touchesToArray(evt.touches);
             }
           }
         }, true)
         InternalEvent.addListener(target, 'touchend', (evt: TouchEvent) => {
-          InternalEvent.consume(evt);
+          if (startTouches) {
+            InternalEvent.consume(evt);
+          }
           touches = null;
           startTouches = null;
         }, true);
 
-        InternalEvent.addListener(target, 'mousemove', (evt: TouchEvent) => {
+        /*InternalEvent.addListener(target, 'mousemove', (evt: TouchEvent) => {
           if (startTouches) {
             InternalEvent.consume(evt);
           }
@@ -394,7 +407,7 @@ class InternalEvent {
           if (startTouches) {
             InternalEvent.consume(evt);
           }
-        }, true);
+        }, true);*/
       }
 
       // Fall back to standard mouse wheel if touch events not in progress, or not a touch device

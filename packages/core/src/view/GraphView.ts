@@ -2071,25 +2071,6 @@ export class GraphView extends EventSource {
     const graph = this.graph;
     const { container } = graph;
 
-    // Support for touch device gestures (eg. pinch to zoom)
-    // Double-tap handling is implemented in mxGraph.fireMouseEvent
-    if (Client.IS_TOUCH) {
-      InternalEvent.addListener(container, 'gesturestart', ((evt: MouseEvent) => {
-        graph.fireGestureEvent(evt);
-        InternalEvent.consume(evt);
-      }) as EventListener);
-
-      InternalEvent.addListener(container, 'gesturechange', ((evt: MouseEvent) => {
-        graph.fireGestureEvent(evt);
-        InternalEvent.consume(evt);
-      }) as EventListener);
-
-      InternalEvent.addListener(container, 'gestureend', ((evt: MouseEvent) => {
-        graph.fireGestureEvent(evt);
-        InternalEvent.consume(evt);
-      }) as EventListener);
-    }
-
     // Fires event only for one pointer per gesture
     let pointerId: number | null = null;
 
@@ -2100,7 +2081,7 @@ export class GraphView extends EventSource {
         // Condition to avoid scrollbar events starting a rubberband selection
         if (
           this.isContainerEvent(evt) &&
-          ((!Client.IS_GC && !Client.IS_SF) || !this.isScrollEvent(evt))
+          (!Client.IS_GC && !Client.IS_SF)
         ) {
           graph.fireMouseEvent(InternalEvent.MOUSE_DOWN, new InternalMouseEvent(evt));
           // @ts-ignore
