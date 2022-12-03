@@ -18,11 +18,9 @@ limitations under the License.
 
 import InternalMouseEvent from './InternalMouseEvent';
 import Client from '../../Client';
-import { isConsumed, isMouseEvent } from '../../util/EventUtils';
+import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import {
-  EventCache,
-  GestureEvent,
   KeyboardEventListener,
   Listenable,
   MouseEventListener,
@@ -33,6 +31,7 @@ import { Graph } from '../Graph';
 // Checks if passive event listeners are supported
 // see https://github.com/Modernizr/Modernizr/issues/1894
 let supportsPassive = false;
+
 
 try {
   document.addEventListener(
@@ -55,7 +54,7 @@ try {
  * @class InternalEvent
  *
  * Cross-browser DOM event support. For internal event handling,
- * {@link mxEventSource} and the graph event dispatch loop in {@link graph} are used.
+ * {@link EventSource} and the graph event dispatch loop in {@link graph} are used.
  *
  * ### Memory Leaks:
  *
@@ -398,7 +397,7 @@ class InternalEvent {
           startTouches = null;
         }, true);
 
-        /*InternalEvent.addListener(target, 'mousemove', (evt: TouchEvent) => {
+        InternalEvent.addListener(target, 'mousemove', (evt: TouchEvent) => {
           if (startTouches) {
             InternalEvent.consume(evt);
           }
@@ -407,27 +406,27 @@ class InternalEvent {
           if (startTouches) {
             InternalEvent.consume(evt);
           }
-        }, true);*/
+        }, true);
       }
 
       // Fall back to standard mouse wheel if touch events not in progress, or not a touch device
       InternalEvent.addListener(target, 'wheel', ((evt: WheelEvent) => {
         if (startTouches) {
           // If being handled by touch events, ignore
-          evt.preventDefault();
+          InternalEvent.consume(evt);
           return;
         }
 
         // To prevent window zoom on trackpad pinch
         if (evt.ctrlKey) {
-          evt.preventDefault();
+          InternalEvent.consume(evt);
         }
 
         // Handles the event using the given function
         if (Math.abs(evt.deltaX) > 0.5 || Math.abs(evt.deltaY) > 0.5) {
           funct(evt, evt.deltaY == 0 ? -evt.deltaX > 0 : -evt.deltaY > 0);
         }
-      }) as EventListener);
+      }) as EventListener, true);
     }
   }
 

@@ -108,7 +108,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
 
   /**
    * Specifies if panning should be active for the left mouse button.
-   * Setting this to true may conflict with {@link Rubberband}. Default is false.
+   * Setting this to true may conflict with {@link RubberbandHandler}. Default is false.
    */
   useLeftButtonForPanning = false;
 
@@ -184,7 +184,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   active = false;
 
   forcePanningHandler: (sender: EventSource, evt: EventObject) => void;
-  gestureHandler: (sender: EventSource, evt: EventObject) => void;
 
   mouseUpListener: MouseEventListener;
 
@@ -418,7 +417,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   onDestroy() {
     this.graph.removeMouseListener(this);
     this.graph.removeListener(this.forcePanningHandler);
-    this.graph.removeListener(this.gestureHandler);
     InternalEvent.removeListener(document, 'mouseup', this.mouseUpListener);
   }
 }

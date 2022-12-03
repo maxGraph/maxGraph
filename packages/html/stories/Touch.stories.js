@@ -168,7 +168,7 @@ const Template = ({ label, ...args }) => {
     rotationEnabled = true;  // Enables rotation handle
     manageSizers = true;  // Enables managing of sizers
     // TODO: It appears live preview is broken on Safari/iOS (iPhone) when resizing nodes!
-    //livePreview = true;  // Enables live preview
+    livePreview = true;  // Enables live preview
     handleImage = touchHandle;
     tolerance = vertexHandlerTolerance;
 
@@ -413,7 +413,7 @@ const Template = ({ label, ...args }) => {
       graph.zoomOut();
     }
     InternalEvent.consume(evt);
-  });
+  }, container);
 
   graph.batchUpdate(() => {
     // Get the default parent for inserting new cells. This

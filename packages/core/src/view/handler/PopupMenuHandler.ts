@@ -192,7 +192,6 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
    */
   onDestroy() {
     this.graph.removeMouseListener(this);
-    this.graph.removeListener(this.gestureHandler);
 
     // Supercall
     super.destroy();
