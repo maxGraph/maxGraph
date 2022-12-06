@@ -192,28 +192,31 @@ export class Stylesheet {
   }
 
   /**
-   * Returns the cell style for the specified baseStyleNames or the given
-   * defaultStyle if no style can be found for the given baseStyleNames.
+   * Returns a {@link CellStateStyle} computed by merging the default style, styles referenced in the specified `baseStyleNames`
+   * and the properties of the `cellStyle` parameter.
+   *
+   * The properties are merged by taken the properties from various styles in the following order:
+   *   - default style
+   *   - registered styles referenced in `baseStyleNames`, in the order of the array
+   *   - `cellStyle` parameter
    *
    * @param cellStyle An object that represents the style.
-   * @param defaultStyle Default style to be returned if no style can be found.
+   * @param defaultStyle Default style used as reference to compute the returned style.
    */
   getCellStyle(cellStyle: CellStyle, defaultStyle: CellStateStyle) {
-    let style: CellStateStyle;
+    let style: CellStateStyle = { ...defaultStyle };
 
-    if (cellStyle.baseStyleNames && cellStyle.baseStyleNames.length > 0) {
+    if (cellStyle.baseStyleNames) {
       // creates style with the given baseStyleNames. (merges from left to right)
-      style = cellStyle.baseStyleNames.reduce((acc, styleName) => {
-        return (acc = {
-          ...acc,
-          ...this.styles.get(styleName),
-        });
-      }, {});
-    } else if (cellStyle.baseStyleNames && cellStyle.baseStyleNames.length === 0) {
-      // baseStyleNames is explicitly an empty array, so don't use any default styles.
-      style = {};
-    } else {
-      style = { ...defaultStyle };
+      style = cellStyle.baseStyleNames.reduce(
+        (acc, styleName) => {
+          return (acc = {
+            ...acc,
+            ...this.styles.get(styleName),
+          });
+        },
+        { ...defaultStyle }
+      );
     }
 
     // Merges cellStyle into style
@@ -221,6 +224,9 @@ export class Stylesheet {
       ...style,
       ...cellStyle,
     };
+
+    // Remove the 'baseStyleNames' that may have been copied from the cellStyle parameter to match the method signature
+    'baseStyleNames' in style && delete style.baseStyleNames;
 
     return style;
   }

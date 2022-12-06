@@ -43,6 +43,9 @@ jobs:
       - name: Build @maxgraph/core - umd
         working-directory: packages/core
         run: npm run build
+      - name: test @maxgraph/core
+        working-directory: packages/core
+        run: npm test
       - name: Build @maxgraph/core - esm
         working-directory: packages/core
         run: npm run generate-esm
