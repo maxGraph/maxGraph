@@ -60,7 +60,7 @@ class AutoSaveManager extends EventSource {
    * value of 1 (s) means the graph is not stored more than once per second.
    * Default is 10.
    */
-  autoSaveDelay: number = 10;
+  autoSaveDelay = 10;
 
   /**
    * Minimum amount of seconds between two consecutive autosaves triggered by
@@ -69,29 +69,29 @@ class AutoSaveManager extends EventSource {
    * stored more than once per second even if there are more than
    * <autoSaveThreshold> changes within that timespan. Default is 2.
    */
-  autoSaveThrottle: number = 2;
+  autoSaveThrottle = 2;
 
   /**
    * Minimum amount of ignored changes before an autosave. Eg. a value of 2
    * means after 2 change of the graph model the autosave will trigger if the
    * condition below is true. Default is 5.
    */
-  autoSaveThreshold: number = 5;
+  autoSaveThreshold = 5;
 
   /**
    * Counter for ignored changes in autosave.
    */
-  ignoredChanges: number = 0;
+  ignoredChanges = 0;
 
   /**
    * Used for autosaving. See <autosave>.
    */
-  lastSnapshot: number = 0;
+  lastSnapshot = 0;
 
   /**
    * Specifies if event handling is enabled. Default is true.
    */
-  enabled: boolean = true;
+  enabled = true;
 
   /**
    * Holds the function that handles graph model changes.

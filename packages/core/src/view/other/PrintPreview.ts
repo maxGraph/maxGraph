@@ -180,10 +180,10 @@ class PrintPreview {
     scale: number | null = null,
     pageFormat: Rectangle | null = null,
     border: number | null = null,
-    x0: number = 0,
-    y0: number = 0,
+    x0 = 0,
+    y0 = 0,
     borderColor: string | null = null,
-    title: string = 'Printer-friendly version',
+    title = 'Printer-friendly version',
     pageSelector: boolean | null = null
   ) {
     this.graph = graph;
@@ -219,29 +219,29 @@ class PrintPreview {
    * to 0 if autoOrigin is false.
    * @default 0
    */
-  border: number = 0;
+  border = 0;
 
   /**
    * The margin at the top of the page (number).
    * @default 0
    */
-  marginTop: number = 0;
+  marginTop = 0;
 
   /**
    * The margin at the bottom of the page (number).
    * @default 0
    */
-  marginBottom: number = 0;
+  marginBottom = 0;
 
   /**
    * Holds the horizontal offset of the output.
    */
-  x0: number = 0;
+  x0 = 0;
 
   /**
    * Holds the vertical offset of the output.
    */
-  y0: number = 0;
+  y0 = 0;
 
   /**
    * Specifies if the origin should be automatically computed based on the top,
@@ -249,31 +249,31 @@ class PrintPreview {
    * to {@link x0} and {@link y0} in {@link open}.
    * @default true
    */
-  autoOrigin: boolean = true;
+  autoOrigin = true;
 
   /**
    * Specifies if overlays should be printed.
    * @default false
    */
-  printOverlays: boolean = false;
+  printOverlays = false;
 
   /**
    * Specifies if controls (such as folding icons) should be printed. Default is
    * false.
    */
-  printControls: boolean = false;
+  printControls = false;
 
   /**
    * Specifies if the background image should be printed.
    * @default false
    */
-  printBackgroundImage: boolean = false;
+  printBackgroundImage = false;
 
   /**
    * Holds the color value for the page background color.
    * @default '#ffffff'
    */
-  backgroundColor: string = '#ffffff';
+  backgroundColor = '#ffffff';
 
   /**
    * Holds the color value for the page border.
@@ -305,7 +305,7 @@ class PrintPreview {
   /**
    * Holds the actual number of pages in the preview.
    */
-  pageCount: number = 0;
+  pageCount = 0;
 
   /**
    * Specifies is clipping should be used to avoid creating too many cell states
@@ -313,7 +313,7 @@ class PrintPreview {
    * used if this is enabled.
    * @default true
    */
-  clipping: boolean = true;
+  clipping = true;
 
   /**
    * Returns {@link wnd}.
@@ -365,8 +365,8 @@ class PrintPreview {
   open(
     css: string | null = null,
     targetWindow: Window | null = null,
-    forcePageBreaks: boolean = false,
-    keepOpen: boolean = false
+    forcePageBreaks = false,
+    keepOpen = false
   ): Window | null {
     // Closing the window while the page is being rendered may cause an
     // exception in IE. This and any other exceptions are simply ignored.

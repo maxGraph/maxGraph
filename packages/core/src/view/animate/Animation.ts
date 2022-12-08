@@ -27,7 +27,7 @@ import InternalEvent from '../event/InternalEvent';
  * @extends {EventSource}
  */
 class Animation extends EventSource {
-  constructor(delay: number=20) {
+  constructor(delay = 20) {
     super();
     this.delay = delay;
   }

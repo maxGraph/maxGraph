@@ -102,7 +102,7 @@ class Perimeter {
     bounds: Rectangle,
     vertex: CellState,
     next: Point,
-    orthogonal: boolean = false
+    orthogonal = false
   ): Point {
     const cx = bounds.getCenterX();
     const cy = bounds.getCenterY();
@@ -162,7 +162,7 @@ class Perimeter {
     bounds: Rectangle,
     vertex: CellState,
     next: Point,
-    orthogonal: boolean = false
+    orthogonal = false
   ): Point {
     const { x } = bounds;
     const { y } = bounds;
@@ -248,7 +248,7 @@ class Perimeter {
     bounds: Rectangle,
     vertex: CellState,
     next: Point,
-    orthogonal: boolean = false
+    orthogonal = false
   ): Point | null {
     const { x } = bounds;
     const { y } = bounds;
@@ -308,7 +308,7 @@ class Perimeter {
     bounds: Rectangle,
     vertex: CellState,
     next: Point,
-    orthogonal: boolean = false
+    orthogonal = false
   ): Point | null {
     const direction = vertex != null ? vertex.style.direction : null;
     const vertical = direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH;
@@ -424,7 +424,7 @@ class Perimeter {
     bounds: Rectangle,
     vertex: CellState,
     next: Point,
-    orthogonal: boolean = false
+    orthogonal = false
   ): Point | null {
     const { x } = bounds;
     const { y } = bounds;

@@ -127,7 +127,7 @@ export const isLeftMouseButton = (evt: MouseEvent) => {
   if ('buttons' in evt && (evt.type === 'mousedown' || evt.type === 'mousemove')) {
     return evt.buttons === 1;
   }
-  if ('which' in evt) {
+  if (evt.which !== undefined) {
     return evt.which === 1;
   }
   return evt.button === 1;

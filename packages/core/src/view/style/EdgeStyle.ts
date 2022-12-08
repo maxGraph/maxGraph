@@ -654,8 +654,7 @@ class EdgeStyle {
         // of a floating port, or if the hint is exactly co-incident with a
         // fixed point, ignore the source and try to work out the orientation
         // from the target end
-        if (i == 0 && ((hozChan && vertChan) || (fixedVertAlign && fixedHozAlign))) {
-        } else {
+        if (!(i == 0 && ((hozChan && vertChan) || (fixedVertAlign && fixedHozAlign)))) {
           if (
             currentPt != null &&
             !fixedHozAlign &&
@@ -1017,8 +1016,8 @@ class EdgeStyle {
         EdgeStyle.scalePointArray(<Point[]>state.absolutePoints, state.view.scale)
       ))
     );
-    let source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
-    let target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
+    const source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
+    const target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
 
     const sourceEdge = source == null ? false : source.cell.isEdge();
     const targetEdge = target == null ? false : target.cell.isEdge();

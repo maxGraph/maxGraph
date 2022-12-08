@@ -83,8 +83,8 @@ class ArrowConnectorShape extends Shape {
     super.apply(state);
 
     if (this.style && this.style.startSize != null && this.style.endSize != null) {
-      this.startSize = (<number>this.style.startSize) * 3;
-      this.endSize = (<number>this.style.endSize) * 3;
+      this.startSize = <number>this.style.startSize * 3;
+      this.endSize = <number>this.style.endSize * 3;
     }
   }
 

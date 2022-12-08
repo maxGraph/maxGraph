@@ -16,10 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  EDGESTYLE,
-  PERIMETER,
-} from '../../util/Constants';
+import { EDGESTYLE, PERIMETER } from '../../util/Constants';
 import EdgeStyle from './EdgeStyle';
 import Perimeter from './Perimeter';
 

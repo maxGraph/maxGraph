@@ -67,7 +67,7 @@ class VertexHandle implements CellHandle {
 
   constructor(
     state: CellState,
-    cursor: string = 'default',
+    cursor = 'default',
     image: ImageBox | null = null,
     shape: Shape | null = null
   ) {
@@ -89,12 +89,16 @@ class VertexHandle implements CellHandle {
   /**
    * Hooks for subclassers to update the style in the <state>.
    */
-  setPosition(bounds: Rectangle | null, pt: Point, me: InternalMouseEvent) {}
+  setPosition(bounds: Rectangle | null, pt: Point, me: InternalMouseEvent) {
+    return;
+  }
 
   /**
    * Hook for subclassers to execute the handle.
    */
-  execute(me: InternalMouseEvent): void {}
+  execute(me: InternalMouseEvent): void {
+    return;
+  }
 
   /**
    * Sets the cell style with the given name to the corresponding value in <state>.
@@ -129,7 +133,6 @@ class VertexHandle implements CellHandle {
         alpha2
       )
     );
-    this.setPosition(this.state.getPaintBounds(), pt, me);
     this.redraw();
   }
 

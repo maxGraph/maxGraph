@@ -17,12 +17,7 @@ limitations under the License.
 */
 
 import EdgeHandler from './EdgeHandler';
-import {
-  CURSOR,
-  EDGESTYLE,
-  ELBOW,
-  HANDLE_SIZE,
-} from '../../util/Constants';
+import { CURSOR, EDGESTYLE, ELBOW, HANDLE_SIZE } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import Translations from '../../util/Translations';
@@ -191,9 +186,9 @@ class ElbowEdgeHandler extends EdgeHandler {
     } else {
       pt = new Point(
         this.graph.getView().scale *
-        (pt.x + this.graph.getView().translate.x + this.state.origin.x),
+          (pt.x + this.graph.getView().translate.x + this.state.origin.x),
         this.graph.getView().scale *
-        (pt.y + this.graph.getView().translate.y + this.state.origin.y)
+          (pt.y + this.graph.getView().translate.y + this.state.origin.y)
       );
     }
 

@@ -29,7 +29,7 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
  * @extends {Shape}
  */
 class RhombusShape extends Shape {
-  constructor(bounds: Rectangle, fill: string, stroke: string, strokewidth: number = 1) {
+  constructor(bounds: Rectangle, fill: string, stroke: string, strokewidth = 1) {
     super();
     this.bounds = bounds;
     this.fill = fill;

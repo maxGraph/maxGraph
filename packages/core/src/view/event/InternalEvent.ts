@@ -36,7 +36,9 @@ let supportsPassive = false;
 try {
   document.addEventListener(
     'test',
-    () => {},
+    () => {
+      return;
+    },
     Object.defineProperty &&
       Object.defineProperty({}, 'passive', {
         get: () => {
@@ -460,11 +462,7 @@ class InternalEvent {
    * @param {boolean} [stopPropagation=true] Option boolean to stop event propagation. Default is
    * true.
    */
-  static consume(
-    evt: Event,
-    preventDefault: boolean = true,
-    stopPropagation: boolean = true
-  ) {
+  static consume(evt: Event, preventDefault = true, stopPropagation = true) {
     if (preventDefault) {
       if (evt.preventDefault) {
         if (stopPropagation) {

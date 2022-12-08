@@ -79,7 +79,7 @@ class CylinderShape extends Shape {
     y: number,
     w: number,
     h: number,
-    isForeground: boolean = false
+    isForeground = false
   ): void {
     const dy = this.getCylinderSize(x, y, w, h);
 

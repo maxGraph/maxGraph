@@ -41,7 +41,7 @@ import Cell from '../cell/Cell';
  * radius - Optional radius as an int. Default is 100.
  */
 class CircleLayout extends GraphLayout {
-  constructor(graph: Graph, radius: number = 100) {
+  constructor(graph: Graph, radius = 100) {
     super(graph);
     // mxGraphLayout.call(this, graph);
     this.radius = radius;
@@ -56,31 +56,31 @@ class CircleLayout extends GraphLayout {
    * Boolean specifying if the circle should be moved to the top,
    * left corner specified by <x0> and <y0>. Default is false.
    */
-  moveCircle: boolean = false;
+  moveCircle = false;
 
   /**
    * Integer specifying the left coordinate of the circle.
    * Default is 0.
    */
-  x0: number = 0;
+  x0 = 0;
 
   /**
    * Integer specifying the top coordinate of the circle.
    * Default is 0.
    */
-  y0: number = 0;
+  y0 = 0;
 
   /**
    * Specifies if all edge points of traversed edges should be removed.
    * Default is true.
    */
-  resetEdges: boolean = true;
+  resetEdges = true;
 
   /**
    * Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are
    * modified by the result. Default is true.
    */
-  disableEdgeStyle: boolean = true;
+  disableEdgeStyle = true;
 
   /**
    * Implements {@link GraphLayout#execute}.

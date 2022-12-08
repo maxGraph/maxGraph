@@ -129,7 +129,11 @@ const ValidationMixin: PartialType = {
    * @param source {@link mxCell} that represents the source terminal.
    * @param target {@link mxCell} that represents the target terminal.
    */
-  getEdgeValidationError(edge: Cell | null=null, source: Cell | null=null, target: Cell | null=null) {
+  getEdgeValidationError(
+    edge: Cell | null = null,
+    source: Cell | null = null,
+    target: Cell | null = null
+  ) {
     if (edge && !this.isAllowDanglingEdges() && (!source || !target)) {
       return '';
     }
@@ -206,7 +210,11 @@ const ValidationMixin: PartialType = {
    * @param source {@link mxCell} that represents the source terminal.
    * @param target {@link mxCell} that represents the target terminal.
    */
-  validateEdge(edge: Cell | null=null, source: Cell | null=null, target: Cell | null=null) {
+  validateEdge(
+    edge: Cell | null = null,
+    source: Cell | null = null,
+    target: Cell | null = null
+  ) {
     return null;
   },
 
@@ -224,7 +232,7 @@ const ValidationMixin: PartialType = {
    * the graph root.
    * @param context Object that represents the global validation state.
    */
-  validateGraph(cell: Cell | null=null, context) {
+  validateGraph(cell: Cell | null = null, context) {
     cell = cell ?? this.getDataModel().getRoot();
 
     if (!cell) {

@@ -49,7 +49,7 @@ class ActorShape extends Shape {
     bounds: Rectangle | null = null,
     fill: ColorValue = NONE,
     stroke: ColorValue = NONE,
-    strokeWidth: number = 1
+    strokeWidth = 1
   ) {
     super();
     this.bounds = bounds;

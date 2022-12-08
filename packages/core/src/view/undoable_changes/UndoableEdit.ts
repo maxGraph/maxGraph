@@ -93,7 +93,7 @@ class UndoableEdit {
    */
   redone = false;
 
-  constructor(source: EventSource, significant: boolean = true) {
+  constructor(source: EventSource, significant = true) {
     this.source = source;
     this.changes = [];
     this.significant = significant;
@@ -126,13 +126,17 @@ class UndoableEdit {
    * Hook to notify any listeners of the changes after an <undo> or <redo>
    * has been carried out. This implementation is empty.
    */
-  notify() {}
+  notify(): void {
+    return;
+  }
 
   /**
    * Hook to free resources after the edit has been removed from the command
    * history. This implementation is empty.
    */
-  die() {}
+  die(): void {
+    return;
+  }
 
   /**
    * Undoes all changes in this edit.

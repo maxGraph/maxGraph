@@ -16,11 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  LINE_ARCSIZE,
-  NONE,
-  RECTANGLE_ROUNDING_FACTOR,
-} from '../../../util/Constants';
+import { LINE_ARCSIZE, NONE, RECTANGLE_ROUNDING_FACTOR } from '../../../util/Constants';
 import Shape from '../Shape';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Rectangle from '../Rectangle';
@@ -33,12 +29,7 @@ import { ColorValue } from '../../../types';
  * @extends {Shape}
  */
 class RectangleShape extends Shape {
-  constructor(
-    bounds: Rectangle,
-    fill: ColorValue,
-    stroke: ColorValue,
-    strokeWidth: number = 1
-  ) {
+  constructor(bounds: Rectangle, fill: ColorValue, stroke: ColorValue, strokeWidth = 1) {
     super();
     this.bounds = bounds;
     this.fill = fill;

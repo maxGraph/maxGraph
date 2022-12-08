@@ -1,15 +1,16 @@
 # maxGraph
 
-<!-- next to come: npm and releases badge
-[![npm version](https://img.shields.io/npm/v/xxx.svg?style=flat)](https://www.npmjs.com/package/xxx)
--->
+[![npm version](https://img.shields.io/npm/v/@maxgraph/core?color=blue&style=flat)](https://www.npmjs.com/package/@maxgraph/core)
 [![build status](https://github.com/maxGraph/maxGraph/workflows/Build/badge.svg)](https://github.com/maxGraph/maxGraph/actions/workflows/build.yml)
 
 maxGraph is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides: 
 - **Nodes**, also known as **vertices** which are typically represented by shapes like rectangles.
 - **Edges** which can be lines and arrows which normally point between one node and another.
 
-It provides many of the diagramming features which would be expected by a piece of presentation software like Microsoft® PowerPoint™ or LibreOffice® Impress such as being able to resize, move or rotate nodes, but has a stronger focus on automatic layout algorithms and applications of [Graph Theory](https://en.wikipedia.org/wiki/Graph_theory). It is suited towards software which requires finer-grained customization of functionality than off-the-shelf packages.
+It provides many of the diagramming features which would be expected by a piece of presentation software like Microsoft® PowerPoint™
+or LibreOffice® Impress such as being able to resize, move or rotate nodes, but has a stronger focus on automatic layout
+algorithms and applications of [Graph Theory](https://en.wikipedia.org/wiki/Graph_theory). It is suited towards software
+which requires finer-grained customization of functionality than off-the-shelf packages.
 
 
 The `maxGraph` library uses no third-party software, it requires no plugins and can be integrated in virtually any framework (it's vanilla JS).
@@ -29,11 +30,29 @@ Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) for 
 
 ## Project status
 
-maxGraph is under active development. An alpha version will be released soon (along with the npm package) once the [versioning](https://github.com/maxGraph/maxGraph/issues/92)
-issue has been resolved.
+`maxGraph` is under active development and is in **alpha**. Please try it in your application and [submit an issue](https://github.com/maxGraph/maxGraph/issues)
+if you think that something is not working.
 
-In the meantime, you can test the project by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package).
+You can also test the project by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
 
+## Install
+
+Install the latest version of `maxGraph` from the [npm registry](https://www.npmjs.com/package/@maxgraph/core).
+
+npm
+```
+npm install @maxgraph/core
+```
+
+yarn
+```
+yarn add @maxgraph/core
+```
+
+pnpm
+```
+pnpm add @maxgraph/core
+```
 
 ## Getting Started
 
@@ -66,13 +85,11 @@ You will see something like in the following _maxGraph panning_ demo:
 For more details, have a look at the [storybook stories](packages/html/stories).
 
 
-## TypeScript
+## TypeScript support
 
 maxGraph is written in TypeScript and provides type definitions so maxGraph can be easily integrated into TypeScript projects.
 
-**WARN**: some definitions are currently buggy, so please set `skipLibCheck` to `true` in the `tsconfig.json` file of your project.
-For more details, see issues [#96](https://github.com/maxGraph/maxGraph/issues/96) and [#105](https://github.com/maxGraph/maxGraph/issues/105#issuecomment-1240640369).
-
+`maxGraph` requires **TypeScript 3.8** or greater.
 
 ## Support
 
@@ -137,6 +154,13 @@ Starting from the mxGraph 4.2.2 release, we
 
 ## Development
 
+### Clean former mxGraph tags
+
+Ensure you don't have the former mxGraph tags locally (see [#92](https://github.com/maxGraph/maxGraph/issues/92) fore more details):
+```
+git fetch --all --tags --prune
+```
+
 ### Setting up local development environment
 
 In the project root directory, execute
@@ -172,4 +196,4 @@ Run
 
 The `packages/core` folder or the generated `packages/core/maxgraph-core-***.tgz` file are now ready for use in an external project, using [npm link](https://docs.npmjs.com/cli/v8/commands/npm-link) or `npm install`.
 
-Examples of use can be found in this [repository](https://github.com/tbouffard/maxgraph-integration-examples).
+Examples of use can be found in the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository.

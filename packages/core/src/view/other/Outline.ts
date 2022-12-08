@@ -172,7 +172,7 @@ class Outline {
         outline.fireMouseEvent(InternalEvent.MOUSE_MOVE, new InternalMouseEvent(evt));
       };
 
-      var redirect2 = (evt: MouseEvent) => {
+      const redirect2 = (evt: MouseEvent) => {
         const outline = <Graph>this.outline;
         InternalEvent.removeGestureListeners(<Listenable>t, null, redirect, redirect2);
         outline.fireMouseEvent(InternalEvent.MOUSE_UP, new InternalMouseEvent(evt));
@@ -219,7 +219,7 @@ class Outline {
 
   bounds: Rectangle | null = null;
 
-  zoom: boolean = false;
+  zoom = false;
 
   startX: number | null = null;
 
@@ -245,44 +245,44 @@ class Outline {
    * Renderhint to be used for the outline graph.
    * @default faster
    */
-  graphRenderHint: string = 'exact';
+  graphRenderHint = 'exact';
 
   /**
    * Specifies if events are handled.
    * @default true
    */
-  enabled: boolean = true;
+  enabled = true;
 
   /**
    * Specifies a viewport rectangle should be shown.
    * @default true
    */
-  showViewport: boolean = true;
+  showViewport = true;
 
   /**
    * Border to be added at the bottom and right.
    * @default 10
    */
-  border: number = 10;
+  border = 10;
 
   /**
    * Specifies the size of the sizer handler.
    * @default 8
    */
-  sizerSize: number = 8;
+  sizerSize = 8;
 
   /**
    * Specifies if labels should be visible in the outline.
    * @default false
    */
-  labelsVisible: boolean = false;
+  labelsVisible = false;
 
   /**
    * Specifies if {@link update} should be called for {@link InternalEvent.PAN} in the source
    * graph.
    * @default false
    */
-  updateOnPan: boolean = false;
+  updateOnPan = false;
 
   /**
    * Optional {@link Image} to be used for the sizer.
@@ -294,7 +294,7 @@ class Outline {
    * Minimum scale to be used.
    * @default 0.0001
    */
-  minScale: number = 0.0001;
+  minScale = 0.0001;
 
   /**
    * Optional boolean flag to suspend updates. This flag will
@@ -313,7 +313,7 @@ class Outline {
    * }
    * ```
    */
-  suspended: boolean = false;
+  suspended = false;
 
   /**
    * Creates the {@link graph} used in the outline.
@@ -420,7 +420,7 @@ class Outline {
   /**
    * Updates the outline.
    */
-  update(revalidate: boolean = false): void {
+  update(revalidate = false): void {
     if (
       this.source != null &&
       this.source.container != null &&

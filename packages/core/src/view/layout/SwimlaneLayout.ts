@@ -29,7 +29,7 @@ import CoordinateAssignment from './hierarchical/CoordinateAssignment';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 import Geometry from '../../view/geometry/Geometry';
-import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
+import { SwimlaneGraphLayoutTraverseArgs } from './types';
 
 /**
  * A hierarchical layout algorithm.
@@ -47,11 +47,7 @@ import GraphHierarchyNode from './datatypes/GraphHierarchyNode';
  * deterministic. Default is true.
  */
 class SwimlaneLayout extends GraphLayout {
-  constructor(
-    graph: Graph,
-    orientation: DIRECTION | null,
-    deterministic: boolean = true
-  ) {
+  constructor(graph: Graph, orientation: DIRECTION | null, deterministic = true) {
     super(graph);
     this.orientation = orientation != null ? orientation : DIRECTION.NORTH;
     this.deterministic = deterministic != null ? deterministic : true;
@@ -551,7 +547,7 @@ class SwimlaneLayout extends GraphLayout {
       let filledVertexSetEmpty = true;
 
       // Poor man's isSetEmpty
-      for (var key in filledVertexSet) {
+      for (const key in filledVertexSet) {
         if (filledVertexSet[key] != null) {
           filledVertexSetEmpty = false;
           break;
@@ -579,16 +575,18 @@ class SwimlaneLayout extends GraphLayout {
           const vertexSet = Object();
           hierarchyVertices.push(vertexSet);
 
-          this.traverse(
-            candidateRoots[i],
-            true,
-            null,
-            allVertexSet,
-            vertexSet,
+          this.traverse({
+            vertex: candidateRoots[i],
+            directed: true,
+            edge: null,
+            allVertices: allVertexSet,
+            currentComp: vertexSet,
             hierarchyVertices,
             filledVertexSet,
-            laneCounter
-          );
+            swimlaneIndex: laneCounter,
+            func: null,
+            visited: null,
+          });
         }
 
         for (let i = 0; i < candidateRoots.length; i += 1) {
@@ -598,7 +596,7 @@ class SwimlaneLayout extends GraphLayout {
         filledVertexSetEmpty = true;
 
         // Poor man's isSetEmpty
-        for (var key in filledVertexSet) {
+        for (const key in filledVertexSet) {
           if (filledVertexSet[key] != null) {
             filledVertexSetEmpty = false;
             break;
@@ -612,21 +610,23 @@ class SwimlaneLayout extends GraphLayout {
       for (let i = 0; i < roots.length; i += 1) {
         const vertexSet = Object();
         hierarchyVertices.push(vertexSet);
-        this.traverse(
-          roots[i],
-          true,
-          null,
-          allVertexSet,
-          vertexSet,
+        this.traverse({
+          vertex: roots[i],
+          directed: true,
+          edge: null,
+          allVertices: allVertexSet,
+          currentComp: vertexSet,
           hierarchyVertices,
-          null,
-          i
-        ); // CHECK THIS PARAM!! ====================
+          filledVertexSet: null,
+          swimlaneIndex: i,
+          func: null,
+          visited: null,
+        }); // CHECK THIS PARAM!! ====================
       }
     }
 
     const tmp = [];
-    for (var key in allVertexSet) {
+    for (const key in allVertexSet) {
       tmp.push(allVertexSet[key]);
     }
 
@@ -696,7 +696,7 @@ class SwimlaneLayout extends GraphLayout {
    * target -
    * directed -
    */
-  getEdgesBetween(source: Cell, target: Cell, directed: boolean = false) {
+  getEdgesBetween(source: Cell, target: Cell, directed = false) {
     const edges = this.getEdges(source);
     const result = [];
 
@@ -731,17 +731,15 @@ class SwimlaneLayout extends GraphLayout {
    * @param allVertices Array of cell paths for the visited cells.
    * @param swimlaneIndex the laid out order index of the swimlane vertex is contained in
    */
-  // @ts-ignore
-  traverse(
-    vertex: Cell | null = null,
-    directed: boolean,
-    edge: Cell | null,
-    allVertices: { [key: string]: Cell } | null = null,
-    currentComp: { [key: string]: Cell },
-    hierarchyVertices: GraphHierarchyNode[],
-    filledVertexSet: { [key: string]: Cell } | null = null,
-    swimlaneIndex: number
-  ) {
+  traverse({
+    vertex,
+    directed,
+    allVertices,
+    currentComp,
+    hierarchyVertices,
+    filledVertexSet,
+    swimlaneIndex,
+  }: SwimlaneGraphLayoutTraverseArgs) {
     if (vertex != null && allVertices != null) {
       // Has this vertex been seen before in any traversal
       // And if the filled vertex set is populated, only
@@ -764,7 +762,6 @@ class SwimlaneLayout extends GraphLayout {
         }
 
         const edges = this.getEdges(vertex);
-        const { model } = this.graph;
 
         for (let i = 0; i < edges.length; i += 1) {
           let otherVertex = this.getVisibleTerminal(edges[i], true);
@@ -775,16 +772,15 @@ class SwimlaneLayout extends GraphLayout {
           }
 
           let otherIndex = 0;
-          const swimlanes = this.swimlanes as Cell[];
 
           // Get the swimlane index of the other terminal
-          for (otherIndex = 0; otherIndex < swimlanes.length; otherIndex++) {
-            if (swimlanes[otherIndex].isAncestor(otherVertex)) {
+          for (otherIndex = 0; otherIndex < this.swimlanes!.length; otherIndex++) {
+            if (this.swimlanes![otherIndex].isAncestor(otherVertex)) {
               break;
             }
           }
 
-          if (otherIndex >= swimlanes.length) {
+          if (otherIndex >= this.swimlanes!.length) {
             continue;
           }
 
@@ -795,16 +791,18 @@ class SwimlaneLayout extends GraphLayout {
             otherIndex > swimlaneIndex ||
             ((!directed || isSource) && otherIndex === swimlaneIndex)
           ) {
-            currentComp = this.traverse(
-              <Cell>otherVertex,
+            currentComp = this.traverse({
+              vertex: otherVertex,
               directed,
-              edges[i],
+              edge: edges[i],
               allVertices,
               currentComp,
               hierarchyVertices,
               filledVertexSet,
-              otherIndex
-            );
+              swimlaneIndex: otherIndex,
+              func: null,
+              visited: null,
+            });
           }
         }
       } else if (currentComp[vertexID] == null) {

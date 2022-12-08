@@ -37,7 +37,7 @@ class ImageShape extends RectangleShape {
     imageSrc: string,
     fill: ColorValue = '#FFFFFF',
     stroke: ColorValue = '#000000',
-    strokeWidth: number = 1
+    strokeWidth = 1
   ) {
     super(bounds, fill, stroke, strokeWidth);
 

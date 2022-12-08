@@ -29,7 +29,11 @@ import ObjectIdentity from './ObjectIdentity';
  * in other words, one where only atomic (strings, numbers) values are
  * cloned. Default is false.
  */
-export const clone = function _clone(obj: any, transients: string[] | null=null, shallow: boolean=false) {
+export const clone = function _clone(
+  obj: any,
+  transients: string[] | null = null,
+  shallow = false
+) {
   shallow = shallow != null ? shallow : false;
   let clone = null;
 

@@ -61,7 +61,7 @@ const Template = ({ label, ...args }) => {
   const f = () => {
     const overlays = graph.getCellOverlays(v1);
 
-    if (overlays == null) {
+    if (overlays.length == 0) {
       graph.removeCellOverlays(v2);
       graph.setCellWarning(v1, 'Tooltip');
     } else {

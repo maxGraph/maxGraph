@@ -51,13 +51,13 @@ import ObjectCodec from './ObjectCodec';
  * @class CodecRegistry
  */
 class CodecRegistry {
-  static codecs: { [key: string]: any } = {};
+  static codecs: { [key: string]: ObjectCodec | undefined } = {};
 
   /**
    * Maps from classnames to codecnames.
    * @static
    */
-  static aliases: { [key: string]: any } = {};
+  static aliases: { [key: string]: string | undefined } = {};
 
   /**
    * Registers a new codec and associates the name of the template
@@ -72,7 +72,7 @@ class CodecRegistry {
       const name = codec.getName();
       CodecRegistry.codecs[name] = codec;
 
-      const classname = codec.template.constructor.name;
+      const classname: string = codec.template.constructor.name;
       if (classname !== name) {
         CodecRegistry.addAlias(classname, name);
       }
@@ -107,7 +107,7 @@ class CodecRegistry {
         name = tmp;
       }
 
-      codec = CodecRegistry.codecs[name];
+      codec = CodecRegistry.codecs[name] ?? null;
 
       // Registers a new default codec for the given constructor
       // if no codec has been previously defined.
@@ -121,6 +121,10 @@ class CodecRegistry {
       }
     }
     return codec;
+  }
+
+  static getCodecByName(name: string) {
+    return CodecRegistry.codecs[name] ?? null;
   }
 }
 

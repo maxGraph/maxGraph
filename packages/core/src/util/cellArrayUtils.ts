@@ -7,7 +7,7 @@ import ObjectIdentity from './ObjectIdentity';
  * returns true.
  */
 export const filterCells = (filter: Function) => (cells: Cell[]) => {
-  let result = [] as Cell[];
+  const result = [] as Cell[];
 
   for (let i = 0; i < cells.length; i += 1) {
     if (filter(cells[i])) {
@@ -30,7 +30,7 @@ export const filterCells = (filter: Function) => (cells: Cell[]) => {
  * in the result. Default is true.
  */
 export const getOpposites =
-  (terminal: Cell, sources: boolean = true, targets: boolean = true) =>
+  (terminal: Cell, sources = true, targets = true) =>
   (edges: Cell[]) => {
     const terminals = [] as Cell[];
 
@@ -142,11 +142,7 @@ export const cloneCells =
  *
  * @private
  */
-const cloneCellImpl = (
-  cell: Cell,
-  mapping: any = {},
-  includeChildren: boolean = false
-): Cell => {
+const cloneCellImpl = (cell: Cell, mapping: any = {}, includeChildren = false): Cell => {
   const ident = <string>ObjectIdentity.get(cell);
   let clone = mapping ? mapping[ident] : null;
 

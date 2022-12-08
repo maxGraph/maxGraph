@@ -230,41 +230,41 @@ export class GraphDataModel extends EventSource {
   /**
    * Maps from Ids to cells.
    */
-  cells: any = {};
+  cells: { [key: string]: Cell } | null = {};
 
   /**
    * Specifies if edges should automatically be moved into the nearest common
    * ancestor of their terminals. Default is true.
    */
-  maintainEdgeParent: boolean = true;
+  maintainEdgeParent = true;
 
   /**
    * Specifies if relative edge parents should be ignored for finding the nearest
    * common ancestors of an edge's terminals. Default is true.
    */
-  ignoreRelativeEdgeParent: boolean = true;
+  ignoreRelativeEdgeParent = true;
 
   /**
    * Specifies if the model should automatically create Ids for new cells.
    * Default is true.
    */
-  createIds: boolean = true;
+  createIds = true;
 
   /**
    * Defines the prefix of new Ids. Default is an empty string.
    */
-  prefix: string = '';
+  prefix = '';
 
   /**
    * Defines the postfix of new Ids. Default is an empty string.
    */
-  postfix: string = '';
+  postfix = '';
 
   /**
    * Specifies the next Id to be created. Initial value is 0.
    */
   // nextId: number | string;
-  nextId: number = 0;
+  nextId = 0;
 
   /**
    * Holds the changes for the current transaction. If the transaction is
@@ -279,12 +279,12 @@ export class GraphDataModel extends EventSource {
    * it. When the counter reaches 0, the transaction is closed and the
    * respective events are fired. Initial value is 0.
    */
-  updateLevel: number = 0;
+  updateLevel = 0;
 
   /**
    * True if the program flow is currently inside endUpdate.
    */
-  endingUpdate: boolean = false;
+  endingUpdate = false;
 
   constructor(root: Cell | null = null) {
     super();
@@ -493,7 +493,7 @@ export class GraphDataModel extends EventSource {
       }
 
       // Recursively processes child cells
-      for (let child of cell.getChildren()) {
+      for (const child of cell.getChildren()) {
         this.cellAdded(child);
       }
     }
@@ -736,7 +736,7 @@ export class GraphDataModel extends EventSource {
   terminalForCellChanged(
     edge: Cell,
     terminal: Cell | null,
-    isSource: boolean = false
+    isSource = false
   ): Cell | null {
     const previous = edge.getTerminal(isSource);
     if (terminal != null) {
@@ -759,7 +759,7 @@ export class GraphDataModel extends EventSource {
    * @param directed  Optional boolean that specifies if the direction of the
    * edge should be taken into account. Default is false.
    */
-  getEdgesBetween(source: Cell, target: Cell, directed: boolean = false): Cell[] {
+  getEdgesBetween(source: Cell, target: Cell, directed = false): Cell[] {
     const tmp1 = source.getEdgeCount();
     const tmp2 = target.getEdgeCount();
 
@@ -1051,7 +1051,7 @@ export class GraphDataModel extends EventSource {
    * @param significant  Optional boolean that specifies if the edit to be created is
    * significant. Default is true.
    */
-  createUndoableEdit(significant: boolean = true): UndoableEdit {
+  createUndoableEdit(significant = true): UndoableEdit {
     const edit = new UndoableEdit(this, significant);
 
     edit.notify = () => {
@@ -1078,7 +1078,7 @@ export class GraphDataModel extends EventSource {
    * source edges.
    */
   // mergeChildren(from: Transactions, to: Transactions, cloneAllEdges?: boolean): void;
-  mergeChildren(from: Cell, to: Cell, cloneAllEdges: boolean = true): void {
+  mergeChildren(from: Cell, to: Cell, cloneAllEdges = true): void {
     this.beginUpdate();
     try {
       const mapping: any = {};
@@ -1167,7 +1167,7 @@ export class GraphDataModel extends EventSource {
    *
    * @param {Cell} cell  to be cloned.
    */
-  cloneCell(cell: Cell | null = null, includeChildren: boolean = true): Cell | null {
+  cloneCell(cell: Cell | null = null, includeChildren = true): Cell | null {
     if (cell != null) {
       return cloneCells(includeChildren)([cell])[0];
     }

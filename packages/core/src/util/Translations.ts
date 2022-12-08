@@ -123,10 +123,7 @@ class Translations {
    * @param lan The current language.
    */
   static getDefaultBundle = (basename: string, lan: string): string | null => {
-    if (
-      Translations.loadDefaultBundle ||
-      !Translations.isLanguageSupported(lan)
-    ) {
+    if (Translations.loadDefaultBundle || !Translations.isLanguageSupported(lan)) {
       return basename + Translations.extension;
     }
     return null;
@@ -185,13 +182,13 @@ class Translations {
    * @param lan The language for which the file should be loaded.
    * @param callback Optional callback for asynchronous loading.
    */
-  static add = (basename: string, lan: string | null=null, callback: Function | null=null): void => {
+  static add = (
+    basename: string,
+    lan: string | null = null,
+    callback: Function | null = null
+  ): void => {
     lan =
-      lan != null
-        ? lan
-        : Client.language != null
-        ? Client.language.toLowerCase()
-        : NONE;
+      lan != null ? lan : Client.language != null ? Client.language.toLowerCase() : NONE;
 
     if (lan !== NONE) {
       const defaultBundle = Translations.getDefaultBundle(basename, lan);
@@ -315,7 +312,11 @@ class Translations {
    * to be replaced with in the resulting string.
    * @param defaultValue Optional string that specifies the default return value.
    */
-  static get = (key: string, params: any[] | null=null, defaultValue: string | null=null): string | null => {
+  static get = (
+    key: string,
+    params: any[] | null = null,
+    defaultValue: string | null = null
+  ): string | null => {
     let value: string | null = Translations.resources[key];
 
     // Applies the default value if no resource was found
@@ -375,6 +376,6 @@ class Translations {
       Translations.add(`${Client.basePath}/resources/graph`, null, callback);
     });
   };
-};
+}
 
 export default Translations;

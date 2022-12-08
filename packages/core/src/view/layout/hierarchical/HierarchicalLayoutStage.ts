@@ -25,15 +25,13 @@ limitations under the License.
  *
  * Constructs a new hierarchical layout stage.
  */
-class HierarchicalLayoutStage {
-  constructor() {}
-
+abstract class HierarchicalLayoutStage {
   /**
    * Takes the graph detail and configuration information within the facade
    * and creates the resulting laid out graph within that facade for further
    * use.
    */
-  execute(parent: any) {}
+  abstract execute(parent: any): void;
 }
 
 export default HierarchicalLayoutStage;

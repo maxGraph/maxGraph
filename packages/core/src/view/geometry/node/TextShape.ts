@@ -38,11 +38,7 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Shape from '../Shape';
 import Rectangle from '../Rectangle';
 import CellState from '../../cell/CellState';
-import {
-  htmlEntities,
-  replaceTrailingNewlines,
-  trim,
-} from '../../../util/StringUtils';
+import { htmlEntities, replaceTrailingNewlines, trim } from '../../../util/StringUtils';
 import { isNode } from '../../../util/domUtils';
 import {
   AlignValue,
@@ -407,9 +403,10 @@ class TextShape extends Shape {
    */
   getAutoDirection() {
     // Looks for strong (directional) characters
-    const tmp = /[A-Za-z\u05d0-\u065f\u066a-\u06ef\u06fa-\u07ff\ufb1d-\ufdff\ufe70-\ufefc]/.exec(
-      String(this.value)
-    );
+    const tmp =
+      /[A-Za-z\u05d0-\u065f\u066a-\u06ef\u06fa-\u07ff\ufb1d-\ufdff\ufe70-\ufefc]/.exec(
+        String(this.value)
+      );
 
     // Returns the direction defined by the character
     return tmp && tmp.length > 0 && tmp[0] > 'z'

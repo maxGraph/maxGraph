@@ -53,11 +53,11 @@ import SwimlaneLayout from '../SwimlaneLayout';
 class CoordinateAssignment extends HierarchicalLayoutStage {
   constructor(
     layout: HierarchicalLayout | SwimlaneLayout,
-    intraCellSpacing: number=30,
-    interRankCellSpacing: number=100,
+    intraCellSpacing = 30,
+    interRankCellSpacing = 100,
     orientation: DIRECTION,
     initialX: number,
-    parallelEdgeSpacing: number=10
+    parallelEdgeSpacing = 10
   ) {
     super();
 
@@ -293,7 +293,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     const nodeList: WeightedCellSorter[] = [];
 
     // Need to be able to map from cell to cellWrapper
-    const map: Dictionary<GraphAbstractHierarchyCell, WeightedCellSorter> = new Dictionary();
+    const map: Dictionary<GraphAbstractHierarchyCell, WeightedCellSorter> =
+      new Dictionary();
     const rank = [];
 
     for (let i = 0; i <= model.maxRank; i += 1) {
@@ -322,26 +323,38 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
 
     while (nodeList.length > 0 && count <= maxTries) {
       const cellWrapper = <WeightedCellSorter>nodeList.shift();
-      const cell: GraphAbstractHierarchyCell = <GraphAbstractHierarchyCell>cellWrapper.cell;
+      const cell: GraphAbstractHierarchyCell = <GraphAbstractHierarchyCell>(
+        cellWrapper.cell
+      );
 
       const rankValue = cellWrapper.weightedValue;
       const rankIndex = parseInt(String(cellWrapper.rankIndex));
 
-      const nextLayerConnectedCells = <GraphAbstractHierarchyCell[]>cell.getNextLayerConnectedCells(rankValue);
-      const previousLayerConnectedCells = <GraphAbstractHierarchyCell[]>cell.getPreviousLayerConnectedCells(rankValue);
+      const nextLayerConnectedCells = <GraphAbstractHierarchyCell[]>(
+        cell.getNextLayerConnectedCells(rankValue)
+      );
+      const previousLayerConnectedCells = <GraphAbstractHierarchyCell[]>(
+        cell.getPreviousLayerConnectedCells(rankValue)
+      );
 
       const numNextLayerConnected = nextLayerConnectedCells.length;
       const numPreviousLayerConnected = previousLayerConnectedCells.length;
 
       const medianNextLevel = this.medianXValue(nextLayerConnectedCells, rankValue + 1);
-      const medianPreviousLevel = this.medianXValue(previousLayerConnectedCells, rankValue - 1);
+      const medianPreviousLevel = this.medianXValue(
+        previousLayerConnectedCells,
+        rankValue - 1
+      );
 
       const numConnectedNeighbours = numNextLayerConnected + numPreviousLayerConnected;
       const currentPosition = <number>cell.getGeneralPurposeVariable(rankValue);
       let cellMedian = <number>currentPosition;
 
       if (numConnectedNeighbours > 0) {
-        cellMedian = (medianNextLevel * numNextLayerConnected + medianPreviousLevel * numPreviousLayerConnected) / numConnectedNeighbours;
+        cellMedian =
+          (medianNextLevel * numNextLayerConnected +
+            medianPreviousLevel * numPreviousLayerConnected) /
+          numConnectedNeighbours;
       }
 
       // Flag storing whether or not position has changed
@@ -354,12 +367,16 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         } else {
           const leftCell = rank[rankValue][rankIndex - 1];
           let leftLimit = <number>leftCell.getGeneralPurposeVariable(rankValue);
-          leftLimit = leftLimit + leftCell.width / 2 + this.intraCellSpacing + cell.width / 2;
+          leftLimit =
+            leftLimit + leftCell.width / 2 + this.intraCellSpacing + cell.width / 2;
 
           if (leftLimit < cellMedian) {
             cell.setGeneralPurposeVariable(rankValue, cellMedian);
             positionChanged = true;
-          } else if (leftLimit < <number>cell.getGeneralPurposeVariable(rankValue) - tolerance) {
+          } else if (
+            leftLimit <
+            <number>cell.getGeneralPurposeVariable(rankValue) - tolerance
+          ) {
             cell.setGeneralPurposeVariable(rankValue, leftLimit);
             positionChanged = true;
           }
@@ -373,12 +390,16 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         } else {
           const rightCell = rank[rankValue][rankIndex + 1];
           let rightLimit = <number>rightCell.getGeneralPurposeVariable(rankValue);
-          rightLimit = rightLimit - rightCell.width / 2 - this.intraCellSpacing - cell.width / 2;
+          rightLimit =
+            rightLimit - rightCell.width / 2 - this.intraCellSpacing - cell.width / 2;
 
           if (rightLimit > cellMedian) {
             cell.setGeneralPurposeVariable(rankValue, cellMedian);
             positionChanged = true;
-          } else if (rightLimit > <number>cell.getGeneralPurposeVariable(rankValue) + tolerance) {
+          } else if (
+            rightLimit >
+            <number>cell.getGeneralPurposeVariable(rankValue) + tolerance
+          ) {
             cell.setGeneralPurposeVariable(rankValue, rightLimit);
             positionChanged = true;
           }
@@ -477,7 +498,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       // Calculate the weighing based on this node type and those this
       // node is connected to on the next layer
       weightedValues[i].weightedValue = this.calculatedWeightedValue(
-        currentCell, <GraphAbstractHierarchyCell[]>nextLayerConnectedCells
+        currentCell,
+        <GraphAbstractHierarchyCell[]>nextLayerConnectedCells
       );
     }
     weightedValues.sort(WeightedCellSorter.compare);
@@ -487,28 +509,21 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
 
     for (let i = 0; i < weightedValues.length; i += 1) {
       let numConnectionsNextLevel = 0;
-      const cell = <GraphHierarchyNode><unknown>weightedValues[i].cell;
+      const cell = <GraphHierarchyNode>(<unknown>weightedValues[i].cell);
       let nextLayerConnectedCells = null;
       let medianNextLevel = 0;
 
       if (nextRankValue < rankValue) {
-        nextLayerConnectedCells = cell
-          .getPreviousLayerConnectedCells(rankValue)
-          .slice();
+        nextLayerConnectedCells = cell.getPreviousLayerConnectedCells(rankValue).slice();
       } else {
-        nextLayerConnectedCells = cell
-          .getNextLayerConnectedCells(rankValue)
-          .slice();
+        nextLayerConnectedCells = cell.getNextLayerConnectedCells(rankValue).slice();
       }
 
       if (nextLayerConnectedCells != null) {
         numConnectionsNextLevel = nextLayerConnectedCells.length;
 
         if (numConnectionsNextLevel > 0) {
-          medianNextLevel = this.medianXValue(
-            nextLayerConnectedCells,
-            nextRankValue
-          );
+          medianNextLevel = this.medianXValue(nextLayerConnectedCells, nextRankValue);
         } else {
           // For case of no connections on the next level set the
           // median to be the current position and try to be
@@ -524,7 +539,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         const weightedValue = cellMap[<string>rank[j].id];
 
         if (weightedValue != null) {
-          const leftCell = <GraphHierarchyNode><unknown>weightedValue.cell;
+          const leftCell = <GraphHierarchyNode>(<unknown>weightedValue.cell);
 
           if (weightedValue.visited) {
             // The left limit is the right hand limit of that
@@ -547,15 +562,11 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       let rightBuffer = 0.0;
       let rightLimit = 100000000.0;
 
-      for (
-        let j = <number>weightedValues[i].rankIndex + 1;
-        j < weightedValues.length;
-
-      ) {
+      for (let j = <number>weightedValues[i].rankIndex + 1; j < weightedValues.length; ) {
         const weightedValue = cellMap[<string>rank[j].id];
 
         if (weightedValue != null) {
-          const rightCell = <GraphHierarchyNode><unknown>weightedValue.cell;
+          const rightCell = <GraphHierarchyNode>(<unknown>weightedValue.cell);
 
           if (weightedValue.visited) {
             // The left limit is the right hand limit of that
@@ -685,7 +696,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     const rank = ranks[rankValue];
     let maxY = 0.0;
     let localX =
-      this.initialX + (<number>this.widestRankValue - (<number[]>this.rankWidths)[rankValue]) / 2;
+      this.initialX +
+      (<number>this.widestRankValue - (<number[]>this.rankWidths)[rankValue]) / 2;
 
     // Store whether or not any of the cells' bounds were unavailable so
     // to only issue the warning once for all cells
@@ -825,15 +837,10 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
 
       this.rankY[rankValue] = y;
       const distanceToNextRank =
-        maxCellHeight / 2.0 +
-        lastRankMaxCellHeight / 2.0 +
-        this.interRankCellSpacing;
+        maxCellHeight / 2.0 + lastRankMaxCellHeight / 2.0 + this.interRankCellSpacing;
       lastRankMaxCellHeight = maxCellHeight;
 
-      if (
-        this.orientation === DIRECTION.NORTH ||
-        this.orientation === DIRECTION.WEST
-      ) {
+      if (this.orientation === DIRECTION.NORTH || this.orientation === DIRECTION.WEST) {
         y += distanceToNextRank;
       } else {
         y -= distanceToNextRank;
@@ -964,7 +971,12 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param rank the layer of the cell
    * @param position the x position being sought
    */
-  repositionValid(model: GraphHierarchyModel, cell: GraphHierarchyEdge | GraphHierarchyNode, rank: number, position: number) {
+  repositionValid(
+    model: GraphHierarchyModel,
+    cell: GraphHierarchyEdge | GraphHierarchyNode,
+    rank: number,
+    position: number
+  ) {
     const ranks = <GraphAbstractHierarchyCell[][]>model.ranks;
     const rankArray = ranks[rank];
     let rankIndex = -1;
@@ -991,8 +1003,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
 
       const leftCell = rankArray[rankIndex - 1];
       let leftLimit = <number>leftCell.getGeneralPurposeVariable(rank);
-      leftLimit =
-        leftLimit + leftCell.width / 2 + this.intraCellSpacing + cell.width / 2;
+      leftLimit = leftLimit + leftCell.width / 2 + this.intraCellSpacing + cell.width / 2;
 
       return leftLimit <= position;
     }
@@ -1005,7 +1016,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
 
       const rightCell = rankArray[rankIndex + 1];
       let rightLimit = <number>rightCell.getGeneralPurposeVariable(rank);
-      rightLimit = rightLimit - rightCell.width / 2 - this.intraCellSpacing - cell.width / 2;
+      rightLimit =
+        rightLimit - rightCell.width / 2 - this.intraCellSpacing - cell.width / 2;
       return rightLimit >= position;
     }
     return true;
@@ -1106,7 +1118,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
               // Calculate width requirements for all connected edges
               for (let j = 0; j < sortedCells.length; j++) {
                 const innerCell = <GraphHierarchyNode>sortedCells[j].cell;
-                var connections;
+                let connections: GraphHierarchyEdge[] | undefined;
 
                 if (innerCell.isVertex()) {
                   // Get the connecting edge
@@ -1138,8 +1150,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
                 }
               }
 
-              const requiredWidth =
-                (connectedEdgeCount + 1) * this.prefHozEdgeSep;
+              const requiredWidth = (connectedEdgeCount + 1) * this.prefHozEdgeSep;
 
               // Add a buffer on the edges of the vertex if the edge count allows
               if (cell.width > requiredWidth + 2 * this.prefHozEdgeSep) {
@@ -1212,11 +1223,12 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       const jettyPositions = <{ [key: string]: number[] }>this.jettyPositions;
       const jettys = jettyPositions[cell.ids[0]];
 
-      const source = cell.isReversed ? (<GraphHierarchyNode>cell.target).cell : (<GraphHierarchyNode>cell.source).cell;
+      const source = cell.isReversed
+        ? (<GraphHierarchyNode>cell.target).cell
+        : (<GraphHierarchyNode>cell.source).cell;
       const { graph } = this.layout;
       const layoutReversed =
-        this.orientation === DIRECTION.EAST ||
-        this.orientation === DIRECTION.SOUTH;
+        this.orientation === DIRECTION.EAST || this.orientation === DIRECTION.SOUTH;
 
       for (let i = 0; i < cell.edges.length; i += 1) {
         const realEdge = cell.edges[i];
@@ -1268,16 +1280,21 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
             if (state != null) {
               x = state.x;
             } else {
-              x = (<Geometry>(<Cell>realSource).geometry).x + (<GraphHierarchyNode>cell.source).width * (<Geometry>modelSource.geometry).x;
+              x =
+                (<Geometry>(<Cell>realSource).geometry).x +
+                (<GraphHierarchyNode>cell.source).width *
+                  (<Geometry>modelSource.geometry).x;
             }
           }
 
-          if (this.orientation === DIRECTION.NORTH || this.orientation === DIRECTION.SOUTH) {
+          if (
+            this.orientation === DIRECTION.NORTH ||
+            this.orientation === DIRECTION.SOUTH
+          ) {
             newPoints.push(new Point(x, y));
             if (this.layout.edgeStyle === HierarchicalEdgeStyle.CURVE) {
               newPoints.push(new Point(x, y + jetty));
             }
-
           } else {
             newPoints.push(new Point(y, x));
             if (this.layout.edgeStyle === HierarchicalEdgeStyle.CURVE) {
@@ -1316,7 +1333,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
           const rankBottomY = <number[]>this.rankBottomY;
 
           let topChannelY = (rankTopY[currentRank] + rankBottomY[currentRank + 1]) / 2.0;
-          let bottomChannelY = (rankTopY[currentRank - 1] + rankBottomY[currentRank]) / 2.0;
+          let bottomChannelY =
+            (rankTopY[currentRank - 1] + rankBottomY[currentRank]) / 2.0;
 
           if (reversed) {
             const tmp = topChannelY;
@@ -1363,17 +1381,15 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
           const modelTarget = <Cell>realEdge.getTerminal(false);
           const realTarget = <Cell>this.layout.getVisibleTerminal(realEdge, false);
 
-          if (
-            this.layout.isPort(modelTarget) &&
-            modelTarget.getParent() === realTarget
-          ) {
+          if (this.layout.isPort(modelTarget) && modelTarget.getParent() === realTarget) {
             const state = graph.view.getState(modelTarget);
             if (state != null) {
               x = state.x;
             } else {
               x =
                 (<Geometry>realTarget.geometry).x +
-                (<GraphHierarchyNode>cell.target).width * (<Geometry>modelTarget.geometry).x;
+                (<GraphHierarchyNode>cell.target).width *
+                  (<Geometry>modelTarget.geometry).x;
             }
           }
 
@@ -1385,7 +1401,6 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
               newPoints.push(new Point(x, y - jetty));
             }
             newPoints.push(new Point(x, y));
-
           } else {
             if (this.layout.edgeStyle === HierarchicalEdgeStyle.CURVE) {
               newPoints.push(new Point(y - jetty, x));
@@ -1429,12 +1444,12 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     const rankBottomY = <number[]>this.rankBottomY;
 
     rankTopY[cell.minRank] = Math.min(rankTopY[cell.minRank], positionY);
-    rankBottomY[cell.minRank] = Math.max(rankBottomY[cell.minRank], positionY + cell.height);
+    rankBottomY[cell.minRank] = Math.max(
+      rankBottomY[cell.minRank],
+      positionY + cell.height
+    );
 
-    if (
-      this.orientation === DIRECTION.NORTH ||
-      this.orientation === DIRECTION.SOUTH
-    ) {
+    if (this.orientation === DIRECTION.NORTH || this.orientation === DIRECTION.SOUTH) {
       this.layout.setVertexLocation(realCell, positionX, positionY);
     } else {
       this.layout.setVertexLocation(realCell, positionY, positionX);

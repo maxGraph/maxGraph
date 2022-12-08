@@ -195,12 +195,16 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
     for (let j = 0; j < rank.length; j += 1) {
       const node = rank[j];
       const rankPosition = <number>node.getGeneralPurposeVariable(i);
-      const connectedCells = <GraphAbstractHierarchyCell[]>node.getPreviousLayerConnectedCells(i);
+      const connectedCells = <GraphAbstractHierarchyCell[]>(
+        node.getPreviousLayerConnectedCells(i)
+      );
       const nodeIndices = [];
 
       for (let k = 0; k < connectedCells.length; k += 1) {
         const connectedNode = connectedCells[k];
-        const otherCellRankPosition = <number>connectedNode.getGeneralPurposeVariable(i - 1);
+        const otherCellRankPosition = <number>(
+          connectedNode.getGeneralPurposeVariable(i - 1)
+        );
         nodeIndices.push(otherCellRankPosition);
       }
 
@@ -303,17 +307,25 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
           // right cell on the new left cell
           if (j === 0) {
             leftCell = orderedCells[j];
-            leftCellAboveConnections = <GraphAbstractHierarchyCell[]>leftCell.getNextLayerConnectedCells(i);
-            leftCellBelowConnections = <GraphAbstractHierarchyCell[]>leftCell.getPreviousLayerConnectedCells(i);
+            leftCellAboveConnections = <GraphAbstractHierarchyCell[]>(
+              leftCell.getNextLayerConnectedCells(i)
+            );
+            leftCellBelowConnections = <GraphAbstractHierarchyCell[]>(
+              leftCell.getPreviousLayerConnectedCells(i)
+            );
             leftAbovePositions = [];
             leftBelowPositions = [];
 
             for (let k = 0; k < leftCellAboveConnections.length; k++) {
-              leftAbovePositions[k] = <number>leftCellAboveConnections[k].getGeneralPurposeVariable(i + 1);
+              leftAbovePositions[k] = <number>(
+                leftCellAboveConnections[k].getGeneralPurposeVariable(i + 1)
+              );
             }
 
             for (let k = 0; k < leftCellBelowConnections.length; k++) {
-              leftBelowPositions[k] = <number>leftCellBelowConnections[k].getGeneralPurposeVariable(i - 1);
+              leftBelowPositions[k] = <number>(
+                leftCellBelowConnections[k].getGeneralPurposeVariable(i - 1)
+              );
             }
           } else {
             leftCellAboveConnections = rightCellAboveConnections;
@@ -324,20 +336,26 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
           }
 
           rightCell = orderedCells[j + 1];
-          rightCellAboveConnections = <GraphAbstractHierarchyCell[]>rightCell.getNextLayerConnectedCells(i);
-          rightCellBelowConnections = <GraphAbstractHierarchyCell[]>rightCell.getPreviousLayerConnectedCells(
-            i
+          rightCellAboveConnections = <GraphAbstractHierarchyCell[]>(
+            rightCell.getNextLayerConnectedCells(i)
+          );
+          rightCellBelowConnections = <GraphAbstractHierarchyCell[]>(
+            rightCell.getPreviousLayerConnectedCells(i)
           );
 
           rightAbovePositions = [];
           rightBelowPositions = [];
 
           for (let k = 0; k < rightCellAboveConnections.length; k++) {
-            rightAbovePositions[k] = <number>rightCellAboveConnections[k].getGeneralPurposeVariable(i + 1);
+            rightAbovePositions[k] = <number>(
+              rightCellAboveConnections[k].getGeneralPurposeVariable(i + 1)
+            );
           }
 
           for (let k = 0; k < rightCellBelowConnections.length; k++) {
-            rightBelowPositions[k] = <number>rightCellBelowConnections[k].getGeneralPurposeVariable(i - 1);
+            rightBelowPositions[k] = <number>(
+              rightCellBelowConnections[k].getGeneralPurposeVariable(i - 1)
+            );
           }
 
           let totalCurrentCrossings = 0;
@@ -371,8 +389,13 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
             totalSwitchedCrossings < totalCurrentCrossings ||
             (totalSwitchedCrossings === totalCurrentCrossings && nudge)
           ) {
-            const temp = <number>(<GraphAbstractHierarchyCell>leftCell).getGeneralPurposeVariable(i);
-            (<GraphAbstractHierarchyCell>leftCell).setGeneralPurposeVariable(i, <number>rightCell.getGeneralPurposeVariable(i));
+            const temp = <number>(
+              (<GraphAbstractHierarchyCell>leftCell).getGeneralPurposeVariable(i)
+            );
+            (<GraphAbstractHierarchyCell>leftCell).setGeneralPurposeVariable(
+              i,
+              <number>rightCell.getGeneralPurposeVariable(i)
+            );
             rightCell.setGeneralPurposeVariable(i, temp);
 
             // With this pair exchanged we have to switch all of
@@ -426,7 +449,9 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
    * @param downwardSweep whether or not this is a downward sweep through the graph
    */
   medianRank(rankValue: number, downwardSweep: boolean) {
-    const nestedBestRanks = <{ [key: number]: GraphAbstractHierarchyCell[] }>this.nestedBestRanks;
+    const nestedBestRanks = <{ [key: number]: GraphAbstractHierarchyCell[] }>(
+      this.nestedBestRanks
+    );
     const numCellsForRank = nestedBestRanks[rankValue].length;
     const medianValues = [];
     const reservedPositions: { [key: number]: boolean } = {};
@@ -440,28 +465,13 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
       // sweeps
       // TODO re-implement some kind of nudge
       // medianValues[i].nudge = !downwardSweep;
-      var nextLevelConnectedCells;
+      const nextLevelConnectedCells = downwardSweep
+        ? cell.getNextLayerConnectedCells(rankValue)
+        : cell.getPreviousLayerConnectedCells(rankValue);
 
-      if (downwardSweep) {
-        nextLevelConnectedCells = cell.getNextLayerConnectedCells(rankValue);
-      } else {
-        nextLevelConnectedCells = cell.getPreviousLayerConnectedCells(
-          rankValue
-        );
-      }
+      const nextRankValue = downwardSweep ? rankValue + 1 : rankValue - 1;
 
-      var nextRankValue;
-
-      if (downwardSweep) {
-        nextRankValue = rankValue + 1;
-      } else {
-        nextRankValue = rankValue - 1;
-      }
-
-      if (
-        nextLevelConnectedCells != null &&
-        nextLevelConnectedCells.length !== 0
-      ) {
+      if (nextLevelConnectedCells != null && nextLevelConnectedCells.length !== 0) {
         sorterEntry.medianValue = this.medianValue(
           nextLevelConnectedCells,
           nextRankValue
@@ -480,7 +490,9 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
     // its temp variable
     for (let i = 0; i < numCellsForRank; i += 1) {
       if (reservedPositions[i] == null) {
-        const cell = <GraphAbstractHierarchyCell>(<MedianCellSorter>medianValues.shift()).cell;
+        const cell = <GraphAbstractHierarchyCell>(
+          (<MedianCellSorter>medianValues.shift()).cell
+        );
         cell.setGeneralPurposeVariable(rankValue, i);
       }
     }
@@ -519,8 +531,7 @@ class MedianHybridCrossingReduction extends HierarchicalLayoutStage {
     }
     const medianPoint = arrayCount / 2;
     const leftMedian = medianValues[medianPoint - 1] - medianValues[0];
-    const rightMedian =
-      medianValues[arrayCount - 1] - medianValues[medianPoint];
+    const rightMedian = medianValues[arrayCount - 1] - medianValues[medianPoint];
 
     return (
       (medianValues[medianPoint - 1] * rightMedian +

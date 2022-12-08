@@ -857,12 +857,16 @@ class SelectionHandler implements GraphPlugin {
   /**
    * Hook for subclassers do show details while the handler is active.
    */
-  updateHint(me?: InternalMouseEvent) {}
+  updateHint(me?: InternalMouseEvent) {
+    return;
+  }
 
   /**
    * Hooks for subclassers to hide details when the handler gets inactive.
    */
-  removeHint() {}
+  removeHint() {
+    return;
+  }
 
   /**
    * Hook for rounding the unscaled vector. This uses Math.round.

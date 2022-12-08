@@ -120,7 +120,7 @@ class Effects {
       }
     };
 
-    let delay = 30;
+    const delay = 30;
     animate();
   }
 
@@ -162,7 +162,14 @@ class Effects {
   /**
    * Asynchronous fade-out operation.
    */
-  static fadeOut(node: HTMLElement, from: number, remove: boolean, step: number, delay: number, isEnabled: boolean): void {
+  static fadeOut(
+    node: HTMLElement,
+    from: number,
+    remove: boolean,
+    step: number,
+    delay: number,
+    isEnabled: boolean
+  ): void {
     step = step || 40;
     delay = delay || 30;
 

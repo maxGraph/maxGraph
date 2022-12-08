@@ -147,15 +147,13 @@ class Client {
    * True if the current browser is Safari.
    */
   static IS_SF =
-    typeof window !== 'undefined' &&
-    /Apple Computer, Inc/.test(navigator.vendor);
+    typeof window !== 'undefined' && /Apple Computer, Inc/.test(navigator.vendor);
 
   /**
    * Returns true if the user agent contains Android.
    */
   static IS_ANDROID =
-    typeof window !== 'undefined' &&
-    navigator.appVersion.indexOf('Android') >= 0;
+    typeof window !== 'undefined' && navigator.appVersion.indexOf('Android') >= 0;
 
   /**
    * Returns true if the user agent is an iPad, iPhone or iPod.
@@ -217,10 +215,9 @@ class Client {
   static NO_FO =
     typeof window !== 'undefined' &&
     (!document.createElementNS ||
-      document.createElementNS(
-        'http://www.w3.org/2000/svg',
-        'foreignObject'
-      ).toString() !== '[object SVGForeignObjectElement]' ||
+      document
+        .createElementNS('http://www.w3.org/2000/svg', 'foreignObject')
+        .toString() !== '[object SVGForeignObjectElement]' ||
       navigator.userAgent.indexOf('Opera/') >= 0);
 
   /**
@@ -280,7 +277,6 @@ class Client {
   static isBrowserSupported = () => {
     return Client.IS_SVG;
   };
-
 }
 
 export default Client;

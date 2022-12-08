@@ -89,12 +89,14 @@ export const makeDraggable = (
   graphF: Graph | Function,
   funct: DropHandler,
   dragElement: Element,
-  dx: number | null=null,
-  dy: number | null=null,
-  autoscroll: boolean | null=null,
-  scalePreview: boolean=false,
-  highlightDropTargets: boolean=true,
-  getDropTarget: ((graph: Graph, x: number, y: number, evt: MouseEvent) => Cell) | null=null
+  dx: number | null = null,
+  dy: number | null = null,
+  autoscroll: boolean | null = null,
+  scalePreview = false,
+  highlightDropTargets = true,
+  getDropTarget:
+    | ((graph: Graph, x: number, y: number, evt: MouseEvent) => Cell)
+    | null = null
 ) => {
   const dragSource = new DragSource(element, funct);
   dragSource.dragOffset = new Point(

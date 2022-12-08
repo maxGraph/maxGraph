@@ -48,10 +48,7 @@ class CollapseChange implements UndoableChange {
    */
   execute() {
     this.collapsed = this.previous;
-    this.previous = this.model.collapsedStateForCellChanged(
-      this.cell,
-      this.previous
-    );
+    this.previous = this.model.collapsedStateForCellChanged(this.cell, this.previous);
   }
 }
 

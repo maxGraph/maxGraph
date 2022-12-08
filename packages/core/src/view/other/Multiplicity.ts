@@ -51,7 +51,7 @@ class Multiplicity {
     validNeighbors: string[],
     countError: string,
     typeError: string,
-    validNeighborsAllowed: boolean = true
+    validNeighborsAllowed = true
   ) {
     this.source = source;
     this.type = type;
@@ -115,7 +115,7 @@ class Multiplicity {
    * Boolean indicating if the list of validNeighbors are those that are allowed
    * for this rule or those that are not allowed for this rule.
    */
-  validNeighborsAllowed: boolean = true;
+  validNeighborsAllowed = true;
 
   /**
    * Holds the localized error message to be displayed if the number of

@@ -235,7 +235,9 @@ const EditingMixin: PartialType = {
    */
   isCellEditable(cell): boolean {
     const style = this.getCurrentCellStyle(cell);
-    return this.isCellsEditable() && !this.isCellLocked(cell) && (style.editable || false);
+    return (
+      this.isCellsEditable() && !this.isCellLocked(cell) && (style.editable || false)
+    );
   },
 
   /**

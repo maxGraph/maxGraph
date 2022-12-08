@@ -43,7 +43,6 @@ const Template = ({ label, ...args }) => {
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
-
   let requestId = 0;
 
   // Speedup the animation
@@ -67,15 +66,15 @@ const Template = ({ label, ...args }) => {
   // Changes the default vertex style in-place
   const style = graph.getStylesheet().getDefaultVertexStyle();
   style.shape = constants.SHAPE.ELLIPSE;
-  style.perimiter = Perimeter.EllipsePerimeter;
+  style.perimeter = Perimeter.EllipsePerimeter;
   style.gradientColor = 'white';
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
-  const cx = graph.container.clientWidth / 2;
-  const cy = graph.container.clientHeight / 2;
+  const cx = args.width / 2;
+  const cy = args.height / 2;
 
   const cell = graph.insertVertex(parent, '0-0', '0-0', cx - 20, cy - 15, 60, 40);
 
@@ -90,8 +89,8 @@ const Template = ({ label, ...args }) => {
   // (implemented for this demo using the server-function)
   function load(graph, cell) {
     if (cell.isVertex()) {
-      const cx = graph.container.clientWidth / 2;
-      const cy = graph.container.clientHeight / 2;
+      const cx = args.width / 2;
+      const cy = args.height / 2;
 
       // Gets the default parent for inserting new cells. This
       // is normally the first child of the root (ie. layer 0).
@@ -102,10 +101,11 @@ const Template = ({ label, ...args }) => {
         const xml = server(cell.id);
         const doc = xmlUtils.parseXml(xml);
         const dec = new Codec(doc);
+
         const model = dec.decode(doc.documentElement);
 
         // Removes all cells which are not in the response
-        for (var key in graph.getDataModel().cells) {
+        for (const key in graph.getDataModel().cells) {
           const tmp = graph.getDataModel().getCell(key);
 
           if (tmp != cell && tmp.isVertex()) {
@@ -114,7 +114,7 @@ const Template = ({ label, ...args }) => {
         }
 
         // Merges the response model with the client model
-        graph.getDataModel().mergeChildren(graph.getDataModel().getRoot().getChildAt(0), parent);
+        graph.getDataModel().mergeChildren(model.getRoot().getChildAt(0), parent);
 
         // Moves the given cell to the center
         let geo = cell.getGeometry();
@@ -133,7 +133,7 @@ const Template = ({ label, ...args }) => {
         // the target model before calling mergeChildren above
         const vertices = [];
 
-        for (var key in graph.getDataModel().cells) {
+        for (const key in graph.getDataModel().cells) {
           const tmp = graph.getDataModel().getCell(key);
 
           if (tmp != cell && tmp.isVertex()) {
@@ -155,8 +155,8 @@ const Template = ({ label, ...args }) => {
         const cellCount = vertices.length;
         const phi = (2 * Math.PI) / cellCount;
         const r = Math.min(
-          graph.container.clientWidth / 4,
-          graph.container.clientHeight / 4
+          args.width / 4,
+          args.height / 4
         );
 
         for (let i = 0; i < cellCount; i++) {

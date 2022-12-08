@@ -70,7 +70,7 @@ export interface _mxCompactTreeLayoutLine {
  * ```
  */
 export class CompactTreeLayout extends GraphLayout {
-  constructor(graph: Graph, horizontal: boolean = true, invert: boolean = false) {
+  constructor(graph: Graph, horizontal = true, invert = false) {
     super(graph);
     this.horizontal = horizontal;
     this.invert = invert;
@@ -84,20 +84,20 @@ export class CompactTreeLayout extends GraphLayout {
    * Specifies the orientation of the layout.
    * @default true
    */
-  horizontal: boolean = true;
+  horizontal = true;
 
   /**
    * Specifies if edge directions should be inverted.
    * @default false.
    */
-  invert: boolean = false;
+  invert = false;
 
   /**
    * If the parents should be resized to match the width/height of the
    * children. Default is true.
    * @default true
    */
-  resizeParent: boolean = true;
+  resizeParent = true;
 
   /**
    * Specifies if the parent location should be maintained, so that the
@@ -105,37 +105,37 @@ export class CompactTreeLayout extends GraphLayout {
    * the layout. Default is false for backwards compatibility.
    * @default false
    */
-  maintainParentLocation: boolean = false;
+  maintainParentLocation = false;
 
   /**
    * Padding added to resized parents.
    * @default 10
    */
-  groupPadding: number = 10;
+  groupPadding = 10;
 
   /**
    * Top padding added to resized parents.
    * @default 0
    */
-  groupPaddingTop: number = 0;
+  groupPaddingTop = 0;
 
   /**
    * Right padding added to resized parents.
    * @default 0
    */
-  groupPaddingRight: number = 0;
+  groupPaddingRight = 0;
 
   /**
    * Bottom padding added to resized parents.
    * @default 0
    */
-  groupPaddingBottom: number = 0;
+  groupPaddingBottom = 0;
 
   /**
    * Left padding added to resized parents.
    * @default 0
    */
-  groupPaddingLeft: number = 0;
+  groupPaddingLeft = 0;
 
   /**
    * A set of the parents that need updating based on children
@@ -148,64 +148,64 @@ export class CompactTreeLayout extends GraphLayout {
    * if it is inside a top-level layer.
    * @default false
    */
-  moveTree: boolean = false;
+  moveTree = false;
 
   /**
    * Holds the levelDistance.
    * @default 10
    */
-  levelDistance: number = 10;
+  levelDistance = 10;
 
   /**
    * Holds the nodeDistance.
    * @default 20
    */
-  nodeDistance: number = 20;
+  nodeDistance = 20;
 
   /**
    * Specifies if all edge points of traversed edges should be removed.
    *
    * @default true
    */
-  resetEdges: boolean = true;
+  resetEdges = true;
 
   /**
    * The preferred horizontal distance between edges exiting a vertex.
    */
-  prefHozEdgeSep: number = 5;
+  prefHozEdgeSep = 5;
 
   /**
    * The preferred vertical offset between edges exiting a vertex.
    */
-  prefVertEdgeOff: number = 4;
+  prefVertEdgeOff = 4;
 
   /**
    * The minimum distance for an edge jetty from a vertex.
    */
-  minEdgeJetty: number = 8;
+  minEdgeJetty = 8;
 
   /**
    * The size of the vertical buffer in the center of inter-rank channels
    * where edge control points should not be placed.
    */
-  channelBuffer: number = 4;
+  channelBuffer = 4;
 
   /**
    * Whether or not to apply the internal tree edge routing.
    */
-  edgeRouting: boolean = true;
+  edgeRouting = true;
 
   /**
    * Specifies if edges should be sorted according to the order of their
    * opposite terminal cell in the model.
    */
-  sortEdges: boolean = false;
+  sortEdges = false;
 
   /**
    * Whether or not the tops of cells in each rank should be aligned
    * across the rank
    */
-  alignRanks: boolean = false;
+  alignRanks = false;
 
   /**
    * An array of the maximum height of cells (relative to the layout direction)
@@ -869,7 +869,7 @@ export class CompactTreeLayout extends GraphLayout {
    * at the given node.
    */
   createLine(dx: number, dy: number, next: any = null): _mxCompactTreeLayoutLine {
-    let line: _mxCompactTreeLayoutLine = {
+    const line: _mxCompactTreeLayoutLine = {
       dx,
       dy,
       next,

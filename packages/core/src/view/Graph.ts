@@ -90,12 +90,12 @@ export const defaultPlugins: GraphPluginConstructor[] = [
 class Graph extends EventSource {
   container: HTMLElement;
 
-  destroyed: boolean = false;
+  destroyed = false;
 
   graphModelChangeListener: Function | null = null;
   paintBackground: Function | null = null;
   foldingEnabled: null | boolean = null;
-  isConstrainedMoving: boolean = false;
+  isConstrainedMoving = false;
 
   /*****************************************************************************
    * Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)
@@ -171,7 +171,7 @@ class Graph extends EventSource {
    * {@link isConstrainChild} returns `true`. The value specifies the
    * portion of the child which is allowed to overlap the parent.
    */
-  defaultOverlap: number = 0.5;
+  defaultOverlap = 0.5;
 
   /**
    * Specifies the default parent to be used to insert new cells.
@@ -320,7 +320,7 @@ class Graph extends EventSource {
    * being resized after the graph has been changed.
    * @default 0
    */
-  border: number = 0;
+  border = 0;
 
   /**
    * Specifies if edges should appear in the foreground regardless of their order
@@ -328,7 +328,7 @@ class Graph extends EventSource {
    * both `true` then the normal order is applied.
    * @default false
    */
-  keepEdgesInForeground: boolean = false;
+  keepEdgesInForeground = false;
 
   /**
    * Specifies if edges should appear in the background regardless of their order
@@ -336,26 +336,26 @@ class Graph extends EventSource {
    * both `true` then the normal order is applied.
    * @default false
    */
-  keepEdgesInBackground: boolean = false;
+  keepEdgesInBackground = false;
 
   /**
    * Specifies the return value for {@link isRecursiveResize}.
    * @default false (for backwards compatibility)
    */
-  recursiveResize: boolean = false;
+  recursiveResize = false;
 
   /**
    * Specifies if the scale and translate should be reset if the root changes in
    * the model.
    * @default true
    */
-  resetViewOnRootChange: boolean = true;
+  resetViewOnRootChange = true;
 
   /**
    * Specifies if loops (aka self-references) are allowed.
    * @default false
    */
-  allowLoops: boolean = false;
+  allowLoops = false;
 
   /**
    * {@link EdgeStyle} to be used for loops. This is a fallback for loops if the
@@ -369,19 +369,19 @@ class Graph extends EventSource {
    * vertices are allowed.
    * @default true
    */
-  multigraph: boolean = true;
+  multigraph = true;
 
   /**
    * Specifies the minimum scale to be applied in {@link fit}. Set this to `null` to allow any value.
    * @default 0.1
    */
-  minFitScale: number = 0.1;
+  minFitScale = 0.1;
 
   /**
    * Specifies the maximum scale to be applied in {@link fit}. Set this to `null` to allow any value.
    * @default 8
    */
-  maxFitScale: number = 8;
+  maxFitScale = 8;
 
   /**
    * Specifies the {@link Image} for the image to be used to display a warning
@@ -653,12 +653,7 @@ class Graph extends EventSource {
    * Scrolls the graph to the given point, extending the graph container if
    * specified.
    */
-  scrollPointToVisible(
-    x: number,
-    y: number,
-    extend: boolean = false,
-    border: number = 20
-  ) {
+  scrollPointToVisible(x: number, y: number, extend = false, border = 20) {
     const panningHandler = this.getPlugin('PanningHandler') as PanningHandler;
 
     if (
@@ -822,11 +817,11 @@ class Graph extends EventSource {
    */
   fit(
     border: number = this.getBorder(),
-    keepOrigin: boolean = false,
-    margin: number = 0,
-    enabled: boolean = true,
-    ignoreWidth: boolean = false,
-    ignoreHeight: boolean = false,
+    keepOrigin = false,
+    margin = 0,
+    enabled = true,
+    ignoreWidth = false,
+    ignoreHeight = false,
     maxHeight: number | null = null
   ): number {
     if (this.container != null) {
@@ -1150,12 +1145,7 @@ class Graph extends EventSource {
    * @param cx Optional float that specifies the horizontal center. Default is `0.5`.
    * @param cy Optional float that specifies the vertical center. Default is `0.5`.
    */
-  center(
-    horizontal: boolean = true,
-    vertical: boolean = true,
-    cx: number = 0.5,
-    cy: number = 0.5
-  ): void {
+  center(horizontal = true, vertical = true, cx = 0.5, cy = 0.5): void {
     const container = <HTMLElement>this.container;
     const _hasScrollbars = hasScrollbars(this.container);
     const padding = 2 * this.getBorder();

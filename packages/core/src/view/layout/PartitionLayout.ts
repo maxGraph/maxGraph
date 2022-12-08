@@ -38,12 +38,7 @@ import Cell from '../cell/Cell';
  * @class
  */
 class PartitionLayout extends GraphLayout {
-  constructor(
-    graph: Graph,
-    horizontal: boolean = true,
-    spacing: number = 0,
-    border: number = 0
-  ) {
+  constructor(graph: Graph, horizontal = true, spacing = 0, border = 0) {
     super(graph);
     this.horizontal = horizontal != null ? horizontal : true;
     this.spacing = spacing || 0;
@@ -71,7 +66,7 @@ class PartitionLayout extends GraphLayout {
   /**
    * Boolean that specifies if vertices should be resized. Default is true.
    */
-  resizeVertices: boolean = true;
+  resizeVertices = true;
 
   /**
    * Returns <horizontal>.

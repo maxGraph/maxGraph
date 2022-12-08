@@ -42,10 +42,10 @@ export const MAX_HOTSPOT_SIZE = 0;
  * Defines the fastest rendering hint.
  */
 export const enum RENDERING_HINT {
-    EXACT = 'exact',
-    FASTER = 'faster',
-    FASTEST = 'fastest',
-};
+  EXACT = 'exact',
+  FASTER = 'faster',
+  FASTEST = 'fastest',
+}
 
 /**
  * - DIALECT.SVG: Defines the SVG display dialect name.
@@ -57,11 +57,17 @@ export const enum RENDERING_HINT {
  * - DIALECT.STRICTHTML: Defines the strict HTML display dialect.
  */
 export const enum DIALECT {
-    SVG = 'svg',
-    MIXEDHTML = 'mixedHtml',
-    PREFERHTML = 'preferHtml',
-    STRICTHTML = 'strictHtml',
-};
+  SVG = 'svg',
+  MIXEDHTML = 'mixedHtml',
+  PREFERHTML = 'preferHtml',
+  STRICTHTML = 'strictHtml',
+}
+
+/**
+ * Name of the field to be used to store the object ID. Default is
+ * <code>mxObjectId</code>.
+ */
+export const IDENTITY_FIELD_NAME = 'mxObjectId';
 
 /**
  * Defines the SVG namespace.
@@ -95,18 +101,18 @@ export const SHADOW_OFFSET_Y = 3;
 export const SHADOW_OPACITY = 1;
 
 export const enum NODETYPE {
-    ELEMENT = 1,
-    ATTRIBUTE = 2,
-    TEXT = 3,
-    CDATA = 4,
-    ENTITY_REFERENCE = 5,
-    ENTITY = 6,
-    PROCESSING_INSTRUCTION = 7,
-    COMMENT = 8,
-    DOCUMENT = 9,
-    DOCUMENTTYPE = 10,
-    DOCUMENT_FRAGMENT = 11,
-    NOTATION = 12,
+  ELEMENT = 1,
+  ATTRIBUTE = 2,
+  TEXT = 3,
+  CDATA = 4,
+  ENTITY_REFERENCE = 5,
+  ENTITY = 6,
+  PROCESSING_INSTRUCTION = 7,
+  COMMENT = 8,
+  DOCUMENT = 9,
+  DOCUMENTTYPE = 10,
+  DOCUMENT_FRAGMENT = 11,
+  NOTATION = 12,
 }
 
 /**
@@ -170,14 +176,14 @@ export const HIGHLIGHT_OPACITY = 100;
  * - CURSOR_CONNECT: Defines the cursor for a connectable state. Default is 'pointer'.
  */
 export const enum CURSOR {
-    MOVABLE_VERTEX = 'move',
-    MOVABLE_EDGE = 'move',
-    LABEL_HANDLE = 'default',
-    TERMINAL_HANDLE = 'pointer',
-    BEND_HANDLE = 'crosshair',
-    VIRTUAL_BEND_HANDLE = 'crosshair',
-    CONNECT = 'pointer',
-};
+  MOVABLE_VERTEX = 'move',
+  MOVABLE_EDGE = 'move',
+  LABEL_HANDLE = 'default',
+  TERMINAL_HANDLE = 'pointer',
+  BEND_HANDLE = 'crosshair',
+  VIRTUAL_BEND_HANDLE = 'crosshair',
+  CONNECT = 'pointer',
+}
 
 /**
  * Defines the color to be used for the cell highlighting.
@@ -464,11 +470,11 @@ export const NONE = 'none';
  * - FONT_STRIKETHROUGH: Constant for strikthrough fonts. Default is 8.
  */
 export const enum FONT {
-    BOLD = 1,
-    ITALIC = 2,
-    UNDERLINE = 4,
-    STRIKETHROUGH = 8,
-};
+  BOLD = 1,
+  ITALIC = 2,
+  UNDERLINE = 4,
+  STRIKETHROUGH = 8,
+}
 
 /**
  * - ARROW_CLASSIC: Constant for classic arrow markers.
@@ -490,16 +496,16 @@ export const enum FONT {
  * - ARROW_DIAMOND_THIN: Constant for thin diamond arrow markers.
  */
 export const enum ARROW {
-    CLASSIC = 'classic',
-    CLASSIC_THIN = 'classicThin',
-    BLOCK = 'block',
-    BLOCK_THIN = 'blockThin',
-    OPEN = 'open',
-    OPEN_THIN = 'openThin',
-    OVAL = 'oval',
-    DIAMOND = 'diamond',
-    DIAMOND_THIN = 'diamondThin',
-};
+  CLASSIC = 'classic',
+  CLASSIC_THIN = 'classicThin',
+  BLOCK = 'block',
+  BLOCK_THIN = 'blockThin',
+  OPEN = 'open',
+  OPEN_THIN = 'openThin',
+  OVAL = 'oval',
+  DIAMOND = 'diamond',
+  DIAMOND_THIN = 'diamondThin',
+}
 
 /**
  * - ALIGN_LEFT: Constant for left horizontal alignment. Default is left.
@@ -515,19 +521,19 @@ export const enum ARROW {
  * - ALIGN_BOTTOM: Constant for bottom vertical alignment. Default is bottom.
  */
 export const enum ALIGN {
-    LEFT = 'left',
-    CENTER = 'center',
-    RIGHT = 'right',
-    TOP = 'top',
-    MIDDLE = 'middle',
-    BOTTOM = 'bottom',
-};
+  LEFT = 'left',
+  CENTER = 'center',
+  RIGHT = 'right',
+  TOP = 'top',
+  MIDDLE = 'middle',
+  BOTTOM = 'bottom',
+}
 
 export const enum DIRECTION {
-    NORTH = 'north',
-    SOUTH = 'south',
-    EAST = 'east',
-    WEST = 'west',
+  NORTH = 'north',
+  SOUTH = 'south',
+  EAST = 'east',
+  WEST = 'west',
 }
 
 /**
@@ -536,7 +542,7 @@ export const enum DIRECTION {
  *
  * Constant for text direction automatic. Default is auto. Use this value
  * to find the direction for a given text with {@link Text#getAutoDirection}.
-*
+ *
  * Constant for text direction left to right. Default is ltr. Use this
  * value for left to right text direction.
  *
@@ -544,11 +550,11 @@ export const enum DIRECTION {
  * value for right to left text direction.
  */
 export const enum TEXT_DIRECTION {
-    DEFAULT = '',
-    AUTO = 'auto',
-    LTR = 'ltr',
-    RTL = 'rtl',
-};
+  DEFAULT = '',
+  AUTO = 'auto',
+  LTR = 'ltr',
+  RTL = 'rtl',
+}
 
 /**
  * - DIRECTION_MASK_NONE: Constant for no direction.
@@ -564,140 +570,140 @@ export const enum TEXT_DIRECTION {
  * - DIRECTION_MASK_ALL: Bitwise mask for all directions.
  */
 export const DIRECTION_MASK = {
-    NONE: 0,
-    WEST: 1,
-    NORTH: 2,
-    SOUTH: 4,
-    EAST: 8,
-    ALL: 15,
+  NONE: 0,
+  WEST: 1,
+  NORTH: 2,
+  SOUTH: 4,
+  EAST: 8,
+  ALL: 15,
 };
 
 /**
  * Default is horizontal.
  */
 export const enum ELBOW {
-    VERTICAL = 'vertical',
-    HORIZONTAL = 'horizontal',
-};
+  VERTICAL = 'vertical',
+  HORIZONTAL = 'horizontal',
+}
 
 /**
  * Can be used as a string value for the STYLE_EDGE style.
  */
 export const enum EDGESTYLE {
-    ELBOW = 'elbowEdgeStyle',
-    ENTITY_RELATION = 'entityRelationEdgeStyle',
-    LOOP = 'loopEdgeStyle',
-    SIDETOSIDE = 'sideToSideEdgeStyle',
-    TOPTOBOTTOM = 'topToBottomEdgeStyle',
-    ORTHOGONAL = 'orthogonalEdgeStyle',
-    SEGMENT = 'segmentEdgeStyle',
-};
+  ELBOW = 'elbowEdgeStyle',
+  ENTITY_RELATION = 'entityRelationEdgeStyle',
+  LOOP = 'loopEdgeStyle',
+  SIDETOSIDE = 'sideToSideEdgeStyle',
+  TOPTOBOTTOM = 'topToBottomEdgeStyle',
+  ORTHOGONAL = 'orthogonalEdgeStyle',
+  SEGMENT = 'segmentEdgeStyle',
+}
 
 /**
  * Can be used as a string value for the STYLE_PERIMETER style.
  */
 export const enum PERIMETER {
-    ELLIPSE = 'ellipsePerimeter',
-    RECTANGLE = 'rectanglePerimeter',
-    RHOMBUS = 'rhombusPerimeter',
-    HEXAGON = 'hexagonPerimeter',
-    TRIANGLE = 'trianglePerimeter'
-};
+  ELLIPSE = 'ellipsePerimeter',
+  RECTANGLE = 'rectanglePerimeter',
+  RHOMBUS = 'rhombusPerimeter',
+  HEXAGON = 'hexagonPerimeter',
+  TRIANGLE = 'trianglePerimeter',
+}
 
 export const enum SHAPE {
-    /**
-     * Name under which {@link RectangleShape} is registered in {@link CellRenderer}.
-     * Default is rectangle.
-     */
-    RECTANGLE = 'rectangle',
+  /**
+   * Name under which {@link RectangleShape} is registered in {@link CellRenderer}.
+   * Default is rectangle.
+   */
+  RECTANGLE = 'rectangle',
 
-    /**
-     * Name under which {@link Ellipse} is registered in {@link CellRenderer}.
-     * Default is ellipse.
-     */
-    ELLIPSE = 'ellipse',
+  /**
+   * Name under which {@link Ellipse} is registered in {@link CellRenderer}.
+   * Default is ellipse.
+   */
+  ELLIPSE = 'ellipse',
 
-    /**
-     * Name under which {@link DoubleEllipse} is registered in {@link CellRenderer}.
-     * Default is doubleEllipse.
-     */
-    DOUBLE_ELLIPSE = 'doubleEllipse',
+  /**
+   * Name under which {@link DoubleEllipse} is registered in {@link CellRenderer}.
+   * Default is doubleEllipse.
+   */
+  DOUBLE_ELLIPSE = 'doubleEllipse',
 
-    /**
-     * Name under which {@link Rhombus} is registered in {@link CellRenderer}.
-     * Default is rhombus.
-     */
-    RHOMBUS = 'rhombus',
+  /**
+   * Name under which {@link Rhombus} is registered in {@link CellRenderer}.
+   * Default is rhombus.
+   */
+  RHOMBUS = 'rhombus',
 
-    /**
-     * Name under which {@link Line} is registered in {@link CellRenderer}.
-     * Default is line.
-     */
-    LINE = 'line',
+  /**
+   * Name under which {@link Line} is registered in {@link CellRenderer}.
+   * Default is line.
+   */
+  LINE = 'line',
 
-    /**
-     * Name under which {@link ImageShape} is registered in {@link CellRenderer}.
-     * Default is image.
-     */
-    IMAGE = 'image',
+  /**
+   * Name under which {@link ImageShape} is registered in {@link CellRenderer}.
+   * Default is image.
+   */
+  IMAGE = 'image',
 
-    /**
-     * Name under which {@link Arrow} is registered in {@link CellRenderer}.
-     * Default is arrow.
-     */
-    ARROW = 'arrow',
+  /**
+   * Name under which {@link Arrow} is registered in {@link CellRenderer}.
+   * Default is arrow.
+   */
+  ARROW = 'arrow',
 
-    /**
-     * Name under which {@link ArrowConnector} is registered in {@link CellRenderer}.
-     * Default is arrowConnector.
-     */
-    ARROW_CONNECTOR = 'arrowConnector',
+  /**
+   * Name under which {@link ArrowConnector} is registered in {@link CellRenderer}.
+   * Default is arrowConnector.
+   */
+  ARROW_CONNECTOR = 'arrowConnector',
 
-    /**
-     * Name under which {@link Label} is registered in {@link CellRenderer}.
-     * Default is label.
-     */
-    LABEL = 'label',
+  /**
+   * Name under which {@link Label} is registered in {@link CellRenderer}.
+   * Default is label.
+   */
+  LABEL = 'label',
 
-    /**
-     * Name under which {@link Cylinder} is registered in {@link CellRenderer}.
-     * Default is cylinder.
-     */
-    CYLINDER = 'cylinder',
+  /**
+   * Name under which {@link Cylinder} is registered in {@link CellRenderer}.
+   * Default is cylinder.
+   */
+  CYLINDER = 'cylinder',
 
-    /**
-     * Name under which {@link Swimlane} is registered in {@link CellRenderer}.
-     * Default is swimlane.
-     */
-    SWIMLANE = 'swimlane',
+  /**
+   * Name under which {@link Swimlane} is registered in {@link CellRenderer}.
+   * Default is swimlane.
+   */
+  SWIMLANE = 'swimlane',
 
-    /**
-     * Name under which {@link Connector} is registered in {@link CellRenderer}.
-     * Default is connector.
-     */
-    CONNECTOR = 'connector',
+  /**
+   * Name under which {@link Connector} is registered in {@link CellRenderer}.
+   * Default is connector.
+   */
+  CONNECTOR = 'connector',
 
-    /**
-     * Name under which {@link Actor} is registered in {@link CellRenderer}.
-     * Default is actor.
-     */
-    ACTOR = 'actor',
+  /**
+   * Name under which {@link Actor} is registered in {@link CellRenderer}.
+   * Default is actor.
+   */
+  ACTOR = 'actor',
 
-    /**
-     * Name under which {@link Cloud} is registered in {@link CellRenderer}.
-     * Default is cloud.
-     */
-    CLOUD = 'cloud',
+  /**
+   * Name under which {@link Cloud} is registered in {@link CellRenderer}.
+   * Default is cloud.
+   */
+  CLOUD = 'cloud',
 
-    /**
-     * Name under which {@link Triangle} is registered in {@link CellRenderer}.
-     * Default is triangle.
-     */
-    TRIANGLE = 'triangle',
+  /**
+   * Name under which {@link Triangle} is registered in {@link CellRenderer}.
+   * Default is triangle.
+   */
+  TRIANGLE = 'triangle',
 
-    /**
-     * Name under which {@link Hexagon} is registered in {@link CellRenderer}.
-     * Default is hexagon.
-     */
-    HEXAGON = 'hexagon',
-};
+  /**
+   * Name under which {@link Hexagon} is registered in {@link CellRenderer}.
+   * Default is hexagon.
+   */
+  HEXAGON = 'hexagon',
+}

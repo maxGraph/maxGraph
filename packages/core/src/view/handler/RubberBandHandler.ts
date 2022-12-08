@@ -86,7 +86,7 @@ class RubberBandHandler implements GraphPlugin {
   gestureHandler: Function;
   graph: Graph;
   first: Point | null = null;
-  destroyed: boolean = false;
+  destroyed = false;
   dragHandler: ((evt: MouseEvent) => void) | null = null;
   dropHandler: ((evt: MouseEvent) => void) | null = null;
 
@@ -98,7 +98,7 @@ class RubberBandHandler implements GraphPlugin {
   /**
    * Specifies the default opacity to be used for the rubberband div.  Default is 20.
    */
-  defaultOpacity: number = 20;
+  defaultOpacity = 20;
 
   /**
    * Specifies if events are handled. Default is true.

@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _mxCompactTreeLayoutNode } from "../CompactTreeLayout";
-import GraphAbstractHierarchyCell from "../datatypes/GraphAbstractHierarchyCell";
+import { _mxCompactTreeLayoutNode } from '../CompactTreeLayout';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
 
 /**
  * @class WeightedCellSorter
@@ -26,7 +26,10 @@ import GraphAbstractHierarchyCell from "../datatypes/GraphAbstractHierarchyCell"
  *
  */
 class WeightedCellSorter {
-  constructor(cell: _mxCompactTreeLayoutNode | GraphAbstractHierarchyCell, weightedValue: number=0) {
+  constructor(
+    cell: _mxCompactTreeLayoutNode | GraphAbstractHierarchyCell,
+    weightedValue = 0
+  ) {
     this.cell = cell;
     this.weightedValue = weightedValue;
   }
@@ -34,17 +37,17 @@ class WeightedCellSorter {
   /**
    * The weighted value of the cell stored.
    */
-  weightedValue: number = 0;
+  weightedValue = 0;
 
   /**
    * Whether or not to flip equal weight values.
    */
-  nudge: boolean = false;
+  nudge = false;
 
   /**
    * Whether or not this cell has been visited in the current assignment.
    */
-  visited: boolean = false;
+  visited = false;
 
   /**
    * The index this cell is in the model rank.

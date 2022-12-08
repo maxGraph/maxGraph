@@ -33,12 +33,7 @@ import Cell from '../cell/Cell';
  * {@link bubbling} is true.
  */
 class SwimlaneManager extends EventSource {
-  constructor(
-    graph: Graph,
-    horizontal: boolean = true,
-    addEnabled: boolean = true,
-    resizeEnabled: boolean = true
-  ) {
+  constructor(graph: Graph, horizontal = true, addEnabled = true, resizeEnabled = true) {
     super();
 
     this.horizontal = horizontal;

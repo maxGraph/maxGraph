@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DIRECTION } from './util/Constants';
+import { DIRECTION, IDENTITY_FIELD_NAME } from './util/Constants';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
 import EventSource from './view/event/EventSource';
@@ -316,3 +316,13 @@ export interface PopupMenuItem extends HTMLElement {
   activeRow: PopupMenuItem | null;
   eventReceiver: HTMLElement | null;
 }
+
+export type IdentityObject = {
+  [IDENTITY_FIELD_NAME]?: string;
+  [k: string]: any;
+};
+
+export type IdentityFunction = {
+  (): any;
+  [IDENTITY_FIELD_NAME]?: string;
+};

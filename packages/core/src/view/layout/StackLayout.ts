@@ -82,52 +82,52 @@ class StackLayout extends GraphLayout {
   /**
    * Border to be added if fill is true.
    */
-  border: number = 0;
+  border = 0;
 
   /**
    * Top margin for the child area.
    */
-  marginTop: number = 0;
+  marginTop = 0;
 
   /**
    * Top margin for the child area.
    */
-  marginLeft: number = 0;
+  marginLeft = 0;
 
   /**
    * Top margin for the child area.
    */
-  marginRight: number = 0;
+  marginRight = 0;
 
   /**
    * Top margin for the child area.
    */
-  marginBottom: number = 0;
+  marginBottom = 0;
 
   /**
    * Boolean indicating if the location of the first cell should be kept, that is, it will not be moved to x0 or y0.
    */
-  keepFirstLocation: boolean = false;
+  keepFirstLocation = false;
 
   /**
    * Boolean indicating if dimension should be changed to fill out the parent cell.
    */
-  fill: boolean = false;
+  fill = false;
 
   /**
    * If the parent should be resized to match the width/height of the stack.
    */
-  resizeParent: boolean = false;
+  resizeParent = false;
 
   /**
    * Use maximum of existing value and new value for resize of parent.
    */
-  resizeParentMax: boolean = false;
+  resizeParentMax = false;
 
   /**
    * If the last element should be resized to fill out the parent.
    */
-  resizeLast: boolean = false;
+  resizeLast = false;
 
   /**
    * Value at which a new column or row should be created.
@@ -137,17 +137,17 @@ class StackLayout extends GraphLayout {
   /**
    * If the strokeWidth should be ignored.
    */
-  borderCollapse: boolean = true;
+  borderCollapse = true;
 
   /**
    * If gaps should be allowed in the stack.
    */
-  allowGaps: boolean = false;
+  allowGaps = false;
 
   /**
    * Grid size for alignment of position and size.
    */
-  gridSize: number = 0;
+  gridSize = 0;
 
   /**
    * Returns horizontal.
