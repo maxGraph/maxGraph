@@ -42,10 +42,10 @@ import Codec from '../serialization/Codec';
  * An {@link InternalEvent.ESCAPE} event is fired via the editor if the escape key is pressed.
  */
 export class EditorKeyHandler {
-  constructor(editor: Editor | null=null) {
+  constructor(editor: Editor | null = null) {
     if (editor != null) {
       this.editor = editor;
-      const handler = this.handler = new KeyHandler(editor.graph);
+      const handler = (this.handler = new KeyHandler(editor.graph));
 
       // Extends the escape function of the internal key
       // handle to hide the properties dialog and fire

@@ -80,7 +80,8 @@ class ConnectorShape extends PolylineShape {
 
     let result = null;
     const n = pts.length;
-    const type: ArrowType | typeof NONE = (source ? this.style.startArrow : this.style.endArrow) || NONE;
+    const type: ArrowType | typeof NONE =
+      (source ? this.style.startArrow : this.style.endArrow) || NONE;
 
     let p0 = source ? pts[1] : pts[n - 2];
     const pe = source ? pts[0] : pts[n - 1];

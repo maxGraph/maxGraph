@@ -19,7 +19,13 @@ limitations under the License.
 import { Graph } from '../Graph';
 import InternalEvent from '../event/InternalEvent';
 import { isAncestorNode } from '../../util/domUtils';
-import { getSource, isAltDown, isConsumed, isControlDown as _isControlDown, isShiftDown } from '../../util/EventUtils';
+import {
+  getSource,
+  isAltDown,
+  isConsumed,
+  isControlDown as _isControlDown,
+  isShiftDown,
+} from '../../util/EventUtils';
 import CellEditorHandler from './CellEditorHandler';
 
 /**
@@ -80,12 +86,12 @@ import CellEditorHandler from './CellEditorHandler';
  * event listener is installed.
  */
 class KeyHandler {
-  constructor(graph: Graph, target: Element | null=null) {
+  constructor(graph: Graph, target: Element | null = null) {
     if (graph != null) {
       this.graph = graph;
       this.target = target || document.documentElement;
 
-      this.keydownHandler = evt => {
+      this.keydownHandler = (evt) => {
         this.keyDown(evt);
       };
 
@@ -238,12 +244,13 @@ class KeyHandler {
 
     // Accepts events from the target object or
     // in-place editing inside graph
-    const cellEditor = this.graph?.getPlugin('CellEditorHandler') as CellEditorHandler | null;
+    const cellEditor = this.graph?.getPlugin(
+      'CellEditorHandler'
+    ) as CellEditorHandler | null;
     if (
       source === this.target ||
       source.parentNode === this.target ||
-      cellEditor != null &&
-      cellEditor.isEventSource(evt)
+      (cellEditor != null && cellEditor.isEventSource(evt))
     ) {
       return true;
     }

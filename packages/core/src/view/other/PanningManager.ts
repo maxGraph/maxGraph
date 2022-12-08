@@ -42,8 +42,12 @@ class PanningManager {
     this.scrollTop = 0;
 
     this.mouseListener = {
-      mouseDown: (sender: EventSource, me: InternalMouseEvent) => {},
-      mouseMove: (sender: EventSource, me: InternalMouseEvent) => {},
+      mouseDown: (sender: EventSource, me: InternalMouseEvent) => {
+        return;
+      },
+      mouseMove: (sender: EventSource, me: InternalMouseEvent) => {
+        return;
+      },
       mouseUp: (sender: EventSource, me: InternalMouseEvent) => {
         if (this.active) {
           this.stop();

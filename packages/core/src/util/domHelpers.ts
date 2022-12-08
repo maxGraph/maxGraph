@@ -16,8 +16,8 @@ limitations under the License.
 
 import Editor from '../editor/Editor';
 import { KeyboardEventListener, MouseEventListener } from '../types';
-import InternalEvent from "../view/event/InternalEvent";
-import { write } from "./domUtils";
+import InternalEvent from '../view/event/InternalEvent';
+import { write } from './domUtils';
 
 /**
  * Adds a hyperlink to the specified parent that invokes action on the
@@ -29,7 +29,13 @@ import { write } from "./domUtils";
  * @param action String that defines the name of the action to be executed.
  * @param pad Optional left-padding for the link. Default is 0.
  */
-export const linkAction = (parent: HTMLElement, text: string, editor: Editor, action: string, pad: number=0) => {
+export const linkAction = (
+  parent: HTMLElement,
+  text: string,
+  editor: Editor,
+  action: string,
+  pad = 0
+) => {
   return link(
     parent,
     text,
@@ -53,7 +59,14 @@ export const linkAction = (parent: HTMLElement, text: string, editor: Editor, ac
  * @param arg Object that represents the argument to the function.
  * @param pad Optional left-padding for the link. Default is 0.
  */
-export const linkInvoke = (parent: Element, text: string, editor: Editor, functName: string, arg: any, pad: number=0) => {
+export const linkInvoke = (
+  parent: Element,
+  text: string,
+  editor: Editor,
+  functName: string,
+  arg: any,
+  pad = 0
+) => {
   return link(
     parent,
     text,
@@ -74,7 +87,12 @@ export const linkInvoke = (parent: Element, text: string, editor: Editor, functN
  * @param funct Function to execute when the link is clicked.
  * @param pad Optional left-padding for the link. Default is 0.
  */
-export const link = (parent: Element, text: string, funct: MouseEventListener | KeyboardEventListener, pad: number=0) => {
+export const link = (
+  parent: Element,
+  text: string,
+  funct: MouseEventListener | KeyboardEventListener,
+  pad = 0
+) => {
   const a = document.createElement('span');
 
   a.style.color = 'blue';
@@ -108,7 +126,11 @@ export const link = (parent: Element, text: string, funct: MouseEventListener | 
  * @param doc Optional document to be used for creating the button. Default is the
  * current document.
  */
-export const button = (label: string, funct: (evt: MouseEvent) => void, doc: Document | null=null): HTMLButtonElement => {
+export const button = (
+  label: string,
+  funct: (evt: MouseEvent) => void,
+  doc: Document | null = null
+): HTMLButtonElement => {
   doc = doc != null ? doc : document;
 
   const button = doc.createElement('button');

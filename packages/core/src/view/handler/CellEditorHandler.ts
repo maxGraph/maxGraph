@@ -189,7 +189,7 @@ class CellEditorHandler implements GraphPlugin {
 
   zoomHandler: () => void;
 
-  clearOnChange: boolean = false;
+  clearOnChange = false;
 
   bounds: Rectangle | null = null;
 
@@ -224,21 +224,21 @@ class CellEditorHandler implements GraphPlugin {
    * Specifies if the label has been modified.
    */
   // modified: boolean;
-  modified: boolean = false;
+  modified = false;
 
   /**
    * Specifies if the textarea should be resized while the text is being edited.
    * Default is true.
    */
   // autoSize: boolean;
-  autoSize: boolean = true;
+  autoSize = true;
 
   /**
    * Specifies if the text should be selected when editing starts. Default is
    * true.
    */
   // selectText: boolean;
-  selectText: boolean = true;
+  selectText = true;
 
   /**
    * Text to be displayed for empty labels. Default is '' or '<br>' in Firefox as
@@ -256,7 +256,7 @@ class CellEditorHandler implements GraphPlugin {
    * editing on Shift+Escape instead. Default is true.
    */
   // escapeCancelsEditing: boolean;
-  escapeCancelsEditing: boolean = true;
+  escapeCancelsEditing = true;
 
   /**
    * Reference to the label DOM node that has been hidden.
@@ -268,7 +268,7 @@ class CellEditorHandler implements GraphPlugin {
    * Specifies the zIndex for the textarea. Default is 5.
    */
   // zIndex: number;
-  zIndex: number = 5;
+  zIndex = 5;
 
   /**
    * Defines the minimum width and height to be used in <resize>. Default is 0x20px.
@@ -281,13 +281,13 @@ class CellEditorHandler implements GraphPlugin {
    * 11 and 1 in all other browsers and modes.
    */
   // wordWrapPadding: 2 | 1 | 0;
-  wordWrapPadding: number = 0;
+  wordWrapPadding = 0;
 
   /**
    * If <focusLost> should be called if <textarea> loses the focus. Default is false.
    */
   // blurEnabled: boolean;
-  blurEnabled: boolean = false;
+  blurEnabled = false;
 
   /**
    * Holds the initial editing value to check if the current value was modified.
@@ -852,7 +852,7 @@ class CellEditorHandler implements GraphPlugin {
   /**
    * Stops the editor and applies the value if cancel is false.
    */
-  stopEditing(cancel: boolean = false) {
+  stopEditing(cancel = false) {
     if (this.editingCell) {
       if (this.textNode) {
         this.textNode.style.visibility = 'visible';

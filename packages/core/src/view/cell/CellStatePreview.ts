@@ -47,7 +47,7 @@ class CellStatePreview {
   /**
    * Contains the number of entries in the map.
    */
-  count: number = 0;
+  count = 0;
 
   /**
    * Returns true if this contains no entries.
@@ -57,7 +57,7 @@ class CellStatePreview {
   }
 
   /**
-     *
+   *
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
@@ -70,8 +70,8 @@ class CellStatePreview {
     state: CellState,
     dx: number,
     dy: number,
-    add: boolean = true,
-    includeEdges: boolean = true
+    add = true,
+    includeEdges = true
   ): Point {
     let delta = this.deltas.get(state.cell);
 
@@ -95,7 +95,7 @@ class CellStatePreview {
   }
 
   /**
-     *
+   *
    * @param {Function} visitor
    * @memberof mxCellStatePreview
    */
@@ -110,7 +110,7 @@ class CellStatePreview {
   }
 
   /**
-     *
+   *
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
@@ -142,7 +142,7 @@ class CellStatePreview {
   }
 
   /**
-     *
+   *
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
@@ -189,7 +189,7 @@ class CellStatePreview {
   }
 
   /**
-     *
+   *
    * @param {CellState} state
    * @memberof mxCellStatePreview
    */

@@ -44,22 +44,22 @@ class MxFastOrganicLayout extends GraphLayout {
   /**
    * Specifies if the top left corner of the input cells should be the origin of the layout result.  Default is true.
    */
-  useInputOrigin: boolean = true;
+  useInputOrigin = true;
 
   /**
    * Specifies if all edge points of traversed edges should be removed.  Default is true.
    */
-  resetEdges: boolean = true;
+  resetEdges = true;
 
   /**
    * Specifies if the STYLE_NOEDGESTYLE flag should be set on edges that are modified by the result.  Default is true.
    */
-  disableEdgeStyle: boolean = true;
+  disableEdgeStyle = true;
 
   /**
    * The force constant by which the attractive forces are divided and the replusive forces are multiple by the square of.  The value equates to the average radius there is of free space around each node.  Default is 50.
    */
-  forceConstant: number = 50;
+  forceConstant = 50;
 
   /**
    * Cache of <forceConstant>^2 for performance.
@@ -69,38 +69,38 @@ class MxFastOrganicLayout extends GraphLayout {
   /**
    * Minimal distance limit.  Default is 2.  Prevents of dividing by zero.
    */
-  minDistanceLimit: number = 2;
+  minDistanceLimit = 2;
 
   /**
    * Maximal distance limit. Default is 500. Prevents of
    * dividing by zero.
    */
-  maxDistanceLimit: number = 500;
+  maxDistanceLimit = 500;
 
   /**
    * Cached version of minDistanceLimit squared.
    */
-  minDistanceLimitSquared: number = 4;
+  minDistanceLimitSquared = 4;
 
   /**
    * Start value of temperature. Default is 200.
    */
-  initialTemp: number = 200;
+  initialTemp = 200;
 
   /**
    * Temperature to limit displacement at later stages of layout.
    */
-  temperature: number = 0;
+  temperature = 0;
 
   /**
    * Total number of iterations to run the layout though.
    */
-  maxIterations: number = 0;
+  maxIterations = 0;
 
   /**
    * Current iteration count.
    */
-  iteration: number = 0;
+  iteration = 0;
 
   /**
    * An array of all vertices to be laid out.

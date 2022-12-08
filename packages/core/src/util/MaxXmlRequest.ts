@@ -85,11 +85,11 @@ import { write } from './domUtils';
 class MaxXmlRequest {
   constructor(
     url: string,
-    params: string | null=null,
-    method: 'GET' | 'POST'='POST',
-    async: boolean=true,
-    username: string | null=null,
-    password: string | null=null
+    params: string | null = null,
+    method: 'GET' | 'POST' = 'POST',
+    async = true,
+    username: string | null = null,
+    password: string | null = null
   ) {
     this.url = url;
     this.params = params;
@@ -127,14 +127,14 @@ class MaxXmlRequest {
    *
    * @default false
    */
-  binary: boolean = false;
+  binary = false;
 
   /**
    * Specifies if withCredentials should be used in HTML5-compliant browsers. Default is false.
    *
    * @default false
    */
-  withCredentials: boolean = false;
+  withCredentials = false;
 
   /**
    * Specifies the username to be used for authentication.
@@ -156,7 +156,7 @@ class MaxXmlRequest {
    * textarea value in {@link simulate}. Defaults to false for backwards compatibility,
    * to avoid another decode on the server this should be set to true.
    */
-  decodeSimulateValues: boolean = false;
+  decodeSimulateValues = false;
 
   /**
    * Returns {@link binary}.
@@ -251,10 +251,10 @@ class MaxXmlRequest {
    * @param ontimeout Optional function to execute on timeout.
    */
   send(
-    onload: Function | null=null,
-    onerror: Function | null=null,
-    timeout: number | null=null,
-    ontimeout: Function | null=null
+    onload: Function | null = null,
+    onerror: Function | null = null,
+    timeout: number | null = null,
+    ontimeout: Function | null = null
   ): void {
     this.request = this.create();
 
@@ -268,24 +268,14 @@ class MaxXmlRequest {
         };
       }
 
-      this.request.open(
-        this.method,
-        this.url,
-        this.async,
-        this.username,
-        this.password
-      );
+      this.request.open(this.method, this.url, this.async, this.username, this.password);
       this.setRequestHeaders(this.request, this.params);
 
       if (window.XMLHttpRequest && this.withCredentials) {
         this.request.withCredentials = 'true';
       }
 
-      if (
-        window.XMLHttpRequest &&
-        timeout != null &&
-        ontimeout != null
-      ) {
+      if (window.XMLHttpRequest && timeout != null && ontimeout != null) {
         this.request.timeout = timeout;
         this.request.ontimeout = ontimeout;
       }
@@ -320,10 +310,7 @@ class MaxXmlRequest {
    */
   setRequestHeaders(request: any, params: any): void {
     if (params != null) {
-      request.setRequestHeader(
-        'Content-Type',
-        'application/x-www-form-urlencoded'
-      );
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     }
   }
 
@@ -334,7 +321,7 @@ class MaxXmlRequest {
    * @param doc Document that contains the form element.
    * @param target Target to send the form result to.
    */
-  simulate(doc: any, target: string | null=null): void {
+  simulate(doc: any, target: string | null = null): void {
     doc = doc || document;
     let old = null;
 
@@ -416,7 +403,7 @@ export const load = (url: string) => {
   const req = new MaxXmlRequest(url, null, 'GET', false);
   req.send();
   return req;
-}
+};
 
 /**
  * Loads the specified URL *asynchronously* and invokes the given functions
@@ -457,12 +444,12 @@ export const load = (url: string) => {
  */
 export const get = (
   url: string,
-  onload: Function | null=null,
-  onerror: Function | null=null,
-  binary: boolean=false,
-  timeout: number | null=null,
-  ontimeout: Function | null=null,
-  headers: { [key: string]: string } | null=null
+  onload: Function | null = null,
+  onerror: Function | null = null,
+  binary = false,
+  timeout: number | null = null,
+  ontimeout: Function | null = null,
+  headers: { [key: string]: string } | null = null
 ) => {
   const req = new MaxXmlRequest(url, null, 'GET');
   const { setRequestHeaders } = req;
@@ -482,7 +469,7 @@ export const get = (
 
   req.send(onload, onerror, timeout, ontimeout);
   return req;
-}
+};
 
 /**
  * Loads the URLs in the given array *asynchronously* and invokes the given function
@@ -534,7 +521,7 @@ export const getAll = (
   if (remain == 0) {
     onload(result);
   }
-}
+};
 
 /**
  * Posts the specified params to the given URL *asynchronously* and invokes
@@ -560,12 +547,12 @@ export const getAll = (
  */
 export const post = (
   url: string,
-  params: string | null=null,
+  params: string | null = null,
   onload: Function,
-  onerror: Function | null=null
+  onerror: Function | null = null
 ) => {
   return new MaxXmlRequest(url, params).send(onload, onerror);
-}
+};
 
 /**
  * Submits the given parameters to the specified URL using

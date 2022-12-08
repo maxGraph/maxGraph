@@ -25,7 +25,7 @@ limitations under the License.
  * coordinates are given, then the default values for <x> and <y> are used.
  */
 class Point {
-  constructor(x: number = 0, y: number = 0) {
+  constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
   }

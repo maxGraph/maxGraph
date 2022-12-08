@@ -42,10 +42,7 @@ export const extractTextWithWhitespace = (elems: Element[]): string => {
 
   function doExtract(elts: Element[]) {
     // Single break should be ignored
-    if (
-      elts.length == 1 &&
-      (elts[0].nodeName == 'BR' || elts[0].innerHTML == '\n')
-    ) {
+    if (elts.length == 1 && (elts[0].nodeName == 'BR' || elts[0].innerHTML == '\n')) {
       return;
     }
 
@@ -88,7 +85,7 @@ export const extractTextWithWhitespace = (elems: Element[]): string => {
  * @param node DOM node to return the text content for.
  */
 export const getTextContent = (node: Text | null): string => {
-  return (node != null && node.textContent) ? node.textContent : '';
+  return node != null && node.textContent ? node.textContent : '';
 };
 
 /**
@@ -179,7 +176,7 @@ export const writeln = (parent: Element, text: string) => {
  *
  * @param parent DOM node to append the linebreak to.
  */
-export const br = (parent: Element, count: number=1) => {
+export const br = (parent: Element, count = 1) => {
   let br = null;
 
   for (let i = 0; i < count; i += 1) {
@@ -223,16 +220,18 @@ export const para = (parent: Element, text: string) => {
  * @param attributeName Optional attribute name to check.
  * @param attributeValue Optional attribute value to check.
  */
-export const isNode = (value: any, nodeName: string | null=null, attributeName?: string, attributeValue?: string) => {
+export const isNode = (
+  value: any,
+  nodeName: string | null = null,
+  attributeName?: string,
+  attributeValue?: string
+) => {
   if (
     value != null &&
     !isNaN(value.nodeType) &&
     (nodeName == null || value.nodeName.toLowerCase() == nodeName.toLowerCase())
   ) {
-    return (
-      attributeName == null ||
-      value.getAttribute(attributeName) == attributeValue
-    );
+    return attributeName == null || value.getAttribute(attributeName) == attributeValue;
   }
 
   return false;
@@ -266,7 +265,10 @@ export const isAncestorNode = (ancestor: Element, child: Element | null) => {
  * @param nodeType Optional node type to return. Default is
  * {@link Constants#NODETYPE_ELEMENT}.
  */
-export const getChildNodes = (node: Element, nodeType: number=NODETYPE.ELEMENT): ChildNode[] => {
+export const getChildNodes = (
+  node: Element,
+  nodeType: number = NODETYPE.ELEMENT
+): ChildNode[] => {
   nodeType = nodeType || NODETYPE.ELEMENT;
 
   const children = [];
@@ -302,7 +304,11 @@ export const importNode = (doc: Document, node: Element, allChildren: boolean) =
  * @param node Node to be imported.
  * @param allChildren If all children should be imported.
  */
-export const importNodeImplementation = (doc: Document, node: Element, allChildren: boolean) => {
+export const importNodeImplementation = (
+  doc: Document,
+  node: Element,
+  allChildren: boolean
+) => {
   switch (node.nodeType) {
     case 1 /* element */: {
       const newNode = doc.createElement(node.nodeName);
@@ -358,7 +364,7 @@ export const clearSelection = () => {
  *
  * @param src URL that points to the image to be displayed.
  */
- export const createImage = (src: string) => {
+export const createImage = (src: string) => {
   let imageNode = null;
   imageNode = document.createElement('img');
   imageNode.setAttribute('src', src);
@@ -379,8 +385,8 @@ export const clearSelection = () => {
 export const addLinkToHead = (
   rel: string,
   href: string,
-  doc: Document | null=null,
-  id: string | null=null
+  doc: Document | null = null,
+  id: string | null = null
 ) => {
   doc = doc || document;
 

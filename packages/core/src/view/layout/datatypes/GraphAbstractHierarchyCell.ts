@@ -18,7 +18,7 @@ limitations under the License.
 
 import Cell from '../../cell/Cell';
 
-class GraphAbstractHierarchyCell extends Cell {
+abstract class GraphAbstractHierarchyCell extends Cell {
   swimlaneIndex: number | null = null;
 
   /**
@@ -59,7 +59,8 @@ class GraphAbstractHierarchyCell extends Cell {
   /**
    * A cached version of the cells this cell connects to on the next layer down
    */
-  previousLayerConnectedCells: { [key: number]: GraphAbstractHierarchyCell[] } | null = null;
+  previousLayerConnectedCells: { [key: number]: GraphAbstractHierarchyCell[] } | null =
+    null;
 
   /**
    * Temporary variable for general use. Generally, try to avoid
@@ -91,16 +92,14 @@ class GraphAbstractHierarchyCell extends Cell {
   /**
    * Returns the cells this cell connects to on the next layer up
    */
-  getNextLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] | null {
-    return null;
-  }
+  abstract getNextLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] | null;
 
   /**
    * Returns the cells this cell connects to on the next layer down
    */
-  getPreviousLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] | null {
-    return null;
-  }
+  abstract getPreviousLayerConnectedCells(
+    layer: number
+  ): GraphAbstractHierarchyCell[] | null;
 
   /**
    * Returns whether or not this cell is an edge
@@ -119,14 +118,12 @@ class GraphAbstractHierarchyCell extends Cell {
   /**
    * Gets the value of temp for the specified layer
    */
-  getGeneralPurposeVariable(layer: number): number | null {
-    return null;
-  }
+  abstract getGeneralPurposeVariable(layer: number): number | null;
 
   /**
    * Set the value of temp for the specified layer
    */
-  setGeneralPurposeVariable(layer: number, value: number) {}
+  abstract setGeneralPurposeVariable(layer: number, value: number): void;
 
   /**
    * Set the value of x for the specified layer

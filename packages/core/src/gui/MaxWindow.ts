@@ -183,17 +183,16 @@ class MaxWindow extends EventSource {
     content: HTMLElement | null,
     x: number,
     y: number,
-    width: number | null=null,
-    height: number | null=null,
-    minimizable: boolean=true,
-    movable: boolean=true,
-    replaceNode: HTMLElement | null=null,
-    style: string=''
+    width: number | null = null,
+    height: number | null = null,
+    minimizable = true,
+    movable = true,
+    replaceNode: HTMLElement | null = null,
+    style = ''
   ) {
     super();
 
     if (content != null) {
-      minimizable = minimizable;
       this.content = content;
       this.init(x, y, width, height, style);
 
@@ -231,7 +230,13 @@ class MaxWindow extends EventSource {
   /**
    * Initializes the DOM tree that represents the window.
    */
-  init(x: number, y: number, width: number | null=null, height: number | null=null, style: string='MaxWindow'): void {
+  init(
+    x: number,
+    y: number,
+    width: number | null = null,
+    height: number | null = null,
+    style = 'MaxWindow'
+  ): void {
     this.div = document.createElement('div');
     this.div.className = style;
 
@@ -335,7 +340,7 @@ class MaxWindow extends EventSource {
   /**
    * Boolean flag that represents the visible state of the window.
    */
-  visible: boolean = false;
+  visible = false;
 
   /**
    * {@link Rectangle} that specifies the minimum width and height of the window.
@@ -347,7 +352,7 @@ class MaxWindow extends EventSource {
    * Specifies if the window should be destroyed when it is closed. If this
    * is false then the window is hidden using <setVisible>. Default is true.
    */
-  destroyOnClose: boolean = true;
+  destroyOnClose = true;
 
   /**
    * Reference to the DOM node (TD) that contains the title.
@@ -489,7 +494,7 @@ class MaxWindow extends EventSource {
 
         // Adds a temporary pair of listeners to intercept
         // the gesture event in the document
-        let dragHandler = (evt: MouseEvent) => {
+        const dragHandler = (evt: MouseEvent) => {
           if (startX != null && startY != null) {
             const dx = getClientX(evt) - startX;
             const dy = getClientY(evt) - startY;
@@ -503,7 +508,7 @@ class MaxWindow extends EventSource {
           }
         };
 
-        let dropHandler = (evt: MouseEvent) => {
+        const dropHandler = (evt: MouseEvent) => {
           if (startX != null && startY != null) {
             startX = null;
             startY = null;
@@ -618,7 +623,7 @@ class MaxWindow extends EventSource {
         this.minimize.setAttribute('src', this.minimizeImage);
         this.minimize.setAttribute('title', 'Minimize');
         this.contentWrapper.style.display = ''; // default
-        
+
         if (maxDisplay != null && height != null) {
           this.maximize.style.display = maxDisplay;
           this.div.style.height = height;
@@ -707,8 +712,7 @@ class MaxWindow extends EventSource {
 
           if (style.overflow === 'auto' || this.resize != null) {
             this.contentWrapper.style.height = `${
-              this.div.offsetHeight -
-              this.title.offsetHeight
+              this.div.offsetHeight - this.title.offsetHeight
             }px`;
           }
 
@@ -736,8 +740,7 @@ class MaxWindow extends EventSource {
 
           if (style.overflow === 'auto' || this.resize != null) {
             this.contentWrapper.style.height = `${
-              this.div.offsetHeight -
-              this.title.offsetHeight
+              this.div.offsetHeight - this.title.offsetHeight
             }px`;
           }
 
@@ -964,7 +967,7 @@ class MaxWindow extends EventSource {
  * @param isInternalWindow Optional boolean indicating if an MaxWindow should be
  * used instead of a new browser window. Default is false.
  */
-export const popup = (content: string, isInternalWindow: boolean=false) => {
+export const popup = (content: string, isInternalWindow = false) => {
   if (isInternalWindow) {
     const div = document.createElement('div');
 
@@ -1031,7 +1034,12 @@ export const popup = (content: string, isInternalWindow: boolean=false) => {
  * @param close Optional boolean indicating whether to add a close button.
  * @param icon Optional icon for the window decoration.
  */
-export const error = (message: string, width: number, close: boolean, icon: string | null=null) => {
+export const error = (
+  message: string,
+  width: number,
+  close: boolean,
+  icon: string | null = null
+) => {
   const div = document.createElement('div');
   div.style.padding = '20px';
 

@@ -62,7 +62,7 @@ const Template = ({ label, ...args }) => {
     if (cell != null) {
       const overlays = graph.getCellOverlays(cell);
 
-      if (overlays == null) {
+      if (overlays.length == 0) {
         // Creates a new overlay with an image and a tooltip
         const overlay = new CellOverlay(
           new ImageBox('/images/check.png', 16, 16),

@@ -454,7 +454,7 @@ export class Editor extends EventSource {
   rubberband: RubberBandHandler | null = null;
   isActive: boolean | null = null;
   properties: any;
-  destroyed: boolean = false;
+  destroyed = false;
 
   /**
    * Specifies the resource key for the zoom dialog. If the resource for this
@@ -604,14 +604,14 @@ export class Editor extends EventSource {
    * top-level cells. Default is false.
    * @default false
    */
-  swimlaneRequired: boolean = false;
+  swimlaneRequired = false;
 
   /**
    * Specifies if the context menu should be disabled in the graph container.
    * Default is true.
    * @default true
    */
-  disableContextMenu: boolean = true;
+  disableContextMenu = true;
 
   /**
    * Specifies the function to be used for inserting new
@@ -630,7 +630,7 @@ export class Editor extends EventSource {
    * mousepointer is selected. Default is false.
    * @default false
    */
-  forcedInserting: boolean = false;
+  forcedInserting = false;
 
   /**
    * Maps from names to protoype cells to be used
@@ -689,7 +689,7 @@ export class Editor extends EventSource {
    * should be converted using encodeURIComponent. Default is true.
    * @default true
    */
-  escapePostData: boolean = true;
+  escapePostData = true;
 
   /**
    * Specifies the URL to be used for posting the diagram
@@ -712,7 +712,7 @@ export class Editor extends EventSource {
    * ie. vertical flow.
    * @default false
    */
-  horizontalFlow: boolean = false;
+  horizontalFlow = false;
 
   /**
    * Group: Autolayout
@@ -730,7 +730,7 @@ export class Editor extends EventSource {
    * the {@link layoutSwimlanes} switch.
    * @default false
    */
-  layoutDiagram: boolean = false;
+  layoutDiagram = false;
 
   /**
    * Specifies the spacing between swimlanes if
@@ -738,7 +738,7 @@ export class Editor extends EventSource {
    * {@link layoutDiagram}. Default is 0.
    * @default 0
    */
-  swimlaneSpacing: number = 0;
+  swimlaneSpacing = 0;
 
   /**
    * Specifies if the swimlanes should be kept at the same
@@ -751,7 +751,7 @@ export class Editor extends EventSource {
    * automatically "stacked" if {@link layoutDiagram} is true.
    * @default false
    */
-  maintainSwimlanes: boolean = false;
+  maintainSwimlanes = false;
 
   /**
    * Specifies if the children of swimlanes should
@@ -759,7 +759,7 @@ export class Editor extends EventSource {
    * depending on {@link horizontalFlow}. Default is false.
    * @default false
    */
-  layoutSwimlanes: boolean = false;
+  layoutSwimlanes = false;
 
   /**
    * Specifies the attribute values to be cycled when inserting new swimlanes.
@@ -778,7 +778,7 @@ export class Editor extends EventSource {
    * {@link cycleAttributeName}. Default is 0.
    * @default 0
    */
-  cycleAttributeIndex: number = 0;
+  cycleAttributeIndex = 0;
 
   /**
    * Name of the attribute to be assigned a {@link cycleAttributeValues}
@@ -805,7 +805,7 @@ export class Editor extends EventSource {
    * Specifies the top coordinate of the tasks window in pixels. Default is 20.
    * @default 20
    */
-  tasksTop: number = 20;
+  tasksTop = 20;
 
   /**
    * Holds the {@link MaxWindow} created in {@link showHelp}
@@ -829,20 +829,20 @@ export class Editor extends EventSource {
    * Specifies the width of the help window in pixels. Default is 300.
    * @default 300
    */
-  helpWidth: number = 300;
+  helpWidth = 300;
 
   /**
    * Specifies the height of the help window in pixels. Default is 260.
    * @default 260
    */
   // helpHeight: number;
-  helpHeight: number = 260;
+  helpHeight = 260;
 
   /**
    * Specifies the width of the properties window in pixels. Default is 240.
    * @default 240
    */
-  propertiesWidth: number = 240;
+  propertiesWidth = 240;
 
   /**
    * Specifies the height of the properties window in pixels.
@@ -859,19 +859,19 @@ export class Editor extends EventSource {
    * account if the dialog is already visible. Default is false.
    * @default false
    */
-  movePropertiesDialog: boolean = false;
+  movePropertiesDialog = false;
 
   /**
    * Specifies if <{@link xGraph.validateGraph} should automatically be invoked after
    * each change. Default is false.
    * @default false
    */
-  validating: boolean = false;
+  validating = false;
 
   /**
    * True if the graph has been modified since it was last saved.
    */
-  modified: boolean = false;
+  modified = false;
 
   /**
    * Returns {@link modified}.

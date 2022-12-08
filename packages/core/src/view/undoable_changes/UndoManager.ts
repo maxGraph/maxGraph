@@ -85,7 +85,7 @@ import UndoableEdit from './UndoableEdit';
  * property contains the {@link mxUndoableEdit} that was added.
  */
 class UndoManager extends EventSource {
-  constructor(size: number=100) {
+  constructor(size = 100) {
     super();
     this.size = size;
     this.clear();
@@ -96,7 +96,7 @@ class UndoManager extends EventSource {
    * 100.
    * @default 100
    */
-  size: number = 100;
+  size = 100;
 
   /**
    * Array that contains the steps of the command history.
@@ -106,7 +106,7 @@ class UndoManager extends EventSource {
   /**
    * Index of the element to be added next.
    */
-  indexOfNextAdd: number = 0;
+  indexOfNextAdd = 0;
 
   /**
    * Returns true if the history is empty.

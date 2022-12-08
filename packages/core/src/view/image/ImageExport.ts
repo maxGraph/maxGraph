@@ -48,8 +48,6 @@ import { Graph } from '../Graph';
  * @class ImageExport
  */
 class ImageExport {
-  constructor() {}
-
   /**
    * Specifies if overlays should be included in the export. Default is false.
    */

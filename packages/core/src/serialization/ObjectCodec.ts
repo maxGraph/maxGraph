@@ -200,10 +200,10 @@ import Codec from './Codec';
  */
 class ObjectCodec {
   constructor(
-    template: any, 
-    exclude: string[]=[], 
-    idrefs: string[]=[], 
-    mapping: { [key: string]: string }={}
+    template: any,
+    exclude: string[] = [],
+    idrefs: string[] = [],
+    mapping: { [key: string]: string } = {}
   ) {
     this.template = template;
 
@@ -223,7 +223,7 @@ class ObjectCodec {
    * Default is false. NOTE: Enabling this carries a possible security risk.
    * @static
    */
-  static allowEval: boolean = false;
+  static allowEval = false;
 
   /**
    * Holds the template object associated with this codec.
@@ -419,16 +419,20 @@ class ObjectCodec {
    * @param value Value of the property to be encoded.
    * @param node XML node that contains the encoded object.
    */
-  encodeValue(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
+  encodeValue(
+    enc: Codec,
+    obj: any,
+    name: string | null,
+    value: any,
+    node: Element
+  ): void {
     if (value != null) {
       // TODO: What is the case where `name` can be `null`? =========================================================================
       if (name != null && this.isReference(obj, name, value, true)) {
         const tmp = enc.getId(value);
 
         if (tmp == null) {
-          MaxLog.warn(
-            `ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`
-          );
+          MaxLog.warn(`ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`);
           return; // exit
         }
 
@@ -448,7 +452,13 @@ class ObjectCodec {
    * Writes the given value into node using {@link writePrimitiveAttribute}
    * or {@link writeComplexAttribute} depending on the type of the value.
    */
-  writeAttribute(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
+  writeAttribute(
+    enc: Codec,
+    obj: any,
+    name: string | null,
+    value: any,
+    node: Element
+  ): void {
     if (typeof value !== 'object' /* primitive type */) {
       this.writePrimitiveAttribute(enc, obj, name, value, node);
     } /* complex type */ else {
@@ -460,14 +470,14 @@ class ObjectCodec {
    * Writes the given value as an attribute of the given node.
    */
   writePrimitiveAttribute(
-    enc: Codec, 
-    obj: any, 
-    name: string | null, 
-    value: any, 
+    enc: Codec,
+    obj: any,
+    name: string | null,
+    value: any,
     node: Element
   ): void {
-    value = this.convertAttributeToXml(enc, obj, name, value, node);  // TODO: params don't seem to match - is this a bug? ===================================
-    
+    value = this.convertAttributeToXml(enc, obj, name, value, node); // TODO: params don't seem to match - is this a bug? ===================================
+
     if (name == null) {
       const child = enc.document.createElement('add');
 
@@ -486,7 +496,13 @@ class ObjectCodec {
   /**
    * Writes the given value as a child node of the given node.
    */
-  writeComplexAttribute(enc: Codec, obj: any, name: string | null, value: any, node: Element): void {
+  writeComplexAttribute(
+    enc: Codec,
+    obj: any,
+    name: string | null,
+    value: any,
+    node: Element
+  ): void {
     const child = enc.encode(value);
 
     if (child != null) {
@@ -509,7 +525,13 @@ class ObjectCodec {
    * @param name Name of the attribute to be converted.
    * @param value Value to be converted.
    */
-  convertAttributeToXml(enc: Codec, obj: any, name: string | null, value: any, node: Element): any {
+  convertAttributeToXml(
+    enc: Codec,
+    obj: any,
+    name: string | null,
+    value: any,
+    node: Element
+  ): any {
     // Makes sure to encode boolean values as numeric values
     if (this.isBooleanAttribute(enc, obj, name, value)) {
       // Checks if the value is true (do not use the value as is, because
@@ -665,7 +687,7 @@ class ObjectCodec {
       }
     }
 
-    let _node = this.beforeDecode(dec, node, obj);
+    const _node = this.beforeDecode(dec, node, obj);
     this.decodeNode(dec, _node, obj);
     return this.afterDecode(dec, _node, obj);
   }
@@ -760,7 +782,7 @@ class ObjectCodec {
    */
   decodeChildren(dec: Codec, node: Element, obj?: any): void {
     let child = <Element>node.firstChild;
-    
+
     while (child != null) {
       const tmp = <Element>child.nextSibling;
 
@@ -790,7 +812,7 @@ class ObjectCodec {
         value = child.getAttribute('value');
 
         if (value == null && ObjectCodec.allowEval) {
-          value = eval(getTextContent(<Text><unknown>child));
+          value = eval(getTextContent(<Text>(<unknown>child)));
         }
       } else {
         value = dec.decode(child, template);

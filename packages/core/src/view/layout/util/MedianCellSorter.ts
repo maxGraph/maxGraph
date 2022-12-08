@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphAbstractHierarchyCell from "../datatypes/GraphAbstractHierarchyCell";
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
 
 /**
  * Class: MedianCellSorter
@@ -34,7 +34,7 @@ class MedianCellSorter {
   /**
    * The weighted value of the cell stored.
    */
-  medianValue: number = 0;
+  medianValue = 0;
 
   /**
    * The cell whose median value is being calculated

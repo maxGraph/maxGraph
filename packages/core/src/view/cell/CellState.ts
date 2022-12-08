@@ -190,7 +190,7 @@ class CellState extends Rectangle {
    * @param bounds Optional {@link Rectangle} to be used as the initial bounds.
    */
   getPerimeterBounds(
-    border: number = 0,
+    border = 0,
     bounds: Rectangle = new Rectangle(this.x, this.y, this.width, this.height)
   ) {
     if (this.shape?.stencil?.aspect === 'fixed') {

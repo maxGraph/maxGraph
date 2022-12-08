@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
- import Point from '../view/geometry/Point';
- import Dictionary from './Dictionary';
- 
- import type { Properties } from '../types'; 
+import Point from '../view/geometry/Point';
+import Dictionary from './Dictionary';
+
+import type { Properties } from '../types';
 
 /**
  * Removes all occurrences of the given object in the given array or
@@ -34,7 +34,7 @@ limitations under the License.
  * @param obj Object to find in the given array.
  * @param array Array to check for the given obj.
  */
- export const remove = (obj: object, array: object[]) => {
+export const remove = (obj: object, array: object[]) => {
   let result = null;
 
   if (typeof array === 'object') {
@@ -93,11 +93,11 @@ export const equalEntries = (a: Properties | null, b: Properties | null) => {
     return false;
   }
   if (a && b) {
-    for (var key in b) {
+    for (const key in b) {
       count++;
     }
 
-    for (var key in a) {
+    for (const key in a) {
       count--;
 
       if ((!Number.isNaN(a[key]) || !Number.isNaN(b[key])) && a[key] !== b[key]) {

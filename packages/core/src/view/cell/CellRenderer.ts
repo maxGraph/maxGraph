@@ -1107,7 +1107,7 @@ class CellRenderer {
    *
    * @param state <CellState> whose overlays should be redrawn.
    */
-  redrawCellOverlays(state: CellState, forced: boolean = false): void {
+  redrawCellOverlays(state: CellState, forced = false): void {
     this.createCellOverlays(state);
 
     if (state.overlays != null) {
@@ -1158,7 +1158,7 @@ class CellRenderer {
    *
    * @param state <CellState> whose control should be redrawn.
    */
-  redrawControl(state: CellState, forced: boolean = false): void {
+  redrawControl(state: CellState, forced = false): void {
     const image = (<Graph>state.view.graph).getFoldingImage(state);
 
     if (state.control != null && image != null) {
@@ -1347,7 +1347,7 @@ class CellRenderer {
    * be drawn into the DOM. If this is false then redraw and/or reconfigure
    * will not be called on the shape.
    */
-  redraw(state: CellState, force: boolean = false, rendering: boolean = true): void {
+  redraw(state: CellState, force = false, rendering = true): void {
     const shapeChanged = this.redrawShape(state, force, rendering);
 
     if (state.shape != null && rendering) {
@@ -1362,11 +1362,7 @@ class CellRenderer {
    *
    * @param state <CellState> whose label should be redrawn.
    */
-  redrawShape(
-    state: CellState,
-    force: boolean = false,
-    rendering: boolean = true
-  ): boolean {
+  redrawShape(state: CellState, force = false, rendering = true): boolean {
     let shapeChanged = false;
     const graph = <Graph>state.view.graph;
 

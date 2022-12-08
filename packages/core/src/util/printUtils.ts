@@ -35,7 +35,7 @@ import { removeCursors } from './styleUtils';
  * Default is <mxConstants.PAGE_FORMAT_A4_PORTRAIT>.
  * @param border The border along each side of every page.
  */
- export const getScaleForPageCount = (
+export const getScaleForPageCount = (
   pageCount: number,
   graph: Graph,
   pageFormat?: Rectangle,
@@ -171,11 +171,11 @@ import { removeCursors } from './styleUtils';
  */
 export const show = (
   graph: Graph,
-  doc: Document | null=null,
+  doc: Document | null = null,
   x0 = 0,
   y0 = 0,
-  w: number | null=null,
-  h: number | null=null
+  w: number | null = null,
+  h: number | null = null
 ) => {
   x0 = x0 != null ? x0 : 0;
   y0 = y0 != null ? y0 : 0;
@@ -303,4 +303,3 @@ export const printScreen = (graph: Graph) => {
     print();
   }
 };
-

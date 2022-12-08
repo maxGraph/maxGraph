@@ -37,12 +37,7 @@ export class TerminalChange implements UndoableChange {
   previous: Cell | null;
   source: boolean;
 
-  constructor(
-    model: GraphDataModel,
-    cell: Cell,
-    terminal: Cell | null,
-    source: boolean
-  ) {
+  constructor(model: GraphDataModel, cell: Cell, terminal: Cell | null, source: boolean) {
     this.model = model;
     this.cell = cell;
     this.terminal = terminal;
@@ -82,7 +77,11 @@ export class TerminalChange implements UndoableChange {
 export class TerminalChangeCodec extends ObjectCodec {
   constructor() {
     const __dummy: any = undefined;
-    super(new TerminalChange(__dummy, __dummy, __dummy, __dummy), ['model', 'previous'], ['cell', 'terminal']);
+    super(
+      new TerminalChange(__dummy, __dummy, __dummy, __dummy),
+      ['model', 'previous'],
+      ['cell', 'terminal']
+    );
   }
 
   /**

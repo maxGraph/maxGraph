@@ -83,9 +83,7 @@ const OverlaysMixin: PartialType = {
       this.getCellRenderer().redraw(state);
     }
 
-    this.fireEvent(
-      new EventObject(InternalEvent.ADD_OVERLAY, { cell, overlay })
-    );
+    this.fireEvent(new EventObject(InternalEvent.ADD_OVERLAY, { cell, overlay }));
     return overlay;
   },
 

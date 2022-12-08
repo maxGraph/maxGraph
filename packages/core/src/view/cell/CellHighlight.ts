@@ -42,7 +42,7 @@ class CellHighlight {
   // TODO: Document me!!
   highlightColor: ColorValue;
 
-  strokeWidth: number = 0;
+  strokeWidth = 0;
 
   dashed = false;
 

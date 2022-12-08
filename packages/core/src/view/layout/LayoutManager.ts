@@ -356,7 +356,7 @@ class LayoutManager extends EventSource {
   /**
    * Executes all layouts which have been scheduled during the changes.
    */
-  layoutCells(cells: Cell[], bubble: boolean = false) {
+  layoutCells(cells: Cell[], bubble = false) {
     if (cells.length > 0) {
       // Invokes the layouts while removing duplicates
       const model = this.getGraph().getDataModel();
@@ -382,7 +382,7 @@ class LayoutManager extends EventSource {
   /**
    * Executes the given layout on the given parent.
    */
-  executeLayout(cell: Cell, bubble: boolean = false) {
+  executeLayout(cell: Cell, bubble = false) {
     const layout = this.getLayout(
       cell,
       bubble ? InternalEvent.BEGIN_UPDATE : InternalEvent.END_UPDATE

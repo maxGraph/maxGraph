@@ -97,7 +97,9 @@ class CellTracker extends CellMarker {
   /**
    * Ignores the event. The event is not consumed.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {}
+  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+    return;
+  }
 
   /**
    * Handles the event by highlighting the cell under the mousepointer if it
@@ -112,7 +114,9 @@ class CellTracker extends CellMarker {
   /**
    * Handles the event by resetting the highlight.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {}
+  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+    return;
+  }
 
   /**
    * Destroys the object and all its resources and DOM nodes. This doesn't

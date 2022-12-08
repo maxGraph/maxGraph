@@ -155,18 +155,18 @@ class GraphHierarchyModel {
   /**
    * Count of the number of times the ancestor dfs has been used.
    */
-  dfsCount: number = 0;
+  dfsCount = 0;
 
   /**
    * High value to start source layering scan rank value from.
    */
-  SOURCESCANSTARTRANK: number = 100000000;
+  SOURCESCANSTARTRANK = 100000000;
 
   /**
    * Whether or not to tighten the assigned ranks of vertices up towards
    * the source cells.
    */
-  tightenToSource: boolean = false;
+  tightenToSource = false;
 
   /**
    * Creates all edges in the internal model
@@ -283,11 +283,8 @@ class GraphHierarchyModel {
 
     while (startNodes.length > 0) {
       const internalNode = startNodes[0];
-      var layerDeterminingEdges;
-      var edgesToBeMarked: GraphHierarchyEdge[] | null;
-
-      layerDeterminingEdges = internalNode.connectsAsTarget;
-      edgesToBeMarked = internalNode.connectsAsSource;
+      const layerDeterminingEdges = internalNode.connectsAsTarget;
+      const edgesToBeMarked = internalNode.connectsAsSource;
 
       // flag to keep track of whether or not all layer determining
       // edges have been scanned

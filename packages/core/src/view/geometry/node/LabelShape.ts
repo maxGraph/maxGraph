@@ -17,11 +17,7 @@ limitations under the License.
 */
 
 import Rectangle from '../Rectangle';
-import {
-  ALIGN,
-  DEFAULT_IMAGESIZE,
-  NONE,
-} from '../../../util/Constants';
+import { ALIGN, DEFAULT_IMAGESIZE, NONE } from '../../../util/Constants';
 import RectangleShape from './RectangleShape';
 import { ColorValue } from '../../../types';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';

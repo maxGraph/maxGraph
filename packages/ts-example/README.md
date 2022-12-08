@@ -2,8 +2,15 @@
 
 Initialized from https://github.com/vitejs/vite/tree/v2.9.8/packages/create-vite/template-vanilla-ts
 
-Do not forget to initialize all packages (you may also need to build the maxgraph@core package)
+## Setup
+
+Initialize all packages
 > From the repository root, run `npm install`.
+ 
+Build maxgraph@core
+> From the `packages/core` directory, run `npm run generate-esm`.
+
+## Run
 
 Run `npm run dev` and go to http://localhost:5173/
 

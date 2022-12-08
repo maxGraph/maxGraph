@@ -49,7 +49,7 @@ import type {
  *
  * Constructs a new abstract canvas.
  */
-class AbstractCanvas2D {
+abstract class AbstractCanvas2D {
   constructor() {
     this.converter = this.createUrlConverter();
     this.reset();
@@ -308,7 +308,7 @@ class AbstractCanvas2D {
     h: number,
     direction: DirectionValue,
     alpha1 = 1,
-    alpha2: number = 1
+    alpha2 = 1
   ) {
     const s = this.state;
     s.fillColor = color1;
@@ -525,32 +525,39 @@ class AbstractCanvas2D {
   /**
    * Empty implementation for backwards compatibility. This will be removed.
    */
-  end() {}
+  abstract end(): void;
 
-  stroke() {}
+  abstract stroke(): void;
 
-  fill() {}
+  abstract fill(): void;
 
-  fillAndStroke() {}
+  abstract fillAndStroke(): void;
 
-  rect(x: number, y: number, w: number, h: number) {}
+  abstract rect(x: number, y: number, w: number, h: number): void;
 
-  roundrect(x: number, y: number, w: number, h: number, r1: number, r2: number) {}
+  abstract roundrect(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    r1: number,
+    r2: number
+  ): void;
 
-  ellipse(x: number, y: number, w: number, h: number) {}
+  abstract ellipse(x: number, y: number, w: number, h: number): void;
 
-  image(
+  abstract image(
     x: number,
     y: number,
     w: number,
     h: number,
     src: string,
-    aspect = true,
-    flipH = false,
-    flipV = false
-  ) {}
+    aspect: boolean,
+    flipH: boolean,
+    flipV: boolean
+  ): void;
 
-  text(
+  abstract text(
     x: number,
     y: number,
     w: number,
@@ -562,11 +569,11 @@ class AbstractCanvas2D {
     format: string,
     overflow: OverflowValue,
     clip: boolean,
-    rotation = 0,
+    rotation: number,
     dir: TextDirectionValue
-  ) {}
+  ): void;
 
-  updateText(
+  abstract updateText(
     x: number,
     y: number,
     w: number,
@@ -576,9 +583,9 @@ class AbstractCanvas2D {
     wrap: boolean,
     overflow: OverflowValue,
     clip: boolean,
-    rotation = 0,
+    rotation: number,
     node: SVGElement
-  ) {}
+  ): void;
 }
 
 export default AbstractCanvas2D;

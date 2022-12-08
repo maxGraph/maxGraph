@@ -21,6 +21,8 @@ import Point from '../geometry/Point';
 import {
   CONNECT_HANDLE_FILLCOLOR,
   CURSOR,
+  DEFAULT_HOTSPOT,
+  DEFAULT_INVALID_COLOR,
   DEFAULT_VALID_COLOR,
   DIALECT,
   EDGE_SELECTION_COLOR,
@@ -43,11 +45,7 @@ import {
   intersects,
   ptSegDistSq,
 } from '../../util/mathUtils';
-import {
-  convertPoint,
-  getOffset,
-  setOpacity,
-} from '../../util/styleUtils';
+import { convertPoint, getOffset, setOpacity } from '../../util/styleUtils';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ConnectionConstraint from '../other/ConnectionConstraint';
@@ -125,7 +123,7 @@ class EdgeHandler {
    */
   bends: Shape[] = [];
 
-  virtualBends: Shape[] = [];
+  virtualBends: Shape[] | undefined;
 
   /**
    * Holds the {@link Shape} that represents the label position.
@@ -241,9 +239,9 @@ class EdgeHandler {
 
   index: number | null = null;
 
-  isSource: boolean = false;
+  isSource = false;
 
-  isTarget: boolean = false;
+  isTarget = false;
 
   label: Point;
 
@@ -255,7 +253,7 @@ class EdgeHandler {
 
   abspoints: (Point | null)[] = [];
 
-  customHandles: CellHandle[] = [];
+  customHandles: CellHandle[] | undefined;
 
   startX = 0;
   startY = 0;
@@ -537,70 +535,7 @@ class EdgeHandler {
    * Creates and returns the {@link CellMarker} used in {@link arker}.
    */
   createMarker() {
-    const self = this; // closure
-
-    class MyMarker extends CellMarker {
-      // Only returns edges if they are connectable and never returns
-      // the edge that is currently being modified
-      getCell = (me: InternalMouseEvent) => {
-        let cell = super.getCell(me);
-
-        // Checks for cell at preview point (with grid)
-        if ((cell === self.state.cell || !cell) && self.currentPoint) {
-          cell = self.graph.getCellAt(self.currentPoint.x, self.currentPoint.y);
-        }
-
-        // Uses connectable parent vertex if one exists
-        if (cell && !cell.isConnectable()) {
-          const parent = cell.getParent();
-
-          if (parent && parent.isVertex() && parent.isConnectable()) {
-            cell = parent;
-          }
-        }
-
-        if (cell) {
-          if (
-            (this.graph.isSwimlane(cell) &&
-              self.currentPoint &&
-              this.graph.hitsSwimlaneContent(
-                cell,
-                self.currentPoint.x,
-                self.currentPoint.y
-              )) ||
-            !self.isConnectableCell(cell) ||
-            cell === self.state.cell ||
-            (cell && !self.graph.connectableEdges && cell.isEdge()) ||
-            self.state.cell.isAncestor(cell)
-          ) {
-            cell = null;
-          }
-        }
-
-        if (cell && !cell.isConnectable()) {
-          cell = null;
-        }
-
-        return cell;
-      };
-
-      // Sets the highlight color according to validateConnection
-      isValidState = (state: CellState) => {
-        const cell = self.state.cell.getTerminal(!self.isSource) as Cell;
-        const cellState = self.graph.view.getState(cell) as CellState;
-        const other = self.graph.view.getTerminalPort(state, cellState, !self.isSource);
-        const otherCell = other ? other.cell : null;
-        const source = self.isSource ? state.cell : otherCell;
-        const target = self.isSource ? otherCell : state.cell;
-
-        // Updates the error message of the handler
-        self.error = self.validateConnection(source, target);
-
-        return !self.error;
-      };
-    }
-
-    return new MyMarker(this.graph) as CellMarker;
+    return new EdgeHandlerCellMarker(this.graph, this);
   }
 
   /**
@@ -825,7 +760,7 @@ class EdgeHandler {
       return false;
     }
 
-    if (this.isCustomHandleEvent(me)) {
+    if (this.isCustomHandleEvent(me) && this.customHandles) {
       // Inverse loop order to match display order
       for (let i = this.customHandles.length - 1; i >= 0; i--) {
         if (checkShape(this.customHandles[i].shape)) {
@@ -845,7 +780,7 @@ class EdgeHandler {
       }
     }
 
-    if (this.isAddVirtualBendEvent(me)) {
+    if (this.virtualBends && this.isAddVirtualBendEvent(me)) {
       for (let i = 0; i < this.virtualBends.length; i += 1) {
         if (checkShape(this.virtualBends[i])) {
           result = InternalEvent.VIRTUAL_HANDLE - i;
@@ -900,7 +835,7 @@ class EdgeHandler {
         handle !== InternalEvent.LABEL_HANDLE ||
         (cell && this.graph.isLabelMovable(cell))
       ) {
-        if (handle <= InternalEvent.VIRTUAL_HANDLE) {
+        if (this.virtualBends && handle <= InternalEvent.VIRTUAL_HANDLE) {
           setOpacity(this.virtualBends[InternalEvent.VIRTUAL_HANDLE - handle].node, 100);
         }
         this.start(me.getX(), me.getY(), handle);
@@ -970,12 +905,16 @@ class EdgeHandler {
    * Hook for subclassers do show details while the handler is active.
    */
 
-  updateHint(me: InternalMouseEvent, point: Point) { }
+  updateHint(me: InternalMouseEvent, point: Point) {
+    return;
+  }
 
   /**
    * Hooks for subclassers to hide details when the handler gets inactive.
    */
-  removeHint() { }
+  removeHint() {
+    return;
+  }
 
   /**
    * Hook for rounding the unscaled width or height. This uses Math.round.
@@ -1515,7 +1454,7 @@ class EdgeHandler {
 
       // Ignores event if mouse has not been moved
       if (me.getX() !== this.startX || me.getY() !== this.startY) {
-        let clone =
+        const clone =
           !this.graph.isIgnoreTerminalEvent(me.getEvent()) &&
           this.graph.isCloneEvent(me.getEvent()) &&
           this.cloneEnabled &&
@@ -1669,8 +1608,10 @@ class EdgeHandler {
 
     this.constraintHandler.reset();
 
-    for (let i = 0; i < this.customHandles.length; i += 1) {
-      this.customHandles[i].reset();
+    if (this.customHandles) {
+      for (let i = 0; i < this.customHandles.length; i += 1) {
+        this.customHandles[i].reset();
+      }
     }
 
     this.setPreviewColor(EDGE_SELECTION_COLOR);
@@ -2053,7 +1994,7 @@ class EdgeHandler {
       this.redrawInnerBends(p0, pe);
     }
 
-    if (this.virtualBends.length > 0) {
+    if (this.virtualBends && this.virtualBends.length > 0) {
       let last = this.abspoints[0] as Point;
 
       for (let i = 0; i < this.virtualBends.length; i += 1) {
@@ -2084,19 +2025,20 @@ class EdgeHandler {
     }
 
     this.labelShape.redraw();
+    if (this.customHandles) {
+      for (let i = 0; i < this.customHandles.length; i += 1) {
+        const shape = this.customHandles[i].shape;
 
-    for (let i = 0; i < this.customHandles.length; i += 1) {
-      const shape = this.customHandles[i].shape;
+        if (shape) {
+          const temp = shape.node.style.display;
+          this.customHandles[i].redraw();
+          shape.node.style.display = temp;
 
-      if (shape) {
-        const temp = shape.node.style.display;
-        this.customHandles[i].redraw();
-        shape.node.style.display = temp;
-
-        // Hides custom handles during text editing
-        shape.node.style.visibility = this.isCustomHandleVisible(this.customHandles[i])
-          ? ''
-          : 'hidden';
+          // Hides custom handles during text editing
+          shape.node.style.visibility = this.isCustomHandleVisible(this.customHandles[i])
+            ? ''
+            : 'hidden';
+        }
       }
     }
   }
@@ -2105,7 +2047,9 @@ class EdgeHandler {
    * Returns true if the given custom handle is visible.
    */
   isCustomHandleVisible(handle: CellHandle) {
-    return !this.graph.isEditing() && (<Graph>this.state.view.graph).getSelectionCount() === 1;
+    return (
+      !this.graph.isEditing() && (<Graph>this.state.view.graph).getSelectionCount() === 1
+    );
   }
 
   /**
@@ -2116,14 +2060,18 @@ class EdgeHandler {
       this.bends[i].node.style.display = visible ? '' : 'none';
     }
 
-    for (let i = 0; i < this.virtualBends.length; i += 1) {
-      this.virtualBends[i].node.style.display = visible ? '' : 'none';
+    if (this.virtualBends) {
+      for (let i = 0; i < this.virtualBends.length; i += 1) {
+        this.virtualBends[i].node.style.display = visible ? '' : 'none';
+      }
     }
 
     this.labelShape.node.style.display = visible ? '' : 'none';
 
-    for (let i = 0; i < this.customHandles.length; i += 1) {
-      this.customHandles[i].setVisible(visible);
+    if (this.customHandles) {
+      for (let i = 0; i < this.customHandles.length; i += 1) {
+        this.customHandles[i].setVisible(visible);
+      }
     }
   }
 
@@ -2242,11 +2190,15 @@ class EdgeHandler {
       this.destroyBends(this.bends);
       this.bends = this.createBends();
 
-      this.destroyBends(this.virtualBends);
-      this.virtualBends = this.createVirtualBends();
-
-      this.destroyBends(this.customHandles);
-      this.customHandles = this.createCustomHandles();
+      if (this.virtualBends) {
+        this.destroyBends(this.virtualBends);
+        this.virtualBends = this.createVirtualBends();
+      }
+      
+      if (this.customHandles) {
+        this.destroyBends(this.customHandles);
+        this.customHandles = this.createCustomHandles();
+      }
 
       // Puts label node on top of bends
       if (
@@ -2315,17 +2267,106 @@ class EdgeHandler {
     // @ts-expect-error Can be null when destroyed.
     this.constraintHandler = null;
 
-    this.destroyBends(this.virtualBends);
-    this.virtualBends = [];
+    if (this.virtualBends) {
+      this.destroyBends(this.virtualBends);
+      this.virtualBends = [];
+    }
 
-    this.destroyBends(this.customHandles);
-    this.customHandles = [];
+    if (this.customHandles){
+      this.destroyBends(this.customHandles);
+      this.customHandles = [];
+    }
 
     this.destroyBends(this.bends);
     this.bends = [];
 
     this.removeHint();
   }
+}
+
+class EdgeHandlerCellMarker extends CellMarker {
+  edgeHandler: EdgeHandler;
+
+  constructor(
+    graph: Graph,
+    edgeHandler: EdgeHandler,
+    validColor: ColorValue = DEFAULT_VALID_COLOR,
+    invalidColor: ColorValue = DEFAULT_INVALID_COLOR,
+    hotspot: number = DEFAULT_HOTSPOT
+  ) {
+    super(graph, validColor, invalidColor, hotspot);
+    this.edgeHandler = edgeHandler;
+  }
+  // Only returns edges if they are connectable and never returns
+  // the edge that is currently being modified
+  getCell = (me: InternalMouseEvent) => {
+    let cell = super.getCell(me);
+
+    // Checks for cell at preview point (with grid)
+    if (
+      (cell === this.edgeHandler.state.cell || !cell) &&
+      this.edgeHandler.currentPoint
+    ) {
+      cell = this.edgeHandler.graph.getCellAt(
+        this.edgeHandler.currentPoint.x,
+        this.edgeHandler.currentPoint.y
+      );
+    }
+
+    // Uses connectable parent vertex if one exists
+    if (cell && !cell.isConnectable()) {
+      const parent = cell.getParent();
+
+      if (parent && parent.isVertex() && parent.isConnectable()) {
+        cell = parent;
+      }
+    }
+
+    if (cell) {
+      if (
+        (this.graph.isSwimlane(cell) &&
+          this.edgeHandler.currentPoint &&
+          this.graph.hitsSwimlaneContent(
+            cell,
+            this.edgeHandler.currentPoint.x,
+            this.edgeHandler.currentPoint.y
+          )) ||
+        !this.edgeHandler.isConnectableCell(cell) ||
+        cell === this.edgeHandler.state.cell ||
+        (cell && !this.edgeHandler.graph.connectableEdges && cell.isEdge()) ||
+        this.edgeHandler.state.cell.isAncestor(cell)
+      ) {
+        cell = null;
+      }
+    }
+
+    if (cell && !cell.isConnectable()) {
+      cell = null;
+    }
+
+    return cell;
+  };
+
+  // Sets the highlight color according to validateConnection
+  isValidState = (state: CellState) => {
+    const cell = this.edgeHandler.state.cell.getTerminal(
+      !this.edgeHandler.isSource
+    ) as Cell;
+    const cellState = this.edgeHandler.graph.view.getState(cell) as CellState;
+    const other = this.edgeHandler.graph.view.getTerminalPort(
+      state,
+      cellState,
+      !this.edgeHandler.isSource
+    );
+    const otherCell = other ? other.cell : null;
+    const source = this.edgeHandler.isSource ? state.cell : otherCell;
+    const target = this.edgeHandler.isSource ? otherCell : state.cell;
+
+    // Updates the error message of the handler
+    this.edgeHandler.error = this.edgeHandler.validateConnection(source, target);
+
+    return !this.edgeHandler.error;
+  };
 }
 
 export default EdgeHandler;

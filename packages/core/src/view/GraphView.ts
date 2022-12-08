@@ -1263,11 +1263,7 @@ export class GraphView extends EventSource {
   /**
    * Transforms the given control point to an absolute point.
    */
-  transformControlPoint(
-    state: CellState,
-    pt: Point,
-    ignoreScale: boolean = false
-  ): Point | null {
+  transformControlPoint(state: CellState, pt: Point, ignoreScale = false): Point | null {
     if (state && pt) {
       const orig = <Point>state.origin;
       const scale = ignoreScale ? 1 : this.scale;
@@ -1437,7 +1433,7 @@ export class GraphView extends EventSource {
    * @param terminal {@link CellState} that represents the terminal.
    * @param source Boolean indicating if the given terminal is the source terminal.
    */
-  getTerminalPort(state: CellState, terminal: CellState, source: boolean = false) {
+  getTerminalPort(state: CellState, terminal: CellState, source = false) {
     const key = source ? 'sourcePort' : 'targetPort';
     const id = state.style[key];
 
@@ -1578,10 +1574,7 @@ export class GraphView extends EventSource {
    * @param {CellState} terminal CellState that represents the terminal.
    * @param {number} border Number that adds a border between the shape and the perimeter.
    */
-  getPerimeterBounds(
-    terminal: CellState | null = null,
-    border: number = 0
-  ): Rectangle | null {
+  getPerimeterBounds(terminal: CellState | null = null, border = 0): Rectangle | null {
     if (terminal) {
       border += terminal.style.perimeterSpacing ?? 0;
     }
@@ -1814,7 +1807,7 @@ export class GraphView extends EventSource {
 
       if (geometry.relative && pointCount > 1) {
         const totalLength = edgeState.length;
-        let { segments } = edgeState;
+        const { segments } = edgeState;
 
         // Works out which line segment the point of the label is closest to
         let p0 = absolutePoints[0] as Point;
@@ -1995,7 +1988,7 @@ export class GraphView extends EventSource {
    * @param cell {@link mxCell} for which the {@link CellState} should be removed.
    */
   removeState(cell: Cell) {
-    let state: CellState | null = this.states.remove(cell);
+    const state: CellState | null = this.states.remove(cell);
 
     if (state) {
       this.graph.cellRenderer.destroy(state);
@@ -2175,8 +2168,12 @@ export class GraphView extends EventSource {
 
         if (popupMenuHandler) popupMenuHandler.hideMenu();
       },
-      mouseMove: () => {},
-      mouseUp: () => {},
+      mouseMove: () => {
+        return;
+      },
+      mouseUp: () => {
+        return;
+      },
     });
 
     this.moveHandler = (evt: MouseEvent) => {
@@ -2266,7 +2263,7 @@ export class GraphView extends EventSource {
    * Creates the DOM nodes for the HTML display.
    */
   createHtml() {
-    var container = this.graph.container;
+    const container = this.graph.container;
 
     if (container != null) {
       this.canvas = this.createHtmlPane('100%', '100%');
@@ -2297,8 +2294,8 @@ export class GraphView extends EventSource {
    */
   updateHtmlCanvasSize(width: number, height: number) {
     if (this.graph.container != null) {
-      var ow = this.graph.container.offsetWidth;
-      var oh = this.graph.container.offsetHeight;
+      const ow = this.graph.container.offsetWidth;
+      const oh = this.graph.container.offsetHeight;
 
       if (ow < width) {
         this.canvas.style.width = width + 'px';
@@ -2320,7 +2317,7 @@ export class GraphView extends EventSource {
    * Creates and returns a drawing pane in HTML (DIV).
    */
   createHtmlPane(width: string, height: string) {
-    var pane = document.createElement('DIV');
+    const pane = document.createElement('DIV');
 
     if (width != null && height != null) {
       pane.style.position = 'absolute';

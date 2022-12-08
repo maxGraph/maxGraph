@@ -48,10 +48,7 @@ class VisibleChange implements UndoableChange {
    */
   execute() {
     this.visible = this.previous;
-    this.previous = this.model.visibleStateForCellChanged(
-      this.cell,
-      this.previous
-    );
+    this.previous = this.model.visibleStateForCellChanged(this.cell, this.previous);
   }
 }
 

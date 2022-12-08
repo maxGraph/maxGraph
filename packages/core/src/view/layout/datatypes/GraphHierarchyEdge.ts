@@ -47,7 +47,7 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
    * Whether or not the direction of this edge has been reversed
    * internally to create a DAG for the hierarchical layout
    */
-  isReversed: boolean = false;
+  isReversed = false;
 
   /**
    * Class: mxGraphHierarchyEdge

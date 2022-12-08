@@ -18,8 +18,8 @@ limitations under the License.
 
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
-import { write, writeln } from "../util/domUtils";
-import Translations from "../util/Translations";
+import { write, writeln } from '../util/domUtils';
+import Translations from '../util/Translations';
 
 /**
  * A simple class for creating HTML forms.
@@ -88,7 +88,7 @@ class MaxForm {
   /**
    * Adds an input for the given name, type and value and returns it.
    */
-  addText(name: string, value: any, type: string='text'): HTMLInputElement {
+  addText(name: string, value: any, type = 'text'): HTMLInputElement {
     const input = document.createElement('input');
     input.setAttribute('type', type);
     input.value = value;

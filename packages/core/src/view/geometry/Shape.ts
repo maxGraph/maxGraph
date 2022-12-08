@@ -488,12 +488,24 @@ class Shape {
         canvas.setDashed(this.isDashed);
       }
 
-      canvas.setStrokeWidth = () => {};
-      canvas.setStrokeColor = () => {};
-      canvas.setFillColor = () => {};
-      canvas.setGradient = () => {};
-      canvas.setDashed = () => {};
-      canvas.text = () => {};
+      canvas.setStrokeWidth = () => {
+        return;
+      };
+      canvas.setStrokeColor = () => {
+        return;
+      };
+      canvas.setFillColor = () => {
+        return;
+      };
+      canvas.setGradient = () => {
+        return;
+      };
+      canvas.setDashed = () => {
+        return;
+      };
+      canvas.text = () => {
+        return;
+      };
     }
 
     return canvas;
@@ -553,12 +565,16 @@ class Shape {
   /**
    * Invoked before paint is called.
    */
-  beforePaint(c: AbstractCanvas2D) {}
+  beforePaint(c: AbstractCanvas2D) {
+    return;
+  }
 
   /**
    * Invokes after paint was called.
    */
-  afterPaint(c: AbstractCanvas2D) {}
+  afterPaint(c: AbstractCanvas2D) {
+    return;
+  }
 
   /**
    * Generic rendering code.
@@ -735,17 +751,23 @@ class Shape {
   /**
    * Hook for subclassers. This implementation is empty.
    */
-  paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {}
+  paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+    return;
+  }
 
   /**
    * Hook for subclassers. This implementation is empty.
    */
-  paintForeground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {}
+  paintForeground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+    return;
+  }
 
   /**
    * Hook for subclassers. This implementation is empty.
    */
-  paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {}
+  paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {
+    return;
+  }
 
   /**
    * Returns the arc size for the given dimension.
@@ -804,11 +826,11 @@ class Shape {
   addPoints(
     c: AbstractCanvas2D,
     pts: Point[],
-    rounded: boolean = false,
+    rounded = false,
     arcSize: number,
-    close: boolean = false,
+    close = false,
     exclude: number[] = [],
-    initialMove: boolean = true
+    initialMove = true
   ) {
     if (pts.length > 0) {
       const pe = pts[pts.length - 1];
@@ -1141,7 +1163,9 @@ class Shape {
     return rect;
   }
 
-  redrawHtmlShape() {}
+  redrawHtmlShape() {
+    return;
+  }
 
   /**
    * Sets a transparent background CSS style to catch all events.

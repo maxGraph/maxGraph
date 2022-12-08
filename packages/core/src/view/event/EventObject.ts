@@ -72,7 +72,7 @@ class EventObject {
   /**
    * Holds the consumed state. Default is false.
    */
-  consumed: boolean = false;
+  consumed = false;
 
   /**
    * Returns <name>.

@@ -14,10 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  NODETYPE,
-  NONE,
-} from './Constants';
+import { NODETYPE, NONE } from './Constants';
 import { getTextContent } from './domUtils';
 
 import type { Properties } from '../types';
@@ -33,7 +30,7 @@ import type { Properties } from '../types';
  * - "\0" (ASCII 0 (0x00)), the NUL-byte
  * - "\x0B" (ASCII 11 (0x0B)), a vertical tab
  */
-export const ltrim = (str: string | null, chars: string = '\\s'): string | null =>
+export const ltrim = (str: string | null, chars = '\\s'): string | null =>
   str != null ? str.replace(new RegExp(`^[${chars}]+`, 'g'), '') : null;
 
 /**
@@ -47,7 +44,7 @@ export const ltrim = (str: string | null, chars: string = '\\s'): string | null 
  * - "\0" (ASCII 0 (0x00)), the NUL-byte
  * - "\x0B" (ASCII 11 (0x0B)), a vertical tab
  */
-export const rtrim = (str: string | null, chars: string = '\\s'): string | null =>
+export const rtrim = (str: string | null, chars = '\\s'): string | null =>
   str != null ? str.replace(new RegExp(`[${chars}]+$`, 'g'), '') : null;
 
 /**
@@ -138,12 +135,12 @@ export const removeWhitespace = (node: HTMLElement, before: boolean) => {
  * @param {string} s String that contains the characters to be converted.
  * @param {boolean} newline If newlines should be replaced. Default is true.
  */
-export const htmlEntities = (s: string, newline: boolean=true): string => {
+export const htmlEntities = (s: string, newline = true): string => {
   s = String(s || '');
 
   s = s.replace(/&/g, '&amp;'); // 38 26
   s = s.replace(/"/g, '&quot;'); // 34 22
-  s = s.replace(/\'/g, '&#39;'); // 39 27
+  s = s.replace(/'/g, '&#39;'); // 39 27
   s = s.replace(/</g, '&lt;'); // 60 3C
   s = s.replace(/>/g, '&gt;'); // 62 3E
 
@@ -208,7 +205,7 @@ export const getColor = (array: any, key: string, defaultValue: any) => {
  *
  * @param obj Object to return the string representation for.
  */
- export const toString = (obj: Properties) => {
+export const toString = (obj: Properties) => {
   let output = '';
 
   for (const i in obj) {
@@ -230,4 +227,3 @@ export const getColor = (array: any, key: string, defaultValue: any) => {
 
   return output;
 };
-

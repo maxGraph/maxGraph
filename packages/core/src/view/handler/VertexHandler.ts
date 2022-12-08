@@ -83,7 +83,7 @@ class VertexHandler {
    * Specifies if only one sizer handle at the bottom, right corner should be
    * used. Default is false.
    */
-  singleSizer: boolean = false;
+  singleSizer = false;
 
   /**
    * Holds the index of the current handle.
@@ -94,7 +94,7 @@ class VertexHandler {
    * Specifies if the bounds of handles should be used for hit-detection in IE or
    * if <tolerance> > 0. Default is true.
    */
-  allowHandleBoundsCheck: boolean = true;
+  allowHandleBoundsCheck = true;
 
   /**
    * Optional {@link Image} to be used as handles. Default is null.
@@ -109,69 +109,69 @@ class VertexHandler {
   /**
    * Optional tolerance for hit-detection in <getHandleForEvent>. Default is 0.
    */
-  tolerance: number = 0;
+  tolerance = 0;
 
   /**
    * Specifies if a rotation handle should be visible. Default is false.
    */
-  rotationEnabled: boolean = false;
+  rotationEnabled = false;
 
   /**
    * Specifies if the parent should be highlighted if a child cell is selected.
    * Default is false.
    */
-  parentHighlightEnabled: boolean = false;
+  parentHighlightEnabled = false;
 
   /**
    * Specifies if rotation steps should be "rasterized" depening on the distance
    * to the handle. Default is true.
    */
-  rotationRaster: boolean = true;
+  rotationRaster = true;
 
   /**
    * Specifies the cursor for the rotation handle. Default is 'crosshair'.
    */
-  rotationCursor: string = 'crosshair';
+  rotationCursor = 'crosshair';
 
   /**
    * Specifies if resize should change the cell in-place. This is an experimental
    * feature for non-touch devices. Default is false.
    */
-  livePreview: boolean = false;
+  livePreview = false;
 
   /**
    * Specifies if the live preview should be moved to the front.
    */
-  movePreviewToFront: boolean = false;
+  movePreviewToFront = false;
 
   /**
    * Specifies if sizers should be hidden and spaced if the vertex is small.
    * Default is false.
    */
-  manageSizers: boolean = false;
+  manageSizers = false;
 
   /**
    * Specifies if the size of groups should be constrained by the children.
    * Default is false.
    */
-  constrainGroupByChildren: boolean = false;
+  constrainGroupByChildren = false;
 
   /**
    * Vertical spacing for rotation icon. Default is -16.
    */
-  rotationHandleVSpacing: number = -16;
+  rotationHandleVSpacing = -16;
 
   /**
    * The horizontal offset for the handles. This is updated in <redrawHandles>
    * if {@link anageSizers} is true and the sizers are offset horizontally.
    */
-  horizontalOffset: number = 0;
+  horizontalOffset = 0;
 
   /**
    * The horizontal offset for the handles. This is updated in <redrawHandles>
    * if {@link anageSizers} is true and the sizers are offset vertically.
    */
-  verticalOffset: number = 0;
+  verticalOffset = 0;
 
   minBounds: Rectangle | null = null;
 
@@ -791,12 +791,16 @@ class VertexHandler {
   /**
    * Hook for subclassers do show details while the handler is active.
    */
-  updateHint(me: InternalMouseEvent) {}
+  updateHint(me: InternalMouseEvent) {
+    return;
+  }
 
   /**
    * Hooks for subclassers to hide details when the handler gets inactive.
    */
-  removeHint() {}
+  removeHint() {
+    return;
+  }
 
   /**
    * Hook for rounding the angle. This uses Math.round.
@@ -1282,7 +1286,9 @@ class VertexHandler {
    * This code is executed as part of the model transaction. This implementation
    * is empty.
    */
-  rotateClick() {}
+  rotateClick() {
+    return;
+  }
 
   /**
    * Rotates the given cell and its children by the given angle in degrees.
@@ -2016,7 +2022,9 @@ class VertexHandler {
    */
   onDestroy() {
     (<Graph>this.state.view.graph).removeListener(this.escapeHandler);
-    this.escapeHandler = () => {};
+    this.escapeHandler = () => {
+      return;
+    };
 
     if (this.preview) {
       this.preview.destroy();

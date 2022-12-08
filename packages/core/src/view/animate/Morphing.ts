@@ -56,7 +56,7 @@ import { Graph } from '../Graph';
  * @param delay Optional delay between the animation steps. Passed to <Animation>.
  */
 class Morphing extends Animation {
-  constructor(graph: Graph, steps: number = 6, ease: number = 1.5, delay: number) {
+  constructor(graph: Graph, steps = 6, ease = 1.5, delay: number) {
     super(delay);
     this.graph = graph;
     this.steps = steps;
@@ -76,7 +76,7 @@ class Morphing extends Animation {
   /**
    * Contains the current step.
    */
-  step: number = 0;
+  step = 0;
 
   /**
    * Ease-off for movement towards the given vector. Larger values are
@@ -100,7 +100,7 @@ class Morphing extends Animation {
 
     if (this.cells != null) {
       // Animates the given cells individually without recursion
-      for (let cell of this.cells) {
+      for (const cell of this.cells) {
         this.animateCell(cell, move, false);
       }
     } else {
@@ -126,7 +126,7 @@ class Morphing extends Animation {
   /**
    * Animates the given cell state using <CellStatePreview.moveState>.
    */
-  animateCell(cell: Cell, move: CellStatePreview, recurse: boolean = false) {
+  animateCell(cell: Cell, move: CellStatePreview, recurse = false) {
     const state = this.graph.getView().getState(cell);
     let delta = null;
 

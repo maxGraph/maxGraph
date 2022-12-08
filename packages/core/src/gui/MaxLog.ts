@@ -160,7 +160,10 @@ class MaxLog {
         const elt = MaxLog.window.getElement();
 
         const resizeHandler = (sender: any, evt: MouseEvent) => {
-          (<HTMLTextAreaElement>MaxLog.textarea).style.height = `${Math.max(0, elt.offsetHeight - 70)}px`;
+          (<HTMLTextAreaElement>MaxLog.textarea).style.height = `${Math.max(
+            0,
+            elt.offsetHeight - 70
+          )}px`;
         };
 
         MaxLog.window.addListener(InternalEvent.RESIZE_END, resizeHandler);

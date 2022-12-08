@@ -28,12 +28,7 @@ import Point from './Point';
  * are given then the respective default values are used.
  */
 class Rectangle extends Point {
-  constructor(
-    x: number = 0,
-    y: number = 0,
-    width: number = 0,
-    height: number = 0
-  ) {
+  constructor(x = 0, y = 0, width = 0, height = 0) {
     super(x, y);
 
     // replace super of mxPoint

@@ -393,7 +393,7 @@ class MaxPopupMenu extends EventSource implements Partial<PopupMenuItem> {
    * @param parent Optional item returned by <addItem>.
    * @param force Optional boolean to ignore <smartSeparators>. Default is false.
    */
-  addSeparator(parent: PopupMenuItem | null=null, force = false) {
+  addSeparator(parent: PopupMenuItem | null = null, force = false) {
     // Defaults to this instance if no parent (submenu) specified, but
     // all the necessary DOM elements are present as in PopupMenuItem
     parent = <PopupMenuItem>(parent || this);

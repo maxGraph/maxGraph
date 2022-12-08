@@ -51,7 +51,7 @@ class TemporaryCellStates {
 
   constructor(
     view: GraphView,
-    scale: number = 1,
+    scale = 1,
     cells: Cell[],
     isCellVisibleFn: Function | null = null,
     getLinkForCellState: Function | null = null

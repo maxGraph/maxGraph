@@ -122,7 +122,7 @@ export const arcToCurves = (
   let x3 = 0;
   let y3 = 0;
 
-  let result = [];
+  const result = [];
 
   for (let n = 0; n < seg; ++n) {
     s1 += segr;

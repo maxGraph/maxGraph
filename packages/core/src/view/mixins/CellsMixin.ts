@@ -1378,7 +1378,7 @@ export const CellsMixin: PartialType = {
 
         if (this.isSwimlane(cell)) {
           const style = this.getCellStyle(cell);
-          let cellStyle = cell.getStyle();
+          const cellStyle = cell.getStyle();
 
           if (style.horizontal ?? true) {
             cellStyle.startSize = size.height + 8;
@@ -2784,7 +2784,7 @@ export const CellsMixin: PartialType = {
    */
   isCellBendable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return this.isCellsBendable() && !this.isCellLocked(cell) && !!style.bendable;
+    return this.isCellsBendable() && !this.isCellLocked(cell) && style.bendable != false;
   },
 
   /**

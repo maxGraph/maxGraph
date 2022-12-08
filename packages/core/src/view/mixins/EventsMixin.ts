@@ -576,7 +576,10 @@ const EventsMixin: PartialType = {
    */
   tapAndHold(me) {
     const evt = me.getEvent();
-    const mxe = new EventObject(InternalEvent.TAP_AND_HOLD, { event: evt, cell: me.getCell() });
+    const mxe = new EventObject(InternalEvent.TAP_AND_HOLD, {
+      event: evt,
+      cell: me.getCell(),
+    });
 
     const panningHandler = this.getPlugin('PanningHandler') as PanningHandler;
     const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
@@ -889,8 +892,9 @@ const EventsMixin: PartialType = {
     // detect which mouseup(s) are part of the first click, ie we do not know when the first click ends.
     if (
       (!this.nativeDblClickEnabled && !isPopupTrigger(me.getEvent())) ||
-      (this.doubleTapEnabled && Client.IS_TOUCH && (isTouchEvent(me.getEvent()) ||
-                                                    isPenEvent(me.getEvent())))
+      (this.doubleTapEnabled &&
+        Client.IS_TOUCH &&
+        (isTouchEvent(me.getEvent()) || isPenEvent(me.getEvent())))
     ) {
       const currentTime = new Date().getTime();
 
@@ -942,9 +946,10 @@ const EventsMixin: PartialType = {
         this.isMouseDown = false;
 
         // Workaround for Chrome/Safari not firing native double click events for double touch on background
-        const valid = cell ||
-            ((isTouchEvent(me.getEvent()) || isPenEvent(me.getEvent())) &&
-             (Client.IS_GC || Client.IS_SF));
+        const valid =
+          cell ||
+          ((isTouchEvent(me.getEvent()) || isPenEvent(me.getEvent())) &&
+            (Client.IS_GC || Client.IS_SF));
 
         if (
           valid &&
@@ -968,11 +973,7 @@ const EventsMixin: PartialType = {
         new EventObject(InternalEvent.FIRE_MOUSE_EVENT, { eventName: evtName, event: me })
       );
 
-      if (
-        Client.IS_SF ||
-        Client.IS_GC ||
-        me.getEvent().target !== this.getContainer()
-      ) {
+      if (Client.IS_SF || Client.IS_GC || me.getEvent().target !== this.getContainer()) {
         const container = this.getContainer();
 
         if (

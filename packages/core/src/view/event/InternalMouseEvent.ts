@@ -191,7 +191,7 @@ class InternalMouseEvent {
   consume(preventDefault?: boolean) {
     preventDefault = preventDefault
       ? preventDefault
-      : this.evt instanceof TouchEvent || isMouseEvent(this.evt);
+      : (window.TouchEvent && this.evt instanceof TouchEvent) || isMouseEvent(this.evt);
 
     if (preventDefault && this.evt.preventDefault) {
       this.evt.preventDefault();

@@ -19,7 +19,7 @@ limitations under the License.
 import {
   CompactTreeLayout,
   _mxCompactTreeLayoutLine,
-  _mxCompactTreeLayoutNode
+  _mxCompactTreeLayoutNode,
 } from './CompactTreeLayout';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
@@ -46,44 +46,44 @@ class RadialTreeLayout extends CompactTreeLayout {
    * The initial offset to compute the angle position.
    * @default 0.5
    */
-  angleOffset: number = 0.5;
+  angleOffset = 0.5;
 
   /**
    * The X co-ordinate of the root cell
    * @default 0
    */
-  rootx: number = 0;
+  rootx = 0;
 
   /**
    * The Y co-ordinate of the root cell
    * @default 0
    */
-  rooty: number = 0;
+  rooty = 0;
 
   /**
    * Holds the levelDistance.
    * @default 120
    */
-  levelDistance: number = 120;
+  levelDistance = 120;
 
   /**
    * Holds the nodeDistance.
    * @default 10
    */
-  nodeDistance: number = 10;
+  nodeDistance = 10;
 
   /**
    * Specifies if the radios should be computed automatically
    * @default false
    */
-  autoRadius: boolean = false;
+  autoRadius = false;
 
   /**
    * Specifies if edges should be sorted according to the order of their
    * opposite terminal cell in the model.
    * @default false
    */
-  sortEdges: boolean = false;
+  sortEdges = false;
 
   /**
    * Array of leftmost x coordinate of each row
@@ -230,8 +230,12 @@ class RadialTreeLayout extends CompactTreeLayout {
         const vertexBounds = this.getVertexBounds(<Cell>node.cell);
         this.setVertexLocation(
           <Cell>node.cell,
-          this.centerX - vertexBounds.width / 2 + this.rowRadi[i] * Math.cos(<number>node.theta),
-          this.centerY - vertexBounds.height / 2 + this.rowRadi[i] * Math.sin(<number>node.theta)
+          this.centerX -
+            vertexBounds.width / 2 +
+            this.rowRadi[i] * Math.cos(<number>node.theta),
+          this.centerY -
+            vertexBounds.height / 2 +
+            this.rowRadi[i] * Math.sin(<number>node.theta)
         );
       }
     }

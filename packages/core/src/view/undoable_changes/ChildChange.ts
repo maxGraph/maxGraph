@@ -41,12 +41,7 @@ export class ChildChange implements UndoableChange {
   index: number;
   previousIndex: number;
 
-  constructor(
-    model: GraphDataModel,
-    parent: Cell | null,
-    child: Cell,
-    index: number = 0
-  ) {
+  constructor(model: GraphDataModel, parent: Cell | null, child: Cell, index = 0) {
     this.model = model;
     this.parent = parent;
     this.previous = parent;
@@ -69,11 +64,7 @@ export class ChildChange implements UndoableChange {
       this.connect(this.child, false);
     }
 
-    tmp = this.model.parentForCellChanged(
-      this.child,
-      this.previous,
-      this.previousIndex
-    );
+    tmp = this.model.parentForCellChanged(this.child, this.previous, this.previousIndex);
 
     if (this.previous) {
       this.connect(this.child, true);
@@ -92,7 +83,7 @@ export class ChildChange implements UndoableChange {
    *
    * @warning doc from mxGraph source code is incorrect
    */
-  connect(cell: Cell, isConnect: boolean = true) {
+  connect(cell: Cell, isConnect = true) {
     const source = cell.getTerminal(true);
     const target = cell.getTerminal(false);
 
@@ -199,12 +190,9 @@ export class ChildChangeCodec extends ObjectCodec {
    * codec from the registry.
    */
   beforeDecode(dec: Codec, _node: Element, obj: any): any {
-    if (
-      _node.firstChild != null &&
-      _node.firstChild.nodeType === NODETYPE.ELEMENT
-    ) {
+    if (_node.firstChild != null && _node.firstChild.nodeType === NODETYPE.ELEMENT) {
       // Makes sure the original node isn't modified
-      let node = _node.cloneNode(true);
+      const node = _node.cloneNode(true);
 
       let tmp = <Element>node.firstChild;
       obj.child = dec.decodeCell(tmp, false);

@@ -38,8 +38,8 @@ import { Graph } from '../view/Graph';
 export function findTreeRoots(
   graph: Graph,
   parent: Cell,
-  isolate: boolean = false,
-  invert: boolean = false
+  isolate = false,
+  invert = false
 ) {
   const roots: Cell[] = [];
 
@@ -117,11 +117,11 @@ export function findTreeRoots(
  */
 export function traverse(
   vertex: Cell | null = null,
-  directed: boolean = true,
+  directed = true,
   func: Function | null = null,
   edge: Cell | null = null,
   visited: Dictionary<Cell, boolean> | null = null,
-  inverse: boolean = false
+  inverse = false
 ) {
   if (func != null && vertex != null) {
     directed = directed != null ? directed : true;
