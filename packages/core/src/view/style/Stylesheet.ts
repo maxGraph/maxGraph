@@ -204,7 +204,7 @@ export class Stylesheet {
    * @param defaultStyle Default style used as reference to compute the returned style.
    */
   getCellStyle(cellStyle: CellStyle, defaultStyle: CellStateStyle) {
-    let style: CellStateStyle = { ...defaultStyle };
+    let style: CellStateStyle;
 
     if (cellStyle.baseStyleNames) {
       // creates style with the given baseStyleNames. (merges from left to right)
@@ -217,6 +217,8 @@ export class Stylesheet {
         },
         { ...defaultStyle }
       );
+    } else {
+      style = { ...defaultStyle };
     }
 
     // Merges cellStyle into style
