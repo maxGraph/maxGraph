@@ -22,6 +22,7 @@ import EventSource from '../event/EventSource';
 import ImageBox from '../image/ImageBox';
 import CellState from './CellState';
 import ObjectIdentity from '../../util/ObjectIdentity';
+import { AlignValue, VAlignValue } from '../../types';
 
 /**
  * Extends {@link EventSource} to implement a graph overlay, represented by an icon
@@ -77,8 +78,8 @@ class CellOverlay extends EventSource implements ObjectIdentity {
   constructor(
     image: ImageBox,
     tooltip: string | null = null,
-    align = 'right',
-    verticalAlign = 'bottom',
+    align: AlignValue = 'right',
+    verticalAlign: VAlignValue = 'bottom',
     offset: Point = new Point(),
     cursor = 'help'
   ) {
@@ -86,6 +87,8 @@ class CellOverlay extends EventSource implements ObjectIdentity {
 
     this.image = image;
     this.tooltip = tooltip;
+    this.align = align;
+    this.verticalAlign = verticalAlign;
     this.offset = offset;
     this.cursor = cursor;
   }
@@ -101,18 +104,20 @@ class CellOverlay extends EventSource implements ObjectIdentity {
   tooltip?: string | null;
 
   /**
-   * Holds the horizontal alignment for the overlay. Default is
-   * {@link Constants#ALIGN_RIGHT}. For edges, the overlay always appears in the
-   * center of the edge.
+   * Holds the horizontal alignment for the overlay.
+   *
+   * For edges, the overlay always appears in the center of the edge.
+   * @default 'right'
    */
-  align: 'left' | 'center' | 'right' = 'right';
+  align: AlignValue = 'right';
 
   /**
-   * Holds the vertical alignment for the overlay. Default is
-   * {@link Constants#ALIGN_BOTTOM}. For edges, the overlay always appears in the
-   * center of the edge.
+   * Holds the vertical alignment for the overlay.
+   *
+   * For edges, the overlay always appears in the center of the edge.
+   * @default 'bottom'
    */
-  verticalAlign: 'top' | 'middle' | 'bottom' = 'bottom';
+  verticalAlign: VAlignValue = 'bottom';
 
   /**
    * Holds the offset as an {@link Point}. The offset will be scaled according to the
@@ -121,7 +126,8 @@ class CellOverlay extends EventSource implements ObjectIdentity {
   offset = new Point();
 
   /**
-   * Holds the cursor for the overlay. Default is 'help'.
+   * Holds the cursor for the overlay.
+   * @default 'help'.
    */
   cursor = 'help';
 
