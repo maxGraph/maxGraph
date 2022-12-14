@@ -49,6 +49,9 @@ jobs:
       - name: Generate @maxgraph/core types
         working-directory: packages/core
         run: npm run generate-types
+      - name: Test @maxgraph/core
+        working-directory: packages/core
+        run: npm test
       - name: Test TypeScript support
         working-directory: packages/ts-support
         run: npm test
