@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, Perimeter, constants, Point } from '@maxgraph/core';
+import { Graph, Perimeter, Point } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
 
@@ -75,7 +75,7 @@ const Template = ({ label, ...args }) => {
     gradientColor: 'white',
     perimeter: Perimeter.RectanglePerimeter,
     rounded: true,
-    shape: constants.SHAPE.RECTANGLE,
+    shape: 'rectangle',
     strokeColor: 'gray',
     verticalAlign: 'middle',
   };
