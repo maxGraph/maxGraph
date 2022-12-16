@@ -54,6 +54,14 @@ const Template = ({ label, ...args }) => {
   // Enables tooltips for the overlays
   graph.setTooltips(true);
 
+  function pickAlignValueRandomly() {
+    return ['left', 'center', 'right'][Math.floor(Math.random() * 3)];
+  }
+
+  function pickVerticalAlignValueRandomly() {
+    return ['top', 'bottom'][Math.floor(Math.random() * 2)];
+  }
+
   // Installs a handler for click events in the graph
   // that toggles the overlay for the respective cell
   graph.addListener(InternalEvent.CLICK, (sender, evt) => {
@@ -61,12 +69,13 @@ const Template = ({ label, ...args }) => {
 
     if (cell != null) {
       const overlays = graph.getCellOverlays(cell);
-
-      if (overlays.length == 0) {
+      if (overlays.length === 0) {
         // Creates a new overlay with an image and a tooltip
         const overlay = new CellOverlay(
           new ImageBox('/images/check.png', 16, 16),
-          'Overlay tooltip'
+          'Overlay tooltip',
+          pickAlignValueRandomly(),
+          pickVerticalAlignValueRandomly()
         );
 
         // Installs a handler for clicks on the overlay
@@ -104,7 +113,7 @@ const Template = ({ label, ...args }) => {
     });
     const v2 = graph.insertVertex({
       parent,
-      value: 'Doubleclick',
+      value: 'Double Click',
       position: [200, 150],
       size: [100, 40],
     });
