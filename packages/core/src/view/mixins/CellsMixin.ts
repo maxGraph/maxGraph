@@ -1881,8 +1881,11 @@ export const CellsMixin: PartialType = {
   },
 
   isCellBendable(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    return this.isCellsBendable() && !this.isCellLocked(cell) && style.bendable != false;
+    return (
+      this.isCellsBendable() &&
+      !this.isCellLocked(cell) &&
+      this.getCurrentCellStyle(cell).bendable != false
+    );
   },
 
   isCellsBendable() {
