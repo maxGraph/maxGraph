@@ -74,6 +74,7 @@ class PolylineShape extends Shape {
     const prev = c.pointerEventsValue;
     c.pointerEventsValue = 'stroke';
 
+    // TODO not consistent with default doc in API and in ConnectorShape (see mxGraph implementation)
     if (!this.style || !(this.style.curved ?? true)) {
       this.paintLine(c, pts, this.isRounded);
     } else {
