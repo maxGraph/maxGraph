@@ -1828,9 +1828,7 @@ export const CellsMixin: PartialType = {
   },
 
   isCellDeletable(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    const deletable = style.deletable == null ? true : style.deletable;
-    return this.isCellsDeletable() && deletable;
+    return this.isCellsDeletable() && (this.getCurrentCellStyle(cell).deletable ?? true);
   },
 
   isCellsDeletable() {
