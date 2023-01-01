@@ -467,7 +467,7 @@ export const NONE = 'none';
  *
  * - FONT_UNDERLINE: Constant for underlined fonts. Default is 4.
  *
- * - FONT_STRIKETHROUGH: Constant for strikthrough fonts. Default is 8.
+ * - FONT_STRIKETHROUGH: Constant for strikethrough fonts. Default is 8.
  */
 export const enum FONT {
   BOLD = 1,
