@@ -1778,9 +1778,7 @@ export const CellsMixin: PartialType = {
   },
 
   isCellCloneable(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    const cloneable = style.cloneable == null ? true : style.cloneable;
-    return this.isCellsCloneable() && cloneable;
+    return this.isCellsCloneable() && (this.getCurrentCellStyle(cell).cloneable ?? true);
   },
 
   isCellsCloneable() {
