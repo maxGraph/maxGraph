@@ -1133,12 +1133,14 @@ export const CellsMixin: PartialType = {
 
       geo.scale(dx, dy, style.aspect === 'fixed');
 
+      // TODO simplify expression. Use ternary. 'resizeWidth default is false'
       if (style.resizeWidth) {
         geo.width = w * dx;
       } else if (!style.resizeWidth) {
         geo.width = w;
       }
 
+      // TODO simplify expression. Use ternary. 'resizeHeight default is false'
       if (style.resizeHeight) {
         geo.height = h * dy;
       } else if (!style.resizeHeight) {
