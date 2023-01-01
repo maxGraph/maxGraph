@@ -131,9 +131,10 @@ export const EditingMixin: PartialType = {
   },
 
   isCellEditable(cell): boolean {
-    const style = this.getCurrentCellStyle(cell);
     return (
-      this.isCellsEditable() && !this.isCellLocked(cell) && (style.editable || false)
+      this.isCellsEditable() &&
+      !this.isCellLocked(cell) &&
+      (this.getCurrentCellStyle(cell).editable ?? true)
     );
   },
 
