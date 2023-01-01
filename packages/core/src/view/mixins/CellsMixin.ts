@@ -15,26 +15,9 @@ limitations under the License.
 */
 
 import Cell from '../cell/Cell';
-import {
-  contains,
-  getBoundingBox,
-  getRotatedPoint,
-  intersects,
-  ptSegDistSq,
-  toRadians,
-} from '../../util/mathUtils';
-import {
-  getSizeForString,
-  setCellStyleFlags,
-  setCellStyles,
-} from '../../util/styleUtils';
-import {
-  ALIGN,
-  DEFAULT_FONTSIZE,
-  DEFAULT_IMAGESIZE,
-  DIRECTION,
-  SHAPE,
-} from '../../util/Constants';
+import { contains, getBoundingBox, getRotatedPoint, intersects, ptSegDistSq, toRadians } from '../../util/mathUtils';
+import { getSizeForString, setCellStyleFlags, setCellStyles } from '../../util/styleUtils';
+import { ALIGN, DEFAULT_FONTSIZE, DEFAULT_IMAGESIZE, DIRECTION, SHAPE } from '../../util/Constants';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
@@ -1841,7 +1824,7 @@ export const CellsMixin: PartialType = {
 
   isCellRotatable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return style.rotatable == null ? true : style.rotatable;
+    return style.rotatable ?? true;
   },
 
   getMovableCells(cells) {
