@@ -399,9 +399,8 @@ export const DEFAULT_MARKERSIZE = 6;
 export const DEFAULT_IMAGESIZE = 24;
 
 /**
- * Defines the length of the horizontal segment of an Entity Relation.
- * This can be overridden using <'segment'> style.
- * Default is 30.
+ * Defines the length of the horizontal segment of an `Entity Relation`.
+ * This can be overridden using {@link CellStateStyle.segment} style.
  */
 export const ENTITY_SEGMENT = 30;
 
