@@ -201,9 +201,11 @@ export const ConnectionsMixin: PartialType = {
           this.setCellStyles(source ? 'exitDx' : 'entryDx', constraint.dx, [edge]);
           this.setCellStyles(source ? 'exitDy' : 'entryDy', constraint.dy, [edge]);
 
-          // Only writes 0 since 1 is default
+          // Only writes false since true is default
           if (!constraint.perimeter) {
-            this.setCellStyles(source ? 'exitPerimeter' : 'entryPerimeter', '0', [edge]);
+            this.setCellStyles(source ? 'exitPerimeter' : 'entryPerimeter', false, [
+              edge,
+            ]);
           } else {
             this.setCellStyles(source ? 'exitPerimeter' : 'entryPerimeter', null, [edge]);
           }
