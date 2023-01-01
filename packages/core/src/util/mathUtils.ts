@@ -618,10 +618,14 @@ export const intersectsHotspot = (
     let w = state.width;
     let h = state.height;
 
-    const start = getValue(state.style, 'startSize') * state.view.scale;
+    // TODO WIP remove the getValue function
+    // TODO add a style constant
+    // const start = getValue(state.style, 'startSize') * state.view.scale;
+    const start = state.style?.startSize ?? 0 * state.view.scale;
 
     if (start > 0) {
-      if (getValue(state.style, 'horizontal', true)) {
+      // if (getValue(state.style, 'horizontal', true)) {
+      if (state.style?.horizontal ?? true) {
         cy = state.y + start / 2;
         h = start;
       } else {
