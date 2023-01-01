@@ -378,9 +378,13 @@ export const getDirectedBounds = (
   flipH: boolean,
   flipV: boolean
 ) => {
-  const d = getValue(style, 'direction', DIRECTION.EAST);
-  flipH = flipH != null ? flipH : getValue(style, 'flipH', false);
-  flipV = flipV != null ? flipV : getValue(style, 'flipV', false);
+  // TODO WIP remove the getValue function
+  // const d = getValue(style, 'direction', DIRECTION.EAST);
+  const d = style?.direction ?? 'east';
+  // flipH = flipH != null ? flipH : getValue(style, 'flipH', false);
+  flipH ??= style?.flipH ?? false;
+  // flipV = flipV != null ? flipV : getValue(style, 'flipH', false);
+  flipV ??= style?.flipV ?? false;
 
   m.x = Math.round(Math.max(0, Math.min(rect.width, m.x)));
   m.y = Math.round(Math.max(0, Math.min(rect.height, m.y)));
