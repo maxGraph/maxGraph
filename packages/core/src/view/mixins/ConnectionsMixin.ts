@@ -222,7 +222,7 @@ export const ConnectionsMixin: PartialType = {
       let r1 = 0;
 
       // Bounds need to be rotated by 90 degrees for further computation
-      if (vertex.style.anchorPointDirection) {
+      if (vertex.style.anchorPointDirection ?? true) {
         if (direction === DIRECTION.NORTH) {
           r1 += 270;
         } else if (direction === DIRECTION.WEST) {
