@@ -405,8 +405,9 @@ export const DEFAULT_IMAGESIZE = 24;
 export const ENTITY_SEGMENT = 30;
 
 /**
- * Defines the rounding factor for rounded rectangles in percent between
- * 0 and 1. Values should be smaller than 0.5. Default is 0.15.
+ * Defines the default rounding factor for rounded vertexes in percent between
+ * `0` and `1`. Values should be smaller than `0.5`.
+ * See {@link CellStateStyle.arcSize}.
  */
 export const RECTANGLE_ROUNDING_FACTOR = 0.15;
 
