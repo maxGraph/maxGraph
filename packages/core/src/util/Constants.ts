@@ -411,7 +411,8 @@ export const ENTITY_SEGMENT = 30;
 export const RECTANGLE_ROUNDING_FACTOR = 0.15;
 
 /**
- * Defines the size of the arcs for rounded edges. Default is 20.
+ * Defines the default size in pixels of the arcs for rounded edges.
+ * See {@link CellStateStyle.arcSize}.
  */
 export const LINE_ARCSIZE = 20;
 
