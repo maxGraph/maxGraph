@@ -111,13 +111,15 @@ describe('getCellStyle', () => {
       arcSize: 6,
       fillColor: 'black',
       fillOpacity: 75,
+      shape: 'custom-shape',
     });
     stylesheet.putCellStyle('style3', { fillColor: 'chartreuse' });
 
     const cellStyle = stylesheet.getCellStyle(
       {
         baseStyleNames: ['style-1', 'unknown', 'style2', 'style3'],
-        shape: 'cloud',
+        endArrow: 'custom-arrow-end',
+        startArrow: 'custom-arrow-start',
         strokeColor: 'yellow',
       },
       { strokeColor: 'green', dashed: true }
@@ -125,9 +127,11 @@ describe('getCellStyle', () => {
     expect(cellStyle).toStrictEqual(<CellStateStyle>{
       arcSize: 6, // from style2
       dashed: true, // from default
+      endArrow: 'custom-arrow-end', // from default
       fillColor: 'chartreuse', // from style3 (latest in baseStyleNames)
       fillOpacity: 75, // from style2 (latest in  baseStyleNames having this property)
-      shape: 'cloud', // from style (override default and style-1)
+      shape: 'custom-shape', // from style2 (override default and style-1)
+      startArrow: 'custom-arrow-start', // from default
       strokeColor: 'yellow',
     });
   });

@@ -116,9 +116,9 @@ class Shape {
 
   endSize = 1;
 
-  startArrow: ArrowType = NONE;
+  startArrow: ArrowType | string = NONE;
 
-  endArrow: ArrowType = NONE;
+  endArrow: ArrowType | string = NONE;
 
   direction: DirectionValue = DIRECTION.EAST;
 
