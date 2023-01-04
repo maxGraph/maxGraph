@@ -61,7 +61,7 @@ export type CellStateStyle = {
    */
   align?: AlignValue;
   /**
-   *  The defines if the direction style should be taken into account when computing the fixed point location for connected edges.
+   *  This defines if the direction style should be taken into account when computing the fixed point location for connected edges.
    *  See also {@link direction}.
    *
    *  Set this to `false` to ignore the direction style for fixed connection points.
