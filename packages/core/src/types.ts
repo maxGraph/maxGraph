@@ -186,16 +186,16 @@ export type CellStateStyle = {
    */
   endSize?: number;
   /**
-   * The horizontal offset of the connection point of an edge with its source terminal.
+   * The horizontal offset of the connection point of an edge with its target terminal.
    */
   entryDx?: number;
   /**
-   * The vertical offset of the connection point of an edge with its source terminal.
+   * The vertical offset of the connection point of an edge with its target terminal.
    */
   entryDy?: number;
   /**
    * Defines if the perimeter should be used to find the exact entry point along the perimeter
-   * of the source.
+   * of the target.
    * @default true
    */
   entryPerimeter?: boolean;
@@ -374,7 +374,7 @@ export type CellStateStyle = {
   indicatorImage?: string;
   /**
    * The indicator shape used within an {@link LabelShape}.
-   * Possible values are all names of registered Shapes with {@link CellRenderer.registerShape}.
+   * The possible values are all names of registered Shapes with {@link CellRenderer.registerShape}.
    * This generally includes {@link ShapeValue} values and the names of any new shapes.
    *
    * The `indicatorShape` property has precedence over the {@link indicatorImage} property.
@@ -382,7 +382,7 @@ export type CellStateStyle = {
   indicatorShape?: string;
   /**
    * The color of the indicator stroke in {@link LabelShape}.
-   * Possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes.
    */
   indicatorStrokeColor?: ColorValue;
   /**
@@ -395,11 +395,11 @@ export type CellStateStyle = {
    */
   jettySize?: number | 'auto';
   /**
-   * Possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes.
    */
   labelBackgroundColor?: ColorValue;
   /**
-   * Possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes.
    */
   labelBorderColor?: ColorValue;
   /**
@@ -480,9 +480,7 @@ export type CellStateStyle = {
    * See {@link Graph.isLabelClipped}.
    *
    * Note that the vertical alignment is ignored for overflow filling and for horizontal
-   * alignment. 
-   * `left` should be used to avoid pixel offsets in Internet Explorer
-   * 11 and earlier or if foreignObjects are disabled.
+   * alignment.
    *
    * @default 'visible'
    */
