@@ -139,7 +139,8 @@ export type CellStateStyle = {
   defaultEdge?: CellStateStyle;
   defaultVertex?: CellStateStyle;
   /**
-   * This specifies if a cell can be deleted. See {@link Graph.isCellDeletable}.
+   * This specifies if a cell can be deleted. 
+   * See {@link Graph.isCellDeletable}.
    * @default true
    */
   deletable?: boolean;
@@ -149,7 +150,7 @@ export type CellStateStyle = {
    */
   direction?: DirectionValue;
   /**
-   * Possible values for style provided out-of-the box by maxGraph are defined in {@link EDGESTYLE}.
+   * The possible values for the style provided out-of-the box by maxGraph are defined in {@link EDGESTYLE}.
    *
    * See {@link noEdgeStyle}.
    */
@@ -161,10 +162,10 @@ export type CellStateStyle = {
    */
   editable?: boolean;
   /**
-   * This defines how the three segment orthogonal edge style leaves its terminal vertices.
+   * This defines how the three-segment orthogonal edge style leaves its terminal vertices.
    * The 'vertical' style leaves the terminal vertices at the top and bottom sides.
    *
-   * Possible values are 'horizontal' and 'vertical'.
+   * The possible values are 'horizontal' and 'vertical'.
    * @default 'horizontal'
    */
   elbow?: string;
@@ -174,7 +175,7 @@ export type CellStateStyle = {
    */
   endArrow?: ArrowType;
   /**
-   * Use `false` for no fill or `true` for fill.
+   * Use `false` to not fill or `true` to fill the end arrow marker.
    * See {@link startFill}.
    * @default true
    */
@@ -229,7 +230,7 @@ export type CellStateStyle = {
    */
   exitY?: number;
   /**
-   * Possible values are all HTML color names or HEX codes, as well as special keywords such
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such
    * as `swimlane`, `inherit`, `indicated` to use the color code of a related cell or the
    * indicator shape.
    */
@@ -262,15 +263,15 @@ export type CellStateStyle = {
    */
   foldable?: boolean;
   /**
-   * Possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes.
    */
   fontColor?: ColorValue;
   /**
-   * Possible values are names such as `Arial; Dialog; Verdana; Times New Roman`.
+   * The possible values are names such as `Arial; Dialog; Verdana; Times New Roman`.
    */
   fontFamily?: string;
   /**
-   * The fontSize style (in px).
+   * The size of the font (in px).
    */
   fontSize?: number;
   /**
@@ -284,7 +285,7 @@ export type CellStateStyle = {
    */
   glass?: boolean;
   /**
-   * Possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes.
    */
   gradientColor?: ColorValue;
   /**
@@ -297,14 +298,14 @@ export type CellStateStyle = {
   /**
    * This value only applies to vertices.
    * If the {@link shape} is `swimlane`, a value of `false` indicates that the swimlane should
-   * be drawn vertically, `true` indicates to draw it horizontally.
-   * If the shape style does not indicate that this vertex is a 'swimlane', this value affects
-   * only whether the label is drawn horizontally or vertically.
+   * be drawn vertically, `true` indicates that it should be drawn horizontally.
+   * If the shape style does not indicate that this vertex is a 'swimlane', this value only
+   * affects whether the label is drawn horizontally or vertically.
    * @default true
    */
   horizontal?: boolean;
   /**
-   * Possible values are any image URL.
+   * The possible values are any image URL.
    *
    * This is the path to the image that is to be displayed within the label of a vertex.
    * Data URLs should use the following format: `data:image/png,xyz` where xyz is the base64
@@ -312,29 +313,29 @@ export type CellStateStyle = {
    */
   image?: string;
   /**
-   * The value defines how any image in the vertex label is aligned horizontally within the
+   * The value defines how any image in the vertex label is horizontally aligned within the
    * label bounds of a {@link LabelShape}.
    * @default 'left'
    */
   imageAlign?: AlignValue;
   /**
-   * Possible values are
-   * - `false`: do not preserve aspect
-   * - `true`: keep aspect
+   * The possible values are:
+   * - `false`: do not preserve aspect of the image
+   * - `true`: keep aspect of the image
    *
    * This is only used in `ImageShape`.
    * @default true
    */
   imageAspect?: boolean;
   /**
-   * Possible values are all HTML color names or HEX codes.
+   * The possible values for the image background are all HTML color names or HEX codes.
    *
    * This is only used in `ImageShape`.
    * @default 'none'
    */
   imageBackground?: ColorValue;
   /**
-   * Possible values are all HTML color names or HEX codes.
+   * The possible values for the color of the image border are all HTML color names or HEX codes.
    *
    * This is only used in `ImageShape`.
    * @default 'none'
@@ -361,11 +362,12 @@ export type CellStateStyle = {
    */
   indicatorDirection?: DirectionValue;
   /**
-   * Possible values start at 0 (in pixels).
+   * The possible values start at 0 (in pixels).
    */
   indicatorHeight?: number;
   /**
-   * Indicator image used within a {@link LabelShape}. Possible values are all image URLs.
+   * Indicator image used within a {@link LabelShape}. 
+   * The possible values are all image URLs.
    *
    * The {@link indicatorShape} has precedence over the indicatorImage.
    */
@@ -379,12 +381,12 @@ export type CellStateStyle = {
    */
   indicatorShape?: string;
   /**
-   * The indicator stroke color in {@link LabelShape}.
+   * The color of the indicator stroke in {@link LabelShape}.
    * Possible values are all HTML color names or HEX codes.
    */
   indicatorStrokeColor?: ColorValue;
   /**
-   * Possible values start at 0 (in pixels).
+   * The possible values start at 0 (in pixels).
    */
   indicatorWidth?: number;
   /**
@@ -405,12 +407,12 @@ export type CellStateStyle = {
    */
   labelPadding?: number;
   /**
-   * The label align defines the position of the label relative to the cell.
-   * - `left` means the entire label bounds is placed completely just to the left of the vertex
-   * - `right` means adjust to the right
-   * - `center` means the label bounds are vertically aligned with the bounds of the vertex
+   * The label alignment defines the position of the label relative to the cell.
+   * - `left` means that the entire label bounds is placed completely just to the left of the vertex.
+   * - `right` means that the label bounds are adjusted to the right.
+   * - `center` means that the label bounds are vertically aligned with the bounds of the vertex.
    *
-   * Note this value does not affect the positioning of label within the label bounds.
+   * Note that this value does not affect the positioning of label within the label bounds.
    * To move the label bounds horizontally within the label bounds, use {@link align}
    * @default 'center'
    */
@@ -420,14 +422,14 @@ export type CellStateStyle = {
    */
   labelWidth?: number;
   /**
-   * Possible values are the functions defined in {@link EdgeStyle}.
+   * The possible values are the functions defined in {@link EdgeStyle}.
    */
   loop?: Function;
   loopStyle?: Function;
   /**
    * The margin between the ellipses in {@link DoubleEllipseShape}.
    *
-   * Possible values are all positive numbers.
+   * The possible values are all positive numbers.
    */
   margin?: number;
   /**
@@ -438,12 +440,13 @@ export type CellStateStyle = {
    */
   movable?: boolean;
   /**
-   *  If this is `true` then no edge style is applied for a given edge. See {@link edgeStyle}.
+   *  If this is `true`, no edge style is applied for a given edge. 
+   *  See {@link edgeStyle}.
    *  @default false
    */
   noEdgeStyle?: boolean;
   /**
-   * If this is `true` then no label is visible for a given cell.
+   * If this is `true`, no label is visible for a given cell.
    * @default false
    */
   noLabel?: boolean;
@@ -472,12 +475,12 @@ export type CellStateStyle = {
    * This value specifies how overlapping vertex labels are handled.
    * - A value of 'visible' will show the complete label.
    * - A value of 'hidden' will clip the label so that it does not overlap the vertex bounds.
-   * - A value of 'fill' will use the vertex bounds
+   * - A value of 'fill' will use the vertex bounds.
    * - A value of 'width' will use the vertex width for the label.
    *
    * See {@link Graph.isLabelClipped}.
    *
-   * Note that the vertical alignment is ignored for overflow fill and for horizontal
+   * Note that the vertical alignment is ignored for overflow filling and for horizontal
    * alignment, left should be used to avoid pixel offsets in Internet Explorer
    * 11 and earlier or if foreignObjects are disabled.
    *
@@ -487,9 +490,9 @@ export type CellStateStyle = {
   /**
    * This defines the perimeter around a particular shape.
    *
-   * For `Function` types, possible values are the functions defined in {@link Perimeter}.
+   * For `Function` types, the possible values are the functions defined in {@link Perimeter}.
    *
-   * Alternatively, use a string or a value of {@link PERIMETER} to access perimeter styles
+   * Alternatively, use a string or a value from {@link PERIMETER} to access perimeter styles
    * registered in {@link StyleRegistry}.
    */
   perimeter?: Function | string | null;
@@ -503,22 +506,22 @@ export type CellStateStyle = {
   perimeterSpacing?: number;
   /**
    * Specifies if pointer events should be fired on transparent backgrounds.
-   * This style is currently only supported in {@link RectangleShape}, {@link SwimlaneShape}
+   * This style is currently only supported by {@link RectangleShape}, {@link SwimlaneShape}
    * and {@link StencilShape}.
    *
-   * This is typically set to `false` in groups where the transparent part should allow any
+   * This style is usually set to `false` in groups where the transparent part should allow any
    * underlying cells to be clickable.
    * @default true
    */
   pointerEvents?: boolean;
   /**
-   * Defines the direction(s) that edges are allowed to connect to cells in.
+   * Defines the direction(s) in which edges are allowed to connect to cells.
    */
   portConstraint?: DIRECTION;
   /**
-   * Define whether port constraint directions are rotated with vertex rotation.
-   * - `false` causes port constraints to remain absolute, relative to the graph
-   * - `true` causes the constraints to rotate with the vertex.
+   * Define if the directions of the port constraints are rotated with the vertex rotation.
+   * - `false` makes the port constraints remain absolute, relative to the graph.
+   * - `true` makes the constraints rotate with the vertex.
    * @default false
    */
   portConstraintRotation?: DIRECTION;
@@ -530,16 +533,16 @@ export type CellStateStyle = {
    */
   resizable?: boolean;
   /**
-   * This specifies if a cell's height resize if the parent is resized.
-   * - If `true`, then the height will be resized even if the cell's geometry is relative.
-   * - If `false`, then the cell's height will not be resized.
+   * This specifies if the height of a cell is resized if the parent is resized.
+   * - If `true`, then the height will be resized even if the cell geometry is relative.
+   * - If `false`, then the height will not be resized.
    * @default false
    */
   resizeHeight?: boolean;
   /**
-   * This specifies if a cell's width resize if the parent is resized.
-   * - If `true`, then the width will be resized even if the cell's geometry is relative.
-   * - If `false`, then the cell's width will not be resized.
+   * This specifies if the width of a cell is resized if the parent is resized.
+   * - If `true`, then the width will be resized even if the cell geometry is relative.
+   * - If `false`, then the width will not be resized.
    * @default false
    */
   resizeWidth?: boolean;
@@ -554,7 +557,7 @@ export type CellStateStyle = {
    */
   rotation?: number;
   /**
-   * For edges this determines whether joins between edges segments are smoothed to a rounded finish.
+   * For edges, this determines whether the joins between edges segments are smoothed to a rounded finish.
    *
    * For vertices that have the rectangle shape, this determines whether the rectangle is rounded.
    *
@@ -564,16 +567,16 @@ export type CellStateStyle = {
    */
   rounded?: boolean;
   /**
-   * This is the relative offset from the center used for connecting edges.
+   * This is the relative offset from the center used to connect the edges.
    *
-   * Possible values are between -0.5 and 0.5.
+   * The possible values are between -0.5 and 0.5.
    * @default 0
    */
   routingCenterX?: number;
   /**
-   * This is the relative offset from the center used for connecting edges.
+   * This is the relative offset from the center used to connect the edges.
    *
-   * Possible values are between -0.5 and 0.5.
+   * The possible values are between -0.5 and 0.5.
    * @default 0
    */
   routingCenterY?: number;
@@ -584,8 +587,8 @@ export type CellStateStyle = {
    */
   segment?: number;
   /**
-   * Possible values are all HTML color names or HEX codes. This style is only used for
-   * `swimlane` shapes.
+   * The possible values are all HTML color names or HEX codes. 
+   * This style is only used for `swimlane` shapes.
    */
   separatorColor?: ColorValue;
   /**
@@ -594,14 +597,14 @@ export type CellStateStyle = {
    */
   shadow?: boolean;
   /**
-   * Possible values are all names of registered Shapes with {@link CellRenderer.registerShape}.
-   * This generally includes {@link ShapeValue} values and the names of any new shapes.
+   * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape}.
+   * This usually includes {@link ShapeValue} values and the names of all new shapes.
    */
   shape?: ShapeValue;
   /**
-   * The source jetty size in {@link EdgeStyle.OrthConnector}.
+   * The size of the source jetty in {@link EdgeStyle.OrthConnector}.
    *
-   * This has precedence over {@link jettySize}.
+   * This value takes precedence over {@link jettySize}.
    * @default {@link jettySize}
    */
   sourceJettySize?: number | 'auto';
@@ -614,7 +617,7 @@ export type CellStateStyle = {
    */
   sourcePerimeterSpacing?: number;
   /**
-   * Defines the ID of the cell that should be used for computing the perimeter point of
+   * Defines the ID of the cell that should be used to compute the perimeter point of
    * the source for an edge.
    *
    * This allows for graphically connecting to a cell while keeping the actual terminal of
@@ -622,13 +625,13 @@ export type CellStateStyle = {
    */
   sourcePort?: string;
   /**
-   * Defines the direction(s) that edges are allowed to connect to sources in.
+   * Defines the direction(s) in which edges are allowed to connect to sources.
    */
   sourcePortConstraint?: DIRECTION;
   /**
    * The value represents the spacing, in pixels, added to each side of a label in a vertex.
    *
-   * This style applies to vertices only.
+   * This style only applies to vertices.
    * @default 0
    */
   spacing?: number;
@@ -636,7 +639,7 @@ export type CellStateStyle = {
    * The value represents the spacing, in pixels, added to the bottom side of a label in a
    * vertex. It is added to the {@link CellStateStyle.spacing} value.
    *
-   * This style applies to vertices only.
+   * This style only applies to vertices.
    * @default 0
    */
   spacingBottom?: number;
@@ -644,7 +647,7 @@ export type CellStateStyle = {
    * The value represents the spacing, in pixels, added to the left side of a label in a
    * vertex. It is added to the {@link CellStateStyle.spacing} value.
    *
-   * This style applies to vertices only.
+   * This style only applies to vertices.
    * @default 0
    */
   spacingLeft?: number;
@@ -652,7 +655,7 @@ export type CellStateStyle = {
    * The value represents the spacing, in pixels, added to the right side of a label in a
    * vertex. It is added to the {@link CellStateStyle.spacing} value.
    *
-   * This style applies to vertices only.
+   * This style only applies to vertices.
    * @default 0
    */
   spacingRight?: number;
@@ -660,7 +663,7 @@ export type CellStateStyle = {
    * The value represents the spacing, in pixels, added to the top side of a label in a
    * vertex. It is added to the {@link CellStateStyle.spacing} value.
    *
-   * This style applies to vertices only.
+   * This style only applies to vertices.
    * @default 0
    */
   spacingTop?: number;
@@ -670,19 +673,19 @@ export type CellStateStyle = {
    */
   startArrow?: ArrowType;
   /**
-   * Use `false` for no fill or `true` for fill.
+   * Use `false` to not fill or `true` to fill the start arrow marker.
    * See {@link endFill}.
    * @default true
    */
   startFill?: boolean;
   /**
-   * The value represents the size of the start marker in pixels or the size of the swimlane
-   * title region depending on the shape it is used for.
+   * The value represents the size of the start marker, in pixels, or the size of the title region
+   * of a `swimlane` depending on the shape it is used for.
    * See {@link endSize}.
    */
   startSize?: number;
   /**
-   * Possible values are all HTML color names or HEX codes, as well as special keywords such
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such
    * as `swimlane`, `inherit`, `indicated` to use the color code of a related cell or the
    * indicator shape or `none` for no color.
    */
@@ -692,15 +695,15 @@ export type CellStateStyle = {
    */
   strokeOpacity?: number;
   /**
-   * The possible range is any non-negative value larger or equal to 1.
+   * The possible range is any non-negative value greater than or equal to 1.
    * The value defines the stroke width in pixels.
    *
-   * Note: To hide a stroke use strokeColor `none`.
+   * Note: To hide a stroke, use `none` as value of `strokeColor`.
    */
   strokeWidth?: number;
   /**
    * The fill color of the `swimlane` background.
-   * Possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes.
    * @default no backgroune
    */
   swimlaneFillColor?: ColorValue;
@@ -711,7 +714,7 @@ export type CellStateStyle = {
    */
   swimlaneLine?: boolean;
   /**
-   * The target jetty size in {@link EdgeStyle.OrthConnector}.
+   * The size of the target jetty in {@link EdgeStyle.OrthConnector}.
    *
    * This has precedence over {@link jettySize}.
    * @default {@link jettySize}
@@ -734,7 +737,7 @@ export type CellStateStyle = {
    */
   targetPort?: string;
   /**
-   * Defines the direction(s) that edges are allowed to connect to sources in.
+   * Defines the direction(s) in which edges are allowed to connect to sources.
    */
   targetPortConstraint?: DIRECTION;
   /**
@@ -747,35 +750,35 @@ export type CellStateStyle = {
   textOpacity?: number;
   /**
    * This value defines how the lines of the label are vertically aligned.
-   * - `top` means the topmost label text line is aligned against the top of the label bounds
-   * - `bottom` means the bottom-most label text line is aligned against the bottom of the
-   * label bounds
-   * - `middle` means there is equal spacing between the topmost text label line and the top
-   * of the label bounds and between the bottom-most text label line and the bottom of the
+   * - `top` means that the topmost line of the label text is aligned with the top of the label bounds.
+   * - `bottom` means that the bottom-most line of the label text is aligned with the bottom of the
+   * label bounds.
+   * - `middle` means that there is equal spacing between the topmost line of the text label and the top
+   * of the label bounds and between the bottom-most line of the text label and the bottom of the
    * label bounds.
    *
-   * Note this value doesn't affect the positioning of the overall label bounds relative to
+   * Note that this value doesn't affect the positioning of the overall label bounds relative to
    * the vertex. To move the label bounds vertically, use {@link verticalLabelPosition}.
    *
    * @default 'middle'
    */
   verticalAlign?: VAlignValue;
   /**
-   * The label align defines the position of the label relative to the cell.
-   * - 'top' means the entire label bounds is placed completely just on the top of the vertex
-   * - 'bottom' means adjust on the bottom
-   * - 'middle' means the label bounds are horizontally aligned with the bounds of the vertex
+   * The label alignment defines the position of the label relative to the cell.
+   * - 'top' means that the entire label bounds are placed completely just on the top of the vertex.
+   * - 'bottom' means that the label bounds are adjusted on the bottom of the vertex.
+   * - 'middle' means that the label bounds are horizontally aligned with the bounds of the vertex.
    *
-   * Note this value doesn't affect the positioning of label within the label bounds.
+   * Note that this value doesn't affect the positioning of label within the label bounds.
    * To move the label vertically within the label bounds, use {@link verticalAlign}.
    * @default 'middle'
    */
   verticalLabelPosition?: VAlignValue;
   /**
    * This value specifies how white-space inside an HTML vertex label should be handled.
-   * - A value of 'nowrap' means the text will never wrap to the next line until a linefeed
+   * - A 'nowrap' value means that the text will never wrap to the next line until a line break
    * is encountered.
-   * - A value of 'wrap' means text will wrap when necessary.
+   * - A 'wrap' value means that the text will wrap if necessary.
    *
    * This style is only used for HTML labels.
    * @default 'nowrap'
