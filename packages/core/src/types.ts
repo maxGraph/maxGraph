@@ -352,7 +352,7 @@ export type CellStateStyle = {
    */
   imageWidth?: number;
   /**
-   * Possible values are all HTML color names or HEX codes, as well as the special `swimlane` keyword
+   * The possible values are all HTML color names or HEX codes, as well as the special `swimlane` keyword
    * to refer to the color of the parent `swimlane` if one exists.
    */
   indicatorColor?: ColorValue;
