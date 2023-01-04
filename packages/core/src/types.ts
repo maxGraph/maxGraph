@@ -481,7 +481,8 @@ export type CellStateStyle = {
    * See {@link Graph.isLabelClipped}.
    *
    * Note that the vertical alignment is ignored for overflow filling and for horizontal
-   * alignment, left should be used to avoid pixel offsets in Internet Explorer
+   * alignment. 
+   * `left` should be used to avoid pixel offsets in Internet Explorer
    * 11 and earlier or if foreignObjects are disabled.
    *
    * @default 'visible'
