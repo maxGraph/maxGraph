@@ -50,12 +50,12 @@ export type CellStateStyle = {
    */
   absoluteArcSize?: number;
   /**
-   * This value defines how the lines of the label are horizontally aligned.
-   * - `left` mean label text lines are aligned to left of the label bounds
-   * - `right` to the right of the label bounds
-   * - `center` means the center of the text lines are aligned in the center of the label bounds.
+   * This value defines how the lines of the label are aligned horizontally.
+   * - `left` means that the lines of label text are aligned to the left of the label bounds.
+   * - `right` means that the lines of label text are aligned to the right of the label bounds.
+   * - `center` means that the center of the label text lines are aligned to the center of the label bounds.
    *
-   * Note this value does not affect the positioning of the overall label bounds relative
+   * Note that this value does not affect the positioning of the overall label bounds relative
    * to the vertex. To move the label bounds horizontally, use {@link labelPosition}.
    * @default 'center'
    */
@@ -69,9 +69,9 @@ export type CellStateStyle = {
    */
   anchorPointDirection?: boolean;
   /**
-   * For **vertexes**, this defines the rounding factor for a {@link rounded} vertex in percent.
-   * Possible values are between `0` and `100`.
-   * If this value is not specified then `constants.RECTANGLE_ROUNDING_FACTOR * 100` is used.
+   * For **vertex**, this defines the rounding factor for a {@link rounded} vertex in percent.
+   * The possible values are between `0` and `100`.
+   * If this value is not specified, then `constants.RECTANGLE_ROUNDING_FACTOR * 100` is used.
    *
    * Shapes supporting `arcSize`:
    * - Rectangle
@@ -79,28 +79,28 @@ export type CellStateStyle = {
    * - Swimlane
    * - Triangle
    *
-   * For **edges**, this defines the absolute size of {@link rounded} corners in pixels.
-   * If this values is not specified then {@link LINE_ARCSIZE} is used.
+   * For **edge**, this defines the absolute size of the {@link rounded} corners in pixels.
+   * If this value is not specified, then {@link LINE_ARCSIZE} is used.
    *
    * See also {@link absoluteArcSize}.
    */
   arcSize?: number;
   /**
-   * Possible values are empty or fixed.
-   * If `fixed` is used then the aspect ratio of the cell will be maintained when resizing.
+   * The possible values are empty or fixed.
+   * If `fixed` is used, the aspect ratio of the cell will be maintained when resizing.
    * @default 'empty'
    */
   aspect?: string;
   /**
-   * This specifies if a cell should be resized automatically if the value has changed.
-   * See {@link Graph.isAutoSizeCell}. This is normally combined with {@link resizable} to disable manual sizing.
+   * This specifies if a cell should be resized automatically if its value changed.
+   * See {@link Graph.isAutoSizeCell}. This is normally combined with {@link resizable} to disable manual resizing.
    * @default false
    */
   autosize?: boolean;
   backgroundColor?: ColorValue;
   /**
    * This specifies if only the background of a cell should be painted when it is highlighted.
-   * Possible values are 0 (false) or 1 (true).
+   * The possible values are 0 (false) or 1 (true).
    * @default 0
    */
   backgroundOutline?: number;
@@ -127,7 +127,7 @@ export type CellStateStyle = {
    */
   dashed?: boolean;
   /**
-   * The type of this value is a space separated list of numbers that specify a custom-defined dash pattern. Only relevant if {@link dashed} is `true`.
+   * The type of this value is a space-separated list of numbers that specify a custom-defined dash pattern. Only relevant if {@link dashed} is `true`.
    *
    * Dash styles are defined in terms of the length of the dash (the drawn part of the stroke) and the length of the space between the dashes.
    *
