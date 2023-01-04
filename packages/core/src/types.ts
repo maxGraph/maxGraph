@@ -200,11 +200,11 @@ export type CellStateStyle = {
    */
   entryPerimeter?: boolean;
   /**
-   * The horizontal relative coordinate connection point of an edge with its target terminal.
+   * The connection point in relative horizontal coordinates of an edge with its target terminal.
    */
   entryX?: number;
   /**
-   * The vertical relative coordinate connection point of an edge with its target terminal.
+   * The connection point in relative vertical coordinates of an edge with its target terminal.
    */
   entryY?: number;
   /**
