@@ -129,7 +129,7 @@ export type CellStateStyle = {
   /**
    * The type of this value is a space-separated list of numbers that specify a custom-defined dash pattern. Only relevant if {@link dashed} is `true`.
    *
-   * Dash styles are defined in terms of the length of the dash (the drawn part of the stroke) and the length of the space between the dashes.
+   * Dash styles are defined by the length of the dash (the drawn part of the stroke) and the length of the space between the dashes.
    *
    * The lengths are relative to the line width: a length of `1` is equal to the line width.
    *
@@ -290,8 +290,8 @@ export type CellStateStyle = {
   gradientColor?: ColorValue;
   /**
    * Generally, and by default in maxGraph, gradient painting is done from the value of {@link fillColor} to the value of {@link gradientColor}.
-   * Taking the example of 'north', this means {@link fillColor} color at the bottom of paint pattern
-   * and {@link gradientColor} at top, with a gradient in-between.
+   * If we take the example of 'north', this means that the {@link fillColor} color is at the bottom of paint pattern
+   * and the {@link gradientColor} color is at the top, with a gradient in-between.
    * @default 'south'
    */
   gradientDirection?: DirectionValue;
@@ -458,7 +458,6 @@ export type CellStateStyle = {
    * Defines if the connection points on either end of the edge should be computed so that
    * the edge is vertical or horizontal if possible and if the point is not at a fixed location.
    *
-   * Default is false.
    * This is used in {@link Graph.isOrthogonal}, which also returns `true` if the {@link edgeStyle}
    * of the edge is an `elbow` or `entity`.
    * @default false
