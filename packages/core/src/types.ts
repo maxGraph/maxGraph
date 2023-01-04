@@ -45,7 +45,7 @@ export type CellStyle = CellStateStyle & { baseStyleNames?: string[] };
 
 export type CellStateStyle = {
   /**
-   * This specifies if {@link arcSize} for rectangles is absolute or relative. Possible values are 1 and 0 (default).
+   * This specifies if {@link arcSize} for rectangles is absolute or relative. The possible values are 1 and 0 (default).
    * @default 0
    */
   absoluteArcSize?: number;
@@ -375,7 +375,7 @@ export type CellStateStyle = {
   /**
    * The indicator shape used within an {@link LabelShape}.
    * The possible values are all names of registered Shapes with {@link CellRenderer.registerShape}.
-   * This generally includes {@link ShapeValue} values and the names of any new shapes.
+   * This usually includes {@link ShapeValue} values and the names of all new shapes.
    *
    * The `indicatorShape` property has precedence over the {@link indicatorImage} property.
    */
@@ -714,7 +714,7 @@ export type CellStateStyle = {
   /**
    * The size of the target jetty in {@link EdgeStyle.OrthConnector}.
    *
-   * This has precedence over {@link jettySize}.
+   * This value takes precedence over {@link jettySize}.
    * @default {@link jettySize}
    */
   targetJettySize?: number | 'auto';
@@ -727,7 +727,7 @@ export type CellStateStyle = {
    */
   targetPerimeterSpacing?: number;
   /**
-   * Defines the ID of the cell that should be used for computing the perimeter point of
+   * Defines the ID of the cell that should be used to compute the perimeter point of
    * the target for an edge.
    *
    * This allows for graphically connecting to a cell while keeping the actual terminal of
