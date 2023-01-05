@@ -18,7 +18,7 @@ limitations under the License.
 import {
   Graph,
   RubberBandHandler,
-  mathUtils,
+  styleUtils,
   eventUtils,
   InternalEvent,
   Client,
@@ -85,7 +85,7 @@ const Template = ({ label, ...args }) => {
         evt.preventDefault();
 
         // Gets drop location point for vertex
-        const pt = mathUtils.convertPoint(
+        const pt = styleUtils.convertPoint(
           graph.container,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)

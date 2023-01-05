@@ -21,7 +21,7 @@ import {
   RubberBandHandler,
   Point,
   SelectionHandler,
-  mathUtils,
+  styleUtils,
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -159,7 +159,7 @@ const Template = ({ label, ...args }) => {
 
   // Replaces move preview for relative children
   graphHandler.getDelta = function (me) {
-    const point = mathUtils.convertPoint(this.graph.container, me.getX(), me.getY());
+    const point = styleUtils.convertPoint(this.graph.container, me.getX(), me.getY());
     let delta = new Point(point.x - this.first.x, point.y - this.first.y);
 
     if (this.cells != null && this.cells.length > 0 && this.cells[0] != null) {
