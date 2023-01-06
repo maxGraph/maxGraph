@@ -49,7 +49,7 @@ class MarkerShape {
   static createMarker(
     canvas: AbstractCanvas2D,
     shape: Shape,
-    type: ArrowType,
+    type: ArrowType | string,
     pe: Point,
     unitX: number,
     unitY: number,

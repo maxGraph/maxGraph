@@ -171,9 +171,13 @@ export type CellStateStyle = {
   elbow?: string;
   /**
    * This defines the style of the end arrow marker.
+   *
+   * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
+   * This generally includes {@link ArrowType} values and the names of any new shapes.
+   *
    * See {@link startArrow}.
    */
-  endArrow?: ArrowType;
+  endArrow?: ArrowType | string;
   /**
    * Use `false` to not fill or `true` to fill the end arrow marker.
    * See {@link startFill}.
@@ -598,7 +602,7 @@ export type CellStateStyle = {
    * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape}.
    * This usually includes {@link ShapeValue} values and the names of all new shapes.
    */
-  shape?: ShapeValue;
+  shape?: ShapeValue | string;
   /**
    * The size of the source jetty in {@link EdgeStyle.OrthConnector}.
    *
@@ -667,9 +671,13 @@ export type CellStateStyle = {
   spacingTop?: number;
   /**
    * This defines the style of the start arrow marker.
+   *
+   * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
+   * This generally includes {@link ArrowType} values and the names of any new shapes.
+   *
    * See {@link endArrow}.
    */
-  startArrow?: ArrowType;
+  startArrow?: ArrowType | string;
   /**
    * Use `false` to not fill or `true` to fill the start arrow marker.
    * See {@link endFill}.
