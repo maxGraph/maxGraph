@@ -60,7 +60,7 @@ const Template = ({ label, ...args }) => {
   // Do not allow removing labels from parents
   graphHandler.removeCellsFromParent = false;
 
-  // Autosize labels on insert where autosize=1
+  // Allow auto-size labels on insert
   graph.autoSizeCellsOnAdd = true;
 
   // Allows moving of relative cells

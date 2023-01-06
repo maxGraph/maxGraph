@@ -2813,7 +2813,7 @@ export const CellsMixin: PartialType = {
    */
   isAutoSizeCell(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return this.isAutoSizeCells() || !!style.autosize;
+    return this.isAutoSizeCells() || (style.autoSize ?? false);
   },
 
   /**

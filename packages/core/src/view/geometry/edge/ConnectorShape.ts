@@ -22,7 +22,7 @@ import MarkerShape from './MarkerShape';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Rectangle from '../Rectangle';
-import { ArrowType, ColorValue } from '../../../types';
+import { ArrowValue, ColorValue } from '../../../types';
 
 /**
  * Extends {@link mxShape} to implement a connector shape.

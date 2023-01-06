@@ -383,7 +383,7 @@ class TextShape extends Shape {
       this.spacingLeft =
         (this.style.spacingLeft ?? this.spacingLeft - old) + this.spacing;
       this.horizontal = this.style.horizontal ?? this.horizontal;
-      this.background = this.style.backgroundColor ?? this.background;
+      this.background = this.style.labelBackgroundColor ?? this.background;
       this.border = this.style.labelBorderColor ?? this.border;
       this.textDirection = this.style.textDirection ?? DEFAULT_TEXT_DIRECTION;
       this.opacity = this.style.textOpacity ?? 100;
