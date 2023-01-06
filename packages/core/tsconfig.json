@@ -13,10 +13,8 @@
   },
   "include": ["src/**/*.ts"],
   "typedocOptions": {
-    "out": "../../docs/api",
+    "out": "../docs/build/api",
     "readme": "none",
-    "includes": "./src/index.ts",
-    "exclude": [],
     "excludeExternals": true,
     "excludePrivate": true
   }

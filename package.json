@@ -15,7 +15,6 @@
     "dev": "node ./scripts/dev",
     "bootstrap": "lerna bootstrap --no-ci",
     "postinstall": "lerna bootstrap --no-ci",
-    "docs": "jsdoc -c jsdoc.json",
     "lint": "eslint packages/**/**.ts",
     "lint:fix": "eslint --fix packages/**/**.ts",
     "prettier": "prettier --write packages/*/src/**/*.ts"
@@ -37,7 +36,6 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "file-loader": "^6.2.0",
-    "jsdoc": "^3.6.7",
     "lerna": "^4.0.0",
     "prettier": "^2.7.1",
     "style-loader": "^3.3.1",
