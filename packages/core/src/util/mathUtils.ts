@@ -621,11 +621,12 @@ export const intersectsHotspot = (
     // TODO WIP remove the getValue function
     // TODO add a style constant
     // const start = getValue(state.style, 'startSize') * state.view.scale;
-    const start = state.style?.startSize ?? 0 * state.view.scale;
+    const style = state.style;
+    const start = style?.startSize ?? 0 * state.view.scale;
 
     if (start > 0) {
       // if (getValue(state.style, 'horizontal', true)) {
-      if (state.style?.horizontal ?? true) {
+      if (style?.horizontal ?? true) {
         cy = state.y + start / 2;
         h = start;
       } else {
@@ -643,7 +644,7 @@ export const intersectsHotspot = (
     }
 
     const rect = new Rectangle(cx - w / 2, cy - h / 2, w, h);
-    const alpha = toRadians(state.style?.rotation ?? 0);
+    const alpha = toRadians(style?.rotation ?? 0);
 
     if (alpha != 0) {
       const cos = Math.cos(-alpha);
