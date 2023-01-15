@@ -643,7 +643,7 @@ export const intersectsHotspot = (
     }
 
     const rect = new Rectangle(cx - w / 2, cy - h / 2, w, h);
-    const alpha = toRadians(getValue(state.style, 'rotation') || 0);
+    const alpha = toRadians(state.style?.rotation ?? 0);
 
     if (alpha != 0) {
       const cos = Math.cos(-alpha);
