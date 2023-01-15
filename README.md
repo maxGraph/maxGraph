@@ -122,8 +122,12 @@ Remove the
 - `typeroots` settings related to `typed-mxgraph` in the `tsconfig.json` file
 - the mxGraph initialization code using the `factory` function
 
-As an example, you can check [this project](https://github.com/tbouffard/maxgraph-integration-examples/tree/main/projects/rollup-ts) which has been migrated
+As an example, you can check [this project](https://github.com/maxGraph/maxgraph-integration-examples/tree/main/projects/rollup-ts) which has been migrated
 from a [typed-mxgraph example](https://github.com/typed-mxgraph/typed-mxgraph-example-bundled-with-rollup).
+
+### API Changes
+
+See the [dedicated page](packages/docs/migrate-from-mxgraph.md).
 
 
 ## History

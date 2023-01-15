@@ -1,6 +1,7 @@
 # Migrate from mxGraph
 
-**This page is a work in progress. Feedback welcome!**
+**This page is a work in progress. Comments are welcome by creating an [issue](https://github.com/maxGraph/maxGraph/issues)
+or opening a [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a).!**
 
 The `maxGraph` API is close to the former `mxGraph` API. This page aims to help the migration to the new API.  
 
