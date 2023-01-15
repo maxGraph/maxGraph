@@ -247,7 +247,7 @@ export const ConnectionsMixin: PartialType = {
       );
 
       // Rotation for direction before projection on perimeter
-      let r2 = style.rotation || 0;
+      let r2 = style.rotation ?? 0;
 
       if (constraint.perimeter) {
         if (r1 !== 0) {
