@@ -353,7 +353,7 @@ class CellRenderer {
   createLabel(state: CellState, value: string) {
     const graph = <Graph>state.view.graph;
 
-    if ((state.style.fontSize || 0) > 0 || state.style.fontSize == null) {
+    if ((state.style.fontSize ?? 0) > 0 || state.style.fontSize == null) {
       // Avoids using DOM node for empty labels
       const isForceHtml = graph.isHtmlLabel(state.cell) || isNode(value);
 
