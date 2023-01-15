@@ -195,7 +195,7 @@ export const FoldingMixin: PartialType = {
         geo.alternateBounds.x = geo.x;
         geo.alternateBounds.y = geo.y;
 
-        const alpha = toRadians(style.rotation || 0);
+        const alpha = toRadians(style.rotation ?? 0);
 
         if (alpha !== 0) {
           const dx = geo.alternateBounds.getCenterX() - geo.getCenterX();
