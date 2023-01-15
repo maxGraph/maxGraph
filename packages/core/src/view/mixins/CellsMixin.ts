@@ -15,9 +15,26 @@ limitations under the License.
 */
 
 import Cell from '../cell/Cell';
-import { contains, getBoundingBox, getRotatedPoint, intersects, ptSegDistSq, toRadians } from '../../util/mathUtils';
-import { getSizeForString, setCellStyleFlags, setCellStyles } from '../../util/styleUtils';
-import { ALIGN, DEFAULT_FONTSIZE, DEFAULT_IMAGESIZE, DIRECTION, SHAPE } from '../../util/Constants';
+import {
+  contains,
+  getBoundingBox,
+  getRotatedPoint,
+  intersects,
+  ptSegDistSq,
+  toRadians,
+} from '../../util/mathUtils';
+import {
+  getSizeForString,
+  setCellStyleFlags,
+  setCellStyles,
+} from '../../util/styleUtils';
+import {
+  ALIGN,
+  DEFAULT_FONTSIZE,
+  DEFAULT_IMAGESIZE,
+  DIRECTION,
+  SHAPE,
+} from '../../util/Constants';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
@@ -342,7 +359,7 @@ export const CellsMixin: PartialType = {
       if (value === null) {
         const style = this.getCurrentCellStyle(cells[0]);
 
-        const current = (style[key] as number) || 0;
+        const current = (style[key] as number) ?? 0;
         value = !((current & flag) === flag);
       }
       setCellStyleFlags(this.getDataModel(), cells, key, flag, value);
@@ -953,13 +970,13 @@ export const CellsMixin: PartialType = {
       }
 
       // Adds spacings
-      dx += 2 * (style.spacing || 0);
-      dx += style.spacingLeft || 0;
-      dx += style.spacingRight || 0;
+      dx += 2 * (style.spacing ?? 0);
+      dx += style.spacingLeft ?? 0;
+      dx += style.spacingRight ?? 0;
 
-      dy += 2 * (style.spacing || 0);
-      dy += style.spacingTop || 0;
-      dy += style.spacingBottom || 0;
+      dy += 2 * (style.spacing ?? 0);
+      dy += style.spacingTop ?? 0;
+      dy += style.spacingBottom ?? 0;
 
       // Add spacing for collapse/expand icon
       // LATER: Check alignment and use constants
