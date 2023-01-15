@@ -3,7 +3,34 @@
 **This page is a work in progress. Comments are welcome by creating an [issue](https://github.com/maxGraph/maxGraph/issues)
 or opening a [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a).!**
 
-The `maxGraph` API is close to the former `mxGraph` API. This page aims to help the migration to the new API.  
+The `maxGraph` APIs are not fully compatible with `mxGraph` APIs, but the `maxGraph` APIs are close to the former `mxGraph` APIs.
+The concepts are the same, so experienced _mxGraph_ users should be able to switch from _mxGraph_ to _maxGraph_ without issues.
+
+The major changes are the support removal of Internet Explorer (including VML support) and Legacy Edge.
+
+
+## Application setup
+
+Remove the
+- `mxgraph` dependency and add `maxgraph@core` instead  
+- _mxGraph_ initialization code using the `factory` function. _maxGraph_ objects can be accessed directly.
+
+### TypeScript
+
+Remove the
+- `@typed-mxgraph/typed-mxgraph` dependency in the `package.json` file
+- `typeroots` settings related to `typed-mxgraph` in the `tsconfig.json` file
+
+As an example, you can check [this project](https://github.com/maxGraph/maxgraph-integration-examples/tree/main/projects/rollup-ts) which has been migrated
+from a [typed-mxgraph example](https://github.com/typed-mxgraph/typed-mxgraph-example-bundled-with-rollup).
+
+
+## General guidelines
+
+- The names of _mxGraph_ objects were all prefixed by `mx`. The prefix has been dropped in _maxGraph_.
+- Most names remain the same
+- Some utility functions, whose implementation is natively available in modern versions of ECMAScript, have been removed.
+
 
 ## Style related properties
 

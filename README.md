@@ -103,31 +103,9 @@ Until we provide a complete documentation, you can check the mxGraph resources
 
 ## Migrating from mxGraph
 
-**NOTE**: the following is only an indication of the migration. A more complete guide will be written in the future.
-
 `maxGraph` APIs are not fully compatible with mxGraph APIs. The concepts are the same, so experienced mxGraph users should be able to switch from mxGraph to maxGraph without issues.
 
-The main changes are the support removal of Internet Explorer (including VML support) and Legacy Edge.
-
-### Migrating JavaScript projects
-
-- The names of mxGraph objects were all prefixed by `mx`. The prefix has been dropped in maxGraph.
-- Most names remain the same
-- Some utility functions, whose implementation is natively available in modern versions of ECMAScript, have been removed.
-
-### Migrating TypeScript projects
-
-Remove the 
-- `@typed-mxgraph/typed-mxgraph` dependency in the `package.json` file
-- `typeroots` settings related to `typed-mxgraph` in the `tsconfig.json` file
-- the mxGraph initialization code using the `factory` function
-
-As an example, you can check [this project](https://github.com/maxGraph/maxgraph-integration-examples/tree/main/projects/rollup-ts) which has been migrated
-from a [typed-mxgraph example](https://github.com/typed-mxgraph/typed-mxgraph-example-bundled-with-rollup).
-
-### API Changes
-
-See the [dedicated page](packages/docs/migrate-from-mxgraph.md).
+For a complete guide, see the [dedicated migration page](packages/docs/migrate-from-mxgraph.md).
 
 
 ## History
