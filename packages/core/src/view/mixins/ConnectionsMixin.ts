@@ -220,11 +220,12 @@ export const ConnectionsMixin: PartialType = {
     if (constraint.point) {
       const bounds = this.getView().getPerimeterBounds(vertex);
       const cx = new Point(bounds.getCenterX(), bounds.getCenterY());
-      const direction = vertex.style.direction;
+      const style = vertex.style;
+      const direction = style.direction;
       let r1 = 0;
 
       // Bounds need to be rotated by 90 degrees for further computation
-      if (vertex.style.anchorPointDirection ?? true) {
+      if (style.anchorPointDirection ?? true) {
         if (direction === DIRECTION.NORTH) {
           r1 += 270;
         } else if (direction === DIRECTION.WEST) {
@@ -246,7 +247,7 @@ export const ConnectionsMixin: PartialType = {
       );
 
       // Rotation for direction before projection on perimeter
-      let r2 = vertex.style.rotation || 0;
+      let r2 = style.rotation || 0;
 
       if (constraint.perimeter) {
         if (r1 !== 0) {
@@ -270,8 +271,8 @@ export const ConnectionsMixin: PartialType = {
         r2 += r1;
 
         if (vertex.cell.isVertex()) {
-          let flipH = vertex.style.flipH;
-          let flipV = vertex.style.flipV;
+          let flipH = style.flipH;
+          let flipV = style.flipV;
 
           if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
             const temp = flipH;
