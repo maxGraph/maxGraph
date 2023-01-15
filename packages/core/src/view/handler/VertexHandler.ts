@@ -1316,7 +1316,7 @@ class VertexHandler {
       if (cell.isVertex() || cell.isEdge()) {
         if (!cell.isEdge()) {
           const style = this.graph.getCurrentCellStyle(cell);
-          const total = (style.rotation || 0) + angle;
+          const total = (style.rotation ?? 0) + angle;
           this.graph.setCellStyles('rotation', total, [cell]);
         }
 

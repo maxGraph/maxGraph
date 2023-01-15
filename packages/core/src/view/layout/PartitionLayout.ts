@@ -42,8 +42,8 @@ class PartitionLayout extends GraphLayout {
   constructor(graph: Graph, horizontal = true, spacing = 0, border = 0) {
     super(graph);
     this.horizontal = horizontal != null ? horizontal : true;
-    this.spacing = spacing || 0;
-    this.border = border || 0;
+    this.spacing = spacing ?? 0;
+    this.border = border ?? 0;
   }
 
   /**
