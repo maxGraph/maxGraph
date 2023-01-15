@@ -172,7 +172,7 @@ export const getNumber = (array: any, key: string, defaultValue: number) => {
   let value = array != null ? array[key] : null;
 
   if (value == null) {
-    value = defaultValue || 0;
+    value = defaultValue ?? 0;
   }
 
   return Number(value);
