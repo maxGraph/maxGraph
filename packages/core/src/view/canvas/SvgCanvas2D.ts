@@ -18,7 +18,7 @@ limitations under the License.
 
 import { isNotNullish } from '../../util/Utils';
 import { mod } from '../../util/mathUtils';
-import { getAlignmentAsPoint } from '../../util/styleUtils';
+import { getAlignmentAsPoint, matchBinaryMask } from '../../util/styleUtils';
 import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
@@ -477,31 +477,16 @@ class SvgCanvas2D extends AbstractCanvas2D {
       alt.setAttribute('font-size', `${Math.round(s.fontSize)}px`);
 
       // Text-anchor start is default in SVG
-      if (anchor !== 'start') {
-        alt.setAttribute('text-anchor', anchor);
-      }
-
-      if ((s.fontStyle & FONT.BOLD) === FONT.BOLD) {
-        alt.setAttribute('font-weight', 'bold');
-      }
-
-      if ((s.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
+      anchor !== 'start' && alt.setAttribute('text-anchor', anchor);
+      const fontStyle = s.fontStyle;
+      matchBinaryMask(fontStyle, FONT.BOLD) && alt.setAttribute('font-weight', 'bold');
+      matchBinaryMask(fontStyle, FONT.ITALIC) &&
         alt.setAttribute('font-style', 'italic');
-      }
 
       const txtDecor = [];
-
-      if ((s.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
-        txtDecor.push('underline');
-      }
-
-      if ((s.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
-        txtDecor.push('line-through');
-      }
-
-      if (txtDecor.length > 0) {
-        alt.setAttribute('text-decoration', txtDecor.join(' '));
-      }
+      matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
+      matchBinaryMask(fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+      txtDecor.length > 0 && alt.setAttribute('text-decoration', txtDecor.join(' '));
 
       write(alt, <string>text);
       return alt;
@@ -1385,27 +1370,14 @@ class SvgCanvas2D extends AbstractCanvas2D {
         this.pointerEvents ? this.pointerEventsValue : 'none'
       }; `;
 
-    if ((s.fontStyle & FONT.BOLD) === FONT.BOLD) {
-      css += 'font-weight: bold; ';
-    }
+    const fontStyle = s.fontStyle;
+    matchBinaryMask(fontStyle, FONT.BOLD) && (css += 'font-weight: bold; ');
+    matchBinaryMask(fontStyle, FONT.ITALIC) && (css += 'font-style: italic; ');
 
-    if ((s.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
-      css += 'font-style: italic; ';
-    }
-
-    const deco = [];
-
-    if ((s.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
-      deco.push('underline');
-    }
-
-    if ((s.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
-      deco.push('line-through');
-    }
-
-    if (deco.length > 0) {
-      css += `text-decoration: ${deco.join(' ')}; `;
-    }
+    const txtDecor = [];
+    matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+    txtDecor.length > 0 && (css += `text-decoration: ${txtDecor.join(' ')}; `);
 
     return css;
   }
@@ -1690,27 +1662,14 @@ class SvgCanvas2D extends AbstractCanvas2D {
       node.setAttribute('font-family', s.fontFamily);
     }
 
-    if ((s.fontStyle & FONT.BOLD) === FONT.BOLD) {
-      node.setAttribute('font-weight', 'bold');
-    }
-
-    if ((s.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
-      node.setAttribute('font-style', 'italic');
-    }
+    const fontStyle = s.fontStyle;
+    matchBinaryMask(fontStyle, FONT.BOLD) && node.setAttribute('font-weight', 'bold');
+    matchBinaryMask(fontStyle, FONT.ITALIC) && node.setAttribute('font-style', 'italic');
 
     const txtDecor = [];
-
-    if ((s.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
-      txtDecor.push('underline');
-    }
-
-    if ((s.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
-      txtDecor.push('line-through');
-    }
-
-    if (txtDecor.length > 0) {
-      node.setAttribute('text-decoration', txtDecor.join(' '));
-    }
+    matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+    txtDecor.length > 0 && node.setAttribute('text-decoration', txtDecor.join(' '));
   }
 
   /**
@@ -1778,13 +1737,8 @@ class SvgCanvas2D extends AbstractCanvas2D {
         div.style.visibility = 'hidden';
         div.style.display = 'inline-block';
 
-        if ((s.fontStyle & FONT.BOLD) === FONT.BOLD) {
-          div.style.fontWeight = 'bold';
-        }
-
-        if ((s.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
-          div.style.fontStyle = 'italic';
-        }
+        matchBinaryMask(s.fontStyle, FONT.BOLD) && (div.style.fontWeight = 'bold');
+        matchBinaryMask(s.fontStyle, FONT.ITALIC) && (div.style.fontStyle = 'italic');
 
         str = htmlEntities(str, false);
         div.innerHTML = str.replace(/\n/g, '<br/>');

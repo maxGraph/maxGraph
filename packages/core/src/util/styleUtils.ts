@@ -599,6 +599,16 @@ export const setOpacity = (node: HTMLElement | SVGElement, value: number) => {
 };
 
 /**
+ * @param value the value to check.
+ * @param mask the binary mask to apply.
+ * @returns `true` if the value matches the binary mask.
+ * @private Subject to change prior being part of the public API.
+ */
+export const matchBinaryMask = (value: number, mask: number) => {
+  return (value & mask) === mask;
+};
+
+/**
  * Returns an {@link Rectangle} with the size (width and height in pixels) of
  * the given string. The string may contain HTML markup. Newlines should be
  * converted to <br> before calling this method. The caller is responsible
@@ -635,27 +645,13 @@ export const getSizeForString = (
 
   // Sets the font style
   if (fontStyle !== null) {
-    if ((fontStyle & FONT.BOLD) === FONT.BOLD) {
-      div.style.fontWeight = 'bold';
-    }
-
-    if ((fontStyle & FONT.ITALIC) === FONT.ITALIC) {
-      div.style.fontStyle = 'italic';
-    }
+    matchBinaryMask(fontStyle, FONT.BOLD) && (div.style.fontWeight = 'bold');
+    matchBinaryMask(fontStyle, FONT.ITALIC) && (div.style.fontWeight = 'italic');
 
     const txtDecor = [];
-
-    if ((fontStyle & FONT.UNDERLINE) == FONT.UNDERLINE) {
-      txtDecor.push('underline');
-    }
-
-    if ((fontStyle & FONT.STRIKETHROUGH) == FONT.STRIKETHROUGH) {
-      txtDecor.push('line-through');
-    }
-
-    if (txtDecor.length > 0) {
-      div.style.textDecoration = txtDecor.join(' ');
-    }
+    matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+    txtDecor.length > 0 && (div.style.textDecoration = txtDecor.join(' '));
   }
 
   // Disables block layout and outside wrapping and hides the div

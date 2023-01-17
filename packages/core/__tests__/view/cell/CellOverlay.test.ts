@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { describe, expect, test } from '@jest/globals';
+import { expect, test } from '@jest/globals';
 import { CellOverlay, Point } from '../../../src';
 
 test('Constructor set all parameters', () => {
