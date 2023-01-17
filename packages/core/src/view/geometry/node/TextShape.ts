@@ -32,7 +32,7 @@ import {
   LINE_HEIGHT,
 } from '../../../util/Constants';
 import { getBoundingBox } from '../../../util/mathUtils';
-import { getAlignmentAsPoint } from '../../../util/styleUtils';
+import { getAlignmentAsPoint, matchBinaryMask } from '../../../util/styleUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Shape from '../Shape';
@@ -599,27 +599,13 @@ class TextShape extends Shape {
         this.color
       }; line-height: ${lh}; pointer-events: ${this.pointerEvents ? 'all' : 'none'}; `;
 
-    if ((this.fontStyle & FONT.BOLD) === FONT.BOLD) {
-      css += 'font-weight: bold; ';
-    }
+    matchBinaryMask(this.fontStyle, FONT.BOLD) && (css += 'font-weight: bold; ');
+    matchBinaryMask(this.fontStyle, FONT.ITALIC) && (css += 'font-style: italic; ');
 
-    if ((this.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
-      css += 'font-style: italic; ';
-    }
-
-    const deco = [];
-
-    if ((this.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
-      deco.push('underline');
-    }
-
-    if ((this.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
-      deco.push('line-through');
-    }
-
-    if (deco.length > 0) {
-      css += `text-decoration: ${deco.join(' ')}; `;
-    }
+    const txtDecor = [];
+    matchBinaryMask(this.fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(this.fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+    txtDecor.length > 0 && (css += `text-decoration: ${txtDecor.join(' ')}; `);
 
     return css;
   }
@@ -814,29 +800,18 @@ class TextShape extends Shape {
     style.verticalAlign = 'top';
     style.color = this.color;
 
-    if ((this.fontStyle & FONT.BOLD) === FONT.BOLD) {
-      style.fontWeight = 'bold';
-    } else {
-      style.fontWeight = '';
-    }
+    matchBinaryMask(this.fontStyle, FONT.BOLD)
+      ? (style.fontWeight = 'bold')
+      : (style.fontWeight = '');
 
-    if ((this.fontStyle & FONT.ITALIC) === FONT.ITALIC) {
-      style.fontStyle = 'italic';
-    } else {
-      style.fontStyle = '';
-    }
+    matchBinaryMask(this.fontStyle, FONT.ITALIC)
+      ? (style.fontStyle = 'italic')
+      : (style.fontStyle = '');
 
     const txtDecor = [];
-
-    if ((this.fontStyle & FONT.UNDERLINE) === FONT.UNDERLINE) {
-      txtDecor.push('underline');
-    }
-
-    if ((this.fontStyle & FONT.STRIKETHROUGH) === FONT.STRIKETHROUGH) {
-      txtDecor.push('line-through');
-    }
-
-    style.textDecoration = txtDecor.join(' ');
+    matchBinaryMask(this.fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(this.fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+    txtDecor.length > 0 && (style.textDecoration = txtDecor.join(' '));
 
     if (this.align === ALIGN.CENTER) {
       style.textAlign = 'center';

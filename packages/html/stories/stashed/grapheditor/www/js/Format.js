@@ -61,13 +61,13 @@ Format.prototype.init = function()
 	let ui = this.editorUi;
 	let editor = ui.editor;
 	let graph = editor.graph;
-	
+
 	this.update = ((sender, evt) =>
 	{
 		this.clearSelectionState();
 		this.refresh();
 	});
-	
+
 	graph.getSelectionModel().addListener(mxEvent.CHANGE, this.update);
 	graph.addListener(mxEvent.EDITING_STARTED, this.update);
 	graph.addListener(mxEvent.EDITING_STOPPED, this.update);
@@ -76,17 +76,17 @@ Format.prototype.init = function()
 	{
 		this.refresh();
 	}));
-	
+
 	ui.addListener('styleChanged', ((sender, evt) =>
 	{
 		this.refresh();
 	}));
-	
+
 	editor.addListener('autosaveChanged', (() =>
 	{
 		this.refresh();
 	}));
-	
+
 	this.refresh();
 };
 
@@ -107,7 +107,7 @@ Format.prototype.getSelectionState = function()
 	{
 		this.selectionState = this.createSelectionState();
 	}
-	
+
 	return this.selectionState;
 };
 
@@ -118,12 +118,12 @@ Format.prototype.createSelectionState = function()
 {
 	let cells = this.editorUi.editor.graph.getSelectionCells();
 	let result = this.initSelectionState();
-	
+
 	for (let i = 0; i < cells.length; i++)
 	{
 		this.updateSelectionStateForCell(result, cells[i], cells);
 	}
-	
+
 	return result;
 };
 
@@ -144,7 +144,7 @@ Format.prototype.initSelectionState = function()
 Format.prototype.updateSelectionStateForCell = function(result, cell, cells)
 {
 	let graph = this.editorUi.editor.graph;
-	
+
 	if (cell.isVertex())
 	{
 		result.resizable = result.resizable && graph.isCellResizable(cell);
@@ -156,7 +156,7 @@ Format.prototype.updateSelectionStateForCell = function(result, cell, cells)
 		result.row = result.row || graph.isTableRow(cell);
 		result.vertices.push(cell);
 		let geo = cell.getGeometry();
-		
+
 		if (geo != null)
 		{
 			if (geo.width > 0)
@@ -174,7 +174,7 @@ Format.prototype.updateSelectionStateForCell = function(result, cell, cells)
 			{
 				result.containsLabel = true;
 			}
-			
+
 			if (geo.height > 0)
 			{
 				if (result.height == null)
@@ -190,12 +190,12 @@ Format.prototype.updateSelectionStateForCell = function(result, cell, cells)
 			{
 				result.containsLabel = true;
 			}
-			
+
 			if (!geo.relative || geo.offset != null)
 			{
 				let x = (geo.relative) ? geo.offset.x : geo.x;
 				let y = (geo.relative) ? geo.offset.y : geo.y;
-				
+
 				if (result.x == null)
 				{
 					result.x = x;
@@ -204,7 +204,7 @@ Format.prototype.updateSelectionStateForCell = function(result, cell, cells)
 				{
 					result.x = '';
 				}
-				
+
 				if (result.y == null)
 				{
 					result.y = y;
@@ -225,7 +225,7 @@ Format.prototype.updateSelectionStateForCell = function(result, cell, cells)
 	}
 
 	let state = graph.view.getState(cell);
-	
+
 	if (state != null)
 	{
 		result.autoSize = result.autoSize || this.isAutoSizeState(state);
@@ -236,14 +236,14 @@ Format.prototype.updateSelectionStateForCell = function(result, cell, cells)
 		result.shadow = result.shadow && this.isShadowState(state);
 		result.fill = result.fill && this.isFillState(state);
 		result.stroke = result.stroke && this.isStrokeState(state);
-		
+
 		let shape = getValue(state.style, 'shape', null);
 		result.containsImage = result.containsImage || shape == 'image';
-		
+
 		for (var key in state.style)
 		{
 			let value = state.style[key];
-			
+
 			if (value != null)
 			{
 				if (result.style[key] == null)
@@ -295,7 +295,7 @@ Format.prototype.isSpecialColor = function(color)
 Format.prototype.isGlassState = function(state)
 {
 	let shape = getValue(state.style, 'shape', null);
-	
+
 	return (shape == 'label' || shape == 'rectangle' || shape == 'internalStorage' ||
 			shape == 'ext' || shape == 'umlLifeline' || shape == 'swimlane' ||
 			shape == 'process');
@@ -318,7 +318,7 @@ Format.prototype.isLineJumpState = function(state)
 {
 	let shape = getValue(state.style, 'shape', null);
 	let curved = getValue(state.style, 'curved', false);
-	
+
 	return !curved && (shape == 'connector' || shape == 'filledEdge');
 };
 
@@ -336,7 +336,7 @@ Format.prototype.isAutoSizeState = function(state)
 Format.prototype.isImageState = function(state)
 {
 	let shape = getValue(state.style, 'shape', null);
-	
+
 	return (shape == 'label' || shape == 'image');
 };
 
@@ -346,7 +346,7 @@ Format.prototype.isImageState = function(state)
 Format.prototype.isShadowState = function(state)
 {
 	let shape = getValue(state.style, 'shape', null);
-	
+
 	return (shape != 'image');
 };
 
@@ -356,7 +356,7 @@ Format.prototype.isShadowState = function(state)
 Format.prototype.clear = function()
 {
 	this.container.innerHTML = '';
-	
+
 	// Destroy existing panels
 	if (this.panels != null)
 	{
@@ -365,7 +365,7 @@ Format.prototype.clear = function()
 			this.panels[i].destroy();
 		}
 	}
-	
+
 	this.panels = [];
 };
 
@@ -379,17 +379,17 @@ Format.prototype.refresh = function()
 	{
 		return;
 	}
-	
+
 	this.clear();
 	let ui = this.editorUi;
 	let graph = ui.editor.graph;
-	
+
 	let div = document.createElement('div');
 	div.style.whiteSpace = 'nowrap';
 	div.style.color = 'rgb(112, 112, 112)';
 	div.style.textAlign = 'left';
 	div.style.cursor = 'default';
-	
+
 	let label = document.createElement('div');
 	label.className = 'geFormatSection';
 	label.style.textAlign = 'center';
@@ -403,7 +403,7 @@ Format.prototype.refresh = function()
 	label.style.overflow = 'hidden';
 	label.style.width = '100%';
 	this.container.appendChild(div);
-	
+
 	// Prevents text selection
     mxEvent.addListener(label, (Client.IS_POINTER) ? 'pointerdown' : 'mousedown',
         ((evt) =>
@@ -414,7 +414,7 @@ Format.prototype.refresh = function()
 	let containsLabel = this.getSelectionState().containsLabel;
 	let currentLabel = null;
 	let currentPanel = null;
-	
+
 	let addClickHandler = ((elt, panel, index) =>
 	{
 		let clickHandler = ((evt) =>
@@ -433,7 +433,7 @@ Format.prototype.refresh = function()
 				{
 					this.currentIndex = index;
 				}
-				
+
 				if (currentLabel != null)
 				{
 					currentLabel.style.backgroundColor = this.inactiveTabBackgroundColor;
@@ -443,29 +443,29 @@ Format.prototype.refresh = function()
 				currentLabel = elt;
 				currentLabel.style.backgroundColor = '';
 				currentLabel.style.borderBottomWidth = '0px';
-				
+
 				if (currentPanel != panel)
 				{
 					if (currentPanel != null)
 					{
 						currentPanel.style.display = 'none';
 					}
-					
+
 					currentPanel = panel;
 					currentPanel.style.display = '';
 				}
 			}
 		});
-		
+
 		mxEvent.addListener(elt, 'click', clickHandler);
-		
+
 		// Prevents text selection
 	    mxEvent.addListener(elt, (Client.IS_POINTER) ? 'pointerdown' : 'mousedown',
         	((evt) =>
     	{
 			evt.preventDefault();
 		}));
-		
+
 		if (index == ((containsLabel) ? this.labelIndex : ((graph.isSelectionEmpty()) ?
 			this.diagramIndex : this.currentIndex)))
 		{
@@ -473,7 +473,7 @@ Format.prototype.refresh = function()
 			clickHandler();
 		}
 	});
-	
+
 	let idx = 0;
 
 	if (graph.isSelectionEmpty())
@@ -485,31 +485,31 @@ Format.prototype.refresh = function()
 		let diagramPanel = div.cloneNode(false);
 		this.panels.push(new DiagramFormatPanel(this, ui, diagramPanel));
 		this.container.appendChild(diagramPanel);
-		
+
 		if (Editor.styles != null)
 		{
 			diagramPanel.style.display = 'none';
 			label.style.width = (this.showCloseButton) ? '106px' : '50%';
 			label.style.cursor = 'pointer';
 			label.style.backgroundColor = this.inactiveTabBackgroundColor;
-			
+
 			var label2 = label.cloneNode(false);
 			label2.style.borderLeftWidth = '1px';
 			label2.style.borderRightWidth = '1px';
 			label2.style.backgroundColor = this.inactiveTabBackgroundColor;
-			
+
 			addClickHandler(label, diagramPanel, idx++);
-			
+
 			let stylePanel = div.cloneNode(false);
 			stylePanel.style.display = 'none';
 			write(label2, Translations.get('style'));
 			div.appendChild(label2);
 			this.panels.push(new DiagramStylePanel(this, ui, stylePanel));
 			this.container.appendChild(stylePanel);
-			
+
 			addClickHandler(label2, stylePanel, idx++);
 		}
-		
+
 		// Adds button to hide the format panel since
 		// people don't seem to find the toolbar button
 		// and the menu item in the format menu
@@ -524,7 +524,7 @@ Format.prototype.refresh = function()
 			label2.style.right = '0px';
 			label2.style.top = '0px';
 			label2.style.width = '25px';
-			
+
 			let img = document.createElement('img');
 			img.setAttribute('border', '0');
 			img.setAttribute('src', Dialog.prototype.closeImage);
@@ -540,12 +540,12 @@ Format.prototype.refresh = function()
 			img.style.padding = '1px';
 			img.style.opacity = 0.5;
 			label2.appendChild(img)
-			
+
 			mxEvent.addListener(img, 'click', function()
 			{
 				ui.actions.get('formatPanel').funct();
 			});
-			
+
 			div.appendChild(label2);
 		}
 	}
@@ -567,7 +567,7 @@ Format.prototype.refresh = function()
 		// Workaround for ignored background in IE
 		label2.style.backgroundColor = this.inactiveTabBackgroundColor;
 		label3.style.backgroundColor = this.inactiveTabBackgroundColor;
-		
+
 		// Style
 		if (containsLabel)
 		{
@@ -578,7 +578,7 @@ Format.prototype.refresh = function()
 			label.style.borderLeftWidth = '0px';
 			write(label, Translations.get('style'));
 			div.appendChild(label);
-			
+
 			let stylePanel = div.cloneNode(false);
 			stylePanel.style.display = 'none';
 			this.panels.push(new StyleFormatPanel(this, ui, stylePanel));
@@ -586,7 +586,7 @@ Format.prototype.refresh = function()
 
 			addClickHandler(label, stylePanel, idx++);
 		}
-		
+
 		// Text
 		write(label2, Translations.get('text'));
 		div.appendChild(label2);
@@ -595,7 +595,7 @@ Format.prototype.refresh = function()
 		textPanel.style.display = 'none';
 		this.panels.push(new TextFormatPanel(this, ui, textPanel));
 		this.container.appendChild(textPanel);
-		
+
 		// Arrange
 		write(label3, Translations.get('arrange'));
 		div.appendChild(label3);
@@ -604,7 +604,7 @@ Format.prototype.refresh = function()
 		arrangePanel.style.display = 'none';
 		this.panels.push(new ArrangePanel(this, ui, arrangePanel));
 		this.container.appendChild(arrangePanel);
-		
+
 		addClickHandler(label2, textPanel, idx++);
 		addClickHandler(label3, arrangePanel, idx++);
 	}
@@ -622,7 +622,7 @@ BaseFormatPanel = function(format, editorUi, container)
 };
 
 /**
- * 
+ *
  */
 BaseFormatPanel.prototype.buttonBackgroundColor = 'white';
 
@@ -638,11 +638,11 @@ BaseFormatPanel.prototype.getSelectionState = function()
 	for (let i = 0; i < cells.length; i++)
 	{
 		let state = graph.view.getState(cells[i]);
-		
+
 		if (state != null)
 		{
 			let tmp = getValue(state.style, 'shape', null);
-			
+
 			if (tmp != null)
 			{
 				if (shape == null)
@@ -654,10 +654,10 @@ BaseFormatPanel.prototype.getSelectionState = function()
 					return null;
 				}
 			}
-			
+
 		}
 	}
-	
+
 	return shape;
 };
 
@@ -668,16 +668,16 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 {
 	unit = (unit != null) ? unit : '';
 	isFloat = (isFloat != null) ? isFloat : false;
-	
+
 	let ui = this.editorUi;
 	let graph = ui.editor.graph;
-	
+
 	min = (min != null) ? min : 1;
 	max = (max != null) ? max : 999;
-	
+
 	let selState = null;
 	let updating = false;
-	
+
 	let update = ((evt) =>
 	{
 		let value = (isFloat) ? parseFloat(input.value) : parseInt(input.value);
@@ -689,24 +689,24 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 			// use integer and round all numbers to two decimal point
 			value = mod(Math.round(value * 100), 36000) / 100;
 		}
-		
+
 		value = Math.min(max, Math.max(min, (isNaN(value)) ? defaultValue : value));
-		
+
 		if (graph.cellEditor.isContentEditing() && textEditFallback)
 		{
 			if (!updating)
 			{
 				updating = true;
-				
+
 				if (selState != null)
 				{
 					graph.cellEditor.restoreSelection(selState);
 					selState = null;
 				}
-				
+
 				textEditFallback(value);
 				input.value = value + unit;
-	
+
 				// Restore focus and selection in input
 				updating = false;
 			}
@@ -717,7 +717,7 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 			{
 				graph.stopEditing(true);
 			}
-			
+
 			graph.getDataModel().beginUpdate();
 			try
 			{
@@ -733,7 +733,7 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 						elt.removeAttribute('size');
 					});
 				}
-				
+
 				for (let i = 0; i < cells.length; i++)
 				{
 					if (cells[i].getChildCount() == 0)
@@ -741,7 +741,7 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 						graph.autoSizeCell(cells[i], false);
 					}
 				}
-				
+
 				ui.fireEvent(new EventObject('styleChanged', 'keys', [key],
 						'values', [value], 'cells', cells));
 			}
@@ -750,7 +750,7 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 				graph.getDataModel().endUpdate();
 			}
 		}
-		
+
 		input.value = value + unit;
 		mxEvent.consume(evt);
 	});
@@ -766,7 +766,7 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 				selState = graph.cellEditor.saveSelection();
 			}
 		});
-		
+
 		mxEvent.addListener(input, 'touchstart', function()
 		{
 			if (document.activeElement == graph.cellEditor.textarea)
@@ -775,10 +775,10 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 			}
 		});
 	}
-	
+
 	mxEvent.addListener(input, 'change', update);
 	mxEvent.addListener(input, 'blur', update);
-	
+
 	return update;
 };
 
@@ -790,7 +790,7 @@ BaseFormatPanel.prototype.createPanel = function()
 	let div = document.createElement('div');
 	div.className = 'geFormatSection';
 	div.style.padding = '12px 0px 12px 18px';
-	
+
 	return div;
 };
 
@@ -806,28 +806,28 @@ BaseFormatPanel.prototype.createTitle = function(title)
 	div.style.width = '200px';
 	div.style.fontWeight = 'bold';
 	write(div, title);
-	
+
 	return div;
 };
 
 /**
- * 
+ *
  */
 BaseFormatPanel.prototype.createStepper = function(input, update, step, height, disableFocus, defaultValue, isFloat)
 {
 	step = (step != null) ? step : 1;
 	height = (height != null) ? height : 8;
-	
+
 	if (Client.IS_MT)
 	{
 		height = height + 1;
-	} 
-	
+	}
+
 	let stepper = document.createElement('div');
 	setPrefixedStyle(stepper.style, 'borderRadius', '3px');
 	stepper.style.border = '1px solid rgb(192, 192, 192)';
 	stepper.style.position = 'absolute';
-	
+
 	let up = document.createElement('div');
 	up.style.borderBottom = '1px solid rgb(192, 192, 192)';
 	up.style.position = 'relative';
@@ -835,7 +835,7 @@ BaseFormatPanel.prototype.createStepper = function(input, update, step, height, 
 	up.style.width = '10px';
 	up.className = 'geBtnUp';
 	stepper.appendChild(up);
-	
+
 	let down = up.cloneNode(false);
 	down.style.border = 'none';
 	down.style.height = height + 'px';
@@ -848,51 +848,51 @@ BaseFormatPanel.prototype.createStepper = function(input, update, step, height, 
 		{
 			input.value = defaultValue || '2';
 		}
-		
+
 		let val = isFloat? parseFloat(input.value) : parseInt(input.value);
-		
+
 		if (!isNaN(val))
 		{
 			input.value = val - step;
-			
+
 			if (update != null)
 			{
 				update(evt);
 			}
 		}
-		
+
 		mxEvent.consume(evt);
 	});
-	
+
 	mxEvent.addListener(up, 'click', function(evt)
 	{
 		if (input.value == '')
 		{
 			input.value = defaultValue || '0';
 		}
-		
+
 		let val = isFloat? parseFloat(input.value) : parseInt(input.value);
-		
+
 		if (!isNaN(val))
 		{
 			input.value = val + step;
-			
+
 			if (update != null)
 			{
 				update(evt);
 			}
 		}
-		
+
 		mxEvent.consume(evt);
 	});
-	
+
 	// Disables transfer of focus to DIV but also :active CSS
 	// so it's only used for fontSize where the focus should
 	// stay on the selected text, but not for any other input.
 	if (disableFocus)
 	{
 		let currentSelection = null;
-		
+
 		mxEvent.addGestureListeners(stepper,
 			function(evt)
 			{
@@ -912,14 +912,14 @@ BaseFormatPanel.prototype.createStepper = function(input, update, step, height, 
 					{
 						// ignore
 					}
-					
+
 					currentSelection = null;
 					mxEvent.consume(evt);
 				}
 			}
 		);
 	}
-	
+
 	return stepper;
 };
 
@@ -934,7 +934,7 @@ BaseFormatPanel.prototype.createOption = function(label, isCheckedFn, setChecked
 	div.style.overflow = 'hidden';
 	div.style.width = '200px';
 	div.style.height = '18px';
-	
+
 	let cb = document.createElement('input');
 	cb.setAttribute('type', 'checkbox');
 	cb.style.margin = '0px 6px 0px 0px';
@@ -946,13 +946,13 @@ BaseFormatPanel.prototype.createOption = function(label, isCheckedFn, setChecked
 
 	let applying = false;
 	let value = isCheckedFn();
-	
+
 	let apply = function(newValue)
 	{
 		if (!applying)
 		{
 			applying = true;
-			
+
 			if (newValue)
 			{
 				cb.setAttribute('checked', 'checked');
@@ -965,18 +965,18 @@ BaseFormatPanel.prototype.createOption = function(label, isCheckedFn, setChecked
 				cb.defaultChecked = false;
 				cb.checked = false;
 			}
-			
+
 			if (value != newValue)
 			{
 				value = newValue;
-				
+
 				// Checks if the color value needs to be updated in the model
 				if (isCheckedFn() != value)
 				{
 					setCheckedFn(value);
 				}
 			}
-			
+
 			applying = false;
 		}
 	};
@@ -987,24 +987,24 @@ BaseFormatPanel.prototype.createOption = function(label, isCheckedFn, setChecked
 		{
 			// Toggles checkbox state for click on label
 			let source = mxEvent.getSource(evt);
-			
+
 			if (source == div || source == span)
 			{
 				cb.checked = !cb.checked;
 			}
-			
+
 			apply(cb.checked);
 		}
 	});
-	
+
 	apply(value);
-	
+
 	if (listener != null)
 	{
 		listener.install(apply);
 		this.listeners.push(listener);
 	}
-	
+
 	if (fn != null)
 	{
 		fn(div);
@@ -1020,21 +1020,21 @@ BaseFormatPanel.prototype.createCellOption = function(label, key, defaultValue, 
 {
 	enabledValue = (enabledValue != null) ? ((enabledValue == 'null') ? null : enabledValue) : '1';
 	disabledValue = (disabledValue != null) ? ((disabledValue == 'null') ? null : disabledValue) : '0';
-	
+
 	let ui = this.editorUi;
 	let editor = ui.editor;
 	let graph = editor.graph;
-	
+
 	return this.createOption(label, function()
 	{
 		// Seems to be null sometimes, not sure why...
 		let state = graph.view.getState(graph.getSelectionCell());
-		
+
 		if (state != null)
 		{
 			return getValue(state.style, key, defaultValue) != disabledValue;
 		}
-		
+
 		return null;
 	}, function(checked)
 	{
@@ -1042,7 +1042,7 @@ BaseFormatPanel.prototype.createCellOption = function(label, key, defaultValue, 
 		{
 			graph.stopEditing();
 		}
-		
+
 		if (action != null)
 		{
 			action.funct();
@@ -1054,12 +1054,12 @@ BaseFormatPanel.prototype.createCellOption = function(label, key, defaultValue, 
 			{
 				let value = (checked) ? enabledValue : disabledValue;
 				graph.setCellStyles(key, value, graph.getSelectionCells());
-				
+
 				if (fn != null)
 				{
 					fn(graph.getSelectionCells(), value);
 				}
-				
+
 				ui.fireEvent(new EventObject('styleChanged', 'keys', [key],
 					'values', [value], 'cells', graph.getSelectionCells()));
 			}
@@ -1076,13 +1076,13 @@ BaseFormatPanel.prototype.createCellOption = function(label, key, defaultValue, 
 			{
 				// Seems to be null sometimes, not sure why...
 				let state = graph.view.getState(graph.getSelectionCell());
-				
+
 				if (state != null)
 				{
 					apply(getValue(state.style, key, defaultValue) != disabledValue);
 				}
 			};
-			
+
 			graph.getDataModel().addListener(mxEvent.CHANGE, this.listener);
 		},
 		destroy: function()
@@ -1103,20 +1103,20 @@ BaseFormatPanel.prototype.createColorOption = function(label, getColorFn, setCol
 	div.style.overflow = 'hidden';
 	div.style.width = '200px';
 	div.style.height = '18px';
-	
+
 	let cb = document.createElement('input');
 	cb.setAttribute('type', 'checkbox');
 	cb.style.margin = '0px 6px 0px 0px';
-	
+
 	if (!hideCheckbox)
 	{
-		div.appendChild(cb);	
+		div.appendChild(cb);
 	}
 
 	let span = document.createElement('span');
 	write(span, label);
 	div.appendChild(span);
-	
+
 	let value = getColorFn();
 	let applying = false;
 	let btn = null;
@@ -1144,7 +1144,7 @@ BaseFormatPanel.prototype.createColorOption = function(label, getColorFn, setCol
 				cb.defaultChecked = false;
 				cb.checked = false;
 			}
-	
+
 			btn.style.display = (cb.checked || hideCheckbox) ? '' : 'none';
 
 			if (callbackFn != null)
@@ -1155,14 +1155,14 @@ BaseFormatPanel.prototype.createColorOption = function(label, getColorFn, setCol
 			if (!disableUpdate)
 			{
 				value = color;
-				
+
 				// Checks if the color value needs to be updated in the model
 				if (forceUpdate || hideCheckbox || getColorFn() != value)
 				{
 					setColorFn(value);
 				}
 			}
-			
+
 			applying = false;
 		}
 	};
@@ -1175,7 +1175,7 @@ BaseFormatPanel.prototype.createColorOption = function(label, getColorFn, setCol
 		});
 		mxEvent.consume(evt);
 	}));
-	
+
 	btn.style.position = 'absolute';
 	btn.style.marginTop = '-4px';
 	btn.style.right = '20px';
@@ -1187,15 +1187,15 @@ BaseFormatPanel.prototype.createColorOption = function(label, getColorFn, setCol
 	mxEvent.addListener(div, 'click', function(evt)
 	{
 		let source = mxEvent.getSource(evt);
-		
+
 		if (source == cb || source.nodeName != 'INPUT')
-		{		
+		{
 			// Toggles checkbox state for click on label
 			if (source != cb)
 			{
 				cb.checked = !cb.checked;
 			}
-	
+
 			// Overrides default value with current value to make it easier
 			// to restore previous value if the checkbox is clicked twice
 			if (!cb.checked && value != null && value != mxConstants.NONE &&
@@ -1203,41 +1203,41 @@ BaseFormatPanel.prototype.createColorOption = function(label, getColorFn, setCol
 			{
 				defaultColor = value;
 			}
-			
+
 			apply((cb.checked) ? defaultColor : mxConstants.NONE);
 		}
 	});
-	
+
 	apply(value, true);
-	
+
 	if (listener != null)
 	{
 		listener.install(apply);
 		this.listeners.push(listener);
 	}
-	
+
 	return div;
 };
 
 /**
- * 
+ *
  */
 BaseFormatPanel.prototype.createCellColorOption = function(label, colorKey, defaultColor, callbackFn, setStyleFn)
 {
 	let ui = this.editorUi;
 	let editor = ui.editor;
 	let graph = editor.graph;
-	
+
 	return this.createColorOption(label, function()
 	{
 		// Seems to be null sometimes, not sure why...
 		let state = graph.view.getState(graph.getSelectionCell());
-		
+
 		if (state != null)
 		{
 			return getValue(state.style, colorKey, null);
 		}
-		
+
 		return null;
 	}, function(color)
 	{
@@ -1250,7 +1250,7 @@ BaseFormatPanel.prototype.createCellColorOption = function(label, colorKey, defa
 			{
 				setStyleFn(color);
 			}
-			
+
 			ui.fireEvent(new EventObject('styleChanged', 'keys', [colorKey],
 				'values', [color], 'cells', graph.getSelectionCells()));
 		}
@@ -1266,13 +1266,13 @@ BaseFormatPanel.prototype.createCellColorOption = function(label, colorKey, defa
 			{
 				// Seems to be null sometimes, not sure why...
 				let state = graph.view.getState(graph.getSelectionCell());
-				
+
 				if (state != null)
 				{
 					apply(getValue(state.style, colorKey, null));
 				}
 			};
-			
+
 			graph.getDataModel().addListener(mxEvent.CHANGE, this.listener);
 		},
 		destroy: function()
@@ -1283,19 +1283,19 @@ BaseFormatPanel.prototype.createCellColorOption = function(label, colorKey, defa
 };
 
 /**
- * 
+ *
  */
 BaseFormatPanel.prototype.addArrow = function(elt, height)
 {
 	height = (height != null) ? height : 10;
-	
+
 	let arrow = document.createElement('div');
 	arrow.style.display = 'inline-block';
 	arrow.style.padding = '6px';
 	arrow.style.paddingRight = '4px';
-	
+
 	let m = (10 - height);
-	
+
 	if (m == 2)
 	{
 		arrow.style.paddingTop = 6 + 'px';
@@ -1308,15 +1308,15 @@ BaseFormatPanel.prototype.addArrow = function(elt, height)
 	{
 		arrow.style.marginTop = '-2px';
 	}
-	
+
 	arrow.style.height = height + 'px';
 	arrow.style.borderLeft = '1px solid #a0a0a0';
 	arrow.innerHTML = '<img border="0" src="' + ((Client.IS_SVG) ? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHBJREFUeNpidHB2ZyAGsACxDRBPIKCuA6TwCBB/h2rABu4A8SYmKCcXiP/iUFgAxL9gCi8A8SwsirZCMQMTkmANEH9E4v+CmsaArvAdyNFI/FlQ92EoBIE+qCRIUz168DBgsU4OqhinQpgHMABAgAEALY4XLIsJ20oAAAAASUVORK5CYII=' :
 		IMAGE_PATH + '/dropdown.png') + '" style="margin-bottom:4px;">';
 	setOpacity(arrow, 70);
-	
+
 	let symbol = elt.getElementsByTagName('div')[0];
-	
+
 	if (symbol != null)
 	{
 		symbol.style.paddingRight = '6px';
@@ -1333,19 +1333,19 @@ BaseFormatPanel.prototype.addArrow = function(elt, height)
 	elt.style.width = 'auto';
 	elt.className += ' geColorBtn';
 	setPrefixedStyle(elt.style, 'borderRadius', '3px');
-	
+
 	elt.appendChild(arrow);
-	
+
 	return symbol;
 };
 
 /**
- * 
+ *
  */
 BaseFormatPanel.prototype.addUnitInput = function(container, unit, right, width, update, step, marginTop, disableFocus, isFloat)
 {
 	marginTop = (marginTop != null) ? marginTop : 0;
-	
+
 	let input = document.createElement('input');
 	input.style.position = 'absolute';
 	input.style.textAlign = 'right';
@@ -1353,7 +1353,7 @@ BaseFormatPanel.prototype.addUnitInput = function(container, unit, right, width,
 	input.style.right = (right + 12) + 'px';
 	input.style.width = width + 'px';
 	container.appendChild(input);
-	
+
 	let stepper = this.createStepper(input, update, step, null, disableFocus, null, isFloat);
 	stepper.style.marginTop = (marginTop - 2) + 'px';
 	stepper.style.right = right + 'px';
@@ -1363,19 +1363,19 @@ BaseFormatPanel.prototype.addUnitInput = function(container, unit, right, width,
 };
 
 /**
- * 
+ *
  */
 BaseFormatPanel.prototype.createRelativeOption = function(label, key, width, handler, init)
 {
 	width = (width != null) ? width : 44;
-	
+
 	let graph = this.editorUi.editor.graph;
 	let div = this.createPanel();
 	div.style.paddingTop = '10px';
 	div.style.paddingBottom = '10px';
 	write(div, label);
 	div.style.fontWeight = 'bold';
-	
+
 	let update = ((evt) =>
 	{
 		if (handler != null)
@@ -1387,7 +1387,7 @@ BaseFormatPanel.prototype.createRelativeOption = function(label, key, width, han
 			let value = parseInt(input.value);
 			value = Math.min(100, Math.max(0, (isNaN(value)) ? 100 : value));
 			let state = graph.view.getState(graph.getSelectionCell());
-			
+
 			if (state != null && value != getValue(state.style, key, 100))
 			{
 				// Removes entry in style (assumes 100 is default for relative values)
@@ -1395,15 +1395,15 @@ BaseFormatPanel.prototype.createRelativeOption = function(label, key, width, han
 				{
 					value = null;
 				}
-				
+
 				graph.setCellStyles(key, value, graph.getSelectionCells());
 				this.editorUi.fireEvent(new EventObject('styleChanged', 'keys', [key],
 					'values', [value], 'cells', graph.getSelectionCells()));
 			}
-	
+
 			input.value = ((value != null) ? value : '100') + ' %';
 		}
-		
+
 		mxEvent.consume(evt);
 	});
 
@@ -1420,7 +1420,7 @@ BaseFormatPanel.prototype.createRelativeOption = function(label, key, width, han
 				input.value = (isNaN(tmp)) ? '' : tmp + ' %';
 			}
 		});
-		
+
 		mxEvent.addListener(input, 'keydown', function(e)
 		{
 			if (e.keyCode == 13)
@@ -1435,7 +1435,7 @@ BaseFormatPanel.prototype.createRelativeOption = function(label, key, width, han
 				mxEvent.consume(e);
 			}
 		});
-		
+
 		graph.getDataModel().addListener(mxEvent.CHANGE, listener);
 		this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 		listener();
@@ -1443,7 +1443,7 @@ BaseFormatPanel.prototype.createRelativeOption = function(label, key, width, han
 
 	mxEvent.addListener(input, 'blur', update);
 	mxEvent.addListener(input, 'change', update);
-	
+
 	if (init != null)
 	{
 		init(input);
@@ -1453,12 +1453,12 @@ BaseFormatPanel.prototype.createRelativeOption = function(label, key, width, han
 };
 
 /**
- * 
+ *
  */
 BaseFormatPanel.prototype.addLabel = function(div, title, right, width)
 {
 	width = (width != null) ? width : 61;
-	
+
 	let label = document.createElement('div');
 	write(label, title);
 	label.style.position = 'absolute';
@@ -1470,7 +1470,7 @@ BaseFormatPanel.prototype.addLabel = function(div, title, right, width)
 };
 
 /**
- * 
+ *
  */
 BaseFormatPanel.prototype.addKeyHandler = function(input, listener)
 {
@@ -1485,7 +1485,7 @@ BaseFormatPanel.prototype.addKeyHandler = function(input, listener)
 		{
 			if (listener != null)
 			{
-				listener(null, null, true);				
+				listener(null, null, true);
 			}
 
 			this.editorUi.editor.graph.container.focus();
@@ -1495,7 +1495,7 @@ BaseFormatPanel.prototype.addKeyHandler = function(input, listener)
 };
 
 /**
- * 
+ *
  */
 BaseFormatPanel.prototype.styleButtons = function(elts)
 {
@@ -1525,7 +1525,7 @@ BaseFormatPanel.prototype.destroy = function()
 		{
 			this.listeners[i].destroy();
 		}
-		
+
 		this.listeners = null;
 	}
 };
@@ -1558,29 +1558,29 @@ ArrangePanel.prototype.init = function()
 	{
 		this.container.appendChild(this.addAngle(this.createPanel()));
 	}
-	
+
 	if (!ss.containsLabel && ss.edges.length == 0 &&
 		ss.style.shape != 'rectangle' &&
 		ss.style.shape != 'label')
 	{
 		this.container.appendChild(this.addFlip(this.createPanel()));
 	}
-	
+
 	if (ss.vertices.length > 1)
 	{
 		this.container.appendChild(this.addAlign(this.createPanel()));
 		this.container.appendChild(this.addDistribute(this.createPanel()));
 	}
-	
+
 	if (graph.isTable(ss.vertices[0]) ||
 		graph.isTableRow(ss.vertices[0]) ||
 		graph.isTableCell(ss.vertices[0]))
 	{
 		this.container.appendChild(this.addTable(this.createPanel()));
 	}
-	
+
 	this.container.appendChild(this.addGroupOps(this.createPanel()));
-	
+
 	if (ss.containsLabel)
 	{
 		// Adds functions from hidden style format panel
@@ -1591,13 +1591,13 @@ ArrangePanel.prototype.init = function()
 		span.style.padding = '10px 0 0 18px';
 		write(span, Translations.get('style'));
 		this.container.appendChild(span);
-			
+
 		new StyleFormatPanel(this.format, this.editorUi, this.container);
 	}
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addTable = function(div)
 {
@@ -1614,7 +1614,7 @@ ArrangePanel.prototype.addTable = function(div)
 	span.style.fontWeight = 'bold';
 	write(span, Translations.get('table'));
 	div.appendChild(span);
-	
+
 	let panel = document.createElement('div');
 	panel.style.position = 'relative';
 	panel.style.paddingLeft = '0px';
@@ -1697,41 +1697,41 @@ ArrangePanel.prototype.addTable = function(div)
 	this.styleButtons(btns);
 	div.appendChild(panel);
 	btns[2].style.marginRight = '9px';
-	
+
 	return div;
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addLayerOps = function(div)
 {
 	let ui = this.editorUi;
-	
+
 	let btn = button(Translations.get('toFront'), function(evt)
 	{
 		ui.actions.get('toFront').funct();
 	})
-	
+
 	btn.setAttribute('title', Translations.get('toFront') + ' (' + this.editorUi.actions.get('toFront').shortcut + ')');
 	btn.style.width = '100px';
 	btn.style.marginRight = '2px';
 	div.appendChild(btn);
-	
+
 	let btn = button(Translations.get('toBack'), function(evt)
 	{
 		ui.actions.get('toBack').funct();
 	})
-	
+
 	btn.setAttribute('title', Translations.get('toBack') + ' (' + this.editorUi.actions.get('toBack').shortcut + ')');
 	btn.style.width = '100px';
 	div.appendChild(btn);
-	
+
 	return div;
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addGroupOps = function(div)
 {
@@ -1741,7 +1741,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 	let ss = this.format.getSelectionState();
 	let count = 0;
 	let btn = null;
-	
+
 	div.style.paddingTop = '8px';
 	div.style.paddingBottom = '6px';
 
@@ -1751,7 +1751,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		{
 			ui.actions.get('group').funct();
 		})
-		
+
 		btn.setAttribute('title', Translations.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
 		btn.style.width = '202px';
 		btn.style.marginBottom = '2px';
@@ -1765,7 +1765,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		{
 			ui.actions.get('ungroup').funct();
 		})
-		
+
 		btn.setAttribute('title', Translations.get('ungroup') + ' (' +
 			this.editorUi.actions.get('ungroup').shortcut + ')');
 		btn.style.width = '202px';
@@ -1773,7 +1773,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		div.appendChild(btn);
 		count++;
 	}
-	
+
 	if (ss.vertices.length > 0)
 	{
 		if (count > 0)
@@ -1781,12 +1781,12 @@ ArrangePanel.prototype.addGroupOps = function(div)
 			br(div);
 			count = 0;
 		}
-		
+
 		let btn = button(Translations.get('copySize'), function(evt)
 		{
 			ui.actions.get('copySize').funct();
 		});
-		
+
 		btn.setAttribute('title', Translations.get('copySize') + ' (' +
 			this.editorUi.actions.get('copySize').shortcut + ')');
 		btn.style.width = '202px';
@@ -1794,27 +1794,27 @@ ArrangePanel.prototype.addGroupOps = function(div)
 
 		div.appendChild(btn);
 		count++;
-		
+
 		if (ui.copiedSize != null)
 		{
 			var btn2 = button(Translations.get('pasteSize'), function(evt)
 			{
 				ui.actions.get('pasteSize').funct();
 			});
-			
+
 			btn2.setAttribute('title', Translations.get('pasteSize') + ' (' +
 				this.editorUi.actions.get('pasteSize').shortcut + ')');
-			
+
 			div.appendChild(btn2);
 			count++;
-			
+
 			btn.style.width = '100px';
 			btn.style.marginBottom = '2px';
 			btn2.style.width = '100px';
 			btn2.style.marginBottom = '2px';
 		}
 	}
-	
+
 	if (graph.getSelectionCount() == 1 && cell.isVertex() && !ss.row &&
 		!ss.cell && cell.getParent().isVertex())
 	{
@@ -1822,12 +1822,12 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		{
 			br(div);
 		}
-		
+
 		btn = button(Translations.get('removeFromGroup'), function(evt)
 		{
 			ui.actions.get('removeFromGroup').funct();
 		})
-		
+
 		btn.setAttribute('title', Translations.get('removeFromGroup'));
 		btn.style.width = '202px';
 		btn.style.marginBottom = '2px';
@@ -1840,12 +1840,12 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		{
 			br(div);
 		}
-		
+
 		btn = button(Translations.get('clearWaypoints'), ((evt) =>
 		{
 			this.editorUi.actions.get('clearWaypoints').funct();
 		}));
-		
+
 		btn.setAttribute('title', Translations.get('clearWaypoints') + ' (' + this.editorUi.actions.get('clearWaypoints').shortcut + ')');
 		btn.style.width = '202px';
 		btn.style.marginBottom = '2px';
@@ -1853,19 +1853,19 @@ ArrangePanel.prototype.addGroupOps = function(div)
 
 		count++;
 	}
-	
+
 	if (graph.getSelectionCount() == 1)
 	{
 		if (count > 0)
 		{
 			br(div);
 		}
-		
+
 		btn = button(Translations.get('editData'), ((evt) =>
 		{
 			this.editorUi.actions.get('editData').funct();
 		}));
-		
+
 		btn.setAttribute('title', Translations.get('editData') + ' (' + this.editorUi.actions.get('editData').shortcut + ')');
 		btn.style.width = '100px';
 		btn.style.marginBottom = '2px';
@@ -1876,7 +1876,7 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		{
 			this.editorUi.actions.get('editLink').funct();
 		}));
-		
+
 		btn.setAttribute('title', Translations.get('editLink'));
 		btn.style.width = '100px';
 		btn.style.marginLeft = '2px';
@@ -1884,17 +1884,17 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		div.appendChild(btn);
 		count++;
 	}
-	
+
 	if (count == 0)
 	{
 		div.style.display = 'none';
 	}
-	
+
 	return div;
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addAlign = function(div)
 {
@@ -1902,7 +1902,7 @@ ArrangePanel.prototype.addAlign = function(div)
 	div.style.paddingTop = '6px';
 	div.style.paddingBottom = '12px';
 	div.appendChild(this.createTitle(Translations.get('align')));
-	
+
 	let stylePanel = document.createElement('div');
 	stylePanel.style.position = 'relative';
 	stylePanel.style.paddingLeft = '0px';
@@ -1922,16 +1922,16 @@ ArrangePanel.prototype.addAlign = function(div)
 		function() { graph.alignCells(mxConstants.ALIGN_MIDDLE); }, stylePanel);
 	let bottom = this.editorUi.toolbar.addButton('geSprite-alignbottom', Translations.get('bottom'),
 		function() { graph.alignCells(mxConstants.ALIGN_BOTTOM); }, stylePanel);
-	
+
 	this.styleButtons([left, center, right, top, middle, bottom]);
 	right.style.marginRight = '6px';
 	div.appendChild(stylePanel);
-	
+
 	return div;
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addFlip = function(div)
 {
@@ -1947,31 +1947,31 @@ ArrangePanel.prototype.addFlip = function(div)
 	span.style.fontWeight = 'bold';
 	write(span, Translations.get('flip'));
 	div.appendChild(span);
-	
+
 	let btn = button(Translations.get('horizontal'), function(evt)
 	{
 		graph.toggleCellStyles('flipH', false);
 	})
-	
+
 	btn.setAttribute('title', Translations.get('horizontal'));
 	btn.style.width = '100px';
 	btn.style.marginRight = '2px';
 	div.appendChild(btn);
-	
+
 	btn = button(Translations.get('vertical'), function(evt)
 	{
 		graph.toggleCellStyles('flipV', false);
 	})
-	
+
 	btn.setAttribute('title', Translations.get('vertical'));
 	btn.style.width = '100px';
 	div.appendChild(btn);
-	
+
 	return div;
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addDistribute = function(div)
 {
@@ -1980,33 +1980,33 @@ ArrangePanel.prototype.addDistribute = function(div)
 	let graph = editor.graph;
 	div.style.paddingTop = '6px';
 	div.style.paddingBottom = '12px';
-	
+
 	div.appendChild(this.createTitle(Translations.get('distribute')));
 
 	let btn = button(Translations.get('horizontal'), function(evt)
 	{
 		graph.distributeCells(true);
 	})
-	
+
 	btn.setAttribute('title', Translations.get('horizontal'));
 	btn.style.width = '100px';
 	btn.style.marginRight = '2px';
 	div.appendChild(btn);
-	
+
 	btn = button(Translations.get('vertical'), function(evt)
 	{
 		graph.distributeCells(false);
 	})
-	
+
 	btn.setAttribute('title', Translations.get('vertical'));
 	btn.style.width = '100px';
 	div.appendChild(btn);
-	
+
 	return div;
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addAngle = function(div)
 {
@@ -2016,27 +2016,27 @@ ArrangePanel.prototype.addAngle = function(div)
 	let ss = this.format.getSelectionState();
 
 	div.style.paddingBottom = '8px';
-	
+
 	let span = document.createElement('div');
 	span.style.position = 'absolute';
 	span.style.width = '70px';
 	span.style.marginTop = '0px';
 	span.style.fontWeight = 'bold';
-	
+
 	let input = null;
 	let update = null;
 	let btn = null;
-	
+
 	if (ss.rotatable && !ss.table && !ss.row && !ss.cell)
 	{
 		write(span, Translations.get('angle'));
 		div.appendChild(span);
-		
+
 		input = this.addUnitInput(div, '°', 20, 44, function()
 		{
 			update.apply(this, arguments);
 		});
-		
+
 		br(div);
 		div.style.paddingTop = '10px';
 	}
@@ -2048,7 +2048,7 @@ ArrangePanel.prototype.addAngle = function(div)
 	if (!ss.containsLabel)
 	{
 		let label = Translations.get('reverse');
-		
+
 		if (ss.vertices.length > 0 && ss.edges.length > 0)
 		{
 			label = Translations.get('turn') + ' / ' + label;
@@ -2062,17 +2062,17 @@ ArrangePanel.prototype.addAngle = function(div)
 		{
 			ui.actions.get('turn').funct(evt);
 		})
-		
+
 		btn.setAttribute('title', label + ' (' + this.editorUi.actions.get('turn').shortcut + ')');
 		btn.style.width = '202px';
 		div.appendChild(btn);
-		
+
 		if (input != null)
 		{
 			btn.style.marginTop = '8px';
 		}
 	}
-	
+
 	if (input != null)
 	{
 		let listener = ((sender, evt, force) =>
@@ -2084,10 +2084,10 @@ ArrangePanel.prototype.addAngle = function(div)
 				input.value = (isNaN(tmp)) ? '' : tmp  + '°';
 			}
 		});
-	
+
 		update = this.installInputHandler(input, 'rotation', 0, 0, 360, '°', null, true);
 		this.addKeyHandler(input, listener);
-	
+
 		graph.getDataModel().addListener(mxEvent.CHANGE, listener);
 		this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 		listener();
@@ -2099,7 +2099,7 @@ ArrangePanel.prototype.addAngle = function(div)
 BaseFormatPanel.prototype.getUnit = function()
 {
 	let unit = this.editorUi.editor.graph.view.unit;
-	
+
 	switch(unit)
 	{
 		case mxConstants.POINTS:
@@ -2119,7 +2119,7 @@ BaseFormatPanel.prototype.inUnit = function(pixels)
 BaseFormatPanel.prototype.fromUnit = function(value)
 {
 	let unit = this.editorUi.editor.graph.view.unit;
-	
+
 	switch(unit)
 	{
 		case mxConstants.POINTS:
@@ -2139,7 +2139,7 @@ BaseFormatPanel.prototype.isFloatUnit = function()
 BaseFormatPanel.prototype.getUnitStep = function()
 {
 	let unit = this.editorUi.editor.graph.view.unit;
-	
+
 	switch(unit)
 	{
 		case mxConstants.POINTS:
@@ -2152,7 +2152,7 @@ BaseFormatPanel.prototype.getUnitStep = function()
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addGeometry = function(container)
 {
@@ -2163,7 +2163,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 
 	let div = this.createPanel();
 	div.style.paddingBottom = '8px';
-		
+
 	let span = document.createElement('div');
 	span.style.position = 'absolute';
 	span.style.width = '50px';
@@ -2181,7 +2181,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 	{
 		heightUpdate.apply(this, arguments);
 	}, this.getUnitStep(), null, null, this.isFloatUnit());
-	
+
 	let autosizeBtn = document.createElement('div');
 	autosizeBtn.className = 'geSprite geSprite-fit';
 	autosizeBtn.setAttribute('title', Translations.get('autosize') + ' (' + this.editorUi.actions.get('autosize').shortcut + ')');
@@ -2191,12 +2191,12 @@ ArrangePanel.prototype.addGeometry = function(container)
 	autosizeBtn.style.border = '0px';
 	autosizeBtn.style.left = '42px';
 	setOpacity(autosizeBtn, 50);
-	
+
 	mxEvent.addListener(autosizeBtn, 'mouseenter', function()
 	{
 		setOpacity(autosizeBtn, 100);
 	});
-	
+
 	mxEvent.addListener(autosizeBtn, 'mouseleave', function()
 	{
 		setOpacity(autosizeBtn, 50);
@@ -2206,9 +2206,9 @@ ArrangePanel.prototype.addGeometry = function(container)
 	{
 		ui.actions.get('autosize').funct();
 	});
-	
+
 	div.appendChild(autosizeBtn);
-	
+
 	if (rect.row)
 	{
 		width.style.visibility = 'hidden';
@@ -2218,7 +2218,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 	{
 		this.addLabel(div, Translations.get('width'), 84);
 	}
-	
+
 	this.addLabel(div, Translations.get('height'), 20);
 	br(div);
 
@@ -2231,7 +2231,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 		'aspect', null, 'fixed', 'null');
 	opt.style.width = '100%';
 	wrapper.appendChild(opt);
-		
+
 	if (!rect.cell && !rect.row)
 	{
 		div.appendChild(wrapper);
@@ -2240,29 +2240,29 @@ ArrangePanel.prototype.addGeometry = function(container)
 	{
 		autosizeBtn.style.visibility = 'hidden';
 	}
-	
+
 	let constrainCheckbox = opt.getElementsByTagName('input')[0];
 	this.addKeyHandler(width, listener);
 	this.addKeyHandler(height, listener);
-	
+
 	widthUpdate = this.addGeometryHandler(width, function(geo, value, cell)
 	{
 		if (graph.isTableCell(cell))
 		{
 			graph.setTableColumnWidth(cell, value - geo.width, true);
-			
+
 			// Blocks processing in caller
 			return true;
 		}
 		else if (geo.width > 0)
 		{
 			let value = Math.max(1, panel.fromUnit(value));
-			
+
 			if (constrainCheckbox.checked)
 			{
 				geo.height = Math.round((geo.height  * value * 100) / geo.width) / 100;
 			}
-			
+
 			geo.width = value;
 		}
 	});
@@ -2272,35 +2272,35 @@ ArrangePanel.prototype.addGeometry = function(container)
 		{
 			cell = cell.getParent();
 		}
-		
+
 		if (graph.isTableRow(cell))
 		{
 			graph.setTableRowHeight(cell, value - geo.height);
-			
+
 			// Blocks processing in caller
 			return true;
 		}
 		else if (geo.height > 0)
 		{
 			let value = Math.max(1, panel.fromUnit(value));
-			
+
 			if (constrainCheckbox.checked)
 			{
 				geo.width = Math.round((geo.width  * value * 100) / geo.height) / 100;
 			}
-			
+
 			geo.height = value;
 		}
 	});
-	
+
 	if (rect.resizable || rect.row || rect.cell)
 	{
 		container.appendChild(div);
 	}
-	
+
 	var div2 = this.createPanel();
 	div2.style.paddingBottom = '30px';
-	
+
 	let span = document.createElement('div');
 	span.style.position = 'absolute';
 	span.style.width = '70px';
@@ -2308,7 +2308,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 	span.style.fontWeight = 'bold';
 	write(span, Translations.get('position'));
 	div2.appendChild(span);
-	
+
 	let left = this.addUnitInput(div2, this.getUnit(), 84, 44, function()
 	{
 		leftUpdate.apply(this, arguments);
@@ -2322,7 +2322,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 
 	this.addLabel(div2, Translations.get('left'), 84);
 	this.addLabel(div2, Translations.get('top'), 20);
-	
+
 	let listener = ((sender, evt, force) =>
 	{
 		rect = this.format.getSelectionState();
@@ -2331,12 +2331,12 @@ ArrangePanel.prototype.addGeometry = function(container)
 			rect.width != null && rect.height != null)
 		{
 			div.style.display = '';
-			
+
 			if (force || document.activeElement != width)
 			{
 				width.value = this.inUnit(rect.width) + ((rect.width == '') ? '' : ' ' + this.getUnit());
 			}
-			
+
 			if (force || document.activeElement != height)
 			{
 				height.value = this.inUnit(rect.height) + ((rect.height == '') ? '' : ' ' + this.getUnit());
@@ -2346,17 +2346,17 @@ ArrangePanel.prototype.addGeometry = function(container)
 		{
 			div.style.display = 'none';
 		}
-		
+
 		if (rect.vertices.length == graph.getSelectionCount() &&
 			rect.x != null && rect.y != null)
 		{
 			div2.style.display = '';
-			
+
 			if (force || document.activeElement != left)
 			{
 				left.value = this.inUnit(rect.x)  + ((rect.x == '') ? '' : ' ' + this.getUnit());
 			}
-			
+
 			if (force || document.activeElement != top)
 			{
 				top.value = this.inUnit(rect.y) + ((rect.y == '') ? '' : ' ' + this.getUnit());
@@ -2374,11 +2374,11 @@ ArrangePanel.prototype.addGeometry = function(container)
 	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
 	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
-	
+
 	leftUpdate = this.addGeometryHandler(left, function(geo, value)
 	{
 		value = panel.fromUnit(value);
-		
+
 		if (geo.relative)
 		{
 			geo.offset.x = value;
@@ -2391,7 +2391,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 	topUpdate = this.addGeometryHandler(top, function(geo, value)
 	{
 		value = panel.fromUnit(value);
-		
+
 		if (geo.relative)
 		{
 			geo.offset.y = value;
@@ -2409,7 +2409,7 @@ ArrangePanel.prototype.addGeometry = function(container)
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addGeometryHandler = function(input, fn)
 {
@@ -2417,14 +2417,14 @@ ArrangePanel.prototype.addGeometryHandler = function(input, fn)
 	let graph = ui.editor.graph;
 	let initialValue = null;
 	let panel = this;
-	
+
 	function update(evt)
 	{
 		if (input.value != '')
 		{
 			let value = parseFloat(input.value);
 
-			if (isNaN(value)) 
+			if (isNaN(value))
 			{
 				input.value = initialValue + ' ' + panel.getUnit();
 			}
@@ -2434,26 +2434,26 @@ ArrangePanel.prototype.addGeometryHandler = function(input, fn)
 				try
 				{
 					let cells = graph.getSelectionCells();
-					
+
 					for (let i = 0; i < cells.length; i++)
 					{
 						if (cells[i].isVertex())
 						{
 							let geo = cells[i].getGeometry();
-							
+
 							if (geo != null)
 							{
 								geo = geo.clone();
-								
+
 								if (!fn(geo, value, cells[i]))
 								{
 									let state = graph.view.getState(cells[i]);
-									
+
 									if (state != null && graph.isRecursiveVertexResize(state))
 									{
 										graph.resizeChildCells(cells[i], geo);
 									}
-									
+
 									graph.getDataModel().setGeometry(cells[i], geo);
 									graph.constrainChildCells(cells[i]);
 								}
@@ -2465,12 +2465,12 @@ ArrangePanel.prototype.addGeometryHandler = function(input, fn)
 				{
 					graph.getDataModel().endUpdate();
 				}
-				
+
 				initialValue = value;
 				input.value = value + ' ' + panel.getUnit();
 			}
 		}
-		
+
 		mxEvent.consume(evt);
 	};
 
@@ -2480,7 +2480,7 @@ ArrangePanel.prototype.addGeometryHandler = function(input, fn)
 	{
 		initialValue = input.value;
 	});
-	
+
 	return update;
 };
 
@@ -2547,16 +2547,16 @@ ArrangePanel.prototype.addEdgeGeometryHandler = function(input, fn)
 };
 
 /**
- * 
+ *
  */
 ArrangePanel.prototype.addEdgeGeometry = function(container)
 {
 	let ui = this.editorUi;
 	let graph = ui.editor.graph;
 	let rect = this.format.getSelectionState();
-	
+
 	let div = this.createPanel();
-	
+
 	let span = document.createElement('div');
 	span.style.position = 'absolute';
 	span.style.width = '70px';
@@ -2573,13 +2573,13 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 
 	br(div);
 	this.addKeyHandler(width, listener);
-	
+
 	function widthUpdate(evt)
 	{
 		// Maximum stroke width is 999
 		let value = parseInt(width.value);
 		value = Math.min(999, Math.max(1, (isNaN(value)) ? 1 : value));
-		
+
 		if (value != getValue(rect.style, 'width', mxCellRenderer.defaultShapes['flexArrow'].prototype.defaultWidth))
 		{
 			graph.setCellStyles('width', value, graph.getSelectionCells());
@@ -2654,11 +2654,11 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 	{
 		rect = this.format.getSelectionState();
 		let cell = graph.getSelectionCell();
-		
+
 		if (rect.style.shape == 'link' || rect.style.shape == 'flexArrow')
 		{
 			div.style.display = '';
-			
+
 			if (force || document.activeElement != width)
 			{
 				let value = getValue(rect.style, 'width',
@@ -2684,7 +2684,7 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 			{
 				divs.style.display = 'none';
 			}
-			
+
 			if (geo.targetPoint != null && cell.getTerminal(false) == null)
 			{
 				xt.value = geo.targetPoint.x;
@@ -2756,7 +2756,7 @@ TextFormatPanel.prototype.addFont = function(container)
 	let editor = ui.editor;
 	let graph = editor.graph;
 	let ss = this.format.getSelectionState();
-	
+
 	let title = this.createTitle(Translations.get('font'));
 	title.style.paddingLeft = '18px';
 	title.style.paddingTop = '10px';
@@ -2774,7 +2774,7 @@ TextFormatPanel.prototype.addFont = function(container)
 	if (graph.cellEditor.isContentEditing())
 	{
 		let cssPanel = stylePanel.cloneNode();
-		
+
 		let cssMenu = this.editorUi.toolbar.addMenu(Translations.get('style'),
 			Translations.get('style'), true, 'formatBlock', cssPanel, null, true);
 		cssMenu.style.color = 'rgb(112, 112, 112)';
@@ -2784,49 +2784,49 @@ TextFormatPanel.prototype.addFont = function(container)
 		this.addArrow(cssMenu);
 		cssMenu.style.width = '192px';
 		cssMenu.style.height = '15px';
-		
+
 		let arrow = cssMenu.getElementsByTagName('div')[0];
 		arrow.style.cssFloat = 'right';
 		container.appendChild(cssPanel);
 	}
-	
+
 	container.appendChild(stylePanel);
-	
+
 	let colorPanel = this.createPanel();
 	colorPanel.style.marginTop = '8px';
 	colorPanel.style.borderTop = '1px solid #c0c0c0';
 	colorPanel.style.paddingTop = '6px';
 	colorPanel.style.paddingBottom = '6px';
-	
+
 	let fontMenu = this.editorUi.toolbar.addMenu('Helvetica', Translations.get('fontFamily'),
 		true, 'fontFamily', stylePanel, null, true);
 	fontMenu.style.color = 'rgb(112, 112, 112)';
 	fontMenu.style.whiteSpace = 'nowrap';
 	fontMenu.style.overflow = 'hidden';
 	fontMenu.style.margin = '0px';
-	
+
 	this.addArrow(fontMenu);
 	fontMenu.style.width = '192px';
 	fontMenu.style.height = '15px';
-	
+
 	var stylePanel2 = stylePanel.cloneNode(false);
 	stylePanel2.style.marginLeft = '-3px';
 	let fontStyleItems = this.editorUi.toolbar.addItems(['bold', 'italic', 'underline'], stylePanel2, true);
 	fontStyleItems[0].setAttribute('title', Translations.get('bold') + ' (' + this.editorUi.actions.get('bold').shortcut + ')');
 	fontStyleItems[1].setAttribute('title', Translations.get('italic') + ' (' + this.editorUi.actions.get('italic').shortcut + ')');
 	fontStyleItems[2].setAttribute('title', Translations.get('underline') + ' (' + this.editorUi.actions.get('underline').shortcut + ')');
-	
+
 	let verticalItem = this.editorUi.toolbar.addItems(['vertical'], stylePanel2, true)[0];
 
 	container.appendChild(stylePanel2);
 
 	this.styleButtons(fontStyleItems);
 	this.styleButtons([verticalItem]);
-	
+
 	var stylePanel3 = stylePanel.cloneNode(false);
 	stylePanel3.style.marginLeft = '-3px';
 	stylePanel3.style.paddingBottom = '0px';
-	
+
 	// Helper function to return a wrapper function does not pass any arguments
 	let callFn = function(fn)
 	{
@@ -2835,7 +2835,7 @@ TextFormatPanel.prototype.addFont = function(container)
 			return fn();
 		};
 	};
-	
+
 	let left = this.editorUi.toolbar.addButton('geSprite-left', Translations.get('left'),
 		(graph.cellEditor.isContentEditing()) ?
 		function(evt)
@@ -2856,7 +2856,7 @@ TextFormatPanel.prototype.addFont = function(container)
 		} : callFn(this.editorUi.menus.createStyleChangeFunction(.align, [mxConstants.ALIGN_RIGHT])), stylePanel3);
 
 	this.styleButtons([left, center, right]);
-	
+
 	// Quick hack for strikethrough
 	// TODO: Add translations and toggle state
 	if (graph.cellEditor.isContentEditing())
@@ -2874,29 +2874,29 @@ TextFormatPanel.prototype.addFont = function(container)
 
 		this.styleButtons([strike]);
 	}
-	
+
 	let top = this.editorUi.toolbar.addButton('geSprite-top', Translations.get('top'),
 		callFn(this.editorUi.menus.createStyleChangeFunction(.verticalAlign, [mxConstants.ALIGN_TOP])), stylePanel3);
 	let middle = this.editorUi.toolbar.addButton('geSprite-middle', Translations.get('middle'),
 		callFn(this.editorUi.menus.createStyleChangeFunction(.verticalAlign, [mxConstants.ALIGN_MIDDLE])), stylePanel3);
 	let bottom = this.editorUi.toolbar.addButton('geSprite-bottom', Translations.get('bottom'),
 		callFn(this.editorUi.menus.createStyleChangeFunction(.verticalAlign, [mxConstants.ALIGN_BOTTOM])), stylePanel3);
-	
+
 	this.styleButtons([top, middle, bottom]);
 
 	container.appendChild(stylePanel3);
-	
+
 	// Hack for updating UI state below based on current text selection
 	// currentTable is the current selected DOM table updated below
 	var sub, sup, full, tableWrapper, currentTable, tableCell, tableRow;
-	
+
 	if (graph.cellEditor.isContentEditing())
 	{
 		top.style.display = 'none';
 		middle.style.display = 'none';
 		bottom.style.display = 'none';
 		verticalItem.style.display = 'none';
-		
+
 		full = this.editorUi.toolbar.addButton('geSprite-justifyfull', Translations.get('block'),
 			function()
 			{
@@ -2921,7 +2921,7 @@ TextFormatPanel.prototype.addFont = function(container)
 				document.execCommand('superscript', false, null);
 			}, stylePanel3)]);
 		sub.style.marginLeft = '9px';
-		
+
 		let tmp = stylePanel3.cloneNode(false);
 		tmp.style.paddingTop = '4px';
 		let btns = [this.editorUi.toolbar.addButton('geSprite-orderedlist', Translations.get('numberedList'),
@@ -2964,23 +2964,23 @@ TextFormatPanel.prototype.addFont = function(container)
 		fontStyleItems[2].style.marginRight = '9px';
 		right.style.marginRight = '9px';
 	}
-	
+
 	// Label position
 	var stylePanel4 = stylePanel.cloneNode(false);
 	stylePanel4.style.marginLeft = '0px';
 	stylePanel4.style.paddingTop = '8px';
 	stylePanel4.style.paddingBottom = '4px';
 	stylePanel4.style.fontWeight = 'normal';
-	
+
 	write(stylePanel4, Translations.get('position'));
-	
+
 	// Adds label position options
 	let positionSelect = document.createElement('select');
 	positionSelect.style.position = 'absolute';
 	positionSelect.style.right = '20px';
 	positionSelect.style.width = '97px';
 	positionSelect.style.marginTop = '-2px';
-	
+
 	let directions = ['topLeft', 'top', 'topRight', 'left', 'center', 'right', 'bottomLeft', 'bottom', 'bottomRight'];
 	let lset = {'topLeft': [mxConstants.ALIGN_LEFT, mxConstants.ALIGN_TOP, mxConstants.ALIGN_RIGHT, mxConstants.ALIGN_BOTTOM],
 			'top': [mxConstants.ALIGN_CENTER, mxConstants.ALIGN_TOP, mxConstants.ALIGN_CENTER, mxConstants.ALIGN_BOTTOM],
@@ -3001,7 +3001,7 @@ TextFormatPanel.prototype.addFont = function(container)
 	}
 
 	stylePanel4.appendChild(positionSelect);
-	
+
 	// Writing direction
 	var stylePanel5 = stylePanel.cloneNode(false);
 	stylePanel5.style.marginLeft = '0px';
@@ -3010,7 +3010,7 @@ TextFormatPanel.prototype.addFont = function(container)
 	stylePanel5.style.fontWeight = 'normal';
 
 	write(stylePanel5, Translations.get('writingDirection'));
-	
+
 	// Adds writing direction options
 	// LATER: Handle reselect of same option in all selects (change event
 	// is not fired for same option so have opened state on click) and
@@ -3037,18 +3037,18 @@ TextFormatPanel.prototype.addFont = function(container)
 	}
 
 	stylePanel5.appendChild(dirSelect);
-	
+
 	if (!graph.isEditing())
 	{
 		container.appendChild(stylePanel4);
-		
+
 		mxEvent.addListener(positionSelect, 'change', function(evt)
 		{
 			graph.getDataModel().beginUpdate();
 			try
 			{
 				let vals = lset[positionSelect.value];
-				
+
 				if (vals != null)
 				{
 					graph.setCellStyles('labelPosition', vals[0], graph.getSelectionCells());
@@ -3061,14 +3061,14 @@ TextFormatPanel.prototype.addFont = function(container)
 			{
 				graph.getDataModel().endUpdate();
 			}
-			
+
 			mxEvent.consume(evt);
 		});
 
 		// LATER: Update dir in text editor while editing and update style with label
 		// NOTE: The tricky part is handling and passing on the auto value
 		container.appendChild(stylePanel5);
-		
+
 		mxEvent.addListener(dirSelect, 'change', function(evt)
 		{
 			graph.setCellStyles('textDirection', dirSet[dirSelect.value], graph.getSelectionCells());
@@ -3085,7 +3085,7 @@ TextFormatPanel.prototype.addFont = function(container)
 	input.style.width = '40px';
 	input.style.height = '17px';
 	stylePanel2.appendChild(input);
-	
+
 	// Workaround for font size 4 if no text is selected is update font size below
 	// after first character was entered (as the font element is lazy created)
 	let pendingFontSize = null;
@@ -3115,7 +3115,7 @@ TextFormatPanel.prototype.addFont = function(container)
 					else
 					{
 						let css = getCurrentStyle(elt);
-						
+
 						if (css.fontSize != fontSize + 'px')
 						{
 							if (getCurrentStyle(elt.parentNode).fontSize != fontSize + 'px')
@@ -3130,7 +3130,7 @@ TextFormatPanel.prototype.addFont = function(container)
 					}
 				}
 			};
-			
+
 			// Wraps text node or mixed selection with leading text in a font element
 			if (container == graph.cellEditor.textarea ||
 				container.nodeType != mxConstants.NODETYPE_ELEMENT)
@@ -3142,12 +3142,12 @@ TextFormatPanel.prototype.addFont = function(container)
 			{
 				container = container.parentNode;
 			}
-			
+
 			if (container != null && container.nodeType == mxConstants.NODETYPE_ELEMENT)
 			{
 				let elts = container.getElementsByTagName('*');
 				updateSize(container);
-				
+
 				for (let i = 0; i < elts.length; i++)
 				{
 					updateSize(elts[i]);
@@ -3160,7 +3160,7 @@ TextFormatPanel.prototype.addFont = function(container)
 		{
 			// Checks selection
 			let par = null;
-			
+
 			if (document.selection)
 			{
 				par = document.selection.createRange().parentElement();
@@ -3168,13 +3168,13 @@ TextFormatPanel.prototype.addFont = function(container)
 			else
 			{
 				let selection = window.getSelection();
-				
+
 				if (selection.rangeCount > 0)
 				{
 					par = selection.getRangeAt(0).commonAncestorContainer;
 				}
 			}
-			
+
 			// Node.contains does not work for text nodes in IE11
 			function isOrContains(container, node)
 			{
@@ -3184,28 +3184,28 @@ TextFormatPanel.prototype.addFont = function(container)
 			        {
 			            return true;
 			        }
-			        
+
 			        node = node.parentNode;
 			    }
-			    
+
 			    return false;
 			};
-			
+
 			if (par != null && isOrContains(graph.cellEditor.textarea, par))
 			{
 				pendingFontSize = fontSize;
-				
+
 				// Workaround for can't set font size in px is to change font size afterwards
 				document.execCommand('fontSize', false, '4');
 				let elts = graph.cellEditor.textarea.getElementsByTagName('font');
-				
+
 				for (let i = 0; i < elts.length; i++)
 				{
 					if (elts[i].getAttribute('size') == '4')
 					{
 						elts[i].removeAttribute('size');
 						elts[i].style.fontSize = pendingFontSize + 'px';
-			
+
 						// Overrides fontSize in input with the one just assigned as a workaround
 						// for potential fontSize values of parent elements that don't match
 						window.setTimeout(function()
@@ -3213,30 +3213,30 @@ TextFormatPanel.prototype.addFont = function(container)
 							input.value = pendingFontSize + ' pt';
 							pendingFontSize = null;
 						}, 0);
-						
+
 						break;
 					}
 				}
 			}
 		}
 	}, true);
-	
+
 	let stepper = this.createStepper(input, inputUpdate, 1, 10, true, Menus.prototype.defaultFontSize);
 	stepper.style.display = input.style.display;
 	stepper.style.marginTop = '4px';
 	stepper.style.right = '20px';
 
 	stylePanel2.appendChild(stepper);
-	
+
 	let arrow = fontMenu.getElementsByTagName('div')[0];
 	arrow.style.cssFloat = 'right';
-	
+
 	let bgColorApply = null;
 	let currentBgColor = '#ffffff';
-	
+
 	let fontColorApply = null;
 	let currentFontColor = '#000000';
-		
+
 	let bgPanel = (graph.cellEditor.isContentEditing()) ? this.createColorOption(Translations.get('backgroundColor'), function()
 	{
 		return currentBgColor;
@@ -3258,7 +3258,7 @@ TextFormatPanel.prototype.addFont = function(container)
 
 	let borderPanel = this.createCellColorOption(Translations.get('borderColor'), 'labelBorderColor', '#000000');
 	borderPanel.style.fontWeight = 'bold';
-	
+
 	let defs = (ss.vertices.length >= 1) ? graph.stylesheet.getDefaultVertexStyle() : graph.stylesheet.getDefaultEdgeStyle();
 	let panel = (graph.cellEditor.isContentEditing()) ? this.createColorOption(Translations.get('fontColor'), function()
 	{
@@ -3339,7 +3339,7 @@ TextFormatPanel.prototype.addFont = function(container)
 		{
 			bgPanel.style.display = '';
 		}
-		
+
 		borderPanel.style.display = bgPanel.style.display;
 	}, function(color)
 	{
@@ -3351,7 +3351,7 @@ TextFormatPanel.prototype.addFont = function(container)
 		{
 			graph.setCellStyles('noLabel', null, graph.getSelectionCells());
 		}
-		
+
 		graph.updateCellStyles('fontColor', color, graph.getSelectionCells());
 
 		graph.updateLabelElements(graph.getSelectionCells(), function(elt)
@@ -3361,42 +3361,42 @@ TextFormatPanel.prototype.addFont = function(container)
 		});
 	});
 	panel.style.fontWeight = 'bold';
-	
+
 	colorPanel.appendChild(panel);
 	colorPanel.appendChild(bgPanel);
-	
+
 	if (!graph.cellEditor.isContentEditing())
 	{
 		colorPanel.appendChild(borderPanel);
 	}
-	
+
 	container.appendChild(colorPanel);
 
 	let extraPanel = this.createPanel();
 	extraPanel.style.paddingTop = '2px';
 	extraPanel.style.paddingBottom = '4px';
-	
+
 	// LATER: Fix toggle using '' instead of 'null'
 	let wwOpt = this.createCellOption(Translations.get('wordWrap'), 'whiteSpace', null, 'wrap', 'null', null, null, true);
 	wwOpt.style.fontWeight = 'bold';
-	
+
 	// Word wrap in edge labels only supported via labelWidth style
 	if (!ss.containsLabel && !ss.autoSize && ss.edges.length == 0)
 	{
 		extraPanel.appendChild(wwOpt);
 	}
-	
+
 	// Delegates switch of style to formattedText action as it also convertes newlines
 	let htmlOpt = this.createCellOption(Translations.get('formattedText'), 'html', '0',
 		null, null, null, ui.actions.get('formattedText'));
 	htmlOpt.style.fontWeight = 'bold';
 	extraPanel.appendChild(htmlOpt);
-	
+
 	let spacingPanel = this.createPanel();
 	spacingPanel.style.paddingTop = '10px';
 	spacingPanel.style.paddingBottom = '28px';
 	spacingPanel.style.fontWeight = 'normal';
-	
+
 	let span = document.createElement('div');
 	span.style.position = 'absolute';
 	span.style.width = '70px';
@@ -3438,7 +3438,7 @@ TextFormatPanel.prototype.addFont = function(container)
 	this.addLabel(spacingPanel, Translations.get('left'), 162);
 	this.addLabel(spacingPanel, Translations.get('bottom'), 91);
 	this.addLabel(spacingPanel, Translations.get('right'), 20);
-	
+
 	if (!graph.cellEditor.isContentEditing())
 	{
 		container.appendChild(extraPanel);
@@ -3449,7 +3449,7 @@ TextFormatPanel.prototype.addFont = function(container)
 	{
 		let selState = null;
 		let lineHeightInput = null;
-		
+
 		container.appendChild(this.createRelativeOption(Translations.get('lineheight'), null, null, function(input)
 		{
 			let value = (input.value == '') ? 120 : parseInt(input.value);
@@ -3460,37 +3460,37 @@ TextFormatPanel.prototype.addFont = function(container)
 				graph.cellEditor.restoreSelection(selState);
 				selState = null;
 			}
-			
+
 			let selectedElement = graph.getSelectedElement();
 			let node = selectedElement;
-			
+
 			while (node != null && node.nodeType != mxConstants.NODETYPE_ELEMENT)
 			{
 				node = node.parentNode;
 			}
-			
+
 			if (node != null && node == graph.cellEditor.textarea && graph.cellEditor.textarea.firstChild != null)
 			{
 				if (graph.cellEditor.textarea.firstChild.nodeName != 'P')
 				{
 					graph.cellEditor.textarea.innerHTML = '<p>' + graph.cellEditor.textarea.innerHTML + '</p>';
 				}
-				
+
 				node = graph.cellEditor.textarea.firstChild;
 			}
-			
+
 			if (node != null && graph.cellEditor.textarea != null && node != graph.cellEditor.textarea &&
 				graph.cellEditor.textarea.contains(node))
 			{
 				node.style.lineHeight = value + '%';
 			}
-			
+
 			input.value = value + ' %';
 		}, function(input)
 		{
 			// Used in CSS handler to update current value
 			lineHeightInput = input;
-			
+
 			// KNOWN: Arrow up/down clear selection text in quirks/IE 8
 			// Text size via arrow button limits to 16 in IE11. Why?
 			mxEvent.addListener(input, 'mousedown', function()
@@ -3500,7 +3500,7 @@ TextFormatPanel.prototype.addFont = function(container)
 					selState = graph.cellEditor.saveSelection();
 				}
 			});
-			
+
 			mxEvent.addListener(input, 'touchstart', function()
 			{
 				if (document.activeElement == graph.cellEditor.textarea)
@@ -3508,10 +3508,10 @@ TextFormatPanel.prototype.addFont = function(container)
 					selState = graph.cellEditor.saveSelection();
 				}
 			});
-			
+
 			input.value = '120 %';
 		}));
-		
+
 		let insertPanel = stylePanel.cloneNode(false);
 		insertPanel.style.paddingLeft = '0px';
 		let insertBtns = this.editorUi.toolbar.addItems(['link', 'image'], insertPanel, true);
@@ -3521,24 +3521,24 @@ TextFormatPanel.prototype.addFont = function(container)
 				function()
 				{
 					document.execCommand('inserthorizontalrule', false);
-				}, insertPanel),				
+				}, insertPanel),
 				this.editorUi.toolbar.addMenuFunctionInContainer(insertPanel, 'geSprite-table', Translations.get('table'), false, ((menu) =>
 				{
 					this.editorUi.menus.addInsertTableItem(menu);
 				}))];
 		this.styleButtons(insertBtns);
 		this.styleButtons(btns);
-		
+
 		var wrapper2 = this.createPanel();
 		wrapper2.style.paddingTop = '10px';
 		wrapper2.style.paddingBottom = '10px';
 		wrapper2.appendChild(this.createTitle(Translations.get('insert')));
 		wrapper2.appendChild(insertPanel);
 		container.appendChild(wrapper2);
-		
+
 		let tablePanel = stylePanel.cloneNode(false);
 		tablePanel.style.paddingLeft = '0px';
-		
+
 		let btns = [
 		        this.editorUi.toolbar.addButton('geSprite-insertcolumnbefore', Translations.get('insertColumnBefore'),
 	     		(() =>
@@ -3632,16 +3632,16 @@ TextFormatPanel.prototype.addFont = function(container)
 				}), tablePanel)];
 		this.styleButtons(btns);
 		btns[2].style.marginRight = '9px';
-		
+
 		var wrapper3 = this.createPanel();
 		wrapper3.style.paddingTop = '10px';
 		wrapper3.style.paddingBottom = '10px';
 		wrapper3.appendChild(this.createTitle(Translations.get('table')));
 		wrapper3.appendChild(tablePanel);
-		
+
 		var tablePanel2 = stylePanel.cloneNode(false);
 		tablePanel2.style.paddingLeft = '0px';
-		
+
 		let btns = [
 		        this.editorUi.toolbar.addButton('geSprite-strokecolor', Translations.get('borderColor'),
 				((evt) =>
@@ -3657,12 +3657,12 @@ TextFormatPanel.prototype.addFont = function(container)
 						this.editorUi.pickColor(color, function(newColor)
 						{
 							let targetElt = (tableCell != null && (evt == null || !mxEvent.isShiftDown(evt))) ? tableCell : currentTable;
-							
+
 							graph.processElements(targetElt, function(elt)
 							{
 								elt.style.border = null;
 							});
-							
+
 							if (newColor == null || newColor == mxConstants.NONE)
 							{
 								targetElt.removeAttribute('border');
@@ -3692,12 +3692,12 @@ TextFormatPanel.prototype.addFont = function(container)
 						this.editorUi.pickColor(color, function(newColor)
 						{
 							let targetElt = (tableCell != null && (evt == null || !mxEvent.isShiftDown(evt))) ? tableCell : currentTable;
-							
+
 							graph.processElements(targetElt, function(elt)
 							{
 								elt.style.backgroundColor = null;
 							});
-							
+
 							if (newColor == null || newColor == mxConstants.NONE)
 							{
 								targetElt.style.backgroundColor = '';
@@ -3715,7 +3715,7 @@ TextFormatPanel.prototype.addFont = function(container)
 					if (currentTable != null)
 					{
 						let value = currentTable.getAttribute('cellPadding') || 0;
-						
+
 						let dlg = new FilenameDialog(ui, value, Translations.get('apply'), ((newValue) =>
 						{
 							if (newValue != null && newValue.length > 0)
@@ -3757,48 +3757,49 @@ TextFormatPanel.prototype.addFont = function(container)
 				}, tablePanel2)];
 		this.styleButtons(btns);
 		btns[2].style.marginRight = '9px';
-		
+
 		wrapper3.appendChild(tablePanel2);
 		container.appendChild(wrapper3);
-		
+
 		tableWrapper = wrapper3;
 	}
-	
+
 	function setSelected(elt, selected)
 	{
 		elt.style.backgroundImage = (selected) ? 'linear-gradient(#c5ecff 0px,#87d4fb 100%)' : '';
 	};
-	
+
 	let listener = ((sender, evt, force) =>
 	{
 		ss = this.format.getSelectionState();
 		let fontStyle = getValue(ss.style, 'fontStyle', 0);
+		// TODO use styleUtils.matchBinaryMask
 		setSelected(fontStyleItems[0], (fontStyle & mxConstants.FONT_BOLD) == mxConstants.FONT_BOLD);
 		setSelected(fontStyleItems[1], (fontStyle & mxConstants.FONT_ITALIC) == mxConstants.FONT_ITALIC);
 		setSelected(fontStyleItems[2], (fontStyle & mxConstants.FONT_UNDERLINE) == mxConstants.FONT_UNDERLINE);
 		fontMenu.firstChild.nodeValue = getValue(ss.style, 'fontFamily', Menus.prototype.defaultFont);
 
 		setSelected(verticalItem, getValue(ss.style, 'horizontal', '1') == '0');
-		
+
 		if (force || document.activeElement != input)
 		{
 			let tmp = parseFloat(getValue(ss.style, 'fontSize', Menus.prototype.defaultFontSize));
 			input.value = (isNaN(tmp)) ? '' : tmp  + ' pt';
 		}
-		
+
 		let align = getValue(ss.style, 'align', mxConstants.ALIGN_CENTER);
 		setSelected(left, align == mxConstants.ALIGN_LEFT);
 		setSelected(center, align == mxConstants.ALIGN_CENTER);
 		setSelected(right, align == mxConstants.ALIGN_RIGHT);
-		
+
 		let valign = getValue(ss.style, 'verticalAlign', mxConstants.ALIGN_MIDDLE);
 		setSelected(top, valign == mxConstants.ALIGN_TOP);
 		setSelected(middle, valign == mxConstants.ALIGN_MIDDLE);
 		setSelected(bottom, valign == mxConstants.ALIGN_BOTTOM);
-		
+
 		let pos = getValue(ss.style, 'labelPosition', mxConstants.ALIGN_CENTER);
 		let vpos = getValue(ss.style, 'verticalLabelPosition', mxConstants.ALIGN_MIDDLE);
-		
+
 		if (pos == mxConstants.ALIGN_LEFT && vpos == mxConstants.ALIGN_TOP)
 		{
 			positionSelect.value = 'topLeft';
@@ -3835,9 +3836,9 @@ TextFormatPanel.prototype.addFont = function(container)
 		{
 			positionSelect.value = 'center';
 		}
-		
+
 		let dir = getValue(ss.style, 'textDirection', mxConstants.DEFAULT_TEXT_DIRECTION);
-		
+
 		if (dir == mxConstants.TEXT_DIRECTION_RTL)
 		{
 			dirSelect.value = 'rightToLeft';
@@ -3850,7 +3851,7 @@ TextFormatPanel.prototype.addFont = function(container)
 		{
 			dirSelect.value = 'automatic';
 		}
-		
+
 		if (force || document.activeElement != globalSpacing)
 		{
 			let tmp = parseFloat(getValue(ss.style, 'spacing', 2));
@@ -3862,19 +3863,19 @@ TextFormatPanel.prototype.addFont = function(container)
 			let tmp = parseFloat(getValue(ss.style, 'spacingTop', 0));
 			topSpacing.value = (isNaN(tmp)) ? '' : tmp  + ' pt';
 		}
-		
+
 		if (force || document.activeElement != rightSpacing)
 		{
 			let tmp = parseFloat(getValue(ss.style, 'spacingRight', 0));
 			rightSpacing.value = (isNaN(tmp)) ? '' : tmp  + ' pt';
 		}
-		
+
 		if (force || document.activeElement != bottomSpacing)
 		{
 			let tmp = parseFloat(getValue(ss.style, 'spacingBottom', 0));
 			bottomSpacing.value = (isNaN(tmp)) ? '' : tmp  + ' pt';
 		}
-		
+
 		if (force || document.activeElement != leftSpacing)
 		{
 			let tmp = parseFloat(getValue(ss.style, 'spacingLeft', 0));
@@ -3898,17 +3899,17 @@ TextFormatPanel.prototype.addFont = function(container)
 	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
 	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
-	
+
 	if (graph.cellEditor.isContentEditing())
 	{
 		let updating = false;
-		
+
 		let updateCssHandler = function()
 		{
 			if (!updating)
 			{
 				updating = true;
-			
+
 				window.setTimeout(function()
 				{
 					let node = graph.getSelectedEditingElement();
@@ -3920,7 +3921,7 @@ TextFormatPanel.prototype.addFont = function(container)
 							if (elt.style != null && css != null)
 							{
 								let lineHeight = css.lineHeight
-								
+
 								if (elt.style.lineHeight != null && elt.style.lineHeight.substring(elt.style.lineHeight.length - 1) == '%')
 								{
 									return parseInt(elt.style.lineHeight) / 100;
@@ -3936,11 +3937,11 @@ TextFormatPanel.prototype.addFont = function(container)
 								return '';
 							}
 						};
-						
+
 						function getAbsoluteFontSize(css)
 						{
 							let fontSize = (css != null) ? css.fontSize : null;
-								
+
 							if (fontSize != null && fontSize.substring(fontSize.length - 2) == 'px')
 							{
 								return parseFloat(fontSize);
@@ -3950,7 +3951,7 @@ TextFormatPanel.prototype.addFont = function(container)
 								return mxConstants.DEFAULT_FONTSIZE;
 							}
 						};
-						
+
 						let css = getCurrentStyle(node);
 						let fontSize = getAbsoluteFontSize(css);
 						let lineHeight = getRelativeLineHeight(fontSize, css, node);
@@ -3970,7 +3971,7 @@ TextFormatPanel.prototype.addFont = function(container)
 									temp = getCurrentStyle(elts[i]);
 									fontSize = Math.max(getAbsoluteFontSize(temp), fontSize);
 									let lh = getRelativeLineHeight(fontSize, temp, elts[i]);
-									
+
 									if (lh != lineHeight || isNaN(lh))
 									{
 										lineHeight = '';
@@ -3978,7 +3979,7 @@ TextFormatPanel.prototype.addFont = function(container)
 								}
 							}
 						}
-						
+
 						function hasParentOrOnlyChild(name)
 						{
 							if (graph.getParentByName(node, name, graph.cellEditor.textarea) != null)
@@ -3988,21 +3989,21 @@ TextFormatPanel.prototype.addFont = function(container)
 							else
 							{
 								let child = node;
-								
+
 								while (child != null && child.childNodes.length == 1)
 								{
 									child = child.childNodes[0];
-									
+
 									if (child.nodeName == name)
 									{
 										return true;
 									}
 								}
 							}
-							
+
 							return false;
 						};
-						
+
 						function isEqualOrPrefixed(str, value)
 						{
 							if (str != null && value != null)
@@ -4016,10 +4017,10 @@ TextFormatPanel.prototype.addFont = function(container)
 									return str.substring(str.length - value.length - 1, str.length) == '-' + value;
 								}
 							}
-							
+
 							return false;
 						};
-						
+
 						if (css != null)
 						{
 							setSelected(fontStyleItems[0], css.fontWeight == 'bold' ||
@@ -4030,7 +4031,7 @@ TextFormatPanel.prototype.addFont = function(container)
 							setSelected(fontStyleItems[2], hasParentOrOnlyChild('U'));
 							setSelected(sup, hasParentOrOnlyChild('SUP'));
 							setSelected(sub, hasParentOrOnlyChild('SUB'));
-							
+
 							if (!graph.cellEditor.isTableSelected())
 							{
 								let align = graph.cellEditor.align || getValue(ss.style, 'align', mxConstants.ALIGN_CENTER);
@@ -4057,12 +4058,12 @@ TextFormatPanel.prototype.addFont = function(container)
 								setSelected(center, isEqualOrPrefixed(css.textAlign, 'center'));
 								setSelected(right, isEqualOrPrefixed(css.textAlign, 'right'));
 							}
-							
+
 							currentTable = graph.getParentByName(node, 'TABLE', graph.cellEditor.textarea);
 							tableRow = (currentTable == null) ? null : graph.getParentByName(node, 'TR', currentTable);
 							tableCell = (currentTable == null) ? null : graph.getParentByNames(node, ['TD', 'TH'], currentTable);
 							tableWrapper.style.display = (currentTable != null) ? '' : 'none';
-							
+
 							if (document.activeElement != input)
 							{
 								if (node.nodeName == 'FONT' && node.getAttribute('size') == '4' &&
@@ -4076,9 +4077,9 @@ TextFormatPanel.prototype.addFont = function(container)
 								{
 									input.value = (isNaN(fontSize)) ? '' : fontSize + ' pt';
 								}
-								
+
 								let lh = parseFloat(lineHeight);
-								
+
 								if (!isNaN(lh))
 								{
 									lineHeightInput.value = Math.round(lh * 100) + ' %';
@@ -4088,7 +4089,7 @@ TextFormatPanel.prototype.addFont = function(container)
 									lineHeightInput.value = '100 %';
 								}
 							}
-							
+
 							// Converts rgb(r,g,b) values
 							let color = css.color.replace(
 								    /\brgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/g,
@@ -4100,7 +4101,7 @@ TextFormatPanel.prototype.addFont = function(container)
 								    function($0, $1, $2, $3) {
 								        return "#" + ("0"+Number($1).toString(16)).substr(-2) + ("0"+Number($2).toString(16)).substr(-2) + ("0"+Number($3).toString(16)).substr(-2);
 								    });
-							
+
 							// Updates the color picker for the current font
 							if (fontColorApply != null)
 							{
@@ -4112,10 +4113,10 @@ TextFormatPanel.prototype.addFont = function(container)
 								{
 									currentFontColor = '#000000';
 								}
-								
+
 								fontColorApply(currentFontColor, true);
 							}
-							
+
 							if (bgColorApply != null)
 							{
 								if (color2.charAt(0) == '#')
@@ -4126,10 +4127,10 @@ TextFormatPanel.prototype.addFont = function(container)
 								{
 									currentBgColor = null;
 								}
-								
+
 								bgColorApply(currentBgColor, true);
 							}
-							
+
 							// Workaround for firstChild is null or not an object
 							// in the log which seems to be IE8- only / 29.01.15
 							if (fontMenu.firstChild != null)
@@ -4138,17 +4139,17 @@ TextFormatPanel.prototype.addFont = function(container)
 							}
 						}
 					}
-					
+
 					updating = false;
 				}, 0);
 			}
 		};
-		
+
 		if (Client.IS_FF || Client.IS_EDGE)
 		{
 			mxEvent.addListener(graph.cellEditor.textarea, 'DOMSubtreeModified', updateCssHandler);
 		}
-		
+
 		mxEvent.addListener(graph.cellEditor.textarea, 'input', updateCssHandler);
 		mxEvent.addListener(graph.cellEditor.textarea, 'touchend', updateCssHandler);
 		mxEvent.addListener(graph.cellEditor.textarea, 'mouseup', updateCssHandler);
@@ -4175,7 +4176,7 @@ StyleFormatPanel = function(format, editorUi, container)
 extend(StyleFormatPanel, BaseFormatPanel);
 
 /**
- * 
+ *
  */
 StyleFormatPanel.prototype.defaultStrokeColor = 'black';
 
@@ -4188,7 +4189,7 @@ StyleFormatPanel.prototype.init = function()
 	let editor = ui.editor;
 	let graph = editor.graph;
 	let ss = this.format.getSelectionState();
-	
+
 	if (!ss.containsLabel)
 	{
 		if (ss.containsImage && ss.vertices.length == 1 && ss.style.shape == 'image' &&
@@ -4196,12 +4197,12 @@ StyleFormatPanel.prototype.init = function()
 		{
 			this.container.appendChild(this.addSvgStyles(this.createPanel()));
 		}
-		
+
 		if (!ss.containsImage || ss.style.shape == 'image')
 		{
 			this.container.appendChild(this.addFill(this.createPanel()));
 		}
-	
+
 		this.container.appendChild(this.addStroke(this.createPanel()));
 		this.container.appendChild(this.addLineJumps(this.createPanel()));
 		let opacityPanel = this.createRelativeOption(Translations.get('opacity'), 'opacity', 41);
@@ -4210,14 +4211,14 @@ StyleFormatPanel.prototype.init = function()
 		this.container.appendChild(opacityPanel);
 		this.container.appendChild(this.addEffects(this.createPanel()));
 	}
-	
+
 	let opsPanel = this.addEditOps(this.createPanel());
-	
+
 	if (opsPanel.firstChild != null)
 	{
 		br(opsPanel);
 	}
-	
+
 	this.container.appendChild(this.addStyleOps(opsPanel));
 };
 
@@ -4228,10 +4229,10 @@ StyleFormatPanel.prototype.getCssRules = function(css)
 {
 	let doc = document.implementation.createHTMLDocument('');
 	let styleElement = document.createElement('style');
-	
+
 	setTextContent(styleElement, css);
 	doc.body.appendChild(styleElement);
-	
+
 	return styleElement.sheet.cssRules;
 };
 
@@ -4251,23 +4252,23 @@ StyleFormatPanel.prototype.addSvgStyles = function(container)
 	try
 	{
 		let exp = ss.style.editableCssRules;
-		
+
 		if (exp != null)
 		{
 			let regex = new RegExp(exp);
-			
+
 			let data = ss.style.image.substring(ss.style.image.indexOf(',') + 1);
 			let xml = (window.atob) ? atob(data) : Base64.decode(data, true);
 			let svg = parseXml(xml);
-			
+
 			if (svg != null)
 			{
 				let styles = svg.getElementsByTagName('style');
-				
+
 				for (let i = 0; i < styles.length; i++)
 				{
 					let rules = this.getCssRules(getTextContent(styles[i]));
-					
+
 					for (let j = 0; j < rules.length; j++)
 					{
 						this.addSvgRule(container, rules[j], svg, styles[i], rules, j, regex);
@@ -4280,7 +4281,7 @@ StyleFormatPanel.prototype.addSvgStyles = function(container)
 	{
 		// ignore
 	}
-	
+
 	return container;
 };
 
@@ -4291,23 +4292,23 @@ StyleFormatPanel.prototype.addSvgRule = function(container, rule, svg, styleElem
 {
 	let ui = this.editorUi;
 	let graph = ui.editor.graph;
-	
+
 	if (regex.test(rule.selectorText))
 	{
 		function rgb2hex(rgb)
 		{
 			 rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-			 
+
 			 return (rgb && rgb.length === 4) ? "#" +
 			  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
 			  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
 			  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 		};
-		
+
 		let addStyleRule = ((rule, key, label) =>
 		{
 			let value = trim(rule.style[key]);
-			
+
 			if (value != '' && value.substring(0, 4) != 'url(')
 			{
 				let option = this.createColorOption(label + ' ' + rule.selectorText, function()
@@ -4317,15 +4318,15 @@ StyleFormatPanel.prototype.addSvgRule = function(container, rule, svg, styleElem
 				{
 					rules[ruleIndex].style[key] = color;
 					let cssTxt = '';
-					
+
 					for (let i = 0; i < rules.length; i++)
 					{
 						cssTxt += rules[i].cssText + ' ';
 					}
-					
+
 					styleElem.textContent = cssTxt;
 					let xml = getXml(svg.documentElement);
-					
+
 					graph.setCellStyles('image', 'data:image/svg+xml,' +
 						((window.btoa) ? btoa(xml) : Base64.encode(xml, true)),
 						graph.getSelectionCells());
@@ -4340,14 +4341,14 @@ StyleFormatPanel.prototype.addSvgRule = function(container, rule, svg, styleElem
 						// ignore
 					}
 				});
-			
+
 				container.appendChild(option);
-				
+
 				// Shows container if rules are added
 				container.style.display = '';
 			}
 		});
-		
+
 		addStyleRule(rule, 'fill', Translations.get('fill'));
 		addStyleRule(rule, 'stroke', Translations.get('line'));
 		addStyleRule(rule, 'stop-color', Translations.get('gradient'));
@@ -4361,31 +4362,31 @@ StyleFormatPanel.prototype.addEditOps = function(div)
 {
 	let ss = this.format.getSelectionState();
 	let btn = null;
-	
+
 	if (this.editorUi.editor.graph.getSelectionCount() == 1)
 	{
 		btn = button(Translations.get('editStyle'), ((evt) =>
 		{
 			this.editorUi.actions.get('editStyle').funct();
 		}));
-		
+
 		btn.setAttribute('title', Translations.get('editStyle') + ' (' + this.editorUi.actions.get('editStyle').shortcut + ')');
 		btn.style.width = '202px';
 		btn.style.marginBottom = '2px';
-		
+
 		div.appendChild(btn);
 	}
-	
+
 	if (ss.image)
 	{
 		var btn2 = button(Translations.get('editImage'), ((evt) =>
 		{
 			this.editorUi.actions.get('image').funct();
 		}));
-		
+
 		btn2.setAttribute('title', Translations.get('editImage'));
 		btn2.style.marginBottom = '2px';
-		
+
 		if (btn == null)
 		{
 			btn2.style.width = '202px';
@@ -4396,10 +4397,10 @@ StyleFormatPanel.prototype.addEditOps = function(div)
 			btn2.style.width = '100px';
 			btn2.style.marginLeft = '2px';
 		}
-		
+
 		div.appendChild(btn2);
 	}
-	
+
 	return div;
 };
 
@@ -4420,9 +4421,9 @@ StyleFormatPanel.prototype.addFill = function(container)
 	gradientSelect.style.marginTop = '-2px';
 	gradientSelect.style.right = '72px';
 	gradientSelect.style.width = '70px';
-	
+
 	let fillStyleSelect = gradientSelect.cloneNode(false);
-	
+
 	// Stops events from bubbling to color option event handler
 	mxEvent.addListener(gradientSelect, 'click', function(evt)
 	{
@@ -4432,7 +4433,7 @@ StyleFormatPanel.prototype.addFill = function(container)
 	{
 		mxEvent.consume(evt);
 	});
-	
+
 	let defs = (ss.vertices.length >= 1) ? graph.stylesheet.getDefaultVertexStyle() : graph.stylesheet.getDefaultEdgeStyle();
 	let gradientPanel = this.createCellColorOption(Translations.get('gradient'), 'gradientColor',
 		(defs.gradientColor != null) ? defs.gradientColor : '#ffffff', function(color)
@@ -4452,7 +4453,7 @@ StyleFormatPanel.prototype.addFill = function(container)
 
 	let fillKey = (ss.style.shape == 'image') ? 'imageBackground' : 'fillColor';
 	let label = (ss.style.shape == 'image') ? Translations.get('background') : Translations.get('fill');
-	
+
 	let defs = (ss.vertices.length >= 1) ? graph.stylesheet.getDefaultVertexStyle() : graph.stylesheet.getDefaultEdgeStyle();
 	let fillPanel = this.createCellColorOption(label, fillKey, (defs[fillKey] != null) ? defs[fillKey] : '#ffffff', null, ((color) =>
 	{
@@ -4474,9 +4475,9 @@ StyleFormatPanel.prototype.addFill = function(container)
 		write(gradientOption, Translations.get(directions[i]));
 		gradientSelect.appendChild(gradientOption);
 	}
-	
+
 	gradientPanel.appendChild(gradientSelect);
-	
+
 	for (let i = 0; i < Editor.roughFillStyles.length; i++)
 	{
 		let fillStyleOption = document.createElement('option');
@@ -4484,7 +4485,7 @@ StyleFormatPanel.prototype.addFill = function(container)
 		write(fillStyleOption, Editor.roughFillStyles[i].dispName);
 		fillStyleSelect.appendChild(fillStyleOption);
 	}
-	
+
 	fillPanel.appendChild(fillStyleSelect);
 
 	let listener = (() =>
@@ -4492,19 +4493,19 @@ StyleFormatPanel.prototype.addFill = function(container)
 		ss = this.format.getSelectionState();
 		let value = getValue(ss.style, 'gradientDirection', mxConstants.DIRECTION_SOUTH);
 		let fillStyle = getValue(ss.style, 'fillStyle', 'auto');
-		
+
 		// Handles empty string which is not allowed as a value
 		if (value == '')
 		{
 			value = mxConstants.DIRECTION_SOUTH;
 		}
-		
+
 		gradientSelect.value = value;
 		fillStyleSelect.value = fillStyle;
 		container.style.display = (ss.fill) ? '' : 'none';
-		
+
 		let fillColor = getValue(ss.style, 'fillColor', null);
-			
+
 		if (!ss.fill || ss.containsImage || fillColor == null || fillColor == mxConstants.NONE || ss.style.shape == 'filledEdge')
 		{
 			fillStyleSelect.style.display = 'none';
@@ -4516,7 +4517,7 @@ StyleFormatPanel.prototype.addFill = function(container)
 			gradientPanel.style.display = (ss.style.sketch != '1' || fillStyle == 'solid' || fillStyle == 'auto') ? '' : 'none';
 		}
 	});
-	
+
 	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
 	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
@@ -4526,24 +4527,24 @@ StyleFormatPanel.prototype.addFill = function(container)
 		graph.setCellStyles('gradientDirection', gradientSelect.value, graph.getSelectionCells());
 		mxEvent.consume(evt);
 	});
-	
+
 	mxEvent.addListener(fillStyleSelect, 'change', function(evt)
 	{
 		graph.setCellStyles('fillStyle', fillStyleSelect.value, graph.getSelectionCells());
 		mxEvent.consume(evt);
 	});
-	
+
 	container.appendChild(fillPanel);
 	container.appendChild(gradientPanel);
-	
+
 	// Adds custom colors
 	let custom = this.getCustomColors();
-	
+
 	for (let i = 0; i < custom.length; i++)
 	{
 		container.appendChild(this.createCellColorOption(custom[i].title, custom[i].key, custom[i].defaultValue));
 	}
-	
+
 	return container;
 };
 
@@ -4554,12 +4555,12 @@ StyleFormatPanel.prototype.getCustomColors = function()
 {
 	let ss = this.format.getSelectionState();
 	let result = [];
-	
+
 	if (ss.style.shape == 'swimlane' || ss.style.shape == 'table')
 	{
 		result.push({title: Translations.get('laneColor'), key: 'swimlaneFillColor', defaultValue: '#ffffff'});
 	}
-	
+
 	return result;
 };
 
@@ -4571,19 +4572,19 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	let ui = this.editorUi;
 	let graph = ui.editor.graph;
 	let ss = this.format.getSelectionState();
-	
+
 	container.style.paddingTop = '4px';
 	container.style.paddingBottom = '4px';
 	container.style.whiteSpace = 'normal';
-	
+
 	let colorPanel = document.createElement('div');
 	colorPanel.style.fontWeight = 'bold';
-	
+
 	if (!ss.stroke)
 	{
 		colorPanel.style.display = 'none';
 	}
-	
+
 	// Adds gradient direction option
 	let styleSelect = document.createElement('select');
 	styleSelect.style.position = 'absolute';
@@ -4600,7 +4601,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		write(styleOption, Translations.get(styles[i]));
 		styleSelect.appendChild(styleOption);
 	}
-	
+
 	mxEvent.addListener(styleSelect, 'change', function(evt)
 	{
 		graph.getDataModel().beginUpdate();
@@ -4609,7 +4610,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 			let keys = ['rounded', 'curved'];
 			// Default for rounded is 1
 			let values = ['0', null];
-			
+
 			if (styleSelect.value == 'rounded')
 			{
 				values = ['1', null];
@@ -4618,12 +4619,12 @@ StyleFormatPanel.prototype.addStroke = function(container)
 			{
 				values = [null, '1'];
 			}
-			
+
 			for (let i = 0; i < keys.length; i++)
 			{
 				graph.setCellStyles(keys[i], values[i], graph.getSelectionCells());
 			}
-			
+
 			ui.fireEvent(new EventObject('styleChanged', 'keys', keys,
 				'values', values, 'cells', graph.getSelectionCells()));
 		}
@@ -4631,10 +4632,10 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		{
 			graph.getDataModel().endUpdate();
 		}
-		
+
 		mxEvent.consume(evt);
 	});
-	
+
 	// Stops events from bubbling to color option event handler
 	mxEvent.addListener(styleSelect, 'click', function(evt)
 	{
@@ -4643,16 +4644,16 @@ StyleFormatPanel.prototype.addStroke = function(container)
 
 	let strokeKey = (ss.style.shape == 'image') ? 'imageBorder' : 'strokeColor';
 	let label = (ss.style.shape == 'image') ? Translations.get('border') : Translations.get('line');
-	
+
 	let defs = (ss.vertices.length >= 1) ? graph.stylesheet.getDefaultVertexStyle() : graph.stylesheet.getDefaultEdgeStyle();
 	let lineColor = this.createCellColorOption(label, strokeKey, (defs[strokeKey] != null) ? defs[strokeKey] : '#000000', null, ((color) =>
 	{
 		graph.updateCellStyles(strokeKey, color, graph.getSelectionCells());
 	}));
-	
+
 	lineColor.appendChild(styleSelect);
 	colorPanel.appendChild(lineColor);
-	
+
 	// Used if only edges selected
 	let stylePanel = colorPanel.cloneNode(false);
 	stylePanel.style.fontWeight = 'normal';
@@ -4666,7 +4667,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	let addItem = ((menu, width, cssName, keys, values) =>
 	{
 		let item = this.editorUi.menus.styleChange(menu, '', keys, values, 'geIcon', null);
-	
+
 		let pat = document.createElement('div');
 		pat.style.width = width + 'px';
 		pat.style.height = '1px';
@@ -4676,7 +4677,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		item.firstChild.firstChild.style.padding = '0px 4px 0px 4px';
 		item.firstChild.firstChild.style.width = width + 'px';
 		item.firstChild.firstChild.appendChild(pat);
-		
+
 		return item;
 	});
 
@@ -4688,10 +4689,10 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		addItem(menu, 75, 'dotted', ['dashed', 'dashPattern'], ['1', '1 2']).setAttribute('title', Translations.get('dotted') + ' (2)');
 		addItem(menu, 75, 'dotted', ['dashed', 'dashPattern'], ['1', '1 4']).setAttribute('title', Translations.get('dotted') + ' (3)');
 	}));
-	
+
 	// Used for mixed selection (vertices and edges)
 	let altStylePanel = stylePanel.cloneNode(false);
-	
+
 	let edgeShape = this.editorUi.toolbar.addMenuFunctionInContainer(altStylePanel, 'geSprite-connection', Translations.get('connection'), false, ((menu) =>
 	{
 		this.editorUi.menus.styleChange(menu, '', ['shape', 'startSize', 'endSize', 'width'], [null, null, null, null], 'geIcon geSprite geSprite-connection', null, true).setAttribute('title', Translations.get('line'));
@@ -4708,7 +4709,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		addItem(menu, 33, 'dotted', ['dashed', 'dashPattern'], ['1', '1 2']).setAttribute('title', Translations.get('dotted') + ' (2)');
 		addItem(menu, 33, 'dotted', ['dashed', 'dashPattern'], ['1', '1 4']).setAttribute('title', Translations.get('dotted') + ' (3)');
 	}));
-	
+
 	var stylePanel2 = stylePanel.cloneNode(false);
 
 	// Stroke width
@@ -4717,9 +4718,9 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	input.style.marginTop = '2px';
 	input.style.width = '41px';
 	input.setAttribute('title', Translations.get('linewidth'));
-	
+
 	stylePanel.appendChild(input);
-	
+
 	let altInput = input.cloneNode(true);
 	altStylePanel.appendChild(altInput);
 
@@ -4728,7 +4729,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		// Maximum stroke width is 999
 		let value = parseInt(input.value);
 		value = Math.min(999, Math.max(1, (isNaN(value)) ? 1 : value));
-		
+
 		if (value != getValue(ss.style, 'strokeWidth', 1))
 		{
 			graph.setCellStyles('strokeWidth', value, graph.getSelectionCells());
@@ -4745,7 +4746,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		// Maximum stroke width is 999
 		let value = parseInt(altInput.value);
 		value = Math.min(999, Math.max(1, (isNaN(value)) ? 1 : value));
-		
+
 		if (value != getValue(ss.style, 'strokeWidth', 1))
 		{
 			graph.setCellStyles('strokeWidth', value, graph.getSelectionCells());
@@ -4761,12 +4762,12 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	stepper.style.display = input.style.display;
 	stepper.style.marginTop = '2px';
 	stylePanel.appendChild(stepper);
-	
+
 	let altStepper = this.createStepper(altInput, altUpdate, 1, 9);
 	altStepper.style.display = altInput.style.display;
 	altStepper.style.marginTop = '2px';
 	altStylePanel.appendChild(altStepper);
-	
+
 	input.style.position = 'absolute';
 	input.style.height = '15px';
 	input.style.left = '141px';
@@ -4793,12 +4794,12 @@ StyleFormatPanel.prototype.addStroke = function(container)
 			this.editorUi.menus.edgeStyleChange(menu, '', ['edge', 'elbow', 'curved', 'noEdgeStyle'], ['elbowEdgeStyle', 'vertical', null, null], 'geIcon geSprite geSprite-verticalelbow', null, true).setAttribute('title', Translations.get('simple'));
 			this.editorUi.menus.edgeStyleChange(menu, '', ['edge', 'elbow', 'curved', 'noEdgeStyle'], ['isometricEdgeStyle', null, null, null], 'geIcon geSprite geSprite-horizontalisometric', null, true).setAttribute('title', Translations.get('isometric'));
 			this.editorUi.menus.edgeStyleChange(menu, '', ['edge', 'elbow', 'curved', 'noEdgeStyle'], ['isometricEdgeStyle', 'vertical', null, null], 'geIcon geSprite geSprite-verticalisometric', null, true).setAttribute('title', Translations.get('isometric'));
-	
+
 			if (ss.style.shape == 'connector')
 			{
 				this.editorUi.menus.edgeStyleChange(menu, '', ['edge', 'curved', 'noEdgeStyle'], ['orthogonalEdgeStyle', '1', null], 'geIcon geSprite geSprite-curved', null, true).setAttribute('title', Translations.get('curved'));
 			}
-			
+
 			this.editorUi.menus.edgeStyleChange(menu, '', ['edge', 'curved', 'noEdgeStyle'], ['entityRelationEdgeStyle', null, null], 'geIcon geSprite geSprite-entity', null, true).setAttribute('title', Translations.get('entityRelation'));
 		}
 	}));
@@ -4859,7 +4860,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 			let item = this.editorUi.menus.edgeStyleChange(menu, '', ['endArrow', 'endFill'], [mxConstants.NONE, 0], 'geIcon', null, false);
 			item.setAttribute('title', Translations.get('none'));
 			item.firstChild.firstChild.innerHTML = '<font style="font-size:10px;">' + htmlEntities(Translations.get('none')) + '</font>';
-			
+
 			if (ss.style.shape == 'connector' || ss.style.shape == 'filledEdge')
 			{
 				this.editorUi.menus.edgeStyleChange(menu, '', ['endArrow', 'endFill'], [mxConstants.ARROW_CLASSIC, 1], 'geIcon geSprite geSprite-endclassic', null, false).setAttribute('title', Translations.get('classic'));
@@ -4905,22 +4906,22 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	this.addArrow(edgeStyle);
 	this.addArrow(lineStart);
 	this.addArrow(lineEnd);
-	
+
 	let symbol = this.addArrow(pattern, 9);
 	symbol.className = 'geIcon';
 	symbol.style.width = 'auto';
-	
+
 	let altSymbol = this.addArrow(altPattern, 9);
 	altSymbol.className = 'geIcon';
 	altSymbol.style.width = '22px';
-	
+
 	let solid = document.createElement('div');
 	solid.style.width = '85px';
 	solid.style.height = '1px';
 	solid.style.borderBottom = '1px solid ' + this.defaultStrokeColor;
 	solid.style.marginBottom = '9px';
 	symbol.appendChild(solid);
-	
+
 	let altSolid = document.createElement('div');
 	altSolid.style.width = '23px';
 	altSolid.style.height = '1px';
@@ -4945,7 +4946,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	arrowPanel.style.paddingBottom = '6px';
 	arrowPanel.style.paddingTop = '4px';
 	arrowPanel.style.fontWeight = 'normal';
-	
+
 	let span = document.createElement('div');
 	span.style.position = 'absolute';
 	span.style.marginLeft = '3px';
@@ -4953,10 +4954,10 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	span.style.marginTop = '2px';
 	span.style.fontWeight = 'normal';
 	span.style.width = '76px';
-	
+
 	write(span, Translations.get('lineend'));
 	arrowPanel.appendChild(span);
-	
+
 	var endSpacingUpdate, endSizeUpdate;
 	let endSpacing = this.addUnitInput(arrowPanel, 'pt', 74, 33, function()
 	{
@@ -4968,15 +4969,15 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	});
 
 	br(arrowPanel);
-	
+
 	let spacer = document.createElement('div');
 	spacer.style.height = '8px';
 	arrowPanel.appendChild(spacer);
-	
+
 	span = span.cloneNode(false);
 	write(span, Translations.get('linestart'));
 	arrowPanel.appendChild(span);
-	
+
 	var startSpacingUpdate, startSizeUpdate;
 	let startSpacing = this.addUnitInput(arrowPanel, 'pt', 74, 33, function()
 	{
@@ -4991,7 +4992,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	this.addLabel(arrowPanel, Translations.get('spacing'), 74, 50);
 	this.addLabel(arrowPanel, Translations.get('size'), 20, 50);
 	br(arrowPanel);
-	
+
 	let perimeterPanel = colorPanel.cloneNode(false);
 	perimeterPanel.style.fontWeight = 'normal';
 	perimeterPanel.style.position = 'relative';
@@ -5000,7 +5001,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	perimeterPanel.style.marginTop = '6px';
 	perimeterPanel.style.borderWidth = '0px';
 	perimeterPanel.style.paddingBottom = '18px';
-	
+
 	let span = document.createElement('div');
 	span.style.position = 'absolute';
 	span.style.marginLeft = '3px';
@@ -5010,7 +5011,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	span.style.width = '120px';
 	write(span, Translations.get('perimeter'));
 	perimeterPanel.appendChild(span);
-	
+
 	var perimeterUpdate;
 	let perimeterSpacing = this.addUnitInput(perimeterPanel, 'pt', 20, 41, function()
 	{
@@ -5026,7 +5027,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	{
 		container.appendChild(perimeterPanel);
 	}
-	
+
 	let listener = ((sender, evt, force) =>
 	{
 		ss = this.format.getSelectionState();
@@ -5037,15 +5038,15 @@ StyleFormatPanel.prototype.addStroke = function(container)
 			let tmp = parseInt(getValue(ss.style, 'strokeWidth', 1));
 			input.value = (isNaN(tmp)) ? '' : tmp + ' pt';
 		}
-		
+
 		if (force || document.activeElement != altInput)
 		{
 			let tmp = parseInt(getValue(ss.style, 'strokeWidth', 1));
 			altInput.value = (isNaN(tmp)) ? '' : tmp + ' pt';
 		}
-		
+
 		styleSelect.style.visibility = (ss.style.shape == 'connector' || ss.style.shape == 'filledEdge') ? '' : 'hidden';
-		
+
 		if (getValue(ss.style, 'curved', null) == '1')
 		{
 			styleSelect.value = 'curved';
@@ -5054,7 +5055,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		{
 			styleSelect.value = 'rounded';
 		}
-		
+
 		if (getValue(ss.style, 'dashed', null) == '1')
 		{
 			if (getValue(ss.style, 'dashPattern', null) == null)
@@ -5070,21 +5071,21 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		{
 			solid.style.borderBottom = '1px solid ' + this.defaultStrokeColor;
 		}
-		
+
 		altSolid.style.borderBottom = solid.style.borderBottom;
-		
+
 		// Updates toolbar icon for edge style
 		let edgeStyleDiv = edgeStyle.getElementsByTagName('div')[0];
-		
+
 		if (edgeStyleDiv != null)
 		{
 			let es = getValue(ss.style, 'edge', null);
-			
+
 			if (getValue(ss.style, 'noEdgeStyle', null) == '1')
 			{
 				es = null;
 			}
-			
+
 			if (es == 'orthogonalEdgeStyle' && getValue(ss.style, 'curved', null) == '1')
 			{
 				edgeStyleDiv.className = 'geSprite geSprite-curved';
@@ -5114,10 +5115,10 @@ StyleFormatPanel.prototype.addStroke = function(container)
 				edgeStyleDiv.className = 'geSprite geSprite-orthogonal';
 			}
 		}
-		
+
 		// Updates icon for edge shape
 		let edgeShapeDiv = edgeShape.getElementsByTagName('div')[0];
-		
+
 		if (edgeShapeDiv != null)
 		{
 			if (ss.style.shape == 'link')
@@ -5137,7 +5138,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 				edgeShapeDiv.className = 'geSprite geSprite-connection';
 			}
 		}
-		
+
 		if (ss.edges.length == graph.getSelectionCount())
 		{
 			altStylePanel.style.display = '';
@@ -5148,15 +5149,15 @@ StyleFormatPanel.prototype.addStroke = function(container)
 			altStylePanel.style.display = 'none';
 			stylePanel.style.display = '';
 		}
-		
+
 		function updateArrow(marker, fill, elt, prefix)
 		{
 			let markerDiv = elt.getElementsByTagName('div')[0];
-			
+
 			if (markerDiv != null)
 			{
 				markerDiv.className = ui.getCssClassForMarker(prefix, ss.style.shape, marker, fill);
-				
+
 				if (markerDiv.className == 'geSprite geSprite-noarrow')
 				{
 					markerDiv.innerHTML = htmlEntities(Translations.get('none'));
@@ -5169,10 +5170,10 @@ StyleFormatPanel.prototype.addStroke = function(container)
 					markerDiv.nextSibling.style.marginTop = '0px';
 				}
 			}
-			
+
 			return markerDiv;
 		};
-		
+
 		let sourceDiv = updateArrow(getValue(ss.style, 'startArrow', null),
 				getValue(ss.style, 'startFill', '1'), lineStart, 'start');
 		let targetDiv = updateArrow(getValue(ss.style, 'endArrow', null),
@@ -5194,7 +5195,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		}
 
 		setOpacity(edgeStyle, (ss.style.shape == 'arrow') ? 30 : 100);
-		
+
 		if (ss.style.shape != 'connector' && ss.style.shape != 'flexArrow' && ss.style.shape != 'filledEdge')
 		{
 			setOpacity(lineStart, 30);
@@ -5211,7 +5212,7 @@ StyleFormatPanel.prototype.addStroke = function(container)
 			let tmp = parseInt(getValue(ss.style, 'startSize', mxConstants.DEFAULT_MARKERSIZE));
 			startSize.value = (isNaN(tmp)) ? '' : tmp  + ' pt';
 		}
-		
+
 		if (force || document.activeElement != startSpacing)
 		{
 			let tmp = parseInt(getValue(ss.style, 'sourcePerimeterSpacing', 0));
@@ -5223,20 +5224,20 @@ StyleFormatPanel.prototype.addStroke = function(container)
 			let tmp = parseInt(getValue(ss.style, 'endSize', mxConstants.DEFAULT_MARKERSIZE));
 			endSize.value = (isNaN(tmp)) ? '' : tmp  + ' pt';
 		}
-		
+
 		if (force || document.activeElement != startSpacing)
 		{
 			let tmp = parseInt(getValue(ss.style, 'targetPerimeterSpacing', 0));
 			endSpacing.value = (isNaN(tmp)) ? '' : tmp  + ' pt';
 		}
-		
+
 		if (force || document.activeElement != perimeterSpacing)
 		{
 			let tmp = parseInt(getValue(ss.style, 'perimeterSpacing', 0));
 			perimeterSpacing.value = (isNaN(tmp)) ? '' : tmp  + ' pt';
 		}
 	});
-	
+
 	startSizeUpdate = this.installInputHandler(startSize, 'startSize', mxConstants.DEFAULT_MARKERSIZE, 0, 999, ' pt');
 	startSpacingUpdate = this.installInputHandler(startSpacing, 'sourcePerimeterSpacing', 0, -999, 999, ' pt');
 	endSizeUpdate = this.installInputHandler(endSize, 'endSize', mxConstants.DEFAULT_MARKERSIZE, 0, 999, ' pt');
@@ -5263,24 +5264,24 @@ StyleFormatPanel.prototype.addStroke = function(container)
 StyleFormatPanel.prototype.addLineJumps = function(container)
 {
 	let ss = this.format.getSelectionState();
-	
+
 	if (Graph.lineJumpsEnabled && ss.edges.length > 0 &&
 		ss.vertices.length == 0 && ss.lineJumps)
 	{
 		container.style.padding = '8px 0px 24px 18px';
-		
+
 		let ui = this.editorUi;
 		let editor = ui.editor;
 		let graph = editor.graph;
-		
+
 		let span = document.createElement('div');
 		span.style.position = 'absolute';
 		span.style.fontWeight = 'bold';
 		span.style.width = '80px';
-		
+
 		write(span, Translations.get('lineJumps'));
 		container.appendChild(span);
-		
+
 		let styleSelect = document.createElement('select');
 		styleSelect.style.position = 'absolute';
 		styleSelect.style.marginTop = '-2px';
@@ -5296,7 +5297,7 @@ StyleFormatPanel.prototype.addLineJumps = function(container)
 			write(styleOption, Translations.get(styles[i]));
 			styleSelect.appendChild(styleOption);
 		}
-		
+
 		mxEvent.addListener(styleSelect, 'change', function(evt)
 		{
 			graph.getDataModel().beginUpdate();
@@ -5310,28 +5311,28 @@ StyleFormatPanel.prototype.addLineJumps = function(container)
 			{
 				graph.getDataModel().endUpdate();
 			}
-			
+
 			mxEvent.consume(evt);
 		});
-		
+
 		// Stops events from bubbling to color option event handler
 		mxEvent.addListener(styleSelect, 'click', function(evt)
 		{
 			mxEvent.consume(evt);
 		});
-		
+
 		container.appendChild(styleSelect);
-		
+
 		var jumpSizeUpdate;
-		
+
 		let jumpSize = this.addUnitInput(container, 'pt', 22, 33, function()
 		{
 			jumpSizeUpdate.apply(this, arguments);
 		});
-		
+
 		jumpSizeUpdate = this.installInputHandler(jumpSize, 'jumpSize',
 			Graph.defaultJumpSize, 0, 999, ' pt');
-		
+
 		let listener = ((sender, evt, force) =>
 		{
 			ss = this.format.getSelectionState();
@@ -5354,7 +5355,7 @@ StyleFormatPanel.prototype.addLineJumps = function(container)
 	{
 		container.style.display = 'none';
 	}
-	
+
 	return container;
 };
 
@@ -5367,7 +5368,7 @@ StyleFormatPanel.prototype.addEffects = function(div)
 	let editor = ui.editor;
 	let graph = editor.graph;
 	let ss = this.format.getSelectionState();
-	
+
 	div.style.paddingTop = '0px';
 	div.style.paddingBottom = '2px';
 
@@ -5383,7 +5384,7 @@ StyleFormatPanel.prototype.addEffects = function(div)
 	left.style.padding = '0px';
 	left.style.width = '50%';
 	left.setAttribute('valign', 'top');
-	
+
 	let right = left.cloneNode(true);
 	right.style.paddingLeft = '8px';
 	row.appendChild(left);
@@ -5394,7 +5395,7 @@ StyleFormatPanel.prototype.addEffects = function(div)
 
 	let current = left;
 	let count = 0;
-	
+
 	let addOption = ((label, key, defaultValue) =>
 	{
 		let opt = this.createCellOption(label, key, defaultValue);
@@ -5407,16 +5408,16 @@ StyleFormatPanel.prototype.addEffects = function(div)
 	let listener = ((sender, evt, force) =>
 	{
 		ss = this.format.getSelectionState();
-		
+
 		left.innerHTML = '';
 		right.innerHTML = '';
 		current = left;
-		
+
 		if (ss.rounded)
 		{
 			addOption(Translations.get('rounded'), 'rounded', 0);
 		}
-		
+
 		if (ss.style.shape == 'swimlane')
 		{
 			addOption(Translations.get('divider'), 'swimlaneLine', 1);
@@ -5426,7 +5427,7 @@ StyleFormatPanel.prototype.addEffects = function(div)
 		{
 			addOption(Translations.get('shadow'), 'shadow', 0);
 		}
-		
+
 		if (ss.glass)
 		{
 			addOption(Translations.get('glass'), 'glass', 0);
@@ -5434,7 +5435,7 @@ StyleFormatPanel.prototype.addEffects = function(div)
 
 		addOption(Translations.get('sketch'), 'sketch', 0);
 	});
-	
+
 	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
 	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
 	listener();
@@ -5449,12 +5450,12 @@ StyleFormatPanel.prototype.addStyleOps = function(div)
 {
 	div.style.paddingTop = '10px';
 	div.style.paddingBottom = '10px';
-	
+
 	let btn = button(Translations.get('setAsDefaultStyle'), ((evt) =>
 	{
 		this.editorUi.actions.get('setAsDefaultStyle').funct();
 	}));
-	
+
 	btn.setAttribute('title', Translations.get('setAsDefaultStyle') + ' (' + this.editorUi.actions.get('setAsDefaultStyle').shortcut + ')');
 	btn.style.width = '202px';
 	div.appendChild(btn);
@@ -5505,27 +5506,27 @@ DiagramStylePanel.prototype.addView = function(div)
 	opts.style.paddingBottom = '12px';
 	opts.style.marginRight = '16px';
 	div.style.paddingTop = '8px';
-	
+
 	let table = document.createElement('table');
 	table.style.width = '100%';
 	table.style.fontWeight = 'bold';
-	
+
 	let tbody = document.createElement('tbody');
 	let row = document.createElement('tr');
 	row.style.padding = '0px';
-	
+
 	let left = document.createElement('td');
 	left.style.padding = '0px';
 	left.style.width = '50%';
 	left.setAttribute('valign', 'middle');
-	
+
 	let right = left.cloneNode(true);
 	right.style.paddingLeft = '8px';
 	row.appendChild(left);
 	row.appendChild(right);
 	tbody.appendChild(row);
 	table.appendChild(tbody);
-	
+
 	// Sketch
 	left.appendChild(this.createOption(Translations.get('sketch'), function()
 	{
@@ -5533,7 +5534,7 @@ DiagramStylePanel.prototype.addView = function(div)
 	}, function(checked)
 	{
 		sketch = checked;
-		
+
 		if (checked)
 		{
 			graph.currentEdgeStyle['sketch'] = '1';
@@ -5544,13 +5545,13 @@ DiagramStylePanel.prototype.addView = function(div)
 			delete graph.currentEdgeStyle['sketch'];
 			delete graph.currentVertexStyle['sketch'];
 		}
-		
+
 		graph.updateCellStyles('sketch', (checked) ? '1' : null, graph.getVerticesAndEdges());
 	}, null, function(div)
 	{
 		div.style.width = 'auto';
 	}));
-	
+
 	// Rounded
 	right.appendChild(this.createOption(Translations.get('rounded'), function()
 	{
@@ -5558,7 +5559,7 @@ DiagramStylePanel.prototype.addView = function(div)
 	}, function(checked)
 	{
 		rounded = checked;
-		
+
 		if (checked)
 		{
 			graph.currentVertexStyle['rounded'] = '1';
@@ -5567,13 +5568,13 @@ DiagramStylePanel.prototype.addView = function(div)
 		{
 			delete graph.currentVertexStyle['rounded'];
 		}
-		
+
 		graph.updateCellStyles('rounded', (checked) ? '1' : null, graph.getVerticesAndEdges(true, true));
 	}, null, function(div)
 	{
 		div.style.width = 'auto';
 	}));
-	
+
 	// Curved
 	left = left.cloneNode(false);
 	right = right.cloneNode(false);
@@ -5588,7 +5589,7 @@ DiagramStylePanel.prototype.addView = function(div)
 	}, function(checked)
 	{
 		curved = checked;
-		
+
 		if (checked)
 		{
 			graph.currentEdgeStyle['curved'] = '1';
@@ -5597,7 +5598,7 @@ DiagramStylePanel.prototype.addView = function(div)
 		{
 			delete graph.currentEdgeStyle['curved'];
 		}
-		
+
 		graph.updateCellStyles('curved', (checked) ? '1' : null, graph.getVerticesAndEdges(false, true));
 	}, null, function(div)
 	{
@@ -5608,25 +5609,25 @@ DiagramStylePanel.prototype.addView = function(div)
 	div.appendChild(opts);
 
 	let defaultStyles = ['fillColor', 'strokeColor', 'fontColor', 'gradientColor'];
-	
+
 	let updateCells = ((styles, graphStyle) =>
 	{
 		let cells = graph.getVerticesAndEdges();
-		
+
 		model.beginUpdate();
 		try
 		{
 			for (let i = 0; i < cells.length; i++)
 			{
 				let style = graph.getCellStyle(cells[i]);
-				
+
 				// Handles special label background color
 				if (style.labelBackgroundColor != null)
 				{
 					graph.updateCellStyles('labelBackgroundColor', (graphStyle != null) ?
 						graphStyle.background : null, [cells[i]]);
 				}
-				
+
 				let edge = cells[i].isEdge();
 				let newStyle = cells[i].getStyle();
 				let current = (edge) ? graph.currentEdgeStyle : graph.currentVertexStyle;
@@ -5640,7 +5641,7 @@ DiagramStylePanel.prototype.addView = function(div)
 						newStyle = setStyle(newStyle, styles[j], current[styles[j]]);
 					}
 				}
-				
+
 				model.setStyle(cells[i], newStyle);
 			}
 		}
@@ -5649,7 +5650,7 @@ DiagramStylePanel.prototype.addView = function(div)
 			model.endUpdate();
 		}
 	});
-			
+
 	let removeStyles = ((style, styles, defaultStyle) =>
 	{
 		if (style != null)
@@ -5678,21 +5679,21 @@ DiagramStylePanel.prototype.addView = function(div)
 				{
 					let bg = (graphStyle != null) ? graphStyle.background : null;
 					theGraph = (theGraph != null) ? theGraph : graph;
-					
+
 					if (bg == null)
 					{
 						bg = theGraph.background;
 					}
-					
+
 					if (bg == null)
 					{
 						bg = theGraph.defaultPageBackgroundColor;
 					}
-					
+
 					result['labelBackgroundColor'] = bg;
 				}
 			}
-			
+
 			for (var key in style)
 			{
 				if (cell == null || ((result[key] != null &&
@@ -5705,11 +5706,11 @@ DiagramStylePanel.prototype.addView = function(div)
 			}
 		}
 	});
-	
+
 	let btn = button(Translations.get('reset'), ((evt) =>
 	{
 		let all = graph.getVerticesAndEdges(true, true);
-		
+
 		if (all.length > 0)
 		{
 			model.beginUpdate();
@@ -5724,24 +5725,24 @@ DiagramStylePanel.prototype.addView = function(div)
 				model.endUpdate();
 			}
 		}
-		
+
 		graph.defaultVertexStyle = clone(ui.initialDefaultVertexStyle);
 		graph.defaultEdgeStyle = clone(ui.initialDefaultEdgeStyle);
 		ui.clearDefaultStyle();
 	}));
-	
+
 	btn.setAttribute('title', Translations.get('reset'));
 	btn.style.textOverflow = 'ellipsis';
 	btn.style.maxWidth = '90px';
 	right.appendChild(btn);
-	
+
 	let createPreview = ((commonStyle, vertexStyle, edgeStyle, graphStyle, container) =>
 	{
 		// Wrapper needed to catch events
 		let div = document.createElement('div');
 		div.style.cssText = 'position:absolute;display:inline-block;width:100%;height:100%;overflow:hidden;pointer-events:none;';
 		container.appendChild(div);
-		
+
 		var graph2 = new Graph(div, null, null, graph.getStylesheet());
 		graph2.resetViewOnRootChange = false;
 		graph2.foldingEnabled = false;
@@ -5751,26 +5752,26 @@ DiagramStylePanel.prototype.addView = function(div)
 		graph2.setConnectable(false);
 		graph2.setPanning(false);
 		graph2.setEnabled(false);
-		
+
 		graph2.getCellStyle = function(cell)
 		{
 			let result = clone(Graph.prototype.getCellStyle.apply(this, arguments));
 			let defaultStyle = graph.stylesheet.getDefaultVertexStyle();
 			let appliedStyle = vertexStyle;
-			
+
 			if (cell.isEdge())
 			{
 				defaultStyle = graph.stylesheet.getDefaultEdgeStyle();
-				appliedStyle = edgeStyle;	
+				appliedStyle = edgeStyle;
 			}
-			
+
 			removeStyles(result, defaultStyles, defaultStyle);
 			applyStyle(commonStyle, result, cell, graphStyle, graph2);
 			applyStyle(appliedStyle, result, cell, graphStyle, graph2);
-			
+
 			return result;
 		};
-		
+
 		// Avoid HTML labels to capture events in bubble phase
 		graph2.model.beginUpdate();
 		try
@@ -5786,12 +5787,12 @@ DiagramStylePanel.prototype.addView = function(div)
 			graph2.model.endUpdate();
 		}
 	});
-	
+
 	// Entries
 	let entries = document.createElement('div');
 	entries.style.position = 'relative';
 	div.appendChild(entries);
-	
+
 	// Cached entries
 	if (this.format.cachedStyleEntries == null)
 	{
@@ -5801,20 +5802,20 @@ DiagramStylePanel.prototype.addView = function(div)
 	let addEntry = ((commonStyle, vertexStyle, edgeStyle, graphStyle, index) =>
 	{
 		let panel = this.format.cachedStyleEntries[index];
-		
+
 		if (panel == null)
 		{
 			panel = document.createElement('div');
 			panel.style.cssText = 'display:inline-block;position:relative;width:96px;height:90px;' +
 				'cursor:pointer;border:1px solid gray;margin:2px;overflow:hidden;';
-	
+
 			if (graphStyle != null && graphStyle.background != null)
 			{
 				panel.style.backgroundColor = graphStyle.background;
 			}
-			
-			createPreview(commonStyle, vertexStyle, edgeStyle, graphStyle, panel); 
-	
+
+			createPreview(commonStyle, vertexStyle, edgeStyle, graphStyle, panel);
+
 			mxEvent.addGestureListeners(panel, ((evt) =>
 			{
 				panel.style.opacity = 0.5;
@@ -5823,13 +5824,13 @@ DiagramStylePanel.prototype.addView = function(div)
 				panel.style.opacity = 1;
 				graph.defaultVertexStyle = clone(ui.initialDefaultVertexStyle);
 				graph.defaultEdgeStyle = clone(ui.initialDefaultEdgeStyle);
-				
+
 				applyStyle(commonStyle, graph.defaultVertexStyle);
 				applyStyle(commonStyle, graph.defaultEdgeStyle);
 				applyStyle(vertexStyle, graph.defaultVertexStyle);
 				applyStyle(edgeStyle, graph.defaultEdgeStyle);
 				ui.clearDefaultStyle();
-				
+
 				if (sketch)
 				{
 					graph.currentEdgeStyle['sketch'] = '1';
@@ -5840,7 +5841,7 @@ DiagramStylePanel.prototype.addView = function(div)
 					graph.currentEdgeStyle['sketch'] = '0';
 					graph.currentVertexStyle['sketch'] = '0';
 				}
-					
+
 				if (rounded)
 				{
 					graph.currentVertexStyle['rounded'] = '1';
@@ -5851,7 +5852,7 @@ DiagramStylePanel.prototype.addView = function(div)
 					graph.currentVertexStyle['rounded'] = '0';
 					graph.currentEdgeStyle['rounded'] = '1';
 				}
-				
+
 				if (curved)
 				{
 					graph.currentEdgeStyle['curved'] = '1';
@@ -5860,16 +5861,16 @@ DiagramStylePanel.prototype.addView = function(div)
 				{
 					graph.currentEdgeStyle['curved'] = '0';
 				}
-	
+
 				model.beginUpdate();
 				try
 				{
 					updateCells(defaultStyles, graphStyle);
-					
+
 					let change = new ChangePageSetup(ui, (graphStyle != null) ? graphStyle.background : null);
 					change.ignoreImage = true;
 					model.execute(change);
-						
+
 					model.execute(new ChangeGridColor(ui, (graphStyle != null && graphStyle.gridColor != null) ?
 						graphStyle.gridColor : graph.view.defaultGridColor));
 				}
@@ -5878,67 +5879,67 @@ DiagramStylePanel.prototype.addView = function(div)
 					model.endUpdate();
 				}
 			}));
-			
+
 			mxEvent.addListener(panel, 'mouseenter', ((evt) =>
 			{
 				let prev = graph.getCellStyle;
 				let prevBg = graph.background;
 				let prevGrid = graph.view.gridColor;
-	
+
 				graph.background = (graphStyle != null) ? graphStyle.background : null;
 				graph.view.gridColor = (graphStyle != null && graphStyle.gridColor != null) ?
 					graphStyle.gridColor : graph.view.defaultGridColor;
-				
+
 				graph.getCellStyle = function(cell)
 				{
 					let result = clone(prev.apply(this, arguments));
-					
+
 					let defaultStyle = graph.stylesheet.getDefaultVertexStyle();
 					let appliedStyle = vertexStyle;
-					
+
 					if (cell.isEdge())
 					{
 						defaultStyle = graph.stylesheet.getDefaultEdgeStyle();
-						appliedStyle = edgeStyle;	
+						appliedStyle = edgeStyle;
 					}
-					
+
 					removeStyles(result, defaultStyles, defaultStyle);
 					applyStyle(commonStyle, result, cell, graphStyle);
 					applyStyle(appliedStyle, result, cell, graphStyle);
-					
+
 					return result;
 				};
-				
+
 				graph.refresh();
 				graph.getCellStyle = prev;
 				graph.background = prevBg;
 				graph.view.gridColor = prevGrid;
 			}));
-			
+
 			mxEvent.addListener(panel, 'mouseleave', ((evt) =>
 			{
 				graph.refresh();
 			}));
-			
+
 			this.format.cachedStyleEntries[index] = panel;
 		}
-		
+
 		entries.appendChild(panel);
 	});
-		
+
 	// Maximum palettes to switch the switcher
 	let maxEntries = 10;
 	let pageCount = Math.ceil(Editor.styles.length / maxEntries);
 	this.format.currentStylePage = (this.format.currentStylePage != null) ? this.format.currentStylePage : 0;
 	let dots = [];
-	
+
 	let addEntries = (() =>
 	{
 		if (dots.length > 0)
 		{
 			dots[this.format.currentStylePage].style.background = '#84d7ff';
 		}
-		
+
 		for (let i = this.format.currentStylePage * maxEntries;
 			i < Math.min((this.format.currentStylePage + 1) * maxEntries,
 			Editor.styles.length); i++)
@@ -5947,7 +5948,7 @@ DiagramStylePanel.prototype.addView = function(div)
 			addEntry(s.commonStyle, s.vertexStyle, s.edgeStyle, s.graph, i);
 		}
 	});
-	
+
 	let selectPage = ((index) =>
 	{
 		if (index >= 0 && index < pageCount)
@@ -5958,7 +5959,7 @@ DiagramStylePanel.prototype.addView = function(div)
 			addEntries();
 		}
 	});
-	
+
 	if (pageCount > 1)
 	{
 		// Selector
@@ -5968,9 +5969,9 @@ DiagramStylePanel.prototype.addView = function(div)
 		switcher.style.textAlign = 'center';
 		switcher.style.paddingTop = '4px';
 		switcher.style.width = '210px';
-		
+
 		div.style.paddingBottom = '8px';
-		
+
 		for (let i = 0; i < pageCount; i++)
 		{
 			let dot = document.createElement('div');
@@ -5983,7 +5984,7 @@ DiagramStylePanel.prototype.addView = function(div)
 			dot.style.cursor = 'pointer';
 			dot.style.background = 'transparent';
 			dot.style.border = '1px solid #b5b6b7';
-			
+
 			(((index, elt) =>
 			{
 				mxEvent.addListener(dot, 'click', (() =>
@@ -5991,36 +5992,36 @@ DiagramStylePanel.prototype.addView = function(div)
 					selectPage(index);
 				}));
 			}))(i, dot);
-			
+
 			switcher.appendChild(dot);
 			dots.push(dot);
 		}
-		
+
 		div.appendChild(switcher);
 		addEntries();
-		
+
 		if (pageCount < 15)
 		{
 			let left = document.createElement('div');
 			left.style.cssText = 'position:absolute;left:0px;top:4px;bottom:0px;width:20px;margin:0px;opacity:0.5;' +
 				'background-repeat:no-repeat;background-position:center center;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQBAMAAADQT4M0AAAAIVBMVEUAAAB2dnZ4eHh3d3d1dXVxcXF2dnZ2dnZ2dnZxcXF2dnYmb3w1AAAACnRSTlMAfCTkhhvb7cQSPH2JPgAAADRJREFUCNdjwACMAmBKaiGYs2oJmLPKAZ3DabU8AMRTXpUKopislqFyVzCAuUZgikkBZjoAcMYLnp53P/UAAAAASUVORK5CYII=);';
-			
+
 			mxEvent.addListener(left, 'click', (() =>
 			{
 				selectPage(mod(this.format.currentStylePage - 1, pageCount));
 			}));
-			
+
 			let right = document.createElement('div');
 			right.style.cssText = 'position:absolute;right:2px;top:4px;bottom:0px;width:20px;margin:0px;opacity:0.5;' +
 				'background-repeat:no-repeat;background-position:center center;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQBAMAAADQT4M0AAAAIVBMVEUAAAB2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnYBuwCcAAAACnRSTlMAfCTkhhvb7cQSPH2JPgAAADZJREFUCNdjQAOMAmBKaiGY8loF5rKswsZlrVo8AUiFrTICcbIWK8A5DF1gDoMymMPApIAwHwCS0Qx/U7qCBQAAAABJRU5ErkJggg==);';
 			switcher.appendChild(left);
 			switcher.appendChild(right);
-			
+
 			mxEvent.addListener(right, 'click', (() =>
 			{
 				selectPage(mod(this.format.currentStylePage + 1, pageCount));
 			}));
-					
+
 			// Hover state
 			function addHoverState(elt)
 			{
@@ -6033,7 +6034,7 @@ DiagramStylePanel.prototype.addView = function(div)
 					elt.style.opacity = '0.5';
 				});
 			};
-			
+
 			addHoverState(left);
 			addHoverState(right);
 		}
@@ -6042,7 +6043,7 @@ DiagramStylePanel.prototype.addView = function(div)
 	{
 		addEntries();
 	}
-	
+
 	return div;
 };
 
@@ -6094,12 +6095,12 @@ DiagramFormatPanel.prototype.addView = function(div)
 	let ui = this.editorUi;
 	let editor = ui.editor;
 	let graph = editor.graph;
-	
+
 	div.appendChild(this.createTitle(Translations.get('view')));
-	
+
 	// Grid
 	this.addGridOption(div);
-	
+
 	// Page View
 	if (DiagramFormatPanel.showPageView)
 	{
@@ -6117,7 +6118,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 				{
 					apply(graph.pageVisible);
 				};
-				
+
 				ui.addListener('pageViewChanged', this.listener);
 			},
 			destroy: function()
@@ -6126,7 +6127,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 			}
 		}));
 	}
-	
+
 	if (graph.isEnabled())
 	{
 		// Background
@@ -6137,7 +6138,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 		{
 			let change = new ChangePageSetup(ui, color);
 			change.ignoreImage = true;
-			
+
 			graph.model.execute(change);
 		}, '#ffffff',
 		{
@@ -6147,7 +6148,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 				{
 					apply(graph.background);
 				};
-				
+
 				ui.addListener('backgroundColorChanged', this.listener);
 			},
 			destroy: function()
@@ -6155,7 +6156,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 				ui.removeListener(this.listener);
 			}
 		});
-		
+
 		if (this.showBackgroundImageOption)
 		{
 			let btn = button(Translations.get('image'), function(evt)
@@ -6163,7 +6164,7 @@ DiagramFormatPanel.prototype.addView = function(div)
 				ui.showBackgroundImageDialog(null, ui.editor.graph.backgroundImage);
 				mxEvent.consume(evt);
 			})
-		
+
 			btn.style.position = 'absolute';
 			btn.className = 'geColorBtn';
 			btn.style.marginTop = '-4px';
@@ -6171,13 +6172,13 @@ DiagramFormatPanel.prototype.addView = function(div)
 			btn.style.height = '22px';
 			btn.style.right = '72px';
 			btn.style.width = '56px';
-		
+
 			bg.appendChild(btn);
 		}
-		
+
 		div.appendChild(bg);
 	}
-	
+
 	return div;
 };
 
@@ -6189,7 +6190,7 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 	let ui = this.editorUi;
 	let editor = ui.editor;
 	let graph = editor.graph;
-	
+
 	div.appendChild(this.createTitle(Translations.get('options')));
 
 	if (graph.isEnabled())
@@ -6209,7 +6210,7 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 				{
 					apply(graph.connectionArrowsEnabled);
 				};
-				
+
 				ui.addListener('connectionArrowsChanged', this.listener);
 			},
 			destroy: function()
@@ -6217,7 +6218,7 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 				ui.removeListener(this.listener);
 			}
 		}));
-		
+
 		// Connection points
 		div.appendChild(this.createOption(Translations.get('connectionPoints'), function()
 		{
@@ -6233,7 +6234,7 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 				{
 					apply(graph.getPlugin('ConnectionHandler').isEnabled());
 				};
-				
+
 				ui.addListener('connectionPointsChanged', this.listener);
 			},
 			destroy: function()
@@ -6257,7 +6258,7 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 				{
 					apply(graph.getPlugin('SelectionHandler').guidesEnabled);
 				};
-				
+
 				ui.addListener('guidesEnabledChanged', this.listener);
 			},
 			destroy: function()
@@ -6271,20 +6272,20 @@ DiagramFormatPanel.prototype.addOptions = function(div)
 };
 
 /**
- * 
+ *
  */
 DiagramFormatPanel.prototype.addGridOption = function(container)
 {
 	let fPanel = this;
 	let ui = this.editorUi;
 	let graph = ui.editor.graph;
-	
+
 	let input = document.createElement('input');
 	input.style.position = 'absolute';
 	input.style.textAlign = 'right';
 	input.style.width = '38px';
-	input.value = this.inUnit(graph.getGridSize()) + ' ' + this.getUnit(); 
-	
+	input.value = this.inUnit(graph.getGridSize()) + ' ' + this.getUnit();
+
 	let stepper = this.createStepper(input, update, this.getUnitStep(), null, null, null, this.isFloatUnit());
 	input.style.display = (graph.isGridEnabled()) ? '' : 'none';
 	stepper.style.display = input.style.display;
@@ -6303,12 +6304,12 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 			mxEvent.consume(e);
 		}
 	});
-	
+
 	function update(evt)
 	{
 		let value = fPanel.isFloatUnit()? parseFloat(input.value) : parseInt(input.value);
 		value = fPanel.fromUnit(Math.max(fPanel.inUnit(1), (isNaN(value)) ? fPanel.inUnit(10) : value));
-		
+
 		if (value != graph.getGridSize())
 		{
 			graph.setGridSize(value)
@@ -6320,23 +6321,23 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 
 	mxEvent.addListener(input, 'blur', update);
 	mxEvent.addListener(input, 'change', update);
-	
+
 	let unitChangeListener = function(sender, evt)
 	{
 		input.value = fPanel.inUnit(graph.getGridSize()) + ' ' + fPanel.getUnit();
 		fPanel.format.refresh();
 	};
-	
+
 	graph.view.addListener('unitChanged', unitChangeListener);
 	this.listeners.push({destroy: function() { graph.view.removeListener(unitChangeListener); }});
-	
+
 	if (Client.IS_SVG)
 	{
 		input.style.marginTop = '-2px';
 		input.style.right = '84px';
 		stepper.style.marginTop = '-16px';
 		stepper.style.right = '72px';
-	
+
 		let panel = this.createColorOption(Translations.get('grid'), function()
 		{
 			let color = graph.view.gridColor;
@@ -6345,7 +6346,7 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 		}, function(color)
 		{
 			let enabled = graph.isGridEnabled();
-			
+
 			if (color == mxConstants.NONE)
 			{
 				graph.setGridEnabled(false);
@@ -6358,7 +6359,7 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 
 			input.style.display = (graph.isGridEnabled()) ? '' : 'none';
 			stepper.style.display = input.style.display;
-			
+
 			if (enabled != graph.isGridEnabled())
 			{
 				ui.fireEvent(new EventObject('gridEnabledChanged'));
@@ -6371,7 +6372,7 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 				{
 					apply((graph.isGridEnabled()) ? graph.view.gridColor : null);
 				};
-				
+
 				ui.addListener('gridColorChanged', this.listener);
 				ui.addListener('gridEnabledChanged', this.listener);
 			},
@@ -6391,22 +6392,22 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 		input.style.right = '32px';
 		stepper.style.marginTop = '2px';
 		stepper.style.right = '20px';
-		
+
 		container.appendChild(input);
 		container.appendChild(stepper);
-		
+
 		container.appendChild(this.createOption(Translations.get('grid'), function()
 		{
 			return graph.isGridEnabled();
 		}, function(checked)
 		{
 			graph.setGridEnabled(checked);
-			
+
 			if (graph.isGridEnabled())
 			{
 				graph.view.gridColor = '#e0e0e0';
 			}
-			
+
 			ui.fireEvent(new EventObject('gridEnabledChanged'));
 		},
 		{
@@ -6416,10 +6417,10 @@ DiagramFormatPanel.prototype.addGridOption = function(container)
 				{
 					input.style.display = (graph.isGridEnabled()) ? '' : 'none';
 					stepper.style.display = input.style.display;
-					
+
 					apply(graph.isGridEnabled());
 				};
-				
+
 				ui.addListener('gridEnabledChanged', this.listener);
 			},
 			destroy: function()
@@ -6439,7 +6440,7 @@ DiagramFormatPanel.prototype.addDocumentProperties = function(div)
 	let ui = this.editorUi;
 	let editor = ui.editor;
 	let graph = editor.graph;
-	
+
 	div.appendChild(this.createTitle(Translations.get('options')));
 
 	return div;
@@ -6453,7 +6454,7 @@ DiagramFormatPanel.prototype.addPaperSize = function(div)
 	let ui = this.editorUi;
 	let editor = ui.editor;
 	let graph = editor.graph;
-	
+
 	div.appendChild(this.createTitle(Translations.get('paperSize')));
 
 	let accessor = PageSetupDialog.addPageFormatPanel(div, 'formatpanel', graph.pageFormat, function(pageFormat)
@@ -6464,31 +6465,31 @@ DiagramFormatPanel.prototype.addPaperSize = function(div)
 			let change = new ChangePageSetup(ui, null, null, pageFormat);
 			change.ignoreColor = true;
 			change.ignoreImage = true;
-			
+
 			graph.model.execute(change);
 		}
 	});
-	
+
 	this.addKeyHandler(accessor.widthInput, function()
 	{
 		accessor.set(graph.pageFormat);
 	});
 	this.addKeyHandler(accessor.heightInput, function()
 	{
-		accessor.set(graph.pageFormat);	
+		accessor.set(graph.pageFormat);
 	});
-	
+
 	let listener = function()
 	{
 		accessor.set(graph.pageFormat);
 	};
-	
+
 	ui.addListener('pageFormatChanged', listener);
 	this.listeners.push({destroy: function() { ui.removeListener(listener); }});
-	
+
 	graph.getDataModel().addListener(mxEvent.CHANGE, listener);
 	this.listeners.push({destroy: function() { graph.getDataModel().removeListener(listener); }});
-	
+
 	return div;
 };
 
@@ -6501,19 +6502,19 @@ DiagramFormatPanel.prototype.addStyleOps = function(div)
 	{
 		this.editorUi.actions.get('editData').funct();
 	}));
-	
+
 	btn.setAttribute('title', Translations.get('editData') + ' (' + this.editorUi.actions.get('editData').shortcut + ')');
 	btn.style.width = '202px';
 	btn.style.marginBottom = '2px';
 	div.appendChild(btn);
 
 	br(div);
-	
+
 	btn = button(Translations.get('clearDefaultStyle'), ((evt) =>
 	{
 		this.editorUi.actions.get('clearDefaultStyle').funct();
 	}));
-	
+
 	btn.setAttribute('title', Translations.get('clearDefaultStyle') + ' (' + this.editorUi.actions.get('clearDefaultStyle').shortcut + ')');
 	btn.style.width = '202px';
 	div.appendChild(btn);
@@ -6527,7 +6528,7 @@ DiagramFormatPanel.prototype.addStyleOps = function(div)
 DiagramFormatPanel.prototype.destroy = function()
 {
 	BaseFormatPanel.prototype.destroy.apply(this, arguments);
-	
+
 	if (this.gridEnabledListener)
 	{
 		this.editorUi.removeListener(this.gridEnabledListener);
