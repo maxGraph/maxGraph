@@ -4,8 +4,8 @@
 
 
 **Breaking Changes**:
-- some types related to `CellStateStyle` have been renamed
-- some properties of `CellStateStyle` have changed (removed or renamed)
+- some types related to `CellStateStyle` have been renamed.
+- some properties of `CellStateStyle` have changed (removed or renamed).
 
 
 ## 0.1.0
