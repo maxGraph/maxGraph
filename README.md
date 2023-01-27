@@ -197,3 +197,7 @@ Run
 The `packages/core` folder or the generated `packages/core/maxgraph-core-***.tgz` file are now ready for use in an external project, using [npm link](https://docs.npmjs.com/cli/v8/commands/npm-link) or `npm install`.
 
 Examples of use can be found in the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository.
+
+### Release
+
+See the dedicated [release](packages/docs/release.md) page.
