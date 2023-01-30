@@ -244,9 +244,7 @@ class StencilShape extends Shape {
       this.fgNode,
       aspect,
       true,
-      !shape.outline ||
-        shape.style == null ||
-        getValue(shape.style, 'backgroundOutline', 0) == 0
+      !shape.outline || shape.style == null || !(shape.style.backgroundOutline ?? false)
     );
 
     // Restores stack for unequal count of save/restore calls

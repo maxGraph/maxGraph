@@ -2,7 +2,13 @@
 
 ## UNRELEASED
 
-N/A
+
+**Breaking Changes**:
+  - helper functions involving _style in the string form_ have been removed from `styleUtils`. Styles are defined using
+  the `CellStateStyle` and it is no longer necessary to process strings.
+  - some types related to `CellStateStyle` have been renamed.
+  - some properties of `CellStateStyle` have changed (removed or renamed).
+
 
 ## 0.1.0
 

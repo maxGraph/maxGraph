@@ -38,7 +38,7 @@ import CellOverlay from '../cell/CellOverlay';
 import ImageBox from '../image/ImageBox';
 
 import type {
-  ArrowType,
+  ArrowValue,
   CellStateStyle,
   ColorValue,
   DirectionValue,
@@ -116,9 +116,9 @@ class Shape {
 
   endSize = 1;
 
-  startArrow: ArrowType | string = NONE;
+  startArrow: ArrowValue | string = NONE;
 
-  endArrow: ArrowType | string = NONE;
+  endArrow: ArrowValue | string = NONE;
 
   direction: DirectionValue = DIRECTION.EAST;
 
@@ -742,7 +742,7 @@ class Shape {
   paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     this.paintBackground(c, x, y, w, h);
 
-    if (!this.outline || !this.style || (this.style.backgroundOutline ?? 0) === 0) {
+    if (!this.outline || !this.style || !(this.style.backgroundOutline ?? false)) {
       c.setShadow(false);
       this.paintForeground(c, x, y, w, h);
     }
@@ -775,7 +775,7 @@ class Shape {
   getArcSize(w: number, h: number) {
     let r = 0;
 
-    if (this.style?.absoluteArcSize === 0) {
+    if (this.style?.absoluteArcSize ?? false) {
       r = Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
     } else {
       const f = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;

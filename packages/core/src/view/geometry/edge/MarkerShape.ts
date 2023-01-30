@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ArrowType } from '../../../types';
+import { ArrowValue } from '../../../types';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { ARROW } from '../../../util/Constants';
 import Point from '../Point';
@@ -49,7 +49,7 @@ class MarkerShape {
   static createMarker(
     canvas: AbstractCanvas2D,
     shape: Shape,
-    type: ArrowType | string,
+    type: ArrowValue | string,
     pe: Point,
     unitX: number,
     unitY: number,
@@ -73,7 +73,7 @@ class MarkerShape {
     return (
       canvas: AbstractCanvas2D,
       shape: Shape,
-      type: ArrowType,
+      type: ArrowValue,
       pe: Point,
       unitX: number,
       unitY: number,
@@ -135,7 +135,7 @@ class MarkerShape {
     return (
       canvas: AbstractCanvas2D,
       shape: Shape,
-      type: ArrowType,
+      type: ArrowValue,
       pe: Point,
       unitX: number,
       unitY: number,
@@ -184,7 +184,7 @@ class MarkerShape {
     (
       canvas: AbstractCanvas2D,
       shape: Shape,
-      type: ArrowType,
+      type: ArrowValue,
       pe: Point,
       unitX: number,
       unitY: number,
@@ -214,7 +214,7 @@ class MarkerShape {
   function diamond(
     canvas: AbstractCanvas2D,
     shape: Shape,
-    type: ArrowType,
+    type: ArrowValue,
     pe: Point,
     unitX: number,
     unitY: number,

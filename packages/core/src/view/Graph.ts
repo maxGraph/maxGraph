@@ -359,7 +359,7 @@ class Graph extends EventSource {
 
   /**
    * {@link EdgeStyle} to be used for loops. This is a fallback for loops if the
-   * {@link mxConstants.STYLE_LOOP} is undefined.
+   * {@link CellStateStyle.loopStyle} is `undefined`.
    * @default {@link EdgeStyle.Loop}
    */
   defaultLoopStyle = EdgeStyle.Loop;

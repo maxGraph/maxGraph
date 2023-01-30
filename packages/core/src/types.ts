@@ -45,10 +45,10 @@ export type CellStyle = CellStateStyle & { baseStyleNames?: string[] };
 
 export type CellStateStyle = {
   /**
-   * This specifies if {@link arcSize} for rectangles is absolute or relative. The possible values are 1 and 0 (default).
-   * @default 0
+   * This specifies if {@link arcSize} for rectangles is absolute or relative.
+   * @default false
    */
-  absoluteArcSize?: number;
+  absoluteArcSize?: boolean;
   /**
    * This value defines how the lines of the label are aligned horizontally.
    * - `left` means that the lines of label text are aligned to the left of the label bounds.
@@ -96,14 +96,12 @@ export type CellStateStyle = {
    * See {@link Graph.isAutoSizeCell}. This is normally combined with {@link resizable} to disable manual resizing.
    * @default false
    */
-  autosize?: boolean;
-  backgroundColor?: ColorValue;
+  autoSize?: boolean;
   /**
    * This specifies if only the background of a cell should be painted when it is highlighted.
-   * The possible values are 0 (false) or 1 (true).
-   * @default 0
+   * @default false
    */
-  backgroundOutline?: number;
+  backgroundOutline?: boolean;
   /**
    * This specifies if the control points of an edge can be moved.
    * See {@link Graph.isCellBendable}.
@@ -136,10 +134,8 @@ export type CellStateStyle = {
    * See also {@link dashed} and {@link fixDash}.
    */
   dashPattern?: string;
-  defaultEdge?: CellStateStyle;
-  defaultVertex?: CellStateStyle;
   /**
-   * This specifies if a cell can be deleted. 
+   * This specifies if a cell can be deleted.
    * See {@link Graph.isCellDeletable}.
    * @default true
    */
@@ -177,7 +173,7 @@ export type CellStateStyle = {
    *
    * See {@link startArrow}.
    */
-  endArrow?: ArrowType | string;
+  endArrow?: ArrowValue | string;
   /**
    * Use `false` to not fill or `true` to fill the end arrow marker.
    * See {@link startFill}.
@@ -370,7 +366,7 @@ export type CellStateStyle = {
    */
   indicatorHeight?: number;
   /**
-   * Indicator image used within a {@link LabelShape}. 
+   * Indicator image used within a {@link LabelShape}.
    * The possible values are all image URLs.
    *
    * The {@link indicatorShape} has precedence over the indicatorImage.
@@ -383,7 +379,7 @@ export type CellStateStyle = {
    *
    * The `indicatorShape` property has precedence over the {@link indicatorImage} property.
    */
-  indicatorShape?: string;
+  indicatorShape?: ShapeValue | string;
   /**
    * The color of the indicator stroke in {@link LabelShape}.
    * The possible values are all HTML color names or HEX codes.
@@ -428,7 +424,6 @@ export type CellStateStyle = {
   /**
    * The possible values are the functions defined in {@link EdgeStyle}.
    */
-  loop?: Function;
   loopStyle?: Function;
   /**
    * The margin between the ellipses in {@link DoubleEllipseShape}.
@@ -444,7 +439,7 @@ export type CellStateStyle = {
    */
   movable?: boolean;
   /**
-   *  If this is `true`, no edge style is applied for a given edge. 
+   *  If this is `true`, no edge style is applied for a given edge.
    *  See {@link edgeStyle}.
    *  @default false
    */
@@ -589,7 +584,7 @@ export type CellStateStyle = {
    */
   segment?: number;
   /**
-   * The possible values are all HTML color names or HEX codes. 
+   * The possible values are all HTML color names or HEX codes.
    * This style is only used for `swimlane` shapes.
    */
   separatorColor?: ColorValue;
@@ -677,7 +672,7 @@ export type CellStateStyle = {
    *
    * See {@link endArrow}.
    */
-  startArrow?: ArrowType | string;
+  startArrow?: ArrowValue | string;
   /**
    * Use `false` to not fill or `true` to fill the start arrow marker.
    * See {@link endFill}.
@@ -805,7 +800,10 @@ export type AlignValue = 'left' | 'center' | 'right';
 export type VAlignValue = 'top' | 'middle' | 'bottom';
 export type OverflowValue = 'fill' | 'width' | 'auto' | 'hidden' | 'scroll' | 'visible';
 export type WhiteSpaceValue = 'normal' | 'wrap' | 'nowrap' | 'pre';
-export type ArrowType =
+/**
+ * Names used to register the edge markers provided out-of-the-box by maxGraph with {@link MarkerShape.addMarker}.
+ */
+export type ArrowValue =
   | 'none'
   | 'classic'
   | 'classicThin'
@@ -816,6 +814,9 @@ export type ArrowType =
   | 'oval'
   | 'diamond'
   | 'diamondThin';
+/**
+ * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
+ */
 export type ShapeValue =
   | 'rectangle'
   | 'ellipse'
@@ -835,39 +836,42 @@ export type ShapeValue =
   | 'hexagon';
 
 export type CanvasState = {
+  alpha: number;
+  dashPattern: string;
+  dashed: boolean;
   dx: number;
   dy: number;
-  scale: number;
-  alpha: number;
   fillAlpha: number;
-  strokeAlpha: number;
   fillColor: ColorValue;
-  gradientFillAlpha: number;
-  gradientColor: ColorValue;
-  gradientAlpha: number;
-  gradientDirection: DirectionValue;
-  strokeColor: ColorValue;
-  strokeWidth: number;
-  dashed: boolean;
-  dashPattern: string;
   fixDash: boolean;
+  fontBackgroundColor: ColorValue;
+  fontBorderColor: ColorValue;
+  fontColor: ColorValue;
+  fontFamily: string;
+  fontSize: number;
+  /**
+   * See {@link CellStateStyle.fontStyle}.
+   */
+  fontStyle: number;
+  gradientAlpha: number;
+  gradientColor: ColorValue;
+  gradientDirection: DirectionValue;
+  gradientFillAlpha: number;
   lineCap: string;
   lineJoin: string;
   miterLimit: number;
-  fontColor: ColorValue;
-  fontBackgroundColor: ColorValue;
-  fontBorderColor: ColorValue;
-  fontSize: number;
-  fontFamily: string;
-  fontStyle: number;
-  shadow: boolean;
-  shadowColor: ColorValue;
-  shadowAlpha: number;
-  shadowDx: number;
-  shadowDy: number;
   rotation: number;
   rotationCx: number;
   rotationCy: number;
+  scale: number;
+  shadow: boolean;
+  shadowAlpha: number;
+  shadowColor: ColorValue;
+  shadowDx: number;
+  shadowDy: number;
+  strokeAlpha: number;
+  strokeColor: ColorValue;
+  strokeWidth: number;
   transform: string | null;
 };
 

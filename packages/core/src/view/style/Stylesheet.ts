@@ -31,53 +31,28 @@ import Codec from '../../serialization/Codec';
 import type { CellStateStyle, CellStyle } from '../../types';
 
 /**
- * @class Stylesheet
+ * Defines the appearance of the cells in a graph. See {@link putCellStyle} for an example
+ * of creating a new cell style.
  *
- * Defines the appearance of the cells in a graph. See {@link putCellStyle} for an
- * example of creating a new cell style. It is recommended to use objects, not
- * arrays for holding cell styles. Existing styles can be cloned using
- * {@link clone} and turned into a string for debugging using
- * {@link toString}.
+ * Existing styles can be cloned using {@link clone} and turned into a string for debugging
+ * using {@link toString}.
  *
  * ### Default Styles
  *
- * The stylesheet contains two built-in styles, which are used if no style is
- * defined for a cell:
+ * The stylesheet contains two built-in styles, which are used if no style is defined for
+ * a cell:
  *
- * - defaultVertex Default style for vertices
- * - defaultEdge Default style for edges
+ * - `defaultVertex`: default style for vertices
+ * - `defaultEdge`: default style for edges
  *
  * ### Example
  *
  * ```javascript
- * var vertexStyle = stylesheet.getDefaultVertexStyle();
- * vertexStyle.rounded = true;
- * var edgeStyle = stylesheet.getDefaultEdgeStyle();
- * edgeStyle.edge = mxEdgeStyle.EntityRelation;
+ * const defaultVertexStyle = stylesheet.getDefaultVertexStyle();
+ * defaultVertexStyle.rounded = true;
+ * const defaultEdgeStyle = stylesheet.getDefaultEdgeStyle();
+ * defaultEdgeStyle.edgeStyle = EdgeStyle.EntityRelation;
  * ```
- *
- * Modifies the built-in default styles.
- *
- * To avoid the default style for a cell, add a leading semicolon
- * to the style definition, eg.
- *
- * ```javascript
- * ;shadow=1
- * ```
- *
- * ### Removing keys
- *
- * For removing a key in a cell style of the form [stylename;|key=value;] the
- * special value none can be used, eg. highlight;fillColor=none
- *
- * See also the helper methods in mxUtils to modify strings of this format,
- * namely {@link setStyle}, {@link indexOfStylename},
- * {@link addStylename}, {@link removeStylename},
- * {@link removeAllStylenames} and {@link setStyleFlag}.
- *
- * Constructor: mxStylesheet
- *
- * Constructs a new stylesheet and assigns default styles.
  */
 export class Stylesheet {
   constructor() {
