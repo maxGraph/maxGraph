@@ -44,6 +44,8 @@ import type {
   DirectionValue,
   GradientMap,
 } from '../../types';
+import Canvas2D from '../canvas/HtmlCanvas2D';
+import HtmlCanvas2D from '../canvas/HtmlCanvas2D';
 
 /**
  * Base class for all shapes.
@@ -477,8 +479,9 @@ class Shape {
   /**
    * Creates a new canvas for drawing this shape. May return null.
    */
-  createCanvas() {
-    const canvas = this.createSvgCanvas();
+  protected createCanvas() {
+    // const canvas = this.createSvgCanvas();
+    const canvas = this.createHtmlCanvas();
 
     if (canvas && this.outline) {
       canvas.setStrokeWidth(this.strokeWidth);
@@ -512,9 +515,22 @@ class Shape {
   }
 
   /**
+   * Creates and returns an H5 for rendering this shape.
+   */
+  private createHtmlCanvas() {
+    // if (!this.node) return null;
+    if (!this.node) return null;
+
+    const canvas = new HtmlCanvas2D(this.node, false);
+
+
+    return canvas;
+  }
+
+  /**
    * Creates and returns an <mxSvgCanvas2D> for rendering this shape.
    */
-  createSvgCanvas() {
+  private createSvgCanvas() {
     if (!this.node) return null;
 
     const canvas = new SvgCanvas2D(this.node, false);
