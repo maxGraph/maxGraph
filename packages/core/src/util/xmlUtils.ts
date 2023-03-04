@@ -128,25 +128,20 @@ export const getXml = (node: Element, linefeed = '&#xa;'): string => {
  *
  * @param node DOM node to return the XML for.
  * @param tab Optional string that specifies the indentation for one level.
- * Default is two spaces.
  * @param indent Optional string that represents the current indentation.
- * Default is an empty string.
- * @param newline Option string that represents a linefeed. Default is '\n'.
+ * @param newline Optional string that represents a linefeed.
+ * @param ns Optional string that represents the target namespace URI.
  */
 export const getPrettyXml = (
-  node: Element,
-  tab: string,
-  indent: string,
-  newline: string,
-  ns: string
+  node: Element | null,
+  tab = '  ',
+  indent = '',
+  newline = '\n',
+  ns: string | null = null
 ): string => {
   const result = [];
 
   if (node != null) {
-    tab = tab != null ? tab : '  ';
-    indent = indent != null ? indent : '';
-    newline = newline != null ? newline : '\n';
-
     if (node.namespaceURI != null && node.namespaceURI !== ns) {
       ns = node.namespaceURI;
 
