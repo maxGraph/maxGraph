@@ -467,10 +467,10 @@ class Shape {
       this.paint(canvas);
       this.afterPaint(canvas);
 
-      if (this.node !== canvas.root && canvas.root) {
-        // Forces parsing in IE8 standards mode - slow! avoid
-        this.node.insertAdjacentHTML('beforeend', canvas.root.outerHTML);
-      }
+      // if (this.node !== canvas.root && canvas.root) {
+      //   // Forces parsing in IE8 standards mode - slow! avoid
+      //   this.node.insertAdjacentHTML('beforeend', canvas.root.outerHTML);
+      // }
 
       this.destroyCanvas(canvas);
     }
@@ -515,16 +515,10 @@ class Shape {
   }
 
   /**
-   * Creates and returns an H5 for rendering this shape.
+   * returns an H5 canvas for rendering this shape.
    */
   private createHtmlCanvas() {
-    // if (!this.node) return null;
-    if (!this.node) return null;
-
-    const canvas = new HtmlCanvas2D(this.node, false);
-
-
-    return canvas;
+    return this.state?.view.graph.htmlCanvas;
   }
 
   /**

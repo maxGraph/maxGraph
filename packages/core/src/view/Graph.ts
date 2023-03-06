@@ -59,6 +59,7 @@ import type { GraphPlugin, GraphPluginConstructor, MouseListenerSet } from '../t
 import Multiplicity from './other/Multiplicity';
 import ImageBundle from './image/ImageBundle';
 import GraphSelectionModel from './GraphSelectionModel';
+import HtmlCanvas2D from './canvas/HtmlCanvas2D';
 
 export const defaultPlugins: GraphPluginConstructor[] = [
   CellEditorHandler,
@@ -89,6 +90,7 @@ export const defaultPlugins: GraphPluginConstructor[] = [
  */
 class Graph extends EventSource {
   container: HTMLElement;
+  htmlCanvas: HtmlCanvas2D;
 
   destroyed = false;
 
@@ -421,6 +423,8 @@ class Graph extends EventSource {
     super();
 
     this.container = container ?? document.createElement('div');
+    this.htmlCanvas = new HtmlCanvas2D(this.container);
+
     this.model = model ?? new GraphDataModel();
     this.plugins = plugins;
     this.cellRenderer = this.createCellRenderer();
@@ -738,13 +742,13 @@ class Graph extends EventSource {
 
     return new Rectangle(
       parseCssNumber(css.paddingLeft) +
-        (css.borderLeftStyle != 'none' ? parseCssNumber(css.borderLeftWidth) : 0),
+      (css.borderLeftStyle != 'none' ? parseCssNumber(css.borderLeftWidth) : 0),
       parseCssNumber(css.paddingTop) +
-        (css.borderTopStyle != 'none' ? parseCssNumber(css.borderTopWidth) : 0),
+      (css.borderTopStyle != 'none' ? parseCssNumber(css.borderTopWidth) : 0),
       parseCssNumber(css.paddingRight) +
-        (css.borderRightStyle != 'none' ? parseCssNumber(css.borderRightWidth) : 0),
+      (css.borderRightStyle != 'none' ? parseCssNumber(css.borderRightWidth) : 0),
       parseCssNumber(css.paddingBottom) +
-        (css.borderBottomStyle != 'none' ? parseCssNumber(css.borderBottomWidth) : 0)
+      (css.borderBottomStyle != 'none' ? parseCssNumber(css.borderBottomWidth) : 0)
     );
   }
 
@@ -862,8 +866,8 @@ class Graph extends EventSource {
         let s2 = ignoreWidth
           ? h1 / h2
           : ignoreHeight
-          ? w1 / w2
-          : Math.min(w1 / w2, h1 / h2);
+            ? w1 / w2
+            : Math.min(w1 / w2, h1 / h2);
 
         if (this.minFitScale != null) {
           s2 = Math.max(s2, this.minFitScale);
@@ -879,14 +883,14 @@ class Graph extends EventSource {
               const x0 =
                 bounds.x != null
                   ? Math.floor(
-                      this.view.translate.x - bounds.x / s + border / s2 + margin / 2
-                    )
+                    this.view.translate.x - bounds.x / s + border / s2 + margin / 2
+                  )
                   : border;
               const y0 =
                 bounds.y != null
                   ? Math.floor(
-                      this.view.translate.y - bounds.y / s + border / s2 + margin / 2
-                    )
+                    this.view.translate.y - bounds.y / s + border / s2 + margin / 2
+                  )
                   : border;
 
               this.view.scaleAndTranslate(s2, x0, y0);
