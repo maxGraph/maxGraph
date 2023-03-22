@@ -21,8 +21,8 @@
     "dev": "webpack --watch --mode=development",
     "build": "cross-env NODE_ENV=production webpack --mode=production",
     "docs:api": "typedoc src/index.ts",
-    "generate-types": "tsc --emitDeclarationOnly",
-    "generate-esm": "tsc --emitDeclarationOnly false --declaration false --declarationDir null",
+    "generate-types": "tsc --version && tsc --emitDeclarationOnly",
+    "generate-esm": "tsc --version && tsc --emitDeclarationOnly false --declaration false --declarationDir null",
     "prepack": "run-s generate-types generate-esm build",
     "test": "jest"
   },
