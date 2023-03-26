@@ -20,7 +20,7 @@ import { AlignValue, VAlignValue, OverflowValue, TextDirectionValue } from "../.
 import { NONE, DIRECTION, DEFAULT_FONTSIZE, DEFAULT_FONTFAMILY, SHADOWCOLOR, SHADOW_OPACITY, SHADOW_OFFSET_X, SHADOW_OFFSET_Y } from "../../util/Constants";
 import AbstractCanvas2D from "./AbstractCanvas2D";
 
-class Canvas2D extends AbstractCanvas2D {
+class HtmlCanvas2D extends AbstractCanvas2D {
     constructor(root: HTMLElement) {
         super()
 
@@ -122,4 +122,4 @@ class Canvas2D extends AbstractCanvas2D {
     }
 }
 
-export default Canvas2D;
+export default HtmlCanvas2D;
