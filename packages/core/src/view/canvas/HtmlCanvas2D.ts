@@ -26,9 +26,11 @@ class Canvas2D extends AbstractCanvas2D {
 
         const canvas = document.createElement("canvas");
         root.appendChild(canvas);
-        canvas.width = 500;
-        canvas.height = 500;
-        canvas.style.border = "1px solid black";
+        canvas.width = 800;
+        canvas.height = 600;
+        canvas.style.position = 'absolute';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
         this.ctx = canvas.getContext("2d");
     }
 

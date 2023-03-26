@@ -44,8 +44,6 @@ import type {
   DirectionValue,
   GradientMap,
 } from '../../types';
-import Canvas2D from '../canvas/HtmlCanvas2D';
-import HtmlCanvas2D from '../canvas/HtmlCanvas2D';
 
 /**
  * Base class for all shapes.
@@ -467,10 +465,12 @@ class Shape {
       this.paint(canvas);
       this.afterPaint(canvas);
 
-      // if (this.node !== canvas.root && canvas.root) {
-      //   // Forces parsing in IE8 standards mode - slow! avoid
-      //   this.node.insertAdjacentHTML('beforeend', canvas.root.outerHTML);
-      // }
+      if (canvas instanceof SvgCanvas2D) {
+        if (this.node !== canvas.root && canvas.root) {
+          // Forces parsing in IE8 standards mode - slow! avoid
+          this.node.insertAdjacentHTML('beforeend', canvas.root.outerHTML);
+        }
+      }
 
       this.destroyCanvas(canvas);
     }
@@ -480,8 +480,12 @@ class Shape {
    * Creates a new canvas for drawing this shape. May return null.
    */
   protected createCanvas() {
-    // const canvas = this.createSvgCanvas();
-    const canvas = this.createHtmlCanvas();
+    let canvas: AbstractCanvas2D | null | undefined;
+    if (this.state?.view.graph.useCanvas) {
+      canvas = this.createHtmlCanvas();
+    } else {
+      canvas = this.createSvgCanvas();
+    }
 
     if (canvas && this.outline) {
       canvas.setStrokeWidth(this.strokeWidth);

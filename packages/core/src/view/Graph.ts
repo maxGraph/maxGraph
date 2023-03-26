@@ -90,7 +90,14 @@ export const defaultPlugins: GraphPluginConstructor[] = [
  */
 class Graph extends EventSource {
   container: HTMLElement;
+
+  /** HTML canvas instance */
   htmlCanvas: HtmlCanvas2D;
+
+  /** 
+   * Specifies if the cells should be rendered by HTML canvas.
+   */
+  useCanvas = false;
 
   destroyed = false;
 
