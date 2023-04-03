@@ -38,14 +38,11 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: npm install
-      - run: cat node_modules/typescript/package.json # may not work on windows (not a problem for now)
-#      - name: Ensure no lint errors
-#        run: npm run lint
-#      - name: Build @maxgraph/core - umd
-#        working-directory: packages/core
-#        run: npm run build
-      - run: cat node_modules/typescript/package.json
+      - name: Ensure no lint errors
+        run: npm run lint
+      - name: Build @maxgraph/core - umd
         working-directory: packages/core
+        run: npm run build
       - name: Build @maxgraph/core - esm
         working-directory: packages/core
         run: npm run generate-esm
