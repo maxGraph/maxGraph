@@ -805,7 +805,6 @@ class VertexHandler {
   /**
    * Hook for rounding the angle. This uses Math.round.
    */
-  // roundAngle(angle: number): number;
   roundAngle(angle: number) {
     return Math.round(angle * 10) / 10;
   }
@@ -883,7 +882,7 @@ class VertexHandler {
   }
 
   /**
-   * Rotates the vertex.
+   * Moves the vertex.
    */
   moveLabel(me: InternalMouseEvent) {
     const point = new Point(me.getGraphX(), me.getGraphY());
@@ -944,7 +943,7 @@ class VertexHandler {
   }
 
   /**
-   * Rotates the vertex.
+   * Resizes the vertex.
    */
   resizeVertex(me: InternalMouseEvent) {
     const ct = new Point(this.state.getCenterX(), this.state.getCenterY());
@@ -1275,7 +1274,9 @@ class VertexHandler {
   }
 
   /**
-   * Rotates the given cell to the given rotation.
+   * Returns the recursiveResize of the give state.   
+   * @param state the given <mxCellState>. This implementation takes the value of this state.
+   * @param me the mouse event.
    */
   isRecursiveResize(state: CellState, me: InternalMouseEvent) {
     return this.graph.isRecursiveResize(this.state);
@@ -1984,7 +1985,6 @@ class VertexHandler {
   /**
    * Redraws the preview.
    */
-  // drawPreview(): void;
   drawPreview() {
     if (this.preview != null) {
       this.preview.bounds = this.bounds;
