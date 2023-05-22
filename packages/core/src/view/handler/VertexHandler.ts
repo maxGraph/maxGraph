@@ -1274,8 +1274,8 @@ class VertexHandler {
   }
 
   /**
-   * Returns the recursiveResize of the give state.   
-   * @param state the given <mxCellState>. This implementation takes the value of this state.
+   * Returns the `recursiveResize` status of the given state.   
+   * @param state the given {@link CellState}. This implementation takes the value of this state.
    * @param me the mouse event.
    */
   isRecursiveResize(state: CellState, me: InternalMouseEvent) {
