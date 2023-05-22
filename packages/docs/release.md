@@ -28,7 +28,9 @@ link to the future GitHub release that will contain detailed release notes, as s
 For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) on
 the GitHub release page.
 ```
-- Make a single commit that includes the changes described above.
+- Make a single commit that includes the changes described above
+  - use the following template for the commit message: `chore(release): prepare version 0.2.0`
+  - push the changes
 
 Create a git tag, prefixing the version with a `v`. For example, if the version is 0.2.0, run
 
