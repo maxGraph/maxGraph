@@ -14,7 +14,7 @@
     // ../../node_modules/@types includes types used to develop maxGraph.
     // Here, we only want to check types used by maxGraph when it is included in applications.
     // So, we don't want the development types to be part of the tests, especially because some of them may require a newer TypeScript version.
-//    "typeRoots": [],
+    "typeRoots": [],
   },
   "include": [
     "src/**/*"
