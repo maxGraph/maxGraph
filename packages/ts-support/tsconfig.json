@@ -8,7 +8,13 @@
     ],
     "moduleResolution": "Node",
     "strict": true,
-    "noEmit": true
+    "noEmit": true,
+    // By default, all visible ”@types” packages are included in your compilation. Packages in node_modules/@types of any enclosing folder are considered visible. For example, that
+    // means packages within ./node_modules/@types/, ../node_modules/@types/, ../../node_modules/@types/, and so on.
+    // ../../node_modules/@types includes types used to develop maxGraph.
+    // Here, we only want to check types used by maxGraph when it is included in applications.
+    // So, we don't want the development types to be part of the tests, especially because some of them may require a newer TypeScript version.
+//    "typeRoots": [],
   },
   "include": [
     "src/**/*"
