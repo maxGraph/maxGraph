@@ -42,7 +42,9 @@ git push origin v0.2.0
 ## Publish the npm package
 
 - Checkout the tag that has just been created
-- From packages/core, run `npm publish`
+- From packages/core:
+  - delete the `dist` folder 
+  - run `npm publish`
 
 
 ## Create the GitHub release
