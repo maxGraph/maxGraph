@@ -25,12 +25,15 @@ Changes in the source code
 - Update the [CHANGELOG](../../CHANGELOG.md) to list the major changes included in the new version. Be generic and add a
 link to the future GitHub release that will contain detailed release notes, as shown below.
 ```markdown
-For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) on the GitHub release page.
+For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) on
+the GitHub release page.
 ```
 - Make a single commit that includes the changes described above.
 
 Create a git tag, prefixing the version with a `v`. For example, if the version is 0.2.0, run
+
 ```
+git fetch --tags
 git tag v0.2.0
 git push origin v0.2.0
 ```

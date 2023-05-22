@@ -80,7 +80,7 @@ graph.batchUpdate(() => {
 
 You will see something like in the following _maxGraph panning_ demo:
 
-![maxGraph panning demo](docs/maxgraph_demo.gif "maxGraph panning demo")
+![maxGraph panning demo](packages/docs/images/maxgraph_demo.gif "maxGraph panning demo")
 
 For more details, have a look at the [storybook stories](packages/html/stories).
 
