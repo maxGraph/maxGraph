@@ -88,7 +88,7 @@ export const makeDraggable = (
   element: Element,
   graphF: Graph | Function,
   funct: DropHandler,
-  dragElement: Element,
+  dragElement: Element | null = null,
   dx: number | null = null,
   dy: number | null = null,
   autoscroll: boolean | null = null,
