@@ -483,8 +483,15 @@ class Graph extends EventSource {
 
   getContainsValidationErrorsResource = () => this.containsValidationErrorsResource;
 
-  // TODO: Document me!!
-  batchUpdate(fn: Function) {
+  /**
+   * Shortcut for updating the model in a transaction.
+   *
+   * @param fn the update to be performed in the transaction.
+   *
+   * @see {@link GraphDataModel.beginUpdate}
+   * @see {@link GraphDataModel.endUpdate}
+   */
+  batchUpdate(fn: () => void) {
     this.getDataModel().beginUpdate();
     try {
       fn();
@@ -494,7 +501,7 @@ class Graph extends EventSource {
   }
 
   /**
-   * Creates a new {@link mxGraphSelectionModel} to be used in this graph.
+   * Creates a new {@link Stylesheet} to be used in this graph.
    */
   createStylesheet(): Stylesheet {
     return new Stylesheet();
@@ -591,7 +598,9 @@ class Graph extends EventSource {
       this.view.invalidate(change.child, true, true);
 
       if (
-        !newParent || !this.getDataModel().contains(newParent) || newParent.isCollapsed()
+        !newParent ||
+        !this.getDataModel().contains(newParent) ||
+        newParent.isCollapsed()
       ) {
         this.view.invalidate(change.child, true, true);
         this.removeStateForCell(change.child);
