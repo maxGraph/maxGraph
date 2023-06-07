@@ -411,12 +411,13 @@ export type CellStateStyle = {
    * - `left` means that the entire label bounds is placed completely just to the left of the vertex.
    * - `right` means that the label bounds are adjusted to the right.
    * - `center` means that the label bounds are vertically aligned with the bounds of the vertex.
+   * - `ignore` means that there is no alignment
    *
    * Note that this value does not affect the positioning of label within the label bounds.
    * To move the label bounds horizontally within the label bounds, use {@link align}
    * @default 'center'
    */
-  labelPosition?: AlignValue;
+  labelPosition?: AlignValue | 'ignore';
   /**
    * The width of the label if the label position is not `center`.
    */
