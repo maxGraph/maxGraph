@@ -145,6 +145,12 @@ git fetch --all --tags --prune
 
 ### Setting up local development environment
 
+NodeJS requirement:
+- use the version declared in [.nvmrc](./.nvmrc). Other versions may work but are not supported.
+- this is the version used by GitHub Actions
+- nvm users can run `nvm use`. If the Node version is not installed, nvm will state how to install the required version.
+
+
 In the project root directory, execute
 
 ```sh
