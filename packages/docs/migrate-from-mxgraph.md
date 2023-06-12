@@ -36,12 +36,12 @@ from a [typed-mxgraph example](https://github.com/typed-mxgraph/typed-mxgraph-ex
 
 **NOTE**: a lot of information is available in https://github.com/maxGraph/maxGraph/pull/70
 
-
-### Other
+Classes rename (not only the 'mx' removal) and method move
 
 
 mxMouseEvent -> InternalMouseEvent
 
+mxStyleMap (typed-mxgraph type) -> CellStateStyle
 
 mxEvent
 mxEvent -> eventUtils
@@ -54,36 +54,32 @@ mxEvent.addMouseWheelListener -> InternalEvent.addMouseWheelListener
 mxEvent.consume -> InternalEvent.consume
 
 mxAbstractCanvas2D -> AbstractCanvas2D
-arcTo(rx: number, ry: number, angle: number, largeArcFlag: number, sweepFlag: number, x: number, y: number) ->
-arcTo(rx: number, ry: number, angle: number, largeArcFlag: boolean, sweepFlag: boolean, x: number, y: number)
+- arcTo(rx: number, ry: number, angle: number, largeArcFlag: number, sweepFlag: number, x: number, y: number) ->
+- arcTo(rx: number, ry: number, angle: number, largeArcFlag: boolean, sweepFlag: boolean, x: number, y: number)
 
 mxSvgCanvas2D -> SvgCanvas2D
-mxSvgCanvas2D.format:(value: string) => number -> SvgCanvas2D.format:(value: number) => number
-
-
+- mxSvgCanvas2D.format:(value: string) => number -> SvgCanvas2D.format:(value: number) => number
 
 mxCell -> Cell
-mxCell.style:string -> Cell.style:CellStyle
+- mxCell.style:string -> Cell.style:CellStyle
 
 
-Shapes
-consistent postfix Shapes
-mxRectangleShape -> RectangleShape
-mxImageShape -> ImageShape
-mxEllipse -> EllipseShape
-mxRhombus -> RhombusShape
-mxMarker -> MarkerShape
-mxConnector -> ConnectorShape
+Shapes: consistent postfix Shapes
+- mxRectangleShape -> RectangleShape
+- mxImageShape -> ImageShape
+- mxEllipse -> EllipseShape
+- mxRhombus -> RhombusShape
+- mxMarker -> MarkerShape
+- mxConnector -> ConnectorShape
+- mxText -> TextShape
 
-mxText -> TextShape
-strokewidth -> strokeWidth
+Shapes properties rename
+  - strokewidth -> strokeWidth
 
 mxDictionary<T> -> Dictionary<K, V>
 
 
 
-mxGraph -> Graph
-mxGraph.getModel() -> graph.model
 
 
 mxGraphDataModel
@@ -92,17 +88,10 @@ mxGraphDataModel.getGeometry(cell: mxCell) -> Cell.getGeometry()
 mxGraphDataModel.isEdge(cell: mxCell) -> Cell.isEdge()
 mxGraphDataModel.getParent(cell: mxCell) -> Cell.getParent()
 
-mxStylesheet -> Stylesheet
-mxStyleMap -> CellStateStyle
 
 
 
 
-
-
-### Classes rename (not only the 'mx' removal)
-
-mxMouseEvent --> InternalMouseEvent
 
 
 ### properties rename
@@ -120,6 +109,9 @@ domUtils
 stringUtils
 - trim
 
+styleUtils
+- convertPoint
+
 xmlUtils
 - getXml
 - createXmlDocument()
@@ -134,8 +126,9 @@ getAlternateText change types
 Properties removed in favor of plugins
 - graph.panningHandler → this.graph.getPlugin('PanningHandler') as PanningHandler;
 
-Graph
-insertVertex/insertEdge: also accept an object instead of several parameters
+others
+- getModel() -> graph.model
+- insertVertex/insertEdge: also accept an object instead of several parameters
 
 
 ### Client
