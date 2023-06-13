@@ -1,68 +1,92 @@
-# Migrate from mxGraph
+# Migration Documentation: mxGraph to maxGraph
 
-**This page is a work in progress. Comments are welcome by creating an [issue](https://github.com/maxGraph/maxGraph/issues)
-or opening a [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a).!**
+This documentation provides guidance on migrating from `mxGraph` to `maxGraph`.
+
+> **Note:** **⚠️⚠️⚠️ This page is a work in progress. ⚠️⚠️⚠️  
+Comments are welcome by creating an [issue](https://github.com/maxGraph/maxGraph/issues)
+or opening a [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a)!**
 
 The `maxGraph` APIs are not fully compatible with the `mxGraph` APIs, but the `maxGraph` APIs are close to the former `mxGraph` APIs.
-The concepts are the same, so experienced _mxGraph_ users should be able to switch from _mxGraph_ to _maxGraph_ without issues.
+The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without issues.
 
 The major changes are the removal of support for Internet Explorer (including VML support) and Legacy Edge.
 
+## Application Setup
 
-## Application setup
+### Replace `mxgraph` Dependency By `maxgraph@core`
 
-Remove the
-- `mxgraph` dependency and add `maxgraph@core` instead.  
-- _mxGraph_ initialization code using the `factory` function. Access _maxGraph_ objects directly.
+- Remove the `mxgraph` dependency from your project.
+- Add `maxgraph@core`. The `maxgraph@core` package contains the core functionality of `maxGraph`.
 
-### TypeScript
+### Initialize `maxGraph`
 
-Remove the
-- `@typed-mxgraph/typed-mxgraph` dependency in the `package.json` file
-- `typeroots` settings related to `typed-mxgraph` in the `tsconfig.json` file
+In your application setup code, replace the `mxGraph` initialization code that uses the `factory` function with direct access to `maxGraph` objects.
 
-As an example, you can check [this project](https://github.com/maxGraph/maxgraph-integration-examples/tree/main/projects/rollup-ts) which has been migrated
-from a [typed-mxgraph example](https://github.com/typed-mxgraph/typed-mxgraph-example-bundled-with-rollup).
+For example, if you had code like this in `mxGraph`:
+
+```javascript
+
+```
+
+Replace it with the equivalent code in `maxGraph`:
+
+```javascript
+
+```
+
+### TypeScript Setup
+
+#### Remove `typed-mxgraph` Dependency
+
+If you were using the `@typed-mxgraph/typed-mxgraph` dependency in your project, remove it from your `package.json` file.
+
+```shell
+npm uninstall @typed-mxgraph/typed-mxgraph
+```
+
+#### Remove `typeroots` Settings
+
+Remove any `typeroots` settings related to `typed-mxgraph` from your `tsconfig.json` file.
+
+For example, if you had a configuration like this:
+
+```json
+"typeroots": ["./node_modules/@types", "./node_modules/@typed-mxgraph/typed-mxgraph"]
+```
+
+Replace it by:
+
+```json
+"typeroots": ["./node_modules/@types"]
+```
+Or remove the line.
+
+## General Guidelines
+
+Here are some general guidelines to keep in mind when migrating from `mxGraph` to `maxGraph`:
+
+- The names of `mxGraph` objects were all prefixed with `mx`. The prefix has been dropped in `maxGraph`.
+- Most names remain the same, but some utility functions, whose implementation is natively available in modern versions of ECMAScript, have been removed.
+
+## Specific Code Changes
+
+This section outlines specific code changes required when migrating from `mxGraph` to `maxGraph`.
+
+> **Note:**a lot of information is available in https://github.com/maxGraph/maxGraph/pull/70
+
+### Classes Rename and Method Move
+
+Certain classes and methods have been renamed or moved in `maxGraph`. Update your code accordingly:
 
 
-## General guidelines
+### Properties Rename and Update
 
-- The names of _mxGraph_ objects were all prefixed with `mx`. The prefix has been dropped in _maxGraph_.
-- Most names remain the same.
-- Some utility functions, whose implementation is natively available in modern versions of ECMAScript, have been removed.
+Rename or update properties in various objects as follows:
 
-
-## Specific code change
-
-**NOTE**: a lot of information is available in https://github.com/maxGraph/maxGraph/pull/70
-
-Classes rename (not only the 'mx' removal) and method move
+Overlay.strokewidth -> strokeWidth
 
 
-mxMouseEvent -> InternalMouseEvent
-
-mxStyleMap (typed-mxgraph type) -> CellStateStyle
-
-mxEvent
-mxEvent -> eventUtils
-mxEvent.isLeftMouseButton -> eventUtils.isLeftMouseButton
-mxEvent.isMultiTouchEvent -> eventUtils.isMultiTouchEvent
-
-mxEvent.PAN_START -> InternalEvent.PAN_START
-mxEvent.PAN_END -> InternalEvent.PAN_END
-mxEvent.addMouseWheelListener -> InternalEvent.addMouseWheelListener
-mxEvent.consume -> InternalEvent.consume
-
-mxAbstractCanvas2D -> AbstractCanvas2D
-- arcTo(rx: number, ry: number, angle: number, largeArcFlag: number, sweepFlag: number, x: number, y: number) ->
-- arcTo(rx: number, ry: number, angle: number, largeArcFlag: boolean, sweepFlag: boolean, x: number, y: number)
-
-mxSvgCanvas2D -> SvgCanvas2D
-- mxSvgCanvas2D.format:(value: string) => number -> SvgCanvas2D.format:(value: number) => number
-
-mxCell -> Cell
-- mxCell.style:string -> Cell.style:CellStyle
-
+### Shape
 
 Shapes: consistent postfix Shapes
 - mxRectangleShape -> RectangleShape
@@ -75,29 +99,6 @@ Shapes: consistent postfix Shapes
 
 Shapes properties rename
   - strokewidth -> strokeWidth
-
-mxDictionary<T> -> Dictionary<K, V>
-
-
-
-
-
-mxGraphDataModel
-mxGraphDataModel.filterDescendants(filter: (cell: mxCell) => boolean, cell:mxCell) -> Cell.filterDescendants
-mxGraphDataModel.getGeometry(cell: mxCell) -> Cell.getGeometry()
-mxGraphDataModel.isEdge(cell: mxCell) -> Cell.isEdge()
-mxGraphDataModel.getParent(cell: mxCell) -> Cell.getParent()
-
-
-
-
-
-
-
-### properties rename
-Overlay.strokewidth -> strokeWidth
-Shape.strokewidth -> strokeWidth
-
 
 ### mxUtils split
 
@@ -121,6 +122,12 @@ xmlUtils
 constructor Element → SvgElement, boolean
 getAlternateText change types
 
+mxAbstractCanvas2D -> AbstractCanvas2D
+- arcTo(rx: number, ry: number, angle: number, largeArcFlag: number, sweepFlag: number, x: number, y: number) ->
+- arcTo(rx: number, ry: number, angle: number, largeArcFlag: boolean, sweepFlag: boolean, x: number, y: number)
+
+mxSvgCanvas2D -> SvgCanvas2D
+- mxSvgCanvas2D.format:(value: string) => number -> SvgCanvas2D.format:(value: number) => number
 
 ### Graph 
 Properties removed in favor of plugins
@@ -139,6 +146,15 @@ renamed properties: TODO which one
 Functions that existed in mxGraph and mxGraphModel have been removed. They provided a way to extend/overidde the default behavior of mxGraphModel or mxCell
 Only the functions on mxCell/Cell remain. See https://github.com/maxGraph/maxGraph/pull/24
 
+mxCell -> Cell
+- mxCell.style:string -> Cell.style:CellStyle
+
+
+mxGraphDataModel
+mxGraphDataModel.filterDescendants(filter: (cell: mxCell) => boolean, cell:mxCell) -> Cell.filterDescendants
+mxGraphDataModel.getGeometry(cell: mxCell) -> Cell.getGeometry()
+mxGraphDataModel.isEdge(cell: mxCell) -> Cell.isEdge()
+mxGraphDataModel.getParent(cell: mxCell) -> Cell.getParent()
 
 ### Misc
 
@@ -146,9 +162,31 @@ Styles removal: https://github.com/maxGraph/maxGraph/pull/31
 
 Codec rename and issue: https://github.com/maxGraph/maxGraph/pull/70
 
+mxDictionary<T> -> Dictionary<K, V>
+
+### Event Handling
+
+mxEvent
+mxEvent -> eventUtils
+mxEvent.isLeftMouseButton -> eventUtils.isLeftMouseButton
+mxEvent.isMultiTouchEvent -> eventUtils.isMultiTouchEvent
+
+mxEvent.PAN_START -> InternalEvent.PAN_START
+mxEvent.PAN_END -> InternalEvent.PAN_END
+mxEvent.addMouseWheelListener -> InternalEvent.addMouseWheelListener
+mxEvent.consume -> InternalEvent.consume
+
+mxMouseEvent -> InternalMouseEvent
 
 
-## Migrating styles
+
+The event handling mechanism has been updated in maxGraph. Use the following guidelines to update your event handling code:
+
+- `mxEvent` has been replaced by `eventUtils` and `InternalEvent` for most event-related operations.
+- Use the `eventUtils.isMultiTouchEvent` method to detect touch events.
+- Use the `eventUtils.isLeftMouseButton` method to detect mouse events.
+
+### Styling
 
 mxGraph
 - default styles defined via mxStyleSheet
@@ -158,12 +196,16 @@ maxGraph
 - default styles defined via StyleSheet
 - style of a Cell: a dedicated object reusing the same properties as the string form used by mxGraph (see below for changes)
 
+mxStyleMap (typed-mxgraph type) -> CellStateStyle
 
-### Properties
+
+#### Properties
 
 In `mxGraph`, the properties are defined as string. In `maxGraph`, they are object properties.
-
 Property names and values are generally the same. Those that change are listed below.
+
+- The `mxConstants` object has been replaced by the object properties.
+- `mxUtils.getValue` has been replaced with `InternalUtils.getValue`.
 
 Property rename
 - `autosize` into `autoSize` (as of maxgraph@0.2.0)
@@ -297,3 +339,8 @@ Documented in jgraph/mxgraph@v4.2.2/javascript/src/js/view/mxStylesheet.js#L33-L
 
 This is currently not supported in maxGraph: https://github.com/maxGraph/maxGraph/issues/154 "Add a way to not use default style properties when computing cell style"
 
+## Conclusion
+
+By following these guidelines and updating your codebase accordingly, you should be able to migrate your application from `mxGraph` to `maxGraph`.
+Remember to thoroughly test your application after the migration to ensure its functionality is preserved.
+If you encounter any issues during the migration process, refer to the `maxGraph` documentation or seek assistance from the `maxGraph` community.
