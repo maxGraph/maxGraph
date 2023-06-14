@@ -141,7 +141,7 @@ Additionally, some shape properties have been renamed:
 Several functions in `mxUtils` have been moved to their own namespaces in `maxGraph`.
 
 #### `domUtils`
-- `extractTextWithWhitespace()`: The signature of this method has changed in `maxGraph`, but the exact details are not given in the documentation.
+- `extractTextWithWhitespace()`: The signature of this method has changed in `maxGraph`. ??????
 
 #### `stringUtils`
 - `trim()`: Update your code to use `stringUtils.trim()` instead of `mxUtils.trim()`.
@@ -154,24 +154,71 @@ Several functions in `mxUtils` have been moved to their own namespaces in `maxGr
 - `createXmlDocument()`: Update your code to use `xmlUtils.createXmlDocument()` instead of `mxUtils.createXmlDocument()`.
 
 
-### SvgCanvas2D
-constructor Element → SvgElement, boolean
-getAlternateText change types
+### `mxAbstractCanvas2D`
 
-parameters type change:
-mxAbstractCanvas2D -> AbstractCanvas2D
-- arcTo(rx: number, ry: number, angle: number, largeArcFlag: number, sweepFlag: number, x: number, y: number) -> arcTo(rx: number, ry: number, angle: number, largeArcFlag: boolean, sweepFlag: boolean, x: number, y: number)
+The `mxAbstractCanvas2D` class has been renamed to `AbstractCanvas2D` in `maxGraph`, and there is a parameter type change in one of its methods.
 
-mxSvgCanvas2D -> SvgCanvas2D
-- mxSvgCanvas2D.format:(value: string) => number -> SvgCanvas2D.format:(value: number) => number
+#### `arcTo()`
+
+The `arcTo()` method in `AbstractCanvas2D` has updated parameter types. The `largeArcFlag` and `sweepFlag` parameters, which were previously of type `number`, are now of type `boolean`.  
+Here is the updated signature:
+
+**Before**:
+```typescript
+arcTo:(rx: number, ry: number, angle: number, largeArcFlag: number, sweepFlag: number, x: number, y: number) => void
+```
+
+**Now**:
+```typescript
+arcTo:(rx: number, ry: number, angle: number, largeArcFlag: boolean, sweepFlag: boolean, x: number, y: number) => void
+```
+
+### `mxSvgCanvas2D`
+
+The `mxSvgCanvas2D` class has been renamed to `SvgCanvas2D` in `maxGraph`.
+
+#### Constructor
+
+The constructor parameter has been updated. Instead of accepting an `Element`, it now expects a `SvgElement` and a `boolean` value.
+
+Before:
+```typescript
+// Old constructor
+const canvas = new mxgraph.mxSvgCanvas2D(element);
+```
+
+Now:
+```typescript
+// Updated constructor
+const canvas = new SvgCanvas2D(svgElement, oneBoolean);
+```
+
+#### `getAlternateText()`
+
+change types ???????
+
+#### `format()`
+
+The `value` parameter, which was previously of type `string`, is now of type `number`.
+
+Before:
+```typescript
+format:(value: string) => number
+```
+
+Now:
+```typescript
+format:(value: number) => number
+```
+
 
 ### Graph
 Properties removed in favor of plugins
-- graph.panningHandler → this.graph.getPlugin('PanningHandler') as PanningHandler;
+- before: graph.panningHandler → now: this.graph.getPlugin('PanningHandler') as PanningHandler;
 
 other
-- getModel() -> graph.model
-- insertVertex/insertEdge: also accept an object instead of multiple parameters
+- before: getModel() -> now: graph.model
+- before: insertVertex/insertEdge: also accept an object instead of multiple parameters
 
 
 ### Client
@@ -182,17 +229,16 @@ renamed properties: TODO which
 Functions that existed in mxGraph and mxGraphModel have been removed. They provided a way to extend/override the default behavior of mxGraphModel or mxCell.
 Only the functions for mxCell/Cell remain. See https://github.com/maxGraph/maxGraph/pull/24
 
-mxCell -> Cell
+before: mxCell -> now: Cell
 
 property type change:
-- mxCell.style:string -> Cell.style:CellStyle
+- before: mxCell.style:string -> now: Cell.style:CellStyle
 
-functions moved : 
-mxGraphDataModel
-mxGraphDataModel.filterDescendants(filter: (cell: mxCell) => boolean, cell:mxCell) -> Cell.filterDescendants
-mxGraphDataModel.getGeometry(cell: mxCell) -> Cell.getGeometry()
-mxGraphDataModel.isEdge(cell: mxCell) -> Cell.isEdge()
-mxGraphDataModel.getParent(cell: mxCell) -> Cell.getParent()
+functions moved : mxGraphDataModel
+before: mxGraphDataModel.filterDescendants(filter: (cell: mxCell) => boolean, cell:mxCell) -> now: Cell.filterDescendants
+before: mxGraphDataModel.getGeometry(cell: mxCell) -> now: Cell.getGeometry()
+before: mxGraphDataModel.isEdge(cell: mxCell) -> now: Cell.isEdge()
+before: mxGraphDataModel.getParent(cell: mxCell) -> now: Cell.getParent()
 
 ### Misc
 
