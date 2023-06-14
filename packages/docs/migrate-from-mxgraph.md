@@ -10,7 +10,7 @@ Here's a breakdown of the proposed changes:
     - Replace the `mxGraph` initialization code with direct access to `maxGraph` objects.
 
 2. General guidelines:
-    - Remove the 'mx' prefix from `mxGraph` object names in `maxGraph`.
+    - Remove the `mx` prefix from `mxGraph` object names in `maxGraph`.
     - Some utility functions have been removed because they are available in modern versions of **ECMAScript**.
 
 3. Specific code changes:
@@ -19,9 +19,9 @@ Here's a breakdown of the proposed changes:
     - Provide instructions for migrating code related to cell manipulation, styles, etc.
 
 4. Migrate styles:
-    - Explain the differences between the `mxGraph' and `maxGraph' styles.
+    - Explain the differences between the `mxGraph` and `maxGraph` styles.
     - List property renames and type changes.
-    - Provide migration instructions for standard styles defined using `StyleSheet' and specific style properties applied to cells.
+    - Provide migration instructions for standard styles defined using `StyleSheet` and specific style properties applied to cells.
 
 5. Miscellaneous:
     - Include additional documentation, examples and warnings related to the migration process from `mxGraph` to `maxGraph`.
@@ -39,8 +39,16 @@ The main changes are the removal of support for Internet Explorer (including VML
 
 ### Replace the `mxgraph` dependency with `maxgraph@core`
 
-- Remove the `mxgraph` dependency from your project.
-- Add `maxgraph@core`. The `maxgraph@core` package contains the core functionality of `maxGraph`.
+- Remove the `mxgraph` dependency from your project:
+```shell
+npm uninstall mxgraph
+```
+
+- Install the `maxgraph@core` dependency:  
+```shell
+npm install maxgraph@core
+```
+ℹ️ The `maxgraph@core` package contains the core functionality of `maxGraph`.
 
 ### Initialize `maxGraph`
 
@@ -52,6 +60,7 @@ For example, if you had code like this in `mxGraph`:
 import factory from 'mxgraph';
 
 const mxgraph = factory({});
+const graph = mxgraph.mxGraph(container);
 
 const point = new mxgraph.mxPoint(10, 50);
 // ... more initialization code
