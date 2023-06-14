@@ -267,16 +267,26 @@ renamed properties: TODO which
 Functions that existed in mxGraph and mxGraphModel have been removed. They provided a way to extend/override the default behavior of mxGraphModel or mxCell.
 Only the functions for mxCell/Cell remain. See https://github.com/maxGraph/maxGraph/pull/24
 
-before: mxCell -> now: Cell
 
-property type change:
-- before: mxCell.style:string -> now: Cell.style:CellStyle
+Some functions previously available in `mxGraph` and `mxGraphModel` have been removed. These functions allowed for customizing the behavior of `mxGraphModel` and `mxCell`. However, now only the functions specific to `mxCell`/`Cell` remain.  
+ℹ️ You can find more information about these changes in the following GitHub pull request: https://github.com/maxGraph/maxGraph/pull/24.
 
-functions moved : mxGraphDataModel
-before: mxGraphDataModel.filterDescendants(filter: (cell: mxCell) => boolean, cell:mxCell) -> now: Cell.filterDescendants
-before: mxGraphDataModel.getGeometry(cell: mxCell) -> now: Cell.getGeometry()
-before: mxGraphDataModel.isEdge(cell: mxCell) -> now: Cell.isEdge()
-before: mxGraphDataModel.getParent(cell: mxCell) -> now: Cell.getParent()
+#### `mxCell`
+
+The `mxCell` class has been renamed to `Cell` for simplicity.
+
+The `style` property of `Cell` has undergone a type change from `string` to `CellStyle`.
+
+
+#### `mxGraphDataModel`
+
+Several functions from the `mxGraphDataModel` class have been moved to the `Cell` class. These functions no longer need the `cell` parameter:
+
+- `filterDescendants()`
+- `getGeometry()`
+- `isEdge()`
+- `getParent()`
+
 
 ### Misc
 
