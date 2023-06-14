@@ -119,7 +119,7 @@ Please update your code accordingly.
 > **Note:** Much information is available at https://github.com/maxGraph/maxGraph/pull/70.
 
 ### Overlay
-The property `strokewidth` has been renamed to `strokeWidth` in `maxGraph`. 
+The `strokewidth` property has been renamed to `strokeWidth` in `maxGraph`. 
 
 ### Shape
 
@@ -133,27 +133,25 @@ The shape names in `maxGraph` have been updated to have a consistent postfix. Pl
 - `mxConnector` should be updated to `ConnectorShape`.
 - `mxText` should be updated to `TextShape`.
 
-Additionally, there has been a renaming of shape properties:
+Additionally, some shape properties have been renamed:
 
-- The property `strokewidth` should now be changed to `strokeWidth`.
+- The `strokewidth` property should now be replaced by `strokeWidth`.
 
-### mxUtils split
-Some methods have been moved in `maxGraph`. Update your code accordingly:
+### `mxUtils` split
+Several functions in `mxUtils` have been moved to their own namespaces in `maxGraph`.
 
-Move functions to their own namespaces
+#### `domUtils`
+- `extractTextWithWhitespace()`: The signature of this method has changed in `maxGraph`, but the exact details are not given in the documentation.
 
-domUtils
-- extractTextWithWhitespace: signature changed (mais ne semble plus etre la signature meme)
+#### `stringUtils`
+- `trim()`: Update your code to use `stringUtils.trim()` instead of `mxUtils.trim()`.
 
-stringUtils
-- trim
+#### `styleUtils`
+- `convertPoint()`: Update your code to use `styleUtils.convertPoint()` instead of `mxUtils.convertPoint()`.
 
-styleUtils
-- convertPoint
-
-xmlUtils
-- getXml
-- createXmlDocument()
+#### `xmlUtils`
+- `getXml`(): Update your code to use `xmlUtils.getXml()` instead of `mxUtils.getXml()`.
+- `createXmlDocument()`: Update your code to use `xmlUtils.createXmlDocument()` instead of `mxUtils.createXmlDocument()`.
 
 
 ### SvgCanvas2D
