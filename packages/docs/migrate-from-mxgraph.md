@@ -163,12 +163,12 @@ The `mxAbstractCanvas2D` class has been renamed to `AbstractCanvas2D` in `maxGra
 The `arcTo()` method in `AbstractCanvas2D` has updated parameter types. The `largeArcFlag` and `sweepFlag` parameters, which were previously of type `number`, are now of type `boolean`.  
 Here is the updated signature:
 
-**Before**:
+**Before**
 ```typescript
 arcTo:(rx: number, ry: number, angle: number, largeArcFlag: number, sweepFlag: number, x: number, y: number) => void
 ```
 
-**Now**:
+**Now**
 ```typescript
 arcTo:(rx: number, ry: number, angle: number, largeArcFlag: boolean, sweepFlag: boolean, x: number, y: number) => void
 ```
@@ -181,13 +181,13 @@ The `mxSvgCanvas2D` class has been renamed to `SvgCanvas2D` in `maxGraph`.
 
 The constructor parameter has been updated. Instead of accepting an `Element`, it now expects a `SvgElement` and a `boolean` value.
 
-Before:
+**Before**
 ```typescript
 // Old constructor
 const canvas = new mxgraph.mxSvgCanvas2D(element);
 ```
 
-Now:
+**Now**
 ```typescript
 // Updated constructor
 const canvas = new SvgCanvas2D(svgElement, oneBoolean);
@@ -201,24 +201,75 @@ change types ???????
 
 The `value` parameter, which was previously of type `string`, is now of type `number`.
 
-Before:
+**Before**
 ```typescript
 format:(value: string) => number
 ```
 
-Now:
+**Now**
 ```typescript
 format:(value: number) => number
 ```
 
 
-### Graph
-Properties removed in favor of plugins
-- before: graph.panningHandler → now: this.graph.getPlugin('PanningHandler') as PanningHandler;
+### `mxGraph`
 
-other
-- before: getModel() -> now: graph.model
-- before: insertVertex/insertEdge: also accept an object instead of multiple parameters
+The `mxGraph` class has been renamed to `Graph` in `maxGraph`.
+There have also been some changes related to properties and methods.
+
+#### `panningHandler` property
+
+The `panningHandler` property has been removed and replaced by a plugin. Instead of accessing `panningHandler` directly, you can use the `getPlugin()` method to get the `PanningHandler` plugin instance. Here's an example:
+
+**Before**
+```typescript
+// Old way to access panningHandler
+const panningHandler = graph.panningHandler;
+```
+
+**Now**
+```typescript
+// Updated way using getPlugin()
+const panningHandler = this.graph.getPlugin('PanningHandler') as PanningHandler;
+```
+
+#### `getModel()`
+
+Instead of calling `getModel()`, you can directly access the `model` property of the graph object. Here's an example:
+
+**Before**
+```typescript
+// Old way of accessing the model
+const model = graph.getModel();
+```
+
+**Now**
+```typescript
+// Updated way to access the model
+const model = graph.model;
+```
+
+#### `insertVertex()` and `insertEdge()`
+
+The `insertVertex()` and `insertEdge()` methods in `maxGraph` now accept one object as parameter instead of multiple parameters. Instead of passing individual parameters, you can pass an object containing all the required properties. Here's an example:
+
+**Before**
+```typescript
+// Old way of using insertVertex()
+graph.insertVertex(parent, id, value, x, y, width, height, style);
+
+// Old way of using insertEdge()
+graph.insertEdge(parent, id, value, source, target, style);
+```
+
+**Now**
+```typescript
+// Updated way to use an object parameter for insertVertex()
+graph.insertVertex({ parent, id, value, x, y, width, height, style });
+
+// Updated way to use an object parameter for insertEdge()
+graph.insertEdge({ parent, id, value, source, target, style });
+```
 
 
 ### Client
