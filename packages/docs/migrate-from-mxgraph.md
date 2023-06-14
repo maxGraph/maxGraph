@@ -1,4 +1,4 @@
-# Migration Documentation: mxGraph to maxGraph
+# Migration guide: mxGraph to maxGraph
 
 This documentation provides instructions for migrating from `mxGraph` to `maxGraph`.
 It includes information about application setup changes, code changes, styles, event handling and other relevant information.
@@ -314,21 +314,24 @@ style.startSize = 8;
 
 mxGraph line 50
 
-> For a named style, the stylename must be the first element
+> For a named style, the the stylename must be the first element
 of the cell style:
 (code)
 stylename;image=http://www.example.com/image.gif
 (end)
-A cell style can have any number of key=value pairs, separated by a semicolon, as follows:
+A cell style can have any number of key=value pairs added, divided
+by a semicolon as follows:
 (code)
 [stylename;|key=value;]
 (end)
 
 mxGraph line 167
 
-> Styles are a collection of key/value pairs, and a stylesheet is a collection of named styles.
-The names are referenced by the cell style, which is stored in <mxCell.style> with the following format: [stylename;|key=value;].
-The string is resolved to a collection of key/value pairs, where the keys are overridden by the values in the string.
+> Styles are a collection of key, value pairs and a stylesheet is a collection
+of named styles. The names are referenced by the cellstyle, which is stored
+in <mxCell.style> with the following format: [stylename;|key=value;]. The
+string is resolved to a collection of key, value pairs, where the keys are
+overridden with the values in the string.
 
 
 **TODO migration example**
