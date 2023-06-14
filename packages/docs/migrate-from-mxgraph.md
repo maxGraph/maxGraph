@@ -114,36 +114,31 @@ Here are some general guidelines to keep in mind when migrating from `mxGraph` t
 ## Specific code changes
 
 This section outlines specific code changes required when migrating from `mxGraph` to `maxGraph`.
+Please update your code accordingly.
 
 > **Note:** Much information is available at https://github.com/maxGraph/maxGraph/pull/70.
 
-### Renaming classes and moving methods
-
-Some classes and methods have been renamed or moved in `maxGraph`. Update your code accordingly:
-
-
-### Rename and update properties
-
-Rename or update properties in various objects as follows:
-
-Overlay.strokewidth -> strokeWidth
-
+### Overlay
+The property `strokewidth` has been renamed to `strokeWidth` in `maxGraph`. 
 
 ### Shape
 
-Shapes: consistent postfix shapes
-- mxRectangleShape -> RectangleShape
-- mxImageShape -> ImageShape
-- mxEllipse -> EllipseShape
-- mxRhombus -> RhombusShape
-- mxMarker -> MarkerShape
-- mxConnector -> ConnectorShape
-- mxText -> TextShape
+The shape names in `maxGraph` have been updated to have a consistent postfix. Please update the shape names in your code as follows:
 
-Rename shape properties
-  - strokewidth -> strokeWidth
+- `mxRectangleShape` should be updated to `RectangleShape`.
+- `mxImageShape` should be updated to `ImageShape`.
+- `mxEllipse` should be updated to `EllipseShape`.
+- `mxRhombus` should be updated to `RhombusShape`.
+- `mxMarker` should be updated to `MarkerShape`.
+- `mxConnector` should be updated to `ConnectorShape`.
+- `mxText` should be updated to `TextShape`.
+
+Additionally, there has been a renaming of shape properties:
+
+- The property `strokewidth` should now be changed to `strokeWidth`.
 
 ### mxUtils split
+Some methods have been moved in `maxGraph`. Update your code accordingly:
 
 Move functions to their own namespaces
 
@@ -165,6 +160,7 @@ xmlUtils
 constructor Element → SvgElement, boolean
 getAlternateText change types
 
+parameters type change:
 mxAbstractCanvas2D -> AbstractCanvas2D
 - arcTo(rx: number, ry: number, angle: number, largeArcFlag: number, sweepFlag: number, x: number, y: number) -> arcTo(rx: number, ry: number, angle: number, largeArcFlag: boolean, sweepFlag: boolean, x: number, y: number)
 
@@ -189,9 +185,11 @@ Functions that existed in mxGraph and mxGraphModel have been removed. They provi
 Only the functions for mxCell/Cell remain. See https://github.com/maxGraph/maxGraph/pull/24
 
 mxCell -> Cell
+
+property type change:
 - mxCell.style:string -> Cell.style:CellStyle
 
-
+functions moved : 
 mxGraphDataModel
 mxGraphDataModel.filterDescendants(filter: (cell: mxCell) => boolean, cell:mxCell) -> Cell.filterDescendants
 mxGraphDataModel.getGeometry(cell: mxCell) -> Cell.getGeometry()
@@ -208,25 +206,21 @@ mxDictionary<T> -> Dictionary<K, V>
 
 ### Event handling
 
-mxEvent
-mxEvent -> eventUtils
-mxEvent.isLeftMouseButton -> eventUtils.isLeftMouseButton
-mxEvent.isMultiTouchEvent -> eventUtils.isMultiTouchEvent
-
-mxEvent.PAN_START -> InternalEvent.PAN_START
-mxEvent.PAN_END -> InternalEvent.PAN_END
-mxEvent.addMouseWheelListener -> InternalEvent.addMouseWheelListener
-mxEvent.consume -> InternalEvent.consume
-
-mxMouseEvent -> InternalMouseEvent
-
-
-
 The event handling mechanism in `maxGraph` has been updated. Use the following guidelines to update your event handling code:
 
 - `mxEvent` has been replaced by `eventUtils` and `InternalEvent` for most event-related operations.
-- Use the `eventUtils.isMultiTouchEvent` method to detect touch events.
-- Use the `eventUtils.isLeftMouseButton` method to detect mouse events.
+- `mxMouseEvent` has been replaced by `InternalMouseEvent`.
+
+#### `eventUtils`
+- Use the `eventUtils.isMultiTouchEvent()` method, to detect touch events, instead of `mxEvent.isMultiTouchEvent()`.
+- Use the `eventUtils.isLeftMouseButton()` method, to detect mouse events, instead of `mxEvent.isLeftMouseButton()`.
+
+#### `InternalEvent`
+- Use the `eventUtils.PAN_START` property instead of `mxEvent.PAN_START`.
+- Use the `eventUtils.PAN_END` property instead of `mxEvent.PAN_END`.
+- Use the `eventUtils.addMouseWheelListener()` method instead of `mxEvent.addMouseWheelListener()`.
+- Use the `eventUtils.consume()` method instead of `mxEvent.consume()`.
+
 
 ### Styling
 
@@ -247,7 +241,7 @@ In `mxGraph`, the properties are defined as string. In `maxGraph`, they are obje
 Property names and values are generally the same. The ones that change are listed below.
 
 - The `mxConstants` object has been replaced by the object properties.
-- `mxUtils.getValue` has been replaced by `InternalUtils.getValue`.
+- `mxUtils.getValue()` has been replaced by `InternalUtils.getValue()`.
 
 Property renaming
 - `autosize` to `autoSize` (from maxgraph@0.2.0)
