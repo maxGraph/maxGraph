@@ -5,26 +5,9 @@ It includes information about application setup changes, code changes, styles, e
 
 Here's a breakdown of the proposed changes:
 
-1. Application setup:
-    - Remove the `mxgraph` dependency and add `maxgraph@core` instead.
-    - Replace the `mxGraph` initialization code with direct access to `maxGraph` objects.
-
-2. General guidelines:
-    - Remove the `mx` prefix from `mxGraph` object names in `maxGraph`.
-    - Some utility functions have been removed because they are available in modern versions of **ECMAScript**.
-
-3. Specific code changes:
-    - Renaming and moving of certain classes and methods.
-    - Rename and update properties in several objects.
-    - Provide instructions for migrating code related to cell manipulation, styles, etc.
-
-4. Migrate styles:
-    - Explain the differences between the `mxGraph` and `maxGraph` styles.
-    - List property renames and type changes.
-    - Provide migration instructions for standard styles defined using `StyleSheet` and specific style properties applied to cells.
-
-5. Miscellaneous:
-    - Include additional documentation, examples and warnings related to the migration process from `mxGraph` to `maxGraph`.
+1. [Application setup](#application-setup)
+2. [General guidelines](#general-guidelines)
+3. [Specific code changes](#specific-code-changes)
 
 > **Note:** **⚠️⚠️⚠️ This page is under construction. ⚠️⚠️⚠️  
 Comments are welcome by creating an [issue](https://github.com/maxGraph/maxGraph/issues)
@@ -35,7 +18,10 @@ The concepts are the same, so experienced `mxGraph` users should be able to swit
 
 The main changes are the removal of support for Internet Explorer (including VML support) and Legacy Edge.
 
+
 ## Application setup
+
+To migrate your application setup from `mxGraph` to `maxGraph`, follow these steps:
 
 ### Replace the `mxgraph` dependency with `maxgraph@core`
 
@@ -103,6 +89,7 @@ Replace with:
 "typeroots": ["./node_modules/@types"]
 ```
 Or remove the line.
+
 
 ## General Guidelines
 
