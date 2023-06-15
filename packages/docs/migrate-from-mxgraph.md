@@ -125,7 +125,7 @@ Additionally, some shape properties have been renamed:
 - The `strokewidth` property should now be replaced by `strokeWidth`.
 
 ### `mxUtils` split
-Several functions in `mxUtils` have been moved to their own namespaces in `maxGraph`.
+Several functions in `mxUtils` have been moved to their own namespaces in `maxGraph`. Some remain in `utils`.
 
 #### `domUtils`
 - `extractTextWithWhitespace()`: The signature of this method has changed in `maxGraph`. ??????
@@ -139,7 +139,6 @@ Several functions in `mxUtils` have been moved to their own namespaces in `maxGr
 #### `xmlUtils`
 - `getXml`(): Update your code to use `xmlUtils.getXml()` instead of `mxUtils.getXml()`.
 - `createXmlDocument()`: Update your code to use `xmlUtils.createXmlDocument()` instead of `mxUtils.createXmlDocument()`.
-
 
 ### `mxAbstractCanvas2D`
 
@@ -290,8 +289,6 @@ Several functions from the `mxGraphDataModel` class have been moved to the `Cell
 
 ### Misc
 
-Remove styles: https://github.com/maxGraph/maxGraph/pull/31
-
 Codec renaming and output: https://github.com/maxGraph/maxGraph/pull/70
 
 mxDictionary<T> -> Dictionary<K, V>
@@ -317,24 +314,25 @@ The event handling mechanism in `maxGraph` has been updated. Use the following g
 ### Styling
 
 `mxGraph`
-- default styles defined via mxStyleSheet
-- Style of a cell: a string containing all properties and values, using a specific syntax and delimiter
+- Default styles defined with `mxStyleSheet`.
+- Style of a Cell: a string containing all properties and values, using a specific syntax and delimiter.
+- Style of a State Cell: a `StyleMap` instance (See [StyleMap](https://github.com/typed-mxgraph/typed-mxgraph/blob/187dd4f0dc7644c0cfbc998dae5fc90879597d81/lib/view/mxStylesheet.d.ts#L2-L4) as a `typed-mxgraph` type).
 
 `maxGraph`
-- default styles defined via StyleSheet
-- style of a Cell: a dedicated object that reuses the same properties as the string form used by mxGraph (see below for changes)
-
-mxStyleMap (typed-mxgraph type) -> CellStateStyle
+- Default styles defined via `StyleSheet`.
+- Style of a Cell: a dedicated `CellStyle` object that reuses the same properties as the string form used by mxGraph (see below for changes).
+- Style of a State Cell: a `CellStateStyle` instance.
 
 
 #### Properties
 
-In `mxGraph`, the properties are defined as string. In `maxGraph`, they are object properties.
-Property names and values are generally the same. The ones that change are listed below.
+In `mxGraph`, the properties are defined as string. The property keys are defined in `mxConstants` and are prefixed by `STYLE_` like `mxConstants.STYLE_FILLCOLOR`.
 
-- The `mxConstants` object has been replaced by the object properties.
-- `mxUtils.getValue()` has been replaced by `InternalUtils.getValue()`.
+In `maxGraph`, they are object properties. `mxConstants.STYLE_*` have been replaced by the object properties (see PR [#31](https://github.com/maxGraph/maxGraph/pull/31)).
 
+Property names and values are generally the same as in `mxGraph`. The ones that change are listed below.
+
+<a name="style-properties-change"></a>
 Property renaming
 - `autosize` to `autoSize` (from maxgraph@0.2.0)
 
@@ -380,7 +378,7 @@ Property type changed from `number` (0 or 1) to `boolean` (if not specified, fro
 
 **TODO: what is a StyleSheet? link to JSDoc/code**
 
-The migration consists of converting `StyleMap` (TODO link to typed-mxgraph) objects to `CellStyle` objects.
+The migration consists of converting [`StyleMap`](https://github.com/typed-mxgraph/typed-mxgraph/blob/187dd4f0dc7644c0cfbc998dae5fc90879597d81/lib/view/mxStylesheet.d.ts#L2-L4) objects to `CellStyle` objects.
 
 If you have been using string or named properties, you can keep that syntax.
 You just need to rename the property or update its value as described in (TODO anchor to properties change paragraph)
@@ -404,10 +402,10 @@ style.startSize = 8;
 ### Migration of specific style properties applied to dedicated cells
 
 - **TODO: what is a style? link to JSDoc/code**
-- **TODO move after the default style paragraph**
 
+#### `mxGraph` style
 
-mxGraph line 50
+[mxGraph line 50](https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxGraph.js#L50-L62)
 
 > For a named style, the the stylename must be the first element
 of the cell style:
@@ -420,31 +418,40 @@ by a semicolon as follows:
 [stylename;|key=value;]
 (end)
 
-mxGraph line 167
+[mxGraph line 167](https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxGraph.js#L167-L171)
 
 > Styles are a collection of key, value pairs and a stylesheet is a collection
 of named styles. The names are referenced by the cellstyle, which is stored
 in <mxCell.style> with the following format: [stylename;|key=value;]. The
 string is resolved to a collection of key, value pairs, where the keys are
 overridden with the values in the string.
+>
+
+See also
+- https://jgraph.github.io/mxgraph/docs/tutorial.html#3.3
+- https://jgraph.github.io/mxgraph/docs/manual.html#3.1.3.1
 
 
-**TODO migration example**
+#### `maxGraph` style
 
-⚠️⚠️⚠ **WARNING**: Be aware of the properties that have been renamed or whose value types have changed, as described in (TODO anchor to properties change paragraph)
+In maxGraph, the style is no more defined as a string but as a `CellStyle` object.
+
+Most of the time, the name of `CellStyle` properties is the same as the style keys in the mxGraph style.
+
+⚠️⚠️⚠ **WARNING**: Be aware of the properties that have been renamed or whose value types have changed, as described in the [style-properties-change](./migrate-from-mxgraph.md#style-properties-change) paragraph.
+
+
+**Migration example**
 
 
 ```js
 // Before
-graph.insertVertex({
-  ...
-  style: 'style1;style2;shape=cylinder;strokeWidth=2;fillColor:#ffffff'
-});
+graph.insertVertex(..., 'style1;style2;shape=cylinder;strokeWidth=2;fillColor:#ffffff');
 ```
 
 
 ```js
-// Now
+// Now using the insertVertex method taking a single parameter
 graph.insertVertex({
   ...
   style: {
@@ -456,13 +463,13 @@ graph.insertVertex({
 });
 ```
 
-To not merge properties of the default style, the style string must start with a `;` (semicolon). As in `;style1;style2;prop1=value1;.....`.
-
-Documented in jgraph/mxgraph@v4.2.2/javascript/src/js/view/mxStylesheet.js#L33-L38
-
+**Special migration case**
+In `mxGraph`, to not merge properties of the default style, the style string must start with a `;` (semicolon) as in `;style1;style2;prop1=value1;.....`.
+This is documented in the [mxStylesheet documentation](jgraph/mxgraph@v4.2.2/javascript/src/js/view/mxStylesheet.js#L33-L38).
 > To override the default style for a cell, add a leading semicolon to the style definition, e.g. ;shadow=1
 
 This is currently not supported in maxGraph: https://github.com/maxGraph/maxGraph/issues/154 "Add a way to not use default style properties when calculating cell styles".
+
 
 ## Conclusion
 
