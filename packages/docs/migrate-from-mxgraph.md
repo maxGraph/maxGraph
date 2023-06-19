@@ -152,6 +152,7 @@ arcTo:(rx: number, ry: number, angle: number, largeArcFlag: number, sweepFlag: n
 ```
 
 **Now**
+Some `number` parameters that took the `0` or `1` values have been transformed into `boolean` parameters.
 ```typescript
 arcTo:(rx: number, ry: number, angle: number, largeArcFlag: boolean, sweepFlag: boolean, x: number, y: number) => void
 ```
