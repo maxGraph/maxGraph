@@ -80,15 +80,12 @@ Remove any `typeroots` settings related to `typed-mxgraph` from your `tsconfig.j
 For example, if you have a configuration like this:
 
 ```json
-"typeroots": ["./node_modules/@types", "./node_modules/@typed-mxgraph/typed-mxgraph"]
+"typeroots": ["./node_modules/@types", "./node_modules/@typed-mxgraph/typed-mxgraph", ...]
 ```
 
-Replace with:
+Remove `"./node_modules/@typed-mxgraph/typed-mxgraph"`.
 
-```json
-"typeroots": ["./node_modules/@types"]
-```
-Or remove the line.
+If you only configured `typeroots` to add the `typed-mxgraph` types, remove the line to restore the [TypeScript defaults](https://www.typescriptlang.org/tsconfig/#typeRoots).
 
 
 ## General Guidelines
