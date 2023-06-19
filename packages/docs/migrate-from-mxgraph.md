@@ -125,7 +125,7 @@ Additionally, some shape properties have been renamed:
 Several functions in `mxUtils` have been moved to their own namespaces in `maxGraph`. Some remain in `utils`.
 
 #### `domUtils`
-- `extractTextWithWhitespace()`: The signature of this method has changed in `maxGraph`. ??????
+- `extractTextWithWhitespace()`: : Update your code to use `domUtils.extractTextWithWhitespace()` instead of `mxUtils.extractTextWithWhitespace()`.
 
 #### `stringUtils`
 - `trim()`: Update your code to use `stringUtils.trim()` instead of `mxUtils.trim()`.
