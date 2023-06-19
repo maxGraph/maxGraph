@@ -219,7 +219,8 @@ const panningHandler = this.graph.getPlugin('PanningHandler') as PanningHandler;
 
 #### `getModel()`
 
-Instead of calling `getModel()`, you can directly access the `model` property of the graph object. Here's an example:
+Instead of calling `getModel()` that returned an instance of `mxGraphModel`, call `getDataModel` which returns an instance of `GraphDataModel`.
+Here's an example:
 
 **Before**
 ```typescript
@@ -230,12 +231,16 @@ const model = graph.getModel();
 **Now**
 ```typescript
 // Updated way to access the model
-const model = graph.model;
+const model = graph.getDataModel();
 ```
 
 #### `insertVertex()` and `insertEdge()`
 
-The `insertVertex()` and `insertEdge()` methods in `maxGraph` now accept one object as parameter instead of multiple parameters. Instead of passing individual parameters, you can pass an object containing all the required properties. Here's an example:
+The `insertVertex()` and `insertEdge()` methods in `maxGraph` now also accept one object as parameter instead of multiple parameters. Instead of passing individual parameters, you can pass an object containing all the required properties.
+
+The former methods having several parameters still exist but the new signature should be used instead.
+
+Here's an example:
 
 **Before**
 ```typescript
@@ -248,10 +253,10 @@ graph.insertEdge(parent, id, value, source, target, style);
 
 **Now**
 ```typescript
-// Updated way to use an object parameter for insertVertex()
+// New way to use an object parameter for insertVertex()
 graph.insertVertex({ parent, id, value, x, y, width, height, style });
 
-// Updated way to use an object parameter for insertEdge()
+// New way to use an object parameter for insertEdge()
 graph.insertEdge({ parent, id, value, source, target, style });
 ```
 
