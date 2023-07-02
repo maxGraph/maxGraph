@@ -100,8 +100,7 @@ export class Stylesheet {
   }
 
   /**
-   * Sets the default style for vertices using defaultVertex as the
-   * stylename.
+   * Sets the default style for vertices using defaultVertex as the style name.
    * @param style Key, value pairs that define the style.
    */
   putDefaultVertexStyle(style: CellStateStyle) {
@@ -109,7 +108,7 @@ export class Stylesheet {
   }
 
   /**
-   * Sets the default style for edges using defaultEdge as the stylename.
+   * Sets the default style for edges using defaultEdge as the style name.
    */
   putDefaultEdgeStyle(style: CellStateStyle) {
     this.putCellStyle('defaultEdge', style);
@@ -118,49 +117,48 @@ export class Stylesheet {
   /**
    * Returns the default style for vertices.
    */
-  getDefaultVertexStyle() {
-    return this.styles.get('defaultVertex');
+  getDefaultVertexStyle(): CellStateStyle {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- the style is set in the constructor
+    return this.styles.get('defaultVertex')!;
   }
 
   /**
    * Sets the default style for edges.
    */
-  getDefaultEdgeStyle() {
-    return this.styles.get('defaultEdge');
+  getDefaultEdgeStyle(): CellStateStyle {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- the style is set in the constructor
+    return this.styles.get('defaultEdge')!;
   }
 
   /**
-   * Stores the given map of key, value pairs under the given name in
-   * {@link styles}.
+   * Stores the given {@link CellStateStyle} under the given name in {@link styles}.
    *
-   * Example:
+   * ### Example
    *
-   * The following example adds a new style called 'rounded' into an
-   * existing stylesheet:
+   * The following example adds a new style called `rounded` into an existing stylesheet:
    *
    * ```javascript
-   * var style = new Object();
-   * style.shape = mxConstants.SHAPE_RECTANGLE;
-   * style.perimiter = mxPerimeter.RectanglePerimeter;
+   * const style = {} as CellStateStyle;
+   * style.shape = SHAPE.RECTANGLE;
+   * style.perimeter = PERIMETER.RECTANGLE;
    * style.rounded = true;
    * graph.getStylesheet().putCellStyle('rounded', style);
    * ```
    *
-   * In the above example, the new style is an object. The possible keys of
-   * the object are all the constants in {@link mxConstants} that start with STYLE
-   * and the values are either JavaScript objects, such as
-   * {@link Perimeter.RightAngleRectanglePerimeter} (which is in fact a function)
-   * or expressions, such as true. Note that not all keys will be
-   * interpreted by all shapes (eg. the line shape ignores the fill color).
-   * The final call to this method associates the style with a name in the
-   * stylesheet. The style is used in a cell with the following code:
+   * ### Description
    *
+   * Note that not all properties will be interpreted by all shapes. For example, the 'line' shape ignores the fill color.
+   * The final call to this method associates the style with a name in the stylesheet.
+   *
+   * The style is used in a cell with the following code:
    * ```javascript
-   * model.setStyle(cell, 'rounded');
+   * // model is an instance of GraphDataModel
+   * // style is an instance of CellStyle
+   * model.setStyle(cell, { baseStyleNames: ['rounded'] });
    * ```
    *
    * @param name Name for the style to be stored.
-   * @param style Key, value pairs that define the style.
+   * @param style The instance of the style to be stored.
    */
   putCellStyle(name: string, style: CellStateStyle) {
     this.styles.set(name, style);

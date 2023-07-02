@@ -210,7 +210,7 @@ import type { CellStyle, FilterFunction } from '../types';
  * Event: mxEvent.BEFORE_UNDO
  *
  * Fires before the change is dispatched after the update level has reached 0
- * in {@link endUpdate}. The `edit` property contains the {@link curreneEdit}.
+ * in {@link endUpdate}. The `edit` property contains the {@link currentEdit}.
  *
  * Event: mxEvent.UNDO
  *

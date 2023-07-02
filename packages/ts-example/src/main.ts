@@ -25,6 +25,7 @@ import {
 import { registerCustomShapes } from './custom-shapes';
 
 // display the maxGraph version in the footer
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- the footer is present in index.html
 const footer = document.querySelector<HTMLElement>('footer')!;
 footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 
@@ -40,8 +41,10 @@ new RubberBandHandler(graph); // Enables rubber band selection
 
 // shapes and styles
 registerCustomShapes();
-// @ts-ignore TODO fix TS2532: Object is possibly 'undefined'.
-graph.getStylesheet().getDefaultEdgeStyle().edgeStyle = 'orthogonalEdgeStyle'; // TODO use constants.EDGESTYLE instead of 'orthogonalEdgeStyle'
+// TODO cannot use constants.EDGESTYLE.ORTHOGONAL
+// TS2748: Cannot access ambient const enums when the '--isolatedModules' flag is provided.
+// See https://github.com/maxGraph/maxGraph/issues/205
+graph.getStylesheet().getDefaultEdgeStyle().edgeStyle = 'orthogonalEdgeStyle';
 
 // Gets the default parent for inserting new cells. This
 // is normally the first child of the root (ie. layer 0).
@@ -71,7 +74,6 @@ graph.batchUpdate(() => {
   graph.insertEdge(parent, null, 'a regular edge', vertex01, vertex02);
 
   // insert vertices using custom shapes
-  // TODO type issue in CellStyle type, shape should allow string to manage custom implementation
   const vertex11 = graph.insertVertex(
     parent,
     null,
@@ -80,7 +82,7 @@ graph.batchUpdate(() => {
     200,
     100,
     100,
-    /*<CellStyle>*/ { shape: 'customRectangle' }
+    <CellStyle>{ shape: 'customRectangle' }
   );
   const vertex12 = graph.insertVertex(
     parent,
@@ -90,7 +92,7 @@ graph.batchUpdate(() => {
     350,
     70,
     70,
-    /*<CellStyle>*/ { shape: 'customEllipse' }
+    <CellStyle>{ shape: 'customEllipse' }
   );
   graph.insertEdge(parent, null, 'another edge', vertex11, vertex12);
 });
