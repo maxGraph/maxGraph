@@ -100,15 +100,16 @@ export class Stylesheet {
   }
 
   /**
-   * Sets the default style for vertices using defaultVertex as the style name.
-   * @param style Key, value pairs that define the style.
+   * Sets the default style for vertices using `defaultVertex` as the style name.
+   * @param style The style to be stored.
    */
   putDefaultVertexStyle(style: CellStateStyle) {
     this.putCellStyle('defaultVertex', style);
   }
 
   /**
-   * Sets the default style for edges using defaultEdge as the style name.
+   * Sets the default style for edges using `defaultEdge` as the style name.
+   * @param style The style to be stored.
    */
   putDefaultEdgeStyle(style: CellStateStyle) {
     this.putCellStyle('defaultEdge', style);
@@ -123,7 +124,7 @@ export class Stylesheet {
   }
 
   /**
-   * Sets the default style for edges.
+   * Returns the default style for edges.
    */
   getDefaultEdgeStyle(): CellStateStyle {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- the style is set in the constructor
