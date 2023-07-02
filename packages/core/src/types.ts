@@ -23,10 +23,6 @@ import type Shape from './view/geometry/Shape';
 import type { Graph } from './view/Graph';
 import type ImageBox from './view/image/ImageBox';
 
-export type CellMap = {
-  [id: string]: Cell;
-};
-
 export type FilterFunction = (cell: Cell) => boolean;
 
 export type UndoableChange = {

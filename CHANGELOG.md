@@ -2,8 +2,9 @@
 
 ## Unreleased
 
-Breaking Changes
+**Breaking Changes**
 - `Stylesheet.getDefaultVertexStyle` and `Stylesheet.getDefaultEdgeStyle` no longer return `undefined`.
+- remove the `CellMap` type. It was not used in the maxGraph code, which should have no impact.
 
 ## 0.2.1
 
