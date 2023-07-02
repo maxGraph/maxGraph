@@ -72,8 +72,19 @@ const parent = graph.getDefaultParent();
 
 // Adds cells to the model in a single step
 graph.batchUpdate(() => {
-  const vertex01 = graph.insertVertex(parent, null, 'a regular rectangle', 10, 10, 100, 100);
-  const vertex02 = graph.insertVertex(parent, null, 'a regular ellipse', 350, 90, 50, 50, <CellStyle>{shape: 'ellipse', fillColor: 'orange'});
+  const vertex01 = graph.insertVertex({
+    parent,
+    position: [10, 10],
+    size: [100, 100],
+    style: { shape: 'customRectangle' },
+    value: 'a regular rectangle',
+  });
+  const vertex02 = graph.insertVertex({
+    position: [350, 90],
+    size: [50, 50],
+    style: { shape: 'ellipse', fillColor: 'orange' },
+    value: 'a regular ellipse',
+  });
   graph.insertEdge(parent, null, 'a regular edge', vertex01, vertex02);
 });
 ```

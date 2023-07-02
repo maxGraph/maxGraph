@@ -15,13 +15,7 @@ limitations under the License.
 */
 
 import './style.css';
-import {
-  type CellStyle,
-  Client,
-  Graph,
-  InternalEvent,
-  RubberBandHandler,
-} from '@maxgraph/core';
+import { Client, Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core';
 import { registerCustomShapes } from './custom-shapes';
 
 // display the maxGraph version in the footer
@@ -52,6 +46,7 @@ const parent = graph.getDefaultParent();
 
 // Adds cells to the model in a single step
 graph.batchUpdate(() => {
+  // use the legacy insertVertex method
   const vertex01 = graph.insertVertex(
     parent,
     null,
@@ -69,30 +64,30 @@ graph.batchUpdate(() => {
     90,
     50,
     50,
-    <CellStyle>{ shape: 'ellipse', fillColor: 'orange' }
+    { fillColor: 'orange', shape: 'ellipse', verticalLabelPosition: 'bottom' }
   );
   graph.insertEdge(parent, null, 'a regular edge', vertex01, vertex02);
 
-  // insert vertices using custom shapes
-  const vertex11 = graph.insertVertex(
+  // insert vertices using custom shapes using the new insertVertex method
+  const vertex11 = graph.insertVertex({
     parent,
-    null,
-    'a custom rectangle',
-    20,
-    200,
-    100,
-    100,
-    <CellStyle>{ shape: 'customRectangle' }
-  );
-  const vertex12 = graph.insertVertex(
+    value: 'a custom rectangle',
+    position: [20, 200],
+    size: [100, 100],
+    style: { shape: 'customRectangle' },
+  });
+  // use the new insertVertex method using position and size parameters
+  const vertex12 = graph.insertVertex({
     parent,
-    null,
-    'a custom ellipse',
-    150,
-    350,
-    70,
-    70,
-    <CellStyle>{ shape: 'customEllipse' }
-  );
+    value: 'a custom ellipse',
+    x: 150,
+    y: 350,
+    width: 70,
+    height: 70,
+    style: {
+      shape: 'customEllipse',
+      verticalLabelPosition: 'bottom',
+    },
+  });
   graph.insertEdge(parent, null, 'another edge', vertex11, vertex12);
 });

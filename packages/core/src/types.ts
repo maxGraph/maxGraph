@@ -22,6 +22,7 @@ import type InternalMouseEvent from './view/event/InternalMouseEvent';
 import type Shape from './view/geometry/Shape';
 import type { Graph } from './view/Graph';
 import type ImageBox from './view/image/ImageBox';
+import Geometry from './view/geometry/Geometry';
 
 export type CellMap = {
   [id: string]: Cell;
@@ -882,6 +883,61 @@ export interface Gradient extends SVGLinearGradientElement {
 
 export type GradientMap = {
   [k: string]: Gradient;
+};
+
+export type VertexParameters = {
+  /**
+   * Class reference to a class derived from {@link Geometry}.
+   * This can be useful for defining custom constraints.
+   * @default {@link Geometry}
+   */
+  geometryClass?: typeof Geometry;
+  /**
+   * It is mandatory to set this value or the {@link size} property.
+   */
+  height?: number;
+  /**
+   * Optional string that defines the id of the new vertex. If not set, the id is auto-generated when creating the vertex.
+   */
+  id?: string;
+  /**
+   * The parent of the new vertex. If not set, use the default parent.
+   */
+  parent?: Cell | null;
+  /**
+   * Fallback when the {@link x} or the {@link y} parameters are not set.
+   * It is mandatory to set this value or the {@link x} and the {@link y} properties.
+   * Order of the elements: x, y
+   */
+  position?: [number, number];
+  /**
+   * Specifies if the geometry is relative.
+   * @default false
+   */
+  relative?: boolean;
+  /**
+   * Fallback when the {@link width} or the {@link height} parameters are not set.
+   * It is mandatory to set this value or the {@link width} and the {@link height} properties.
+   * Order of the elements: width, height
+   */
+  size?: [number, number];
+  style?: CellStyle;
+  /**
+   * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
+   */
+  value?: any;
+  /**
+   * It is mandatory to set this value or the {@link size} property.
+   */
+  width?: number;
+  /**
+   * It is mandatory to set this value or the {@link position} property.
+   */
+  x?: number;
+  /**
+   * It is mandatory to set this value or the {@link position} property.
+   */
+  y?: number;
 };
 
 export interface GraphPluginConstructor {
