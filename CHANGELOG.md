@@ -1,5 +1,10 @@
 # `maxGraph` Change Log
 
+## Unreleased
+
+Breaking Changes
+- `Stylesheet.getDefaultVertexStyle` and `Stylesheet.getDefaultEdgeStyle` no longer return `undefined`.
+
 ## 0.2.1
 
 This is a bug fix release.
