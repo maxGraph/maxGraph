@@ -88,7 +88,12 @@ graph.batchUpdate(() => {
     style: { shape: 'ellipse', fillColor: 'orange' },
     value: 'a regular ellipse',
   });
-  graph.insertEdge(parent, null, 'a regular edge', vertex01, vertex02);
+  graph.insertEdge({
+    parent,
+    source: vertex01,
+    target: vertex02,
+    value: 'a regular edge',
+  });
 });
 ```
 

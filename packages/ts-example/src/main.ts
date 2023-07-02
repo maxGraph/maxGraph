@@ -19,8 +19,7 @@ import { Client, Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core'
 import { registerCustomShapes } from './custom-shapes';
 
 // display the maxGraph version in the footer
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- the footer is present in index.html
-const footer = document.querySelector<HTMLElement>('footer')!;
+const footer = <HTMLElement>document.querySelector('footer');
 footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 
 // Creates the graph inside the given container
@@ -66,9 +65,10 @@ graph.batchUpdate(() => {
     50,
     { fillColor: 'orange', shape: 'ellipse', verticalLabelPosition: 'bottom' }
   );
+  // use the legacy insertEdge method
   graph.insertEdge(parent, null, 'a regular edge', vertex01, vertex02);
 
-  // insert vertices using custom shapes using the new insertVertex method
+  // insert vertex using custom shapes using the new insertVertex method
   const vertex11 = graph.insertVertex({
     parent,
     value: 'a custom rectangle',
@@ -89,5 +89,12 @@ graph.batchUpdate(() => {
       verticalLabelPosition: 'bottom',
     },
   });
-  graph.insertEdge(parent, null, 'another edge', vertex11, vertex12);
+  // use the new insertEdge method
+  graph.insertEdge({
+    parent,
+    value: 'another edge',
+    source: vertex11,
+    target: vertex12,
+    style: { endArrow: 'block', rounded: true },
+  });
 });

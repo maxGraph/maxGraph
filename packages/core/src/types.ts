@@ -881,6 +881,30 @@ export type GradientMap = {
   [k: string]: Gradient;
 };
 
+export type EdgeParameters = {
+  /**
+   * Optional string that defines the id of the new edge. If not set, the id is auto-generated when creating the vertex.
+   */
+  id?: string;
+  /**
+   * The parent of the new edge. If not set, use the default parent.
+   */
+  parent?: Cell | null;
+  /**
+   * The {@link Cell} that defines the source of the edge.
+   */
+  source?: Cell | null;
+  style?: CellStyle;
+  /**
+   * The {@link Cell} that defines the target of the edge.
+   */
+  target?: Cell | null;
+  /**
+   * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
+   */
+  value?: any;
+};
+
 export type VertexParameters = {
   /**
    * Class reference to a class derived from {@link Geometry}.
