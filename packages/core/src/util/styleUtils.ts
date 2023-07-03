@@ -61,10 +61,7 @@ export const removeCursors = (element: HTMLElement) => {
  * @param element DOM node whose current style should be returned.
  */
 export const getCurrentStyle = (element: HTMLElement) => {
-  if (!element || element.toString() === '[object ShadowRoot]') {
-    return null;
-  }
-  return window.getComputedStyle(element, '');
+  return !element || element.toString() === '[object ShadowRoot]' ? null : window.getComputedStyle(element, '');
 };
 
 /**
