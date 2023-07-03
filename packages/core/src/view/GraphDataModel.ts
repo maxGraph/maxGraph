@@ -957,6 +957,31 @@ export class GraphDataModel extends EventSource {
   }
 
   /**
+   * Updates the model in a transaction.
+   * This is a shortcut to the usage of {@link beginUpdate} and the {@link endUpdate} methods.
+   *
+   * ```javascript
+   * const model = graph.getDataModel();
+   * const parent = graph.getDefaultParent();
+   * const index = model.getChildCount(parent);
+   * model.batchUpdate(() => {
+   *   model.add(parent, v1, index);
+   *   model.add(parent, v2, index+1);
+   * });
+   * ```
+   *
+   * @param fn the update to be performed in the transaction.
+   */
+  batchUpdate(fn: () => void) {
+    this.beginUpdate();
+    try {
+      fn();
+    } finally {
+      this.endUpdate();
+    }
+  }
+
+  /**
    * Increments the {@link updateLevel} by one. The event notification
    * is queued until {@link updateLevel} reaches 0 by use of
    * {@link endUpdate}.
@@ -971,9 +996,9 @@ export class GraphDataModel extends EventSource {
    * and {@link endUpdate} calls as shown here:
    *
    * ```javascript
-   * var model = graph.getDataModel();
-   * var parent = graph.getDefaultParent();
-   * var index = model.getChildCount(parent);
+   * const model = graph.getDataModel();
+   * const parent = graph.getDefaultParent();
+   * const index = model.getChildCount(parent);
    * model.beginUpdate();
    * try
    * {

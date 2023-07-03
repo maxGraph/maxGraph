@@ -484,20 +484,14 @@ class Graph extends EventSource {
   getContainsValidationErrorsResource = () => this.containsValidationErrorsResource;
 
   /**
-   * Shortcut for updating the model in a transaction.
+   * Updates the model in a transaction.
    *
    * @param fn the update to be performed in the transaction.
    *
-   * @see {@link GraphDataModel.beginUpdate}
-   * @see {@link GraphDataModel.endUpdate}
+   * @see {@link GraphDataModel.batchUpdate}
    */
   batchUpdate(fn: () => void) {
-    this.getDataModel().beginUpdate();
-    try {
-      fn();
-    } finally {
-      this.getDataModel().endUpdate();
-    }
+    this.getDataModel().batchUpdate(fn);
   }
 
   /**

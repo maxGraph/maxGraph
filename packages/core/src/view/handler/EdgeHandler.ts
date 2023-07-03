@@ -1727,11 +1727,9 @@ class EdgeHandler {
     isClone: boolean,
     me: InternalMouseEvent
   ) {
-    const model = this.graph.getDataModel();
     const parent = edge.getParent();
 
-    model.beginUpdate();
-    try {
+    this.graph.batchUpdate(() => {
       let constraint = this.constraintHandler.currentConstraint;
 
       if (constraint == null) {
@@ -1739,9 +1737,7 @@ class EdgeHandler {
       }
 
       this.graph.connectCell(edge, terminal, isSource, constraint);
-    } finally {
-      model.endUpdate();
-    }
+    });
 
     return edge;
   }
@@ -1752,8 +1748,7 @@ class EdgeHandler {
   changeTerminalPoint(edge: Cell, point: Point, isSource: boolean, clone: boolean) {
     const model = this.graph.getDataModel();
 
-    model.beginUpdate();
-    try {
+    model.batchUpdate(() => {
       if (clone) {
         const parent = edge.getParent();
         const terminal = edge.getTerminal(!isSource);
@@ -1770,9 +1765,7 @@ class EdgeHandler {
         model.setGeometry(edge, geo);
         this.graph.connectCell(edge, null, isSource, new ConnectionConstraint(null));
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
 
     return edge;
   }
@@ -1782,8 +1775,7 @@ class EdgeHandler {
    */
   changePoints(edge: Cell, points: Point[], clone: boolean) {
     const model = this.graph.getDataModel();
-    model.beginUpdate();
-    try {
+    model.batchUpdate(() => {
       if (clone) {
         const parent = edge.getParent();
         const source = edge.getTerminal(true);
@@ -1802,9 +1794,7 @@ class EdgeHandler {
 
         model.setGeometry(edge, geo);
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
 
     return edge;
   }
@@ -2194,7 +2184,7 @@ class EdgeHandler {
         this.destroyBends(this.virtualBends);
         this.virtualBends = this.createVirtualBends();
       }
-      
+
       if (this.customHandles) {
         this.destroyBends(this.customHandles);
         this.customHandles = this.createCustomHandles();
@@ -2272,7 +2262,7 @@ class EdgeHandler {
       this.virtualBends = [];
     }
 
-    if (this.customHandles){
+    if (this.customHandles) {
       this.destroyBends(this.customHandles);
       this.customHandles = [];
     }

@@ -183,7 +183,6 @@ class HierarchicalLayout extends GraphLayout {
    */
   execute(parent: Cell, roots: Cell[] | Cell | null = null): void {
     this.parent = parent;
-    const { model } = this.graph;
     this.edgesCache = new Dictionary();
     this.edgeSourceTermCache = new Dictionary();
     this.edgesTargetTermCache = new Dictionary();
@@ -234,8 +233,8 @@ class HierarchicalLayout extends GraphLayout {
       this.roots = rootsCopy;
     }
 
-    model.beginUpdate();
-    try {
+    const { model } = this.graph;
+    model.batchUpdate(() => {
       this.run(parent);
 
       if (this.resizeParent && !parent.isCollapsed()) {
@@ -253,9 +252,7 @@ class HierarchicalLayout extends GraphLayout {
           model.setGeometry(parent, geo);
         }
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 
   /**

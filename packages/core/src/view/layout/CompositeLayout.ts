@@ -80,16 +80,11 @@ class CompositeLayout extends GraphLayout {
    * single transaction.
    */
   execute(parent: Cell): void {
-    const model = this.graph.getDataModel();
-
-    model.beginUpdate();
-    try {
+    this.graph.batchUpdate(() => {
       for (let i = 0; i < this.layouts.length; i += 1) {
         this.layouts[i].execute.apply(this.layouts[i], [parent]);
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 }
 

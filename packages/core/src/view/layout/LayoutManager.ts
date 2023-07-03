@@ -361,8 +361,7 @@ class LayoutManager extends EventSource {
       // Invokes the layouts while removing duplicates
       const model = this.getGraph().getDataModel();
 
-      model.beginUpdate();
-      try {
+      model.batchUpdate(() => {
         let last = null;
 
         for (const cell of cells) {
@@ -373,9 +372,7 @@ class LayoutManager extends EventSource {
         }
 
         this.fireEvent(new EventObject(InternalEvent.LAYOUT_CELLS, { cells }));
-      } finally {
-        model.endUpdate();
-      }
+      });
     }
   }
 

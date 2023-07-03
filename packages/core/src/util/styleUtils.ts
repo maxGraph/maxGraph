@@ -331,8 +331,7 @@ export const setCellStyles = (
   value: any
 ) => {
   if (cells.length > 0) {
-    model.beginUpdate();
-    try {
+    model.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
         const cell = cells[i];
 
@@ -343,9 +342,7 @@ export const setCellStyles = (
           model.setStyle(cell, style);
         }
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 };
 
@@ -379,8 +376,7 @@ export const setCellStyleFlags = (
   value: boolean
 ) => {
   if (cells.length > 0) {
-    model.beginUpdate();
-    try {
+    model.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
         const cell = cells[i];
 
@@ -389,9 +385,7 @@ export const setCellStyleFlags = (
           model.setStyle(cell, style);
         }
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 };
 
@@ -399,7 +393,7 @@ export const setCellStyleFlags = (
  * Sets or removes the given key from the specified style and returns the
  * new style. If value is null then the flag is toggled.
  *
- * @param style String of the form [(stylename|key=value);].
+ * @param style The style of the Cell.
  * @param key Key of the style to be changed.
  * @param flag Integer for the bit to be changed.
  * @param value Optional boolean value for the given flag.
