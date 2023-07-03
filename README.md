@@ -80,6 +80,7 @@ graph.batchUpdate(() => {
     value: 'a regular rectangle',
   });
   const vertex02 = graph.insertVertex({
+    parent,
     position: [350, 90],
     size: [50, 50],
     style: { shape: 'ellipse', fillColor: 'orange' },
