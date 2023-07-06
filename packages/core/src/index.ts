@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* Graph mixins */
+/* Graph mixins - side effects */
 import './view/mixins/PortsMixin';
 import './view/mixins/PanningMixin';
 import './view/mixins/ZoomMixin';
@@ -39,7 +39,6 @@ import './view/mixins/PageBreaksMixin';
 import './view/mixins/GroupingMixin';
 import './view/mixins/OrderMixin';
 
-// GraphCodec
 export { Graph } from './view/Graph';
 
 export { GraphDataModel, ModelCodec } from './view/GraphDataModel';
@@ -67,11 +66,7 @@ export { default as VisibleChange } from './view/undoable_changes/VisibleChange'
 
 export { EditorKeyHandler, EditorKeyHandlerCodec } from './editor/EditorKeyHandler';
 export { EditorPopupMenu, EditorPopupMenuCodec } from './editor/EditorPopupMenu';
-// TODO restore EditorToolbarCodec if needed
-// currently, the following error occurs when running vitejs build
-// [ERROR] No matching export in "../core/dist/esm/editor/EditorToolbar.js" for import "EditorToolbarCodec"
-// export { EditorToolbar, EditorToolbarCodec } from './editor/EditorToolbar';
-export { EditorToolbar } from './editor/EditorToolbar';
+export { EditorToolbar, EditorToolbarCodec } from './editor/EditorToolbar';
 export { Editor, EditorCodec } from './editor/Editor';
 
 export { default as CellHighlight } from './view/cell/CellHighlight';
@@ -180,11 +175,7 @@ export { default as Rectangle } from './view/geometry/Rectangle';
 export { default as EdgeStyle } from './view/style/EdgeStyle';
 export { default as Perimeter } from './view/style/Perimeter';
 export { default as StyleRegistry } from './view/style/StyleRegistry';
-// TODO restore StylesheetCodec if needed
-// currently, the following error occurs when running vitejs build
-// [ERROR] No matching export in "../core/dist/esm/view/style/Stylesheet.js" for import "StylesheetCodec"
-// export { Stylesheet, StylesheetCodec } from './view/style/Stylesheet';
-export { Stylesheet } from './view/style/Stylesheet';
+export { Stylesheet, StylesheetCodec } from './view/style/Stylesheet';
 
 export * as DomHelpers from './util/domHelpers';
 
