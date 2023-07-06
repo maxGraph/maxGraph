@@ -33,7 +33,7 @@ Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) for 
 `maxGraph` is under active development and is in **alpha**. Please try it in your application and [submit an issue](https://github.com/maxGraph/maxGraph/issues)
 if you think that something is not working.
 
-You can also test the project by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
+You can also test the `maxGraph` by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
 
 ## Install
 
@@ -87,7 +87,7 @@ For more details, have a look at the [storybook stories](packages/html/stories).
 
 ## TypeScript support
 
-maxGraph is written in TypeScript and provides type definitions so maxGraph can be easily integrated into TypeScript projects.
+`maxGraph` is written in TypeScript and provides type definitions so `maxGraph` can be easily integrated into TypeScript applications.
 
 `maxGraph` requires **TypeScript 3.8** or greater.
 
@@ -176,13 +176,15 @@ and select `@mxgraph/html`.
 Since both commands are in watch mode, so it's recommended to open two terminals and run them separately. When a file is saved from the core package, the html storybook will be automatically updated.
 
 
-### <a id="build-local-npm-package"></a> Building the npm package for usage in external project
+### <a id="build-local-npm-package"></a> Building the npm package locally
+
+**Reminder**: the released version are available at [npmjs](https://www.npmjs.com/package/@maxgraph/core). 
 
 Run
 - from the project root: `npm install`
 - then, from the `packages/core` folder: `npm pack`
 
-The `packages/core` folder or the generated `packages/core/maxgraph-core-***.tgz` file are now ready for use in an external project, using [npm link](https://docs.npmjs.com/cli/v8/commands/npm-link) or `npm install`.
+The `packages/core` folder or the generated `packages/core/maxgraph-core-***.tgz` file are now ready for use in your application, using [npm link](https://docs.npmjs.com/cli/v8/commands/npm-link) or `npm install`.
 
 Examples of use can be found in the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository.
 
