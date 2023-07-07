@@ -33,7 +33,7 @@ Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) for 
 `maxGraph` is under active development and is in **alpha**. Please try it in your application and [submit an issue](https://github.com/maxGraph/maxGraph/issues)
 if you think that something is not working.
 
-You can also test the `maxGraph` by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
+You can also test `maxGraph` by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
 
 ## Install
 
