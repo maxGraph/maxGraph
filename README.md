@@ -16,10 +16,10 @@ which requires finer-grained customization of functionality than off-the-shelf p
 The `maxGraph` library uses no third-party software, it requires no plugins and can be integrated in virtually any framework (it's vanilla JS).
 
 `maxGraph` is the successor of [mxGraph](https://github.com/jgraph/mxgraph) which is now end of life.
-At first, it provides the same features as mxGraph and adds
+At first, it provides the same features as `mxGraph` and adds
 - TypeScript support
 - maintained npm package
-- modern modular, tree shakable, version of mxGraph to reduce the whole package size
+- modern modular, tree shakable, version of `mxGraph` to reduce the whole package size
 
 New features will follow.
 
@@ -103,7 +103,7 @@ Until we provide a complete documentation, you can check the mxGraph resources
 
 ## Migrating from mxGraph
 
-`maxGraph` APIs are not fully compatible with mxGraph APIs. The concepts are the same, so experienced mxGraph users should be able to switch from mxGraph to maxGraph without issues.
+`maxGraph` APIs are not fully compatible with `mxGraph` APIs. The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without issues.
 
 For a complete guide, see the [dedicated migration page](packages/docs/migrate-from-mxgraph.md).
 
@@ -127,7 +127,7 @@ On 2020-11-12, a fork of the `mxGraph` was created with a call to Contributors.
 
 The project was then [renamed on 2021-06-02](https://github.com/maxGraph/maxGraph/discussions/47) into `maxGraph` due to [licensing issue](https://github.com/maxGraph/maxGraph/discussions/23).
 
-Starting from the mxGraph 4.2.2 release, we
+Starting from the `mxGraph` 4.2.2 release, we
 - moved code to ES9
 - removed Internet Explorer specific code
 - migrated to TypeScript, based on the work initiated in [typed-mxgraph](https://github.com/typed-mxgraph/typed-mxgraph)
@@ -138,7 +138,7 @@ Starting from the mxGraph 4.2.2 release, we
 
 ### Clean former mxGraph tags
 
-Ensure you don't have the former mxGraph tags locally (see [#92](https://github.com/maxGraph/maxGraph/issues/92) fore more details):
+Ensure you don't have the former `mxGraph` tags locally (see [#92](https://github.com/maxGraph/maxGraph/issues/92) fore more details):
 ```
 git fetch --all --tags --prune
 ```
@@ -163,7 +163,7 @@ To watch the core package, execute
 $ npm run dev
 ```
 
-and select `@mxgraph/core`.
+and select `@maxgraph/core`.
 
 To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), execute
 
@@ -171,7 +171,7 @@ To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), e
 $ npm run dev
 ```
 
-and select `@mxgraph/html`.
+and select `@maxgraph/html`.
 
 Since both commands are in watch mode, so it's recommended to open two terminals and run them separately. When a file is saved from the core package, the html storybook will be automatically updated.
 
