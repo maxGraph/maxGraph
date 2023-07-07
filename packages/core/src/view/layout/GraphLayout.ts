@@ -25,17 +25,10 @@ import Cell from '../cell/Cell';
 import { GraphLayoutTraverseArgs } from './types';
 
 /**
- * @class GraphLayout
+ * Base class for all layout algorithms in mxGraph.
  *
- * Base class for all layout algorithms in mxGraph. Main public functions are
- * {@link moveCell} for handling a moved cell within a layouted parent, and {@link execute} for
- * running the layout on a given parent cell.
- *
- * Known Subclasses:
- *
- * {@link mxCircleLayout}, {@link mxCompactTreeLayout}, {@link mxCompositeLayout},
- * {@link mxFastOrganicLayout}, {@link mxParallelEdgeLayout}, {@link mxPartitionLayout},
- * {@link mxStackLayout}
+ * Main public methods are {@link moveCell} for handling a moved cell within a layouted parent,
+ * and {@link execute} for running the layout on a given parent cell.
  */
 class GraphLayout {
   constructor(graph: Graph) {
@@ -43,18 +36,19 @@ class GraphLayout {
   }
 
   /**
-   * Reference to the enclosing {@link mxGraph}.
+   * Reference to the enclosing {@link Graph}.
    */
   graph: Graph;
 
   /**
-   * Boolean indicating if the bounding box of the label should be used if
-   * its available. Default is true.
+   * Boolean indicating if the bounding box of the label should be used if it iss available.
+   * @default true.
    */
   useBoundingBox = true;
 
   /**
    * The parent cell of the layout, if any
+   * @default null
    */
   parent: Cell | null = null;
 
@@ -66,7 +60,7 @@ class GraphLayout {
    *
    * Empty implementation.
    *
-   * @param cell {@link mxCell} which has been moved.
+   * @param cell {@link Cell} which has been moved.
    * @param x X-coordinate of the new cell location.
    * @param y Y-coordinate of the new cell location.
    */
@@ -80,8 +74,9 @@ class GraphLayout {
    *
    * Empty implementation.
    *
-   * @param cell <Cell> which has been moved.
+   * @param cell {@link Cell} which has been moved.
    * @param bounds {@link Rectangle} that represents the new cell bounds.
+   * @param prev
    */
   resizeCell(cell: Cell, bounds: Rectangle, prev?: Cell) {
     return;
@@ -90,7 +85,7 @@ class GraphLayout {
   /**
    * Executes the layout algorithm for the children of the given parent.
    *
-   * @param parent {@link mxCell} whose children should be layed out.
+   * @param parent {@link Cell} whose children should be layed out.
    */
   execute(parent: Cell): void {
     return;
@@ -110,8 +105,8 @@ class GraphLayout {
    * returns the value for the given key in the style of the given cell.
    *
    * @param key Key of the constraint to be returned.
-   * @param cell {@link mxCell} whose constraint should be returned.
-   * @param edge Optional {@link mxCell} that represents the connection whose constraint
+   * @param cell {@link Cell} whose constraint should be returned.
+   * @param edge Optional {@link Cell} that represents the connection whose constraint
    * should be returned. Default is null.
    * @param source Optional boolean that specifies if the connection is incoming
    * or outgoing. Default is null.
@@ -132,19 +127,19 @@ class GraphLayout {
    *
    * ```javascript
    * MaxLog.show();
-   * var cell = graph.getSelectionCell();
+   * const cell = graph.getSelectionCell();
    * graph.traverse(cell, false, function(vertex, edge)
    * {
    *   MaxLog.debug(graph.getLabel(vertex));
    * });
    * ```
    *
-   * @param vertex {@link mxCell} that represents the vertex where the traversal starts.
+   * @param vertex {@link Cell} that represents the vertex where the traversal starts.
    * @param directed Optional boolean indicating if edges should only be traversed
    * from source to target. Default is true.
    * @param func Visitor function that takes the current vertex and the incoming
    * edge as arguments. The traversal stops if the function returns false.
-   * @param edge Optional {@link mxCell} that represents the incoming edge. This is
+   * @param edge Optional {@link Cell} that represents the incoming edge. This is
    * null for the first step of the traversal.
    * @param visited Optional {@link Dictionary} of cell paths for the visited cells.
    */
@@ -185,8 +180,8 @@ class GraphLayout {
   /**
    * Returns true if the given parent is an ancestor of the given child.
    *
-   * @param parent {@link mxCell} that specifies the parent.
-   * @param child {@link mxCell} that specifies the child.
+   * @param parent {@link Cell} that specifies the parent.
+   * @param child {@link Cell} that specifies the child.
    * @param traverseAncestors boolean whether to
    */
   isAncestor(parent: Cell, child: Cell | null, traverseAncestors?: boolean): boolean {
@@ -206,35 +201,33 @@ class GraphLayout {
   }
 
   /**
-   * Returns a boolean indicating if the given {@link mxCell} is movable or
+   * Returns a boolean indicating if the given {@link Cell} is movable or
    * bendable by the algorithm. This implementation returns true if the given
    * cell is movable in the graph.
    *
-   * @param cell {@link mxCell} whose movable state should be returned.
+   * @param cell {@link Cell} whose movable state should be returned.
    */
   isVertexMovable(cell: Cell): boolean {
     return this.graph.isCellMovable(cell);
   }
 
   /**
-   * Returns a boolean indicating if the given {@link mxCell} should be ignored by
+   * Returns a boolean indicating if the given {@link Cell} should be ignored by
    * the algorithm. This implementation returns false for all vertices.
    *
-   * @param vertex {@link mxCell} whose ignored state should be returned.
+   * @param vertex {@link Cell} whose ignored state should be returned.
    */
   isVertexIgnored(vertex: Cell): boolean {
     return !vertex.isVertex() || !vertex.isVisible();
   }
 
   /**
-   * Returns a boolean indicating if the given {@link mxCell} should be ignored by
+   * Returns a boolean indicating if the given {@link Cell} should be ignored by
    * the algorithm. This implementation returns false for all vertices.
    *
-   * @param cell {@link mxCell} whose ignored state should be returned.
+   * @param edge {@link Cell} whose ignored state should be returned.
    */
   isEdgeIgnored(edge: Cell): boolean {
-    const model = this.graph.getDataModel();
-
     return (
       !edge.isEdge() ||
       !edge.isVisible() ||
@@ -320,7 +313,7 @@ class GraphLayout {
    * the geometry is not replaced with an updated instance. The new or old
    * bounds are returned (including overlapping labels).
    *
-   * @param cell {@link mxCell} whose geometry is to be set.
+   * @param cell {@link Cell} whose geometry is to be set.
    * @param x Integer that defines the x-coordinate of the new location.
    * @param y Integer that defines the y-coordinate of the new location.
    */
