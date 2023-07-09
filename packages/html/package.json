@@ -6,7 +6,8 @@
   "description": "Storybook stories",
   "main": "index.js",
   "scripts": {
-    "dev": "start-storybook -p 8901"
+    "dev": "start-storybook -p 8901",
+    "build": "build-storybook --output-dir dist"
   },
   "dependencies": {
     "@maxgraph/core": "*"
