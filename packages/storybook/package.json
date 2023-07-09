@@ -8,7 +8,7 @@
     "build-storybook": "storybook build --output-dir dist"
   },
   "dependencies": {
-    "@maxgraph/core": "*"
+    "@maxgraph/core": "file:../core"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.26",

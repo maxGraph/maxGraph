@@ -1,3 +1,7 @@
+import '@maxgraph/core/css/common.css';
+
+// TODO rename file
+
 export const globalTypes = {
   width: {
     type: 'number',
