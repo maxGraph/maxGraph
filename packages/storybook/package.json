@@ -21,9 +21,6 @@
     "@storybook/blocks": "^7.0.26",
     "@storybook/html": "^7.0.26",
     "@storybook/html-vite": "^7.0.26",
-    "@storybook/testing-library": "^0.0.14-next.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "storybook": "^7.0.26",
     "typescript": "^5.1.6",
     "vite": "^4.4.2"
