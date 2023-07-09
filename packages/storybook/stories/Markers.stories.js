@@ -24,6 +24,7 @@ import {
   CylinderShape,
   ArrowShape,
   Point,
+  RubberBandHandler,
 } from '@maxgraph/core';
 
 import { globalTypes } from './utils/argTypes.js';
@@ -129,6 +130,9 @@ const Template = ({ label, ...args }) => {
 
   // Creates the graph
   const graph = new Graph(container);
+
+  // Enables rubberband selection
+  new RubberBandHandler(graph);
 
   // Sets default styles
   let style = graph.getStylesheet().getDefaultVertexStyle();
