@@ -1,6 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/html';
-import type { ButtonProps } from './Button';
-import { createButton } from './Button';
+import type { ButtonProps } from './Button.ts';
+import { createButton } from './Button.ts';
 
 // More on how to set up stories at: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta = {

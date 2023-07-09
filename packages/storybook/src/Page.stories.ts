@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html';
 import { within, userEvent } from '@storybook/testing-library';
-import { createPage } from './Page';
+import { createPage } from './Page.ts';
 
 const meta = {
   title: 'Example/Page',
