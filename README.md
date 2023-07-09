@@ -78,21 +78,29 @@ graph.batchUpdate(() => {
     parent,
     position: [10, 10],
     size: [100, 100],
-    style: { shape: 'customRectangle' },
-    value: 'a regular rectangle',
+    value: 'rectangle',
   });
   const vertex02 = graph.insertVertex({
     parent,
     position: [350, 90],
     size: [50, 50],
-    style: { shape: 'ellipse', fillColor: 'orange' },
-    value: 'a regular ellipse',
+    style: {
+      fillColor: 'orange',
+      shape: 'ellipse',
+      verticalAlign: 'top',
+      verticalLabelPosition: 'bottom',
+    },
+    value: 'ellipse',
   });
   graph.insertEdge({
     parent,
     source: vertex01,
     target: vertex02,
-    value: 'a regular edge',
+    value: 'edge',
+    style: {
+      edgeStyle: 'orthogonalEdgeStyle',
+      rounded: true,
+    },
   });
 });
 ```

@@ -15,7 +15,13 @@ limitations under the License.
 */
 
 import './style.css';
-import { Client, Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core';
+import {
+  Client,
+  Graph,
+  InternalEvent,
+  Perimeter,
+  RubberBandHandler,
+} from '@maxgraph/core';
 import { registerCustomShapes } from './custom-shapes';
 
 // display the maxGraph version in the footer
@@ -34,10 +40,13 @@ new RubberBandHandler(graph); // Enables rubber band selection
 
 // shapes and styles
 registerCustomShapes();
-// TODO cannot use constants.EDGESTYLE.ORTHOGONAL
-// TS2748: Cannot access ambient const enums when the '--isolatedModules' flag is provided.
-// See https://github.com/maxGraph/maxGraph/issues/205
-graph.getStylesheet().getDefaultEdgeStyle().edgeStyle = 'orthogonalEdgeStyle';
+// create a dedicated style for "ellipse" to share properties
+graph.getStylesheet().putCellStyle('myEllipse', {
+  perimeter: Perimeter.EllipsePerimeter,
+  shape: 'ellipse',
+  verticalAlign: 'top',
+  verticalLabelPosition: 'bottom',
+});
 
 // Gets the default parent for inserting new cells. This
 // is normally the first child of the root (ie. layer 0).
@@ -63,10 +72,19 @@ graph.batchUpdate(() => {
     90,
     50,
     50,
-    { fillColor: 'orange', shape: 'ellipse', verticalLabelPosition: 'bottom' }
+    {
+      baseStyleNames: ['myEllipse'],
+      fillColor: 'orange',
+    }
   );
   // use the legacy insertEdge method
-  graph.insertEdge(parent, null, 'a regular edge', vertex01, vertex02);
+  graph.insertEdge(parent, null, 'an orthogonal style edge', vertex01, vertex02, {
+    // TODO cannot use constants.EDGESTYLE.ORTHOGONAL
+    // TS2748: Cannot access ambient const enums when the '--isolatedModules' flag is provided.
+    // See https://github.com/maxGraph/maxGraph/issues/205
+    edgeStyle: 'orthogonalEdgeStyle',
+    rounded: true,
+  });
 
   // insert vertex using custom shapes using the new insertVertex method
   const vertex11 = graph.insertVertex({
@@ -85,8 +103,8 @@ graph.batchUpdate(() => {
     width: 70,
     height: 70,
     style: {
+      baseStyleNames: ['myEllipse'],
       shape: 'customEllipse',
-      verticalLabelPosition: 'bottom',
     },
   });
   // use the new insertEdge method
@@ -95,6 +113,6 @@ graph.batchUpdate(() => {
     value: 'another edge',
     source: vertex11,
     target: vertex12,
-    style: { endArrow: 'block', rounded: true },
+    style: { endArrow: 'block' },
   });
 });
