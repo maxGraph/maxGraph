@@ -40,18 +40,18 @@ export type Properties = {
 
 export type CellStyle = CellStateStyle & {
   /**
-   * Names of styles used to populate the properties prior applying specific properties defined here.
+   * Names of styles used to fill properties before applying the specific properties defined in {@link CellStateStyle}.
    *
-   * Here is the initial properties population algorithm:
-   * - Take the style name in the order of the array
-   * - Retrieve the related style for the registered style in {@link StyleSheet}
-   * - Ignore unknown styles
-   * - Merge the current style with the style retrieved from `StyleSheet`
+   * Here's the initial algorithm for populating properties:
+   * - Take the style name in order from the table
+   * - Retrieve the style associated with the style registered in {@link StyleSheet}.
+   * Ignore unknown styles
+   * - Merge the current style with the style retrieved from `StyleSheet`.
    *
-   * Once the initial properties population completes, merge the style with the properties defined here.
+   * Once the initial population of properties is complete, merge the style with the properties defined {@link CellStateStyle}.
    *
-   * **NOTE**: the order of the style in the array matters: if the same property is defined in several style, the actually
-   * used value is the one defined in the last style declare in the array.
+   **NOTE**: the order of styles in the array is important: if the same property is defined in several styles,
+   * the value actually used is that defined in the last style declared in the array.
    */
   baseStyleNames?: string[];
 };
