@@ -184,10 +184,10 @@ export class Stylesheet {
       // creates style with the given baseStyleNames. (merges from left to right)
       style = cellStyle.baseStyleNames.reduce(
         (acc, styleName) => {
-          return (acc = {
+          return {
             ...acc,
             ...this.styles.get(styleName),
-          });
+          };
         },
         { ...defaultStyle }
       );

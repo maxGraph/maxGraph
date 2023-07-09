@@ -38,7 +38,23 @@ export type Properties = {
   [k: string]: any;
 };
 
-export type CellStyle = CellStateStyle & { baseStyleNames?: string[] };
+export type CellStyle = CellStateStyle & {
+  /**
+   * Names of styles used to populate the properties prior applying specific properties defined here.
+   *
+   * Here is the initial properties population algorithm:
+   * - Take the style name in the order of the array
+   * - Retrieve the related style for the registered style in {@link StyleSheet}
+   * - Ignore unknown styles
+   * - Merge the current style with the style retrieved from `StyleSheet`
+   *
+   * Once the initial properties population completes, merge the style with the properties defined here.
+   *
+   * **NOTE**: the order of the style in the array matters: if the same property is defined in several style, the actually
+   * used value is the one defined in the last style declare in the array.
+   */
+  baseStyleNames?: string[];
+};
 
 export type CellStateStyle = {
   /**
