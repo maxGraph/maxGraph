@@ -111,6 +111,8 @@ You will see something like in the following _maxGraph panning_ demo:
 
 For more details, have a look at the [storybook stories](packages/html/stories).
 
+Notice that some elements produced by `maxGraph` require to use [CSS and images](./packages/docs/css-and-images.md) provided in the npm package.
+
 
 ## TypeScript support
 

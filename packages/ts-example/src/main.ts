@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import '@maxgraph/core/css/common.css';
 import './style.css';
 import {
   Client,

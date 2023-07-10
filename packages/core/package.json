@@ -14,7 +14,9 @@
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist"
+    "css",
+    "dist",
+    "files"
   ],
   "homepage": "https://github.com/maxGraph/maxGraph",
   "repository": {
