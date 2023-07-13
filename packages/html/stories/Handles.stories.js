@@ -29,23 +29,30 @@ import {
   VertexHandle,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  contextMenuTypes,
+  contextMenuValues,
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Layouts/Handles',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...contextMenuValues,
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
-
 const Template = ({ label, ...args }) => {
   const div = document.createElement('div');
 
