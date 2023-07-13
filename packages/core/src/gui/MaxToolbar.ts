@@ -30,7 +30,7 @@ interface HTMLSelectOptionWithFunct extends HTMLOptionElement {
   funct?: (evt: any) => void;
 }
 
-export interface HTMLImageElementWithProps extends HTMLImageElement {
+interface HTMLImageElementWithProps extends HTMLImageElement {
   initialClassName?: any;
   altIcon?: any;
 }

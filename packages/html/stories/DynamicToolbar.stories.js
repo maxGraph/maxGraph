@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import {
-  type CellStyle,
   Graph,
-  type HTMLImageElementWithProps,
   RubberBandHandler,
   ConnectionHandler,
   ImageBox,
@@ -36,7 +34,6 @@ import {
   globalValues,
   rubberBandTypes,
   rubberBandValues,
-  // @ts-ignore
 } from './shared/args.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
@@ -53,12 +50,7 @@ export default {
   },
 };
 
-type InternalHTMLImageElementWithProps = HTMLImageElementWithProps & {
-  enabled?: boolean;
-};
-
-const Template = ({ label, ...args }: { [p: string]: any }) => {
-  console.log('bitch');
+const Template = ({ label, ...args }) => {
   const div = document.createElement('div');
 
   const container = document.createElement('div');
@@ -108,24 +100,19 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
 
   if (args.rubberBand) new RubberBandHandler(graph);
 
-  addVertex('/images/rectangle.gif', 100, 40, {});
-  addVertex('/images/rounded.gif', 100, 40, { rounded: true });
-  addVertex('/images/ellipse.gif', 40, 40, { shape: 'ellipse' });
-  addVertex('/images/rhombus.gif', 40, 40, { shape: 'rhombus' });
-  addVertex('/images/triangle.gif', 40, 40, { shape: 'triangle' });
-  addVertex('/images/cylinder.gif', 40, 40, { shape: 'cylinder' });
-  addVertex('/images/actor.gif', 30, 40, { shape: 'actor' });
+  addVertex('/images/rectangle.gif', 100, 40, '');
+  addVertex('/images/rounded.gif', 100, 40, 'shape=rounded');
+  addVertex('/images/ellipse.gif', 40, 40, 'shape=ellipse');
+  addVertex('/images/rhombus.gif', 40, 40, 'shape=rhombus');
+  addVertex('/images/triangle.gif', 40, 40, 'shape=triangle');
+  addVertex('/images/cylinder.gif', 40, 40, 'shape=cylinder');
+  addVertex('/images/actor.gif', 30, 40, 'shape=actor');
 
-  function addVertex(icon: string, w: number, h: number, style: CellStyle) {
+  function addVertex(icon, w, h, style) {
     const vertex = new Cell(null, new Geometry(0, 0, w, h), style);
     vertex.setVertex(true);
 
-    const img: InternalHTMLImageElementWithProps = addToolbarItem(
-      graph,
-      toolbar,
-      vertex,
-      icon
-    );
+    const img = addToolbarItem(graph, toolbar, vertex, icon);
     img.enabled = true;
 
     graph.getSelectionModel().addListener(InternalEvent.CHANGE, () => {
@@ -135,57 +122,39 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
     });
   }
 
-  function addToolbarItem(
-    graph: Graph,
-    toolbar: MaxToolbar,
-    prototype: Cell,
-    image: string
-  ) {
+  function addToolbarItem(graph, toolbar, prototype, image) {
     // Function that is executed when the image is dropped on
     // the graph. The cell argument points to the cell under
     // the mousepointer if there is one.
-    const funct = (
-      graph: Graph,
-      _evt: MouseEvent,
-      cell: Cell | null,
-      x?: number,
-      y?: number
-    ) => {
+    const funct = (graph, evt, cell, x, y) => {
       graph.stopEditing(false);
 
-      const vertex = <Cell>graph.getDataModel().cloneCell(prototype);
-      // @ts-ignore
+      const vertex = graph.getDataModel().cloneCell(prototype);
       vertex.geometry.x = x;
-      // @ts-ignore
       vertex.geometry.y = y;
 
-      graph.addCell(vertex, null);
+      graph.addCell(vertex);
       graph.setSelectionCell(vertex);
     };
 
     // Creates the image which is used as the drag icon (preview)
-    const img: InternalHTMLImageElementWithProps = toolbar.addMode(
-      null,
-      image,
-      (evt: MouseEvent, cell: Cell) => {
-        const pt = graph.getPointForEvent(evt);
-        funct(graph, evt, cell, pt.x, pt.y);
-      },
-      ''
-    );
+    const img = toolbar.addMode(null, image, (evt, cell) => {
+      const pt = graph.getPointForEvent(evt);
+      funct(graph, evt, cell, pt.x, pt.y);
+    });
 
     // Disables dragging if element is disabled. This is a workaround
     // for wrong event order in IE. Following is a dummy listener that
     // is invoked as the last listener in IE.
-    InternalEvent.addListener(img, 'mousedown', (_evt: MouseEvent) => {
+    InternalEvent.addListener(img, 'mousedown', (evt) => {
       // do nothing
     });
 
     // This listener is always called first before any other listener
     // in all browsers.
-    InternalEvent.addListener(img, 'mousedown', (_evt: MouseEvent) => {
+    InternalEvent.addListener(img, 'mousedown', (evt) => {
       if (img.enabled == false) {
-        InternalEvent.consume(_evt);
+        InternalEvent.consume(evt);
       }
     });
 
