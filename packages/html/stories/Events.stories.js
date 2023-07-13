@@ -24,24 +24,29 @@ import {
   ParallelEdgeLayout,
   ImageBox,
   KeyHandler,
-  constants,
   EdgeStyle,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import {
+  globalTypes,
+  globalValues,
+  panningTypes,
+  panningValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js'; // style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Events/Events',
   argTypes: {
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...panningTypes,
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...panningValues,
+    ...rubberBandValues,
   },
 };
 
