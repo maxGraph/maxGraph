@@ -17,10 +17,10 @@ limitations under the License.
 
 import { Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core';
 import {
-  globalTypes,
-  globalValues,
   contextMenuTypes,
   contextMenuValues,
+  globalTypes,
+  globalValues,
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
@@ -30,8 +30,8 @@ import '@maxgraph/core/css/common.css';
 export default {
   title: 'Basic/HelloWorld',
   argTypes: {
-    ...globalTypes,
     ...contextMenuTypes,
+    ...globalTypes,
     ...rubberBandTypes,
   },
   args: {

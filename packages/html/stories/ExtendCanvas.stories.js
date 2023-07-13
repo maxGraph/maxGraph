@@ -25,10 +25,10 @@ import {
 } from '@maxgraph/core';
 
 import {
-  globalTypes,
-  globalValues,
   contextMenuTypes,
   contextMenuValues,
+  globalTypes,
+  globalValues,
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
@@ -38,8 +38,8 @@ import '@maxgraph/core/css/common.css';
 export default {
   title: 'Backgrounds/ExtendCanvas',
   argTypes: {
-    ...globalTypes,
     ...contextMenuTypes,
+    ...globalTypes,
     ...rubberBandTypes,
   },
   args: {

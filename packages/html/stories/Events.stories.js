@@ -27,10 +27,10 @@ import {
   EdgeStyle,
 } from '@maxgraph/core';
 import {
-  globalTypes,
-  globalValues,
   contextMenuTypes,
   contextMenuValues,
+  globalTypes,
+  globalValues,
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js'; // style required by RubberBand
@@ -39,8 +39,8 @@ import '@maxgraph/core/css/common.css';
 export default {
   title: 'Events/Events',
   argTypes: {
-    ...globalTypes,
     ...contextMenuTypes,
+    ...globalTypes,
     ...rubberBandTypes,
   },
   args: {
