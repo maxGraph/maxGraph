@@ -15,18 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, utils, constants, RubberBandHandler } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { Graph, utils, RubberBandHandler } from '@maxgraph/core';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Styles/DynamicStyle',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
