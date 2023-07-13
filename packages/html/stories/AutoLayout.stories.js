@@ -32,20 +32,16 @@ import {
   styleUtils,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, panningTypes, rubberBandTypes } from './shared/argTypes.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Layouts/AutoLayout',
   argTypes: {
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...panningTypes,
+    ...rubberBandTypes,
   },
 };
 
@@ -100,9 +96,6 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given this.el
   const graph = new MyCustomGraph(container);
   graph.setPanning(true);
-
-  const panningHandler = graph.getPlugin('PanningHandler');
-  panningHandler.useLeftButtonForPanning = true;
 
   graph.setAllowDanglingEdges(false);
 
