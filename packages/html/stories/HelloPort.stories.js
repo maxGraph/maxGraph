@@ -16,27 +16,34 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  RubberBandHandler,
-  EdgeStyle,
-  Point,
-  constants,
-  DomHelpers,
   Client,
+  DomHelpers,
+  EdgeStyle,
+  Graph,
+  MaxWindow,
+  Point,
+  RubberBandHandler,
+  xmlUtils,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
-import { popup } from '@maxgraph/core/gui/MaxWindow';
-import { getPrettyXml } from '@maxgraph/core/util/xmlUtils';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Connections/HelloPort',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
@@ -117,7 +124,7 @@ const Template = ({ label, ...args }) => {
   const button = DomHelpers.button('View XML', function () {
     const encoder = new Codec();
     const node = encoder.encode(graph.getDataModel());
-    popup(getPrettyXml(node), true);
+    MaxWindow.popup(xmlUtils.getPrettyXml(node), true);
   });
 
   controller.appendChild(button);
