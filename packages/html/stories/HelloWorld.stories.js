@@ -19,8 +19,8 @@ import { Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core';
 import {
   globalTypes,
   globalValues,
-  panningTypes,
-  panningValues,
+  contextMenuTypes,
+  contextMenuValues,
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
@@ -31,12 +31,12 @@ export default {
   title: 'Basic/HelloWorld',
   argTypes: {
     ...globalTypes,
-    ...panningTypes,
+    ...contextMenuTypes,
     ...rubberBandTypes,
   },
   args: {
     ...globalValues,
-    ...panningValues,
+    ...contextMenuValues,
     ...rubberBandValues,
   },
 };

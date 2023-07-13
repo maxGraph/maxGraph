@@ -29,8 +29,8 @@ import {
 import {
   globalTypes,
   globalValues,
-  panningTypes,
-  panningValues,
+  contextMenuTypes,
+  contextMenuValues,
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js'; // style required by RubberBand
@@ -40,12 +40,12 @@ export default {
   title: 'Events/Events',
   argTypes: {
     ...globalTypes,
-    ...panningTypes,
+    ...contextMenuTypes,
     ...rubberBandTypes,
   },
   args: {
     ...globalValues,
-    ...panningValues,
+    ...contextMenuValues,
     ...rubberBandValues,
   },
 };

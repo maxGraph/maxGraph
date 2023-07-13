@@ -35,8 +35,8 @@ import {
 import {
   globalTypes,
   globalValues,
-  panningTypes,
-  panningValues,
+  contextMenuTypes,
+  contextMenuValues,
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
@@ -47,12 +47,12 @@ export default {
   title: 'Layouts/AutoLayout',
   argTypes: {
     ...globalTypes,
-    ...panningTypes,
+    ...contextMenuTypes,
     ...rubberBandTypes,
   },
   args: {
     ...globalValues,
-    ...panningValues,
+    ...contextMenuValues,
     ...rubberBandValues,
   },
 };
