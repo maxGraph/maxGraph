@@ -18,7 +18,6 @@ limitations under the License.
 import {
   Client,
   Graph,
-  InternalEvent,
   RubberBandHandler,
   ConnectionHandler,
   ConnectionConstraint,
