@@ -6,8 +6,8 @@
   "description": "Storybook stories",
   "type": "module",
   "scripts": {
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build --output-dir dist"
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build --output-dir dist"
   },
   "dependencies": {
     "@maxgraph/core": "*"
