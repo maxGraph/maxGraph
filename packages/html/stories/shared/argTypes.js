@@ -1,12 +1,25 @@
 export const globalTypes = {
   width: {
-    type: 'number',
-    defaultValue: 800,
+    control: {
+      type: 'range',
+      min: 100,
+      max: 1000,
+      step: 10,
+    },
   },
   height: {
-    type: 'number',
-    defaultValue: 600,
+    control: {
+      type: 'range',
+      min: 100,
+      max: 1000,
+      step: 10,
+    },
   },
+};
+
+export const globalValues = {
+  height: 600,
+  width: 800,
 };
 
 export const rubberBandTypes = {
@@ -16,10 +29,17 @@ export const rubberBandTypes = {
   },
 };
 
+export const rubberBandValues = {
+  rubberBand: true,
+};
+
 export const panningTypes = {
   // by default, the panning uses the right button of the mouse, so disable the context-menu to not overlap
   contextMenu: {
     type: 'boolean',
-    defaultValue: false,
   },
+};
+
+export const panningValues = {
+  contextMenu: false,
 };

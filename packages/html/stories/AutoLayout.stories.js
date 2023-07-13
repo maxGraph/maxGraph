@@ -32,7 +32,14 @@ import {
   styleUtils,
 } from '@maxgraph/core';
 
-import { globalTypes, panningTypes, rubberBandTypes } from './shared/argTypes.js';
+import {
+  globalTypes,
+  globalValues,
+  panningTypes,
+  panningValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/argTypes.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -42,6 +49,11 @@ export default {
     ...globalTypes,
     ...panningTypes,
     ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...panningValues,
+    ...rubberBandValues,
   },
 };
 

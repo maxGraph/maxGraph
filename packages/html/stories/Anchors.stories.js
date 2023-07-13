@@ -28,7 +28,12 @@ import {
   CellState,
 } from '@maxgraph/core';
 
-import { globalTypes, rubberBandTypes } from './shared/argTypes.js';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/argTypes.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -37,6 +42,10 @@ export default {
   argTypes: {
     ...globalTypes,
     ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 

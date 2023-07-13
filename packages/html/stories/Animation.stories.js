@@ -17,7 +17,7 @@ limitations under the License.
 
 import { Graph, Point } from '@maxgraph/core';
 
-import { globalTypes } from './shared/argTypes.js';
+import { globalTypes, globalValues } from './shared/argTypes.js';
 // required by the custom code (see the end of the Story)
 import './css/animation.css';
 
@@ -25,6 +25,9 @@ export default {
   title: 'Effects/Animation',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
