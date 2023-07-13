@@ -20,3 +20,11 @@ export const rubberBandTypes = {
     defaultValue: true,
   },
 };
+
+export const panningTypes = {
+  // by default, the panning uses the right button of the mouse, so disable the context-menu to not overlap
+  contextMenu: {
+    type: 'boolean',
+    defaultValue: false,
+  },
+};

@@ -51,8 +51,6 @@ const Template = ({ label, ...args }) => {
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
-  if (!args.contextMenu) InternalEvent.disableContextMenu(container);
-
   class MyCustomConnectionHandler extends ConnectionHandler {
     // Enables connect preview for the default edge style
     createEdgeState(me) {
