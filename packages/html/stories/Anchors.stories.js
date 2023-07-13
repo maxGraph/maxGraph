@@ -28,16 +28,15 @@ import {
   CellState,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, rubberBandTypes } from './shared/argTypes.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Connections/Anchors',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
   },
 };
 
