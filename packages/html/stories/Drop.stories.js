@@ -22,23 +22,27 @@ import {
   eventUtils,
   InternalEvent,
   Client,
+  xmlUtils,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
-import { getXml, parseXml } from '@maxgraph/core/util/xmlUtils';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+//import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'DnD_CopyPaste/Drop',
   argTypes: {
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
@@ -124,7 +128,7 @@ function handleDrop(graph, file, x, y) {
       if (file.type.substring(0, 9) === 'image/svg') {
         const comma = data.indexOf(',');
         const svgText = atob(data.substring(comma + 1));
-        const root = parseXml(svgText);
+        const root = xmlUtils.parseXml(svgText);
 
         // Parses SVG to find width and height
         if (root != null) {
@@ -155,7 +159,7 @@ function handleDrop(graph, file, x, y) {
             w = Math.max(1, Math.round(w));
             h = Math.max(1, Math.round(h));
 
-            data = `data:image/svg+xml,${btoa(getXml(svgs[0], '\n'))}`;
+            data = `data:image/svg+xml,${btoa(xmlUtils.getXml(svgs[0], '\n'))}`;
             graph.insertVertex({
               position: [x, y],
               size: [w, h],
