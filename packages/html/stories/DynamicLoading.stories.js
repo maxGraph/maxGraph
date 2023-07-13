@@ -25,13 +25,15 @@ import {
   Codec,
   xmlUtils,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Misc/DynamicLoading',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -154,10 +156,7 @@ const Template = ({ label, ...args }) => {
         // Arranges the response in a circle
         const cellCount = vertices.length;
         const phi = (2 * Math.PI) / cellCount;
-        const r = Math.min(
-          args.width / 4,
-          args.height / 4
-        );
+        const r = Math.min(args.width / 4, args.height / 4);
 
         for (let i = 0; i < cellCount; i++) {
           let geo = vertices[i].getGeometry();
