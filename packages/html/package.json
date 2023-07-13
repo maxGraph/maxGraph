@@ -6,7 +6,7 @@
   "description": "Storybook stories",
   "type": "module",
   "scripts": {
-    "dev": "storybook dev -p 6006",
+    "dev": "storybook dev -p 8901",
     "build": "storybook build --output-dir dist"
   },
   "dependencies": {
