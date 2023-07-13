@@ -25,16 +25,22 @@ import {
   VertexHandler,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
 
 export default {
   title: 'Icon_Images/ContextIcons',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
