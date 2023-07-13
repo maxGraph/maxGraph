@@ -17,12 +17,15 @@ limitations under the License.
 
 import { Graph, Rectangle } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Layouts/Collapse',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
