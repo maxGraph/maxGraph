@@ -17,7 +17,7 @@ limitations under the License.
 
 import { Graph, Point } from '@maxgraph/core';
 
-import { globalTypes, globalValues } from './shared/argTypes.js';
+import { globalTypes, globalValues } from './shared/args.js';
 // required by the custom code (see the end of the Story)
 import './css/animation.css';
 

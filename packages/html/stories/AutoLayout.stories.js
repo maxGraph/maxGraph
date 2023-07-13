@@ -39,7 +39,7 @@ import {
   panningValues,
   rubberBandTypes,
   rubberBandValues,
-} from './shared/argTypes.js';
+} from './shared/args.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 

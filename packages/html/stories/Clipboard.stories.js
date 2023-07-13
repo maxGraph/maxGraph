@@ -35,7 +35,7 @@ import {
   globalValues,
   rubberBandTypes,
   rubberBandValues,
-} from './shared/argTypes.js';
+} from './shared/args.js';
 
 export default {
   title: 'DnD_CopyPaste/Clipboard',
