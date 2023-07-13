@@ -17,27 +17,21 @@ limitations under the License.
 
 import {
   Graph,
-  InternalEvent,
   RubberBandHandler,
   Point,
   SelectionHandler,
   styleUtils,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, rubberBandTypes } from './shared/argTypes.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Events/Boundary',
   argTypes: {
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
   },
 };
 
@@ -49,9 +43,6 @@ const Template = ({ label, ...args }) => {
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
-
-  // Disables the built-in context menu
-  if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   class MyCustomGraph extends Graph {
     // Enables moving of relative children
