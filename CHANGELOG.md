@@ -1,10 +1,15 @@
 # `maxGraph` Change Log
 
-## Unreleased
+## 0.3.0
+
+This release contains new features, bug fixes and documentation improvements.
 
 **Breaking Changes**
-- `Stylesheet.getDefaultVertexStyle` and `Stylesheet.getDefaultEdgeStyle` no longer return `undefined`.
+- types: `Stylesheet.getDefaultVertexStyle` and `Stylesheet.getDefaultEdgeStyle` no longer return `undefined`.
 - remove the `CellMap` type. It was not used in the maxGraph code, which should have no impact.
+
+For more details, see the [0.3.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.3.0) on
+the GitHub release page.
 
 ## 0.2.1
 

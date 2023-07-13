@@ -35,7 +35,7 @@ import Point from './geometry/Point';
 import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
 import Cell from './cell/Cell';
 import GraphDataModel from './GraphDataModel';
-import Stylesheet from './style/Stylesheet';
+import { Stylesheet } from './style/Stylesheet';
 import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants';
 
 import ChildChange from './undoable_changes/ChildChange';
@@ -51,9 +51,6 @@ import EdgeHandler from './handler/EdgeHandler';
 import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
-
-import CodecRegistry from '../serialization/CodecRegistry';
-import ObjectCodec from '../serialization/ObjectCodec';
 
 import type { GraphPlugin, GraphPluginConstructor, MouseListenerSet } from '../types';
 import Multiplicity from './other/Multiplicity';

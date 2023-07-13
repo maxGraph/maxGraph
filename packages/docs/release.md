@@ -88,3 +88,14 @@ Once done, create a Pull Request in the [integration examples repository](https:
 to use the new release. Use [PR #28](https://github.com/maxGraph/maxgraph-integration-examples/pull/28) as an example.
 
 **Note:** The examples will be updated automatically in the future, see the [issue #27](https://github.com/maxGraph/maxgraph-integration-examples/issues/27) for more details.
+
+Then, create a [new draft release](https://github.com/maxGraph/maxGraph/releases/)
+- name: use the same version as in `maxGraph`, like `0.2.1` 
+- tag: use the version prefixed with v, like `v0.2.1`
+- save it as a draft
+
+Generate the list of the major changes by using the [automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes).
+
+Also add links to the releases previously created for `maxGraph`. As an example, see the release of the [0.2.1 version](https://github.com/maxGraph/maxgraph-integration-examples/releases/tag/v0.2.1).
+
+Publish the release.

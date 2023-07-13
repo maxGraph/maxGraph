@@ -742,4 +742,3 @@ export class EditorToolbarCodec extends ObjectCodec {
 }
 
 CodecRegistry.register(new EditorToolbarCodec());
-export default EditorToolbar;

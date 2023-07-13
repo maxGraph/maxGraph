@@ -383,4 +383,3 @@ export class StylesheetCodec extends ObjectCodec {
 }
 
 CodecRegistry.register(new StylesheetCodec());
-export default Stylesheet;

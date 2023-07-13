@@ -5,13 +5,13 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --version && tsc && vite build",
+    "build": "tsc --version && tsc && vite build --base ./",
     "preview": "vite preview"
   },
   "dependencies": {
     "@maxgraph/core": "*"
   },
   "devDependencies": {
-    "vite": "~4.3.1"
+    "vite": "~4.4.2"
   }
 }

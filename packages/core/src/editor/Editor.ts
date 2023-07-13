@@ -23,7 +23,7 @@ import EventSource from '../view/event/EventSource';
 import Translations from '../util/Translations';
 import Client from '../Client';
 import CompactTreeLayout from '../view/layout/CompactTreeLayout';
-import EditorToolbar from './EditorToolbar';
+import { EditorToolbar } from './EditorToolbar';
 import StackLayout from '../view/layout/StackLayout';
 import EventObject from '../view/event/EventObject';
 import { getOffset } from '../util/styleUtils';
