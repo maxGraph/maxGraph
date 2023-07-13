@@ -30,20 +30,13 @@ import {
   cellArrayUtils,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, rubberBandTypes } from './shared/argTypes.js';
 
 export default {
   title: 'DnD_CopyPaste/Clipboard',
   argTypes: {
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
   },
 };
 
@@ -55,9 +48,6 @@ const Template = ({ label, ...args }) => {
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
-
-  // Disables the built-in context menu
-  if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Creates the graph inside the given this.el
   const graph = new Graph(container);
