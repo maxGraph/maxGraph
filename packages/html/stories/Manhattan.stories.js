@@ -18,7 +18,8 @@ limitations under the License.
 import {
   EdgeStyle,
   Graph,
-  SelectionHandler
+  SelectionHandler,
+  InternalEvent
 } from '@maxgraph/core';
 
 import { globalTypes } from '../.storybook/preview';
@@ -48,6 +49,15 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given container
   const graph = new Graph(container);
 
+  // Hack to rerender edge on any node move
+  graph.model.addListener(InternalEvent.CHANGE, (sender, evt) => {
+    const changesList = evt.getProperty("changes");
+    const hasMoveEdits = changesList && changesList.some(c => c.constructor.name == "GeometryChange");
+    // If detected GeometryChange event, call graph.view.refresh(), which will reroute edge
+    if (hasMoveEdits) {
+        graph?.view?.refresh();
+    }
+});
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
