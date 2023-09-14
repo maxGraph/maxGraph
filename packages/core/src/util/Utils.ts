@@ -16,6 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Client from '../Client';
+
 /**
  * A singleton class that provides cross-browser helper methods.
  * This is a global functionality. To access the functions in this
