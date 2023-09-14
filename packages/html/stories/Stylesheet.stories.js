@@ -16,13 +16,15 @@ limitations under the License.
 */
 
 import { Graph, Perimeter, Point } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Styles/Stylesheet',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
