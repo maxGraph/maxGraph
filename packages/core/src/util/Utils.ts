@@ -48,7 +48,7 @@ export const utils = {
   /**
    * Defines the image used for error dialogs.
    */
-  errorImage: '/error.gif', // Client.imageBasePath + '/error.gif',
+  errorImage: `${Client.imageBasePath}/error.gif`,
 };
 
 export const isNullish = (v: string | object | null | undefined | number) =>
