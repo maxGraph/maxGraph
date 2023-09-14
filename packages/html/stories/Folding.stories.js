@@ -64,7 +64,7 @@ const Template = ({ label, ...args }) => {
   style.startSize = 30;
 
   style = [];
-  style.shape = constants.SHAPE_RECTANGLE;
+  style.shape = constants.SHAPE.RECTANGLE;
   style.strokeColor = 'none';
   style.fillColor = 'none';
   style.foldable = false;
