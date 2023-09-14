@@ -16,7 +16,9 @@ limitations under the License.
 */
 
 import {
+  CellOverlay,
   Graph,
+  InternalEvent,
   EdgeStyle,
   DomHelpers,
   xmlUtils,
@@ -181,7 +183,7 @@ const Template = ({ label, ...args }) => {
 
     // Installs a handler for clicks on the overlay
     overlay.addListener(InternalEvent.CLICK, function (sender, evt) {
-      utils.alert(`${tooltip}\nLast update: ${new Date()}`);
+      window.alert(`${tooltip}\nLast update: ${new Date()}`);
     });
 
     return overlay;
