@@ -16,17 +16,15 @@ limitations under the License.
 */
 
 import { Graph, constants, RubberBandHandler, cloneUtils } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalValues, globalTypes } from './shared/args.js';
 
 export default {
   title: 'Styles/HoverStyle',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+  },
+  args: {
+    ...globalValues,
   },
 };
 
