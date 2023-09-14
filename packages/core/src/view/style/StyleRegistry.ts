@@ -66,6 +66,7 @@ StyleRegistry.putValue(EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide);
 StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
 StyleRegistry.putValue(EDGESTYLE.ORTHOGONAL, EdgeStyle.OrthConnector);
 StyleRegistry.putValue(EDGESTYLE.SEGMENT, EdgeStyle.SegmentConnector);
+StyleRegistry.putValue(EDGESTYLE.MANHATTAN, EdgeStyle.ManhattanConnector);
 
 StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
 StyleRegistry.putValue(PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter);
