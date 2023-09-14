@@ -1,5 +1,5 @@
 /*
-Copyright 2022-present The maxGraph project Contributors
+Copyright 2023-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,12 +22,8 @@ function createGraph(): Graph {
   return new Graph(null);
 }
 
-
-// Here we just check that the default styles are initialized, and some properties set
-// We don't test all properties on purpose
 describe('layout execute', () => {
-  test('Circular layout graph is greated without throwing an error', () => {
-
+  test('Circular layout graph is created successfully', () => {
     // prepare test
     const graph: Graph = createGraph();
     const parent = graph.getDefaultParent();
@@ -55,15 +51,12 @@ describe('layout execute', () => {
       const e8 = graph.insertEdge(parent, null, '', v7, v8);
       const e9 = graph.insertEdge(parent, null, '', v8, v9);
 
-      // Executes the layout
+      // Execute the layout
       layout.execute(parent);
     });
   });
 
-
-
-  test('Non-circular layout graph is greated without throwing an error', () => {
-
+  test('Non-circular layout graph is created successfully', () => {
     // prepare test
     const graph: Graph = createGraph();
     const parent = graph.getDefaultParent();
@@ -95,11 +88,8 @@ describe('layout execute', () => {
       const e12 = graph.insertEdge(parent, null, '', v7, v6);
       const e13 = graph.insertEdge(parent, null, '', v7, v5);
 
-      // Executes the layout
+      // Execute the layout
       layout.execute(parent);
     });
   });
-
-
 });
-
