@@ -15,19 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  EdgeStyle,
-  Graph,
-  SelectionHandler,
-  InternalEvent
-} from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { EdgeStyle, Graph, InternalEvent, SelectionHandler } from '@maxgraph/core';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Connections/Manhattan',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -44,20 +41,21 @@ const Template = ({ label, ...args }) => {
   SelectionHandler.prototype.guidesEnabled = true;
 
   // Allow end of edge to come only from west
-  EdgeStyle.MANHATTAN_END_DIRECTIONS = ["west"];
+  EdgeStyle.MANHATTAN_END_DIRECTIONS = ['west'];
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
 
   // Hack to rerender edge on any node move
   graph.model.addListener(InternalEvent.CHANGE, (sender, evt) => {
-    const changesList = evt.getProperty("changes");
-    const hasMoveEdits = changesList && changesList.some(c => c.constructor.name == "GeometryChange");
+    const changesList = evt.getProperty('changes');
+    const hasMoveEdits =
+      changesList && changesList.some((c) => c.constructor.name == 'GeometryChange');
     // If detected GeometryChange event, call graph.view.refresh(), which will reroute edge
     if (hasMoveEdits) {
-        graph?.view?.refresh();
+      graph?.view?.refresh();
     }
-});
+  });
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
@@ -67,11 +65,10 @@ const Template = ({ label, ...args }) => {
     style.strokeWidth = 2;
     style.rounded = true;
     style.entryPerimeter = true;
-    style.entryY = .25;
+    style.entryY = 0.25;
     style.entryX = 0;
     // After move of "obstacles" nodes, move "finish" node - edge route will be recalculated
     style.edgeStyle = 'manhattanEdgeStyle';
-
 
     var v1 = graph.insertVertex(parent, null, 'start', 50, 50, 140, 70);
     var v2 = graph.insertVertex(parent, null, 'finish', 500, 450, 140, 72);
