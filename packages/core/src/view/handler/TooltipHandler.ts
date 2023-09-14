@@ -30,31 +30,22 @@ import type { GraphPlugin } from '../../types';
 import EventSource from '../event/EventSource';
 
 /**
- * Graph event handler that displays tooltips. {@link Graph#getTooltip} is used to
- * get the tooltip for a cell or handle. This handler is built-into
- * {@link Graph#tooltipHandler} and enabled using {@link Graph#setTooltips}.
+ * Graph event handler that displays tooltips.
  *
- * Example:
+ * {@link Graph#getTooltip} is used to get the tooltip for a cell or handle.
  *
- * (code>
- * new mxTooltipHandler(graph);
- * (end)
- *
- * Constructor: mxTooltipHandler
- *
- * Constructs an event handler that displays tooltips with the specified
- * delay (in milliseconds). If no delay is specified then a default delay
- * of 500 ms (0.5 sec) is used.
- *
- * @param graph Reference to the enclosing {@link Graph}.
- * @param delay Optional delay in milliseconds.
+ * This handler is generally enabled using {@link Graph#setTooltips}.
  */
 class TooltipHandler implements GraphPlugin {
   static pluginId = 'TooltipHandler';
 
+  /**
+   * Constructs an event handler that displays tooltips.
+   *
+   * @param graph Reference to the enclosing {@link Graph}.
+   */
   constructor(graph: Graph) {
     this.graph = graph;
-    this.delay = 500;
     this.graph.addMouseListener(this);
 
     this.div = document.createElement('div');
@@ -87,7 +78,8 @@ class TooltipHandler implements GraphPlugin {
   div: HTMLElement;
 
   /**
-   * Specifies the zIndex for the tooltip and its shadow. Default is 10005.
+   * Specifies the zIndex for the tooltip and its shadow.
+   * @default 10005
    */
   zIndex = 10005;
 
@@ -97,23 +89,25 @@ class TooltipHandler implements GraphPlugin {
   graph: Graph;
 
   /**
-   * Delay to show the tooltip in milliseconds. Default is 500.
+   * Delay to show the tooltip in milliseconds.
+   * @default 500
    */
-  delay: number;
+  delay = 500;
 
   /**
-   * Specifies if touch and pen events should be ignored. Default is true.
+   * Specifies if touch and pen events should be ignored.
+   * @default true
    */
   ignoreTouchEvents = true;
 
   /**
-   * Specifies if the tooltip should be hidden if the mouse is moved over the
-   * current cell. Default is false.
+   * Specifies if the tooltip should be hidden if the mouse is moved over the current cell.
+   * @default false
    */
   hideOnHover = false;
 
   /**
-   * True if this handler was destroyed using <destroy>.
+   * `true` if this handler was destroyed using {@link onDestroy}.
    */
   destroyed = false;
 
@@ -125,28 +119,31 @@ class TooltipHandler implements GraphPlugin {
   thread: number | null = null;
 
   /**
-   * Specifies if events are handled. Default is false.
+   * Specifies if events are handled.
+   * @default false
    */
   enabled = false;
 
   /**
-   * Returns true if events are handled. This implementation
-   * returns <enabled>.
+   * Returns `true` if events are handled.
+   *
+   * This implementation returns {@link enabled}.
    */
   isEnabled() {
     return this.enabled;
   }
 
   /**
-   * Enables or disables event handling. This implementation
-   * updates <enabled>.
+   * Enables or disables event handling.
+   *
+   * This implementation updates {@link enabled}.
    */
   setEnabled(enabled: boolean) {
     this.enabled = enabled;
   }
 
   /**
-   * Returns <hideOnHover>.
+   * Returns {@link hideOnHover}.
    */
   isHideOnHover() {
     return this.hideOnHover;
