@@ -31,17 +31,22 @@ import {
   utils,
   MaxToolbar,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import {
+  contextMenuTypes,
+  contextMenuValues,
+  globalTypes,
+  globalValues,
+} from './shared/args.js';
 
 export default {
   title: 'Layouts/OrgChart',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
+  },
+  args: {
+    ...contextMenuValues,
+    ...globalValues,
   },
 };
 
