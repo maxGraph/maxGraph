@@ -23,21 +23,28 @@ import {
   InternalEvent,
   xmlUtils,
   Codec,
-  utils,
   EdgeStyle,
   domUtils,
   MaxForm,
   CellAttributeChange,
+  RubberBandHandler,
 } from '@maxgraph/core';
-import { globalTypes, globalValues } from './shared/args.js';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
 
 export default {
   title: 'Xml_Json/UserObject',
   argTypes: {
     ...globalTypes,
+    ...rubberBandTypes,
   },
   args: {
     ...globalValues,
+    ...rubberBandValues,
   },
 };
 
@@ -178,7 +185,7 @@ const Template = ({ label, ...args }) => {
     DomHelpers.button('View XML', function () {
       const encoder = new Codec();
       const node = encoder.encode(graph.getDataModel());
-      popup(utils.getPrettyXml(node), true);
+      popup(xmlUtils.getPrettyXml(node), true);
     })
   );
 
