@@ -22,7 +22,6 @@ import {
   Point,
   constants,
   cloneUtils,
-  EdgeStyle,
   InternalEvent,
   SwimlaneManager,
   StackLayout,
@@ -30,13 +29,15 @@ import {
   Graph,
   Client,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Layouts/SwimLanes',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
