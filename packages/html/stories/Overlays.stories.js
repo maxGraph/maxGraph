@@ -82,7 +82,7 @@ const Template = ({ label, ...args }) => {
 
         // Installs a handler for clicks on the overlay
         overlay.addListener(InternalEvent.CLICK, (sender, evt2) => {
-          utils.alert('Overlay clicked');
+          window.alert('Overlay clicked');
         });
 
         // Sets the overlay for the cell in the graph
