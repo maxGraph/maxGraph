@@ -16,13 +16,15 @@ limitations under the License.
 */
 
 import { Graph, CellTracker, constants, InternalEvent } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Zoom_OffPage/OffPage',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -36,7 +38,8 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Use complete cell as highlight region
-  constants.ACTIVE_REGION = 1;
+  // TODO how do we set the constants.ACTIVE_REGION?
+  // constants.ACTIVE_REGION = 1;
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
