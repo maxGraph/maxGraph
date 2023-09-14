@@ -23,20 +23,21 @@ import {
   InternalEvent,
   xmlUtils,
   Codec,
-  constants,
   utils,
   EdgeStyle,
   domUtils,
   MaxForm,
   CellAttributeChange,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Xml_Json/UserObject',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
