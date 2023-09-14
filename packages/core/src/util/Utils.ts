@@ -16,6 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Client from '../Client';
+
 /**
  * A singleton class that provides cross-browser helper methods.
  * This is a global functionality. To access the functions in this
@@ -48,7 +50,7 @@ export const utils = {
   /**
    * Defines the image used for error dialogs.
    */
-  errorImage: '/error.gif', // Client.imageBasePath + '/error.gif',
+  errorImage: `${Client.imageBasePath}/error.gif`,
 };
 
 export const isNullish = (v: string | object | null | undefined | number) =>

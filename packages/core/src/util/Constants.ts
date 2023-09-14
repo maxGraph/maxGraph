@@ -598,6 +598,7 @@ export const enum EDGESTYLE {
   TOPTOBOTTOM = 'topToBottomEdgeStyle',
   ORTHOGONAL = 'orthogonalEdgeStyle',
   SEGMENT = 'segmentEdgeStyle',
+  MANHATTAN = 'manhattanEdgeStyle',
 }
 
 /**

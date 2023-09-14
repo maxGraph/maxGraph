@@ -35,7 +35,7 @@ jobs:
       matrix:
         os: ['ubuntu-22.04', 'macos-12', 'windows-2022']
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup node
         uses: actions/setup-node@v3
         with:

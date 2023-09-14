@@ -1,5 +1,15 @@
 # `maxGraph` Change Log
 
+## 0.4.0
+
+This release contains new features, bug fixes and documentation improvements.
+
+**Major improvements**
+- introduce the Manhattan connector
+
+For more details, see the [0.4.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.4.0) on
+the GitHub release page.
+
 ## 0.3.0
 
 This release contains new features, bug fixes and documentation improvements.

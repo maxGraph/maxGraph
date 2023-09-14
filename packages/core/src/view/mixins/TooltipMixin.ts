@@ -139,8 +139,9 @@ const TooltipMixin: PartialType = {
    *****************************************************************************/
 
   /**
-   * Specifies if tooltips should be enabled. This implementation updates
-   * {@link TooltipHandler.enabled} in {@link tooltipHandler}.
+   * Specifies if tooltips should be enabled.
+   *
+   * This implementation updates {@link TooltipHandler.enabled}.
    *
    * @param enabled Boolean indicating if tooltips should be enabled.
    */
