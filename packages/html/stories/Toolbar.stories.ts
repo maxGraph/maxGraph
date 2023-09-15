@@ -18,11 +18,11 @@ limitations under the License.
 import {
   Graph,
   RubberBandHandler,
+  type CellStyle,
   ConnectionHandler,
   ImageBox,
   MaxToolbar,
   GraphDataModel,
-  KeyHandler,
   Cell,
   Geometry,
   DragSource,
@@ -34,6 +34,7 @@ import {
   globalValues,
   rubberBandTypes,
   rubberBandValues,
+  // @ts-ignore TODO find a way to fix this
 } from './shared/args.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
@@ -50,7 +51,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: { [p: string]: any }) => {
   const div = document.createElement('div');
 
   const container = document.createElement('div');
@@ -93,9 +94,14 @@ const Template = ({ label, ...args }) => {
   graph.dropEnabled = true;
 
   // Matches DnD inside the graph
-  DragSource.prototype.getDropTarget = function (graph, x, y) {
+  DragSource.prototype.getDropTarget = function (
+    graph: Graph,
+    x: number,
+    y: number,
+    _evt: MouseEvent
+  ) {
     let cell = graph.getCellAt(x, y);
-    if (!graph.isValidDropTarget(cell)) {
+    if (cell && !graph.isValidDropTarget(cell)) {
       cell = null;
     }
     return cell;
@@ -105,26 +111,26 @@ const Template = ({ label, ...args }) => {
   graph.setConnectable(true);
   graph.setMultigraph(false);
 
-  // Stops editing on enter or escape keypress
-  const keyHandler = new KeyHandler(graph);
+  // Stops editing on enter or escape keypress (TODO not working, do we want to keep this here?)
+  // const keyHandler = new KeyHandler(graph);
 
   if (args.rubberBand) new RubberBandHandler(graph);
 
-  const addVertex = (icon, w, h, style) => {
+  function addVertex(icon: string, w: number, h: number, style: CellStyle) {
     const vertex = new Cell(null, new Geometry(0, 0, w, h), style);
     vertex.setVertex(true);
 
     addToolbarItem(graph, toolbar, vertex, icon);
-  };
+  }
 
-  addVertex('/images/swimlane.gif', 120, 160, 'shape=swimlane;startSize=20;');
-  addVertex('/images/rectangle.gif', 100, 40, '');
-  addVertex('/images/rounded.gif', 100, 40, 'shape=rounded');
-  addVertex('/images/ellipse.gif', 40, 40, 'shape=ellipse');
-  addVertex('/images/rhombus.gif', 40, 40, 'shape=rhombus');
-  addVertex('/images/triangle.gif', 40, 40, 'shape=triangle');
-  addVertex('/images/cylinder.gif', 40, 40, 'shape=cylinder');
-  addVertex('/images/actor.gif', 30, 40, 'shape=actor');
+  addVertex('/images/swimlane.gif', 120, 160, { shape: 'swimlane', startSize: 20 });
+  addVertex('/images/rectangle.gif', 100, 40, {});
+  addVertex('/images/rounded.gif', 100, 40, { rounded: true });
+  addVertex('/images/ellipse.gif', 40, 40, { shape: 'ellipse' });
+  addVertex('/images/rhombus.gif', 40, 40, { shape: 'rhombus' });
+  addVertex('/images/triangle.gif', 40, 40, { shape: 'triangle' });
+  addVertex('/images/cylinder.gif', 40, 40, { shape: 'cylinder' });
+  addVertex('/images/actor.gif', 30, 40, { shape: 'actor' });
   toolbar.addLine();
 
   const button = DomHelpers.button('Create toolbar entry from selection', (evt) => {
@@ -136,41 +142,49 @@ const Template = ({ label, ...args }) => {
       // Function that is executed when the image is dropped on
       // the graph. The cell argument points to the cell under
       // the mousepointer if there is one.
-      const funct = (graph, evt, cell) => {
+      const funct = (graph: Graph, _evt: MouseEvent, cell: Cell | null) => {
         graph.stopEditing(false);
 
         const pt = graph.getPointForEvent(evt);
-        const dx = pt.x - bounds.x;
-        const dy = pt.y - bounds.y;
+        const dx = pt.x - (bounds?.x ?? 0);
+        const dy = pt.y - (bounds?.y ?? 0);
 
         graph.setSelectionCells(graph.importCells(cells, dx, dy, cell));
       };
 
       // Creates the image which is used as the drag icon (preview)
-      const img = toolbar.addMode(null, '/images/outline.gif', funct);
+      const img = toolbar.addMode(null, '/images/outline.gif', funct, '');
       gestureUtils.makeDraggable(img, graph, funct);
     }
   });
 
   tbContainer.appendChild(button);
 
-  function addToolbarItem(graph, toolbar, prototype, image) {
+  function addToolbarItem(
+    graph: Graph,
+    toolbar: MaxToolbar,
+    prototype: Cell,
+    image: string
+  ) {
     // Function that is executed when the image is dropped on
     // the graph. The cell argument points to the cell under
     // the mousepointer if there is one.
-    const funct = (graph, evt, cell) => {
+    const funct = (graph: Graph, evt: MouseEvent, cell: Cell | null) => {
       graph.stopEditing(false);
 
       const pt = graph.getPointForEvent(evt);
       const vertex = graph.getDataModel().cloneCell(prototype);
-      vertex.geometry.x = pt.x;
-      vertex.geometry.y = pt.y;
+      if (!vertex) return;
 
+      if (vertex.geometry) {
+        vertex.geometry.x = pt.x;
+        vertex.geometry.y = pt.y;
+      }
       graph.setSelectionCells(graph.importCells([vertex], 0, 0, cell));
     };
 
     // Creates the image which is used as the drag icon (preview)
-    const img = toolbar.addMode(null, image, funct);
+    const img = toolbar.addMode(null, image, funct, '');
     gestureUtils.makeDraggable(img, graph, funct);
   }
 
