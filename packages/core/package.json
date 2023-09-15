@@ -27,7 +27,7 @@
     "url": "https://github.com/maxGraph/maxGraph/issues"
   },
   "scripts": {
-    "dev": "webpack --watch --mode=development",
+    "dev": "tsc --watch",
     "build": "cross-env NODE_ENV=production webpack --mode=production",
     "docs:api": "typedoc src/index.ts",
     "generate-types": "tsc --version && tsc --emitDeclarationOnly",
