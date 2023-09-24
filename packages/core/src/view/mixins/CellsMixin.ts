@@ -2714,13 +2714,16 @@ export const CellsMixin: PartialType = {
   /**
    * Returns true if the given cell is moveable. This returns {@link cellsMovable}
    * for all given cells if {@link isCellLocked} does not return true for the given
-   * cell and its style does not specify {@link 'movable'} to be 0.
+   * cell, and its style either explicitly specifies {@link 'movable'} as true or
+   * doesn't specify it at all
    *
    * @param cell {@link mxCell} whose movable state should be returned.
    */
   isCellMovable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return this.isCellsMovable() && !this.isCellLocked(cell) && !style.movable;
+    return this.isCellsMovable()
+      && !this.isCellLocked(cell)
+      && (style.movable === undefined || style.movable);
   },
 
   /**
