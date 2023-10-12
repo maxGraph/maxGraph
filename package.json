@@ -1,7 +1,7 @@
 {
   "name": "maxgraph",
   "license": "Apache-2.0",
-  "version": "0.1.0",
+  "private": true,
   "description": "maxGraph is a fully client side JavaScript diagramming library that uses SVG and HTML for rendering.",
   "homepage": "https://github.com/maxGraph/maxGraph",
   "repository": {

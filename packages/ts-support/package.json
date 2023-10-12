@@ -1,6 +1,5 @@
 {
   "name": "@maxgraph/ts-support",
-  "version": "0.0.0",
   "private": true,
   "scripts": {
     "test": "tsc --version && tsc"

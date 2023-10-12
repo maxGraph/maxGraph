@@ -2,7 +2,6 @@
   "name": "@maxgraph/ts-example-built-with-vite",
   "license": "Apache-2.0",
   "private": true,
-  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc --version && tsc && vite build --base ./",
