@@ -34,7 +34,6 @@ import {
   globalValues,
   rubberBandTypes,
   rubberBandValues,
-  // @ts-ignore TODO find a way to fix this
 } from './shared/args.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
