@@ -14,14 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  AbstractCanvas2D,
-  CellRenderer,
-  type ColorValue,
-  EllipseShape,
-  Rectangle,
-  RectangleShape,
-} from '@maxgraph/core';
+import type { AbstractCanvas2D, ColorValue, Rectangle } from '@maxgraph/core';
+import { CellRenderer, EllipseShape, RectangleShape } from '@maxgraph/core';
 
 export function registerCustomShapes(): void {
   console.info('Registering custom shapes...');
