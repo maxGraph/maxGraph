@@ -118,6 +118,4 @@ const footer = <HTMLElement>document.querySelector('footer');
 footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 
 // Creates the graph inside the given container
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- we are sure that the element exist
-const container = document.querySelector<HTMLElement>('#graph-container')!;
-initializeGraph(container);
+initializeGraph(<HTMLElement>document.querySelector('#graph-container'));
