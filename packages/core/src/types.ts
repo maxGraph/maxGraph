@@ -38,7 +38,7 @@ export type Properties = {
   [k: string]: any;
 };
 
-export type CellStyle = CellStateStyle & {
+    export type CellStyle = CellStateStyle & {
   /**
    * Names of styles used to fill properties before applying the specific properties defined in {@link CellStateStyle}.
    *
@@ -186,7 +186,7 @@ export type CellStateStyle = {
    *
    * See {@link startArrow}.
    */
-  endArrow?: ArrowValue | string;
+  endArrow?: ArrowValue;
   /**
    * Use `false` to not fill or `true` to fill the end arrow marker.
    * See {@link startFill}.
@@ -392,7 +392,7 @@ export type CellStateStyle = {
    *
    * The `indicatorShape` property has precedence over the {@link indicatorImage} property.
    */
-  indicatorShape?: ShapeValue | string;
+  indicatorShape?: ShapeValue;
   /**
    * The color of the indicator stroke in {@link LabelShape}.
    * The possible values are all HTML color names or HEX codes.
@@ -611,7 +611,7 @@ export type CellStateStyle = {
    * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape}.
    * This usually includes {@link ShapeValue} values and the names of all new shapes.
    */
-  shape?: ShapeValue | string;
+  shape?: ShapeValue;
   /**
    * The size of the source jetty in {@link EdgeStyle.OrthConnector}.
    *
@@ -686,7 +686,7 @@ export type CellStateStyle = {
    *
    * See {@link endArrow}.
    */
-  startArrow?: ArrowValue | string;
+  startArrow?: ArrowValue;
   /**
    * Use `false` to not fill or `true` to fill the start arrow marker.
    * See {@link endFill}.
@@ -918,7 +918,7 @@ export type EdgeParameters = {
   /**
    * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
    */
-  value?: any;
+  value?: unknown;
 };
 
 export type VertexParameters = {
