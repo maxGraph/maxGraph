@@ -186,6 +186,12 @@ In the project root directory, execute
 $ npm install
 ```
 
+In the `packages/core` folder, execute
+
+```sh
+npm pack
+```
+
 To watch the core package, execute
 
 ```sh
