@@ -192,7 +192,7 @@ In the `packages/core` folder, execute
 npm pack
 ```
 
-To watch the core package, execute
+To watch the core package, execute (in the project root directory)
 
 ```sh
 $ npm run dev
@@ -200,7 +200,7 @@ $ npm run dev
 
 and select `@maxgraph/core`.
 
-To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), execute
+To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), execute (in the project root directory)
 
 ```sh
 $ npm run dev
