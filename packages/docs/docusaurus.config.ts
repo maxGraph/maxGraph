@@ -56,11 +56,11 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    // image: 'img/docusaurus-social-card.jpg',
     navbar: {
       title: 'maxGraph',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'maxGraph Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -70,9 +70,9 @@ const config: Config = {
           position: 'left',
           label: 'Tutorial',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        {to: '/docs/api', label: 'API', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/maxGraph/maxGraph',
           label: 'GitHub',
           position: 'right',
         },
@@ -87,6 +87,10 @@ const config: Config = {
             {
               label: 'Tutorial',
               to: '/docs/intro',
+            },
+            {
+              label: 'API',
+              to: '/docs/api',
             },
           ],
         },
