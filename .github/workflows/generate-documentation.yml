@@ -6,6 +6,7 @@ on:
       - development
     paths:
       - '.github/workflows/generate-documentation.yml'
+      - '.nvmrc'
       - 'packages/core/*'
       - 'packages/docs/*'
       - 'package.json'
