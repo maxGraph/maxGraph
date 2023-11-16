@@ -186,7 +186,13 @@ In the project root directory, execute
 $ npm install
 ```
 
-To watch the core package, execute
+In the `packages/core` folder, execute
+
+```sh
+npm pack
+```
+
+To watch the core package, execute (in the project root directory)
 
 ```sh
 $ npm run dev
@@ -194,7 +200,7 @@ $ npm run dev
 
 and select `@maxgraph/core`.
 
-To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), execute
+To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), execute (in the project root directory)
 
 ```sh
 $ npm run dev
