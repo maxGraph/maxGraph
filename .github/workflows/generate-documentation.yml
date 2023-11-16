@@ -25,3 +25,6 @@ jobs:
       - name: Build @maxgraph/core API docs
         working-directory: packages/core
         run: npm run docs:api
+      - name: Build documentation site
+        working-directory: packages/docs
+        run: npm run build
