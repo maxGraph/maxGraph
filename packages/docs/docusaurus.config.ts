@@ -70,7 +70,7 @@ const config: Config = {
           position: 'left',
           label: 'Documentation',
         },
-        {to: '/docs/api', label: 'API', position: 'left'},
+        // {to: '/docs/api', label: 'API', position: 'left'},
         {
           href: 'https://github.com/maxGraph/maxGraph',
           label: 'GitHub',
@@ -88,10 +88,10 @@ const config: Config = {
               label: 'Documentation',
               to: '/docs/intro',
             },
-            {
-              label: 'API',
-              to: '/docs/api',
-            },
+            // {
+            //   label: 'API',
+            //   to: '/docs/api',
+            // },
           ],
         },
         {
