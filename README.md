@@ -107,11 +107,11 @@ graph.batchUpdate(() => {
 
 You will see something like in the following _maxGraph panning_ demo:
 
-![maxGraph panning demo](packages/docs/images/maxgraph_demo.gif "maxGraph panning demo")
+![maxGraph panning demo](packages/docs/old-content/images/maxgraph_demo.gif "maxGraph panning demo")
 
 For more details, have a look at the [storybook stories](packages/html/stories).
 
-Notice that some elements produced by `maxGraph` require to use [CSS and images](./packages/docs/css-and-images.md) provided in the npm package.
+Notice that some elements produced by `maxGraph` require to use [CSS and images](packages/docs/old-content/css-and-images.md) provided in the npm package.
 
 
 ## TypeScript support
@@ -134,7 +134,7 @@ Until we provide a complete documentation, you can check the mxGraph resources
 
 `maxGraph` APIs are not fully compatible with `mxGraph` APIs. The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without issues.
 
-For a complete guide, see the [dedicated migration page](packages/docs/migrate-from-mxgraph.md).
+For a complete guide, see the [dedicated migration page](packages/docs/old-content/migrate-from-mxgraph.md).
 
 
 ## History
@@ -225,4 +225,4 @@ Examples of use can be found in the [maxgraph-integration-examples](https://gith
 
 ### Release
 
-See the dedicated [release](packages/docs/release.md) page.
+See the dedicated [release](packages/docs/old-content/release.md) page.
