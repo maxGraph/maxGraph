@@ -1,3 +1,7 @@
+---
+description: Integrate CSS and Images assets required by maxGraph.
+---
+
 # CSS and Images
 
 ## CSS

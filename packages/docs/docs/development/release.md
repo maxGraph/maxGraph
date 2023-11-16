@@ -1,3 +1,7 @@
+---
+description: Explain how to do a release of maxGraph.
+---
+
 # Release how-to
 
 This page explains the steps needed to release a new version of maxgraph@core.
