@@ -22,7 +22,7 @@ released. Rename it if necessary.
 
 Changes in the source code
 - Update the version in [package.json](../../core/package.json) and the `VERSION` constant in the [Client](../../core/src/Client.ts) file.
-- Update the [CHANGELOG](../../../CHANGELOG.md) to list the major changes included in the new version. Be generic and add a
+- Update the `CHANGELOG` file to list the major changes included in the new version. Be generic and add a
 link to the future GitHub release that will contain detailed release notes, as shown below.
 ```markdown
 For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) on
