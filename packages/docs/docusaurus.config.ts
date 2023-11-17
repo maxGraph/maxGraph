@@ -40,13 +40,6 @@ const config: Config = {
           editUrl:
             'https://github.com/maxGraph/maxGraph/tree/main/packages/docs/',
         },
-        // blog: {
-        //   showReadingTime: true,
-        //   // Please change this to your repo.
-        //   // Remove this to remove the "edit this page" links.
-        //   editUrl:
-        //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        // },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -70,6 +63,7 @@ const config: Config = {
           position: 'left',
           label: 'Documentation',
         },
+        // {to: '/storybook', label: 'Demo', position: 'left'},
         // {to: '/docs/api', label: 'API', position: 'left'},
         {
           href: 'https://github.com/maxGraph/maxGraph',
@@ -82,12 +76,16 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Content',
           items: [
             {
               label: 'Documentation',
               to: '/docs/intro',
             },
+            // {
+            //   label: 'Demo',
+            //   to: '/storybook',
+            // },
             // {
             //   label: 'API',
             //   to: '/docs/api',
@@ -109,19 +107,11 @@ const config: Config = {
               label: 'Announces',
               href: 'https://github.com/maxGraph/maxGraph/discussions/categories/announces',
             },
-            // {
-            //   label: 'Twitter',
-            //   href: 'https://twitter.com/docusaurus',
-            // },
           ],
         },
         {
           title: 'More',
           items: [
-            // {
-            //   label: 'Blog',
-            //   to: '/blog',
-            // },
             {
               label: 'GitHub',
               href: 'https://github.com/maxGraph/maxGraph',
