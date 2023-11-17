@@ -34,10 +34,9 @@ export default function Home(): JSX.Element {
       description="maxGraph, a TypeScript library which can display and allow interaction with vector diagrams."
     >
       <HomepageHeader />
-      {/*TODO add features in the future */}
-      {/*<main>*/}
-      {/*  <HomepageFeatures />*/}
-      {/*</main>*/}
+      <main>
+        <HomepageFeatures />
+      </main>
     </Layout>
   );
 }

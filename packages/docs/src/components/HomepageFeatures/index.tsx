@@ -10,38 +10,41 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Based on mature technology',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        <code>maxGraph</code> is the successor of{' '}
+        <a href="https://github.com/jgraph/mxgraph">mxGraph</a> (which is now EOL in its
+        public version), the diagram library that powers{' '}
+        <a href="https://www.drawio.com/">draw.io</a>.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Fully typed',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        <code>maxGraph</code> is written in TypeScript and provides precise types to guide
+        you easily when developing or reading API documentation.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Flexible with convenient defaults',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        <code>maxGraph</code> is highly configurable and offers numerous extension points.
+        But it also provides numerous built-in elements, for example for shapes and
+        styles.
       </>
     ),
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({ title, Svg, description }: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
