@@ -13,7 +13,7 @@
   },
   "include": ["src/**/*.ts"],
   "typedocOptions": {
-    "out": "../website/build/api",
+    "out": "build/api",
     "readme": "none",
     "excludeExternals": true,
     "excludePrivate": true
