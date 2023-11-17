@@ -111,7 +111,7 @@ You will see something like in the following _maxGraph panning_ demo:
 
 For more details, have a look at the [storybook stories](packages/html/stories).
 
-Notice that some elements produced by `maxGraph` require to use [CSS and images](packages/website/old-content/css-and-images.md) provided in the npm package.
+Notice that some elements produced by `maxGraph` require to use [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
 
 
 ## TypeScript support
@@ -225,4 +225,4 @@ Examples of use can be found in the [maxgraph-integration-examples](https://gith
 
 ### Release
 
-See the dedicated [release](packages/website/old-content/release.md) page.
+See the dedicated [release](packages/website/docs/development/release.md) page.
