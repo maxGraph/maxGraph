@@ -25,7 +25,7 @@ released. Rename it if necessary.
 - Close the milestone.
 
 Changes in the source code
-- Update the version in [package.json](../../core/package.json) and the `VERSION` constant in the [Client](../../core/src/Client.ts) file.
+- Update the version in `packages/core/package.json` and the `VERSION` constant in the `packages/core/src/Client.ts` file.
 - Update the `CHANGELOG` file to list the major changes included in the new version. Be generic and add a
 link to the future GitHub release that will contain detailed release notes, as shown below.
 ```markdown
@@ -63,7 +63,7 @@ Create a [new draft release](https://github.com/maxGraph/maxGraph/releases/)
 - save it as a draft
 
 Generate the list of the major changes by using the [automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes).
-It is based on the labels of the merged Pull Requests included in this release and the [GitHub release configuration](../../../.github/release.yml).
+It is based on the labels of the merged Pull Requests included in this release and the [GitHub release configuration](https://github.com/maxGraph/maxGraph/blob/development/.github/release.yml).
 
 If the list is incorrect (for example, an item is not in the correct category), update the label(s) or the associated
 Pull Request and regenerate the list.
