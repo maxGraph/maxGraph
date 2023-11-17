@@ -1,4 +1,4 @@
-name: Generate documentation
+name: Generate website
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
       - '.github/workflows/generate-documentation.yml'
       - '.nvmrc'
       - 'packages/core/*'
-      - 'packages/docs/*'
+      - 'packages/website/*'
       - 'package.json'
 
 jobs:
@@ -25,6 +25,6 @@ jobs:
       - name: Build @maxgraph/core API docs
         working-directory: packages/core
         run: npm run docs:api
-      - name: Build documentation site
-        working-directory: packages/docs
+      - name: Build website
+        working-directory: packages/website
         run: npm run build
