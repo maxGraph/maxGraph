@@ -9,9 +9,16 @@ Here's a breakdown of the proposed changes:
 2. [General guidelines](#general-guidelines)
 3. [Specific code changes](#specific-code-changes)
 
-> **Note:** **⚠️⚠️⚠️ This page is under construction. ⚠️⚠️⚠️  
+:::warning
+
+**This page is under construction.**
+
 Comments are welcome by creating an [issue](https://github.com/maxGraph/maxGraph/issues)
-or starting a [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a)!**.
+or starting a [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a)!.
+
+Feel free to create a [Pull Request](https://github.com/maxGraph/maxGraph/pulls) to enrich the content or fix errors.
+
+:::
 
 The `maxGraph` APIs are not fully compatible with the `mxGraph` APIs, but the `maxGraph` APIs are close to the former `mxGraph` APIs.
 The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without problems.
