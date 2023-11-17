@@ -297,330 +297,191 @@ Several functions from the `mxGraphDataModel` class have been moved to the `Cell
 - `getParent()`
 
 
-[//]: # (below this point, an error occurs. TODO fix it)
-[//]: # (### Misc)
+### Misc
+
+- Codec renaming and output: https://github.com/maxGraph/maxGraph/pull/70
+- `mxDictionary`&lt;T&gt; to `Dictionary`&lt;K, V&gt;
+
+
+### Event handling
+
+The event handling mechanism in `maxGraph` has been updated. Use the following guidelines to update your event handling code:
+
+- `mxEvent` has been replaced by `eventUtils` and `InternalEvent` for most event-related operations.
+- `mxMouseEvent` has been replaced by `InternalMouseEvent`.
 
-[//]: # ()
-[//]: # (Codec renaming and output: https://github.com/maxGraph/maxGraph/pull/70)
+#### `eventUtils`
+- Use the `eventUtils.isMultiTouchEvent()` method, to detect touch events, instead of `mxEvent.isMultiTouchEvent()`.
+- Use the `eventUtils.isLeftMouseButton()` method, to detect mouse events, instead of `mxEvent.isLeftMouseButton()`.
 
-[//]: # ()
-[//]: # (mxDictionary<T> -> Dictionary<K, V>)
+#### `InternalEvent`
+- Use the `eventUtils.PAN_START` property instead of `mxEvent.PAN_START`.
+- Use the `eventUtils.PAN_END` property instead of `mxEvent.PAN_END`.
+- Use the `eventUtils.addMouseWheelListener()` method instead of `mxEvent.addMouseWheelListener()`.
+- Use the `eventUtils.consume()` method instead of `mxEvent.consume()`.
 
-[//]: # ()
-[//]: # (### Event handling)
 
-[//]: # ()
-[//]: # (The event handling mechanism in `maxGraph` has been updated. Use the following guidelines to update your event handling code:)
+### Styling
 
-[//]: # ()
-[//]: # (- `mxEvent` has been replaced by `eventUtils` and `InternalEvent` for most event-related operations.)
+`mxGraph`
+- Default styles defined with `mxStyleSheet`.
+- Style of a Cell: a string containing all properties and values, using a specific syntax and delimiter.
+- Style of a State Cell: a `StyleMap` instance (See [StyleMap](https://github.com/typed-mxgraph/typed-mxgraph/blob/187dd4f0dc7644c0cfbc998dae5fc90879597d81/lib/view/mxStylesheet.d.ts#L2-L4) as a `typed-mxgraph` type).
+
+`maxGraph`
+- Default styles defined via `StyleSheet`.
+- Style of a Cell: a dedicated `CellStyle` object that reuses the same properties as the string form used by mxGraph (see below for changes).
+- Style of a State Cell: a `CellStateStyle` instance.
 
-[//]: # (- `mxMouseEvent` has been replaced by `InternalMouseEvent`.)
 
-[//]: # ()
-[//]: # (#### `eventUtils`)
+#### Properties
+
+In `mxGraph`, the properties are defined as string. The property keys are defined in `mxConstants` and are prefixed by `STYLE_` like `mxConstants.STYLE_FILLCOLOR`.
 
-[//]: # (- Use the `eventUtils.isMultiTouchEvent&#40;&#41;` method, to detect touch events, instead of `mxEvent.isMultiTouchEvent&#40;&#41;`.)
+In `maxGraph`, they are object properties. `mxConstants.STYLE_*` have been replaced by the object properties (see PR [#31](https://github.com/maxGraph/maxGraph/pull/31)).
+
+Property names and values are generally the same as in `mxGraph`. The ones that change are listed below.
 
-[//]: # (- Use the `eventUtils.isLeftMouseButton&#40;&#41;` method, to detect mouse events, instead of `mxEvent.isLeftMouseButton&#40;&#41;`.)
+<a name="style-properties-change"></a>
+Property renaming
+- `autosize` to `autoSize` (from maxgraph@0.2.0)
 
-[//]: # ()
-[//]: # (#### `InternalEvent`)
+Property type changed from `number` (0 or 1) to `boolean` (if not specified, from maxgraph@0.1.0):
+- `anchorPointDirection`
+- `absoluteArcSize` (as of maxgraph@0.2.0)
+- `autosize`
+- `backgroundOutline` (as of maxgraph@0.2.0)
+- `bendable`
+- `cloneable`
+- `curved`
+- `dashed`
+- `deletable`
+- `editable`
+- `endFill`
+- `entryPerimeter`
+- `exitPerimeter`
+- `fixDash`
+- `flipH`
+- `flipV`
+- `foldable`
+- `glass`
+- `horizontal`
+- `imageAspect`
+- `movable`
+- `noEdgeStyle`
+- `noLabel`
+- `orthogonal`
+- `orthogonalLoop`
+- `pointerEvents`
+- `resizable`
+- `resizeHeight`
+- `resizeWidth`
+- `rotatable`
+- `rounded`
+- `shadow`
+- `startFill`
+- `swimlaneLine`
 
-[//]: # (- Use the `eventUtils.PAN_START` property instead of `mxEvent.PAN_START`.)
 
-[//]: # (- Use the `eventUtils.PAN_END` property instead of `mxEvent.PAN_END`.)
 
-[//]: # (- Use the `eventUtils.addMouseWheelListener&#40;&#41;` method instead of `mxEvent.addMouseWheelListener&#40;&#41;`.)
+### Migration of default styles defined with StyleSheet
 
-[//]: # (- Use the `eventUtils.consume&#40;&#41;` method instead of `mxEvent.consume&#40;&#41;`.)
+**TODO: what is a StyleSheet? link to JSDoc/code**
 
-[//]: # ()
-[//]: # ()
-[//]: # (### Styling)
+The migration consists of converting [`StyleMap`](https://github.com/typed-mxgraph/typed-mxgraph/blob/187dd4f0dc7644c0cfbc998dae5fc90879597d81/lib/view/mxStylesheet.d.ts#L2-L4) objects to `CellStyle` objects.
 
-[//]: # ()
-[//]: # (`mxGraph`)
+If you have been using string or named properties, you can keep that syntax.
+You just need to rename the property or update its value as described in (TODO anchor to properties change paragraph)
+```ts
+style['propertyName1'] = value1
+style.propertyName2 = value2
+```
 
-[//]: # (- Default styles defined with `mxStyleSheet`.)
+If you used `mxConstants`, remove it and use named properties instead.
+```ts
+// mxGraphStyle is a StyleMap
+mxGraphStyle[mxConstants.STYLE_STARTSIZE] = 8
 
-[//]: # (- Style of a Cell: a string containing all properties and values, using a specific syntax and delimiter.)
+// maxGraph style is a CellStyle
+style['startSize'] = 8;
+// or
+style.startSize = 8;
+```
 
-[//]: # (- Style of a State Cell: a `StyleMap` instance &#40;See [StyleMap]&#40;https://github.com/typed-mxgraph/typed-mxgraph/blob/187dd4f0dc7644c0cfbc998dae5fc90879597d81/lib/view/mxStylesheet.d.ts#L2-L4&#41; as a `typed-mxgraph` type&#41;.)
 
-[//]: # ()
-[//]: # (`maxGraph`)
+### Migration of specific style properties applied to dedicated cells
 
-[//]: # (- Default styles defined via `StyleSheet`.)
+- **TODO: what is a style? link to JSDoc/code**
 
-[//]: # (- Style of a Cell: a dedicated `CellStyle` object that reuses the same properties as the string form used by mxGraph &#40;see below for changes&#41;.)
+#### `mxGraph` style
 
-[//]: # (- Style of a State Cell: a `CellStateStyle` instance.)
+[mxGraph line 50](https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxGraph.js#L50-L62)
 
-[//]: # ()
-[//]: # ()
-[//]: # (#### Properties)
+> For a named style, the the stylename must be the first element
+of the cell style:
+(code)
+stylename;image=http://www.example.com/image.gif
+(end)
+A cell style can have any number of key=value pairs added, divided
+by a semicolon as follows:
+(code)
+[stylename;|key=value;]
+(end)
 
-[//]: # ()
-[//]: # (In `mxGraph`, the properties are defined as string. The property keys are defined in `mxConstants` and are prefixed by `STYLE_` like `mxConstants.STYLE_FILLCOLOR`.)
+[mxGraph line 167](https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxGraph.js#L167-L171)
 
-[//]: # ()
-[//]: # (In `maxGraph`, they are object properties. `mxConstants.STYLE_*` have been replaced by the object properties &#40;see PR [#31]&#40;https://github.com/maxGraph/maxGraph/pull/31&#41;&#41;.)
+> Styles are a collection of key, value pairs and a stylesheet is a collection
+of named styles. The names are referenced by the cellstyle, which is stored
+in 'mxCell.style' with the following format: [stylename;|key=value;]. The
+string is resolved to a collection of key, value pairs, where the keys are
+overridden with the values in the string.
 
-[//]: # ()
-[//]: # (Property names and values are generally the same as in `mxGraph`. The ones that change are listed below.)
+See also
+- https://jgraph.github.io/mxgraph/docs/tutorial.html#3.3
+- https://jgraph.github.io/mxgraph/docs/manual.html#3.1.3.1
 
-[//]: # ()
-[//]: # (<a name="style-properties-change"></a>)
 
-[//]: # (Property renaming)
+#### `maxGraph` style
 
-[//]: # (- `autosize` to `autoSize` &#40;from maxgraph@0.2.0&#41;)
+In maxGraph, the style is no more defined as a string but as a `CellStyle` object.
 
-[//]: # ()
-[//]: # (Property type changed from `number` &#40;0 or 1&#41; to `boolean` &#40;if not specified, from maxgraph@0.1.0&#41;:)
+Most of the time, the name of `CellStyle` properties is the same as the style keys in the mxGraph style.
 
-[//]: # (- `anchorPointDirection`)
+⚠️⚠️⚠ **WARNING**: Be aware of the properties that have been renamed or whose value types have changed, as described in the [style-properties-change](./migrate-from-mxgraph.md#style-properties-change) paragraph.
 
-[//]: # (- `absoluteArcSize` &#40;as of maxgraph@0.2.0&#41;)
 
-[//]: # (- `autosize`)
+**Migration example**
 
-[//]: # (- `backgroundOutline` &#40;as of maxgraph@0.2.0&#41;)
 
-[//]: # (- `bendable`)
+```js
+// Before
+graph.insertVertex(..., 'style1;style2;shape=cylinder;strokeWidth=2;fillColor:#ffffff');
+```
 
-[//]: # (- `cloneable`)
 
-[//]: # (- `curved`)
+```js
+// Now using the insertVertex method taking a single parameter
+graph.insertVertex({
+  ...
+  style: {
+    baseStyleNames: ['style1', 'style2']
+    shape: 'cylinder',
+    strokeWidth: 2,
+    fillColor: '#ffffff'
+  }
+});
+```
 
-[//]: # (- `dashed`)
+**Special migration case**
+In `mxGraph`, to not merge properties of the default style, the style string must start with a `;` (semicolon) as in `;style1;style2;prop1=value1;.....`.
+This is documented in the [mxStylesheet documentation](jgraph/mxgraph@v4.2.2/javascript/src/js/view/mxStylesheet.js#L33-L38).
+> To override the default style for a cell, add a leading semicolon to the style definition, e.g. ;shadow=1
 
-[//]: # (- `deletable`)
+This is currently not supported in maxGraph: https://github.com/maxGraph/maxGraph/issues/154 "Add a way to not use default style properties when calculating cell styles".
 
-[//]: # (- `editable`)
 
-[//]: # (- `endFill`)
+## Conclusion
 
-[//]: # (- `entryPerimeter`)
-
-[//]: # (- `exitPerimeter`)
-
-[//]: # (- `fixDash`)
-
-[//]: # (- `flipH`)
-
-[//]: # (- `flipV`)
-
-[//]: # (- `foldable`)
-
-[//]: # (- `glass`)
-
-[//]: # (- `horizontal`)
-
-[//]: # (- `imageAspect`)
-
-[//]: # (- `movable`)
-
-[//]: # (- `noEdgeStyle`)
-
-[//]: # (- `noLabel`)
-
-[//]: # (- `orthogonal`)
-
-[//]: # (- `orthogonalLoop`)
-
-[//]: # (- `pointerEvents`)
-
-[//]: # (- `resizable`)
-
-[//]: # (- `resizeHeight`)
-
-[//]: # (- `resizeWidth`)
-
-[//]: # (- `rotatable`)
-
-[//]: # (- `rounded`)
-
-[//]: # (- `shadow`)
-
-[//]: # (- `startFill`)
-
-[//]: # (- `swimlaneLine`)
-
-[//]: # ()
-[//]: # ()
-[//]: # ()
-[//]: # (### Migration of default styles defined with StyleSheet)
-
-[//]: # ()
-[//]: # (**TODO: what is a StyleSheet? link to JSDoc/code**)
-
-[//]: # ()
-[//]: # (The migration consists of converting [`StyleMap`]&#40;https://github.com/typed-mxgraph/typed-mxgraph/blob/187dd4f0dc7644c0cfbc998dae5fc90879597d81/lib/view/mxStylesheet.d.ts#L2-L4&#41; objects to `CellStyle` objects.)
-
-[//]: # ()
-[//]: # (If you have been using string or named properties, you can keep that syntax.)
-
-[//]: # (You just need to rename the property or update its value as described in &#40;TODO anchor to properties change paragraph&#41;)
-
-[//]: # (```ts)
-
-[//]: # (style['propertyName1'] = value1)
-
-[//]: # (style.propertyName2 = value2)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (If you used `mxConstants`, remove it and use named properties instead.)
-
-[//]: # (```ts)
-
-[//]: # (// mxGraphStyle is a StyleMap)
-
-[//]: # (mxGraphStyle[mxConstants.STYLE_STARTSIZE] = 8)
-
-[//]: # ()
-[//]: # (// maxGraph style is a CellStyle)
-
-[//]: # (style['startSize'] = 8;)
-
-[//]: # (// or)
-
-[//]: # (style.startSize = 8;)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # ()
-[//]: # (### Migration of specific style properties applied to dedicated cells)
-
-[//]: # ()
-[//]: # (- **TODO: what is a style? link to JSDoc/code**)
-
-[//]: # ()
-[//]: # (#### `mxGraph` style)
-
-[//]: # ()
-[//]: # ([mxGraph line 50]&#40;https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxGraph.js#L50-L62&#41;)
-
-[//]: # ()
-[//]: # (> For a named style, the the stylename must be the first element)
-
-[//]: # (of the cell style:)
-
-[//]: # (&#40;code&#41;)
-
-[//]: # (stylename;image=http://www.example.com/image.gif)
-
-[//]: # (&#40;end&#41;)
-
-[//]: # (A cell style can have any number of key=value pairs added, divided)
-
-[//]: # (by a semicolon as follows:)
-
-[//]: # (&#40;code&#41;)
-
-[//]: # ([stylename;|key=value;])
-
-[//]: # (&#40;end&#41;)
-
-[//]: # ()
-[//]: # ([mxGraph line 167]&#40;https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxGraph.js#L167-L171&#41;)
-
-[//]: # ()
-[//]: # (> Styles are a collection of key, value pairs and a stylesheet is a collection)
-
-[//]: # (of named styles. The names are referenced by the cellstyle, which is stored)
-
-[//]: # (in <mxCell.style> with the following format: [stylename;|key=value;]. The)
-
-[//]: # (string is resolved to a collection of key, value pairs, where the keys are)
-
-[//]: # (overridden with the values in the string.)
-
-[//]: # (>)
-
-[//]: # ()
-[//]: # (See also)
-
-[//]: # (- https://jgraph.github.io/mxgraph/docs/tutorial.html#3.3)
-
-[//]: # (- https://jgraph.github.io/mxgraph/docs/manual.html#3.1.3.1)
-
-[//]: # ()
-[//]: # ()
-[//]: # (#### `maxGraph` style)
-
-[//]: # ()
-[//]: # (In maxGraph, the style is no more defined as a string but as a `CellStyle` object.)
-
-[//]: # ()
-[//]: # (Most of the time, the name of `CellStyle` properties is the same as the style keys in the mxGraph style.)
-
-[//]: # ()
-[//]: # (⚠️⚠️⚠ **WARNING**: Be aware of the properties that have been renamed or whose value types have changed, as described in the [style-properties-change]&#40;./migrate-from-mxgraph.md#style-properties-change&#41; paragraph.)
-
-[//]: # ()
-[//]: # ()
-[//]: # (**Migration example**)
-
-[//]: # ()
-[//]: # ()
-[//]: # (```js)
-
-[//]: # (// Before)
-
-[//]: # (graph.insertVertex&#40;..., 'style1;style2;shape=cylinder;strokeWidth=2;fillColor:#ffffff'&#41;;)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # ()
-[//]: # (```js)
-
-[//]: # (// Now using the insertVertex method taking a single parameter)
-
-[//]: # (graph.insertVertex&#40;{)
-
-[//]: # (  ...)
-
-[//]: # (  style: {)
-
-[//]: # (    baseStyleNames: ['style1', 'style2'])
-
-[//]: # (    shape: 'cylinder',)
-
-[//]: # (    strokeWidth: 2,)
-
-[//]: # (    fillColor: '#ffffff')
-
-[//]: # (  })
-
-[//]: # (}&#41;;)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (**Special migration case**)
-
-[//]: # (In `mxGraph`, to not merge properties of the default style, the style string must start with a `;` &#40;semicolon&#41; as in `;style1;style2;prop1=value1;.....`.)
-
-[//]: # (This is documented in the [mxStylesheet documentation]&#40;jgraph/mxgraph@v4.2.2/javascript/src/js/view/mxStylesheet.js#L33-L38&#41;.)
-
-[//]: # (> To override the default style for a cell, add a leading semicolon to the style definition, e.g. ;shadow=1)
-
-[//]: # ()
-[//]: # (This is currently not supported in maxGraph: https://github.com/maxGraph/maxGraph/issues/154 "Add a way to not use default style properties when calculating cell styles".)
-
-[//]: # ()
-[//]: # ()
-[//]: # (## Conclusion)
-
-[//]: # ()
-[//]: # (By following these guidelines and updating your codebase accordingly, you should be able to migrate your application from `mxGraph` to `maxGraph`.)
-
-[//]: # (Remember to test your application thoroughly after the migration to ensure that its functionality is preserved.)
-
-[//]: # (If you encounter any problems during the migration process, please refer to the `maxGraph` documentation or ask the `maxGraph` community for help.)
+By following these guidelines and updating your codebase accordingly, you should be able to migrate your application from `mxGraph` to `maxGraph`.
+Remember to test your application thoroughly after the migration to ensure that its functionality is preserved.
+If you encounter any problems during the migration process, please refer to the `maxGraph` documentation or ask the `maxGraph` community for help.
