@@ -28,3 +28,10 @@ jobs:
       - name: Build website
         working-directory: packages/website
         run: npm run build
+      - name: Upload website artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: website-${{github.sha}}
+          path: |
+            packages/core/build/api/
+            packages/website/build/
