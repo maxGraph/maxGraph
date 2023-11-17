@@ -134,7 +134,7 @@ Until we provide a complete documentation, you can check the mxGraph resources
 
 `maxGraph` APIs are not fully compatible with `mxGraph` APIs. The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without issues.
 
-For a complete guide, see the [dedicated migration page](packages/docs/old-content/migrate-from-mxgraph.md).
+For a complete guide, see the [dedicated migration page](packages/docs/docs/usage/migrate-from-mxgraph.md).
 
 
 ## History
