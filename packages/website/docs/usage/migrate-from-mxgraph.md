@@ -447,8 +447,11 @@ In maxGraph, the style is no more defined as a string but as a `CellStyle` objec
 
 Most of the time, the name of `CellStyle` properties is the same as the style keys in the mxGraph style.
 
-⚠️⚠️⚠ **WARNING**: Be aware of the properties that have been renamed or whose value types have changed, as described in the [style-properties-change](./migrate-from-mxgraph.md#style-properties-change) paragraph.
+:::warning
 
+Be aware of the properties that have been renamed or whose value types have changed, as described in the [style-properties-change](./migrate-from-mxgraph.md#style-properties-change) paragraph.
+
+:::
 
 **Migration example**
 
