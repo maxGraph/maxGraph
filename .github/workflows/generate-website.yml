@@ -5,7 +5,7 @@ on:
     branches:
       - development
     paths:
-      - '.github/workflows/generate-documentation.yml'
+      - '.github/workflows/generate-website.yml'
       - '.nvmrc'
       - 'packages/core/*'
       - 'packages/website/*'
