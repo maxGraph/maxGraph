@@ -38,7 +38,7 @@ export type Properties = {
   [k: string]: any;
 };
 
-    export type CellStyle = CellStateStyle & {
+export type CellStyle = CellStateStyle & {
   /**
    * Names of styles used to fill properties before applying the specific properties defined in {@link CellStateStyle}.
    *
@@ -827,7 +827,8 @@ export type ArrowValue =
   | 'openThin'
   | 'oval'
   | 'diamond'
-  | 'diamondThin';
+  | 'diamondThin'
+  | (string & {});
 /**
  * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
  */
@@ -847,7 +848,8 @@ export type ShapeValue =
   | 'actor'
   | 'cloud'
   | 'triangle'
-  | 'hexagon';
+  | 'hexagon'
+  | (string & {});
 
 export type CanvasState = {
   alpha: number;
@@ -918,7 +920,7 @@ export type EdgeParameters = {
   /**
    * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
    */
-  value?: unknown;
+  value?: Record<string | number | Symbol, any> | string;
 };
 
 export type VertexParameters = {
