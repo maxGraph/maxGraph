@@ -920,7 +920,7 @@ export type EdgeParameters = {
   /**
    * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
    */
-  value?: Record<string | number | Symbol, any> | string;
+  value?: Record<string | number | symbol, any> | string;
 };
 
 export type VertexParameters = {
