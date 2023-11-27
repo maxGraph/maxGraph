@@ -24,17 +24,13 @@
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
     "better-docs": "^2.3.2",
-    "css-loader": "^6.5.1",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
-    "file-loader": "^6.2.0",
     "lerna": "^4.0.0",
     "prettier": "^2.7.1",
-    "style-loader": "^3.3.1",
     "typedoc": "^0.23.21",
-    "typescript": "^4.9.5",
-    "url-loader": "^4.1.1"
+    "typescript": "^4.9.5"
   },
   "overrides": {
     "@types/node": "^16.18.0"
