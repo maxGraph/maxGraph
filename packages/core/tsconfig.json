@@ -5,7 +5,7 @@
     "declaration": true,
     "declarationMap": false,
     "emitDeclarationOnly": false,
-    "outDir": "./dist/esm",
+    "outDir": "./dist",
     "strict": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true
