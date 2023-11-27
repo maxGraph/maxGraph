@@ -11,7 +11,6 @@
     "graph",
     "svg"
   ],
-  "main": "dist/maxgraph.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
