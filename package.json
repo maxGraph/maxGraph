@@ -30,7 +30,6 @@
     "@typescript-eslint/parser": "^5.39.0",
     "babel-loader": "^8.2.3",
     "better-docs": "^2.3.2",
-    "cross-env": "~7.0.3",
     "css-loader": "^6.5.1",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
