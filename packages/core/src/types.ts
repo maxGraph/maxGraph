@@ -182,11 +182,11 @@ export type CellStateStyle = {
    * This defines the style of the end arrow marker.
    *
    * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
-   * This generally includes {@link ArrowType} values and the names of any new shapes.
+   * This includes {@link ArrowValue} values and custom names that have been registered.
    *
    * See {@link startArrow}.
    */
-  endArrow?: ArrowValue;
+  endArrow?: StyleArrayValue;
   /**
    * Use `false` to not fill or `true` to fill the end arrow marker.
    * See {@link startFill}.
@@ -388,11 +388,11 @@ export type CellStateStyle = {
   /**
    * The indicator shape used within an {@link LabelShape}.
    * The possible values are all names of registered Shapes with {@link CellRenderer.registerShape}.
-   * This usually includes {@link ShapeValue} values and the names of all new shapes.
+   * This includes {@link ShapeValue} values and custom names that have been registered.
    *
    * The `indicatorShape` property has precedence over the {@link indicatorImage} property.
    */
-  indicatorShape?: ShapeValue;
+  indicatorShape?: StyleShapeValue;
   /**
    * The color of the indicator stroke in {@link LabelShape}.
    * The possible values are all HTML color names or HEX codes.
@@ -609,9 +609,9 @@ export type CellStateStyle = {
   shadow?: boolean;
   /**
    * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape}.
-   * This usually includes {@link ShapeValue} values and the names of all new shapes.
+   * This includes {@link ShapeValue} values and custom names that have been registered.
    */
-  shape?: ShapeValue;
+  shape?: StyleShapeValue;
   /**
    * The size of the source jetty in {@link EdgeStyle.OrthConnector}.
    *
@@ -682,11 +682,11 @@ export type CellStateStyle = {
    * This defines the style of the start arrow marker.
    *
    * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
-   * This generally includes {@link ArrowType} values and the names of any new shapes.
+   * This includes {@link ArrowValue} values and the names of any new shapes.
    *
    * See {@link endArrow}.
    */
-  startArrow?: ArrowValue;
+  startArrow?: StyleArrayValue;
   /**
    * Use `false` to not fill or `true` to fill the start arrow marker.
    * See {@link endFill}.
@@ -827,8 +827,13 @@ export type ArrowValue =
   | 'openThin'
   | 'oval'
   | 'diamond'
-  | 'diamondThin'
-  | (string & {});
+  | 'diamondThin';
+
+/**
+ * {@link ArrowValue} with support for extensions.
+ */
+export type StyleArrayValue = ArrowValue | (string & {});
+
 /**
  * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
  */
@@ -848,8 +853,12 @@ export type ShapeValue =
   | 'actor'
   | 'cloud'
   | 'triangle'
-  | 'hexagon'
-  | (string & {});
+  | 'hexagon';
+
+/**
+ * {@link ShapeValue} with support for extensions.
+ */
+export type StyleShapeValue = ShapeValue | (string & {});
 
 export type CanvasState = {
   alpha: number;
