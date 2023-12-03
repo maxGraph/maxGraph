@@ -41,7 +41,12 @@ npm uninstall mxgraph
 ```shell
 npm install maxgraph@core
 ```
-ℹ️ The `maxgraph@core` package contains the core functionality of `maxGraph`.
+
+:::info
+
+The `maxgraph@core` package contains the core functionality of `maxGraph`.
+
+:::
 
 ### Initialize `maxGraph`
 
@@ -107,7 +112,11 @@ Here are some general guidelines to keep in mind when migrating from `mxGraph` t
 This section outlines specific code changes required when migrating from `mxGraph` to `maxGraph`.
 Please update your code accordingly.
 
-> **Note:** Much information is available at https://github.com/maxGraph/maxGraph/pull/70.
+:::note
+
+A wide range of information is available at https://github.com/maxGraph/maxGraph/pull/70.
+
+:::
 
 ### Overlay
 The `strokewidth` property has been renamed to `strokeWidth` in `maxGraph`. 
@@ -194,7 +203,7 @@ const canvas = new SvgCanvas2D(svgElement, oneBoolean);
 
 #### `getAlternateText()`
 
-change types ???????
+**TODO** change types ???????
 
 #### `format()`
 
@@ -307,7 +316,12 @@ Only the functions for mxCell/Cell remain. See https://github.com/maxGraph/maxGr
 
 
 Some functions previously available in `mxGraph` and `mxGraphModel` have been removed. These functions allowed for customizing the behavior of `mxGraphModel` and `mxCell`. However, now only the functions specific to `mxCell`/`Cell` remain.  
-ℹ️ You can find more information about these changes in the following GitHub pull request: https://github.com/maxGraph/maxGraph/pull/24.
+
+:::note
+
+You can find more information about these changes in the following GitHub pull request: https://github.com/maxGraph/maxGraph/pull/24.
+
+:::
 
 #### `mxCell`
 
