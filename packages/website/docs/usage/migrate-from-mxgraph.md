@@ -144,6 +144,14 @@ Several functions in `mxUtils` have been moved to their own namespaces in `maxGr
 - `getXml`(): Update your code to use `xmlUtils.getXml()` instead of `mxUtils.getXml()`.
 - `createXmlDocument()`: Update your code to use `xmlUtils.createXmlDocument()` instead of `mxUtils.createXmlDocument()`.
 
+
+### Removed methods from `mxUtils`
+
+The following methods of `mxUtils` have been removed without replacements in `maxGraph`. Use your own implementation or 3rd party libraries instead:
+- `mxUtils.button`
+- `mxUtils.error`
+
+
 ### `mxAbstractCanvas2D`
 
 The `mxAbstractCanvas2D` class has been renamed to `AbstractCanvas2D` in `maxGraph`, and there is a parameter type change in one of its methods.
@@ -208,6 +216,9 @@ format:(value: number) => number
 The `mxGraph` class has been renamed to `Graph` in `maxGraph`.
 There have also been some changes related to properties and methods.
 
+Some properties have been removed in favor of the usage of plugins. Plugins are registered at the Graph initialization by passing
+an array of plugins to the constructor.
+
 #### `panningHandler` property
 
 The `panningHandler` property has been removed and replaced by a plugin. Instead of accessing `panningHandler` directly, you can use the `getPlugin()` method to get the `PanningHandler` plugin instance. Here's an example:
@@ -269,7 +280,25 @@ graph.insertEdge({ parent, id, value, source, target, style });
 
 
 ### Client
-renamed properties: TODO which
+
+The `mxClient` class has been removed into `Client`.
+
+Removed properties
+- `defaultBundles`
+- `mxForceIncludes`: it was used to force loading the JavaScript files in development mode in mxGraph. We are not
+managing development mode in that way anymore.
+- `mxLoadResources`: not used anymore
+- `mxLoadStylesheets`: not used anymore
+- `mxResourceExtension`: it was only used in `Translations`, so only keep the property in `Translations`
+
+Removed methods
+- `setForceIncludes`: the `mxForceIncludes` property has been removed
+- `setLoadResources`: the `mxLoadResources` property has been removed
+- `setLoadStylesheets`: the `mxLoadStylesheets` property has been removed
+- `setResourceExtension`: the `mxResourceExtension` property has been removed
+
+Moved methods
+- `link` method moved and renamed `domUtils.addLinkToHead`
 
 
 ### Cell manipulation
@@ -284,7 +313,14 @@ Some functions previously available in `mxGraph` and `mxGraphModel` have been re
 
 The `mxCell` class has been renamed to `Cell` for simplicity.
 
-The `style` property of `Cell` has undergone a type change from `string` to `CellStyle`.
+The `style` property of `Cell` has undergone a type change from `string` to `CellStyle`. See the paragraph about "Migration of specific style properties applied to dedicated cells"
+for more details about how to migrate the style property.
+
+
+#### `mxGraph`
+
+Some methods were removed:
+- `mxGraph.isCellVisible(cell)` see https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942 for rationale
 
 
 #### `mxGraphDataModel`
@@ -296,6 +332,8 @@ Several functions from the `mxGraphDataModel` class have been moved to the `Cell
 - `isEdge()`
 - `getParent()`
 
+Others were removed:
+- `mxGraphModel.isVisible(cell)` see https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942 for rationale
 
 ### Misc
 
@@ -315,10 +353,10 @@ The event handling mechanism in `maxGraph` has been updated. Use the following g
 - Use the `eventUtils.isLeftMouseButton()` method, to detect mouse events, instead of `mxEvent.isLeftMouseButton()`.
 
 #### `InternalEvent`
-- Use the `eventUtils.PAN_START` property instead of `mxEvent.PAN_START`.
-- Use the `eventUtils.PAN_END` property instead of `mxEvent.PAN_END`.
-- Use the `eventUtils.addMouseWheelListener()` method instead of `mxEvent.addMouseWheelListener()`.
-- Use the `eventUtils.consume()` method instead of `mxEvent.consume()`.
+- Use the `InternalEvent.PAN_START` property instead of `mxEvent.PAN_START`.
+- Use the `InternalEvent.PAN_END` property instead of `mxEvent.PAN_END`.
+- Use the `InternalEvent.addMouseWheelListener()` method instead of `mxEvent.addMouseWheelListener()`.
+- Use the `InternalEvent.consume()` method instead of `mxEvent.consume()`.
 
 
 ### Styling
