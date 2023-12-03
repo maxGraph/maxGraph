@@ -7,8 +7,9 @@ on:
     paths:
       - '.github/workflows/generate-website.yml'
       - '.nvmrc'
-      - 'packages/core/*'
-      - 'packages/website/*'
+      - 'packages/core/**/*'
+      - 'packages/website/**/*'
+      - '!packages/website/README.md'
       - 'package.json'
 
 jobs:
