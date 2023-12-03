@@ -49,7 +49,6 @@ git push origin v0.2.0
 
 - Checkout the tag that has just been created
 - From packages/core:
-  - delete the `dist` folder 
   - run `npm publish`
 
 
