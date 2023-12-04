@@ -9,9 +9,6 @@
     "build": "tsc && storybook build --output-dir dist",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "@maxgraph/core": "*"
-  },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.4.6",
     "@storybook/addon-links": "^7.4.6",

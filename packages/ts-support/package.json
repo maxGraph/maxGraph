@@ -4,9 +4,6 @@
   "scripts": {
     "test": "tsc --version && tsc"
   },
-  "dependencies": {
-    "@maxgraph/core": "*"
-  },
   "devDependencies": {
     "typescript": "3.8.2"
   }
