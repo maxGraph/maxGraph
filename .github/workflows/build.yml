@@ -5,27 +5,30 @@ on:
     branches:
       - development
     paths:
+      - '.github/actions/build-setup/**/*'
       - '.github/workflows/build.yml'
+      - '.eslint*'
       - '.nvmrc'
       - 'packages/**/*'
       - '!packages/**/*.md'
       - '!packages/website/**/*'
-      - 'scripts/**/*'
-      - 'babel.config.js'
       - 'package.json'
-      - 'webpack.config.js'
+      - 'package-lock.json'
+      - 'tsconfig.json'
   pull_request:
     branches:
       - development
     paths:
+      - '.github/actions/build-setup/**/*'
       - '.github/workflows/build.yml'
+      - '.eslint*'
+      - '.nvmrc'
       - 'packages/**/*'
       - '!packages/**/*.md'
       - '!packages/website/**/*'
-      - 'scripts/**/*'
-      - 'babel.config.js'
       - 'package.json'
-      - 'webpack.config.js'
+      - 'package-lock.json'
+      - 'tsconfig.json'
 
 jobs:
   build:
