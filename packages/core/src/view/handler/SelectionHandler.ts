@@ -480,10 +480,10 @@ class SelectionHandler implements GraphPlugin {
     if (!this.graph.isToggleEvent(me.getEvent()) || !isAltDown(me.getEvent())) {
       while (c) {
         if (selectionCellsHandler?.isHandled(c)) {
-          const cellEditor = this.graph.getPlugin(
+          const cellEditorHandler = this.graph.getPlugin(
             'CellEditorHandler'
           ) as CellEditorHandler;
-          return cellEditor?.getEditingCell() !== c;
+          return cellEditorHandler?.getEditingCell() !== c;
         }
         c = c.getParent();
       }
