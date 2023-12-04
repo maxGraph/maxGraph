@@ -61,13 +61,9 @@ import type { ColorValue, GraphPlugin } from '../../types';
  * handlers are created using {@link Graph#createHandler} in
  * {@link GraphSelectionModel#cellAdded}.
  *
- * To avoid the container to scroll a moved cell into view, set
- * <scrollAfterMove> to false.
+ * To avoid the container to scroll a moved cell into view, set {@link scrollOnMove} to `false`.
  *
- * Constructor: mxGraphHandler
- *
- * Constructs an event handler that creates handles for the
- * selection cells.
+ * Constructs an event handler that creates handles for the selection cells.
  *
  * @param graph Reference to the enclosing {@link Graph}.
  */
@@ -269,8 +265,8 @@ class SelectionHandler implements GraphPlugin {
   connectOnDrop = false;
 
   /**
-   * Specifies if the view should be scrolled so that a moved cell is
-   * visible. Default is true.
+   * Specifies if the view should be scrolled so that a moved cell is visible.
+   * @default true
    */
   scrollOnMove = true;
 

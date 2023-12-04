@@ -262,14 +262,14 @@ export const VERTEX_SELECTION_DASHED = true;
 export const EDGE_SELECTION_DASHED = true;
 
 /**
- * Defines the color to be used for the guidelines in mxGraphHandler.
- * Default is #FF0000.
+ * Defines the color to be used for the guidelines in `Guide`.
+ * @default #FF0000.
  */
 export const GUIDE_COLOR = '#FF0000';
 
 /**
- * Defines the strokewidth to be used for the guidelines in mxGraphHandler.
- * Default is 1.
+ * Defines the strokewidth to be used for the guidelines in `Guide`.
+ * @default 1.
  */
 export const GUIDE_STROKEWIDTH = 1;
 

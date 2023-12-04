@@ -68,21 +68,19 @@ export const defaultPlugins: GraphPluginConstructor[] = [
 ];
 
 /**
- * Extends {@link EventSource} to implement a graph component for
- * the browser. This is the main class of the package. To activate
- * panning and connections use {@link setPanning} and {@link setConnectable}.
- * For rubberband selection you must create a new instance of
- * {@link rubberband}. The following listeners are added to
- * {@link mouseListeners} by default:
+ * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
+ *
+ * To activate panning and connections use {@link setPanning} and {@link setConnectable}.
+ * For rubberband selection you must create a new instance of {@link rubberband}.
+ *
+ * The following listeners are added to {@link mouseListeners} by default:
  *
  * - tooltipHandler: {@link TooltipHandler} that displays tooltips
  * - panningHandler: {@link PanningHandler} for panning and popup menus
  * - connectionHandler: {@link ConnectionHandler} for creating connections
- * - graphHandler: {@link SelectionHandler} for moving and cloning cells
+ * - selectionHandler: {@link SelectionHandler} for moving and cloning cells
  *
  * These listeners will be called in the above order if they are enabled.
- * @class graph
- * @extends {EventSource}
  */
 class Graph extends EventSource {
   container: HTMLElement;
