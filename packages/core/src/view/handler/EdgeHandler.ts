@@ -75,7 +75,7 @@ import { equalPoints } from '../../util/arrayUtils';
 /**
  * Graph event handler that reconnects edges and modifies control points and the edge
  * label location.
- * Uses {@link TerminalMarker} for finding and highlighting new source and target vertices.
+ * Uses {@link CellMarker} for finding and highlighting new source and target vertices.
  * This handler is automatically created in mxGraph.createHandler for each selected edge.
  * **To enable adding/removing control points, the following code can be used**
  * @example
@@ -98,7 +98,7 @@ class EdgeHandler {
   state: CellState;
 
   /**
-   * Holds the {@link TerminalMarker} which is used for highlighting terminals.
+   * Holds the {@link CellMarker} which is used for highlighting terminals.
    */
   marker: CellMarker;
 
@@ -311,13 +311,14 @@ class EdgeHandler {
       }
     }
 
-    const graphHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
 
     // Creates bends for the non-routed absolute points
     // or bends that don't correspond to points
     if (
-      this.graph.getSelectionCount() < graphHandler.maxCells ||
-      graphHandler.maxCells <= 0
+      selectionHandler &&
+      (this.graph.getSelectionCount() < selectionHandler.maxCells ||
+        selectionHandler.maxCells <= 0)
     ) {
       this.bends = this.createBends();
 
@@ -496,21 +497,21 @@ class EdgeHandler {
   }
 
   /**
-   * Returns {@link Constants#EDGE_SELECTION_COLOR}.
+   * Returns {@link EDGE_SELECTION_COLOR}.
    */
   getSelectionColor() {
     return EDGE_SELECTION_COLOR;
   }
 
   /**
-   * Returns {@link Constants#EDGE_SELECTION_STROKEWIDTH}.
+   * Returns {@link EDGE_SELECTION_STROKEWIDTH}.
    */
   getSelectionStrokeWidth() {
     return EDGE_SELECTION_STROKEWIDTH;
   }
 
   /**
-   * Returns {@link Constants#EDGE_SELECTION_DASHED}.
+   * Returns {@link EDGE_SELECTION_DASHED}.
    */
   isSelectionDashed() {
     return EDGE_SELECTION_DASHED;
@@ -525,14 +526,14 @@ class EdgeHandler {
   }
 
   /**
-   * Creates and returns the {@link CellMarker} used in {@link arker}.
+   * Creates and returns the {@link CellMarker} used in {@link marker}.
    */
   getCellAt(x: number, y: number) {
     return !this.outlineConnect ? this.graph.getCellAt(x, y) : null;
   }
 
   /**
-   * Creates and returns the {@link CellMarker} used in {@link arker}.
+   * Creates and returns the {@link CellMarker} used in {@link marker}.
    */
   createMarker() {
     return new EdgeHandlerCellMarker(this.graph, this);
@@ -552,7 +553,7 @@ class EdgeHandler {
 
   /**
    * Creates and returns the bends used for modifying the edge. This is
-   * typically an array of {@link RectangleShapes}.
+   * typically an array of {@link RectangleShape}.
    */
   createBends() {
     const { cell } = this.state;
@@ -593,7 +594,7 @@ class EdgeHandler {
 
   /**
    * Creates and returns the bends used for modifying the edge. This is
-   * typically an array of {@link RectangleShapes}.
+   * typically an array of {@link RectangleShape}.
    */
   // createVirtualBends(): mxRectangleShape[];
   createVirtualBends() {
@@ -1439,7 +1440,7 @@ class EdgeHandler {
 
   /**
    * Handles the event to applying the previewed changes on the edge by
-   * using {@link oveLabel}, <connect> or <changePoints>.
+   * using {@link moveLabel}, <connect> or <changePoints>.
    */
   mouseUp(sender: EventSource, me: InternalMouseEvent) {
     // Workaround for wrong event source in Webkit

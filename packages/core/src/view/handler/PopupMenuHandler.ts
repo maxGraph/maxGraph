@@ -99,11 +99,10 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
    * Initializes the shapes required for this vertex handler.
    */
   init() {
-    // Hides the tooltip if the mouse is over
-    // the context menu
+    // Hides the tooltip if the mouse is over the context menu
     InternalEvent.addGestureListeners(this.div, (evt) => {
       const tooltipHandler = this.graph.getPlugin('TooltipHandler') as TooltipHandler;
-      tooltipHandler.hide();
+      tooltipHandler?.hide();
     });
   }
 
@@ -176,7 +175,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
 
       // Hides the tooltip if there is one
       const tooltipHandler = this.graph.getPlugin('TooltipHandler') as TooltipHandler;
-      tooltipHandler.hide();
+      tooltipHandler?.hide();
 
       // Menu is shifted by 1 pixel so that the mouse up event
       // is routed via the underlying shape instead of the DIV

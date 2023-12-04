@@ -87,7 +87,7 @@ const TooltipMixin: PartialType = {
         'SelectionCellsHandler'
       ) as SelectionCellsHandler;
 
-      const handler = selectionCellsHandler.getHandler(state.cell);
+      const handler = selectionCellsHandler?.getHandler(state.cell);
 
       // @ts-ignore Guarded against undefined error already.
       if (handler && typeof handler.getTooltipForNode === 'function') {
@@ -147,8 +147,7 @@ const TooltipMixin: PartialType = {
    */
   setTooltips(enabled: boolean) {
     const tooltipHandler = this.getPlugin('TooltipHandler') as TooltipHandler;
-
-    tooltipHandler.setEnabled(enabled);
+    tooltipHandler?.setEnabled(enabled);
   },
 };
 

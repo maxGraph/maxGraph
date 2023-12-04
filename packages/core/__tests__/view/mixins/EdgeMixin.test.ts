@@ -15,16 +15,12 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { Cell, type CellStyle, Geometry, Graph } from '../../../src';
-
-function createGraph(): Graph {
-  // @ts-ignore - no need for a container, we don't check the view here
-  return new Graph(null);
-}
+import { createGraphWithoutContainer } from './utils';
+import { Cell, type CellStyle, Geometry } from '../../../src';
 
 describe('insertEdge', () => {
   test('with several parameters', () => {
-    const graph = createGraph();
+    const graph = createGraphWithoutContainer();
     const source = new Cell();
     const target = new Cell();
 
@@ -55,7 +51,7 @@ describe('insertEdge', () => {
   });
 
   test('with single parameter', () => {
-    const graph = createGraph();
+    const graph = createGraphWithoutContainer();
     const source = new Cell();
     const target = new Cell();
 
@@ -91,7 +87,7 @@ describe('insertEdge', () => {
   });
 
   test('with single parameter and non default parent', () => {
-    const graph = createGraph();
+    const graph = createGraphWithoutContainer();
 
     const parentCell = graph.insertVertex({
       value: 'non default',

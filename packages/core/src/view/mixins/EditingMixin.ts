@@ -92,8 +92,8 @@ const EditingMixin: PartialType = {
   },
 
   /**
-   * Fires a {@link startEditing} event and invokes {@link CellEditorHandler.startEditing}
-   * on {@link editor}. After editing was started, a {@link editingStarted} event is
+   * Fires a {@link InternalEvent.START_EDITING} event and invokes {@link CellEditorHandler.startEditing}.
+   * After editing was started, a {@link InternalEvent.EDITING_STARTED} event is
    * fired.
    *
    * @param cell {@link mxCell} to start the in-place editor for.
@@ -112,8 +112,10 @@ const EditingMixin: PartialType = {
           new EventObject(InternalEvent.START_EDITING, { cell, event: evt })
         );
 
-        const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
-        cellEditor.startEditing(cell, evt);
+        const cellEditorHandler = this.getPlugin(
+          'CellEditorHandler'
+        ) as CellEditorHandler;
+        cellEditorHandler?.startEditing(cell, evt);
 
         this.fireEvent(
           new EventObject(InternalEvent.EDITING_STARTED, { cell, event: evt })
@@ -136,14 +138,14 @@ const EditingMixin: PartialType = {
   },
 
   /**
-   * Stops the current editing  and fires a {@link editingStopped} event.
+   * Stops the current editing  and fires a {@link InternalEvent.EDITING_STOPPED} event.
    *
    * @param cancel Boolean that specifies if the current editing value
    * should be stored.
    */
   stopEditing(cancel = false) {
-    const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
-    cellEditor.stopEditing(cancel);
+    const cellEditorHandler = this.getPlugin('CellEditorHandler') as CellEditorHandler;
+    cellEditorHandler?.stopEditing(cancel);
     this.fireEvent(new EventObject(InternalEvent.EDITING_STOPPED, { cancel }));
   },
 
@@ -218,11 +220,11 @@ const EditingMixin: PartialType = {
    * If no cell is specified then this returns true if any
    * cell is currently being edited.
    *
-   * @param cell {@link mxCell} that should be checked.
+   * @param cell {@link Cell} that should be checked.
    */
   isEditing(cell = null) {
-    const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
-    const editingCell = cellEditor.getEditingCell();
+    const cellEditorHandler = this.getPlugin('CellEditorHandler') as CellEditorHandler;
+    const editingCell = cellEditorHandler?.getEditingCell();
     return !cell ? !!editingCell : cell === editingCell;
   },
 

@@ -250,7 +250,7 @@ class KeyHandler {
     if (
       source === this.target ||
       source.parentNode === this.target ||
-      (cellEditor != null && cellEditor.isEventSource(evt))
+      (cellEditor && cellEditor.isEventSource(evt))
     ) {
       return true;
     }

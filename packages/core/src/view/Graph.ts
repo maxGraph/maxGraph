@@ -723,7 +723,11 @@ class Graph extends EventSource {
           }
         }
       }
-    } else if (this.isAllowAutoPanning() && !panningHandler.isActive()) {
+    } else if (
+      this.isAllowAutoPanning() &&
+      panningHandler &&
+      !panningHandler.isActive()
+    ) {
       panningHandler.getPanningManager().panTo(x + this.getPanDx(), y + this.getPanDy());
     }
   }

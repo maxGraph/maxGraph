@@ -2165,8 +2165,7 @@ export class GraphView extends EventSource {
     graph.addMouseListener({
       mouseDown: (sender: any, me: InternalMouseEvent) => {
         const popupMenuHandler = graph.getPlugin('PopupMenuHandler') as PopupMenuHandler;
-
-        if (popupMenuHandler) popupMenuHandler.hideMenu();
+        popupMenuHandler?.hideMenu();
       },
       mouseMove: () => {
         return;

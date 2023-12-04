@@ -15,16 +15,12 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { type CellStyle, Geometry, Graph } from '../../../src';
-
-function createGraph(): Graph {
-  // @ts-ignore - no need for a container, we don't check the view here
-  return new Graph(null);
-}
+import { createGraphWithoutContainer } from './utils';
+import { type CellStyle, Geometry } from '../../../src';
 
 describe('insertVertex', () => {
   test('with several parameters', () => {
-    const graph = createGraph();
+    const graph = createGraphWithoutContainer();
     const style: CellStyle = { rounded: true, shape: 'cloud' };
     const cell = graph.insertVertex(null, 'vertex_1', 'a value', 10, 20, 110, 120, style);
     expect(cell.getId()).toBe('vertex_1');
@@ -50,7 +46,7 @@ describe('insertVertex', () => {
   });
 
   test('with single parameter', () => {
-    const graph = createGraph();
+    const graph = createGraphWithoutContainer();
     const style: CellStyle = { align: 'right', fillColor: 'red' };
     const cell = graph.insertVertex({
       value: 'a value',
@@ -82,7 +78,7 @@ describe('insertVertex', () => {
   });
 
   test('with single parameter and non default parent', () => {
-    const graph = createGraph();
+    const graph = createGraphWithoutContainer();
 
     const parentCell = graph.insertVertex({
       value: 'non default',

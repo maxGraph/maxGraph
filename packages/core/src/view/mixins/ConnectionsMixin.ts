@@ -746,7 +746,7 @@ const ConnectionsMixin: PartialType = {
    */
   setConnectable(connectable) {
     const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
-    connectionHandler.setEnabled(connectable);
+    connectionHandler?.setEnabled(connectable);
   },
 
   /**
@@ -754,7 +754,7 @@ const ConnectionsMixin: PartialType = {
    */
   isConnectable() {
     const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
-    return connectionHandler.isEnabled();
+    return connectionHandler?.isEnabled() ?? false;
   },
 };
 

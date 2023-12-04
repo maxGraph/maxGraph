@@ -184,7 +184,7 @@ type FactoryMethod = (
  * the port IDs, use <Transactions.getCell>.
  *
  * ```javascript
- * graph.getPlugin('ConnectionHandler').addListener(mxEvent.CONNECT, (sender, evt)=>
+ * graph.getPlugin('ConnectionHandler')?.addListener(mxEvent.CONNECT, (sender, evt) =>
  * {
  *   let edge = evt.getProperty('cell');
  *   let source = graph.getDataModel().getTerminal(edge, true);

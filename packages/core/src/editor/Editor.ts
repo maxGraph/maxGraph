@@ -1437,24 +1437,24 @@ export class Editor extends EventSource {
     // event if an insert function is defined
     this.installInsertHandler(graph);
 
-    // Redirects the function for creating the
-    // popupmenu items
+    // Redirects the function for creating the popupmenu items
     const popupMenuHandler = <PopupMenuHandler>graph.getPlugin('PopupMenuHandler');
+    if (popupMenuHandler) {
+      popupMenuHandler.factoryMethod = (menu: any, cell: Cell | null, evt: any): void => {
+        return this.createPopupMenu(menu, cell, evt);
+      };
+    }
 
-    popupMenuHandler.factoryMethod = (menu: any, cell: Cell | null, evt: any): void => {
-      return this.createPopupMenu(menu, cell, evt);
-    };
-
-    // Redirects the function for creating
-    // new connections in the diagram
+    // Redirects the function for creating new connections in the diagram
     const connectionHandler = <ConnectionHandler>graph.getPlugin('ConnectionHandler');
-
-    connectionHandler.factoryMethod = (
-      source: Cell | null,
-      target: Cell | null
-    ): Cell => {
-      return this.createEdge(source, target);
-    };
+    if (connectionHandler) {
+      connectionHandler.factoryMethod = (
+        source: Cell | null,
+        target: Cell | null
+      ): Cell => {
+        return this.createEdge(source, target);
+      };
+    }
 
     // Maintains swimlanes and installs autolayout
     this.createSwimlaneManager(graph);
@@ -2458,13 +2458,13 @@ export class Editor extends EventSource {
     );
 
     if (modename === 'select') {
-      panningHandler.useLeftButtonForPanning = false;
+      panningHandler && (panningHandler.useLeftButtonForPanning = false);
       this.graph.setConnectable(false);
     } else if (modename === 'connect') {
-      panningHandler.useLeftButtonForPanning = false;
+      panningHandler && (panningHandler.useLeftButtonForPanning = false);
       this.graph.setConnectable(true);
     } else if (modename === 'pan') {
-      panningHandler.useLeftButtonForPanning = true;
+      panningHandler && (panningHandler.useLeftButtonForPanning = true);
       this.graph.setConnectable(false);
     }
   }

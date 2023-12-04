@@ -132,7 +132,7 @@ class SelectionHandler implements GraphPlugin {
 
               // Forces update to ignore last visible state
               this.setHandlesVisibleForCells(
-                selectionCellsHandler.getHandledSelectionCells(),
+                selectionCellsHandler?.getHandledSelectionCells() ?? [],
                 false,
                 true
               );
@@ -479,11 +479,11 @@ class SelectionHandler implements GraphPlugin {
 
     if (!this.graph.isToggleEvent(me.getEvent()) || !isAltDown(me.getEvent())) {
       while (c) {
-        if (selectionCellsHandler.isHandled(c)) {
+        if (selectionCellsHandler?.isHandled(c)) {
           const cellEditor = this.graph.getPlugin(
             'CellEditorHandler'
           ) as CellEditorHandler;
-          return cellEditor.getEditingCell() !== c;
+          return cellEditor?.getEditingCell() !== c;
         }
         c = c.getParent();
       }
@@ -497,7 +497,7 @@ class SelectionHandler implements GraphPlugin {
   selectDelayed(me: InternalMouseEvent) {
     const popupMenuHandler = this.graph.getPlugin('PopupMenuHandler') as PopupMenuHandler;
 
-    if (!popupMenuHandler.isPopupTrigger(me)) {
+    if (!popupMenuHandler || !popupMenuHandler.isPopupTrigger(me)) {
       let cell = me.getCell();
       if (cell === null) {
         cell = this.cell;
@@ -1064,7 +1064,7 @@ class SelectionHandler implements GraphPlugin {
         ) as SelectionCellsHandler;
 
         this.setHandlesVisibleForCells(
-          selectionCellsHandler.getHandledSelectionCells(),
+          selectionCellsHandler?.getHandledSelectionCells() ?? [],
           false
         );
         this.updateLivePreview(this.currentDx, this.currentDy);
@@ -1265,11 +1265,8 @@ class SelectionHandler implements GraphPlugin {
     ) as SelectionCellsHandler;
 
     for (let i = 0; i < states.length; i += 1) {
-      const handler = selectionCellsHandler.getHandler(states[i][0].cell);
-
-      if (handler != null) {
-        handler.redraw(true);
-      }
+      const handler = selectionCellsHandler?.getHandler(states[i][0].cell);
+      handler?.redraw(true);
     }
   }
 
@@ -1383,11 +1380,9 @@ class SelectionHandler implements GraphPlugin {
       ) as SelectionCellsHandler;
 
       for (let i = 0; i < cells.length; i += 1) {
-        const handler = selectionCellsHandler.getHandler(cells[i]);
-
-        if (handler != null) {
+        const handler = selectionCellsHandler?.getHandler(cells[i]);
+        if (handler) {
           handler.setHandlesVisible(visible);
-
           if (visible) {
             handler.redraw();
           }
@@ -1438,7 +1433,7 @@ class SelectionHandler implements GraphPlugin {
             'ConnectionHandler'
           ) as ConnectionHandler;
 
-          connectionHandler.connect(this.cell, cell, me.getEvent());
+          connectionHandler?.connect(this.cell, cell, me.getEvent());
         } else {
           const clone =
             graph.isCloneEvent(me.getEvent()) &&
@@ -1493,7 +1488,7 @@ class SelectionHandler implements GraphPlugin {
       ) as SelectionCellsHandler;
 
       this.setHandlesVisibleForCells(
-        selectionCellsHandler.getHandledSelectionCells(),
+        selectionCellsHandler?.getHandledSelectionCells() ?? [],
         true
       );
     }
