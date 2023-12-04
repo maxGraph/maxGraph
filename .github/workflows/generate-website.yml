@@ -20,11 +20,9 @@ jobs:
       - name: Build Setup
         uses: ./.github/actions/build-setup
       - name: Build @maxgraph/core API docs
-        working-directory: packages/core
-        run: npm run docs:api
+        run: npm run docs:api -w packages/core
       - name: Build website
-        working-directory: packages/website
-        run: npm run build
+        run: npm run build -w packages/website
       - name: Upload website artifact
         uses: actions/upload-artifact@v3
         with:

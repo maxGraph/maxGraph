@@ -40,20 +40,15 @@ jobs:
       - name: Build Setup
         uses: ./.github/actions/build-setup
       - name: Build @maxgraph/core - esm
-        working-directory: packages/core
-        run: npm run build
+        run: npm run build -w packages/core
       - name: Test @maxgraph/core
-        working-directory: packages/core
-        run: npm test
+        run: npm test -w packages/core
       - name: Test TypeScript support
-        working-directory: packages/ts-support
-        run: npm test
+        run: npm test -w packages/ts-support
       - name: Build ts-example
-        working-directory: packages/ts-example
-        run: npm run build
+        run: npm run build -w packages/ts-example
       - name: Build Storybook mini-site
-        working-directory: packages/html
-        run: npm run build
+        run: npm run build -w packages/html
       - name: Upload all examples as artifact
         uses: actions/upload-artifact@v3
         with:
