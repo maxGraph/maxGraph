@@ -11,4 +11,4 @@ runs:
     - name: Install dependencies
       uses: bahmutov/npm-install@v1
       with:
-        install-command: npm ci --prefer-offline --audit false --ignore-scripts
+        install-command: npm ci --prefer-offline --audit false --ignore-scripts --no-fund
