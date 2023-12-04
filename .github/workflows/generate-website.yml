@@ -17,12 +17,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-      - name: Install dependencies
-        run: npm install
+      - name: Build Setup
+        uses: ./.github/actions/build-setup
       - name: Build @maxgraph/core API docs
         working-directory: packages/core
         run: npm run docs:api
