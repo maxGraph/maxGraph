@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import { DIRECTION, IDENTITY_FIELD_NAME } from './util/Constants';
+import type { Graph } from './view/Graph';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
 import EventSource from './view/event/EventSource';
 import type InternalMouseEvent from './view/event/InternalMouseEvent';
-import type Shape from './view/geometry/Shape';
-import type { Graph } from './view/Graph';
-import type ImageBox from './view/image/ImageBox';
 import Geometry from './view/geometry/Geometry';
+import type Shape from './view/geometry/Shape';
+import type ImageBox from './view/image/ImageBox';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -34,9 +34,7 @@ export type UndoableChange = {
 
 export type StyleValue = string | number;
 
-export type Properties = {
-  [k: string]: any;
-};
+export type Properties = Record<string, any>;
 
 export type CellStyle = CellStateStyle & {
   /**
@@ -904,10 +902,9 @@ export interface Gradient extends SVGLinearGradientElement {
   mxRefCount: number;
 }
 
-export type GradientMap = {
-  [k: string]: Gradient;
-};
+export type GradientMap = Record<string, Gradient>;
 
+export type EdgeParametersValue = Record<string | number | symbol, any> | string;
 export type EdgeParameters = {
   /**
    * Optional string that defines the id of the new edge. If not set, the id is auto-generated when creating the vertex.
@@ -929,7 +926,7 @@ export type EdgeParameters = {
   /**
    * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
    */
-  value?: Record<string | number | symbol, any> | string;
+  value?: EdgeParametersValue;
 };
 
 export type VertexParameters = {
@@ -1053,8 +1050,7 @@ export interface PopupMenuItem extends HTMLElement {
 
 export type IdentityObject = {
   [IDENTITY_FIELD_NAME]?: string;
-  [k: string]: any;
-};
+} & Record<string, any>;
 
 export type IdentityFunction = {
   (): any;
