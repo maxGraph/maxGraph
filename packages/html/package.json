@@ -18,6 +18,6 @@
     "@storybook/html-vite": "^7.4.6",
     "storybook": "^7.4.6",
     "typescript": "^5.2.2",
-    "vite": "^4.4.11"
+    "vite": "^4.4.12"
   }
 }
