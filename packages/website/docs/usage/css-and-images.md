@@ -1,9 +1,13 @@
+---
+description: Integrate CSS and Images assets required by maxGraph.
+---
+
 # CSS and Images
 
 ## CSS
 
 Some features of `maxGraph` create elements in the DOM to let interact with the `Graph`.
-For instance, it happens hen using _Rubberband_, _Tooltip_, _MaxWindow_, _Editor_ and _Toolbar_.
+For instance, it happens when using _Rubberband_, _Tooltip_, _MaxWindow_, _Editor_ and _Toolbar_.
 
 These elements require the application to provide CSS rules for correct display.
 

@@ -9,9 +9,16 @@ Here's a breakdown of the proposed changes:
 2. [General guidelines](#general-guidelines)
 3. [Specific code changes](#specific-code-changes)
 
-> **Note:** **⚠️⚠️⚠️ This page is under construction. ⚠️⚠️⚠️  
+:::warning
+
+**This page is under construction.**
+
 Comments are welcome by creating an [issue](https://github.com/maxGraph/maxGraph/issues)
-or starting a [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a)!**.
+or starting a [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a)!.
+
+Feel free to create a [Pull Request](https://github.com/maxGraph/maxGraph/pulls) to enrich the content or fix errors.
+
+:::
 
 The `maxGraph` APIs are not fully compatible with the `mxGraph` APIs, but the `maxGraph` APIs are close to the former `mxGraph` APIs.
 The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without problems.
@@ -34,7 +41,12 @@ npm uninstall mxgraph
 ```shell
 npm install maxgraph@core
 ```
-ℹ️ The `maxgraph@core` package contains the core functionality of `maxGraph`.
+
+:::info
+
+The `maxgraph@core` package contains the core functionality of `maxGraph`.
+
+:::
 
 ### Initialize `maxGraph`
 
@@ -100,7 +112,11 @@ Here are some general guidelines to keep in mind when migrating from `mxGraph` t
 This section outlines specific code changes required when migrating from `mxGraph` to `maxGraph`.
 Please update your code accordingly.
 
-> **Note:** Much information is available at https://github.com/maxGraph/maxGraph/pull/70.
+:::note
+
+A wide range of information is available at https://github.com/maxGraph/maxGraph/pull/70.
+
+:::
 
 ### Overlay
 The `strokewidth` property has been renamed to `strokeWidth` in `maxGraph`. 
@@ -136,6 +152,14 @@ Several functions in `mxUtils` have been moved to their own namespaces in `maxGr
 #### `xmlUtils`
 - `getXml`(): Update your code to use `xmlUtils.getXml()` instead of `mxUtils.getXml()`.
 - `createXmlDocument()`: Update your code to use `xmlUtils.createXmlDocument()` instead of `mxUtils.createXmlDocument()`.
+
+
+### Removed methods from `mxUtils`
+
+The following methods of `mxUtils` have been removed without replacements in `maxGraph`. Use your own implementation or 3rd party libraries instead:
+- `mxUtils.button`
+- `mxUtils.error`
+
 
 ### `mxAbstractCanvas2D`
 
@@ -179,7 +203,7 @@ const canvas = new SvgCanvas2D(svgElement, oneBoolean);
 
 #### `getAlternateText()`
 
-change types ???????
+**TODO** change types ???????
 
 #### `format()`
 
@@ -200,6 +224,9 @@ format:(value: number) => number
 
 The `mxGraph` class has been renamed to `Graph` in `maxGraph`.
 There have also been some changes related to properties and methods.
+
+Some properties have been removed in favor of the usage of plugins. Plugins are registered at the Graph initialization by passing
+an array of plugins to the constructor.
 
 #### `panningHandler` property
 
@@ -262,7 +289,25 @@ graph.insertEdge({ parent, id, value, source, target, style });
 
 
 ### Client
-renamed properties: TODO which
+
+The `mxClient` class has been removed into `Client`.
+
+Removed properties
+- `defaultBundles`
+- `mxForceIncludes`: it was used to force loading the JavaScript files in development mode in mxGraph. We are not
+managing development mode in that way anymore.
+- `mxLoadResources`: not used anymore
+- `mxLoadStylesheets`: not used anymore
+- `mxResourceExtension`: it was only used in `Translations`, so only keep the property in `Translations`
+
+Removed methods
+- `setForceIncludes`: the `mxForceIncludes` property has been removed
+- `setLoadResources`: the `mxLoadResources` property has been removed
+- `setLoadStylesheets`: the `mxLoadStylesheets` property has been removed
+- `setResourceExtension`: the `mxResourceExtension` property has been removed
+
+Moved methods
+- `link` method moved and renamed `domUtils.addLinkToHead`
 
 
 ### Cell manipulation
@@ -271,13 +316,25 @@ Only the functions for mxCell/Cell remain. See https://github.com/maxGraph/maxGr
 
 
 Some functions previously available in `mxGraph` and `mxGraphModel` have been removed. These functions allowed for customizing the behavior of `mxGraphModel` and `mxCell`. However, now only the functions specific to `mxCell`/`Cell` remain.  
-ℹ️ You can find more information about these changes in the following GitHub pull request: https://github.com/maxGraph/maxGraph/pull/24.
+
+:::note
+
+You can find more information about these changes in the following GitHub pull request: https://github.com/maxGraph/maxGraph/pull/24.
+
+:::
 
 #### `mxCell`
 
 The `mxCell` class has been renamed to `Cell` for simplicity.
 
-The `style` property of `Cell` has undergone a type change from `string` to `CellStyle`.
+The `style` property of `Cell` has undergone a type change from `string` to `CellStyle`. See the paragraph about "Migration of specific style properties applied to dedicated cells"
+for more details about how to migrate the style property.
+
+
+#### `mxGraph`
+
+Some methods were removed:
+- `mxGraph.isCellVisible(cell)` see https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942 for rationale
 
 
 #### `mxGraphDataModel`
@@ -289,12 +346,14 @@ Several functions from the `mxGraphDataModel` class have been moved to the `Cell
 - `isEdge()`
 - `getParent()`
 
+Others were removed:
+- `mxGraphModel.isVisible(cell)` see https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942 for rationale
 
 ### Misc
 
-Codec renaming and output: https://github.com/maxGraph/maxGraph/pull/70
+- Codec renaming and output: https://github.com/maxGraph/maxGraph/pull/70
+- `mxDictionary`&lt;T&gt; to `Dictionary`&lt;K, V&gt;
 
-mxDictionary<T> -> Dictionary<K, V>
 
 ### Event handling
 
@@ -308,10 +367,10 @@ The event handling mechanism in `maxGraph` has been updated. Use the following g
 - Use the `eventUtils.isLeftMouseButton()` method, to detect mouse events, instead of `mxEvent.isLeftMouseButton()`.
 
 #### `InternalEvent`
-- Use the `eventUtils.PAN_START` property instead of `mxEvent.PAN_START`.
-- Use the `eventUtils.PAN_END` property instead of `mxEvent.PAN_END`.
-- Use the `eventUtils.addMouseWheelListener()` method instead of `mxEvent.addMouseWheelListener()`.
-- Use the `eventUtils.consume()` method instead of `mxEvent.consume()`.
+- Use the `InternalEvent.PAN_START` property instead of `mxEvent.PAN_START`.
+- Use the `InternalEvent.PAN_END` property instead of `mxEvent.PAN_END`.
+- Use the `InternalEvent.addMouseWheelListener()` method instead of `mxEvent.addMouseWheelListener()`.
+- Use the `InternalEvent.consume()` method instead of `mxEvent.consume()`.
 
 
 ### Styling
@@ -425,10 +484,9 @@ by a semicolon as follows:
 
 > Styles are a collection of key, value pairs and a stylesheet is a collection
 of named styles. The names are referenced by the cellstyle, which is stored
-in <mxCell.style> with the following format: [stylename;|key=value;]. The
+in 'mxCell.style' with the following format: [stylename;|key=value;]. The
 string is resolved to a collection of key, value pairs, where the keys are
 overridden with the values in the string.
->
 
 See also
 - https://jgraph.github.io/mxgraph/docs/tutorial.html#3.3
@@ -441,8 +499,11 @@ In maxGraph, the style is no more defined as a string but as a `CellStyle` objec
 
 Most of the time, the name of `CellStyle` properties is the same as the style keys in the mxGraph style.
 
-⚠️⚠️⚠ **WARNING**: Be aware of the properties that have been renamed or whose value types have changed, as described in the [style-properties-change](./migrate-from-mxgraph.md#style-properties-change) paragraph.
+:::warning
 
+Be aware of the properties that have been renamed or whose value types have changed, as described in the [style-properties-change](./migrate-from-mxgraph.md#style-properties-change) paragraph.
+
+:::
 
 **Migration example**
 
@@ -468,7 +529,7 @@ graph.insertVertex({
 
 **Special migration case**
 In `mxGraph`, to not merge properties of the default style, the style string must start with a `;` (semicolon) as in `;style1;style2;prop1=value1;.....`.
-This is documented in the [mxStylesheet documentation](jgraph/mxgraph@v4.2.2/javascript/src/js/view/mxStylesheet.js#L33-L38).
+This is documented in the [mxStylesheet documentation](https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxStylesheet.js#L33-L38).
 > To override the default style for a cell, add a leading semicolon to the style definition, e.g. ;shadow=1
 
 This is currently not supported in maxGraph: https://github.com/maxGraph/maxGraph/issues/154 "Add a way to not use default style properties when calculating cell styles".

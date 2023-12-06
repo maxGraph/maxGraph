@@ -2,7 +2,7 @@
   "name": "@maxgraph/core",
   "license": "Apache-2.0",
   "private": false,
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "maxGraph is a fully client side JavaScript diagramming library that uses SVG and HTML for rendering.",
   "keywords": [
     "browser",
@@ -11,9 +11,8 @@
     "graph",
     "svg"
   ],
-  "main": "dist/maxgraph.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "css",
     "dist",
@@ -28,20 +27,20 @@
     "url": "https://github.com/maxGraph/maxGraph/issues"
   },
   "scripts": {
+    "clean": "rimraf dist",
     "dev": "tsc --watch",
-    "build": "cross-env NODE_ENV=production webpack --mode=production",
+    "build": "tsc --version && tsc",
     "docs:api": "typedoc src/index.ts",
-    "generate-types": "tsc --version && tsc --emitDeclarationOnly",
-    "generate-esm": "tsc --version && tsc --emitDeclarationOnly false --declaration false --declarationDir null",
-    "prepack": "run-s generate-types generate-esm build",
+    "prepack": "run-s clean build",
     "test": "jest"
   },
   "devDependencies": {
-    "circular-dependency-plugin": "^5.2.2",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
     "npm-run-all": "~4.1.5",
+    "rimraf": "~5.0.5",
     "ts-jest": "^29.0.3",
+    "typedoc": "^0.23.21",
     "typescript": "^4.9.5"
   },
   "sideEffects": true

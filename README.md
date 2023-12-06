@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@maxgraph/core?color=blue&style=flat)](https://www.npmjs.com/package/@maxgraph/core)
 [![build status](https://github.com/maxGraph/maxGraph/workflows/Build/badge.svg)](https://github.com/maxGraph/maxGraph/actions/workflows/build.yml)
 
-<!-- copied into packages/core/README.md -->
+<!-- copied into packages/core/README.md and packages/website/docs/intro.md -->
 `maxGraph` is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides: 
 - **Nodes**, also known as **vertices** which are typically represented by shapes like rectangles.
 - **Edges** which can be lines and arrows which normally point between one node and another.
@@ -12,7 +12,7 @@ It provides many of the diagramming features which would be expected by a piece 
 or LibreOffice® Impress such as being able to resize, move or rotate nodes, but has a stronger focus on automatic layout
 algorithms and applications of [Graph Theory](https://en.wikipedia.org/wiki/Graph_theory). It is suited towards software
 which requires finer-grained customization of functionality than off-the-shelf packages.
-<!-- END OF 'copied into packages/core/README.md' -->
+<!-- END OF 'copied into packages/core/README.md and packages/website/docs/intro.md' -->
 
 
 The `maxGraph` library uses no third-party software, it requires no plugins and can be integrated in virtually any framework (it's vanilla JS).
@@ -107,11 +107,11 @@ graph.batchUpdate(() => {
 
 You will see something like in the following _maxGraph panning_ demo:
 
-![maxGraph panning demo](packages/docs/images/maxgraph_demo.gif "maxGraph panning demo")
+![maxGraph panning demo](docs/images/maxgraph_demo.gif "maxGraph panning demo")
 
 For more details, have a look at the [storybook stories](packages/html/stories).
 
-Notice that some elements produced by `maxGraph` require to use [CSS and images](./packages/docs/css-and-images.md) provided in the npm package.
+Notice that some elements produced by `maxGraph` require to use [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
 
 
 ## TypeScript support
@@ -134,7 +134,7 @@ Until we provide a complete documentation, you can check the mxGraph resources
 
 `maxGraph` APIs are not fully compatible with `mxGraph` APIs. The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without issues.
 
-For a complete guide, see the [dedicated migration page](packages/docs/migrate-from-mxgraph.md).
+For a complete guide, see the [dedicated migration page](packages/website/docs/usage/migrate-from-mxgraph.md).
 
 
 ## History
@@ -186,7 +186,13 @@ In the project root directory, execute
 $ npm install
 ```
 
-To watch the core package, execute
+In the `packages/core` folder, execute
+
+```sh
+npm pack
+```
+
+To watch the core package, execute (in the project root directory)
 
 ```sh
 $ npm run dev
@@ -194,7 +200,7 @@ $ npm run dev
 
 and select `@maxgraph/core`.
 
-To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), execute
+To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), execute (in the project root directory)
 
 ```sh
 $ npm run dev
@@ -219,4 +225,4 @@ Examples of use can be found in the [maxgraph-integration-examples](https://gith
 
 ### Release
 
-See the dedicated [release](packages/docs/release.md) page.
+See the dedicated [release](packages/website/docs/development/release.md) page.
