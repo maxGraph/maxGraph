@@ -6,7 +6,6 @@ javascript/examples/**/dist
 .vscode/
 *.iml
 dist
-package-lock.json
 *.tgz
 
 # dependencies

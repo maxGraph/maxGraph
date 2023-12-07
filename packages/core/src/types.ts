@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import { DIRECTION, IDENTITY_FIELD_NAME } from './util/Constants';
+import type { Graph } from './view/Graph';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
 import EventSource from './view/event/EventSource';
 import type InternalMouseEvent from './view/event/InternalMouseEvent';
-import type Shape from './view/geometry/Shape';
-import type { Graph } from './view/Graph';
-import type ImageBox from './view/image/ImageBox';
 import Geometry from './view/geometry/Geometry';
+import type Shape from './view/geometry/Shape';
+import type ImageBox from './view/image/ImageBox';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -34,9 +34,7 @@ export type UndoableChange = {
 
 export type StyleValue = string | number;
 
-export type Properties = {
-  [k: string]: any;
-};
+export type Properties = Record<string, any>;
 
 export type CellStyle = CellStateStyle & {
   /**
@@ -182,11 +180,11 @@ export type CellStateStyle = {
    * This defines the style of the end arrow marker.
    *
    * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
-   * This generally includes {@link ArrowType} values and the names of any new shapes.
+   * This includes {@link ArrowValue} values and custom names that have been registered.
    *
    * See {@link startArrow}.
    */
-  endArrow?: ArrowValue | string;
+  endArrow?: StyleArrayValue;
   /**
    * Use `false` to not fill or `true` to fill the end arrow marker.
    * See {@link startFill}.
@@ -388,11 +386,11 @@ export type CellStateStyle = {
   /**
    * The indicator shape used within an {@link LabelShape}.
    * The possible values are all names of registered Shapes with {@link CellRenderer.registerShape}.
-   * This usually includes {@link ShapeValue} values and the names of all new shapes.
+   * This includes {@link ShapeValue} values and custom names that have been registered.
    *
    * The `indicatorShape` property has precedence over the {@link indicatorImage} property.
    */
-  indicatorShape?: ShapeValue | string;
+  indicatorShape?: StyleShapeValue;
   /**
    * The color of the indicator stroke in {@link LabelShape}.
    * The possible values are all HTML color names or HEX codes.
@@ -609,9 +607,9 @@ export type CellStateStyle = {
   shadow?: boolean;
   /**
    * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape}.
-   * This usually includes {@link ShapeValue} values and the names of all new shapes.
+   * This includes {@link ShapeValue} values and custom names that have been registered.
    */
-  shape?: ShapeValue | string;
+  shape?: StyleShapeValue;
   /**
    * The size of the source jetty in {@link EdgeStyle.OrthConnector}.
    *
@@ -682,11 +680,11 @@ export type CellStateStyle = {
    * This defines the style of the start arrow marker.
    *
    * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
-   * This generally includes {@link ArrowType} values and the names of any new shapes.
+   * This includes {@link ArrowValue} values and the names of any new shapes.
    *
    * See {@link endArrow}.
    */
-  startArrow?: ArrowValue | string;
+  startArrow?: StyleArrayValue;
   /**
    * Use `false` to not fill or `true` to fill the start arrow marker.
    * See {@link endFill}.
@@ -828,6 +826,12 @@ export type ArrowValue =
   | 'oval'
   | 'diamond'
   | 'diamondThin';
+
+/**
+ * {@link ArrowValue} with support for extensions.
+ */
+export type StyleArrayValue = ArrowValue | (string & {});
+
 /**
  * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
  */
@@ -848,6 +852,11 @@ export type ShapeValue =
   | 'cloud'
   | 'triangle'
   | 'hexagon';
+
+/**
+ * {@link ShapeValue} with support for extensions.
+ */
+export type StyleShapeValue = ShapeValue | (string & {});
 
 export type CanvasState = {
   alpha: number;
@@ -893,10 +902,9 @@ export interface Gradient extends SVGLinearGradientElement {
   mxRefCount: number;
 }
 
-export type GradientMap = {
-  [k: string]: Gradient;
-};
+export type GradientMap = Record<string, Gradient>;
 
+export type EdgeParametersValue = Record<string | number | symbol, any> | string;
 export type EdgeParameters = {
   /**
    * Optional string that defines the id of the new edge. If not set, the id is auto-generated when creating the vertex.
@@ -918,7 +926,7 @@ export type EdgeParameters = {
   /**
    * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
    */
-  value?: any;
+  value?: EdgeParametersValue;
 };
 
 export type VertexParameters = {
@@ -1042,8 +1050,7 @@ export interface PopupMenuItem extends HTMLElement {
 
 export type IdentityObject = {
   [IDENTITY_FIELD_NAME]?: string;
-  [k: string]: any;
-};
+} & Record<string, any>;
 
 export type IdentityFunction = {
   (): any;

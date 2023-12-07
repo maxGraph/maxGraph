@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../cell/Cell';
+import type { CellStyle, EdgeParameters, EdgeParametersValue } from '../../types';
+import Dictionary from '../../util/Dictionary';
 import { mixInto } from '../../util/Utils';
 import { removeDuplicates } from '../../util/arrayUtils';
 import { findNearestSegment } from '../../util/mathUtils';
-import Geometry from '../geometry/Geometry';
+import { Graph } from '../Graph';
+import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import Dictionary from '../../util/Dictionary';
-import { Graph } from '../Graph';
+import Geometry from '../geometry/Geometry';
 import Point from '../geometry/Point';
-import type { CellStyle, EdgeParameters } from '../../types';
 
 declare module '../Graph' {
   interface Graph {
@@ -186,7 +186,7 @@ declare module '../Graph' {
     insertEdge(
       parent: Cell | null,
       id: string | null | undefined,
-      value: any,
+      value: EdgeParametersValue,
       source?: Cell | null,
       target?: Cell | null,
       style?: CellStyle
