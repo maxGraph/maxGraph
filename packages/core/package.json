@@ -32,7 +32,7 @@
     "build": "tsc --version && tsc",
     "docs:api": "typedoc src/index.ts",
     "prepack": "run-s clean build",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "devDependencies": {
     "jest": "^29.3.1",
