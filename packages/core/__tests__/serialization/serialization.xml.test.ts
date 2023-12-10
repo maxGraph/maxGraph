@@ -326,13 +326,15 @@ describe('import mxGraph model', () => {
   `;
 
   test('Basic model', () => {
-
-    console.info("Codecs before:", Object.getOwnPropertyNames(CodecRegistry.codecs));
-    //
+    console.info("Codecs properties before:", Object.getOwnPropertyNames(CodecRegistry.codecs));
+    console.info("Codecs before:", CodecRegistry.codecs);
+    console.info("Aliases before:", CodecRegistry.aliases);
 
     const model = new GraphDataModel();
     new ModelXmlSerializer(model).import(mxGraphModelAsXml);
-    console.info("Codecs after:", Object.getOwnPropertyNames(CodecRegistry.codecs));
+    console.info("Codecs properties after:", Object.getOwnPropertyNames(CodecRegistry.codecs));
+    console.info("Codecs after:", CodecRegistry.codecs);
+    console.info("Aliases after:", CodecRegistry.aliases);
 
     const cellIds = Object.getOwnPropertyNames(model.cells);
     console.warn("cellIds", cellIds);
