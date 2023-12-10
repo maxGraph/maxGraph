@@ -799,7 +799,7 @@ class CellEditorHandler implements GraphPlugin {
       if (
         this.autoSize &&
         // @ts-ignore
-        (this.graph.model.isEdge(state.cell) || state.style.overflow !== 'fill')
+        (state.cell.isEdge() || state.style.overflow !== 'fill')
       ) {
         window.setTimeout(() => {
           this.resize();
