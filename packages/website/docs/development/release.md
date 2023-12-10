@@ -95,7 +95,7 @@ Review the newly created discussion in the [Announces](https://github.com/maxGra
 Once done, create a Pull Request in the [integration examples repository](https://github.com/maxGraph/maxgraph-integration-examples) to use the new release.
 Dependencies in this repository are automatically updated by Dependabot, so you can trigger a new Dependabot run or wait for the next scheduled Dependabot run for this update to take place.
 
-Then, create a [new draft release](https://github.com/maxGraph/maxgraph-integration-examples/releases)
+Then, create a [new draft release](https://github.com/maxGraph/maxgraph-integration-examples/releases):
 - name: use the same version as in `maxGraph`, like `0.2.1` 
 - tag: use the version prefixed with v, like `v0.2.1`
 - save it as a draft
