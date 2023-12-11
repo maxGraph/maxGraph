@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { Cell, Codec, Geometry, Graph, GraphDataModel, Point } from '../../src';
+import { createGraphWithoutContainer } from '../utils';
+import { Cell, Codec, Geometry, GraphDataModel, Point } from '../../src';
 import { getPrettyXml, parseXml } from '../../src/util/xmlUtils';
 
 type ModelExportOptions = {
@@ -111,8 +112,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
   });
 
   test('use Graph - reproduced what is described in issue 178', () => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const graph = new Graph(null!);
+    const graph = createGraphWithoutContainer();
     expect(() =>
       new ModelXmlSerializer(graph.getDataModel()).import(xmlFromIssue178)
     ).toThrow(new Error('Invalid x supplied.'));

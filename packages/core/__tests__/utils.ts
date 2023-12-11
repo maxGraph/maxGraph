@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph } from '../../../src';
+import { Graph } from '../src';
 
 // no need for a container, we don't check the view here
 export const createGraphWithoutContainer = (): Graph => new Graph(null!);

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { test } from '@jest/globals';
-import { createGraphWithoutPlugins } from './utils';
+import { createGraphWithoutPlugins } from '../../utils';
 
 test('The "PanningHandler" plugin is not available', () => {
   const graph = createGraphWithoutPlugins();

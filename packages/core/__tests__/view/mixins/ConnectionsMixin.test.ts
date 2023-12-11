@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { createGraphWithoutPlugins } from './utils';
+import { createGraphWithoutPlugins } from '../../utils';
 
 test('The "ConnectionHandler" plugin is not available', () => {
   const graph = createGraphWithoutPlugins();

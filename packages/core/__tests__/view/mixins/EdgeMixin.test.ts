@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { createGraphWithoutContainer } from './utils';
+import { createGraphWithoutContainer } from '../../utils';
 import { Cell, type CellStyle, Geometry } from '../../../src';
 
 describe('insertEdge', () => {
