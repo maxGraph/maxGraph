@@ -1,5 +1,10 @@
 # `maxGraph` Change Log
 
+## UNRELEASED
+
+**Breaking Changes**
+- it is no longer possible to pass a 'n' value for the `max` property of the `Multiplicity` class. Pass `null` instead to have the same effect.
+
 ## 0.8.0
 
 Release date: `2024-02-14`
