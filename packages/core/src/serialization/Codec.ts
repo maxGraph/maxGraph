@@ -50,6 +50,10 @@ const createXmlDocument = () => {
  * const xml = mxUtils.getXml(result);
  * ```
  *
+ * **WARN**: as of version 0.6.0, the codecs provided by maxGraph are no longer registered by default, they **MUST** be registered before
+ * performing `encode` or `decode`. For instance, you can use the {@link registerAllCodecs} function (or other related functions)
+ * to register the codecs.
+ *
  * #### Example
  *
  * Using the code below, an XML document is decoded into an existing model. The

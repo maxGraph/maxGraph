@@ -1,5 +1,5 @@
 /*
-Copyright 2022-present The maxGraph project Contributors
+Copyright 2023-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,20 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { defineConfig } from 'vite';
-
-export default defineConfig(({ mode }) => {
-  return {
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            // put the maxgraph code in a dedicated file. It lets know the size the produced bundle in an external application and if tree shaking works
-            maxgraph: ['@maxgraph/core'],
-          },
-        },
-      },
-      chunkSizeWarningLimit: 468, // @maxgraph/core
-    },
-  };
-});
+export * from './editor';
+export * from './CellCodec';
+export * from './ChildChangeCodec';
+export * from './GenericChangeCodec';
+export * from './GraphViewCodec';
+export * from './ModelCodec';
+export * from './RootChangeCodec';
+export * from './StylesheetCodec';
+export * from './TerminalChangeCodec';

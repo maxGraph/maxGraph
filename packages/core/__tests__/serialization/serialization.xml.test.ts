@@ -16,7 +16,14 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { createGraphWithoutContainer } from '../utils';
-import { Cell, Codec, Geometry, GraphDataModel, Point } from '../../src';
+import {
+  Cell,
+  Codec,
+  Geometry,
+  GraphDataModel,
+  Point,
+  registerCoreCodecs,
+} from '../../src';
 import { getPrettyXml, parseXml } from '../../src/util/xmlUtils';
 
 type ModelExportOptions = {
@@ -34,7 +41,9 @@ type ModelExportOptions = {
  */
 class ModelXmlSerializer {
   // Include 'XML' in the class name as there were past discussions about supporting other format (JSON for example {@link https://github.com/maxGraph/maxGraph/discussions/60}).
-  constructor(private dataModel: GraphDataModel) {}
+  constructor(private dataModel: GraphDataModel) {
+    registerCoreCodecs();
+  }
 
   import(xml: string): void {
     const doc = parseXml(xml);
