@@ -21,7 +21,11 @@ import type GraphDataModel from '../view/GraphDataModel';
 
 /**
  * Export options of {@link ModelXmlSerializer}.
- * @alpha subject to change
+ *
+ * **WARN**: this is an experimental feature that is subject to change.
+ *
+ * @alpha
+ * @experimental
  * @since 0.6.0
  */
 export type ModelExportOptions = {
@@ -35,7 +39,10 @@ export type ModelExportOptions = {
 /**
  * Convenient utility class using {@link Codec} to manage maxGraph model import and export.
  *
- * @alpha subject to change (class and method names)
+ * **WARN**: this is an experimental feature that is subject to change (class and method names).
+ *
+ * @alpha
+ * @experimental
  * @since 0.6.0
  */
 // Include 'XML' in the class name as there were past discussions about supporting other format like JSON for example
