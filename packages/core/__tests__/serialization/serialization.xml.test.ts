@@ -16,47 +16,7 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { createGraphWithoutContainer } from '../utils';
-import {
-  Cell,
-  Codec,
-  Geometry,
-  GraphDataModel,
-  Point,
-  registerCoreCodecs,
-} from '../../src';
-import { getPrettyXml, parseXml } from '../../src/util/xmlUtils';
-
-type ModelExportOptions = {
-  /**
-   * @default true
-   */
-  pretty?: boolean;
-};
-
-/**
- * Convenient utility class using {@link Codec} to manage maxGraph model import and export.
- *
- * @internal
- * @alpha subject to change (class and method names)
- */
-class ModelXmlSerializer {
-  // Include 'XML' in the class name as there were past discussions about supporting other format (JSON for example {@link https://github.com/maxGraph/maxGraph/discussions/60}).
-  constructor(private dataModel: GraphDataModel) {
-    registerCoreCodecs();
-  }
-
-  import(xml: string): void {
-    const doc = parseXml(xml);
-    new Codec(doc).decode(doc.documentElement, this.dataModel);
-  }
-
-  export(options?: ModelExportOptions): string {
-    const encodedNode = new Codec().encode(this.dataModel);
-    return options?.pretty ?? true
-      ? getPrettyXml(encodedNode)
-      : getPrettyXml(encodedNode, '', '', '');
-  }
-}
+import { Cell, Geometry, GraphDataModel, ModelXmlSerializer, Point } from '../../src';
 
 // inspired by VertexMixin.createVertex
 const newVertex = (id: string, value: string) => {

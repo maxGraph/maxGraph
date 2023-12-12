@@ -9,6 +9,8 @@ You can use one of the following functions to register codecs:
   - `registerCoreCodecs`
   - `registerEditorCodecs`
 
+To serialize the `maxGraph` model, you can use the `ModelXmlSerializer` class, which registers codecs under the hood.
+
 ## 0.5.0
 
 Release date: `2023-12-07`

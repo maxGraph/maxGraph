@@ -114,6 +114,7 @@ export { default as SwimlaneOrdering } from './view/layout/hierarchical/Swimlane
 export { default as Codec } from './serialization/Codec';
 export { default as CodecRegistry } from './serialization/CodecRegistry';
 export { default as ObjectCodec } from './serialization/ObjectCodec';
+export * from './serialization/ModelXmlSerializer';
 export * from './serialization/codecs';
 export * from './serialization/register';
 
