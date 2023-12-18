@@ -58,7 +58,13 @@ pnpm add @maxgraph/core
 
 ## Getting Started
 
-Assuming your page defines an element with the id `graph-container`, the following will display a rectangle connected to an orange circle.
+Here is an example that shows how to display a rectangle connected to an orange circle.
+
+This example assumes that
+- you are building an application that includes the maxGraph dependency, and it has been installed as explained above.
+- your application includes a page that defines an element with the id `graph-container`.
+- you want to use `TypeScript`, adapt it if you want to use `JavaScript` (mainly, remove references to the 'type' syntax).
+
 ```typescript
 import {type CellStyle, Graph, InternalEvent} from '@maxgraph/core';
 
@@ -109,9 +115,22 @@ You will see something like in the following _maxGraph panning_ demo:
 
 ![maxGraph panning demo](docs/images/maxgraph_demo.gif "maxGraph panning demo")
 
-For more details, have a look at the [storybook stories](packages/html/stories).
+
+To continue, please have a look at:
+
+- the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph. The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
+- the [ts-example](packages/ts-example) project/application that demonstrates how to use `maxGraph` in a vanilla Typescript application powered by [Vite](https://vitejs.dev/).
+- the https://github.com/maxGraph/maxgraph-integration-examples repository which shows how to integrate `maxGraph` with different frameworks and build tools.
+
 
 Notice that some elements produced by `maxGraph` require to use [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
+
+Until we provide a complete documentation, you can check the [mxGraph documentation](https://jgraph.github.io/mxgraph/).
+The key resources are the JavaScript user manual which explain the concepts and how to start using the API, the JavaScript examples and the JavaScript API specification.
+- https://jgraph.github.io/mxgraph/docs/tutorial.html
+- https://jgraph.github.io/mxgraph/docs/manual.html
+ 
+> Be aware that the maxGraph API doesn't fully match the mxGraph API (see the paragraph below about "[Migrating from mxGraph](#migrate-from-mxgraph)").
 
 
 ## TypeScript support
@@ -125,12 +144,8 @@ Notice that some elements produced by `maxGraph` require to use [CSS and images]
 For usage question, please open a new [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a) on GitHub. You can also use
 [GitHub discussions](https://github.com/maxGraph/maxGraph/discussions) for other topics like `maxGraph` development or to get the latest news.
 
-Until we provide a complete documentation, you can check the mxGraph resources
-- mxGraph documentation: [Github pages branch](https://jgraph.github.io/mxgraph/). The key resources are the JavaScript user manual, the JavaScript examples and the JavaScript API specification.
-- [mxgraph tag on Stack Overflow](http://stackoverflow.com/questions/tagged/mxgraph). Please ensure your questions adhere to the [SO guidelines](http://stackoverflow.com/help/on-topic), otherwise it is likely to be closed.
 
-
-## Migrating from mxGraph
+## <a id="migrate-from-mxgraph"></a> Migrating from mxGraph
 
 `maxGraph` APIs are not fully compatible with `mxGraph` APIs. The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without issues.
 

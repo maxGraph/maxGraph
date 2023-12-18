@@ -19,3 +19,7 @@ For more details, see the [maxGraph GitHub repository](https://github.com/maxGra
 ```
 npm install @maxgraph/core
 ```
+
+## Getting started
+
+All the information is available in the [README of the GitHub repository](https://github.com/maxGraph/maxGraph).
