@@ -16,19 +16,11 @@ limitations under the License.
 
 import Cell from '../cell/Cell';
 import GraphDataModel from '../GraphDataModel';
-import ObjectCodec from '../../serialization/ObjectCodec';
-import CodecRegistry from '../../serialization/CodecRegistry';
 
 import type { UndoableChange } from '../../types';
-import Codec from '../../serialization/Codec';
 
 /**
  * Action to change a terminal in a model.
- *
- * Constructor: mxTerminalChange
- *
- * Constructs a change of a terminal in the
- * specified model.
  */
 export class TerminalChange implements UndoableChange {
   model: GraphDataModel;
@@ -59,39 +51,4 @@ export class TerminalChange implements UndoableChange {
   }
 }
 
-/**
- * Codec for {@link TerminalChange}s. This class is created and registered
- * dynamically at load time and used implicitly via <Codec> and
- * the <CodecRegistry>.
- *
- * Transient Fields:
- *
- * - model
- * - previous
- *
- * Reference Fields:
- *
- * - cell
- * - terminal
- */
-export class TerminalChangeCodec extends ObjectCodec {
-  constructor() {
-    const __dummy: any = undefined;
-    super(
-      new TerminalChange(__dummy, __dummy, __dummy, __dummy),
-      ['model', 'previous'],
-      ['cell', 'terminal']
-    );
-  }
-
-  /**
-   * Restores the state by assigning the previous value.
-   */
-  afterDecode(dec: Codec, node: Element, obj: any): any {
-    obj.previous = obj.terminal;
-    return obj;
-  }
-}
-
-CodecRegistry.register(new TerminalChangeCodec());
 export default TerminalChange;

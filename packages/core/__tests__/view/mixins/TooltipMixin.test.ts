@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { test } from '@jest/globals';
-import { createGraphWithoutPlugins } from './utils';
+import { createGraphWithoutPlugins } from '../../utils';
 import { Cell, CellState } from '../../../src';
 
 test('The "TooltipHandler" plugin is not available', () => {

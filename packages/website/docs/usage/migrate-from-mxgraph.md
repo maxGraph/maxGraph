@@ -535,6 +535,16 @@ This is documented in the [mxStylesheet documentation](https://github.com/jgraph
 This is currently not supported in maxGraph: https://github.com/maxGraph/maxGraph/issues/154 "Add a way to not use default style properties when calculating cell styles".
 
 
+### Codecs
+
+:::warning
+
+From version 0.6.0 of `maxGraph`, codecs supplied by maxGraph are no longer registered by default, they ** MUST** be registered before performing an `encode` or `decode`
+
+For example, you can use the `registerCoreCodecs` function (or other related functions) to register codecs.
+
+:::
+
 ## Conclusion
 
 By following these guidelines and updating your codebase accordingly, you should be able to migrate your application from `mxGraph` to `maxGraph`.

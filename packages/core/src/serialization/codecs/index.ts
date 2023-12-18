@@ -14,9 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph } from '../../../src';
-
-// no need for a container, we don't check the view here
-export const createGraphWithoutContainer = (): Graph => new Graph(null!);
-
-export const createGraphWithoutPlugins = (): Graph => new Graph(null!, null!, []);
+export * from './editor';
+export * from './CellCodec';
+export * from './ChildChangeCodec';
+export * from './GenericChangeCodec';
+export * from './GraphViewCodec';
+export * from './ModelCodec';
+export * from './RootChangeCodec';
+export * from './StylesheetCodec';
+export * from './TerminalChangeCodec';

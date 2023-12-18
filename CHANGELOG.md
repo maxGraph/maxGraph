@@ -1,5 +1,14 @@
 # `maxGraph` Change Log
 
+# UNRELEASED
+
+**Breaking Changes**
+- Codecs supplied by `maxGraph` are no longer registered by default. They **MUST** be registered before performing an `encode` or `decode`.
+You can use one of the following functions to register codecs: 
+  - `registerAllCodecs`
+  - `registerCoreCodecs`
+  - `registerEditorCodecs`
+
 ## 0.5.0
 
 Release date: `2023-12-07`

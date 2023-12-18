@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test } from '@jest/globals';
-import { createGraphWithoutPlugins } from '../../utils';
+import { Graph } from '../src';
 
-test('The "PanningHandler" plugin is not available', () => {
-  const graph = createGraphWithoutPlugins();
-  graph.setPanning(true);
-});
+// no need for a container, we don't check the view here
+export const createGraphWithoutContainer = (): Graph => new Graph(null!);
+
+export const createGraphWithoutPlugins = (): Graph => new Graph(null!, null!, []);

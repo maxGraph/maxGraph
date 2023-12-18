@@ -15,7 +15,15 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { Cell, Codec, Geometry, Graph, GraphDataModel, Point } from '../../src';
+import { createGraphWithoutContainer } from '../utils';
+import {
+  Cell,
+  Codec,
+  Geometry,
+  GraphDataModel,
+  Point,
+  registerCoreCodecs,
+} from '../../src';
 import { getPrettyXml, parseXml } from '../../src/util/xmlUtils';
 
 type ModelExportOptions = {
@@ -33,7 +41,9 @@ type ModelExportOptions = {
  */
 class ModelXmlSerializer {
   // Include 'XML' in the class name as there were past discussions about supporting other format (JSON for example {@link https://github.com/maxGraph/maxGraph/discussions/60}).
-  constructor(private dataModel: GraphDataModel) {}
+  constructor(private dataModel: GraphDataModel) {
+    registerCoreCodecs();
+  }
 
   import(xml: string): void {
     const doc = parseXml(xml);
@@ -111,8 +121,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
   });
 
   test('use Graph - reproduced what is described in issue 178', () => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const graph = new Graph(null!);
+    const graph = createGraphWithoutContainer();
     expect(() =>
       new ModelXmlSerializer(graph.getDataModel()).import(xmlFromIssue178)
     ).toThrow(new Error('Invalid x supplied.'));
