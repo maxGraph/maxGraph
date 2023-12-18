@@ -53,7 +53,7 @@ jobs:
       - name: Build Storybook mini-site
         run: npm run build -w packages/html
       - name: Upload all examples as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bundles-test-results-${{github.sha}}
           path: |

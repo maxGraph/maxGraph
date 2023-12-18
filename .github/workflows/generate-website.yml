@@ -27,7 +27,7 @@ jobs:
       - name: Build website
         run: npm run build -w packages/website
       - name: Upload website artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: website-${{github.sha}}
           path: |
