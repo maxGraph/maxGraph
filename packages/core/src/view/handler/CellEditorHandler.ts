@@ -798,7 +798,6 @@ class CellEditorHandler implements GraphPlugin {
       // Workaround for initial offsetHeight not ready for heading in markup
       if (
         this.autoSize &&
-        // @ts-ignore
         (state.cell.isEdge() || state.style.overflow !== 'fill')
       ) {
         window.setTimeout(() => {
