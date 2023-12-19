@@ -84,10 +84,14 @@ class CodecRegistry {
    * @param constructor_ JavaScript constructor function.
    */
   static getCodec(constructor_: any): ObjectCodec | null {
+    // TODO wrong JSDoc the parameter is a string or a constructor
+    // if a string, try to get the codec by name and by alias (should probably use the code of getCodecByName)
+    // if no codec, it register a new codec for the providing "type" pass as constructor
     let codec = null;
 
     if (constructor_ != null) {
       let { name } = constructor_;
+      console.warn('@@getCodec - constructor name:', name);
       const tmp = CodecRegistry.aliases[name];
 
       if (tmp != null) {
@@ -110,20 +114,21 @@ class CodecRegistry {
   }
 
   static getCodecByName(name: string) {
+    // TODO the implementation in getCodec may be better
     // Also use alias
-    console.warn("getCodecByName - name:", name)
+    console.warn('getCodecByName - name:', name);
     let codec = CodecRegistry.codecs[name];
     // let codec = CodecRegistry.codecs[name] ?? null;
     if (!codec) {
       const alias = CodecRegistry.aliases[name];
-      console.warn("getCodecByName - NO codec - alias:", alias);
+      console.warn('getCodecByName - NO codec - alias:', alias);
       if (alias) {
         codec = CodecRegistry.codecs[alias];
       }
     }
 
-    console.warn("getCodecByName - NO codec - return codec:", codec);
-    return codec  ?? null;
+    console.warn('getCodecByName - NO codec - return codec:', codec);
+    return codec ?? null;
   }
 }
 
