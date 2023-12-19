@@ -84,14 +84,26 @@ class CodecRegistry {
    * @param constructor_ JavaScript constructor function.
    */
   static getCodec(constructor_: any): ObjectCodec | null {
+    // TODO simplify implementation
+    // if (constructor_ == null) {
+    //   return null;
+    // }
+
     // TODO wrong JSDoc the parameter is a string or a constructor
     // if a string, try to get the codec by name and by alias (should probably use the code of getCodecByName)
     // if no codec, it register a new codec for the providing "type" pass as constructor
     let codec = null;
 
+    // console.info('CodecRegistry.getCodec - parameter as string: %s', constructor_);
+
     if (constructor_ != null) {
-      let { name } = constructor_;
-      console.info('CodecRegistry.getCodec - constructor name:', name);
+      console.info('CodecRegistry.getCodec - parameter type:', typeof constructor_);
+      // let { name } = constructor_;
+      let name = typeof constructor_ === 'string' ? constructor_ : constructor_.name;
+      console.info(
+        'CodecRegistry.getCodec - name (direct or assume from constructor):',
+        name
+      );
       const tmp = CodecRegistry.aliases[name];
       console.info('CodecRegistry.getCodec - alias resolution:', tmp);
 
@@ -101,7 +113,8 @@ class CodecRegistry {
       console.info('CodecRegistry.getCodec - used name to find codec:', name);
 
       codec = CodecRegistry.codecs[name] ?? null;
-      console.info('CodecRegistry.getCodec - found codec:', codec);
+      console.info('CodecRegistry.getCodec - found codec:', codec != null);
+      // console.info('CodecRegistry.getCodec - found codec:', codec);
 
       // Registers a new default codec for the given constructor if no codec has been previously defined.
       if (codec == null) {
@@ -134,12 +147,14 @@ class CodecRegistry {
         codec = CodecRegistry.codecs[alias];
         console.info(
           'CodecRegistry.getCodecByName - NO codec - codec from alias:',
-          codec
+          !!codec
+          // codec
         );
       }
     }
 
-    console.info('CodecRegistry.getCodecByName - found codec:', codec);
+    console.info('CodecRegistry.getCodecByName - found codec:', !!codec);
+    // console.info('CodecRegistry.getCodecByName - found codec:', codec);
     return codec ?? null;
   }
 }
