@@ -54,10 +54,14 @@ export class ModelCodec extends ObjectCodec {
    * Reads the cells into the graph model. All cells are children of the root element in the node.
    */
   decodeRoot(dec: Codec, root: Element, model: GraphDataModel) {
+    // console.info('ModelCodec.decodeRoot - start');
+    console.info('ModelCodec.decodeRoot - start. dec: ', dec);
     let rootCell = null;
     let tmp = root.firstChild as Element;
 
     while (tmp != null) {
+      // TODO review the signature of decodeCell
+      // @ts-ignore
       const cell = dec.decodeCell(tmp);
 
       if (cell != null && cell.getParent() == null) {
