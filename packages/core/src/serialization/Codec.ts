@@ -439,7 +439,7 @@ class Codec {
       if (!this.isCellCodec(decoder)) {
         decoder = CodecRegistry.getCodec(Cell);
       }
-      cell = decoder?.decode(this, node);
+      cell = decoder?.decode(this, node); // TODO as Cell; impact method signature
 
       if (restoreStructures) {
         this.insertIntoGraph(cell);
