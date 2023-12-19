@@ -90,6 +90,8 @@ export const registerCoreCodecs = (force = false) => {
 
     // mxGraph support
     CodecRegistry.addAlias('mxGraphModel', 'GraphDataModel');
+    CodecRegistry.addAlias('mxCell', 'Cell');
+    // CodecRegistry.addAlias('mxGeometry', 'Geometry');
 
     isCoreCodecsRegistered = true;
   }
