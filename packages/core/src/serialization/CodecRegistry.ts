@@ -91,19 +91,23 @@ class CodecRegistry {
 
     if (constructor_ != null) {
       let { name } = constructor_;
-      console.warn('@@getCodec - constructor name:', name);
+      console.info('CodecRegistry.getCodec - constructor name:', name);
       const tmp = CodecRegistry.aliases[name];
+      console.info('CodecRegistry.getCodec - alias resolution:', tmp);
 
       if (tmp != null) {
         name = tmp;
       }
+      console.info('CodecRegistry.getCodec - used name to find codec:', name);
 
       codec = CodecRegistry.codecs[name] ?? null;
+      console.info('CodecRegistry.getCodec - found codec:', codec);
 
       // Registers a new default codec for the given constructor if no codec has been previously defined.
       if (codec == null) {
         try {
           codec = new ObjectCodec(new constructor_());
+          console.info('CodecRegistry.getCodec - no codec, so register:', codec);
           CodecRegistry.register(codec);
         } catch (e) {
           // ignore
@@ -115,19 +119,27 @@ class CodecRegistry {
 
   static getCodecByName(name: string) {
     // TODO the implementation in getCodec may be better
+    // this is the compact form
+    // const codecName = CodecRegistry.aliases[name] ?? name;
+    // return  CodecRegistry.codecs[codecName] ?? null;
+
     // Also use alias
-    console.warn('getCodecByName - name:', name);
+    console.info('CodecRegistry.getCodecByName - name:', name);
     let codec = CodecRegistry.codecs[name];
     // let codec = CodecRegistry.codecs[name] ?? null;
     if (!codec) {
       const alias = CodecRegistry.aliases[name];
-      console.warn('getCodecByName - NO codec - alias:', alias);
+      console.info('CodecRegistry.getCodecByName - NO codec - alias:', alias);
       if (alias) {
         codec = CodecRegistry.codecs[alias];
+        console.info(
+          'CodecRegistry.getCodecByName - NO codec - codec from alias:',
+          codec
+        );
       }
     }
 
-    console.warn('getCodecByName - NO codec - return codec:', codec);
+    console.info('CodecRegistry.getCodecByName - found codec:', codec);
     return codec ?? null;
   }
 }
