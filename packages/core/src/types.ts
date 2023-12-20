@@ -23,15 +23,6 @@ import type InternalMouseEvent from './view/event/InternalMouseEvent';
 import Geometry from './view/geometry/Geometry';
 import type Shape from './view/geometry/Shape';
 import type ImageBox from './view/image/ImageBox';
-import GraphDataModel from "./view/GraphDataModel";
-import GraphSelectionModel from "./view/GraphSelectionModel";
-import Stylesheet from "./view/style/Stylesheet";
-import GraphView from "./view/GraphView";
-import CellRenderer from "./view/cell/CellRenderer";
-import VertexHandler from "./view/handler/VertexHandler";
-import EdgeHandler from "./view/handler/EdgeHandler";
-import EdgeSegmentHandler from "./view/handler/EdgeSegmentHandler";
-import ElbowEdgeHandler from "./view/handler/ElbowEdgeHandler";
 
 export type FilterFunction = (cell: Cell) => boolean;
 
