@@ -1,16 +1,27 @@
-/**
- * Copyright (c) 2006-2013, JGraph Ltd
- *
- * Show region
- *
- * This example demonstrates using a custom
- * rubberband handler to show the selected region in a new window.
- */
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2013, JGraph Ltd
 
-import React from 'react';
-import { globalTypes } from '../.storybook/preview';
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/*
+Show region
+
+This example demonstrates using a custom rubberband handler to show the selected region in a new window.
+*/
+
 import {
-  constants,
   eventUtils,
   Graph,
   InternalEvent,
@@ -18,8 +29,14 @@ import {
   MaxPopupMenu,
   Rectangle,
   RubberBandHandler,
+  styleUtils,
 } from '@maxgraph/core';
-import * as styleUtils from '@maxgraph/core/util/styleUtils';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
 
 const CSS_TEMPLATE = `
 body div.mxPopupMenu {
@@ -60,6 +77,7 @@ table.mxPopupMenu tr {
 }
 `;
 
+// TODO apply this settings to the container used by the Graph
 const HTML_TEMPLATE = `
 <!-- Page passes the container for the graph to the program -->
 <body onload="main(document.getElementById('graphContainer'))">
@@ -76,6 +94,11 @@ export default {
   title: 'Misc/ShowRegion',
   argTypes: {
     ...globalTypes,
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
@@ -96,7 +119,7 @@ const Template = ({ label, ...args }) => {
   InternalEvent.disableContextMenu(container);
 
   // Changes some default colors
-  // TODO: Find a way of modifying globally or setting locally!
+  // TODO Find a way of modifying globally or setting locally! See https://github.com/maxGraph/maxGraph/issues/192
   //constants.HANDLE_FILLCOLOR = '#99ccff';
   //constants.HANDLE_STROKECOLOR = '#0088cf';
   //constants.VERTEX_SELECTION_COLOR = '#00a8ff';
@@ -106,56 +129,53 @@ const Template = ({ label, ...args }) => {
 
   class MyCustomRubberBandHandler extends RubberBandHandler {
     isForceRubberbandEvent(me) {
-      return (
-          RubberBandHandler.prototype.isForceRubberbandEvent.apply(this, arguments) ||
-          me.isPopupTrigger()
-      );
-    };
+      return super.isForceRubberbandEvent(me) || me.isPopupTrigger();
+    }
 
     // Defines a new popup menu for region selection in the rubberband handler
     popupMenu = new MaxPopupMenu(function (menu, cell, evt) {
       let rect = new Rectangle(
-          rubberband.x,
-          rubberband.y,
-          rubberband.width,
-          rubberband.height
+        rubberband.x,
+        rubberband.y,
+        rubberband.width,
+        rubberband.height
       );
 
       menu.addItem('Show this', null, function () {
         rubberband.popupMenu.hideMenu();
         let bounds = graph.getGraphBounds();
         domUtils.show(
-            graph,
-            null,
-            bounds.x - rubberband.x,
-            bounds.y - rubberband.y,
-            rubberband.width,
-            rubberband.height
+          graph,
+          null,
+          bounds.x - rubberband.x,
+          bounds.y - rubberband.y,
+          rubberband.width,
+          rubberband.height
         );
       });
     });
 
     mouseDown(sender, me) {
       this.popupMenu.hideMenu();
-      super.mouseDown.apply(this, arguments);
-    };
+      super.mouseDown(sender, me);
+    }
 
     mouseUp(sender, me) {
       if (eventUtils.isPopupTrigger(me.getEvent())) {
         if (!graph.getPlugin('PopupMenuHandler').isMenuShowing()) {
           let origin = styleUtils.getScrollOrigin();
           this.popupMenu.popup(
-              me.getX() + origin.x + 1,
-              me.getY() + origin.y + 1,
-              null,
-              me.getEvent()
+            me.getX() + origin.x + 1,
+            me.getY() + origin.y + 1,
+            null,
+            me.getEvent()
           );
           this.reset();
         }
       } else {
-        super.mouseUp.apply(this, arguments);
+        super.mouseUp(sender, me);
       }
-    };
+    }
   }
 
   // Enables rubberband selection

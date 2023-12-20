@@ -1,27 +1,41 @@
-/**
- * Copyright (c) 2006-2013, JGraph Ltd
- *
- * Graph Layout
- *
- * This example demonstrates using
- * automatic graph layouts and listening to changes of the graph size
- * to keep the container size in sync.
- */
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2013, JGraph Ltd
 
-import React from 'react';
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/*
+  Graph Layout
+
+  This example demonstrates using automatic graph layouts and listening to changes of the graph size
+  to keep the container size in sync.
+*/
+
 import {
   constants,
   CircleLayout,
+  DomHelpers,
   FastOrganicLayout,
   Graph,
   InternalEvent,
   Morphing,
   Perimeter,
 } from '@maxgraph/core';
-import { button } from '@maxgraph/core/util/domHelpers';
 
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
+// TODO apply this settings to the container used by the Graph
 const HTML_TEMPLATE = `
 <!-- Page passes the container for the graph to the program -->
 <body onload="main(document.getElementById('graphContainer'))">
@@ -43,6 +57,10 @@ export default {
       type: 'boolean',
       defaultValue: false,
     },
+  },
+  args: {
+    ...globalValues,
+    animate: true,
   },
 };
 
@@ -97,7 +115,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   mainContainer.appendChild(
-    button('Circle Layout', function (evt) {
+    DomHelpers.button('Circle Layout', function (evt) {
       graph.getDataModel().beginUpdate();
       try {
         // Creates a layout algorithm to be used
@@ -120,7 +138,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   mainContainer.appendChild(
-    button('Organic Layout', function (evt) {
+    DomHelpers.button('Organic Layout', function (evt) {
       graph.getDataModel().beginUpdate();
       try {
         layout.execute(parent);

@@ -1,40 +1,57 @@
-/**
- * Copyright (c) 2006-2015, JGraph Ltd
- *
- * Scrollbars
- *
- * This example demonstrates using
- * a scrollable table with different sections in a cell label.
- */
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2015, JGraph Ltd
 
-import React from 'react';
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/*
+Scrollbars
+This example demonstrates using a scrollable table with different sections in a cell label.
+*/
+
 import {
-  constants,
-  Client,
-  ConnectionHandler,
-  Perimeter,
-  Point,
-  EdgeStyle,
-  Graph,
-  InternalEvent,
-  SelectionHandler,
   Cell,
-  RubberBandHandler,
-  KeyHandler,
-  Rectangle,
-  GraphView,
-  ImageBox,
   CellRenderer,
   CellEditorHandler,
-  TooltipHandler,
+  Client,
+  ConnectionHandler,
+  constants,
+  DomHelpers,
+  domUtils,
+  EdgeStyle,
+  ImageBox,
+  InternalEvent,
+  Graph,
+  GraphView,
+  KeyHandler,
+  PanningHandler,
+  Perimeter,
+  Point,
+  Rectangle,
+  RubberBandHandler,
   SelectionCellsHandler,
-  PopupMenuHandler,
-  PanningHandler
+  SelectionHandler,
+  xmlUtils,
 } from '@maxgraph/core';
-import { createXmlDocument } from '@maxgraph/core/util/xmlUtils';
-import { button } from '@maxgraph/core/util/domHelpers';
-import { isNode } from '@maxgraph/core/util/domUtils';
-import {globalTypes} from "../.storybook/preview";
+import {
+  contextMenuTypes,
+  contextMenuValues,
+  globalValues,
+  globalTypes,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 const CSS_TEMPLATE = `
 table.title {
@@ -71,6 +88,7 @@ button {
 }
 `;
 
+// TODO apply this settings to the container used by the Graph
 const HTML_TEMPLATE = `
 <!-- Page passes the container for the graph to the program -->
 <body onload="main(document.getElementById('graphContainer'))">
@@ -85,7 +103,12 @@ const HTML_TEMPLATE = `
 export default {
   title: 'Misc/Scrollbars',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
+  },
+  args: {
+    ...contextMenuValues,
+    ...globalValues,
   },
 };
 
@@ -119,7 +142,7 @@ const Template = ({ label, ...args }) => {
     let div = tr.parentNode.parentNode.parentNode;
     let offsetTop = parseInt(div.style.top);
     let y =
-        state.y + (tr.offsetTop + tr.offsetHeight / 2 - div.scrollTop + offsetTop) * s;
+      state.y + (tr.offsetTop + tr.offsetHeight / 2 - div.scrollTop + offsetTop) * s;
     y = Math.min(state.y + state.height, Math.max(state.y + offsetTop * s, y));
     return y;
   };
@@ -333,7 +356,7 @@ const Template = ({ label, ...args }) => {
       if (div != null) {
         y = start.getCenterY() - div.scrollTop;
 
-        if (isNode(edge.cell.value) && !start.cell.isCollapsed()) {
+        if (domUtils.isNode(edge.cell.value) && !start.cell.isCollapsed()) {
           let attr = source ? 'sourceRow' : 'targetRow';
           let row = parseInt(edge.cell.value.getAttribute(attr));
 
@@ -351,8 +374,10 @@ const Template = ({ label, ...args }) => {
         // Keeps vertical coordinate inside start
         let offsetTop = parseInt(div.style.top) * start.view.scale;
         y = Math.min(
-            isNaN(start.y + start.height) ? 9999999999999 : start.y + start.height,
-            isNaN(Math.max(start.y + offsetTop, y)) ? 9999999999999 : Math.max(start.y + offsetTop, y),
+          isNaN(start.y + start.height) ? 9999999999999 : start.y + start.height,
+          isNaN(Math.max(start.y + offsetTop, y))
+            ? 9999999999999
+            : Math.max(start.y + offsetTop, y)
         );
 
         // Updates the vertical position of the nearest point if we're not
@@ -367,7 +392,7 @@ const Template = ({ label, ...args }) => {
 
       // Routes multiple incoming edges along common waypoints if
       // the edges have a common target row
-      if (source && isNode(edge.cell.value) && start != null && end != null) {
+      if (source && domUtils.isNode(edge.cell.value) && start != null && end != null) {
         let edges = this.graph.getEdgesBetween(start.cell, end.cell, true);
         let tmp = [];
 
@@ -375,7 +400,10 @@ const Template = ({ label, ...args }) => {
         let row = edge.cell.value.getAttribute('targetRow');
 
         for (let i = 0; i < edges.length; i++) {
-          if (isNode(edges[i].value) && edges[i].value.getAttribute('targetRow') == row) {
+          if (
+            domUtils.isNode(edges[i].value) &&
+            edges[i].value.getAttribute('targetRow') == row
+          ) {
             tmp.push(edges[i]);
           }
         }
@@ -456,33 +484,35 @@ const Template = ({ label, ...args }) => {
         return '';
       }
     }
+
+    createCellRenderer() {
+      return new MyCustomCellRenderer();
+    }
+
+    createGraphView() {
+      return new MyCustomGraphView(this);
+    }
   }
 
   // Creates the graph inside the given container
   let graph = new MyCustomGraph(
     container,
     null,
+    // use a dedicated set of plugins
     [
       CellEditorHandler,
-      TooltipHandler,
-      SelectionCellsHandler,
-      PopupMenuHandler,
       ConnectionHandler,
+      MyCustomConnectionHandler,
       MyCustomSelectionHandler,
       PanningHandler,
-    ],
-    null,
-    {
-      GraphView: MyCustomGraphView,
-      CellRenderer: MyCustomCellRenderer,
-      ConnectionHandler: MyCustomConnectionHandler,
-      SelectionHandler: MyCustomSelectionHandler
-    }
+      RubberBandHandler,
+      SelectionCellsHandler,
+    ]
   );
 
   // Uses the entity perimeter (below) as default
-  graph.stylesheet.getDefaultVertexStyle().verticalAlign = constants.ALIGN_TOP;
-  graph.stylesheet.getDefaultVertexStyle().perimiter = Perimeter.EntityPerimeter;
+  graph.stylesheet.getDefaultVertexStyle().verticalAlign = constants.ALIGN.TOP;
+  graph.stylesheet.getDefaultVertexStyle().perimeter = Perimeter.RectanglePerimeter;
   graph.stylesheet.getDefaultVertexStyle().shadow = true;
   graph.stylesheet.getDefaultVertexStyle().fillColor = '#DDEAFF';
   graph.stylesheet.getDefaultVertexStyle().gradientColor = '#A9C4EB';
@@ -511,16 +541,13 @@ const Template = ({ label, ...args }) => {
   graph.setHtmlLabels(true);
 
   // User objects (data) for the individual cells
-  let doc = createXmlDocument();
+  let doc = xmlUtils.createXmlDocument();
 
   // Same should be used to create the XML node for the table
   // description and the rows (most probably as child nodes)
   let relation = doc.createElement('Relation');
   relation.setAttribute('sourceRow', '4');
   relation.setAttribute('targetRow', '6');
-
-  // Enables rubberband selection
-  new RubberBandHandler(graph);
 
   // Enables key handling (eg. escape)
   new KeyHandler(graph);
@@ -543,14 +570,14 @@ const Template = ({ label, ...args }) => {
     graph.insertEdge(parent, null, relation, v1, v2);
   });
 
-  let btn1 = button('+', function () {
+  let btn1 = DomHelpers.button('+', function () {
     graph.zoomIn();
   });
   btn1.style.marginLeft = '20px';
 
   document.body.appendChild(btn1);
   document.body.appendChild(
-    button('-', function () {
+    DomHelpers.button('-', function () {
       graph.zoomOut();
     })
   );

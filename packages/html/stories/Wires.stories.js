@@ -1,6 +1,25 @@
-/**
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2020, JGraph Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/*
+====================
 README
-******
+====================
+
 - Edge-to-edge connections: We store the point where the mouse
 was released in the terminal points of the edge geometry and
 use that point to find the nearest segment on the target edge
@@ -11,7 +30,7 @@ mxGraphView.updateFixedTerminalPoint.
 computes its result based on the output of mxGraphView.
 updateFixedTerminalPoint, which computes all connection points
 for edge-to-edge connections and constrained ports and vertices
-and stores them in state.absolutePoints. 
+and stores them in state.absolutePoints.
 
 - Routing directions are stored in the 'portConstraint' style.
 Possible values for this style horizontal and vertical. Note
@@ -29,7 +48,7 @@ as "ports". Instead, the connection information is stored as a
 relative point in the connecting edge. (See also: portrefs.html
 for storing references to ports.)
 
- */
+*/
 
 import {
   domUtils,
@@ -45,6 +64,7 @@ import {
   Point,
   CylinderShape,
   CellRenderer,
+  DomHelpers,
   EdgeStyle,
   Rectangle,
   EdgeHandler,
@@ -62,21 +82,33 @@ import {
   SelectionCellsHandler,
   PopupMenuHandler,
 } from '@maxgraph/core';
-import { button } from '@maxgraph/core/util/domHelpers';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  contextMenuTypes,
+  contextMenuValues,
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Connections/Wires',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...contextMenuValues,
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
+// TODO apply this settings to the container used by the Graph
 const HTML_TEMPLATE = `
 <body onload="main(document.getElementById('graphContainer'))">
   <div id="graphContainer"
@@ -96,9 +128,12 @@ const Template = ({ label, ...args }) => {
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
-  parentContainer.appendChild(container)
+  parentContainer.appendChild(container);
 
-  //constants.SHADOWCOLOR = '#C0C0C0';  // TODO: Find a way of modifying globally or setting locally!
+  // Changes some default colors
+  // TODO Find a way of modifying globally or setting locally! See https://github.com/maxGraph/maxGraph/issues/192
+  //constants.SHADOWCOLOR = '#C0C0C0';
+
   let joinNodeSize = 7;
   let strokeWidth = 2;
 
@@ -131,7 +166,7 @@ const Template = ({ label, ...args }) => {
       }
 
       return super.createHandler.apply(this, arguments);
-    };
+    }
 
     // Adds oval markers for edge-to-edge connections.
     getCellStyle(cell) {
@@ -149,7 +184,7 @@ const Template = ({ label, ...args }) => {
         }
       }
       return style;
-    };
+    }
 
     getTooltipForCell(cell) {
       let tip = '';
@@ -173,7 +208,7 @@ const Template = ({ label, ...args }) => {
         }
       }
       return tip;
-    };
+    }
 
     // Alternative solution for implementing connection points without child cells.
     // This can be extended as shown in portrefs.html example to allow for per-port
@@ -182,9 +217,9 @@ const Template = ({ label, ...args }) => {
       let geo = terminal != null ? terminal.cell.getGeometry() : null;
 
       if (
-          (geo != null ? !geo.relative : false) &&
-          terminal.cell.isVertex() &&
-          terminal.cell.getChildCount() === 0
+        (geo != null ? !geo.relative : false) &&
+        terminal.cell.isVertex() &&
+        terminal.cell.getChildCount() === 0
       ) {
         return [
           new ConnectionConstraint(new Point(0, 0.5), false),
@@ -192,7 +227,7 @@ const Template = ({ label, ...args }) => {
         ];
       }
       return null;
-    };
+    }
   }
 
   // FIXME: Provide means to make EdgeHandler and ConnectionHandler instantiate this subclass!
@@ -205,7 +240,7 @@ const Template = ({ label, ...args }) => {
     // Alt disables guides
     isEnabledForEvent(evt) {
       return !eventUtils.isAltDown(evt);
-    };
+    }
   }
 
   class MyCustomEdgeHandler extends EdgeHandler {
@@ -214,7 +249,7 @@ const Template = ({ label, ...args }) => {
 
     isConnectableCell(cell) {
       return graph.getPlugin('ConnectionHandler').isConnectableCell(cell);
-    };
+    }
 
     connect(edge, terminal, isSource, isClone, me) {
       let result = null;
@@ -235,9 +270,7 @@ const Template = ({ label, ...args }) => {
             pt.x = pt.x / this.graph.view.scale - this.graph.view.translate.x;
             pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
 
-            let pstate = this.graph
-                .getView()
-                .getState(edge.getParent());
+            let pstate = this.graph.getView().getState(edge.getParent());
 
             if (pstate != null) {
               pt.x -= pstate.origin.x;
@@ -256,15 +289,15 @@ const Template = ({ label, ...args }) => {
       }
 
       return result;
-    };
+    }
 
     createMarker() {
       let marker = super.createMarker.apply(this, arguments);
       // Adds in-place highlighting when reconnecting existing edges
       marker.highlight.highlight =
-          this.graph.getPlugin('ConnectionHandler').marker.highlight.highlight;
+        this.graph.getPlugin('ConnectionHandler').marker.highlight.highlight;
       return marker;
-    };
+    }
   }
 
   // Switch for black background and bright styles
@@ -283,7 +316,7 @@ const Template = ({ label, ...args }) => {
           this.textarea.style.color = '#FFFFFF';
         }
       }
-    }
+    };
   } else {
     MyCustomCellEditorHandler = CellEditorHandler;
   }
@@ -303,7 +336,7 @@ const Template = ({ label, ...args }) => {
     // disabled if right click should stop connection handler.
     isPopupTrigger() {
       return false;
-    };
+    }
   }
 
   class MyCustomConnectionHandler extends ConnectionHandler {
@@ -316,7 +349,7 @@ const Template = ({ label, ...args }) => {
     // Starts connections on the background in wire-mode
     isStartEvent(me) {
       return checkbox.checked || super.isStartEvent.apply(this, arguments);
-    };
+    }
 
     // Avoids any connections for gestures within tolerance except when in wire-mode
     // or when over a port
@@ -336,7 +369,7 @@ const Template = ({ label, ...args }) => {
         }
       }
       super.mouseUp.apply(this, arguments);
-    };
+    }
 
     // Overrides methods to preview and create new edges.
 
@@ -346,31 +379,31 @@ const Template = ({ label, ...args }) => {
 
       if (this.sourceConstraint != null && this.previous != null) {
         edge.style =
-            'exitX' +
-            '=' +
-            this.sourceConstraint.point.x +
-            ';' +
-            'exitY' +
-            '=' +
-            this.sourceConstraint.point.y +
-            ';';
+          'exitX' +
+          '=' +
+          this.sourceConstraint.point.x +
+          ';' +
+          'exitY' +
+          '=' +
+          this.sourceConstraint.point.y +
+          ';';
       } else if (me.getCell().isEdge()) {
         let scale = this.graph.view.scale;
         let tr = this.graph.view.translate;
         let pt = new Point(
-            this.graph.snap(me.getGraphX() / scale) - tr.x,
-            this.graph.snap(me.getGraphY() / scale) - tr.y
+          this.graph.snap(me.getGraphX() / scale) - tr.x,
+          this.graph.snap(me.getGraphY() / scale) - tr.y
         );
         edge.geometry.setTerminalPoint(pt, true);
       }
 
       return this.graph.view.createState(edge);
-    };
+    }
 
     // Uses right mouse button to create edges on background (see also: lines 67 ff)
     isStopEvent(me) {
       return me.getState() != null || eventUtils.isRightMouseButton(me.getEvent());
-    };
+    }
 
     // Updates target terminal point for edge-to-edge connections.
     updateCurrentState(me, point) {
@@ -380,20 +413,20 @@ const Template = ({ label, ...args }) => {
         this.edgeState.cell.geometry.setTerminalPoint(null, false);
 
         if (
-            this.shape != null &&
-            this.currentState != null &&
-            this.currentState.cell.isEdge()
+          this.shape != null &&
+          this.currentState != null &&
+          this.currentState.cell.isEdge()
         ) {
           let scale = this.graph.view.scale;
           let tr = this.graph.view.translate;
           let pt = new Point(
-              this.graph.snap(me.getGraphX() / scale) - tr.x,
-              this.graph.snap(me.getGraphY() / scale) - tr.y
+            this.graph.snap(me.getGraphX() / scale) - tr.x,
+            this.graph.snap(me.getGraphY() / scale) - tr.y
           );
           this.edgeState.cell.geometry.setTerminalPoint(pt, false);
         }
       }
-    };
+    }
 
     // Adds in-place highlighting for complete cell area (no hotspot).
     createMarker() {
@@ -406,7 +439,8 @@ const Template = ({ label, ...args }) => {
 
       // Adds in-place highlighting
       //const mxCellHighlightHighlight = mxCellHighlight.prototype.highlight;
-      marker.highlight.highlight = function(state) {   // TODO: Should this be a subclass of marker rather than assigning directly?
+      marker.highlight.highlight = function (state) {
+        // TODO: Should this be a subclass of marker rather than assigning directly?
         if (this.state != state) {
           if (this.state != null) {
             this.state.style = this.lastStyle;
@@ -437,7 +471,7 @@ const Template = ({ label, ...args }) => {
       };
 
       return marker;
-    };
+    }
 
     // Makes sure non-relative cells can only be connected via constraints
     isConnectableCell(cell) {
@@ -447,19 +481,14 @@ const Template = ({ label, ...args }) => {
         let geo = cell != null ? cell.getGeometry() : null;
         return geo != null ? geo.relative : false;
       }
-    };
+    }
   }
 
   // Updates connection points before the routing is called.
 
   class MyCustomGraphView extends GraphView {
     // Computes the position of edge to edge connection points.
-    updateFixedTerminalPoint(
-        edge,
-        terminal,
-        source,
-        constraint
-    ) {
+    updateFixedTerminalPoint(edge, terminal, source, constraint) {
       let pt = null;
 
       if (constraint != null) {
@@ -512,8 +541,8 @@ const Template = ({ label, ...args }) => {
         // Computes constraint connection points on vertices and ports
         else if (terminal != null && terminal.cell.geometry.relative) {
           pt = new Point(
-              this.getRoutingCenterX(terminal),
-              this.getRoutingCenterY(terminal)
+            this.getRoutingCenterX(terminal),
+            this.getRoutingCenterY(terminal)
           );
         }
 
@@ -529,7 +558,7 @@ const Template = ({ label, ...args }) => {
       }
 
       edge.setAbsoluteTerminalPoint(pt, source);
-    };
+    }
   }
 
   // Updates the terminal and control points in the cloned preview.
@@ -551,7 +580,7 @@ const Template = ({ label, ...args }) => {
       }
 
       return clone;
-    };
+    }
   }
 
   // Imlements a custom resistor shape. Direction currently ignored here.
@@ -578,7 +607,7 @@ const Template = ({ label, ...args }) => {
         path.lineTo(16 * dx, h / 2);
         path.end();
       }
-    };
+    }
   }
 
   CellRenderer.registerShape('resistor', ResistorShape);
@@ -611,8 +640,8 @@ const Template = ({ label, ...args }) => {
 
     if (pt == null && source != null) {
       pt = new Point(
-          state.view.getRoutingCenterX(source),
-          state.view.getRoutingCenterY(source)
+        state.view.getRoutingCenterX(source),
+        state.view.getRoutingCenterY(source)
       );
     } else if (pt != null) {
       pt = pt.clone();
@@ -662,8 +691,8 @@ const Template = ({ label, ...args }) => {
     // TODO: Should move along connected segment
     if (pt == null && target != null) {
       pt = new Point(
-          state.view.getRoutingCenterX(target),
-          state.view.getRoutingCenterY(target)
+        state.view.getRoutingCenterX(target),
+        state.view.getRoutingCenterY(target)
       );
     }
 
@@ -901,15 +930,15 @@ const Template = ({ label, ...args }) => {
   });
 
   parentContainer.appendChild(
-      button('Zoom In', function () {
-        graph.zoomIn();
-      })
+    DomHelpers.button('Zoom In', function () {
+      graph.zoomIn();
+    })
   );
 
   parentContainer.appendChild(
-      button('Zoom Out', function () {
-        graph.zoomOut();
-      })
+    DomHelpers.button('Zoom Out', function () {
+      graph.zoomOut();
+    })
   );
 
   // Undo/redo
@@ -921,22 +950,22 @@ const Template = ({ label, ...args }) => {
   graph.getView().addListener(InternalEvent.UNDO, listener);
 
   parentContainer.appendChild(
-      button('Undo', function () {
-        undoManager.undo();
-      })
+    DomHelpers.button('Undo', function () {
+      undoManager.undo();
+    })
   );
 
   parentContainer.appendChild(
-      button('Redo', function () {
-        undoManager.redo();
-      })
+    DomHelpers.button('Redo', function () {
+      undoManager.redo();
+    })
   );
 
   // Shows XML for debugging the actual model
   parentContainer.appendChild(
-      button('Delete', function () {
-        graph.removeCells();
-      })
+    DomHelpers.button('Delete', function () {
+      graph.removeCells();
+    })
   );
 
   // Wire-mode
@@ -956,7 +985,7 @@ const Template = ({ label, ...args }) => {
 
   InternalEvent.addListener(checkbox2, 'click', function (evt) {
     if (checkbox2.checked) {
-      container.style.background = "url(/images/grid.gif)";
+      container.style.background = 'url(/images/grid.gif)';
     } else {
       container.style.background = '';
     }
@@ -965,6 +994,6 @@ const Template = ({ label, ...args }) => {
   InternalEvent.disableContextMenu(container);
 
   return parentContainer;
-}
+};
 
 export const Default = Template.bind({});

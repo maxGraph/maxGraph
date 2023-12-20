@@ -1,12 +1,26 @@
-/**
- * Copyright (c) 2006-2013, JGraph Ltd
- *
- * Menustyle
- * Menustyle. This example demonstrates using
- * CSS to style the mxPopupMenu.
- */
+/*
+Copyright 2021-present The maxGraph project Contributors
+Copyright (c) 2006-2013, JGraph Ltd
 
-import React from 'react';
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/*
+Menustyle
+
+This example demonstrates using CSS to style the mxPopupMenu.
+*/
+
 import {
   Client,
   CellOverlay,
@@ -25,7 +39,9 @@ import {
   SelectionHandler,
   PanningHandler,
 } from '@maxgraph/core';
-import {globalTypes} from "../.storybook/preview";
+import { globalTypes, globalValues } from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 const CSS_TEMPLATE = `
 body div.mxPopupMenu {
@@ -64,8 +80,9 @@ table.mxPopupMenu hr {
 table.mxPopupMenu tr {
   font-size: 4pt;
 }
-`
+`;
 
+// TODO apply this settings to the container used by the Graph
 const HTML_TEMPLATE = `
 <body onload="main(document.getElementById('graphContainer'))">
   <!-- Creates a container for the graph with a grid wallpaper -->
@@ -80,6 +97,9 @@ export default {
   title: 'Misc/MenuStyle',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -100,7 +120,7 @@ const Template = ({ label, ...args }) => {
   InternalEvent.disableContextMenu(container);
 
   // Changes some default colors
-  // TODO: Find a way of modifying globally or setting locally!
+  // TODO Find a way of modifying globally or setting locally! See https://github.com/maxGraph/maxGraph/issues/192
   //constants.HANDLE_FILLCOLOR = '#99ccff';
   //constants.HANDLE_STROKECOLOR = '#0088cf';
   //constants.VERTEX_SELECTION_COLOR = '#00a8ff';
@@ -145,7 +165,7 @@ const Template = ({ label, ...args }) => {
       super(graph);
 
       // Installs context menu
-      this.factoryMethod = function(menu, cell, evt) {
+      this.factoryMethod = function (menu, cell, evt) {
         menu.addItem('Item 1', null, function () {
           alert('Item 1');
         });
@@ -156,20 +176,20 @@ const Template = ({ label, ...args }) => {
 
         let submenu1 = menu.addItem('Submenu 1', null, null);
         menu.addItem(
-            'Subitem 1',
-            null,
-            function () {
-              alert('Subitem 1');
-            },
-            submenu1
+          'Subitem 1',
+          null,
+          function () {
+            alert('Subitem 1');
+          },
+          submenu1
         );
         menu.addItem(
-            'Subitem 1',
-            null,
-            function () {
-              alert('Subitem 2');
-            },
-            submenu1
+          'Subitem 1',
+          null,
+          function () {
+            alert('Subitem 2');
+          },
+          submenu1
         );
       };
     }
@@ -190,11 +210,9 @@ const Template = ({ label, ...args }) => {
     ConnectionHandler,
     SelectionHandler,
     PanningHandler,
+    RubberBandHandler,
   ]);
   graph.setTooltips(true);
-
-  // Enables rubberband selection
-  new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
@@ -211,8 +229,8 @@ const Template = ({ label, ...args }) => {
   // Creates a new overlay with an image and a tooltip and makes it "transparent" to events
   // and sets the overlay for the cell in the graph
   let overlay = new CellOverlay(
-      new ImageBox('editors/images/overlays/check.png', 16, 16),
-      'Overlay tooltip'
+    new ImageBox('editors/images/overlays/check.png', 16, 16),
+    'Overlay tooltip'
   );
   graph.addCellOverlay(v1, overlay);
 
