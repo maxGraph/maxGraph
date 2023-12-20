@@ -52,11 +52,7 @@ import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 
-import type {
-  GraphPlugin,
-  GraphPluginConstructor,
-  MouseListenerSet,
-} from '../types';
+import type { GraphPlugin, GraphPluginConstructor, MouseListenerSet } from '../types';
 import Multiplicity from './other/Multiplicity';
 import ImageBundle from './image/ImageBundle';
 import GraphSelectionModel from './GraphSelectionModel';
@@ -96,9 +92,9 @@ class Graph extends EventSource {
   foldingEnabled: null | boolean = null;
   isConstrainedMoving = false;
 
-  /*****************************************************************************
-   * Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)
-   *****************************************************************************/
+  // ===================================================================================================================
+  // Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)
+  // ===================================================================================================================
 
   cells: Cell[] = [];
 
@@ -114,10 +110,6 @@ class Graph extends EventSource {
    * connections in a graph.
    */
   multiplicities: Multiplicity[] = [];
-
-  /*****************************************************************************
-   * Group: Variables
-   *****************************************************************************/
 
   /**
    * Holds the {@link GraphDataModel} that contains the cells to be displayed.
@@ -411,12 +403,11 @@ class Graph extends EventSource {
   containsValidationErrorsResource: string =
     Client.language != 'none' ? 'containsValidationErrors' : '';
 
-  /*****************************************************************************
-   * Group: "Create Class Instance" factory functions
-   *****************************************************************************/
-
-  // These can be overridden in subclasses of Graph to allow the Graph
-  // to instantiate user-defined implementations with custom behavior
+  // ===================================================================================================================
+  // Group: "Create Class Instance" factory functions.
+  // These can be overridden in subclasses of Graph to allow the Graph to instantiate user-defined implementations with
+  // custom behavior.
+  // ===================================================================================================================
 
   /**
    * Creates a new {@link Stylesheet} to be used in this graph.
@@ -491,9 +482,9 @@ class Graph extends EventSource {
     return new ElbowEdgeHandler(state);
   }
 
-  /*****************************************************************************
-   * Group: Main graph constructor and functions
-   *****************************************************************************/
+  // ===================================================================================================================
+  // Group: Main graph constructor and functions
+  // ===================================================================================================================
 
   constructor(
     container: HTMLElement,
