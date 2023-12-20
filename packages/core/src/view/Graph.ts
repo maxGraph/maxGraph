@@ -498,7 +498,7 @@ class Graph extends EventSource {
     this.model = model ?? this.createGraphDataModel();
     this.plugins = plugins;
     this.cellRenderer = this.createCellRenderer();
-    this.setStylesheet(stylesheet != null ? stylesheet : this.createStylesheet());
+    this.setStylesheet(stylesheet ?? this.createStylesheet());
     this.view = this.createGraphView();
 
     // Adds a graph model listener to update the view
