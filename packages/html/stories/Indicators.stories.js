@@ -16,13 +16,15 @@ limitations under the License.
 */
 
 import { Graph, EdgeStyle, constants, KeyHandler } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Icon_Images/Indicators',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 

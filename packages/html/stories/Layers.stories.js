@@ -16,13 +16,15 @@ limitations under the License.
 */
 
 import { Graph, DomHelpers, Cell, GraphDataModel, Point } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Layouts/Layers',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 

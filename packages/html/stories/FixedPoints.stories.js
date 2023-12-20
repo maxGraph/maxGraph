@@ -24,19 +24,27 @@ import {
   Point,
   CellState,
   EdgeHandler,
+  mathUtils,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
-import { intersects } from '@maxgraph/core/util/mathUtils';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Connections/FixedPoints',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
@@ -52,7 +60,7 @@ const Template = ({ label, ...args }) => {
   class MyCustomConstraintHandler extends ConstraintHandler {
     // Snaps to fixed points
     intersects(icon, point, source, existingEdge) {
-      return !source || existingEdge || intersects(icon.bounds, point);
+      return !source || existingEdge || mathUtils.intersects(icon.bounds, point);
     }
   }
 

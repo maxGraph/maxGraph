@@ -25,10 +25,9 @@ import {
   toRadians,
 } from '../../util/mathUtils';
 import {
+  getSizeForString,
   setCellStyleFlags,
   setCellStyles,
-  setStyle,
-  getSizeForString,
 } from '../../util/styleUtils';
 import {
   ALIGN,
@@ -157,18 +156,51 @@ declare module '../Graph' {
     constrainChildCells: (cell: Cell) => void;
     scaleCell: (cell: Cell, dx: number, dy: number, recurse: boolean) => void;
     extendParent: (cell: Cell) => void;
+    /**
+     * Clones and inserts the given cells into the graph using the move method and returns the inserted cells. This shortcut
+     * is used if cells are inserted via data transfer.
+     *
+     * @param cells Array of {@link Cell} to be imported.
+     * @param dx Integer that specifies the x-coordinate of the vector. Default is `0`.
+     * @param dy Integer that specifies the y-coordinate of the vector. Default is `0`.
+     * @param target {@link mxCell} that represents the new parent of the cells.
+     * @param evt {@link MouseEvent} that triggered the invocation.
+     * @param mapping Optional mapping for existing clones.
+     * @returns the cells that were imported.
+     */
     importCells: (
       cells: Cell[],
-      dx: number,
-      dy: number,
+      dx?: number,
+      dy?: number,
       target?: Cell | null,
       evt?: MouseEvent | null,
       mapping?: any
     ) => Cell[];
+
+    /**
+     * Moves or clones the specified cells and moves the cells or clones by the given amount, adding them to the optional
+     * target cell. The `evt` is the mouse event as the mouse was released. The change is carried out using {@link cellsMoved}.
+     * This method fires {@link Event#MOVE_CELLS} while the transaction is in progress.
+     *
+     * Use the following code to move all cells in the graph.
+     *
+     * ```javascript
+     * graph.moveCells(graph.getChildCells(null, true, true), 10, 10);
+     * ```
+     *
+     * @param cells Array of {@link Cell} to be moved, cloned or added to the target.
+     * @param dx Integer that specifies the x-coordinate of the vector. Default is `0`.
+     * @param dy Integer that specifies the y-coordinate of the vector. Default is `0`.
+     * @param clone Boolean indicating if the cells should be cloned. Default is `false`.
+     * @param target {@link Cell} that represents the new parent of the cells.
+     * @param evt {@link MouseEvent} that triggered the invocation.
+     * @param mapping Optional mapping for existing clones.
+     * @returns the cells that were moved.
+     */
     moveCells: (
       cells: Cell[],
-      dx: number,
-      dy: number,
+      dx?: number,
+      dy?: number,
       clone?: boolean,
       target?: Cell | null,
       evt?: MouseEvent | null,
@@ -1815,47 +1847,14 @@ export const CellsMixin: PartialType = {
     }
   },
 
-  /*****************************************************************************
-   * Group: Cell moving
-   *****************************************************************************/
+  // *************************************************************************************
+  // Group: Cell moving
+  // *************************************************************************************
 
-  /**
-   * Clones and inserts the given cells into the graph using the move
-   * method and returns the inserted cells. This shortcut is used if
-   * cells are inserted via datatransfer.
-   *
-   * @param cells Array of {@link Cell} to be imported.
-   * @param dx Integer that specifies the x-coordinate of the vector. Default is `0`.
-   * @param dy Integer that specifies the y-coordinate of the vector. Default is `0`.
-   * @param target {@link mxCell} that represents the new parent of the cells.
-   * @param evt Mouseevent that triggered the invocation.
-   * @param mapping Optional mapping for existing clones.
-   */
-  importCells(cells, dx, dy, target = null, evt = null, mapping = {}) {
+  importCells(cells, dx?: number, dy?: number, target = null, evt = null, mapping = {}) {
     return this.moveCells(cells, dx, dy, true, target, evt, mapping);
   },
 
-  /**
-   * Moves or clones the specified cells and moves the cells or clones by the
-   * given amount, adding them to the optional target cell. The evt is the
-   * mouse event as the mouse was released. The change is carried out using
-   * <cellsMoved>. This method fires {@link Event#MOVE_CELLS} while the
-   * transaction is in progress. Returns the cells that were moved.
-   *
-   * Use the following code to move all cells in the graph.
-   *
-   * ```javascript
-   * graph.moveCells(graph.getChildCells(null, true, true), 10, 10);
-   * ```
-   *
-   * @param cells Array of {@link Cells} to be moved, cloned or added to the target.
-   * @param dx Integer that specifies the x-coordinate of the vector. Default is 0.
-   * @param dy Integer that specifies the y-coordinate of the vector. Default is 0.
-   * @param clone Boolean indicating if the cells should be cloned. Default is false.
-   * @param target <Cell> that represents the new parent of the cells.
-   * @param evt Mouseevent that triggered the invocation.
-   * @param mapping Optional mapping for existing clones.
-   */
   moveCells(
     cells,
     dx = 0,
@@ -2700,8 +2699,7 @@ export const CellsMixin: PartialType = {
    */
   isCellRotatable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    const rotatable = style.rotatable == null ? true : style.rotatable;
-    return rotatable;
+    return style.rotatable == null ? true : style.rotatable;
   },
 
   /**
@@ -2714,15 +2712,17 @@ export const CellsMixin: PartialType = {
   },
 
   /**
-   * Returns true if the given cell is moveable. This returns {@link cellsMovable}
-   * for all given cells if {@link isCellLocked} does not return true for the given
-   * cell and its style does not specify {@link 'movable'} to be 0.
+   * Returns `true` if the given cell is movable. This returns {@link cellsMovable}
+   * for all given cells if {@link isCellLocked} does not return `true` for the given
+   * cell, and its style does not specify {@link CellStateStyle.movable} to be `false`.
    *
    * @param cell {@link mxCell} whose movable state should be returned.
    */
   isCellMovable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return this.isCellsMovable() && !this.isCellLocked(cell) && !style.movable;
+    return this.isCellsMovable()
+      && !this.isCellLocked(cell)
+      && (style.movable ?? true);
   },
 
   /**
@@ -2734,7 +2734,7 @@ export const CellsMixin: PartialType = {
 
   /**
    * Specifies if the graph should allow moving of cells. This implementation
-   * updates {@link cellsMsovable}.
+   * updates {@link cellsMovable}.
    *
    * @param value Boolean indicating if the graph should allow moving of cells.
    */
@@ -2752,9 +2752,9 @@ export const CellsMixin: PartialType = {
    */
   isCellResizable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    const r =
-      this.isCellsResizable() && !this.isCellLocked(cell) && (style.resizable ?? true);
-    return r;
+    return (
+      this.isCellsResizable() && !this.isCellLocked(cell) && (style.resizable ?? true)
+    );
   },
 
   /**
@@ -2815,7 +2815,7 @@ export const CellsMixin: PartialType = {
    */
   isAutoSizeCell(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return this.isAutoSizeCells() || !!style.autosize;
+    return this.isAutoSizeCells() || (style.autoSize ?? false);
   },
 
   /**

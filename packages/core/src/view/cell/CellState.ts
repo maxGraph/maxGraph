@@ -258,8 +258,7 @@ class CellState extends Rectangle {
    * returned.
    */
   getVisibleTerminal(source = false) {
-    const tmp = this.getVisibleTerminalState(source);
-    return tmp ? tmp.cell : null;
+    return this.getVisibleTerminalState(source)?.cell ?? null;
   }
 
   /**
@@ -400,9 +399,7 @@ class CellState extends Rectangle {
    */
   isLoop(state: CellState) {
     const src = this.getVisibleTerminalState(true);
-    const trg = this.getVisibleTerminalState(false);
-
-    return src && src === trg;
+    return src && src === this.getVisibleTerminalState(false);
   }
 
   /*****************************************************************************
@@ -410,85 +407,65 @@ class CellState extends Rectangle {
    *****************************************************************************/
 
   /**
-   * Returns the vertical alignment for the given cell state. This
-   * implementation returns the value stored under
-   * {@link 'verticalAlign'} in the cell style.
-   *
-   * @param state {@link CellState} whose vertical alignment should be
-   * returned.
+   * Returns the vertical alignment for the given cell state.
+   * This implementation returns the value stored in the {@link CellStateStyle.verticalAlign}
+   * property of {@link style}.
    */
   getVerticalAlign() {
     return this.style.verticalAlign ?? ALIGN.MIDDLE;
   }
 
   /**
-   * Returns true if the given state has no stroke- or fillcolor and no image.
-   *
-   * @param state {@link CellState} to check.
+   * Returns `true` if the given state has no stroke, no fill color and no image.
    */
   isTransparentState() {
-    let result = false;
-
-    const stroke = this.style.strokeColor ?? NONE;
-    const fill = this.style.fillColor ?? NONE;
-
-    result = stroke === NONE && fill === NONE && !this.getImageSrc();
-
-    return result;
+    return (
+      (this.style.strokeColor ?? NONE) === NONE &&
+      (this.style.fillColor ?? NONE) === NONE &&
+      !this.getImageSrc()
+    );
   }
 
   /**
-   * Returns the image URL for the given cell state. This implementation
-   * returns the value stored under {@link 'image'} in the cell
-   * style.
-   *
-   * @param state {@link CellState} whose image URL should be returned.
+   * Returns the image URL for the given cell state.
+   * This implementation returns the value stored in the {@link CellStateStyle.image} property
+   * of {@link style}.
    */
   getImageSrc() {
     return this.style.image || null;
   }
 
   /**
-   * Returns the indicator color for the given cell state. This
-   * implementation returns the value stored under
-   * {@link mxConstants.STYLE_INDICATOR_COLOR} in the cell style.
-   *
-   * @param state {@link CellState} whose indicator color should be
-   * returned.
+   * Returns the indicator color for the given cell state.
+   * This implementation returns the value stored in the {@link CellStateStyle.indicatorColor}
+   * property of {@link style}.
    */
   getIndicatorColor() {
     return this.style.indicatorColor || null;
   }
 
   /**
-   * Returns the indicator gradient color for the given cell state. This
-   * implementation returns the value stored under
-   * {@link mxConstants.STYLE_INDICATOR_GRADIENTCOLOR} in the cell style.
-   *
-   * @param state {@link CellState} whose indicator gradient color should be
-   * returned.
+   * Returns the indicator gradient color for the given cell state.
+   * This implementation returns the value stored in the {@link CellStateStyle.gradientColor}
+   * property of {@link style}.
    */
   getIndicatorGradientColor() {
     return this.style.gradientColor || null;
   }
 
   /**
-   * Returns the indicator shape for the given cell state. This
-   * implementation returns the value stored under
-   * {@link mxConstants.STYLE_INDICATOR_SHAPE} in the cell style.
-   *
-   * @param state {@link CellState} whose indicator shape should be returned.
+   * Returns the indicator shape for the given cell state.
+   * This implementation returns the value stored in the {@link CellStateStyle.indicatorShape}
+   * property of {@link style}.
    */
   getIndicatorShape() {
     return this.style.indicatorShape || null;
   }
 
   /**
-   * Returns the indicator image for the given cell state. This
-   * implementation returns the value stored under
-   * {@link mxConstants.STYLE_INDICATOR_IMAGE} in the cell style.
-   *
-   * @param state {@link CellState} whose indicator image should be returned.
+   * Returns the indicator image for the given cell state.
+   * This implementation returns the value stored in the {@link CellStateStyle.indicatorImage}
+   * property of {@link style}.
    */
   getIndicatorImageSrc() {
     return this.style.indicatorImage || null;

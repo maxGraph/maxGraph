@@ -16,13 +16,15 @@ limitations under the License.
 */
 
 import { Graph, constants, EdgeStyle, StackLayout, LayoutManager } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Layouts/Folding',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -62,7 +64,7 @@ const Template = ({ label, ...args }) => {
   style.startSize = 30;
 
   style = [];
-  style.shape = constants.SHAPE_RECTANGLE;
+  style.shape = constants.SHAPE.RECTANGLE;
   style.strokeColor = 'none';
   style.fillColor = 'none';
   style.foldable = false;

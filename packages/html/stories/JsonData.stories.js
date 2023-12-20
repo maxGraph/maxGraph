@@ -26,14 +26,26 @@ import {
   domUtils,
   xmlUtils,
   popup,
+  RubberBandHandler,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Xml_Json/JsonData',
   argTypes: {
     ...globalTypes,
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 

@@ -15,17 +15,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, constants } from '@maxgraph/core';
+import {
+  CellTracker,
+  Client,
+  cloneUtils,
+  constants,
+  domUtils,
+  EventObject,
+  FastOrganicLayout,
+  Graph,
+  InternalEvent,
+  MaxXmlRequest,
+  Perimeter,
+} from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
-import { clone } from '@maxgraph/core/util/cloneUtils';
-import { button } from '@maxgraph/core/util/domHelpers';
-import { load } from '@maxgraph/core/util/MaxXmlRequest';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Xml_Json/FileIO',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -73,7 +85,7 @@ const Template = ({ label, ...args }) => {
       style = graph.getStylesheet().getDefaultEdgeStyle();
       style.labelBackgroundColor = 'white';
 
-      style = clone(style);
+      style = cloneUtils.clone(style);
       style.startArrow = constants.ARROW.CLASSIC;
       graph.getStylesheet().putCellStyle('2way', style);
 
@@ -86,18 +98,18 @@ const Template = ({ label, ...args }) => {
 
       // Creates a layout algorithm to be used
       // with the graph
-      const layout = new MxFastOrganicLayout(graph);
+      const layout = new FastOrganicLayout(graph);
 
       // Moves stuff wider apart than usual
       layout.forceConstant = 140;
 
       // Adds a button to execute the layout
-      this.el2.appendChild(
-        button('Arrange', function (evt) {
-          const parent = graph.getDefaultParent();
-          layout.execute(parent);
-        })
-      );
+      const button = document.createElement('button');
+      domUtils.write(button, 'Arrange');
+      InternalEvent.addListener(button, 'click', (evt) => {
+        const parent = graph.getDefaultParent();
+        layout.execute(parent);
+      });
 
       // Load cells and layouts the graph
       graph.batchUpdate(() => {
@@ -139,7 +151,7 @@ const Template = ({ label, ...args }) => {
     // is normally the first child of the root (ie. layer 0).
     const parent = graph.getDefaultParent();
 
-    const req = load(filename);
+    const req = MaxXmlRequest.load(filename);
     const text = req.getText();
 
     const lines = text.split('\n');
@@ -184,7 +196,7 @@ const Template = ({ label, ...args }) => {
 
   // Parses the Graph XML file format
   function read(graph, filename) {
-    const req = load(filename);
+    const req = MaxXmlRequest.load(filename);
     const root = req.getDocumentElement();
     const dec = new Codec(root.ownerDocument);
 

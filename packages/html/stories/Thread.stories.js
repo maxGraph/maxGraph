@@ -16,13 +16,15 @@ limitations under the License.
 */
 
 import { Graph, Client } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Misc/Thread',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 

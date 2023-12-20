@@ -18,7 +18,6 @@ limitations under the License.
 import {
   Client,
   Graph,
-  InternalEvent,
   RubberBandHandler,
   ConnectionHandler,
   ConnectionConstraint,
@@ -28,16 +27,24 @@ import {
   CellState,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Connections/Anchors',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
@@ -51,8 +58,6 @@ const Template = ({ label, ...args }) => {
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
-
-  if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   class MyCustomConnectionHandler extends ConnectionHandler {
     // Enables connect preview for the default edge style

@@ -1398,7 +1398,7 @@ class CellRenderer {
         const selectionCellsHandler = graph.getPlugin(
           'SelectionCellsHandler'
         ) as SelectionCellsHandler;
-        selectionCellsHandler.updateHandler(state);
+        selectionCellsHandler?.updateHandler(state);
       }
     } else if (
       !force &&
@@ -1412,7 +1412,7 @@ class CellRenderer {
       const selectionCellsHandler = graph.getPlugin(
         'SelectionCellsHandler'
       ) as SelectionCellsHandler;
-      selectionCellsHandler.updateHandler(state);
+      selectionCellsHandler?.updateHandler(state);
       force = true;
     }
 

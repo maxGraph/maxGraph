@@ -49,11 +49,11 @@ class SelectionChange implements UndoableChange {
       selectionModel.updatingSelectionResource;
 
     for (const removed of this.removed) {
-      this.graph.getSelectionModel().cellRemoved(removed);
+      selectionModel.cellRemoved(removed);
     }
 
     for (const added of this.added) {
-      this.graph.getSelectionModel().cellAdded(added);
+      selectionModel.cellAdded(added);
     }
 
     [this.added, this.removed] = [this.removed, this.added];
@@ -61,7 +61,7 @@ class SelectionChange implements UndoableChange {
     window.status =
       Translations.get(selectionModel.doneResource) || selectionModel.doneResource;
 
-    this.graph.fireEvent(
+    selectionModel.fireEvent(
       new EventObject(InternalEvent.CHANGE, { added: this.added, removed: this.removed })
     );
   }

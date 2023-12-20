@@ -32,8 +32,6 @@ import TerminalChange from './undoable_changes/TerminalChange';
 import ValueChange from './undoable_changes/ValueChange';
 import VisibleChange from './undoable_changes/VisibleChange';
 import Geometry from './geometry/Geometry';
-import ObjectCodec from '../serialization/ObjectCodec';
-import CodecRegistry from '../serialization/CodecRegistry';
 import { cloneCells, filterCells } from '../util/cellArrayUtils';
 
 import type { CellStyle, FilterFunction } from '../types';
@@ -210,7 +208,7 @@ import type { CellStyle, FilterFunction } from '../types';
  * Event: mxEvent.BEFORE_UNDO
  *
  * Fires before the change is dispatched after the update level has reached 0
- * in {@link endUpdate}. The `edit` property contains the {@link curreneEdit}.
+ * in {@link endUpdate}. The `edit` property contains the {@link currentEdit}.
  *
  * Event: mxEvent.UNDO
  *
@@ -957,6 +955,31 @@ export class GraphDataModel extends EventSource {
   }
 
   /**
+   * Updates the model in a transaction.
+   * This is a shortcut to the usage of {@link beginUpdate} and the {@link endUpdate} methods.
+   *
+   * ```javascript
+   * const model = graph.getDataModel();
+   * const parent = graph.getDefaultParent();
+   * const index = model.getChildCount(parent);
+   * model.batchUpdate(() => {
+   *   model.add(parent, v1, index);
+   *   model.add(parent, v2, index+1);
+   * });
+   * ```
+   *
+   * @param fn the update to be performed in the transaction.
+   */
+  batchUpdate(fn: () => void) {
+    this.beginUpdate();
+    try {
+      fn();
+    } finally {
+      this.endUpdate();
+    }
+  }
+
+  /**
    * Increments the {@link updateLevel} by one. The event notification
    * is queued until {@link updateLevel} reaches 0 by use of
    * {@link endUpdate}.
@@ -971,9 +994,9 @@ export class GraphDataModel extends EventSource {
    * and {@link endUpdate} calls as shown here:
    *
    * ```javascript
-   * var model = graph.getDataModel();
-   * var parent = graph.getDefaultParent();
-   * var index = model.getChildCount(parent);
+   * const model = graph.getDataModel();
+   * const parent = graph.getDefaultParent();
+   * const index = model.getChildCount(parent);
    * model.beginUpdate();
    * try
    * {
@@ -1175,61 +1198,4 @@ export class GraphDataModel extends EventSource {
   }
 }
 
-/**
- * Codec for <Transactions>s. This class is created and registered
- * dynamically at load time and used implicitly via <Codec>
- * and the <CodecRegistry>.
- */
-export class ModelCodec extends ObjectCodec {
-  constructor() {
-    super(new GraphDataModel());
-  }
-
-  /**
-   * Encodes the given <Transactions> by writing a (flat) XML sequence of
-   * cell nodes as produced by the <CellCodec>. The sequence is
-   * wrapped-up in a node with the name root.
-   */
-  encodeObject(enc: any, obj: Cell, node: Element) {
-    const rootNode = enc.document.createElement('root');
-    enc.encodeCell(obj.getRoot(), rootNode);
-    node.appendChild(rootNode);
-  }
-
-  /**
-   * Overrides decode child to handle special child nodes.
-   */
-  decodeChild(dec: any, child: Element, obj: Cell | GraphDataModel) {
-    if (child.nodeName === 'root') {
-      this.decodeRoot(dec, child, <GraphDataModel>obj);
-    } else {
-      this.decodeChild.apply(this, [dec, child, obj]);
-    }
-  }
-
-  /**
-   * Reads the cells into the graph model. All cells
-   * are children of the root element in the node.
-   */
-  decodeRoot(dec: any, root: Element, model: GraphDataModel) {
-    let rootCell = null;
-    let tmp = root.firstChild;
-
-    while (tmp != null) {
-      const cell = dec.decodeCell(tmp);
-
-      if (cell != null && cell.getParent() == null) {
-        rootCell = cell;
-      }
-      tmp = tmp.nextSibling;
-    }
-
-    // Sets the root on the model if one has been decoded
-    if (rootCell != null) {
-      model.setRoot(rootCell);
-    }
-  }
-}
-
-CodecRegistry.register(new ModelCodec());
 export default GraphDataModel;

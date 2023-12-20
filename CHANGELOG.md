@@ -1,10 +1,88 @@
 # `maxGraph` Change Log
 
-## UNRELEASED
+# UNRELEASED
 
-N/A
+**Breaking Changes**
+- Codecs supplied by `maxGraph` are no longer registered by default. They **MUST** be registered before performing an `encode` or `decode`.
+You can use one of the following functions to register codecs: 
+  - `registerAllCodecs`
+  - `registerCoreCodecs`
+  - `registerEditorCodecs`
+
+To serialize the `maxGraph` model, you can use the `ModelXmlSerializer` class, which registers codecs under the hood.
+
+## 0.5.0
+
+Release date: `2023-12-07`
+
+This release contains new features, bug fixes and documentation improvements.
+
+**Breaking Changes**
+- the UMD bundle is no more provided in the npm package.
+
+For more details, see the [0.5.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.5.0) on the GitHub release page.
+
+## 0.4.1
+
+Release date: `2023-10-30`
+
+This release contains bug fixes and internal improvements.
+
+For more details, see the [0.4.1 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.4.1) on
+the GitHub release page.
+
+## 0.4.0
+
+Release date: `2023-09-14`
+
+This release contains new features, bug fixes and documentation improvements.
+
+**Major improvements**
+- introduce the Manhattan connector
+
+For more details, see the [0.4.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.4.0) on
+the GitHub release page.
+
+## 0.3.0
+
+Release date: `2023-07-07`
+
+This release contains new features, bug fixes and documentation improvements.
+
+**Breaking Changes**
+- types: `Stylesheet.getDefaultVertexStyle` and `Stylesheet.getDefaultEdgeStyle` no longer return `undefined`.
+- remove the `CellMap` type. It was not used in the maxGraph code, which should have no impact.
+
+For more details, see the [0.3.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.3.0) on
+the GitHub release page.
+
+## 0.2.1
+
+Release date: `2023-06-08`
+
+This is a bug fix release.
+
+For more details, see the [0.2.1 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.2.1) on
+the GitHub release page.
+
+## 0.2.0
+
+Release date: `2023-05-22`
+
+This release contains bug fixes and documentation improvements.
+
+**Breaking Changes**:
+  - helper functions involving _style in the string form_ have been removed from `styleUtils`. Styles are defined using
+  the `CellStateStyle` and it is no longer necessary to process strings. For more details, see [PR #173](https://github.com/maxGraph/maxGraph/pull/173) and commit [5ecfda6](https://github.com/maxGraph/maxGraph/commit/5ecfda6b2b326c86597a3e3a6c4fb0548d3666b8).
+  - some types related to `CellStateStyle` have been renamed. For more details, see [PR #165](https://github.com/maxGraph/maxGraph/pull/165) and commit [ca1914b](https://github.com/maxGraph/maxGraph/commit/ca1914b5824eed253556df585337aa07d974e920).
+  - some properties of `CellStateStyle` have changed (removed or renamed). The renamed properties better match the former `mxGraph` properties. For more details, see [PR #165](https://github.com/maxGraph/maxGraph/pull/165) and commit [ca1914b](https://github.com/maxGraph/maxGraph/commit/ca1914b5824eed253556df585337aa07d974e920).
+
+For more details, see the [0.2.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.2.0) on
+the GitHub release page.
 
 ## 0.1.0
+
+Release date: `2022-11-22`
 
 Initial `mxGraph` implementation. This is an **alpha** version.
 

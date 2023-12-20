@@ -210,7 +210,7 @@ const SwimlaneMixin: PartialType = {
     const style = this.getCurrentCellStyle(swimlane, ignoreState);
     const size = style.startSize ?? DEFAULT_STARTSIZE;
 
-    if (style.horizontal === true) {
+    if (style.horizontal ?? true) {
       result.height = size;
     } else {
       result.width = size;
@@ -225,7 +225,7 @@ const SwimlaneMixin: PartialType = {
     const dir = style.direction ?? DIRECTION.EAST;
     const flipH = style.flipH;
     const flipV = style.flipV;
-    const h = style.horizontal;
+    const h = style.horizontal ?? true;
     let n = h ? 0 : 3;
 
     if (dir === DIRECTION.NORTH) {

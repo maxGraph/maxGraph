@@ -15,14 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, CylinderShape, constants, CellRenderer } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { Graph, CylinderShape, CellRenderer } from '@maxgraph/core';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Shapes/Shape',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -45,7 +47,7 @@ const Template = ({ label, ...args }) => {
 
     The code below defines the shape. The BoxShape function
     it the constructor which creates a new object instance.
-    
+
     The next lines use an CylinderShape instance to augment the
     prototype of the shape ("inheritance") and reset the
     constructor to the topmost function of the c'tor chain.

@@ -21,9 +21,6 @@ import MaxPopupMenu from '../gui/MaxPopupMenu';
 import { getTextContent } from '../util/domUtils';
 import Translations from '../util/Translations';
 import Editor from './Editor';
-import CodecRegistry from '../serialization/CodecRegistry';
-import ObjectCodec from '../serialization/ObjectCodec';
-import Codec from '../serialization/Codec';
 
 import { PopupMenuItem } from '../types';
 
@@ -324,42 +321,4 @@ export class EditorPopupMenu {
   }
 }
 
-/**
- * Custom codec for configuring <EditorPopupMenu>s. This class is created
- * and registered dynamically at load time and used implicitly via
- * <Codec> and the <CodecRegistry>. This codec only reads configuration
- * data for existing popup menus, it does not encode or create menus. Note
- * that this codec only passes the configuration node to the popup menu,
- * which uses the config to dynamically create menus. See
- * <EditorPopupMenu.createMenu>.
- */
-export class EditorPopupMenuCodec extends ObjectCodec {
-  constructor() {
-    super(new EditorPopupMenu());
-  }
-
-  /**
-   * Returns null.
-   */
-  encode(enc: Codec, obj: Element): Element | null {
-    return null;
-  }
-
-  /**
-   * Uses the given node as the config for <EditorPopupMenu>.
-   */
-  decode(dec: Codec, node: Element, into: any) {
-    const inc = node.getElementsByTagName('include')[0];
-
-    if (inc != null) {
-      this.processInclude(dec, inc, into);
-    } else if (into != null) {
-      into.config = node;
-    }
-
-    return into;
-  }
-}
-
-CodecRegistry.register(new EditorPopupMenuCodec());
 export default EditorPopupMenu;

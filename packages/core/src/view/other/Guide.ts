@@ -78,7 +78,7 @@ class Guide {
   tolerance = 2;
 
   /**
-   * Sets the {@link CellStates} that should be used for alignment.
+   * Sets the {@link CellState}s that should be used for alignment.
    */
   setStates(states: CellState[]) {
     this.states = states;
@@ -103,8 +103,8 @@ class Guide {
 
   /**
    * Returns the mxShape to be used for painting the respective guide. This
-   * implementation returns a new, dashed and crisp {@link Polyline} using
-   * {@link Constants#GUIDE_COLOR} and {@link Constants#GUIDE_STROKEWIDTH} as the format.
+   * implementation returns a new, dashed and crisp {@link PolylineShape} using
+   * {@link GUIDE_COLOR} and {@link GUIDE_STROKEWIDTH} as the format.
    *
    * @param horizontal Boolean that specifies which guide should be created.
    */

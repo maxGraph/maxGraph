@@ -395,15 +395,13 @@ const PanningMixin: PartialType = {
    *****************************************************************************/
 
   /**
-   * Specifies if panning should be enabled. This implementation updates
-   * {@link PanningHandler.panningEnabled} in {@link panningHandler}.
+   * Specifies if panning should be enabled. This implementation updates {@link PanningHandler.panningEnabled}.
    *
    * @param enabled Boolean indicating if panning should be enabled.
    */
   setPanning(enabled) {
     const panningHandler = this.getPlugin('PanningHandler') as PanningHandler;
-
-    if (panningHandler) panningHandler.panningEnabled = enabled;
+    panningHandler && (panningHandler.panningEnabled = enabled);
   },
 };
 

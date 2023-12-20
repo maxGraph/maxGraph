@@ -18,18 +18,20 @@ limitations under the License.
 import {
   Graph,
   KeyHandler,
-  mathUtils,
+  styleUtils,
   domUtils,
   cloneUtils,
   eventUtils,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Editing/Editing',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -94,7 +96,7 @@ const Template = ({ label, ...args }) => {
       // a mouse event
       if (evt != null) {
         // Finds the relative coordinates inside the cell
-        const point = mathUtils.convertPoint(
+        const point = styleUtils.convertPoint(
           this.container,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)

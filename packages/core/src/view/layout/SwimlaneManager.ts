@@ -207,18 +207,13 @@ class SwimlaneManager extends EventSource {
    */
   cellsAdded(cells: Cell[]) {
     if (cells.length > 0) {
-      const model = this.graph.getDataModel();
-
-      model.beginUpdate();
-      try {
+      this.graph.batchUpdate(() => {
         for (const cell of cells) {
           if (!this.isSwimlaneIgnored(cell)) {
             this.swimlaneAdded(cell);
           }
         }
-      } finally {
-        model.endUpdate();
-      }
+      });
     }
   }
 
@@ -260,10 +255,7 @@ class SwimlaneManager extends EventSource {
    */
   cellsResized(cells: Cell[]) {
     if (cells.length > 0) {
-      const model = this.getGraph().getDataModel();
-
-      model.beginUpdate();
-      try {
+      this.graph.batchUpdate(() => {
         // Finds the top-level swimlanes and adds offsets
         for (const cell of cells) {
           if (!this.isSwimlaneIgnored(cell)) {
@@ -291,9 +283,7 @@ class SwimlaneManager extends EventSource {
             }
           }
         }
-      } finally {
-        model.endUpdate();
-      }
+      });
     }
   }
 
@@ -307,8 +297,7 @@ class SwimlaneManager extends EventSource {
   resizeSwimlane(swimlane: Cell, w: number, h: number, parentHorizontal: boolean) {
     const model = this.graph.getDataModel();
 
-    model.beginUpdate();
-    try {
+    model.batchUpdate(() => {
       const horizontal = this.isCellHorizontal(swimlane);
 
       if (!this.isSwimlaneIgnored(swimlane)) {
@@ -344,9 +333,7 @@ class SwimlaneManager extends EventSource {
         const child = swimlane.getChildAt(i);
         this.resizeSwimlane(child, w, h, horizontal);
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 
   /**

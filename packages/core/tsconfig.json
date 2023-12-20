@@ -3,20 +3,17 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "declarationDir": "./dist/types",
     "declarationMap": false,
-    "emitDeclarationOnly": true,
-    "outDir": "./dist/esm",
+    "emitDeclarationOnly": false,
+    "outDir": "./dist",
     "strict": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*.ts"],
   "typedocOptions": {
-    "out": "../../docs/api",
+    "out": "build/api",
     "readme": "none",
-    "includes": "./src/index.ts",
-    "exclude": [],
     "excludeExternals": true,
     "excludePrivate": true
   }

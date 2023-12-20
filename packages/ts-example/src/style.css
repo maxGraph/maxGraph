@@ -40,12 +40,8 @@ footer {
   overflow: hidden;
 }
 
-/* For rubber band selection as we don't have access to the maxGraph CSS files in the project */
+/* For rubber band selection, override maxGraph defaults */
 div.mxRubberband {
-  position: absolute;
-  overflow: hidden;
-  border-style: solid;
-  border-width: 2px;
   border-color: #b18426;
   background: #db9b0b;
 }

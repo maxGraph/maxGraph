@@ -262,14 +262,14 @@ export const VERTEX_SELECTION_DASHED = true;
 export const EDGE_SELECTION_DASHED = true;
 
 /**
- * Defines the color to be used for the guidelines in mxGraphHandler.
- * Default is #FF0000.
+ * Defines the color to be used for the guidelines in `Guide`.
+ * @default #FF0000.
  */
 export const GUIDE_COLOR = '#FF0000';
 
 /**
- * Defines the strokewidth to be used for the guidelines in mxGraphHandler.
- * Default is 1.
+ * Defines the strokewidth to be used for the guidelines in `Guide`.
+ * @default 1.
  */
 export const GUIDE_STROKEWIDTH = 1;
 
@@ -399,20 +399,21 @@ export const DEFAULT_MARKERSIZE = 6;
 export const DEFAULT_IMAGESIZE = 24;
 
 /**
- * Defines the length of the horizontal segment of an Entity Relation.
- * This can be overridden using <'segment'> style.
- * Default is 30.
+ * Defines the length of the horizontal segment of an `Entity Relation`.
+ * This can be overridden using {@link CellStateStyle.segment} style.
  */
 export const ENTITY_SEGMENT = 30;
 
 /**
- * Defines the rounding factor for rounded rectangles in percent between
- * 0 and 1. Values should be smaller than 0.5. Default is 0.15.
+ * Defines the default rounding factor for the rounded vertices in percent between
+ * `0` and `1`. Values should be smaller than `0.5`.
+ * See {@link CellStateStyle.arcSize}.
  */
 export const RECTANGLE_ROUNDING_FACTOR = 0.15;
 
 /**
- * Defines the size of the arcs for rounded edges. Default is 20.
+ * Defines the default size in pixels of the arcs for the rounded edges.
+ * See {@link CellStateStyle.arcSize}.
  */
 export const LINE_ARCSIZE = 20;
 
@@ -467,7 +468,7 @@ export const NONE = 'none';
  *
  * - FONT_UNDERLINE: Constant for underlined fonts. Default is 4.
  *
- * - FONT_STRIKETHROUGH: Constant for strikthrough fonts. Default is 8.
+ * - FONT_STRIKETHROUGH: Constant for strikethrough fonts. Default is 8.
  */
 export const enum FONT {
   BOLD = 1,
@@ -597,6 +598,7 @@ export const enum EDGESTYLE {
   TOPTOBOTTOM = 'topToBottomEdgeStyle',
   ORTHOGONAL = 'orthogonalEdgeStyle',
   SEGMENT = 'segmentEdgeStyle',
+  MANHATTAN = 'manhattanEdgeStyle',
 }
 
 /**

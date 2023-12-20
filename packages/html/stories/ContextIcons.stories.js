@@ -20,21 +20,29 @@ import {
   InternalEvent,
   RubberBandHandler,
   eventUtils,
-  mathUtils,
+  styleUtils,
   domUtils,
   VertexHandler,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Icon_Images/ContextIcons',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
@@ -131,7 +139,7 @@ const Template = ({ label, ...args }) => {
       img.style.height = '16px';
 
       InternalEvent.addGestureListeners(img, (evt) => {
-        const pt = mathUtils.convertPoint(
+        const pt = styleUtils.convertPoint(
           this.graph.container,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)

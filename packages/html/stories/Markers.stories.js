@@ -25,13 +25,15 @@ import {
   ArrowShape,
   Point,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Icon_Images/Markers',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -135,15 +137,14 @@ const Template = ({ label, ...args }) => {
   style.fillColor = '#FFFFFF';
   style.strokeColor = '#000000';
   style.fontColor = '#000000';
-  style.fontStyle = '1';
+  style.fontStyle = 1;
 
   style = graph.getStylesheet().getDefaultEdgeStyle();
   style.strokeColor = '#000000';
   style.fontColor = '#000000';
-  style.fontStyle = '0';
-  style.fontStyle = '0';
-  style.startSize = '8';
-  style.endSize = '8';
+  style.fontStyle = 0;
+  style.startSize = 8;
+  style.endSize = 8;
 
   // Populates the graph
   const parent = graph.getDefaultParent();
@@ -156,8 +157,8 @@ const Template = ({ label, ...args }) => {
       startArrow: 'oval',
       endArrow: 'block',
       sourcePerimeterSpacing: 4,
-      startFill: 0,
-      endFill: 0,
+      startFill: false,
+      endFill: false,
     });
     const e11 = graph.insertVertex(e1, null, 'Label', 0, 0, 20, 14, {
       shape: 'message',

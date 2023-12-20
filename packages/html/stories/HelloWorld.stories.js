@@ -16,21 +16,28 @@ limitations under the License.
 */
 
 import { Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import {
+  contextMenuTypes,
+  contextMenuValues,
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Basic/HelloWorld',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...contextMenuValues,
+    ...rubberBandValues,
   },
 };
 

@@ -16,13 +16,15 @@ limitations under the License.
 */
 
 import { Graph, DomHelpers } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Zoom_OffPage/LoD',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 

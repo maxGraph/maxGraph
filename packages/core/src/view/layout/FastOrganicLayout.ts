@@ -170,7 +170,6 @@ class MxFastOrganicLayout extends GraphLayout {
    * given parent where <isVertexIgnored> returns false.
    */
   execute(parent: Cell) {
-    const model = this.graph.getDataModel();
     this.vertexArray = [];
     let cells = this.graph.getChildVertices(parent);
 
@@ -230,8 +229,7 @@ class MxFastOrganicLayout extends GraphLayout {
 
     // Moves cell location back to top-left from center locations used in
     // algorithm, resetting the edge points is part of the transaction
-    model.beginUpdate();
-    try {
+    this.graph.batchUpdate(() => {
       for (let i = 0; i < n; i += 1) {
         this.dispX[i] = 0;
         this.dispY[i] = 0;
@@ -341,9 +339,7 @@ class MxFastOrganicLayout extends GraphLayout {
       }
 
       this.graph.moveCells(this.vertexArray, dx, dy);
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 
   /**

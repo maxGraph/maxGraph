@@ -15,24 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Graph, RubberBandHandler, RadialTreeLayout, Perimeter } from '@maxgraph/core';
 import {
-  Graph,
-  RubberBandHandler,
-  constants,
-  RadialTreeLayout,
-  Perimeter,
-} from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Layouts/RadialTreeLayout',
   argTypes: {
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 

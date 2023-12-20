@@ -55,7 +55,7 @@ class CylinderShape extends Shape {
     this.redrawPath(c, x, y, w, h, false);
     c.fillAndStroke();
 
-    if (!this.outline || !this.style || this.style.backgroundOutline === 0) {
+    if (!this.outline || !this.style || !(this.style.backgroundOutline ?? false)) {
       c.setShadow(false);
       c.begin();
       this.redrawPath(c, x, y, w, h, true);

@@ -24,16 +24,28 @@ import {
   RubberBandHandler,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  contextMenuTypes,
+  contextMenuValues,
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Misc/Guides',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...contextMenuValues,
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
@@ -67,8 +79,7 @@ const Template = ({ label, ...args }) => {
 
   // Enables guides
   const selectionHandler = graph.getPlugin('SelectionHandler');
-  if (selectionHandler)
-    selectionHandler.guidesEnabled = true;
+  if (selectionHandler) selectionHandler.guidesEnabled = true;
 
   // Changes the default style for edges "in-place" and assigns
   // an alternate edge style which is applied in Graph.flip

@@ -15,14 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, Perimeter, constants, EdgeStyle } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { Graph, Perimeter, Point } from '@maxgraph/core';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Styles/Stylesheet',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -41,8 +43,7 @@ const Template = ({ label, ...args }) => {
   // Disables basic selection and cell handling
   graph.setEnabled(false);
 
-  // Returns a special label for edges. Note: This does
-  // a supercall to use the default implementation.
+  // Returns a special label for edges. Note: This does a super call to use the default implementation.
   graph.getLabel = function (cell) {
     const label = Graph.prototype.getLabel.apply(this, arguments);
 
@@ -56,9 +57,7 @@ const Template = ({ label, ...args }) => {
   graph.setTooltips(true);
   graph.getTooltip = function (state) {
     const { cell } = state;
-    const model = this.getDataModel();
-
-    if (modcellel.isEdge()) {
+    if (cell.isEdge()) {
       const source = this.getLabel(cell.getTerminal(true));
       const target = this.getLabel(cell.getTerminal(false));
 
@@ -68,30 +67,49 @@ const Template = ({ label, ...args }) => {
   };
 
   // Creates the default style for vertices
-  let style = [];
-  style.shape = constants.SHAPE.RECTANGLE;
-  style.perimiter = Perimeter.RectanglePerimeter;
-  style.strokeColor = 'gray';
-  style.rounded = true;
-  style.fillColor = '#EEEEEE';
-  style.gradientColor = 'white';
-  style.fontColor = '#774400';
-  style.align = constants.ALIGN.CENTER;
-  style.verticalAlign = constants.ALIGN.MIDDLE;
-  style.fontSize = '12';
-  style.fontStyle = 1;
-  graph.getStylesheet().putDefaultVertexStyle(style);
+  /** @type {import('@maxgraph/core').CellStyle} */
+  const defaultVertexStyle = {
+    align: 'center',
+    fillColor: '#EEEEEE',
+    fontColor: '#774400',
+    fontSize: 12,
+    fontStyle: 1,
+    gradientColor: 'white',
+    perimeter: Perimeter.RectanglePerimeter,
+    rounded: true,
+    shape: 'rectangle',
+    strokeColor: 'gray',
+    verticalAlign: 'middle',
+  };
+  graph.getStylesheet().putDefaultVertexStyle(defaultVertexStyle);
 
   // Creates the default style for edges
-  style = [];
-  style.shape = constants.SHAPE.CONNECTOR;
-  style.strokeColor = '#6482B9';
-  style.align = constants.ALIGN.CENTER;
-  style.verticalAlign = constants.ALIGN.MIDDLE;
-  style.edge = EdgeStyle.ElbowConnector;
-  style.endArrow = constants.ARROW.CLASSIC;
-  style.fontSize = '10';
-  graph.getStylesheet().putDefaultEdgeStyle(style);
+  /** @type {import('@maxgraph/core').CellStyle} */
+  const defaultEdgeStyle = {
+    align: 'center',
+    edgeStyle: 'elbowEdgeStyle',
+    endArrow: 'classic',
+    fontSize: 10,
+    shape: 'connector',
+    strokeColor: '#6482B9',
+    verticalAlign: 'middle',
+  };
+  graph.getStylesheet().putDefaultEdgeStyle(defaultEdgeStyle);
+
+  // Additional styles
+  const redColor = '#f10d0d';
+  /** @type {import('@maxgraph/core').CellStyle} */
+  const edgeImportantStyle = {
+    fontColor: redColor,
+    fontSize: 14,
+    fontStyle: 3,
+    strokeColor: redColor,
+  };
+  graph.getStylesheet().putCellStyle('importantEdge', edgeImportantStyle);
+
+  /** @type {import('@maxgraph/core').CellStyle} */
+  const shapeImportantStyle = { strokeColor: redColor };
+  graph.getStylesheet().putCellStyle('importantShape', shapeImportantStyle);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
@@ -99,21 +117,33 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(parent, null, 'Interval 1', 20, 20, 180, 30);
+    const v1 = graph.insertVertex({
+      parent,
+      value: 'Interval 1',
+      position: [20, 20],
+      size: [180, 30],
+      style: { baseStyleNames: ['importantShape'] },
+    });
     const v2 = graph.insertVertex(parent, null, 'Interval 2', 140, 80, 280, 30);
     const v3 = graph.insertVertex(parent, null, 'Interval 3', 200, 140, 360, 30);
     const v4 = graph.insertVertex(parent, null, 'Interval 4', 480, 200, 120, 30);
     const v5 = graph.insertVertex(parent, null, 'Interval 5', 60, 260, 400, 30);
     const e1 = graph.insertEdge(parent, null, '1', v1, v2);
-    e1.getGeometry().points = [{ x: 160, y: 60 }];
-    const e2 = graph.insertEdge(parent, null, '2', v1, v5);
-    e2.getGeometry().points = [{ x: 80, y: 60 }];
+    e1.getGeometry().points = [new Point(160, 60)];
+    const e2 = graph.insertEdge({
+      parent,
+      value: '2',
+      source: v1,
+      target: v5,
+      style: { baseStyleNames: ['importantEdge'] },
+    });
+    e2.getGeometry().points = [new Point(80, 60)];
     const e3 = graph.insertEdge(parent, null, '3', v2, v3);
-    e3.getGeometry().points = [{ x: 280, y: 120 }];
+    e3.getGeometry().points = [new Point(280, 120)];
     const e4 = graph.insertEdge(parent, null, '4', v3, v4);
-    e4.getGeometry().points = [{ x: 500, y: 180 }];
+    e4.getGeometry().points = [new Point(500, 180)];
     const e5 = graph.insertEdge(parent, null, '5', v3, v5);
-    e5.getGeometry().points = [{ x: 380, y: 180 }];
+    e5.getGeometry().points = [new Point(380, 180)];
   });
 
   return container;

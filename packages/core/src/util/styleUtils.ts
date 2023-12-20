@@ -56,14 +56,12 @@ export const removeCursors = (element: HTMLElement) => {
 };
 
 /**
- * Function: getCurrentStyle
- *
  * Returns the current style of the specified element.
  *
  * @param element DOM node whose current style should be returned.
  */
 export const getCurrentStyle = (element: HTMLElement) => {
-  return element ? window.getComputedStyle(element, '') : null;
+  return !element || element.toString() === '[object ShadowRoot]' ? null : window.getComputedStyle(element, '');
 };
 
 /**
@@ -316,118 +314,6 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
 };
 
 /**
- * Returns the stylename in a style of the form [(stylename|key=value);] or
- * an empty string if the given style does not contain a stylename.
- *
- * @param style String of the form [(stylename|key=value);].
- */
-export const getStylename = (style: string) => {
-  const pairs = style.split(';');
-  const stylename = pairs[0];
-
-  if (stylename.indexOf('=') < 0) {
-    return stylename;
-  }
-
-  return '';
-};
-
-/**
- * Returns the stylenames in a style of the form [(stylename|key=value);]
- * or an empty array if the given style does not contain any stylenames.
- *
- * @param style String of the form [(stylename|key=value);].
- */
-export const getStylenames = (style: string) => {
-  const result = [];
-
-  const pairs = style.split(';');
-
-  for (let i = 0; i < pairs.length; i += 1) {
-    if (pairs[i].indexOf('=') < 0) {
-      result.push(pairs[i]);
-    }
-  }
-
-  return result;
-};
-
-/**
- * Returns the index of the given stylename in the given style. This
- * returns -1 if the given stylename does not occur (as a stylename) in the
- * given style, otherwise it returns the index of the first character.
- */
-export const indexOfStylename = (style: string, stylename: string) => {
-  const tokens = style.split(';');
-  let pos = 0;
-
-  for (let i = 0; i < tokens.length; i += 1) {
-    if (tokens[i] == stylename) {
-      return pos;
-    }
-
-    pos += tokens[i].length + 1;
-  }
-
-  return -1;
-};
-
-/**
- * Adds the specified stylename to the given style if it does not already
- * contain the stylename.
- */
-export const addStylename = (style: string, stylename: string) => {
-  if (indexOfStylename(style, stylename) < 0) {
-    if (style == null) {
-      style = '';
-    } else if (style.length > 0 && style.charAt(style.length - 1) != ';') {
-      style += ';';
-    }
-
-    style += stylename;
-  }
-
-  return style;
-};
-
-/**
- * Removes all occurrences of the specified stylename in the given style
- * and returns the updated style. Trailing semicolons are not preserved.
- */
-export const removeStylename = (style: string, stylename: string) => {
-  const result = [];
-
-  const tokens = style.split(';');
-
-  for (let i = 0; i < tokens.length; i += 1) {
-    if (tokens[i] != stylename) {
-      result.push(tokens[i]);
-    }
-  }
-
-  return result.join(';');
-};
-
-/**
- * Removes all stylenames from the given style and returns the updated
- * style.
- */
-export const removeAllStylenames = (style: string) => {
-  const result = [];
-
-  const tokens = style.split(';');
-
-  for (let i = 0; i < tokens.length; i += 1) {
-    // Keeps the key, value assignments
-    if (tokens[i].indexOf('=') >= 0) {
-      result.push(tokens[i]);
-    }
-  }
-
-  return result.join(';');
-};
-
-/**
  * Assigns the value for the given key in the styles of the given cells, or
  * removes the key from the styles if the value is null.
  *
@@ -443,8 +329,7 @@ export const setCellStyles = (
   value: any
 ) => {
   if (cells.length > 0) {
-    model.beginUpdate();
-    try {
+    model.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
         const cell = cells[i];
 
@@ -455,59 +340,8 @@ export const setCellStyles = (
           model.setStyle(cell, style);
         }
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
-};
-
-/**
- * Adds or removes the given key, value pair to the style and returns the
- * new style. If value is null or zero length then the key is removed from
- * the style. This is for cell styles, not for CSS styles.
- *
- * @param style String of the form [(stylename|key=value);].
- * @param key Key of the style to be changed.
- * @param value New value for the given key.
- */
-export const setStyle = (style: string | null, key: string, value: any) => {
-  const isValue =
-    value != null && (typeof value.length === 'undefined' || value.length > 0);
-
-  if (style == null || style.length == 0) {
-    if (isValue) {
-      style = `${key}=${value};`;
-    }
-  } else if (style.substring(0, key.length + 1) == `${key}=`) {
-    const next = style.indexOf(';');
-
-    if (isValue) {
-      style = `${key}=${value}${next < 0 ? ';' : style.substring(next)}`;
-    } else {
-      style = next < 0 || next == style.length - 1 ? '' : style.substring(next + 1);
-    }
-  } else {
-    const index = style.indexOf(`;${key}=`);
-
-    if (index < 0) {
-      if (isValue) {
-        const sep = style.charAt(style.length - 1) == ';' ? '' : ';';
-        style = `${style + sep + key}=${value};`;
-      }
-    } else {
-      const next = style.indexOf(';', index + 1);
-
-      if (isValue) {
-        style = `${style.substring(0, index + 1) + key}=${value}${
-          next < 0 ? ';' : style.substring(next)
-        }`;
-      } else {
-        style = style.substring(0, index) + (next < 0 ? ';' : style.substring(next));
-      }
-    }
-  }
-
-  return style;
 };
 
 /**
@@ -540,8 +374,7 @@ export const setCellStyleFlags = (
   value: boolean
 ) => {
   if (cells.length > 0) {
-    model.beginUpdate();
-    try {
+    model.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
         const cell = cells[i];
 
@@ -550,9 +383,7 @@ export const setCellStyleFlags = (
           model.setStyle(cell, style);
         }
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 };
 
@@ -560,7 +391,7 @@ export const setCellStyleFlags = (
  * Sets or removes the given key from the specified style and returns the
  * new style. If value is null then the flag is toggled.
  *
- * @param style String of the form [(stylename|key=value);].
+ * @param style The style of the Cell.
  * @param key Key of the style to be changed.
  * @param flag Integer for the bit to be changed.
  * @param value Optional boolean value for the given flag.
@@ -596,6 +427,16 @@ export const setStyleFlag = (
  */
 export const setOpacity = (node: HTMLElement | SVGElement, value: number) => {
   node.style.opacity = String(value / 100);
+};
+
+/**
+ * @param value the value to check.
+ * @param mask the binary mask to apply.
+ * @returns `true` if the value matches the binary mask.
+ * @private Subject to change prior being part of the public API.
+ */
+export const matchBinaryMask = (value: number, mask: number) => {
+  return (value & mask) === mask;
 };
 
 /**
@@ -635,27 +476,13 @@ export const getSizeForString = (
 
   // Sets the font style
   if (fontStyle !== null) {
-    if ((fontStyle & FONT.BOLD) === FONT.BOLD) {
-      div.style.fontWeight = 'bold';
-    }
-
-    if ((fontStyle & FONT.ITALIC) === FONT.ITALIC) {
-      div.style.fontStyle = 'italic';
-    }
+    matchBinaryMask(fontStyle, FONT.BOLD) && (div.style.fontWeight = 'bold');
+    matchBinaryMask(fontStyle, FONT.ITALIC) && (div.style.fontWeight = 'italic');
 
     const txtDecor = [];
-
-    if ((fontStyle & FONT.UNDERLINE) == FONT.UNDERLINE) {
-      txtDecor.push('underline');
-    }
-
-    if ((fontStyle & FONT.STRIKETHROUGH) == FONT.STRIKETHROUGH) {
-      txtDecor.push('line-through');
-    }
-
-    if (txtDecor.length > 0) {
-      div.style.textDecoration = txtDecor.join(' ');
-    }
+    matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+    txtDecor.length > 0 && (div.style.textDecoration = txtDecor.join(' '));
   }
 
   // Disables block layout and outside wrapping and hides the div

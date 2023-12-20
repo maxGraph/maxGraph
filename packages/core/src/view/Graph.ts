@@ -35,7 +35,7 @@ import Point from './geometry/Point';
 import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
 import Cell from './cell/Cell';
 import GraphDataModel from './GraphDataModel';
-import Stylesheet from './style/Stylesheet';
+import { Stylesheet } from './style/Stylesheet';
 import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants';
 
 import ChildChange from './undoable_changes/ChildChange';
@@ -51,9 +51,6 @@ import EdgeHandler from './handler/EdgeHandler';
 import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
-
-import CodecRegistry from '../serialization/CodecRegistry';
-import ObjectCodec from '../serialization/ObjectCodec';
 
 import type {
   GraphPlugin,
@@ -75,21 +72,19 @@ export const defaultPlugins: GraphPluginConstructor[] = [
 ];
 
 /**
- * Extends {@link EventSource} to implement a graph component for
- * the browser. This is the main class of the package. To activate
- * panning and connections use {@link setPanning} and {@link setConnectable}.
- * For rubberband selection you must create a new instance of
- * {@link rubberband}. The following listeners are added to
- * {@link mouseListeners} by default:
+ * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
+ *
+ * To activate panning and connections use {@link setPanning} and {@link setConnectable}.
+ * For rubberband selection you must create a new instance of {@link rubberband}.
+ *
+ * The following listeners are added to {@link mouseListeners} by default:
  *
  * - tooltipHandler: {@link TooltipHandler} that displays tooltips
  * - panningHandler: {@link PanningHandler} for panning and popup menus
  * - connectionHandler: {@link ConnectionHandler} for creating connections
- * - graphHandler: {@link SelectionHandler} for moving and cloning cells
+ * - selectionHandler: {@link SelectionHandler} for moving and cloning cells
  *
  * These listeners will be called in the above order if they are enabled.
- * @class graph
- * @extends {EventSource}
  */
 class Graph extends EventSource {
   container: HTMLElement;
@@ -363,7 +358,7 @@ class Graph extends EventSource {
 
   /**
    * {@link EdgeStyle} to be used for loops. This is a fallback for loops if the
-   * {@link mxConstants.STYLE_LOOP} is undefined.
+   * {@link CellStateStyle.loopStyle} is `undefined`.
    * @default {@link EdgeStyle.Loop}
    */
   defaultLoopStyle = EdgeStyle.Loop;
@@ -570,14 +565,15 @@ class Graph extends EventSource {
 
   getContainsValidationErrorsResource = () => this.containsValidationErrorsResource;
 
-  // TODO: Document me!!
-  batchUpdate(fn: Function) {
-    this.getDataModel().beginUpdate();
-    try {
-      fn();
-    } finally {
-      this.getDataModel().endUpdate();
-    }
+  /**
+   * Updates the model in a transaction.
+   *
+   * @param fn the update to be performed in the transaction.
+   *
+   * @see {@link GraphDataModel.batchUpdate}
+   */
+  batchUpdate(fn: () => void) {
+    this.getDataModel().batchUpdate(fn);
   }
 
   /**
@@ -657,8 +653,9 @@ class Graph extends EventSource {
       this.view.invalidate(change.child, true, true);
 
       if (
-        newParent &&
-        (!this.getDataModel().contains(newParent) || newParent.isCollapsed())
+        !newParent ||
+        !this.getDataModel().contains(newParent) ||
+        newParent.isCollapsed()
       ) {
         this.view.invalidate(change.child, true, true);
         this.removeStateForCell(change.child);
@@ -790,7 +787,11 @@ class Graph extends EventSource {
           }
         }
       }
-    } else if (this.isAllowAutoPanning() && !panningHandler.isActive()) {
+    } else if (
+      this.isAllowAutoPanning() &&
+      panningHandler &&
+      !panningHandler.isActive()
+    ) {
       panningHandler.getPanningManager().panTo(x + this.getPanDx(), y + this.getPanDy());
     }
   }

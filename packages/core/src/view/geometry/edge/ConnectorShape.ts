@@ -22,7 +22,7 @@ import MarkerShape from './MarkerShape';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Rectangle from '../Rectangle';
-import { ArrowType, ColorValue } from '../../../types';
+import { ArrowValue, ColorValue } from '../../../types';
 
 /**
  * Extends {@link mxShape} to implement a connector shape.
@@ -80,8 +80,7 @@ class ConnectorShape extends PolylineShape {
 
     let result = null;
     const n = pts.length;
-    const type: ArrowType | typeof NONE =
-      (source ? this.style.startArrow : this.style.endArrow) || NONE;
+    const type = (source ? this.style.startArrow : this.style.endArrow) || NONE;
 
     let p0 = source ? pts[1] : pts[n - 2];
     const pe = source ? pts[0] : pts[n - 1];
@@ -113,7 +112,7 @@ class ConnectorShape extends PolylineShape {
 
       // Allow for stroke width in the end point used and the
       // orthogonal vectors describing the direction of the marker
-      const filled = !(source ? this.style.startFill : this.style.endFill);
+      const filled = (source ? this.style.startFill : this.style.endFill) ?? true;
 
       result = MarkerShape.createMarker(
         c,

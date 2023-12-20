@@ -16,30 +16,34 @@ limitations under the License.
 */
 
 import {
-  Editor,
   ConnectionHandler,
   ImageBox,
   Perimeter,
   Point,
   constants,
   cloneUtils,
-  EdgeStyle,
   InternalEvent,
   SwimlaneManager,
   StackLayout,
   LayoutManager,
+  Graph,
+  Client,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Layouts/SwimLanes',
   argTypes: {
     ...globalTypes,
   },
+  args: {
+    ...globalValues,
+  },
 };
 
 const Template = ({ label, ...args }) => {
+  Client.setImageBasePath('/images');
+
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'hidden';
@@ -47,6 +51,8 @@ const Template = ({ label, ...args }) => {
   container.style.height = `${args.height}px`;
   container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
+
+  InternalEvent.disableContextMenu(container);
 
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
@@ -59,9 +65,10 @@ const Template = ({ label, ...args }) => {
   //   .load('editors/config/keyhandler-commons.xml')
   //   .getDocumentElement();
   // const editor = new Editor(config);
-  const editor = new Editor(null);
-  editor.setGraphContainer(container);
-  const { graph } = editor;
+  // const editor = new Editor(null);
+  // editor.setGraphContainer(container);
+  // const { graph } = editor;
+  const graph = new Graph(container);
   const model = graph.getDataModel();
 
   // Auto-resizes the container
@@ -83,6 +90,7 @@ const Template = ({ label, ...args }) => {
   style.fontColor = 'black';
   style.strokeColor = 'black';
   // delete style.fillColor;
+  style.foldable = true;
 
   style = cloneUtils.clone(style);
   style.shape = constants.SHAPE.RECTANGLE;
@@ -118,7 +126,7 @@ const Template = ({ label, ...args }) => {
   graph.getStylesheet().putCellStyle('end', style);
 
   style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = constants.EDGESTYLE.ELBOW;
   style.endArrow = constants.ARROW.BLOCK;
   style.rounded = true;
   style.fontColor = 'black';
@@ -132,7 +140,7 @@ const Template = ({ label, ...args }) => {
 
   // Installs double click on middle control point and
   // changes style of edges between empty and this value
-  graph.alternateEdgeStyle = 'elbow=vertical';
+  graph.alternateEdgeStyle = { elbow: 'vertical' };
 
   // Adds automatic layout and various switches if the
   // graph is enabled
@@ -147,10 +155,8 @@ const Template = ({ label, ...args }) => {
     graph.isValidSource = function (cell) {
       if (previousIsValidSource.apply(this, arguments)) {
         const style = cell.getStyle();
-
-        return style == null || !(style == 'end' || style.indexOf('end') == 0);
+        return style == null || !style.baseStyleNames.includes('end');
       }
-
       return false;
     };
 
@@ -162,11 +168,10 @@ const Template = ({ label, ...args }) => {
     // style below
     graph.isValidTarget = function (cell) {
       const style = cell.getStyle();
-
       return (
         !cell.isEdge() &&
         !this.isSwimlane(cell) &&
-        (style == null || !(style == 'state' || style.indexOf('state') == 0))
+        (style == null || !!style.baseStyleNames.includes('state'))
       );
     };
 
@@ -234,7 +239,7 @@ const Template = ({ label, ...args }) => {
     let style = {};
 
     if (this.isCollapsed()) {
-      style.horizontal = 1;
+      style.horizontal = true;
       style.align = 'left';
       style.spacingLeft = 14;
     }
@@ -282,13 +287,15 @@ const Template = ({ label, ...args }) => {
 
   const insertVertex = (options) => {
     const v = graph.insertVertex(options);
-    v.getStyle = getStyle;
+    // TODO find a way to restore
+    // v.getStyle = getStyle;
     return v;
   };
 
   const insertEdge = (options) => {
     const e = graph.insertEdge(options);
-    e.getStyle = getStyle;
+    // TODO find a way to restore
+    // e.getStyle = getStyle;
     return e;
   };
 

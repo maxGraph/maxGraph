@@ -86,13 +86,9 @@ class CircleLayout extends GraphLayout {
    * Implements {@link GraphLayout#execute}.
    */
   execute(parent: Cell) {
-    const model = this.graph.getDataModel();
-
     // Moves the vertices to build a circle. Makes sure the
     // radius is large enough for the vertices to not
     // overlap
-    model.beginUpdate();
-
     this.graph.batchUpdate(() => {
       // Gets all vertices inside the parent and finds
       // the maximum dimension of the largest vertex

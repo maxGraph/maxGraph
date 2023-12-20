@@ -233,12 +233,13 @@ class VertexHandler {
       this.selectionBorder.setCursor(CURSOR.MOVABLE_VERTEX);
     }
 
-    const graphHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
 
     // Adds the sizer handles
     if (
-      graphHandler.maxCells <= 0 ||
-      this.graph.getSelectionCount() < graphHandler.maxCells
+      selectionHandler &&
+      (selectionHandler.maxCells <= 0 ||
+        this.graph.getSelectionCount() < selectionHandler.maxCells)
     ) {
       const resizable = this.graph.isCellResizable(this.state.cell);
       this.sizers = [];
@@ -338,14 +339,17 @@ class VertexHandler {
    * Returns true if the rotation handle should be showing.
    */
   isRotationHandleVisible() {
-    const graphHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandlerCheck = selectionHandler
+      ? selectionHandler.maxCells <= 0 ||
+        this.graph.getSelectionCount() < selectionHandler.maxCells
+      : true;
 
     return (
       this.graph.isEnabled() &&
       this.rotationEnabled &&
       this.graph.isCellRotatable(this.state.cell) &&
-      (graphHandler.maxCells <= 0 ||
-        this.graph.getSelectionCount() < graphHandler.maxCells)
+      selectionHandlerCheck
     );
   }
 
@@ -724,8 +728,7 @@ class VertexHandler {
         ) as SelectionCellsHandler;
 
         for (let i = 0; i < edges.length; i += 1) {
-          const handler = selectionCellsHandler.getHandler(edges[i]);
-
+          const handler = selectionCellsHandler?.getHandler(edges[i]);
           if (handler) {
             this.edgeHandlers.push(handler as EdgeHandler);
           }
@@ -805,7 +808,6 @@ class VertexHandler {
   /**
    * Hook for rounding the angle. This uses Math.round.
    */
-  // roundAngle(angle: number): number;
   roundAngle(angle: number) {
     return Math.round(angle * 10) / 10;
   }
@@ -883,7 +885,7 @@ class VertexHandler {
   }
 
   /**
-   * Rotates the vertex.
+   * Moves the vertex.
    */
   moveLabel(me: InternalMouseEvent) {
     const point = new Point(me.getGraphX(), me.getGraphY());
@@ -944,7 +946,7 @@ class VertexHandler {
   }
 
   /**
-   * Rotates the vertex.
+   * Resizes the vertex.
    */
   resizeVertex(me: InternalMouseEvent) {
     const ct = new Point(this.state.getCenterX(), this.state.getCenterY());
@@ -1275,7 +1277,9 @@ class VertexHandler {
   }
 
   /**
-   * Rotates the given cell to the given rotation.
+   * Returns the `recursiveResize` status of the given state.
+   * @param state the given {@link CellState}. This implementation takes the value of this state.
+   * @param me the mouse event.
    */
   isRecursiveResize(state: CellState, me: InternalMouseEvent) {
     return this.graph.isRecursiveResize(this.state);
@@ -1984,7 +1988,6 @@ class VertexHandler {
   /**
    * Redraws the preview.
    */
-  // drawPreview(): void;
   drawPreview() {
     if (this.preview != null) {
       this.preview.bounds = this.bounds;

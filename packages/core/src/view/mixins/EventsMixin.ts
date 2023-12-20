@@ -589,7 +589,7 @@ const EventsMixin: PartialType = {
 
     if (mxe.isConsumed()) {
       // Resets the state of the panning handler
-      panningHandler.panningTrigger = false;
+      panningHandler && (panningHandler.panningTrigger = false);
     }
 
     // Handles the event if it has not been consumed
@@ -597,6 +597,7 @@ const EventsMixin: PartialType = {
       this.isEnabled() &&
       !isConsumed(evt) &&
       !mxe.isConsumed() &&
+      connectionHandler &&
       connectionHandler.isEnabled()
     ) {
       const cell = connectionHandler.marker.getCell(me);
@@ -1057,13 +1058,13 @@ const EventsMixin: PartialType = {
           Math.abs(this.initialTouchY - me.getGraphY()) < this.tolerance;
       }
 
-      const cellEditor = this.getPlugin('CellEditorHandler') as CellEditorHandler;
+      const cellEditorHandler = this.getPlugin('CellEditorHandler') as CellEditorHandler;
 
-      // Stops editing for all events other than from cellEditor
+      // Stops editing for all events other than from cellEditorHandler
       if (
         evtName === InternalEvent.MOUSE_DOWN &&
         this.isEditing() &&
-        !cellEditor.isEventSource(me.getEvent())
+        !cellEditorHandler?.isEventSource(me.getEvent())
       ) {
         this.stopEditing(!this.isInvokesStopCellEditing());
       }

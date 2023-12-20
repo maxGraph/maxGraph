@@ -1,0 +1,35 @@
+name: Generate website
+
+on:
+  pull_request:
+    branches:
+      - development
+    paths:
+      - '.github/actions/build-setup/**/*'
+      - '.github/workflows/generate-website.yml'
+      - '.nvmrc'
+      - 'packages/core/**/*'
+      - 'packages/website/**/*'
+      - '!packages/website/README.md'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Setup
+        uses: ./.github/actions/build-setup
+      - name: Build @maxgraph/core API docs
+        run: npm run docs:api -w packages/core
+      - name: Build website
+        run: npm run build -w packages/website
+      - name: Upload website artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-${{github.sha}}
+          path: |
+            packages/core/build/api/
+            packages/website/build/

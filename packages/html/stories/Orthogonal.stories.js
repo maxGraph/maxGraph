@@ -27,13 +27,24 @@ import {
   GraphView,
   InternalEvent,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Connections/Orthogonal',
   argTypes: {
     ...globalTypes,
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 

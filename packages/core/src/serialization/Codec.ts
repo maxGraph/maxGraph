@@ -45,21 +45,23 @@ const createXmlDocument = () => {
  * The following code is used to encode a graph model.
  *
  * ```javascript
- * var encoder = new Codec();
- * var result = encoder.encode(graph.getDataModel());
- * var xml = mxUtils.getXml(result);
+ * const encoder = new Codec();
+ * const result = encoder.encode(graph.getDataModel());
+ * const xml = mxUtils.getXml(result);
  * ```
+ *
+ * **WARN**: as of version 0.6.0, the codecs provided by maxGraph are no longer registered by default, they **MUST** be registered before
+ * performing `encode` or `decode`. For instance, you can use the {@link registerAllCodecs} function (or other related functions)
+ * to register the codecs.
  *
  * #### Example
  *
  * Using the code below, an XML document is decoded into an existing model. The
- * document may be obtained using one of the functions in mxUtils for loading
- * an XML file, eg. {@link mxUtils.get}, or using {@link mxUtils.parseXml} for parsing an
- * XML string.
+ * document may be obtained using {@link parseXml} for parsing an XML string.
  *
  * ```javascript
- * var doc = mxUtils.parseXml(xmlString);
- * var codec = new Codec(doc);
+ * const doc = xmlUtils.parseXml(xmlString);
+ * const codec = new Codec(doc);
  * codec.decode(doc.documentElement, graph.getDataModel());
  * ```
  *
@@ -70,18 +72,17 @@ const createXmlDocument = () => {
  * be added anywhere in the cell hierarchy after parsing.
  *
  * ```javascript
- * var xml = '<root><mxCell id="2" value="Hello," vertex="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell><mxCell id="3" value="World!" vertex="1"><mxGeometry x="200" y="150" width="80" height="30" as="geometry"/></mxCell><mxCell id="4" value="" edge="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></root>';
- * var doc = mxUtils.parseXml(xml);
- * var codec = new Codec(doc);
- * var elt = doc.documentElement.firstChild;
- * var cells = [];
+ * const xml = '<root><mxCell id="2" value="Hello," vertex="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell><mxCell id="3" value="World!" vertex="1"><mxGeometry x="200" y="150" width="80" height="30" as="geometry"/></mxCell><mxCell id="4" value="" edge="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></root>';
+ * const doc = mxUtils.parseXml(xml);
+ * const codec = new Codec(doc);
+ * let elt = doc.documentElement.firstChild;
+ * const cells = [];
  *
  * while (elt != null)
  * {
  *   cells.push(codec.decode(elt));
  *   elt = elt.nextSibling;
  * }
- *
  * graph.addCells(cells);
  * ```
  *
@@ -91,13 +92,13 @@ const createXmlDocument = () => {
  * output is displayed in a dialog box.
  *
  * ```javascript
- * var enc = new Codec();
- * var cells = graph.getSelectionCells();
- * mxUtils.alert(mxUtils.getPrettyXml(enc.encode(cells)));
+ * const enc = new Codec();
+ * const cells = graph.getSelectionCells();
+ * const xml = xmlUtils.getPrettyXml(enc.encode(cells));
  * ```
  *
  * Newlines in the XML can be converted to <br>, in which case a '<br>' argument
- * must be passed to {@link mxUtils.getXml} as the second argument.
+ * must be passed to {@link getXml} as the second argument.
  *
  * ### Debugging
  *
@@ -105,11 +106,11 @@ const createXmlDocument = () => {
  * encoded objects:
  *
  * ```javascript
- * var oldEncode = encode;
+ * const oldEncode = encode;
  * encode(obj)
  * {
  *   MaxLog.show();
- *   MaxLog.debug('Codec.encode: obj='+mxUtils.getFunctionName(obj.constructor));
+ *   MaxLog.debug('Codec.encode: obj='+StringUtils.getFunctionName(obj.constructor));
  *
  *   return oldEncode.apply(this, arguments);
  * };
@@ -146,7 +147,7 @@ class Codec {
   /**
    * Lookup table for resolving IDs to elements.
    */
-  elements: any = null; // { [key: string]: Element } | null
+  elements: any = null; // TODO why not { [key: string]: Element } | null
 
   /**
    * Specifies if default values should be encoded. Default is false.
@@ -154,7 +155,7 @@ class Codec {
   encodeDefaults = false;
 
   /**
-   * Assoiates the given object with the given ID and returns the given object.
+   * Associates the given object with the given ID and returns the given object.
    *
    * @param id ID for the object to be associated with.
    * @param obj Object to be associated with the ID.
@@ -199,7 +200,7 @@ class Codec {
    * Example:
    *
    * ```javascript
-   * var codec = new Codec();
+   * const codec = new Codec();
    * codec.lookup(id)
    * {
    *   return model.getCell(id);
@@ -222,11 +223,6 @@ class Codec {
     return this.elements[id];
   }
 
-  /**
-   * Returns the element with the given ID from {@link document}.
-   *
-   * @param id String that contains the ID.
-   */
   updateElements(): void {
     if (this.elements == null) {
       this.elements = {};
@@ -299,7 +295,7 @@ class Codec {
    * Example:
    *
    * ```javascript
-   * var codec = new Codec();
+   * const codec = new Codec();
    * codec.reference(obj)
    * {
    *   return obj.getCustomId();
@@ -313,8 +309,7 @@ class Codec {
   }
 
   /**
-   * Encodes the specified object and returns the resulting
-   * XML node.
+   * Encodes the specified object and returns the resulting XML node.
    *
    * @param obj Object to be encoded.
    */
@@ -345,7 +340,7 @@ class Codec {
    * the new instance if no object was given.
    *
    * @param node XML node to be decoded.
-   * @param into Optional object to be decodec into.
+   * @param into Optional object to be decoded into.
    */
   decode(node: Element | null, into?: any): any {
     this.updateElements();
@@ -418,10 +413,9 @@ class Codec {
    * @param restoreStructures Optional boolean indicating whether
    * the graph structure should be restored by calling insert
    * and insertEdge on the parent and terminals, respectively.
-   * Default is true.
+   * Default is `true`.
    */
-  decodeCell(node: Element, restoreStructures?: boolean): Cell {
-    restoreStructures = restoreStructures != null ? restoreStructures : true;
+  decodeCell(node: Element, restoreStructures = true): Cell {
     let cell = null;
 
     if (node != null && node.nodeType === NODETYPE.ELEMENT) {
@@ -490,7 +484,7 @@ class Codec {
    * are not null.
    *
    * @param node XML node to set the attribute for.
-   * @param attributes Attributename to be set.
+   * @param attribute The name of the attribute to be set.
    * @param value New value of the attribute.
    */
   setAttribute(node: Element, attribute: string, value: any): void {

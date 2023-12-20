@@ -87,7 +87,7 @@ const TooltipMixin: PartialType = {
         'SelectionCellsHandler'
       ) as SelectionCellsHandler;
 
-      const handler = selectionCellsHandler.getHandler(state.cell);
+      const handler = selectionCellsHandler?.getHandler(state.cell);
 
       // @ts-ignore Guarded against undefined error already.
       if (handler && typeof handler.getTooltipForNode === 'function') {
@@ -139,15 +139,15 @@ const TooltipMixin: PartialType = {
    *****************************************************************************/
 
   /**
-   * Specifies if tooltips should be enabled. This implementation updates
-   * {@link TooltipHandler.enabled} in {@link tooltipHandler}.
+   * Specifies if tooltips should be enabled.
+   *
+   * This implementation updates {@link TooltipHandler.enabled}.
    *
    * @param enabled Boolean indicating if tooltips should be enabled.
    */
   setTooltips(enabled: boolean) {
     const tooltipHandler = this.getPlugin('TooltipHandler') as TooltipHandler;
-
-    tooltipHandler.setEnabled(enabled);
+    tooltipHandler?.setEnabled(enabled);
   },
 };
 

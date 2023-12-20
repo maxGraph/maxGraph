@@ -15,14 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, mathUtils } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { Graph, styleUtils } from '@maxgraph/core';
+import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
   title: 'Connections/EdgeTolerance',
   argTypes: {
     ...globalTypes,
+  },
+  args: {
+    ...globalValues,
   },
 };
 
@@ -47,7 +49,7 @@ const Template = ({ label, ...args }) => {
         // them here. Storing them in the event means the overridden
         // method doesn't have to do this again.
         if (me.graphX == null || me.graphY == null) {
-          const pt = mathUtils.convertPoint(container, me.getX(), me.getY());
+          const pt = styleUtils.convertPoint(container, me.getX(), me.getY());
 
           me.graphX = pt.x;
           me.graphY = pt.y;
@@ -74,7 +76,7 @@ const Template = ({ label, ...args }) => {
     dblClick(evt, cell) {
       // Overrides double click handling to use the tolerance
       if (cell == null) {
-        const pt = mathUtils.convertPoint(
+        const pt = styleUtils.convertPoint(
           el,
           eventUtils.getClientX(evt),
           eventUtils.getClientY(evt)

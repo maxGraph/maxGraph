@@ -29,23 +29,31 @@ import {
   Morphing,
   EventObject,
   eventUtils,
-  mathUtils,
+  styleUtils,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  contextMenuTypes,
+  contextMenuValues,
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Layouts/AutoLayout',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...contextMenuValues,
+    ...rubberBandValues,
   },
 };
 
@@ -100,9 +108,6 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given this.el
   const graph = new MyCustomGraph(container);
   graph.setPanning(true);
-
-  const panningHandler = graph.getPlugin('PanningHandler');
-  panningHandler.useLeftButtonForPanning = true;
 
   graph.setAllowDanglingEdges(false);
 
@@ -190,7 +195,7 @@ const Template = ({ label, ...args }) => {
 
       graph.stopEditing(false);
 
-      const pt = mathUtils.convertPoint(
+      const pt = styleUtils.convertPoint(
         graph.container,
         eventUtils.getClientX(evt2),
         eventUtils.getClientY(evt2)
