@@ -410,38 +410,10 @@ class Graph extends EventSource {
   // ===================================================================================================================
 
   /**
-   * Creates a new {@link Stylesheet} to be used in this graph.
-   */
-  createStylesheet(): Stylesheet {
-    return new Stylesheet();
-  }
-
-  /**
-   * Creates a new {@link GraphView} to be used in this graph.
-   */
-  createGraphView(): GraphView {
-    return new GraphView(this);
-  }
-
-  /**
    * Creates a new {@link CellRenderer} to be used in this graph.
    */
   createCellRenderer(): CellRenderer {
     return new CellRenderer();
-  }
-
-  /**
-   * Creates a new {@link GraphSelectionModel} to be used in this graph.
-   */
-  createSelectionModel() {
-    return new GraphSelectionModel(this);
-  }
-
-  /**
-   * Creates a new {@link GraphDataModel} to be used in this graph.
-   */
-  createGraphDataModel(): GraphDataModel {
-    return new GraphDataModel();
   }
 
   /**
@@ -453,15 +425,6 @@ class Graph extends EventSource {
     // Note this method not being called createEdgeHandler to keep compatibility
     // with older code which overrides/calls createEdgeHandler
     return new EdgeHandler(state);
-  }
-
-  /**
-   * Hooks to create a new {@link VertexHandler} for the given {@link CellState}.
-   *
-   * @param state {@link CellState} to create the handler for.
-   */
-  createVertexHandler(state: CellState): VertexHandler {
-    return new VertexHandler(state);
   }
 
   /**
@@ -480,6 +443,43 @@ class Graph extends EventSource {
    */
   createElbowEdgeHandler(state: CellState) {
     return new ElbowEdgeHandler(state);
+  }
+
+  /**
+   * Creates a new {@link GraphDataModel} to be used in this graph.
+   */
+  createGraphDataModel(): GraphDataModel {
+    return new GraphDataModel();
+  }
+
+  /**
+   * Creates a new {@link GraphView} to be used in this graph.
+   */
+  createGraphView(): GraphView {
+    return new GraphView(this);
+  }
+
+  /**
+   * Creates a new {@link GraphSelectionModel} to be used in this graph.
+   */
+  createSelectionModel() {
+    return new GraphSelectionModel(this);
+  }
+
+  /**
+   * Creates a new {@link Stylesheet} to be used in this graph.
+   */
+  createStylesheet(): Stylesheet {
+    return new Stylesheet();
+  }
+
+  /**
+   * Hooks to create a new {@link VertexHandler} for the given {@link CellState}.
+   *
+   * @param state {@link CellState} to create the handler for.
+   */
+  createVertexHandler(state: CellState): VertexHandler {
+    return new VertexHandler(state);
   }
 
   // ===================================================================================================================
