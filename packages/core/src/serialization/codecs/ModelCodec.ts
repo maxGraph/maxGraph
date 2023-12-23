@@ -18,6 +18,7 @@ import ObjectCodec from '../ObjectCodec';
 import GraphDataModel from '../../view/GraphDataModel';
 import Cell from '../../view/cell/Cell';
 import type Codec from '../Codec';
+import { getPrettyXml } from '../../util/xmlUtils';
 
 /**
  * Codec for {@link GraphDataModel}s.
@@ -64,7 +65,13 @@ export class ModelCodec extends ObjectCodec {
       // TODO review the signature of decodeCell
       // @ts-ignore
       const cell = dec.decodeCell(tmp);
-      console.info('ModelCodec.decodeRoot - decoded cell', cell);
+
+      const cellValue = cell?.value;
+      console.info(
+        'ModelCodec.decodeRoot - decoded cell (id, value): ',
+        cell?.id,
+        cellValue instanceof Element ? getPrettyXml(cellValue) : cellValue
+      );
 
       if (cell != null && cell.getParent() == null) {
         rootCell = cell;
