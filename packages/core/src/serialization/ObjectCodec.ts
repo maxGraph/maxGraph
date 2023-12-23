@@ -675,7 +675,9 @@ class ObjectCodec {
    */
   decode(dec: Codec, node: Element, into?: any): any {
     const id = <string>node.getAttribute('id');
+    console.info('[ObjectCode.decode] start id:', id);
     let obj = dec.objects[id];
+    console.info('[ObjectCode.decode] object already registered?', !!obj);
 
     if (obj == null) {
       obj = into || this.cloneTemplate();
