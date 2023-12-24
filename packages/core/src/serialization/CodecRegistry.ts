@@ -89,7 +89,7 @@ class CodecRegistry {
     //   return null;
     // }
 
-    // TODO wrong JSDoc the parameter is a string or a constructor
+    // TODO wrong JSDoc the parameter is a string or a constructor + rename parameter for clarity
     // if a string, try to get the codec by name and by alias (should probably use the code of getCodecByName)
     // if no codec, it register a new codec for the providing "type" pass as constructor
     let codec = null;
@@ -100,19 +100,24 @@ class CodecRegistry {
       console.info('CodecRegistry.getCodec - parameter type:', typeof constructor_);
       // let { name } = constructor_;
       let name = typeof constructor_ === 'string' ? constructor_ : constructor_.name;
-      console.info(
-        'CodecRegistry.getCodec - name (direct or assume from constructor):',
-        name
-      );
-      const tmp = CodecRegistry.aliases[name];
-      console.info('CodecRegistry.getCodec - alias resolution:', tmp);
+      // console.info(
+      //   'CodecRegistry.getCodec - name (direct or assume from constructor):',
+      //   name
+      // );
+      //
+      // const tmp = CodecRegistry.aliases[name];
+      // console.info('CodecRegistry.getCodec - alias resolution:', tmp);
+      //
+      // if (tmp != null) {
+      //   name = tmp;
+      // }
+      // console.info('CodecRegistry.getCodec - used name to find codec:', name);
 
-      if (tmp != null) {
-        name = tmp;
-      }
-      console.info('CodecRegistry.getCodec - used name to find codec:', name);
+      // codec = CodecRegistry.codecs[name] ?? null;
 
-      codec = CodecRegistry.codecs[name] ?? null;
+      // TODO this change is required when introducing an alias for mxCell
+      codec = this.getCodecByName(name);
+
       console.info('CodecRegistry.getCodec - found codec:', codec != null);
       // console.info('CodecRegistry.getCodec - found codec:', codec);
 
@@ -130,8 +135,13 @@ class CodecRegistry {
     return codec;
   }
 
+  /**
+   * First try to get the codec by the name it is registered with. If it doesn't exist, use the alias eventually declared
+   * to get the codec.
+   * @param name the name of the codec that is willing to be retrieved.
+   */
   static getCodecByName(name: string) {
-    // TODO the implementation in getCodec may be better
+    // TODO the implementation in getCodec differs, it first tries to resolve the alias
     // this is the compact form
     // const codecName = CodecRegistry.aliases[name] ?? name;
     // return  CodecRegistry.codecs[codecName] ?? null;

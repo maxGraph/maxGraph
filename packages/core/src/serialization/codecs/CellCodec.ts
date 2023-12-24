@@ -170,4 +170,9 @@ export class CellCodec extends ObjectCodec {
 
     return inner;
   }
+
+  // TODO try no not have Cell: 'mxCell' in the alias!!! the following doesn't work
+  getName(): string {
+    return 'Cell';
+  }
 }
