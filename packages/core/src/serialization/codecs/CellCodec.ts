@@ -113,9 +113,7 @@ export class CellCodec extends ObjectCodec {
     const classname = this.getName();
 
     console.info('[CellCodec.beforeDecode] nodeName/classname', node.nodeName, classname);
-    // TODO Here is a hardcoded hack, we should probably make this configurable with a getAliases(): string[] method
-    // or create a subclass that the the same to mxCell directly
-    if (node.nodeName != 'mxCell' && node.nodeName !== classname) {
+    if (node.nodeName !== classname) {
       console.info('[CellCodec.beforeDecode] nodeName/classname are not matching');
       // Passes the inner graphical annotation node to the
       // object codec for further processing of the cell.

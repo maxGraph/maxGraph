@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './editor';
-export * from './CellCodec';
-export * from './ChildChangeCodec';
-export * from './GenericChangeCodec';
-export * from './GraphViewCodec';
-export * from './ModelCodec';
-export * from './mxCellCodec';
-export * from './RootChangeCodec';
-export * from './StylesheetCodec';
-export * from './TerminalChangeCodec';
+import { CellCodec } from './CellCodec';
+
+/**
+ * CellCodec to support the legacy `mxGraph` format.
+ */
+export class mxCellCodec extends CellCodec {
+  getName(): string {
+    return 'mxCell';
+  }
+}

@@ -25,6 +25,7 @@ import {
   GenericChangeCodec,
   GraphViewCodec,
   ModelCodec,
+  mxCellCodec,
   RootChangeCodec,
   StylesheetCodec,
   TerminalChangeCodec,
@@ -90,7 +91,7 @@ export const registerCoreCodecs = (force = false) => {
 
     // mxGraph support
     CodecRegistry.addAlias('mxGraphModel', 'GraphDataModel');
-    CodecRegistry.addAlias('mxCell', 'Cell');
+    CodecRegistry.register(new mxCellCodec());
     // CodecRegistry.addAlias('mxGeometry', 'Geometry');
 
     isCoreCodecsRegistered = true;
