@@ -767,7 +767,6 @@ class ObjectCodec {
       }
 
       if (!this.isExcluded(obj, name, value, false)) {
-        // MaxLog.debug(mxUtils.getFunctionName(obj.constructor)+'.'+name+'='+value);
         obj[name] = value;
       }
     }
@@ -860,7 +859,6 @@ class ObjectCodec {
       } else {
         obj.push(value);
       }
-      // MaxLog.debug('Decoded '+mxUtils.getFunctionName(obj.constructor)+'.'+fieldname+': '+value);
     }
   }
 
