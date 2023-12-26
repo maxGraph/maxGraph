@@ -99,6 +99,7 @@ class CodecRegistry {
     if (constructor_ != null) {
       console.info('CodecRegistry.getCodec - parameter type:', typeof constructor_);
       // let { name } = constructor_;
+      // Equivalent of calling import { getFunctionName } from '../util/StringUtils';
       let name = typeof constructor_ === 'string' ? constructor_ : constructor_.name;
       // console.info(
       //   'CodecRegistry.getCodec - name (direct or assume from constructor):',
