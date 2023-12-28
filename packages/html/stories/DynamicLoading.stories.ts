@@ -16,15 +16,17 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  TextShape,
-  Effects,
-  InternalEvent,
   constants,
+  Effects,
+  EventObject,
+  Graph,
+  GraphDataModel,
+  InternalEvent,
+  ModelXmlSerializer,
   Perimeter,
-  Codec,
-  xmlUtils,
+  TextShape,
 } from '@maxgraph/core';
+import type Cell from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
@@ -37,7 +39,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: { [p: string]: any }) => {
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'hidden';
@@ -57,7 +59,7 @@ const Template = ({ label, ...args }) => {
   graph.setEnabled(false);
 
   // Handles clicks on cells
-  graph.addListener(InternalEvent.CLICK, function (sender, evt) {
+  graph.addListener(InternalEvent.CLICK, function (_sender: any, evt: EventObject) {
     const cell = evt.getProperty('cell');
 
     if (cell != null) {
@@ -81,15 +83,17 @@ const Template = ({ label, ...args }) => {
   const cell = graph.insertVertex(parent, '0-0', '0-0', cx - 20, cy - 15, 60, 40);
 
   // Animates the changes in the graph model
-  graph.getDataModel().addListener(InternalEvent.CHANGE, function (sender, evt) {
-    const { changes } = evt.getProperty('edit');
-    Effects.animateChanges(graph, changes);
-  });
+  graph
+    .getDataModel()
+    .addListener(InternalEvent.CHANGE, function (_sender: any, evt: EventObject) {
+      const { changes } = evt.getProperty('edit');
+      Effects.animateChanges(graph, changes);
+    });
 
   // Loads the links for the given cell into the given graph
   // by requesting the respective data in the server-side
   // (implemented for this demo using the server-function)
-  function load(graph, cell) {
+  function load(graph: Graph, cell: Cell) {
     if (cell.isVertex()) {
       const cx = args.width / 2;
       const cy = args.height / 2;
@@ -101,10 +105,9 @@ const Template = ({ label, ...args }) => {
       // Adds cells to the model in a single step
       graph.batchUpdate(() => {
         const xml = server(cell.id);
-        const doc = xmlUtils.parseXml(xml);
-        const dec = new Codec(doc);
 
-        const model = dec.decode(doc.documentElement);
+        const model = new GraphDataModel();
+        new ModelXmlSerializer(model).import(xml);
 
         // Removes all cells which are not in the response
         for (const key in graph.getDataModel().cells) {
@@ -176,7 +179,7 @@ const Template = ({ label, ...args }) => {
   // Simulates the existence of a server that can crawl the
   // big graph with a certain depth and create a graph model
   // for the traversed cells, which is then sent to the client
-  function server(cellId) {
+  function server(cellId: string) {
     // Increments the request ID as a prefix for the cell IDs
     requestId++;
 
@@ -190,20 +193,17 @@ const Template = ({ label, ...args }) => {
     // Adds cells to the model in a single step
     graph.batchUpdate(() => {
       const v0 = graph.insertVertex(parent, cellId, 'Dummy', 0, 0, 60, 40);
-      const cellCount = parseInt(Math.random() * 16) + 4;
+      const cellCount = Math.floor(Math.random() * 16) + 4;
 
       // Creates the random links and cells for the response
       for (let i = 0; i < cellCount; i++) {
         const id = `${requestId}-${i}`;
         const v = graph.insertVertex(parent, id, id, 0, 0, 60, 40);
-        const e = graph.insertEdge(parent, null, `Link ${i}`, v0, v);
+        graph.insertEdge(parent, null, `Link ${i}`, v0, v);
       }
     });
 
-    const enc = new Codec();
-    const node = enc.encode(graph.getDataModel());
-
-    return xmlUtils.getXml(node);
+    return new ModelXmlSerializer(graph.getDataModel()).export();
   }
 
   load(graph, cell);
