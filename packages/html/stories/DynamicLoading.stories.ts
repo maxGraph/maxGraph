@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import {
-  constants,
   Effects,
   EventObject,
   Graph,
@@ -26,7 +25,7 @@ import {
   Perimeter,
   TextShape,
 } from '@maxgraph/core';
-import type Cell from '@maxgraph/core';
+import type { Cell } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
@@ -39,7 +38,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }: { [p: string]: any }) => {
+const Template = ({ label, ...args }: Record<string, any>) => {
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'hidden';
@@ -50,7 +49,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   let requestId = 0;
 
   // Speedup the animation
-  TextShape.prototype.enableBoundingBox = false;
+  TextShape.prototype.useSvgBoundingBox = false;
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -69,7 +68,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
 
   // Changes the default vertex style in-place
   const style = graph.getStylesheet().getDefaultVertexStyle();
-  style.shape = constants.SHAPE.ELLIPSE;
+  style.shape = 'ellipse';
   style.perimeter = Perimeter.EllipsePerimeter;
   style.gradientColor = 'white';
 
@@ -113,13 +112,16 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
         for (const key in graph.getDataModel().cells) {
           const tmp = graph.getDataModel().getCell(key);
 
-          if (tmp != cell && tmp.isVertex()) {
+          if (tmp != null && tmp != cell && tmp.isVertex()) {
             graph.removeCells([tmp]);
           }
         }
 
         // Merges the response model with the client model
-        graph.getDataModel().mergeChildren(model.getRoot().getChildAt(0), parent);
+        // Here we know that the root is not null
+        graph
+          .getDataModel()
+          .mergeChildren((model.getRoot() as Cell).getChildAt(0), parent);
 
         // Moves the given cell to the center
         let geo = cell.getGeometry();
@@ -141,7 +143,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
         for (const key in graph.getDataModel().cells) {
           const tmp = graph.getDataModel().getCell(key);
 
-          if (tmp != cell && tmp.isVertex()) {
+          if (tmp != null && tmp != cell && tmp.isVertex()) {
             vertices.push(tmp);
 
             // Changes the initial location "in-place"
@@ -179,12 +181,12 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   // Simulates the existence of a server that can crawl the
   // big graph with a certain depth and create a graph model
   // for the traversed cells, which is then sent to the client
-  function server(cellId: string) {
+  function server(cellId: string | null) {
     // Increments the request ID as a prefix for the cell IDs
     requestId++;
 
-    // Creates a local graph with no display
-    const graph = new Graph();
+    // Creates a local graph with no display (pass null as container)
+    const graph = new Graph(null!);
 
     // Gets the default parent for inserting new cells. This
     // is normally the first child of the root (ie. layer 0).
