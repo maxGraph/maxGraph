@@ -1413,7 +1413,7 @@ export class GraphView extends EventSource {
       edge.style[source ? 'sourcePerimeterSpacing' : 'targetPerimeterSpacing'] ?? 0;
     let pt = this.getPerimeterPoint(start, <Point>next, alpha === 0 && orth, border);
 
-    if (alpha !== 0) {
+    if (pt && alpha !== 0) {
       const cos = Math.cos(alpha);
       const sin = Math.sin(alpha);
       pt = getRotatedPoint(pt, cos, sin, center);
@@ -1455,7 +1455,7 @@ export class GraphView extends EventSource {
    * the perimeter and the line between the center of the shape and the given point.
    *
    * @param terminal {@link CellState} for the source or target terminal.
-   * @param next {@link mxPoint} that lies outside of the given terminal.
+   * @param next {@link Point} that lies outside the given terminal.
    * @param orthogonal Boolean that specifies if the orthogonal projection onto
    * the perimeter should be returned. If this is false then the intersection
    * of the perimeter and the line between the next and the center point is
@@ -1467,14 +1467,14 @@ export class GraphView extends EventSource {
     next: Point,
     orthogonal: boolean,
     border = 0
-  ): Point {
+  ): Point | null {
     let point = null;
 
     if (terminal != null) {
       const perimeter = this.getPerimeterFunction(terminal);
 
       if (perimeter != null && next != null) {
-        const bounds = <Rectangle>this.getPerimeterBounds(terminal, border);
+        const bounds = this.getPerimeterBounds(terminal, border);
 
         if (bounds.width > 0 || bounds.height > 0) {
           point = new Point(next.x, next.y);
@@ -1568,14 +1568,12 @@ export class GraphView extends EventSource {
    * };
    * ```
    *
-   * @param {CellState} terminal CellState that represents the terminal.
-   * @param {number} border Number that adds a border between the shape and the perimeter.
+   * @param terminal CellState that represents the terminal.
+   * @param border Number that adds a border between the shape and the perimeter.
    */
-  getPerimeterBounds(terminal: CellState | null = null, border = 0): Rectangle | null {
-    if (terminal) {
-      border += terminal.style.perimeterSpacing ?? 0;
-    }
-    return (<CellState>terminal).getPerimeterBounds(border * this.scale);
+  getPerimeterBounds(terminal: CellState, border = 0): Rectangle {
+    border += terminal.style.perimeterSpacing ?? 0;
+    return terminal.getPerimeterBounds(border * this.scale);
   }
 
   /**

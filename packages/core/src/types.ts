@@ -18,9 +18,11 @@ import { DIRECTION, IDENTITY_FIELD_NAME } from './util/Constants';
 import type { Graph } from './view/Graph';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
-import EventSource from './view/event/EventSource';
+import type EventSource from './view/event/EventSource';
 import type InternalMouseEvent from './view/event/InternalMouseEvent';
-import Geometry from './view/geometry/Geometry';
+import type Geometry from './view/geometry/Geometry';
+import type Point from './view/geometry/Point';
+import type Rectangle from './view/geometry/Rectangle';
 import type Shape from './view/geometry/Shape';
 import type ImageBox from './view/image/ImageBox';
 
@@ -499,12 +501,17 @@ export type CellStateStyle = {
   /**
    * This defines the perimeter around a particular shape.
    *
-   * For `Function` types, the possible values are the functions defined in {@link Perimeter}.
+   * For {@link PerimeterFunction} types, some possible values are the functions defined in {@link Perimeter}.
    *
    * Alternatively, use a string or a value from {@link PERIMETER} to access perimeter styles
    * registered in {@link StyleRegistry}.
+   * If {@link GraphView.allowEval} is set to `true`, you can pass the {@link PerimeterFunction} implementation directly as a string.
+   * Remember that enabling this switch carries a possible security risk
+   *
+   * **WARNING**: explicitly set the value to null or undefined means to not use any perimeter.
+   * To use the perimeter defined in the default vertex, do not set this property.
    */
-  perimeter?: Function | string | null;
+  perimeter?: PerimeterFunction | PerimeterValue | (string & {}) | null;
   /**
    * This is the distance between the connection point and the perimeter in pixels.
    * - When used in a vertex style, this applies to all incoming edges to floating ports
@@ -1056,3 +1063,30 @@ export type IdentityFunction = {
   (): any;
   [IDENTITY_FIELD_NAME]?: string;
 };
+
+/**
+ * Describes a perimeter for the given bounds.
+ *
+ * @param bounds the {@link Rectangle} that represents the absolute bounds of the vertex.
+ * @param vertex the {@link CellState} that represents the vertex.
+ * @param next the {@link Point} that represents the nearest neighbour point on the given edge.
+ * @param orthogonal Boolean that specifies if the orthogonal projection onto the perimeter should be returned.
+ *                   If this is `false`, then the intersection of the perimeter and the line between the next and the center point is returned.
+ * @returns the resulting {@link Point} projected to the perimeter.
+ */
+export type PerimeterFunction = (
+  bounds: Rectangle,
+  vertex: CellState,
+  next: Point,
+  orthogonal: boolean
+) => Point | null;
+
+/**
+ * Names used to register the perimeter provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
+ */
+export type PerimeterValue =
+  | 'ellipsePerimeter'
+  | 'hexagonPerimeter'
+  | 'rectanglePerimeter'
+  | 'rhombusPerimeter'
+  | 'trianglePerimeter';

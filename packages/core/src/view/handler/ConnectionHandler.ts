@@ -220,7 +220,6 @@ type FactoryMethod = (
 class ConnectionHandler extends EventSource implements GraphPlugin {
   static pluginId = 'ConnectionHandler';
 
-  // TODO: Document me!
   previous: CellState | null = null;
   iconState: CellState | null = null;
   icons: ImageShape[] = [];
@@ -249,8 +248,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Specifies if icons should be displayed inside the graph container instead
    * of the overlay pane. This is used for HTML labels on vertices which hide
-   * the connect icon. This has precendence over {@link oveIconBack} when set
-   * to true. Default is false.
+   * the connect icon. This has precedence over {@link moveIconBack} when set
+   * to true.
+   * @default `false`
    */
   moveIconFront = false;
 
@@ -262,10 +262,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   moveIconBack = false;
 
   /**
-   * {@link Image} that is used to trigger the creation of a new connection. This
-   * is used in <createIcons>. Default is null.
+   * {@link Image} that is used to trigger the creation of a new connection.
+   * This is used in {@link createIcons}.
+   * @default null
    */
-
   connectImage: Image | null = null;
 
   /**
@@ -1352,7 +1352,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
     const { view } = state;
     const targetPerimeter = view.getPerimeterFunction(state);
 
-    if (targetPerimeter && this.previous) {
+    if (targetPerimeter && this.previous && this.edgeState) {
       const next =
         this.waypoints.length > 0
           ? this.waypoints[this.waypoints.length - 1]
@@ -1707,7 +1707,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
         let value = null;
         let style = {};
 
-        if (this.edgeState) {
+        if (this.edgeState?.cell) {
           value = this.edgeState.cell.value;
           style = this.edgeState.cell.style ?? {};
         }
@@ -1725,7 +1725,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
           );
 
           // Uses geometry of the preview edge state
-          if (this.edgeState && this.edgeState.cell && this.edgeState.cell.geometry) {
+          if (this.edgeState?.cell?.geometry) {
             model.setGeometry(edge, this.edgeState.cell.geometry);
           }
 

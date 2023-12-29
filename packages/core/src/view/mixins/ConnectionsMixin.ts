@@ -174,7 +174,7 @@ const ConnectionsMixin: PartialType = {
    */
   getOutlineConstraint(point, terminalState, me) {
     if (terminalState.shape) {
-      const bounds = <Rectangle>this.getView().getPerimeterBounds(terminalState);
+      const bounds = this.getView().getPerimeterBounds(terminalState);
       const direction = terminalState.style.direction;
 
       if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
@@ -341,7 +341,7 @@ const ConnectionsMixin: PartialType = {
     let point: Point | null = null;
 
     if (constraint.point) {
-      const bounds = <Rectangle>this.getView().getPerimeterBounds(vertex);
+      const bounds = this.getView().getPerimeterBounds(vertex);
       const cx = new Point(bounds.getCenterX(), bounds.getCenterY());
       const direction = vertex.style.direction;
       let r1 = 0;

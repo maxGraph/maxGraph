@@ -853,9 +853,8 @@ export class GraphDataModel extends EventSource {
    * Sets the style of the given {@link Cell} using {@link StyleChange} and
    * adds the change to the current transaction.
    *
-   * @param {Cell} cell  whose style should be changed.
-   * @param style  String of the form [stylename;|key=value;] to specify
-   * the new cell style.
+   * @param cell  whose style should be changed.
+   * @param style the new cell style to set.
    */
   setStyle(cell: Cell, style: CellStyle) {
     if (style !== cell.getStyle()) {
