@@ -17,6 +17,7 @@ limitations under the License.
 import ObjectCodec from '../ObjectCodec';
 import GraphDataModel from '../../view/GraphDataModel';
 import Cell from '../../view/cell/Cell';
+import type Codec from '../Codec';
 
 /**
  * Codec for {@link GraphDataModel}s.
@@ -41,7 +42,7 @@ export class ModelCodec extends ObjectCodec {
   /**
    * Overrides decode child to handle special child nodes.
    */
-  decodeChild(dec: any, child: Element, obj: Cell | GraphDataModel) {
+  decodeChild(dec: Codec, child: Element, obj: Cell | GraphDataModel) {
     if (child.nodeName === 'root') {
       this.decodeRoot(dec, child, <GraphDataModel>obj);
     } else {
@@ -52,9 +53,9 @@ export class ModelCodec extends ObjectCodec {
   /**
    * Reads the cells into the graph model. All cells are children of the root element in the node.
    */
-  decodeRoot(dec: any, root: Element, model: GraphDataModel) {
+  decodeRoot(dec: Codec, root: Element, model: GraphDataModel) {
     let rootCell = null;
-    let tmp = root.firstChild;
+    let tmp = root.firstChild as Element;
 
     while (tmp != null) {
       const cell = dec.decodeCell(tmp);
@@ -62,7 +63,7 @@ export class ModelCodec extends ObjectCodec {
       if (cell != null && cell.getParent() == null) {
         rootCell = cell;
       }
-      tmp = tmp.nextSibling;
+      tmp = tmp.nextSibling as Element;
     }
 
     // Sets the root on the model if one has been decoded

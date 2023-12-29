@@ -29,6 +29,9 @@ import {
   StylesheetCodec,
   TerminalChangeCodec,
 } from './codecs';
+import ObjectCodec from './ObjectCodec';
+import Geometry from '../view/geometry/Geometry';
+import Point from '../view/geometry/Point';
 import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
 import CollapseChange from '../view/undoable_changes/CollapseChange';
 import GeometryChange from '../view/undoable_changes/GeometryChange';
@@ -77,6 +80,13 @@ export const registerCoreCodecs = (force = false) => {
     CodecRegistry.register(new StylesheetCodec());
     CodecRegistry.register(new TerminalChangeCodec());
     registerGenericChangeCodecs();
+
+    // To support decode/import executed before encode/export (see https://github.com/maxGraph/maxGraph/issues/178)
+    // Codecs are currently only registered automatically during encode/export
+    CodecRegistry.register(new ObjectCodec(new Geometry()));
+    CodecRegistry.register(new ObjectCodec(new Point()));
+    CodecRegistry.register(new ObjectCodec({})); // Object
+    CodecRegistry.register(new ObjectCodec([])); // Array
 
     isCoreCodecsRegistered = true;
   }

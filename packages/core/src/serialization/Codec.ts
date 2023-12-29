@@ -428,18 +428,18 @@ class Codec {
       // This assumes all node names inside the user object are either
       // not registered or they correspond to a class for cells.
       if (!this.isCellCodec(decoder)) {
-        let child = node.firstChild;
+        let child = node.firstChild as Element;
 
         while (child != null && !this.isCellCodec(decoder)) {
           decoder = CodecRegistry.getCodec(child.nodeName);
-          child = child.nextSibling;
+          child = child.nextSibling as Element;
         }
       }
 
       if (!this.isCellCodec(decoder)) {
         decoder = CodecRegistry.getCodec(Cell);
       }
-      cell = (<ObjectCodec>decoder).decode(this, node);
+      cell = decoder?.decode(this, node);
 
       if (restoreStructures) {
         this.insertIntoGraph(cell);
