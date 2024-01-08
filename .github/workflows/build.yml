@@ -45,7 +45,12 @@ jobs:
       - name: Build @maxgraph/core - esm
         run: npm run build -w packages/core
       - name: Test @maxgraph/core
-        run: npm test -w packages/core
+        run: npm test -w packages/core -- --coverage
+      - name: Upload test results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-coverage-${{runner.os}}-${{github.sha}}
+          path: packages/core/coverage/lcov-report
       - name: Test TypeScript support
         run: npm test -w packages/ts-support
       - name: Build ts-example
@@ -55,7 +60,7 @@ jobs:
       - name: Upload all examples as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: bundles-test-results-${{runner.os}}-${{github.sha}}
+          name: examples-${{runner.os}}-${{github.sha}}
           path: |
             packages/html/dist/
             packages/ts-example/dist/

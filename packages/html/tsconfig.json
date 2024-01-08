@@ -9,7 +9,8 @@
 
     /* Bundler mode */
     "allowJs": true,
-    "moduleResolution": "bundler",
+    // TODO restore bundler - require exports in the package.json of @maxgraph/core
+    "moduleResolution": "Node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

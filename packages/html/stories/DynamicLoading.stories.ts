@@ -16,15 +16,16 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  TextShape,
   Effects,
+  EventObject,
+  Graph,
+  GraphDataModel,
   InternalEvent,
-  constants,
+  ModelXmlSerializer,
   Perimeter,
-  Codec,
-  xmlUtils,
+  TextShape,
 } from '@maxgraph/core';
+import type { Cell } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 
 export default {
@@ -37,7 +38,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, any>) => {
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'hidden';
@@ -48,7 +49,7 @@ const Template = ({ label, ...args }) => {
   let requestId = 0;
 
   // Speedup the animation
-  TextShape.prototype.enableBoundingBox = false;
+  TextShape.prototype.useSvgBoundingBox = false;
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -57,7 +58,7 @@ const Template = ({ label, ...args }) => {
   graph.setEnabled(false);
 
   // Handles clicks on cells
-  graph.addListener(InternalEvent.CLICK, function (sender, evt) {
+  graph.addListener(InternalEvent.CLICK, function (_sender: any, evt: EventObject) {
     const cell = evt.getProperty('cell');
 
     if (cell != null) {
@@ -67,7 +68,7 @@ const Template = ({ label, ...args }) => {
 
   // Changes the default vertex style in-place
   const style = graph.getStylesheet().getDefaultVertexStyle();
-  style.shape = constants.SHAPE.ELLIPSE;
+  style.shape = 'ellipse';
   style.perimeter = Perimeter.EllipsePerimeter;
   style.gradientColor = 'white';
 
@@ -81,15 +82,17 @@ const Template = ({ label, ...args }) => {
   const cell = graph.insertVertex(parent, '0-0', '0-0', cx - 20, cy - 15, 60, 40);
 
   // Animates the changes in the graph model
-  graph.getDataModel().addListener(InternalEvent.CHANGE, function (sender, evt) {
-    const { changes } = evt.getProperty('edit');
-    Effects.animateChanges(graph, changes);
-  });
+  graph
+    .getDataModel()
+    .addListener(InternalEvent.CHANGE, function (_sender: any, evt: EventObject) {
+      const { changes } = evt.getProperty('edit');
+      Effects.animateChanges(graph, changes);
+    });
 
   // Loads the links for the given cell into the given graph
   // by requesting the respective data in the server-side
   // (implemented for this demo using the server-function)
-  function load(graph, cell) {
+  function load(graph: Graph, cell: Cell) {
     if (cell.isVertex()) {
       const cx = args.width / 2;
       const cy = args.height / 2;
@@ -101,22 +104,24 @@ const Template = ({ label, ...args }) => {
       // Adds cells to the model in a single step
       graph.batchUpdate(() => {
         const xml = server(cell.id);
-        const doc = xmlUtils.parseXml(xml);
-        const dec = new Codec(doc);
 
-        const model = dec.decode(doc.documentElement);
+        const model = new GraphDataModel();
+        new ModelXmlSerializer(model).import(xml);
 
         // Removes all cells which are not in the response
         for (const key in graph.getDataModel().cells) {
           const tmp = graph.getDataModel().getCell(key);
 
-          if (tmp != cell && tmp.isVertex()) {
+          if (tmp != null && tmp != cell && tmp.isVertex()) {
             graph.removeCells([tmp]);
           }
         }
 
         // Merges the response model with the client model
-        graph.getDataModel().mergeChildren(model.getRoot().getChildAt(0), parent);
+        // Here we know that the root is not null
+        graph
+          .getDataModel()
+          .mergeChildren((model.getRoot() as Cell).getChildAt(0), parent);
 
         // Moves the given cell to the center
         let geo = cell.getGeometry();
@@ -138,7 +143,7 @@ const Template = ({ label, ...args }) => {
         for (const key in graph.getDataModel().cells) {
           const tmp = graph.getDataModel().getCell(key);
 
-          if (tmp != cell && tmp.isVertex()) {
+          if (tmp != null && tmp != cell && tmp.isVertex()) {
             vertices.push(tmp);
 
             // Changes the initial location "in-place"
@@ -176,12 +181,12 @@ const Template = ({ label, ...args }) => {
   // Simulates the existence of a server that can crawl the
   // big graph with a certain depth and create a graph model
   // for the traversed cells, which is then sent to the client
-  function server(cellId) {
+  function server(cellId: string | null) {
     // Increments the request ID as a prefix for the cell IDs
     requestId++;
 
-    // Creates a local graph with no display
-    const graph = new Graph();
+    // Creates a local graph with no display (pass null as container)
+    const graph = new Graph(null!);
 
     // Gets the default parent for inserting new cells. This
     // is normally the first child of the root (ie. layer 0).
@@ -190,20 +195,17 @@ const Template = ({ label, ...args }) => {
     // Adds cells to the model in a single step
     graph.batchUpdate(() => {
       const v0 = graph.insertVertex(parent, cellId, 'Dummy', 0, 0, 60, 40);
-      const cellCount = parseInt(Math.random() * 16) + 4;
+      const cellCount = Math.floor(Math.random() * 16) + 4;
 
       // Creates the random links and cells for the response
       for (let i = 0; i < cellCount; i++) {
         const id = `${requestId}-${i}`;
         const v = graph.insertVertex(parent, id, id, 0, 0, 60, 40);
-        const e = graph.insertEdge(parent, null, `Link ${i}`, v0, v);
+        graph.insertEdge(parent, null, `Link ${i}`, v0, v);
       }
     });
 
-    const enc = new Codec();
-    const node = enc.encode(graph.getDataModel());
-
-    return xmlUtils.getXml(node);
+    return new ModelXmlSerializer(graph.getDataModel()).export();
   }
 
   load(graph, cell);

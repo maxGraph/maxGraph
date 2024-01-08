@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, utils, RubberBandHandler } from '@maxgraph/core';
+import { Graph, RubberBandHandler } from '@maxgraph/core';
 import {
   globalTypes,
   globalValues,
@@ -57,7 +57,7 @@ const Template = ({ label, ...args }) => {
 
   // Needs to set a flag to check for dynamic style changes,
   // that is, changes to styles on cells where the style was
-  // not explicitely changed using mxStyleChange
+  // not explicitly changed using mxStyleChange
   graph.getView().updateStyle = true;
 
   // Overrides Cell.getStyle to return a specific style
@@ -74,7 +74,7 @@ const Template = ({ label, ...args }) => {
 
       if (target != null) {
         const targetStyle = graph.getCurrentCellStyle(target);
-        const fill = utils.getValue(targetStyle, 'fillColor');
+        const fill = targetStyle.fillColor;
 
         if (fill != null) {
           style.strokeColor = fill;
