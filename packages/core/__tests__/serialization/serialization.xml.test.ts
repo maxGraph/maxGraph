@@ -169,8 +169,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
     const modelChecker = new ModelChecker(model);
     modelChecker.checkRootCells();
 
-    const vertex1 = model.getCell('v1');
-    modelChecker.expectIsVertex(vertex1, 'vertex 1', {
+    modelChecker.expectIsVertex(model.getCell('v1'), 'vertex 1', {
       geometry: new Geometry(100, 100, 100, 80),
       style: {
         fillColor: 'green',
@@ -178,8 +177,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
       },
     });
 
-    const vertex2 = model.getCell('v2');
-    modelChecker.expectIsVertex(vertex2, 'vertex 2', {
+    modelChecker.expectIsVertex(model.getCell('v2'), 'vertex 2', {
       style: {
         // @ts-ignore FIX should be false
         bendable: 0,
@@ -189,11 +187,10 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
       },
     });
 
-    const edge1 = model.getCell('e1');
-    const edge1Geometry = new Geometry();
-    edge1Geometry.points = [new Point(0, 10), new Point(0, 40), new Point(40, 40)];
-    modelChecker.expectIsEdge(edge1, null, {
-      geometry: edge1Geometry,
+    const edgeGeometry = new Geometry();
+    edgeGeometry.points = [new Point(0, 10), new Point(0, 40), new Point(40, 40)];
+    modelChecker.expectIsEdge(model.getCell('e1'), null, {
+      geometry: edgeGeometry,
     });
   });
 
@@ -205,8 +202,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
     const modelChecker = new ModelChecker(model);
     modelChecker.checkRootCells();
 
-    const cell = model.getCell('B_#0');
-    modelChecker.expectIsVertex(cell, 'rootNode', {
+    modelChecker.expectIsVertex(model.getCell('B_#0'), 'rootNode', {
       geometry: new Geometry(100, 100, 100, 80),
       style: { fillColor: 'green', shape: 'triangle', strokeWidth: 4 },
     });
@@ -310,8 +306,7 @@ describe('import after export', () => {
     const modelChecker = new ModelChecker(model);
     modelChecker.checkRootCells();
 
-    const cell = model.getCell('B_#0');
-    modelChecker.expectIsVertex(cell, 'rootNode', {
+    modelChecker.expectIsVertex(model.getCell('B_#0'), 'rootNode', {
       geometry: new Geometry(100, 100, 100, 80),
       style: { fillColor: 'green', shape: 'triangle', strokeWidth: 4 },
     });
