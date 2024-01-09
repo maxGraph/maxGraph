@@ -533,7 +533,7 @@ export type CellStateStyle = {
    * - `true` makes the constraints rotate with the vertex.
    * @default false
    */
-  portConstraintRotation?: DIRECTION;
+  portConstraintRotation?: boolean;
   /**
    * This specifies if a cell can be resized.
    *

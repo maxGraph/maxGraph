@@ -206,21 +206,19 @@ export const getRotatedPoint = (pt: Point, cos: number, sin: number, c = new Poi
 
 /**
  * Returns an integer mask of the port constraints of the given map
- * @param dict the style map to determine the port constraints for
- * @param defaultValue Default value to return if the key is undefined.
- * @return the mask of port constraint directions
  *
  * @param terminal {@link CelState} that represents the terminal.
- * @param edge <CellState> that represents the edge.
+ * @param edge {@link CelState} that represents the edge.
  * @param source Boolean that specifies if the terminal is the source terminal.
- * @param defaultValue Default value to be returned.
+ * @param defaultValue Default value to be returned if no port constraint is defined in the terminal.
+ * @return the mask of port constraint directions
  */
 export const getPortConstraints = (
   terminal: CellState,
   edge: CellState,
   source: boolean,
-  defaultValue: any
-) => {
+  defaultValue: number
+): number => {
   const value = getValue(
     terminal.style,
     'portConstraint',
@@ -233,10 +231,10 @@ export const getPortConstraints = (
 
   const directions = value.toString();
   let returnValue = DIRECTION_MASK.NONE;
-  const constraintRotationEnabled = getValue(terminal.style, 'portConstraintRotation', 0);
+  const constraintRotationEnabled = terminal.style.portConstraintRotation ?? false;
   let rotation = 0;
 
-  if (constraintRotationEnabled == 1) {
+  if (constraintRotationEnabled) {
     rotation = terminal.style.rotation ?? 0;
   }
 
