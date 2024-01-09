@@ -1,5 +1,5 @@
 /*
-Copyright 2023-present The maxGraph project Contributors
+Copyright 2024-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { describe, test } from '@jest/globals';
+import { ModelChecker } from './utils';
 import { CodecRegistry, GraphDataModel, ModelXmlSerializer } from '../../src';
-import { ModelChecker } from './serialization.xml.test';
 
 function logRegistry(stage: string): void {
   console.info(
