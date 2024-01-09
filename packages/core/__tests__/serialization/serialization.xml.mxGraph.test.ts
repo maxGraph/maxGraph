@@ -36,23 +36,24 @@ function logModelCells(model: GraphDataModel): void {
 }
 
 describe('import mxGraph model', () => {
-  // TODO also test what happens when the style property is set
+  // TODO test geometry
+  // TODO also test what happens when the style property is set --> dedicated model without geometry
   const mxGraphModelAsXml = `<mxGraphModel>
   <root>
     <mxCell id="0"/>
     <mxCell id="1" parent="0"/>
     <mxCell id="2" vertex="1" parent="1" value="Vertex #2">
-      <mxGeometry x="380" y="20" width="140" height="30" as="geometry"/>
+<!--      <mxGeometry x="380" y="20" width="140" height="30" as="geometry"/>-->
     </mxCell>
     <mxCell id="3" vertex="1" parent="1" value="Vertex #3">
-      <mxGeometry x="200" y="80" width="380" height="30" as="geometry"/>
+<!--      <mxGeometry x="200" y="80" width="380" height="30" as="geometry"/>-->
     </mxCell>
     <mxCell id="7" edge="1" source="2" target="3" parent="1" value="Edge #7">
-      <mxGeometry as="geometry">
-        <Array as="points">
-          <Object x="420" y="60"/>
-        </Array>
-      </mxGeometry>
+<!--      <mxGeometry as="geometry">-->
+<!--        <Array as="points">-->
+<!--          <Object x="420" y="60"/>-->
+<!--        </Array>-->
+<!--      </mxGeometry>-->
     </mxCell>
   </root>
 </mxGraphModel>
