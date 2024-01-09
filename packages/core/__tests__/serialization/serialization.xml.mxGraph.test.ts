@@ -46,14 +46,14 @@ describe('import mxGraph model', () => {
       <mxGeometry x="380" y="20" width="140" height="30" as="geometry"/>
     </mxCell>
     <mxCell id="3" vertex="1" parent="1" value="Vertex #3">
-<!--      <mxGeometry x="200" y="80" width="380" height="30" as="geometry"/>-->
+      <mxGeometry x="200" y="80" width="380" height="30" as="geometry"/>
     </mxCell>
     <mxCell id="7" edge="1" source="2" target="3" parent="1" value="Edge #7">
-<!--      <mxGeometry as="geometry">-->
-<!--        <Array as="points">-->
-<!--          <Object x="420" y="60"/>-->
-<!--        </Array>-->
-<!--      </mxGeometry>-->
+      <mxGeometry as="geometry">
+        <Array as="points">
+          <Object x="420" y="60"/>
+        </Array>
+      </mxGeometry>
     </mxCell>
   </root>
 </mxGraphModel>
@@ -75,10 +75,13 @@ describe('import mxGraph model', () => {
       geometry: new Geometry(380, 20, 140, 30),
     });
 
-    modelChecker.expectIsVertex(model.getCell('3'), 'Vertex #3');
-    // expect(cell3?.geometry).toEqual(new Geometry(200, 80, 380, 30));  // TODO mxCell, same problem as with maxGraph model, <Element>(<unknown>cell?.geometry)
+    modelChecker.expectIsVertex(model.getCell('3'), 'Vertex #3', {
+      geometry: new Geometry(200, 80, 380, 30),
+    });
 
-    modelChecker.expectIsEdge(model.getCell('7'), 'Edge #7');
+    modelChecker.expectIsEdge(model.getCell('7'), 'Edge #7', {
+      // geometry: new Geometry(380, 20, 140, 31),
+    });
     // expect(cell7?.geometry).toEqual(new Geometry(380, 20, 140, 30)); // TODO mxCell, same problem as with maxGraph model, <Element>(<unknown>cell?.geometry)
   });
 });
