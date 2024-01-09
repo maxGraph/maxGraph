@@ -16,7 +16,7 @@ limitations under the License.
 
 import { describe, test } from '@jest/globals';
 import { ModelChecker } from './utils';
-import { CodecRegistry, GraphDataModel, ModelXmlSerializer } from '../../src';
+import { CodecRegistry, Geometry, GraphDataModel, ModelXmlSerializer } from '../../src';
 
 function logRegistry(stage: string): void {
   console.info(
@@ -43,7 +43,7 @@ describe('import mxGraph model', () => {
     <mxCell id="0"/>
     <mxCell id="1" parent="0"/>
     <mxCell id="2" vertex="1" parent="1" value="Vertex #2">
-<!--      <mxGeometry x="380" y="20" width="140" height="30" as="geometry"/>-->
+      <mxGeometry x="380" y="20" width="140" height="30" as="geometry"/>
     </mxCell>
     <mxCell id="3" vertex="1" parent="1" value="Vertex #3">
 <!--      <mxGeometry x="200" y="80" width="380" height="30" as="geometry"/>-->
@@ -59,7 +59,7 @@ describe('import mxGraph model', () => {
 </mxGraphModel>
   `;
 
-  test('Basic model', () => {
+  test('Model with geometry', () => {
     logRegistry('before');
     const model = new GraphDataModel();
     // logModelCells(model);
@@ -71,8 +71,9 @@ describe('import mxGraph model', () => {
 
     modelChecker.checkRootCells();
 
-    modelChecker.expectIsVertex(model.getCell('2'), 'Vertex #2');
-    // expect(cell2?.geometry).toEqual(new Geometry(380, 20, 140, 30));  // TODO mxCell, same problem as with maxGraph model, <Element>(<unknown>cell?.geometry)
+    modelChecker.expectIsVertex(model.getCell('2'), 'Vertex #2', {
+      geometry: new Geometry(380, 20, 140, 30),
+    });
 
     modelChecker.expectIsVertex(model.getCell('3'), 'Vertex #3');
     // expect(cell3?.geometry).toEqual(new Geometry(200, 80, 380, 30));  // TODO mxCell, same problem as with maxGraph model, <Element>(<unknown>cell?.geometry)
