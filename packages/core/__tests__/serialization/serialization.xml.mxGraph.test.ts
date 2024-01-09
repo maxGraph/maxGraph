@@ -60,10 +60,12 @@ describe('import mxGraph model', () => {
   `;
 
   test('Basic model', () => {
+    logRegistry('before');
     const model = new GraphDataModel();
-    logModelCells(model);
+    // logModelCells(model);
     new ModelXmlSerializer(model).import(mxGraphModelAsXml);
-    logModelCells(model);
+    // logModelCells(model);
+    logRegistry('after');
 
     const modelChecker = new ModelChecker(model);
 
