@@ -425,6 +425,7 @@ Property type changed from `number` (0 or 1) to `boolean` (if not specified, fro
 - `orthogonal`
 - `orthogonalLoop`
 - `pointerEvents`
+- `portConstraintRotation`
 - `resizable`
 - `resizeHeight`
 - `resizeWidth`
