@@ -16,7 +16,13 @@ limitations under the License.
 
 import { describe, test } from '@jest/globals';
 import { ModelChecker } from './utils';
-import { CodecRegistry, Geometry, GraphDataModel, ModelXmlSerializer } from '../../src';
+import {
+  CodecRegistry,
+  Geometry,
+  GraphDataModel,
+  ModelXmlSerializer,
+  Point,
+} from '../../src';
 
 function logRegistry(stage: string): void {
   console.info(
@@ -79,9 +85,11 @@ describe('import mxGraph model', () => {
       geometry: new Geometry(200, 80, 380, 30),
     });
 
+    const edgeGeometry = new Geometry();
+    // @ts-ignore TODO not correctly converted, should be new Point(420, 60)
+    edgeGeometry.points = [{ x: 420, y: 60 }];
     modelChecker.expectIsEdge(model.getCell('7'), 'Edge #7', {
-      // geometry: new Geometry(380, 20, 140, 31),
+      geometry: edgeGeometry,
     });
-    // expect(cell7?.geometry).toEqual(new Geometry(380, 20, 140, 30)); // TODO mxCell, same problem as with maxGraph model, <Element>(<unknown>cell?.geometry)
   });
 });
