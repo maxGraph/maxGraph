@@ -312,3 +312,45 @@ describe('import after export', () => {
     });
   });
 });
+
+describe('import mxGraph model', () => {
+  const mxGraphModelAsXml = `<mxGraphModel>
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2" vertex="1" parent="1" value="Interval 1">
+      <mxGeometry x="380" y="20" width="140" height="30" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>
+  `;
+
+  test('Basic model', () => {
+
+    console.info("Codecs before:", Object.getOwnPropertyNames(CodecRegistry.codecs));
+    //
+
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model).import(mxGraphModelAsXml);
+    console.info("Codecs after:", Object.getOwnPropertyNames(CodecRegistry.codecs));
+
+    const cellIds = Object.getOwnPropertyNames(model.cells);
+    console.warn("cellIds", cellIds);
+
+    expect(model.getCell('0')).toBeDefined();
+    expect(model.getCell('1')).toBeDefined();
+    const cell = model.getCell('2');
+    expect(cell).toBeDefined();
+    expect(cell?.value).toEqual('Interval 1');
+    expect(cell?.vertex).toEqual(1); // FIX should be set to true
+    expect(cell?.isVertex()).toBeTruthy();
+    expect(cell?.getParent()?.id).toEqual('1');
+    expect(cell?.geometry).toEqual(new Geometry(380, 20, 140, 30));
+    // expect(cell?.style).toEqual({
+    //   fillColor: 'green',
+    //   shape: 'triangle',
+    //   strokeWidth: 4,
+    // });
+  });
+});
+

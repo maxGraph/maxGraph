@@ -88,6 +88,9 @@ export const registerCoreCodecs = (force = false) => {
     CodecRegistry.register(new ObjectCodec({})); // Object
     CodecRegistry.register(new ObjectCodec([])); // Array
 
+    // mxGraph support
+    CodecRegistry.addAlias("mxGraphModel", "GraphModel");
+
     isCoreCodecsRegistered = true;
   }
 };

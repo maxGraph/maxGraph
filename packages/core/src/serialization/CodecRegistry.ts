@@ -110,7 +110,20 @@ class CodecRegistry {
   }
 
   static getCodecByName(name: string) {
-    return CodecRegistry.codecs[name] ?? null;
+    // Also use alias
+    console.warn("getCodecByName - name:", name)
+    let codec = CodecRegistry.codecs[name];
+    // let codec = CodecRegistry.codecs[name] ?? null;
+    if (!codec) {
+      const alias = CodecRegistry.aliases[name];
+      console.warn("getCodecByName - NO codec - alias:", alias);
+      if (alias) {
+        codec = CodecRegistry.codecs[alias];
+      }
+    }
+
+    console.warn("getCodecByName - NO codec - return codec:", codec);
+    return codec  ?? null;
   }
 }
 
