@@ -14,16 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { describe, expect, test } from '@jest/globals';
-import { createGraphWithoutContainer } from '../utils';
-import {
-  Cell,
-  CodecRegistry,
-  Geometry,
-  GraphDataModel,
-  ModelXmlSerializer,
-  Point,
-} from '../../src';
+import { describe, test } from '@jest/globals';
+import { CodecRegistry, GraphDataModel, ModelXmlSerializer } from '../../src';
+import { ModelChecker } from './serialization.xml.test';
 
 function logRegistry(stage: string): void {
   console.info(
@@ -40,41 +33,6 @@ function logModelCells(model: GraphDataModel): void {
     Object.getOwnPropertyNames(model.cells)
   );
   console.info('[logModelCells] root cell:', model.root);
-}
-
-// TODO use ModelChecker used in other serialization tests
-// also check style, geometry --> use a single parameter to check everything
-class ModelChecker {
-  constructor(private model: GraphDataModel) {}
-
-  checkRootCells() {
-    // TODO check cell 0 has no parent
-    expect(this.model.getCell('0')).toBeDefined();
-    // TODO check cell 0 is parent
-    expect(this.model.getCell('1')).toBeDefined();
-  }
-
-  checkVertexBaseProperties(cell: Cell | null, value: string) {
-    expect(cell).toBeDefined();
-    // TODO do type infer as cell is defined at this point
-    expect(cell?.value).toEqual(value);
-    expect(cell?.edge).toEqual(false);
-    expect(cell?.isEdge()).toBeFalsy();
-    expect(cell?.vertex).toEqual(1); // FIX should be set to true
-    expect(cell?.isVertex()).toBeTruthy();
-    expect(cell?.getParent()?.id).toEqual('1');
-  }
-
-  checkEdgeBaseProperties(cell: Cell | null, value: string) {
-    expect(cell).toBeDefined();
-    // TODO do type infer as cell is defined at this point
-    expect(cell?.value).toEqual(value);
-    expect(cell?.edge).toEqual(1); // FIX should be set to true
-    expect(cell?.isEdge()).toBeTruthy();
-    expect(cell?.vertex).toEqual(false);
-    expect(cell?.isVertex()).toBeFalsy();
-    expect(cell?.getParent()?.id).toEqual('1');
-  }
 }
 
 describe('import mxGraph model', () => {
@@ -110,16 +68,13 @@ describe('import mxGraph model', () => {
 
     modelChecker.checkRootCells();
 
-    const cell2 = model.getCell('2');
-    modelChecker.checkVertexBaseProperties(cell2, 'Vertex #2');
+    modelChecker.expectIsVertex(model.getCell('2'), 'Vertex #2');
     // expect(cell2?.geometry).toEqual(new Geometry(380, 20, 140, 30));  // TODO mxCell, same problem as with maxGraph model, <Element>(<unknown>cell?.geometry)
 
-    const cell3 = model.getCell('3');
-    modelChecker.checkVertexBaseProperties(cell3, 'Vertex #3');
+    modelChecker.expectIsVertex(model.getCell('3'), 'Vertex #3');
     // expect(cell3?.geometry).toEqual(new Geometry(200, 80, 380, 30));  // TODO mxCell, same problem as with maxGraph model, <Element>(<unknown>cell?.geometry)
 
-    const cell7 = model.getCell('7');
-    modelChecker.checkEdgeBaseProperties(cell7, 'Edge #7');
+    modelChecker.expectIsEdge(model.getCell('7'), 'Edge #7');
     // expect(cell7?.geometry).toEqual(new Geometry(380, 20, 140, 30)); // TODO mxCell, same problem as with maxGraph model, <Element>(<unknown>cell?.geometry)
   });
 });

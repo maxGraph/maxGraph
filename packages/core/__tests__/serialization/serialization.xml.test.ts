@@ -55,7 +55,7 @@ type ExpectCellProperties = {
 /**
  * Utility class to check the model after import.
  */
-class ModelChecker {
+export class ModelChecker {
   constructor(private model: GraphDataModel) {}
 
   checkRootCells() {
