@@ -26,19 +26,15 @@ import { copyTextToClipboard } from '../util/Utils';
 
 /**
  * A singleton class that implements a simple console.
- *
- * Variable: consoleName
- *
- * Specifies the name of the console window. Default is 'Console'.
  */
 class MaxLog {
   static textarea: HTMLTextAreaElement | null = null;
-  static window: any;
-  static td: any;
+  static window: MaxWindow;
+  static td: HTMLTableCellElement;
 
   /**
    * Initializes the DOM node for the console.
-   * This requires document.body to point to a non-null value.
+   * This requires `document.body` to point to a non-null value.
    * This is called from within setVisible if the log has not yet been initialized.
    */
   static init(): void {
@@ -175,6 +171,10 @@ class MaxLog {
     }
   }
 
+  /**
+   * Specifies the name of the console window.
+   * @default 'Console'
+   */
   static consoleName = 'Console';
 
   /**
@@ -218,9 +218,8 @@ class MaxLog {
   }
 
   /**
-   * Returns true if the console is visible.
+   * Returns `true` if the console is visible.
    */
-  // static isVisible(): boolean;
   static isVisible() {
     if (MaxLog.window != null) {
       return MaxLog.window.isVisible();
@@ -232,7 +231,6 @@ class MaxLog {
   /**
    * Shows the console.
    */
-  // static show(): void;
   static show() {
     MaxLog.setVisible(true);
   }
@@ -251,7 +249,7 @@ class MaxLog {
   }
 
   /**
-   * Writes the specified string to the console if TRACE is true and returns the current time in milliseconds.
+   * Writes the specified string to the console if {@link TRACE} is `true` and returns the current time in milliseconds.
    */
   static enter(string: string): number | undefined {
     if (MaxLog.TRACE) {
@@ -261,10 +259,10 @@ class MaxLog {
   }
 
   /**
-   * Writes the specified string to the console
-   * if <TRACE> is true and computes the difference
-   * between the current time and t0 in milliseconds.
-   * See <enter> for an example.
+   * Writes the specified string to the console if {@link TRACE} is `true` and computes the difference between the current
+   * time and t0 in milliseconds.
+   *
+   * @see {@link enter} for an example.
    */
   static leave(string: string, t0: number) {
     if (MaxLog.TRACE) {
@@ -274,9 +272,8 @@ class MaxLog {
   }
 
   /**
-   * Adds all arguments to the console if DEBUG is enabled.
+   * Adds all arguments to the console if {@link DEBUG} is enabled.
    */
-  // static debug(message: string): void;
   static debug(...args: string[]) {
     if (MaxLog.DEBUG) {
       MaxLog.writeln(...args);
@@ -284,9 +281,8 @@ class MaxLog {
   }
 
   /**
-   * Adds all arguments to the console if WARN is enabled.
+   * Adds all arguments to the console if {@link WARN} is enabled.
    */
-  // static warn(message: string): void;
   static warn(...args: string[]) {
     if (MaxLog.WARN) {
       MaxLog.writeln(...args);
