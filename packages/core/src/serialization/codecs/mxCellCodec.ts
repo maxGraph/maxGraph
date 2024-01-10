@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { convertStyleFromString } from './mxGraph/utils';
 import { CellCodec } from './CellCodec';
+import type Codec from '../Codec';
 
 /**
  * CellCodec to support the legacy `mxGraph` format.
@@ -22,5 +24,17 @@ import { CellCodec } from './CellCodec';
 export class mxCellCodec extends CellCodec {
   getName(): string {
     return 'mxCell';
+  }
+
+  decodeAttribute(dec: Codec, attr: any, obj?: any) {
+    const attributeNodeName = attr.nodeName;
+    // console.info('@@mxCellCodec decodeAttribute attributeNodeName:', attributeNodeName);
+    if (attributeNodeName == 'style') {
+      const attributeValue = attr.value;
+      console.info('@@mxCellCodec decodeAttribute --> detected style:', attributeValue);
+      convertStyleFromString(attributeValue);
+    } else {
+      super.decodeAttribute(dec, attr, obj);
+    }
   }
 }

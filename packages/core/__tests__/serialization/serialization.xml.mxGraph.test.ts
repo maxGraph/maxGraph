@@ -16,13 +16,7 @@ limitations under the License.
 
 import { describe, test } from '@jest/globals';
 import { ModelChecker } from './utils';
-import {
-  CodecRegistry,
-  Geometry,
-  GraphDataModel,
-  ModelXmlSerializer,
-  Point,
-} from '../../src';
+import { CodecRegistry, Geometry, GraphDataModel, ModelXmlSerializer } from '../../src';
 
 function logRegistry(stage: string): void {
   console.info(
@@ -42,9 +36,9 @@ function logModelCells(model: GraphDataModel): void {
 }
 
 describe('import mxGraph model', () => {
-  // TODO test geometry
-  // TODO also test what happens when the style property is set --> dedicated model without geometry
-  const mxGraphModelAsXml = `<mxGraphModel>
+  test('Model with geometry', () => {
+    // TODO also test what happens when the style property is set --> dedicated model without geometry
+    const mxGraphModelAsXml = `<mxGraphModel>
   <root>
     <mxCell id="0"/>
     <mxCell id="1" parent="0"/>
@@ -65,7 +59,6 @@ describe('import mxGraph model', () => {
 </mxGraphModel>
   `;
 
-  test('Model with geometry', () => {
     logRegistry('before');
     const model = new GraphDataModel();
     // logModelCells(model);
@@ -93,16 +86,28 @@ describe('import mxGraph model', () => {
     });
   });
 
-  // test('Model with style', () => {
-  //   logRegistry('before');
-  //   const model = new GraphDataModel();
-  //   // logModelCells(model);
-  //   new ModelXmlSerializer(model).import(mxGraphModelAsXml);
-  //   // logModelCells(model);
-  //   logRegistry('after');
-  //
-  //   const modelChecker = new ModelChecker(model);
-  //
-  //   modelChecker.checkRootCells();
-  // });
+  test('Model with style', () => {
+    const xmlWithStyleAttribute = `<mxGraphModel>
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2" vertex="1" parent="1" value="Vertex with style" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E6E6E6;dashed=1;">
+    </mxCell>
+  </root>
+</mxGraphModel>`;
+
+    // logRegistry('before');
+    const model = new GraphDataModel();
+    // logModelCells(model);
+    new ModelXmlSerializer(model).import(xmlWithStyleAttribute);
+    // logModelCells(model);
+    // logRegistry('after');
+
+    const modelChecker = new ModelChecker(model);
+
+    modelChecker.checkRootCells();
+    modelChecker.expectIsVertex(model.getCell('2'), 'Vertex with style', {
+      style: { rounded: true, fillColor: 'fillColor=#E6E6E6' },
+    });
+  });
 });
