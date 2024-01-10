@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { convertStyleFromString } from './mxGraph/utils';
-import { CellCodec } from './CellCodec';
-import type Codec from '../Codec';
+import { convertStyleFromString } from './utils';
+import { CellCodec } from '../CellCodec';
+import type Codec from '../../Codec';
 
 /**
  * CellCodec to support the legacy `mxGraph` format.

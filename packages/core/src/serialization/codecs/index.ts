@@ -20,7 +20,7 @@ export * from './ChildChangeCodec';
 export * from './GenericChangeCodec';
 export * from './GraphViewCodec';
 export * from './ModelCodec';
-export * from './mxCellCodec';
 export * from './RootChangeCodec';
 export * from './StylesheetCodec';
 export * from './TerminalChangeCodec';
+export * from './mxGraph/mxCellCodec';
