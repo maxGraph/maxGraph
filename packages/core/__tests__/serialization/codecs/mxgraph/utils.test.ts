@@ -14,14 +14,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// manage leading ; (see issue to support )
-// manage trailing ; (skip element)
-// manage base name style (no =)
+// basic properties
+import { describe, expect, test } from '@jest/globals';
+import { convertStyleFromString } from '../../../../src/serialization/codecs/mxGraph/utils';
+import { CellStateStyle, CellStyle } from '../../../../src';
 
-// from https://github.com/maxGraph/maxGraph/issues/102#issuecomment-1225577772
-// rounded=0;whiteSpace=wrap;html=1;fillColor=#E6E6E6;dashed=1;
+describe('convertStyleFromString', () => {
+  test('Basic', () => {
+    // adapted from https://github.com/maxGraph/maxGraph/issues/221
+    expect(
+      convertStyleFromString(
+        'rounded=0;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=27'
+      )
+    ).toEqual({
+      rounded: 0, // FIX should be true
+      whiteSpace: 'wrap',
+      fillColor: '#dae8fc',
+      strokeColor: '#6c8ebf',
+      fontStyle: 1,
+      fontSize: 27,
+    });
+  });
+  // test('Model with geometry', () => {});
+  // test('Model with geometry', () => {});
 
-// from https://github.com/maxGraph/maxGraph/issues/221
-// rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=27;
+  // manage leading ; (see issue to support )
 
-// add example with renamed properties (see migration guide)
+  // manage trailing ; (skip element)
+  // from https://github.com/maxGraph/maxGraph/issues/102#issuecomment-1225577772
+  // rounded=0;whiteSpace=wrap;html=1;fillColor=#E6E6E6;dashed=1;
+
+  // manage base name style (no = at the begining and in the middle)
+
+  // add example with renamed properties (see migration guide)
+});
