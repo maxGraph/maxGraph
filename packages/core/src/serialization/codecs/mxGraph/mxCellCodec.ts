@@ -28,11 +28,8 @@ export class mxCellCodec extends CellCodec {
 
   decodeAttribute(dec: Codec, attr: any, obj?: any) {
     const attributeNodeName = attr.nodeName;
-    // console.info('@@mxCellCodec decodeAttribute attributeNodeName:', attributeNodeName);
-    if (attributeNodeName == 'style') {
-      const attributeValue = attr.value;
-      console.info('@@mxCellCodec decodeAttribute --> detected style:', attributeValue);
-      convertStyleFromString(attributeValue);
+    if (obj && attributeNodeName == 'style') {
+      obj['style'] = convertStyleFromString(attr.value);
     } else {
       super.decodeAttribute(dec, attr, obj);
     }

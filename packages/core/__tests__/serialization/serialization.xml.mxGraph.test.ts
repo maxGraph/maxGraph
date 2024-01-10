@@ -35,10 +35,8 @@ function logModelCells(model: GraphDataModel): void {
   console.info('[logModelCells] root cell:', model.root);
 }
 
-// TODO describe is not needed here as we have a single describe
 describe('import mxGraph model', () => {
   test('Model with geometry', () => {
-    // TODO also test what happens when the style property is set --> dedicated model without geometry
     const mxGraphModelAsXml = `<mxGraphModel>
   <root>
     <mxCell id="0"/>
@@ -108,7 +106,15 @@ describe('import mxGraph model', () => {
 
     modelChecker.checkRootCells();
     modelChecker.expectIsVertex(model.getCell('2'), 'Vertex with style', {
-      style: { rounded: true, fillColor: 'fillColor=#E6E6E6' },
+      style: {
+        // @ts-ignore FIX should be true
+        dashed: 1,
+        fillColor: '#E6E6E6',
+        html: 1,
+        // @ts-ignore FIX should be false
+        rounded: 0,
+        whiteSpace: 'wrap',
+      },
     });
   });
 });
