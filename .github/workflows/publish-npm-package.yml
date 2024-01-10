@@ -1,0 +1,22 @@
+name: Publish NPM Package
+on:
+  push:
+    tags:
+      -  v*
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      # required for "npm provenance"
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Setup
+        uses: ./.github/actions/build-setup
+        with:
+          registry-url: 'https://registry.npmjs.org'
+      # scoped package requires "access=public"
+      - run: npm publish -w packages/core --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
