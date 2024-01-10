@@ -17,10 +17,6 @@ limitations under the License.
 import { isNumeric } from '../../../util/mathUtils';
 
 export function convertStyleFromString(input: string) {
-  // manage leading ; (see issue to support )
-  // manage trailing ; (skip element)
-  // manage base name style (no =)
-
   const style = {};
 
   // input
