@@ -36,13 +36,24 @@ describe('convertStyleFromString', () => {
     });
   });
   // test('Model with geometry', () => {});
-  // test('Model with geometry', () => {});
 
   // manage leading ; (see issue to support )
 
   // manage trailing ; (skip element)
-  // from https://github.com/maxGraph/maxGraph/issues/102#issuecomment-1225577772
-  // rounded=0;whiteSpace=wrap;html=1;fillColor=#E6E6E6;dashed=1;
+  test('With trailing ;', () => {
+    // from https://github.com/maxGraph/maxGraph/issues/102#issuecomment-1225577772
+    expect(
+      convertStyleFromString(
+        'rounded=0;whiteSpace=wrap;html=1;fillColor=#E6E6E6;dashed=1;'
+      )
+    ).toEqual({
+      rounded: 0, // FIX should be true
+      whiteSpace: 'wrap',
+      html: 1, // custom draw.io
+      fillColor: '#E6E6E6',
+      dashed: 1,
+    });
+  });
 
   // manage base name style (no = at the begining and in the middle)
 

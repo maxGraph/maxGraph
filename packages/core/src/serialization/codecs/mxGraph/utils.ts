@@ -25,8 +25,10 @@ export function convertStyleFromString(input: string) {
   //     .filter(([k]) => k === key)
   //     .map(([, v]) => v)[0] ?? defaultValue;
 
-  const elements = input.split(';');
-  // .filter(([k]) => Boolean) // TODO filter empty key
+  const elements = input
+    .split(';')
+    // filter empty key
+    .filter(([k]) => k);
   for (let element of elements) {
     // if element doesn't contain =, it is a base style
     const [key, value] = element.split('=');
