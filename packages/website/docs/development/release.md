@@ -56,8 +56,9 @@ git tag v0.2.0
 
 ## Publish the npm package
 
-TODO link to the new workflow
+The package is published automatically once the Git tag is pushed thanks to a [GitHub workflow](https://github.com/maxGraph/maxgraph-integration-examples/actions/workflows/publish-npm-package.yml).
 
+If its execution fails, and you want to publish the package manually:
 - Checkout the tag that has just been created
 - From packages/core:
   - run `npm publish`
