@@ -92,4 +92,17 @@ describe('import mxGraph model', () => {
       geometry: edgeGeometry,
     });
   });
+
+  // test('Model with style', () => {
+  //   logRegistry('before');
+  //   const model = new GraphDataModel();
+  //   // logModelCells(model);
+  //   new ModelXmlSerializer(model).import(mxGraphModelAsXml);
+  //   // logModelCells(model);
+  //   logRegistry('after');
+  //
+  //   const modelChecker = new ModelChecker(model);
+  //
+  //   modelChecker.checkRootCells();
+  // });
 });
