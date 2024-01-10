@@ -63,25 +63,30 @@ git tag v0.2.0
 
 ## Create the GitHub release
 
+The release workflow has initiated a new draft GitHub release, which needs to be updated and published.
+For more details about GitHub release, follow the [GitHub help](https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release)
+
+Find a better version
+
 **Example**: Use the [maxGraph 0.1.0 release](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) for inspiration
 
-Create a [new draft release](https://github.com/maxGraph/maxGraph/releases/)
-- name: use the version that has just been published
-- tag: use the tag create before
-- save it as a draft
-
-Generate the list of the major changes by using the [automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes).
-It is based on the labels of the merged Pull Requests included in this release and the [GitHub release configuration](https://github.com/maxGraph/maxGraph/blob/development/.github/release.yml).
-
-If the list is incorrect (for example, an item is not in the correct category), update the label(s) or the associated
-Pull Request and regenerate the list.
 
 On top of the auto-generated list, add a few words to highlight important changes. In particular, list **_breaking changes_**.
 
+**REMOVE**
 Also add links to the
 - npm package
 - GitHub milestone
 - related paragraph in the Changelog file
+
+
+The list of the major changes has been [automatically generated](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes). Review and adjust it if necessary:
+  - It is based on the labels of the merged Pull Requests included in this release and the [GitHub release configuration](https://github.com/maxGraph/maxGraph/blob/development/.github/release.yml).
+  - If the list is incorrect (for example, an item is not in the correct category), update the label(s) or the associated
+Pull Request and regenerate the list.
+
+
+
 
 Before you publish the release, make sure that a discussion will be created in the `Announces` category when the release
 is published.
