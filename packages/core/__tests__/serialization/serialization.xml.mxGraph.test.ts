@@ -35,6 +35,7 @@ function logModelCells(model: GraphDataModel): void {
   console.info('[logModelCells] root cell:', model.root);
 }
 
+// TODO describe is not needed here as we have a single describe
 describe('import mxGraph model', () => {
   test('Model with geometry', () => {
     // TODO also test what happens when the style property is set --> dedicated model without geometry
