@@ -15,15 +15,10 @@ limitations under the License.
 */
 
 import { isNumeric } from '../../../util/mathUtils';
+import type { CellStyle } from '../../../types';
 
 export function convertStyleFromString(input: string) {
-  const style = {};
-
-  // input
-  //     ?.split(';')
-  //     .map(entry => entry.split('='))
-  //     .filter(([k]) => k === key)
-  //     .map(([, v]) => v)[0] ?? defaultValue;
+  const style: CellStyle = {};
 
   const elements = input
     .split(';')
@@ -31,14 +26,16 @@ export function convertStyleFromString(input: string) {
     .filter(([k]) => k);
   for (let element of elements) {
     // if element doesn't contain =, it is a base style
-    const [key, value] = element.split('=');
-
-    console.info('@@convertStyleFromString key:', key);
-    // @ts-ignore
-    style[key] = convertToNumericIfNeeded(value);
+    if (!element.includes('=')) {
+      !style.baseStyleNames && (style.baseStyleNames = []);
+      style.baseStyleNames.push(element);
+    } else {
+      const [key, value] = element.split('=');
+      // @ts-ignore
+      style[key] = convertToNumericIfNeeded(value);
+    }
   }
 
-  console.info('@@convertStyleFromString input %s, return: ', input, style);
   return style;
 }
 

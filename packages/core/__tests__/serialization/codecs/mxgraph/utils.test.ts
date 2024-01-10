@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// basic properties
 import { describe, expect, test } from '@jest/globals';
 import { convertStyleFromString } from '../../../../src/serialization/codecs/mxGraph/utils';
-import { CellStateStyle, CellStyle } from '../../../../src';
+import { CellStyle } from '../../../../src';
 
 describe('convertStyleFromString', () => {
   test('Basic', () => {
@@ -35,7 +34,6 @@ describe('convertStyleFromString', () => {
       fontSize: 27,
     });
   });
-  // test('Model with geometry', () => {});
 
   test('With leading ;', () => {
     // TODO update when implementing https://github.com/maxGraph/maxGraph/issues/154
@@ -45,7 +43,6 @@ describe('convertStyleFromString', () => {
     });
   });
 
-  // manage trailing ; (skip element)
   test('With trailing ;', () => {
     // from https://github.com/maxGraph/maxGraph/issues/102#issuecomment-1225577772
     expect(
@@ -62,6 +59,17 @@ describe('convertStyleFromString', () => {
   });
 
   // manage base name style (no = at the begining and in the middle)
+  test('With base name style', () => {
+    expect(
+      convertStyleFromString(
+        'rectangle;fontColor=yellow;customRectangle;gradientColor=white;'
+      )
+    ).toEqual(<CellStyle>{
+      baseStyleNames: ['rectangle', 'customRectangle'],
+      fontColor: 'yellow',
+      gradientColor: 'white',
+    });
+  });
 
   // add example with renamed properties (see migration guide)
 });
