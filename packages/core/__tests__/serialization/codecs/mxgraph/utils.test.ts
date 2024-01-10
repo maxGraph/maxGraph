@@ -37,7 +37,13 @@ describe('convertStyleFromString', () => {
   });
   // test('Model with geometry', () => {});
 
-  // manage leading ; (see issue to support )
+  test('With leading ;', () => {
+    // TODO update when implementing https://github.com/maxGraph/maxGraph/issues/154
+    expect(convertStyleFromString(';arcSize=4;endSize=5;')).toEqual({
+      arcSize: 4,
+      endSize: 5,
+    });
+  });
 
   // manage trailing ; (skip element)
   test('With trailing ;', () => {
