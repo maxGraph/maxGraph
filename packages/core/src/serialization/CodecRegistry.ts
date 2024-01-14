@@ -100,23 +100,23 @@ class CodecRegistry {
     // Equivalent of calling import { getFunctionName } from '../util/StringUtils';
     let name =
       typeof constructorOrName === 'string' ? constructorOrName : constructorOrName.name;
-    // console.info(
-    //   'CodecRegistry.getCodec - name (direct or assume from constructor):',
-    //   name
-    // );
-    //
-    // const tmp = CodecRegistry.aliases[name];
-    // console.info('CodecRegistry.getCodec - alias resolution:', tmp);
-    //
-    // if (tmp != null) {
-    //   name = tmp;
-    // }
-    // console.info('CodecRegistry.getCodec - used name to find codec:', name);
+    console.info(
+      'CodecRegistry.getCodec - name (direct or assume from constructor):',
+      name
+    );
 
-    // codec = CodecRegistry.codecs[name] ?? null;
+    const tmp = CodecRegistry.aliases[name];
+    console.info('CodecRegistry.getCodec - alias resolution:', tmp);
+
+    if (tmp != null) {
+      name = tmp;
+    }
+    console.info('CodecRegistry.getCodec - used name to find codec:', name);
+
+    codec = CodecRegistry.codecs[name] ?? null;
 
     // TODO this change is required when introducing an alias for mxCell
-    codec = this.getCodecByName(name);
+    // codec = this.getCodecByName(name);
 
     console.info('CodecRegistry.getCodec - found codec:', codec != null);
     // console.info('CodecRegistry.getCodec - found codec:', codec);
