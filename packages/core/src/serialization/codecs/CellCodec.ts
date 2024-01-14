@@ -112,9 +112,7 @@ export class CellCodec extends ObjectCodec {
     let inner: Element | null = <Element>node.cloneNode(true);
     const classname = this.getName();
 
-    console.info('[CellCodec.beforeDecode] nodeName/classname', node.nodeName, classname);
     if (node.nodeName !== classname) {
-      console.info('[CellCodec.beforeDecode] nodeName/classname are not matching');
       // Passes the inner graphical annotation node to the
       // object codec for further processing of the cell.
       const tmp = node.getElementsByTagName(classname)[0];

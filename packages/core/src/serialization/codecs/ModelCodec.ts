@@ -18,7 +18,6 @@ import ObjectCodec from '../ObjectCodec';
 import GraphDataModel from '../../view/GraphDataModel';
 import Cell from '../../view/cell/Cell';
 import type Codec from '../Codec';
-import { getPrettyXml } from '../../util/xmlUtils';
 
 /**
  * Codec for {@link GraphDataModel}s.
@@ -55,23 +54,13 @@ export class ModelCodec extends ObjectCodec {
    * Reads the cells into the graph model. All cells are children of the root element in the node.
    */
   decodeRoot(dec: Codec, root: Element, model: GraphDataModel) {
-    console.info('ModelCodec.decodeRoot - start');
-    // console.info('ModelCodec.decodeRoot - start. dec: ', dec);
     let rootCell = null;
     let tmp = root.firstChild as Element;
 
     while (tmp != null) {
-      console.info('ModelCodec.decodeRoot - tmp node', tmp);
       // TODO review the signature of decodeCell
       // @ts-ignore
       const cell = dec.decodeCell(tmp);
-
-      const cellValue = cell?.value;
-      console.info(
-        'ModelCodec.decodeRoot - decoded cell (id, value): ',
-        cell?.id,
-        cellValue instanceof Element ? getPrettyXml(cellValue) : cellValue
-      );
 
       if (cell != null && cell.getParent() == null) {
         rootCell = cell;
@@ -80,7 +69,6 @@ export class ModelCodec extends ObjectCodec {
     }
 
     // Sets the root on the model if one has been decoded
-    console.info('ModelCodec.decodeRoot - found rootCell', rootCell);
     if (rootCell != null) {
       model.setRoot(rootCell);
     }

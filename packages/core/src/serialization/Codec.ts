@@ -23,8 +23,6 @@ import Cell from '../view/cell/Cell';
 import MaxLog from '../gui/MaxLog';
 import { getFunctionName } from '../util/StringUtils';
 import { importNode, isNode } from '../util/domUtils';
-import ObjectCodec from './ObjectCodec';
-import { getPrettyXml } from '../util/xmlUtils';
 
 const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);
@@ -417,7 +415,6 @@ class Codec {
    * Default is `true`.
    */
   decodeCell(node: Element, restoreStructures = true): Cell {
-    console.info('[Codec.decodeCell] start - node.nodeType', node?.nodeType);
     let cell = null;
 
     // TODO can be simplify, invert condition an return a null value, so cell can be declared as const
@@ -427,34 +424,23 @@ class Codec {
       // not return a codec then the node is the user object (an XML node
       // that contains the mxCell, aka inversion).
       let decoder = CodecRegistry.getCodec(node.nodeName);
-      console.info('[Codec.decodeCell] decoder retrieved');
-      // Tries to find the codec for the cell inside the user object.
 
+      // Tries to find the codec for the cell inside the user object.
       // This assumes all node names inside the user object are either
       // not registered or they correspond to a class for cells.
       if (!this.isCellCodec(decoder)) {
-        console.info('[Codec.decodeCell] decoder is a not cell codec');
         let child = node.firstChild as Element;
-        // @ts-ignore
-        console.info('[Codec.decodeCell] first child', getPrettyXml(child));
 
         while (child != null && !this.isCellCodec(decoder)) {
           decoder = CodecRegistry.getCodec(child.nodeName);
           child = child.nextSibling as Element;
-          // @ts-ignore
-          console.info('[Codec.decodeCell] nextSibling', getPrettyXml(child));
         }
-        console.info('[Codec.decodeCell] decoder after checking children?', !!decoder);
       }
+
       if (!this.isCellCodec(decoder)) {
         decoder = CodecRegistry.getCodec(Cell);
-        console.info(
-          '[Codec.decodeCell] still not a cell decoder, get cell decoder?',
-          !!decoder
-        );
       }
       cell = decoder?.decode(this, node); // TODO as Cell; impact method signature
-      console.info('[Codec.decodeCell] do decoding, cell?', !!cell);
 
       if (restoreStructures) {
         this.insertIntoGraph(cell);
