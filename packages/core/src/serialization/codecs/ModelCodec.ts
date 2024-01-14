@@ -58,8 +58,6 @@ export class ModelCodec extends ObjectCodec {
     let tmp = root.firstChild as Element;
 
     while (tmp != null) {
-      // TODO review the signature of decodeCell
-      // @ts-ignore
       const cell = dec.decodeCell(tmp);
 
       if (cell != null && cell.getParent() == null) {
