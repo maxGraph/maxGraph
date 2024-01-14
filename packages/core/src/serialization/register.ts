@@ -26,6 +26,7 @@ import {
   GraphViewCodec,
   ModelCodec,
   mxCellCodec,
+  mxGeometryCodec,
   RootChangeCodec,
   StylesheetCodec,
   TerminalChangeCodec,
@@ -39,7 +40,6 @@ import GeometryChange from '../view/undoable_changes/GeometryChange';
 import StyleChange from '../view/undoable_changes/StyleChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
 import VisibleChange from '../view/undoable_changes/VisibleChange';
-import { mxGeometryCodec } from './codecs/mxGraph/mxGeometryCodec';
 
 const registerGenericChangeCodecs = () => {
   const __dummy: any = undefined;
