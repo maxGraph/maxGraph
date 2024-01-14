@@ -120,3 +120,27 @@ describe('import mxGraph model', () => {
     });
   });
 });
+
+describe('import model from draw.io', () => {
+  test('from https://github.com/maxGraph/maxGraph/issues/221', () => {
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model)
+      .import(`<mxGraphModel dx="1502" dy="926" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1"
+              pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2Ija7sB8CSz23ppRtK8d-5" value="PostgreSQL"
+            style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=27;"
+            parent="1" vertex="1">
+      <mxGeometry x="650" y="430" width="210" height="80" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>`);
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
+    modelChecker.expectIsVertex(model.getCell('2Ija7sB8CSz23ppRtK8d-5'), 'PostgreSQL');
+  });
+});
