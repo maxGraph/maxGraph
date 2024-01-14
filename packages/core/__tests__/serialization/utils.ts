@@ -40,6 +40,11 @@ export class ModelChecker {
     expect(cell1?.parent).toBe(cell0);
   }
 
+  checkCellsCount(count: number) {
+    const cellIds = Object.getOwnPropertyNames(this.model.cells);
+    expect(cellIds).toHaveLength(count);
+  }
+
   expectIsVertex(cell: Cell | null, value: string, properties?: ExpectCellProperties) {
     this.checkCellBaseProperties(cell, value, properties);
     if (!cell) return; // cannot occur, this is enforced by checkCellBaseProperties

@@ -68,6 +68,7 @@ describe('import mxGraph model', () => {
     const modelChecker = new ModelChecker(model);
 
     modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(5);
 
     modelChecker.expectIsVertex(model.getCell('2'), 'Vertex #2', {
       geometry: new Geometry(380, 20, 140, 30),
@@ -105,6 +106,7 @@ describe('import mxGraph model', () => {
     const modelChecker = new ModelChecker(model);
 
     modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
     modelChecker.expectIsVertex(model.getCell('2'), 'Vertex with style', {
       style: {
         // @ts-ignore FIX should be true
