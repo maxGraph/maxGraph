@@ -79,7 +79,11 @@ class CodecRegistry {
   }
 
   /**
-   * Returns a codec that handles objects that are constructed using the given constructor.
+   * Returns a codec that handles objects that are constructed using the given constructor or a codec registered under the provided name.
+   *
+   * When passing a name, the method first check if an alias exists for the name, and if so, it uses it to retrieve the codec.
+   *
+   * If there is no registered Codec, the method tries to register a new Codec using the provided constructor.
    *
    * @param constructorOrName JavaScript constructor function of the Codec or Codec name.
    */
@@ -88,44 +92,23 @@ class CodecRegistry {
       return null;
     }
 
-    // TODO wrong JSDoc the parameter is a string or a constructor + rename parameter for clarity
-    // if a string, try to get the codec by name and by alias (should probably use the code of getCodecByName)
-    // if no codec, it register a new codec for the providing "type" pass as constructor
     let codec = null;
 
-    // console.info('CodecRegistry.getCodec - parameter as string: %s', constructorOrName);
-
-    console.info('CodecRegistry.getCodec - parameter type:', typeof constructorOrName);
-    // let { name } = constructorOrName;
     // Equivalent of calling import { getFunctionName } from '../util/StringUtils';
     let name =
       typeof constructorOrName === 'string' ? constructorOrName : constructorOrName.name;
-    console.info(
-      'CodecRegistry.getCodec - name (direct or assume from constructor):',
-      name
-    );
 
     const tmp = CodecRegistry.aliases[name];
-    console.info('CodecRegistry.getCodec - alias resolution:', tmp);
-
     if (tmp != null) {
       name = tmp;
     }
-    console.info('CodecRegistry.getCodec - used name to find codec:', name);
 
     codec = CodecRegistry.codecs[name] ?? null;
-
-    // TODO this change is required when introducing an alias for mxCell
-    // codec = this.getCodecByName(name);
-
-    console.info('CodecRegistry.getCodec - found codec:', codec != null);
-    // console.info('CodecRegistry.getCodec - found codec:', codec);
 
     // Registers a new default codec for the given constructor if no codec has been previously defined.
     if (codec == null) {
       try {
         codec = new ObjectCodec(new constructorOrName());
-        console.info('CodecRegistry.getCodec - no codec, so register:', codec);
         CodecRegistry.register(codec);
       } catch (e) {
         // ignore
@@ -140,30 +123,14 @@ class CodecRegistry {
    * @param name the name of the codec that is willing to be retrieved.
    */
   static getCodecByName(name: string) {
-    // TODO the implementation in getCodec differs, it first tries to resolve the alias
-    // this is the compact form
-    // const codecName = CodecRegistry.aliases[name] ?? name;
-    // return  CodecRegistry.codecs[codecName] ?? null;
-
-    // Also use alias
-    console.info('CodecRegistry.getCodecByName - name:', name);
     let codec = CodecRegistry.codecs[name];
-    // let codec = CodecRegistry.codecs[name] ?? null;
     if (!codec) {
       const alias = CodecRegistry.aliases[name];
-      console.info('CodecRegistry.getCodecByName - NO codec - alias:', alias);
       if (alias) {
         codec = CodecRegistry.codecs[alias];
-        console.info(
-          'CodecRegistry.getCodecByName - NO codec - codec from alias:',
-          !!codec
-          // codec
-        );
       }
     }
 
-    console.info('CodecRegistry.getCodecByName - found codec:', !!codec);
-    // console.info('CodecRegistry.getCodecByName - found codec:', codec);
     return codec ?? null;
   }
 }
