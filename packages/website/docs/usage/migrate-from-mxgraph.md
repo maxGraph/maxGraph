@@ -508,6 +508,7 @@ Be aware of the properties that have been renamed or whose value types have chan
 
 **Migration example**
 
+If you want to write code to migrate mxGraph to maxGraph style, you can have a look at `packages/core/src/serialization/codecs/mxGraph/utils.ts`.
 
 ```js
 // Before
