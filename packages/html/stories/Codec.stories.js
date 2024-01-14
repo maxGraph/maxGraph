@@ -116,9 +116,6 @@ const Template = ({ label, ...args }) => {
   graph.setTooltips(false);
   graph.setEnabled(false);
 
-  const model = new GraphDataModel();
-  new ModelXmlSerializer(graph.getDataModel()).import(xmlModel);
-
   // Changes the default style for edges "in-place"
   const style = graph.getStylesheet().getDefaultEdgeStyle();
   style.edge = EdgeStyle.ElbowConnector;
@@ -130,14 +127,14 @@ const Template = ({ label, ...args }) => {
   graph.container.style.cursor = 'move';
   graph.setPanning(true);
 
-  if (divs[i].style.width === '' && divs[i].style.height === '') {
-    graph.resizeContainer = true;
-  } else {
-    // Adds border for fixed size boxes
-    graph.border = 20;
-  }
+  // if (divs[i].style.width === '' && divs[i].style.height === '') {
+  //   graph.resizeContainer = true;
+  // } else {
+  //   // Adds border for fixed size boxes
+  //   graph.border = 20;
+  // }
 
-  decoder.decode(node, graph.getDataModel());
+  new ModelXmlSerializer(graph.getDataModel()).import(xmlModel);
   graph.resizeContainer = false;
 
   // Adds zoom buttons in top, left corner
@@ -155,7 +152,7 @@ const Template = ({ label, ...args }) => {
 
   function addButton(label, funct) {
     const btn = document.createElement('div');
-    const labelNode = btn.ownerDocument.createTextNode(text);
+    const labelNode = btn.ownerDocument.createTextNode(label);
     btn.appendChild(labelNode);
 
     btn.style.position = 'absolute';
@@ -192,4 +189,8 @@ const Template = ({ label, ...args }) => {
   } else {
     container.appendChild(buttons);
   }
+
+  return div;
 };
+
+export const Default = Template.bind({});
