@@ -24,7 +24,7 @@ export function convertStyleFromString(input: string) {
     .split(';')
     // filter empty key
     .filter(([k]) => k);
-  for (let element of elements) {
+  for (const element of elements) {
     // if element doesn't contain =, it is a base style
     if (!element.includes('=')) {
       !style.baseStyleNames && (style.baseStyleNames = []);
