@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import {
-  EdgeStyle,
   Graph,
   InternalEvent,
   ModelXmlSerializer,
@@ -112,7 +111,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   // Changes the default style for edges "in-place"
   const style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edgeStyle = EdgeStyle.ElbowConnector;
+  style.edgeStyle = 'elbowEdgeStyle';
 
   // Enables panning with left mouse button
   const panningHandler = graph.getPlugin('PanningHandler') as PanningHandler;
