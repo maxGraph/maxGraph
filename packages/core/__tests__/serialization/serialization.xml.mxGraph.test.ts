@@ -24,23 +24,6 @@ import {
   Point,
 } from '../../src';
 
-function logRegistry(stage: string): void {
-  console.info(
-    `Codecs properties ${stage}:`,
-    Object.getOwnPropertyNames(CodecRegistry.codecs)
-  );
-  console.info(`Codecs ${stage}:`, CodecRegistry.codecs);
-  console.info(`Aliases ${stage}:`, CodecRegistry.aliases);
-}
-
-function logModelCells(model: GraphDataModel): void {
-  console.info(
-    '[logModelCells] cellIds in model:',
-    Object.getOwnPropertyNames(model.cells)
-  );
-  console.info('[logModelCells] root cell:', model.root);
-}
-
 describe('import mxGraph model', () => {
   test('Model with geometry', () => {
     const mxGraphModelAsXml = `<mxGraphModel>
@@ -64,12 +47,8 @@ describe('import mxGraph model', () => {
 </mxGraphModel>
   `;
 
-    logRegistry('before');
     const model = new GraphDataModel();
-    // logModelCells(model);
     new ModelXmlSerializer(model).import(mxGraphModelAsXml);
-    // logModelCells(model);
-    logRegistry('after');
 
     const modelChecker = new ModelChecker(model);
 
@@ -101,12 +80,8 @@ describe('import mxGraph model', () => {
   </root>
 </mxGraphModel>`;
 
-    // logRegistry('before');
     const model = new GraphDataModel();
-    // logModelCells(model);
     new ModelXmlSerializer(model).import(xmlWithStyleAttribute);
-    // logModelCells(model);
-    // logRegistry('after');
 
     const modelChecker = new ModelChecker(model);
 
