@@ -414,37 +414,35 @@ class Codec {
    * and insertEdge on the parent and terminals, respectively.
    * Default is `true`.
    */
-  decodeCell(node: Element, restoreStructures = true): Cell {
-    let cell = null;
+  decodeCell(node: Element, restoreStructures = true): Cell | null {
+    if (node?.nodeType !== NODETYPE.ELEMENT) {
+      return null;
+    }
 
-    // TODO can be simplify, invert condition an return a null value, so cell can be declared as const
-    // if (node != null && node.nodeType === NODETYPE.ELEMENT) {
-    if (node?.nodeType === NODETYPE.ELEMENT) {
-      // Tries to find a codec for the given node name. If that does
-      // not return a codec then the node is the user object (an XML node
-      // that contains the mxCell, aka inversion).
-      let decoder = CodecRegistry.getCodec(node.nodeName);
+    // Tries to find a codec for the given node name. If that does
+    // not return a codec then the node is the user object (an XML node
+    // that contains the mxCell, aka inversion).
+    let decoder = CodecRegistry.getCodec(node.nodeName);
 
-      // Tries to find the codec for the cell inside the user object.
-      // This assumes all node names inside the user object are either
-      // not registered or they correspond to a class for cells.
-      if (!this.isCellCodec(decoder)) {
-        let child = node.firstChild as Element;
+    // Tries to find the codec for the cell inside the user object.
+    // This assumes all node names inside the user object are either
+    // not registered or they correspond to a class for cells.
+    if (!this.isCellCodec(decoder)) {
+      let child = node.firstChild as Element;
 
-        while (child != null && !this.isCellCodec(decoder)) {
-          decoder = CodecRegistry.getCodec(child.nodeName);
-          child = child.nextSibling as Element;
-        }
+      while (child != null && !this.isCellCodec(decoder)) {
+        decoder = CodecRegistry.getCodec(child.nodeName);
+        child = child.nextSibling as Element;
       }
+    }
 
-      if (!this.isCellCodec(decoder)) {
-        decoder = CodecRegistry.getCodec(Cell);
-      }
-      cell = decoder?.decode(this, node); // TODO as Cell; impact method signature
+    if (!this.isCellCodec(decoder)) {
+      decoder = CodecRegistry.getCodec(Cell);
+    }
+    const cell = decoder?.decode(this, node);
 
-      if (restoreStructures) {
-        this.insertIntoGraph(cell);
-      }
+    if (restoreStructures) {
+      this.insertIntoGraph(cell);
     }
     return cell;
   }
