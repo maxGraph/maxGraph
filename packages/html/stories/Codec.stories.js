@@ -83,7 +83,7 @@ const xmlModel = `<mxGraphModel>
 </mxGraphModel>`;
 
 export default {
-  title: 'Misc/Codec_from_mxGraph',
+  title: 'Misc/CodecImport_mxGraph',
   argTypes: {
     ...globalTypes,
   },
