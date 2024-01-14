@@ -18,10 +18,9 @@ limitations under the License.
 import {
   EdgeStyle,
   Graph,
-  GraphDataModel,
-  InternalEvent as mxEvent,
   InternalEvent,
   ModelXmlSerializer,
+  type PanningHandler,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 
@@ -94,7 +93,7 @@ export default {
 
 // This example demonstrates dynamically creating a graph from XML coming from mxGraph, as well as
 // changing the default style for edges in-place.
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, any>) => {
   const div = document.createElement('div');
 
   const container = document.createElement('div');
@@ -113,10 +112,10 @@ const Template = ({ label, ...args }) => {
 
   // Changes the default style for edges "in-place"
   const style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = EdgeStyle.ElbowConnector;
+  style.edgeStyle = EdgeStyle.ElbowConnector;
 
   // Enables panning with left mouse button
-  const panningHandler = graph.getPlugin('PanningHandler');
+  const panningHandler = graph.getPlugin('PanningHandler') as PanningHandler;
   panningHandler.useLeftButtonForPanning = true;
   panningHandler.ignoreCell = true;
   graph.container.style.cursor = 'move';
@@ -139,7 +138,7 @@ const Template = ({ label, ...args }) => {
   const bw = 16;
   const bh = 16;
 
-  function addButton(label, funct) {
+  function addButton(label: string, funct: () => void) {
     const btn = document.createElement('div');
     const labelNode = btn.ownerDocument.createTextNode(label);
     btn.appendChild(labelNode);
@@ -155,9 +154,9 @@ const Template = ({ label, ...args }) => {
     btn.style.left = `${left}px`;
     btn.style.top = '0px';
 
-    InternalEvent.addListener(btn, 'click', function (evt) {
+    InternalEvent.addListener(btn, 'click', function (evt: Event) {
       funct();
-      mxEvent.consume(evt);
+      InternalEvent.consume(evt);
     });
 
     left += bw;
