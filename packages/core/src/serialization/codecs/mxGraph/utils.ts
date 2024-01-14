@@ -17,6 +17,9 @@ limitations under the License.
 import { isNumeric } from '../../../util/mathUtils';
 import type { CellStyle } from '../../../types';
 
+// from mxGraph to maxGraph
+const fieldMapping = new Map<string, string>([['autosize', 'autoSize']]);
+
 export function convertStyleFromString(input: string) {
   const style: CellStyle = {};
 
@@ -31,7 +34,7 @@ export function convertStyleFromString(input: string) {
     } else {
       const [key, value] = element.split('=');
       // @ts-ignore
-      style[key] = convertToNumericIfNeeded(value);
+      style[fieldMapping.get(key) ?? key] = convertToNumericIfNeeded(value);
     }
   }
 

@@ -71,5 +71,12 @@ describe('convertStyleFromString', () => {
     });
   });
 
-  // add example with renamed properties (see migration guide)
+  // renamed properties (see migration guide)
+  // autosize
+  test('With renamed properties', () => {
+    // @ts-ignore
+    expect(convertStyleFromString('autosize=1')).toEqual(<CellStyle>{
+      autoSize: 1, // FIX should be true
+    });
+  });
 });
