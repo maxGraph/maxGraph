@@ -106,8 +106,6 @@ const Template = ({ label, ...args }) => {
   container.style.border = '1px solid gray';
   div.appendChild(container);
 
-  container.innerHTML = '';
-
   const graph = new Graph(container);
   graph.centerZoom = false;
   graph.setTooltips(false);
