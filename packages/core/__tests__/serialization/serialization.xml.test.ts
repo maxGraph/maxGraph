@@ -133,6 +133,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
 
     const modelChecker = new ModelChecker(model);
     modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
 
     modelChecker.expectIsVertex(model.getCell('B_#0'), 'rootNode', {
       geometry: new Geometry(100, 100, 100, 80),
@@ -237,6 +238,7 @@ describe('import after export', () => {
 
     const modelChecker = new ModelChecker(model);
     modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
 
     modelChecker.expectIsVertex(model.getCell('B_#0'), 'rootNode', {
       geometry: new Geometry(100, 100, 100, 80),
