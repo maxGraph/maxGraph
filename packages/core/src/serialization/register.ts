@@ -93,11 +93,10 @@ export const registerCoreCodecs = (force = false) => {
     // mxGraph support
     CodecRegistry.addAlias('mxGraphModel', 'GraphDataModel');
     CodecRegistry.register(new mxCellCodec());
-    // remove extra alias automatically added when registering mxCellCodec
-    delete CodecRegistry.aliases['Cell'];
-    // CodecRegistry.addAlias('mxGeometry', 'Geometry');
     CodecRegistry.register(new mxGeometryCodec());
-    // TODO export codec + remove alias
+    // remove extra alias automatically added when registering mxCellCodec and mxGeometryCodec
+    delete CodecRegistry.aliases['Cell'];
+    delete CodecRegistry.aliases['Geometry'];
 
     isCoreCodecsRegistered = true;
   }
