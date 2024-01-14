@@ -39,6 +39,7 @@ import GeometryChange from '../view/undoable_changes/GeometryChange';
 import StyleChange from '../view/undoable_changes/StyleChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
 import VisibleChange from '../view/undoable_changes/VisibleChange';
+import { mxGeometryCodec } from './codecs/mxGraph/mxGeometryCodec';
 
 const registerGenericChangeCodecs = () => {
   const __dummy: any = undefined;
@@ -94,7 +95,9 @@ export const registerCoreCodecs = (force = false) => {
     CodecRegistry.register(new mxCellCodec());
     // remove extra alias automatically added when registering mxCellCodec
     delete CodecRegistry.aliases['Cell'];
-    CodecRegistry.addAlias('mxGeometry', 'Geometry');
+    // CodecRegistry.addAlias('mxGeometry', 'Geometry');
+    CodecRegistry.register(new mxGeometryCodec());
+    // TODO export codec + remove alias
 
     isCoreCodecsRegistered = true;
   }
