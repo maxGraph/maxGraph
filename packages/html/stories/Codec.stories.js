@@ -92,13 +92,10 @@ export default {
   },
 };
 
+// This example demonstrates dynamically creating a graph from XML coming from mxGraph, as well as
+// changing the default style for edges in-place.
 const Template = ({ label, ...args }) => {
   const div = document.createElement('div');
-
-  // TODO add description
-  // This example demonstrates dynamically creating a graph from XML and
-  // encoding the model into XML, as well as changing the default style for
-  // edges in-place. This graph is embedded in the page.
 
   const container = document.createElement('div');
   container.style.position = 'relative';
