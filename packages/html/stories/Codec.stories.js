@@ -102,11 +102,11 @@ const Template = ({ label, ...args }) => {
 
   const container = document.createElement('div');
   container.style.position = 'relative';
-  container.style.overflow = 'auto';
+  container.style.overflow = 'hidden';
   container.style.width = `${args.width}px`;
   container.style.height = `${args.height}px`;
-  // container.style.cursor = 'default';
-  //   style="position:relative;background:#eeeeee;border:1px solid gray;overflow:auto;width:400px;height:200px;"
+  container.style.background = '#eeeeee';
+  container.style.border = '1px solid gray';
   div.appendChild(container);
 
   container.innerHTML = '';
@@ -126,13 +126,7 @@ const Template = ({ label, ...args }) => {
   panningHandler.ignoreCell = true;
   graph.container.style.cursor = 'move';
   graph.setPanning(true);
-
-  // if (divs[i].style.width === '' && divs[i].style.height === '') {
-  //   graph.resizeContainer = true;
-  // } else {
-  //   // Adds border for fixed size boxes
-  //   graph.border = 20;
-  // }
+  InternalEvent.disableContextMenu(container);
 
   new ModelXmlSerializer(graph.getDataModel()).import(xmlModel);
   graph.resizeContainer = false;
@@ -160,7 +154,7 @@ const Template = ({ label, ...args }) => {
     btn.style.border = '1px solid gray';
     btn.style.textAlign = 'center';
     btn.style.fontSize = '10px';
-    btn.style.cursor = 'hand';
+    btn.style.cursor = 'pointer';
     btn.style.width = `${bw}px`;
     btn.style.height = `${bh}px`;
     btn.style.left = `${left}px`;
@@ -184,11 +178,7 @@ const Template = ({ label, ...args }) => {
     graph.zoomOut();
   });
 
-  if (container.nextSibling != null) {
-    container.parentNode.insertBefore(buttons, container.nextSibling);
-  } else {
-    container.appendChild(buttons);
-  }
+  div.insertBefore(buttons, container);
 
   return div;
 };
