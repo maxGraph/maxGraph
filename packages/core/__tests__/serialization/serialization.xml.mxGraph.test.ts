@@ -141,6 +141,18 @@ describe('import model from draw.io', () => {
     const modelChecker = new ModelChecker(model);
     modelChecker.checkRootCells();
     modelChecker.checkCellsCount(3);
-    modelChecker.expectIsVertex(model.getCell('2Ija7sB8CSz23ppRtK8d-5'), 'PostgreSQL');
+    modelChecker.expectIsVertex(model.getCell('2Ija7sB8CSz23ppRtK8d-5'), 'PostgreSQL', {
+      geometry: new Geometry(650, 430, 210, 80),
+      style: {
+        fillColor: '#dae8fc',
+        fontSize: 27,
+        fontStyle: 1,
+        html: 1,
+        // @ts-ignore FIX should be false
+        rounded: 0,
+        strokeColor: '#6c8ebf',
+        whiteSpace: 'wrap',
+      },
+    });
   });
 });
