@@ -95,8 +95,9 @@ export const registerCoreCodecs = (force = false) => {
     CodecRegistry.register(new mxCellCodec());
     CodecRegistry.register(new mxGeometryCodec());
     // remove extra alias automatically added when registering mxCellCodec and mxGeometryCodec
-    delete CodecRegistry.aliases['Cell'];
-    delete CodecRegistry.aliases['Geometry'];
+    CodecRegistry.aliases['Cell'] === 'mxCell' && delete CodecRegistry.aliases['Cell'];
+    CodecRegistry.aliases['Geometry'] === 'mxGeometry' &&
+      delete CodecRegistry.aliases['Geometry'];
 
     isCoreCodecsRegistered = true;
   }
