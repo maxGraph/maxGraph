@@ -32,6 +32,11 @@ export class mxGeometryCodec extends ObjectCodec {
     // Convert points to the right form
     // input: [ { x: 420, y: 60 }, ... ]
     // output: [ Point { _x: 420, _y: 60 }, ... ]
+    //
+    // in mxGraph XML, the points are modeled as Object, so it is easier to convert the values to Point objects after the whole decoding of the geometry
+    // <Array as="points">
+    //   <Object x="420" y="60"/>
+    // </Array>
 
     const originalPoints = (obj as Geometry).points;
     if (originalPoints) {
