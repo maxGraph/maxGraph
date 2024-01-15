@@ -36,7 +36,7 @@ describe('convertStyleFromString', () => {
   });
 
   test('With leading ;', () => {
-    // TODO update when implementing https://github.com/maxGraph/maxGraph/issues/154
+    // To update when implementing https://github.com/maxGraph/maxGraph/issues/154
     expect(convertStyleFromString(';arcSize=4;endSize=5;')).toEqual({
       arcSize: 4,
       endSize: 5,
@@ -72,7 +72,6 @@ describe('convertStyleFromString', () => {
   });
 
   // renamed properties (see migration guide)
-  // autosize
   test('With renamed properties', () => {
     // @ts-ignore
     expect(convertStyleFromString('autosize=1')).toEqual(<CellStyle>{
