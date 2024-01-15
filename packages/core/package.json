@@ -20,6 +20,8 @@
         "default": "./dist/index.js"
       }
     },
+    "./css/*": "./css/*",
+    "./images/*": "./images/*",
     "./package.json": "./package.json"
   },
   "files": [
