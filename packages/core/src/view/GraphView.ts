@@ -897,11 +897,11 @@ export class GraphView extends EventSource {
 
           if (geo.relative && pState) {
             if (pState.cell.isEdge()) {
-              const origin = this.getPoint(pState, geo);
+              const point = this.getPoint(pState, geo);
 
-              if (origin) {
-                origin.x += origin.x / this.scale - pState.origin.x - this.translate.x;
-                origin.y += origin.y / this.scale - pState.origin.y - this.translate.y;
+              if (point) {
+                origin.x += point.x / this.scale - pState.origin.x - this.translate.x;
+                origin.y += point.y / this.scale - pState.origin.y - this.translate.y;
               }
             } else {
               origin.x += geo.x * pState.unscaledWidth + offset.x;
