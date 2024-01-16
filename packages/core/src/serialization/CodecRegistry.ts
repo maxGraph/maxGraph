@@ -54,17 +54,18 @@ class CodecRegistry {
   static aliases: { [key: string]: string | undefined } = {};
 
   /**
-   * Registers a new codec and associates the name of the template constructor in the codec with the codec object.
+   * Registers a new codec and associates the name of the codec via {@link ObjectCodec.getName} with the codec object.
    *
    * @param codec ObjectCodec to be registered.
+   * @param registerAlias if `true`, register an alias if the codec name doesn't match the name of {@link ObjectCodec.template}.
    */
-  static register(codec: ObjectCodec): ObjectCodec {
+  static register(codec: ObjectCodec, registerAlias = true): ObjectCodec {
     if (codec != null) {
       const name = codec.getName();
       CodecRegistry.codecs[name] = codec;
 
       const classname: string = codec.template.constructor.name;
-      if (classname !== name) {
+      if (registerAlias && classname !== name) {
         CodecRegistry.addAlias(classname, name);
       }
     }
