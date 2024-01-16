@@ -57,7 +57,7 @@ class CodecRegistry {
    * Registers a new codec and associates the name of the codec via {@link ObjectCodec.getName} with the codec object.
    *
    * @param codec ObjectCodec to be registered.
-   * @param registerAlias if `true`, register an alias if the codec name doesn't match the name of {@link ObjectCodec.template}.
+   * @param registerAlias if `true`, register an alias if the codec name doesn't match the name of the constructor of {@link ObjectCodec.template}.
    */
   static register(codec: ObjectCodec, registerAlias = true): ObjectCodec {
     if (codec != null) {
