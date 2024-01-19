@@ -17,21 +17,8 @@ limitations under the License.
 */
 
 import RectangleShape from '../geometry/node/RectangleShape';
-import EllipseShape from '../geometry/node/EllipseShape';
-import RhombusShape from '../geometry/node/RhombusShape';
-import CylinderShape from '../geometry/node/CylinderShape';
 import ConnectorShape from '../geometry/edge/ConnectorShape';
-import ActorShape from '../geometry/ActorShape';
-import TriangleShape from '../geometry/node/TriangleShape';
-import HexagonShape from '../geometry/node/HexagonShape';
-import CloudShape from '../geometry/node/CloudShape';
-import LineShape from '../geometry/edge/LineShape';
-import ArrowShape from '../geometry/edge/ArrowShape';
-import ArrowConnectorShape from '../geometry/edge/ArrowConnectorShape';
-import DoubleEllipseShape from '../geometry/node/DoubleEllipseShape';
-import SwimlaneShape from '../geometry/node/SwimlaneShape';
 import ImageShape from '../geometry/node/ImageShape';
-import LabelShape from '../geometry/node/LabelShape';
 import TextShape from '../geometry/node/TextShape';
 import {
   ALIGN,
@@ -41,7 +28,6 @@ import {
   DEFAULT_TEXT_DIRECTION,
   DIALECT,
   NONE,
-  SHAPE,
 } from '../../util/Constants';
 import { getRotatedPoint, mod, toRadians } from '../../util/mathUtils';
 import { convertPoint } from '../../util/styleUtils';
@@ -1513,29 +1499,6 @@ class CellRenderer {
       state.shape = null;
     }
   }
-}
-
-// Add default shapes into the default shapes array
-for (const [shapeName, shapeClass] of [
-  [SHAPE.RECTANGLE, RectangleShape],
-  [SHAPE.ELLIPSE, EllipseShape],
-  [SHAPE.RHOMBUS, RhombusShape],
-  [SHAPE.CYLINDER, CylinderShape],
-  [SHAPE.CONNECTOR, ConnectorShape],
-  [SHAPE.ACTOR, ActorShape],
-  [SHAPE.TRIANGLE, TriangleShape],
-  [SHAPE.HEXAGON, HexagonShape],
-  [SHAPE.CLOUD, CloudShape],
-  [SHAPE.LINE, LineShape],
-  [SHAPE.ARROW, ArrowShape],
-  [SHAPE.ARROW_CONNECTOR, ArrowConnectorShape],
-  [SHAPE.DOUBLE_ELLIPSE, DoubleEllipseShape],
-  [SHAPE.SWIMLANE, SwimlaneShape],
-  [SHAPE.IMAGE, ImageShape],
-  [SHAPE.LABEL, LabelShape],
-]) {
-  // @ts-ignore
-  CellRenderer.registerShape(shapeName, shapeClass);
 }
 
 export default CellRenderer;

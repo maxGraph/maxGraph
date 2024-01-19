@@ -21,8 +21,6 @@ import EdgeStyle from './EdgeStyle';
 import Perimeter from './Perimeter';
 
 /**
- * @class StyleRegistry
- *
  * Singleton class that acts as a global converter from string to object values
  * in a style. This is currently only used to perimeters and edge styles.
  */
@@ -58,20 +56,5 @@ class StyleRegistry {
     return null;
   }
 }
-
-StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
-StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
-StyleRegistry.putValue(EDGESTYLE.LOOP, EdgeStyle.Loop);
-StyleRegistry.putValue(EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide);
-StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
-StyleRegistry.putValue(EDGESTYLE.ORTHOGONAL, EdgeStyle.OrthConnector);
-StyleRegistry.putValue(EDGESTYLE.SEGMENT, EdgeStyle.SegmentConnector);
-StyleRegistry.putValue(EDGESTYLE.MANHATTAN, EdgeStyle.ManhattanConnector);
-
-StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
-StyleRegistry.putValue(PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter);
-StyleRegistry.putValue(PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter);
-StyleRegistry.putValue(PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter);
-StyleRegistry.putValue(PERIMETER.HEXAGON, Perimeter.HexagonPerimeter);
 
 export default StyleRegistry;
