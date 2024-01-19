@@ -197,6 +197,7 @@ import type Codec from './Codec';
  * Expressions are only evaluated if {@link allowEval} is true.
  */
 class ObjectCodec {
+  private name?: string;
   constructor(
     template: any,
     exclude: string[] = [],
@@ -257,10 +258,14 @@ class ObjectCodec {
    * this the codec registry automatically adds an alias for the classname
    * if that is different from what this returns.
    *
-   * The default implementation returns the classname of the template class.
+   * The default implementation returns the classname of the template class if no name is set.
    */
   getName(): string {
-    return this.template.constructor.name;
+    return this.name ?? this.template.constructor.name;
+  }
+
+  setName(name: string): void {
+    this.name = name;
   }
 
   /**

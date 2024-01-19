@@ -57,6 +57,7 @@ export class CellCodec extends ObjectCodec {
       ['children', 'edges', 'overlays', 'mxTransient'],
       ['parent', 'source', 'target']
     );
+    this.setName('Cell');
   }
 
   /**

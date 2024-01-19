@@ -27,6 +27,7 @@ import type Codec from '../Codec';
 export class ModelCodec extends ObjectCodec {
   constructor() {
     super(new GraphDataModel());
+    this.setName('GraphDataModel');
   }
 
   /**
