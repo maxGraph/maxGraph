@@ -51,7 +51,7 @@ import { PopupMenuItem } from '../types';
  *
  * Fires after the menu has been shown in <popup>.
  */
-class MaxPopupMenu extends EventSource implements Partial<PopupMenuItem> {
+class MaxPopupMenu extends EventSource {
   constructor(
     factoryMethod?: (handler: PopupMenuItem, cell: Cell | null, me: MouseEvent) => void
   ) {
