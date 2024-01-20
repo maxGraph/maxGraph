@@ -33,12 +33,12 @@ import ImageShape from '../geometry/node/ImageShape';
 import LabelShape from '../geometry/node/LabelShape';
 import { SHAPE } from '../../util/Constants';
 
-let isCoreElementsRegistered = false;
+let isDefaultElementsRegistered = false;
 /**
  * Add default shapes into `CellRenderer` shapes.
  */
-export function registerCoreShapes() {
-  if (!isCoreElementsRegistered) {
+export function registerDefaultShapes() {
+  if (!isDefaultElementsRegistered) {
     for (const [shapeName, shapeClass] of [
       [SHAPE.ACTOR, ActorShape],
       [SHAPE.ARROW, ArrowShape],
@@ -61,6 +61,6 @@ export function registerCoreShapes() {
       CellRenderer.registerShape(shapeName, shapeClass);
     }
 
-    isCoreElementsRegistered = true;
+    isDefaultElementsRegistered = true;
   }
 }

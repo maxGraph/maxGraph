@@ -19,15 +19,15 @@ import EdgeStyle from './EdgeStyle';
 import Perimeter from './Perimeter';
 import StyleRegistry from './StyleRegistry';
 
-let isCoreElementsRegistered = false;
+let isDefaultElementsRegistered = false;
 /**
  * Register style elements for "EdgeStyle" and "Perimeters".
  */
-export const registerCoreStyleElements = (): void => {
-  if (!isCoreElementsRegistered) {
+export const registerDefaultStyleElements = (): void => {
+  if (!isDefaultElementsRegistered) {
     registerEdgeStyles();
     registerPerimeters();
-    isCoreElementsRegistered = true;
+    isDefaultElementsRegistered = true;
   }
 };
 
