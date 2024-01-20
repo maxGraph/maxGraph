@@ -19,33 +19,30 @@ import EdgeStyle from './EdgeStyle';
 import Perimeter from './Perimeter';
 import StyleRegistry from './StyleRegistry';
 
-let isDefaultElementsRegistered = false;
+let isDefaultsRegistered = false;
+
 /**
  * Register style elements for "EdgeStyle" and "Perimeters".
  */
 export const registerDefaultStyleElements = (): void => {
-  if (!isDefaultElementsRegistered) {
-    registerEdgeStyles();
-    registerPerimeters();
-    isDefaultElementsRegistered = true;
+  if (!isDefaultsRegistered) {
+    // Edge styles
+    StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
+    StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
+    StyleRegistry.putValue(EDGESTYLE.LOOP, EdgeStyle.Loop);
+    StyleRegistry.putValue(EDGESTYLE.MANHATTAN, EdgeStyle.ManhattanConnector);
+    StyleRegistry.putValue(EDGESTYLE.ORTHOGONAL, EdgeStyle.OrthConnector);
+    StyleRegistry.putValue(EDGESTYLE.SEGMENT, EdgeStyle.SegmentConnector);
+    StyleRegistry.putValue(EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide);
+    StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
+
+    // Perimeters
+    StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
+    StyleRegistry.putValue(PERIMETER.HEXAGON, Perimeter.HexagonPerimeter);
+    StyleRegistry.putValue(PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter);
+    StyleRegistry.putValue(PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter);
+    StyleRegistry.putValue(PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter);
+
+    isDefaultsRegistered = true;
   }
-};
-
-const registerEdgeStyles = (): void => {
-  StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
-  StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
-  StyleRegistry.putValue(EDGESTYLE.LOOP, EdgeStyle.Loop);
-  StyleRegistry.putValue(EDGESTYLE.MANHATTAN, EdgeStyle.ManhattanConnector);
-  StyleRegistry.putValue(EDGESTYLE.ORTHOGONAL, EdgeStyle.OrthConnector);
-  StyleRegistry.putValue(EDGESTYLE.SEGMENT, EdgeStyle.SegmentConnector);
-  StyleRegistry.putValue(EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide);
-  StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
-};
-
-const registerPerimeters = (): void => {
-  StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
-  StyleRegistry.putValue(PERIMETER.HEXAGON, Perimeter.HexagonPerimeter);
-  StyleRegistry.putValue(PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter);
-  StyleRegistry.putValue(PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter);
-  StyleRegistry.putValue(PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter);
 };
