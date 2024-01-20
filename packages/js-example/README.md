@@ -2,13 +2,17 @@
 
 Demonstrate how to import/decode an XML model using `Codecs`.
 
+## Setup
 
-## Usage
+Initialize all packages
+> From the repository root, run `npm install`.
 
-To run locally:
+Build [@maxgraph/core](../../README.md#development).
 
-1. `npm install`
-2. Build [@maxgraph/core](../../README.md#development)
-3. `npm run build`
-4. `npm run serve`
-5. [localhost app](http://localhost:8080)
+
+## Run
+
+Run `npm run dev` and go to http://localhost:8080/
+
+If you want to bundle the application, run `npm run build` and then run `npm run preview` to access to a preview of the
+bundle application.

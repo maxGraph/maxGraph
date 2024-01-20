@@ -14,7 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import '@maxgraph/core/css/common.css';
+import './style.css';
 import {
+  Client,
   Graph,
   InternalEvent,
   ModelXmlSerializer,
@@ -27,7 +30,6 @@ const initializeGraph = (container) => {
 
   const graph = new Graph(container);
   graph.setPanning(true); // Use mouse right button for panning
-  // TODO import CSS
   new RubberBandHandler(graph); // Enables rubber band selection
 
   const xmlWithVerticesAndEdges = `<GraphDataModel>
@@ -66,6 +68,10 @@ const initializeGraph = (container) => {
   console.info('Exporting model...');
   console.info('Model as XML', modelXmlSerializer.export());
 };
+
+// display the maxGraph version in the footer
+const footer = document.querySelector('footer');
+footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 
 // Creates the graph inside the given container
 initializeGraph(document.querySelector('#graph-container'));
