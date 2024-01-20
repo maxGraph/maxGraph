@@ -34,6 +34,7 @@ import LabelShape from '../geometry/node/LabelShape';
 import { SHAPE } from '../../util/Constants';
 
 let isDefaultElementsRegistered = false;
+
 /**
  * Add default shapes into `CellRenderer` shapes.
  */
