@@ -26,7 +26,6 @@ import {
   Graph,
   InternalEvent,
   MaxXmlRequest,
-  Perimeter,
 } from '@maxgraph/core';
 
 import { globalTypes, globalValues } from './shared/args.js';
@@ -77,7 +76,6 @@ const Template = ({ label, ...args }) => {
       // Changes the default vertex style in-place
       let style = graph.getStylesheet().getDefaultVertexStyle();
       style.shape = constants.SHAPE.ROUNDED;
-      style.perimiter = Perimeter.RectanglePerimeter;
       style.gradientColor = 'white';
       style.perimeterSpacing = 4;
       style.shadow = true;

@@ -36,7 +36,6 @@ import {
   GraphView,
   KeyHandler,
   PanningHandler,
-  Perimeter,
   Point,
   Rectangle,
   RubberBandHandler,
@@ -512,7 +511,6 @@ const Template = ({ label, ...args }) => {
 
   // Uses the entity perimeter (below) as default
   graph.stylesheet.getDefaultVertexStyle().verticalAlign = constants.ALIGN.TOP;
-  graph.stylesheet.getDefaultVertexStyle().perimeter = Perimeter.RectanglePerimeter;
   graph.stylesheet.getDefaultVertexStyle().shadow = true;
   graph.stylesheet.getDefaultVertexStyle().fillColor = '#DDEAFF';
   graph.stylesheet.getDefaultVertexStyle().gradientColor = '#A9C4EB';

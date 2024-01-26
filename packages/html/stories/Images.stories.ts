@@ -21,7 +21,7 @@ import {
   ImageBox,
   Rectangle,
   constants,
-  Perimeter,
+  CellStateStyle,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 
@@ -35,13 +35,12 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, any>) => {
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'hidden';
   container.style.width = `${args.width}px`;
   container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
   container.style.cursor = 'default';
 
   // Creates the graph inside the given container
@@ -65,55 +64,26 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    var v1 = graph.insertVertex(
-      parent,
-      null,
-      'First Line\nSecond Line',
-      20,
-      10,
-      80,
-      100,
-      { baseStyleNames: ['bottom'] }
-    );
-    var v1 = graph.insertVertex(
-      parent,
-      null,
-      'First Line\nSecond Line',
-      130,
-      10,
-      80,
-      100,
-      { baseStyleNames: ['top'] }
-    );
-    var v1 = graph.insertVertex(parent, null, '', 230, 10, 100, 100, {
+    graph.insertVertex(parent, null, 'First Line\nSecond Line', 20, 10, 80, 100, {
+      baseStyleNames: ['bottom'],
+    });
+    graph.insertVertex(parent, null, 'First Line\nSecond Line', 130, 10, 80, 100, {
+      baseStyleNames: ['top'],
+    });
+    graph.insertVertex(parent, null, '', 230, 10, 100, 100, {
       baseStyleNames: ['image'],
     });
-    var v2 = graph.insertVertex(
-      parent,
-      null,
-      'First Line\nSecond Line',
-      20,
-      130,
-      140,
-      60,
-      { baseStyleNames: ['right'] }
-    );
-    var v2 = graph.insertVertex(
-      parent,
-      null,
-      'First Line\nSecond Line',
-      180,
-      130,
-      140,
-      60,
-      { baseStyleNames: ['left'] }
-    );
+    graph.insertVertex(parent, null, 'First Line\nSecond Line', 20, 130, 140, 60, {
+      baseStyleNames: ['right'],
+    });
+    graph.insertVertex(parent, null, 'First Line\nSecond Line', 180, 130, 140, 60, {
+      baseStyleNames: ['left'],
+    });
   });
 
-  function configureStylesheet(graph) {
-    let style = {};
+  function configureStylesheet(graph: Graph) {
+    let style: CellStateStyle = {};
     style.shape = constants.SHAPE.IMAGE;
-    style.perimiter = Perimeter.RectanglePerimeter;
     style.image = 'images/icons48/keys.png';
     style.fontColor = '#FFFFFF';
     graph.getStylesheet().putCellStyle('image', style);
@@ -124,6 +94,7 @@ const Template = ({ label, ...args }) => {
     style.align = constants.ALIGN.CENTER;
     style.verticalAlign = constants.ALIGN.TOP;
     style.imageAlign = constants.ALIGN.CENTER;
+    // TODO missing 'imageVerticalAlign' property in CellStateStyle
     style.imageVerticalAlign = constants.ALIGN.TOP;
     style.image = 'images/icons48/gear.png';
     style.imageWidth = '48';
@@ -133,6 +104,7 @@ const Template = ({ label, ...args }) => {
     graph.getStylesheet().putCellStyle('bottom', style);
 
     style = cloneUtils.clone(style);
+    // TODO missing 'imageVerticalAlign' property in CellStateStyle
     style.imageVerticalAlign = constants.ALIGN.BOTTOM;
     style.image = 'images/icons48/server.png';
     delete style.spacingTop;
@@ -140,8 +112,8 @@ const Template = ({ label, ...args }) => {
 
     style = cloneUtils.clone(style);
     style.align = constants.ALIGN.LEFT;
-    style.imageAlign = constants.ALIGN.LEFT;
     style.verticalAlign = constants.ALIGN.MIDDLE;
+    // TODO missing 'imageVerticalAlign' property in CellStateStyle
     style.imageVerticalAlign = constants.ALIGN.MIDDLE;
     style.image = 'images/icons48/earth.png';
     style.spacingLeft = '55';

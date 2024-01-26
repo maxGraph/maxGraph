@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, RubberBandHandler, RadialTreeLayout, Perimeter } from '@maxgraph/core';
+import { Graph, RubberBandHandler, RadialTreeLayout } from '@maxgraph/core';
 import {
   globalTypes,
   globalValues,
@@ -37,7 +37,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, any>) => {
   const container = document.createElement('div');
   container.style.position = 'relative';
   container.style.overflow = 'hidden';
@@ -54,7 +54,6 @@ const Template = ({ label, ...args }) => {
 
   // Changes the default vertex style in-place
   let style = graph.getStylesheet().getDefaultVertexStyle();
-  style.perimiter = Perimeter.RectanglePerimeter;
   style.gradientColor = 'white';
   style.perimeterSpacing = 6;
   style.rounded = true;
@@ -89,22 +88,22 @@ const Template = ({ label, ...args }) => {
     const v7_5 = graph.insertVertex(parent, null, '4.6', 0, 0, 80, 30);
     const v7_6 = graph.insertVertex(parent, null, '4.7', 0, 0, 80, 30);
 
-    const e1 = graph.insertEdge(parent, null, '', v1, v2);
-    const e2 = graph.insertEdge(parent, null, '', v1, v3);
-    const e3 = graph.insertEdge(parent, null, '', v3, v4);
-    const e3_1 = graph.insertEdge(parent, null, '', v3, v4_1);
-    const e3_2 = graph.insertEdge(parent, null, '', v3, v4_2);
-    const e3_3 = graph.insertEdge(parent, null, '', v3, v4_3);
-    const e3_4 = graph.insertEdge(parent, null, '', v3, v4_4);
-    const e4 = graph.insertEdge(parent, null, '', v2, v5);
-    const e5 = graph.insertEdge(parent, null, '', v1, v6);
-    const e6 = graph.insertEdge(parent, null, '', v4_3, v7);
-    var e6_1 = graph.insertEdge(parent, null, '', v4_4, v7_4);
-    var e6_2 = graph.insertEdge(parent, null, '', v4_4, v7_5);
-    var e6_3 = graph.insertEdge(parent, null, '', v4_4, v7_6);
-    var e6_1 = graph.insertEdge(parent, null, '', v4_3, v7_1);
-    var e6_2 = graph.insertEdge(parent, null, '', v4_3, v7_2);
-    var e6_3 = graph.insertEdge(parent, null, '', v4_3, v7_3);
+    graph.insertEdge(parent, null, '', v1, v2);
+    graph.insertEdge(parent, null, '', v1, v3);
+    graph.insertEdge(parent, null, '', v3, v4);
+    graph.insertEdge(parent, null, '', v3, v4_1);
+    graph.insertEdge(parent, null, '', v3, v4_2);
+    graph.insertEdge(parent, null, '', v3, v4_3);
+    graph.insertEdge(parent, null, '', v3, v4_4);
+    graph.insertEdge(parent, null, '', v2, v5);
+    graph.insertEdge(parent, null, '', v1, v6);
+    graph.insertEdge(parent, null, '', v4_3, v7);
+    graph.insertEdge(parent, null, '', v4_4, v7_4);
+    graph.insertEdge(parent, null, '', v4_4, v7_5);
+    graph.insertEdge(parent, null, '', v4_4, v7_6);
+    graph.insertEdge(parent, null, '', v4_3, v7_1);
+    graph.insertEdge(parent, null, '', v4_3, v7_2);
+    graph.insertEdge(parent, null, '', v4_3, v7_3);
 
     // Executes the layout
     layout.execute(parent);

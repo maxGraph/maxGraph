@@ -23,31 +23,15 @@ limitations under the License.
 */
 
 import {
-  constants,
   CircleLayout,
   DomHelpers,
   FastOrganicLayout,
   Graph,
   InternalEvent,
   Morphing,
-  Perimeter,
 } from '@maxgraph/core';
 
 import { globalTypes, globalValues } from './shared/args.js';
-
-// TODO apply this settings to the container used by the Graph
-const HTML_TEMPLATE = `
-<!-- Page passes the container for the graph to the program -->
-<body onload="main(document.getElementById('graphContainer'))">
-
-  <!-- Creates a container for the graph with a grid wallpaper. Make sure to define the position
-    and overflow attributes! See comments on the adding of the size-listener on line 54 ff!  -->
-  <div id="graphContainer"
-    style="position:relative;overflow:auto;width:821px;height:641px;background:url('editors/images/grid.gif');">
-  </div>
-  <br>
-</body>
-`;
 
 export default {
   title: 'Layouts/GraphLayout',
@@ -64,7 +48,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, any>) => {
   const mainContainer = document.createElement('div');
   const container = document.createElement('div');
 
@@ -76,15 +60,15 @@ const Template = ({ label, ...args }) => {
   container.style.cursor = 'default';
 
   // Creates the graph inside the given container
-  let graph = new Graph(container);
+  const graph = new Graph(container);
 
   // Disables basic selection and cell handling
   graph.setEnabled(false);
 
   // Changes the default vertex style in-place
-  let style = graph.getStylesheet().getDefaultVertexStyle();
-  style.shape = constants.SHAPE.ELLIPSE;
-  style.perimiter = Perimeter.EllipsePerimeter;
+  const style = graph.getStylesheet().getDefaultVertexStyle();
+  style.shape = 'ellipse';
+  style.perimeter = 'ellipsePerimeter';
   style.gradientColor = 'white';
   style.fontSize = 10;
 
@@ -104,27 +88,26 @@ const Template = ({ label, ...args }) => {
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
-  let parent = graph.getDefaultParent();
+  const parent = graph.getDefaultParent();
 
   // Creates a layout algorithm to be used
   // with the graph
-  let layout = new FastOrganicLayout(graph);
+  const layout = new FastOrganicLayout(graph);
 
   // Moves stuff wider apart than usual
   layout.forceConstant = 80;
 
   // Adds a button to execute the layout
   mainContainer.appendChild(
-    DomHelpers.button('Circle Layout', function (evt) {
+    DomHelpers.button('Circle Layout', () => {
       graph.getDataModel().beginUpdate();
       try {
-        // Creates a layout algorithm to be used
-        // with the graph
-        let circleLayout = new CircleLayout(graph);
+        // Creates a layout algorithm to be used with the graph
+        const circleLayout = new CircleLayout(graph);
         circleLayout.execute(parent);
       } finally {
         if (args.animate) {
-          let morph = new Morphing(graph, 6, 1.5, 20);
+          const morph = new Morphing(graph, 6, 1.5, 20);
           morph.addListener(InternalEvent.DONE, function () {
             graph.getDataModel().endUpdate();
           });
@@ -138,14 +121,14 @@ const Template = ({ label, ...args }) => {
 
   // Adds a button to execute the layout
   mainContainer.appendChild(
-    DomHelpers.button('Organic Layout', function (evt) {
+    DomHelpers.button('Organic Layout', () => {
       graph.getDataModel().beginUpdate();
       try {
         layout.execute(parent);
       } finally {
         if (args.animate) {
           // Default values are 6, 1.5, 20
-          let morph = new Morphing(graph, 10, 1.7, 20);
+          const morph = new Morphing(graph, 10, 1.7, 20);
           morph.addListener(InternalEvent.DONE, function () {
             graph.getDataModel().endUpdate();
           });
@@ -160,28 +143,28 @@ const Template = ({ label, ...args }) => {
   mainContainer.appendChild(container);
 
   // Adds cells to the model in a single step
-  let w = 30;
-  let h = 30;
+  const w = 30;
+  const h = 30;
 
   graph.batchUpdate(() => {
-    let v1 = graph.insertVertex(parent, null, 'A', 0, 0, w, h);
-    let v2 = graph.insertVertex(parent, null, 'B', 0, 0, w, h);
-    let v3 = graph.insertVertex(parent, null, 'C', 0, 0, w, h);
-    let v4 = graph.insertVertex(parent, null, 'D', 0, 0, w, h);
-    let v5 = graph.insertVertex(parent, null, 'E', 0, 0, w, h);
-    let v6 = graph.insertVertex(parent, null, 'F', 0, 0, w, h);
-    let v7 = graph.insertVertex(parent, null, 'G', 0, 0, w, h);
-    let v8 = graph.insertVertex(parent, null, 'H', 0, 0, w, h);
-    let e1 = graph.insertEdge(parent, null, 'ab', v1, v2);
-    let e2 = graph.insertEdge(parent, null, 'ac', v1, v3);
-    let e3 = graph.insertEdge(parent, null, 'cd', v3, v4);
-    let e4 = graph.insertEdge(parent, null, 'be', v2, v5);
-    let e5 = graph.insertEdge(parent, null, 'cf', v3, v6);
-    let e6 = graph.insertEdge(parent, null, 'ag', v1, v7);
-    let e7 = graph.insertEdge(parent, null, 'gh', v7, v8);
-    let e8 = graph.insertEdge(parent, null, 'gc', v7, v3);
-    let e9 = graph.insertEdge(parent, null, 'gd', v7, v4);
-    let e10 = graph.insertEdge(parent, null, 'eh', v5, v8);
+    const v1 = graph.insertVertex(parent, null, 'A', 0, 0, w, h);
+    const v2 = graph.insertVertex(parent, null, 'B', 0, 0, w, h);
+    const v3 = graph.insertVertex(parent, null, 'C', 0, 0, w, h);
+    const v4 = graph.insertVertex(parent, null, 'D', 0, 0, w, h);
+    const v5 = graph.insertVertex(parent, null, 'E', 0, 0, w, h);
+    const v6 = graph.insertVertex(parent, null, 'F', 0, 0, w, h);
+    const v7 = graph.insertVertex(parent, null, 'G', 0, 0, w, h);
+    const v8 = graph.insertVertex(parent, null, 'H', 0, 0, w, h);
+    graph.insertEdge(parent, null, 'ab', v1, v2);
+    graph.insertEdge(parent, null, 'ac', v1, v3);
+    graph.insertEdge(parent, null, 'cd', v3, v4);
+    graph.insertEdge(parent, null, 'be', v2, v5);
+    graph.insertEdge(parent, null, 'cf', v3, v6);
+    graph.insertEdge(parent, null, 'ag', v1, v7);
+    graph.insertEdge(parent, null, 'gh', v7, v8);
+    graph.insertEdge(parent, null, 'gc', v7, v3);
+    graph.insertEdge(parent, null, 'gd', v7, v4);
+    graph.insertEdge(parent, null, 'eh', v5, v8);
 
     // Executes the layout
     layout.execute(parent);

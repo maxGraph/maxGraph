@@ -104,13 +104,13 @@ const Template = ({ label, ...args }) => {
 
   style = cloneUtils.clone(style);
   style.shape = constants.SHAPE.ELLIPSE;
-  style.perimiter = Perimeter.EllipsePerimeter;
+  style.perimeter = Perimeter.EllipsePerimeter;
   delete style.rounded;
   graph.getStylesheet().putCellStyle('state', style);
 
   style = cloneUtils.clone(style);
   style.shape = constants.SHAPE.RHOMBUS;
-  style.perimiter = Perimeter.RhombusPerimeter;
+  style.perimeter = Perimeter.RhombusPerimeter;
   style.verticalAlign = 'top';
   style.spacingTop = 40;
   style.spacingRight = 64;
@@ -118,7 +118,7 @@ const Template = ({ label, ...args }) => {
 
   style = cloneUtils.clone(style);
   style.shape = constants.SHAPE.DOUBLE_ELLIPSE;
-  style.perimiter = Perimeter.EllipsePerimeter;
+  style.perimeter = Perimeter.EllipsePerimeter;
   style.spacingTop = 28;
   style.fontSize = 14;
   style.fontStyle = 1;

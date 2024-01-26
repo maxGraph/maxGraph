@@ -222,7 +222,6 @@ const Template = ({ label, ...args }) => {
 
     style = [];
     style.shape = constants.SHAPE.SWIMLANE;
-    style.perimiter = Perimeter.RectanglePerimeter;
     style.strokeColor = '#a0a0a0';
     style.fontColor = '#606060';
     style.fillColor = '#E0E0DF';
@@ -239,7 +238,7 @@ const Template = ({ label, ...args }) => {
 
     style = [];
     style.shape = constants.SHAPE.RHOMBUS;
-    style.perimiter = Perimeter.RhombusPerimeter;
+    style.perimeter = Perimeter.RhombusPerimeter;
     style.strokeColor = '#91BCC0';
     style.fontColor = 'gray';
     style.fillColor = '#91BCC0';
@@ -251,7 +250,7 @@ const Template = ({ label, ...args }) => {
 
     style = [];
     style.shape = constants.SHAPE.ELLIPSE;
-    style.perimiter = Perimeter.EllipsePerimeter;
+    style.perimeter = Perimeter.EllipsePerimeter;
     style.fontColor = 'gray';
     style.fillColor = '#A0C88F';
     style.gradientColor = 'white';
