@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, Perimeter, constants, RubberBandHandler } from '@maxgraph/core';
+import { Graph, Perimeter, RubberBandHandler } from '@maxgraph/core';
 import {
   globalTypes,
   globalValues,
@@ -57,18 +57,18 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   // Makes all cells round with a white, bold label
   let style = graph.stylesheet.getDefaultVertexStyle();
-  style.shape = constants.SHAPE.ELLIPSE;
+  style.shape = 'ellipse';
   style.perimeter = Perimeter.EllipsePerimeter;
   style.fontColor = 'white';
   style.gradientColor = 'white';
-  style.fontStyle = constants.FONT.BOLD;
+  style.fontStyle = 1; // bold
   style.fontSize = 14;
   style.shadow = true;
 
   // Makes all edge labels gray with a white background
   style = graph.stylesheet.getDefaultEdgeStyle();
   style.fontColor = 'gray';
-  style.fontStyle = constants.FONT.BOLD;
+  style.fontStyle = 1; // bold
   style.fontColor = 'black';
   style.strokeWidth = 2;
 
@@ -105,7 +105,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   });
 
   // Creates the second graph model (without a container)
-  const graph2 = new Graph();
+  const graph2 = new Graph(null!);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
