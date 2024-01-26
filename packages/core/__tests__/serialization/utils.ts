@@ -45,7 +45,11 @@ export class ModelChecker {
     expect(cellIds).toHaveLength(count);
   }
 
-  expectIsVertex(cell: Cell | null, value: string, properties?: ExpectCellProperties) {
+  expectIsVertex(
+    cell: Cell | null,
+    value: string | null,
+    properties?: ExpectCellProperties
+  ) {
     this.checkCellBaseProperties(cell, value, properties);
     if (!cell) return; // cannot occur, this is enforced by checkCellBaseProperties
     expect(cell.edge).toEqual(false);

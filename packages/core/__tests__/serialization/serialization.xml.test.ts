@@ -184,7 +184,12 @@ describe('export', () => {
     v1.setStyle({ fillColor: 'green', strokeWidth: 4 });
     v1.geometry = new Geometry(100, 100, 100, 80);
     const v2 = newVertex('v2', 'vertex 2');
-    v2.style = { bendable: false, rounded: true, fontColor: 'yellow' };
+    v2.style = {
+      bendable: false,
+      rounded: true,
+      fontColor: 'yellow',
+      baseStyleNames: ['style1', 'style2'],
+    };
     model.add(parent, v2);
 
     const edge = newEdge('e1', 'edge');
@@ -212,7 +217,12 @@ describe('export', () => {
       <Object fillColor="green" strokeWidth="4" as="style" />
     </Cell>
     <Cell id="v2" value="vertex 2" vertex="1" parent="1">
-      <Object bendable="0" rounded="1" fontColor="yellow" as="style" />
+      <Object bendable="0" rounded="1" fontColor="yellow" as="style">
+        <Array as="baseStyleNames">
+          <add value="style1" />
+          <add value="style2" />
+        </Array>
+      </Object>
     </Cell>
     <Cell id="e1" value="edge" edge="1" parent="1" source="v1" target="v2">
       <Geometry as="geometry">
@@ -243,6 +253,43 @@ describe('import after export', () => {
     modelChecker.expectIsVertex(model.getCell('B_#0'), 'rootNode', {
       geometry: new Geometry(100, 100, 100, 80),
       style: { fillColor: 'green', shape: 'triangle', strokeWidth: 4 },
+    });
+  });
+
+  test('Cell with baseStyleNames style attribute', () => {
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model).import(
+      `<GraphDataModel>
+      <root>
+          <Cell id="0">
+              <Object as="style"/>
+          </Cell>
+          <Cell id="1" parent="0">
+              <Object as="style"/>
+          </Cell>
+          <Cell id="cell-1" vertex="1" parent="1">
+              <Object entryPerimeter="1" shadow="1" as="style">
+                <Array as="baseStyleNames">
+                  <add value="style1" />
+                </Array>
+              </Object>
+          </Cell>
+      </root>
+  </GraphDataModel>`
+    );
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
+
+    modelChecker.expectIsVertex(model.getCell('cell-1'), null, {
+      style: {
+        baseStyleNames: ['style1'],
+        // @ts-ignore FIX should be true
+        entryPerimeter: 1,
+        // @ts-ignore FIX should be true
+        shadow: 1,
+      },
     });
   });
 });
