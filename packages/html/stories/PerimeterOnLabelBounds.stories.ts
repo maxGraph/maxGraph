@@ -72,12 +72,12 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
       if (point) {
         const perimeter = super.getPerimeterFunction(terminal);
-        if (terminal?.text?.boundingBox) {
+        if (perimeter && terminal?.text?.boundingBox) {
           // Adds a small border to the label bounds
           const b = terminal.text.boundingBox.clone();
           b.grow(3);
 
-          if (perimeter && mathUtils.rectangleIntersectsSegment(b, point, next)) {
+          if (mathUtils.rectangleIntersectsSegment(b, point, next)) {
             point = perimeter(b, terminal, next, orthogonal);
           }
         }
