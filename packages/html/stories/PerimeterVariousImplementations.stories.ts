@@ -14,15 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  type CellState,
-  Graph,
-  GraphView,
-  InternalEvent,
-  mathUtils,
-  type Point,
-  RubberBandHandler,
-} from '@maxgraph/core';
+import { Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core';
 import {
   globalTypes,
   globalValues,

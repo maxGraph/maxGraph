@@ -77,7 +77,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
           const b = terminal.text.boundingBox.clone();
           b.grow(3);
 
-          if (mathUtils.rectangleIntersectsSegment(b, point, next)) {
+          if (perimeter && mathUtils.rectangleIntersectsSegment(b, point, next)) {
             point = perimeter(b, terminal, next, orthogonal);
           }
         }
