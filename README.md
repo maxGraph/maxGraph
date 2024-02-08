@@ -32,8 +32,10 @@ Chrome, Edge, Firefox, Safari, Chromium based browsers (Brave, Opera, ....) for 
 
 ## Project status
 
-`maxGraph` is under active development and is in **alpha**. Please try it in your application and [submit an issue](https://github.com/maxGraph/maxGraph/issues)
-if you think that something is not working.
+`maxGraph` is currently under active development, with a few adjustments still required to match the behavior of `mxGraph`.
+In the meantime, new features are also being added to enrich the library.
+
+Please try it in your application and [submit an issue](https://github.com/maxGraph/maxGraph/issues) if you think that something is not working.
 
 You can also test `maxGraph` by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
 
@@ -225,6 +227,7 @@ and select `@maxgraph/html`.
 
 Since both commands are in watch mode, so it's recommended to open two terminals and run them separately. When a file is saved from the core package, the html storybook will be automatically updated.
 
+For more details about `@maxgraph/html`, see the README that explains the [maxGraph examples](./packages/html/README.md).
 
 ### <a id="build-local-npm-package"></a> Building the npm package locally
 

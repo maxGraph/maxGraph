@@ -184,7 +184,7 @@ export type CellStateStyle = {
    *
    * See {@link startArrow}.
    */
-  endArrow?: StyleArrayValue;
+  endArrow?: StyleArrowValue;
   /**
    * Use `false` to not fill or `true` to fill the end arrow marker.
    * See {@link startFill}.
@@ -684,7 +684,7 @@ export type CellStateStyle = {
    *
    * See {@link endArrow}.
    */
-  startArrow?: StyleArrayValue;
+  startArrow?: StyleArrowValue;
   /**
    * Use `false` to not fill or `true` to fill the start arrow marker.
    * See {@link endFill}.
@@ -830,7 +830,7 @@ export type ArrowValue =
 /**
  * {@link ArrowValue} with support for extensions.
  */
-export type StyleArrayValue = ArrowValue | (string & {});
+export type StyleArrowValue = ArrowValue | (string & {});
 
 /**
  * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.

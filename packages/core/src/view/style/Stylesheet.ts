@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import { ALIGN, ARROW, SHAPE } from '../../util/Constants';
-import Perimeter from './Perimeter';
 import { clone } from '../../util/cloneUtils';
 import type { CellStateStyle, CellStyle } from '../../types';
 
@@ -65,7 +64,7 @@ export class Stylesheet {
   createDefaultVertexStyle() {
     const style = {} as CellStateStyle;
     style.shape = SHAPE.RECTANGLE;
-    style.perimeter = Perimeter.RectanglePerimeter;
+    style.perimeter = 'rectanglePerimeter';
     style.verticalAlign = ALIGN.MIDDLE;
     style.align = ALIGN.CENTER;
     style.fillColor = '#C3D9FF';

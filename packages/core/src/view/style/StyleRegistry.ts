@@ -16,10 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EDGESTYLE, PERIMETER } from '../../util/Constants';
-import EdgeStyle from './EdgeStyle';
-import Perimeter from './Perimeter';
-
 /**
  * Singleton class that acts as a global converter from string to object values
  * in a style. This is currently only used to perimeters and edge styles.

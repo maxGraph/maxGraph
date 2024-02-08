@@ -1,5 +1,11 @@
 # `maxGraph` Change Log
 
+## UNRELEASED
+
+**Breaking Changes**
+- rename the `StyleArrayValue` type into `StyleArrowValue`.
+This only has an impact on TypeScript users who use this type explicitly, which should happen rarely.
+
 ## 0.7.0
 
 Release date: `2024-01-20`
