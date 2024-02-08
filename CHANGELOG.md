@@ -13,6 +13,9 @@ This only has an impact on TypeScript users who use this type explicitly, which 
   - This change should not impact people using working implementation of perimeter function
   (including these provided by maxGraph) as they already have the right signature. Implementers of
   custom perimeter in TypeScript may have to slightly update their perimeter function declaration.
+- `GraphView` signature method changes
+  -  `getPerimeterPoint` can now return `null`
+  - `getPerimeterBounds` no longer accept null `CellState` and no longer returns `null`
 
 ## 0.7.0
 
