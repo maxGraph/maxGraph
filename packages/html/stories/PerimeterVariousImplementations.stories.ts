@@ -61,8 +61,6 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   // Creates the graph inside the given container
   const graph: Graph = new Graph(container);
-  // graph.setVertexLabelsMovable(true);
-  // graph.setConnectable(true);
 
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);
