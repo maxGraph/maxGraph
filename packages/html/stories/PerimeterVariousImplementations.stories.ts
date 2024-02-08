@@ -187,6 +187,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       size: [80, 80],
       style: withPerimeter(
         {
+          direction: 'north', // use vertical side and ensure that the perimeter follow the shape direction
           fillColor: 'lightblue',
           shape: 'hexagon',
         },
