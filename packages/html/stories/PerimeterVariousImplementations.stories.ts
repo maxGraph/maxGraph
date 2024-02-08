@@ -75,7 +75,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     graph.insertEdge({ parent, source: rectangle1, target: rectangle2 });
     const rectangle3 = graph.insertVertex({
       parent,
-      value: 'Rectangle 3\nnone perimeter',
+      value: 'Rectangle 3\nno perimeter',
       position: [250, 20],
       size: [80, 60],
       style: {
@@ -110,7 +110,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     graph.insertEdge({ parent, source: triangle1, target: triangle2 });
     const triangle3 = graph.insertVertex({
       parent,
-      value: 'Triangle 3\nnone perimeter',
+      value: 'Triangle 3\nno perimeter',
       position: [20, 120],
       size: [80, 60],
       style: {
@@ -150,7 +150,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     graph.insertEdge({ parent, source: rhombus1, target: rhombus2 });
     const rhombus3 = graph.insertVertex({
       parent,
-      value: 'Rhombus 3\nnone perimeter',
+      value: 'Rhombus 3\nno perimeter',
       position: [580, 100],
       size: [50, 50],
       style: {
@@ -190,7 +190,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     graph.insertEdge({ parent, source: rhombus1, target: hexagon2 });
     const hexagon3 = graph.insertVertex({
       parent,
-      value: 'Hexagon 3\nnone perimeter',
+      value: 'Hexagon 3\nno perimeter',
       position: [600, 180],
       size: [60, 60],
       style: {
@@ -232,7 +232,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     graph.insertEdge({ parent, source: hexagon2, target: ellipse2 });
     const ellipse3 = graph.insertVertex({
       parent,
-      value: 'Ellipse 3\nnone perimeter',
+      value: 'Ellipse 3\nno perimeter',
       position: [550, 470],
       size: [60, 60],
       style: {
