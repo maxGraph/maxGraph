@@ -67,7 +67,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       next: Point,
       orthogonal: boolean,
       border: number
-    ): Point {
+    ): Point | null {
       let point = super.getPerimeterPoint(terminal, next, orthogonal, border);
 
       if (point) {
