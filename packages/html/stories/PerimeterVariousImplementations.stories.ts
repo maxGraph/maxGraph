@@ -14,7 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core';
+import {
+  type CellStateStyle,
+  Graph,
+  InternalEvent,
+  RubberBandHandler,
+} from '@maxgraph/core';
 import {
   globalTypes,
   globalValues,
@@ -27,14 +32,21 @@ import '@maxgraph/core/css/common.css';
 export default {
   title: 'Styles/PerimeterVariousImplementations',
   argTypes: {
+    useDefaultPerimeter: {
+      type: 'boolean',
+      defaultValue: false,
+    },
     ...globalTypes,
     ...rubberBandTypes,
   },
   args: {
+    useDefaultPerimeter: false,
     ...globalValues,
     ...rubberBandValues,
   },
 };
+
+const withoutPerimeter = (style: CellStateStyle) => ({ ...style, perimeter: null });
 
 const Template = ({ label, ...args }: Record<string, any>) => {
   const container = document.createElement('div');
@@ -59,6 +71,9 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
+  const withPerimeter = (style: CellStateStyle, perimeter: string) =>
+    args.useDefaultPerimeter ? style : { ...style, perimeter };
+
   graph.batchUpdate(() => {
     const rectangle1 = graph.insertVertex({
       parent,
@@ -78,9 +93,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Rectangle 3\nno perimeter',
       position: [250, 20],
       size: [80, 60],
-      style: {
-        perimeter: null,
-      },
+      style: withoutPerimeter({}),
     });
     graph.insertEdge({ parent, source: rectangle2, target: rectangle3 });
 
@@ -89,11 +102,13 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Triangle 1',
       position: [150, 190],
       size: [80, 60],
-      style: {
-        fillColor: 'pink',
-        perimeter: 'trianglePerimeter',
-        shape: 'triangle',
-      },
+      style: withPerimeter(
+        {
+          fillColor: 'pink',
+          shape: 'triangle',
+        },
+        'trianglePerimeter'
+      ),
     });
     graph.insertEdge({ parent, source: rectangle2, target: triangle1 });
     const triangle2 = graph.insertVertex({
@@ -101,11 +116,13 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Triangle 2',
       position: [20, 250],
       size: [80, 60],
-      style: {
-        fillColor: 'pink',
-        perimeter: 'trianglePerimeter',
-        shape: 'triangle',
-      },
+      style: withPerimeter(
+        {
+          fillColor: 'pink',
+          shape: 'triangle',
+        },
+        'trianglePerimeter'
+      ),
     });
     graph.insertEdge({ parent, source: triangle1, target: triangle2 });
     const triangle3 = graph.insertVertex({
@@ -113,11 +130,10 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Triangle 3\nno perimeter',
       position: [20, 120],
       size: [80, 60],
-      style: {
+      style: withoutPerimeter({
         fillColor: 'pink',
-        perimeter: null,
         shape: 'triangle',
-      },
+      }),
     });
     graph.insertEdge({ parent, source: triangle1, target: triangle3 });
 
@@ -126,12 +142,14 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Rhombus 1',
       position: [420, 80],
       size: [50, 50],
-      style: {
-        fillColor: 'chartreuse',
-        labelPosition: 'right',
-        perimeter: 'rhombusPerimeter',
-        shape: 'rhombus',
-      },
+      style: withPerimeter(
+        {
+          fillColor: 'chartreuse',
+          labelPosition: 'right',
+          shape: 'rhombus',
+        },
+        'rhombusPerimeter'
+      ),
     });
     graph.insertEdge({ parent, source: triangle1, target: rhombus1 });
     graph.insertEdge({ parent, source: rectangle2, target: rhombus1 });
@@ -140,12 +158,15 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Rhombus 2',
       position: [500, 15],
       size: [50, 50],
-      style: {
-        fillColor: 'chartreuse',
-        labelPosition: 'left',
-        perimeter: 'rhombusPerimeter',
-        shape: 'rhombus',
-      },
+      style: withPerimeter(
+        {
+          fillColor: 'chartreuse',
+          labelPosition: 'left',
+          perimeter: 'rhombusPerimeter',
+          shape: 'rhombus',
+        },
+        'rhombusPerimeter'
+      ),
     });
     graph.insertEdge({ parent, source: rhombus1, target: rhombus2 });
     const rhombus3 = graph.insertVertex({
@@ -153,12 +174,11 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Rhombus 3\nno perimeter',
       position: [580, 100],
       size: [50, 50],
-      style: {
+      style: withoutPerimeter({
         fillColor: 'chartreuse',
         verticalLabelPosition: 'top',
-        perimeter: null,
         shape: 'rhombus',
-      },
+      }),
     });
     graph.insertEdge({ parent, source: rhombus2, target: rhombus3 });
 
@@ -167,11 +187,13 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Hexagon 1',
       position: [280, 250],
       size: [80, 80],
-      style: {
-        fillColor: 'lightblue',
-        perimeter: 'hexagonPerimeter',
-        shape: 'hexagon',
-      },
+      style: withPerimeter(
+        {
+          fillColor: 'lightblue',
+          shape: 'hexagon',
+        },
+        'hexagonPerimeter'
+      ),
     });
     graph.insertEdge({ parent, source: triangle1, target: hexagon1 });
     graph.insertEdge({ parent, source: rhombus1, target: hexagon1 });
@@ -180,11 +202,13 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Hexagon 2',
       position: [450, 200],
       size: [60, 60],
-      style: {
-        fillColor: 'lightblue',
-        perimeter: 'hexagonPerimeter',
-        shape: 'hexagon',
-      },
+      style: withPerimeter(
+        {
+          fillColor: 'lightblue',
+          shape: 'hexagon',
+        },
+        'hexagonPerimeter'
+      ),
     });
     graph.insertEdge({ parent, source: hexagon1, target: hexagon2 });
     graph.insertEdge({ parent, source: rhombus1, target: hexagon2 });
@@ -193,12 +217,11 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Hexagon 3\nno perimeter',
       position: [600, 180],
       size: [60, 60],
-      style: {
+      style: withoutPerimeter({
         fillColor: 'lightblue',
         labelPosition: 'right',
-        perimeter: null,
         shape: 'hexagon',
-      },
+      }),
     });
     graph.insertEdge({ parent, source: hexagon3, target: hexagon2 });
     graph.insertEdge({ parent, source: rhombus3, target: hexagon3 });
@@ -208,11 +231,13 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Ellipse 1',
       position: [400, 400],
       size: [60, 60],
-      style: {
-        fillColor: 'orange',
-        perimeter: 'ellipsePerimeter',
-        shape: 'ellipse',
-      },
+      style: withPerimeter(
+        {
+          fillColor: 'orange',
+          shape: 'ellipse',
+        },
+        'ellipsePerimeter'
+      ),
     });
     graph.insertEdge({ parent, source: hexagon1, target: ellipse1 });
     graph.insertEdge({ parent, source: hexagon2, target: ellipse1 });
@@ -222,11 +247,13 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Ellipse 2',
       position: [600, 320],
       size: [60, 60],
-      style: {
-        fillColor: 'orange',
-        perimeter: 'ellipsePerimeter',
-        shape: 'ellipse',
-      },
+      style: withPerimeter(
+        {
+          fillColor: 'orange',
+          shape: 'ellipse',
+        },
+        'ellipsePerimeter'
+      ),
     });
     graph.insertEdge({ parent, source: ellipse1, target: ellipse2 });
     graph.insertEdge({ parent, source: hexagon2, target: ellipse2 });
@@ -235,12 +262,11 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       value: 'Ellipse 3\nno perimeter',
       position: [550, 470],
       size: [60, 60],
-      style: {
+      style: withoutPerimeter({
         fillColor: 'orange',
         labelPosition: 'right',
-        perimeter: null,
         shape: 'ellipse',
-      },
+      }),
     });
     graph.insertEdge({ parent, source: ellipse1, target: ellipse3 });
     graph.insertEdge({ parent, source: ellipse2, target: ellipse3 });
