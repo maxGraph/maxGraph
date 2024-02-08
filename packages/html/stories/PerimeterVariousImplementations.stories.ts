@@ -25,7 +25,7 @@ import {
 import '@maxgraph/core/css/common.css';
 
 export default {
-  title: 'Labels/PerimeterVariousImplementations',
+  title: 'Styles/PerimeterVariousImplementations',
   argTypes: {
     ...globalTypes,
     ...rubberBandTypes,
