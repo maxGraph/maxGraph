@@ -225,6 +225,7 @@ and select `@maxgraph/html`.
 
 Since both commands are in watch mode, so it's recommended to open two terminals and run them separately. When a file is saved from the core package, the html storybook will be automatically updated.
 
+For more details about `@maxgraph/html`, see the README that explains the [maxGraph examples](./packages/html/README.md).
 
 ### <a id="build-local-npm-package"></a> Building the npm package locally
 
