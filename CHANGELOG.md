@@ -5,6 +5,14 @@
 **Breaking Changes**
 - rename the `StyleArrayValue` type into `StyleArrowValue`.
 This only has an impact on TypeScript users who use this type explicitly, which should happen rarely.
+- `Perimeter` is no longer a class but a value object. This only impact users that had extended the
+`Perimeter` class. Regular user that define perimeter style properties using function provided by
+ `maxGraph` are not impacted by this change.
+- `CellState.perimeter` no longer accept `Function`, but only the `PerimeterFunction`.
+  - Passing an arbitrary `Function` was incorrect and always failed at runtime.
+  - This change should not impact people using working implementation of perimeter function
+  (including these provided by maxGraph) as they already have the right signature. Implementers of
+  custom perimeter in TypeScript may have to slightly update their perimeter function declaration.
 
 ## 0.7.0
 
