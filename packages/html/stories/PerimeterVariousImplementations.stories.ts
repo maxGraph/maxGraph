@@ -60,7 +60,6 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    // const rectangle1 = graph.insertVertex(parent, null, 'Rectangle 1', 20, 20, 80, 30);
     const rectangle1 = graph.insertVertex({
       parent,
       value: 'Rectangle 1',
