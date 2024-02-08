@@ -79,7 +79,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       position: [250, 20],
       size: [80, 60],
       style: {
-        perimeter: 'none',
+        perimeter: null,
       },
     });
     graph.insertEdge({ parent, source: rectangle2, target: rectangle3 });
@@ -115,7 +115,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       size: [80, 60],
       style: {
         fillColor: 'pink',
-        perimeter: 'none',
+        perimeter: null,
         shape: 'triangle',
       },
     });
@@ -156,7 +156,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       style: {
         fillColor: 'chartreuse',
         verticalLabelPosition: 'top',
-        perimeter: 'none',
+        perimeter: null,
         shape: 'rhombus',
       },
     });
@@ -196,7 +196,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       style: {
         fillColor: 'lightblue',
         labelPosition: 'right',
-        perimeter: 'none',
+        perimeter: null,
         shape: 'hexagon',
       },
     });
@@ -238,7 +238,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       style: {
         fillColor: 'orange',
         labelPosition: 'right',
-        perimeter: 'none',
+        perimeter: null,
         shape: 'ellipse',
       },
     });
