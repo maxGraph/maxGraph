@@ -20,7 +20,6 @@ import {
   Client,
   cloneUtils,
   DomHelpers,
-  EdgeStyle,
   Graph,
   type ImageBox,
   InternalEvent,
@@ -384,7 +383,9 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     style.fontStyle = 1;
 
     style = graph.getStylesheet().getDefaultEdgeStyle();
-    style.edgeStyle = EdgeStyle.ElbowConnector;
+    // TODO was working in mxGraph, currently edgeStyle must be a string, but passing the function works at runtime
+    // style.edgeStyle = EdgeStyle.ElbowConnector;
+    style.edgeStyle = 'elbowEdgeStyle';
     style.strokeColor = '#808080';
     style.rounded = true;
     // style.shadow = true; // TMP disable until we cannot change the shadow color
