@@ -45,7 +45,7 @@ import { clone } from '../util/cloneUtils';
 import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
 import TooltipHandler from './handler/TooltipHandler';
-import { MouseEventListener } from '../types';
+import type { EdgeStyleFunction, MouseEventListener } from '../types';
 
 /**
  * @class GraphView
@@ -1275,8 +1275,8 @@ export class GraphView extends EventSource {
 
   /**
    * Returns true if the given edge should be routed with {@link graph.defaultLoopStyle}
-   * or the {@link mxConstants.STYLE_LOOP} defined for the given edge. This implementation
-   * returns true if the given edge is a loop and does not
+   * or the {@link CellStateStyle.STYLE_LOOP} defined for the given edge.
+   * This implementation returns `true` if the given edge is a loop and does not
    */
   isLoopStyleEnabled(
     edge: CellState,
@@ -1307,7 +1307,7 @@ export class GraphView extends EventSource {
     points: Point[] = [],
     source: CellState | null = null,
     target: CellState | null = null
-  ) {
+  ): EdgeStyleFunction | null {
     let edgeStyle = this.isLoopStyleEnabled(edge, points, source, target)
       ? edge.style.loopStyle ?? this.graph.defaultLoopStyle
       : !edge.style.noEdgeStyle ?? false
@@ -1326,7 +1326,7 @@ export class GraphView extends EventSource {
     }
 
     if (typeof edgeStyle === 'function') {
-      return edgeStyle;
+      return edgeStyle as EdgeStyleFunction;
     }
 
     return null;

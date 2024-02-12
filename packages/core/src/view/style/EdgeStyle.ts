@@ -19,50 +19,53 @@ limitations under the License.
 import { getValue } from '../../util/Utils';
 import { getNumber } from '../../util/StringUtils';
 import {
-  contains,
   getBoundingBox,
   getPortConstraints,
   reversePortConstraints,
 } from '../../util/mathUtils';
 import Point from '../geometry/Point';
-import CellState from '../cell/CellState';
+import type CellState from '../cell/CellState';
 import {
   DEFAULT_MARKERSIZE,
   DIRECTION,
   DIRECTION_MASK,
-  ELBOW,
-  ENTITY_SEGMENT,
   NONE,
 } from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import Geometry from '../geometry/Geometry';
+import { scaleCellState, scalePointArray } from './edge/shared';
+
+import { ElbowConnector as ElbowConnectorFunction } from './edge/Elbow';
+import { EntityRelation as EntityRelationFunction } from './edge/EntityRelation';
+import { Loop as LoopFunction } from './edge/Loop';
+import { SegmentConnector as SegmentConnectorFunction } from './edge/Segment';
+import { SideToSide as SideToSideFunction } from './edge/SideToSide';
+import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
 
 /**
- * Provides various edge styles to be used as the values for
- * <'edge'> in a cell style.
+ * Provides various edge styles to be used as the values for `edgeStyle` in a cell style.
  *
  * Example:
  *
  * ```javascript
  * let style = stylesheet.getDefaultEdgeStyle();
- * style.edge = mxEdgeStyle.ElbowConnector;
+ * style.edgeStyle = EdgeStyle.ElbowConnector;
  * ```
  *
- * Sets the default edge style to <ElbowConnector>.
+ * Sets the default edge style to `ElbowConnector`.
  *
  * Custom edge style:
  *
- * To write a custom edge style, a function must be added to the mxEdgeStyle
- * object as follows:
+ * To write a custom edge style, a function must be added to the EdgeStyle object as follows:
  *
  * ```javascript
- * mxEdgeStyle.MyStyle = (state, source, target, points, result)=>
+ * EdgeStyle.MyStyle = (state, source, target, points, result)=>
  * {
  *   if (source != null && target != null)
  *   {
- *     let pt = new mxPoint(target.getCenterX(), source.getCenterY());
+ *     let pt = new Point(target.getCenterX(), source.getCenterY());
  *
- *     if (mxUtils.contains(source, pt.x, pt.y))
+ *     if (Utils.contains(source, pt.x, pt.y))
  *     {
  *       pt.y = source.y + source.height;
  *     }
@@ -80,25 +83,25 @@ import Geometry from '../geometry/Geometry';
  *
  * The new edge style should then be registered in the {@link StyleRegistry} as follows:
  * ```javascript
- * mxStyleRegistry.putValue('myEdgeStyle', mxEdgeStyle.MyStyle);
+ * StyleRegistry.putValue('myEdgeStyle', EdgeStyle.MyStyle);
  * ```
  *
  * The custom edge style above can now be used in a specific edge as follows:
  *
  * ```javascript
- * model.setStyle(edge, 'edgeStyle=myEdgeStyle');
+ * style.edgeStyle = 'myEdgeStyle';
  * ```
  *
  * Note that the key of the {@link StyleRegistry} entry for the function should
  * be used in string values, unless {@link GraphView#allowEval} is true, in
- * which case you can also use mxEdgeStyle.MyStyle for the value in the
+ * which case you can also use `EdgeStyle.MyStyle` for the value in the
  * cell style above.
  *
  * Or it can be used for all edges in the graph as follows:
  *
  * ```javascript
  * let style = graph.getStylesheet().getDefaultEdgeStyle();
- * style.edge = mxEdgeStyle.MyStyle;
+ * style.edgeStyle = EdgeStyle.MyStyle;
  * ```
  *
  * Note that the object can be used directly when programmatically setting
@@ -117,700 +120,46 @@ class EdgeStyle {
    * result array are then replaced with Point that take into account
    * the terminal's perimeter and next point on the edge.
    *
-   * @param state <CellState> that represents the edge to be updated.
-   * @param source <CellState> that represents the source terminal.
-   * @param target <CellState> that represents the target terminal.
+   * @param state {@link CellState} that represents the edge to be updated.
+   * @param source {@link CellState} that represents the source terminal.
+   * @param target {@link CellState} that represents the target terminal.
    * @param points List of relative control points.
-   * @param result Array of <Point> that represent the actual points of the
-   * edge.
+   * @param result Array of {@link Point} that represent the actual points of the edge.
    */
-  static EntityRelation(
-    state: CellState,
-    source: CellState,
-    target: CellState,
-    points: Point[],
-    result: Point[]
-  ) {
-    const { view } = state;
-    const { graph } = view;
-    const segment = getValue(state.style, 'segment', ENTITY_SEGMENT) * view.scale;
-
-    const pts = state.absolutePoints;
-    const p0 = pts[0];
-    const pe = pts[pts.length - 1];
-
-    let isSourceLeft = false;
-
-    if (source != null) {
-      const sourceGeometry = <Geometry>source.cell.getGeometry();
-
-      if (sourceGeometry.relative) {
-        isSourceLeft = sourceGeometry.x <= 0.5;
-      } else if (target != null) {
-        isSourceLeft =
-          (pe != null ? pe.x : target.x + target.width) < (p0 != null ? p0.x : source.x);
-      }
-    }
-
-    if (p0 != null) {
-      source = new CellState();
-      source.x = p0.x;
-      source.y = p0.y;
-    } else if (source != null) {
-      const constraint = getPortConstraints(source, state, true, DIRECTION_MASK.NONE);
-
-      if (
-        constraint !== DIRECTION_MASK.NONE &&
-        constraint !== DIRECTION_MASK.WEST + DIRECTION_MASK.EAST
-      ) {
-        isSourceLeft = constraint === DIRECTION_MASK.WEST;
-      }
-    } else {
-      return;
-    }
-
-    let isTargetLeft = true;
-
-    if (target != null) {
-      const targetGeometry = <Geometry>target.cell.getGeometry();
-
-      if (targetGeometry.relative) {
-        isTargetLeft = targetGeometry.x <= 0.5;
-      } else if (source != null) {
-        isTargetLeft =
-          (p0 != null ? p0.x : source.x + source.width) < (pe != null ? pe.x : target.x);
-      }
-    }
-
-    if (pe != null) {
-      target = new CellState();
-      target.x = pe.x;
-      target.y = pe.y;
-    } else if (target != null) {
-      const constraint = getPortConstraints(target, state, false, DIRECTION_MASK.NONE);
-
-      if (
-        constraint !== DIRECTION_MASK.NONE &&
-        constraint != DIRECTION_MASK.WEST + DIRECTION_MASK.EAST
-      ) {
-        isTargetLeft = constraint === DIRECTION_MASK.WEST;
-      }
-    }
-
-    if (source != null && target != null) {
-      const x0 = isSourceLeft ? source.x : source.x + source.width;
-      const y0 = view.getRoutingCenterY(source);
-
-      const xe = isTargetLeft ? target.x : target.x + target.width;
-      const ye = view.getRoutingCenterY(target);
-
-      const seg = segment;
-
-      let dx = isSourceLeft ? -seg : seg;
-      const dep = new Point(x0 + dx, y0);
-
-      dx = isTargetLeft ? -seg : seg;
-      const arr = new Point(xe + dx, ye);
-
-      // Adds intermediate points if both go out on same side
-      if (isSourceLeft === isTargetLeft) {
-        const x = isSourceLeft ? Math.min(x0, xe) - segment : Math.max(x0, xe) + segment;
-
-        result.push(new Point(x, y0));
-        result.push(new Point(x, ye));
-      } else if (dep.x < arr.x === isSourceLeft) {
-        const midY = y0 + (ye - y0) / 2;
-
-        result.push(dep);
-        result.push(new Point(dep.x, midY));
-        result.push(new Point(arr.x, midY));
-        result.push(arr);
-      } else {
-        result.push(dep);
-        result.push(arr);
-      }
-    }
-  }
+  static EntityRelation = EntityRelationFunction;
 
   /**
    * Implements a self-reference, aka. loop.
    */
-  static Loop(
-    state: CellState,
-    source: CellState,
-    target: CellState,
-    points: Point[],
-    result: Point[]
-  ) {
-    const pts = state.absolutePoints;
-
-    const p0 = pts[0];
-    const pe = pts[pts.length - 1];
-
-    if (p0 != null && pe != null) {
-      if (points != null && points.length > 0) {
-        for (let i = 0; i < points.length; i += 1) {
-          let pt = points[i];
-          pt = <Point>state.view.transformControlPoint(state, pt);
-          result.push(new Point(pt.x, pt.y));
-        }
-      }
-
-      return;
-    }
-
-    if (source != null) {
-      const { view } = state;
-      const { graph } = view;
-      let pt = points != null && points.length > 0 ? points[0] : null;
-
-      if (pt != null) {
-        pt = <Point>view.transformControlPoint(state, pt);
-        if (contains(source, pt.x, pt.y)) {
-          pt = null;
-        }
-      }
-
-      let x = 0;
-      let dx = 0;
-      let y = 0;
-      let dy = 0;
-
-      const seg = getValue(state.style, 'segment', graph.gridSize) * view.scale;
-      const dir = getValue(state.style, 'direction', DIRECTION.WEST);
-
-      if (dir === DIRECTION.NORTH || dir === DIRECTION.SOUTH) {
-        x = view.getRoutingCenterX(source);
-        dx = seg;
-      } else {
-        y = view.getRoutingCenterY(source);
-        dy = seg;
-      }
-
-      if (pt == null || pt.x < source.x || pt.x > source.x + source.width) {
-        if (pt != null) {
-          x = pt.x;
-          dy = Math.max(Math.abs(y - pt.y), dy);
-        } else if (dir === DIRECTION.NORTH) {
-          y = source.y - 2 * dx;
-        } else if (dir === DIRECTION.SOUTH) {
-          y = source.y + source.height + 2 * dx;
-        } else if (dir === DIRECTION.EAST) {
-          x = source.x - 2 * dy;
-        } else {
-          x = source.x + source.width + 2 * dy;
-        }
-      } else if (pt !== null) {
-        x = view.getRoutingCenterX(source);
-        dx = Math.max(Math.abs(x - pt.x), dy);
-        y = pt.y;
-        dy = 0;
-      }
-
-      result.push(new Point(x - dx, y - dy));
-      result.push(new Point(x + dx, y + dy));
-    }
-  }
+  static Loop = LoopFunction;
 
   /**
-   * Uses either <SideToSide> or <TopToBottom> depending on the horizontal
-   * flag in the cell style. <SideToSide> is used if horizontal is true or
-   * unspecified. See <EntityRelation> for a description of the
-   * parameters.
+   * Uses either {@link SideToSide} or {@link TopToBottom} depending on the horizontal flag in the cell style.
+   * {@link SideToSide} is used if horizontal is `true` or unspecified.
    */
-  static ElbowConnector(
-    state: CellState,
-    source: CellState,
-    target: CellState,
-    points: Point[],
-    result: Point[]
-  ) {
-    let pt = points != null && points.length > 0 ? points[0] : null;
-
-    let vertical = false;
-    let horizontal = false;
-
-    if (source != null && target != null) {
-      if (pt != null) {
-        const left = Math.min(source.x, target.x);
-        const right = Math.max(source.x + source.width, target.x + target.width);
-
-        const top = Math.min(source.y, target.y);
-        const bottom = Math.max(source.y + source.height, target.y + target.height);
-
-        pt = <Point>state.view.transformControlPoint(state, pt);
-        vertical = pt.y < top || pt.y > bottom;
-        horizontal = pt.x < left || pt.x > right;
-      } else {
-        const left = Math.max(source.x, target.x);
-        const right = Math.min(source.x + source.width, target.x + target.width);
-
-        vertical = left === right;
-        if (!vertical) {
-          const top = Math.max(source.y, target.y);
-          const bottom = Math.min(source.y + source.height, target.y + target.height);
-
-          horizontal = top === bottom;
-        }
-      }
-    }
-
-    if (!horizontal && (vertical || state.style.elbow === ELBOW.VERTICAL)) {
-      EdgeStyle.TopToBottom(state, source, target, points, result);
-    } else {
-      EdgeStyle.SideToSide(state, source, target, points, result);
-    }
-  }
+  static ElbowConnector = ElbowConnectorFunction;
 
   /**
-   * Implements a vertical elbow edge. See <EntityRelation> for a description
-   * of the parameters.
+   * Implements a vertical elbow edge.
    */
-  static SideToSide(
-    state: CellState,
-    source: CellState,
-    target: CellState,
-    points: Point[],
-    result: Point[]
-  ) {
-    const { view } = state;
-    let pt = points != null && points.length > 0 ? points[0] : null;
-    const pts = state.absolutePoints;
-    const p0 = pts[0];
-    const pe = pts[pts.length - 1];
-
-    if (pt != null) {
-      pt = view.transformControlPoint(state, pt);
-    }
-
-    if (p0 != null) {
-      source = new CellState();
-      source.x = p0.x;
-      source.y = p0.y;
-    }
-
-    if (pe != null) {
-      target = new CellState();
-      target.x = pe.x;
-      target.y = pe.y;
-    }
-
-    if (source != null && target != null) {
-      const l = Math.max(source.x, target.x);
-      const r = Math.min(source.x + source.width, target.x + target.width);
-
-      const x = pt != null ? pt.x : Math.round(r + (l - r) / 2);
-
-      let y1 = view.getRoutingCenterY(source);
-      let y2 = view.getRoutingCenterY(target);
-
-      if (pt != null) {
-        if (pt.y >= source.y && pt.y <= source.y + source.height) {
-          y1 = pt.y;
-        }
-
-        if (pt.y >= target.y && pt.y <= target.y + target.height) {
-          y2 = pt.y;
-        }
-      }
-
-      if (!contains(target, x, y1) && !contains(source, x, y1)) {
-        result.push(new Point(x, y1));
-      }
-
-      if (!contains(target, x, y2) && !contains(source, x, y2)) {
-        result.push(new Point(x, y2));
-      }
-
-      if (result.length === 1) {
-        if (pt != null) {
-          if (!contains(target, x, pt.y) && !contains(source, x, pt.y)) {
-            result.push(new Point(x, pt.y));
-          }
-        } else {
-          const t = Math.max(source.y, target.y);
-          const b = Math.min(source.y + source.height, target.y + target.height);
-
-          result.push(new Point(x, t + (b - t) / 2));
-        }
-      }
-    }
-  }
+  static SideToSide = SideToSideFunction;
 
   /**
-   * Implements a horizontal elbow edge. See <EntityRelation> for a
-   * description of the parameters.
+   * Implements a horizontal elbow edge.
    */
-  static TopToBottom(
-    state: CellState,
-    source: CellState,
-    target: CellState,
-    points: Point[],
-    result: Point[]
-  ) {
-    const { view } = state;
-    let pt = points != null && points.length > 0 ? points[0] : null;
-    const pts = state.absolutePoints;
-    const p0 = pts[0];
-    const pe = pts[pts.length - 1];
-
-    if (pt != null) {
-      pt = view.transformControlPoint(state, pt);
-    }
-
-    if (p0 != null) {
-      source = new CellState();
-      source.x = p0.x;
-      source.y = p0.y;
-    }
-
-    if (pe != null) {
-      target = new CellState();
-      target.x = pe.x;
-      target.y = pe.y;
-    }
-
-    if (source != null && target != null) {
-      const t = Math.max(source.y, target.y);
-      const b = Math.min(source.y + source.height, target.y + target.height);
-
-      let x = view.getRoutingCenterX(source);
-
-      if (pt != null && pt.x >= source.x && pt.x <= source.x + source.width) {
-        x = pt.x;
-      }
-
-      const y = pt != null ? pt.y : Math.round(b + (t - b) / 2);
-
-      if (!contains(target, x, y) && !contains(source, x, y)) {
-        result.push(new Point(x, y));
-      }
-
-      if (pt != null && pt.x >= target.x && pt.x <= target.x + target.width) {
-        x = pt.x;
-      } else {
-        x = view.getRoutingCenterX(target);
-      }
-
-      if (!contains(target, x, y) && !contains(source, x, y)) {
-        result.push(new Point(x, y));
-      }
-
-      if (result.length === 1) {
-        if (pt != null && result.length === 1) {
-          if (!contains(target, pt.x, y) && !contains(source, pt.x, y)) {
-            result.push(new Point(pt.x, y));
-          }
-        } else {
-          const l = Math.max(source.x, target.x);
-          const r = Math.min(source.x + source.width, target.x + target.width);
-
-          result.push(new Point(l + (r - l) / 2, y));
-        }
-      }
-    }
-  }
+  static TopToBottom = TopToBottomFunction;
 
   /**
    * Implements an orthogonal edge style. Use {@link EdgeSegmentHandler}
    * as an interactive handler for this style.
    *
-   * @param state <CellState> that represents the edge to be updated.
-   * @param sourceScaled <CellState> that represents the source terminal.
-   * @param targetScaled <CellState> that represents the target terminal.
+   * @param state {@link CellState} that represents the edge to be updated.
+   * @param sourceScaled {@link CellState} that represents the source terminal.
+   * @param targetScaled {@link CellState} that represents the target terminal.
    * @param controlHints List of relative control points.
-   * @param result Array of <Point> that represent the actual points of the
-   * edge.
+   * @param result Array of {@link Point} that represent the actual points of the edge.
    */
-  static SegmentConnector(
-    state: CellState,
-    sourceScaled: CellState,
-    targetScaled: CellState,
-    controlHints: Point[],
-    result: Point[]
-  ) {
-    // Creates array of all way- and terminalpoints
-    // TODO: Figure out what to do when there are nulls in `pts`!
-    const pts = <Point[]>(
-      (<unknown>(
-        EdgeStyle.scalePointArray(
-          <Point[]>(<unknown>state.absolutePoints),
-          state.view.scale
-        )
-      ))
-    );
-    const source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
-    const target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
-    const tol = 1;
-
-    // Whether the first segment outgoing from the source end is horizontal
-    let lastPushed = result.length > 0 ? result[0] : null;
-    let horizontal = true;
-    let hint = null;
-
-    // Adds waypoints only if outside of tolerance
-    function pushPoint(pt: Point) {
-      pt.x = Math.round(pt.x * state.view.scale * 10) / 10;
-      pt.y = Math.round(pt.y * state.view.scale * 10) / 10;
-
-      if (
-        lastPushed == null ||
-        Math.abs(lastPushed.x - pt.x) >= tol ||
-        Math.abs(lastPushed.y - pt.y) >= Math.max(1, state.view.scale)
-      ) {
-        result.push(pt);
-        lastPushed = pt;
-      }
-
-      return lastPushed;
-    }
-
-    // Adds the first point
-    let pt = pts[0];
-
-    if (pt == null && source != null) {
-      pt = new Point(
-        state.view.getRoutingCenterX(source),
-        state.view.getRoutingCenterY(source)
-      );
-    } else if (pt != null) {
-      pt = pt.clone();
-    }
-
-    const lastInx = pts.length - 1;
-    let pe = null;
-
-    // Adds the waypoints
-    if (controlHints != null && controlHints.length > 0) {
-      // Converts all hints and removes nulls
-      let hints = [];
-
-      for (let i = 0; i < controlHints.length; i += 1) {
-        const tmp = state.view.transformControlPoint(state, controlHints[i], true);
-
-        if (tmp != null) {
-          hints.push(tmp);
-        }
-      }
-
-      if (hints.length === 0) {
-        return;
-      }
-
-      // Aligns source and target hint to fixed points
-      if (pt != null && hints[0] != null) {
-        if (Math.abs(hints[0].x - pt.x) < tol) {
-          hints[0].x = pt.x;
-        }
-
-        if (Math.abs(hints[0].y - pt.y) < tol) {
-          hints[0].y = pt.y;
-        }
-      }
-
-      pe = pts[lastInx];
-
-      if (pe != null && hints[hints.length - 1] != null) {
-        if (Math.abs(hints[hints.length - 1].x - pe.x) < tol) {
-          hints[hints.length - 1].x = pe.x;
-        }
-
-        if (Math.abs(hints[hints.length - 1].y - pe.y) < tol) {
-          hints[hints.length - 1].y = pe.y;
-        }
-      }
-
-      hint = hints[0];
-
-      let currentTerm = source;
-      let currentPt = pts[0];
-      let hozChan = false;
-      let vertChan = false;
-      let currentHint = hint;
-
-      if (currentPt != null) {
-        currentTerm = null;
-      }
-
-      // Check for alignment with fixed points and with channels
-      // at source and target segments only
-      for (let i = 0; i < 2; i += 1) {
-        const fixedVertAlign = currentPt != null && currentPt.x === currentHint.x;
-        const fixedHozAlign = currentPt != null && currentPt.y === currentHint.y;
-
-        const inHozChan =
-          currentTerm != null &&
-          currentHint.y >= currentTerm.y &&
-          currentHint.y <= currentTerm.y + currentTerm.height;
-        const inVertChan =
-          currentTerm != null &&
-          currentHint.x >= currentTerm.x &&
-          currentHint.x <= currentTerm.x + currentTerm.width;
-
-        hozChan = fixedHozAlign || (currentPt == null && inHozChan);
-        vertChan = fixedVertAlign || (currentPt == null && inVertChan);
-
-        // If the current hint falls in both the hor and vert channels in the case
-        // of a floating port, or if the hint is exactly co-incident with a
-        // fixed point, ignore the source and try to work out the orientation
-        // from the target end
-        if (!(i == 0 && ((hozChan && vertChan) || (fixedVertAlign && fixedHozAlign)))) {
-          if (
-            currentPt != null &&
-            !fixedHozAlign &&
-            !fixedVertAlign &&
-            (inHozChan || inVertChan)
-          ) {
-            horizontal = !inHozChan;
-            break;
-          }
-
-          if (vertChan || hozChan) {
-            horizontal = hozChan;
-
-            if (i === 1) {
-              // Work back from target end
-              horizontal = hints.length % 2 === 0 ? hozChan : vertChan;
-            }
-
-            break;
-          }
-        }
-
-        currentTerm = target;
-        currentPt = pts[lastInx];
-
-        if (currentPt != null) {
-          currentTerm = null;
-        }
-
-        currentHint = hints[hints.length - 1];
-
-        if (fixedVertAlign && fixedHozAlign) {
-          hints = hints.slice(1);
-        }
-      }
-
-      if (
-        horizontal &&
-        ((pts[0] != null && pts[0].y !== hint.y) ||
-          (pts[0] == null &&
-            source != null &&
-            (hint.y < source.y || hint.y > source.y + source.height)))
-      ) {
-        pushPoint(new Point(pt.x, hint.y));
-      } else if (
-        !horizontal &&
-        ((pts[0] != null && pts[0].x !== hint.x) ||
-          (pts[0] == null &&
-            source != null &&
-            (hint.x < source.x || hint.x > source.x + source.width)))
-      ) {
-        pushPoint(new Point(hint.x, pt.y));
-      }
-
-      if (horizontal) {
-        pt.y = hint.y;
-      } else {
-        pt.x = hint.x;
-      }
-
-      for (let i = 0; i < hints.length; i += 1) {
-        horizontal = !horizontal;
-        hint = hints[i];
-
-        //        MaxLog.show();
-        //        MaxLog.debug('hint', i, hint.x, hint.y);
-
-        if (horizontal) {
-          pt.y = hint.y;
-        } else {
-          pt.x = hint.x;
-        }
-
-        pushPoint(pt.clone());
-      }
-    } else {
-      hint = pt;
-      // FIXME: First click in connect preview toggles orientation
-      horizontal = true;
-    }
-
-    // Adds the last point
-    pt = pts[lastInx];
-
-    if (pt == null && target != null) {
-      pt = new Point(
-        state.view.getRoutingCenterX(target),
-        state.view.getRoutingCenterY(target)
-      );
-    }
-
-    if (pt != null) {
-      if (hint != null) {
-        if (
-          horizontal &&
-          ((pts[lastInx] != null && pts[lastInx].y !== hint.y) ||
-            (pts[lastInx] == null &&
-              target != null &&
-              (hint.y < target.y || hint.y > target.y + target.height)))
-        ) {
-          pushPoint(new Point(pt.x, hint.y));
-        } else if (
-          !horizontal &&
-          ((pts[lastInx] != null && pts[lastInx].x !== hint.x) ||
-            (pts[lastInx] == null &&
-              target != null &&
-              (hint.x < target.x || hint.x > target.x + target.width)))
-        ) {
-          pushPoint(new Point(hint.x, pt.y));
-        }
-      }
-    }
-
-    // Removes bends inside the source terminal for floating ports
-    if (pts[0] == null && source != null) {
-      while (
-        result.length > 1 &&
-        result[1] != null &&
-        contains(source, result[1].x, result[1].y)
-      ) {
-        result.splice(1, 1);
-      }
-    }
-
-    // Removes bends inside the target terminal
-    if (pts[lastInx] == null && target != null) {
-      while (
-        result.length > 1 &&
-        result[result.length - 1] != null &&
-        contains(target, result[result.length - 1].x, result[result.length - 1].y)
-      ) {
-        result.splice(result.length - 1, 1);
-      }
-    }
-
-    // Removes last point if inside tolerance with end point
-    if (
-      pe != null &&
-      result[result.length - 1] != null &&
-      Math.abs(pe.x - result[result.length - 1].x) <= tol &&
-      Math.abs(pe.y - result[result.length - 1].y) <= tol
-    ) {
-      result.splice(result.length - 1, 1);
-
-      // Lines up second last point in result with end point
-      if (result[result.length - 1] != null) {
-        if (Math.abs(result[result.length - 1].x - pe.x) < tol) {
-          result[result.length - 1].x = pe.x;
-        }
-
-        if (Math.abs(result[result.length - 1].y - pe.y) < tol) {
-          result[result.length - 1].y = pe.y;
-        }
-      }
-    }
-  }
+  static SegmentConnector = SegmentConnectorFunction;
 
   static orthBuffer = 10;
 
@@ -941,66 +290,13 @@ class EdgeStyle {
   }
 
   /**
-   * Scales an array of {@link Point}
+   * Implements a local orthogonal router between the given cells.
    *
-   * @param points array of {@link Point} to scale
-   * @param scale the scaling to divide by
-   */
-  static scalePointArray(points: Point[], scale: number): (Point | null)[] | null {
-    let result: (Point | null)[] | null = [];
-
-    if (points != null) {
-      for (let i = 0; i < points.length; i += 1) {
-        if (points[i] != null) {
-          const pt = new Point(
-            Math.round((points[i].x / scale) * 10) / 10,
-            Math.round((points[i].y / scale) * 10) / 10
-          );
-          result[i] = pt;
-        } else {
-          result[i] = null;
-        }
-      }
-    } else {
-      result = null;
-    }
-
-    return result;
-  }
-
-  /**
-   * Scales an <CellState>
-   *
-   * @param state <CellState> to scale
-   * @param scale the scaling to divide by
-   */
-  static scaleCellState(state: CellState, scale: number) {
-    let result = null;
-
-    if (state != null) {
-      result = state.clone();
-      result.setRect(
-        Math.round((state.x / scale) * 10) / 10,
-        Math.round((state.y / scale) * 10) / 10,
-        Math.round((state.width / scale) * 10) / 10,
-        Math.round((state.height / scale) * 10) / 10
-      );
-    } else {
-      result = null;
-    }
-
-    return result;
-  }
-
-  /**
-   * Implements a local orthogonal router between the given
-   * cells.
-   *
-   * @param state <CellState> that represents the edge to be updated.
-   * @param sourceScaled <CellState> that represents the source terminal.
-   * @param targetScaled <CellState> that represents the target terminal.
-   * @param controlHints List of relative control points.
-   * @param result Array of <Point> that represent the actual points of the
+   * @param state {@link CellState} that represents the edge to be updated.
+   * @param sourceScaled {@link CellState} that represents the source terminal.
+   * @param targetScaled {@link CellState} that represents the target terminal.
+   * @param controlHints List of relative control {@link Point}s.
+   * @param result Array of {@link Point}s that represent the actual points of the
    * edge.
    */
   static OrthConnector(
@@ -1013,11 +309,11 @@ class EdgeStyle {
     // TODO: Figure out what to do when there are nulls in `pts`!
     const pts = <Point[]>(
       (<unknown>(
-        EdgeStyle.scalePointArray(<Point[]>state.absolutePoints, state.view.scale)
+        scalePointArray(<Point[]>state.absolutePoints, state.view.scale)
       ))
     );
-    const source = EdgeStyle.scaleCellState(sourceScaled, state.view.scale);
-    const target = EdgeStyle.scaleCellState(targetScaled, state.view.scale);
+    const source = scaleCellState(sourceScaled, state.view.scale);
+    const target = scaleCellState(targetScaled, state.view.scale);
 
     const sourceEdge = source == null ? false : source.cell.isEdge();
     const targetEdge = target == null ? false : target.cell.isEdge();
@@ -1538,12 +834,11 @@ class EdgeStyle {
     this.MANHATTAN_STEP * 2, this.MANHATTAN_STEP * 2);
 
   /**
-   * ManhattanConnector code is based on code from
-   * https://github.com/mwangm/mxgraph-manhattan-connector
+   * ManhattanConnector code is based on code from https://github.com/mwangm/mxgraph-manhattan-connector
    *
-   * Implements router to find shortest route that avoids cells using
-   * manhattan distance as metric.
+   * Implements router to find the shortest route that avoids cells using manhattan distance as metric.
    */
+
   static ManhattanConnector(
     state: CellState,
     source: CellState,
@@ -2071,4 +1366,3 @@ class EdgeStyle {
 }
 
 export default EdgeStyle;
-

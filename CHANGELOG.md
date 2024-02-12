@@ -13,9 +13,15 @@ This only has an impact on TypeScript users who use this type explicitly, which 
   - This change should not impact people using working implementation of perimeter function
   (including these provided by maxGraph) as they already have the right signature. Implementers of
   custom perimeter in TypeScript may have to slightly update their perimeter function declaration.
+- `CellStateStyle.loopStyle` no longer accept `Function`, but only the `EdgeStyleFunction` (limited impacts like on the `perimeter` property) 
+- `Graph.createEdgeHandler` only accepts `EdgeStyleFunction` for the `edgeStyle` parameter.
 - `GraphView` signature method changes
-  -  `getPerimeterPoint` can now return `null`
+  - `getPerimeterPoint` can now return `null`
   - `getPerimeterBounds` no longer accept null `CellState` and no longer returns `null`
+- Some internal methods of `EdgeStyle` are no longer available:
+  - `scaleCellState`
+  - `scalePointArray`
+
 
 ## 0.7.0
 

@@ -159,6 +159,8 @@ export type CellStateStyle = {
    */
   direction?: DirectionValue;
   /**
+   * This defines the style of the edge if the current cell is an Edge.
+   *
    * The possible values for the style provided out-of-the box by maxGraph are defined in {@link EDGESTYLE}.
    *
    * See {@link noEdgeStyle}.
@@ -437,8 +439,10 @@ export type CellStateStyle = {
   labelWidth?: number;
   /**
    * The possible values are the functions defined in {@link EdgeStyle}.
+   *
+   * See {@link edgeStyle}.
    */
-  loopStyle?: Function;
+  loopStyle?: EdgeStyleFunction;
   /**
    * The margin between the ellipses in {@link DoubleEllipseShape}.
    *
@@ -1090,3 +1094,20 @@ export type PerimeterValue =
   | 'rectanglePerimeter'
   | 'rhombusPerimeter'
   | 'trianglePerimeter';
+
+/**
+ * Computes the actual points of the edge.
+ *
+ * @param state {@link CellState} that represents the edge to be updated.
+ * @param source {@link CellState} that represents the source terminal.
+ * @param target {@link CellState} that represents the target terminal.
+ * @param points List of relative control points.
+ * @param result Array of {@link Point} that represent the actual points of the edge.
+ */
+export type EdgeStyleFunction = (
+  state: CellState,
+  source: CellState,
+  target: CellState | null,
+  points: Point[],
+  result: Point[]
+) => void;

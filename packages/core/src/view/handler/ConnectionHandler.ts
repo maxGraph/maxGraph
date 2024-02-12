@@ -1345,9 +1345,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Returns the perimeter point for the given target state.
    *
    * @param state <CellState> that represents the target cell state.
-   * @param me {@link MouseEvent} that represents the mouse move.
+   * @param _me {@link MouseEvent} that represents the mouse move.
    */
-  getTargetPerimeterPoint(state: CellState, me: InternalMouseEvent) {
+  getTargetPerimeterPoint(state: CellState, _me: InternalMouseEvent) {
     let result: Point | null = null;
     const { view } = state;
     const targetPerimeter = view.getPerimeterFunction(state);
