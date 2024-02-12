@@ -18,6 +18,7 @@ import '@maxgraph/core/css/common.css';
 import './style.css';
 import {
   Client,
+  DomHelpers,
   Graph,
   InternalEvent,
   ModelXmlSerializer,
@@ -64,9 +65,7 @@ const initializeGraph = (container) => {
   const modelXmlSerializer = new ModelXmlSerializer(graph.model);
   modelXmlSerializer.import(xmlWithVerticesAndEdges);
 
-  // check what has been imported
-  console.info('Exporting model...');
-  console.info('Model as XML', modelXmlSerializer.export());
+  return graph;
 };
 
 // display the maxGraph version in the footer
@@ -74,4 +73,14 @@ const footer = document.querySelector('footer');
 footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 
 // Creates the graph inside the given container
-initializeGraph(document.querySelector('#graph-container'));
+const container = document.querySelector('#graph-container');
+const graph = initializeGraph(container);
+
+const button = DomHelpers.button('View XML', function () {
+  const modelXmlSerializer = new ModelXmlSerializer(graph.model);
+  const xml = modelXmlSerializer.export();
+
+  // poor way to display the XML
+  window.alert(xml);
+});
+container.parentElement.appendChild(button);
