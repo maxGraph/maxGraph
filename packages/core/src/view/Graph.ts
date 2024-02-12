@@ -1036,7 +1036,7 @@ class Graph extends EventSource {
    * @param state {@link CellState} to create the handler for.
    * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
    */
-  createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null) {
+  createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
     let result = null;
     if (
       edgeStyle == EdgeStyle.Loop ||
