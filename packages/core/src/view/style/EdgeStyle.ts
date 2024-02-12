@@ -34,6 +34,7 @@ import {
 import Rectangle from '../geometry/Rectangle';
 import Geometry from '../geometry/Geometry';
 import { scaleCellState, scalePointArray } from './edge/shared';
+import type { EdgeStyleFunction } from '../../types';
 
 import { ElbowConnector as ElbowConnectorFunction } from './edge/Elbow';
 import { EntityRelation as EntityRelationFunction } from './edge/EntityRelation';
@@ -299,13 +300,13 @@ class EdgeStyle {
    * @param result Array of {@link Point}s that represent the actual points of the
    * edge.
    */
-  static OrthConnector(
+  static OrthConnector: EdgeStyleFunction = (
     state: CellState,
     sourceScaled: CellState,
-    targetScaled: CellState,
+    targetScaled: CellState | null,
     controlHints: Point[],
     result: Point[]
-  ) {
+  ) => {
     // TODO: Figure out what to do when there are nulls in `pts`!
     const pts = <Point[]>(
       (<unknown>(
@@ -807,7 +808,7 @@ class EdgeStyle {
         result.splice(index, 1);
       }
     }
-  }
+  };
 
   // Size of the step to find a route
   static MANHATTAN_STEP = 12;
@@ -838,14 +839,13 @@ class EdgeStyle {
    *
    * Implements router to find the shortest route that avoids cells using manhattan distance as metric.
    */
-
-  static ManhattanConnector(
+  static ManhattanConnector: EdgeStyleFunction = (
     state: CellState,
     source: CellState,
-    target: CellState,
+    target: CellState | null,
     points: Point[],
     result: Point[]
-  ) {
+  ) => {
     /**
      * Adds all values from source geometry to target.
      * Used to create padding box around cell geometry.
@@ -1283,7 +1283,7 @@ class EdgeStyle {
     function router(
       state: CellState,
       source: CellState,
-      target: CellState,
+      target: CellState | null,
       points: Point[],
       result: Point[],
       opt: typeof config
@@ -1332,7 +1332,7 @@ class EdgeStyle {
     }
 
     router(state, source, target, points, result, config);
-  }
+  };
 
   static getRoutePattern(
     dir: number[],
