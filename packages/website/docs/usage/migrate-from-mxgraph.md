@@ -225,10 +225,19 @@ format:(value: number) => number
 The `mxGraph` class has been renamed to `Graph` in `maxGraph`.
 There have also been some changes related to properties and methods.
 
-Some properties have been removed in favor of the usage of plugins. Plugins are registered at the Graph initialization by passing
+Some properties have been removed in favor of the usage of plugins. Plugins are registered at the `Graph` initialization by passing
 an array of plugins to the constructor.
 
-#### `panningHandler` property
+| property removed        | method removed                | new plugin              |
+|-------------------------|-------------------------------|-------------------------|
+| `connectionHandler`     | `createConnectionHandler`     | `ConnectionHandler`     |
+| `graphHandler`          | `createGraphHandler`          | `SelectionHandler`      |
+| `panningHandler`        | `createPanningHandler`        | `PanningHandler`        |
+| `popupMenuHandler`      | `createPopupMenuHandler`      | `PopupMenuHandler`      |
+| `selectionCellsHandler` | `createSelectionCellsHandler` | `SelectionCellsHandler` |
+| `tooltipHandler`        | `createTooltipHandler`        | `TooltipHandler`        |
+
+#### Example of migration with the `panningHandler` property
 
 The `panningHandler` property has been removed and replaced by a plugin. Instead of accessing `panningHandler` directly, you can use the `getPlugin()` method to get the `PanningHandler` plugin instance. Here's an example:
 
