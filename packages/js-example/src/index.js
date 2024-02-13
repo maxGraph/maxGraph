@@ -25,15 +25,7 @@ import {
   RubberBandHandler,
 } from '@maxgraph/core';
 
-const initializeGraph = (container) => {
-  // Disables the built-in context menu
-  InternalEvent.disableContextMenu(container);
-
-  const graph = new Graph(container);
-  graph.setPanning(true); // Use mouse right button for panning
-  new RubberBandHandler(graph); // Enables rubber band selection
-
-  const xmlWithVerticesAndEdges = `<GraphDataModel>
+const xmlWithVerticesAndEdges = `<GraphDataModel>
     <root>
       <Cell id="0">
         <Object as="style" />
@@ -61,7 +53,16 @@ const initializeGraph = (container) => {
       </Cell>
     </root>
   </GraphDataModel>
-  `;
+`;
+
+const initializeGraph = (container) => {
+  // Disables the built-in context menu
+  InternalEvent.disableContextMenu(container);
+
+  const graph = new Graph(container);
+  graph.setPanning(true); // Use mouse right button for panning
+  new RubberBandHandler(graph); // Enables rubber band selection
+
   const modelXmlSerializer = new ModelXmlSerializer(graph.model);
   modelXmlSerializer.import(xmlWithVerticesAndEdges);
 
@@ -76,11 +77,19 @@ footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 const container = document.querySelector('#graph-container');
 const graph = initializeGraph(container);
 
-const button = DomHelpers.button('View XML', function () {
-  const modelXmlSerializer = new ModelXmlSerializer(graph.model);
-  const xml = modelXmlSerializer.export();
+// poor way to display the XML
+const popup = (content) => {
+  window.alert(content);
+};
 
-  // poor way to display the XML
-  window.alert(xml);
-});
-container.parentElement.appendChild(button);
+container.parentElement.appendChild(
+  DomHelpers.button('View Original XML', () => {
+    popup(xmlWithVerticesAndEdges);
+  })
+);
+container.parentElement.appendChild(
+  DomHelpers.button('Export XML', () => {
+    const xml = new ModelXmlSerializer(graph.model).export();
+    popup(xml);
+  })
+);
