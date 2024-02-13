@@ -207,10 +207,10 @@ $ npm install
 To watch the core package, execute:
 
 ```sh
-$ nnpm run dev -w packages/core
+$ npm run dev -w packages/core
 ```
 
-To run the html (vanilla-js) version of [Storybook](https://storybook.js.org/), execute (in the project root directory)
+To run the examples provided as [Storybook](https://storybook.js.org/) stories, execute:
 
 ```sh
 $ npm run -w packages/html
