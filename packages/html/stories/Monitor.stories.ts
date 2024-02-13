@@ -380,7 +380,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     style.gradientDirection = 'east';
     style.rounded = true;
     // style.shadow = true; // TMP disable until we can change the shadow color
-    style.fontStyle = 1;
+    style.fontStyle = 1; // bold
 
     style = graph.getStylesheet().getDefaultEdgeStyle();
     // TODO was working in mxGraph, currently edgeStyle must be a string, but passing the function works at runtime
