@@ -18,21 +18,14 @@ import '@maxgraph/core/css/common.css';
 import './style.css';
 import {
   Client,
+  DomHelpers,
   Graph,
   InternalEvent,
   ModelXmlSerializer,
   RubberBandHandler,
 } from '@maxgraph/core';
 
-const initializeGraph = (container) => {
-  // Disables the built-in context menu
-  InternalEvent.disableContextMenu(container);
-
-  const graph = new Graph(container);
-  graph.setPanning(true); // Use mouse right button for panning
-  new RubberBandHandler(graph); // Enables rubber band selection
-
-  const xmlWithVerticesAndEdges = `<GraphDataModel>
+const xmlWithVerticesAndEdges = `<GraphDataModel>
     <root>
       <Cell id="0">
         <Object as="style" />
@@ -60,13 +53,20 @@ const initializeGraph = (container) => {
       </Cell>
     </root>
   </GraphDataModel>
-  `;
+`;
+
+const initializeGraph = (container) => {
+  // Disables the built-in context menu
+  InternalEvent.disableContextMenu(container);
+
+  const graph = new Graph(container);
+  graph.setPanning(true); // Use mouse right button for panning
+  new RubberBandHandler(graph); // Enables rubber band selection
+
   const modelXmlSerializer = new ModelXmlSerializer(graph.model);
   modelXmlSerializer.import(xmlWithVerticesAndEdges);
 
-  // check what has been imported
-  console.info('Exporting model...');
-  console.info('Model as XML', modelXmlSerializer.export());
+  return graph;
 };
 
 // display the maxGraph version in the footer
@@ -74,4 +74,22 @@ const footer = document.querySelector('footer');
 footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 
 // Creates the graph inside the given container
-initializeGraph(document.querySelector('#graph-container'));
+const container = document.querySelector('#graph-container');
+const graph = initializeGraph(container);
+
+// poor way to display the XML
+const popup = (content) => {
+  window.alert(content);
+};
+
+container.parentElement.appendChild(
+  DomHelpers.button('View Original XML', () => {
+    popup(xmlWithVerticesAndEdges);
+  })
+);
+container.parentElement.appendChild(
+  DomHelpers.button('Export XML', () => {
+    const xml = new ModelXmlSerializer(graph.model).export();
+    popup(xml);
+  })
+);

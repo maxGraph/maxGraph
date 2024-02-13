@@ -52,7 +52,12 @@ import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 
-import type { GraphPlugin, GraphPluginConstructor, MouseListenerSet } from '../types';
+import type {
+  EdgeStyleFunction,
+  GraphPlugin,
+  GraphPluginConstructor,
+  MouseListenerSet,
+} from '../types';
 import Multiplicity from './other/Multiplicity';
 import ImageBundle from './image/ImageBundle';
 import GraphSelectionModel from './GraphSelectionModel';
@@ -1029,8 +1034,9 @@ class Graph extends EventSource {
    * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
    *
    * @param state {@link CellState} to create the handler for.
+   * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
    */
-  createEdgeHandler(state: CellState, edgeStyle: any) {
+  createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
     let result = null;
     if (
       edgeStyle == EdgeStyle.Loop ||
@@ -1048,7 +1054,7 @@ class Graph extends EventSource {
       result = this.createEdgeHandlerInstance(state);
     }
 
-    return result as EdgeHandler;
+    return result;
   }
 
   /*****************************************************************************

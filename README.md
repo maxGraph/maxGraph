@@ -196,6 +196,7 @@ NodeJS requirements:
 - this is the version used by GitHub Actions
 - nvm users can run `nvm use`. If the Node version is not installed, nvm will state how to install the required version.
 
+Note: maxGraph relies on npm workspaces to build.
 
 In the project root directory, execute
 
@@ -203,27 +204,17 @@ In the project root directory, execute
 $ npm install
 ```
 
-In the `packages/core` folder, execute
+To watch the core package, execute:
 
 ```sh
-npm pack
+$ npm run dev -w packages/core
 ```
 
-To watch the core package, execute (in the project root directory)
+To watch the examples provided as [Storybook](https://storybook.js.org/) stories, execute:
 
 ```sh
-$ npm run dev
+$ npm run dev -w packages/html
 ```
-
-and select `@maxgraph/core`.
-
-To run the html(vanilla-js) version of [Storybook](https://storybook.js.org/), execute (in the project root directory)
-
-```sh
-$ npm run dev
-```
-
-and select `@maxgraph/html`.
 
 Since both commands are in watch mode, so it's recommended to open two terminals and run them separately. When a file is saved from the core package, the html storybook will be automatically updated.
 
