@@ -210,10 +210,10 @@ To watch the core package, execute:
 $ npm run dev -w packages/core
 ```
 
-To run the examples provided as [Storybook](https://storybook.js.org/) stories, execute:
+To watch the examples provided as [Storybook](https://storybook.js.org/) stories, execute:
 
 ```sh
-$ npm run -w packages/html
+$ npm run dev -w packages/html
 ```
 
 Since both commands are in watch mode, so it's recommended to open two terminals and run them separately. When a file is saved from the core package, the html storybook will be automatically updated.
