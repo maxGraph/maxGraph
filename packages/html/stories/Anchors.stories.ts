@@ -16,15 +16,18 @@ limitations under the License.
 */
 
 import {
+  CellEditorHandler,
+  CellState,
   Client,
-  Graph,
-  RubberBandHandler,
   ConnectionHandler,
   ConnectionConstraint,
   Geometry,
-  PolylineShape,
+  Graph,
+  InternalMouseEvent,
   Point,
-  CellState,
+  RubberBandHandler,
+  SelectionCellsHandler,
+  SelectionHandler,
 } from '@maxgraph/core';
 
 import {
@@ -48,7 +51,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   Client.setImageBasePath('/images');
 
   const container = document.createElement('div');
@@ -61,31 +64,30 @@ const Template = ({ label, ...args }) => {
 
   class MyCustomConnectionHandler extends ConnectionHandler {
     // Enables connect preview for the default edge style
-    createEdgeState(me) {
-      const edge = graph.createEdge(null, null, null, null, null);
+    createEdgeState(_me: InternalMouseEvent) {
+      const edge = this.graph.createEdge(null, null!, null, null, null);
       return new CellState(this.graph.view, edge, this.graph.getCellStyle(edge));
     }
   }
 
   class MyCustomGraph extends Graph {
-    getAllConnectionConstraints(terminal, source) {
+    constructor(container: HTMLElement) {
+      super(
+        container,
+        undefined,
+        // Use a dedicated set of plugins to not use extra plugins not needed here
+        [
+          CellEditorHandler,
+          SelectionCellsHandler,
+          MyCustomConnectionHandler,
+          SelectionHandler,
+        ]
+      );
+    }
+    getAllConnectionConstraints = (terminal: CellState | null, _source: boolean) => {
       // Overridden to define per-geometry connection points
-      if (terminal && terminal.cell) {
-        if (terminal.shape.stencil) {
-          if (terminal.shape.stencil.constraints) {
-            return terminal.shape.stencil.constraints;
-          }
-        } else if (terminal.cell.geometry.constraints) {
-          return terminal.cell.geometry.constraints;
-        }
-      }
-
-      return null;
-    }
-
-    createConnectionHandler() {
-      return new MyCustomConnectionHandler(this);
-    }
+      return (terminal?.cell?.geometry as MyCustomGeometryClass)?.constraints ?? null;
+    };
   }
 
   class MyCustomGeometryClass extends Geometry {
@@ -107,10 +109,10 @@ const Template = ({ label, ...args }) => {
   }
 
   // Edges have no connection points
-  PolylineShape.prototype.constraints = null;
+  // PolylineShape.prototype.constraints = null; // not useful here
 
   // Creates the graph inside the given container
-  const graph = new MyCustomGraph(container);
+  const graph: Graph = new MyCustomGraph(container);
   graph.setConnectable(true);
 
   // Specifies the default edge style
@@ -139,7 +141,7 @@ const Template = ({ label, ...args }) => {
       size: [80, 30],
       geometryClass: MyCustomGeometryClass,
     });
-    const e1 = graph.insertEdge({
+    graph.insertEdge({
       parent,
       value: '',
       source: v1,
