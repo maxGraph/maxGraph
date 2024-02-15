@@ -8,6 +8,11 @@ This page explains the steps needed to release a new version of maxgraph@core.
 
 Currently, the release process is completely manual. Automation will come later based on the information provided here.
 
+## Prerequisites
+
+- Releases are done from the default branch
+- Ensure that all GitHub Actions runs are successful
+- Make sure that the documentation is up-to-date
 
 ## Preparation
 
@@ -24,7 +29,11 @@ released. Rename it if necessary.
 - Clean up this open milestone if some issues are still open (move them to a new milestone or discard the milestone from them).
 - Close the milestone.
 
-Changes in the source code
+Apply changes in the source code
+- Prerequisites:
+  - Releases are done from the default branch, so all changes are done in the `main` branch.
+  - These changes are going to be done locally, and then pushed to the repository.
+  - Make sure that the code is up-to-date with the `main` branch. Run `git pull` to get the latest changes.
 - Update the version in `packages/core/package.json` and the `VERSION` constant in the `packages/core/src/Client.ts` file.
 - Update the `package-lock.json` file by running npm install at the root of the repository. It should only change the version of `@maxgraph/core`.
 - Update the `CHANGELOG` file to list the major changes included in the new version. Be generic and add a
@@ -36,11 +45,11 @@ the GitHub release page.
 
 - Make a single commit that includes the changes described above
   - Use the following template for the commit message: `chore(release): prepare version 0.2.0`
-  - Push the changes
-    - The default branch is protected by a GitHub ruleset that prevents direct pushing to the branch.
-    - Update the ruleset and add a [bypass permission](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository#granting-bypass-permissions-for-your-ruleset) for your account.
-    - Run the git push command.
-    - Update the ruleset to remove the bypass permission. 
+- Push the changes
+  - The default branch is protected by a GitHub ruleset that prevents direct pushing to the branch.
+  - Update the ruleset and add a [bypass permission](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository#granting-bypass-permissions-for-your-ruleset) for your account.
+  - Run the git push command.
+  - Update the ruleset to remove the bypass permission. 
 
 - Create a git tag, prefixing the version with a `v`. For example, if the version is 0.2.0, run:
 ```
