@@ -3,7 +3,7 @@ name: Generate website
 on:
   pull_request:
     branches:
-      - development
+      - main
     paths:
       - '.github/actions/build-setup/**/*'
       - '.github/workflows/generate-website.yml'

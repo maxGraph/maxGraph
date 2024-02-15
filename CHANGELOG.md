@@ -1,8 +1,15 @@
 # `maxGraph` Change Log
 
-## UNRELEASED
+## 0.8.0
+
+Release date: `2024-02-14`
+
+For more details, see the [0.8.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.8.0) on the GitHub release page.
+
+This release contains new features and bug fixes.
 
 **Breaking Changes**
+They mainly impacts TypeScript users and impacts are limited:
 - rename the `StyleArrayValue` type into `StyleArrowValue`.
 This only has an impact on TypeScript users who use this type explicitly, which should happen rarely.
 - `Perimeter` is no longer a class but a value object. This only impact users that had extended the

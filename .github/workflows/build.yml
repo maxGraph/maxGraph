@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - development
+      - main
     paths:
       - '.github/actions/build-setup/**/*'
       - '.github/workflows/build.yml'
@@ -17,7 +17,7 @@ on:
       - 'tsconfig.json'
   pull_request:
     branches:
-      - development
+      - main
     paths:
       - '.github/actions/build-setup/**/*'
       - '.github/workflows/build.yml'

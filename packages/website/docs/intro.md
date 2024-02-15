@@ -27,8 +27,8 @@ This documentation is a **work in progress**. Please be patient, the content wil
 ## Getting Started
 
 Please check the maxGraph repository **README**:
-- [installation](https://github.com/maxGraph/maxGraph/blob/development/README.md#install)
-- [getting started](https://github.com/maxGraph/maxGraph/blob/development/README.md#getting-started)
+- [installation](https://github.com/maxGraph/maxGraph#install)
+- [getting started](https://github.com/maxGraph/maxGraph#getting-started)
 
 
 ## Usage
