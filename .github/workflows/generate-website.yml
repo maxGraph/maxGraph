@@ -64,7 +64,6 @@ jobs:
       contents: read
       pages: write      # to deploy to Pages
       id-token: write   # to verify the deployment originates from an appropriate source
-      actions: read # to download an artifact uploaded by `actions/upload-pages-artifact@v3`
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
