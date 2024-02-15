@@ -13,7 +13,7 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://maxgraph.github.io/', // TODO add 'maxGraph/'?
+  url: 'https://maxgraph.github.io/', // mainly used for sitemap.xml
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl,
