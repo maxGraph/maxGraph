@@ -75,7 +75,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       super(
         container,
         undefined,
-        // Use a dedicated set of plugins to not use extra plugins not needed here
+        // Use a dedicated set of plugins to use MyCustomConnectionHandler and to not use extra plugins not needed here
         [
           CellEditorHandler,
           SelectionCellsHandler,
