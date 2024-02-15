@@ -25,6 +25,7 @@ The concepts are the same, so experienced `mxGraph` users should be able to swit
 
 The main changes are the removal of support for Internet Explorer (including VML support) and Legacy Edge.
 
+The initial description of the changes has been described in [#70](https://github.com/maxGraph/maxGraph/pull/70).
 
 ## Application setup
 

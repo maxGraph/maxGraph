@@ -1,17 +1,22 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+
+const baseUrl: string = '/'; // TODO baseUrl: '/maxGraph/' + also hard coded url,
 
 const config: Config = {
   title: 'maxGraph',
-  tagline: 'A TypeScript library which can display and allow interaction with vector diagrams.',
+  // The "generated" directory contains the demo (storybook) and the API documentation (typedoc)
+  staticDirectories: ['generated', 'static'],
+  tagline:
+    'A TypeScript library which can display and allow interaction with vector diagrams.',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://maxgraph.github.io/',
+  url: 'https://maxgraph.github.io/', // TODO add 'maxGraph/'?
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/', // TODO   baseUrl: '/maxGraph/',
+  baseUrl,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -35,10 +40,8 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/maxGraph/maxGraph/tree/main/packages/docs/',
+          editUrl: 'https://github.com/maxGraph/maxGraph/tree/main/packages/docs/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -50,6 +53,12 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     // image: 'img/docusaurus-social-card.jpg',
+    announcementBar: {
+      content:
+        '⚠️ This is a <b>work in progress</b>, the content of the original <i>mxGraph</i> documentation will be progressively migrated here ⚠️',
+      backgroundColor: 'rgb(255, 248, 230)',
+      isCloseable: false,
+    },
     docs: {
       sidebar: {
         hideable: true,
@@ -63,13 +72,24 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'docsSidebar',
-          position: 'left',
           label: 'Documentation',
+          position: 'left',
+          sidebarId: 'docsSidebar',
+          type: 'docSidebar',
         },
-        // {to: '/storybook', label: 'Demo', position: 'left'},
-        // {to: '/docs/api', label: 'API', position: 'left'},
+        // TODO when enabling this, also enable the corresponding configuration in the footer
+        // {
+        //   href: `${baseUrl}demo/`,
+        //   label: 'Demo',
+        //   position: 'left',
+        //   target: '_blank',
+        // },
+        {
+          href: `${baseUrl}api-docs/`,
+          label: 'API',
+          position: 'left',
+          target: '_blank',
+        },
         {
           href: 'https://github.com/maxGraph/maxGraph',
           label: 'GitHub',
@@ -88,13 +108,15 @@ const config: Config = {
               to: '/docs/intro',
             },
             // {
+            //   href: `${baseUrl}demo/`,
             //   label: 'Demo',
-            //   to: '/storybook',
+            //   target: '_blank',
             // },
-            // {
-            //   label: 'API',
-            //   to: '/docs/api',
-            // },
+            {
+              href: `${baseUrl}api-docs/`,
+              label: 'API',
+              target: '_blank',
+            },
           ],
         },
         {

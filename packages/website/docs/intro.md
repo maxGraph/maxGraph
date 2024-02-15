@@ -19,7 +19,9 @@ which requires finer-grained customization of functionality than off-the-shelf p
 
 :::warning
 
-This documentation is a **work in progress**. Please be patient, the content will be updated progressively.
+This documentation is a **work in progress**.
+
+Please be patient, as content will be gradually updated, especially the content of the original `mxGraph` documentation.
 
 :::
 

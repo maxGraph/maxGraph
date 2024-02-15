@@ -26,10 +26,11 @@ jobs:
         run: npm run docs:api -w packages/core
       - name: Build website
         run: npm run build -w packages/website
+      - name: Copy generated resources to the website
+        run: npm run extra:copy-gen-resources -w packages/website
       - name: Upload website artifact
         uses: actions/upload-artifact@v4
         with:
           name: website-${{github.sha}}
           path: |
-            packages/core/build/api/
             packages/website/build/

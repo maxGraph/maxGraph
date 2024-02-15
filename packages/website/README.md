@@ -24,20 +24,19 @@ $ npm build
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
-<!-- TODO document deployment
-### Deployment
 
-Using SSH:
+### External resources to include within the site
 
+The navbar includes links to external resources built by other packages
+- the API documentation
+- the Storybook demo
+
+Such resources are expected to be copied into the `generated` directory of the website.
+- build the related resources
+- copy `/packages/core/` to `/packages/webapp/generated/api-docs`
+- copy `/packages/html/dist` to `/packages/webapp/generated/demo`
+
+Run the following commands to copy the resources:
+```bash
+npm run extra:copy-gen-resources
 ```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
--->
