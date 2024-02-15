@@ -1,6 +1,22 @@
 name: Generate website
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/actions/build-setup/**/*'
+      - '.github/workflows/generate-website.yml'
+      - '.nvmrc'
+      - 'packages/core/**/*'
+      - 'packages/website/**/*'
+      - '!packages/website/README.md'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+  # Allows you to deploy manually to GH Pages from the Actions tab (only if run from the main branch)
+  workflow_dispatch:
+
   pull_request:
     branches:
       - main
@@ -14,6 +30,13 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - 'tsconfig.json'
+
+
+# Allow one concurrent deployment
+# Use a dynamic name to run the workflow in parallel for the build part (in particular in PRs)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -29,8 +52,24 @@ jobs:
       - name: Build website
         run: npm run build -w packages/website
       - name: Upload website artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: website-${{github.sha}}
-          path: |
-            packages/website/build/
+          path: packages/website/build/
+
+  deploy:
+    needs: build
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      contents: read
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+      actions: read # to download an artifact uploaded by `actions/upload-pages-artifact@v3`
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
