@@ -146,7 +146,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} - The maxGraph project Contributors. Built with Docusaurus.`,
+      copyright: `Copyright © 2021-${new Date().getFullYear()} - The maxGraph project Contributors. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
