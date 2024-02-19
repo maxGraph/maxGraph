@@ -219,4 +219,5 @@ export { default as ConnectionConstraint } from './view/other/ConnectionConstrai
 export { default as Multiplicity } from './view/other/Multiplicity';
 
 // Ensure types are exported in the type definitions
+export type { HTMLImageElementWithProps } from './gui/MaxToolbar';
 export * from './types';
