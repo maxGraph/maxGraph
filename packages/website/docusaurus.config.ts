@@ -20,7 +20,7 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'maxGraph', // Usually your GitHub org/user name.
+  organizationName: 'maxGraph', // Usually your GitHub org/username.
   projectName: 'maxGraph', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -77,13 +77,12 @@ const config: Config = {
           sidebarId: 'docsSidebar',
           type: 'docSidebar',
         },
-        // TODO when enabling this, also enable the corresponding configuration in the footer
-        // {
-        //   href: `${baseUrl}demo/`,
-        //   label: 'Demo',
-        //   position: 'left',
-        //   target: '_blank',
-        // },
+        {
+          href: `${baseUrl}demo/`,
+          label: 'Demo',
+          position: 'left',
+          target: '_blank',
+        },
         {
           href: `${baseUrl}api-docs/`,
           label: 'API',
@@ -107,11 +106,11 @@ const config: Config = {
               label: 'Documentation',
               to: '/docs/intro',
             },
-            // {
-            //   href: `${baseUrl}demo/`,
-            //   label: 'Demo',
-            //   target: '_blank',
-            // },
+            {
+              href: `${baseUrl}demo/`,
+              label: 'Demo',
+              target: '_blank',
+            },
             {
               href: `${baseUrl}api-docs/`,
               label: 'API',

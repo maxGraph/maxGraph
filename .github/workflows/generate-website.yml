@@ -47,6 +47,8 @@ jobs:
         uses: ./.github/actions/build-setup
       - name: Build @maxgraph/core API docs
         run: npm run docs:api -w packages/core
+      - name: Build Storybook demo
+        run: npm run build -w packages/core -w packages/html
       - name: Copy generated resources to the website
         run: npm run extra:copy-gen-resources -w packages/website
       - name: Build website

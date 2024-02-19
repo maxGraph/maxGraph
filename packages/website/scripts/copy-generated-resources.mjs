@@ -16,7 +16,6 @@ rmSync(targetDirectory, {
 });
 
 copySync('../core/build/api', `${targetDirectory}/api-docs`);
-// TODO enable when the GH workflow will build storybook at the same time of the website
-// copySync('../html/dist', `${targetDirectory}/demo`);
+copySync('../html/dist', `${targetDirectory}/demo`);
 
 console.info('Copy of generated resources done');
