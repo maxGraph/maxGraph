@@ -18,7 +18,6 @@ limitations under the License.
 import {
   CellEditorHandler,
   CellState,
-  Client,
   ConnectionHandler,
   ConnectionConstraint,
   Geometry,
@@ -36,6 +35,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -52,15 +52,8 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  Client.setImageBasePath('/images');
-
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  configureImagesBasePath();
+  const container = createGraphContainer(args);
 
   class MyCustomConnectionHandler extends ConnectionHandler {
     // Enables connect preview for the default edge style

@@ -49,6 +49,7 @@ import {
   globalValues,
   globalTypes,
 } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -94,7 +95,7 @@ const HTML_TEMPLATE = `
 
   <!-- Creates a container for the graph with a grid wallpaper. Width, height and cursor in the style are for IE only -->
   <div id="graphContainer"
-    style="cursor:default;position:absolute;top:30px;left:0px;bottom:0px;right:0px;background:url('editors/images/grid.gif')">
+    style="cursor:default;position:absolute;top:30px;left:0px;bottom:0px;right:0px;background:url('./images/grid.gif')">
   </div>
 </body>
 `;
@@ -116,13 +117,7 @@ const Template = ({ label, ...args }) => {
   styleElm.innerText = CSS_TEMPLATE;
   document.head.appendChild(styleElm);
 
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
 
   // Disables foreignObjects
   Client.NO_FO = true;

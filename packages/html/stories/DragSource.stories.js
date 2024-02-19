@@ -35,6 +35,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -51,12 +52,8 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
+  container.style.background = ''; // no grid
 
   class MyCustomGuide extends Guide {
     isEnabledForEvent(evt) {
@@ -93,13 +90,7 @@ const Template = ({ label, ...args }) => {
 
   // Creates the graph inside the given container
   for (let i = 0; i < 2; i++) {
-    const subContainer = document.createElement('div');
-    subContainer.style.overflow = 'hidden';
-    subContainer.style.position = 'relative';
-    subContainer.style.width = '321px';
-    subContainer.style.height = '241px';
-    subContainer.style.background = "url('/images/grid.gif')";
-    subContainer.style.cursor = 'default';
+    const subContainer = createGraphContainer({ width: 321, height: 241 });
     container.appendChild(subContainer);
 
     const graph = new MyCustomGraph(subContainer);

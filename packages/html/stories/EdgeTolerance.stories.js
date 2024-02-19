@@ -17,6 +17,7 @@ limitations under the License.
 
 import { Graph, styleUtils } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Connections/EdgeTolerance',
@@ -29,13 +30,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
 
   class MyCustomGraph extends Graph {
     fireMouseEvent(evtName, me, sender) {

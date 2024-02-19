@@ -17,6 +17,7 @@ limitations under the License.
 
 import { Graph, cloneUtils, ImageBox, Rectangle, CellStateStyle } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Icon_Images/Images',
@@ -29,12 +30,8 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, any>) => {
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
+  container.style.background = ''; // no grid
 
   // Creates the graph inside the given container
   const graph = new Graph(container);

@@ -24,6 +24,7 @@ import {
   ImageBox,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Effects/Overlays',
@@ -36,13 +37,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
@@ -74,7 +69,7 @@ const Template = ({ label, ...args }) => {
       if (overlays.length === 0) {
         // Creates a new overlay with an image and a tooltip
         const overlay = new CellOverlay(
-          new ImageBox('/images/check.png', 16, 16),
+          new ImageBox('images/check.png', 16, 16),
           'Overlay tooltip',
           pickAlignValueRandomly(),
           pickVerticalAlignValueRandomly()

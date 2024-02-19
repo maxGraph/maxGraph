@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import {
-  Client,
   DomHelpers,
   EdgeStyle,
   Graph,
@@ -32,6 +31,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -48,17 +48,10 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  Client.setImageBasePath('/images');
+  configureImagesBasePath();
 
   const div = document.createElement('div');
-
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
   div.appendChild(container);
 
   // Creates the graph inside the given container

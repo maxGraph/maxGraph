@@ -91,6 +91,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -120,14 +121,7 @@ const HTML_TEMPLATE = `
 
 const Template = ({ label, ...args }) => {
   const parentContainer = document.createElement('div');
-  const container = document.createElement('div');
-
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
   parentContainer.appendChild(container);
 
   // Changes some default colors
@@ -985,7 +979,7 @@ const Template = ({ label, ...args }) => {
 
   InternalEvent.addListener(checkbox2, 'click', function (evt) {
     if (checkbox2.checked) {
-      container.style.background = 'url(/images/grid.gif)';
+      container.style.background = 'url(./images/grid.gif)';
     } else {
       container.style.background = '';
     }

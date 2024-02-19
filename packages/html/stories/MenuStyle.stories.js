@@ -40,6 +40,7 @@ import {
   PanningHandler,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -87,7 +88,7 @@ const HTML_TEMPLATE = `
 <body onload="main(document.getElementById('graphContainer'))">
   <!-- Creates a container for the graph with a grid wallpaper -->
   <div id="graphContainer"
-    style="overflow:hidden;width:321px;height:241px;background:url('editors/images/grid.gif');cursor:default;">
+    style="overflow:hidden;width:321px;height:241px;background:url('./images/grid.gif');cursor:default;">
   </div>
 </body>
 </html>
@@ -108,13 +109,7 @@ const Template = ({ label, ...args }) => {
   styleElm.innerText = CSS_TEMPLATE;
   document.head.appendChild(styleElm);
 
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
 
   // Disables built-in context menu
   InternalEvent.disableContextMenu(container);
@@ -229,7 +224,7 @@ const Template = ({ label, ...args }) => {
   // Creates a new overlay with an image and a tooltip and makes it "transparent" to events
   // and sets the overlay for the cell in the graph
   let overlay = new CellOverlay(
-    new ImageBox('editors/images/overlays/check.png', 16, 16),
+    new ImageBox('images/overlays/check.png', 16, 16),
     'Overlay tooltip'
   );
   graph.addCellOverlay(v1, overlay);
