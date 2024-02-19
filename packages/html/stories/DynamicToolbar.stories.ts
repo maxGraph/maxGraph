@@ -107,9 +107,18 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   addVertex('/images/rectangle.gif', 100, 40, {});
   addVertex('/images/rounded.gif', 100, 40, { rounded: true });
-  addVertex('/images/ellipse.gif', 40, 40, { shape: 'ellipse' });
-  addVertex('/images/rhombus.gif', 40, 40, { shape: 'rhombus' });
-  addVertex('/images/triangle.gif', 40, 40, { shape: 'triangle' });
+  addVertex('/images/ellipse.gif', 40, 40, {
+    shape: 'ellipse',
+    perimeter: 'ellipsePerimeter',
+  });
+  addVertex('/images/rhombus.gif', 40, 40, {
+    shape: 'rhombus',
+    perimeter: 'rhombusPerimeter',
+  });
+  addVertex('/images/triangle.gif', 40, 40, {
+    shape: 'triangle',
+    perimeter: 'trianglePerimeter',
+  });
   addVertex('/images/cylinder.gif', 40, 40, { shape: 'cylinder' });
   addVertex('/images/actor.gif', 30, 40, { shape: 'actor' });
 
