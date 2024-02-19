@@ -58,28 +58,26 @@ type InternalHTMLImageElementWithProps = HTMLImageElementWithProps & {
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
+  div.style.display = 'flex';
+
+  // Creates the div for the toolbar
+  const tbContainer = document.createElement('div');
+  tbContainer.style.display = 'flex';
+  tbContainer.style.flexDirection = 'column';
+  tbContainer.style.marginRight = '.5rem';
+  div.appendChild(tbContainer);
+
+  // Creates new toolbar without event processing
+  const toolbar = new MaxToolbar(tbContainer);
+  toolbar.enabled = false;
+
+  // Creates the div for the graph
   const container = createGraphContainer(args);
   div.appendChild(container);
 
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
   ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
-
-  // Creates the div for the toolbar
-  const tbContainer = document.createElement('div');
-  tbContainer.style.position = 'absolute';
-  tbContainer.style.overflow = 'hidden';
-  tbContainer.style.padding = '2px';
-  tbContainer.style.left = '0px';
-  tbContainer.style.top = '0px';
-  tbContainer.style.width = '24px';
-  tbContainer.style.bottom = '0px';
-
-  div.appendChild(tbContainer);
-
-  // Creates new toolbar without event processing
-  const toolbar = new MaxToolbar(tbContainer);
-  toolbar.enabled = false;
 
   // Creates the model and the graph inside the container
   // using the fastest rendering available on the browser
