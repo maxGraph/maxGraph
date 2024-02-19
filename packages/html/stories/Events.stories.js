@@ -33,7 +33,9 @@ import {
   globalValues,
   rubberBandTypes,
   rubberBandValues,
-} from './shared/args.js'; // style required by RubberBand
+} from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
+// style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
 export default {
@@ -51,17 +53,11 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
 
   class MyCustomConnectionHandler extends ConnectionHandler {
     // Sets the image to be used for creating new connections
-    connectImage = new ImageBox('/images/green-dot.gif', 14, 14);
+    connectImage = new ImageBox('images/green-dot.gif', 14, 14);
   }
 
   // Disables built-in context menu
@@ -143,16 +139,16 @@ const Template = ({ label, ...args }) => {
 function createPopupMenu(graph, menu, cell, evt) {
   // Function to create the entries in the popupmenu
   if (cell != null) {
-    menu.addItem('Cell Item', '/images/image.gif', () => {
+    menu.addItem('Cell Item', 'images/image.gif', () => {
       alert('MenuItem1');
     });
   } else {
-    menu.addItem('No-Cell Item', '/images/image.gif', () => {
+    menu.addItem('No-Cell Item', 'images/image.gif', () => {
       alert('MenuItem2');
     });
   }
   menu.addSeparator();
-  menu.addItem('MenuItem3', '/images/warning.gif', () => {
+  menu.addItem('MenuItem3', 'images/warning.gif', () => {
     alert(`MenuItem3: ${graph.getSelectionCount()} selected`);
   });
 }

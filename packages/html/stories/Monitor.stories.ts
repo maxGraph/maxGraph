@@ -17,7 +17,6 @@ limitations under the License.
 
 import {
   CellOverlay,
-  Client,
   cloneUtils,
   DomHelpers,
   Graph,
@@ -28,6 +27,7 @@ import {
   xmlUtils,
 } from '@maxgraph/core';
 import { globalTypes } from './shared/args.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Misc/Monitor',
@@ -40,17 +40,12 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }: Record<string, any>) => {
-  Client.setImageBasePath('/images');
+const Template = ({ label, ...args }: Record<string, string>) => {
+  configureImagesBasePath();
 
   const div = document.createElement('div');
-
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
+  container.style.background = ''; // no grid
   div.appendChild(container);
 
   // Should we allow overriding constants?

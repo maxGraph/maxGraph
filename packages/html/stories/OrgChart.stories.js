@@ -37,6 +37,7 @@ import {
   globalTypes,
   globalValues,
 } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Layouts/OrgChart',
@@ -52,14 +53,7 @@ export default {
 
 const Template = ({ label, ...args }) => {
   const div = document.createElement('div');
-
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
   div.appendChild(container);
 
   // Should we allow overriding constants?
@@ -126,7 +120,7 @@ const Template = ({ label, ...args }) => {
   style.rounded = '1';
   style.glass = '1';
 
-  style.image = '/images/dude3.png';
+  style.image = 'images/dude3.png';
   style.imageWidth = '48';
   style.imageHeight = '48';
   style.spacing = 8;
@@ -228,7 +222,7 @@ const Template = ({ label, ...args }) => {
       20,
       140,
       60,
-      { image: '/images/house.png' }
+      { image: 'images/house.png' }
     );
     graph.updateCellSize(v1);
     addOverlays(graph, v1, false);
@@ -272,17 +266,17 @@ const Template = ({ label, ...args }) => {
 
     if (cell != null) {
       if (cell.isVertex()) {
-        menu.addItem('Add child', '/images/overlays/check.png', function () {
+        menu.addItem('Add child', 'images/overlays/check.png', function () {
           addChild(graph, cell);
         });
       }
 
-      menu.addItem('Edit label', '/images/text.gif', function () {
+      menu.addItem('Edit label', 'images/text.gif', function () {
         graph.startEditingAtCell(cell);
       });
 
       if (cell.id != 'treeRoot' && cell.isVertex()) {
-        menu.addItem('Delete', '/images/delete.gif', function () {
+        menu.addItem('Delete', 'images/delete.gif', function () {
           deleteSubtree(graph, cell);
         });
       }
@@ -290,22 +284,22 @@ const Template = ({ label, ...args }) => {
       menu.addSeparator();
     }
 
-    menu.addItem('Fit', '/images/zoom.gif', function () {
+    menu.addItem('Fit', 'images/zoom.gif', function () {
       graph.fit();
     });
 
-    menu.addItem('Actual', '/images/zoomactual.gif', function () {
+    menu.addItem('Actual', 'images/zoomactual.gif', function () {
       graph.zoomActual();
     });
 
     menu.addSeparator();
 
-    menu.addItem('Print', '/images/print.gif', function () {
+    menu.addItem('Print', 'images/print.gif', function () {
       const preview = new PrintPreview(graph, 1);
       preview.open();
     });
 
-    menu.addItem('Poster Print', '/images/print.gif', function () {
+    menu.addItem('Poster Print', 'images/print.gif', function () {
       const pageCount = utils.prompt('Enter maximum page count', '1');
 
       if (pageCount != null) {

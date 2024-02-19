@@ -35,6 +35,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -52,23 +53,12 @@ export default {
 
 const Template = ({ label, ...args }) => {
   const div = document.createElement('div');
-
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
   div.appendChild(container);
 
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
-  ConnectionHandler.prototype.connectImage = new ImageBox(
-    '/images/connector.gif',
-    16,
-    16
-  );
+  ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
 
   // Creates the div for the toolbar
   const tbContainer = document.createElement('div');
@@ -100,13 +90,13 @@ const Template = ({ label, ...args }) => {
 
   if (args.rubberBand) new RubberBandHandler(graph);
 
-  addVertex('/images/rectangle.gif', 100, 40, '');
-  addVertex('/images/rounded.gif', 100, 40, 'shape=rounded');
-  addVertex('/images/ellipse.gif', 40, 40, 'shape=ellipse');
-  addVertex('/images/rhombus.gif', 40, 40, 'shape=rhombus');
-  addVertex('/images/triangle.gif', 40, 40, 'shape=triangle');
-  addVertex('/images/cylinder.gif', 40, 40, 'shape=cylinder');
-  addVertex('/images/actor.gif', 30, 40, 'shape=actor');
+  addVertex('images/rectangle.gif', 100, 40, '');
+  addVertex('images/rounded.gif', 100, 40, 'shape=rounded');
+  addVertex('images/ellipse.gif', 40, 40, 'shape=ellipse');
+  addVertex('images/rhombus.gif', 40, 40, 'shape=rhombus');
+  addVertex('images/triangle.gif', 40, 40, 'shape=triangle');
+  addVertex('images/cylinder.gif', 40, 40, 'shape=cylinder');
+  addVertex('images/actor.gif', 30, 40, 'shape=actor');
 
   function addVertex(icon, w, h, style) {
     const vertex = new Cell(null, new Geometry(0, 0, w, h), style);

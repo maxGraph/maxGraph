@@ -22,6 +22,7 @@ import {
   type PanningHandler,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 
 const xmlModel = `<mxGraphModel>
   <root>
@@ -95,11 +96,7 @@ export default {
 const Template = ({ label, ...args }: Record<string, any>) => {
   const div = document.createElement('div');
 
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
+  const container = createGraphContainer(args);
   container.style.background = '#eeeeee';
   container.style.border = '1px solid gray';
   div.appendChild(container);

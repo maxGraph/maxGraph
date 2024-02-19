@@ -36,6 +36,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -52,13 +53,7 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
 
   // Creates the graph inside the given this.el
   const graph = new Graph(container);

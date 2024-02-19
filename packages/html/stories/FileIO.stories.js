@@ -29,6 +29,7 @@ import {
 } from '@maxgraph/core';
 
 import { globalTypes, globalValues } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Xml_Json/FileIO',
@@ -42,14 +43,7 @@ export default {
 
 const Template = ({ label, ...args }) => {
   const div = document.createElement('div');
-
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
   div.appendChild(container);
 
   // Program starts here. Creates a sample graph in the

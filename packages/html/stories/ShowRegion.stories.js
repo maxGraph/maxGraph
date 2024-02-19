@@ -37,6 +37,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
 
 const CSS_TEMPLATE = `
 body div.mxPopupMenu {
@@ -84,7 +85,7 @@ const HTML_TEMPLATE = `
 
   <!-- Creates a container for the graph with a grid wallpaper -->
   <div id="graphContainer"
-    style="overflow:hidden;width:321px;height:241px;background:url('editors/images/grid.gif');cursor:default;">
+    style="overflow:hidden;width:321px;height:241px;background:url('./images/grid.gif');cursor:default;">
   </div>
   Use the right mouse button to select a region of the diagram and select <i>Show this</i>.
 </body>
@@ -107,13 +108,7 @@ const Template = ({ label, ...args }) => {
   styleElm.innerText = CSS_TEMPLATE;
   document.head.appendChild(styleElm);
 
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
 
   // Disables built-in context menu
   InternalEvent.disableContextMenu(container);
