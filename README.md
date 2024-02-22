@@ -132,7 +132,7 @@ The key resources are the JavaScript user manual which explain the concepts and 
 
 ## Examples
 
-To continue, please have a look at:
+For more complete examples than getting started,, please have a look at:
 
 - the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph.
   - The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
