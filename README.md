@@ -137,7 +137,7 @@ To continue, please have a look at:
 - the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph.
   - The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
   - A live instance is available on the [maxGraph webiste](https://maxgraph.github.io/maxGraph/demo).
-- the [ts-example](packages/ts-example) project/application that demonstrates how to use `maxGraph` in a vanilla Typescript application powered by [Vite](https://vitejs.dev/).
+- the [ts-example](packages/ts-example) project/application that demonstrates how to use `maxGraph` in a vanilla TypeScript application powered by [Vite](https://vitejs.dev/).
 - the [js-example](packages/js-example) project/application that demonstrates how import and export the `maxGraph` model with XML data. It is in a vanilla JavaScript application buit with [Webapck](https://webpack.js.org/).
 - the https://github.com/maxGraph/maxgraph-integration-examples repository which shows how to integrate `maxGraph` with different frameworks and build tools.
 
