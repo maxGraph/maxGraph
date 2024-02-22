@@ -118,14 +118,9 @@ You will see something like in the following _maxGraph panning_ demo:
 ![maxGraph panning demo](docs/images/maxgraph_demo.gif "maxGraph panning demo")
 
 
-To continue, please have a look at:
+## Documentation
 
-- the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph. The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
-- the [ts-example](packages/ts-example) project/application that demonstrates how to use `maxGraph` in a vanilla Typescript application powered by [Vite](https://vitejs.dev/).
-- the https://github.com/maxGraph/maxgraph-integration-examples repository which shows how to integrate `maxGraph` with different frameworks and build tools.
-
-
-Notice that some elements produced by `maxGraph` require to use [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
+The maxGraph documentation is available on the [maxGraph webiste](https://maxgraph.github.io/maxGraph). ⚠️ This is a **work in progress**, the content of the original _mxGraph_ documentation will be progressively migrated there ⚠️.
 
 Until we provide a complete documentation, you can check the [mxGraph documentation](https://jgraph.github.io/mxgraph/).
 The key resources are the JavaScript user manual which explain the concepts and how to start using the API, the JavaScript examples and the JavaScript API specification.
@@ -135,16 +130,19 @@ The key resources are the JavaScript user manual which explain the concepts and 
 > Be aware that the maxGraph API doesn't fully match the mxGraph API (see the paragraph below about "[Migrating from mxGraph](#migrate-from-mxgraph)").
 
 
-## TypeScript support
+## Examples
 
-`maxGraph` is written in TypeScript and provides type definitions so `maxGraph` can be easily integrated into TypeScript applications.
+To continue, please have a look at:
 
-`maxGraph` requires **TypeScript 3.8** or greater.
+- the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph.
+  - The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
+  - A live instance is available on the [maxGraph webiste](https://maxgraph.github.io/maxGraph/demo).
+- the [ts-example](packages/ts-example) project/application that demonstrates how to use `maxGraph` in a vanilla Typescript application powered by [Vite](https://vitejs.dev/).
+- the [js-example](packages/js-example) project/application that demonstrates how import and export the `maxGraph` model with XML data. It is in a vanilla JavaScript application buit with [Webapck](https://webpack.js.org/).
+- the https://github.com/maxGraph/maxgraph-integration-examples repository which shows how to integrate `maxGraph` with different frameworks and build tools.
 
-## Support
 
-For usage question, please open a new [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a) on GitHub. You can also use
-[GitHub discussions](https://github.com/maxGraph/maxGraph/discussions) for other topics like `maxGraph` development or to get the latest news.
+Notice that some elements produced by `maxGraph` require to use [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
 
 
 ## <a id="migrate-from-mxgraph"></a> Migrating from mxGraph
@@ -152,6 +150,19 @@ For usage question, please open a new [discussion](https://github.com/maxGraph/m
 `maxGraph` APIs are not fully compatible with `mxGraph` APIs. The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without issues.
 
 For a complete guide, see the [dedicated migration page](packages/website/docs/usage/migrate-from-mxgraph.md).
+
+
+## TypeScript support
+
+`maxGraph` is written in TypeScript and provides type definitions so `maxGraph` can be easily integrated into TypeScript applications.
+
+`maxGraph` requires **TypeScript 3.8** or greater.
+
+
+## Support
+
+For usage question, please open a new [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a) on GitHub. You can also use
+[GitHub discussions](https://github.com/maxGraph/maxGraph/discussions) for other topics like `maxGraph` development or to get the latest news.
 
 
 ## History
