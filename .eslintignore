@@ -1,2 +1,7 @@
 **/dist/**
 **/node_modules/**
+packages/core/build/**
+packages/core/coverage/**
+packages/html/stashed/**
+packages/website/build/**
+packages/website/generated/**

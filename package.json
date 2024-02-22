@@ -16,8 +16,8 @@
   ],
   "scripts": {
     "dev": "node ./scripts/dev",
-    "lint": "eslint packages/**/**.ts",
-    "lint:fix": "eslint --fix packages/**/**.ts",
+    "lint": "eslint \"**/*.ts\"",
+    "lint:fix": "eslint --fix \"**/*.ts\"",
     "prettier": "prettier --write packages/*/src/**/*.ts"
   },
   "devDependencies": {
