@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import CellRenderer from './CellRenderer';
+
+import type Shape from '../geometry/Shape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import EllipseShape from '../geometry/node/EllipseShape';
 import RhombusShape from '../geometry/node/RhombusShape';
@@ -40,7 +42,7 @@ let isDefaultElementsRegistered = false;
  */
 export function registerDefaultShapes() {
   if (!isDefaultElementsRegistered) {
-    for (const [shapeName, shapeClass] of [
+    const shapesToRegister: [string, new (...arguments_: any) => Shape][] = [
       [SHAPE.ACTOR, ActorShape],
       [SHAPE.ARROW, ArrowShape],
       [SHAPE.ARROW_CONNECTOR, ArrowConnectorShape],
@@ -57,8 +59,8 @@ export function registerDefaultShapes() {
       [SHAPE.RHOMBUS, RhombusShape],
       [SHAPE.SWIMLANE, SwimlaneShape],
       [SHAPE.TRIANGLE, TriangleShape],
-    ]) {
-      // @ts-ignore
+    ];
+    for (const [shapeName, shapeClass] of shapesToRegister) {
       CellRenderer.registerShape(shapeName, shapeClass);
     }
 
