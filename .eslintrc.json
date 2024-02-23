@@ -5,7 +5,7 @@
         "es2020": true
     },
     "plugins": [
-        "eslint-plugin-import"
+        "import"
     ],
     "extends": [
         "eslint:recommended",
