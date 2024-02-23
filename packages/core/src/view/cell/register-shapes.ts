@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import CellRenderer from './CellRenderer';
-
 import type Shape from '../geometry/Shape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import EllipseShape from '../geometry/node/EllipseShape';
