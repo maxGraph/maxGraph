@@ -1488,35 +1488,34 @@ export class Editor extends EventSource {
   createLayoutManager(graph: Graph): LayoutManager {
     const layoutMgr = new LayoutManager(graph);
 
-    const self = this; // closure
     layoutMgr.getLayout = (cell: Cell) => {
       let layout = null;
-      const model = self.graph.getDataModel();
+      const model = this.graph.getDataModel();
 
       if (cell.getParent() != null) {
         // Executes the swimlane layout if a child of
         // a swimlane has been changed. The layout is
         // lazy created in createSwimlaneLayout.
-        if (self.layoutSwimlanes && graph.isSwimlane(cell)) {
-          if (self.swimlaneLayout == null) {
-            self.swimlaneLayout = self.createSwimlaneLayout();
+        if (this.layoutSwimlanes && graph.isSwimlane(cell)) {
+          if (this.swimlaneLayout == null) {
+            this.swimlaneLayout = this.createSwimlaneLayout();
           }
 
-          layout = self.swimlaneLayout;
+          layout = this.swimlaneLayout;
         }
 
         // Executes the diagram layout if the modified
         // cell is a top-level cell. The layout is
         // lazy created in createDiagramLayout.
         else if (
-          self.layoutDiagram &&
+          this.layoutDiagram &&
           (graph.isValidRoot(cell) || (<Cell>cell.getParent()).getParent() == null)
         ) {
-          if (self.diagramLayout == null) {
-            self.diagramLayout = self.createDiagramLayout();
+          if (this.diagramLayout == null) {
+            this.diagramLayout = this.createDiagramLayout();
           }
 
-          layout = self.diagramLayout;
+          layout = this.diagramLayout;
         }
       }
 
@@ -1644,16 +1643,15 @@ export class Editor extends EventSource {
    * @param graph
    */
   installInsertHandler(graph: Graph): void {
-    const self = this; // closure
     const insertHandler: MouseListenerSet = {
       mouseDown: (sender: any, me: InternalMouseEvent) => {
         if (
-          self.insertFunction != null &&
+          this.insertFunction != null &&
           !me.isPopupTrigger() &&
-          (self.forcedInserting || me.getState() == null)
+          (this.forcedInserting || me.getState() == null)
         ) {
-          self.graph.clearSelection();
-          self.insertFunction(me.getEvent(), me.getCell());
+          this.graph.clearSelection();
+          this.insertFunction(me.getEvent(), me.getCell());
 
           // Consumes the rest of the events
           // for this gesture (down, move, up)

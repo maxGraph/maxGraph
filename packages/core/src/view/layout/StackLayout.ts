@@ -252,13 +252,13 @@ class StackLayout extends GraphLayout {
           ? geo1.x === geo2.x
             ? 0
             : geo1.x > geo2.x && geo2.x > 0
-            ? 1
-            : -1
+              ? 1
+              : -1
           : geo1.y === geo2.y
-          ? 0
-          : geo1.y > geo2.y && geo2.y > 0
-          ? 1
-          : -1;
+            ? 0
+            : geo1.y > geo2.y && geo2.y > 0
+              ? 1
+              : -1;
       });
     }
     return cells;

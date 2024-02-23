@@ -2720,9 +2720,7 @@ export const CellsMixin: PartialType = {
    */
   isCellMovable(cell) {
     const style = this.getCurrentCellStyle(cell);
-    return this.isCellsMovable()
-      && !this.isCellLocked(cell)
-      && (style.movable ?? true);
+    return this.isCellsMovable() && !this.isCellLocked(cell) && (style.movable ?? true);
   },
 
   /**

@@ -23,7 +23,6 @@ import type { PerimeterFunction } from '../../../types';
 import { DIRECTION } from '../../../util/Constants';
 import { intersection } from '../../../util/mathUtils';
 
-
 export const HexagonPerimeter: PerimeterFunction = (
   bounds: Rectangle,
   vertex: CellState,

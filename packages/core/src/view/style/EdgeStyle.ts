@@ -309,9 +309,7 @@ class EdgeStyle {
   ) => {
     // TODO: Figure out what to do when there are nulls in `pts`!
     const pts = <Point[]>(
-      (<unknown>(
-        scalePointArray(<Point[]>state.absolutePoints, state.view.scale)
-      ))
+      (<unknown>scalePointArray(<Point[]>state.absolutePoints, state.view.scale))
     );
     const source = scaleCellState(sourceScaled, state.view.scale);
     const target = scaleCellState(targetScaled, state.view.scale);
@@ -756,7 +754,7 @@ class EdgeStyle {
       if (
         currentIndex > 0 &&
         EdgeStyle.wayPoints1[currentIndex][currentOrientation] ===
-        EdgeStyle.wayPoints1[currentIndex - 1][currentOrientation]
+          EdgeStyle.wayPoints1[currentIndex - 1][currentOrientation]
       ) {
         currentIndex--;
       } else {
@@ -819,20 +817,29 @@ class EdgeStyle {
 
   // Possible starting directions from an element
   static MANHATTAN_START_DIRECTIONS: DIRECTION[] = [
-    DIRECTION.NORTH, DIRECTION.EAST, DIRECTION.SOUTH, DIRECTION.WEST
+    DIRECTION.NORTH,
+    DIRECTION.EAST,
+    DIRECTION.SOUTH,
+    DIRECTION.WEST,
   ];
 
   // Possible ending directions to an element
   static MANHATTAN_END_DIRECTIONS: DIRECTION[] = [
-    DIRECTION.NORTH, DIRECTION.EAST, DIRECTION.SOUTH, DIRECTION.WEST
+    DIRECTION.NORTH,
+    DIRECTION.EAST,
+    DIRECTION.SOUTH,
+    DIRECTION.WEST,
   ];
 
   // Limit for directions change when searching route
   static MANHATTAN_MAX_ALLOWED_DIRECTION_CHANGE = 90;
 
   static MANHATTAN_PADDING_BOX = new Geometry(
-    -this.MANHATTAN_STEP, -this.MANHATTAN_STEP,
-    this.MANHATTAN_STEP * 2, this.MANHATTAN_STEP * 2);
+    -this.MANHATTAN_STEP,
+    -this.MANHATTAN_STEP,
+    this.MANHATTAN_STEP * 2,
+    this.MANHATTAN_STEP * 2
+  );
 
   /**
    * ManhattanConnector code is based on code from https://github.com/mwangm/mxgraph-manhattan-connector
@@ -859,20 +866,25 @@ class EdgeStyle {
       target.width += source.width || 0;
       target.height += source.height || 0;
       return target;
-    };
+    }
 
     function snapCoordinateToGrid(value: number, gridSize: number) {
       return gridSize * Math.round(value / gridSize);
-    };
+    }
 
     function snapPointToGrid(p: Point, gx: number, gy?: number) {
       p.x = snapCoordinateToGrid(p.x, gx);
       p.y = snapCoordinateToGrid(p.y, gy || gx);
       return p;
-    };
+    }
 
     function isPointInRectangle(rect: Rectangle, p: Point) {
-      return p.x >= rect.x && p.x <= rect.x + rect.width && p.y >= rect.y && p.y <= rect.y + rect.height;
+      return (
+        p.x >= rect.x &&
+        p.x <= rect.x + rect.width &&
+        p.y >= rect.y &&
+        p.y <= rect.y + rect.height
+      );
     }
 
     function getRectangleCenter(rect: Rectangle): Point {
@@ -881,23 +893,22 @@ class EdgeStyle {
 
     function getDifferencePoint(p1: Point, p2: Point): Point {
       return new Point(p1.x - p2.x, p1.y - p2.y);
-    };
+    }
 
     function movePoint(p: Point, moveX?: number, moveY?: number): Point {
       p.x += moveX || 0;
       p.y += moveY || 0;
       return p;
-    };
+    }
 
     function getPointTheta(p1: Point, p2: Point) {
       const p = p2.clone();
       const y = -(p.y - p1.y);
       const x = p.x - p1.x;
       const PRECISION = 10;
-      const rad = (y.toFixed(PRECISION) == "0" && x.toFixed(PRECISION) == "0")
-        ? 0
-        : Math.atan2(y, x);
-      return 180 * rad / Math.PI;
+      const rad =
+        y.toFixed(PRECISION) == '0' && x.toFixed(PRECISION) == '0' ? 0 : Math.atan2(y, x);
+      return (180 * rad) / Math.PI;
     }
 
     function normalizePoint(point: Point) {
@@ -913,7 +924,7 @@ class EdgeStyle {
 
     function toPointFromString(pointString: string) {
       const xy = pointString.split(pointString.indexOf('@') === -1 ? ' ' : '@');
-      return new Point(parseInt(xy[0], 10), parseInt(xy[1], 10))
+      return new Point(parseInt(xy[0], 10), parseInt(xy[1], 10));
     }
 
     function pointToString(point: Point) {
@@ -923,17 +934,16 @@ class EdgeStyle {
     function getCellAbsoluteBounds(cellState: CellState) {
       const graph = cellState.view.graph;
       const cellBounds = graph.getCellBounds(cellState.cell, false, false)?.clone();
-      if (!cellBounds)
-        return undefined;
+      if (!cellBounds) return undefined;
       const view = graph.view;
       const { scale, translate } = view;
       const { x, y } = translate;
       const round = (v: number) => Math.round(v * 10) / 10;
       const res = new Rectangle(
-        round((cellBounds.x / scale) - x),
-        round((cellBounds.y / scale) - y),
+        round(cellBounds.x / scale - x),
+        round(cellBounds.y / scale - y),
         round(cellBounds.width / scale),
-        round(cellBounds.height / scale),
+        round(cellBounds.height / scale)
       );
 
       return res;
@@ -947,17 +957,37 @@ class EdgeStyle {
 
       // An array of directions to find next points on the route
       directions: [
-        { offsetX: mStep, offsetY: 0, cost: mStep, angle: normalizeAngle(getPointTheta(new Point(0, 0), new Point(mStep, 0))) },
-        { offsetX: 0, offsetY: mStep, cost: mStep, angle: normalizeAngle(getPointTheta(new Point(0, 0), new Point(0, mStep))) },
-        { offsetX: -mStep, offsetY: 0, cost: mStep, angle: normalizeAngle(getPointTheta(new Point(0, 0), new Point(-mStep, 0))) },
-        { offsetX: 0, offsetY: -mStep, cost: mStep, angle: normalizeAngle(getPointTheta(new Point(0, 0), new Point(0, -mStep))) }
+        {
+          offsetX: mStep,
+          offsetY: 0,
+          cost: mStep,
+          angle: normalizeAngle(getPointTheta(new Point(0, 0), new Point(mStep, 0))),
+        },
+        {
+          offsetX: 0,
+          offsetY: mStep,
+          cost: mStep,
+          angle: normalizeAngle(getPointTheta(new Point(0, 0), new Point(0, mStep))),
+        },
+        {
+          offsetX: -mStep,
+          offsetY: 0,
+          cost: mStep,
+          angle: normalizeAngle(getPointTheta(new Point(0, 0), new Point(-mStep, 0))),
+        },
+        {
+          offsetX: 0,
+          offsetY: -mStep,
+          cost: mStep,
+          angle: normalizeAngle(getPointTheta(new Point(0, 0), new Point(0, -mStep))),
+        },
       ],
 
       directionMap: {
-        "east": { x: 1, y: 0 },
-        "south": { x: 0, y: 1 },
-        "west": { x: -1, y: 0 },
-        "north": { x: 0, y: -1 }
+        east: { x: 1, y: 0 },
+        south: { x: 0, y: 1 },
+        west: { x: -1, y: 0 },
+        north: { x: 0, y: -1 },
       },
 
       // A penalty received for direction change
@@ -970,7 +1000,7 @@ class EdgeStyle {
       // i.e. function(from, to, opts) { return []; }
       draggingRoute: null,
 
-      previousDirAngle: 0
+      previousDirAngle: 0,
     };
 
     /**
@@ -994,26 +1024,26 @@ class EdgeStyle {
       // to go through all obstacles, we check only those in a particular cell.
       build(source: CellState | null, target: CellState | null) {
         const graph = source?.view.graph || target?.view.graph;
-        if (!graph)
-          return;
+        if (!graph) return;
         return Array.from(graph.getView().getCellStates())
-          .filter(s => s.cell && s.cell.isVertex() && !s.cell.isEdge())
-          .map(s => getCellAbsoluteBounds(s))
-          .map(bbox => bbox ? moveAndExpand(bbox, this.options.paddingBox) : null)
-          .forEach(bbox => {
-            if (!bbox)
-              return;
+          .filter((s) => s.cell && s.cell.isVertex() && !s.cell.isEdge())
+          .map((s) => getCellAbsoluteBounds(s))
+          .map((bbox) => (bbox ? moveAndExpand(bbox, this.options.paddingBox) : null))
+          .forEach((bbox) => {
+            if (!bbox) return;
 
             const origin = snapPointToGrid(new Point(bbox.x, bbox.y), this.mapGridSize);
-            const corner = snapPointToGrid(new Point(bbox.x + bbox.width, bbox.y + bbox.height), this.mapGridSize);
+            const corner = snapPointToGrid(
+              new Point(bbox.x + bbox.width, bbox.y + bbox.height),
+              this.mapGridSize
+            );
 
             for (let x = origin.x; x <= corner.x; x += this.mapGridSize) {
               for (let y = origin.y; y <= corner.y; y += this.mapGridSize) {
                 const gridKey = x + '@' + y;
 
                 const rectArr = this.map.get(gridKey) || [];
-                if (!this.map.has(gridKey))
-                  this.map.set(gridKey, rectArr);
+                if (!this.map.has(gridKey)) this.map.set(gridKey, rectArr);
                 rectArr.push(bbox);
               }
             }
@@ -1024,7 +1054,7 @@ class EdgeStyle {
         const mapKey = pointToString(snapPointToGrid(point.clone(), this.mapGridSize));
         const obstacles = this.map.get(mapKey);
         if (obstacles) {
-          return obstacles.every(obstacle => !isPointInRectangle(obstacle, point))
+          return obstacles.every((obstacle) => !isPointInRectangle(obstacle, point));
         }
         return true;
       }
@@ -1048,7 +1078,7 @@ class EdgeStyle {
         } else {
           this.hash.set(key, {
             value,
-            open: true
+            open: true,
           });
         }
 
@@ -1056,15 +1086,14 @@ class EdgeStyle {
         this.items.sort((i1, i2) => {
           const hashItem1 = this.hash.get(i1);
           const hashItem2 = this.hash.get(i2);
-          if (!hashItem1 || !hashItem2)
-            return 0;
-          return hashItem1.value - hashItem2.value});
-      };
+          if (!hashItem1 || !hashItem2) return 0;
+          return hashItem1.value - hashItem2.value;
+        });
+      }
 
       remove(key: string) {
         const hashItem = this.hash.get(key);
-        if (hashItem)
-          hashItem.open = false;
+        if (hashItem) hashItem.open = false;
       }
 
       isOpen(key: string) {
@@ -1083,22 +1112,25 @@ class EdgeStyle {
 
       pop(): string | undefined {
         const key = this.items.shift();
-        if (key)
-          this.remove(key);
+        if (key) this.remove(key);
         return key;
       }
     }
 
-    function reconstructRoute(parents: { [key: string]: Point }, endPoint: Point, startCenter: Point, endCenter: Point) {
+    function reconstructRoute(
+      parents: { [key: string]: Point },
+      endPoint: Point,
+      startCenter: Point,
+      endCenter: Point
+    ) {
       const route: Point[] = [];
       let previousDirection = normalizePoint(getDifferencePoint(endCenter, endPoint));
       let current = endPoint;
       let parent;
 
       while (parents[pointToString(current)]) {
-        parent = parents[pointToString(current)]
-        if (!parent)
-          continue;
+        parent = parents[pointToString(current)];
+        if (!parent) continue;
         const direction = normalizePoint(getDifferencePoint(current, parent));
 
         // Add point in when direction change
@@ -1117,15 +1149,19 @@ class EdgeStyle {
       return route;
     }
 
-    function getRectPoints(bbox: Rectangle, directionList: DIRECTION[], opt: typeof config): Point[] {
+    function getRectPoints(
+      bbox: Rectangle,
+      directionList: DIRECTION[],
+      opt: typeof config
+    ): Point[] {
       const step = EdgeStyle.MANHATTAN_STEP;
       const center = getRectangleCenter(bbox);
       const res: Point[] = [];
       for (const direction of directionList) {
         const directionPoint = opt.directionMap[direction];
 
-        const x = directionPoint.x * bbox.width / 2;
-        const y = directionPoint.y * bbox.height / 2;
+        const x = (directionPoint.x * bbox.width) / 2;
+        const y = (directionPoint.y * bbox.height) / 2;
 
         const point = movePoint(center.clone(), x, y);
 
@@ -1134,14 +1170,13 @@ class EdgeStyle {
         }
 
         res.push(snapPointToGrid(point, step));
-
-      };
+      }
       return res;
     }
 
     function normalizeAngle(angle: number) {
       return (angle % 360) + (angle < 0 ? 360 : 0);
-    };
+    }
 
     function getDirectionAngle(start: Point, end: Point, directionLength: number) {
       const q = 360 / directionLength;
@@ -1158,56 +1193,76 @@ class EdgeStyle {
 
       for (let i = 0, len = endPoints.length; i < len; i++) {
         const cost = getManhattanDistance(from, endPoints[i]);
-        if (cost < min)
-          min = cost;
+        if (cost < min) min = cost;
       }
 
       return min;
     }
 
-    function alignPointToCell(point: Point, edgeState: CellState, cellState: CellState, isSourceCell: boolean) {
+    function alignPointToCell(
+      point: Point,
+      edgeState: CellState,
+      cellState: CellState,
+      isSourceCell: boolean
+    ) {
       const cellBounds = getCellAbsoluteBounds(cellState);
 
-      const y = isSourceCell
-        ? edgeState.style.exitY
-        : edgeState.style.entryY;
+      const y = isSourceCell ? edgeState.style.exitY : edgeState.style.entryY;
       const onlyHorizontalDirections = isSourceCell
-        ? EdgeStyle.MANHATTAN_START_DIRECTIONS.every(d => d != DIRECTION.NORTH && d != DIRECTION.SOUTH)
-        : EdgeStyle.MANHATTAN_END_DIRECTIONS.every(d => d != DIRECTION.NORTH && d != DIRECTION.SOUTH)
+        ? EdgeStyle.MANHATTAN_START_DIRECTIONS.every(
+            (d) => d != DIRECTION.NORTH && d != DIRECTION.SOUTH
+          )
+        : EdgeStyle.MANHATTAN_END_DIRECTIONS.every(
+            (d) => d != DIRECTION.NORTH && d != DIRECTION.SOUTH
+          );
 
       if (y != undefined && onlyHorizontalDirections) {
         const cellHeight = cellBounds?.height || 0;
-        point.y = cellBounds?.y != undefined
-          ? cellBounds?.y + cellHeight * y
-          : point.y - cellHeight / 2 + cellHeight * y;
+        point.y =
+          cellBounds?.y != undefined
+            ? cellBounds?.y + cellHeight * y
+            : point.y - cellHeight / 2 + cellHeight * y;
       }
 
-      const x = isSourceCell
-        ? edgeState.style.exitX
-        : edgeState.style.entryX;
+      const x = isSourceCell ? edgeState.style.exitX : edgeState.style.entryX;
       const onlyVerticalDirections = isSourceCell
-        ? EdgeStyle.MANHATTAN_START_DIRECTIONS.every(d => d != DIRECTION.WEST && d != DIRECTION.EAST)
-        : EdgeStyle.MANHATTAN_END_DIRECTIONS.every(d => d != DIRECTION.WEST && d != DIRECTION.EAST)
+        ? EdgeStyle.MANHATTAN_START_DIRECTIONS.every(
+            (d) => d != DIRECTION.WEST && d != DIRECTION.EAST
+          )
+        : EdgeStyle.MANHATTAN_END_DIRECTIONS.every(
+            (d) => d != DIRECTION.WEST && d != DIRECTION.EAST
+          );
       if (x != undefined && onlyVerticalDirections) {
         const cellWidth = cellBounds?.width || 0;
-        point.x = cellBounds?.x != undefined
-          ? cellBounds?.x + cellWidth * x
-          : point.x - cellWidth / 2 + cellWidth * (x || 0);
+        point.x =
+          cellBounds?.x != undefined
+            ? cellBounds?.x + cellWidth * x
+            : point.x - cellWidth / 2 + cellWidth * (x || 0);
       }
     }
 
-    function findRoute(start: Rectangle, end: Rectangle, obstacleMap: ObstacleMap, opt: typeof config) {
+    function findRoute(
+      start: Rectangle,
+      end: Rectangle,
+      obstacleMap: ObstacleMap,
+      opt: typeof config
+    ) {
       // Caculate start points and end points
       const step = EdgeStyle.MANHATTAN_STEP;
-      const startPoints = getRectPoints(start, EdgeStyle.MANHATTAN_START_DIRECTIONS, opt)
-        .filter(p => obstacleMap.isPointAccessible(p));
+      const startPoints = getRectPoints(
+        start,
+        EdgeStyle.MANHATTAN_START_DIRECTIONS,
+        opt
+      ).filter((p) => obstacleMap.isPointAccessible(p));
 
       const startCenter = snapPointToGrid(getRectangleCenter(start), step);
-      const endPoints = getRectPoints(end, EdgeStyle.MANHATTAN_END_DIRECTIONS, opt)
-        .filter(p => obstacleMap.isPointAccessible(p));
+      const endPoints = getRectPoints(
+        end,
+        EdgeStyle.MANHATTAN_END_DIRECTIONS,
+        opt
+      ).filter((p) => obstacleMap.isPointAccessible(p));
       const endCenter = snapPointToGrid(getRectangleCenter(end), step);
       if (startPoints.length > 0 && endPoints.length > 0) {
-
         // The set of possible  points to be evaluated, initially containing the start points.
         const openSet = new SortedSet();
         // Keeps predecessor of given element.
@@ -1215,13 +1270,13 @@ class EdgeStyle {
         // Cost from start to a point along best known path.
         const costs: { [key: string]: number } = {};
 
-        startPoints.forEach(p => {
+        startPoints.forEach((p) => {
           const key = pointToString(p);
           openSet.add(key, estimateCost(p, endPoints));
           costs[key] = 0;
         });
         let loopsRemain = EdgeStyle.MANHATTAN_MAXIMUM_LOOPS;
-        const endPointsKeys = endPoints.map(p => pointToString(p));
+        const endPointsKeys = endPoints.map((p) => pointToString(p));
         let currentDirectionAngle: number | undefined;
         let previousDirectionAngle: number | undefined;
         // Main route finding loop
@@ -1236,12 +1291,17 @@ class EdgeStyle {
           previousDirectionAngle = currentDirectionAngle;
           currentDirectionAngle = parents[currentKey]
             ? getDirectionAngle(parents[currentKey], currentPoint, opt.directions.length)
-            : opt.previousDirAngle != 0 ? opt.previousDirAngle : getDirectionAngle(startCenter, currentPoint, opt.directions.length);
+            : opt.previousDirAngle != 0
+              ? opt.previousDirAngle
+              : getDirectionAngle(startCenter, currentPoint, opt.directions.length);
 
           // if get the endpoint
           if (endPointsKeys.indexOf(currentKey) >= 0) {
             // stop route to enter the end point in opposite direction.
-            const directionChangedAngle = getDirectionChange(currentDirectionAngle, getDirectionAngle(currentPoint, endCenter, opt.directions.length));
+            const directionChangedAngle = getDirectionChange(
+              currentDirectionAngle,
+              getDirectionAngle(currentPoint, endCenter, opt.directions.length)
+            );
             if (currentPoint.equals(endCenter) || directionChangedAngle < 180) {
               opt.previousDirAngle = currentDirectionAngle;
               return reconstructRoute(parents, currentPoint, startCenter, endCenter);
@@ -1251,25 +1311,44 @@ class EdgeStyle {
           // Go over all possible directions and find neighbors.
           for (let i = 0; i < opt.directions.length; i++) {
             const direction = opt.directions[i];
-            const directionChangedAngle = getDirectionChange(currentDirectionAngle, direction.angle);
-            if (previousDirectionAngle && directionChangedAngle > EdgeStyle.MANHATTAN_MAX_ALLOWED_DIRECTION_CHANGE) {
+            const directionChangedAngle = getDirectionChange(
+              currentDirectionAngle,
+              direction.angle
+            );
+            if (
+              previousDirectionAngle &&
+              directionChangedAngle > EdgeStyle.MANHATTAN_MAX_ALLOWED_DIRECTION_CHANGE
+            ) {
               continue;
             }
 
-            const neighborPoint = movePoint(currentPoint.clone(), direction.offsetX, direction.offsetY);
+            const neighborPoint = movePoint(
+              currentPoint.clone(),
+              direction.offsetX,
+              direction.offsetY
+            );
             const neighborKey = pointToString(neighborPoint);
-            if (openSet.isClose(neighborKey) || !obstacleMap.isPointAccessible(neighborPoint)) {
+            if (
+              openSet.isClose(neighborKey) ||
+              !obstacleMap.isPointAccessible(neighborPoint)
+            ) {
               continue;
             }
 
-            const costFromStart = currentCost + direction.cost + opt.penaltiesGenerator(directionChangedAngle);
+            const costFromStart =
+              currentCost +
+              direction.cost +
+              opt.penaltiesGenerator(directionChangedAngle);
 
             if (!openSet.isOpen(neighborKey) || costFromStart < costs[neighborKey]) {
               // Neighbor point has not been processed yet or the cost of the path
               // from start is lesser than previously calcluated.
               parents[neighborKey] = currentPoint;
               costs[neighborKey] = costFromStart;
-              openSet.add(neighborKey, costFromStart + estimateCost(neighborPoint, endPoints));
+              openSet.add(
+                neighborKey,
+                costFromStart + estimateCost(neighborPoint, endPoints)
+              );
             }
           }
 
@@ -1314,21 +1393,30 @@ class EdgeStyle {
       if (state.style) {
         if (state.visibleSourceState && routePoints.length > 0) {
           // If there are at least one point, align it to source cell
-          alignPointToCell(routePoints[0], state, state.visibleSourceState, true)
+          alignPointToCell(routePoints[0], state, state.visibleSourceState, true);
         }
 
         if (state.visibleTargetState && routePoints.length > 1) {
           // If there are more than one point, align last point to target cell
-          alignPointToCell(routePoints[routePoints.length - 1], state, state.visibleTargetState, false)
+          alignPointToCell(
+            routePoints[routePoints.length - 1],
+            state,
+            state.visibleTargetState,
+            false
+          );
         }
       }
 
       // Scaling and translating result points
       const scale = state.view.scale;
-      routePoints.forEach(pt => result.push(new Point(
-        Math.round((pt.x + state.view.translate.x) * scale * 10) / 10,
-        Math.round((pt.y + state.view.translate.y) * scale * 10) / 10
-      )));
+      routePoints.forEach((pt) =>
+        result.push(
+          new Point(
+            Math.round((pt.x + state.view.translate.x) * scale * 10) / 10,
+            Math.round((pt.y + state.view.translate.y) * scale * 10) / 10
+          )
+        )
+      );
     }
 
     router(state, source, target, points, result, config);

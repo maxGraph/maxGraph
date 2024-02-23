@@ -1261,8 +1261,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
               ? rankBottomY[minRank]
               : rankTopY[minRank]
             : layoutReversed
-            ? rankTopY[maxRank]
-            : rankBottomY[maxRank];
+              ? rankTopY[maxRank]
+              : rankBottomY[maxRank];
           let jetty = jettys[parallelEdgeCount * 4 + 1 + arrayOffset];
 
           if (reversed !== layoutReversed) {
@@ -1368,8 +1368,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
               ? rankTopY[maxRank]
               : rankBottomY[maxRank]
             : layoutReversed
-            ? rankBottomY[minRank]
-            : rankTopY[minRank];
+              ? rankBottomY[minRank]
+              : rankTopY[minRank];
           let jetty = jettys[parallelEdgeCount * 4 + 3 - arrayOffset];
 
           if (reversed !== layoutReversed) {

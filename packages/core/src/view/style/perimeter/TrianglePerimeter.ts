@@ -114,16 +114,7 @@ export const TrianglePerimeter: PerimeterFunction = (
     }
 
     if ((vertical && next.x <= x + w / 2) || (!vertical && next.y <= y + h / 2)) {
-      result = intersection(
-        next.x,
-        next.y,
-        cx,
-        cy,
-        start.x,
-        start.y,
-        corner.x,
-        corner.y
-      );
+      result = intersection(next.x, next.y, cx, cy, start.x, start.y, corner.x, corner.y);
     } else {
       result = intersection(next.x, next.y, cx, cy, corner.x, corner.y, end.x, end.y);
     }

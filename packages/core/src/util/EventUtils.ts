@@ -70,8 +70,8 @@ export const isTouchEvent = (evt: MouseEvent) => {
   return t.pointerType
     ? t.pointerType === 'touch' || t.pointerType === t.MSPOINTER_TYPE_TOUCH
     : t.mozInputSource !== undefined
-    ? t.mozInputSource === 5
-    : t.type.indexOf('touch') === 0;
+      ? t.mozInputSource === 5
+      : t.type.indexOf('touch') === 0;
 };
 
 /**
@@ -83,8 +83,8 @@ export const isPenEvent = (evt: MouseEvent) => {
   return t.pointerType
     ? t.pointerType == 'pen' || t.pointerType === t.MSPOINTER_TYPE_PEN
     : t.mozInputSource !== undefined
-    ? t.mozInputSource === 2
-    : t.type.indexOf('pen') === 0;
+      ? t.mozInputSource === 2
+      : t.type.indexOf('pen') === 0;
 };
 
 /**
@@ -110,8 +110,8 @@ export const isMouseEvent = (evt: Event) => {
   return t.pointerType
     ? t.pointerType == 'mouse' || t.pointerType === t.MSPOINTER_TYPE_MOUSE
     : t.mozInputSource !== undefined
-    ? t.mozInputSource === 1
-    : t.type.indexOf('mouse') === 0;
+      ? t.mozInputSource === 1
+      : t.type.indexOf('mouse') === 0;
 };
 
 /**

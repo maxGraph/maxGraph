@@ -934,8 +934,8 @@ class Graph extends EventSource {
         let s2 = ignoreWidth
           ? h1 / h2
           : ignoreHeight
-          ? w1 / w2
-          : Math.min(w1 / w2, h1 / h2);
+            ? w1 / w2
+            : Math.min(w1 / w2, h1 / h2);
 
         if (this.minFitScale != null) {
           s2 = Math.max(s2, this.minFitScale);
