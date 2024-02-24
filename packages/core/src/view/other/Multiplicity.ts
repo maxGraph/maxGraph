@@ -47,7 +47,7 @@ class Multiplicity {
     attr: string,
     value: string,
     min: number | null | undefined,
-    max: number | 'n' | null | undefined,
+    max: number | null | undefined,
     validNeighbors: string[],
     countError: string,
     typeError: string,
@@ -57,8 +57,8 @@ class Multiplicity {
     this.type = type;
     this.attr = attr;
     this.value = value;
-    this.min = min != null ? min : 0;
-    this.max = max != null ? max : 'n';
+    this.min = min ?? 0;
+    this.max = max ?? Number.MAX_VALUE;
     this.validNeighbors = validNeighbors;
     this.countError = Translations.get(countError) || countError;
     this.typeError = Translations.get(typeError) || typeError;
@@ -92,17 +92,15 @@ class Multiplicity {
 
   /**
    * Defines the minimum number of connections for which this rule applies.
-   *
    * @default 0
    */
   min: number;
 
   /**
    * Defines the maximum number of connections for which this rule applies.
-   * A value of 'n' means unlimited times.
-   * @default 'n'
+   * @default {@link Number.MAX_VALUE}
    */
-  max: number | 'n';
+  max: number;
 
   /**
    * Holds an array of strings that specify the type of neighbor for which

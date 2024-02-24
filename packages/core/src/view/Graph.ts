@@ -113,8 +113,7 @@ class Graph extends EventSource {
   mouseListeners: MouseListenerSet[] = [];
 
   /**
-   * An array of {@link Multiplicity} describing the allowed
-   * connections in a graph.
+   * An array of {@link Multiplicity} describing the allowed connections in a graph.
    */
   multiplicities: Multiplicity[] = [];
 
