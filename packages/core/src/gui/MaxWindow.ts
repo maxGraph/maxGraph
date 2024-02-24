@@ -188,7 +188,7 @@ class MaxWindow extends EventSource {
     minimizable = true,
     movable = true,
     replaceNode: HTMLElement | null = null,
-    style = ''
+    style?: string
   ) {
     super();
 
@@ -235,7 +235,7 @@ class MaxWindow extends EventSource {
     y: number,
     width: number | null = null,
     height: number | null = null,
-    style = 'MaxWindow'
+    style = 'mxWindow'
   ): void {
     this.div = document.createElement('div');
     this.div.className = style;
