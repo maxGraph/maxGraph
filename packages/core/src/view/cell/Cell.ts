@@ -631,6 +631,7 @@ export class Cell implements IdentityObject {
     let path = CellPath.create(cell2);
 
     if (path.length > 0) {
+      // Bubbles through the ancestors of the first cell to find the nearest common ancestor.
       // eslint-disable-next-line @typescript-eslint/no-this-alias -- we need to use `this` to refer to the instance to start processing
       let cell: Cell | null = this;
       let current: string | null = CellPath.create(cell);
