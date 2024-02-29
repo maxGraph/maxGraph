@@ -20,14 +20,17 @@ import {
   Rectangle,
   DomHelpers,
   KeyHandler,
+  eventUtils,
   InternalEvent,
   xmlUtils,
-  Codec,
   EdgeStyle,
   domUtils,
   MaxForm,
   CellAttributeChange,
   RubberBandHandler,
+  ModelXmlSerializer,
+  popup,
+  type Cell,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -35,6 +38,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Xml_Json/UserObject',
@@ -48,33 +52,27 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
+  configureImagesBasePath();
+  const mainDiv = document.createElement('div');
+
   const div = document.createElement('div');
+  mainDiv.appendChild(div);
+  div.style.display = 'flex';
+  div.style.gap = '2rem';
 
-  const table = document.createElement('table');
-  table.style.position = 'relative';
+  const container = createGraphContainer(args);
+  container.style.background = 'none'; // no grid
+  container.style.border = 'solid 1px black';
+  div.appendChild(container);
 
-  table.innerHTML = `
-    <tr>
-      <td>
-        <div 
-          id="graphContainer"
-          style="border:solid 1px black;overflow:hidden;width:321px;height:241px;cursor:default"
-        ></div>
-      </td>
-      <td valign="top">
-        <div 
-          id="properties" 
-          style="border:solid 1px black;padding:10px"
-        ></div>
-    </tr>
-  `;
-  div.appendChild(table);
+  const divProperties = document.createElement('div');
+  divProperties.id = 'properties';
+  divProperties.style.border = 'solid 1px black';
+  divProperties.style.padding = '1rem';
+  div.appendChild(divProperties);
 
-  const container = document.getElementById('graphContainer');
-
-  // Note that these XML nodes will be enclosing the
-  // Cell nodes for the model cells in the output
+  // Note that these XML nodes will be enclosing the Cell nodes for the model cells in the output
   const doc = xmlUtils.createXmlDocument();
 
   const person1 = doc.createElement('Person');
@@ -94,8 +92,7 @@ const Template = ({ label, ...args }) => {
   // Optional disabling of sizing
   graph.setCellsResizable(false);
 
-  // Configures the graph contains to resize and
-  // add a border at the bottom, right
+  // Configures the graph contains to resize and add a border at the bottom, right
   graph.setResizeContainer(true);
   graph.minimumContainerSize = new Rectangle(0, 0, 500, 380);
   graph.setBorder(60);
@@ -147,17 +144,17 @@ const Template = ({ label, ...args }) => {
       autoSize = true;
     }
 
-    cellLabelChanged.apply(this, arguments);
+    cellLabelChanged.apply(this, [cell, newValue, autoSize]);
   };
 
   // Overrides method to create the editing value
-  const { getEditingValue } = graph;
-  graph.getEditingValue = function (cell) {
+  graph.getEditingValue = function (cell: Cell, _evt: MouseEvent | null): string {
     if (domUtils.isNode(cell.value) && cell.value.nodeName.toLowerCase() == 'person') {
       const firstName = cell.getAttribute('firstName', '');
       const lastName = cell.getAttribute('lastName', '');
       return `${firstName} ${lastName}`;
     }
+    return '';
   };
 
   // Adds a special tooltip for edges
@@ -167,27 +164,26 @@ const Template = ({ label, ...args }) => {
   graph.getTooltipForCell = function (cell) {
     // Adds some relation details for edges
     if (cell.isEdge()) {
-      const src = this.getLabel(cell.getTerminal(true));
-      const trg = this.getLabel(cell.getTerminal(false));
+      const src = this.getLabel(cell.getTerminal(true)!);
+      const trg = this.getLabel(cell.getTerminal(false)!);
       return `${src} ${cell.value.nodeName} ${trg}`;
     }
-    return getTooltipForCell.apply(this, arguments);
+    return getTooltipForCell.apply(this, [cell]);
   };
 
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);
 
   const buttons = document.createElement('div');
-  div.appendChild(buttons);
+  mainDiv.appendChild(buttons);
 
   // Adds an option to view the XML of the graph
-  buttons.appendChild(
-    DomHelpers.button('View XML', function () {
-      const encoder = new Codec();
-      const node = encoder.encode(graph.getDataModel());
-      popup(xmlUtils.getPrettyXml(node), true);
-    })
-  );
+  const button = DomHelpers.button('View XML', function () {
+    const xml = new ModelXmlSerializer(graph.getDataModel()).export();
+    popup(xml, true);
+  });
+  button.style.marginTop = '1rem';
+  buttons.appendChild(button);
 
   // Changes the style for match the markup
   // Creates the default style for vertices
@@ -198,17 +194,18 @@ const Template = ({ label, ...args }) => {
   style.fillColor = '#DFDFDF';
   style.gradientColor = 'white';
   style.fontColor = 'black';
-  style.fontSize = '12';
+  style.fontSize = 12;
   style.spacing = 4;
 
   // Creates the default style for edges
   style = graph.getStylesheet().getDefaultEdgeStyle();
   style.strokeColor = '#0C0C0C';
   style.labelBackgroundColor = 'white';
-  style.edge = EdgeStyle.ElbowConnector;
+  // @ts-ignore TODO fix the type, this works
+  style.edgeStyle = EdgeStyle.ElbowConnector;
   style.rounded = true;
   style.fontColor = 'black';
-  style.fontSize = '10';
+  style.fontSize = 10;
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
@@ -218,22 +215,20 @@ const Template = ({ label, ...args }) => {
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, person1, 40, 40, 80, 30);
     const v2 = graph.insertVertex(parent, null, person2, 200, 150, 80, 30);
-    const e1 = graph.insertEdge(parent, null, relation, v1, v2);
+    graph.insertEdge(parent, null, relation, v1, v2);
   });
 
-  // Implements a properties panel that uses
-  // CellAttributeChange to change properties
-  graph.getSelectionModel().addListener(InternalEvent.CHANGE, function (sender, evt) {
+  // Implements a properties panel that uses CellAttributeChange to change properties
+  graph.getSelectionModel().addListener(InternalEvent.CHANGE, () => {
     selectionChanged(graph);
   });
-
   selectionChanged(graph);
 
   /**
    * Updates the properties panel
    */
-  function selectionChanged(graph) {
-    const div = document.getElementById('properties');
+  function selectionChanged(graph: Graph) {
+    const div = divProperties;
 
     // Forces focusout in IE
     graph.container.focus();
@@ -254,7 +249,7 @@ const Template = ({ label, ...args }) => {
       domUtils.br(div);
 
       // Creates the form from the attributes of the user object
-      const form = new MaxForm();
+      const form = new MaxForm('');
       const attrs = cell.value.attributes;
 
       for (let i = 0; i < attrs.length; i++) {
@@ -266,10 +261,20 @@ const Template = ({ label, ...args }) => {
     }
   }
 
+  type CellValueAttribute = {
+    nodeName: string;
+    nodeValue: string;
+  };
+
   /**
    * Creates the textfield for the given property.
    */
-  function createTextField(graph, form, cell, attribute) {
+  function createTextField(
+    graph: Graph,
+    form: MaxForm,
+    cell: Cell,
+    attribute: CellValueAttribute
+  ) {
     const input = form.addText(`${attribute.nodeName}:`, attribute.nodeValue);
 
     const applyHandler = function () {
@@ -285,12 +290,21 @@ const Template = ({ label, ...args }) => {
       }
     };
 
-    InternalEvent.addListener(input, 'keypress', function (evt) {
-      // Needs to take shift into account for textareas
-      if (evt.keyCode == /* enter */ 13 && !InternalEvent.isShiftDown(evt)) {
-        input.blur();
+    InternalEvent.addListener(
+      input,
+      'keypress',
+      function (evt: MouseEvent | KeyboardEvent) {
+        // Needs to take shift into account for textareas
+        // TODO should probably use code instead of keyCode, see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
+        if (
+          'keyCode' in evt &&
+          evt.keyCode == /* enter */ 13 &&
+          !eventUtils.isShiftDown(evt)
+        ) {
+          input.blur();
+        }
       }
-    });
+    );
 
     // Note: Known problem is the blurring of fields in
     // Firefox by changing the selection, in which case
@@ -300,7 +314,7 @@ const Template = ({ label, ...args }) => {
     // explicitely where we do the graph.focus above.
     InternalEvent.addListener(input, 'blur', applyHandler);
   }
-  return div;
+  return mainDiv;
 };
 
 export const Default = Template.bind({});

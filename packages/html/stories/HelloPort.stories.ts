@@ -19,10 +19,10 @@ import {
   DomHelpers,
   EdgeStyle,
   Graph,
-  MaxWindow,
+  ModelXmlSerializer,
   Point,
+  popup,
   RubberBandHandler,
-  xmlUtils,
 } from '@maxgraph/core';
 
 import {
@@ -32,7 +32,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
+// style required by RubberBand and popup
 import '@maxgraph/core/css/common.css';
 
 export default {
@@ -47,7 +47,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
 
   const div = document.createElement('div');
@@ -61,32 +61,34 @@ const Template = ({ label, ...args }) => {
 
   // Sets the default edge style
   const style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = EdgeStyle.ElbowConnector;
+  // @ts-ignore TODO fix the type, this works
+  style.edgeStyle = EdgeStyle.ElbowConnector;
 
   // Ports are not used as terminals for edges, they are
   // only used to compute the graphical connection point
   graph.isPort = function (cell) {
-    const geo = cell.getGeometry();
-
-    return geo != null ? geo.relative : false;
+    const geo = cell?.getGeometry();
+    return geo?.relative ?? false;
   };
 
   // Implements a tooltip that shows the actual
   // source and target of an edge
   graph.getTooltipForCell = function (cell) {
-    if (cell.isEdge()) {
-      return `${this.convertValueToString(
-        cell.getTerminal(true)
-      )} => ${this.convertValueToString(cell.getTerminal(false))}`;
+    if (cell && cell.isEdge()) {
+      const source = cell.getTerminal(true);
+      const target = cell.getTerminal(false);
+      if (source && target) {
+        return `${this.convertValueToString(source)} => ${this.convertValueToString(
+          target
+        )}`;
+      }
     }
 
-    return Graph.prototype.getTooltipForCell.apply(this, arguments);
+    return Graph.prototype.getTooltipForCell.apply(this, [cell]);
   };
 
   // Removes the folding icon and disables any folding
-  graph.isCellFoldable = function (cell) {
-    return false;
-  };
+  graph.isCellFoldable = (_cell) => false;
 
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);
@@ -100,24 +102,28 @@ const Template = ({ label, ...args }) => {
     const v1 = graph.insertVertex(parent, null, 'Hello', 20, 80, 80, 30);
     v1.setConnectable(false);
     const v11 = graph.insertVertex(v1, null, '', 1, 1, 10, 10);
-    v11.geometry.offset = new Point(-5, -5);
-    v11.geometry.relative = true;
+    if (v11.geometry) {
+      v11.geometry.offset = new Point(-5, -5);
+      v11.geometry.relative = true;
+    }
     const v12 = graph.insertVertex(v1, null, '', 1, 0, 10, 10);
-    v12.geometry.offset = new Point(-5, -5);
-    v12.geometry.relative = true;
+    if (v12.geometry) {
+      v12.geometry.offset = new Point(-5, -5);
+      v12.geometry.relative = true;
+    }
     const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
     const v3 = graph.insertVertex(parent, null, 'World2', 200, 20, 80, 30);
-    var e1 = graph.insertEdge(parent, null, '', v11, v2);
-    var e1 = graph.insertEdge(parent, null, '', v12, v3);
+    graph.insertEdge(parent, null, '', v11, v2);
+    graph.insertEdge(parent, null, '', v12, v3);
   });
 
   const controller = document.createElement('div');
   div.appendChild(controller);
 
   const button = DomHelpers.button('View XML', function () {
-    const encoder = new Codec();
-    const node = encoder.encode(graph.getDataModel());
-    MaxWindow.popup(xmlUtils.getPrettyXml(node), true);
+    const xml = new ModelXmlSerializer(graph.getDataModel()).export();
+    // TODO missing CSS for the popup
+    popup(xml, true);
   });
 
   controller.appendChild(button);

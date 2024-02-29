@@ -23,11 +23,11 @@ import {
   xmlUtils,
   eventUtils,
   Client,
-  Codec,
   GraphDataModel,
   styleUtils,
   stringUtils,
   cellArrayUtils,
+  ModelXmlSerializer,
 } from '@maxgraph/core';
 
 import {
@@ -60,14 +60,14 @@ const Template = ({ label, ...args }) => {
 
   // Public helper method for shared clipboard.
   Clipboard.cellsToString = function (cells) {
-    const codec = new Codec();
+    console.warn('cellsToString', cells);
     const model = new GraphDataModel();
     const parent = model.getRoot().getChildAt(0);
 
     for (let i = 0; i < cells.length; i++) {
       model.add(parent, cells[i]);
     }
-    return xmlUtils.getXml(codec.encode(model));
+    return new ModelXmlSerializer(model).export();
   };
 
   // Focused but invisible textarea during control or meta key events
@@ -84,8 +84,10 @@ const Template = ({ label, ...args }) => {
   // Workaround for no copy event in IE/FF if empty
   textInput.value = ' ';
 
-  // Shows a textare when control/cmd is pressed to handle native clipboard actions
+  // Shows a textarea when control/cmd is pressed to handle native clipboard actions
   InternalEvent.addListener(document, 'keydown', function (evt) {
+    console.warn('CALLED keydown', evt);
+
     // No dialog visible
     const source = eventUtils.getSource(evt);
 
@@ -165,6 +167,7 @@ const Template = ({ label, ...args }) => {
 
   // Handles copy event by putting XML for current selection into text input
   InternalEvent.addListener(textInput, 'copy', (evt) => {
+    console.warn('CALLED copy', evt);
     if (graph.isEnabled() && !graph.isSelectionEmpty()) {
       copyCells(
         graph,
@@ -191,46 +194,40 @@ const Template = ({ label, ...args }) => {
     let cells = [];
 
     try {
-      const doc = xmlUtils.parseXml(xml);
-      const node = doc.documentElement;
+      const model = new GraphDataModel();
+      new ModelXmlSerializer(model).import(xml);
 
-      if (node != null) {
-        const model = new GraphDataModel();
-        const codec = new Codec(node.ownerDocument);
-        codec.decode(node, model);
+      const childCount = model.getRoot().getChildCount();
+      const targetChildCount = graph.model.getRoot().getChildCount();
 
-        const childCount = model.getRoot().getChildCount();
-        const targetChildCount = graph.model.getRoot().getChildCount();
+      // Merges existing layers and adds new layers
+      graph.model.beginUpdate();
+      try {
+        for (let i = 0; i < childCount; i++) {
+          let parent = model.getRoot().getChildAt(i);
 
-        // Merges existing layers and adds new layers
-        graph.model.beginUpdate();
-        try {
-          for (let i = 0; i < childCount; i++) {
-            let parent = model.getRoot().getChildAt(i);
+          // Adds cells to existing layers if not locked
+          if (targetChildCount > i) {
+            // Inserts into active layer if only one layer is being pasted
+            const target =
+              childCount === 1
+                ? graph.getDefaultParent()
+                : graph.model.getRoot().getChildAt(i);
 
-            // Adds cells to existing layers if not locked
-            if (targetChildCount > i) {
-              // Inserts into active layer if only one layer is being pasted
-              const target =
-                childCount === 1
-                  ? graph.getDefaultParent()
-                  : graph.model.getRoot().getChildAt(i);
-
-              if (!graph.isCellLocked(target)) {
-                const children = parent.getChildren();
-                cells = cells.concat(graph.importCells(children, dx, dy, target));
-              }
-            } else {
-              // Delta is non cascading, needs separate move for layers
-              parent = graph.importCells([parent], 0, 0, graph.model.getRoot())[0];
+            if (!graph.isCellLocked(target)) {
               const children = parent.getChildren();
-              graph.moveCells(children, dx, dy);
-              cells = cells.concat(children);
+              cells = cells.concat(graph.importCells(children, dx, dy, target));
             }
+          } else {
+            // Delta is non cascading, needs separate move for layers
+            parent = graph.importCells([parent], 0, 0, graph.model.getRoot())[0];
+            const children = parent.getChildren();
+            graph.moveCells(children, dx, dy);
+            cells = cells.concat(children);
           }
-        } finally {
-          graph.model.endUpdate();
         }
+      } finally {
+        graph.model.endUpdate();
       }
     } catch (e) {
       alert(e);

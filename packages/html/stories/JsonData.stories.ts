@@ -21,11 +21,11 @@ import {
   DomHelpers,
   CodecRegistry,
   InternalEvent,
-  Codec,
   domUtils,
-  xmlUtils,
   popup,
   RubberBandHandler,
+  ModelXmlSerializer,
+  type Cell,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -49,24 +49,28 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
   const div = document.createElement('div');
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  // Register a new codec
-  function CustomData(value) {
-    this.value = value;
+  class CustomData {
+    constructor(public value?: string) {}
   }
+
+  type CustomCell = Cell & {
+    data?: CustomData;
+  };
+
   const codec = new ObjectCodec(new CustomData());
   codec.encode = function (enc, obj) {
     const node = enc.document.createElement('CustomData');
     domUtils.setTextContent(node, JSON.stringify(obj));
     return node;
   };
-  codec.decode = function (dec, node, into) {
-    const obj = JSON.parse(domUtils.getTextContent(node));
+  codec.decode = function (_dec, node) {
+    const obj = JSON.parse(domUtils.getTextContent(node as unknown as Text));
     obj.constructor = CustomData;
 
     return obj;
@@ -88,11 +92,11 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
+    const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30) as CustomCell;
     v1.data = new CustomData('v1');
-    const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+    const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30) as CustomCell;
     v2.data = new CustomData('v2');
-    const e1 = graph.insertEdge(parent, null, '', v1, v2);
+    graph.insertEdge(parent, null, '', v1, v2);
   });
 
   const buttons = document.createElement('div');
@@ -100,9 +104,8 @@ const Template = ({ label, ...args }) => {
 
   buttons.appendChild(
     DomHelpers.button('Show JSON', function () {
-      const encoder = new Codec();
-      const node = encoder.encode(graph.getDataModel());
-      popup(xmlUtils.getXml(node), true);
+      const xml = new ModelXmlSerializer(graph.getDataModel()).export();
+      popup(xml, true);
     })
   );
 
