@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import {
+  Client,
   Graph,
   CylinderShape,
   CellRenderer,
