@@ -71,6 +71,9 @@ const xmlWithVerticesAndEdges = `<GraphDataModel>
       <Object fillColor="green" strokeWidth="4" as="style" />
     </Cell>
     <Cell id="v2" value="vertex 2" vertex="1" parent="1">
+      <Geometry _x="200" _y="50" _width="30" _height="100" as="geometry">
+        <Point _x="30" _y="40" as="offset" />
+      </Geometry>
       <Object bendable="0" rounded="1" fontColor="yellow" as="style" />
     </Cell>
     <Cell id="e1" edge="1" parent="1" source="v1" target="v2">
@@ -109,6 +112,8 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
       },
     });
 
+    const vertexGeometry = new Geometry(200, 50, 30, 100);
+    vertexGeometry.offset = new Point(30, 40);
     modelChecker.expectIsVertex(model.getCell('v2'), 'vertex 2', {
       style: {
         // @ts-ignore FIX should be false
@@ -117,6 +122,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
         // @ts-ignore FIX should be true
         rounded: 1,
       },
+      geometry: vertexGeometry,
     });
 
     const edgeGeometry = new Geometry();
@@ -183,6 +189,7 @@ describe('export', () => {
     model.add(parent, v1);
     v1.setStyle({ fillColor: 'green', strokeWidth: 4 });
     v1.geometry = new Geometry(100, 100, 100, 80);
+    v1.geometry.offset = new Point(10, 12);
     const v2 = newVertex('v2', 'vertex 2');
     v2.style = {
       bendable: false,
@@ -213,7 +220,9 @@ describe('export', () => {
       <Object as="style" />
     </Cell>
     <Cell id="v1" value="vertex 1" vertex="1" parent="1">
-      <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry" />
+      <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry">
+        <Point _x="10" _y="12" as="offset" />
+      </Geometry>
       <Object fillColor="green" strokeWidth="4" as="style" />
     </Cell>
     <Cell id="v2" value="vertex 2" vertex="1" parent="1">
