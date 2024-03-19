@@ -2048,7 +2048,10 @@ class ConnectionHandlerCellMarker extends CellMarker {
             cell
           );
 
-          if (this.connectionHandler.error && this.connectionHandler.error.length === 0) {
+          if (
+            this.connectionHandler.error !== null &&
+            this.connectionHandler.error.length === 0
+          ) {
             cell = null;
 
             // Enables create target inside groups
