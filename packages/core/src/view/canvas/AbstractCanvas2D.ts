@@ -479,6 +479,12 @@ abstract class AbstractCanvas2D {
   /**
    * Adds the given arc to the current path. This is a synthetic operation that
    * is broken down into curves.
+   * @param rx: The x distance between the current position
+   *            and the center of the ellipse around which to arc
+   * @param ry: The y distance between the current position
+   *            and the center of the ellipse around which to arc
+   * @param x: The x position of the end point of the arc
+   * @param y: The y position of the end point of the arc
    */
   arcTo(
     rx: number,
