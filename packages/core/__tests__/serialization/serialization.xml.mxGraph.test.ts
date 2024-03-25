@@ -34,7 +34,9 @@ describe('import mxGraph model', () => {
       <mxGeometry x="380" y="20" width="140" height="30" as="geometry"/>
     </mxCell>
     <mxCell id="3" vertex="1" parent="1" value="Vertex #3">
-      <mxGeometry x="200" y="80" width="380" height="30" as="geometry"/>
+      <mxGeometry x="200" y="80" width="380" height="30" as="geometry">
+        <mxPoint x="1" y="1" as="offset"/>
+      </mxGeometry>
     </mxCell>
     <mxCell id="7" edge="1" source="2" target="3" parent="1" value="Edge #7">
       <mxGeometry as="geometry">
@@ -59,8 +61,10 @@ describe('import mxGraph model', () => {
       geometry: new Geometry(380, 20, 140, 30),
     });
 
+    const vertex3Geometry = new Geometry(200, 80, 380, 30);
+    vertex3Geometry.offset = new Point(1, 1);
     modelChecker.expectIsVertex(model.getCell('3'), 'Vertex #3', {
-      geometry: new Geometry(200, 80, 380, 30),
+      geometry: vertex3Geometry,
     });
 
     const edgeGeometry = new Geometry();
