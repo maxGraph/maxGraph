@@ -85,31 +85,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
 
     this.graph.addListener(InternalEvent.FIRE_MOUSE_EVENT, this.forcePanningHandler);
 
-    // Handles pinch gestures
-    this.gestureHandler = (sender: EventSource, eo: EventObject) => {
-      if (this.isPinchEnabled()) {
-        const evt = eo.getProperty('event');
-
-        if (!isConsumed(evt) && evt.type === 'gesturestart') {
-          this.initialScale = this.graph.view.scale;
-
-          // Forces start of panning when pinch gesture starts
-          if (!this.active && this.mouseDownEvent) {
-            this.start(this.mouseDownEvent);
-            this.mouseDownEvent = null;
-          }
-        } else if (evt.type === 'gestureend' && this.initialScale !== 0) {
-          this.initialScale = 0;
-        }
-
-        if (this.initialScale !== 0) {
-          this.zoomGraph(evt);
-        }
-      }
-    };
-
-    this.graph.addListener(InternalEvent.GESTURE, this.gestureHandler);
-
     this.mouseUpListener = () => {
       if (this.active) {
         this.reset();
@@ -133,7 +108,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
 
   /**
    * Specifies if panning should be active for the left mouse button.
-   * Setting this to true may conflict with {@link Rubberband}. Default is false.
+   * Setting this to true may conflict with {@link RubberbandHandler}. Default is false.
    */
   useLeftButtonForPanning = false;
 
@@ -209,7 +184,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   active = false;
 
   forcePanningHandler: (sender: EventSource, evt: EventObject) => void;
-  gestureHandler: (sender: EventSource, evt: EventObject) => void;
 
   mouseUpListener: MouseEventListener;
 
@@ -443,7 +417,6 @@ class PanningHandler extends EventSource implements GraphPlugin {
   onDestroy() {
     this.graph.removeMouseListener(this);
     this.graph.removeListener(this.forcePanningHandler);
-    this.graph.removeListener(this.gestureHandler);
     InternalEvent.removeListener(document, 'mouseup', this.mouseUpListener);
   }
 }

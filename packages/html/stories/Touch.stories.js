@@ -1,0 +1,439 @@
+/**
+ * Copyright (c) 2006-2013, JGraph Ltd
+ * 
+ * Touch
+ * 
+ * This example demonstrates handling of touch,
+ * mouse and pointer events.
+ */
+
+import {
+  utils,
+  domUtils,
+  styleUtils,
+  mathUtils,
+  eventUtils,
+  constants,
+  ConnectionHandler, EdgeHandler,
+  Graph, Outline,
+  PanningHandler,
+  Point,
+  PopupMenuHandler,
+  SelectionHandler, Translations,
+  VertexHandler,
+  Client,
+  RubberBandHandler,
+  InternalEvent,
+  CellEditorHandler,
+  TooltipHandler,
+  SelectionCellsHandler,
+  ConnectionHandlerCellMarker,
+} from "@maxgraph/core";
+
+import { globalTypes } from "../.storybook/preview";
+
+export default {
+  title: 'DnD_CopyPaste/Touch',
+  argTypes: {
+    ...globalTypes,
+  },
+};
+
+// TODO: Centralize to global MaxGraph CSS or assign these styles explicitly
+const MENU_STYLES = `
+<style type="text/css">
+  body div.mxPopupMenu {
+    position: absolute;
+    padding: 3px;
+  }
+  body table.mxPopupMenu {
+    border-collapse: collapse;
+    margin: 0px;
+  }
+  body tr.mxPopupMenuItem {
+    cursor: default;
+  }
+  body td.mxPopupMenuItem {
+    padding: 10px 60px 10px 30px;
+    font-family: Arial;
+    font-size: 9pt;
+  }
+  body td.mxPopupMenuIcon {
+    padding: 0px;
+  }
+  table.mxPopupMenu hr {
+    border-top: solid 1px #cccccc;
+  }
+  table.mxPopupMenu tr {
+    font-size: 4pt;
+  }
+</style>
+`
+
+const Template = ({ label, ...args }) => {
+  // To detect if touch events are actually supported, the following condition is recommended:
+  // Client.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+
+  // Disables built-in text selection and context menu while not editing text
+  let textEditing = (evt) => {
+    return graph.isEditing();
+  };
+
+  const container = document.createElement('div');
+  container.onselectstart = textEditing;
+  container.onmousedown = textEditing;
+  container.oncontextmenu = textEditing;
+
+  container.style.position = 'relative';
+  container.style.overflow = 'hidden';
+  container.style.width = `${args.width}px`;
+  container.style.height = `${args.height}px`;
+  container.style.background = 'url(/images/grid.gif)';
+  container.style.cursor = 'default';
+
+  // Rounded edge and vertex handles
+  let touchHandle = new Image('images/handle-main.png', 17, 17);
+  Outline.prototype.sizerImage = touchHandle;
+
+  // Adds connect icon to selected vertex
+  let connectorSrc = 'images/handle-connect.png';
+
+  // Sets constants for touch style
+  // TODO: Find a means of altering these constants (ts conversion)
+  //constants.HANDLE_SIZE = 16;
+  //constants.LABEL_HANDLE_SIZE = 7;
+
+  // Context menu trigger implementation depending on current selection state
+  // combined with support for normal popup trigger.
+  let cellSelected = false;
+  let selectionEmpty = false;
+  let menuShowing = false;
+
+  // Larger tolerance and grid for real touch devices
+  let vertexHandlerTolerance,
+      edgeHandlerTolerance,
+      graphTolerance;
+
+  if (Client.IS_TOUCH || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0) {
+    //Shape.prototype.svgStrokeTolerance = 18;  // TODO: Find if there's a way to replicate the previous behaviour - having this value for all shapes (ts conversion)
+    vertexHandlerTolerance = 12;
+    edgeHandlerTolerance = 12;
+    graphTolerance = 12;
+  } else {
+    vertexHandlerTolerance = 0;
+    edgeHandlerTolerance = 0;
+    graphTolerance = 0;
+  }
+
+  class MyEdgeHandler extends EdgeHandler {
+    // TODO: Integrate this, potentially with the other cases in Graph.ts's createEdgeHandler (ts conversion)
+    tolerance = edgeHandlerTolerance;
+    handleImage = touchHandle
+  }
+
+  class MyPopupMenuHandler extends PopupMenuHandler {
+    autoExpand = true;
+
+    isSelectOnPopup(me) {
+      return eventUtils.isMouseEvent(me.getEvent());
+    };
+
+    // Installs context menu
+    factoryMethod(menu, cell, evt) {
+      menu.addItem('Item 1', null, function () {
+        alert('Item 1');
+      });
+      menu.addSeparator();
+
+      let submenu1 = menu.addItem('Submenu 1', null, null);
+      menu.addItem('Subitem 1', null, function () {
+        alert('Subitem 1');
+      }, submenu1);
+      menu.addItem('Subitem 1', null, function () {
+        alert('Subitem 2');
+      }, submenu1);
+    };
+
+    // Shows popup menu if cell was selected or selection was empty and background was clicked
+    mouseUp(sender, me) {
+      this.popupTrigger = !graph.isEditing() && (this.popupTrigger || (!menuShowing &&
+          !graph.isEditing() && !eventUtils.isMouseEvent(me.getEvent()) &&
+          ((selectionEmpty && me.getCell() == null && graph.isSelectionEmpty()) ||
+              (cellSelected && graph.isCellSelected(me.getCell())))));
+      super.mouseUp.apply(this, arguments);
+    };
+  }
+
+  class MyVertexHandler extends VertexHandler {
+    rotationEnabled = true;  // Enables rotation handle
+    manageSizers = true;  // Enables managing of sizers
+    // TODO: It appears live preview is broken on Safari/iOS (iPhone) when resizing nodes!
+    livePreview = true;  // Enables live preview
+    handleImage = touchHandle;
+    tolerance = vertexHandlerTolerance;
+
+    init() {
+      // TODO: Use 4 sizers, move outside of shape
+      //this.singleSizer = this.state.width < 30 && this.state.height < 30;
+      super.init.apply(this, arguments);
+
+      // Only show connector image on one cell and do not show on containers
+      if (
+          this.graph.getPlugin('ConnectionHandler').isEnabled() &&
+          this.state.cell.isConnectable() &&
+          this.graph.getSelectionCount() === 1
+      ) {
+        this.connectorImg = domUtils.createImage(connectorSrc);
+        this.connectorImg.style.cursor = 'pointer';
+        this.connectorImg.style.width = '29px';
+        this.connectorImg.style.height = '29px';
+        this.connectorImg.style.position = 'absolute';
+
+        if (!Client.IS_TOUCH) {
+          this.connectorImg.setAttribute('title', Translations.get('connect'));
+          InternalEvent.redirectMouseEvents(this.connectorImg, this.graph, this.state);
+        }
+
+        // Starts connecting on touch/mouse down
+        InternalEvent.addGestureListeners(this.connectorImg,
+            ((evt) => {
+              this.graph.getPlugin('PopupMenuHandler').hideMenu();
+              this.graph.stopEditing(false);
+
+              let pt = styleUtils.convertPoint(this.graph.container,
+                  InternalEvent.getClientX(evt), InternalEvent.getClientY(evt));
+              this.graph.getPlugin('ConnectionHandler').start(this.state, pt.x, pt.y);
+              this.graph.isMouseDown = true;
+              this.graph.isMouseTrigger = eventUtils.isMouseEvent(evt);
+              InternalEvent.consume(evt);
+            })
+        );
+
+        this.graph.container.appendChild(this.connectorImg);
+      }
+
+      this.redrawHandles();
+    };
+
+    hideSizers() {
+      super.hideSizers.apply(this, arguments);
+
+      if (this.connectorImg != null) {
+        this.connectorImg.style.visibility = 'hidden';
+      }
+    };
+
+    reset() {
+      super.reset.apply(this, arguments);
+
+      if (this.connectorImg != null) {
+        this.connectorImg.style.visibility = '';
+      }
+    };
+
+    redrawHandles() {
+      super.redrawHandles.apply(this);
+
+      if (this.state != null && this.connectorImg != null) {
+        let pt = new Point();
+        let s = this.state;
+
+        // Top right for single-sizer
+        if (this.singleSizer) {
+          pt.x = s.x + s.width - this.connectorImg.offsetWidth / 2;
+          pt.y = s.y - this.connectorImg.offsetHeight / 2;
+        } else {
+          pt.x = s.x + s.width + constants.HANDLE_SIZE / 2 + 4 + this.connectorImg.offsetWidth / 2;
+          pt.y = s.y + s.height / 2;
+        }
+
+        let alpha = mathUtils.toRadians(utils.getValue(s.style, 'rotation', 0));
+        if (alpha !== 0) {
+          let cos = Math.cos(alpha);
+          let sin = Math.sin(alpha);
+
+          let ct = new Point(s.getCenterX(), s.getCenterY());
+          pt = mathUtils.getRotatedPoint(pt, cos, sin, ct);
+        }
+
+        this.connectorImg.style.left = (pt.x - this.connectorImg.offsetWidth / 2) + 'px';
+        this.connectorImg.style.top = (pt.y - this.connectorImg.offsetHeight / 2) + 'px';
+      }
+    };
+
+    destroy(sender, me) {
+      super.destroy.apply(this, arguments);
+
+      if (this.connectorImg != null) {
+        this.connectorImg.parentNode.removeChild(this.connectorImg);
+        this.connectorImg = null;
+      }
+    };
+  }
+
+  class MyPanningHandler extends PanningHandler {
+    // One finger pans (no rubberband selection) must start regardless of mouse button
+    isPanningTrigger(me) {
+      let evt = me.getEvent();
+
+      return (me.getState() == null && !eventUtils.isMouseEvent(evt)) ||
+          (eventUtils.isPopupTrigger(evt) && (me.getState() == null ||
+              eventUtils.isControlDown(evt) || eventUtils.isShiftDown(evt)));
+    };
+  }
+
+  class MySelectionHandler extends SelectionHandler {
+    // Don't clear selection if multiple cells selected
+    mouseDown(sender, me) {
+      super.mouseDown.apply(this, arguments);
+
+      if (this.graph.isCellSelected(me.getCell()) && this.graph.getSelectionCount() > 1) {
+        this.delayedSelection = false;
+      }
+    };
+  }
+
+  class MyConnectionHandler extends ConnectionHandler {
+    createMarker() {
+      class MyMarker extends ConnectionHandlerCellMarker {
+        // Disable new connections via "hotspot"
+        isEnabled() {
+          return this.graph.getPlugin('ConnectionHandler').first != null;
+        };
+      }
+      return new MyMarker(this.graph, this);
+    }
+
+    // On connect the target is selected, and we clone the cell of the preview edge for insert
+    selectCells(edge, target) {
+      if (target != null) {
+        this.graph.setSelectionCell(target);
+      } else {
+        this.graph.setSelectionCell(edge);
+      }
+    };
+  }
+
+  class MyCustomGraph extends Graph {
+    tolerance = graphTolerance;
+
+    createVertexHandler(state) {
+      return new MyVertexHandler(state);
+    }
+
+    fireMouseEvent(evtName, me, sender) {
+      if (evtName === InternalEvent.MOUSE_DOWN) {
+        // For hit detection on edges
+        me = this.updateMouseEvent(me);
+
+        cellSelected = this.isCellSelected(me.getCell());
+        selectionEmpty = this.isSelectionEmpty();
+        menuShowing = graph.getPlugin('PopupMenuHandler').isMenuShowing();
+      }
+      super.fireMouseEvent.apply(this, arguments);
+    };
+
+    // Adds custom hit detection if native hit detection found no cell
+    updateMouseEvent(me) {
+      me = super.updateMouseEvent.apply(this, arguments);
+
+      if (me.getState() == null) {
+        let cell = this.getCellAt(me.graphX, me.graphY);
+        if (cell != null && this.isSwimlane(cell) && this.hitsSwimlaneContent(cell, me.graphX, me.graphY)) {
+          cell = null;
+        } else {
+          me.state = this.view.getState(cell);
+
+          if (me.state != null && me.state.shape != null) {
+            this.container.style.cursor = me.state.shape.node.style.cursor;
+          }
+        }
+      }
+
+      if (me.getState() == null) {
+        this.container.style.cursor = 'default';
+      }
+      return me;
+    };
+
+    // Overrides double click handling to use the tolerance
+    dblClick(evt, cell) {
+      if (cell == null) {
+        let pt = styleUtils.convertPoint(this.container,
+            InternalEvent.getClientX(evt), InternalEvent.getClientY(evt));
+        cell = this.getCellAt(pt.x, pt.y);
+      }
+      super.dblClick.call(this, evt, cell);
+    };
+  }
+
+  // Creates the graph inside the given container
+  let graph = new MyCustomGraph(container, null, [
+    CellEditorHandler,
+    TooltipHandler,
+    SelectionCellsHandler,
+    MyPopupMenuHandler,
+    MyConnectionHandler,
+    MySelectionHandler,
+    MyPanningHandler,
+  ]);
+
+  graph.centerZoom = false;
+  graph.setConnectable(true);
+  graph.setPanning(true);
+
+  // Creates rubberband selection
+  let rubberband = new RubberBandHandler(graph);
+
+  // Tap and hold on background starts rubberband for multiple selected
+  // cells the cell associated with the event is deselected
+  graph.addListener(InternalEvent.TAP_AND_HOLD, function (sender, evt) {
+    if (!eventUtils.isMultiTouchEvent(evt)) {
+      let me = evt.getProperty('event');
+      let cell = evt.getProperty('cell');
+
+      if (cell == null) {
+        let pt = styleUtils.convertPoint(this.container,
+            eventUtils.getClientX(me), eventUtils.getClientY(me));
+        rubberband.start(pt.x, pt.y);
+      } else if (graph.getSelectionCount() > 1 && graph.isCellSelected(cell)) {
+        graph.removeSelectionCell(cell);
+      }
+
+      // Blocks further processing of the event
+      evt.consume();
+    }
+  });
+
+  // Adds mouse wheel handling for zoom
+  InternalEvent.addMouseWheelListener(function (evt, up) {
+    if (up) {
+      graph.zoomIn();
+    } else {
+      graph.zoomOut();
+    }
+    InternalEvent.consume(evt);
+  }, container);
+
+  graph.batchUpdate(() => {
+    // Get the default parent for inserting new cells. This
+    // is normally the first child of the root (ie. layer 0).
+    let parent = graph.getDefaultParent();
+
+    let v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
+    let v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+    let e1 = graph.insertEdge(parent, null, '', v1, v2);
+  });
+
+  // Pre-fetches touch handle+connector image
+  new Image().src = touchHandle.src;
+  new Image().src = connectorSrc;
+
+  return container;
+};
+
+window.onerror = function(a, b, c, d, e) {
+  alert(a+'\n'+b+'\n'+c+'\n'+d+'\n'+e+'\n'+e.stack)
+}
+
+export const Default = Template.bind({});

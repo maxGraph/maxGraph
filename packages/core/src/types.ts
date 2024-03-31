@@ -1008,7 +1008,7 @@ export interface GraphPlugin {
 
 export type Listener = {
   name: string;
-  f: MouseEventListener | KeyboardEventListener;
+  f: MouseEventListener | TouchEventListener | KeyboardEventListener;
 };
 
 export type ListenerTarget = {
@@ -1018,6 +1018,7 @@ export type ListenerTarget = {
 export type Listenable = (EventTarget | (Window & typeof globalThis)) & ListenerTarget;
 
 export type MouseEventListener = (me: MouseEvent) => void;
+export type TouchEventListener = (me: TouchEvent) => void;
 export type KeyboardEventListener = (ke: KeyboardEvent) => void;
 
 export type GestureEvent = Event &
