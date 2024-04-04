@@ -34,32 +34,20 @@ export const MIN_HOTSPOT_SIZE = 8;
  */
 export const MAX_HOTSPOT_SIZE = 0;
 
-/**
- * Defines the exact rendering hint.
- *
- * Defines the faster rendering hint.
- *
- * Defines the fastest rendering hint.
- */
-export const enum RENDERING_HINT {
+export enum RENDERING_HINT {
   EXACT = 'exact',
   FASTER = 'faster',
   FASTEST = 'fastest',
 }
 
-/**
- * - DIALECT.SVG: Defines the SVG display dialect name.
- *
- * - DIALECT.MIXEDHTML: Defines the mixed HTML display dialect name.
- *
- * - DIALECT.PREFERHTML: Defines the preferred HTML display dialect name.
- *
- * - DIALECT.STRICTHTML: Defines the strict HTML display dialect.
- */
-export const enum DIALECT {
+export enum DIALECT {
+  /** the SVG display dialect name. */
   SVG = 'svg',
+  /** the mixed HTML display dialect name. */
   MIXEDHTML = 'mixedHtml',
+  /** the preferred HTML display dialect name. */
   PREFERHTML = 'preferHtml',
+  /** the strict HTML display dialect name. */
   STRICTHTML = 'strictHtml',
 }
 
