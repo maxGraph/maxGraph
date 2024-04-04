@@ -5,6 +5,7 @@
     "declaration": true,
     "declarationMap": false,
     "emitDeclarationOnly": false,
+    "isolatedModules": true,
     "outDir": "./dist",
     "strict": true,
     "skipLibCheck": false,

@@ -461,76 +461,54 @@ export const PAGE_FORMAT_LETTER_LANDSCAPE = [0, 0, 1100, 850];
  */
 export const NONE = 'none';
 
-/**
- * - FONT_BOLD: Constant for bold fonts. Default is 1.
- *
- * - FONT_ITALIC: Constant for italic fonts. Default is 2.
- *
- * - FONT_UNDERLINE: Constant for underlined fonts. Default is 4.
- *
- * - FONT_STRIKETHROUGH: Constant for strikethrough fonts. Default is 8.
- */
-export const enum FONT {
+export enum FONT {
+  /** for bold fonts. */
   BOLD = 1,
+  /** for italic fonts. */
   ITALIC = 2,
+  /** for underlined fonts. */
   UNDERLINE = 4,
+  /** for strikethrough fonts. */
   STRIKETHROUGH = 8,
 }
 
-/**
- * - ARROW_CLASSIC: Constant for classic arrow markers.
- *
- * - ARROW_CLASSIC_THIN: Constant for thin classic arrow markers.
- *
- * - ARROW_BLOCK: Constant for block arrow markers.
- *
- * - ARROW_BLOCK_THIN: Constant for thin block arrow markers.
- *
- * - ARROW_OPEN: Constant for open arrow markers.
- *
- * - ARROW_OPEN_THIN: Constant for thin open arrow markers.
- *
- * - ARROW_OVAL: Constant for oval arrow markers.
- *
- * - ARROW_DIAMOND: Constant for diamond arrow markers.
- *
- * - ARROW_DIAMOND_THIN: Constant for thin diamond arrow markers.
- */
-export const enum ARROW {
+export enum ARROW {
+  /** for classic arrow markers. */
   CLASSIC = 'classic',
+  /** for thin classic arrow markers. */
   CLASSIC_THIN = 'classicThin',
+  /** for block arrow markers. */
   BLOCK = 'block',
+  /** for thin block arrow markers. */
   BLOCK_THIN = 'blockThin',
+  /** for open arrow markers. */
   OPEN = 'open',
+  /** for thin open arrow markers. */
   OPEN_THIN = 'openThin',
+  /** for oval arrow markers. */
   OVAL = 'oval',
+  /** for diamond arrow markers. */
   DIAMOND = 'diamond',
+  /** for thin diamond arrow markers. */
   DIAMOND_THIN = 'diamondThin',
 }
 
-/**
- * - ALIGN_LEFT: Constant for left horizontal alignment. Default is left.
- *
- * - ALIGN_CENTER: Constant for center horizontal alignment. Default is center.
- *
- * - ALIGN_RIGHT: Constant for right horizontal alignment. Default is right.
- *
- * - ALIGN_TOP: Constant for top vertical alignment. Default is top.
- *
- * - ALIGN_MIDDLE: Constant for middle vertical alignment. Default is middle.
- *
- * - ALIGN_BOTTOM: Constant for bottom vertical alignment. Default is bottom.
- */
-export const enum ALIGN {
+export enum ALIGN {
+  /** left horizontal alignment. */
   LEFT = 'left',
+  /** center horizontal alignment. */
   CENTER = 'center',
+  /** right horizontal alignment. */
   RIGHT = 'right',
+  /** top vertical alignment. */
   TOP = 'top',
+  /** middle vertical alignment. */
   MIDDLE = 'middle',
+  /** bottom vertical alignment. */
   BOTTOM = 'bottom',
 }
 
-export const enum DIRECTION {
+export enum DIRECTION {
   NORTH = 'north',
   SOUTH = 'south',
   EAST = 'east',
@@ -582,7 +560,7 @@ export const DIRECTION_MASK = {
 /**
  * Default is horizontal.
  */
-export const enum ELBOW {
+export enum ELBOW {
   VERTICAL = 'vertical',
   HORIZONTAL = 'horizontal',
 }
@@ -590,7 +568,7 @@ export const enum ELBOW {
 /**
  * Can be used as a string value for the STYLE_EDGE style.
  */
-export const enum EDGESTYLE {
+export enum EDGESTYLE {
   ELBOW = 'elbowEdgeStyle',
   ENTITY_RELATION = 'entityRelationEdgeStyle',
   LOOP = 'loopEdgeStyle',
@@ -604,7 +582,7 @@ export const enum EDGESTYLE {
 /**
  * Can be used as a string value for the STYLE_PERIMETER style.
  */
-export const enum PERIMETER {
+export enum PERIMETER {
   ELLIPSE = 'ellipsePerimeter',
   RECTANGLE = 'rectanglePerimeter',
   RHOMBUS = 'rhombusPerimeter',
@@ -612,7 +590,7 @@ export const enum PERIMETER {
   TRIANGLE = 'trianglePerimeter',
 }
 
-export const enum SHAPE {
+export enum SHAPE {
   /**
    * Name under which {@link RectangleShape} is registered in {@link CellRenderer}.
    * Default is rectangle.

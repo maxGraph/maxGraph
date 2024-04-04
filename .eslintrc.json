@@ -24,6 +24,14 @@
         "@typescript-eslint/no-this-alias": "warn",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-duplicate-enum-values": "off", // check the impact of changing enum values if we want to enable this
-        "@typescript-eslint/no-unused-vars": "off"
+        "@typescript-eslint/no-unused-vars": "off",
+        "no-restricted-syntax": [
+            "error",
+            // ban const enums
+            {
+                "selector": "TSEnumDeclaration[const=true]",
+                "message": "Const enums are forbidden to increase interoperability. Use regular enums instead."
+            }
+        ]
     }
 }
