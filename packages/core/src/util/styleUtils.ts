@@ -388,7 +388,6 @@ export const setCellStyleFlags = (
 };
 
 /**
- * Sets or removes the given key from the specified style and returns the new style.
  * Sets or toggles the flag bit for the given key in the cell's style.
  * If the `value` parameter is not set, then the flag is toggled.
  *
