@@ -15,8 +15,9 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { matchBinaryMask } from '../../src/util/styleUtils';
+import { matchBinaryMask, setStyleFlag } from '../../src/util/styleUtils';
 import { FONT } from '../../src/util/Constants';
+import { type CellStyle } from '../../src/types';
 
 describe('matchBinaryMask', () => {
   test('match self', () => {
@@ -30,5 +31,66 @@ describe('matchBinaryMask', () => {
   });
   test('no match', () => {
     expect(matchBinaryMask(46413, FONT.ITALIC)).toBeFalsy();
+  });
+});
+
+describe('setStyleFlag', () => {
+  test('fontStyle undefined, set bold, no value', () => {
+    const style: CellStyle = {};
+    setStyleFlag(style, 'fontStyle', FONT.BOLD);
+    expect(style.fontStyle).toBe(1);
+  });
+  test('fontStyle undefined, set bold, value is false', () => {
+    const style: CellStyle = {};
+    setStyleFlag(style, 'fontStyle', FONT.BOLD, false);
+    expect(style.fontStyle).toBe(0);
+  });
+  test('fontStyle undefined, set italic, value is false', () => {
+    const style: CellStyle = {};
+    setStyleFlag(style, 'fontStyle', FONT.ITALIC, false);
+    expect(style.fontStyle).toBe(0);
+  });
+  test('fontStyle undefined, set underline, value is true', () => {
+    const style: CellStyle = {};
+    setStyleFlag(style, 'fontStyle', FONT.UNDERLINE, true);
+    expect(style.fontStyle).toBe(4);
+  });
+  test('fontStyle undefined, set strike-through, value is true', () => {
+    const style: CellStyle = {};
+    setStyleFlag(style, 'fontStyle', FONT.STRIKETHROUGH, true);
+    expect(style.fontStyle).toBe(8);
+  });
+
+  test('fontStyle set without bold, toggle bold', () => {
+    const style: CellStyle = { fontStyle: 2 };
+    setStyleFlag(style, 'fontStyle', FONT.BOLD);
+    expect(style.fontStyle).toBe(3);
+  });
+  test('fontStyle set with bold, toggle bold', () => {
+    const style: CellStyle = { fontStyle: 9 };
+    setStyleFlag(style, 'fontStyle', FONT.BOLD);
+    expect(style.fontStyle).toBe(8);
+  });
+
+  test('fontStyle set without strike-through, set strike-through', () => {
+    const style: CellStyle = { fontStyle: 7 };
+    setStyleFlag(style, 'fontStyle', FONT.STRIKETHROUGH, true);
+    expect(style.fontStyle).toBe(15);
+  });
+  test('fontStyle set without strike-through, unset strike-through', () => {
+    const style: CellStyle = { fontStyle: 7 };
+    setStyleFlag(style, 'fontStyle', FONT.STRIKETHROUGH, false);
+    expect(style.fontStyle).toBe(7);
+  });
+
+  test('fontStyle set with underline, set underline', () => {
+    const style: CellStyle = { fontStyle: 6 };
+    setStyleFlag(style, 'fontStyle', FONT.UNDERLINE, true);
+    expect(style.fontStyle).toBe(6);
+  });
+  test('fontStyle set with underline, unset underline', () => {
+    const style: CellStyle = { fontStyle: 6 };
+    setStyleFlag(style, 'fontStyle', FONT.UNDERLINE, false);
+    expect(style.fontStyle).toBe(2);
   });
 });
