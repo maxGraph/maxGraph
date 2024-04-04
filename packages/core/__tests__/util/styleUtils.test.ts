@@ -15,8 +15,14 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { matchBinaryMask } from '../../src/util/styleUtils';
+import {
+  matchBinaryMask,
+  setCellStyleFlags,
+  setCellStyles,
+} from '../../src/util/styleUtils';
 import { FONT } from '../../src/util/Constants';
+import { createGraphWithoutPlugins } from '../utils';
+import type { CellStyle } from '../../src';
 
 describe('matchBinaryMask', () => {
   test('match self', () => {
@@ -31,4 +37,42 @@ describe('matchBinaryMask', () => {
   test('no match', () => {
     expect(matchBinaryMask(46413, FONT.ITALIC)).toBeFalsy();
   });
+});
+
+test('setCellStyles on vertex', () => {
+  // Need a graph to have a view and ensure that the cell state is updated
+  const graph = createGraphWithoutPlugins();
+
+  const style: CellStyle = { strokeColor: 'yellow', labelWidth: 100 };
+  const cell = graph.insertVertex({
+    value: 'a value',
+    x: 10,
+    y: 20,
+    size: [110, 120],
+    style,
+  });
+  expect(cell.style).toStrictEqual(style);
+
+  setCellStyles(graph.getDataModel(), [cell], 'strokeColor', 'chartreuse');
+  expect(cell.style.strokeColor).toBe('chartreuse');
+  expect(graph.getView().getState(cell)?.style?.strokeColor).toBe('chartreuse');
+});
+
+test('setCellStyleFlags on vertex', () => {
+  // Need a graph to have a view and ensure that the cell state is updated
+  const graph = createGraphWithoutPlugins();
+
+  const style: CellStyle = { fontStyle: 4, spacing: 8 };
+  const cell = graph.insertVertex({
+    value: 'a value',
+    x: 10,
+    y: 20,
+    size: [110, 120],
+    style,
+  });
+  expect(cell.style).toStrictEqual(style);
+
+  setCellStyleFlags(graph.getDataModel(), [cell], 'fontStyle', FONT.BOLD, true);
+  expect(cell.style.fontStyle).toBe(5);
+  expect(graph.getView().getState(cell)?.style?.fontStyle).toBe(5);
 });

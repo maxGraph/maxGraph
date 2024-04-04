@@ -70,6 +70,16 @@ declare module '../Graph' {
     getCurrentCellStyle: (cell: Cell, ignoreState?: boolean) => CellStateStyle;
     getCellStyle: (cell: Cell) => CellStateStyle;
     postProcessCellStyle: (style: CellStateStyle) => CellStateStyle;
+    /**
+     * Sets the style of the specified cells. If no cells are given, then the selection cells are changed.
+     *
+     * **IMPORTANT**: Do not pass {@link Cell.getStyle} as value of the `style` parameter. Always get a clone of the style of the cell with {@link Cell.getClonedStyle}, then update it and pass the updated style to this method.
+     * For more details, see {@link GraphDataModel.setStyle}.
+     *
+     * @param style String representing the new style of the cells.
+     * @param cells Optional array of {@link Cell} to set the style for. Default is the
+     * selection cells.
+     */
     setCellStyle: (style: CellStyle, cells: Cell[]) => void;
     toggleCellStyle: (
       key: keyof CellStateStyle,
@@ -655,14 +665,6 @@ export const CellsMixin: PartialType = {
     return style;
   },
 
-  /**
-   * Sets the style of the specified cells. If no cells are given, then the
-   * selection cells are changed.
-   *
-   * @param style String representing the new style of the cells.
-   * @param cells Optional array of {@link Cell} to set the style for. Default is the
-   * selection cells.
-   */
   setCellStyle(style, cells?) {
     cells = cells ?? this.getSelectionCells();
 

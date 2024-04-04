@@ -850,25 +850,30 @@ export class GraphDataModel extends EventSource {
   }
 
   /**
-   * Sets the style of the given {@link Cell} using {@link StyleChange} and
-   * adds the change to the current transaction.
+   * Sets the style of the given {@link Cell} using {@link StyleChange} and adds the change to the current transaction.
+   *
+   * **IMPORTANT**: Do not pass {@link Cell.getStyle} as value of the `style` parameter. Otherwise, no style change is performed, so the view won't be updated.
+   * Always get a clone of the style of the cell with {@link Cell.getClonedStyle}, then update it and pass the updated style to this method.
    *
    * @param cell  whose style should be changed.
    * @param style the new cell style to set.
    */
   setStyle(cell: Cell, style: CellStyle) {
+    // To investigate in the future: it may be more convenient to do a deep comparison to prevent unnecessary changes
+    // If the passed style is the same as the current style without being the same instance, we don't need to do anything
+    // With the current implementation, a style change is executed when the styles are deep equal.
     if (style !== cell.getStyle()) {
       this.execute(new StyleChange(this, cell, style));
     }
   }
 
   /**
-   * Inner callback to update the style of the given {@link Cell}
-   * using {@link Cell#setStyle} and return the previous style.
+   * Inner callback to update the style of the given {@link Cell}  using {@link Cell#setStyle} and return the previous style.
    *
-   * @param {Cell} cell  that specifies the cell to be updated.
-   * @param style  String of the form [stylename;|key=value;] to specify
-   * the new cell style.
+   * **IMPORTANT**: to fully work, this method should not receive `cell.getStyle` as value of the `style` parameter. See {@link setStyle} for more information.
+   *
+   * @param cell  whose style should be changed.
+   * @param style the new cell style to set.
    */
   styleForCellChanged(cell: Cell, style: CellStyle) {
     const previous = cell.getStyle();
@@ -896,7 +901,7 @@ export class GraphDataModel extends EventSource {
    * the previous collapsed state.
    *
    * @param {Cell} cell  that specifies the cell to be updated.
-   * @param collapsed  Boolean that specifies the new collpased state.
+   * @param collapsed  Boolean that specifies the new collapsed state.
    */
   collapsedStateForCellChanged(cell: Cell, collapsed: boolean): boolean {
     const previous = cell.isCollapsed();

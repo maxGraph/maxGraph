@@ -320,7 +320,7 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
  * removes the key from the styles if the value is null.
  *
  * @param model <Transactions> to execute the transaction in.
- * @param cells Array of {@link Cells} to be updated.
+ * @param cells Array of {@link Cell}s to be updated.
  * @param key Key of the style to be changed.
  * @param value New value for the given key.
  */
@@ -336,7 +336,8 @@ export const setCellStyles = (
         const cell = cells[i];
 
         if (cell) {
-          const style = cell.getStyle();
+          // Currently, the style object must be cloned, otherwise model.setStyle does not trigger the change event and the cell state in the view is not updated
+          const style = cell.getClonedStyle();
           style[key] = value;
 
           model.setStyle(cell, style);
@@ -363,7 +364,7 @@ export const setCellStyles = (
  * Toggles the bold font style.
  *
  * @param model <Transactions> that contains the cells.
- * @param cells Array of {@link Cells} to change the style for.
+ * @param cells Array of {@link Cell}s to change the style for.
  * @param key Key of the style to be changed.
  * @param flag Integer for the bit to be changed.
  * @param value Optional boolean value for the flag.
@@ -381,7 +382,8 @@ export const setCellStyleFlags = (
         const cell = cells[i];
 
         if (cell) {
-          const style = setStyleFlag(cell.getStyle(), key, flag, value);
+          // Currently, the style object must be cloned, otherwise model.setStyle does not trigger the change event and the cell state in the view is not updated
+          const style = setStyleFlag(cell.getClonedStyle(), key, flag, value);
           model.setStyle(cell, style);
         }
       }

@@ -242,14 +242,25 @@ export class Cell implements IdentityObject {
   }
 
   /**
-   * Returns a string that describes the <style>.
+   * Returns a string that describes the {@link style}.
+   *
+   * **IMPORTANT**: if you want to get the style object to later update it and propagate changes to the view, use {@link getClonedStyle} instead.
    */
   getStyle() {
     return this.style;
   }
 
   /**
-   * Sets the string to be used as the <style>.
+   * Use this method to get the style object to later update it and propagate changes to the view.
+   *
+   * See {@link GraphDataModel.setStyle} for more details.
+   */
+  getClonedStyle() {
+    return clone(this.getStyle());
+  }
+
+  /**
+   * Sets the string to be used as the {@link style}.
    */
   setStyle(style: CellStyle) {
     this.style = style;

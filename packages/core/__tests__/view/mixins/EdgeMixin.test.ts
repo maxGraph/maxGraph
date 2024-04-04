@@ -32,7 +32,12 @@ describe('insertEdge', () => {
     expect(cell.value).toBe('a value');
     expect(cell.source).toBe(source);
     expect(cell.target).toBe(target);
-    expect(cell.style).toStrictEqual(style);
+    expect(cell.style).toStrictEqual({
+      ...style,
+      // added during insertion
+      sourcePort: null,
+      targetPort: null,
+    });
 
     const geometry = new Geometry();
     geometry.relative = true;
@@ -68,7 +73,12 @@ describe('insertEdge', () => {
     expect(cell.value).toBe('a value');
     expect(cell.source).toBe(source);
     expect(cell.target).toBe(target);
-    expect(cell.style).toStrictEqual(style);
+    expect(cell.style).toStrictEqual({
+      ...style,
+      // added during insertion
+      sourcePort: null,
+      targetPort: null,
+    });
 
     const geometry = new Geometry();
     geometry.relative = true;
