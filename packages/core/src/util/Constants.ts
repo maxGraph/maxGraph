@@ -88,7 +88,7 @@ export const SHADOW_OFFSET_Y = 3;
  */
 export const SHADOW_OPACITY = 1;
 
-export const enum NODETYPE {
+export enum NODETYPE {
   ELEMENT = 1,
   ATTRIBUTE = 2,
   TEXT = 3,
@@ -148,28 +148,20 @@ export const HIGHLIGHT_SIZE = 2;
  */
 export const HIGHLIGHT_OPACITY = 100;
 
-/**
- * - CURSOR_MOVABLE_VERTEX: Defines the cursor for a movable vertex. Default is 'move'.
- *
- * - CURSOR_MOVABLE_EDGE: Defines the cursor for a movable edge. Default is 'move'.
- *
- * - CURSOR_LABEL_HANDLE: Defines the cursor for a movable label. Default is 'default'.
- *
- * - CURSOR_TERMINAL_HANDLE: Defines the cursor for a terminal handle. Default is 'pointer'.
- *
- * - CURSOR_BEND_HANDLE: Defines the cursor for a movable bend. Default is 'crosshair'.
- *
- * - CURSOR_VIRTUAL_BEND_HANDLE: Defines the cursor for a movable bend. Default is 'crosshair'.
- *
- * - CURSOR_CONNECT: Defines the cursor for a connectable state. Default is 'pointer'.
- */
-export const enum CURSOR {
+export enum CURSOR {
+  /** Defines the cursor for a movable vertex. */
   MOVABLE_VERTEX = 'move',
+  /** Defines the cursor for a movable edge. */
   MOVABLE_EDGE = 'move',
+  /** Defines the cursor for a movable label. */
   LABEL_HANDLE = 'default',
+  /** Defines the cursor for a terminal handle. */
   TERMINAL_HANDLE = 'pointer',
+  /** Defines the cursor for a movable bend. */
   BEND_HANDLE = 'crosshair',
+  /** Defines the cursor for a movable bend. */
   VIRTUAL_BEND_HANDLE = 'crosshair',
+  /** Defines the cursor for a connectable state. */
   CONNECT = 'pointer',
 }
 
@@ -503,23 +495,15 @@ export enum DIRECTION {
   WEST = 'west',
 }
 
-/**
- * Constant for text direction default. Default is an empty string. Use
- * this value to use the default text direction of the operating system.
- *
- * Constant for text direction automatic. Default is auto. Use this value
- * to find the direction for a given text with {@link Text#getAutoDirection}.
- *
- * Constant for text direction left to right. Default is ltr. Use this
- * value for left to right text direction.
- *
- * Constant for text direction right to left. Default is rtl. Use this
- * value for right to left text direction.
- */
-export const enum TEXT_DIRECTION {
+export enum TEXT_DIRECTION {
+  /**
+   * Use this value to use the default text direction of the operating system. */
   DEFAULT = '',
+  /** Use this value to find the direction for a given text with {@link Text#getAutoDirection}. */
   AUTO = 'auto',
+  /** Use this value for left to right text direction. */
   LTR = 'ltr',
+  /** Use this value for right to left text direction. */
   RTL = 'rtl',
 }
 
