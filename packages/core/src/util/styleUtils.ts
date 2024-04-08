@@ -349,19 +349,17 @@ export const setCellStyles = (
 
 /**
  * Sets or toggles the flag bit for the given key in the cell's styles.
- * If value is null then the flag is toggled.
+ * If the `value` parameter is not set, then the flag is toggled.
  *
- * Example:
+ * Example that toggles the bold font style:
  *
  * ```javascript
- * let cells = graph.getSelectionCells();
- * mxUtils.setCellStyleFlags(graph.model,
+ * const cells = graph.getSelectionCells();
+ * setCellStyleFlags(graph.model,
  *       cells,
- *       mxConstants.STYLE_FONTSTYLE,
- *       mxConstants.FONT_BOLD);
+ *       'fontStyle',
+ *       constants.FONT.BOLD);
  * ```
- *
- * Toggles the bold font style.
  *
  * @param model <Transactions> that contains the cells.
  * @param cells Array of {@link Cell}s to change the style for.
@@ -374,7 +372,7 @@ export const setCellStyleFlags = (
   cells: Cell[],
   key: NumericCellStateStyleKeys,
   flag: number,
-  value: boolean
+  value?: boolean
 ) => {
   if (cells.length > 0) {
     model.batchUpdate(() => {
@@ -392,8 +390,8 @@ export const setCellStyleFlags = (
 };
 
 /**
- * Sets or removes the given key from the specified style and returns the
- * new style. If value is null then the flag is toggled.
+ * Sets or toggles the flag bit for the given key in the cell's style.
+ * If the `value` parameter is not set, then the flag is toggled.
  *
  * @param style The style of the Cell.
  * @param key Key of the style to be changed.
@@ -409,7 +407,7 @@ export const setStyleFlag = (
   const v = style[key];
 
   if (v === undefined) {
-    style[key] = value === undefined ? flag : 0;
+    style[key] = value === undefined || value ? flag : 0;
   } else {
     if (value === undefined) {
       style[key] = v ^ flag;

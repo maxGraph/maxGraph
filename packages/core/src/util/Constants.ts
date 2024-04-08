@@ -34,32 +34,20 @@ export const MIN_HOTSPOT_SIZE = 8;
  */
 export const MAX_HOTSPOT_SIZE = 0;
 
-/**
- * Defines the exact rendering hint.
- *
- * Defines the faster rendering hint.
- *
- * Defines the fastest rendering hint.
- */
-export const enum RENDERING_HINT {
+export enum RENDERING_HINT {
   EXACT = 'exact',
   FASTER = 'faster',
   FASTEST = 'fastest',
 }
 
-/**
- * - DIALECT.SVG: Defines the SVG display dialect name.
- *
- * - DIALECT.MIXEDHTML: Defines the mixed HTML display dialect name.
- *
- * - DIALECT.PREFERHTML: Defines the preferred HTML display dialect name.
- *
- * - DIALECT.STRICTHTML: Defines the strict HTML display dialect.
- */
-export const enum DIALECT {
+export enum DIALECT {
+  /** the SVG display dialect name. */
   SVG = 'svg',
+  /** the mixed HTML display dialect name. */
   MIXEDHTML = 'mixedHtml',
+  /** the preferred HTML display dialect name. */
   PREFERHTML = 'preferHtml',
+  /** the strict HTML display dialect name. */
   STRICTHTML = 'strictHtml',
 }
 
@@ -100,7 +88,7 @@ export const SHADOW_OFFSET_Y = 3;
  */
 export const SHADOW_OPACITY = 1;
 
-export const enum NODETYPE {
+export enum NODETYPE {
   ELEMENT = 1,
   ATTRIBUTE = 2,
   TEXT = 3,
@@ -160,28 +148,20 @@ export const HIGHLIGHT_SIZE = 2;
  */
 export const HIGHLIGHT_OPACITY = 100;
 
-/**
- * - CURSOR_MOVABLE_VERTEX: Defines the cursor for a movable vertex. Default is 'move'.
- *
- * - CURSOR_MOVABLE_EDGE: Defines the cursor for a movable edge. Default is 'move'.
- *
- * - CURSOR_LABEL_HANDLE: Defines the cursor for a movable label. Default is 'default'.
- *
- * - CURSOR_TERMINAL_HANDLE: Defines the cursor for a terminal handle. Default is 'pointer'.
- *
- * - CURSOR_BEND_HANDLE: Defines the cursor for a movable bend. Default is 'crosshair'.
- *
- * - CURSOR_VIRTUAL_BEND_HANDLE: Defines the cursor for a movable bend. Default is 'crosshair'.
- *
- * - CURSOR_CONNECT: Defines the cursor for a connectable state. Default is 'pointer'.
- */
-export const enum CURSOR {
+export enum CURSOR {
+  /** Defines the cursor for a movable vertex. */
   MOVABLE_VERTEX = 'move',
+  /** Defines the cursor for a movable edge. */
   MOVABLE_EDGE = 'move',
+  /** Defines the cursor for a movable label. */
   LABEL_HANDLE = 'default',
+  /** Defines the cursor for a terminal handle. */
   TERMINAL_HANDLE = 'pointer',
+  /** Defines the cursor for a movable bend. */
   BEND_HANDLE = 'crosshair',
+  /** Defines the cursor for a movable bend. */
   VIRTUAL_BEND_HANDLE = 'crosshair',
+  /** Defines the cursor for a connectable state. */
   CONNECT = 'pointer',
 }
 
@@ -461,99 +441,69 @@ export const PAGE_FORMAT_LETTER_LANDSCAPE = [0, 0, 1100, 850];
  */
 export const NONE = 'none';
 
-/**
- * - FONT_BOLD: Constant for bold fonts. Default is 1.
- *
- * - FONT_ITALIC: Constant for italic fonts. Default is 2.
- *
- * - FONT_UNDERLINE: Constant for underlined fonts. Default is 4.
- *
- * - FONT_STRIKETHROUGH: Constant for strikethrough fonts. Default is 8.
- */
-export const enum FONT {
+export enum FONT {
+  /** for bold fonts. */
   BOLD = 1,
+  /** for italic fonts. */
   ITALIC = 2,
+  /** for underlined fonts. */
   UNDERLINE = 4,
+  /** for strikethrough fonts. */
   STRIKETHROUGH = 8,
 }
 
-/**
- * - ARROW_CLASSIC: Constant for classic arrow markers.
- *
- * - ARROW_CLASSIC_THIN: Constant for thin classic arrow markers.
- *
- * - ARROW_BLOCK: Constant for block arrow markers.
- *
- * - ARROW_BLOCK_THIN: Constant for thin block arrow markers.
- *
- * - ARROW_OPEN: Constant for open arrow markers.
- *
- * - ARROW_OPEN_THIN: Constant for thin open arrow markers.
- *
- * - ARROW_OVAL: Constant for oval arrow markers.
- *
- * - ARROW_DIAMOND: Constant for diamond arrow markers.
- *
- * - ARROW_DIAMOND_THIN: Constant for thin diamond arrow markers.
- */
-export const enum ARROW {
+export enum ARROW {
+  /** for classic arrow markers. */
   CLASSIC = 'classic',
+  /** for thin classic arrow markers. */
   CLASSIC_THIN = 'classicThin',
+  /** for block arrow markers. */
   BLOCK = 'block',
+  /** for thin block arrow markers. */
   BLOCK_THIN = 'blockThin',
+  /** for open arrow markers. */
   OPEN = 'open',
+  /** for thin open arrow markers. */
   OPEN_THIN = 'openThin',
+  /** for oval arrow markers. */
   OVAL = 'oval',
+  /** for diamond arrow markers. */
   DIAMOND = 'diamond',
+  /** for thin diamond arrow markers. */
   DIAMOND_THIN = 'diamondThin',
 }
 
-/**
- * - ALIGN_LEFT: Constant for left horizontal alignment. Default is left.
- *
- * - ALIGN_CENTER: Constant for center horizontal alignment. Default is center.
- *
- * - ALIGN_RIGHT: Constant for right horizontal alignment. Default is right.
- *
- * - ALIGN_TOP: Constant for top vertical alignment. Default is top.
- *
- * - ALIGN_MIDDLE: Constant for middle vertical alignment. Default is middle.
- *
- * - ALIGN_BOTTOM: Constant for bottom vertical alignment. Default is bottom.
- */
-export const enum ALIGN {
+export enum ALIGN {
+  /** left horizontal alignment. */
   LEFT = 'left',
+  /** center horizontal alignment. */
   CENTER = 'center',
+  /** right horizontal alignment. */
   RIGHT = 'right',
+  /** top vertical alignment. */
   TOP = 'top',
+  /** middle vertical alignment. */
   MIDDLE = 'middle',
+  /** bottom vertical alignment. */
   BOTTOM = 'bottom',
 }
 
-export const enum DIRECTION {
+export enum DIRECTION {
   NORTH = 'north',
   SOUTH = 'south',
   EAST = 'east',
   WEST = 'west',
 }
 
-/**
- * Constant for text direction default. Default is an empty string. Use
- * this value to use the default text direction of the operating system.
- *
- * Constant for text direction automatic. Default is auto. Use this value
- * to find the direction for a given text with {@link Text#getAutoDirection}.
- *
- * Constant for text direction left to right. Default is ltr. Use this
- * value for left to right text direction.
- *
- * Constant for text direction right to left. Default is rtl. Use this
- * value for right to left text direction.
- */
-export const enum TEXT_DIRECTION {
+export enum TEXT_DIRECTION {
+  /**
+   * Use this value to use the default text direction of the operating system. */
   DEFAULT = '',
+  /** Use this value to find the direction for a given text with {@link Text#getAutoDirection}. */
   AUTO = 'auto',
+  /** Use this value for left to right text direction. */
   LTR = 'ltr',
+  /** Use this value for right to left text direction. */
   RTL = 'rtl',
 }
 
@@ -582,7 +532,7 @@ export const DIRECTION_MASK = {
 /**
  * Default is horizontal.
  */
-export const enum ELBOW {
+export enum ELBOW {
   VERTICAL = 'vertical',
   HORIZONTAL = 'horizontal',
 }
@@ -590,7 +540,7 @@ export const enum ELBOW {
 /**
  * Can be used as a string value for the STYLE_EDGE style.
  */
-export const enum EDGESTYLE {
+export enum EDGESTYLE {
   ELBOW = 'elbowEdgeStyle',
   ENTITY_RELATION = 'entityRelationEdgeStyle',
   LOOP = 'loopEdgeStyle',
@@ -604,7 +554,7 @@ export const enum EDGESTYLE {
 /**
  * Can be used as a string value for the STYLE_PERIMETER style.
  */
-export const enum PERIMETER {
+export enum PERIMETER {
   ELLIPSE = 'ellipsePerimeter',
   RECTANGLE = 'rectanglePerimeter',
   RHOMBUS = 'rhombusPerimeter',
@@ -612,7 +562,7 @@ export const enum PERIMETER {
   TRIANGLE = 'trianglePerimeter',
 }
 
-export const enum SHAPE {
+export enum SHAPE {
   /**
    * Name under which {@link RectangleShape} is registered in {@link CellRenderer}.
    * Default is rectangle.
