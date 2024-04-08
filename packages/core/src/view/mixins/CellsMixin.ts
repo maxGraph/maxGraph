@@ -80,7 +80,7 @@ declare module '../Graph' {
      * @param cells Optional array of {@link Cell} to set the style for. Default is the
      * selection cells.
      */
-    setCellStyle: (style: CellStyle, cells: Cell[]) => void;
+    setCellStyle: (style: CellStyle, cells?: Cell[]) => void;
     toggleCellStyle: (
       key: keyof CellStateStyle,
       defaultValue: boolean,
