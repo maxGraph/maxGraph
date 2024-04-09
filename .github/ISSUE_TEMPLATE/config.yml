@@ -1,0 +1,9 @@
+# see https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository#configuring-the-template-chooser
+blank_issues_enabled: false
+contact_links:
+  - name: Community Support for usage questions
+    url: https://github.com/maxGraph/maxGraph/discussions/categories/development
+    about: Please ask and answer questions about maxGraph usage here.
+  - name: Development Support
+    url: https://github.com/maxGraph/maxGraph/discussions/categories/development
+    about: Please ask questions about maxGraph development here.
