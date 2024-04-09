@@ -15,9 +15,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, constants, EdgeStyle, StackLayout, LayoutManager } from '@maxgraph/core';
+import {
+  Client,
+  constants,
+  Graph,
+  ImageBox as Image,
+  LayoutManager,
+  StackLayout,
+} from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Layouts/Folding',
@@ -29,7 +36,8 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
+  configureImagesBasePath();
   const container = createGraphContainer(args);
 
   // Should we allow overriding constant values?
@@ -41,7 +49,11 @@ const Template = ({ label, ...args }) => {
   graph.setDropEnabled(true);
 
   // Disables global features
-  graph.collapseToPreferredSize = false;
+  graph.options.collapseToPreferredSize = false;
+  // Redefine here to ensure that the updated Client.imageBasePath value is used
+  graph.options.collapsedImage = new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9);
+  graph.options.expandedImage = new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9);
+
   graph.constrainChildren = false;
   graph.cellsSelectable = false;
   graph.extendParentsOnAdd = false;
@@ -50,7 +62,9 @@ const Template = ({ label, ...args }) => {
 
   // Sets global styles
   let style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = EdgeStyle.EntityRelation;
+  // TODO was working in mxGraph, currently edgeStyle must be a string, but passing the function works at runtime
+  // style.edgeStyle = EdgeStyle.EntityRelation;
+  style.edgeStyle = constants.EDGESTYLE.ENTITY_RELATION;
   style.rounded = true;
 
   style = graph.getStylesheet().getDefaultVertexStyle();
@@ -58,7 +72,7 @@ const Template = ({ label, ...args }) => {
   style.shape = 'swimlane';
   style.startSize = 30;
 
-  style = [];
+  style = {};
   style.shape = constants.SHAPE.RECTANGLE;
   style.strokeColor = 'none';
   style.fillColor = 'none';
@@ -70,7 +84,7 @@ const Template = ({ label, ...args }) => {
   layout.border = graph.border;
   const layoutMgr = new LayoutManager(graph);
   layoutMgr.getLayout = function (cell) {
-    if (!cell.collapsed) {
+    if (cell && !cell.collapsed) {
       if (cell.parent !== graph.model.root) {
         layout.resizeParent = true;
         layout.horizontal = false;

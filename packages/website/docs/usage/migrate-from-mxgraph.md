@@ -297,6 +297,18 @@ graph.insertVertex({ parent, id, value, x, y, width, height, style });
 graph.insertEdge({ parent, id, value, source, target, style });
 ```
 
+#### Folding properties
+
+The following folding properties have been removed:
+  - `collapsedImage`
+  - `collapseToPreferredSize`
+  - `expandedImage`
+  - `foldingEnabled`
+
+They are now set in the `Graph.options` object with the same property name.
+
+For example, to set the `foldingEnabled` property, instead of doing `Graph.foldingEnabled`, you should set instead `Graph.options.foldingEnabled`.
+
 
 ### Client
 

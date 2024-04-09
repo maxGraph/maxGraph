@@ -34,6 +34,15 @@ declare module '../Graph' {
     getCollapseExpandResource: () => string;
     isFoldingEnabled: () => boolean;
     getFoldableCells: (cells: Cell[], collapse: boolean) => Cell[] | null;
+
+    /**
+     * Returns `true` if the given cell is foldable.
+     *
+     * The default implementation returns `true` if the cell has at least one child and its style
+     * does not specify {@link CellStyle.foldable} to be `false`.
+     *
+     * @param cell whose foldable state should be returned.
+     */
     isCellFoldable: (cell: Cell, collapse: boolean) => boolean;
     getFoldingImage: (state: CellState) => Image | null;
     foldCells: (
@@ -58,24 +67,26 @@ declare module '../Graph' {
   }
 }
 
-/**
- * GraphFoldingOptions
- *
- * @memberof GraphFolding
- * @typedef {object} GraphFoldingOptions
- * @property {boolean} foldingEnabled Specifies if folding (collapse and expand
- *                     via an image icon in the graph should be enabled).
- * @property {Image} collapsedImage Specifies the {@link Image} to indicate a collapsed state.
- *                     Default value is Client.imageBasePath + '/collapsed.gif'
- * @property {Image} expandedImage Specifies the {@link Image} to indicate a expanded state.
- *                     Default value is Client.imageBasePath + '/expanded.gif'
- * @property {collapseToPreferredSize} Specifies if the cell size should be changed to the preferred size when
- *                     a cell is first collapsed.
- */
 type GraphFoldingOptions = {
+  /**
+   * Specifies if folding (collapse and expand via an image icon in the graph should be enabled).
+   * @default true
+   **/
   foldingEnabled: boolean;
+  /**
+   * Specifies the {@link Image} to indicate a collapsed state.
+   * @default `Client.imageBasePath + '/collapsed.gif'`
+   **/
   collapsedImage: Image;
+  /**
+   * Specifies the {@link Image} to indicate a expanded state.
+   * @default `Client.imageBasePath + '/expanded.gif'`
+   **/
   expandedImage: Image;
+  /**
+   * Specifies if the cell size should be changed to the preferred size when a cell is first collapsed.
+   * @default true
+   */
   collapseToPreferredSize: boolean;
 };
 
@@ -134,10 +145,6 @@ const FoldingMixin: PartialType = {
   },
 
   /**
-   * @default true
-   */
-
-  /**
    * Returns the cells which are movable in the given array of cells.
    */
   getFoldableCells(cells, collapse = false) {
@@ -146,16 +153,9 @@ const FoldingMixin: PartialType = {
     });
   },
 
-  /**
-   * Returns true if the given cell is foldable. This implementation
-   * returns true if the cell has at least one child and its style
-   * does not specify {@link mxConstants.STYLE_FOLDABLE} to be 0.
-   *
-   * @param cell {@link mxCell} whose foldable state should be returned.
-   */
   isCellFoldable(cell, collapse?: boolean): boolean {
     const style = this.getCurrentCellStyle(cell);
-    return cell.getChildCount() > 0 && (style.foldable || false);
+    return cell.getChildCount() > 0 && (style.foldable ?? true);
   },
 
   /**
@@ -163,7 +163,7 @@ const FoldingMixin: PartialType = {
    * the specified cell state. This returns null for all edges.
    */
   getFoldingImage(state) {
-    if (state != null && this.options.foldingEnabled && !state.cell.isEdge()) {
+    if (state != null && this.isFoldingEnabled() && !state.cell.isEdge()) {
       const tmp = (<Cell>state.cell).isCollapsed();
 
       if (this.isCellFoldable(state.cell, !tmp)) {
