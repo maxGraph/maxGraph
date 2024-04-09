@@ -10,6 +10,9 @@ assignees: ''
 ### Describe the bug
 A clear and concise description of what the bug is.
 
+Please create a single issue for each bug. If you have multiple bugs, please create multiple issues.
+This will help us to track and manage the issues more effectively.
+
 
 ### To Reproduce
 Steps to reproduce the behavior:
