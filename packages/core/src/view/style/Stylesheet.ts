@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ALIGN, ARROW, SHAPE } from '../../util/Constants';
+import { ALIGN, ARROW, NONE, SHAPE } from '../../util/Constants';
 import { clone } from '../../util/cloneUtils';
 import type { CellStateStyle, CellStyle } from '../../types';
 
@@ -186,9 +186,14 @@ export class Stylesheet {
     }
 
     // Merges cellStyle into style
+    const filteredCellStyle = clone(cellStyle); // Clones the cellStyle to avoid modifying the original object pass as parameter
+    for (const key of Object.keys(filteredCellStyle)) {
+      (filteredCellStyle[key] === undefined || filteredCellStyle[key] == NONE) &&
+        delete filteredCellStyle[key];
+    }
     style = {
       ...style,
-      ...cellStyle,
+      ...filteredCellStyle,
     };
 
     // Remove the 'baseStyleNames' that may have been copied from the cellStyle parameter to match the method signature
