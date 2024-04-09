@@ -69,25 +69,18 @@ const createObjectCodec = (template: any, name: string): ObjectCodec => {
   return objectCodec;
 };
 
-let isCoreCodecsRegistered = false;
-
+let isModelCodecsRegistered = false;
 /**
- * Register core editor i.e. codecs that don't relate to editor.
+ * Register model codecs i.e. codecs used to import/export the Graph Model, see {@link GraphDataModel}.
  *
  * @param force if `true` register the codecs even if they were already registered. If false, only register them
  *              if they have never been registered before.
- * @since 0.6.0
+ * @since 0.10.0
  */
-export const registerCoreCodecs = (force = false) => {
-  if (!isCoreCodecsRegistered || force) {
+export const registerModelCodecs = (force = false) => {
+  if (!isModelCodecsRegistered || force) {
     CodecRegistry.register(new CellCodec());
-    CodecRegistry.register(new ChildChangeCodec());
-    CodecRegistry.register(new GraphViewCodec());
     CodecRegistry.register(new ModelCodec());
-    CodecRegistry.register(new RootChangeCodec());
-    CodecRegistry.register(new StylesheetCodec());
-    CodecRegistry.register(new TerminalChangeCodec());
-    registerGenericChangeCodecs();
 
     // To support decode/import executed before encode/export (see https://github.com/maxGraph/maxGraph/issues/178)
     // Codecs are currently only registered automatically during encode/export
@@ -107,6 +100,29 @@ export const registerCoreCodecs = (force = false) => {
     CodecRegistry.addAlias('mxPoint', 'Point');
     CodecRegistry.register(new mxCellCodec(), false);
     CodecRegistry.register(new mxGeometryCodec(), false);
+
+    isModelCodecsRegistered = true;
+  }
+};
+
+let isCoreCodecsRegistered = false;
+/**
+ * Register core codecs i.e. codecs that don't relate to editor. This includes model codecs that can be registered individually with {@link registerModelCodecs}.
+ *
+ * @param force if `true` register the codecs even if they were already registered. If false, only register them
+ *              if they have never been registered before.
+ * @since 0.6.0
+ */
+export const registerCoreCodecs = (force = false) => {
+  if (!isCoreCodecsRegistered || force) {
+    CodecRegistry.register(new ChildChangeCodec());
+    CodecRegistry.register(new GraphViewCodec());
+    CodecRegistry.register(new RootChangeCodec());
+    CodecRegistry.register(new StylesheetCodec());
+    CodecRegistry.register(new TerminalChangeCodec());
+    registerGenericChangeCodecs();
+
+    registerModelCodecs(force);
 
     isCoreCodecsRegistered = true;
   }
@@ -131,7 +147,7 @@ export const registerEditorCodecs = (force = false) => {
 };
 
 /**
- * Register all editors i.e. core codecs (as done by {@link registerCoreCodecs}) and editor codecs (as done by {@link registerEditorCodecs}).
+ * Register all codecs i.e. core codecs (as done by {@link registerCoreCodecs}) and editor codecs (as done by {@link registerEditorCodecs}).
  *
  * @param force if `true` register the codecs even if they were already registered. If false, only register them
  *              if they have never been registered before.
