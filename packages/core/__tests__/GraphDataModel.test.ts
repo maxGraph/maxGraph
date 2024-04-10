@@ -23,18 +23,15 @@ describe('isLayer', () => {
   dm.setRoot(root);
 
   test('Child is null', () => {
-    // @ts-ignore
-    const child: Cell = null;
-    expect(dm.isLayer(child)).toBe(false);
+    expect(dm.isLayer(null)).toBe(false);
   });
 
   test('Child is not null and is not layer', () => {
-    const child: Cell = new Cell();
-    expect(dm.isLayer(child)).toBe(false);
+    expect(dm.isLayer(new Cell())).toBe(false);
   });
 
   test('Child is not null and is layer', () => {
-    const child: Cell = new Cell();
+    const child = new Cell();
     root.children.push(child);
     child.setParent(root);
     expect(dm.isLayer(child)).toBe(true);
