@@ -15,16 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  Client,
-  constants,
-  Graph,
-  ImageBox as Image,
-  LayoutManager,
-  StackLayout,
-} from '@maxgraph/core';
+import { constants, Graph, LayoutManager, StackLayout } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import {
+  configureExpandedAndCollapsedImages,
+  configureImagesBasePath,
+  createGraphContainer,
+} from './shared/configure.js';
 
 export default {
   title: 'Layouts/Folding',
@@ -50,9 +47,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Disables global features
   graph.options.collapseToPreferredSize = false;
-  // Redefine here to ensure that the updated Client.imageBasePath value is used
-  graph.options.collapsedImage = new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9);
-  graph.options.expandedImage = new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9);
+  configureExpandedAndCollapsedImages(graph);
 
   graph.constrainChildren = false;
   graph.cellsSelectable = false;

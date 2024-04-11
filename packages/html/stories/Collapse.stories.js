@@ -18,7 +18,11 @@ limitations under the License.
 import { Graph, Rectangle } from '@maxgraph/core';
 
 import { globalTypes, globalValues } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import {
+  configureExpandedAndCollapsedImages,
+  configureImagesBasePath,
+  createGraphContainer,
+} from './shared/configure.js';
 
 export default {
   title: 'Layouts/Collapse',
@@ -31,10 +35,12 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
+  configureImagesBasePath();
   const container = createGraphContainer(args);
 
   const graph = new Graph(container);
   const parent = graph.getDefaultParent();
+  configureExpandedAndCollapsedImages(graph);
 
   const getStyle = function () {
     // Extends Transactions.getStyle to show an image when collapsed
@@ -63,7 +69,7 @@ const Template = ({ label, ...args }) => {
       style: { shape: 'swimlane', startSize: 20 },
     });
     v1.geometry.alternateBounds = new Rectangle(0, 0, 110, 70);
-    v1.getStyle = getStyle;
+    // v1.getStyle = getStyle;
 
     const v11 = graph.insertVertex({
       parent: v1,
@@ -71,7 +77,7 @@ const Template = ({ label, ...args }) => {
       position: [10, 40],
       size: [120, 80],
     });
-    v11.getStyle = getStyle;
+    // v11.getStyle = getStyle;
   });
 
   return container;

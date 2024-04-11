@@ -29,7 +29,11 @@ import {
   Graph,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import {
+  configureExpandedAndCollapsedImages,
+  configureImagesBasePath,
+  createGraphContainer,
+} from './shared/configure.js';
 
 export default {
   title: 'Layouts/SwimLanes',
@@ -69,6 +73,7 @@ const Template = ({ label, ...args }) => {
   graph.border = 80;
   graph.getView().translate = new Point(graph.border / 2, graph.border / 2);
   graph.setResizeContainer(true);
+  configureExpandedAndCollapsedImages(graph);
 
   const graphHandler = graph.getPlugin('SelectionHandler');
   graphHandler.setRemoveCellsFromParent(false);
