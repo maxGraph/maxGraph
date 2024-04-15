@@ -16,6 +16,7 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { CellStateStyle, CellStyle, Stylesheet } from '../../../src';
+import { NONE } from '../../../src/util/Constants';
 
 /**
  * Additional properties to test extension points by extending `CellStyle` and `CustomCellStateStyle`.
@@ -133,6 +134,111 @@ describe('getCellStyle', () => {
       shape: 'custom-shape', // from style2 (override default and style-1)
       startArrow: 'custom-arrow-start', // from default
       strokeColor: 'yellow',
+    });
+  });
+
+  test('Setting undefined properties, there are filtered in the computed "getStyle"', () => {
+    const stylesheet = new Stylesheet();
+    const cellStyle = stylesheet.getCellStyle(
+      {
+        align: undefined,
+        shape: 'cloud',
+        strokeColor: undefined,
+      },
+      { arcSize: 5 }
+    );
+    expect(cellStyle).toStrictEqual({
+      arcSize: 5, // from default
+      shape: 'cloud',
+    });
+  });
+
+  // This was the mxGraph behaviour
+  // Setting a null/undefined value with mxUtils.setStyle remove the key from the cell style (in the string form). As it was not present in the style, it felt back to values from the default or base style.
+  // See https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxUtils.js#L3465-L3478
+  test('Setting undefined properties fallback to property value of the default style', () => {
+    const stylesheet = new Stylesheet();
+    const cellStyle = stylesheet.getCellStyle(
+      {
+        align: undefined,
+        shape: 'cloud',
+        strokeColor: undefined,
+      },
+      { strokeColor: 'red', align: 'left' }
+    );
+    expect(cellStyle).toStrictEqual({
+      align: 'left',
+      shape: 'cloud',
+      strokeColor: 'red',
+    });
+  });
+
+  // This was the mxGraph behaviour (same as fallback to value in the default style)
+  test('Setting undefined properties fallback to property value of the "base" styles', () => {
+    const stylesheet = new Stylesheet();
+    stylesheet.putCellStyle('style-1', {
+      shape: 'triangle',
+      fillColor: 'blue',
+      fillOpacity: 80,
+    });
+
+    const cellStyle = stylesheet.getCellStyle(
+      {
+        baseStyleNames: ['style-1'],
+        fillColor: undefined,
+        fillOpacity: undefined,
+        shape: 'cloud',
+      },
+      {}
+    );
+    expect(cellStyle).toStrictEqual({
+      fillColor: 'blue',
+      fillOpacity: 80,
+      shape: 'cloud',
+    });
+  });
+
+  // This was the mxGraph behaviour, see https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxStylesheet.js#L236-L239
+  test('Setting properties with "none" value fallback to property value of the default and "base" styles', () => {
+    const stylesheet = new Stylesheet();
+    stylesheet.putCellStyle('style-1', {
+      fillColor: 'orange',
+    });
+
+    const cellStyle = stylesheet.getCellStyle(
+      {
+        baseStyleNames: ['style-1'],
+        fillColor: NONE,
+        shape: 'cloud',
+        strokeColor: NONE,
+      },
+      { strokeColor: 'pink' }
+    );
+    expect(cellStyle).toStrictEqual({
+      fillColor: 'orange',
+      shape: 'cloud',
+      strokeColor: 'pink',
+    });
+  });
+
+  // This was the mxGraph behaviour
+  test('Setting undefined properties in "base" style, set the property to undefined in the style', () => {
+    const stylesheet = new Stylesheet();
+    stylesheet.putCellStyle('style-1', {
+      fillColor: undefined,
+      fillOpacity: 80,
+    });
+
+    const cellStyle = stylesheet.getCellStyle(
+      {
+        baseStyleNames: ['style-1'],
+      },
+      { fillColor: 'yellow', shape: 'cloud' }
+    );
+    expect(cellStyle).toStrictEqual({
+      fillColor: undefined,
+      fillOpacity: 80,
+      shape: 'cloud',
     });
   });
 

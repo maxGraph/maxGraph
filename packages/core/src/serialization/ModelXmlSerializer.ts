@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { registerCoreCodecs } from './register';
+import { registerModelCodecs } from './register';
 import { getPrettyXml, parseXml } from '../util/xmlUtils';
 import { Codec } from '../index';
 import type GraphDataModel from '../view/GraphDataModel';
@@ -68,6 +68,6 @@ export class ModelXmlSerializer {
    * Hook for replacing codecs registered by default (core codecs).
    */
   protected registerCodecs(): void {
-    registerCoreCodecs();
+    registerModelCodecs();
   }
 }

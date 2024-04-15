@@ -379,7 +379,7 @@ const SwimlaneMixin: PartialType = {
       }
     }
 
-    return !this.getDataModel().isLayer(<Cell>cell) && !parent ? cell : null;
+    return !this.getDataModel().isLayer(cell) && !parent ? cell : null;
   },
 
   /**

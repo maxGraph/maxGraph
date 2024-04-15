@@ -396,9 +396,9 @@ export class GraphDataModel extends EventSource {
   /**
    * Returns true if {@link isRoot} returns true for the parent of the given cell.
    *
-   * @param {Cell} cell  that represents the possible layer.
+   * @param cell  that represents the possible layer.
    */
-  isLayer(cell: Cell) {
+  isLayer(cell: Cell | null) {
     return cell ? this.isRoot(cell.getParent()) : false;
   }
 
