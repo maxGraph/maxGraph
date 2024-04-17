@@ -372,14 +372,14 @@ const SwimlaneMixin: PartialType = {
     }
 
     // Checks if parent is dropped into child if not cloning
+    let parentCell = cell;
     if (!clone) {
-      let parent = cell;
-      while (parent && cells.indexOf(parent) < 0) {
-        parent = parent.getParent();
+      while (parentCell && cells.indexOf(parentCell) < 0) {
+        parentCell = parentCell.getParent();
       }
     }
 
-    return !this.getDataModel().isLayer(cell) && !parent ? cell : null;
+    return !this.getDataModel().isLayer(cell) && !parentCell ? cell : null;
   },
 
   /**
