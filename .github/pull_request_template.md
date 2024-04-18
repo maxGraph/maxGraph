@@ -14,8 +14,10 @@ Note: core contributors are not required to use this template.
 - [ ] Addresses an existing open issue: closes #<the_issue_number_here>. If not, explain why (minor changes, etc.).
 - [ ] You have discussed this issue with the maintainers of `maxGraph`, and you are assigned to the issue.
 - [ ] The scope of the PR is small enough to review in a single session. PR targeting several issues should be split into separate PRs. Don't create large PR like https://github.com/maxGraph/maxGraph/pull/88.
+- [ ] I have added tests to prove my fix is effective or my feature works. This can be done in the form of automatic tests in `packages/core/_tests_` or a new or altered Storybook story in `packages/html/stories` (an existing story may also demonstrate the change).
+- [ ] I have provided screenshot/videos to demonstrate the change. If no releavant, explain why.
+- [ ] I have added or edited necessary documentation, or no docs changes are needed.
 - [ ] The PR title follows the ["Conventional Commits"](https://www.conventionalcommits.org/en/v1.0.0/) guidelines.
-
 <!--
 The PR title must look like `<type>[optional scope]: <lower case description>`
 
