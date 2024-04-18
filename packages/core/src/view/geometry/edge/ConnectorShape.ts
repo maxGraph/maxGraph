@@ -58,16 +58,21 @@ class ConnectorShape extends PolylineShape {
 
     super.paintEdgeShape(c, pts);
 
-    // Disables shadows, dashed styles and fixes fill color for markers
-    c.setFillColor(this.stroke);
+    // Disables shadows, dashed styles
     c.setShadow(false);
     c.setDashed(false);
 
     if (sourceMarker) {
+      const strokeColor = this.style?.startStrokeColor ?? this.stroke;
+      c.setStrokeColor(strokeColor);
+      c.setFillColor(this.style?.startFillColor ?? strokeColor);
       sourceMarker();
     }
 
     if (targetMarker) {
+      const strokeColor = this.style?.endStrokeColor ?? this.stroke;
+      c.setStrokeColor(strokeColor);
+      c.setFillColor(this.style?.endFillColor ?? strokeColor);
       targetMarker();
     }
   }

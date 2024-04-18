@@ -196,6 +196,18 @@ export type CellStateStyle = {
    */
   endFill?: boolean;
   /**
+   * Set the fill color of the end arrow marker if {@link endFill} is `true`.
+   * If not set, use {@link startStrokeColor}.
+   * @since 0.10.0
+   */
+  endFillColor?: ColorValue;
+  /**
+   * Set the stroke color of the end arrow marker.
+   * If not set, use {@link strokeColor}.
+   * @since 0.10.0
+   */
+  endStrokeColor?: ColorValue;
+  /**
    * The value represents the size of the end marker in pixels.
    * See {@link startSize}.
    */
@@ -702,6 +714,18 @@ export type CellStateStyle = {
    * @default true
    */
   startFill?: boolean;
+  /**
+   * Set the fill color of the start arrow marker if {@link startFill} is `true`.
+   * If not set, use {@link startStrokeColor}.
+   * @since 0.10.0
+   */
+  startFillColor?: ColorValue;
+  /**
+   * Set the stroke color of the start arrow marker.
+   * If not set, use {@link strokeColor}.
+   * @since 0.10.0
+   */
+  startStrokeColor?: ColorValue;
   /**
    * The value represents the size of the start marker, in pixels, or the size of the title region
    * of a `swimlane` depending on the shape it is used for.

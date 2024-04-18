@@ -25,6 +25,7 @@ import {
   ArrowShape,
   Point,
 } from '@maxgraph/core';
+import type { AbstractCanvas2D, ArrowValue, Shape } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
 
@@ -38,7 +39,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
 
   // Enables guides
@@ -48,7 +49,18 @@ const Template = ({ label, ...args }) => {
   // Registers and defines the custom marker
   MarkerShape.addMarker(
     'dash',
-    function (canvas, shape, type, pe, unitX, unitY, size, source, sw, filled) {
+    function (
+      canvas: AbstractCanvas2D,
+      _shape: Shape,
+      _type: ArrowValue,
+      pe: Point,
+      unitX: number,
+      unitY: number,
+      size: number,
+      _source: boolean,
+      sw: number,
+      _filled: boolean
+    ) {
       const nx = unitX * (size + sw + 1);
       const ny = unitY * (size + sw + 1);
 
@@ -63,25 +75,33 @@ const Template = ({ label, ...args }) => {
 
   // Defines custom message shape
   class MessageShape extends CylinderShape {
-    redrawPath(path, x, y, w, h, isForeground) {
+    redrawPath(
+      c: AbstractCanvas2D,
+      _x: number,
+      _y: number,
+      w: number,
+      h: number,
+      isForeground = false
+    ): void {
       if (isForeground) {
-        path.moveTo(0, 0);
-        path.lineTo(w / 2, h / 2);
-        path.lineTo(w, 0);
+        c.moveTo(0, 0);
+        c.lineTo(w / 2, h / 2);
+        c.lineTo(w, 0);
       } else {
-        path.moveTo(0, 0);
-        path.lineTo(w, 0);
-        path.lineTo(w, h);
-        path.lineTo(0, h);
-        path.close();
+        c.moveTo(0, 0);
+        c.lineTo(w, 0);
+        c.lineTo(w, h);
+        c.lineTo(0, h);
+        c.close();
       }
     }
   }
+  // @ts-ignore -- as for core shapes
   CellRenderer.registerShape('message', MessageShape);
 
   // Defines custom edge shape
   class LinkShape extends ArrowShape {
-    paintEdgeShape(c, pts) {
+    paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {
       const width = 10;
 
       // Base vector (between end points)
@@ -122,6 +142,7 @@ const Template = ({ label, ...args }) => {
       c.stroke();
     }
   }
+  // @ts-ignore -- as for core shapes
   CellRenderer.registerShape('link', LinkShape);
 
   // Creates the graph
@@ -148,7 +169,7 @@ const Template = ({ label, ...args }) => {
     const v1 = graph.insertVertex(parent, null, 'v1', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'v2', 440, 20, 80, 30);
     const e1 = graph.insertEdge(parent, null, '', v1, v2, {
-      dashed: 1,
+      dashed: true,
       startArrow: 'oval',
       endArrow: 'block',
       sourcePerimeterSpacing: 4,
@@ -163,18 +184,40 @@ const Template = ({ label, ...args }) => {
       align: 'right',
       fontStyle: 0,
     });
-    e11.geometry.offset = new Point(-10, -7);
-    e11.geometry.relative = true;
+    if (e11.geometry) {
+      e11.geometry.offset = new Point(-10, -7);
+      e11.geometry.relative = true;
+    }
     e11.connectable = false;
 
     const v3 = graph.insertVertex(parent, null, 'v3', 20, 120, 80, 30);
     const v4 = graph.insertVertex(parent, null, 'v4', 440, 120, 80, 30);
-    const e2 = graph.insertEdge(parent, null, 'Label', v3, v4, {
+    graph.insertEdge(parent, null, 'Label', v3, v4, {
       startArrow: 'dash',
       startSize: 12,
       endArrow: 'block',
       labelBackgroundColor: '#FFFFFF',
     });
+
+    const edgeV2ToV4 = graph.insertEdge({
+      parent,
+      value: 'Markers with stroke colors (fill end marker)',
+      source: v2,
+      target: v4,
+      style: {
+        rounded: true,
+        startArrow: 'oval',
+        startFill: false,
+        startStrokeColor: 'orange',
+        startSize: 20,
+        endArrow: 'blockThin',
+        endStrokeColor: 'pink',
+        endSize: 20,
+      },
+    });
+    if (edgeV2ToV4.geometry) {
+      edgeV2ToV4.geometry.points = [new Point(600, 55), new Point(600, 120)];
+    }
 
     const v5 = graph.insertVertex(parent, null, 'v5', 40, 220, 40, 40, {
       shape: 'ellipse',
@@ -184,10 +227,58 @@ const Template = ({ label, ...args }) => {
       shape: 'doubleEllipse',
       perimeter: 'ellipsePerimeter',
     });
-    const e3 = graph.insertEdge(parent, null, 'Link', v5, v6, {
+    graph.insertEdge(parent, null, 'Link', v5, v6, {
       shape: 'link',
       labelBackgroundColor: '#FFFFFF',
     });
+    const edgeV4ToV6 = graph.insertEdge({
+      parent,
+      value: 'Markers with fill colors',
+      source: v4,
+      target: v6,
+      style: {
+        strokeColor: 'blue',
+        arcSize: 10,
+        rounded: true,
+        startArrow: 'diamondThin',
+        startFillColor: 'orange',
+        startSize: 20,
+        endArrow: 'blockThin',
+        endFillColor: 'pink',
+        endSize: 20,
+      },
+    });
+    if (edgeV4ToV6.geometry) {
+      edgeV4ToV6.geometry.points = [new Point(600, 160), new Point(600, 200)];
+    }
+
+    const edgeV6ToV5 = graph.insertEdge({
+      parent,
+      value: 'Markers with fill and stroke colors',
+      source: v6,
+      target: v5,
+      style: {
+        strokeColor: 'chartreuse',
+        arcSize: 60,
+        rounded: true,
+        startArrow: 'diamondThin',
+        startFillColor: 'orange',
+        startStrokeColor: 'black',
+        startSize: 20,
+        endArrow: 'blockThin',
+        endFillColor: 'pink',
+        endStrokeColor: 'gray',
+        endSize: 20,
+      },
+    });
+    if (edgeV6ToV5.geometry) {
+      edgeV6ToV5.geometry.points = [
+        new Point(560, 260),
+        new Point(480, 320),
+        new Point(180, 340),
+        new Point(40, 300),
+      ];
+    }
   });
 
   return container;
