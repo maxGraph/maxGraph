@@ -120,7 +120,7 @@ You will see something like in the following _maxGraph panning_ demo:
 
 ## Documentation
 
-The maxGraph documentation is available on the [maxGraph webiste](https://maxgraph.github.io/maxGraph). ⚠️ This is a **work in progress**, the content of the original _mxGraph_ documentation will be progressively migrated there ⚠️.
+The maxGraph documentation is available on the [maxGraph website](https://maxgraph.github.io/maxGraph). ⚠️ This is a **work in progress**, the content of the original _mxGraph_ documentation will be progressively migrated there ⚠️.
 
 Until we provide a complete documentation, you can check the [mxGraph documentation](https://jgraph.github.io/mxgraph/).
 The key resources are the JavaScript user manual which explain the concepts and how to start using the API, the JavaScript examples and the JavaScript API specification.
