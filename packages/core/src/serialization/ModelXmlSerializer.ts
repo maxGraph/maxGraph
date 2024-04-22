@@ -16,7 +16,7 @@ limitations under the License.
 
 import { registerModelCodecs } from './register';
 import { getPrettyXml, parseXml } from '../util/xmlUtils';
-import { Codec } from '../index';
+import Codec from './Codec';
 import type GraphDataModel from '../view/GraphDataModel';
 
 /**
