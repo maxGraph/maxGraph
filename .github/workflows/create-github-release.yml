@@ -26,7 +26,7 @@ jobs:
             npm package: [${{ env.VERSION }}](https://www.npmjs.com/package/@maxgraph/core/v/${{ env.VERSION }})
             **Update the milestone URL**
             Issues: [milestone ${{ env.VERSION }}](https://github.com/maxGraph/maxGraph/milestone/x?closed=1)
-            See also the [Changelog](https://github.com/maxGraph/maxGraph/tree/${{ env.VERSION }}/CHANGELOG.md) file.
+            See also the [Changelog](https://github.com/maxGraph/maxGraph/tree/v${{ env.VERSION }}/CHANGELOG.md) file.
 
 
             ## Breaking changes
