@@ -57,12 +57,15 @@ jobs:
         run: npm run build -w packages/ts-example
       - name: Build Storybook mini-site
         run: npm run build -w packages/html
+      - name: Build js-example
+        run: npm run build -w packages/js-example
       - name: Upload all examples as artifact
         uses: actions/upload-artifact@v4
         with:
           name: examples-${{runner.os}}-${{github.sha}}
           path: |
             packages/html/dist/
+            packages/js-example/dist/
             packages/ts-example/dist/
       - name: Ensure no lint errors
         run: npm run lint
