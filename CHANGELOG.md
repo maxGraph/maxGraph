@@ -1,5 +1,10 @@
 # `maxGraph` Change Log
 
+## UNRELEASED
+
+**Breaking Changes**
+- In `StencilShape`, the `allowEval` and `defaultLocalized` static properties have been removed. Configure these properties using `StencilShapeGlobalSettings`. 
+
 ## 0.10.1
 
 Release date: `2024-04-23`

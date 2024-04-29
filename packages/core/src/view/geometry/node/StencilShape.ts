@@ -37,6 +37,25 @@ import { AlignValue, ColorValue, VAlignValue } from '../../../types';
 import { getNumber } from '../../../util/StringUtils';
 
 /**
+ * Configure global settings for stencil shapes.
+ * @experimental subject to change or removal
+ */
+export const StencilShapeGlobalSettings = {
+  /**
+   * Specifies if the use of eval is allowed for evaluating text content and images.
+   * Set this to `true` if stencils can not contain user input.
+   * @default false
+   */
+  allowEval: false,
+
+  /**
+   * Specifies the default value for the localized attribute of the text element.
+   * @default false
+   */
+  defaultLocalized: false,
+};
+
+/**
  * Implements a generic shape which is based on a XML node as a description.
  *
  * @class StencilShape
@@ -50,25 +69,12 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Static global variable that specifies the default value for the localized
-   * attribute of the text element. Default is false.
-   */
-  static defaultLocalized = false;
-
-  /**
-   * Static global switch that specifies if the use of eval is allowed for
-   * evaluating text content and images. Default is false. Set this to true
-   * if stencils can not contain user input.
-   */
-  static allowEval = false;
-
-  /**
    * Holds the XML node with the stencil description.
    */
   desc: Element;
 
   /**
-   * Holds an array of {@link ConnectionConstraints} as defined in the shape.
+   * Holds an array of {@link ConnectionConstraint}s as defined in the shape.
    */
   constraints: ConnectionConstraint[] = [];
 
@@ -168,7 +174,7 @@ class StencilShape extends Shape {
     let result = this.evaluateAttribute(node, attribute, shape);
     const loc = node.getAttribute('localized');
 
-    if ((StencilShape.defaultLocalized && !loc) || loc === '1') {
+    if ((StencilShapeGlobalSettings.defaultLocalized && !loc) || loc === '1') {
       result = Translations.get(<string>result);
     }
     return result;
@@ -186,7 +192,7 @@ class StencilShape extends Shape {
     if (!result) {
       const text = getTextContent(<Text>(<unknown>node));
 
-      if (text && StencilShape.allowEval) {
+      if (text && StencilShapeGlobalSettings.allowEval) {
         const funct = eval(text);
 
         if (typeof funct === 'function') {
