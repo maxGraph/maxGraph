@@ -199,25 +199,27 @@ describe('getCellStyle', () => {
   });
 
   // This was the mxGraph behaviour, see https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxStylesheet.js#L236-L239
-  test('Setting properties with "none" value fallback to property value of the default and "base" styles', () => {
+  test('Setting properties with "none" value remove the property value', () => {
     const stylesheet = new Stylesheet();
     stylesheet.putCellStyle('style-1', {
       fillColor: 'orange',
+      rounded: true,
     });
 
     const cellStyle = stylesheet.getCellStyle(
       {
         baseStyleNames: ['style-1'],
         fillColor: NONE,
+        gradientColor: NONE, // not set in default and baseStyles
         shape: 'cloud',
         strokeColor: NONE,
       },
-      { strokeColor: 'pink' }
+      { opacity: 50, strokeColor: 'pink' }
     );
     expect(cellStyle).toStrictEqual({
-      fillColor: 'orange',
+      opacity: 50, // from default
+      rounded: true, // from style-1
       shape: 'cloud',
-      strokeColor: 'pink',
     });
   });
 

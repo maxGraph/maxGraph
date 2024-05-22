@@ -164,6 +164,9 @@ export class Stylesheet {
    *   - registered styles referenced in `baseStyleNames`, in the order of the array
    *   - `cellStyle` parameter
    *
+   * To fully unset a style property i.e. the property is not set even if a value is set in the default style or in the referenced styles,
+   * set the `cellStyle` property to `none`. For example. `cellStyle.fillColor = 'none'`
+   *
    * @param cellStyle An object that represents the style.
    * @param defaultStyle Default style used as reference to compute the returned style.
    */
@@ -186,15 +189,13 @@ export class Stylesheet {
     }
 
     // Merges cellStyle into style
-    const filteredCellStyle = clone(cellStyle); // Clones the cellStyle to avoid modifying the original object pass as parameter
-    for (const key of Object.keys(filteredCellStyle)) {
-      (filteredCellStyle[key] === undefined || filteredCellStyle[key] == NONE) &&
-        delete filteredCellStyle[key];
+    for (const key of Object.keys(cellStyle)) {
+      // @ts-ignore
+      if (cellStyle[key] !== undefined) {
+        // @ts-ignore
+        cellStyle[key] == NONE ? delete style[key] : (style[key] = cellStyle[key]);
+      }
     }
-    style = {
-      ...style,
-      ...filteredCellStyle,
-    };
 
     // Remove the 'baseStyleNames' that may have been copied from the cellStyle parameter to match the method signature
     'baseStyleNames' in style && delete style.baseStyleNames;
