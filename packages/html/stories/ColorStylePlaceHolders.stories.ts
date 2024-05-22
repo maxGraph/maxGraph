@@ -1,6 +1,5 @@
 /*
-Copyright 2021-present The maxGraph project Contributors
-Copyright (c) 2006-2020, JGraph Ltd
+Copyright 2024-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,11 +16,7 @@ limitations under the License.
 
 import { constants, Graph } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import {
-  configureExpandedAndCollapsedImages,
-  configureImagesBasePath,
-  createGraphContainer,
-} from './shared/configure.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Styles/ColorStylePlaceHolders',
@@ -41,23 +36,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const graph = new Graph(container);
 
   // Disables global features
-  // graph.options.collapseToPreferredSize = false;
-  configureExpandedAndCollapsedImages(graph);
-
-  // graph.constrainChildren = false;
   graph.cellsSelectable = false;
   graph.cellsLocked = true;
-  // graph.extendParentsOnAdd = false;
-  // graph.extendParents = false;
-  // graph.border = 10;
 
   // Sets global styles
   const defaultVertexStyle = graph.getStylesheet().getDefaultVertexStyle();
   defaultVertexStyle.foldable = false;
-
-  const defaultEdgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
-  defaultEdgeStyle.edgeStyle = constants.EDGESTYLE.ELBOW;
-  defaultEdgeStyle.rounded = true;
 
   graph.getStylesheet().putCellStyle('swimlane', {
     shape: constants.SHAPE.SWIMLANE,
