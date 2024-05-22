@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import {
+  Client,
   Graph,
   InternalEvent,
   RubberBandHandler,
@@ -23,6 +24,9 @@ import {
   styleUtils,
   domUtils,
   VertexHandler,
+  type CellState,
+  type ConnectionHandler,
+  type SelectionHandler,
 } from '@maxgraph/core';
 
 import {
@@ -31,7 +35,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -47,18 +51,25 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, any>) => {
+  configureImagesBasePath();
   const container = createGraphContainer(args);
 
-  class mxVertexToolHandler extends VertexHandler {
-    // Defines a subclass for VertexHandler that adds a set of clickable
-    // icons to every selected vertex.
+  // convenient function to create an image element available when the demo is not deployed in the root context
+  const createImage = (fileName: string) => {
+    return domUtils.createImage(`${Client.imageBasePath}/${fileName}`);
+  };
 
-    domNode = null;
+  // Defines a subclass for VertexHandler that adds a set of clickable icons to every selected vertex.
+  class CustomVertexToolHandler extends VertexHandler {
+    private domNode: HTMLDivElement = null!;
+
+    constructor(state: CellState) {
+      super(state);
+      this.init();
+    }
 
     init() {
-      super.init();
-
       // In this example we force the use of DIVs for images in IE. This
       // handles transparency in PNG images properly in IE and fixes the
       // problem that IE routes all mouse events for a gesture via the
@@ -67,13 +78,8 @@ const Template = ({ label, ...args }) => {
       this.domNode.style.position = 'absolute';
       this.domNode.style.whiteSpace = 'nowrap';
 
-      // Workaround for event redirection via image tag in quirks and IE8
-      const createImage = (src) => {
-        return domUtils.createImage(src);
-      };
-
       // Delete
-      let img = createImage('images/delete2.png');
+      let img = createImage('delete2.png');
       img.setAttribute('title', 'Delete');
       img.style.cursor = 'pointer';
       img.style.width = '16px';
@@ -82,14 +88,14 @@ const Template = ({ label, ...args }) => {
         // Disables dragging the image
         InternalEvent.consume(evt);
       });
-      InternalEvent.addListener(img, 'click', (evt) => {
+      InternalEvent.addListener(img, 'click', (evt: Event) => {
         this.graph.removeCells([this.state.cell]);
         InternalEvent.consume(evt);
       });
       this.domNode.appendChild(img);
 
       // Size
-      img = createImage('images/fit_to_size.png');
+      img = createImage('fit_to_size.png');
       img.setAttribute('title', 'Resize');
       img.style.cursor = 'se-resize';
       img.style.width = '16px';
@@ -104,14 +110,14 @@ const Template = ({ label, ...args }) => {
       this.domNode.appendChild(img);
 
       // Move
-      img = createImage('images/plus.png');
+      img = createImage('plus.png');
       img.setAttribute('title', 'Move');
       img.style.cursor = 'move';
       img.style.width = '16px';
       img.style.height = '16px';
 
-      const graphHandler = graph.getPlugin('SelectionHandler');
-      const connectionHandler = graph.getPlugin('ConnectionHandler');
+      const graphHandler = graph.getPlugin('SelectionHandler') as SelectionHandler;
+      const connectionHandler = graph.getPlugin('ConnectionHandler') as ConnectionHandler;
 
       InternalEvent.addGestureListeners(img, (evt) => {
         graphHandler.start(
@@ -127,7 +133,7 @@ const Template = ({ label, ...args }) => {
       this.domNode.appendChild(img);
 
       // Connect
-      img = createImage('images/check.png');
+      img = createImage('check.png');
       img.setAttribute('title', 'Connect');
       img.style.cursor = 'pointer';
       img.style.width = '16px';
@@ -163,20 +169,20 @@ const Template = ({ label, ...args }) => {
       }
     }
 
-    destroy(sender, me) {
-      super.destroy(sender, me);
+    onDestroy() {
+      super.onDestroy();
 
-      if (this.domNode != null) {
-        this.domNode.parentNode.removeChild(this.domNode);
-        this.domNode = null;
+      if (this.domNode) {
+        this.domNode.parentNode?.removeChild(this.domNode);
+        this.domNode = null!;
       }
     }
   }
 
   class MyCustomGraph extends Graph {
-    createHandler(state) {
+    createHandler(state: CellState) {
       if (state != null && state.cell.isVertex()) {
-        return new mxVertexToolHandler(state);
+        return new CustomVertexToolHandler(state);
       }
       return super.createHandler(state);
     }
@@ -186,7 +192,7 @@ const Template = ({ label, ...args }) => {
   const graph = new MyCustomGraph(container);
   graph.setConnectable(true);
 
-  const connectionHandler = graph.getPlugin('ConnectionHandler');
+  const connectionHandler = graph.getPlugin('ConnectionHandler') as ConnectionHandler;
   connectionHandler.createTarget = true;
 
   // Uncomment the following if you want the container
@@ -214,7 +220,7 @@ const Template = ({ label, ...args }) => {
       position: [200, 150],
       size: [80, 30],
     });
-    const e1 = graph.insertEdge({
+    graph.insertEdge({
       parent,
       source: v1,
       target: v2,
