@@ -93,6 +93,7 @@ const Template = ({ label, ...args }) => {
   wnd.setMaximizable(true);
   wnd.setResizable(true);
   wnd.setVisible(true);
+  wnd.setClosable(true);
 
   const lorem =
     'Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ';
@@ -113,6 +114,7 @@ const Template = ({ label, ...args }) => {
   wnd.setScrollable(true);
   wnd.setResizable(true);
   wnd.setVisible(true);
+  wnd.setClosable(true);
 
   content = content.cloneNode(true);
   content.style.width = '400px';
@@ -131,6 +133,7 @@ const Template = ({ label, ...args }) => {
   wnd.setScrollable(true);
   wnd.setResizable(true);
   wnd.setVisible(true);
+  wnd.setClosable(true);
 
   MaxLog.show();
 
