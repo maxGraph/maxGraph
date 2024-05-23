@@ -534,7 +534,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Starts a new connection for the given state and coordinates.
    */
-  start(state: CellState, x: number, y: number, edgeState: CellState) {
+  start(state: CellState, x: number, y: number, edgeState?: CellState) {
     this.previous = state;
     this.first = new Point(x, y);
     this.edgeState = edgeState ?? this.createEdgeState();
@@ -1806,7 +1806,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
         }
       } catch (e) {
         MaxLog.show();
-        // MaxLog.debug(e.message);
+        const errorMessage = `Error in ConnectionHandler: ${
+          e instanceof Error ? e.message + '\n' + e.stack : 'unknown cause'
+        }`;
+        MaxLog.debug(errorMessage);
       } finally {
         model.endUpdate();
       }

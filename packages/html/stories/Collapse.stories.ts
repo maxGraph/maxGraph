@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, Rectangle } from '@maxgraph/core';
+import { type Cell, type CellStyle, Graph, Rectangle } from '@maxgraph/core';
 
 import { globalTypes, globalValues } from './shared/args.js';
 import {
@@ -34,7 +34,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
   const container = createGraphContainer(args);
 
@@ -42,22 +42,21 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
   configureExpandedAndCollapsedImages(graph);
 
-  const getStyle = function () {
-    // Extends Transactions.getStyle to show an image when collapsed
-    // TODO cannot use super without a parent class
-    // let style = super.getStyle();
-    let style = '';
-    if (this.isCollapsed()) {
-      style = {
-        ...style,
-        shape: 'image',
-        image: 'http://www.jgraph.com/images/mxgraph.gif',
-        noLabel: 1,
-        imageBackground: '#C3D9FF',
-        imageBorder: '#6482B9',
-      };
+  // Extends Cell.getStyle to show an image when collapsed
+  const getStyle = function (this: Cell): CellStyle {
+    if (!this.isCollapsed()) {
+      return this.style;
     }
-    return style;
+    return {
+      // Need to create a copy the original style as we don't want to change the original style stored in the Cell
+      // Otherwise, when expanding the cell, the style will be incorrect
+      ...this.style,
+      shape: 'image',
+      image: './images/package.png',
+      noLabel: true,
+      imageBackground: '#e7e9ef',
+      imageBorder: '#6482B9',
+    };
   };
 
   graph.batchUpdate(() => {
@@ -68,8 +67,8 @@ const Template = ({ label, ...args }) => {
       size: [200, 200],
       style: { shape: 'swimlane', startSize: 20 },
     });
-    v1.geometry.alternateBounds = new Rectangle(0, 0, 110, 70);
-    // v1.getStyle = getStyle;
+    v1.geometry!.alternateBounds = new Rectangle(0, 0, 110, 70);
+    v1.getStyle = getStyle;
 
     const v11 = graph.insertVertex({
       parent: v1,
@@ -77,7 +76,7 @@ const Template = ({ label, ...args }) => {
       position: [10, 40],
       size: [120, 80],
     });
-    // v11.getStyle = getStyle;
+    v11.getStyle = getStyle;
   });
 
   return container;

@@ -35,7 +35,11 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import {
+  configureExpandedAndCollapsedImages,
+  configureImagesBasePath,
+  createGraphContainer,
+} from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -52,6 +56,7 @@ export default {
 };
 
 const Template = ({ label, ...args }: { [p: string]: any }) => {
+  configureImagesBasePath();
   const div = document.createElement('div');
   const container = createGraphContainer(args);
   div.appendChild(container);
@@ -80,6 +85,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   // using the fastest rendering available on the browser
   const model = new GraphDataModel();
   const graph = new Graph(container, model);
+  configureExpandedAndCollapsedImages(graph);
   graph.dropEnabled = true;
 
   // Matches DnD inside the graph
