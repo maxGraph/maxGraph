@@ -49,7 +49,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
   const container = createGraphContainer(args);
 
@@ -87,7 +87,7 @@ const Template = ({ label, ...args }) => {
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-    const e1 = graph.insertEdge(parent, null, '', v1, v2);
+    graph.insertEdge(parent, null, '', v1, v2);
   });
 
   wnd.setMaximizable(true);
@@ -116,7 +116,7 @@ const Template = ({ label, ...args }) => {
   wnd.setVisible(true);
   wnd.setClosable(true);
 
-  content = content.cloneNode(true);
+  content = content.cloneNode(true) as HTMLDivElement;
   content.style.width = '400px';
 
   wnd = new MaxWindow(
