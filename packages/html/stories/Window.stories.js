@@ -33,8 +33,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand and MaxWindow/MaxLog
 
 export default {
   title: 'Windows/Windows',
