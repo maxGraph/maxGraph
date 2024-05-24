@@ -20,7 +20,7 @@ import {
   Graph,
   type HTMLImageElementWithProps,
   RubberBandHandler,
-  ConnectionHandler,
+  type ConnectionHandler,
   ImageBox,
   MaxToolbar,
   GraphDataModel,
@@ -29,6 +29,7 @@ import {
   InternalEvent,
   styleUtils,
   gestureUtils,
+  Client,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -36,9 +37,8 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Toolbars/DynamicToolbar',
@@ -57,6 +57,7 @@ type InternalHTMLImageElementWithProps = HTMLImageElementWithProps & {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
+  configureImagesBasePath();
   const div = document.createElement('div');
   div.style.display = 'flex';
 
@@ -75,14 +76,19 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  // Defines an icon for creating new connections in the connection handler.
-  // This will automatically disable the highlighting of the source vertex.
-  ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
-
   // Creates the model and the graph inside the container
   // using the fastest rendering available on the browser
   const model = new GraphDataModel();
   const graph = new Graph(container, model);
+
+  // Defines an icon for creating new connections in the connection handler.
+  // This will automatically disable the highlighting of the source vertex.
+  const connectionHandler = graph.getPlugin('ConnectionHandler') as ConnectionHandler;
+  connectionHandler.connectImage = new ImageBox(
+    `${Client.imageBasePath}/connector.gif`,
+    16,
+    16
+  );
 
   // Enables new connections in the graph
   graph.setConnectable(true);

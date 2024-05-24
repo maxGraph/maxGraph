@@ -17,11 +17,11 @@ limitations under the License.
 
 import {
   Graph,
-  ConnectionHandler,
   ImageBox,
   RubberBandHandler,
   KeyHandler,
   DomHelpers,
+  Client,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -30,8 +30,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Misc/Permissions',
@@ -50,12 +49,16 @@ const Template = ({ label, ...args }) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  // Defines an icon for creating new connections in the connection handler.
-  // This will automatically disable the highlighting of the source vertex.
-  ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
-
   // Creates the graph inside the given container
   const graph = new Graph(container);
+  // Defines an icon for creating new connections in the connection handler.
+  // This will automatically disable the highlighting of the source vertex.
+  const connectionHandler = graph.getPlugin('ConnectionHandler');
+  connectionHandler.connectImage = new ImageBox(
+    `${Client.imageBasePath}/connector.gif`,
+    16,
+    16
+  );
 
   // Enable tooltips, disables mutligraphs, enable loops
   graph.setMultigraph(false);
