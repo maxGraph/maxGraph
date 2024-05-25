@@ -1,6 +1,6 @@
 ---
 name: Technical request
-about: Suggest an refactoring, technical change, ... for this project
+about: Suggest a refactoring, technical change, ... for this project
 title: "[CHORE]"
 labels: chore, triage
 assignees: ''
