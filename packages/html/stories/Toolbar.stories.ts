@@ -160,7 +160,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   function addEdge(icon: string, w: number, h: number, style: CellStyle) {
     addCell(false, icon, w, h, style);
   }
-  addEdge('images/entity.gif', 30, 40, {});
+  addEdge('images/entity.gif', 50, 50, {});
   addToolbarLine();
 
   const button = DomHelpers.button('Create toolbar entry from selection', (evt) => {
@@ -215,7 +215,10 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
 
         if (cellToImport.isEdge()) {
           cellToImport.geometry.sourcePoint = new Point(pt.x, pt.y);
-          cellToImport.geometry.targetPoint = new Point(pt.x + 50, pt.y + 50);
+          cellToImport.geometry.targetPoint = new Point(
+            pt.x + cellToImport.geometry.width,
+            pt.y + cellToImport.geometry.height
+          );
         }
       }
 
