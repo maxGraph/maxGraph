@@ -23,10 +23,6 @@ import { equalPoints } from '../../util/arrayUtils';
 import { clone } from '../../util/cloneUtils';
 
 /**
- * @class Geometry
- *
- * @extends {Rectangle}
- *
  * For vertices, the geometry consists of the x- and y-location, and the width
  * and height. For edges, the geometry consists of the optional terminal- and
  * control points. The terminal points are only required if an edge is
@@ -49,8 +45,7 @@ import { clone } from '../../util/cloneUtils';
  * be ignored or interpreted differently depending on the edge's {@link edgeStyle}.
  *
  * To disable automatic reset of control points after a cell has been moved or
- * resized, the the {@link graph.resizeEdgesOnMove} and
- * {@link graph.resetEdgesOnResize} may be used.
+ * resized, {@link graph.resetEdgesOnMove} and {@link graph.resetEdgesOnResize} may be used.
  *
  * ### Edge Labels
  *
