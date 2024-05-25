@@ -105,15 +105,15 @@ class Geometry extends Rectangle {
 
   /**
    * Defines the source {@link Point} of the edge. This is used if the
-   * corresponding edge does not have a source vertex. Otherwise it is
-   * ignored. Default is  null.
+   * corresponding edge does not have a source vertex. Otherwise, it is ignored.
+   * @default null
    */
   sourcePoint: Point | null = null;
 
   /**
-   * Defines the target {@link Point} of the edge. This is used if the
-   * corresponding edge does not have a target vertex. Otherwise it is
-   * ignored. Default is null.
+   * Defines the source {@link Point} of the edge. This is used if the
+   * corresponding edge does not have a target vertex. Otherwise, it is ignored.
+   * @default null
    */
   targetPoint: Point | null = null;
 
