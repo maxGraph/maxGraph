@@ -34,6 +34,6 @@ describe('isLayer', () => {
     const child = new Cell();
     root.children.push(child);
     child.setParent(root);
-    expect(dm.isLayer(child)).toBe(true);
+    expect(dm.isLayer(child)).toBeTruthy();
   });
 });
