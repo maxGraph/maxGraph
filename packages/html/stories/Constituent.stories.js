@@ -54,9 +54,11 @@ const Template = ({ label, ...args }) => {
   }
 
   class MyCustomGraph extends Graph {
-    foldingEnabled = false;
-
-    recursiveResize = true;
+    constructor(container) {
+      super(container);
+      this.options.foldingEnabled = false;
+      this.recursiveResize = true;
+    }
 
     isPart(cell) {
       // Helper method to mark parts with constituent=1 in the style

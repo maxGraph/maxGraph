@@ -69,7 +69,7 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given container
   const graph = new Graph(container);
   graph.disconnectOnMove = false;
-  graph.foldingEnabled = false;
+  graph.options.foldingEnabled = false;
   graph.cellsResizable = false;
   graph.extendParents = false;
   graph.setConnectable(true);
