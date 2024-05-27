@@ -16,7 +16,7 @@ limitations under the License.
 
 import { expect, test } from '@jest/globals';
 import { ImageExport, Point, XmlCanvas2D } from '../../../src';
-import { createXmlDocument, getPrettyXml, getXml } from '../../../src/util/xmlUtils';
+import { createXmlDocument, getPrettyXml } from '../../../src/util/xmlUtils';
 import { createGraphWithoutContainer } from '../../utils';
 
 test('export with XmlCanvas2D', () => {
