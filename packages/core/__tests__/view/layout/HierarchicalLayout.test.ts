@@ -15,17 +15,13 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { Graph, HierarchicalLayout } from '../../../src';
-
-function createGraph(): Graph {
-  // @ts-ignore - no need for a container, we don't check the view here
-  return new Graph(null);
-}
+import { HierarchicalLayout } from '../../../src';
+import { createGraphWithoutContainer } from '../../utils';
 
 describe('layout execute', () => {
   test('Circular layout graph is created successfully', () => {
     // prepare test
-    const graph: Graph = createGraph();
+    const graph = createGraphWithoutContainer();
     const parent = graph.getDefaultParent();
     const layout = new HierarchicalLayout(graph);
 
@@ -72,7 +68,7 @@ describe('layout execute', () => {
 
   test('Non-circular layout graph is created successfully', () => {
     // prepare test
-    const graph: Graph = createGraph();
+    const graph = createGraphWithoutContainer();
     const parent = graph.getDefaultParent();
     const layout = new HierarchicalLayout(graph);
 

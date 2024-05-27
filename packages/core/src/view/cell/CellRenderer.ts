@@ -50,15 +50,23 @@ import { CellStateStyle } from '../../types';
 import SelectionCellsHandler from '../handler/SelectionCellsHandler';
 import { Graph } from '../Graph';
 
+const placeholderStyleValues = ['inherit', 'swimlane', 'indicated'];
+const placeholderStyleProperties: (keyof CellStateStyle)[] = [
+  'fillColor',
+  'strokeColor',
+  'gradientColor',
+  'fontColor',
+];
+
 /**
  * Renders cells into a document object model. The <defaultShapes> is a global
- * map of shapename, constructor pairs that is used in all instances. You can
+ * map of shape names, constructor pairs that is used in all instances. You can
  * get a list of all available shape names using the following code.
  *
  * In general the cell renderer is in charge of creating, redrawing and
  * destroying the shape and label associated with a cell state, as well as
  * some other graphical objects, namely controls and overlays. The shape
- * hieararchy in the display (ie. the hierarchy in which the DOM nodes
+ * hierarchy in the display (i.e. the hierarchy in which the DOM nodes
  * appear in the document) does not reflect the cell hierarchy. The shapes
  * are a (flat) sequence of shapes and labels inside the draw pane of the
  * graph view, with some exceptions, namely the HTML labels being placed
@@ -71,51 +79,54 @@ import { Graph } from '../Graph';
  *   MaxLog.debug(i);
  * }
  * ```
- *
- * Constructor: mxCellRenderer
- *
- * Constructs a new cell renderer with the following built-in shapes:
- * arrow, rectangle, ellipse, rhombus, image, line, label, cylinder,
- * swimlane, connector, actor and cloud.
  */
 class CellRenderer {
   /**
    * Static array that contains the globally registered shapes which are
    * known to all instances of this class. For adding new shapes you should
    * use the static {@link CellRenderer#registerShape} function.
+   *
+   * Built-in shapes: arrow, rectangle, ellipse, rhombus, image, line, label, cylinder,
+   * swimlane, connector, actor and cloud.
    */
   static defaultShapes: { [key: string]: typeof Shape } = {};
 
   /**
-   * Defines the default shape for edges. Default is {@link Connector}.
+   * Defines the default shape for edges.
+   * @default {@link ConnectorShape}
    */
   // @ts-expect-error The constructors for Shape and Connector are different.
   defaultEdgeShape: typeof Shape = ConnectorShape;
 
   /**
-   * Defines the default shape for vertices. Default is {@link RectangleShape}.
+   * Defines the default shape for vertices.
+   * @default {@link RectangleShape}.
    */
   defaultVertexShape: typeof RectangleShape = RectangleShape;
 
   /**
-   * Defines the default shape for labels. Default is {@link Text}.
+   * Defines the default shape for labels.
+   * @default {@link Text}.
    */
   defaultTextShape: typeof TextShape = TextShape;
 
   /**
    * Specifies if the folding icon should ignore the horizontal
-   * orientation of a swimlane. Default is true.
+   * orientation of a swimlane.
+   * @default true.
    */
   legacyControlPosition = true;
 
   /**
    * Specifies if spacing and label position should be ignored if overflow is
-   * fill or width. Default is true for backwards compatiblity.
+   * fill or width.
+   * @default true for backwards compatibility.
    */
   legacySpacing = true;
 
   /**
-   * Anti-aliasing option for new shapes. Default is true.
+   * Antialiasing option for new shapes.
+   * @default true.
    */
   antiAlias = true;
 
@@ -126,7 +137,8 @@ class CellRenderer {
 
   /**
    * Specifies if the enabled state of the graph should be ignored in the control
-   * click handler (to allow folding in disabled graphs). Default is false.
+   * click handler (to allow folding in disabled graphs).
+   * @default false.
    */
   forceControlClickHandler = false;
 
@@ -134,7 +146,7 @@ class CellRenderer {
    * Registers the given constructor under the specified key in this instance of the renderer.
    * @example
    * ```
-   * mxCellRenderer.registerShape(mxConstants.SHAPE_RECTANGLE, mxRectangleShape);
+   * CellRenderer.registerShape(Constants.SHAPE_RECTANGLE, RectangleShape);
    * ```
    *
    * @param key the shape name.
@@ -146,7 +158,7 @@ class CellRenderer {
 
   /**
    * Initializes the shape in the given state by calling its init method with
-   * the correct container after configuring it using <configureShape>.
+   * the correct container after configuring it using {@link configureShape}.
    *
    * @param state <CellState> for which the shape should be initialized.
    */
@@ -161,7 +173,7 @@ class CellRenderer {
   /**
    * Creates and returns the shape for the given cell state.
    *
-   * @param state <CellState> for which the shape should be created.
+   * @param state {@link CellState} for which the shape should be created.
    */
   createShape(state: CellState) {
     let shape = null;
@@ -183,7 +195,7 @@ class CellRenderer {
   /**
    * Creates the indicator shape for the given cell state.
    *
-   * @param state <CellState> for which the indicator shape should be created.
+   * @param state {@link CellState} for which the indicator shape should be created.
    */
   createIndicatorShape(state: CellState) {
     if (state.shape) {
@@ -192,7 +204,7 @@ class CellRenderer {
   }
 
   /**
-   * Returns the shape for the given name from <defaultShapes>.
+   * Returns the shape for the given name from {@link defaultShapes}.
    */
   getShape(name: string | null) {
     return name ? CellRenderer.defaultShapes[name] : null;
@@ -251,24 +263,13 @@ class CellRenderer {
   }
 
   /**
-   * Resolves special keywords 'inherit', 'indicated' and 'swimlane' and sets
-   * the respective color on the shape.
+   * Check if style properties supporting placeholders requires resolution.
    */
   checkPlaceholderStyles(state: CellState) {
     // LATER: Check if the color has actually changed
-    if (state.style) {
-      const values = ['inherit', 'swimlane', 'indicated'];
-      const styles: (keyof CellStateStyle)[] = [
-        'fillColor',
-        'strokeColor',
-        'gradientColor',
-        'fontColor',
-      ];
-
-      for (let i = 0; i < styles.length; i += 1) {
-        if (values.indexOf(state.style[styles[i]] as string) >= 0) {
-          return true;
-        }
+    for (const property of placeholderStyleProperties) {
+      if (placeholderStyleValues.includes(state.style[property] as string)) {
+        return true;
       }
     }
     return false;
@@ -282,7 +283,7 @@ class CellRenderer {
     const shape: Shape | null = key === 'fontColor' ? state.text : state.shape;
 
     if (shape) {
-      const graph = <Graph>state.view.graph;
+      const graph = state.view.graph;
 
       // @ts-ignore
       const value = shape[field];
@@ -301,7 +302,7 @@ class CellRenderer {
           referenced = state.cell;
         }
 
-        referenced = graph.getSwimlane(<Cell>referenced);
+        referenced = graph.getSwimlane(referenced);
         key = graph.swimlaneIndicatorColorAttribute;
       } else if (value === 'indicated' && state.shape) {
         // @ts-ignore
