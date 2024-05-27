@@ -20,7 +20,6 @@ import Point from '../geometry/Point';
 
 /**
  * Defines an object that contains the constraints about how to connect one side of an edge to its terminal.
- * @class ConnectionConstraint
  */
 class ConnectionConstraint {
   /**
