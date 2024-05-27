@@ -22,30 +22,29 @@ import Shape from '../geometry/Shape';
 import { Graph } from '../Graph';
 
 /**
- * Creates a new image export instance to be used with an export canvas. Here
- * is an example that uses this class to create an image via a backend using
- * {@link XmlExportCanvas}.
+ * Creates a new image export instance to be used with an export canvas.
+ *
+ * Here is an example that uses this class to create an image via a backend using {@link XmlCanvas2D}.
  *
  * ```javascript
- * var xmlDoc = mxUtils.createXmlDocument();
- * var root = xmlDoc.createElement('output');
+ * const xmlDoc = xmlUtils.createXmlDocument();
+ * const root = xmlDoc.createElement('output');
  * xmlDoc.appendChild(root);
  *
- * var xmlCanvas = new mxXmlCanvas2D(root);
- * var imgExport = new mxImageExport();
+ * const xmlCanvas = new XmlCanvas2D(root);
+ * const imgExport = new ImageExport();
+ *
  * imgExport.drawState(graph.getView().getState(graph.model.root), xmlCanvas);
+ * const xml = xmlUtils.getXml(root);
  *
- * var bounds = graph.getGraphBounds();
- * var w = Math.ceil(bounds.x + bounds.width);
- * var h = Math.ceil(bounds.y + bounds.height);
+ * const bounds = graph.getGraphBounds();
+ * const w = Math.ceil(bounds.x + bounds.width);
+ * const h = Math.ceil(bounds.y + bounds.height);
  *
- * var xml = mxUtils.getXml(root);
  * new MaxXmlRequest('export', 'format=png&w=' + w +
  * 		'&h=' + h + '&bg=#F9F7ED&xml=' + encodeURIComponent(xml))
  * 		.simulate(document, '_blank');
  * ```
- *
- * @class ImageExport
  */
 class ImageExport {
   /**
