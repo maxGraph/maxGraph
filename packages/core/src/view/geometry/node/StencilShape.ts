@@ -38,7 +38,7 @@ import { getNumber } from '../../../util/StringUtils';
 
 /**
  * Configure global settings for stencil shapes.
- * @experimental subject to change or removal
+ * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.11.0
  * @category Configuration
  */
