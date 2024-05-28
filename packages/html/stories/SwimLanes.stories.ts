@@ -27,6 +27,11 @@ import {
   StackLayout,
   LayoutManager,
   Graph,
+  type Cell,
+  type EdgeParameters,
+  type EventObject,
+  type SelectionHandler,
+  type VertexParameters,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import {
@@ -45,7 +50,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
   const container = createGraphContainer(args);
   container.style.background = ''; // no grid
@@ -66,6 +71,10 @@ const Template = ({ label, ...args }) => {
   // const editor = new Editor(null);
   // editor.setGraphContainer(container);
   // const { graph } = editor;
+  type CustomGraph = Graph & {
+    isPool(cell: Cell | null): boolean;
+  };
+
   const graph = new Graph(container);
   const model = graph.getDataModel();
 
@@ -75,7 +84,7 @@ const Template = ({ label, ...args }) => {
   graph.setResizeContainer(true);
   configureExpandedAndCollapsedImages(graph);
 
-  const graphHandler = graph.getPlugin('SelectionHandler');
+  const graphHandler = graph.getPlugin('SelectionHandler') as SelectionHandler;
   graphHandler.setRemoveCellsFromParent(false);
 
   // Changes the default vertex style in-place
@@ -150,11 +159,10 @@ const Template = ({ label, ...args }) => {
 
     // End-states are no valid sources
     const previousIsValidSource = graph.isValidSource;
-
     graph.isValidSource = function (cell) {
-      if (previousIsValidSource.apply(this, arguments)) {
+      if (previousIsValidSource.apply(this, [cell]) && cell) {
         const style = cell.getStyle();
-        return style == null || !style.baseStyleNames.includes('end');
+        return style == null || !style.baseStyleNames?.includes('end');
       }
       return false;
     };
@@ -166,11 +174,12 @@ const Template = ({ label, ...args }) => {
     // the example below, so we use the state
     // style below
     graph.isValidTarget = function (cell) {
+      if (!cell) return false;
       const style = cell.getStyle();
       return (
         !cell.isEdge() &&
         !this.isSwimlane(cell) &&
-        (style == null || !!style.baseStyleNames.includes('state'))
+        (style == null || !!style.baseStyleNames?.includes('state'))
       );
     };
 
@@ -181,17 +190,17 @@ const Template = ({ label, ...args }) => {
     graph.setSplitEnabled(false);
 
     // Returns true for valid drop operations
-    graph.isValidDropTarget = function (target, cells, evt) {
+    graph.isValidDropTarget = function (this: CustomGraph, target, cells, evt) {
       if (this.isSplitEnabled() && this.isSplitTarget(target, cells, evt)) {
         return true;
       }
 
-      const model = this.getDataModel();
       let lane = false;
       let pool = false;
       let cell = false;
 
       // Checks if any lanes or pools are selected
+      cells ??= [];
       for (let i = 0; i < cells.length; i++) {
         const tmp = cells[i].getParent();
         lane = lane || this.isPool(tmp);
@@ -208,15 +217,15 @@ const Template = ({ label, ...args }) => {
     };
 
     // Adds new method for identifying a pool
-    graph.isPool = function (cell) {
+    (graph as CustomGraph).isPool = function (cell: Cell | null) {
       const model = this.getDataModel();
-      const parent = cell.getParent();
+      const parent = cell?.getParent();
 
-      return parent != null && parent.getParent() == model.getRoot();
+      return parent?.getParent() == model.getRoot();
     };
 
     // Keeps widths on collapse/expand
-    const foldingHandler = function (sender, evt) {
+    const foldingHandler = function (_sender: any, evt: EventObject) {
       const cells = evt.getProperty('cells');
 
       for (let i = 0; i < cells.length; i++) {
@@ -232,17 +241,16 @@ const Template = ({ label, ...args }) => {
   }
 
   // Changes swimlane orientation while collapsed
-  const getStyle = function () {
-    // TODO super cannot be used here
-    // let style = super.getStyle();
-    let style = {};
-
-    if (this.isCollapsed()) {
-      style.horizontal = true;
-      style.align = 'left';
-      style.spacingLeft = 14;
+  const getStyle = function (this: Cell) {
+    if (!this.isCollapsed()) {
+      return this.style;
     }
-
+    // Need to create a copy the original style as we don't want to change the original style stored in the Cell
+    // Otherwise, when expanding the cell, the style will be incorrect
+    const style = { ...this.style };
+    style.horizontal = true;
+    style.align = 'left';
+    style.spacingLeft = 14;
     return style;
   };
 
@@ -268,11 +276,12 @@ const Template = ({ label, ...args }) => {
 
   layoutMgr.getLayout = function (cell) {
     if (
+      cell &&
       !cell.isEdge() &&
       cell.getChildCount() > 0 &&
-      (cell.getParent() == model.getRoot() || graph.isPool(cell))
+      (cell.getParent() == model.getRoot() || (graph as CustomGraph).isPool(cell))
     ) {
-      layout.fill = graph.isPool(cell);
+      layout.fill = (graph as CustomGraph).isPool(cell);
 
       return layout;
     }
@@ -284,17 +293,15 @@ const Template = ({ label, ...args }) => {
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
-  const insertVertex = (options) => {
+  const insertVertex = (options: VertexParameters) => {
     const v = graph.insertVertex(options);
-    // TODO find a way to restore
-    // v.getStyle = getStyle;
+    v.getStyle = getStyle;
     return v;
   };
 
-  const insertEdge = (options) => {
+  const insertEdge = (options: EdgeParameters) => {
     const e = graph.insertEdge(options);
-    // TODO find a way to restore
-    // e.getStyle = getStyle;
+    e.getStyle = getStyle;
     return e;
   };
 
@@ -458,8 +465,6 @@ const Template = ({ label, ...args }) => {
       style: { baseStyleNames: ['end'] },
     });
 
-    let e = null;
-
     insertEdge({
       parent: lane1a,
       source: start1,
@@ -514,7 +519,11 @@ const Template = ({ label, ...args }) => {
       value: 'Yes',
       source: step44,
       target: step111,
-      style: { verticalAlign: 'bottom', horizontal: 0, labelBackgroundColor: 'white' },
+      style: {
+        verticalAlign: 'bottom',
+        horizontal: false,
+        labelBackgroundColor: 'white',
+      },
     });
 
     insertEdge({
@@ -524,7 +533,7 @@ const Template = ({ label, ...args }) => {
       target: end2,
       style: { verticalAlign: 'bottom' },
     });
-    e = insertEdge({
+    let e = insertEdge({
       parent: lane2a,
       value: 'No',
       source: step444,
@@ -532,10 +541,10 @@ const Template = ({ label, ...args }) => {
       style: { verticalAlign: 'top' },
     });
 
-    e.geometry.points = [
+    e.geometry!.points = [
       new Point(
-        step444.geometry.x + step444.geometry.width / 2,
-        end3.geometry.y + end3.geometry.height / 2
+        step444.geometry!.x + step444.geometry!.width / 2,
+        end3.geometry!.y + end3.geometry!.height / 2
       ),
     ];
 
@@ -558,10 +567,10 @@ const Template = ({ label, ...args }) => {
       style: { baseStyleNames: ['crossover'] },
     });
 
-    e.geometry.points = [
+    e.geometry!.points = [
       new Point(
-        step33.geometry.x + step33.geometry.width / 2 + 20,
-        step11.geometry.y + (step11.geometry.height * 4) / 5
+        step33.geometry!.x + step33.geometry!.width / 2 + 20,
+        step11.geometry!.y + (step11.geometry!.height * 4) / 5
       ),
     ];
 

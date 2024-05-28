@@ -42,7 +42,7 @@ import { DirectionValue, TextDirectionValue } from '../../types';
  *   <setFontFamily>, <setFontStyle>
  * - <setShadow>, <setShadowColor>, <setShadowAlpha>, <setShadowOffset>
  * - <rect>, <roundrect>, <ellipse>, <image>, <text>
- * - <begin>, {@link oveTo}, <lineTo>, <quadTo>, <curveTo>
+ * - <begin>, {@link moveTo}, <lineTo>, <quadTo>, <curveTo>
  * - <stroke>, <fill>, <fillAndStroke>
  *
  * <AbstractCanvas2D.arcTo> is an additional method for drawing paths. This is
@@ -53,8 +53,8 @@ import { DirectionValue, TextDirectionValue } from '../../types';
  *
  * Constructs a new abstract canvas.
  */
-class mxXmlCanvas2D extends AbstractCanvas2D {
-  constructor(root: SVGElement) {
+class XmlCanvas2D extends AbstractCanvas2D {
+  constructor(root: Element) {
     super();
 
     this.root = root;
@@ -66,7 +66,7 @@ class mxXmlCanvas2D extends AbstractCanvas2D {
   /**
    * Reference to the container for the SVG content.
    */
-  root: SVGElement;
+  root: Element;
 
   /**
    * Specifies if text output should be enabled.
@@ -991,4 +991,4 @@ class mxXmlCanvas2D extends AbstractCanvas2D {
   }
 }
 
-export default mxXmlCanvas2D;
+export default XmlCanvas2D;

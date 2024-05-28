@@ -39,6 +39,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import '@maxgraph/core/css/common.css'; // style required by popup
 
 export default {
   title: 'Xml_Json/UserObject',

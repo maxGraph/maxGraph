@@ -880,20 +880,20 @@ export const CellsMixin: PartialType = {
   /**
    * Returns the clone for the given cell. Uses {@link cloneCells}.
    *
-   * @param cell {@link mxCell} to be cloned.
+   * @param cell {@link Cell} to be cloned.
    * @param allowInvalidEdges Optional boolean that specifies if invalid edges
    * should be cloned. Default is `true`.
    * @param mapping Optional mapping for existing clones.
    * @param keepPosition Optional boolean indicating if the position of the cells should
    * be updated to reflect the lost parent cell. Default is `false`.
    */
-  cloneCell(cell, allowInvalidEdges = false, mapping = null, keepPosition = false) {
+  cloneCell(cell, allowInvalidEdges = false, mapping = {}, keepPosition = false) {
     return this.cloneCells([cell], allowInvalidEdges, mapping, keepPosition)[0];
   },
 
   /**
    * Returns the clones for the given cells. The clones are created recursively
-   * using {@link mxGraphModel.cloneCells}. If the terminal of an edge is not in the
+   * using {@link cloneCells}. If the terminal of an edge is not in the
    * given array, then the respective end is assigned a terminal point and the
    * terminal is removed.
    *

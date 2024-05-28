@@ -56,9 +56,7 @@ export const StencilShapeGlobalSettings = {
 };
 
 /**
- * Implements a generic shape which is based on a XML node as a description.
- *
- * @class StencilShape
+ * Implements a generic shape which is based on an XML node as a description.
  */
 class StencilShape extends Shape {
   constructor(desc: Element) {
@@ -134,8 +132,7 @@ class StencilShape extends Shape {
   }
 
   /**
-   * Reads the constraints from <desc> into <constraints> using
-   * <parseConstraint>.
+   * Reads the constraints from {@link desc} into {@link constraints} using {@link parseConstraint}.
    */
   parseConstraints() {
     const conns = this.desc.getElementsByTagName('connections')[0];

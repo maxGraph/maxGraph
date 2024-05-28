@@ -108,8 +108,7 @@ export const getViewXml = (
  * no linefeed is defined.
  *
  * @param node DOM node to return the XML for.
- * @param linefeed Optional string that linefeeds are converted into. Default is
- * &#xa;
+ * @param linefeed Optional string that linefeeds are converted into. Default is `\&#xa;`.
  */
 export const getXml = (node: Element, linefeed = '&#xa;'): string => {
   const xmlSerializer = new XMLSerializer();

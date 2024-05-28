@@ -33,8 +33,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand and MaxWindow/MaxLog
 
 export default {
   title: 'Windows/Windows',
@@ -50,7 +49,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
   const container = createGraphContainer(args);
 
@@ -88,12 +87,13 @@ const Template = ({ label, ...args }) => {
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
     const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-    const e1 = graph.insertEdge(parent, null, '', v1, v2);
+    graph.insertEdge(parent, null, '', v1, v2);
   });
 
   wnd.setMaximizable(true);
   wnd.setResizable(true);
   wnd.setVisible(true);
+  wnd.setClosable(true);
 
   const lorem =
     'Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ';
@@ -114,8 +114,9 @@ const Template = ({ label, ...args }) => {
   wnd.setScrollable(true);
   wnd.setResizable(true);
   wnd.setVisible(true);
+  wnd.setClosable(true);
 
-  content = content.cloneNode(true);
+  content = content.cloneNode(true) as HTMLDivElement;
   content.style.width = '400px';
 
   wnd = new MaxWindow(
@@ -132,6 +133,7 @@ const Template = ({ label, ...args }) => {
   wnd.setScrollable(true);
   wnd.setResizable(true);
   wnd.setVisible(true);
+  wnd.setClosable(true);
 
   MaxLog.show();
 

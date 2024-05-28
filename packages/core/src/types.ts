@@ -197,7 +197,7 @@ export type CellStateStyle = {
   endFill?: boolean;
   /**
    * Set the fill color of the end arrow marker if {@link endFill} is `true`.
-   * If not set, use {@link startStrokeColor}.
+   * If not set, use {@link strokeColor}.
    * @since 0.10.0
    */
   endFillColor?: ColorValue;
@@ -257,11 +257,13 @@ export type CellStateStyle = {
    */
   exitY?: number;
   /**
-   * The possible values are all HTML color names or HEX codes, as well as special keywords such
-   * as `swimlane`, `inherit`, `indicated` to use the color code of a related cell or the
-   * indicator shape.
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such as:
+   * - `indicated` to use the color of a related cell or the indicator shape
+   * - `inherit` to use the color of the direct parent cell
+   * - `none` for no color
+   * - `swimlane` to use the color of the parent swimlane if one exists in the parent hierarchy
    */
-  fillColor?: ColorValue;
+  fillColor?: SpecialStyleColorValue;
   /**
    * Possible range is `0-100`.
    */
@@ -290,9 +292,13 @@ export type CellStateStyle = {
    */
   foldable?: boolean;
   /**
-   * The possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such as:
+   * - `indicated` to use the color of a related cell or the indicator shape
+   * - `inherit` to use the color of the direct parent cell
+   * - `none` for no color
+   * - `swimlane` to use the color of the parent swimlane if one exists in the parent hierarchy
    */
-  fontColor?: ColorValue;
+  fontColor?: SpecialStyleColorValue;
   /**
    * The possible values are names such as `Arial; Dialog; Verdana; Times New Roman`.
    */
@@ -312,9 +318,13 @@ export type CellStateStyle = {
    */
   glass?: boolean;
   /**
-   * The possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such as:
+   * - `indicated` to use the color of a related cell or the indicator shape
+   * - `inherit` to use the color of the direct parent cell
+   * - `none` for no color
+   * - `swimlane` to use the color of the parent swimlane if one exists in the parent hierarchy
    */
-  gradientColor?: ColorValue;
+  gradientColor?: SpecialStyleColorValue;
   /**
    * Generally, and by default in maxGraph, gradient painting is done from the value of {@link fillColor} to the value of {@link gradientColor}.
    * If we take the example of 'north', this means that the {@link fillColor} color is at the bottom of paint pattern
@@ -733,11 +743,13 @@ export type CellStateStyle = {
    */
   startSize?: number;
   /**
-   * The possible values are all HTML color names or HEX codes, as well as special keywords such
-   * as `swimlane`, `inherit`, `indicated` to use the color code of a related cell or the
-   * indicator shape or `none` for no color.
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such as:
+   * - `indicated` to use the color of a related cell or the indicator shape
+   * - `inherit` to use the color of the direct parent cell
+   * - `none` for no color
+   * - `swimlane` to use the color of the parent swimlane if one exists in the parent hierarchy
    */
-  strokeColor?: ColorValue;
+  strokeColor?: SpecialStyleColorValue;
   /**
    * The possible range is `0-100`.
    */
@@ -752,7 +764,7 @@ export type CellStateStyle = {
   /**
    * The fill color of the `swimlane` background.
    * The possible values are all HTML color names or HEX codes.
-   * @default no backgroune
+   * @default no background
    */
   swimlaneFillColor?: ColorValue;
   /**
@@ -841,6 +853,14 @@ export type NumericCellStateStyleKeys = NonNullable<
 >;
 
 export type ColorValue = string;
+/** Color values and special placeholders used to resolve colors (see {@link CellRenderer.resolveColor}) for style properties. */
+export type SpecialStyleColorValue =
+  | 'indicated'
+  | 'inherit'
+  | 'none'
+  | 'swimlane'
+  | (string & {});
+
 export type DirectionValue = 'north' | 'south' | 'east' | 'west';
 export type TextDirectionValue = '' | 'ltr' | 'rtl' | 'auto';
 export type AlignValue = 'left' | 'center' | 'right';

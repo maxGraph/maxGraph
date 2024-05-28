@@ -41,6 +41,14 @@ declare module '../Graph' {
       terminalState: CellState,
       me: InternalMouseEvent
     ) => ConnectionConstraint | null;
+    /**
+     * Returns an array of all {@link ConnectionConstraint}s for the given terminal. If
+     * the shape of the given terminal is a {@link StencilShape} then the constraints
+     * of the corresponding {@link StencilShape} are returned.
+     *
+     * @param terminal {@link CellState} that represents the terminal.
+     * @param source Boolean that specifies if the terminal is the source or target.
+     */
     getAllConnectionConstraints: (
       terminal: CellState | null,
       source: boolean
@@ -240,19 +248,8 @@ const ConnectionsMixin: PartialType = {
     return null;
   },
 
-  /**
-   * Returns an array of all {@link mxConnectionConstraints} for the given terminal. If
-   * the shape of the given terminal is a {@link mxStencilShape} then the constraints
-   * of the corresponding {@link mxStencil} are returned.
-   *
-   * @param terminal {@link CellState} that represents the terminal.
-   * @param source Boolean that specifies if the terminal is the source or target.
-   */
   getAllConnectionConstraints(terminal, source) {
-    if (terminal && terminal.shape && terminal.shape.stencil) {
-      return terminal.shape.stencil.constraints;
-    }
-    return null;
+    return terminal?.shape?.stencil?.constraints ?? null;
   },
 
   /**

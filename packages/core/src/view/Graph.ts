@@ -96,7 +96,6 @@ class Graph extends EventSource {
 
   graphModelChangeListener: Function | null = null;
   paintBackground: Function | null = null;
-  foldingEnabled: null | boolean = null;
   isConstrainedMoving = false;
 
   // ===================================================================================================================

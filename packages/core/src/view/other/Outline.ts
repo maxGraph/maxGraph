@@ -325,7 +325,7 @@ class Outline {
       defaultPlugins,
       this.source.getStylesheet()
     );
-    graph.foldingEnabled = false;
+    graph.options.foldingEnabled = false;
     graph.autoScroll = false;
     return graph;
   }

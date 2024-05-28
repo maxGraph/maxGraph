@@ -721,7 +721,7 @@ const Template = ({ label, ...args }) => {
   graph.setConnectable(true);
   graph.setConnectableEdges(true);
   graph.setDisconnectOnMove(false);
-  graph.foldingEnabled = false;
+  graph.options.foldingEnabled = false;
 
   //Maximum size
   graph.maximumGraphBounds = new Rectangle(0, 0, 800, 600);
