@@ -39,6 +39,8 @@ import { getNumber } from '../../../util/StringUtils';
 /**
  * Configure global settings for stencil shapes.
  * @experimental subject to change or removal
+ * @since 0.11.0
+ * @category Configuration
  */
 export const StencilShapeGlobalSettings = {
   /**
