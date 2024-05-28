@@ -142,7 +142,7 @@ export { default as RectangleShape } from './view/geometry/node/RectangleShape';
 export { default as RhombusShape } from './view/geometry/node/RhombusShape';
 export {
   default as StencilShape,
-  StencilShapeGlobalSettings,
+  StencilShapeConfig,
 } from './view/geometry/node/StencilShape';
 export { default as StencilShapeRegistry } from './view/geometry/node/StencilShapeRegistry';
 

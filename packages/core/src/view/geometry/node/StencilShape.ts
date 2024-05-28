@@ -42,7 +42,7 @@ import { getNumber } from '../../../util/StringUtils';
  * @since 0.11.0
  * @category Configuration
  */
-export const StencilShapeGlobalSettings = {
+export const StencilShapeConfig = {
   /**
    * Specifies if the use of eval is allowed for evaluating text content and images.
    * Set this to `true` if stencils can not contain user input.
@@ -173,7 +173,7 @@ class StencilShape extends Shape {
     let result = this.evaluateAttribute(node, attribute, shape);
     const loc = node.getAttribute('localized');
 
-    if ((StencilShapeGlobalSettings.defaultLocalized && !loc) || loc === '1') {
+    if ((StencilShapeConfig.defaultLocalized && !loc) || loc === '1') {
       result = Translations.get(<string>result);
     }
     return result;
@@ -191,7 +191,7 @@ class StencilShape extends Shape {
     if (!result) {
       const text = getTextContent(<Text>(<unknown>node));
 
-      if (text && StencilShapeGlobalSettings.allowEval) {
+      if (text && StencilShapeConfig.allowEval) {
         const funct = eval(text);
 
         if (typeof funct === 'function') {

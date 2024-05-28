@@ -141,7 +141,7 @@ Additionally, some shape properties have been renamed:
 
 #### `mxStencil` to `StencilShape`
 
-In maxGraph@0.11.0, the `allowEval` and `defaultLocalized` properties have been removed. Configure these properties using `StencilShapeGlobalSettings`.
+In maxGraph@0.11.0, the `allowEval` and `defaultLocalized` properties have been removed. Configure these properties using `StencilShapeConfig`.
 
 
 ### `mxUtils` split
