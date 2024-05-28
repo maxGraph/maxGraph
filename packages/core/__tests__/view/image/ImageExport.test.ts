@@ -200,10 +200,6 @@ test.each([false, true])(
 
     const svgCanvas = new SvgCanvas2D(group, false);
 
-    // const xmlDoc = createXmlDocument();
-    // const root = xmlDoc.createElement('data');
-    // xmlDoc.appendChild(root);
-    // const xmlCanvas = new XmlCanvas2D(root);
     const imageExport = new ImageExport();
     imageExport.includeOverlays = includeOverlays;
 
