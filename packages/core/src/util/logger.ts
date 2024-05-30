@@ -22,6 +22,7 @@ import { getElapseMillisecondsMessage } from './Utils';
  *
  * @experimental subject to change or removal. The logging system may be modified in the future without prior notice.
  * @since 0.11.0
+ * @category Logging
  */
 export class NoOpLogger implements Logger {
   debug(_message: string): void {}
@@ -48,6 +49,7 @@ export class NoOpLogger implements Logger {
  *
  * @experimental subject to change or removal. The logging system may be modified in the future without prior notice.
  * @since 0.11.0
+ * @category Logging
  */
 export class ConsoleLogger implements Logger {
   debugEnabled = false;
