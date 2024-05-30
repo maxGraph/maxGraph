@@ -1155,3 +1155,39 @@ export type EdgeStyleFunction = (
   points: Point[],
   result: Point[]
 ) => void;
+
+/**
+ * @experimental subject to change or removal. The logging system may be modified in the future without prior notice.
+ * @since 0.11.0
+ */
+export interface Logger {
+  /**
+   * Log the specified string at TRACE level and returns the current time in milliseconds.
+   *
+   * @return may return `undefined` hen the TRACE level is not enabled.
+   */
+  enter(message: string): number | undefined;
+
+  /**
+   * Log the specified string at TRACE level and also log the difference between the current
+   * time and t0 in milliseconds.
+   *
+   * @see {@link enter} for an example.
+   */
+  leave(message: string, baseTimestamp?: number): void;
+
+  /**
+   * Shows the console in the UI. This may produce no effect in some implementation which doesn't rely on the UI to log.
+   */
+  show(): void;
+
+  trace(message: string): void;
+
+  debug(message: string): void;
+
+  info(message: string): void;
+
+  warn(message: string): void;
+
+  error(message: string, ...optionalParams: any[]): void;
+}

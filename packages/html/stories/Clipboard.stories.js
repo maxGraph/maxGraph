@@ -60,7 +60,6 @@ const Template = ({ label, ...args }) => {
 
   // Public helper method for shared clipboard.
   Clipboard.cellsToString = function (cells) {
-    console.warn('cellsToString', cells);
     const model = new GraphDataModel();
     const parent = model.getRoot().getChildAt(0);
 
@@ -86,8 +85,6 @@ const Template = ({ label, ...args }) => {
 
   // Shows a textarea when control/cmd is pressed to handle native clipboard actions
   InternalEvent.addListener(document, 'keydown', function (evt) {
-    console.warn('CALLED keydown', evt);
-
     // No dialog visible
     const source = eventUtils.getSource(evt);
 
@@ -167,7 +164,6 @@ const Template = ({ label, ...args }) => {
 
   // Handles copy event by putting XML for current selection into text input
   InternalEvent.addListener(textInput, 'copy', (evt) => {
-    console.warn('CALLED copy', evt);
     if (graph.isEnabled() && !graph.isSelectionEmpty()) {
       copyCells(
         graph,

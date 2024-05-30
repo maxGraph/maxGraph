@@ -20,7 +20,7 @@ import CellPath from '../view/cell/CellPath';
 import CodecRegistry from './CodecRegistry';
 import { NODETYPE } from '../util/Constants';
 import Cell from '../view/cell/Cell';
-import MaxLog from '../gui/MaxLog';
+import { GlobalConfig } from '../util/config';
 import { getFunctionName } from '../util/StringUtils';
 import { importNode, isNode } from '../util/domUtils';
 
@@ -108,8 +108,8 @@ const createXmlDocument = () => {
  * const oldEncode = encode;
  * encode(obj)
  * {
- *   MaxLog.show();
- *   MaxLog.debug('Codec.encode: obj='+StringUtils.getFunctionName(obj.constructor));
+ *   GlobalConfig.logger.show();
+ *   GlobalConfig.logger.debug('Codec.encode: obj=' + StringUtils.getFunctionName(obj.constructor));
  *
  *   return oldEncode.apply(this, arguments);
  * };
@@ -323,7 +323,9 @@ class Codec {
       } else if (isNode(obj)) {
         node = importNode(this.document, obj, true);
       } else {
-        MaxLog.warn(`Codec.encode: No codec for ${getFunctionName(obj.constructor)}`);
+        GlobalConfig.logger.warn(
+          `Codec.encode: No codec for ${getFunctionName(obj.constructor)}`
+        );
       }
     }
     return node;

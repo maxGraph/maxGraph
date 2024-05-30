@@ -19,7 +19,7 @@ import { EditorToolbar } from '../../../editor/EditorToolbar';
 import type Codec from '../../Codec';
 import type Editor from '../../../editor/Editor';
 import { NODETYPE } from '../../../util/Constants';
-import MaxLog from '../../../gui/MaxLog';
+import { GlobalConfig } from '../../../util/config';
 import { convertPoint } from '../../../util/styleUtils';
 import { getClientX, getClientY } from '../../../util/EventUtils';
 import InternalEvent from '../../../view/event/InternalEvent';
@@ -216,7 +216,7 @@ export class EditorToolbarCodec extends ObjectCodec {
 
                         return clone;
                       }
-                      MaxLog.warn(`Template ${template} not found`);
+                      GlobalConfig.logger.warn(`Template ${template} not found`);
 
                       return null;
                     };

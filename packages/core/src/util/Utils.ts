@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import Client from '../Client';
+import { GlobalConfig } from './config';
 
 /**
  * A singleton class that provides cross-browser helper methods.
@@ -69,7 +70,7 @@ export const mixInto = (dest: any) => (mixin: any) => {
       });
     }
   } catch (e) {
-    console.error('Error while mixing', e);
+    GlobalConfig.logger.error('Error while mixing', e);
   }
 };
 
@@ -98,10 +99,10 @@ export const copyTextToClipboard = (text: string): void => {
   }
   navigator.clipboard.writeText(text).then(
     function () {
-      console.log('Async: Copying to clipboard was successful!');
+      GlobalConfig.logger.info('Async: Copying to clipboard was successful!');
     },
     function (err) {
-      console.error('Async: Could not copy text: ', err);
+      GlobalConfig.logger.error('Async: Could not copy text: ', err);
     }
   );
 };
@@ -122,10 +123,18 @@ const fallbackCopyTextToClipboard = (text: string): void => {
   try {
     const successful = document.execCommand('copy');
     const msg = successful ? 'successful' : 'unsuccessful';
-    console.log('Fallback: Copying text command was ' + msg);
+    GlobalConfig.logger.info(`Fallback: Copying text command was ${msg}`);
   } catch (err) {
-    console.error('Fallback: Oops, unable to copy', err);
+    GlobalConfig.logger.error('Fallback: Oops, unable to copy', err);
   }
 
   document.body.removeChild(textArea);
 };
+
+/**
+ * If `baseTimestamp` is provided and not zero, returns a message describing the elapsed milliseconds since this value.
+ * Otherwise, returns an empty string.
+ * @param baseTimestamp the base timestamp to compute the elapsed milliseconds from
+ */
+export const getElapseMillisecondsMessage = (baseTimestamp?: number): string =>
+  baseTimestamp ? ` (${new Date().getTime() - baseTimestamp} ms)` : '';

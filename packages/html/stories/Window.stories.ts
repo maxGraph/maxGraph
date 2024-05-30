@@ -23,6 +23,8 @@ import {
   InternalEvent,
   MaxLog,
   domUtils,
+  GlobalConfig,
+  MaxLogAsLogger,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
@@ -52,6 +54,9 @@ export default {
 const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
   const container = createGraphContainer(args);
+
+  GlobalConfig.logger = new MaxLogAsLogger();
+  GlobalConfig.logger.info('Starting the Window story...');
 
   // Note that we're using the container scrollbars for the graph so that the
   // container extends to the parent div inside the window
@@ -136,6 +141,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   wnd.setClosable(true);
 
   MaxLog.show();
+  GlobalConfig.logger.info('MaxLog show done!');
 
   return container;
 };

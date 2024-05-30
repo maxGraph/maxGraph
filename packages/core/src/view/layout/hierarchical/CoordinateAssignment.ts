@@ -18,7 +18,7 @@ limitations under the License.
 
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import { DIRECTION } from '../../../util/Constants';
-import MaxLog from '../../../gui/MaxLog';
+import { GlobalConfig } from '../../../util/config';
 import WeightedCellSorter from '../util/WeightedCellSorter';
 import Dictionary from '../../../util/Dictionary';
 import Point from '../../geometry/Point';
@@ -28,7 +28,6 @@ import GraphHierarchyModel from './GraphHierarchyModel';
 import Cell from '../../../view/cell/Cell';
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
-import { _mxCompactTreeLayoutNode } from '../CompactTreeLayout';
 import { Graph } from '../../../view/Graph';
 import Geometry from '../../../view/geometry/Geometry';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
@@ -206,20 +205,20 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     const model = <GraphHierarchyModel>this.layout.getDataModel();
     const ranks = <GraphAbstractHierarchyCell[][]>model.ranks;
 
-    MaxLog.show();
-    MaxLog.writeln('======Coord assignment debug=======');
+    const logger = GlobalConfig.logger;
+    logger.show();
+    logger.info('======Coord assignment debug=======');
 
     for (let j = 0; j < ranks.length; j++) {
-      MaxLog.write('Rank ', String(j), ' : ');
       const rank = ranks[j];
 
-      for (let k = 0; k < rank.length; k++) {
-        const cell = rank[k];
-        MaxLog.write(String(cell.getGeneralPurposeVariable(j)), '  ');
-      }
-      MaxLog.writeln();
+      const cellsInfo = rank
+        .map((cell) => String(cell.getGeneralPurposeVariable(j)))
+        .join('  ');
+
+      logger.info(`Rank ${j} : ${cellsInfo}`);
     }
-    MaxLog.writeln('====================================');
+    logger.info('====================================');
   }
 
   /**
@@ -733,7 +732,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         if (node.edges != null) {
           numEdges = node.edges.length;
         } else {
-          MaxLog.warn('edge.edges is null');
+          GlobalConfig.logger.warn('edge.edges is null');
         }
 
         node.width = (numEdges - 1) * this.parallelEdgeSpacing;
@@ -747,8 +746,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       localX += this.intraCellSpacing;
     }
 
-    if (boundsWarning == true) {
-      MaxLog.warn('At least one cell has no bounds');
+    if (boundsWarning) {
+      GlobalConfig.logger.warn('At least one cell has no bounds');
     }
   }
 
@@ -810,7 +809,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
           if (node.edges != null) {
             numEdges = node.edges.length;
           } else {
-            MaxLog.warn('edge.edges is null');
+            GlobalConfig.logger.warn('edge.edges is null');
           }
 
           node.width = (numEdges - 1) * this.parallelEdgeSpacing;
@@ -831,8 +830,8 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         this.rankWidths[rankValue] = localX;
       }
 
-      if (boundsWarning == true) {
-        MaxLog.warn('At least one cell has no bounds');
+      if (boundsWarning) {
+        GlobalConfig.logger.warn('At least one cell has no bounds');
       }
 
       this.rankY[rankValue] = y;

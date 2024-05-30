@@ -73,10 +73,10 @@ const placeholderStyleProperties: (keyof CellStateStyle)[] = [
  * directly inside the graph container for certain browsers.
  *
  * ```javascript
- * MaxLog.show();
+ * GlobalConfig.logger.show();
  * for (var i in mxCellRenderer.defaultShapes)
  * {
- *   MaxLog.debug(i);
+ *   GlobalConfig.logger.debug(i);
  * }
  * ```
  */

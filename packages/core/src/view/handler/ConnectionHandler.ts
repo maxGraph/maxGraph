@@ -44,7 +44,7 @@ import ConstraintHandler from './ConstraintHandler';
 import PolylineShape from '../geometry/edge/PolylineShape';
 import EventSource from '../event/EventSource';
 import Rectangle from '../geometry/Rectangle';
-import MaxLog from '../../gui/MaxLog';
+import { GlobalConfig } from '../../util/config';
 import {
   getClientX,
   getClientY,
@@ -194,8 +194,8 @@ type FactoryMethod = (
  *   let sourcePortId = style[mxConstants.STYLE_SOURCE_PORT];
  *   let targetPortId = style[mxConstants.STYLE_TARGET_PORT];
  *
- *   MaxLog.show();
- *   MaxLog.debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
+ *   GlobalConfig.logger.show();
+ *   GlobalConfig.logger.debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
  * });
  * ```
  *
@@ -1804,12 +1804,12 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
             )
           );
         }
-      } catch (e) {
-        MaxLog.show();
+      } catch (e: any) {
+        GlobalConfig.logger.show();
         const errorMessage = `Error in ConnectionHandler: ${
           e instanceof Error ? e.message + '\n' + e.stack : 'unknown cause'
         }`;
-        MaxLog.debug(errorMessage);
+        GlobalConfig.logger.debug(errorMessage);
       } finally {
         model.endUpdate();
       }

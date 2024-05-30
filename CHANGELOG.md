@@ -1,5 +1,14 @@
 # `maxGraph` Change Log
 
+## UNRELEASED
+
+**Breaking Changes**
+- Logs are no longer sent to `MaxLog` by default. To restore the previous behavior, change maxGraph's global configuration with:
+```js
+GlobalConfig.logger = new MaxLogAsLogger();
+```
+- `MaxWindow.activeWindow` is no longer available; it was intended for internal use only, so there's no reason to make it public.
+
 ## 0.10.3
 
 Release date: `2024-05-29`

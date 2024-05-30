@@ -27,7 +27,7 @@ import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
 import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils';
 import { getRotatedPoint, ptSegDistSq, relativeCcw, toRadians } from '../util/mathUtils';
-import MaxLog from '../gui/MaxLog';
+import { GlobalConfig } from '../util/config';
 import Translations from '../util/Translations';
 import CellState from './cell/CellState';
 import UndoableEdit from './undoable_changes/UndoableEdit';
@@ -529,7 +529,7 @@ export class GraphView extends EventSource {
    * Default is {@link currentRoot} or the root of the model.
    */
   validate(cell: Cell | null = null) {
-    const t0 = MaxLog.enter('mxGraphView.validate');
+    const t0 = GlobalConfig.logger.enter('GraphView.validate');
     window.status =
       Translations.get(this.updatingDocumentResource) || this.updatingDocumentResource;
 
@@ -549,7 +549,7 @@ export class GraphView extends EventSource {
     }
 
     window.status = Translations.get(this.doneResource) || this.doneResource;
-    MaxLog.leave('mxGraphView.validate', <number>t0);
+    GlobalConfig.logger.leave('GraphView.validate', t0);
   }
 
   /**

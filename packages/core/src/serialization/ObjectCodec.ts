@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import ObjectIdentity from '../util/ObjectIdentity';
-import MaxLog from '../gui/MaxLog';
+import { GlobalConfig } from '../util/config';
 import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
 import { NODETYPE } from '../util/Constants';
@@ -48,11 +48,11 @@ import type Codec from './Codec';
  * const node = enc.encode(obj);
  * ```
  *
- * The output of the encoding may be viewed using {@link MaxLog} as follows.
+ * The output of the encoding may be viewed using {@link GlobalConfig.logger} as follows.
  *
  * ```javascript
- * MaxLog.show();
- * MaxLog.debug(mxUtils.getPrettyXml(node));
+ * GlobalConfig.logger.show();
+ * GlobalConfig.logger.debug(mxUtils.getPrettyXml(node));
  * ```
  *
  * Finally, the result of the encoding looks as follows.
@@ -370,7 +370,7 @@ class ObjectCodec {
    * if the value is a function.
    *
    * If no ID exists for a variable in {@link idrefs} or if an object
-   * cannot be encoded, a warning is issued using {@link MaxLog.warn}.
+   * cannot be encoded, a warning is issued using {@link GlobalConfig.logger}.
    *
    * Returns the resulting XML node that represents the given
    * object.
@@ -436,7 +436,9 @@ class ObjectCodec {
         const tmp = enc.getId(value);
 
         if (tmp == null) {
-          MaxLog.warn(`ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`);
+          GlobalConfig.logger.warn(
+            `ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`
+          );
           return; // exit
         }
 
@@ -516,7 +518,9 @@ class ObjectCodec {
 
       node.appendChild(child);
     } else {
-      MaxLog.warn(`ObjectCodec.encode: No node for ${this.getName()}.${name}: ${value}`);
+      GlobalConfig.logger.warn(
+        `ObjectCodec.encode: No node for ${this.getName()}.${name}: ${value}`
+      );
     }
   }
 
@@ -669,7 +673,7 @@ class ObjectCodec {
    * ```
    *
    * If no object exists for an ID in {@link idrefs} a warning is issued
-   * using {@link MaxLog.warn}.
+   * using {@link GlobalConfig.logger}.
    *
    * Returns the resulting object that represents the given XML node
    * or the object given to the method as the into parameter.
@@ -760,7 +764,7 @@ class ObjectCodec {
         const tmp = dec.getObject(value);
 
         if (tmp == null) {
-          MaxLog.warn(
+          GlobalConfig.logger.warn(
             `ObjectCodec.decode: No object for ${this.getName()}.${name}=${value}`
           );
           return; // exit

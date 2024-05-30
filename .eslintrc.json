@@ -32,6 +32,7 @@
                 "selector": "TSEnumDeclaration[const=true]",
                 "message": "Const enums are forbidden to increase interoperability. Use regular enums instead."
             }
-        ]
+        ],
+        "no-console": "error"
     }
 }

@@ -29,6 +29,8 @@ import { getClientX, getClientY } from '../util/EventUtils';
 import { htmlEntities } from '../util/StringUtils';
 import { utils } from '../util/Utils';
 
+let activeWindow: MaxWindow | null = null;
+
 /**
  * Basic window inside a document.
  *
@@ -213,8 +215,6 @@ class MaxWindow extends EventSource {
       }
     }
   }
-
-  static activeWindow: MaxWindow | null = null;
 
   td!: HTMLElement;
   div!: HTMLElement;
@@ -404,21 +404,22 @@ class MaxWindow extends EventSource {
    * Puts the window on top of all other windows.
    */
   activate(): void {
-    if (MaxWindow.activeWindow !== this) {
+    if (activeWindow !== this) {
       const style = getCurrentStyle(this.getElement());
       const index = style != null ? parseInt(style.zIndex) : 3;
 
-      if (MaxWindow.activeWindow) {
-        const elt = MaxWindow.activeWindow.getElement();
+      if (activeWindow) {
+        const elt = activeWindow.getElement();
 
-        if (elt != null && elt.style != null) {
+        if (elt?.style) {
           elt.style.zIndex = String(index);
         }
       }
 
-      const previousWindow = MaxWindow.activeWindow;
+      const previousWindow = activeWindow;
       this.getElement().style.zIndex = String(index + 1);
-      MaxWindow.activeWindow = this;
+      // eslint-disable-next-line @typescript-eslint/no-this-alias -- we need to maintain the reference to the current window
+      activeWindow = this;
 
       this.fireEvent(new EventObject(InternalEvent.ACTIVATE, { previousWindow }));
     }

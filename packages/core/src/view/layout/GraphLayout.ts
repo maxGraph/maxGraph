@@ -126,11 +126,11 @@ class GraphLayout {
    * Example:
    *
    * ```javascript
-   * MaxLog.show();
+   * GlobalConfig.logger.show();
    * const cell = graph.getSelectionCell();
    * graph.traverse(cell, false, function(vertex, edge)
    * {
-   *   MaxLog.debug(graph.getLabel(vertex));
+   *   GlobalConfig.logger.debug(graph.getLabel(vertex));
    * });
    * ```
    *

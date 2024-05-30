@@ -330,8 +330,8 @@ class InternalEvent {
    * ```javascript
    * mxEvent.addMouseWheelListener(function (evt, up)
    * {
-   *   MaxLog.show();
-   *   MaxLog.debug('mouseWheel: up='+up);
+   *   GlobalConfig.logger.show();
+   *   GlobalConfig.logger.debug('mouseWheel: up='+up);
    * });
    * ```
    *

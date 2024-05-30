@@ -156,6 +156,8 @@ export * as xmlUtils from './util/xmlUtils';
 export * as styleUtils from './util/styleUtils';
 export * as mathUtils from './util/mathUtils';
 export * as cellArrayUtils from './util/cellArrayUtils';
+export { GlobalConfig } from './util/config';
+export * from './util/logger';
 
 export { default as Animation } from './view/animate/Animation';
 export { default as Effects } from './view/animate/Effects';
@@ -188,6 +190,7 @@ export { default as InternalMouseEvent } from './view/event/InternalMouseEvent';
 
 export { default as MaxForm } from './gui/MaxForm';
 export { default as MaxLog } from './gui/MaxLog';
+export { MaxLogAsLogger } from './gui/MaxLogAsLogger';
 export { default as MaxPopupMenu } from './gui/MaxPopupMenu';
 export { default as MaxToolbar } from './gui/MaxToolbar';
 export { default as MaxWindow } from './gui/MaxWindow';

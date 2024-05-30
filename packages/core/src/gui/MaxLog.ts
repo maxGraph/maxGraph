@@ -22,7 +22,7 @@ import { getInnerHtml, write } from '../util/domUtils';
 import { toString } from '../util/StringUtils';
 import MaxWindow, { popup } from './MaxWindow';
 import { KeyboardEventListener, MouseEventListener } from '../types';
-import { copyTextToClipboard } from '../util/Utils';
+import { copyTextToClipboard, getElapseMillisecondsMessage } from '../util/Utils';
 
 /**
  * A singleton class that implements a simple console.
@@ -178,20 +178,20 @@ class MaxLog {
   static consoleName = 'Console';
 
   /**
-   * Specified if the output for <enter> and <leave> should be visible in the
-   * console. Default is false.
+   * Specified if the output for {@link enter} and {@link leave} should be visible in the console.
+   * @default false
    */
   static TRACE = false;
 
   /**
-   * Specifies if the output for <debug> should be visible in the console.
-   * Default is true.
+   * Specifies if the output for {@link debug} should be visible in the console.
+   * @default true
    */
   static DEBUG = true;
 
   /**
-   * Specifies if the output for <warn> should be visible in the console.
-   * Default is true.
+   * Specifies if the output for {@link warn} should be visible in the console.
+   * @default true
    */
   static WARN = true;
 
@@ -264,9 +264,9 @@ class MaxLog {
    *
    * @see {@link enter} for an example.
    */
-  static leave(string: string, t0: number) {
+  static leave(string: string, t0?: number) {
     if (MaxLog.TRACE) {
-      const dt = t0 !== 0 ? ` (${new Date().getTime() - t0} ms)` : '';
+      const dt = getElapseMillisecondsMessage(t0);
       MaxLog.writeln(`Leaving ${string}${dt}`);
     }
   }
@@ -276,6 +276,15 @@ class MaxLog {
    */
   static debug(...args: string[]) {
     if (MaxLog.DEBUG) {
+      MaxLog.writeln(...args);
+    }
+  }
+
+  /**
+   * Adds all arguments to the console if {@link TRACE} is enabled.
+   */
+  static trace(...args: string[]) {
+    if (MaxLog.TRACE) {
       MaxLog.writeln(...args);
     }
   }

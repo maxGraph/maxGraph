@@ -25,16 +25,12 @@ import { Graph } from '../Graph';
  * implemented.
  *
  * ```javascript
- * var mgr = new AutoSaveManager(editor.graph);
- * mgr.save()
- * {
- *   MaxLog.show();
- *   MaxLog.debug('save');
+ * const mgr = new AutoSaveManager(editor.graph);
+ * mgr.save() {
+ *   GlobalConfig.logger.show();
+ *   GlobalConfig.logger.debug('save');
  * };
  * ```
- *
- * @class AutoSaveManager
- * @extends EventSource
  */
 class AutoSaveManager extends EventSource {
   constructor(graph: Graph) {

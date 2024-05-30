@@ -859,7 +859,7 @@ export class Editor extends EventSource {
   movePropertiesDialog = false;
 
   /**
-   * Specifies if <{@link xGraph.validateGraph} should automatically be invoked after
+   * Specifies if {@link Graph.validateGraph} should automatically be invoked after
    * each change. Default is false.
    * @default false
    */

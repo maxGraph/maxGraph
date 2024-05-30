@@ -19,7 +19,7 @@ import { Stylesheet } from '../../view/style/Stylesheet';
 import type Codec from '../Codec';
 import StyleRegistry from '../../view/style/StyleRegistry';
 import { clone } from '../../util/cloneUtils';
-import MaxLog from '../../gui/MaxLog';
+import { GlobalConfig } from '../../util/config';
 import { NODETYPE } from '../../util/Constants';
 import { isNumeric } from '../../util/mathUtils';
 import { getTextContent } from '../../util/domUtils';
@@ -142,7 +142,7 @@ export class StylesheetCodec extends ObjectCodec {
 
           if (style == null) {
             if (extend != null) {
-              MaxLog.warn(
+              GlobalConfig.logger.warn(
                 `StylesheetCodec.decode: stylesheet ${extend} not found to extend`
               );
             }

@@ -18,12 +18,10 @@ import type { AbstractCanvas2D, ColorValue, Rectangle } from '@maxgraph/core';
 import { CellRenderer, EllipseShape, RectangleShape } from '@maxgraph/core';
 
 export const registerCustomShapes = (): void => {
-  console.info('Registering custom shapes...');
   // @ts-ignore TODO fix CellRenderer. Calls to this function are also marked as 'ts-ignore' in CellRenderer
   CellRenderer.registerShape('customRectangle', CustomRectangleShape);
   // @ts-ignore
   CellRenderer.registerShape('customEllipse', CustomEllipseShape);
-  console.info('Custom shapes registered');
 };
 
 class CustomRectangleShape extends RectangleShape {

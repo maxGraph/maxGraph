@@ -19,7 +19,7 @@ import {
   Graph,
   InternalEvent,
   RubberBandHandler,
-  MaxLog,
+  GlobalConfig,
   GraphView,
   Point,
   DomHelpers,
@@ -177,8 +177,8 @@ const Template = ({ label, ...args }) => {
         }
       };
     } catch (e) {
-      MaxLog.show();
-      MaxLog.debug('Using background image');
+      GlobalConfig.logger.show();
+      GlobalConfig.logger.debug('Using background image');
 
       container.style.backgroundImage = "url('./images/grid.gif')";
     }

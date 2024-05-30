@@ -215,9 +215,6 @@ export const SegmentConnector: EdgeStyleFunction = (
       horizontal = !horizontal;
       hint = hints[i];
 
-      //        MaxLog.show();
-      //        MaxLog.debug('hint', i, hint.x, hint.y);
-
       if (horizontal) {
         pt.y = hint.y;
       } else {
