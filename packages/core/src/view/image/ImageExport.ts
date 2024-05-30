@@ -32,9 +32,9 @@ import { Graph } from '../Graph';
  * xmlDoc.appendChild(root);
  *
  * const xmlCanvas = new XmlCanvas2D(root);
- * const imgExport = new ImageExport();
+ * const imageExport = new ImageExport();
  *
- * imgExport.drawState(graph.getView().getState(graph.model.root), xmlCanvas);
+ * imageExport.drawState(graph.getView().getState(graph.model.root), xmlCanvas);
  * const xml = xmlUtils.getXml(root);
  *
  * const bounds = graph.getGraphBounds();
@@ -48,7 +48,8 @@ import { Graph } from '../Graph';
  */
 class ImageExport {
   /**
-   * Specifies if overlays should be included in the export. Default is false.
+   * Specifies if overlays should be included in the export.
+   * @default false
    */
   includeOverlays = false;
 
@@ -57,15 +58,11 @@ class ImageExport {
    */
   drawState(state: CellState, canvas: AbstractCanvas2D): void {
     if (state) {
-      this.visitStatesRecursive(state, canvas, () => {
-        this.drawCellState(state, canvas);
-      });
+      this.visitStatesRecursive(state, canvas, this.drawCellState.bind(this));
 
       // Paints the overlays
       if (this.includeOverlays) {
-        this.visitStatesRecursive(state, canvas, () => {
-          this.drawOverlays(state, canvas);
-        });
+        this.visitStatesRecursive(state, canvas, this.drawOverlays.bind(this));
       }
     }
   }
@@ -73,11 +70,15 @@ class ImageExport {
   /**
    * Visits the given state and all its descendants to the given canvas recursively.
    */
-  visitStatesRecursive(state: CellState, canvas: AbstractCanvas2D, visitor: Function) {
+  visitStatesRecursive(
+    state: CellState,
+    canvas: AbstractCanvas2D,
+    visitor: (state: CellState, canvas: AbstractCanvas2D) => void
+  ) {
     if (state) {
       visitor(state, canvas);
 
-      const graph = <Graph>state.view.graph;
+      const graph = state.view.graph;
       const childCount = state.cell.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -91,7 +92,7 @@ class ImageExport {
   /**
    * Returns the link for the given cell state and canvas. This returns null.
    */
-  getLinkForCellState(state: CellState, canvas: AbstractCanvas2D): any {
+  getLinkForCellState(_state: CellState, _canvas: AbstractCanvas2D): any {
     return null;
   }
 
@@ -151,7 +152,7 @@ class ImageExport {
    */
   drawOverlays(state: CellState, canvas: AbstractCanvas2D): void {
     if (state.overlays != null) {
-      state.overlays.visit((id, shape) => {
+      state.overlays.visit((_id, shape) => {
         if (shape instanceof Shape) {
           shape.paint(canvas);
         }
