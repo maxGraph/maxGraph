@@ -492,7 +492,7 @@ class Graph extends EventSource {
   // ===================================================================================================================
 
   protected registerDefaults(): void {
-    registerDefaultShapes();
+    // registerDefaultShapes();
     registerDefaultStyleElements();
   }
 
