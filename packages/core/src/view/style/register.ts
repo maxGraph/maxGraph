@@ -37,11 +37,11 @@ export const registerDefaultStyleElements = (): void => {
     StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
 
     // Perimeters
-    // StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
-    // StyleRegistry.putValue(PERIMETER.HEXAGON, Perimeter.HexagonPerimeter);
-    // StyleRegistry.putValue(PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter);
-    // StyleRegistry.putValue(PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter);
-    // StyleRegistry.putValue(PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter);
+    StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
+    StyleRegistry.putValue(PERIMETER.HEXAGON, Perimeter.HexagonPerimeter);
+    StyleRegistry.putValue(PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter);
+    StyleRegistry.putValue(PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter);
+    StyleRegistry.putValue(PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter);
 
     isDefaultsRegistered = true;
   }

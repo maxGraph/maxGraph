@@ -77,30 +77,30 @@ import { TrianglePerimeter as TrianglePerimeterFunction } from './perimeter/Tria
  * setting the value via a key, value pair in a cell style.
  */
 const Perimeter = {
-  // /**
-  //  * Describes a rectangular perimeter.
-  //  */
-  // RectanglePerimeter: RectanglePerimeterFunction,
-  //
-  // /**
-  //  * Describes an elliptic perimeter.
-  //  */
-  // EllipsePerimeter: EllipsePerimeterFunction,
-  //
-  // /**
-  //  * Describes a rhombus (aka diamond) perimeter.
-  //  */
-  // RhombusPerimeter: RhombusPerimeterFunction,
-  //
-  // /**
-  //  * Describes a triangle perimeter.
-  //  */
-  // TrianglePerimeter: TrianglePerimeterFunction,
-  //
-  // /**
-  //  * Describes a hexagon perimeter.
-  //  */
-  // HexagonPerimeter: HexagonPerimeterFunction,
+  /**
+   * Describes a rectangular perimeter.
+   */
+  RectanglePerimeter: RectanglePerimeterFunction,
+
+  /**
+   * Describes an elliptic perimeter.
+   */
+  EllipsePerimeter: EllipsePerimeterFunction,
+
+  /**
+   * Describes a rhombus (aka diamond) perimeter.
+   */
+  RhombusPerimeter: RhombusPerimeterFunction,
+
+  /**
+   * Describes a triangle perimeter.
+   */
+  TrianglePerimeter: TrianglePerimeterFunction,
+
+  /**
+   * Describes a hexagon perimeter.
+   */
+  HexagonPerimeter: HexagonPerimeterFunction,
 };
 
 export default Perimeter;
