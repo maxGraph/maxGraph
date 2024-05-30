@@ -65,13 +65,13 @@ import { registerDefaultShapes } from './cell/register-shapes';
 import { registerDefaultStyleElements } from './style/register';
 
 export const defaultPlugins: GraphPluginConstructor[] = [
-  CellEditorHandler,
-  TooltipHandler,
-  SelectionCellsHandler,
-  PopupMenuHandler,
-  ConnectionHandler,
-  SelectionHandler,
-  PanningHandler,
+  // CellEditorHandler,
+  // TooltipHandler,
+  // SelectionCellsHandler,
+  // PopupMenuHandler,
+  // ConnectionHandler,
+  // SelectionHandler,
+  // PanningHandler,
 ];
 
 /**
