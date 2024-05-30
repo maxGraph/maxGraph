@@ -27,14 +27,14 @@ let isDefaultsRegistered = false;
 export const registerDefaultStyleElements = (): void => {
   if (!isDefaultsRegistered) {
     // Edge styles
-    StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
-    StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
-    StyleRegistry.putValue(EDGESTYLE.LOOP, EdgeStyle.Loop);
-    StyleRegistry.putValue(EDGESTYLE.MANHATTAN, EdgeStyle.ManhattanConnector);
-    StyleRegistry.putValue(EDGESTYLE.ORTHOGONAL, EdgeStyle.OrthConnector);
-    StyleRegistry.putValue(EDGESTYLE.SEGMENT, EdgeStyle.SegmentConnector);
-    StyleRegistry.putValue(EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide);
-    StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
+    // StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
+    // StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
+    // StyleRegistry.putValue(EDGESTYLE.LOOP, EdgeStyle.Loop);
+    // StyleRegistry.putValue(EDGESTYLE.MANHATTAN, EdgeStyle.ManhattanConnector);
+    // StyleRegistry.putValue(EDGESTYLE.ORTHOGONAL, EdgeStyle.OrthConnector);
+    // StyleRegistry.putValue(EDGESTYLE.SEGMENT, EdgeStyle.SegmentConnector);
+    // StyleRegistry.putValue(EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide);
+    // StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
 
     // Perimeters
     StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
