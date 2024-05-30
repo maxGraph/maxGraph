@@ -1037,17 +1037,15 @@ class Graph extends EventSource {
   createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
     let result = null;
     if (
-      edgeStyle == EdgeStyle.Loop
-      // ||
-      // edgeStyle == EdgeStyle.ElbowConnector ||
-      // edgeStyle == EdgeStyle.SideToSide ||
-      // edgeStyle == EdgeStyle.TopToBottom
+      edgeStyle == EdgeStyle.Loop ||
+      edgeStyle == EdgeStyle.ElbowConnector ||
+      edgeStyle == EdgeStyle.SideToSide ||
+      edgeStyle == EdgeStyle.TopToBottom
     ) {
       result = this.createElbowEdgeHandler(state);
     } else if (
-      edgeStyle != null
-      // edgeStyle == EdgeStyle.SegmentConnector ||
-      // edgeStyle == EdgeStyle.OrthConnector
+      edgeStyle == EdgeStyle.SegmentConnector ||
+      edgeStyle == EdgeStyle.OrthConnector
     ) {
       result = this.createEdgeSegmentHandler(state);
     } else {
@@ -1255,13 +1253,12 @@ class Graph extends EventSource {
 
     const tmp = this.view.getEdgeStyle(edge);
     return (
-      tmp !== undefined
-      // tmp === EdgeStyle.SegmentConnector ||
-      // tmp === EdgeStyle.ElbowConnector ||
-      // tmp === EdgeStyle.SideToSide ||
-      // tmp === EdgeStyle.TopToBottom ||
-      // tmp === EdgeStyle.EntityRelation ||
-      // tmp === EdgeStyle.OrthConnector
+      tmp === EdgeStyle.SegmentConnector ||
+      tmp === EdgeStyle.ElbowConnector ||
+      tmp === EdgeStyle.SideToSide ||
+      tmp === EdgeStyle.TopToBottom ||
+      tmp === EdgeStyle.EntityRelation ||
+      tmp === EdgeStyle.OrthConnector
     );
   }
 
