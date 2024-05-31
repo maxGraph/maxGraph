@@ -25,12 +25,14 @@ import Rectangle from '../Rectangle';
 import { ArrowValue, ColorValue } from '../../../types';
 
 /**
- * Extends {@link mxShape} to implement a connector shape.
- * The connector shape allows for arrow heads on either side.
- * This shape is registered under {@link mxConstants.SHAPE_CONNECTOR} in {@link mxCellRenderer}.
+ * Extends {@link PolylineShape} to implement a connector shape including a polyline (a line with multiple points)
+ * that allows for arrow heads on either side.
  *
- * @class ConnectorShape
- * @extends {PolylineShape}
+ * The shape is used to represent edges, not vertices.
+ *
+ * This shape is registered under {@link SHAPE.CONNECTOR} in {@link CellRenderer}.
+ *
+ * @category Edge Shapes
  */
 class ConnectorShape extends PolylineShape {
   constructor(points: Point[], stroke: ColorValue, strokewidth: number) {

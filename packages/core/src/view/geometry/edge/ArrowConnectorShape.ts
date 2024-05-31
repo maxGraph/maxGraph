@@ -26,10 +26,13 @@ import CellState from '../../cell/CellState';
 import { ColorValue } from '../../../types';
 
 /**
- * Extends {@link Shape} to implement an new rounded arrow shape with support for waypoints and double arrows. The
- * shape is used to represent edges, not vertices.
+ * Extends {@link Shape} to implement a new rounded arrow shape with support for waypoints and double arrows.
  *
- * This shape is registered under {@link mxConstants.SHAPE_ARROW_CONNECTOR} in {@link mxCellRenderer}.
+ * The shape is used to represent edges, not vertices.
+ *
+ * By default, this shape is registered under {@link SHAPE.ARROW_CONNECTOR} in {@link CellRenderer}.
+ *
+ * @category Edge Shapes
  */
 class ArrowConnectorShape extends Shape {
   constructor(

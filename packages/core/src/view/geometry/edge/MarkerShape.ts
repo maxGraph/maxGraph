@@ -23,9 +23,9 @@ import Point from '../Point';
 import Shape from '../Shape';
 
 /**
- * A static class that implements all markers for VML and SVG using a registry.
+ * A registry that stores all edge markers using .
+ *
  * NOTE: The signatures in this class will change.
- * @class MarkerShape
  */
 class MarkerShape {
   /**

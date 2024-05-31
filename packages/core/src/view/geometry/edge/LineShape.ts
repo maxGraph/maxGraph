@@ -23,9 +23,12 @@ import { ColorValue } from '../../../types';
 
 /**
  * Extends {@link Shape} to implement a horizontal line shape.
- * This shape is registered under {@link mxConstants.SHAPE_LINE} in {@link mxCellRenderer}.
- * @class Line
- * @extends {Shape}
+ *
+ * The shape is used to represent edges, not vertices.
+ *
+ * By default, this shape is registered under {@link SHAPE.LINE} in {@link CellRenderer}.
+ *
+ * @category Edge Shapes
  */
 class LineShape extends Shape {
   constructor(bounds: Rectangle, stroke: ColorValue, strokeWidth = 1, vertical = false) {

@@ -106,7 +106,7 @@ class CellRenderer {
 
   /**
    * Defines the default shape for labels.
-   * @default {@link Text}.
+   * @default {@link TextShape}.
    */
   defaultTextShape: typeof TextShape = TextShape;
 
