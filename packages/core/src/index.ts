@@ -140,7 +140,10 @@ export { default as HexagonShape } from './view/geometry/node/HexagonShape';
 export { default as ImageShape } from './view/geometry/node/ImageShape';
 export { default as RectangleShape } from './view/geometry/node/RectangleShape';
 export { default as RhombusShape } from './view/geometry/node/RhombusShape';
-export { default as StencilShape } from './view/geometry/node/StencilShape';
+export {
+  default as StencilShape,
+  StencilShapeConfig,
+} from './view/geometry/node/StencilShape';
 export { default as StencilShapeRegistry } from './view/geometry/node/StencilShapeRegistry';
 
 export * as constants from './util/Constants';

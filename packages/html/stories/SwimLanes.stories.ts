@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import {
-  ConnectionHandler,
+  type ConnectionHandler,
   ImageBox,
   Perimeter,
   Point,
@@ -32,6 +32,7 @@ import {
   type EventObject,
   type SelectionHandler,
   type VertexParameters,
+  Client,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import {
@@ -56,10 +57,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   container.style.background = ''; // no grid
 
   InternalEvent.disableContextMenu(container);
-
-  // Defines an icon for creating new connections in the connection handler.
-  // This will automatically disable the highlighting of the source vertex.
-  ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
 
   // Creates a wrapper editor around a new graph inside
   // the given container using an XML config for the
@@ -86,6 +83,15 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const graphHandler = graph.getPlugin('SelectionHandler') as SelectionHandler;
   graphHandler.setRemoveCellsFromParent(false);
+
+  // Defines an icon for creating new connections in the connection handler.
+  // This will automatically disable the highlighting of the source vertex.
+  const connectionHandler = graph.getPlugin('ConnectionHandler') as ConnectionHandler;
+  connectionHandler.connectImage = new ImageBox(
+    `${Client.imageBasePath}/connector.gif`,
+    16,
+    16
+  );
 
   // Changes the default vertex style in-place
   let style = graph.getStylesheet().getDefaultVertexStyle();

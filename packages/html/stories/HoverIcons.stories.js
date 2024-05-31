@@ -23,7 +23,7 @@ import {
   Rectangle,
   mathUtils,
   domUtils,
-  ConnectionHandler,
+  Client,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -31,9 +31,8 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Icon_Images/HoverIcons',
@@ -48,11 +47,8 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
+  configureImagesBasePath();
   const container = createGraphContainer(args);
-
-  // Defines an icon for creating new connections in the connection handler.
-  // This will automatically disable the highlighting of the source vertex.
-  ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
 
   // Defines a new class for all icons
   class mxIconSet {
@@ -122,6 +118,15 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given container
   const graph = new Graph(container);
   graph.setConnectable(true);
+
+  // Defines an icon for creating new connections in the connection handler.
+  // This will automatically disable the highlighting of the source vertex.
+  const connectionHandler = graph.getPlugin('ConnectionHandler');
+  connectionHandler.connectImage = new ImageBox(
+    `${Client.imageBasePath}/connector.gif`,
+    16,
+    16
+  );
 
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);

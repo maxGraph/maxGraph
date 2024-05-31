@@ -126,17 +126,23 @@ The `strokewidth` property has been renamed to `strokeWidth` in `maxGraph`.
 
 The shape names in `maxGraph` have been updated to have a consistent postfix. Please update the shape names in your code as follows:
 
-- `mxRectangleShape` should be updated to `RectangleShape`.
-- `mxImageShape` should be updated to `ImageShape`.
-- `mxEllipse` should be updated to `EllipseShape`.
-- `mxRhombus` should be updated to `RhombusShape`.
-- `mxMarker` should be updated to `MarkerShape`.
 - `mxConnector` should be updated to `ConnectorShape`.
+- `mxEllipse` should be updated to `EllipseShape`.
+- `mxImageShape` should be updated to `ImageShape`.
+- `mxRectangleShape` should be updated to `RectangleShape`.
+- `mxMarker` should be updated to `MarkerShape`.
+- `mxRhombus` should be updated to `RhombusShape`.
+- `mxStencil` should be updated to `StencilShape`.
 - `mxText` should be updated to `TextShape`.
 
 Additionally, some shape properties have been renamed:
 
 - The `strokewidth` property should now be replaced by `strokeWidth`.
+
+#### `mxStencil` to `StencilShape`
+
+In maxGraph@0.11.0, the `allowEval` and `defaultLocalized` properties have been removed. Configure these properties using `StencilShapeConfig`.
+
 
 ### `mxUtils` split
 Several functions in `mxUtils` have been moved to their own namespaces in `maxGraph`. Some remain in `utils`.

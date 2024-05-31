@@ -23,10 +23,6 @@ import { equalPoints } from '../../util/arrayUtils';
 import { clone } from '../../util/cloneUtils';
 
 /**
- * @class Geometry
- *
- * @extends {Rectangle}
- *
  * For vertices, the geometry consists of the x- and y-location, and the width
  * and height. For edges, the geometry consists of the optional terminal- and
  * control points. The terminal points are only required if an edge is
@@ -49,8 +45,7 @@ import { clone } from '../../util/cloneUtils';
  * be ignored or interpreted differently depending on the edge's {@link edgeStyle}.
  *
  * To disable automatic reset of control points after a cell has been moved or
- * resized, the the {@link graph.resizeEdgesOnMove} and
- * {@link graph.resetEdgesOnResize} may be used.
+ * resized, {@link graph.resetEdgesOnMove} and {@link graph.resetEdgesOnResize} may be used.
  *
  * ### Edge Labels
  *
@@ -105,15 +100,15 @@ class Geometry extends Rectangle {
 
   /**
    * Defines the source {@link Point} of the edge. This is used if the
-   * corresponding edge does not have a source vertex. Otherwise it is
-   * ignored. Default is  null.
+   * corresponding edge does not have a source vertex. Otherwise, it is ignored.
+   * @default null
    */
   sourcePoint: Point | null = null;
 
   /**
-   * Defines the target {@link Point} of the edge. This is used if the
-   * corresponding edge does not have a target vertex. Otherwise it is
-   * ignored. Default is null.
+   * Defines the source {@link Point} of the edge. This is used if the
+   * corresponding edge does not have a target vertex. Otherwise, it is ignored.
+   * @default null
    */
   targetPoint: Point | null = null;
 
@@ -121,31 +116,34 @@ class Geometry extends Rectangle {
    * Array of {@link Point} which specifies the control points along the edge.
    * These points are the intermediate points on the edge, for the endpoints
    * use {@link targetPoint} and {@link sourcePoint} or set the terminals of the edge to
-   * a non-null value. Default is null.
+   * a non-null value.
+   * @default null
    */
   points: Point[] | null = null;
 
   /**
-   * For edges, this holds the offset (in pixels) from the position defined
-   * by {@link x} and {@link y} on the edge. For relative geometries (for vertices), this
-   * defines the absolute offset from the point defined by the relative
-   * coordinates. For absolute geometries (for vertices), this defines the
-   * offset for the label. Default is null.
+   * For edges, this holds the offset (in pixels) from the position defined by {@link x} and {@link y} on the edge.
+   *
+   * For relative geometries (for vertices), this defines the absolute offset from the point defined by the relative
+   * coordinates.
+   *
+   * For absolute geometries (for vertices), this defines the offset for the label.
+   * @default null
    */
   offset: Point | null = null;
 
   /**
-   * Specifies if the coordinates in the geometry are to be interpreted as
-   * relative coordinates. For edges, this is used to define the location of
-   * the edge label relative to the edge as rendered on the display. For
-   * vertices, this specifies the relative location inside the bounds of the
-   * parent cell.
+   * Specifies if the coordinates in the geometry are to be interpreted as relative coordinates.
    *
-   * If this is false, then the coordinates are relative to the origin of the
-   * parent cell or, for edges, the edge label position is relative to the
-   * center of the edge as rendered on screen.
+   * For edges, this is used to define the location of the edge label relative to the edge
+   * as rendered on the display.
    *
-   * Default is false.
+   * For vertices, this specifies the relative location inside the bounds of the parent cell.
+   *
+   * If this is `false`, then the coordinates are relative to the origin of the parent cell or,
+   * for edges, the edge label position is relative to the center of the edge as rendered on screen.
+   *
+   * @default false.
    */
   relative = false;
 
@@ -160,7 +158,7 @@ class Geometry extends Rectangle {
    * existing geometry instance. If this operation is called during a graph
    * model transactional change, then the geometry should be cloned before
    * calling this method and setting the geometry of the cell using
-   * {@link mxGraphModel.setGeometry}.
+   * {@link GraphDataModel.setGeometry}.
    */
   swap() {
     if (this.alternateBounds) {

@@ -145,11 +145,11 @@ type FactoryMethod = (
  * mxConstants.HIGHLIGHT_COLOR = null;
  * ```
  *
- * To install the image, the connectImage field of the mxConnectionHandler must
+ * To install the image, the connectImage field of the ConnectionHandler must
  * be assigned a new {@link Image} instance:
  *
  * ```javascript
- * connectImage = new mxImage('images/green-dot.gif', 14, 14);
+ * connectImage = new ImageBox('images/green-dot.gif', 14, 14);
  * ```
  *
  * This will use the green-dot.gif with a width and height of 14 pixels as the
@@ -593,9 +593,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
 
   /**
    * Hook to return the {@link Image} used for the connection icon of the given
-   * <CellState>. This implementation returns <connectImage>.
+   * {@link CellState}. This implementation returns {@link connectImage}.
    *
-   * @param state <CellState> whose connect image should be returned.
+   * @param state {@link CellState} whose connect image should be returned.
    */
   getConnectImage(state: CellState) {
     return this.connectImage;
@@ -615,10 +615,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Creates the array {@link ImageShapes} that represent the connect icons for
-   * the given <CellState>.
+   * Creates the array {@link ImageShape}s that represent the connect icons for
+   * the given {@link CellState}.
    *
-   * @param state <CellState> whose connect icons should be returned.
+   * @param state {@link CellState} whose connect icons should be returned.
    */
   createIcons(state: CellState) {
     const image = this.getConnectImage(state);

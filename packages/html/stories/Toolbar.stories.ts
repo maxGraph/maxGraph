@@ -16,18 +16,20 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  RubberBandHandler,
+  Cell,
   type CellStyle,
-  ConnectionHandler,
+  Client,
+  type ConnectionHandler,
+  DomHelpers,
+  DragSource,
+  Geometry,
+  gestureUtils,
+  Graph,
+  GraphDataModel,
   ImageBox,
   MaxToolbar,
-  GraphDataModel,
-  Cell,
-  Geometry,
-  DragSource,
-  DomHelpers,
-  gestureUtils,
+  Point,
+  RubberBandHandler,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -40,8 +42,7 @@ import {
   configureImagesBasePath,
   createGraphContainer,
 } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Toolbars/Toolbar',
@@ -58,24 +59,20 @@ export default {
 const Template = ({ label, ...args }: { [p: string]: any }) => {
   configureImagesBasePath();
   const div = document.createElement('div');
-  const container = createGraphContainer(args);
-  div.appendChild(container);
+  div.style.display = 'flex';
+  div.style.flexDirection = 'column-reverse';
 
-  // Defines an icon for creating new connections in the connection handler.
-  // This will automatically disable the highlighting of the source vertex.
-  ConnectionHandler.prototype.connectImage = new ImageBox('images/connector.gif', 16, 16);
+  const toolbarAndGraphParentContainer = document.createElement('div');
+  toolbarAndGraphParentContainer.style.display = 'flex';
+  div.appendChild(toolbarAndGraphParentContainer);
 
   // Creates the div for the toolbar
   const tbContainer = document.createElement('div');
-  tbContainer.style.position = 'absolute';
-  tbContainer.style.overflow = 'hidden';
-  tbContainer.style.padding = '2px';
-  tbContainer.style.left = '0px';
-  tbContainer.style.top = '0px';
-  tbContainer.style.width = '24px';
-  tbContainer.style.bottom = '0px';
+  tbContainer.style.display = 'flex';
+  tbContainer.style.flexDirection = 'column';
+  tbContainer.style.marginRight = '.5rem';
 
-  div.appendChild(tbContainer);
+  toolbarAndGraphParentContainer.appendChild(tbContainer);
 
   // Creates new toolbar without event processing
   const toolbar = new MaxToolbar(tbContainer);
@@ -83,10 +80,22 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
 
   // Creates the model and the graph inside the container
   // using the fastest rendering available on the browser
+  const container = createGraphContainer(args);
+  toolbarAndGraphParentContainer.appendChild(container);
+
   const model = new GraphDataModel();
   const graph = new Graph(container, model);
   configureExpandedAndCollapsedImages(graph);
   graph.dropEnabled = true;
+
+  // Defines an icon for creating new connections in the connection handler.
+  // This will automatically disable the highlighting of the source vertex.
+  const connectionHandler = graph.getPlugin('ConnectionHandler') as ConnectionHandler;
+  connectionHandler.connectImage = new ImageBox(
+    `${Client.imageBasePath}/connector.gif`,
+    16,
+    16
+  );
 
   // Matches DnD inside the graph
   DragSource.prototype.getDropTarget = function (
@@ -111,11 +120,31 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
 
   if (args.rubberBand) new RubberBandHandler(graph);
 
-  function addVertex(icon: string, w: number, h: number, style: CellStyle) {
-    const vertex = new Cell(null, new Geometry(0, 0, w, h), style);
-    vertex.setVertex(true);
+  function addCell(
+    isVertex: boolean,
+    icon: string,
+    w: number,
+    h: number,
+    style: CellStyle
+  ) {
+    const cell = new Cell(null, new Geometry(0, 0, w, h), style);
+    cell.setVertex(isVertex);
+    cell.setEdge(!isVertex);
 
-    addToolbarItem(graph, toolbar, vertex, icon);
+    addToolbarItem(graph, toolbar, cell, icon, !isVertex ? 'Edge' : undefined);
+  }
+
+  function addVertex(icon: string, w: number, h: number, style: CellStyle) {
+    addCell(true, icon, w, h, style);
+  }
+
+  // the line is not correctly display when calling toolbar.addLine() when the toolbar is in a flex container
+  function addToolbarLine() {
+    const hr = document.createElement('hr');
+    hr.style.maxHeight = '0';
+    hr.style.minWidth = '100%';
+    hr.setAttribute('size', '1');
+    tbContainer.appendChild(hr);
   }
 
   addVertex('images/swimlane.gif', 120, 160, { shape: 'swimlane', startSize: 20 });
@@ -126,7 +155,13 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   addVertex('images/triangle.gif', 40, 40, { shape: 'triangle' });
   addVertex('images/cylinder.gif', 40, 40, { shape: 'cylinder' });
   addVertex('images/actor.gif', 30, 40, { shape: 'actor' });
-  toolbar.addLine();
+  addToolbarLine();
+
+  function addEdge(icon: string, w: number, h: number, style: CellStyle) {
+    addCell(false, icon, w, h, style);
+  }
+  addEdge('images/entity.gif', 50, 50, {});
+  addToolbarLine();
 
   const button = DomHelpers.button('Create toolbar entry from selection', (evt) => {
     if (!graph.isSelectionEmpty()) {
@@ -153,13 +188,16 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
     }
   });
 
-  tbContainer.appendChild(button);
+  button.style.marginBottom = '1rem';
+  button.style.alignSelf = 'flex-start';
+  div.appendChild(button);
 
   function addToolbarItem(
     graph: Graph,
     toolbar: MaxToolbar,
     prototype: Cell,
-    image: string
+    image: string,
+    title?: string
   ) {
     // Function that is executed when the image is dropped on
     // the graph. The cell argument points to the cell under
@@ -168,18 +206,27 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
       graph.stopEditing(false);
 
       const pt = graph.getPointForEvent(evt);
-      const vertex = graph.getDataModel().cloneCell(prototype);
-      if (!vertex) return;
+      const cellToImport = graph.getDataModel().cloneCell(prototype);
+      if (!cellToImport) return;
 
-      if (vertex.geometry) {
-        vertex.geometry.x = pt.x;
-        vertex.geometry.y = pt.y;
+      if (cellToImport.geometry) {
+        cellToImport.geometry.x = pt.x;
+        cellToImport.geometry.y = pt.y;
+
+        if (cellToImport.isEdge()) {
+          cellToImport.geometry.sourcePoint = new Point(pt.x, pt.y);
+          cellToImport.geometry.targetPoint = new Point(
+            pt.x + cellToImport.geometry.width,
+            pt.y + cellToImport.geometry.height
+          );
+        }
       }
-      graph.setSelectionCells(graph.importCells([vertex], 0, 0, cell));
+
+      graph.setSelectionCells(graph.importCells([cellToImport], 0, 0, cell));
     };
 
     // Creates the image which is used as the drag icon (preview)
-    const img = toolbar.addMode(null, image, funct, '');
+    const img = toolbar.addMode(title, image, funct, '');
     gestureUtils.makeDraggable(img, graph, funct);
   }
 
