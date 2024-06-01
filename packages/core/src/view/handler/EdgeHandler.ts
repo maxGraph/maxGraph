@@ -634,9 +634,8 @@ class EdgeHandler {
       : null;
 
     return (
-      edgeStyle !== EdgeStyle.EntityRelation ||
-      index === 0 ||
-      index === this.abspoints.length - 1
+      // edgeStyle !== EdgeStyle.EntityRelation ||
+      index === 0 || index === this.abspoints.length - 1
     );
   }
 

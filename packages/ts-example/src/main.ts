@@ -20,7 +20,7 @@ import {
   Client,
   Graph,
   InternalEvent,
-  Perimeter,
+  // Perimeter,
   RubberBandHandler,
 } from '@maxgraph/core';
 import { registerCustomShapes } from './custom-shapes';
@@ -37,7 +37,7 @@ const initializeGraph = (container: HTMLElement) => {
   registerCustomShapes();
   // create a dedicated style for "ellipse" to share properties
   graph.getStylesheet().putCellStyle('myEllipse', {
-    perimeter: Perimeter.EllipsePerimeter,
+    perimeter: 'ellipsePerimeter',
     shape: 'ellipse',
     verticalAlign: 'top',
     verticalLabelPosition: 'bottom',
