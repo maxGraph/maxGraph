@@ -1508,36 +1508,4 @@ class Graph extends EventSource {
   }
 }
 
-/**
- * Codec for {@link Graph}s. This class is created and registered
- * dynamically at load time and used implicitly via <Codec>
- * and the <CodecRegistry>.
- *
- * Transient Fields:
- *
- * - graphListeners
- * - eventListeners
- * - view
- * - container
- * - cellRenderer
- * - editor
- * - selection
- */
-
-/*export class GraphCodec extends ObjectCodec {
-  constructor() {
-    // TODO: Register every possible plugin (i.e. all not being excluded via tree-shaking(?))
-    super(new Graph(), [
-      'graphListeners',
-      'eventListeners',
-      'view',
-      'container',
-      'cellRenderer',
-      'editor',
-      'selection',
-    ]);
-  }
-}*/
-
-//CodecRegistry.register(new GraphCodec());
 export { Graph };

@@ -18,6 +18,7 @@ export * from './editor';
 export * from './CellCodec';
 export * from './ChildChangeCodec';
 export * from './GenericChangeCodec';
+export * from './GraphCodec';
 export * from './GraphViewCodec';
 export * from './ModelCodec';
 export * from './RootChangeCodec';
