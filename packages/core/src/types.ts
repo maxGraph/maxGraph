@@ -16,6 +16,7 @@ limitations under the License.
 
 import { DIRECTION, IDENTITY_FIELD_NAME } from './util/Constants';
 import type { Graph } from './view/Graph';
+import type AbstractCanvas2D from './view/canvas/AbstractCanvas2D';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
 import type EventSource from './view/event/EventSource';
@@ -1155,3 +1156,16 @@ export type EdgeStyleFunction = (
   points: Point[],
   result: Point[]
 ) => void;
+
+export type MarkerFactoryFunction = (
+  canvas: AbstractCanvas2D,
+  shape: Shape,
+  type: StyleArrowValue,
+  pe: Point,
+  unitX: number,
+  unitY: number,
+  size: number,
+  source: boolean,
+  sw: number,
+  filled: boolean
+) => () => void;
