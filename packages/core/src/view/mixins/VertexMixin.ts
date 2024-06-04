@@ -281,10 +281,6 @@ const VertexMixin: PartialType = {
     return this.getChildCells(parent, true, false);
   },
 
-  // ***************************************************************************
-  // Group: Graph Behaviour
-  // ***************************************************************************
-
   isVertexLabelsMovable() {
     return this.vertexLabelsMovable;
   },
