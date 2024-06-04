@@ -62,6 +62,7 @@ import Multiplicity from './other/Multiplicity';
 import ImageBundle from './image/ImageBundle';
 import GraphSelectionModel from './GraphSelectionModel';
 import { registerDefaultShapes } from './cell/register-shapes';
+import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
 import { registerDefaultStyleElements } from './style/register';
 
 export const defaultPlugins: GraphPluginConstructor[] = [
@@ -494,6 +495,7 @@ class Graph extends EventSource {
   protected registerDefaults(): void {
     registerDefaultShapes();
     registerDefaultStyleElements();
+    registerDefaultEdgeMarkers();
   }
 
   constructor(

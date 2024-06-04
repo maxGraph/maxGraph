@@ -25,7 +25,7 @@ import {
   ArrowShape,
   Point,
 } from '@maxgraph/core';
-import type { AbstractCanvas2D, ArrowValue, Shape } from '@maxgraph/core';
+import type { AbstractCanvas2D, Shape, StyleArrowValue } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
 
@@ -52,7 +52,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     function (
       canvas: AbstractCanvas2D,
       _shape: Shape,
-      _type: ArrowValue,
+      _type: StyleArrowValue,
       pe: Point,
       unitX: number,
       unitY: number,

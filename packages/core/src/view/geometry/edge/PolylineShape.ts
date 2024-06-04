@@ -24,21 +24,21 @@ import { ColorValue } from '../../../types';
 
 /**
  * Extends {@link Shape} to implement a polyline (a line with multiple points).
- * This shape is registered under {@link Constants#SHAPE_POLYLINE} in
- * {@link CellRenderer}.
  *
- * Constructor: mxPolyline
+ * The shape is used to represent edges, not vertices.
  *
- * Constructs a new polyline shape.
+ * By default, this shape is not registered in {@link CellRenderer}.
  *
- * @param points Array of <Point> that define the points. This is stored in
- * {@link Shape#points}.
- * @param stroke String that defines the stroke color. Default is 'black'. This is
- * stored in <stroke>.
- * @param strokewidth Optional integer that defines the stroke width. Default is
- * 1. This is stored in <strokewidth>.
+ * @category Edge Shapes
  */
 class PolylineShape extends Shape {
+  /**
+   * Constructs a new polyline shape.
+   *
+   * @param points Array of <{@link Point} that define the points. This is stored in {@link Shape.points}.
+   * @param stroke String that defines the stroke color. Default is 'black'. This is stored in {@link Shape.stroke}.
+   * @param strokeWidth Optional integer that defines the stroke width. Default is 1. This is stored in {@link Shape.strokeWidth}.
+   */
   constructor(points: Point[], stroke: ColorValue, strokeWidth = 1) {
     super();
     this.points = points;

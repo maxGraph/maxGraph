@@ -17,7 +17,7 @@
     "readme": "none",
     "excludeExternals": true,
     "excludePrivate": true,
-    "categoryOrder": ["Configuration", "Logging","*"],
+    "categoryOrder": ["Configuration", "Edge Shapes", "Logging", "*"],
     "categorizeByGroup": false,
     "navigation": {
       "includeCategories": false, // not enough categories to warrant this

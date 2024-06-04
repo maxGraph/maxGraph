@@ -588,8 +588,7 @@ export enum SHAPE {
   RHOMBUS = 'rhombus',
 
   /**
-   * Name under which {@link Line} is registered in {@link CellRenderer}.
-   * Default is line.
+   * Name under which {@link LineShape} is registered in {@link CellRenderer} by default.
    */
   LINE = 'line',
 
@@ -600,14 +599,12 @@ export enum SHAPE {
   IMAGE = 'image',
 
   /**
-   * Name under which {@link Arrow} is registered in {@link CellRenderer}.
-   * Default is arrow.
+   * Name under which {@link ArrowShape} is registered in {@link CellRenderer} by default.
    */
   ARROW = 'arrow',
 
   /**
-   * Name under which {@link ArrowConnector} is registered in {@link CellRenderer}.
-   * Default is arrowConnector.
+   * Name under which {@link ArrowConnectorShape} is registered in {@link CellRenderer} by default.
    */
   ARROW_CONNECTOR = 'arrowConnector',
 
@@ -630,8 +627,7 @@ export enum SHAPE {
   SWIMLANE = 'swimlane',
 
   /**
-   * Name under which {@link Connector} is registered in {@link CellRenderer}.
-   * Default is connector.
+   * Name under which {@link ConnectorShape} is registered in {@link CellRenderer} by default.
    */
   CONNECTOR = 'connector',
 
