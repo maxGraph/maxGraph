@@ -21,6 +21,6 @@
     "categorizeByGroup": false,
     "navigation": {
       "includeCategories": false, // not enough categories to warrant this
-    }
+    },
   }
 }
