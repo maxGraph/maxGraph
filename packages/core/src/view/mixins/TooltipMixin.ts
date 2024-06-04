@@ -26,13 +26,55 @@ import { mixInto } from '../../util/Utils';
 
 declare module '../Graph' {
   interface Graph {
+    /**
+     * Returns the string or DOM node that represents the tooltip for the given
+     * state, node and coordinate pair. This implementation checks if the given
+     * node is a folding icon or overlay and returns the respective tooltip. If
+     * this does not result in a tooltip, the handler for the cell is retrieved
+     * from {@link SelectionCellsHandler} and the optional {@link getTooltipForNode} method is
+     * called. If no special tooltip exists here then {@link getTooltipForCell} is used
+     * with the cell in the given state as the argument to return a tooltip for the
+     * given state.
+     *
+     * @param state {@link CellState} whose tooltip should be returned.
+     * @param node DOM node that is currently under the mouse.
+     * @param x X-coordinate of the mouse.
+     * @param y Y-coordinate of the mouse.
+     */
     getTooltip: (
       state: CellState,
       node: HTMLElement | SVGElement,
       x: number,
       y: number
     ) => HTMLElement | string | null;
+
+    /**
+     * Returns the string or DOM node to be used as the tooltip for the given
+     * cell. This implementation uses the {@link Cell.getTooltip} function if it
+     * exists, or else it returns {@link convertValueToString} for the cell.
+     *
+     * @example
+     *
+     * ```javascript
+     * graph.getTooltipForCell = function(cell)
+     * {
+     *   return 'Hello, World!';
+     * }
+     * ```
+     *
+     * Replaces all tooltips with the string Hello, World!
+     *
+     * @param cell {@link mxCell} whose tooltip should be returned.
+     */
     getTooltipForCell: (cell: Cell) => HTMLElement | string;
+
+    /**
+     * Specifies if tooltips should be enabled.
+     *
+     * This implementation updates {@link TooltipHandler.enabled}.
+     *
+     * @param enabled Boolean indicating if tooltips should be enabled.
+     */
     setTooltips: (enabled: boolean) => void;
   }
 }
@@ -46,21 +88,6 @@ type PartialType = PartialGraph & PartialTooltip;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const TooltipMixin: PartialType = {
-  /**
-   * Returns the string or DOM node that represents the tooltip for the given
-   * state, node and coordinate pair. This implementation checks if the given
-   * node is a folding icon or overlay and returns the respective tooltip. If
-   * this does not result in a tooltip, the handler for the cell is retrieved
-   * from {@link selectionCellsHandler} and the optional getTooltipForNode method is
-   * called. If no special tooltip exists here then {@link getTooltipForCell} is used
-   * with the cell in the given state as the argument to return a tooltip for the
-   * given state.
-   *
-   * @param state {@link CellState} whose tooltip should be returned.
-   * @param node DOM node that is currently under the mouse.
-   * @param x X-coordinate of the mouse.
-   * @param y Y-coordinate of the mouse.
-   */
   getTooltip(state, node, x, y) {
     let tip: HTMLElement | string | null = null;
 
@@ -89,9 +116,11 @@ const TooltipMixin: PartialType = {
 
       const handler = selectionCellsHandler?.getHandler(state.cell);
 
-      // @ts-ignore Guarded against undefined error already.
-      if (handler && typeof handler.getTooltipForNode === 'function') {
-        // @ts-ignore Guarded against undefined error already.
+      if (
+        handler &&
+        'getTooltipForNode' in handler &&
+        typeof handler.getTooltipForNode === 'function'
+      ) {
         tip = handler.getTooltipForNode(node);
       }
     }
@@ -103,24 +132,6 @@ const TooltipMixin: PartialType = {
     return tip;
   },
 
-  /**
-   * Returns the string or DOM node to be used as the tooltip for the given
-   * cell. This implementation uses the cells getTooltip function if it
-   * exists, or else it returns {@link convertValueToString} for the cell.
-   *
-   * @example
-   *
-   * ```javascript
-   * graph.getTooltipForCell = function(cell)
-   * {
-   *   return 'Hello, World!';
-   * }
-   * ```
-   *
-   * Replaces all tooltips with the string Hello, World!
-   *
-   * @param cell {@link mxCell} whose tooltip should be returned.
-   */
   getTooltipForCell(cell: Cell) {
     let tip = null;
 
@@ -134,17 +145,6 @@ const TooltipMixin: PartialType = {
     return tip;
   },
 
-  /*****************************************************************************
-   * Group: Graph behaviour
-   *****************************************************************************/
-
-  /**
-   * Specifies if tooltips should be enabled.
-   *
-   * This implementation updates {@link TooltipHandler.enabled}.
-   *
-   * @param enabled Boolean indicating if tooltips should be enabled.
-   */
   setTooltips(enabled: boolean) {
     const tooltipHandler = this.getPlugin('TooltipHandler') as TooltipHandler;
     tooltipHandler?.setEnabled(enabled);

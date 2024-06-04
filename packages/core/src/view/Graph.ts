@@ -1285,13 +1285,12 @@ class Graph extends EventSource {
   }
 
   /**
-   * Returns the textual representation for the given cell. This
-   * implementation returns the nodename or string-representation of the user
-   * object.
+   * Returns the textual representation for the given cell.
+   *
+   * This implementation returns the node name or string-representation of the user object.
    *
    *
-   * The following returns the label attribute from the cells user
-   * object if it is an XML node.
+   * The following returns the label attribute from the cells user object if it is an XML node.
    *
    * @example
    * ```javascript
@@ -1303,7 +1302,7 @@ class Graph extends EventSource {
    *
    * See also: {@link cellLabelChanged}.
    *
-   * @param cell {@link mxCell} whose textual representation should be returned.
+   * @param cell {@link Cell} whose textual representation should be returned.
    */
   convertValueToString(cell: Cell): string {
     const value = cell.getValue();
@@ -1320,10 +1319,11 @@ class Graph extends EventSource {
   }
 
   /**
-   * Returns the string to be used as the link for the given cell. This
-   * implementation returns null.
+   * Returns the string to be used as the link for the given cell.
    *
-   * @param cell {@link mxCell} whose tooltip should be returned.
+   * This implementation returns null.
+   *
+   * @param cell {@link Cell} whose link should be returned.
    */
   getLinkForCell(cell: Cell): string | null {
     return null;
