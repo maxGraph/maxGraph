@@ -18,7 +18,8 @@ limitations under the License.
 
 import Client from '../Client';
 import { NONE } from './Constants';
-import MaxXmlRequest, { get, load } from './MaxXmlRequest';
+import { get, load } from './MaxXmlRequest';
+import type MaxXmlRequest from './MaxXmlRequest';
 
 /**
  * Implements internationalization. You can provide any number of
@@ -30,11 +31,11 @@ import MaxXmlRequest, { get, load } from './MaxXmlRequest';
  * default resource which is loaded in all cases. If a properties file for a
  * specific language exists, then it is used to override the settings in the
  * default resource. All entries in the file are of the form key=value. The
- * values may then be accessed in code via <get>. Lines without
+ * values may then be accessed in code via {@link get}. Lines without
  * equal signs in the properties files are ignored.
  *
  * Resource files may either be added programmatically using
- * <add> or via a resource tag in the UI section of the
+ * {@link add} or via a resource tag in the UI section of the
  * editor configuration file, eg:
  *
  * ```javascript
@@ -48,28 +49,30 @@ import MaxXmlRequest, { get, load } from './MaxXmlRequest';
  *
  * Values may contain placeholders of the form {1}...{n} where each placeholder
  * is replaced with the value of the corresponding array element in the params
- * argument passed to {@link Resources#get}. The placeholder {1} maps to the first
+ * argument passed to {@link get}. The placeholder {1} maps to the first
  * element in the array (at index 0).
  *
- * See <Client.language> for more information on specifying the default
+ * See {@link Client.language} for more information on specifying the default
  * language or disabling all loading of resources.
  *
  * Lines that start with a # sign will be ignored.
  *
- * Special characters
+ * ## Special characters
  *
  * To use unicode characters, use the standard notation (eg. \u8fd1) or %u as a
  * prefix (eg. %u20AC will display a Euro sign). For normal hex encoded strings,
  * use % as a prefix, eg. %F6 will display a "o umlaut" (&ouml;).
  *
- * See <resourcesEncoded> to disable this. If you disable this, make sure that
+ * See {@link resourcesEncoded} to disable this. If you disable this, make sure that
  * your files are UTF-8 encoded.
  *
- * Asynchronous loading
+ * ## Asynchronous loading
+ *
+ * TODO the following is taken from mxGraph and is probably no longer accurate
  *
  * By default, the core adds two resource files synchronously at load time.
  * To load these files asynchronously, set {@link LoadResources} to false
- * before loading Client.js and use {@link Resources#loadResources} instead.
+ * before loading Client and use {@link loadResources} instead.
  */
 class Translations {
   /*
@@ -84,7 +87,7 @@ class Translations {
   static extension = '.txt';
 
   /**
-   * Specifies whether or not values in resource files are encoded with \u or
+   * Specifies whether values in resource files are encoded with \u or
    * percentage. Default is false.
    */
   static resourcesEncoded = false;
@@ -175,7 +178,7 @@ class Translations {
    * added using the following code:
    *
    * ```javascript
-   * mxResources.add('resources/editor');
+   * Translations.add('resources/editor');
    * ```
    *
    * @param basename The basename for which the file should be loaded.
@@ -293,9 +296,9 @@ class Translations {
    * Returns the value for the specified resource key.
    *
    * Example:
-   * To read the value for 'welomeMessage', use the following:
+   * To read the value for 'welcomeMessage', use the following:
    * ```javascript
-   * let result = mxResources.get('welcomeMessage') || '';
+   * let result = Translations.get('welcomeMessage') || '';
    * ```
    *
    * This would require an entry of the following form in
@@ -366,8 +369,7 @@ class Translations {
   };
 
   /**
-   * Loads all required resources asynchronously. Use this to load the graph and
-   * editor resources if {@link LoadResources} is false.
+   * Loads all required resources asynchronously. Use this to load the graph and editor resources.
    *
    * @param callback Callback function for asynchronous loading.
    */

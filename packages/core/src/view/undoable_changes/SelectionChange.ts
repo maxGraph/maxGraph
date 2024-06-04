@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import EventObject from '../event/EventObject';
-import Translations from '../../util/Translations';
 import InternalEvent from '../event/InternalEvent';
 
 import type { UndoableChange } from '../../types';
@@ -23,7 +22,6 @@ import type { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 
 /**
- * @class SelectionChange
  * Action to change the current root in a view.
  */
 class SelectionChange implements UndoableChange {
@@ -44,9 +42,6 @@ class SelectionChange implements UndoableChange {
    */
   execute() {
     const selectionModel = this.graph.getSelectionModel();
-    window.status =
-      Translations.get(selectionModel.updatingSelectionResource) ||
-      selectionModel.updatingSelectionResource;
 
     for (const removed of this.removed) {
       selectionModel.cellRemoved(removed);
@@ -57,9 +52,6 @@ class SelectionChange implements UndoableChange {
     }
 
     [this.added, this.removed] = [this.removed, this.added];
-
-    window.status =
-      Translations.get(selectionModel.doneResource) || selectionModel.doneResource;
 
     selectionModel.fireEvent(
       new EventObject(InternalEvent.CHANGE, { added: this.added, removed: this.removed })

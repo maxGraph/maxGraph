@@ -28,7 +28,6 @@ import InternalEvent from './event/InternalEvent';
 import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils';
 import { getRotatedPoint, ptSegDistSq, relativeCcw, toRadians } from '../util/mathUtils';
 import MaxLog from '../gui/MaxLog';
-import Translations from '../util/Translations';
 import CellState from './cell/CellState';
 import UndoableEdit from './undoable_changes/UndoableEdit';
 import ImageShape from './geometry/node/ImageShape';
@@ -221,7 +220,7 @@ export class GraphView extends EventSource {
 
   /**
    * Sets the scale and fires a {@link scale} event before calling {@link revalidate} followed
-   * by {@link graph.sizeDidChange}.
+   * by {@link Graph.sizeDidChange}.
    *
    * @param value Decimal value that specifies the new scale (1 is 100%).
    */
@@ -253,7 +252,7 @@ export class GraphView extends EventSource {
 
   /**
    * Sets the translation and fires a {@link translate} event before calling
-   * {@link revalidate} followed by {@link graph.sizeDidChange}. The translation is the
+   * {@link revalidate} followed by {@link Graph.sizeDidChange}. The translation is the
    * negative of the origin.
    *
    * @param dx X-coordinate of the translation.
@@ -530,8 +529,6 @@ export class GraphView extends EventSource {
    */
   validate(cell: Cell | null = null) {
     const t0 = MaxLog.enter('mxGraphView.validate');
-    window.status =
-      Translations.get(this.updatingDocumentResource) || this.updatingDocumentResource;
 
     this.resetValidationState();
 
@@ -548,7 +545,6 @@ export class GraphView extends EventSource {
       this.resetValidationState();
     }
 
-    window.status = Translations.get(this.doneResource) || this.doneResource;
     MaxLog.leave('mxGraphView.validate', <number>t0);
   }
 

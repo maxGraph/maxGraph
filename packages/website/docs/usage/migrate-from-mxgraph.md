@@ -316,6 +316,11 @@ They are now set in the `Graph.options` object with the same property name.
 For example, to set the `foldingEnabled` property, instead of doing `Graph.foldingEnabled`, you should set instead `Graph.options.foldingEnabled`.
 
 
+### mxResources
+
+The `mxResources` class has been renamed to `Translations` in `maxGraph`.
+
+
 ### Client
 
 The `mxClient` class has been removed into `Client`.
