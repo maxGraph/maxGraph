@@ -123,6 +123,17 @@ const Template = ({ label, ...args }) => {
     const v3 = graph.insertVertex(parent, null, 'Interval 3', 200, 140, 360, 30);
     const v4 = graph.insertVertex(parent, null, 'Interval 4', 480, 200, 120, 30);
     const v5 = graph.insertVertex(parent, null, 'Interval 5', 60, 260, 400, 30);
+    const v6 = graph.insertVertex({
+      parent,
+      value: 'Interval 6 (ignore default style)',
+      position: [60, 360],
+      size: [500, 30],
+      style: {
+        ignoreDefaultStyle: true,
+        shape: 'rectangle',
+        strokeColor: 'black',
+      },
+    });
     const e1 = graph.insertEdge(parent, null, '1', v1, v2);
     e1.getGeometry().points = [new Point(160, 60)];
     const e2 = graph.insertEdge({
@@ -139,6 +150,7 @@ const Template = ({ label, ...args }) => {
     e4.getGeometry().points = [new Point(500, 180)];
     const e5 = graph.insertEdge(parent, null, '5', v3, v5);
     e5.getGeometry().points = [new Point(380, 180)];
+    const e6 = graph.insertEdge(parent, null, '6', v5, v6);
   });
 
   return container;
