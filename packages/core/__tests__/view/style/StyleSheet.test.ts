@@ -268,85 +268,89 @@ describe('getCellStyle', () => {
   });
 
   describe('ignoreDefaultStyle', () => {
-    test('set to true, no baseStyleNames', () => {
-      const stylesheet = new Stylesheet();
-      const cellStyle = stylesheet.getCellStyle(
-        {
-          ignoreDefaultStyle: true,
+    describe('set to true', () => {
+      test('no baseStyleNames', () => {
+        const stylesheet = new Stylesheet();
+        const cellStyle = stylesheet.getCellStyle(
+          {
+            ignoreDefaultStyle: true,
+            shape: 'cloud',
+            strokeColor: 'yellow',
+          },
+          { fillColor: 'red', strokeColor: 'green' }
+        );
+        expect(cellStyle).toStrictEqual({
           shape: 'cloud',
           strokeColor: 'yellow',
-        },
-        { fillColor: 'red', strokeColor: 'green' }
-      );
-      expect(cellStyle).toStrictEqual({
-        shape: 'cloud',
-        strokeColor: 'yellow',
+        });
       });
-    });
 
-    test('set to false, no baseStyleNames', () => {
-      const stylesheet = new Stylesheet();
-      const cellStyle = stylesheet.getCellStyle(
-        {
-          ignoreDefaultStyle: false,
-          shape: 'cloud',
-          strokeColor: 'yellow',
-        },
-        { fillColor: 'red', strokeColor: 'green' }
-      );
-      expect(cellStyle).toStrictEqual({
-        fillColor: 'red',
-        shape: 'cloud',
-        strokeColor: 'yellow',
-      });
-    });
-
-    test('set to true, with baseStyleNames', () => {
-      const stylesheet = new Stylesheet();
-      stylesheet.putCellStyle('style-1', {
-        align: 'left',
-        shape: 'triangle',
-      });
-      const cellStyle = stylesheet.getCellStyle(
-        {
-          baseStyleNames: ['style-1'],
-          ignoreDefaultStyle: true,
+      test('with baseStyleNames', () => {
+        const stylesheet = new Stylesheet();
+        stylesheet.putCellStyle('style-1', {
+          align: 'left',
+          shape: 'triangle',
+        });
+        const cellStyle = stylesheet.getCellStyle(
+          {
+            baseStyleNames: ['style-1'],
+            ignoreDefaultStyle: true,
+            rounded: true,
+            shape: 'cloud',
+            strokeColor: 'yellow',
+          },
+          { fillColor: 'red', strokeColor: 'green' }
+        );
+        expect(cellStyle).toStrictEqual({
+          align: 'left',
           rounded: true,
           shape: 'cloud',
           strokeColor: 'yellow',
-        },
-        { fillColor: 'red', strokeColor: 'green' }
-      );
-      expect(cellStyle).toStrictEqual({
-        align: 'left',
-        rounded: true,
-        shape: 'cloud',
-        strokeColor: 'yellow',
+        });
       });
     });
 
-    test('set to false, with baseStyleNames', () => {
-      const stylesheet = new Stylesheet();
-      stylesheet.putCellStyle('style-1', {
-        align: 'left',
-        shape: 'triangle',
+    describe('set to false', () => {
+      test('no baseStyleNames', () => {
+        const stylesheet = new Stylesheet();
+        const cellStyle = stylesheet.getCellStyle(
+          {
+            ignoreDefaultStyle: false,
+            shape: 'cloud',
+            strokeColor: 'yellow',
+          },
+          { fillColor: 'red', strokeColor: 'green' }
+        );
+        expect(cellStyle).toStrictEqual({
+          fillColor: 'red',
+          shape: 'cloud',
+          strokeColor: 'yellow',
+        });
       });
-      const cellStyle = stylesheet.getCellStyle(
-        {
-          baseStyleNames: ['style-1'],
-          ignoreDefaultStyle: false,
+
+      test('with baseStyleNames', () => {
+        const stylesheet = new Stylesheet();
+        stylesheet.putCellStyle('style-1', {
+          align: 'left',
+          shape: 'triangle',
+        });
+        const cellStyle = stylesheet.getCellStyle(
+          {
+            baseStyleNames: ['style-1'],
+            ignoreDefaultStyle: false,
+            rounded: true,
+            shape: 'cloud',
+            strokeColor: 'yellow',
+          },
+          { fillColor: 'red', strokeColor: 'green' }
+        );
+        expect(cellStyle).toStrictEqual({
+          align: 'left',
+          fillColor: 'red',
           rounded: true,
           shape: 'cloud',
           strokeColor: 'yellow',
-        },
-        { fillColor: 'red', strokeColor: 'green' }
-      );
-      expect(cellStyle).toStrictEqual({
-        align: 'left',
-        fillColor: 'red',
-        rounded: true,
-        shape: 'cloud',
-        strokeColor: 'yellow',
+        });
       });
     });
   });
