@@ -171,22 +171,15 @@ export class Stylesheet {
    * @param defaultStyle Default style used as reference to compute the returned style.
    */
   getCellStyle(cellStyle: CellStyle, defaultStyle: CellStateStyle) {
-    let style: CellStateStyle;
-    const baseStyle = cellStyle.ignoreDefaultStyle ? {} : defaultStyle;
-
+    let style = cellStyle.ignoreDefaultStyle ? {} : { ...defaultStyle };
     if (cellStyle.baseStyleNames) {
       // creates style with the given baseStyleNames. (merges from left to right)
-      style = cellStyle.baseStyleNames.reduce(
-        (acc, styleName) => {
-          return {
-            ...acc,
-            ...this.styles.get(styleName),
-          };
-        },
-        { ...baseStyle }
-      );
-    } else {
-      style = { ...baseStyle };
+      style = cellStyle.baseStyleNames.reduce((acc, styleName) => {
+        return {
+          ...acc,
+          ...this.styles.get(styleName),
+        };
+      }, style);
     }
 
     // Merges cellStyle into style
@@ -198,7 +191,7 @@ export class Stylesheet {
       }
     }
 
-    // Remove the specific CellStyle properties that may have been copied from the CellStyle parameter to match the method signature
+    // Remove the specific CellStyle properties that may have been copied from the cellStyle parameter to match the method signature
     'baseStyleNames' in style && delete style.baseStyleNames;
     'ignoreDefaultStyle' in style && delete style.ignoreDefaultStyle;
 
