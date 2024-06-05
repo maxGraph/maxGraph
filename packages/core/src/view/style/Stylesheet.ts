@@ -159,8 +159,8 @@ export class Stylesheet {
    * Returns a {@link CellStateStyle} computed by merging the default style, styles referenced in the specified `baseStyleNames`
    * and the properties of the `cellStyle` parameter.
    *
-   * The properties are merged by taken the properties from various styles in the following order:
-   *   - default style
+   * The properties are merged by taking the properties from various styles in the following order:
+   *   - default style (if {@link CellStyle.ignoreDefaultStyle} is not set to `true`, otherwise it is ignored)
    *   - registered styles referenced in `baseStyleNames`, in the order of the array
    *   - `cellStyle` parameter
    *
