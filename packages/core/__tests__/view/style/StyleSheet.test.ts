@@ -64,6 +64,7 @@ describe('putCellStyle', () => {
 describe('getCellStyle', () => {
   test.each([undefined, []])('baseStyleNames=%s', (baseStyleNames) => {
     const stylesheet = new Stylesheet();
+    const defaultStyle: CellStateStyle = { align: 'center', strokeColor: 'green' };
     const cellStyle = stylesheet.getCellStyle(
       {
         baseStyleNames,
@@ -71,7 +72,7 @@ describe('getCellStyle', () => {
         shape: 'triangle',
         strokeColor: 'yellow',
       },
-      { align: 'center', strokeColor: 'green' }
+      defaultStyle
     );
     expect(cellStyle).toStrictEqual(<CellStateStyle>{
       align: 'center', // from default
@@ -79,19 +80,21 @@ describe('getCellStyle', () => {
       shape: 'triangle',
       strokeColor: 'yellow', // from style
     });
+    expect(cellStyle).not.toBe(defaultStyle); // the default style is not modified
   });
 
   test('baseStyleNames set and related styles are registered', () => {
     const stylesheet = new Stylesheet();
     stylesheet.putCellStyle('style-1', { shape: 'triangle', fillColor: 'blue' });
 
+    const defaultStyle = { strokeColor: 'green', dashed: true };
     const cellStyle = stylesheet.getCellStyle(
       {
         baseStyleNames: ['style-1'],
         shape: 'cloud',
         strokeColor: 'yellow',
       },
-      { strokeColor: 'green', dashed: true }
+      defaultStyle
     );
     expect(cellStyle).toStrictEqual(<CellStateStyle>{
       dashed: true, // from default
@@ -99,6 +102,7 @@ describe('getCellStyle', () => {
       shape: 'cloud', // from style (override default and style-1)
       strokeColor: 'yellow',
     });
+    expect(cellStyle).not.toBe(defaultStyle); // the default style is not modified
   });
 
   test('baseStyleNames set and related styles are registered or not', () => {
