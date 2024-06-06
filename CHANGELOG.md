@@ -9,6 +9,9 @@
 GlobalConfig.logger = new MaxLogAsLogger();
 ```
 - `MaxWindow.activeWindow` is no longer available; it was intended for internal use only, so there's no reason to make it public.
+- The signature of `cellArrayUtils.getOpposites` has changed. It now returns an array and take an edges Cell array parameter.
+Previously it was returning a function and this was an extra indirection. This is now simpler to use and match the signature of the mxGraph function.
+
 
 ## 0.10.3
 

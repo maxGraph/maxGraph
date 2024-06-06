@@ -19,42 +19,41 @@ export const filterCells = (filter: Function) => (cells: Cell[]) => {
 };
 
 /**
- * Returns all opposite vertices wrt terminal for the given edges, only
- * returning sources and/or targets as specified. The result is returned
- * as an array of {@link Cell}.
+ * Returns all opposite vertices terminal for the given edges, only returning sources and/or targets as specified.
+ * The result is returned as an array of {@link Cell}.
  *
+ * @param edges Array of {Cell} that contain the edges to be examined.
  * @param {Cell} terminal  that specifies the known end of the edges.
- * @param sources  Boolean that specifies if source terminals should be contained
- * in the result. Default is true.
- * @param targets  Boolean that specifies if target terminals should be contained
- * in the result. Default is true.
+ * @param includeSources  Boolean that specifies if source terminals should be included in the result. Default is `true`.
+ * @param includeTargets  Boolean that specifies if target terminals should be included in the result. Default is `true`.
  */
-export const getOpposites =
-  (terminal: Cell, sources = true, targets = true) =>
-  (edges: Cell[]) => {
-    const terminals = [] as Cell[];
+export const getOpposites = (
+  edges: Cell[],
+  terminal: Cell,
+  includeSources = true,
+  includeTargets = true
+): Cell[] => {
+  return edges.reduce((terminals, edge) => {
+    const source = edge.getTerminal(true);
+    const target = edge.getTerminal(false);
 
-    for (let i = 0; i < edges.length; i += 1) {
-      const source = edges[i].getTerminal(true);
-      const target = edges[i].getTerminal(false);
-
-      // Checks if the terminal is the source of
-      // the edge and if the target should be
-      // stored in the result
-      if (source === terminal && target != null && target !== terminal && targets) {
-        terminals.push(target);
-      }
-
-      // Checks if the terminal is the taget of
-      // the edge and if the source should be
-      // stored in the result
-      else if (target === terminal && source != null && source !== terminal && sources) {
-        terminals.push(source);
-      }
+    // Checks if the terminal is the source of the edge and if the target should be stored in the result
+    if (source === terminal && target != null && target !== terminal && includeTargets) {
+      terminals.push(target);
+    }
+    // Checks if the terminal is the target of the edge and if the source should be stored in the result
+    else if (
+      target === terminal &&
+      source != null &&
+      source !== terminal &&
+      includeSources
+    ) {
+      terminals.push(source);
     }
 
     return terminals;
-  };
+  }, [] as Cell[]);
+};
 
 /**
  * Returns the topmost cells of the hierarchy in an array that contains no
@@ -163,8 +162,7 @@ const cloneCellImpl = (cell: Cell, mapping: any = {}, includeChildren = false): 
 };
 
 /**
- * Inner helper method for restoring the connections in
- * a network of cloned cells.
+ * Inner helper method for restoring the connections in a network of cloned cells.
  *
  * @private
  */

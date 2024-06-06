@@ -344,17 +344,15 @@ Moved methods
 
 
 ### Cell manipulation
-Functions that existed in mxGraph and mxGraphModel have been removed. They provided a way to extend/override the default behavior of mxGraphModel or mxCell.
-Only the functions for mxCell/Cell remain. See https://github.com/maxGraph/maxGraph/pull/24
 
-
-Some functions previously available in `mxGraph` and `mxGraphModel` have been removed. These functions allowed for customizing the behavior of `mxGraphModel` and `mxCell`. However, now only the functions specific to `mxCell`/`Cell` remain.  
+Some methods previously available in `mxGraph` and `mxGraphModel` have been removed. These methods allowed for customizing the behavior of `mxGraphModel` and `mxCell`. However, now only the methods specific to `Cell` remain.  
 
 :::note
 
 You can find more information about these changes in the following GitHub pull request: https://github.com/maxGraph/maxGraph/pull/24.
 
 :::
+
 
 #### `mxCell`
 
@@ -372,15 +370,24 @@ Some methods were removed:
 
 #### `mxGraphDataModel`
 
-Several functions from the `mxGraphDataModel` class have been moved to the `Cell` class. These functions no longer need the `cell` parameter:
+Several methods from the `mxGraphDataModel` class have been moved to the `Cell` class. These methods no longer need the `cell` parameter:
 
 - `filterDescendants()`
 - `getGeometry()`
 - `isEdge()`
 - `getParent()`
 
+Some methods in `mxGraphModel` that were general manipulation of cells and independent of the model have been moved to the `cellArrayUtils` namespace and are now available as individual functions.
+- `cloneImpl()` (should not be used, private implementation)
+- `cloneCells()`
+- `getOpposite()`
+- `getParents()`
+- `getTopmostCells()`
+- `restoreClone()` (should not be used, private implementation)
+
 Others were removed:
-- `mxGraphModel.isVisible(cell)` see https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942 for rationale
+- `isVisible(cell)` see https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942 for rationale
+- `cloneCell()`
 
 ### Misc
 
