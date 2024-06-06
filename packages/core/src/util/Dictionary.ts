@@ -16,24 +16,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IdentityFunction, IdentityObject } from '../types';
+import type { IdentityFunction, IdentityObject } from '../types';
 import ObjectIdentity from './ObjectIdentity';
-
-//type Dictionary<T, U> = {
-//  [key: string]: U;
-//};
 
 type MapKey = string;
 
 type Visitor<MapKey, U> = (key: MapKey, value: U) => void;
 
 /**
- * A wrapper class for an associative array with object keys. Note: This
- * implementation uses {@link ObjectIdentitiy} to turn object keys into strings.
+ * A wrapper class for an associative array with object keys.
  *
- * Constructor: mxEventSource
+ * Note: This implementation uses {@link ObjectIdentity} to turn object keys into strings.
  *
- * Constructs a new dictionary which allows object to be used as keys.
  */
 class Dictionary<T extends IdentityObject | IdentityFunction | null, U> {
   constructor() {

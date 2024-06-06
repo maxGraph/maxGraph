@@ -21,14 +21,63 @@ import { Graph } from '../Graph';
 
 declare module '../Graph' {
   interface Graph {
+    /**
+     * Specifies the factor used for {@link zoomIn} and {@link zoomOut}.
+     * @default 1.2 (120%)
+     */
     zoomFactor: number;
+
+    /**
+     * Specifies if the viewport should automatically contain the selection cells after a zoom operation.
+     * @default false
+     */
     keepSelectionVisibleOnZoom: boolean;
+
+    /**
+     * Specifies if the zoom operations should go into the center of the actual
+     * diagram rather than going from top, left.
+     * @default true
+     */
     centerZoom: boolean;
+
+    /**
+     * Zooms into the graph by {@link zoomFactor}.
+     */
     zoomIn: () => void;
+
+    /**
+     * Zooms out of the graph by {@link zoomFactor}.
+     */
     zoomOut: () => void;
+
+    /**
+     * Resets the zoom in the view to the original scale.
+     */
     zoomActual: () => void;
+
+    /**
+     * Zooms the graph to the given scale with an optional boolean center
+     * argument, which is passed to {@link zoom}.
+     */
     zoomTo: (scale: number, center?: boolean) => void;
+
+    /**
+     * Zooms the graph using the given factor. Center is an optional boolean
+     * argument that keeps the graph scrolled to the center. If the center argument
+     * is omitted, then {@link centerZoom} will be used as its value.
+     */
     zoom: (factor: number, center?: boolean) => void;
+
+    /**
+     * Zooms the graph to the specified rectangle. If the rectangle does not have same aspect
+     * ratio as the display container, it is increased in the smaller relative dimension only
+     * until the aspect match. The original rectangle is centralised within this expanded one.
+     *
+     * Note that the input rectangular must be un-scaled and un-translated.
+     *
+     * @param rect The un-scaled and un-translated rectangluar region that should be just visible
+     * after the operation
+     */
     zoomToRect: (rect: Rectangle) => void;
   }
 }
@@ -53,46 +102,20 @@ type PartialType = PartialGraph & PartialZoom;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const ZoomMixin: PartialType = {
-  /**
-   * Specifies the factor used for {@link zoomIn} and {@link zoomOut}.
-   * @default 1.2 (120%)
-   */
   zoomFactor: 1.2,
 
-  /**
-   * Specifies if the viewport should automatically contain the selection cells after a zoom operation.
-   * @default false
-   */
   keepSelectionVisibleOnZoom: false,
 
-  /**
-   * Specifies if the zoom operations should go into the center of the actual
-   * diagram rather than going from top, left.
-   * @default true
-   */
   centerZoom: true,
 
-  /*****************************************************************************
-   * Group: Graph display
-   *****************************************************************************/
-
-  /**
-   * Zooms into the graph by {@link zoomFactor}.
-   */
   zoomIn() {
     this.zoom(this.zoomFactor);
   },
 
-  /**
-   * Zooms out of the graph by {@link zoomFactor}.
-   */
   zoomOut() {
     this.zoom(1 / this.zoomFactor);
   },
 
-  /**
-   * Resets the zoom and panning in the view.
-   */
   zoomActual() {
     if (this.getView().scale === 1) {
       this.getView().setTranslate(0, 0);
@@ -104,19 +127,10 @@ const ZoomMixin: PartialType = {
     }
   },
 
-  /**
-   * Zooms the graph to the given scale with an optional boolean center
-   * argument, which is passd to {@link zoom}.
-   */
   zoomTo(scale, center = false) {
     this.zoom(scale / this.getView().scale, center);
   },
 
-  /**
-   * Zooms the graph using the given factor. Center is an optional boolean
-   * argument that keeps the graph scrolled to the center. If the center argument
-   * is omitted, then {@link centerZoom} will be used as its value.
-   */
   zoom(factor, center) {
     center = center ?? this.centerZoom;
 
@@ -193,16 +207,6 @@ const ZoomMixin: PartialType = {
     }
   },
 
-  /**
-   * Zooms the graph to the specified rectangle. If the rectangle does not have same aspect
-   * ratio as the display container, it is increased in the smaller relative dimension only
-   * until the aspect match. The original rectangle is centralised within this expanded one.
-   *
-   * Note that the input rectangular must be un-scaled and un-translated.
-   *
-   * @param rect The un-scaled and un-translated rectangluar region that should be just visible
-   * after the operation
-   */
   zoomToRect(rect) {
     const container = this.getContainer();
     const scaleX = container.clientWidth / rect.width;

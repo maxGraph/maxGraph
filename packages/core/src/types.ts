@@ -55,6 +55,15 @@ export type CellStyle = CellStateStyle & {
    * the value actually used is that defined in the last style declared in the array.
    */
   baseStyleNames?: string[];
+
+  /**
+   * If set to `true`, ignores the default style when computing the actual style for a cell.
+   * The {@link baseStyleNames} are still taken into account.
+   *
+   * @default false
+   * @since 0.11.0
+   */
+  ignoreDefaultStyle?: boolean;
 };
 
 export type CellStateStyle = {

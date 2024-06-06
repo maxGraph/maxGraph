@@ -70,8 +70,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     return geo?.relative ?? false;
   };
 
-  // Implements a tooltip that shows the actual
-  // source and target of an edge
+  // Implements a tooltip that shows the actual source and target of an edge
   graph.getTooltipForCell = function (cell) {
     if (cell && cell.isEdge()) {
       const source = cell.getTerminal(true);

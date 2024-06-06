@@ -159,8 +159,8 @@ export class Stylesheet {
    * Returns a {@link CellStateStyle} computed by merging the default style, styles referenced in the specified `baseStyleNames`
    * and the properties of the `cellStyle` parameter.
    *
-   * The properties are merged by taken the properties from various styles in the following order:
-   *   - default style
+   * The properties are merged by taking the properties from various styles in the following order:
+   *   - default style (if {@link CellStyle.ignoreDefaultStyle} is not set to `true`, otherwise it is ignored)
    *   - registered styles referenced in `baseStyleNames`, in the order of the array
    *   - `cellStyle` parameter
    *
@@ -171,21 +171,15 @@ export class Stylesheet {
    * @param defaultStyle Default style used as reference to compute the returned style.
    */
   getCellStyle(cellStyle: CellStyle, defaultStyle: CellStateStyle) {
-    let style: CellStateStyle;
-
+    let style = cellStyle.ignoreDefaultStyle ? {} : { ...defaultStyle };
     if (cellStyle.baseStyleNames) {
       // creates style with the given baseStyleNames. (merges from left to right)
-      style = cellStyle.baseStyleNames.reduce(
-        (acc, styleName) => {
-          return {
-            ...acc,
-            ...this.styles.get(styleName),
-          };
-        },
-        { ...defaultStyle }
-      );
-    } else {
-      style = { ...defaultStyle };
+      style = cellStyle.baseStyleNames.reduce((acc, styleName) => {
+        return {
+          ...acc,
+          ...this.styles.get(styleName),
+        };
+      }, style);
     }
 
     // Merges cellStyle into style
@@ -197,8 +191,9 @@ export class Stylesheet {
       }
     }
 
-    // Remove the 'baseStyleNames' that may have been copied from the cellStyle parameter to match the method signature
+    // Remove the specific CellStyle properties that may have been copied from the cellStyle parameter to match the method signature
     'baseStyleNames' in style && delete style.baseStyleNames;
+    'ignoreDefaultStyle' in style && delete style.ignoreDefaultStyle;
 
     return style;
   }

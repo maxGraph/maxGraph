@@ -16,7 +16,7 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { convertStyleFromString } from '../../../../src/serialization/codecs/mxGraph/utils';
-import { CellStyle } from '../../../../src';
+import type { CellStyle } from '../../../../src';
 
 describe('convertStyleFromString', () => {
   test('Basic', () => {
@@ -36,10 +36,10 @@ describe('convertStyleFromString', () => {
   });
 
   test('With leading ;', () => {
-    // To update when implementing https://github.com/maxGraph/maxGraph/issues/154
-    expect(convertStyleFromString(';arcSize=4;endSize=5;')).toEqual({
+    expect(convertStyleFromString(';arcSize=4;endSize=5;')).toEqual(<CellStyle>{
       arcSize: 4,
       endSize: 5,
+      ignoreDefaultStyle: true,
     });
   });
 

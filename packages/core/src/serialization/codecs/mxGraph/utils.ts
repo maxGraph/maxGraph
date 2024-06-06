@@ -22,6 +22,7 @@ const fieldMapping = new Map<string, string>([['autosize', 'autoSize']]);
 
 export function convertStyleFromString(input: string) {
   const style: CellStyle = {};
+  input.startsWith(';') && (style.ignoreDefaultStyle = true);
 
   const elements = input
     .split(';')
