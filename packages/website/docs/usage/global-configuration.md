@@ -1,5 +1,5 @@
 ---
-description: How-to globally configure maxGraph globally.
+description: How-to configure maxGraph globally.
 ---
 
 # Global Configuration
