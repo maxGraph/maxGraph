@@ -112,10 +112,9 @@ export const getParents = (cells: Cell[]) => {
  * Returns an array of clones for the given array of {@link Cell}`.
  * Depending on the value of includeChildren, a deep clone is created for
  * each cell. Connections are restored based if the corresponding
- * cell is contained in the passed in array.
+ * cell is contained in the provided in array.
  *
- * @param includeChildren  Boolean indicating if the cells should be cloned
- * with all descendants.
+ * @param includeChildren  Boolean indicating if the cells should be cloned with all descendants.
  * @param mapping  Optional mapping for existing clones.
  */
 export const cloneCells =
@@ -142,12 +141,12 @@ export const cloneCells =
  * @private
  */
 const cloneCellImpl = (cell: Cell, mapping: any = {}, includeChildren = false): Cell => {
-  const ident = <string>ObjectIdentity.get(cell);
-  let clone = mapping ? mapping[ident] : null;
+  const identity = <string>ObjectIdentity.get(cell);
+  let clone = mapping ? mapping[identity] : null;
 
   if (clone == null) {
     clone = cell.clone();
-    mapping[ident] = clone;
+    mapping[identity] = clone;
 
     if (includeChildren) {
       const childCount = cell.getChildCount();
@@ -166,27 +165,25 @@ const cloneCellImpl = (cell: Cell, mapping: any = {}, includeChildren = false): 
  *
  * @private
  */
-export const restoreClone =
-  (clone: Cell, cell: Cell, mapping: any) => (cells: Cell[]) => {
-    const source = cell.getTerminal(true);
-
-    if (source != null) {
-      const tmp = mapping[<string>ObjectIdentity.get(source)];
-      if (tmp != null) {
-        tmp.insertEdge(clone, true);
-      }
+const restoreClone = (clone: Cell, cell: Cell, mapping: any): void => {
+  const source = cell.getTerminal(true);
+  if (source != null) {
+    const tmp = mapping[<string>ObjectIdentity.get(source)];
+    if (tmp != null) {
+      tmp.insertEdge(clone, true);
     }
+  }
 
-    const target = cell.getTerminal(false);
-    if (target != null) {
-      const tmp = mapping[<string>ObjectIdentity.get(target)];
-      if (tmp != null) {
-        tmp.insertEdge(clone, false);
-      }
+  const target = cell.getTerminal(false);
+  if (target != null) {
+    const tmp = mapping[<string>ObjectIdentity.get(target)];
+    if (tmp != null) {
+      tmp.insertEdge(clone, false);
     }
+  }
 
-    const childCount = clone.getChildCount();
-    for (let i = 0; i < childCount; i += 1) {
-      restoreClone(<Cell>clone.getChildAt(i), <Cell>cell.getChildAt(i), mapping);
-    }
-  };
+  const childCount = clone.getChildCount();
+  for (let i = 0; i < childCount; i += 1) {
+    restoreClone(<Cell>clone.getChildAt(i), <Cell>cell.getChildAt(i), mapping);
+  }
+};

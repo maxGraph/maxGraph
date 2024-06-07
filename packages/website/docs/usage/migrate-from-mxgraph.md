@@ -378,16 +378,15 @@ Several methods from the `mxGraphDataModel` class have been moved to the `Cell` 
 - `getParent()`
 
 Some methods in `mxGraphModel` that were general manipulation of cells and independent of the model have been moved to the `cellArrayUtils` namespace and are now available as individual functions.
-- `cloneImpl()` (should not be used, private implementation)
 - `cloneCells()`
 - `getOpposite()`
 - `getParents()`
 - `getTopmostCells()`
-- `restoreClone()` (should not be used, private implementation)
 
 Others were removed:
+- `cloneImpl()`
 - `isVisible(cell)` see https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942 for rationale
-- `cloneCell()`
+- `restoreClone()` (from version 0.11.0)
 
 ### Misc
 

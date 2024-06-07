@@ -377,9 +377,8 @@ export class Cell implements IdentityObject {
   /**
    * Sets the source or target terminal and returns the new terminal.
    *
-   * @param {Cell} terminal     mxCell that represents the new source or target terminal.
-   * @param {boolean} isSource  boolean that specifies if the source or target terminal
-   * should be set.
+   * @param terminal  Cell that represents the new source or target terminal.
+   * @param isSource  boolean that specifies if the source or target terminal should be set.
    */
   setTerminal(terminal: Cell | null, isSource: boolean) {
     if (isSource) {
@@ -401,7 +400,7 @@ export class Cell implements IdentityObject {
   /**
    * Returns the index of the specified child in the child array.
    *
-   * @param childChild whose index should be returned.
+   * @param child Child whose index should be returned.
    */
   getIndex(child: Cell | null) {
     if (child === null) return -1;

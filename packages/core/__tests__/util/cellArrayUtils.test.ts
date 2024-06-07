@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { getOpposites } from '../../src/util/cellArrayUtils';
+import { cloneCells, getOpposites } from '../../src/util/cellArrayUtils';
+import { IDENTITY_FIELD_NAME } from '../../src/util/Constants';
 import Cell from '../../src/view/cell/Cell';
+import { GraphDataModel } from '../../src/view/GraphDataModel';
 
 describe('getOpposites', () => {
   const edges: Cell[] = [];
@@ -71,5 +73,108 @@ describe('getOpposites', () => {
     expect(getOpposites(edges, terminal, false, true)).toStrictEqual([
       oppositeOfMatchingSource,
     ]);
+  });
+});
+
+describe('cloneCells', () => {
+  test.each([true, false])(
+    'cell without parent, without children and with terminals - including children: %s',
+    (includeChildren) => {
+      const cell = new Cell('main cell');
+      const source = new Cell();
+      expect(source.edges).toHaveLength(0); // untouched
+      cell.setTerminal(source, true);
+      const target = new Cell();
+      cell.setTerminal(target, false);
+      // @ts-ignore
+      expect(cell[IDENTITY_FIELD_NAME]).toBeUndefined();
+
+      const clones = cloneCells(includeChildren)([cell, source]);
+      expect(clones).toHaveLength(2);
+
+      expect(cell.getParent()).toBeNull(); // untouched
+      expect(cell.getTerminal(true)).not.toBeNull(); // untouched
+      expect(cell.getTerminal(false)).not.toBeNull(); // untouched
+      cell.setTerminal(null, false); // not cloned, as not registered in test
+
+      // @ts-ignore -- it has been added by cloneCells
+      expect(cell[IDENTITY_FIELD_NAME]).toStrictEqual(expect.stringMatching('Cell#'));
+      // @ts-ignore
+      delete cell[IDENTITY_FIELD_NAME];
+      // @ts-ignore -- it has been added by cloneCells
+      expect(source[IDENTITY_FIELD_NAME]).toStrictEqual(expect.stringMatching('Cell#'));
+      // @ts-ignore
+      delete source[IDENTITY_FIELD_NAME];
+
+      const clonedCell = clones[0];
+      expect(clonedCell.source!.edges).toHaveLength(1); // it has been added by cloneCells
+      clonedCell.source!.edges = [];
+      expect(clonedCell).toStrictEqual(cell);
+
+      const clonedSource = clones[1];
+      expect(clonedSource).toStrictEqual(source);
+    }
+  );
+});
+
+describe('cloneCell', () => {
+  // Tests are located here as they are similar to cloneCells test and cloneCell will be move out of GraphDataModel in the future
+  const model = new GraphDataModel();
+
+  test('null cell', () => {
+    expect(model.cloneCell(null)).toBeNull();
+  });
+
+  describe('cell without children', () => {
+    test.each([true, false])(
+      'cell with parent and without terminal - including children: %s',
+      (includeChildren) => {
+        const cell = new Cell();
+        cell.setParent(new Cell());
+        // @ts-ignore
+        expect(cell[IDENTITY_FIELD_NAME]).toBeUndefined();
+
+        const clone = model.cloneCell(cell, includeChildren);
+        expect(clone).not.toBe(cell); // this is not the same instance, but a new one
+
+        expect(cell.getParent()).not.toBeNull(); // untouched
+        cell.setParent(null); // not cloned, so remove for comparison
+        // @ts-ignore -- it has been added by cloneCell
+        expect(cell[IDENTITY_FIELD_NAME]).toStrictEqual(expect.stringMatching('Cell#'));
+        // @ts-ignore
+        delete cell[IDENTITY_FIELD_NAME];
+
+        expect(clone).toStrictEqual(cell);
+      }
+    );
+
+    test.each([true, false])(
+      'cell without parent and with terminals - including children: %s',
+      (includeChildren) => {
+        const cell = new Cell();
+        const source = new Cell();
+        cell.setTerminal(source, true);
+        const target = new Cell();
+        cell.setTerminal(target, false);
+        // @ts-ignore
+        expect(cell[IDENTITY_FIELD_NAME]).toBeUndefined();
+
+        const clone = model.cloneCell(cell, includeChildren);
+        expect(clone).not.toBe(cell); // this is not the same instance, but a new one
+
+        expect(cell.getParent()).toBeNull(); // untouched
+        expect(cell.getTerminal(true)).not.toBeNull(); // untouched
+        cell.setTerminal(null, true); // not cloned, as not registered in test
+        expect(cell.getTerminal(false)).not.toBeNull(); // untouched
+        cell.setTerminal(null, false); // not cloned, as not registered in test
+
+        // @ts-ignore -- it has been added by cloneCell
+        expect(cell[IDENTITY_FIELD_NAME]).toStrictEqual(expect.stringMatching('Cell#'));
+        // @ts-ignore
+        delete cell[IDENTITY_FIELD_NAME];
+
+        expect(clone).toStrictEqual(cell);
+      }
+    );
   });
 });

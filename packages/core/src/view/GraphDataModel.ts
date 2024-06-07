@@ -1104,7 +1104,6 @@ export class GraphDataModel extends EventSource {
    * id in the target model are reconnected to reflect the terminals of the
    * source edges.
    */
-  // mergeChildren(from: Transactions, to: Transactions, cloneAllEdges?: boolean): void;
   mergeChildren(from: Cell, to: Cell, cloneAllEdges = true): void {
     this.beginUpdate();
     try {
@@ -1141,7 +1140,6 @@ export class GraphDataModel extends EventSource {
    * cell to the target cell with the same id or the clone of the source cell
    * that was inserted into this model.
    */
-  // mergeChildrenImpl(from: Transactions, to: Transactions, cloneAllEdges: boolean, mapping: any): void;
   mergeChildrenImpl(from: Cell, to: Cell, cloneAllEdges: boolean, mapping: any = {}) {
     this.beginUpdate();
     try {
@@ -1184,21 +1182,18 @@ export class GraphDataModel extends EventSource {
     }
   }
 
-  //
-  // Cell Cloning
-  //
-
   /**
-   * Returns a deep clone of the given {@link Cell}` (including
-   * the children) which is created using {@link cloneCells}`.
+   * Returns a deep clone of the given {@link Cell}` (including the children) which is created using {@link cloneCells}`.
    *
-   * @param {Cell} cell  to be cloned.
+   * @param cell {@link Cell} to be cloned. Default is `null`.
+   * @param includeChildren Boolean indicating if the cells should be cloned with all descendants. Default is `true`.
    */
   cloneCell(cell: Cell | null = null, includeChildren = true): Cell | null {
-    if (cell != null) {
-      return cloneCells(includeChildren)([cell])[0];
+    if (!cell) {
+      return null;
     }
-    return null;
+
+    return cloneCells(includeChildren)([cell])[0];
   }
 }
 
