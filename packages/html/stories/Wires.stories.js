@@ -81,6 +81,7 @@ import {
   TooltipHandler,
   SelectionCellsHandler,
   PopupMenuHandler,
+  cellArrayUtils,
 } from '@maxgraph/core';
 
 import {
@@ -92,8 +93,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Connections/Wires',
@@ -869,7 +869,7 @@ const Template = ({ label, ...args }) => {
       v22.geometry.relative = true;
       v22.geometry.offset = new Point(-10, -1);*/
 
-    let v3 = graph.addCell(graph.getDataModel().cloneCell(v1));
+    let v3 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v3.value = 'J3';
     v3.geometry.x = 420;
     v3.geometry.y = 340;

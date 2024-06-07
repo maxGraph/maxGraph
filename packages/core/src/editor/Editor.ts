@@ -54,6 +54,7 @@ import { CellStateStyle, MouseListenerSet } from '../types';
 import ConnectionHandler from '../view/handler/ConnectionHandler';
 import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
+import { cloneCell } from '../util/cellArrayUtils';
 
 /**
  * Installs the required language resources at class
@@ -314,7 +315,7 @@ if (mxLoadResources) {
  *
  * ```javascript
  * var template = editor.templates['task'];
- * var clone = editor.graph.model.cloneCell(template);
+ * var clone = cloneCell(template);
  * ```
  *
  * #### Translations:
@@ -1856,8 +1857,7 @@ export class Editor extends EventSource {
    * @returns Cell
    */
   createGroup(): Cell {
-    const model = this.graph.getDataModel();
-    return <Cell>model.cloneCell(this.defaultGroup);
+    return <Cell>cloneCell(this.defaultGroup);
   }
 
   /**
@@ -2483,12 +2483,11 @@ export class Editor extends EventSource {
    * @param target
    */
   createEdge(source: Cell | null, target: Cell | null): Cell {
-    // Clones the defaultedge prototype
+    // Clones the default edge prototype
     let e: Cell;
 
     if (this.defaultEdge != null) {
-      const model = this.graph.getDataModel();
-      e = <Cell>model.cloneCell(this.defaultEdge);
+      e = <Cell>cloneCell(this.defaultEdge);
     } else {
       e = new Cell('');
       e.setEdge(true);

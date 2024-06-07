@@ -26,6 +26,7 @@ import {
   EdgeHandler,
   GraphView,
   InternalEvent,
+  cellArrayUtils,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -34,8 +35,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Connections/Orthogonal',
@@ -168,15 +168,15 @@ const Template = ({ label, ...args }) => {
     );
     v13.geometry.offset = new Point(0, -5);
 
-    const v2 = graph.addCell(graph.getDataModel().cloneCell(v1));
+    const v2 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v2.geometry.x = 200;
     v2.geometry.y = 60;
 
-    const v3 = graph.addCell(graph.getDataModel().cloneCell(v1));
+    const v3 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v3.geometry.x = 40;
     v3.geometry.y = 150;
 
-    const v4 = graph.addCell(graph.getDataModel().cloneCell(v1));
+    const v4 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v4.geometry.x = 200;
     v4.geometry.y = 170;
 

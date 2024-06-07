@@ -109,6 +109,23 @@ export const getParents = (cells: Cell[]) => {
 };
 
 /**
+ * Returns a deep clone of the given {@link Cell}` (including the children) which is created using {@link cloneCells}`.
+ *
+ * @param cell {@link Cell} to be cloned. Default is `null`.
+ * @param includeChildren Boolean indicating if the cells should be cloned with all descendants. Default is `true`.
+ */
+export const cloneCell = (
+  cell: Cell | null = null,
+  includeChildren = true
+): Cell | null => {
+  if (!cell) {
+    return null;
+  }
+
+  return cloneCells(includeChildren)([cell])[0];
+};
+
+/**
  * Returns an array of clones for the given array of {@link Cell}`.
  * Depending on the value of includeChildren, a deep clone is created for
  * each cell. Connections are restored based if the corresponding

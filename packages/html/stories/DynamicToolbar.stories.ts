@@ -30,6 +30,7 @@ import {
   styleUtils,
   gestureUtils,
   Client,
+  cellArrayUtils,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -152,7 +153,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     ) => {
       graph.stopEditing(false);
 
-      const vertex = graph.getDataModel().cloneCell(prototype)!;
+      const vertex = cellArrayUtils.cloneCell(prototype)!;
       if (vertex?.geometry) {
         x !== undefined && (vertex.geometry.x = x);
         y !== undefined && (vertex.geometry.y = y);

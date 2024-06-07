@@ -30,6 +30,7 @@ import {
   MaxToolbar,
   Point,
   RubberBandHandler,
+  cellArrayUtils,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -206,7 +207,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
       graph.stopEditing(false);
 
       const pt = graph.getPointForEvent(evt);
-      const cellToImport = graph.getDataModel().cloneCell(prototype);
+      const cellToImport = cellArrayUtils.cloneCell(prototype);
       if (!cellToImport) return;
 
       if (cellToImport.geometry) {

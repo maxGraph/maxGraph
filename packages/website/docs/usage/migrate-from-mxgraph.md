@@ -378,6 +378,7 @@ Several methods from the `mxGraphDataModel` class have been moved to the `Cell` 
 - `getParent()`
 
 Some methods in `mxGraphModel` that were general manipulation of cells and independent of the model have been moved to the `cellArrayUtils` namespace and are now available as individual functions.
+- `cloneCell()` (from version 0.11.0)
 - `cloneCells()`
 - `getOpposite()`
 - `getParents()`
