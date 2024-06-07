@@ -920,7 +920,7 @@ export const CellsMixin: PartialType = {
       const { scale } = this.getView();
       const trans = this.getView().translate;
       const out: Cell[] = [];
-      clones = cloneCells(true, mapping)(cells);
+      clones = cloneCells(cells, true, mapping);
 
       for (let i = 0; i < cells.length; i += 1) {
         const cell = cells[i];

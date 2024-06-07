@@ -1193,7 +1193,7 @@ export class GraphDataModel extends EventSource {
       return null;
     }
 
-    return cloneCells(includeChildren)([cell])[0];
+    return cloneCells([cell], includeChildren)[0];
   }
 }
 
