@@ -122,7 +122,7 @@ export const cloneCell = (
     return null;
   }
 
-  return cloneCells(includeChildren)([cell])[0];
+  return cloneCells([cell], includeChildren)[0];
 };
 
 /**
@@ -131,26 +131,29 @@ export const cloneCell = (
  * each cell. Connections are restored based if the corresponding
  * cell is contained in the provided in array.
  *
+ * @param cells The cells to clone
  * @param includeChildren  Boolean indicating if the cells should be cloned with all descendants.
  * @param mapping  Optional mapping for existing clones.
  */
-export const cloneCells =
-  (includeChildren = true, mapping: any = {}) =>
-  (cells: Cell[]) => {
-    const clones = [] as Cell[];
+export const cloneCells = (
+  cells: Cell[],
+  includeChildren = true,
+  mapping: any = {}
+): Cell[] => {
+  const clones = [] as Cell[];
 
-    for (const cell of cells) {
-      clones.push(cloneCellImpl(cell, mapping, includeChildren));
+  for (const cell of cells) {
+    clones.push(cloneCellImpl(cell, mapping, includeChildren));
+  }
+
+  for (let i = 0; i < clones.length; i += 1) {
+    if (clones[i] != null) {
+      restoreClone(<Cell>clones[i], cells[i], mapping);
     }
+  }
 
-    for (let i = 0; i < clones.length; i += 1) {
-      if (clones[i] != null) {
-        restoreClone(<Cell>clones[i], cells[i], mapping);
-      }
-    }
-
-    return clones;
-  };
+  return clones;
+};
 
 /**
  * Inner helper method for cloning cells recursively.

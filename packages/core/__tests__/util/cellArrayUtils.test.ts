@@ -88,7 +88,7 @@ describe('cloneCells', () => {
       // @ts-ignore
       expect(cell[IDENTITY_FIELD_NAME]).toBeUndefined();
 
-      const clones = cloneCells(includeChildren)([cell, source]);
+      const clones = cloneCells([cell, source], includeChildren);
       expect(clones).toHaveLength(2);
 
       expect(cell.getParent()).toBeNull(); // untouched

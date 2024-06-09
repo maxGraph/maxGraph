@@ -12,6 +12,7 @@ GlobalConfig.logger = new MaxLogAsLogger();
 - The signature of `cellArrayUtils.getOpposites` has changed. It now returns an array and take an edges Cell array parameter.
 Previously it was returning a function and this was an extra indirection. This is now simpler to use and match the signature of the mxGraph function.
 - `cellArrayUtils.restoreClone` is no longer available. It was intended to be private.
+- The signature of `cellArrayUtils.cloneCells` has changed. It now returns an array of Cells instead of a function. 
 - The `GraphDataModel.cloneCell` function has been moved to the `cellArrayUtils` namespace. The function doesn't use any internal `GraphDataModel`
 state, and moving it into `cellArrayUtils` is consistent with the `cloneCells` function already there.
 
