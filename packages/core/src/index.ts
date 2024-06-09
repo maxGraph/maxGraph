@@ -82,7 +82,7 @@ export { default as PopupMenuHandler } from './view/handler/PopupMenuHandler';
 export { default as RubberBandHandler } from './view/handler/RubberBandHandler';
 export { default as SelectionCellsHandler } from './view/handler/SelectionCellsHandler';
 export { default as TooltipHandler } from './view/handler/TooltipHandler';
-export type { default as VertexHandler } from './view/handler/VertexHandler';
+export { default as VertexHandler } from './view/handler/VertexHandler';
 
 export { default as CircleLayout } from './view/layout/CircleLayout';
 export { default as CompactTreeLayout } from './view/layout/CompactTreeLayout';

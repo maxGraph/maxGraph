@@ -485,8 +485,7 @@ class Graph extends EventSource {
    * @param state {@link CellState} to create the handler for.
    */
   createVertexHandler(state: CellState): VertexHandler {
-    // return new VertexHandler(state);
-    return null!;
+    return new VertexHandler(state);
   }
 
   // ===================================================================================================================
