@@ -18,7 +18,6 @@ import { describe, expect, test } from '@jest/globals';
 import { cloneCell, cloneCells, getOpposites } from '../../src/util/cellArrayUtils';
 import { IDENTITY_FIELD_NAME } from '../../src/util/Constants';
 import Cell from '../../src/view/cell/Cell';
-import { GraphDataModel } from '../../src/view/GraphDataModel';
 
 describe('getOpposites', () => {
   const edges: Cell[] = [];
