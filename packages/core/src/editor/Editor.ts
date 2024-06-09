@@ -57,6 +57,8 @@ import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
 
+// TODO disabled side effects, so editor resources are not loaded by default
+// This should be done in a different way
 /**
  * Installs the required language resources at class
  * loading time.
@@ -208,9 +210,9 @@ if (mxLoadResources) {
  *
  * ```javascript
  * <Task label="Task" description="">
- *   <mxCell vertex="true">
- *     <mxGeometry as="geometry" width="72" height="32"/>
- *   </mxCell>
+ *   <Cell vertex="true">
+ *     <Geometry as="geometry" width="72" height="32"/>
+ *   </Cell>
  * </Task>
  * ```
  *
@@ -258,7 +260,7 @@ if (mxLoadResources) {
  * New entries can be added to the toolbar by inserting an add-node into the
  * above configuration. Existing entries may be removed and changed by
  * modifying or removing the respective entries in the configuration.
- * The configuration is read by the {@link DefaultPopupMenuCodec}, the format of the
+ * The configuration is read by the {@link EditorPopupMenuCodec}, the format of the
  * configuration is explained in {@link EditorPopupMenu.decode}.
  *
  * The toolbar is defined in the EditorToolbar section. Items can be added
@@ -272,8 +274,7 @@ if (mxLoadResources) {
  *     ...
  * ```
  *
- * The format of the configuration is described in
- * {@link DefaultToolbarCodec.decode}.
+ * The format of the configuration is described in {@link EditorToolbarCodec.decode}.
  *
  * Ids:
  *
@@ -282,12 +283,12 @@ if (mxLoadResources) {
  * time. For example, if the Task node from above has an id attribute, then
  * the {@link Cell.id} of the corresponding cell will have this value. If there
  * is no Id collision in the model, then the cell may be retrieved using this
- * Id with the {@link mxGraphModel.getCell} function. If there is a collision, a new
- * Id will be created for the cell using {@link mxGraphModel.createId}. At encoding
+ * Id with the {@link GraphDataModel.getCell} function. If there is a collision, a new
+ * Id will be created for the cell using {@link GraphDataModel.createId}. At encoding
  * time, this new Id will replace the value previously stored under the id
  * attribute in the Task node.
  *
- * See {@link EditorCodec}, {@link DefaultToolbarCodec} and {@link DefaultPopupMenuCodec}
+ * See {@link EditorCodec}, {@link EditorToolbarCodec} and {@link EditorPopupMenuCodec}
  * for information about configuring the editor and user interface.
  *
  * Programmatically inserting cells:
