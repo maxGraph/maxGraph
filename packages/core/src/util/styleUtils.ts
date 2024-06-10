@@ -442,10 +442,11 @@ export const matchBinaryMask = (value: number, mask: number) => {
 };
 
 /**
- * Returns an {@link Rectangle} with the size (width and height in pixels) of
- * the given string. The string may contain HTML markup. Newlines should be
- * converted to <br> before calling this method. The caller is responsible
- * for sanitizing the HTML markup.
+ * Returns an {@link Rectangle} with the size (width and height in pixels) of the given string.
+ *
+ * The string may contain HTML markup. Newlines should be converted to <br> before calling this method.
+ *
+ * **IMPORTANT**: the caller is responsible for sanitizing the HTML markup.
  *
  * Example:
  *
@@ -455,10 +456,8 @@ export const matchBinaryMask = (value: number, mask: number) => {
  * ```
  *
  * @param text String whose size should be returned.
- * @param fontSize Integer that specifies the font size in pixels. Default is
- * {@link Constants#DEFAULT_FONTSIZE}.
- * @param fontFamily String that specifies the name of the font family. Default
- * is {@link Constants#DEFAULT_FONTFAMILY}.
+ * @param fontSize Integer that specifies the font size in pixels. Default is {@link DEFAULT_FONTSIZE}.
+ * @param fontFamily String that specifies the name of the font family. Default is {@link DEFAULT_FONTFAMILY}.
  * @param textWidth Optional width for text wrapping.
  * @param fontStyle Optional font style.
  */
