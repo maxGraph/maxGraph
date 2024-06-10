@@ -37,7 +37,7 @@ import Rectangle from '../geometry/Rectangle';
 import AbstractCanvas2D from './AbstractCanvas2D';
 import { getXml } from '../../util/xmlUtils';
 import { isNode, write } from '../../util/domUtils';
-import { htmlEntities, trim } from '../../util/StringUtils';
+import { htmlEntities, replaceLineFeedsForInnerHtml, trim } from '../../util/StringUtils';
 import {
   AlignValue,
   ColorValue,
@@ -1740,7 +1740,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
         matchBinaryMask(s.fontStyle, FONT.ITALIC) && (div.style.fontStyle = 'italic');
 
         str = htmlEntities(str, false);
-        div.innerHTML = str.replace(/\n/g, '<br/>');
+        div.innerHTML = replaceLineFeedsForInnerHtml(str);
 
         document.body.appendChild(div);
         const w = div.offsetWidth;
