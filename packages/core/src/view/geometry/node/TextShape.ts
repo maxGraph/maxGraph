@@ -38,7 +38,12 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Shape from '../Shape';
 import Rectangle from '../Rectangle';
 import CellState from '../../cell/CellState';
-import { htmlEntities, replaceTrailingNewlines, trim } from '../../../util/StringUtils';
+import {
+  htmlEntities,
+  replaceLineFeedsForInnerHtml,
+  replaceTrailingNewlines,
+  trim,
+} from '../../../util/StringUtils';
 import { isNode } from '../../../util/domUtils';
 import {
   AlignValue,
@@ -921,11 +926,6 @@ class TextShape extends Shape {
 
     return new Point(dx, dy);
   }
-}
-
-// TODO use a shared utils function
-function replaceLineFeedsForInnerHtml(input: string): string {
-  return input.replace(/\n/g, '<br>');
 }
 
 export default TextShape;

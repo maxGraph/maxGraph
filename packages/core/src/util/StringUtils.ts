@@ -150,6 +150,9 @@ export const htmlEntities = (s: string, newline = true): string => {
   return s;
 };
 
+export const replaceLineFeedsForInnerHtml = (input: string): string =>
+  input.replace(/\n/g, '<br>');
+
 export const getStringValue = (array: any, key: string, defaultValue: string) => {
   let value = array != null ? array[key] : null;
   if (value == null) {
