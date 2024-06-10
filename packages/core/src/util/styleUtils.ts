@@ -451,8 +451,7 @@ export const matchBinaryMask = (value: number, mask: number) => {
  * Example:
  *
  * ```javascript
- * // TODO use shared utils
- * const label = graph.getLabel(cell).replace(/\n/g, "<br>");
+ * const label = StringUtils.replaceLineFeedsForInnerHtml(graph.getLabel(cell));
  * const size = graph.getSizeForString(label);
  * ```
  *
