@@ -21,22 +21,70 @@ import { Graph } from '../Graph';
 
 declare module '../Graph' {
   interface Graph {
+    /**
+     * @default 0
+     */
+    // TODO: Document me!
     snapTolerance: number;
+
+    /**
+     * Specifies the grid size.
+     * @default 10
+     */
     gridSize: number;
+
+    /**
+     * Specifies if the grid is enabled. This is used in {@link snap}.
+     * @default true
+     */
     gridEnabled: boolean;
 
     getSnapTolerance: () => number;
+
+    /**
+     * Snaps the given numeric value to the grid if {@link gridEnabled} is true.
+     *
+     * @param value Numeric value to be snapped to the grid.
+     */
     snap: (value: number) => number;
+
+    /**
+     * Snaps the given delta with the given scaled bounds.
+     *
+     * @param delta
+     * @param bounds
+     * @param ignoreGrid default `false`
+     * @param ignoreHorizontal default `false`
+     * @param ignoreVertical default `false`
+     */
     snapDelta: (
       delta: Point,
       bounds: Rectangle,
-      ignoreGrid: boolean,
-      ignoreHorizontal: boolean,
-      ignoreVertical: boolean
+      ignoreGrid?: boolean,
+      ignoreHorizontal?: boolean,
+      ignoreVertical?: boolean
     ) => Point;
+
+    /**
+     * Returns {@link gridEnabled}.
+     */
     isGridEnabled: () => boolean;
+
+    /**
+     * Specifies if the grid should be enabled.
+     *
+     * @param value Boolean indicating if the grid should be enabled.
+     */
     setGridEnabled: (value: boolean) => void;
+
+    /**
+     * Returns {@link gridSize}.
+     */
     getGridSize: () => number;
+
+    /**
+     * Sets {@link gridSize}.
+     */
     setGridSize: (value: number) => void;
   }
 }
@@ -59,34 +107,16 @@ type PartialType = PartialGraph & PartialSnap;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const SnapMixin: PartialType = {
-  // TODO: Document me!
   snapTolerance: 0,
 
   getSnapTolerance() {
     return this.snapTolerance;
   },
 
-  /**
-   * Specifies the grid size.
-   * @default 10
-   */
   gridSize: 10,
 
-  /**
-   * Specifies if the grid is enabled. This is used in {@link snap}.
-   * @default true
-   */
   gridEnabled: true,
 
-  /*****************************************************************************
-   * Group: Graph display
-   *****************************************************************************/
-
-  /**
-   * Snaps the given numeric value to the grid if {@link gridEnabled} is true.
-   *
-   * @param value Numeric value to be snapped to the grid.
-   */
   snap(value) {
     if (this.gridEnabled) {
       value = Math.round(value / this.gridSize) * this.gridSize;
@@ -94,9 +124,6 @@ const SnapMixin: PartialType = {
     return value;
   },
 
-  /**
-   * Snaps the given delta with the given scaled bounds.
-   */
   snapDelta(
     delta,
     bounds,
@@ -155,36 +182,18 @@ const SnapMixin: PartialType = {
     return delta;
   },
 
-  /*****************************************************************************
-   * Group: Graph behaviour
-   *****************************************************************************/
-
-  /**
-   * Returns {@link gridEnabled} as a boolean.
-   */
   isGridEnabled() {
     return this.gridEnabled;
   },
 
-  /**
-   * Specifies if the grid should be enabled.
-   *
-   * @param value Boolean indicating if the grid should be enabled.
-   */
   setGridEnabled(value) {
     this.gridEnabled = value;
   },
 
-  /**
-   * Returns {@link gridSize}.
-   */
   getGridSize() {
     return this.gridSize;
   },
 
-  /**
-   * Sets {@link gridSize}.
-   */
   setGridSize(value) {
     this.gridSize = value;
   },

@@ -315,6 +315,9 @@ They are now set in the `Graph.options` object with the same property name.
 
 For example, to set the `foldingEnabled` property, instead of doing `Graph.foldingEnabled`, you should set instead `Graph.options.foldingEnabled`.
 
+#### Other properties
+
+- the `tolerance` property has been renamed (and the get/set method as well). It is now named `snapTolerance`.
 
 ### mxResources
 
