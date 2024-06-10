@@ -451,8 +451,9 @@ export const matchBinaryMask = (value: number, mask: number) => {
  * Example:
  *
  * ```javascript
- * let label = graph.getLabel(cell).replace(/\n/g, "<br>");
- * let size = graph.getSizeForString(label);
+ * // TODO use shared utils
+ * const label = graph.getLabel(cell).replace(/\n/g, "<br>");
+ * const size = graph.getSizeForString(label);
  * ```
  *
  * @param text String whose size should be returned.

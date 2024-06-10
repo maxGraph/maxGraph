@@ -266,7 +266,7 @@ class TextShape extends Shape {
       // Handles trailing newlines to make sure they are visible in rendering output
       val =
         !isNode(this.value) && this.replaceLinefeeds && fmt === 'html'
-          ? (<string>val).replace(/\n/g, '<br/>')
+          ? replaceLineFeedsForInnerHtml(<string>val)
           : val;
 
       let dir: TextDirectionValue = this.textDirection;
@@ -582,7 +582,7 @@ class TextShape extends Shape {
 
     // Handles trailing newlines to make sure they are visible in rendering output
     val = replaceTrailingNewlines(val, '<div><br></div>');
-    val = this.replaceLinefeeds ? val.replace(/\n/g, '<br/>') : val;
+    val = this.replaceLinefeeds ? replaceLineFeedsForInnerHtml(val) : val;
 
     return val;
   }
@@ -707,7 +707,7 @@ class TextShape extends Shape {
 
       // Handles trailing newlines to make sure they are visible in rendering output
       val = replaceTrailingNewlines(val, '<div>&nbsp;</div>');
-      val = this.replaceLinefeeds ? val.replace(/\n/g, '<br/>') : val;
+      val = this.replaceLinefeeds ? replaceLineFeedsForInnerHtml(val) : val;
       val = `<div style="display:inline-block;_display:inline;">${val}</div>`;
 
       elt.innerHTML = val;
@@ -732,7 +732,7 @@ class TextShape extends Shape {
 
       // Handles trailing newlines to make sure they are visible in rendering output
       val = replaceTrailingNewlines(val, '<div><br></div>');
-      val = this.replaceLinefeeds ? val.replace(/\n/g, '<br/>') : val;
+      val = this.replaceLinefeeds ? replaceLineFeedsForInnerHtml(val) : val;
       const bg = this.background !== NONE ? this.background : null;
       const bd = this.border !== NONE ? this.border : null;
 
@@ -921,6 +921,11 @@ class TextShape extends Shape {
 
     return new Point(dx, dy);
   }
+}
+
+// TODO use a shared utils function
+function replaceLineFeedsForInnerHtml(input: string): string {
+  return input.replace(/\n/g, '<br>');
 }
 
 export default TextShape;
