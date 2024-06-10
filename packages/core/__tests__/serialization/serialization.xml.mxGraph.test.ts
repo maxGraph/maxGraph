@@ -16,13 +16,7 @@ limitations under the License.
 
 import { describe, test } from '@jest/globals';
 import { ModelChecker } from './utils';
-import {
-  CodecRegistry,
-  Geometry,
-  GraphDataModel,
-  ModelXmlSerializer,
-  Point,
-} from '../../src';
+import { Geometry, GraphDataModel, ModelXmlSerializer, Point } from '../../src';
 
 describe('import mxGraph model', () => {
   test('Model with geometry', () => {
