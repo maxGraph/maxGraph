@@ -22,9 +22,19 @@ import { mixInto } from '../../util/Utils';
 
 declare module '../Graph' {
   interface Graph {
+    /** @default null */
     horizontalPageBreaks: any[] | null;
+
+    /** @default null */
     verticalPageBreaks: any[] | null;
 
+    /**
+     * Invokes from {@link sizeDidChange} to redraw the page breaks.
+     *
+     * @param visible Boolean that specifies if page breaks should be shown.
+     * @param width Specifies the width of the container in pixels.
+     * @param height Specifies the height of the container in pixels.
+     */
     updatePageBreaks: (visible: boolean, width: number, height: number) => void;
   }
 }
@@ -51,14 +61,7 @@ const PageBreaksMixin: PartialType = {
   horizontalPageBreaks: null,
   verticalPageBreaks: null,
 
-  /**
-   * Invokes from {@link sizeDidChange} to redraw the page breaks.
-   *
-   * @param visible Boolean that specifies if page breaks should be shown.
-   * @param width Specifies the width of the container in pixels.
-   * @param height Specifies the height of the container in pixels.
-   */
-  updatePageBreaks(visible, width, height) {
+  updatePageBreaks(visible, _width, _height) {
     const { scale, translate: tr } = this.getView();
     const fmt = this.getPageFormat();
     const ps = scale * this.getPageScale();
