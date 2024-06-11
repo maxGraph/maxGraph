@@ -27,12 +27,49 @@ import SelectionCellsHandler from '../handler/SelectionCellsHandler';
 
 declare module '../Graph' {
   interface Graph {
+    /** @default null */
     shiftPreview1: HTMLElement | null;
+
+    /** @default null */
     shiftPreview2: HTMLElement | null;
+
+    /**
+     * Specifies if scrollbars should be used for panning in {@link panGraph} if any scrollbars are available.
+     *
+     * If scrollbars are enabled in CSS, but no scrollbars appear because the graph is smaller than the container size,
+     * then no panning occurs if this is `true`.
+     * @default true
+     */
     useScrollbarsForPanning: boolean;
+
+    /**
+     * Specifies if auto scrolling should be carried out via {@link PanningHandler} even if the container has scrollbars.
+     *
+     * This disables {@link scrollPointToVisible} and uses {@link PanningManager} instead. If this is `true` then {@link autoExtend} is disabled.
+     *
+     * It should only be used with a scroll buffer or when scrollbars are visible and scrollable in all directions.
+     * @default false
+     */
     timerAutoScroll: boolean;
+
+    /**
+     * Specifies if panning via {@link panGraph} should be allowed to implement autoscroll if no scrollbars are available in {@link scrollPointToVisible}.
+     *
+     * To enable panning inside the container, near the edge, set {@link PanningManager.border} to a positive value.
+     * @default false
+     */
     allowAutoPanning: boolean;
+
+    /**
+     * Current horizontal panning value.
+     * @default 0
+     */
     panDx: number;
+
+    /**
+     * Current vertical panning value.
+     * @default 0
+     */
     panDy: number;
 
     isUseScrollbarsForPanning: () => boolean;
@@ -42,9 +79,46 @@ declare module '../Graph' {
     setPanDx: (dx: number) => void;
     getPanDy: () => number;
     setPanDy: (dy: number) => void;
+
+    /**
+     * Shifts the graph display by the given amount. This is used to preview panning operations, use {@link GraphView.setTranslate} to set a persistent
+     * translation of the view.
+     *
+     * Fires {@link InternalEvent.PAN}.
+     *
+     * @param dx Amount to shift the graph along the x-axis.
+     * @param dy Amount to shift the graph along the y-axis.
+     */
     panGraph: (dx: number, dy: number) => void;
+
+    /**
+     * Pans the graph so that it shows the given cell. Optionally the cell may be centered in the container.
+     *
+     * To center a given graph if the {@link container} has no scrollbars, use the following code.
+     *
+     * ```javascript
+     * const bounds = graph.getGraphBounds();
+     * graph.view.setTranslate(-bounds.x - (bounds.width - container.clientWidth) / 2,
+     * 						   -bounds.y - (bounds.height - container.clientHeight) / 2);
+     * ```
+     *
+     * @param cell {@link Cell} to be made visible.
+     * @param center Optional boolean flag. Default is `false`.
+     */
     scrollCellToVisible: (cell: Cell, center?: boolean) => void;
+
+    /**
+     * Pans the graph so that it shows the given rectangle.
+     *
+     * @param rect {@link Rectangle} to be made visible.
+     */
     scrollRectToVisible: (rect: Rectangle) => boolean;
+
+    /**
+     * Specifies if panning should be enabled. This implementation updates {@link PanningHandler.panningEnabled}.
+     *
+     * @param enabled Boolean indicating if panning should be enabled.
+     */
     setPanning: (enabled: boolean) => void;
   }
 }
@@ -78,50 +152,24 @@ const PanningMixin: PartialType = {
   shiftPreview1: null,
   shiftPreview2: null,
 
-  /**
-   * Specifies if scrollbars should be used for panning in {@link panGraph} if
-   * any scrollbars are available. If scrollbars are enabled in CSS, but no
-   * scrollbars appear because the graph is smaller than the container size,
-   * then no panning occurs if this is `true`.
-   * @default true
-   */
   useScrollbarsForPanning: true,
 
   isUseScrollbarsForPanning() {
     return this.useScrollbarsForPanning;
   },
 
-  /**
-   * Specifies if autoscrolling should be carried out via mxPanningManager even
-   * if the container has scrollbars. This disables {@link scrollPointToVisible} and
-   * uses {@link PanningManager} instead. If this is true then {@link autoExtend} is
-   * disabled. It should only be used with a scroll buffer or when scollbars
-   * are visible and scrollable in all directions.
-   * @default false
-   */
   timerAutoScroll: false,
 
   isTimerAutoScroll() {
     return this.timerAutoScroll;
   },
 
-  /**
-   * Specifies if panning via {@link panGraph} should be allowed to implement autoscroll
-   * if no scrollbars are available in {@link scrollPointToVisible}. To enable panning
-   * inside the container, near the edge, set {@link PanningManager.border} to a
-   * positive value.
-   * @default false
-   */
   allowAutoPanning: false,
 
   isAllowAutoPanning() {
     return this.allowAutoPanning;
   },
 
-  /**
-   * Current horizontal panning value.
-   * @default 0
-   */
   panDx: 0,
 
   getPanDx() {
@@ -132,10 +180,6 @@ const PanningMixin: PartialType = {
     this.panDx = dx;
   },
 
-  /**
-   * Current vertical panning value.
-   * @default 0
-   */
   panDy: 0,
 
   getPanDy() {
@@ -146,14 +190,6 @@ const PanningMixin: PartialType = {
     this.panDy = dy;
   },
 
-  /**
-   * Shifts the graph display by the given amount. This is used to preview
-   * panning operations, use {@link GraphView.setTranslate} to set a persistent
-   * translation of the view. Fires {@link InternalEvent.PAN}.
-   *
-   * @param dx Amount to shift the graph along the x-axis.
-   * @param dy Amount to shift the graph along the y-axis.
-   */
   panGraph(dx, dy) {
     const container = this.getContainer();
 
@@ -254,21 +290,6 @@ const PanningMixin: PartialType = {
     }
   },
 
-  /**
-   * Pans the graph so that it shows the given cell. Optionally the cell may
-   * be centered in the container.
-   *
-   * To center a given graph if the {@link container} has no scrollbars, use the following code.
-   *
-   * [code]
-   * var bounds = graph.getGraphBounds();
-   * graph.view.setTranslate(-bounds.x - (bounds.width - container.clientWidth) / 2,
-   * 						   -bounds.y - (bounds.height - container.clientHeight) / 2);
-   * [/code]
-   *
-   * @param cell {@link mxCell} to be made visible.
-   * @param center Optional boolean flag. Default is `false`.
-   */
   scrollCellToVisible(cell, center = false) {
     const x = -this.getView().translate.x;
     const y = -this.getView().translate.y;
@@ -300,11 +321,6 @@ const PanningMixin: PartialType = {
     }
   },
 
-  /**
-   * Pans the graph so that it shows the given rectangle.
-   *
-   * @param rect {@link mxRectangle} to be made visible.
-   */
   scrollRectToVisible(rect) {
     let isChanged = false;
 
@@ -390,15 +406,6 @@ const PanningMixin: PartialType = {
     return isChanged;
   },
 
-  /*****************************************************************************
-   * Group: Graph behaviour
-   *****************************************************************************/
-
-  /**
-   * Specifies if panning should be enabled. This implementation updates {@link PanningHandler.panningEnabled}.
-   *
-   * @param enabled Boolean indicating if panning should be enabled.
-   */
   setPanning(enabled) {
     const panningHandler = this.getPlugin('PanningHandler') as PanningHandler;
     panningHandler && (panningHandler.panningEnabled = enabled);
