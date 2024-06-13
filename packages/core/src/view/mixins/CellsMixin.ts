@@ -159,11 +159,12 @@ declare module '../Graph' {
     getCurrentCellStyle: (cell: Cell, ignoreState?: boolean) => CellStateStyle;
 
     /**
-     * Returns the style for the given cell from the cell state, if one exists,
-     * or using {@link getCellStyle}.
+     * Returns the computed style of the Cell using the edge or vertex default style regarding of the type of the cell.
+     * The actual computation is done by {@link Stylesheet.getCellStyle}.
+     *
+     * **Note**: You should try and get the cell state for the given cell and use the cached style in the state before using this method.
      *
      * @param cell {@link Cell} whose style should be returned as an array.
-     * @param ignoreState Optional boolean that specifies if the cell state should be ignored.
      */
     getCellStyle: (cell: Cell) => CellStateStyle;
 
