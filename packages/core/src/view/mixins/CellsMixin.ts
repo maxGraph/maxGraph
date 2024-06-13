@@ -170,7 +170,7 @@ declare module '../Graph' {
 
     /**
      * Tries to resolve the value for the image style in the image bundles and
-     * turns short data URIs as defined in mxImageBundle to data URIs as
+     * turns short data URIs as defined in {@link ImageBundle} to data URIs as
      * defined in RFC 2397 of the IETF.
      */
     postProcessCellStyle: (style: CellStateStyle) => CellStateStyle;
