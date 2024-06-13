@@ -264,8 +264,7 @@ declare module '../Graph' {
     ) => void;
 
     /**
-     * Aligns the given cells vertically or horizontally according to the given
-     * alignment using the optional parameter as the coordinate.
+     * Aligns the given cells vertically or horizontally according to the given alignment using the optional parameter as the coordinate.
      *
      * @param align Specifies the alignment. Possible values are all entries of the {@link ALIGN} enum.
      * @param cells Array of {@link Cell} to be aligned.
@@ -289,10 +288,9 @@ declare module '../Graph' {
     ) => Cell;
 
     /**
-     * Returns the clones for the given cells. The clones are created recursively
-     * using {@link cloneCells}. If the terminal of an edge is not in the
-     * given array, then the respective end is assigned a terminal point and the
-     * terminal is removed.
+     * Returns the clones for the given cells. The clones are created recursively using {@link cloneCells}.
+     *
+     * If the terminal of an edge is not in the given array, then the respective end is assigned a terminal point and the terminal is removed.
      *
      * @param cells Array of {@link Cell} to be cloned.
      * @param allowInvalidEdges Optional boolean that specifies if invalid edges should be cloned. Default is `true`.
@@ -307,15 +305,16 @@ declare module '../Graph' {
     ) => Cell[];
 
     /**
-     * Adds the cell to the parent and connects it to the given source and
-     * target terminals. This is a shortcut method. Returns the cell that was
-     * added.
+     * Adds the cell to the parent and connects it to the given source and target terminals.
+     *
+     * This is a shortcut method.
      *
      * @param cell {@link mxCell} to be inserted into the given parent.
      * @param parent {@link mxCell} that represents the new parent. If no parent is given then the default parent is used.
      * @param index Optional index to insert the cells at. Default is 'to append'.
      * @param source Optional {@link Cell} that represents the source terminal.
      * @param target Optional {@link Cell} that represents the target terminal.
+     * @returns the cell that was added.
      */
     addCell: (
       cell: Cell,
