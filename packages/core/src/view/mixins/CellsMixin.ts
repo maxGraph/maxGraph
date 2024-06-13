@@ -187,9 +187,9 @@ declare module '../Graph' {
     setCellStyle: (style: CellStyle, cells?: Cell[]) => void;
 
     /**
-     * Toggles the boolean value for the given key in the style of the given cell
-     * and returns the new value as 0 or 1. If no cell is specified then the
-     * selection cell is used.
+     * Toggles the boolean value for the given key in the style of the given cell and returns the new value as boolean.
+     *
+     * If no cell is specified then the selection cell is used.
      *
      * @param key String representing the key for the boolean value to be toggled.
      * @param defaultValue Optional boolean default value if no value is defined. Default is `false`.
@@ -202,14 +202,14 @@ declare module '../Graph' {
     ) => boolean | null;
 
     /**
-     * Toggles the boolean value for the given key in the style of the given cells
-     * and returns the new value as 0 or 1. If no cells are specified, then the
-     * selection cells are used. For example, this can be used to toggle
-     * {@link 'rounded'} or any other style with a boolean value.
+     * Toggles the boolean value for the given key in the style of the given cells and returns the new value as boolean.
+     *
+     * If no cells are specified, then the selection cells are used.
+     *
+     * For example, this can be used to toggle {@link CellStateStyle.rounded} or any other style with a boolean value.
      *
      * @param key String representing the key for the boolean value to be toggled.
-     * @param defaultValue Optional boolean default value if no value is defined.
-     * Default is `false`.
+     * @param defaultValue Optional boolean default value if no value is defined. Default is `false`.
      * @param cells Optional array of {@link Cell} whose styles should be modified. Default is the selection cells.
      */
     toggleCellStyles: (
