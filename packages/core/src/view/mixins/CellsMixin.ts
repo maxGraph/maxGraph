@@ -219,11 +219,11 @@ declare module '../Graph' {
     ) => boolean | null;
 
     /**
-     * Sets the key to value in the styles of the given cells. This will modify
-     * the existing cell styles in-place and override any existing assignment
-     * for the given key. If no cells are specified, then the selection cells
-     * are changed. If no value is specified, then the respective key is
-     * removed from the styles.
+     * Sets the key to value in the styles of the given cells. This will modify the existing cell styles in-place and override any existing assignment for the given key.
+     *
+     * If no cells are specified, then the selection cells are changed.
+     *
+     * If no value is specified, then the respective key is removed from the styles.
      *
      * @param key String representing the key to be assigned.
      * @param value String representing the new value for the key.
