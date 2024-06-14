@@ -23,7 +23,24 @@ import Cell from '../cell/Cell';
 
 declare module '../Graph' {
   interface Graph {
+    /**
+     * Moves the given cells to the front or back. The change is carried out using {@link cellsOrdered}.
+     *
+     * This method fires {@link InternalEvent.ORDER_CELLS} while the transaction is in progress.
+     *
+     * @param back Boolean that specifies if the cells should be moved to back. Default is `false`.
+     * @param cells Array of {@link Cell} to move to the background. If not set, then the selection cells are used.
+     */
     orderCells: (back: boolean, cells?: Cell[]) => Cell[];
+
+    /**
+     * Moves the given cells to the front or back.
+     *
+     * This method fires {@link InternalEvent.CELLS_ORDERED} while the transaction is in progress.
+     *
+     * @param cells Array of {@link Cell} whose order should be changed.
+     * @param back Boolean that specifies if the cells should be moved to back. Default is `false`.
+     */
     cellsOrdered: (cells: Cell[], back: boolean) => void;
   }
 }
@@ -37,19 +54,6 @@ type PartialType = PartialGraph & PartialOrder;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const OrderMixin: PartialType = {
-  /*****************************************************************************
-   * Group: Order
-   *****************************************************************************/
-
-  /**
-   * Moves the given cells to the front or back. The change is carried out
-   * using {@link cellsOrdered}. This method fires {@link InternalEvent.ORDER_CELLS} while the
-   * transaction is in progress.
-   *
-   * @param back Boolean that specifies if the cells should be moved to back.
-   * @param cells Array of {@link mxCell} to move to the background. If null is
-   * specified then the selection cells are used.
-   */
   orderCells(back = false, cells) {
     if (!cells) cells = this.getSelectionCells();
     if (!cells) {
@@ -71,13 +75,6 @@ const OrderMixin: PartialType = {
     return cells;
   },
 
-  /**
-   * Moves the given cells to the front or back. This method fires
-   * {@link InternalEvent.CELLS_ORDERED} while the transaction is in progress.
-   *
-   * @param cells Array of {@link mxCell} whose order should be changed.
-   * @param back Boolean that specifies if the cells should be moved to back.
-   */
   cellsOrdered(cells, back = false) {
     this.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
