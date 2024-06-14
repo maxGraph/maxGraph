@@ -22,8 +22,19 @@ declare module '../Graph' {
   interface Graph {
     imageBundles: ImageBundle[];
 
+    /**
+     * Adds the specified {@link ImageBundle}.
+     */
     addImageBundle: (bundle: ImageBundle) => void;
+
+    /**
+     * Removes the specified {@link ImageBundle}.
+     */
     removeImageBundle: (bundle: ImageBundle) => void;
+
+    /**
+     * Searches all {@link imageBundles} for the specified key and returns the value for the first match or `null` if the key is not found.
+     */
     getImageFromBundles: (key: string) => string | null;
   }
 }
@@ -40,16 +51,10 @@ type PartialType = PartialImage;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 const ImageMixin: PartialType = {
-  /**
-   * Adds the specified {@link ImageBundle}.
-   */
   addImageBundle(bundle) {
     this.imageBundles.push(bundle);
   },
 
-  /**
-   * Removes the specified {@link ImageBundle}.
-   */
   removeImageBundle(bundle) {
     const tmp: ImageBundle[] = [];
     for (let i = 0; i < this.imageBundles.length; i += 1) {
@@ -60,10 +65,6 @@ const ImageMixin: PartialType = {
     this.imageBundles = tmp;
   },
 
-  /**
-   * Searches all {@link imageBundles} for the specified key and returns the value
-   * for the first match or null if the key is not found.
-   */
   getImageFromBundles(key) {
     if (key) {
       for (let i = 0; i < this.imageBundles.length; i += 1) {
