@@ -14,80 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mixInto } from '../../util/Utils';
-import Point from '../geometry/Point';
-import Rectangle from '../geometry/Rectangle';
-import { Graph } from '../Graph';
-
-declare module '../Graph' {
-  interface Graph {
-    /**
-     * @default 0
-     */
-    // TODO: Document me!
-    snapTolerance: number;
-
-    /**
-     * Specifies the grid size.
-     * @default 10
-     */
-    gridSize: number;
-
-    /**
-     * Specifies if the grid is enabled. This is used in {@link snap}.
-     * @default true
-     */
-    gridEnabled: boolean;
-
-    getSnapTolerance: () => number;
-
-    /**
-     * Snaps the given numeric value to the grid if {@link gridEnabled} is true.
-     *
-     * @param value Numeric value to be snapped to the grid.
-     */
-    snap: (value: number) => number;
-
-    /**
-     * Snaps the given delta with the given scaled bounds.
-     *
-     * @param delta
-     * @param bounds
-     * @param ignoreGrid default `false`
-     * @param ignoreHorizontal default `false`
-     * @param ignoreVertical default `false`
-     */
-    snapDelta: (
-      delta: Point,
-      bounds: Rectangle,
-      ignoreGrid?: boolean,
-      ignoreHorizontal?: boolean,
-      ignoreVertical?: boolean
-    ) => Point;
-
-    /**
-     * Returns {@link gridEnabled}.
-     */
-    isGridEnabled: () => boolean;
-
-    /**
-     * Specifies if the grid should be enabled.
-     *
-     * @param value Boolean indicating if the grid should be enabled.
-     */
-    setGridEnabled: (value: boolean) => void;
-
-    /**
-     * Returns {@link gridSize}.
-     */
-    getGridSize: () => number;
-
-    /**
-     * Sets {@link gridSize}.
-     */
-    setGridSize: (value: number) => void;
-  }
-}
+import type { Graph } from '../Graph';
 
 type PartialGraph = Pick<Graph, 'getView'>;
 type PartialSnap = Pick<
@@ -106,7 +33,7 @@ type PartialSnap = Pick<
 type PartialType = PartialGraph & PartialSnap;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const SnapMixin: PartialType = {
+export const SnapMixin: PartialType = {
   snapTolerance: 0,
 
   getSnapTolerance() {
@@ -198,5 +125,3 @@ const SnapMixin: PartialType = {
     this.gridSize = value;
   },
 };
-
-mixInto(Graph)(SnapMixin);

@@ -4,6 +4,7 @@
   "private": false,
   "version": "0.11.0",
   "type": "module",
+  "sideEffects": true,
   "description": "maxGraph is a fully client side JavaScript diagramming library that uses SVG and HTML for rendering.",
   "keywords": [
     "browser",
@@ -53,6 +54,5 @@
     "rimraf": "~5.0.5",
     "ts-jest": "^29.0.3",
     "typedoc": "~0.25.13"
-  },
-  "sideEffects": true
+  }
 }

@@ -59,7 +59,12 @@ export const isNullish = (v: string | object | null | undefined | number) =>
 export const isNotNullish = (v: string | object | null | undefined | number) =>
   !isNullish(v);
 
-// Merge a mixin into the destination
+/**
+ * Merge a mixin into the destination
+ * @param dest the destination class
+ *
+ * @private not part of the public API, can be removed or changed without prior notice
+ */
 export const mixInto = (dest: any) => (mixin: any) => {
   const keys = Reflect.ownKeys(mixin);
   try {

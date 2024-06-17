@@ -64,6 +64,7 @@ import GraphSelectionModel from './GraphSelectionModel';
 import { registerDefaultShapes } from './cell/register-shapes';
 import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
 import { registerDefaultStyleElements } from './style/register';
+import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 
 export const defaultPlugins: GraphPluginConstructor[] = [
   CellEditorHandler,
@@ -157,8 +158,7 @@ class Graph extends EventSource {
   renderHint: string | null = null;
 
   /**
-   * Dialect to be used for drawing the graph. Possible values are all
-   * constants in {@link mxConstants} with a DIALECT-prefix.
+   * Dialect to be used for drawing the graph. Possible values are all constants in {@link DIALECT}.
    */
   dialect: 'svg' | 'mixedHtml' | 'preferHtml' | 'strictHtml' = 'svg';
 
@@ -232,7 +232,7 @@ class Graph extends EventSource {
 
   /**
    * Specifies the page format for the background page.
-   * This is used as the default in {@link printPreview} and for painting the background page
+   * This is used as the default in {@link PrintPreview} and for painting the background page
    * if {@link pageVisible} is `true` and the page breaks if {@link pageBreaksVisible} is `true`.
    * @default {@link mxConstants.PAGE_FORMAT_A4_PORTRAIT}
    */
@@ -1509,6 +1509,11 @@ class Graph extends EventSource {
     }
   }
 }
+
+// This introduces a side effect, but it is necessary to ensure the Graph is enriched with all properties and methods defined in mixins.
+// It is only called when Graph is imported, so the Graph definition is always consistent.
+// And this doesn't impact the tree-shaking.
+applyGraphMixins();
 
 /**
  * Codec for {@link Graph}s. This class is created and registered

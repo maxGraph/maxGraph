@@ -15,72 +15,8 @@ limitations under the License.
 */
 
 import Rectangle from '../geometry/Rectangle';
-import { mixInto } from '../../util/Utils';
 import { hasScrollbars } from '../../util/styleUtils';
-import { Graph } from '../Graph';
-
-declare module '../Graph' {
-  interface Graph {
-    /**
-     * Specifies the factor used for {@link zoomIn} and {@link zoomOut}.
-     * @default 1.2 (120%)
-     */
-    zoomFactor: number;
-
-    /**
-     * Specifies if the viewport should automatically contain the selection cells after a zoom operation.
-     * @default false
-     */
-    keepSelectionVisibleOnZoom: boolean;
-
-    /**
-     * Specifies if the zoom operations should go into the center of the actual
-     * diagram rather than going from top, left.
-     * @default true
-     */
-    centerZoom: boolean;
-
-    /**
-     * Zooms into the graph by {@link zoomFactor}.
-     */
-    zoomIn: () => void;
-
-    /**
-     * Zooms out of the graph by {@link zoomFactor}.
-     */
-    zoomOut: () => void;
-
-    /**
-     * Resets the zoom in the view to the original scale.
-     */
-    zoomActual: () => void;
-
-    /**
-     * Zooms the graph to the given scale with an optional boolean center
-     * argument, which is passed to {@link zoom}.
-     */
-    zoomTo: (scale: number, center?: boolean) => void;
-
-    /**
-     * Zooms the graph using the given factor. Center is an optional boolean
-     * argument that keeps the graph scrolled to the center. If the center argument
-     * is omitted, then {@link centerZoom} will be used as its value.
-     */
-    zoom: (factor: number, center?: boolean) => void;
-
-    /**
-     * Zooms the graph to the specified rectangle. If the rectangle does not have same aspect
-     * ratio as the display container, it is increased in the smaller relative dimension only
-     * until the aspect match. The original rectangle is centralised within this expanded one.
-     *
-     * Note that the input rectangular must be un-scaled and un-translated.
-     *
-     * @param rect The un-scaled and un-translated rectangluar region that should be just visible
-     * after the operation
-     */
-    zoomToRect: (rect: Rectangle) => void;
-  }
-}
+import type { Graph } from '../Graph';
 
 type PartialGraph = Pick<
   Graph,
@@ -101,7 +37,7 @@ type PartialZoom = Pick<
 type PartialType = PartialGraph & PartialZoom;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const ZoomMixin: PartialType = {
+export const ZoomMixin: PartialType = {
   zoomFactor: 1.2,
 
   keepSelectionVisibleOnZoom: false,
@@ -270,5 +206,3 @@ const ZoomMixin: PartialType = {
     }
   },
 };
-
-mixInto(Graph)(ZoomMixin);

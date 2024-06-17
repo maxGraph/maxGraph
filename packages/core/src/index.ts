@@ -14,30 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* Graph mixins - side effects */
-import './view/mixins/PortsMixin';
-import './view/mixins/PanningMixin';
-import './view/mixins/ZoomMixin';
-import './view/mixins/EventsMixin';
-import './view/mixins/ImageMixin';
-import './view/mixins/CellsMixin';
-import './view/mixins/SelectionMixin';
-import './view/mixins/ConnectionsMixin';
-import './view/mixins/EdgeMixin';
-import './view/mixins/VertexMixin';
-import './view/mixins/OverlaysMixin';
-import './view/mixins/EditingMixin';
-import './view/mixins/FoldingMixin';
-import './view/mixins/LabelMixin';
-import './view/mixins/ValidationMixin';
-import './view/mixins/SnapMixin';
-import './view/mixins/TooltipMixin';
-import './view/mixins/TerminalMixin';
-import './view/mixins/DragDropMixin';
-import './view/mixins/SwimlaneMixin';
-import './view/mixins/PageBreaksMixin';
-import './view/mixins/GroupingMixin';
-import './view/mixins/OrderMixin';
+// Contribution of Mixins to the Graph type (no side effects, types only)
+import './view/mixins/_graph-mixins-types';
 
 export { Graph } from './view/Graph';
 

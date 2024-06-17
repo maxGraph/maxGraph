@@ -14,34 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mixInto } from '../../util/Utils';
-import { Graph } from '../Graph';
-import ImageBundle from '../image/ImageBundle';
-
-declare module '../Graph' {
-  interface Graph {
-    imageBundles: ImageBundle[];
-
-    /**
-     * Adds the specified {@link ImageBundle}.
-     */
-    addImageBundle: (bundle: ImageBundle) => void;
-
-    /**
-     * Removes the specified {@link ImageBundle}.
-     */
-    removeImageBundle: (bundle: ImageBundle) => void;
-
-    /**
-     * Searches all {@link imageBundles} for the specified key and returns the value for the first match or `null` if the key is not found.
-     */
-    getImageFromBundles: (key: string) => string | null;
-  }
-}
-
-/*****************************************************************************
- * Group: Image bundles
- *****************************************************************************/
+import type { Graph } from '../Graph';
+import type ImageBundle from '../image/ImageBundle';
 
 type PartialImage = Pick<
   Graph,
@@ -50,7 +24,7 @@ type PartialImage = Pick<
 type PartialType = PartialImage;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const ImageMixin: PartialType = {
+export const ImageMixin: PartialType = {
   addImageBundle(bundle) {
     this.imageBundles.push(bundle);
   },
@@ -77,5 +51,3 @@ const ImageMixin: PartialType = {
     return null;
   },
 };
-
-mixInto(Graph)(ImageMixin);
