@@ -65,7 +65,7 @@ export class ModelXmlSerializer {
   }
 
   /**
-   * Hook for replacing codecs registered by default (core codecs).
+   * Hook for replacing codecs registered by default (model codecs).
    */
   protected registerCodecs(): void {
     registerModelCodecs();

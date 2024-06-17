@@ -23,6 +23,7 @@ import {
   EditorPopupMenuCodec,
   EditorToolbarCodec,
   GenericChangeCodec,
+  GraphCodec,
   GraphViewCodec,
   ModelCodec,
   mxCellCodec,
@@ -116,6 +117,7 @@ let isCoreCodecsRegistered = false;
 export const registerCoreCodecs = (force = false) => {
   if (!isCoreCodecsRegistered || force) {
     CodecRegistry.register(new ChildChangeCodec());
+    CodecRegistry.register(new GraphCodec());
     CodecRegistry.register(new GraphViewCodec());
     CodecRegistry.register(new RootChangeCodec());
     CodecRegistry.register(new StylesheetCodec());
