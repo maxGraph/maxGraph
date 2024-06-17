@@ -4,7 +4,7 @@ This directory contains mixins that extend the functionality of the Graph class.
 
 ## Purpose
 
-Historically, in the mxGraph library, the `mxGraph` class acts as a God Object that contains all the functionality of the library. In version 4.2.2, the related
+Historically, in the mxGraph library, the `mxGraph` class acts as a [God Object](https://en.wikipedia.org/wiki/God_object) that contains all the functionality of the library. In version 4.2.2, the related
 source file includes [13,229 lines](https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/view/mxGraph.js#L13229).
 
 `maxGraph` inherits from this design pattern, and various changes were introduced to the library to make it more modular and maintainable.
