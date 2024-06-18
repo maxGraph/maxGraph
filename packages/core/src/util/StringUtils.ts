@@ -132,8 +132,8 @@ export const removeWhitespace = (node: HTMLElement, before: boolean) => {
  * Replaces characters (less than, greater than, newlines and quotes) with
  * their HTML entities in the given string and returns the result.
  *
- * @param {string} s String that contains the characters to be converted.
- * @param {boolean} newline If newlines should be replaced. Default is true.
+ * @param s String that contains the characters to be converted.
+ * @param newline If newlines should be replaced. Default is `true`.
  */
 export const htmlEntities = (s: string, newline = true): string => {
   s = String(s || '');

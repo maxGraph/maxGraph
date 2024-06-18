@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { registerModelCodecs } from './register';
-import { getPrettyXml, parseXml } from '../util/xmlUtils';
+import { getPrettyXml, getXml, parseXml } from '../util/xmlUtils';
 import Codec from './Codec';
 import type GraphDataModel from '../view/GraphDataModel';
 
@@ -52,16 +52,14 @@ export class ModelXmlSerializer {
     this.registerCodecs();
   }
 
-  import(xml: string): void {
-    const doc = parseXml(xml);
+  import(input: string | Element): void {
+    const doc = typeof input === 'string' ? parseXml(input) : input.ownerDocument;
     new Codec(doc).decode(doc.documentElement, this.dataModel);
   }
 
   export(options?: ModelExportOptions): string {
     const encodedNode = new Codec().encode(this.dataModel);
-    return options?.pretty ?? true
-      ? getPrettyXml(encodedNode)
-      : getPrettyXml(encodedNode, '', '', '');
+    return options?.pretty ?? true ? getPrettyXml(encodedNode) : getXml(encodedNode!);
   }
 
   /**

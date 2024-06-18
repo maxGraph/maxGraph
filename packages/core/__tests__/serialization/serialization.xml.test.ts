@@ -177,7 +177,7 @@ describe('export', () => {
     expect(
       new ModelXmlSerializer(new GraphDataModel()).export({ pretty: false })
     ).toEqual(
-      `<GraphDataModel><root><Cell id="0"><Object as="style" /></Cell><Cell id="1" parent="0"><Object as="style" /></Cell></root></GraphDataModel>`
+      `<GraphDataModel><root><Cell id="0"><Object as="style"/></Cell><Cell id="1" parent="0"><Object as="style"/></Cell></root></GraphDataModel>`
     );
   });
 

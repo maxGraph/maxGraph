@@ -28,6 +28,7 @@ import StackLayout from '../view/layout/StackLayout';
 import EventObject from '../view/event/EventObject';
 import { getOffset } from '../util/styleUtils';
 import Codec from '../serialization/Codec';
+import { ModelXmlSerializer } from '../serialization/ModelXmlSerializer';
 import MaxWindow, { error } from '../gui/MaxWindow';
 import MaxForm from '../gui/MaxForm';
 import Outline from '../view/other/Outline';
@@ -1891,13 +1892,11 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Reads the specified XML node into the existing graph model and resets
-   * the command history and modified state.
-   * @param node
+   * Reads the specified XML node into the existing graph model and resets the command history and modified state.
+   * @param node the XML node to be read into the graph model.
    */
-  readGraphModel(node: any): void {
-    const dec = new Codec(node.ownerDocument);
-    dec.decode(node, this.graph.getDataModel());
+  readGraphModel(node: Element): void {
+    new ModelXmlSerializer(this.graph.getDataModel()).import(node);
     this.resetHistory();
   }
 
@@ -1974,24 +1973,14 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Hook to create the string representation of the diagram. The default
-   * implementation uses an {@link Codec} to encode the graph model as
-   * follows:
+   * Hook to create the string representation of the diagram.
    *
-   * @example
-   * ```javascript
-   * var enc = new Codec();
-   * var node = enc.encode(this.graph.getDataModel());
-   * return mxUtils.getXml(node, this.linefeed);
-   * ```
+   * The default implementation uses {@link ModelXmlSerializer} to encode the graph model.
    *
    * @param linefeed Optional character to be used as the linefeed. Default is {@link linefeed}.
    */
-  writeGraphModel(linefeed: string): string {
-    linefeed = linefeed != null ? linefeed : this.linefeed;
-    const enc = new Codec();
-    const node = <Element>enc.encode(this.graph.getDataModel());
-    return getXml(node, linefeed);
+  writeGraphModel(linefeed?: string): string {
+    return new ModelXmlSerializer(this.graph.getDataModel()).export({ pretty: false });
   }
 
   /**
