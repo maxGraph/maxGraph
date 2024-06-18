@@ -252,6 +252,9 @@ function diamond(
 }
 
 let isDefaultMarkersRegistered = false;
+/**
+ * @category Configuration
+ */
 export const registerDefaultEdgeMarkers = (): void => {
   if (!isDefaultMarkersRegistered) {
     MarkerShape.addMarker('classic', createArrow(2));

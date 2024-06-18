@@ -77,6 +77,7 @@ let isModelCodecsRegistered = false;
  * @param force if `true` register the codecs even if they were already registered. If false, only register them
  *              if they have never been registered before.
  * @since 0.10.0
+ * @category Configuration
  */
 export const registerModelCodecs = (force = false) => {
   if (!isModelCodecsRegistered || force) {
@@ -113,6 +114,7 @@ let isCoreCodecsRegistered = false;
  * @param force if `true` register the codecs even if they were already registered. If false, only register them
  *              if they have never been registered before.
  * @since 0.6.0
+ * @category Configuration
  */
 export const registerCoreCodecs = (force = false) => {
   if (!isCoreCodecsRegistered || force) {
@@ -136,6 +138,7 @@ let isEditorCodecsRegistered = false;
  * @param force if `true` register the codecs even if they were already registered. If false, only register them
  *              if they have never been registered before.
  * @since 0.6.0
+ * @category Configuration
  */
 export const registerEditorCodecs = (force = false) => {
   if (!isEditorCodecsRegistered || force) {
@@ -154,6 +157,7 @@ export const registerEditorCodecs = (force = false) => {
  * @param force if `true` register the codecs even if they were already registered. If false, only register them
  *              if they have never been registered before.
  * @since 0.6.0
+ * @category Configuration
  */
 export const registerAllCodecs = (force = false) => {
   registerCoreCodecs(force);
