@@ -168,8 +168,8 @@ declare module '../Graph' {
      */
     toggleCellStyle: (
       key: keyof CellStateStyle,
-      defaultValue: boolean,
-      cell: Cell
+      defaultValue?: boolean,
+      cell?: Cell
     ) => boolean | null;
 
     /**
@@ -224,7 +224,7 @@ declare module '../Graph' {
      *
      * @param key String representing the key to toggle the flag in.
      * @param flag Integer that represents the bit to be toggled.
-     * @param value Boolean value to be used or null if the value should be toggled.
+     * @param value Boolean value to be used or `null` if the value should be toggled. Default is `null`.
      * @param cells Optional array of {@link Cell} to change the style for. Default is the selection cells.
      */
     setCellStyleFlags: (
