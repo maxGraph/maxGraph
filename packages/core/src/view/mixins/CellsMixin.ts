@@ -214,8 +214,8 @@ declare module '../Graph' {
      */
     toggleCellStyles: (
       key: keyof CellStateStyle,
-      defaultValue: boolean,
-      cells: Cell[]
+      defaultValue?: boolean,
+      cells?: Cell[]
     ) => boolean | null;
 
     /**
