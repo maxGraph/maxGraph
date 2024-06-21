@@ -22,7 +22,7 @@ import KeyHandler from '../view/handler/KeyHandler';
 import Editor from './Editor';
 
 /**
- * Binds keycodes to actionnames in an editor.  This aggregates an internal {@link handler} and extends the implementation of {@link KeyHandler.escape} to not only cancel the editing, but also hide the properties dialog and fire an <Editor.escape> event via {@link editor}.  An instance of this class is created by {@link Editor} and stored in {@link Editor.keyHandler}.
+ * Binds keycodes to action names in an editor.  This aggregates an internal {@link handler} and extends the implementation of {@link KeyHandler.escape} to not only cancel the editing, but also hide the properties dialog and fire an <Editor.escape> event via {@link editor}.  An instance of this class is created by {@link Editor} and stored in {@link Editor.keyHandler}.
  *
  * @Example
  * Bind the delete key to the delete action in an existing editor.

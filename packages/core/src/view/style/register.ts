@@ -23,6 +23,8 @@ let isDefaultsRegistered = false;
 
 /**
  * Register style elements for "EdgeStyle" and "Perimeters".
+ *
+ * @category Configuration
  */
 export const registerDefaultStyleElements = (): void => {
   if (!isDefaultsRegistered) {

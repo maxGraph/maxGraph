@@ -28,6 +28,7 @@ import StackLayout from '../view/layout/StackLayout';
 import EventObject from '../view/event/EventObject';
 import { getOffset } from '../util/styleUtils';
 import Codec from '../serialization/Codec';
+import { ModelXmlSerializer } from '../serialization/ModelXmlSerializer';
 import MaxWindow, { error } from '../gui/MaxWindow';
 import MaxForm from '../gui/MaxForm';
 import Outline from '../view/other/Outline';
@@ -56,6 +57,8 @@ import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
 
+// TODO disabled side effects, so editor resources are not loaded by default
+// This should be done in a different way
 /**
  * Installs the required language resources at class
  * loading time.
@@ -207,9 +210,9 @@ if (mxLoadResources) {
  *
  * ```javascript
  * <Task label="Task" description="">
- *   <mxCell vertex="true">
- *     <mxGeometry as="geometry" width="72" height="32"/>
- *   </mxCell>
+ *   <Cell vertex="true">
+ *     <Geometry as="geometry" width="72" height="32"/>
+ *   </Cell>
  * </Task>
  * ```
  *
@@ -257,7 +260,7 @@ if (mxLoadResources) {
  * New entries can be added to the toolbar by inserting an add-node into the
  * above configuration. Existing entries may be removed and changed by
  * modifying or removing the respective entries in the configuration.
- * The configuration is read by the {@link DefaultPopupMenuCodec}, the format of the
+ * The configuration is read by the {@link EditorPopupMenuCodec}, the format of the
  * configuration is explained in {@link EditorPopupMenu.decode}.
  *
  * The toolbar is defined in the EditorToolbar section. Items can be added
@@ -271,8 +274,7 @@ if (mxLoadResources) {
  *     ...
  * ```
  *
- * The format of the configuration is described in
- * {@link DefaultToolbarCodec.decode}.
+ * The format of the configuration is described in {@link EditorToolbarCodec.decode}.
  *
  * Ids:
  *
@@ -281,12 +283,12 @@ if (mxLoadResources) {
  * time. For example, if the Task node from above has an id attribute, then
  * the {@link Cell.id} of the corresponding cell will have this value. If there
  * is no Id collision in the model, then the cell may be retrieved using this
- * Id with the {@link mxGraphModel.getCell} function. If there is a collision, a new
- * Id will be created for the cell using {@link mxGraphModel.createId}. At encoding
+ * Id with the {@link GraphDataModel.getCell} function. If there is a collision, a new
+ * Id will be created for the cell using {@link GraphDataModel.createId}. At encoding
  * time, this new Id will replace the value previously stored under the id
  * attribute in the Task node.
  *
- * See {@link EditorCodec}, {@link DefaultToolbarCodec} and {@link DefaultPopupMenuCodec}
+ * See {@link EditorCodec}, {@link EditorToolbarCodec} and {@link EditorPopupMenuCodec}
  * for information about configuring the editor and user interface.
  *
  * Programmatically inserting cells:
@@ -1891,13 +1893,11 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Reads the specified XML node into the existing graph model and resets
-   * the command history and modified state.
-   * @param node
+   * Reads the specified XML node into the existing graph model and resets the command history and modified state.
+   * @param node the XML node to be read into the graph model.
    */
-  readGraphModel(node: any): void {
-    const dec = new Codec(node.ownerDocument);
-    dec.decode(node, this.graph.getDataModel());
+  readGraphModel(node: Element): void {
+    new ModelXmlSerializer(this.graph.getDataModel()).import(node);
     this.resetHistory();
   }
 
@@ -1974,24 +1974,14 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Hook to create the string representation of the diagram. The default
-   * implementation uses an {@link Codec} to encode the graph model as
-   * follows:
+   * Hook to create the string representation of the diagram.
    *
-   * @example
-   * ```javascript
-   * var enc = new Codec();
-   * var node = enc.encode(this.graph.getDataModel());
-   * return mxUtils.getXml(node, this.linefeed);
-   * ```
+   * The default implementation uses {@link ModelXmlSerializer} to encode the graph model.
    *
    * @param linefeed Optional character to be used as the linefeed. Default is {@link linefeed}.
    */
-  writeGraphModel(linefeed: string): string {
-    linefeed = linefeed != null ? linefeed : this.linefeed;
-    const enc = new Codec();
-    const node = <Element>enc.encode(this.graph.getDataModel());
-    return getXml(node, linefeed);
+  writeGraphModel(linefeed?: string): string {
+    return new ModelXmlSerializer(this.graph.getDataModel()).export({ pretty: false });
   }
 
   /**
