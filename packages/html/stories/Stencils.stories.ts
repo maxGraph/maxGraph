@@ -16,22 +16,24 @@ limitations under the License.
 */
 
 import {
-  Graph,
+  type AbstractCanvas2D,
+  CellHighlight,
+  CellRenderer,
+  type CellState,
   ConnectionHandler,
+  constants,
   DomHelpers,
   EdgeHandler,
+  Graph,
   InternalEvent,
+  load,
   Point,
-  CellHighlight,
-  constants,
-  VertexHandler,
+  type Rectangle,
   RubberBandHandler,
   Shape,
   StencilShape,
   StencilShapeRegistry,
-  CellRenderer,
-  utils,
-  load,
+  VertexHandler,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
@@ -42,8 +44,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Shapes/Stencils',
@@ -59,12 +60,12 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  // Allow overriding constants?
+  // Allow overriding constants. See https://github.com/maxGraph/maxGraph/issues/192
   // Sets the global shadow color
   // constants.SHADOWCOLOR = '#C0C0C0';
   // constants.SHADOW_OPACITY = 0.5;
@@ -83,33 +84,42 @@ const Template = ({ label, ...args }) => {
   // Enable rotation handle
   VertexHandler.prototype.rotationEnabled = true;
 
-  // Uses the shape for resize previews
-  VertexHandler.prototype.createSelectionShape = function (bounds) {
-    const key = this.state.style.shape;
-    const stencil = StencilShapeRegistry.getStencil(key);
-    let shape = null;
+  class CustomVertexHandler extends VertexHandler {
+    // Uses the shape for resize previews
+    createSelectionShape(bounds: Rectangle) {
+      const stencil = StencilShapeRegistry.getStencil(this.state.style.shape ?? '');
+      let shape = null;
 
-    if (stencil != null) {
-      shape = new Shape(stencil);
-      shape.apply(this.state);
-    } else {
-      shape = new this.state.shape.constructor();
+      if (stencil != null) {
+        shape = new Shape(stencil);
+        shape.apply(this.state);
+      } else {
+        // @ts-ignore known to work at runtime
+        shape = new this.state.shape.constructor();
+      }
+
+      shape.outline = true;
+      shape.bounds = bounds;
+      shape.stroke = constants.HANDLE_STROKECOLOR;
+      shape.strokewidth = this.getSelectionStrokeWidth();
+      shape.isDashed = this.isSelectionDashed();
+      shape.isShadow = false;
+      return shape;
     }
+  }
 
-    shape.outline = true;
-    shape.bounds = bounds;
-    shape.stroke = constants.HANDLE_STROKECOLOR;
-    shape.strokewidth = this.getSelectionStrokeWidth();
-    shape.isDashed = this.isSelectionDashed();
-    shape.isShadow = false;
-    return shape;
-  };
+  class CustomGraph extends Graph {
+    constructor(container: HTMLElement) {
+      super(container);
+    }
+    createVertexHandler(state: CellState) {
+      return new CustomVertexHandler(state);
+    }
+  }
 
-  // Defines a custom stencil via the canvas API as defined here:
-  // http://jgraph.github.io/mxgraph/docs/js-api/files/util/mxXmlCanvas2D-js.html
-
+  // Defines a custom Shape via the canvas API
   class CustomShape extends Shape {
-    paintBackground(c, x, y, w, h) {
+    paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
       c.translate(x, y);
 
       // Head
@@ -143,12 +153,16 @@ const Template = ({ label, ...args }) => {
   // Loads the stencils into the registry
   const req = load('stencils.xml');
   const root = req.getDocumentElement();
-  let shape = root.firstChild;
+  let shape = root!.firstChild;
+
+  function isElement(node: ChildNode): node is Element {
+    return node.nodeType === constants.NODETYPE.ELEMENT;
+  }
 
   while (shape != null) {
-    if (shape.nodeType === constants.NODETYPE.ELEMENT) {
+    if (isElement(shape)) {
       StencilShapeRegistry.addStencil(
-        shape.getAttribute('name'),
+        shape.getAttribute('name')!, // the "name" attribute is always set
         new StencilShape(shape)
       );
     }
@@ -159,26 +173,23 @@ const Template = ({ label, ...args }) => {
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Creates the graph inside the given container
-  const graph = new Graph(container);
+  // const graph = new Graph(container);
+  const graph = new CustomGraph(container);
   graph.setConnectable(true);
   graph.setTooltips(true);
   graph.setPanning(true);
 
   graph.getTooltipForCell = function (cell) {
-    if (cell != null) {
-      return cell.style;
-    }
-
-    return null;
+    return cell ? JSON.stringify(cell.style) : 'Cell without dedicated style';
   };
 
   // Changes default styles
   let style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edge = 'orthogonalEdgeStyle';
+  style.edgeStyle = 'orthogonalEdgeStyle';
   style = graph.getStylesheet().getDefaultVertexStyle();
   style.fillColor = '#adc5ff';
   style.gradientColor = '#7d85df';
-  style.shadow = '1';
+  style.shadow = true;
 
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);
@@ -193,9 +204,9 @@ const Template = ({ label, ...args }) => {
     const v2 = graph.insertVertex(parent, null, 'A2', 20, 220, 40, 80, { shape: 'and' });
     const v3 = graph.insertVertex(parent, null, 'X1', 160, 110, 80, 80, { shape: 'xor' });
     const e1 = graph.insertEdge(parent, null, '', v1, v3);
-    e1.geometry.points = [new Point(90, 60), new Point(90, 130)];
+    e1.geometry!.points = [new Point(90, 60), new Point(90, 130)];
     const e2 = graph.insertEdge(parent, null, '', v2, v3);
-    e2.geometry.points = [new Point(90, 260), new Point(90, 170)];
+    e2.geometry!.points = [new Point(90, 260), new Point(90, 170)];
 
     const v4 = graph.insertVertex(parent, null, 'A3', 520, 20, 40, 80, {
       shape: 'customShape',
@@ -210,21 +221,21 @@ const Template = ({ label, ...args }) => {
       flipH: true,
     });
     const e3 = graph.insertEdge(parent, null, '', v4, v6);
-    e3.geometry.points = [new Point(490, 60), new Point(130, 130)];
+    e3.geometry!.points = [new Point(490, 60), new Point(130, 130)];
     const e4 = graph.insertEdge(parent, null, '', v5, v6);
-    e4.geometry.points = [new Point(490, 260), new Point(130, 170)];
+    e4.geometry!.points = [new Point(490, 260), new Point(130, 170)];
 
     const v7 = graph.insertVertex(parent, null, 'O1', 250, 260, 80, 60, {
       shape: 'or',
       direction: 'south',
     });
     const e5 = graph.insertEdge(parent, null, '', v6, v7);
-    e5.geometry.points = [new Point(310, 150)];
+    e5.geometry!.points = [new Point(310, 150)];
     const e6 = graph.insertEdge(parent, null, '', v3, v7);
-    e6.geometry.points = [new Point(270, 150)];
+    e6.geometry!.points = [new Point(270, 150)];
 
     const e7 = graph.insertEdge(parent, null, '', v7, v5);
-    e7.geometry.points = [new Point(290, 370)];
+    e7.geometry!.points = [new Point(290, 370)];
   });
 
   const buttons = document.createElement('div');
@@ -257,7 +268,7 @@ const Template = ({ label, ...args }) => {
         if (geo != null) {
           graph.batchUpdate(() => {
             // Rotates the size and position in the geometry
-            geo = geo.clone();
+            geo = geo!.clone();
             geo.x += geo.width / 2 - geo.height / 2;
             geo.y += geo.height / 2 - geo.width / 2;
             const tmp = geo.width;
@@ -318,16 +329,22 @@ const Template = ({ label, ...args }) => {
   buttons.appendChild(
     DomHelpers.button('Style', function () {
       const cell = graph.getSelectionCell();
+      if (!cell) return;
 
-      if (cell != null) {
-        const style = utils.prompt('Style', cell.getStyle());
-
-        if (style != null) {
-          graph.getDataModel().setStyle(cell, style);
-        }
+      const newStyle = window.prompt(
+        `Style Cell #${cell.getId()}`,
+        JSON.stringify(cell.getStyle())
+      );
+      if (newStyle) {
+        graph.getDataModel().setStyle(cell, JSON.parse(newStyle));
       }
     })
   );
+
+  buttons.appendChild(document.createTextNode('\u00a0'));
+  buttons.appendChild(document.createTextNode('\u00a0'));
+  buttons.appendChild(document.createTextNode('\u00a0'));
+  buttons.appendChild(document.createTextNode('\u00a0'));
 
   buttons.appendChild(
     DomHelpers.button('+', function () {
