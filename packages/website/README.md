@@ -18,8 +18,8 @@ The navbar includes links to external resources built by other packages
 
 Such resources are expected to be copied into the `generated` directory of the website.
 - build the related resources
-- copy `/packages/core/` to `/packages/webapp/generated/api-docs`
-- copy `/packages/html/dist` to `/packages/webapp/generated/demo`
+- copy `/packages/core/` to `/packages/website/generated/api-docs`
+- copy `/packages/html/dist` to `/packages/website/generated/demo`
 
 Run the following commands to copy the resources:
 ```bash
