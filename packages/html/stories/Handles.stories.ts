@@ -27,6 +27,10 @@ import {
   RubberBandHandler,
   utils,
   VertexHandle,
+  type AbstractCanvas2D,
+  type CellState,
+  CellStateStyle,
+  VertexHandlerConfig,
 } from '@maxgraph/core';
 
 import {
@@ -38,8 +42,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
-import '@maxgraph/core/css/common.css';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Layouts/Handles',
@@ -54,7 +57,7 @@ export default {
     ...rubberBandValues,
   },
 };
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
   const container = createGraphContainer(args);
   div.appendChild(container);
@@ -64,7 +67,7 @@ const Template = ({ label, ...args }) => {
 
     defaultPos2 = 60;
 
-    getLabelBounds(rect) {
+    getLabelBounds(rect: Rectangle) {
       const pos1 = utils.getValue(this.style, 'pos1', this.defaultPos1) * this.scale;
       const pos2 = utils.getValue(this.style, 'pos2', this.defaultPos2) * this.scale;
       return new Rectangle(
@@ -75,7 +78,14 @@ const Template = ({ label, ...args }) => {
       );
     }
 
-    redrawPath(path, x, y, w, h, isForeground) {
+    redrawPath(
+      path: AbstractCanvas2D,
+      _x: number,
+      _y: number,
+      w: number,
+      h: number,
+      isForeground = false
+    ) {
       const pos1 = utils.getValue(this.style, 'pos1', this.defaultPos1);
       const pos2 = utils.getValue(this.style, 'pos2', this.defaultPos2);
 
@@ -94,12 +104,19 @@ const Template = ({ label, ...args }) => {
       }
     }
   }
+  // @ts-ignore
   CellRenderer.registerShape('myShape', MyShape);
+
+  // Enable rotation handle
+  VertexHandlerConfig.rotationEnabled = true;
+
+  type CustomCellStateStyle = CellStateStyle & {
+    pos1?: number;
+    pos2?: number;
+  };
 
   class MyCustomVertexHandler extends VertexHandler {
     livePreview = true;
-
-    rotationEnabled = true;
 
     createCustomHandles() {
       if (this.state.style.shape === 'myShape') {
@@ -107,6 +124,8 @@ const Template = ({ label, ...args }) => {
         const firstHandle = new VertexHandle(this.state);
 
         firstHandle.getPosition = function (bounds) {
+          if (!bounds) return new Point(0, 0);
+
           const pos2 = Math.max(
             0,
             Math.min(
@@ -130,6 +149,8 @@ const Template = ({ label, ...args }) => {
         };
 
         firstHandle.setPosition = function (bounds, pt) {
+          if (!bounds) return;
+
           const pos2 = Math.max(
             0,
             Math.min(
@@ -140,12 +161,13 @@ const Template = ({ label, ...args }) => {
             )
           );
 
-          this.state.style.pos1 = Math.round(
+          (this.state.style as CustomCellStateStyle).pos1 = Math.round(
             Math.max(0, Math.min(pos2, pt.y - bounds.y))
           );
         };
 
         firstHandle.execute = function () {
+          // @ts-ignore
           this.copyStyle('pos1');
         };
 
@@ -155,6 +177,8 @@ const Template = ({ label, ...args }) => {
         const secondHandle = new VertexHandle(this.state);
 
         secondHandle.getPosition = function (bounds) {
+          if (!bounds) return new Point(0, 0);
+
           const pos1 = Math.max(
             0,
             Math.min(
@@ -178,6 +202,8 @@ const Template = ({ label, ...args }) => {
         };
 
         secondHandle.setPosition = function (bounds, pt) {
+          if (!bounds) return;
+
           const pos1 = Math.max(
             0,
             Math.min(
@@ -188,12 +214,13 @@ const Template = ({ label, ...args }) => {
             )
           );
 
-          this.state.style.pos2 = Math.round(
+          (this.state.style as CustomCellStateStyle).pos2 = Math.round(
             Math.max(pos1, Math.min(bounds.height, pt.y - bounds.y))
           );
         };
 
         secondHandle.execute = function () {
+          // @ts-ignore
           this.copyStyle('pos2');
         };
 
@@ -202,12 +229,12 @@ const Template = ({ label, ...args }) => {
         return [firstHandle, secondHandle];
       }
 
-      return null;
+      return [];
     }
   }
 
   class MyCustomGraph extends Graph {
-    createVertexHandler(state) {
+    createVertexHandler(state: CellState) {
       return new MyCustomVertexHandler(state);
     }
   }
@@ -231,7 +258,7 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(
+    graph.insertVertex(
       parent,
       null,
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -239,7 +266,13 @@ const Template = ({ label, ...args }) => {
       20,
       240,
       120,
-      { shape: 'myShape', whiteSpace: 'wrap', overflow: 'hidden', pos1: 30, pos2: 80 }
+      {
+        shape: 'myShape',
+        whiteSpace: 'wrap',
+        overflow: 'hidden',
+        pos1: 30,
+        pos2: 80,
+      } as CustomCellStateStyle
     );
   });
 

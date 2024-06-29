@@ -81,16 +81,20 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   EdgeHandler.prototype.outlineConnect = true;
   CellHighlight.prototype.keepOnTop = true;
 
-  // Enable rotation handle
-  VertexHandler.prototype.rotationEnabled = true;
-
   class CustomVertexHandler extends VertexHandler {
+    // Enable rotation handle
+    // use an alternate way to enable rotation handle as we already override the VertexHandler for other purposes
+    // another way to enable rotation handle is to set `VertexHandlerConfig.rotationEnabled = true`;
+    isRotationEnabled(): boolean {
+      return true;
+    }
+
     // Uses the shape for resize previews
     createSelectionShape(bounds: Rectangle) {
       const stencil = StencilShapeRegistry.getStencil(this.state.style.shape ?? '');
-      let shape = null;
+      let shape: Shape;
 
-      if (stencil != null) {
+      if (stencil) {
         shape = new Shape(stencil);
         shape.apply(this.state);
       } else {
@@ -101,7 +105,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       shape.outline = true;
       shape.bounds = bounds;
       shape.stroke = constants.HANDLE_STROKECOLOR;
-      shape.strokewidth = this.getSelectionStrokeWidth();
+      shape.strokeWidth = this.getSelectionStrokeWidth();
       shape.isDashed = this.isSelectionDashed();
       shape.isShadow = false;
       return shape;
@@ -173,7 +177,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Creates the graph inside the given container
-  // const graph = new Graph(container);
   const graph = new CustomGraph(container);
   graph.setConnectable(true);
   graph.setTooltips(true);

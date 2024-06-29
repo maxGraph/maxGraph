@@ -219,16 +219,16 @@ class EdgeHandler {
   /**
    * Specifies if connections to the outline of a highlighted target should be
    * enabled. This will allow to place the connection point along the outline of
-   * the highlighted target. Default is false.
+   * the highlighted target.
+   * @default false
    */
-  // outlineConnect: boolean;
   outlineConnect = false;
 
   /**
    * Specifies if the label handle should be moved if it intersects with another
-   * handle. Uses <checkLabelHandle> for checking and moving. Default is false.
+   * handle. Uses {@link checkLabelHandle} for checking and moving.
+   * @default false
    */
-  // manageLabelHandle: boolean;
   manageLabelHandle = false;
 
   escapeHandler: (sender: Listenable, evt: Event) => void;

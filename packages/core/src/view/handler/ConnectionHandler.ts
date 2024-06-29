@@ -362,14 +362,16 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Switch to enable moving the preview away from the mousepointer. This is required in browsers
    * where the preview cannot be made transparent to events and if the built-in hit detection on
-   * the HTML elements in the page should be used. Default is the value of <Client.IS_VML>.
+   * the HTML elements in the page should be used.
+   * @default false
    */
   movePreviewAway = false;
 
   /**
    * Specifies if connections to the outline of a highlighted target should be
    * enabled. This will allow to place the connection point along the outline of
-   * the highlighted target. Default is false.
+   * the highlighted target.
+   * @default false
    */
   outlineConnect = false;
 

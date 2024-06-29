@@ -42,13 +42,14 @@ import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Image from '../image/ImageBox';
 import Cell from '../cell/Cell';
-import { CellHandle, Listenable } from '../../types';
+import type { CellHandle, Listenable } from '../../types';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import EdgeHandler from './EdgeHandler';
 import EventSource from '../event/EventSource';
 import SelectionHandler from './SelectionHandler';
 import SelectionCellsHandler from './SelectionCellsHandler';
+import { VertexHandlerConfig } from './config';
 
 /**
  * Event handler for resizing cells.
@@ -109,10 +110,14 @@ class VertexHandler {
   tolerance = 0;
 
   /**
-   * Specifies if a rotation handle should be visible.
-   * @default false
+   * Enable rotation handle
+   *
+   * This implementation returns {@link VertexHandlerConfig.rotationEnabled}.
+   * @since 0.12.0
    */
-  rotationEnabled = false;
+  protected isRotationEnabled(): boolean {
+    return VertexHandlerConfig.rotationEnabled;
+  }
 
   /**
    * Specifies if the parent should be highlighted if a child cell is selected.
@@ -325,7 +330,7 @@ class VertexHandler {
     }
 
     // Handles escape keystrokes
-    this.escapeHandler = (sender: Listenable, evt: Event) => {
+    this.escapeHandler = (_sender: Listenable, _evt: Event) => {
       if (this.livePreview && this.index != null) {
         // Redraws the live preview
         (<Graph>this.state.view.graph).cellRenderer.redraw(this.state, true);
@@ -354,7 +359,7 @@ class VertexHandler {
 
     return (
       this.graph.isEnabled() &&
-      this.rotationEnabled &&
+      this.isRotationEnabled() &&
       this.graph.isCellRotatable(this.state.cell) &&
       selectionHandlerCheck
     );
@@ -375,9 +380,11 @@ class VertexHandler {
   }
 
   /**
-   * Returns an array of custom handles. This implementation returns null.
+   * Returns an array of custom handles.
+   *
+   * This implementation returns an empty array.
    */
-  createCustomHandles() {
+  createCustomHandles(): CellHandle[] {
     return [];
   }
 
@@ -407,7 +414,7 @@ class VertexHandler {
   }
 
   /**
-   * Returns the mxRectangle that defines the bounds of the selection border.
+   * Returns the Rectangle that defines the bounds of the selection border.
    */
   getSelectionBounds(state: CellState) {
     return new Rectangle(
@@ -508,7 +515,7 @@ class VertexHandler {
    *
    * This implementation returns `true` for all given indices.
    */
-  isSizerVisible(index: number) {
+  isSizerVisible(_index: number) {
     return true;
   }
 
@@ -556,7 +563,7 @@ class VertexHandler {
 
   /**
    * Returns the index of the handle for the given event. This returns the index
-   * of the sizer from where the event originated or {@link Event.LABEL_HANDLE}.
+   * of the sizer from where the event originated or {@link InternalEvent.LABEL_HANDLE}.
    */
   getHandleForEvent(me: InternalMouseEvent) {
     // Connection highlight may consume events before they reach sizer handle
@@ -1223,7 +1230,7 @@ class VertexHandler {
         if (index <= InternalEvent.CUSTOM_HANDLE) {
           if (this.customHandles != null) {
             // Creates style before changing cell state
-            const style = (<Graph>this.state.view.graph).getCellStyle(this.state.cell);
+            const style = this.state.view.graph.getCellStyle(this.state.cell);
 
             this.customHandles[InternalEvent.CUSTOM_HANDLE - index].active = false;
             this.customHandles[InternalEvent.CUSTOM_HANDLE - index].execute(me);
@@ -1296,8 +1303,9 @@ class VertexHandler {
 
   /**
    * Hook for subclasses to implement a single click on the rotation handle.
-   * This code is executed as part of the model transaction. This implementation
-   * is empty.
+   * This code is executed as part of the model transaction.
+   *
+   * This implementation is empty.
    */
   rotateClick() {
     return;
@@ -1896,9 +1904,7 @@ class VertexHandler {
 
         // Hides rotation handle during text editing
         this.rotationShape.node.style.visibility =
-          (<Graph>this.state.view.graph).isEditing() || !this.handlesVisible
-            ? 'hidden'
-            : '';
+          this.state.view.graph.isEditing() || !this.handlesVisible ? 'hidden' : '';
       }
     }
 
