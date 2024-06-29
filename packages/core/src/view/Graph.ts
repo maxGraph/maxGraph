@@ -430,7 +430,8 @@ class Graph extends EventSource {
   createEdgeHandlerInstance(state: CellState): EdgeHandler {
     // Note this method not being called createEdgeHandler to keep compatibility
     // with older code which overrides/calls createEdgeHandler
-    return new EdgeHandler(state);
+    // return new EdgeHandler(state);
+    return null!;
   }
 
   /**
@@ -439,7 +440,8 @@ class Graph extends EventSource {
    * @param state {@link CellState} to create the handler for.
    */
   createEdgeSegmentHandler(state: CellState) {
-    return new EdgeSegmentHandler(state);
+    // return new EdgeSegmentHandler(state);
+    return null;
   }
 
   /**
@@ -448,7 +450,8 @@ class Graph extends EventSource {
    * @param state {@link CellState} to create the handler for.
    */
   createElbowEdgeHandler(state: CellState) {
-    return new ElbowEdgeHandler(state);
+    // return new ElbowEdgeHandler(state);
+    return null;
   }
 
   /**
@@ -485,7 +488,8 @@ class Graph extends EventSource {
    * @param state {@link CellState} to create the handler for.
    */
   createVertexHandler(state: CellState): VertexHandler {
-    return new VertexHandler(state);
+    // return new VertexHandler(state);
+    return null!;
   }
 
   // ===================================================================================================================
@@ -1037,24 +1041,24 @@ class Graph extends EventSource {
    * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
    */
   createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
-    let result = null;
+    const result = null;
     if (
       edgeStyle == EdgeStyle.Loop ||
       edgeStyle == EdgeStyle.ElbowConnector ||
       edgeStyle == EdgeStyle.SideToSide ||
       edgeStyle == EdgeStyle.TopToBottom
     ) {
-      result = this.createElbowEdgeHandler(state);
+      // result = this.createElbowEdgeHandler(state);
     } else if (
       edgeStyle == EdgeStyle.SegmentConnector ||
       edgeStyle == EdgeStyle.OrthConnector
     ) {
-      result = this.createEdgeSegmentHandler(state);
+      // result = this.createEdgeSegmentHandler(state);
     } else {
-      result = this.createEdgeHandlerInstance(state);
+      // result = this.createEdgeHandlerInstance(state);
     }
 
-    return result;
+    return result!;
   }
 
   /*****************************************************************************
