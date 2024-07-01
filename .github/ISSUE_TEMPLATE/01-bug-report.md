@@ -32,6 +32,7 @@ If applicable, add screenshots or videos to help explain your problem.
 
 
 ### Environment
+- `maxGraph` version or commit:
 - Desktop or mobile:
 - OS and version: [e.g. iOS 14.1]
 - Browser and version: [e.g. chrome 118, safari 15]

@@ -437,7 +437,6 @@ In `maxGraph`, they are object properties. `mxConstants.STYLE_*` have been repla
 
 Property names and values are generally the same as in `mxGraph`. The ones that change are listed below.
 
-<a name="style-properties-change"></a>
 Property renaming
 - `autosize` to `autoSize` (from maxgraph@0.2.0)
 
@@ -545,7 +544,7 @@ Most of the time, the name of `CellStyle` properties is the same as the style ke
 
 :::warning
 
-Be aware of the properties that have been renamed or whose value types have changed, as described in the [style-properties-change](./migrate-from-mxgraph.md#style-properties-change) paragraph.
+Be aware of the properties that have been renamed or whose value types have changed, as described in the [style properties](#properties) paragraph.
 
 :::
 
