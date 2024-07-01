@@ -3,7 +3,8 @@
 ## UNRELEASED
 
 **Breaking Changes**
-- `VertexHandler.rotationEnabled` has been removed as it was not possible to correctly change its value. Use the `VertexHandlerConfig` class to configure the rotation behavior globally or override the new `VertexHandler.isRotationEnabled` method.
+- `VertexHandler.rotationEnabled` has been removed as it was not possible to correctly change its value.
+Use `VertexHandlerConfig.rotationEnabled` to configure the rotation behavior globally or override the `VertexHandler.isRotationEnabled` method.
 
 ## 0.11.0
 
