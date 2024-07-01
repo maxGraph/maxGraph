@@ -110,7 +110,7 @@ class VertexHandler {
   tolerance = 0;
 
   /**
-   * Enable rotation handle
+   * Specifies if a rotation handle should be visible.
    *
    * This implementation returns {@link VertexHandlerConfig.rotationEnabled}.
    * @since 0.12.0
