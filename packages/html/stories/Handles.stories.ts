@@ -29,7 +29,7 @@ import {
   VertexHandle,
   type AbstractCanvas2D,
   type CellState,
-  CellStateStyle,
+  type CellStateStyle,
   VertexHandlerConfig,
 } from '@maxgraph/core';
 
