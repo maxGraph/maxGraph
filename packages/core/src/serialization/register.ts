@@ -86,13 +86,7 @@ export const registerModelCodecs = (force = false) => {
 
     // To support decode/import executed before encode/export (see https://github.com/maxGraph/maxGraph/issues/178)
     // Codecs are currently only registered automatically during encode/export
-    // in js-example, project built with webpack
-    // the name of the Geometry constructor is sometimes the same as the name of the Cell constructor
-    // registering an alias here would override the alias for Cell.
-    // Cell is the top level element while encoding, so the Cell alias must be set, otherwise "Uncaught InternalError: too much recursion" occurs
-    // But, then, the Geometry elements are not correctly encoded
-    // This hasn't been managed as part of https://github.com/maxGraph/maxGraph/issues/169 which only dealt with the encode/import feature.
-    CodecRegistry.register(createObjectCodec(new Geometry(), 'Geometry'), false);
+    CodecRegistry.register(createObjectCodec(new Geometry(), 'Geometry'));
     CodecRegistry.register(createObjectCodec(new Point(), 'Point'));
     CodecRegistry.register(new ObjectCodec({})); // Object
     CodecRegistry.register(new ObjectCodec([])); // Array
