@@ -61,6 +61,7 @@ import type {
 import Multiplicity from './other/Multiplicity';
 import ImageBundle from './image/ImageBundle';
 import GraphSelectionModel from './GraphSelectionModel';
+import HtmlCanvas2D from './canvas/HtmlCanvas2D';
 import { registerDefaultShapes } from './cell/register-shapes';
 import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
 import { registerDefaultStyleElements } from './style/register';
@@ -93,6 +94,14 @@ export const defaultPlugins: GraphPluginConstructor[] = [
  */
 class Graph extends EventSource {
   container: HTMLElement;
+
+  /** HTML canvas instance */
+  htmlCanvas: HtmlCanvas2D;
+
+  /**
+   * Specifies if the cells should be rendered by HTML canvas.
+   */
+  useCanvas = false;
 
   destroyed = false;
 
@@ -508,6 +517,8 @@ class Graph extends EventSource {
     this.registerDefaults();
 
     this.container = container ?? document.createElement('div');
+    this.htmlCanvas = new HtmlCanvas2D(this.container);
+
     this.model = model ?? this.createGraphDataModel();
     this.plugins = plugins;
     this.cellRenderer = this.createCellRenderer();

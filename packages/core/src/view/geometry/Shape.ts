@@ -465,9 +465,11 @@ class Shape {
       this.paint(canvas);
       this.afterPaint(canvas);
 
-      if (this.node !== canvas.root && canvas.root) {
-        // Forces parsing in IE8 standards mode - slow! avoid
-        this.node.insertAdjacentHTML('beforeend', canvas.root.outerHTML);
+      if (canvas instanceof SvgCanvas2D) {
+        if (this.node !== canvas.root && canvas.root) {
+          // Forces parsing in IE8 standards mode - slow! avoid
+          this.node.insertAdjacentHTML('beforeend', canvas.root.outerHTML);
+        }
       }
 
       this.destroyCanvas(canvas);
@@ -477,8 +479,13 @@ class Shape {
   /**
    * Creates a new canvas for drawing this shape. May return null.
    */
-  createCanvas() {
-    const canvas = this.createSvgCanvas();
+  protected createCanvas() {
+    let canvas: AbstractCanvas2D | null | undefined;
+    if (this.state?.view.graph.useCanvas) {
+      canvas = this.createHtmlCanvas();
+    } else {
+      canvas = this.createSvgCanvas();
+    }
 
     if (canvas && this.outline) {
       canvas.setStrokeWidth(this.strokeWidth);
@@ -512,9 +519,16 @@ class Shape {
   }
 
   /**
+   * returns an H5 canvas for rendering this shape.
+   */
+  private createHtmlCanvas() {
+    return this.state?.view.graph.htmlCanvas;
+  }
+
+  /**
    * Creates and returns an <mxSvgCanvas2D> for rendering this shape.
    */
-  createSvgCanvas() {
+  private createSvgCanvas() {
     if (!this.node) return null;
 
     const canvas = new SvgCanvas2D(this.node, false);
