@@ -23,11 +23,12 @@ import EventSource from '../view/event/EventSource';
 import Translations from '../util/Translations';
 import Client from '../Client';
 import CompactTreeLayout from '../view/layout/CompactTreeLayout';
-import EditorToolbar from './EditorToolbar';
+import { EditorToolbar } from './EditorToolbar';
 import StackLayout from '../view/layout/StackLayout';
 import EventObject from '../view/event/EventObject';
 import { getOffset } from '../util/styleUtils';
 import Codec from '../serialization/Codec';
+import { ModelXmlSerializer } from '../serialization/ModelXmlSerializer';
 import MaxWindow, { error } from '../gui/MaxWindow';
 import MaxForm from '../gui/MaxForm';
 import Outline from '../view/other/Outline';
@@ -43,7 +44,7 @@ import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
 import PrintPreview from '../view/other/PrintPreview';
 import mxClipboard from '../util/Clipboard';
 import MaxLog from '../gui/MaxLog';
-import { addLinkToHead, isNode } from '../util/domUtils';
+import { isNode } from '../util/domUtils';
 import { getViewXml, getXml } from '../util/xmlUtils';
 import { load, post, submit } from '../util/MaxXmlRequest';
 import PopupMenuHandler from '../view/handler/PopupMenuHandler';
@@ -54,10 +55,10 @@ import { CellStateStyle, MouseListenerSet } from '../types';
 import ConnectionHandler from '../view/handler/ConnectionHandler';
 import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
-import ObjectCodec from '../serialization/ObjectCodec';
-import CodecRegistry from '../serialization/CodecRegistry';
-import { getChildNodes } from '../util/domUtils';
+import { cloneCell } from '../util/cellArrayUtils';
 
+// TODO disabled side effects, so editor resources are not loaded by default
+// This should be done in a different way
 /**
  * Installs the required language resources at class
  * loading time.
@@ -209,9 +210,9 @@ if (mxLoadResources) {
  *
  * ```javascript
  * <Task label="Task" description="">
- *   <mxCell vertex="true">
- *     <mxGeometry as="geometry" width="72" height="32"/>
- *   </mxCell>
+ *   <Cell vertex="true">
+ *     <Geometry as="geometry" width="72" height="32"/>
+ *   </Cell>
  * </Task>
  * ```
  *
@@ -259,7 +260,7 @@ if (mxLoadResources) {
  * New entries can be added to the toolbar by inserting an add-node into the
  * above configuration. Existing entries may be removed and changed by
  * modifying or removing the respective entries in the configuration.
- * The configuration is read by the {@link DefaultPopupMenuCodec}, the format of the
+ * The configuration is read by the {@link EditorPopupMenuCodec}, the format of the
  * configuration is explained in {@link EditorPopupMenu.decode}.
  *
  * The toolbar is defined in the EditorToolbar section. Items can be added
@@ -273,8 +274,7 @@ if (mxLoadResources) {
  *     ...
  * ```
  *
- * The format of the configuration is described in
- * {@link DefaultToolbarCodec.decode}.
+ * The format of the configuration is described in {@link EditorToolbarCodec.decode}.
  *
  * Ids:
  *
@@ -283,12 +283,12 @@ if (mxLoadResources) {
  * time. For example, if the Task node from above has an id attribute, then
  * the {@link Cell.id} of the corresponding cell will have this value. If there
  * is no Id collision in the model, then the cell may be retrieved using this
- * Id with the {@link mxGraphModel.getCell} function. If there is a collision, a new
- * Id will be created for the cell using {@link mxGraphModel.createId}. At encoding
+ * Id with the {@link GraphDataModel.getCell} function. If there is a collision, a new
+ * Id will be created for the cell using {@link GraphDataModel.createId}. At encoding
  * time, this new Id will replace the value previously stored under the id
  * attribute in the Task node.
  *
- * See {@link EditorCodec}, {@link DefaultToolbarCodec} and {@link DefaultPopupMenuCodec}
+ * See {@link EditorCodec}, {@link EditorToolbarCodec} and {@link EditorPopupMenuCodec}
  * for information about configuring the editor and user interface.
  *
  * Programmatically inserting cells:
@@ -317,7 +317,7 @@ if (mxLoadResources) {
  *
  * ```javascript
  * var template = editor.templates['task'];
- * var clone = editor.graph.model.cloneCell(template);
+ * var clone = cloneCell(template);
  * ```
  *
  * #### Translations:
@@ -862,7 +862,7 @@ export class Editor extends EventSource {
   movePropertiesDialog = false;
 
   /**
-   * Specifies if <{@link xGraph.validateGraph} should automatically be invoked after
+   * Specifies if {@link Graph.validateGraph} should automatically be invoked after
    * each change. Default is false.
    * @default false
    */
@@ -1437,24 +1437,24 @@ export class Editor extends EventSource {
     // event if an insert function is defined
     this.installInsertHandler(graph);
 
-    // Redirects the function for creating the
-    // popupmenu items
+    // Redirects the function for creating the popupmenu items
     const popupMenuHandler = <PopupMenuHandler>graph.getPlugin('PopupMenuHandler');
+    if (popupMenuHandler) {
+      popupMenuHandler.factoryMethod = (menu: any, cell: Cell | null, evt: any): void => {
+        return this.createPopupMenu(menu, cell, evt);
+      };
+    }
 
-    popupMenuHandler.factoryMethod = (menu: any, cell: Cell | null, evt: any): void => {
-      return this.createPopupMenu(menu, cell, evt);
-    };
-
-    // Redirects the function for creating
-    // new connections in the diagram
+    // Redirects the function for creating new connections in the diagram
     const connectionHandler = <ConnectionHandler>graph.getPlugin('ConnectionHandler');
-
-    connectionHandler.factoryMethod = (
-      source: Cell | null,
-      target: Cell | null
-    ): Cell => {
-      return this.createEdge(source, target);
-    };
+    if (connectionHandler) {
+      connectionHandler.factoryMethod = (
+        source: Cell | null,
+        target: Cell | null
+      ): Cell => {
+        return this.createEdge(source, target);
+      };
+    }
 
     // Maintains swimlanes and installs autolayout
     this.createSwimlaneManager(graph);
@@ -1491,35 +1491,34 @@ export class Editor extends EventSource {
   createLayoutManager(graph: Graph): LayoutManager {
     const layoutMgr = new LayoutManager(graph);
 
-    const self = this; // closure
     layoutMgr.getLayout = (cell: Cell) => {
       let layout = null;
-      const model = self.graph.getDataModel();
+      const model = this.graph.getDataModel();
 
       if (cell.getParent() != null) {
         // Executes the swimlane layout if a child of
         // a swimlane has been changed. The layout is
         // lazy created in createSwimlaneLayout.
-        if (self.layoutSwimlanes && graph.isSwimlane(cell)) {
-          if (self.swimlaneLayout == null) {
-            self.swimlaneLayout = self.createSwimlaneLayout();
+        if (this.layoutSwimlanes && graph.isSwimlane(cell)) {
+          if (this.swimlaneLayout == null) {
+            this.swimlaneLayout = this.createSwimlaneLayout();
           }
 
-          layout = self.swimlaneLayout;
+          layout = this.swimlaneLayout;
         }
 
         // Executes the diagram layout if the modified
         // cell is a top-level cell. The layout is
         // lazy created in createDiagramLayout.
         else if (
-          self.layoutDiagram &&
+          this.layoutDiagram &&
           (graph.isValidRoot(cell) || (<Cell>cell.getParent()).getParent() == null)
         ) {
-          if (self.diagramLayout == null) {
-            self.diagramLayout = self.createDiagramLayout();
+          if (this.diagramLayout == null) {
+            this.diagramLayout = this.createDiagramLayout();
           }
 
-          layout = self.diagramLayout;
+          layout = this.diagramLayout;
         }
       }
 
@@ -1647,16 +1646,15 @@ export class Editor extends EventSource {
    * @param graph
    */
   installInsertHandler(graph: Graph): void {
-    const self = this; // closure
     const insertHandler: MouseListenerSet = {
       mouseDown: (sender: any, me: InternalMouseEvent) => {
         if (
-          self.insertFunction != null &&
+          this.insertFunction != null &&
           !me.isPopupTrigger() &&
-          (self.forcedInserting || me.getState() == null)
+          (this.forcedInserting || me.getState() == null)
         ) {
-          self.graph.clearSelection();
-          self.insertFunction(me.getEvent(), me.getCell());
+          this.graph.clearSelection();
+          this.insertFunction(me.getEvent(), me.getCell());
 
           // Consumes the rest of the events
           // for this gesture (down, move, up)
@@ -1861,8 +1859,7 @@ export class Editor extends EventSource {
    * @returns Cell
    */
   createGroup(): Cell {
-    const model = this.graph.getDataModel();
-    return <Cell>model.cloneCell(this.defaultGroup);
+    return <Cell>cloneCell(this.defaultGroup);
   }
 
   /**
@@ -1896,13 +1893,11 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Reads the specified XML node into the existing graph model and resets
-   * the command history and modified state.
-   * @param node
+   * Reads the specified XML node into the existing graph model and resets the command history and modified state.
+   * @param node the XML node to be read into the graph model.
    */
-  readGraphModel(node: any): void {
-    const dec = new Codec(node.ownerDocument);
-    dec.decode(node, this.graph.getDataModel());
+  readGraphModel(node: Element): void {
+    new ModelXmlSerializer(this.graph.getDataModel()).import(node);
     this.resetHistory();
   }
 
@@ -1979,24 +1974,14 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Hook to create the string representation of the diagram. The default
-   * implementation uses an {@link Codec} to encode the graph model as
-   * follows:
+   * Hook to create the string representation of the diagram.
    *
-   * @example
-   * ```javascript
-   * var enc = new Codec();
-   * var node = enc.encode(this.graph.getDataModel());
-   * return mxUtils.getXml(node, this.linefeed);
-   * ```
+   * The default implementation uses {@link ModelXmlSerializer} to encode the graph model.
    *
    * @param linefeed Optional character to be used as the linefeed. Default is {@link linefeed}.
    */
-  writeGraphModel(linefeed: string): string {
-    linefeed = linefeed != null ? linefeed : this.linefeed;
-    const enc = new Codec();
-    const node = <Element>enc.encode(this.graph.getDataModel());
-    return getXml(node, linefeed);
+  writeGraphModel(linefeed?: string): string {
+    return new ModelXmlSerializer(this.graph.getDataModel()).export({ pretty: false });
   }
 
   /**
@@ -2458,13 +2443,13 @@ export class Editor extends EventSource {
     );
 
     if (modename === 'select') {
-      panningHandler.useLeftButtonForPanning = false;
+      panningHandler && (panningHandler.useLeftButtonForPanning = false);
       this.graph.setConnectable(false);
     } else if (modename === 'connect') {
-      panningHandler.useLeftButtonForPanning = false;
+      panningHandler && (panningHandler.useLeftButtonForPanning = false);
       this.graph.setConnectable(true);
     } else if (modename === 'pan') {
-      panningHandler.useLeftButtonForPanning = true;
+      panningHandler && (panningHandler.useLeftButtonForPanning = true);
       this.graph.setConnectable(false);
     }
   }
@@ -2488,12 +2473,11 @@ export class Editor extends EventSource {
    * @param target
    */
   createEdge(source: Cell | null, target: Cell | null): Cell {
-    // Clones the defaultedge prototype
+    // Clones the default edge prototype
     let e: Cell;
 
     if (this.defaultEdge != null) {
-      const model = this.graph.getDataModel();
-      e = <Cell>model.cloneCell(this.defaultEdge);
+      e = <Cell>cloneCell(this.defaultEdge);
     } else {
       e = new Cell('');
       e.setEdge(true);
@@ -2688,216 +2672,4 @@ export class Editor extends EventSource {
   }
 }
 
-/**
- * Codec for <Editor>s. This class is created and registered
- * dynamically at load time and used implicitly via <Codec>
- * and the <CodecRegistry>.
- *
- * Transient Fields:
- *
- * - modified
- * - lastSnapshot
- * - ignoredChanges
- * - undoManager
- * - graphContainer
- * - toolbarContainer
- */
-export class EditorCodec extends ObjectCodec {
-  constructor() {
-    const __dummy: any = undefined;
-    super(new Editor(__dummy), [
-      'modified',
-      'lastSnapshot',
-      'ignoredChanges',
-      'undoManager',
-      'graphContainer',
-      'toolbarContainer',
-    ]);
-  }
-
-  /**
-   * Decodes the ui-part of the configuration node by reading
-   * a sequence of the following child nodes and attributes
-   * and passes the control to the default decoding mechanism:
-   *
-   * Child Nodes:
-   *
-   * stylesheet - Adds a CSS stylesheet to the document.
-   * resource - Adds the basename of a resource bundle.
-   * add - Creates or configures a known UI element.
-   *
-   * These elements may appear in any order given that the
-   * graph UI element is added before the toolbar element
-   * (see Known Keys).
-   *
-   * Attributes:
-   *
-   * as - Key for the UI element (see below).
-   * element - ID for the element in the document.
-   * style - CSS style to be used for the element or window.
-   * x - X coordinate for the new window.
-   * y - Y coordinate for the new window.
-   * width - Width for the new window.
-   * height - Optional height for the new window.
-   * name - Name of the stylesheet (absolute/relative URL).
-   * basename - Basename of the resource bundle (see {@link Resources}).
-   *
-   * The x, y, width and height attributes are used to create a new
-   * <MaxWindow> if the element attribute is not specified in an add
-   * node. The name and basename are only used in the stylesheet and
-   * resource nodes, respectively.
-   *
-   * Known Keys:
-   *
-   * graph - Main graph element (see <Editor.setGraphContainer>).
-   * title - Title element (see <Editor.setTitleContainer>).
-   * toolbar - Toolbar element (see <Editor.setToolbarContainer>).
-   * status - Status bar element (see <Editor.setStatusContainer>).
-   *
-   * Example:
-   *
-   * ```javascript
-   * <ui>
-   *   <stylesheet name="css/process.css"/>
-   *   <resource basename="resources/app"/>
-   *   <add as="graph" element="graph"
-   *     style="left:70px;right:20px;top:20px;bottom:40px"/>
-   *   <add as="status" element="status"/>
-   *   <add as="toolbar" x="10" y="20" width="54"/>
-   * </ui>
-   * ```
-   */
-  afterDecode(dec: Codec, node: Element, obj: any): any {
-    // Assigns the specified templates for edges
-    const defaultEdge = node.getAttribute('defaultEdge');
-
-    if (defaultEdge != null) {
-      node.removeAttribute('defaultEdge');
-      obj.defaultEdge = obj.templates[defaultEdge];
-    }
-
-    // Assigns the specified templates for groups
-    const defaultGroup = node.getAttribute('defaultGroup');
-
-    if (defaultGroup != null) {
-      node.removeAttribute('defaultGroup');
-      obj.defaultGroup = obj.templates[defaultGroup];
-    }
-    return obj;
-  }
-
-  /**
-   * Overrides decode child to handle special child nodes.
-   */
-  decodeChild(dec: Codec, child: Element, obj: any) {
-    if (child.nodeName === 'Array') {
-      const role = child.getAttribute('as');
-
-      if (role === 'templates') {
-        this.decodeTemplates(dec, child, obj);
-        return;
-      }
-    } else if (child.nodeName === 'ui') {
-      this.decodeUi(dec, child, obj);
-      return;
-    }
-    super.decodeChild.apply(this, [dec, child, obj]);
-  }
-
-  /**
-   * Decodes the ui elements from the given node.
-   */
-  decodeUi(dec: Codec, node: Element, editor: Editor) {
-    let tmp = <Element>node.firstChild;
-    while (tmp != null) {
-      if (tmp.nodeName === 'add') {
-        const as = <string>tmp.getAttribute('as');
-        const elt = tmp.getAttribute('element');
-        const style = tmp.getAttribute('style');
-        let element = null;
-
-        if (elt != null) {
-          element = document.getElementById(elt);
-
-          if (element != null && style != null) {
-            element.style.cssText += `;${style}`;
-          }
-        } else {
-          const x = parseInt(<string>tmp.getAttribute('x'));
-          const y = parseInt(<string>tmp.getAttribute('y'));
-          const width = tmp.getAttribute('width') || null;
-          const height = tmp.getAttribute('height') || null;
-
-          // Creates a new window around the element
-          element = document.createElement('div');
-          if (style != null) {
-            element.style.cssText = style;
-          }
-
-          const wnd = new MaxWindow(
-            Translations.get(as) || as,
-            element,
-            x,
-            y,
-            width ? parseInt(width) : null,
-            height ? parseInt(height) : null,
-            false,
-            true
-          );
-          wnd.setVisible(true);
-        }
-
-        // TODO: Make more generic
-        if (as === 'graph') {
-          editor.setGraphContainer(element);
-        } else if (as === 'toolbar') {
-          editor.setToolbarContainer(element);
-        } else if (as === 'title') {
-          editor.setTitleContainer(element);
-        } else if (as === 'status') {
-          editor.setStatusContainer(element);
-        } else if (as === 'map') {
-          throw new Error('Unimplemented');
-          //editor.setMapContainer(element);
-        }
-      } else if (tmp.nodeName === 'resource') {
-        Translations.add(<string>tmp.getAttribute('basename'));
-      } else if (tmp.nodeName === 'stylesheet') {
-        addLinkToHead('stylesheet', <string>tmp.getAttribute('name'));
-      }
-
-      tmp = <Element>tmp.nextSibling;
-    }
-  }
-
-  /**
-   * Decodes the cells from the given node as templates.
-   */
-  decodeTemplates(dec: Codec, node: Element, editor: Editor) {
-    if (editor.templates == null) {
-      editor.templates = [];
-    }
-
-    const children = <Element[]>getChildNodes(node);
-    for (let j = 0; j < children.length; j++) {
-      const name = <string>children[j].getAttribute('as');
-      let child = <Element | null>children[j].firstChild;
-
-      while (child != null && child.nodeType !== 1) {
-        child = <Element | null>child.nextSibling;
-      }
-
-      if (child != null) {
-        // LATER: Only single cells means you need
-        // to group multiple cells within another
-        // cell. This should be changed to support
-        // arrays of cells, or the wrapper must
-        // be automatically handled in this class.
-        editor.templates[name] = dec.decodeCell(child);
-      }
-    }
-  }
-}
-
-CodecRegistry.register(new EditorCodec());
 export default Editor;

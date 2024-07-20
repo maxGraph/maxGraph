@@ -23,55 +23,50 @@ import {
   xmlUtils,
   eventUtils,
   Client,
-  Codec,
   GraphDataModel,
   styleUtils,
   stringUtils,
   cellArrayUtils,
+  ModelXmlSerializer,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'DnD_CopyPaste/Clipboard',
   argTypes: {
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
 const Template = ({ label, ...args }) => {
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
-
-  // Disables the built-in context menu
-  if (!args.contextMenu) InternalEvent.disableContextMenu(container);
+  const container = createGraphContainer(args);
 
   // Creates the graph inside the given this.el
   const graph = new Graph(container);
 
   // Public helper method for shared clipboard.
   Clipboard.cellsToString = function (cells) {
-    const codec = new Codec();
     const model = new GraphDataModel();
     const parent = model.getRoot().getChildAt(0);
 
     for (let i = 0; i < cells.length; i++) {
       model.add(parent, cells[i]);
     }
-    return xmlUtils.getXml(codec.encode(model));
+    return new ModelXmlSerializer(model).export();
   };
 
   // Focused but invisible textarea during control or meta key events
@@ -88,7 +83,7 @@ const Template = ({ label, ...args }) => {
   // Workaround for no copy event in IE/FF if empty
   textInput.value = ' ';
 
-  // Shows a textare when control/cmd is pressed to handle native clipboard actions
+  // Shows a textarea when control/cmd is pressed to handle native clipboard actions
   InternalEvent.addListener(document, 'keydown', function (evt) {
     // No dialog visible
     const source = eventUtils.getSource(evt);
@@ -195,46 +190,40 @@ const Template = ({ label, ...args }) => {
     let cells = [];
 
     try {
-      const doc = xmlUtils.parseXml(xml);
-      const node = doc.documentElement;
+      const model = new GraphDataModel();
+      new ModelXmlSerializer(model).import(xml);
 
-      if (node != null) {
-        const model = new GraphDataModel();
-        const codec = new Codec(node.ownerDocument);
-        codec.decode(node, model);
+      const childCount = model.getRoot().getChildCount();
+      const targetChildCount = graph.model.getRoot().getChildCount();
 
-        const childCount = model.getRoot().getChildCount();
-        const targetChildCount = graph.model.getRoot().getChildCount();
+      // Merges existing layers and adds new layers
+      graph.model.beginUpdate();
+      try {
+        for (let i = 0; i < childCount; i++) {
+          let parent = model.getRoot().getChildAt(i);
 
-        // Merges existing layers and adds new layers
-        graph.model.beginUpdate();
-        try {
-          for (let i = 0; i < childCount; i++) {
-            let parent = model.getRoot().getChildAt(i);
+          // Adds cells to existing layers if not locked
+          if (targetChildCount > i) {
+            // Inserts into active layer if only one layer is being pasted
+            const target =
+              childCount === 1
+                ? graph.getDefaultParent()
+                : graph.model.getRoot().getChildAt(i);
 
-            // Adds cells to existing layers if not locked
-            if (targetChildCount > i) {
-              // Inserts into active layer if only one layer is being pasted
-              const target =
-                childCount === 1
-                  ? graph.getDefaultParent()
-                  : graph.model.getRoot().getChildAt(i);
-
-              if (!graph.isCellLocked(target)) {
-                const children = parent.getChildren();
-                cells = cells.concat(graph.importCells(children, dx, dy, target));
-              }
-            } else {
-              // Delta is non cascading, needs separate move for layers
-              parent = graph.importCells([parent], 0, 0, graph.model.getRoot())[0];
+            if (!graph.isCellLocked(target)) {
               const children = parent.getChildren();
-              graph.moveCells(children, dx, dy);
-              cells = cells.concat(children);
+              cells = cells.concat(graph.importCells(children, dx, dy, target));
             }
+          } else {
+            // Delta is non cascading, needs separate move for layers
+            parent = graph.importCells([parent], 0, 0, graph.model.getRoot())[0];
+            const children = parent.getChildren();
+            graph.moveCells(children, dx, dy);
+            cells = cells.concat(children);
           }
-        } finally {
-          graph.model.endUpdate();
         }
+      } finally {
+        graph.model.endUpdate();
       }
     } catch (e) {
       alert(e);

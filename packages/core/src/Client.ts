@@ -18,9 +18,9 @@ limitations under the License.
 
 class Client {
   /**
-   * Contains the current version of the maxGraph library.
+   * The version of the `maxGraph` library.
    */
-  static VERSION = '0.1.0';
+  static VERSION = '0.12.0';
 
   /**
    * Base path for all URLs in the core without trailing slash.

@@ -24,27 +24,34 @@ import {
   RubberBandHandler,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  contextMenuTypes,
+  contextMenuValues,
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Misc/Guides',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...contextMenuValues,
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
 const Template = ({ label, ...args }) => {
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
 
   // Alt disables guides
   SelectionHandler.prototype.useGuidesForEvent = function (me) {
@@ -67,8 +74,7 @@ const Template = ({ label, ...args }) => {
 
   // Enables guides
   const selectionHandler = graph.getPlugin('SelectionHandler');
-  if (selectionHandler)
-    selectionHandler.guidesEnabled = true;
+  if (selectionHandler) selectionHandler.guidesEnabled = true;
 
   // Changes the default style for edges "in-place" and assigns
   // an alternate edge style which is applied in Graph.flip

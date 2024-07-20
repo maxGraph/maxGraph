@@ -712,10 +712,7 @@ class CellEditorHandler implements GraphPlugin {
     }
 
     const tooltipHandler = this.graph.getPlugin('TooltipHandler') as TooltipHandler;
-
-    if (tooltipHandler) {
-      tooltipHandler.hideTooltip();
-    }
+    tooltipHandler?.hideTooltip();
 
     const state = this.graph.getView().getState(cell);
 
@@ -799,11 +796,7 @@ class CellEditorHandler implements GraphPlugin {
       }
 
       // Workaround for initial offsetHeight not ready for heading in markup
-      if (
-        this.autoSize &&
-        // @ts-ignore
-        (this.graph.model.isEdge(state.cell) || state.style.overflow !== 'fill')
-      ) {
+      if (this.autoSize && (state.cell.isEdge() || state.style.overflow !== 'fill')) {
         window.setTimeout(() => {
           this.resize();
         }, 0);

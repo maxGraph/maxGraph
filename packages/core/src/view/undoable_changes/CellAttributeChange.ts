@@ -16,8 +16,6 @@ limitations under the License.
 
 import { isNullish } from '../../util/Utils';
 import Cell from '../cell/Cell';
-import CodecRegistry from '../../serialization/CodecRegistry';
-import GenericChangeCodec from './GenericChangeCodec';
 
 import type { UndoableChange } from '../../types';
 
@@ -81,8 +79,4 @@ class CellAttributeChange implements UndoableChange {
   }
 }
 
-const __dummy: any = undefined;
-CodecRegistry.register(
-  new GenericChangeCodec(new CellAttributeChange(__dummy, __dummy, __dummy), 'value')
-);
 export default CellAttributeChange;

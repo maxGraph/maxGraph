@@ -15,83 +15,15 @@ limitations under the License.
 */
 
 import Point from '../geometry/Point';
-import CellState from '../cell/CellState';
-import InternalMouseEvent from '../event/InternalMouseEvent';
 import ConnectionConstraint from '../other/ConnectionConstraint';
-import Rectangle from '../geometry/Rectangle';
 import { DIRECTION } from '../../util/Constants';
-import { mixInto } from '../../util/Utils';
 import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Dictionary from '../../util/Dictionary';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import ConnectionHandler from '../handler/ConnectionHandler';
-
-declare module '../Graph' {
-  interface Graph {
-    constrainChildren: boolean;
-    constrainRelativeChildren: boolean;
-    disconnectOnMove: boolean;
-    cellsDisconnectable: boolean;
-
-    getOutlineConstraint: (
-      point: Point,
-      terminalState: CellState,
-      me: InternalMouseEvent
-    ) => ConnectionConstraint | null;
-    getAllConnectionConstraints: (
-      terminal: CellState | null,
-      source: boolean
-    ) => ConnectionConstraint[] | null;
-    getConnectionConstraint: (
-      edge: CellState,
-      terminal: CellState | null,
-      source: boolean
-    ) => ConnectionConstraint;
-    setConnectionConstraint: (
-      edge: Cell,
-      terminal: Cell | null,
-      source: boolean,
-      constraint: ConnectionConstraint | null
-    ) => void;
-    getConnectionPoint: (
-      vertex: CellState,
-      constraint: ConnectionConstraint,
-      round?: boolean
-    ) => Point | null;
-    connectCell: (
-      edge: Cell,
-      terminal: Cell | null,
-      source: boolean,
-      constraint?: ConnectionConstraint | null
-    ) => Cell;
-    cellConnected: (
-      edge: Cell,
-      terminal: Cell | null,
-      source: boolean,
-      constraint?: ConnectionConstraint | null
-    ) => void;
-    disconnectGraph: (cells: Cell[]) => void;
-    getConnections: (cell: Cell, parent?: Cell | null) => Cell[];
-    isConstrainChild: (cell: Cell) => boolean;
-    isConstrainChildren: () => boolean;
-    setConstrainChildren: (value: boolean) => void;
-    isConstrainRelativeChildren: () => boolean;
-    setConstrainRelativeChildren: (value: boolean) => void;
-    isDisconnectOnMove: () => boolean;
-    setDisconnectOnMove: (value: boolean) => void;
-    isCellDisconnectable: (cell: Cell, terminal: Cell | null, source: boolean) => boolean;
-    isCellsDisconnectable: () => boolean;
-    setCellsDisconnectable: (value: boolean) => void;
-    isValidSource: (cell: Cell | null) => boolean;
-    isValidTarget: (cell: Cell | null) => boolean;
-    isValidConnection: (source: Cell | null, target: Cell | null) => boolean;
-    setConnectable: (connectable: boolean) => void;
-    isConnectable: () => boolean;
-  }
-}
 
 type PartialGraph = Pick<Graph, 'getView' | 'getDataModel' | 'isPortsEnabled'>;
 type PartialConnections = Pick<
@@ -140,41 +72,22 @@ type PartialConnections = Pick<
 type PartialType = PartialGraph & PartialConnections;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const ConnectionsMixin: PartialType = {
+export const ConnectionsMixin: PartialType = {
   /*****************************************************************************
    * Group: Cell connecting and connection constraints
    *****************************************************************************/
 
-  /**
-   * Specifies if a child should be constrained inside the parent bounds after a
-   * move or resize of the child.
-   * @default true
-   */
   constrainChildren: true,
 
-  /**
-   * Specifies if child cells with relative geometries should be constrained
-   * inside the parent bounds, if {@link constrainChildren} is `true`, and/or the
-   * {@link maximumGraphBounds}.
-   * @default false
-   */
   constrainRelativeChildren: false,
 
-  /**
-   * Specifies if edges should be disconnected from their terminals when they
-   * are moved.
-   * @default true
-   */
   disconnectOnMove: true,
 
   cellsDisconnectable: true,
 
-  /**
-   * Returns the constraint used to connect to the outline of the given state.
-   */
   getOutlineConstraint(point, terminalState, me) {
     if (terminalState.shape) {
-      const bounds = <Rectangle>this.getView().getPerimeterBounds(terminalState);
+      const bounds = this.getView().getPerimeterBounds(terminalState);
       const direction = terminalState.style.direction;
 
       if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
@@ -240,29 +153,10 @@ const ConnectionsMixin: PartialType = {
     return null;
   },
 
-  /**
-   * Returns an array of all {@link mxConnectionConstraints} for the given terminal. If
-   * the shape of the given terminal is a {@link mxStencilShape} then the constraints
-   * of the corresponding {@link mxStencil} are returned.
-   *
-   * @param terminal {@link CellState} that represents the terminal.
-   * @param source Boolean that specifies if the terminal is the source or target.
-   */
   getAllConnectionConstraints(terminal, source) {
-    if (terminal && terminal.shape && terminal.shape.stencil) {
-      return terminal.shape.stencil.constraints;
-    }
-    return null;
+    return terminal?.shape?.stencil?.constraints ?? null;
   },
 
-  /**
-   * Returns an {@link ConnectionConstraint} that describes the given connection
-   * point. This result can then be passed to {@link getConnectionPoint}.
-   *
-   * @param edge {@link CellState} that represents the edge.
-   * @param terminal {@link CellState} that represents the terminal.
-   * @param source Boolean indicating if the terminal is the source or target.
-   */
   getConnectionConstraint(edge, terminal, source = false) {
     let point: Point | null = null;
     const x = edge.style[source ? 'exitX' : 'entryX'];
@@ -292,17 +186,6 @@ const ConnectionsMixin: PartialType = {
     return new ConnectionConstraint(point, perimeter, null, dx, dy);
   },
 
-  /**
-   * Sets the {@link ConnectionConstraint} that describes the given connection point.
-   * If no constraint is given then nothing is changed. To remove an existing
-   * constraint from the given edge, use an empty constraint instead.
-   *
-   * @param edge {@link mxCell} that represents the edge.
-   * @param terminal {@link mxCell} that represents the terminal.
-   * @param source Boolean indicating if the terminal is the source or target.
-   * @param constraint Optional {@link ConnectionConstraint} to be used for this
-   * connection.
-   */
   setConnectionConstraint(edge, terminal, source = false, constraint = null) {
     if (constraint) {
       this.batchUpdate(() => {
@@ -329,19 +212,11 @@ const ConnectionsMixin: PartialType = {
     }
   },
 
-  /**
-   * Returns the nearest point in the list of absolute points or the center
-   * of the opposite terminal.
-   *
-   * @param vertex {@link CellState} that represents the vertex.
-   * @param constraint {@link mxConnectionConstraint} that represents the connection point
-   * constraint as returned by {@link getConnectionConstraint}.
-   */
   getConnectionPoint(vertex, constraint, round = true) {
     let point: Point | null = null;
 
     if (constraint.point) {
-      const bounds = <Rectangle>this.getView().getPerimeterBounds(vertex);
+      const bounds = this.getView().getPerimeterBounds(vertex);
       const cx = new Point(bounds.getCenterX(), bounds.getCenterY());
       const direction = vertex.style.direction;
       let r1 = 0;
@@ -429,17 +304,6 @@ const ConnectionsMixin: PartialType = {
     return point;
   },
 
-  /**
-   * Connects the specified end of the given edge to the given terminal
-   * using {@link cellConnected} and fires {@link InternalEvent.CONNECT_CELL} while the
-   * transaction is in progress. Returns the updated edge.
-   *
-   * @param edge {@link mxCell} whose terminal should be updated.
-   * @param terminal {@link mxCell} that represents the new terminal to be used.
-   * @param source Boolean indicating if the new terminal is the source or target.
-   * @param constraint Optional {@link ConnectionConstraint} to be used for this
-   * connection.
-   */
   connectCell(edge, terminal = null, source = false, constraint = null) {
     this.batchUpdate(() => {
       const previous = edge.getTerminal(source);
@@ -461,16 +325,6 @@ const ConnectionsMixin: PartialType = {
     return edge;
   },
 
-  /**
-   * Sets the new terminal for the given edge and resets the edge points if
-   * {@link resetEdgesOnConnect} is true. This method fires
-   * {@link InternalEvent.CELL_CONNECTED} while the transaction is in progress.
-   *
-   * @param edge {@link mxCell} whose terminal should be updated.
-   * @param terminal {@link mxCell} that represents the new terminal to be used.
-   * @param source Boolean indicating if the new terminal is the source or target.
-   * @param constraint {@link mxConnectionConstraint} to be used for this connection.
-   */
   cellConnected(edge, terminal, source = false, constraint = null) {
     this.batchUpdate(() => {
       const previous = edge.getTerminal(source);
@@ -515,12 +369,6 @@ const ConnectionsMixin: PartialType = {
     });
   },
 
-  /**
-   * Disconnects the given edges from the terminals which are not in the
-   * given array.
-   *
-   * @param cells Array of {@link Cell} to be disconnected.
-   */
   disconnectGraph(cells) {
     this.batchUpdate(() => {
       const { scale, translate: tr } = this.getView();
@@ -593,25 +441,10 @@ const ConnectionsMixin: PartialType = {
     });
   },
 
-  /**
-   * Returns all visible edges connected to the given cell without loops.
-   *
-   * @param cell {@link mxCell} whose connections should be returned.
-   * @param parent Optional parent of the opposite end for a connection to be
-   * returned.
-   */
   getConnections(cell, parent = null) {
     return this.getEdges(cell, parent, true, true, false);
   },
 
-  /**
-   * Returns true if the given cell should be kept inside the bounds of its
-   * parent according to the rules defined by {@link getOverlap} and
-   * {@link isAllowOverlapParent}. This implementation returns false for all children
-   * of edges and {@link isConstrainChildren} otherwise.
-   *
-   * @param cell {@link mxCell} that should be constrained.
-   */
   isConstrainChild(cell) {
     return (
       this.isConstrainChildren() &&
@@ -620,30 +453,18 @@ const ConnectionsMixin: PartialType = {
     );
   },
 
-  /**
-   * Returns {@link constrainChildren}.
-   */
   isConstrainChildren() {
     return this.constrainChildren;
   },
 
-  /**
-   * Sets {@link constrainChildren}.
-   */
   setConstrainChildren(value) {
     this.constrainChildren = value;
   },
 
-  /**
-   * Returns {@link constrainRelativeChildren}.
-   */
   isConstrainRelativeChildren() {
     return this.constrainRelativeChildren;
   },
 
-  /**
-   * Sets {@link constrainRelativeChildren}.
-   */
   setConstrainRelativeChildren(value) {
     this.constrainRelativeChildren = value;
   },
@@ -652,59 +473,26 @@ const ConnectionsMixin: PartialType = {
    * Group: Graph behaviour
    *****************************************************************************/
 
-  /**
-   * Returns {@link disconnectOnMove} as a boolean.
-   */
   isDisconnectOnMove() {
     return this.disconnectOnMove;
   },
 
-  /**
-   * Specifies if edges should be disconnected when moved. (Note: Cloned
-   * edges are always disconnected.)
-   *
-   * @param value Boolean indicating if edges should be disconnected
-   * when moved.
-   */
   setDisconnectOnMove(value) {
     this.disconnectOnMove = value;
   },
 
-  /**
-   * Returns true if the given cell is disconnectable from the source or
-   * target terminal. This returns {@link isCellsDisconnectable} for all given
-   * cells if {@link isCellLocked} does not return true for the given cell.
-   *
-   * @param cell {@link mxCell} whose disconnectable state should be returned.
-   * @param terminal {@link mxCell} that represents the source or target terminal.
-   * @param source Boolean indicating if the source or target terminal is to be
-   * disconnected.
-   */
   isCellDisconnectable(cell, terminal = null, source = false) {
     return this.isCellsDisconnectable() && !this.isCellLocked(cell);
   },
 
-  /**
-   * Returns {@link cellsDisconnectable}.
-   */
   isCellsDisconnectable() {
     return this.cellsDisconnectable;
   },
 
-  /**
-   * Sets {@link cellsDisconnectable}.
-   */
   setCellsDisconnectable(value) {
     this.cellsDisconnectable = value;
   },
 
-  /**
-   * Returns true if the given cell is a valid source for new connections.
-   * This implementation returns true for all non-null values and is
-   * called by is called by {@link isValidConnection}.
-   *
-   * @param cell {@link mxCell} that represents a possible source or null.
-   */
   isValidSource(cell) {
     return (
       (cell == null && this.isAllowDanglingEdges()) ||
@@ -714,48 +502,21 @@ const ConnectionsMixin: PartialType = {
     );
   },
 
-  /**
-   * Returns {@link isValidSource} for the given cell. This is called by
-   * {@link isValidConnection}.
-   *
-   * @param cell {@link mxCell} that represents a possible target or null.
-   */
   isValidTarget(cell) {
     return this.isValidSource(cell);
   },
 
-  /**
-   * Returns true if the given target cell is a valid target for source.
-   * This is a boolean implementation for not allowing connections between
-   * certain pairs of vertices and is called by {@link getEdgeValidationError}.
-   * This implementation returns true if {@link isValidSource} returns true for
-   * the source and {@link isValidTarget} returns true for the target.
-   *
-   * @param source {@link mxCell} that represents the source cell.
-   * @param target {@link mxCell} that represents the target cell.
-   */
   isValidConnection(source, target) {
     return this.isValidSource(source) && this.isValidTarget(target);
   },
 
-  /**
-   * Specifies if the graph should allow new connections. This implementation
-   * updates {@link ConnectionHandler.enabled} in {@link connectionHandler}.
-   *
-   * @param connectable Boolean indicating if new connections should be allowed.
-   */
   setConnectable(connectable) {
     const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
-    connectionHandler.setEnabled(connectable);
+    connectionHandler?.setEnabled(connectable);
   },
 
-  /**
-   * Returns true if the {@link connectionHandler} is enabled.
-   */
   isConnectable() {
     const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
-    return connectionHandler.isEnabled();
+    return connectionHandler?.isEnabled() ?? false;
   },
 };
-
-mixInto(Graph)(ConnectionsMixin);

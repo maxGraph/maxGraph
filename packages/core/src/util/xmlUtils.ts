@@ -102,21 +102,18 @@ export const getViewXml = (
 };
 
 /**
- * Returns the XML content of the specified node. For Internet Explorer,
- * all \r\n\t[\t]* are removed from the XML string and the remaining \r\n
- * are replaced by \n. All \n are then replaced with linefeed, or &#xa; if
- * no linefeed is defined.
+ * Returns the XML content of the specified node.
+ *
+ * All `\n` are then replaced with the linefeed parameter value.
  *
  * @param node DOM node to return the XML for.
- * @param linefeed Optional string that linefeeds are converted into. Default is
- * &#xa;
+ * @param linefeed Optional string that linefeed are converted into. Default is `&#xa;`.
  */
 export const getXml = (node: Element, linefeed = '&#xa;'): string => {
   const xmlSerializer = new XMLSerializer();
   let xml = xmlSerializer.serializeToString(node);
 
-  // Replaces linefeeds with HTML Entities.
-  linefeed = linefeed || '&#xa;';
+  // Replaces linefeed with HTML Entities.
   xml = xml.replace(/\n/g, linefeed);
   return xml;
 };

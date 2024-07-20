@@ -75,13 +75,10 @@ class EdgeLabelLayout extends GraphLayout {
    * @param e   edges
    */
   placeLabels(v: CellState[], e: CellState[]): void {
-    const model = this.graph.getDataModel();
-
     // Moves the vertices to build a circle. Makes sure the
     // radius is large enough for the vertices to not
     // overlap
-    model.beginUpdate();
-    try {
+    this.graph.batchUpdate(() => {
       for (let i = 0; i < e.length; i += 1) {
         const edge = e[i];
 
@@ -95,9 +92,7 @@ class EdgeLabelLayout extends GraphLayout {
           }
         }
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 
   /**

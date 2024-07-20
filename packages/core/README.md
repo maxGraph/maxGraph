@@ -1,7 +1,7 @@
 # @maxgraph/core
 
 <!-- extract of ../../README.md -->
-maxGraph is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides:
+`maxGraph` is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides:
 - **Nodes**, also known as **vertices** which are typically represented by shapes like rectangles.
 - **Edges** which can be lines and arrows which normally point between one node and another.
 
@@ -19,3 +19,7 @@ For more details, see the [maxGraph GitHub repository](https://github.com/maxGra
 ```
 npm install @maxgraph/core
 ```
+
+## Getting started
+
+All the information is available in the [README of the GitHub repository](https://github.com/maxGraph/maxGraph).

@@ -26,7 +26,9 @@ import { ColorValue } from '../../../types';
 /**
  * Extends {@link Shape} to implement an arrow shape. The shape is used to represent edges, not vertices.
  *
- * This shape is registered under {@link mxConstants.SHAPE_ARROW} in {@link mxCellRenderer}.
+ * By default, this shape is registered under {@link SHAPE.ARROW} in {@link CellRenderer}.
+ *
+ * @category Edge Shapes
  */
 class ArrowShape extends Shape {
   constructor(

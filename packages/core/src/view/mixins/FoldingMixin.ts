@@ -16,68 +16,14 @@ limitations under the License.
 
 import Image from '../image/ImageBox';
 import Client from '../../Client';
-import CellState from '../cell/CellState';
 import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Geometry from '../geometry/Geometry';
-import { getValue, mixInto } from '../../util/Utils';
+import { getValue } from '../../util/Utils';
 import { toRadians } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
-import { Graph } from '../Graph';
-
-declare module '../Graph' {
-  interface Graph {
-    options: GraphFoldingOptions;
-    collapseExpandResource: string;
-
-    getCollapseExpandResource: () => string;
-    isFoldingEnabled: () => boolean;
-    getFoldableCells: (cells: Cell[], collapse: boolean) => Cell[] | null;
-    isCellFoldable: (cell: Cell, collapse: boolean) => boolean;
-    getFoldingImage: (state: CellState) => Image | null;
-    foldCells: (
-      collapse: boolean,
-      recurse?: boolean,
-      cells?: Cell[] | null,
-      checkFoldable?: boolean,
-      evt?: Event | null
-    ) => Cell[] | null;
-    cellsFolded: (
-      cells: Cell[] | null,
-      collapse: boolean,
-      recurse: boolean,
-      checkFoldable?: boolean
-    ) => void;
-    swapBounds: (cell: Cell, willCollapse: boolean) => void;
-    updateAlternateBounds: (
-      cell: Cell | null,
-      geo: Geometry | null,
-      willCollapse: boolean
-    ) => void;
-  }
-}
-
-/**
- * GraphFoldingOptions
- *
- * @memberof GraphFolding
- * @typedef {object} GraphFoldingOptions
- * @property {boolean} foldingEnabled Specifies if folding (collapse and expand
- *                     via an image icon in the graph should be enabled).
- * @property {Image} collapsedImage Specifies the {@link Image} to indicate a collapsed state.
- *                     Default value is Client.imageBasePath + '/collapsed.gif'
- * @property {Image} expandedImage Specifies the {@link Image} to indicate a expanded state.
- *                     Default value is Client.imageBasePath + '/expanded.gif'
- * @property {collapseToPreferredSize} Specifies if the cell size should be changed to the preferred size when
- *                     a cell is first collapsed.
- */
-type GraphFoldingOptions = {
-  foldingEnabled: boolean;
-  collapsedImage: Image;
-  expandedImage: Image;
-  collapseToPreferredSize: boolean;
-};
+import type { Graph } from '../Graph';
 
 type PartialGraph = Pick<
   Graph,
@@ -109,7 +55,7 @@ type PartialFolding = Pick<
 type PartialType = PartialGraph & PartialFolding;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const FoldingMixin: PartialType = {
+export const FoldingMixin: PartialType = {
   options: {
     foldingEnabled: true,
     collapsedImage: new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9),
@@ -117,12 +63,6 @@ const FoldingMixin: PartialType = {
     collapseToPreferredSize: true,
   },
 
-  /**
-   * Specifies the resource key for the tooltip on the collapse/expand icon.
-   * If the resource for this key does not exist then the value is used as
-   * the tooltip.
-   * @default 'collapse-expand'
-   */
   collapseExpandResource: Client.language != 'none' ? 'collapse-expand' : '',
 
   getCollapseExpandResource() {
@@ -133,37 +73,19 @@ const FoldingMixin: PartialType = {
     return this.options.foldingEnabled;
   },
 
-  /**
-   * @default true
-   */
-
-  /**
-   * Returns the cells which are movable in the given array of cells.
-   */
   getFoldableCells(cells, collapse = false) {
     return this.getDataModel().filterCells(cells, (cell: Cell) => {
       return this.isCellFoldable(cell, collapse);
     });
   },
 
-  /**
-   * Returns true if the given cell is foldable. This implementation
-   * returns true if the cell has at least one child and its style
-   * does not specify {@link mxConstants.STYLE_FOLDABLE} to be 0.
-   *
-   * @param cell {@link mxCell} whose foldable state should be returned.
-   */
   isCellFoldable(cell, collapse?: boolean): boolean {
     const style = this.getCurrentCellStyle(cell);
-    return cell.getChildCount() > 0 && (style.foldable || false);
+    return cell.getChildCount() > 0 && (style.foldable ?? true);
   },
 
-  /**
-   * Returns the {@link Image} used to display the collapsed state of
-   * the specified cell state. This returns null for all edges.
-   */
   getFoldingImage(state) {
-    if (state != null && this.options.foldingEnabled && !state.cell.isEdge()) {
+    if (state != null && this.isFoldingEnabled() && !state.cell.isEdge()) {
       const tmp = (<Cell>state.cell).isCollapsed();
 
       if (this.isCellFoldable(state.cell, !tmp)) {
@@ -173,32 +95,12 @@ const FoldingMixin: PartialType = {
     return null;
   },
 
-  /*****************************************************************************
-   * Group: Folding
-   *****************************************************************************/
-
-  /**
-   * Sets the collapsed state of the specified cells and all descendants
-   * if recurse is true. The change is carried out using {@link cellsFolded}.
-   * This method fires {@link InternalEvent.FOLD_CELLS} while the transaction is in
-   * progress. Returns the cells whose collapsed state was changed.
-   *
-   * @param collapse Boolean indicating the collapsed state to be assigned.
-   * @param recurse Optional boolean indicating if the collapsed state of all
-   * descendants should be set. Default is `false`.
-   * @param cells Array of {@link Cell} whose collapsed state should be set. If
-   * null is specified then the foldable selection cells are used.
-   * @param checkFoldable Optional boolean indicating of isCellFoldable should be
-   * checked. Default is `false`.
-   * @param evt Optional native event that triggered the invocation.
-   */
-  // foldCells(collapse: boolean, recurse: boolean, cells: mxCellArray, checkFoldable?: boolean, evt?: Event): mxCellArray;
   foldCells(
     collapse = false,
     recurse = false,
     cells = null,
     checkFoldable = false,
-    evt = null
+    _evt = null
   ) {
     if (cells == null) {
       cells = this.getFoldableCells(this.getSelectionCells(), collapse);
@@ -223,19 +125,6 @@ const FoldingMixin: PartialType = {
     return cells;
   },
 
-  /**
-   * Sets the collapsed state of the specified cells. This method fires
-   * {@link InternalEvent.CELLS_FOLDED} while the transaction is in progress. Returns the
-   * cells whose collapsed state was changed.
-   *
-   * @param cells Array of {@link Cell} whose collapsed state should be set.
-   * @param collapse Boolean indicating the collapsed state to be assigned.
-   * @param recurse Boolean indicating if the collapsed state of all descendants
-   * should be set.
-   * @param checkFoldable Optional boolean indicating of isCellFoldable should be
-   * checked. Default is `false`.
-   */
-  // cellsFolded(cells: mxCellArray, collapse: boolean, recurse: boolean, checkFoldable?: boolean): void;
   cellsFolded(cells = null, collapse = false, recurse = false, checkFoldable = false) {
     if (cells != null && cells.length > 0) {
       this.batchUpdate(() => {
@@ -267,14 +156,6 @@ const FoldingMixin: PartialType = {
     }
   },
 
-  /**
-   * Swaps the alternate and the actual bounds in the geometry of the given
-   * cell invoking {@link updateAlternateBounds} before carrying out the swap.
-   *
-   * @param cell {@link mxCell} for which the bounds should be swapped.
-   * @param willCollapse Boolean indicating if the cell is going to be collapsed.
-   */
-  // swapBounds(cell: mxCell, willCollapse: boolean): void;
   swapBounds(cell, willCollapse = false) {
     let geo = cell.getGeometry();
     if (geo != null) {
@@ -287,19 +168,6 @@ const FoldingMixin: PartialType = {
     }
   },
 
-  /**
-   * Updates or sets the alternate bounds in the given geometry for the given
-   * cell depending on whether the cell is going to be collapsed. If no
-   * alternate bounds are defined in the geometry and
-   * {@link collapseToPreferredSize} is true, then the preferred size is used for
-   * the alternate bounds. The top, left corner is always kept at the same
-   * location.
-   *
-   * @param cell {@link mxCell} for which the geometry is being udpated.
-   * @param g {@link mxGeometry} for which the alternate bounds should be updated.
-   * @param willCollapse Boolean indicating if the cell is going to be collapsed.
-   */
-  // updateAlternateBounds(cell: mxCell, geo: mxGeometry, willCollapse: boolean): void;
   updateAlternateBounds(cell = null, geo = null, willCollapse = false) {
     if (cell != null && geo != null) {
       const style = this.getCurrentCellStyle(cell);
@@ -347,5 +215,3 @@ const FoldingMixin: PartialType = {
     }
   },
 };
-
-mixInto(Graph)(FoldingMixin);

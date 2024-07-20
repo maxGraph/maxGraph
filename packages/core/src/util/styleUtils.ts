@@ -56,14 +56,14 @@ export const removeCursors = (element: HTMLElement) => {
 };
 
 /**
- * Function: getCurrentStyle
- *
  * Returns the current style of the specified element.
  *
  * @param element DOM node whose current style should be returned.
  */
 export const getCurrentStyle = (element: HTMLElement) => {
-  return element ? window.getComputedStyle(element, '') : null;
+  return !element || element.toString() === '[object ShadowRoot]'
+    ? null
+    : window.getComputedStyle(element, '');
 };
 
 /**
@@ -320,7 +320,7 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
  * removes the key from the styles if the value is null.
  *
  * @param model <Transactions> to execute the transaction in.
- * @param cells Array of {@link Cells} to be updated.
+ * @param cells Array of {@link Cell}s to be updated.
  * @param key Key of the style to be changed.
  * @param value New value for the given key.
  */
@@ -331,42 +331,38 @@ export const setCellStyles = (
   value: any
 ) => {
   if (cells.length > 0) {
-    model.beginUpdate();
-    try {
+    model.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
         const cell = cells[i];
 
         if (cell) {
-          const style = cell.getStyle();
+          // Currently, the style object must be cloned, otherwise model.setStyle does not trigger the change event and the cell state in the view is not updated
+          const style = cell.getClonedStyle();
           style[key] = value;
 
           model.setStyle(cell, style);
         }
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 };
 
 /**
  * Sets or toggles the flag bit for the given key in the cell's styles.
- * If value is null then the flag is toggled.
+ * If the `value` parameter is not set, then the flag is toggled.
  *
- * Example:
+ * Example that toggles the bold font style:
  *
  * ```javascript
- * let cells = graph.getSelectionCells();
- * mxUtils.setCellStyleFlags(graph.model,
+ * const cells = graph.getSelectionCells();
+ * setCellStyleFlags(graph.model,
  *       cells,
- *       mxConstants.STYLE_FONTSTYLE,
- *       mxConstants.FONT_BOLD);
+ *       'fontStyle',
+ *       constants.FONT.BOLD);
  * ```
  *
- * Toggles the bold font style.
- *
  * @param model <Transactions> that contains the cells.
- * @param cells Array of {@link Cells} to change the style for.
+ * @param cells Array of {@link Cell}s to change the style for.
  * @param key Key of the style to be changed.
  * @param flag Integer for the bit to be changed.
  * @param value Optional boolean value for the flag.
@@ -376,30 +372,28 @@ export const setCellStyleFlags = (
   cells: Cell[],
   key: NumericCellStateStyleKeys,
   flag: number,
-  value: boolean
+  value?: boolean
 ) => {
   if (cells.length > 0) {
-    model.beginUpdate();
-    try {
+    model.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
         const cell = cells[i];
 
         if (cell) {
-          const style = setStyleFlag(cell.getStyle(), key, flag, value);
+          // Currently, the style object must be cloned, otherwise model.setStyle does not trigger the change event and the cell state in the view is not updated
+          const style = setStyleFlag(cell.getClonedStyle(), key, flag, value);
           model.setStyle(cell, style);
         }
       }
-    } finally {
-      model.endUpdate();
-    }
+    });
   }
 };
 
 /**
- * Sets or removes the given key from the specified style and returns the
- * new style. If value is null then the flag is toggled.
+ * Sets or toggles the flag bit for the given key in the cell's style.
+ * If the `value` parameter is not set, then the flag is toggled.
  *
- * @param style String of the form [(stylename|key=value);].
+ * @param style The style of the Cell.
  * @param key Key of the style to be changed.
  * @param flag Integer for the bit to be changed.
  * @param value Optional boolean value for the given flag.
@@ -413,7 +407,7 @@ export const setStyleFlag = (
   const v = style[key];
 
   if (v === undefined) {
-    style[key] = value === undefined ? flag : 0;
+    style[key] = value === undefined || value ? flag : 0;
   } else {
     if (value === undefined) {
       style[key] = v ^ flag;

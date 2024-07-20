@@ -42,24 +42,19 @@ import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Image from '../image/ImageBox';
 import Cell from '../cell/Cell';
-import { CellHandle, Listenable } from '../../types';
+import type { CellHandle, Listenable } from '../../types';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import EdgeHandler from './EdgeHandler';
 import EventSource from '../event/EventSource';
 import SelectionHandler from './SelectionHandler';
 import SelectionCellsHandler from './SelectionCellsHandler';
+import { VertexHandlerConfig } from './config';
 
 /**
- * Event handler for resizing cells. This handler is automatically created in
- * {@link Graph#createHandler}.
+ * Event handler for resizing cells.
  *
- * Constructor: mxVertexHandler
- *
- * Constructs an event handler that allows to resize vertices
- * and groups.
- *
- * @param state <CellState> of the cell to be resized.
+ * This handler is automatically created in {@link Graph#createHandler}.
  */
 class VertexHandler {
   escapeHandler: (sender: Listenable, evt: Event) => void;
@@ -73,15 +68,15 @@ class VertexHandler {
   graph: Graph;
 
   /**
-   * Reference to the <CellState> being modified.
+   * Reference to the {@link CellState} being modified.
    */
   state: CellState;
 
   sizers: Shape[] = [];
 
   /**
-   * Specifies if only one sizer handle at the bottom, right corner should be
-   * used. Default is false.
+   * Specifies if only one sizer handle at the bottom, right corner should be used.
+   * @default false
    */
   singleSizer = false;
 
@@ -91,85 +86,97 @@ class VertexHandler {
   index: number | null = null;
 
   /**
-   * Specifies if the bounds of handles should be used for hit-detection in IE or
-   * if <tolerance> > 0. Default is true.
+   * Specifies if the bounds of handles should be used for hit-detection in IE or if {@link tolerance} > 0.
+   * @default true
    */
   allowHandleBoundsCheck = true;
 
   /**
-   * Optional {@link Image} to be used as handles. Default is null.
+   * Optional {@link Image} to be used as handles.
+   * @default null
    */
   handleImage: Image | null = null;
 
   /**
    * If handles are currently visible.
+   * @default true
    */
   handlesVisible = true;
 
   /**
-   * Optional tolerance for hit-detection in <getHandleForEvent>. Default is 0.
+   * Optional tolerance for hit-detection in {@link getHandleForEvent}.
+   * @default 0
    */
   tolerance = 0;
 
   /**
-   * Specifies if a rotation handle should be visible. Default is false.
+   * Specifies if a rotation handle should be visible.
+   *
+   * This implementation returns {@link VertexHandlerConfig.rotationEnabled}.
+   * @since 0.12.0
    */
-  rotationEnabled = false;
+  protected isRotationEnabled(): boolean {
+    return VertexHandlerConfig.rotationEnabled;
+  }
 
   /**
    * Specifies if the parent should be highlighted if a child cell is selected.
-   * Default is false.
+   * @default false
    */
   parentHighlightEnabled = false;
 
   /**
-   * Specifies if rotation steps should be "rasterized" depening on the distance
-   * to the handle. Default is true.
+   * Specifies if rotation steps should be "rasterized" depending on the distance to the handle.
+   * @default true
    */
   rotationRaster = true;
 
   /**
-   * Specifies the cursor for the rotation handle. Default is 'crosshair'.
+   * Specifies the cursor for the rotation handle.
+   * @default 'crosshair'.
    */
   rotationCursor = 'crosshair';
 
   /**
    * Specifies if resize should change the cell in-place. This is an experimental
-   * feature for non-touch devices. Default is false.
+   * feature for non-touch devices.
+   * @default false
    */
   livePreview = false;
 
   /**
    * Specifies if the live preview should be moved to the front.
+   * @default false
    */
   movePreviewToFront = false;
 
   /**
    * Specifies if sizers should be hidden and spaced if the vertex is small.
-   * Default is false.
+   * @default false
    */
   manageSizers = false;
 
   /**
    * Specifies if the size of groups should be constrained by the children.
-   * Default is false.
+   * @default false
    */
   constrainGroupByChildren = false;
 
   /**
-   * Vertical spacing for rotation icon. Default is -16.
+   * Vertical spacing for rotation icon.
+   * @default -16
    */
   rotationHandleVSpacing = -16;
 
   /**
-   * The horizontal offset for the handles. This is updated in <redrawHandles>
-   * if {@link anageSizers} is true and the sizers are offset horizontally.
+   * The horizontal offset for the handles. This is updated in {@link redrawHandles}
+   * if {@link manageSizers} is `true` and the sizers are offset horizontally.
    */
   horizontalOffset = 0;
 
   /**
    * The horizontal offset for the handles. This is updated in <redrawHandles>
-   * if {@link anageSizers} is true and the sizers are offset vertically.
+   * if {@link manageSizers} is true and the sizers are offset vertically.
    */
   verticalOffset = 0;
 
@@ -211,9 +218,14 @@ class VertexHandler {
 
   EMPTY_POINT = new Point();
 
+  /**
+   * Constructs an event handler that allows to resize vertices and groups.
+   *
+   * @param state {@link CellState} of the cell to be resized.
+   */
   constructor(state: CellState) {
     this.state = state;
-    this.graph = <Graph>this.state.view.graph;
+    this.graph = this.state.view.graph;
     this.selectionBounds = this.getSelectionBounds(this.state);
     this.bounds = new Rectangle(
       this.selectionBounds.x,
@@ -233,12 +245,13 @@ class VertexHandler {
       this.selectionBorder.setCursor(CURSOR.MOVABLE_VERTEX);
     }
 
-    const graphHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
 
     // Adds the sizer handles
     if (
-      graphHandler.maxCells <= 0 ||
-      this.graph.getSelectionCount() < graphHandler.maxCells
+      selectionHandler &&
+      (selectionHandler.maxCells <= 0 ||
+        this.graph.getSelectionCount() < selectionHandler.maxCells)
     ) {
       const resizable = this.graph.isCellResizable(this.state.cell);
       this.sizers = [];
@@ -317,7 +330,7 @@ class VertexHandler {
     }
 
     // Handles escape keystrokes
-    this.escapeHandler = (sender: Listenable, evt: Event) => {
+    this.escapeHandler = (_sender: Listenable, _evt: Event) => {
       if (this.livePreview && this.index != null) {
         // Redraws the live preview
         (<Graph>this.state.view.graph).cellRenderer.redraw(this.state, true);
@@ -335,38 +348,43 @@ class VertexHandler {
   }
 
   /**
-   * Returns true if the rotation handle should be showing.
+   * Returns `true` if the rotation handle should be showing.
    */
   isRotationHandleVisible() {
-    const graphHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandlerCheck = selectionHandler
+      ? selectionHandler.maxCells <= 0 ||
+        this.graph.getSelectionCount() < selectionHandler.maxCells
+      : true;
 
     return (
       this.graph.isEnabled() &&
-      this.rotationEnabled &&
+      this.isRotationEnabled() &&
       this.graph.isCellRotatable(this.state.cell) &&
-      (graphHandler.maxCells <= 0 ||
-        this.graph.getSelectionCount() < graphHandler.maxCells)
+      selectionHandlerCheck
     );
   }
 
   /**
-   * Returns true if the aspect ratio if the cell should be maintained.
+   * Returns `true` if the aspect ratio if the cell should be maintained.
    */
   isConstrainedEvent(me: InternalMouseEvent) {
     return isShiftDown(me.getEvent()) || this.state.style.aspect === 'fixed';
   }
 
   /**
-   * Returns true if the center of the vertex should be maintained during the resize.
+   * Returns `true` if the center of the vertex should be maintained during the resize.
    */
   isCenteredEvent(state: CellState, me: InternalMouseEvent) {
     return false;
   }
 
   /**
-   * Returns an array of custom handles. This implementation returns null.
+   * Returns an array of custom handles.
+   *
+   * This implementation returns an empty array.
    */
-  createCustomHandles() {
+  createCustomHandles(): CellHandle[] {
     return [];
   }
 
@@ -396,8 +414,7 @@ class VertexHandler {
   }
 
   /**
-   * Returns the mxRectangle that defines the bounds of the selection
-   * border.
+   * Returns the Rectangle that defines the bounds of the selection border.
    */
   getSelectionBounds(state: CellState) {
     return new Rectangle(
@@ -431,21 +448,21 @@ class VertexHandler {
   }
 
   /**
-   * Returns {@link Constants#VERTEX_SELECTION_COLOR}.
+   * Returns {@link VERTEX_SELECTION_COLOR}.
    */
   getSelectionColor() {
     return VERTEX_SELECTION_COLOR;
   }
 
   /**
-   * Returns {@link Constants#VERTEX_SELECTION_STROKEWIDTH}.
+   * Returns {@link VERTEX_SELECTION_STROKEWIDTH}.
    */
   getSelectionStrokeWidth() {
     return VERTEX_SELECTION_STROKEWIDTH;
   }
 
   /**
-   * Returns {@link Constants#VERTEX_SELECTION_DASHED}.
+   * Returns {@link VERTEX_SELECTION_DASHED}.
    */
   isSelectionDashed() {
     return VERTEX_SELECTION_DASHED;
@@ -494,10 +511,11 @@ class VertexHandler {
   }
 
   /**
-   * Returns true if the sizer for the given index is visible.
-   * This returns true for all given indices.
+   * Returns `true` if the sizer for the given index is visible.
+   *
+   * This implementation returns `true` for all given indices.
    */
-  isSizerVisible(index: number) {
+  isSizerVisible(_index: number) {
     return true;
   }
 
@@ -528,7 +546,7 @@ class VertexHandler {
   }
 
   /**
-   * Helper method to create an {@link Rectangle} around the given centerpoint
+   * Helper method to create an {@link Rectangle} around the given center point
    * with a width and height of 2*s or 6, if no s is given.
    */
   moveSizerTo(shape: Shape, x: number, y: number) {
@@ -545,7 +563,7 @@ class VertexHandler {
 
   /**
    * Returns the index of the handle for the given event. This returns the index
-   * of the sizer from where the event originated or {@link Event#LABEL_INDEX}.
+   * of the sizer from where the event originated or {@link InternalEvent.LABEL_HANDLE}.
    */
   getHandleForEvent(me: InternalMouseEvent) {
     // Connection highlight may consume events before they reach sizer handle
@@ -607,8 +625,9 @@ class VertexHandler {
   }
 
   /**
-   * Returns true if the given event allows custom handles to be changed. This
-   * implementation returns true.
+   * Returns `true` if the given event allows custom handles to be changed.
+   *
+   * This implementation returns `true`.
    */
   isCustomHandleEvent(me: InternalMouseEvent) {
     return true;
@@ -631,8 +650,9 @@ class VertexHandler {
   }
 
   /**
-   * Called if <livePreview> is enabled to check if a border should be painted.
-   * This implementation returns true if the shape is transparent.
+   * Called if {@link livePreview} is enabled to check if a border should be painted.
+   *
+   * This implementation returns `true` if the shape is transparent.
    */
   isLivePreviewBorder() {
     return (
@@ -724,8 +744,7 @@ class VertexHandler {
         ) as SelectionCellsHandler;
 
         for (let i = 0; i < edges.length; i += 1) {
-          const handler = selectionCellsHandler.getHandler(edges[i]);
-
+          const handler = selectionCellsHandler?.getHandler(edges[i]);
           if (handler) {
             this.edgeHandlers.push(handler as EdgeHandler);
           }
@@ -748,7 +767,7 @@ class VertexHandler {
   }
 
   /**
-   * Shortcut to <hideSizers>.
+   * Shortcut to {@link hideSizers}.
    */
   setHandlesVisible(visible: boolean) {
     this.handlesVisible = visible;
@@ -789,29 +808,28 @@ class VertexHandler {
   }
 
   /**
-   * Hook for subclassers do show details while the handler is active.
+   * Hook for subclasses do show details while the handler is active.
    */
   updateHint(me: InternalMouseEvent) {
     return;
   }
 
   /**
-   * Hooks for subclassers to hide details when the handler gets inactive.
+   * Hooks for subclasses to hide details when the handler gets inactive.
    */
   removeHint() {
     return;
   }
 
   /**
-   * Hook for rounding the angle. This uses Math.round.
+   * Hook for rounding the angle. This uses {@link Math.round}.
    */
-  // roundAngle(angle: number): number;
   roundAngle(angle: number) {
     return Math.round(angle * 10) / 10;
   }
 
   /**
-   * Hook for rounding the unscaled width or height. This uses Math.round.
+   * Hook for rounding the unscaled width or height. This uses {@link Math.round}.
    */
   roundLength(length: number) {
     return Math.round(length * 100) / 100;
@@ -876,14 +894,14 @@ class VertexHandler {
   }
 
   /**
-   * Returns true if a ghost preview should be used for custom handles.
+   * Returns `true` if a ghost preview should be used for custom handles.
    */
   isGhostPreview() {
     return this.state.cell.getChildCount() > 0;
   }
 
   /**
-   * Rotates the vertex.
+   * Moves the vertex.
    */
   moveLabel(me: InternalMouseEvent) {
     const point = new Point(me.getGraphX(), me.getGraphY());
@@ -944,7 +962,7 @@ class VertexHandler {
   }
 
   /**
-   * Rotates the vertex.
+   * Resizes the vertex.
    */
   resizeVertex(me: InternalMouseEvent) {
     const ct = new Point(this.state.getCenterX(), this.state.getCenterY());
@@ -1212,7 +1230,7 @@ class VertexHandler {
         if (index <= InternalEvent.CUSTOM_HANDLE) {
           if (this.customHandles != null) {
             // Creates style before changing cell state
-            const style = (<Graph>this.state.view.graph).getCellStyle(this.state.cell);
+            const style = this.state.view.graph.getCellStyle(this.state.cell);
 
             this.customHandles[InternalEvent.CUSTOM_HANDLE - index].active = false;
             this.customHandles[InternalEvent.CUSTOM_HANDLE - index].execute(me);
@@ -1275,16 +1293,19 @@ class VertexHandler {
   }
 
   /**
-   * Rotates the given cell to the given rotation.
+   * Returns the `recursiveResize` status of the given state.
+   * @param state the given {@link CellState}. This implementation takes the value of this state.
+   * @param me the mouse event.
    */
   isRecursiveResize(state: CellState, me: InternalMouseEvent) {
     return this.graph.isRecursiveResize(this.state);
   }
 
   /**
-   * Hook for subclassers to implement a single click on the rotation handle.
-   * This code is executed as part of the model transaction. This implementation
-   * is empty.
+   * Hook for subclasses to implement a single click on the rotation handle.
+   * This code is executed as part of the model transaction.
+   *
+   * This implementation is empty.
    */
   rotateClick() {
     return;
@@ -1293,8 +1314,9 @@ class VertexHandler {
   /**
    * Rotates the given cell and its children by the given angle in degrees.
    *
-   * @param cell <Cell> to be rotated.
+   * @param cell {@link Cell} to be rotated.
    * @param angle Angle in degrees.
+   * @param parent if set, consider the parent in the rotation computation.
    */
   rotateCell(cell: Cell, angle: number, parent?: Cell) {
     if (angle !== 0) {
@@ -1882,9 +1904,7 @@ class VertexHandler {
 
         // Hides rotation handle during text editing
         this.rotationShape.node.style.visibility =
-          (<Graph>this.state.view.graph).isEditing() || !this.handlesVisible
-            ? 'hidden'
-            : '';
+          this.state.view.graph.isEditing() || !this.handlesVisible ? 'hidden' : '';
       }
     }
 
@@ -1919,8 +1939,9 @@ class VertexHandler {
   }
 
   /**
-   * Returns true if the parent highlight should be visible. This implementation
-   * always returns true.
+   * Returns `true` if the parent highlight should be visible.
+   *
+   * This implementation always returns `true`.
    */
   isParentHighlightVisible() {
     const parent = this.state.cell.getParent();
@@ -1928,7 +1949,7 @@ class VertexHandler {
   }
 
   /**
-   * Updates the highlight of the parent if <parentHighlightEnabled> is true.
+   * Updates the highlight of the parent if {@link parentHighlightEnabled} is `true`.
    */
   updateParentHighlight() {
     if (!this.isDestroyed()) {
@@ -1984,7 +2005,6 @@ class VertexHandler {
   /**
    * Redraws the preview.
    */
-  // drawPreview(): void;
   drawPreview() {
     if (this.preview != null) {
       this.preview.bounds = this.bounds;
@@ -2011,7 +2031,7 @@ class VertexHandler {
   }
 
   /**
-   * Returns true if this handler was destroyed or not initialized.
+   * Returns `true` if this handler was destroyed or not initialized.
    */
   isDestroyed() {
     return this.selectionBorder == null;

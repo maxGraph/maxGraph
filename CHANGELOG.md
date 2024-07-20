@@ -1,16 +1,207 @@
 # `maxGraph` Change Log
 
-## UNRELEASED
+## 0.12.0
 
+Release date: `2024-07-05`
+
+For more details, see the [0.12.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.12.0) on the GitHub release page.
+
+This release contains enhancements, documentation improvements and bug fixes.
+
+**Breaking Changes**
+- `VertexHandler.rotationEnabled` has been removed as it was not possible to correctly change its value.
+Use `VertexHandlerConfig.rotationEnabled` to configure the rotation behavior globally or override the `VertexHandler.isRotationEnabled` method.
+
+## 0.11.0
+
+Release date: `2024-06-09`
+
+For more details, see the [0.11.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.11.0) on the GitHub release page.
+
+This release contains enhancements, documentation improvements and bug fixes.
+
+**Breaking Changes**
+- In `StencilShape`, the `allowEval` and `defaultLocalized` static properties have been removed. Configure these properties using `StencilShapeConfig`. 
+- Logs are no longer sent to `MaxLog` by default. To restore the previous behavior, change maxGraph's global configuration with:
+```js
+GlobalConfig.logger = new MaxLogAsLogger();
+```
+- `MaxWindow.activeWindow` is no longer available; it was intended for internal use only, so there's no reason to make it public.
+- The signature of `cellArrayUtils.getOpposites` has changed. It now returns an array and take an edges Cell array parameter.
+Previously it was returning a function and this was an extra indirection. This is now simpler to use and match the signature of the mxGraph function.
+- `cellArrayUtils.restoreClone` is no longer available. It was intended to be private.
+- The signature of `cellArrayUtils.cloneCells` has changed. It now returns an array of Cells instead of a function. 
+- The `GraphDataModel.cloneCell` function has been moved to the `cellArrayUtils` namespace. The function doesn't use any internal `GraphDataModel`
+state, and moving it into `cellArrayUtils` is consistent with the `cloneCells` function already there.
+
+## 0.10.3
+
+Release date: `2024-05-29`
+
+For more details, see the [0.10.3 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.10.3) on the GitHub release page.
+
+This release contains bug fixes.
+
+## 0.10.2
+
+Release date: `2024-05-24`
+
+For more details, see the [0.10.2 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.10.2) on the GitHub release page.
+
+This release contains bug fixes.
+
+## 0.10.1
+
+Release date: `2024-04-23`
+
+For more details, see the [0.10.1 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.10.1) on the GitHub release page.
+
+This release contains documentation improvements and bug fixes.
+
+## 0.10.0
+
+Release date: `2024-04-19`
+
+For more details, see the [0.10.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.10.0) on the GitHub release page.
+
+This release contains enhancements, documentation improvements and bug fixes.
+
+## 0.9.0
+
+Release date: `2024-04-08`
+
+For more details, see the [0.9.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.9.0) on the GitHub release page.
+
+This release contains documentation improvements and bug fixes.
+
+**Breaking Changes**
+- it is no longer possible to pass a 'n' value for the `max` property of the `Multiplicity` class. Pass `null` instead to have the same effect.
+
+## 0.8.0
+
+Release date: `2024-02-14`
+
+For more details, see the [0.8.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.8.0) on the GitHub release page.
+
+This release contains new features and bug fixes.
+
+**Breaking Changes**
+They mainly impacts TypeScript users and impacts are limited:
+- rename the `StyleArrayValue` type into `StyleArrowValue`.
+This only has an impact on TypeScript users who use this type explicitly, which should happen rarely.
+- `Perimeter` is no longer a class but a value object. This only impact users that had extended the
+`Perimeter` class. Regular user that define perimeter style properties using function provided by
+ `maxGraph` are not impacted by this change.
+- `CellState.perimeter` no longer accept `Function`, but only the `PerimeterFunction`.
+  - Passing an arbitrary `Function` was incorrect and always failed at runtime.
+  - This change should not impact people using working implementation of perimeter function
+  (including these provided by maxGraph) as they already have the right signature. Implementers of
+  custom perimeter in TypeScript may have to slightly update their perimeter function declaration.
+- `CellStateStyle.loopStyle` no longer accept `Function`, but only the `EdgeStyleFunction` (limited impacts like on the `perimeter` property) 
+- `Graph.createEdgeHandler` only accepts `EdgeStyleFunction` for the `edgeStyle` parameter.
+- `GraphView` signature method changes
+  - `getPerimeterPoint` can now return `null`
+  - `getPerimeterBounds` no longer accept null `CellState` and no longer returns `null`
+- Some internal methods of `EdgeStyle` are no longer available:
+  - `scaleCellState`
+  - `scalePointArray`
+
+
+## 0.7.0
+
+Release date: `2024-01-20`
+
+This release contains new features and bug fixes.
+
+For more details, see the [0.7.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.7.0) on the GitHub release page.
+
+## 0.6.0
+
+Release date: `2023-12-22`
+
+**Breaking Changes**
+- Codecs supplied by `maxGraph` are no longer registered by default. They **MUST** be registered before performing an `encode` or `decode`.
+You can use one of the following functions to register codecs: 
+  - `registerAllCodecs`
+  - `registerCoreCodecs`
+  - `registerEditorCodecs`
+
+To serialize the `maxGraph` model, you can use the `ModelXmlSerializer` class, which registers codecs under the hood.
+
+For more details, see the [0.6.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) on the GitHub release page.
+
+## 0.5.0
+
+Release date: `2023-12-07`
+
+This release contains new features, bug fixes and documentation improvements.
+
+**Breaking Changes**
+- the UMD bundle is no more provided in the npm package.
+
+For more details, see the [0.5.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.5.0) on the GitHub release page.
+
+## 0.4.1
+
+Release date: `2023-10-30`
+
+This release contains bug fixes and internal improvements.
+
+For more details, see the [0.4.1 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.4.1) on
+the GitHub release page.
+
+## 0.4.0
+
+Release date: `2023-09-14`
+
+This release contains new features, bug fixes and documentation improvements.
+
+**Major improvements**
+- introduce the Manhattan connector
+
+For more details, see the [0.4.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.4.0) on
+the GitHub release page.
+
+## 0.3.0
+
+Release date: `2023-07-07`
+
+This release contains new features, bug fixes and documentation improvements.
+
+**Breaking Changes**
+- types: `Stylesheet.getDefaultVertexStyle` and `Stylesheet.getDefaultEdgeStyle` no longer return `undefined`.
+- remove the `CellMap` type. It was not used in the maxGraph code, which should have no impact.
+
+For more details, see the [0.3.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.3.0) on
+the GitHub release page.
+
+## 0.2.1
+
+Release date: `2023-06-08`
+
+This is a bug fix release.
+
+For more details, see the [0.2.1 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.2.1) on
+the GitHub release page.
+
+## 0.2.0
+
+Release date: `2023-05-22`
+
+This release contains bug fixes and documentation improvements.
 
 **Breaking Changes**:
   - helper functions involving _style in the string form_ have been removed from `styleUtils`. Styles are defined using
-  the `CellStateStyle` and it is no longer necessary to process strings.
-  - some types related to `CellStateStyle` have been renamed.
-  - some properties of `CellStateStyle` have changed (removed or renamed).
+  the `CellStateStyle` and it is no longer necessary to process strings. For more details, see [PR #173](https://github.com/maxGraph/maxGraph/pull/173) and commit [5ecfda6](https://github.com/maxGraph/maxGraph/commit/5ecfda6b2b326c86597a3e3a6c4fb0548d3666b8).
+  - some types related to `CellStateStyle` have been renamed. For more details, see [PR #165](https://github.com/maxGraph/maxGraph/pull/165) and commit [ca1914b](https://github.com/maxGraph/maxGraph/commit/ca1914b5824eed253556df585337aa07d974e920).
+  - some properties of `CellStateStyle` have changed (removed or renamed). The renamed properties better match the former `mxGraph` properties. For more details, see [PR #165](https://github.com/maxGraph/maxGraph/pull/165) and commit [ca1914b](https://github.com/maxGraph/maxGraph/commit/ca1914b5824eed253556df585337aa07d974e920).
 
+For more details, see the [0.2.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.2.0) on
+the GitHub release page.
 
 ## 0.1.0
+
+Release date: `2022-11-22`
 
 Initial `mxGraph` implementation. This is an **alpha** version.
 
@@ -25,7 +216,7 @@ For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph
 
 ## `mxGraph` Change Log
 
-The `maxGraph`implementation is derived from the `mxGraph v4.2.2` implementation.
+The `maxGraph`implementation is derived from `mxGraph` version `4.2.2`, released on `28-OCT-2020`.
 
 The mxGraph change log can be found at the following addresses:
   - https://github.com/jgraph/mxgraph/blob/v4.2.2/ChangeLog

@@ -24,33 +24,36 @@ import {
   ImageBox,
   Shape,
   TriangleShape,
-  constants,
   ConnectionConstraint,
-  Client,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Connections/PortRefs',
   argTypes: {
     ...globalTypes,
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
 const Template = ({ label, ...args }) => {
-  Client.setImageBasePath('/images');
-
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  configureImagesBasePath();
+  const container = createGraphContainer(args);
 
   // Replaces the port image
-  ConstraintHandler.prototype.pointImage = new ImageBox('/images/dot.gif', 10, 10);
+  ConstraintHandler.prototype.pointImage = new ImageBox('images/dot.gif', 10, 10);
 
   const graph = new Graph(container);
   graph.setConnectable(true);
@@ -68,7 +71,7 @@ const Template = ({ label, ...args }) => {
   const parent = graph.getDefaultParent();
 
   // Ports are equal for all shapes...
-  const ports = new Array();
+  const ports = [];
 
   // NOTE: Constraint is used later for orthogonal edge routing (currently ignored)
   ports.w = { x: 0, y: 0.5, perimeter: true, constraint: 'west' };
@@ -81,7 +84,7 @@ const Template = ({ label, ...args }) => {
   ports.se = { x: 1, y: 1, perimeter: true, constraint: 'south east' };
 
   // ... except for triangles
-  const ports2 = new Array();
+  const ports2 = [];
 
   // NOTE: Constraint is used later for orthogonal edge routing (currently ignored)
   ports2.in1 = { x: 0, y: 0, perimeter: true, constraint: 'west' };
@@ -138,7 +141,7 @@ const Template = ({ label, ...args }) => {
     } else if (terminal != null && terminal.cell.isVertex()) {
       if (terminal.shape != null) {
         const ports = terminal.shape.getPorts();
-        const cstrs = new Array();
+        const cstrs = [];
 
         for (const id in ports) {
           const port = ports[id];

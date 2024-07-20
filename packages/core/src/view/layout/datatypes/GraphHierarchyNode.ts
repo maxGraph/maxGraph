@@ -149,7 +149,6 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
     this.temp[0] = value;
   }
 
-  /**
   isAncestor(otherNode: GraphHierarchyNode): boolean {
     // Firstly, the hash code of this node needs to be shorter than the
     // other node

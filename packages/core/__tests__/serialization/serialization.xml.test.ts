@@ -15,38 +15,9 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { Cell, Codec, Geometry, Graph, GraphDataModel, Point } from '../../src';
-import { getPrettyXml, parseXml } from '../../src/util/xmlUtils';
-
-type ModelExportOptions = {
-  /**
-   * @default true
-   */
-  pretty?: boolean;
-};
-
-/**
- * Convenient utility class using {@link Codec} to manage maxGraph model import and export.
- *
- * @internal
- * @alpha subject to change (class and method names)
- */
-class ModelXmlSerializer {
-  // Include 'XML' in the class name as there were past discussions about supporting other format (JSON for example {@link https://github.com/maxGraph/maxGraph/discussions/60}).
-  constructor(private dataModel: GraphDataModel) {}
-
-  import(xml: string): void {
-    const doc = parseXml(xml);
-    new Codec(doc).decode(doc.documentElement, this.dataModel);
-  }
-
-  export(options?: ModelExportOptions): string {
-    const encodedNode = new Codec().encode(this.dataModel);
-    return options?.pretty ?? true
-      ? getPrettyXml(encodedNode)
-      : getPrettyXml(encodedNode, '', '', '');
-  }
-}
+import { ModelChecker } from './utils';
+import { createGraphWithoutContainer } from '../utils';
+import { Cell, Geometry, GraphDataModel, ModelXmlSerializer, Point } from '../../src';
 
 // inspired by VertexMixin.createVertex
 const newVertex = (id: string, value: string) => {
@@ -71,7 +42,7 @@ const getParent = (model: GraphDataModel) => {
 };
 
 // Adapted from https://github.com/maxGraph/maxGraph/issues/178
-const xmlFromIssue178 = `<GraphDataModel>
+const xmlWithSingleVertex = `<GraphDataModel>
     <root>
         <Cell id="0">
             <Object as="style"/>
@@ -87,36 +58,102 @@ const xmlFromIssue178 = `<GraphDataModel>
     </root>
 </GraphDataModel>`;
 
+const xmlWithVerticesAndEdges = `<GraphDataModel>
+  <root>
+    <Cell id="0">
+      <Object as="style" />
+    </Cell>
+    <Cell id="1" parent="0">
+      <Object as="style" />
+    </Cell>
+    <Cell id="v1" value="vertex 1" vertex="1" parent="1">
+      <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry" />
+      <Object fillColor="green" strokeWidth="4" as="style" />
+    </Cell>
+    <Cell id="v2" value="vertex 2" vertex="1" parent="1">
+      <Geometry _x="200" _y="50" _width="30" _height="100" as="geometry">
+        <Point _x="30" _y="40" as="offset" />
+      </Geometry>
+      <Object bendable="0" rounded="1" fontColor="yellow" as="style" />
+    </Cell>
+    <Cell id="e1" edge="1" parent="1" source="v1" target="v2">
+      <Geometry as="geometry">
+        <Array as="points">
+          <Point _y="10" />
+          <Point _y="40" />
+          <Point _x="40" _y="40" />
+        </Array>
+      </Geometry>
+      <Object as="style" />
+    </Cell>
+  </root>
+</GraphDataModel>
+`;
+
+test('Check the content of an empty GraphDataModel', () => {
+  const modelChecker = new ModelChecker(new GraphDataModel());
+  // Ensure that we have the same content as after an import
+  modelChecker.checkRootCells();
+});
+
 describe('import before the export (reproduce https://github.com/maxGraph/maxGraph/issues/178)', () => {
   test('only use GraphDataModel', () => {
     const model = new GraphDataModel();
-    new ModelXmlSerializer(model).import(xmlFromIssue178);
+    new ModelXmlSerializer(model).import(xmlWithVerticesAndEdges);
 
-    const cell = model.getCell('B_#0');
-    expect(cell).not.toBeNull();
-    expect(cell?.value).toEqual('rootNode');
-    expect(cell?.vertex).toEqual(1); // FIX should be set to true
-    expect(cell?.isVertex()).toBeTruthy();
-    expect(cell?.getParent()?.id).toEqual('1');
-    const geometry = <Element>(<unknown>cell?.geometry); // FIX should be new Geometry(100, 100, 100, 80)
-    expect(geometry.getAttribute('_x')).toEqual('100');
-    expect(geometry.getAttribute('_y')).toEqual('100');
-    expect(geometry.getAttribute('_height')).toEqual('80');
-    expect(geometry.getAttribute('_width')).toEqual('100');
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
 
-    const style = <Element>(<unknown>cell?.style); // FIX should be { fillColor: 'green', shape: 'triangle', strokeWidth: 4, }
-    expect(style.getAttribute('fillColor')).toEqual('green');
-    expect(style.getAttribute('shape')).toEqual('triangle');
-    expect(style.getAttribute('strokeWidth')).toEqual('4');
+    modelChecker.expectIsVertex(model.getCell('v1'), 'vertex 1', {
+      geometry: new Geometry(100, 100, 100, 80),
+      style: {
+        fillColor: 'green',
+        strokeWidth: 4,
+      },
+    });
+
+    const vertexGeometry = new Geometry(200, 50, 30, 100);
+    vertexGeometry.offset = new Point(30, 40);
+    modelChecker.expectIsVertex(model.getCell('v2'), 'vertex 2', {
+      style: {
+        // @ts-ignore FIX should be false
+        bendable: 0,
+        fontColor: 'yellow',
+        // @ts-ignore FIX should be true
+        rounded: 1,
+      },
+      geometry: vertexGeometry,
+    });
+
+    const edgeGeometry = new Geometry();
+    edgeGeometry.points = [new Point(0, 10), new Point(0, 40), new Point(40, 40)];
+    modelChecker.expectIsEdge(model.getCell('e1'), null, {
+      geometry: edgeGeometry,
+    });
   });
 
-  test('use Graph - reproduced what is described in issue 178', () => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const graph = new Graph(null!);
-    expect(() =>
-      new ModelXmlSerializer(graph.getDataModel()).import(xmlFromIssue178)
-    ).toThrow(new Error('Invalid x supplied.'));
+  test('use Graph - was failing in issue 178', () => {
+    const graph = createGraphWithoutContainer();
+    const model = graph.getDataModel();
+    new ModelXmlSerializer(model).import(xmlWithSingleVertex);
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
+
+    modelChecker.expectIsVertex(model.getCell('B_#0'), 'rootNode', {
+      geometry: new Geometry(100, 100, 100, 80),
+      style: { fillColor: 'green', shape: 'triangle', strokeWidth: 4 },
+    });
   });
+});
+
+test('Import then export - expect the same xml content', () => {
+  const model = new GraphDataModel();
+  const serializer = new ModelXmlSerializer(model);
+  serializer.import(xmlWithVerticesAndEdges);
+  const exportedXml = serializer.export();
+  expect(exportedXml).toEqual(xmlWithVerticesAndEdges);
 });
 
 describe('export', () => {
@@ -140,7 +177,7 @@ describe('export', () => {
     expect(
       new ModelXmlSerializer(new GraphDataModel()).export({ pretty: false })
     ).toEqual(
-      `<GraphDataModel><root><Cell id="0"><Object as="style" /></Cell><Cell id="1" parent="0"><Object as="style" /></Cell></root></GraphDataModel>`
+      `<GraphDataModel><root><Cell id="0"><Object as="style"/></Cell><Cell id="1" parent="0"><Object as="style"/></Cell></root></GraphDataModel>`
     );
   });
 
@@ -152,8 +189,14 @@ describe('export', () => {
     model.add(parent, v1);
     v1.setStyle({ fillColor: 'green', strokeWidth: 4 });
     v1.geometry = new Geometry(100, 100, 100, 80);
+    v1.geometry.offset = new Point(10, 12);
     const v2 = newVertex('v2', 'vertex 2');
-    v2.style = { bendable: false, rounded: true, fontColor: 'yellow' };
+    v2.style = {
+      bendable: false,
+      rounded: true,
+      fontColor: 'yellow',
+      baseStyleNames: ['style1', 'style2'],
+    };
     model.add(parent, v2);
 
     const edge = newEdge('e1', 'edge');
@@ -177,11 +220,18 @@ describe('export', () => {
       <Object as="style" />
     </Cell>
     <Cell id="v1" value="vertex 1" vertex="1" parent="1">
-      <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry" />
+      <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry">
+        <Point _x="10" _y="12" as="offset" />
+      </Geometry>
       <Object fillColor="green" strokeWidth="4" as="style" />
     </Cell>
     <Cell id="v2" value="vertex 2" vertex="1" parent="1">
-      <Object bendable="0" rounded="1" fontColor="yellow" as="style" />
+      <Object bendable="0" rounded="1" fontColor="yellow" as="style">
+        <Array as="baseStyleNames">
+          <add value="style1" />
+          <add value="style2" />
+        </Array>
+      </Object>
     </Cell>
     <Cell id="e1" value="edge" edge="1" parent="1" source="v1" target="v2">
       <Geometry as="geometry">
@@ -200,22 +250,55 @@ describe('export', () => {
   });
 });
 
-describe('import', () => {
-  test('XML from issue 178', () => {
+describe('import after export', () => {
+  test('only use GraphDataModel with xml containing a single vertex', () => {
     const model = new GraphDataModel();
-    new ModelXmlSerializer(model).import(xmlFromIssue178);
+    new ModelXmlSerializer(model).import(xmlWithSingleVertex);
 
-    const cell = model.getCell('B_#0');
-    expect(cell).toBeDefined();
-    expect(cell?.value).toEqual('rootNode');
-    expect(cell?.vertex).toEqual(1); // FIX should be set to true
-    expect(cell?.isVertex()).toBeTruthy();
-    expect(cell?.getParent()?.id).toEqual('1');
-    expect(cell?.geometry).toEqual(new Geometry(100, 100, 100, 80));
-    expect(cell?.style).toEqual({
-      fillColor: 'green',
-      shape: 'triangle',
-      strokeWidth: 4,
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
+
+    modelChecker.expectIsVertex(model.getCell('B_#0'), 'rootNode', {
+      geometry: new Geometry(100, 100, 100, 80),
+      style: { fillColor: 'green', shape: 'triangle', strokeWidth: 4 },
+    });
+  });
+
+  test('Cell with baseStyleNames style attribute', () => {
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model).import(
+      `<GraphDataModel>
+      <root>
+          <Cell id="0">
+              <Object as="style"/>
+          </Cell>
+          <Cell id="1" parent="0">
+              <Object as="style"/>
+          </Cell>
+          <Cell id="cell-1" vertex="1" parent="1">
+              <Object entryPerimeter="1" shadow="1" as="style">
+                <Array as="baseStyleNames">
+                  <add value="style1" />
+                </Array>
+              </Object>
+          </Cell>
+      </root>
+  </GraphDataModel>`
+    );
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
+
+    modelChecker.expectIsVertex(model.getCell('cell-1'), null, {
+      style: {
+        baseStyleNames: ['style1'],
+        // @ts-ignore FIX should be true
+        entryPerimeter: 1,
+        // @ts-ignore FIX should be true
+        shadow: 1,
+      },
     });
   });
 });

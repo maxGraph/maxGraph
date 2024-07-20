@@ -21,12 +21,12 @@ import ObjectCodec from './ObjectCodec';
 /**
  * Singleton class that acts as a global registry for codecs.
  *
- * ### Adding an <Codec>:
+ * ### Adding a Codec
  *
  * 1. Define a default codec with a new instance of the object to be handled.
  *
  *     ```javascript
- *     var codec = new ObjectCodec(new Transactions());
+ *     const codec = new ObjectCodec(new Transactions());
  *     ```
  *
  * 2. Define the functions required for encoding and decoding objects.
@@ -36,44 +36,36 @@ import ObjectCodec from './ObjectCodec';
  *     codec.decode = function(dec: Codec, node: Element, into: any): any { ... }
  *     ```
  *
- * 3. Register the codec in the <CodecRegistry>.
+ * 3. Register the codec in the CodecRegistry.
  *
  *     ```javascript
  *     CodecRegistry.register(codec);
  *     ```
  *
- * {@link ObjectCodec.decode} may be used to either create a new
- * instance of an object or to configure an existing instance,
- * in which case the into argument points to the existing
- * object. In this case, we say the codec "configures" the
- * object.
- *
- * @class CodecRegistry
+ * {@link ObjectCodec.decode} may be used to either create a new instance of an object or to configure an existing instance,
+ * in which case the into argument points to the existing object. In this case, we say the codec "configures" the object.
  */
 class CodecRegistry {
   static codecs: { [key: string]: ObjectCodec | undefined } = {};
 
   /**
-   * Maps from classnames to codecnames.
-   * @static
+   * Maps from classnames to codec names.
    */
   static aliases: { [key: string]: string | undefined } = {};
 
   /**
-   * Registers a new codec and associates the name of the template
-   * constructor in the codec with the codec object.
+   * Registers a new codec and associates the name of the codec via {@link ObjectCodec.getName} with the codec object.
    *
-   * @static
-   *
-   * @param codec - {@link ObjectCodec} to be registered.
+   * @param codec ObjectCodec to be registered.
+   * @param registerAlias if `true`, register an alias if the codec name doesn't match the name of the constructor of {@link ObjectCodec.template}.
    */
-  static register(codec: ObjectCodec): ObjectCodec {
+  static register(codec: ObjectCodec, registerAlias = true): ObjectCodec {
     if (codec != null) {
       const name = codec.getName();
       CodecRegistry.codecs[name] = codec;
 
       const classname: string = codec.template.constructor.name;
-      if (classname !== name) {
+      if (registerAlias && classname !== name) {
         CodecRegistry.addAlias(classname, name);
       }
     }
@@ -81,50 +73,66 @@ class CodecRegistry {
   }
 
   /**
-   * Adds an alias for mapping a classname to a codecname.
-   * @static
+   * Adds an alias for mapping a classname to a codec name.
    */
   static addAlias(classname: string, codecname: string): void {
     CodecRegistry.aliases[classname] = codecname;
   }
 
   /**
-   * Returns a codec that handles objects that are constructed
-   * using the given constructor.
+   * Returns a codec that handles objects that are constructed using the given constructor or a codec registered under the provided name.
    *
-   * @static
+   * When passing a name, the method first check if an alias exists for the name, and if so, it uses it to retrieve the codec.
    *
-   * @param ctor - JavaScript constructor function.
+   * If there is no registered Codec, the method tries to register a new Codec using the provided constructor.
+   *
+   * @param constructorOrName JavaScript constructor function of the Codec or Codec name.
    */
-  static getCodec(constructor_: any): ObjectCodec | null {
+  static getCodec(constructorOrName: any): ObjectCodec | null {
+    if (constructorOrName == null) {
+      return null;
+    }
+
     let codec = null;
 
-    if (constructor_ != null) {
-      let { name } = constructor_;
-      const tmp = CodecRegistry.aliases[name];
+    // Equivalent of calling import { getFunctionName } from '../util/StringUtils';
+    let name =
+      typeof constructorOrName === 'string' ? constructorOrName : constructorOrName.name;
 
-      if (tmp != null) {
-        name = tmp;
-      }
+    const tmp = CodecRegistry.aliases[name];
+    if (tmp != null) {
+      name = tmp;
+    }
 
-      codec = CodecRegistry.codecs[name] ?? null;
+    codec = CodecRegistry.codecs[name] ?? null;
 
-      // Registers a new default codec for the given constructor
-      // if no codec has been previously defined.
-      if (codec == null) {
-        try {
-          codec = new ObjectCodec(new constructor_());
-          CodecRegistry.register(codec);
-        } catch (e) {
-          // ignore
-        }
+    // Registers a new default codec for the given constructor if no codec has been previously defined.
+    if (codec == null) {
+      try {
+        codec = new ObjectCodec(new constructorOrName());
+        CodecRegistry.register(codec);
+      } catch (e) {
+        // ignore
       }
     }
     return codec;
   }
 
+  /**
+   * First try to get the codec by the name it is registered with. If it doesn't exist, use the alias eventually declared
+   * to get the codec.
+   * @param name the name of the codec that is willing to be retrieved.
+   */
   static getCodecByName(name: string) {
-    return CodecRegistry.codecs[name] ?? null;
+    let codec = CodecRegistry.codecs[name];
+    if (!codec) {
+      const alias = CodecRegistry.aliases[name];
+      if (alias) {
+        codec = CodecRegistry.codecs[alias];
+      }
+    }
+
+    return codec ?? null;
   }
 }
 

@@ -1,0 +1,71 @@
+name: Create GitHub release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  create_release:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write # create the GH release
+    steps:
+      - name: Set env
+        run: |
+          echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          body: |
+            **Adapt this one liner summary**
+            ⚡ This new version improves ... ⚡
+
+            _If appropriate, briefly explain the contents of the new version._
+
+            npm package: [${{ env.VERSION }}](https://www.npmjs.com/package/@maxgraph/core/v/${{ env.VERSION }})
+            **Update the milestone URL**
+            Fixed issues: [milestone ${{ env.VERSION }}](https://github.com/maxGraph/maxGraph/milestone/x?closed=1)
+            See also the [Changelog](https://github.com/maxGraph/maxGraph/tree/v${{ env.VERSION }}/CHANGELOG.md) file.
+
+
+            ## Breaking changes
+
+            **TODO: keep if relevant and follow the guidelines below**
+
+              - explain why it is introduced
+              - explain the impact (use case, usage, impact a lot of user or only few, ....)
+              - add references to issue or pull request to help users to understand the breaking change
+
+            ### Removal of deprecated API
+
+            **TODO: keep if relevant and follow the guidelines below**
+
+              - list API
+              - add reference to the version and release notes where it was announced as "deprecated"
+
+            ## Deprecated APIs
+
+            **TODO: keep if relevant and follow the guidelines below**
+
+              - list the APIs
+              - explain why they are deprecated
+              - provide the new API to use instead. If none exist, mention it
+              - explain in which version it will be removed. We usually keep 3 minor versions prior removal.
+              - ensure that an issue exists to track the removal (one by version is OK) and it is attached to a milestone related to the version
+
+            ## Highlights
+            _Note_: use [release 0.5.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.5.0) and [release 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) as examples
+
+            **Add screenshots, animations or videos to make your description more user-friendly!**
+
+            ### Change 1
+
+            some explanations....
+
+            ℹ️ For more details, see #<PR_NUMBER>.
+
+            ### Other changes.... adapt and create more paragraphs
+          draft: true
+          generateReleaseNotes: true
+          name: ${{ env.VERSION }}

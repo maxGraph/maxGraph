@@ -36,15 +36,15 @@ import Shape from '../geometry/Shape';
  * {
  *   mouseDown: (sender, evt)=>
  *   {
- *     MaxLog.debug('mouseDown');
+ *     GlobalConfig.logger.debug('mouseDown');
  *   },
  *   mouseMove: (sender, evt)=>
  *   {
- *     MaxLog.debug('mouseMove');
+ *     GlobalConfig.logger.debug('mouseMove');
  *   },
  *   mouseUp: (sender, evt)=>
  *   {
- *     MaxLog.debug('mouseUp');
+ *     GlobalConfig.logger.debug('mouseUp');
  *   }
  * });
  * ```

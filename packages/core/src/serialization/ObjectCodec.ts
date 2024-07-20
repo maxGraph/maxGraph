@@ -17,14 +17,14 @@ limitations under the License.
 */
 
 import ObjectIdentity from '../util/ObjectIdentity';
-import MaxLog from '../gui/MaxLog';
+import { GlobalConfig } from '../util/config';
 import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
 import { NODETYPE } from '../util/Constants';
 import { isInteger, isNumeric } from '../util/mathUtils';
 import { getTextContent } from '../util/domUtils';
 import { load } from '../util/MaxXmlRequest';
-import Codec from './Codec';
+import type Codec from './Codec';
 
 /**
  * Generic codec for JavaScript objects that implements a mapping between
@@ -36,7 +36,7 @@ import Codec from './Codec';
  * Consider the following example.
  *
  * ```javascript
- * var obj = new Object();
+ * const obj = new Object();
  * obj.foo = "Foo";
  * obj.bar = "Bar";
  * ```
@@ -44,15 +44,15 @@ import Codec from './Codec';
  * This object is encoded into an XML node using the following.
  *
  * ```javascript
- * var enc = new Codec();
- * var node = enc.encode(obj);
+ * const enc = new Codec();
+ * const node = enc.encode(obj);
  * ```
  *
- * The output of the encoding may be viewed using {@link MaxLog} as follows.
+ * The output of the encoding may be viewed using {@link GlobalConfig.logger} as follows.
  *
  * ```javascript
- * MaxLog.show();
- * MaxLog.debug(mxUtils.getPrettyXml(node));
+ * GlobalConfig.logger.show();
+ * GlobalConfig.logger.debug(mxUtils.getPrettyXml(node));
  * ```
  *
  * Finally, the result of the encoding looks as follows.
@@ -63,7 +63,7 @@ import Codec from './Codec';
  *
  * In the above output, the foo and bar fields have been mapped to attributes
  * with the same names, and the name of the constructor was used for the
- * nodename.
+ * node name.
  *
  * ### Booleans
  *
@@ -75,15 +75,15 @@ import Codec from './Codec';
  *
  * The above scheme is applied to all atomic fields, that is, to all non-object
  * fields of an object. For object fields, a child node is created with a
- * special attribute that contains the fieldname. This special attribute is
+ * special attribute that contains the field name. This special attribute is
  * called "as" and hence, as is a reserved word that should not be used for a
- * fieldname.
+ * field name.
  *
  * Consider the following example where foo is an object and bar is an atomic
  * property of foo.
  *
  * ```javascript
- * var obj = {foo: {bar: "Bar"}};
+ * const obj = {foo: {bar: "Bar"}};
  * ```
  *
  * This will be mapped to the following XML structure by ObjectCodec.
@@ -95,13 +95,13 @@ import Codec from './Codec';
  * ```
  *
  * In the above output, the inner Object node contains the as-attribute that
- * specifies the fieldname in the enclosing object. That is, the field foo was
+ * specifies the field name in the enclosing object. That is, the field foo was
  * mapped to a child node with an as-attribute that has the value foo.
  *
  * ### Arrays
  *
  * Arrays are special objects that are either associative, in which case each
- * key, value pair is treated like a field where the key is the fieldname, or
+ * key, value pair is treated like a field where the key is the field name, or
  * they are a sequence of atomic values and objects, which is mapped to a
  * sequence of child nodes. For object elements, the above scheme is applied
  * without the use of the special as-attribute for creating each child. For
@@ -113,7 +113,7 @@ import Codec from './Codec';
  * called bar with an atomic value, and foo with an object value.
  *
  * ```javascript
- * var obj = ["Bar", {bar: "Bar"}];
+ * const obj = ["Bar", {bar: "Bar"}];
  * obj["bar"] = "Bar";
  * obj["foo"] = {bar: "Bar"};
  * ```
@@ -139,7 +139,7 @@ import Codec from './Codec';
  * which are used to lookup the object in a table within {@link Codec}. The
  * {@link isReference} function is in charge of deciding if a specific field should
  * be encoded as a reference or not. Its default implementation returns true if
- * the fieldname is in {@link idrefs}, an array of strings that is used to configure
+ * the field name is in {@link idrefs}, an array of strings that is used to configure
  * the {@link ObjectCodec}.
  *
  * Using this approach, the mapping does not guarantee that the referenced
@@ -174,11 +174,11 @@ import Codec from './Codec';
  * For decoding JavaScript expressions, the add-node may be used with a text
  * content that contains the JavaScript expression. For example, the following
  * creates a field called foo in the enclosing object and assigns it the value
- * of {@link mxConstants.ALIGN_LEFT}.
+ * of {@link Constants.ALIGN.LEFT}.
  *
  * ```javascript
  * <Object>
- *   <add as="foo">mxConstants.ALIGN_LEFT</add>
+ *   <add as="foo">Constants.ALIGN.LEFT</add>
  * </Object>
  * ```
  *
@@ -195,10 +195,9 @@ import Codec from './Codec';
  * functions on the resulting object.
  *
  * Expressions are only evaluated if {@link allowEval} is true.
- *
- * @class ObjectCodec
  */
 class ObjectCodec {
+  private name?: string;
   constructor(
     template: any,
     exclude: string[] = [],
@@ -220,8 +219,9 @@ class ObjectCodec {
 
   /**
    * Static global switch that specifies if expressions in arrays are allowed.
-   * Default is false. NOTE: Enabling this carries a possible security risk.
-   * @static
+   *
+   * **NOTE**: Enabling this carries a possible security risk.
+   * @default false
    */
   static allowEval = false;
 
@@ -231,8 +231,7 @@ class ObjectCodec {
   template: any;
 
   /**
-   * Array containing the variable names that should be
-   * ignored by the codec.
+   * Array containing the variable names that should be ignored by the codec.
    */
   exclude: string[];
 
@@ -244,24 +243,29 @@ class ObjectCodec {
   idrefs: string[];
 
   /**
-   * Maps from from fieldnames to XML attribute names.
+   * Maps from field names to XML attribute names.
    */
   mapping: { [key: string]: string };
 
   /**
-   * Maps from from XML attribute names to fieldnames.
+   * Maps from XML attribute names to fieldnames.
    */
   reverse: { [key: string]: string };
 
   /**
-   * Returns the name used for the nodenames and lookup of the codec when
+   * Returns the name used for the node names and lookup of the codec when
    * classes are encoded and nodes are decoded. For classes to work with
    * this the codec registry automatically adds an alias for the classname
-   * if that is different than what this returns. The default implementation
-   * returns the classname of the template class.
+   * if that is different from what this returns.
+   *
+   * The default implementation returns the classname of the template class if no name is set.
    */
   getName(): string {
-    return this.template.constructor.name;
+    return this.name ?? this.template.constructor.name;
+  }
+
+  setName(name: string): void {
+    this.name = name;
   }
 
   /**
@@ -272,7 +276,7 @@ class ObjectCodec {
   }
 
   /**
-   * Returns the fieldname for the given attributename.
+   * Returns the field name for the given attribute name.
    * Looks up the value in the {@link reverse} mapping or returns
    * the input if there is no reverse mapping for the
    * given name.
@@ -290,7 +294,7 @@ class ObjectCodec {
   }
 
   /**
-   * Returns the attributename for the given fieldname.
+   * Returns the attribute name for the given field name.
    * Looks up the value in the {@link mapping} or returns
    * the input if there is no mapping for the
    * given name.
@@ -308,8 +312,8 @@ class ObjectCodec {
 
   /**
    * Returns true if the given attribute is to be ignored by the codec. This
-   * implementation returns true if the given fieldname is in {@link exclude} or
-   * if the fieldname equals {@link ObjectIdentity.FIELD_NAME}.
+   * implementation returns true if the given field name is in {@link exclude} or
+   * if the field name equals {@link ObjectIdentity.FIELD_NAME}.
    *
    * @param obj Object instance that contains the field.
    * @param attr Fieldname of the field.
@@ -322,12 +326,12 @@ class ObjectCodec {
   }
 
   /**
-   * Returns true if the given fieldname is to be treated
+   * Returns true if the given field name is to be treated
    * as a textual reference (ID). This implementation returns
-   * true if the given fieldname is in {@link idrefs}.
+   * true if the given field name is in {@link idrefs}.
    *
    * @param obj Object instance that contains the field.
-   * @param attr Fieldname of the field.
+   * @param attr Field name of the field.
    * @param value Value of the field.
    * @param write Boolean indicating if the field is being encoded or decoded.
    * Write is true if the field is being encoded, else it is being decoded.
@@ -366,7 +370,7 @@ class ObjectCodec {
    * if the value is a function.
    *
    * If no ID exists for a variable in {@link idrefs} or if an object
-   * cannot be encoded, a warning is issued using {@link MaxLog.warn}.
+   * cannot be encoded, a warning is issued using {@link GlobalConfig.logger}.
    *
    * Returns the resulting XML node that represents the given
    * object.
@@ -432,7 +436,9 @@ class ObjectCodec {
         const tmp = enc.getId(value);
 
         if (tmp == null) {
-          MaxLog.warn(`ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`);
+          GlobalConfig.logger.warn(
+            `ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`
+          );
           return; // exit
         }
 
@@ -512,7 +518,9 @@ class ObjectCodec {
 
       node.appendChild(child);
     } else {
-      MaxLog.warn(`ObjectCodec.encode: No node for ${this.getName()}.${name}: ${value}`);
+      GlobalConfig.logger.warn(
+        `ObjectCodec.encode: No node for ${this.getName()}.${name}: ${value}`
+      );
     }
   }
 
@@ -545,7 +553,7 @@ class ObjectCodec {
    * Returns true if the given object attribute is a boolean value.
    *
    * @param enc {@link Codec} that controls the encoding process.
-   * @param obj Objec to convert the attribute for.
+   * @param obj Object to convert the attribute for.
    * @param name Name of the attribute to be converted.
    * @param value Value of the attribute to be converted.
    */
@@ -580,20 +588,19 @@ class ObjectCodec {
    *
    * @param dec {@link Codec} that controls the decoding process.
    * @param attr XML attribute to be converted.
-   * @param obj Objec to convert the attribute for.
+   * @param obj Object to convert the attribute for.
    */
   isNumericAttribute(dec: Codec, attr: any, obj: any): boolean {
     // Handles known numeric attributes for generic objects
-    const result =
+    return (
       (obj.constructor === Geometry &&
         (attr.name === 'x' ||
           attr.name === 'y' ||
           attr.name === 'width' ||
           attr.name === 'height')) ||
       (obj.constructor === Point && (attr.name === 'x' || attr.name === 'y')) ||
-      isNumeric(attr.value);
-
-    return result;
+      isNumeric(attr.value)
+    );
   }
 
   /**
@@ -666,14 +673,14 @@ class ObjectCodec {
    * ```
    *
    * If no object exists for an ID in {@link idrefs} a warning is issued
-   * using {@link MaxLog.warn}.
+   * using {@link GlobalConfig.logger}.
    *
    * Returns the resulting object that represents the given XML node
    * or the object given to the method as the into parameter.
    *
    * @param dec {@link Codec} that controls the decoding process.
    * @param node XML node to be decoded.
-   * @param into Optional objec to encode the node into.
+   * @param into Optional object to encode the node into.
    */
   decode(dec: Codec, node: Element, into?: any): any {
     const id = <string>node.getAttribute('id');
@@ -711,7 +718,7 @@ class ObjectCodec {
    *
    * @param dec {@link Codec} that controls the decoding process.
    * @param node XML node to be decoded.
-   * @param obj Objec to encode the node into.
+   * @param obj Object to encode the node into.
    */
   decodeAttributes(dec: Codec, node: Element, obj: any): void {
     const attrs = node.attributes;
@@ -757,7 +764,7 @@ class ObjectCodec {
         const tmp = dec.getObject(value);
 
         if (tmp == null) {
-          MaxLog.warn(
+          GlobalConfig.logger.warn(
             `ObjectCodec.decode: No object for ${this.getName()}.${name}=${value}`
           );
           return; // exit
@@ -767,7 +774,6 @@ class ObjectCodec {
       }
 
       if (!this.isExcluded(obj, name, value, false)) {
-        // MaxLog.debug(mxUtils.getFunctionName(obj.constructor)+'.'+name+'='+value);
         obj[name] = value;
       }
     }
@@ -847,8 +853,8 @@ class ObjectCodec {
 
   /**
    * Sets the decoded child node as a value of the given object. If the
-   * object is a map, then the value is added with the given fieldname as a
-   * key. If the fieldname is not empty, then setFieldValue is called or
+   * object is a map, then the value is added with the given field name as a
+   * key. If the field name is not empty, then setFieldValue is called or
    * else, if the object is a collection, the value is added to the
    * collection. For strongly typed languages it may be required to
    * override this with the correct code to add an entry to an object.
@@ -860,7 +866,6 @@ class ObjectCodec {
       } else {
         obj.push(value);
       }
-      // MaxLog.debug('Decoded '+mxUtils.getFunctionName(obj.constructor)+'.'+fieldname+': '+value);
     }
   }
 
@@ -915,7 +920,7 @@ class ObjectCodec {
    * without any changes. The return value of this method
    * is returned to the decoder from {@link decode}.
    *
-   * @param enc {@link Codec} that controls the encoding process.
+   * @param dec {@link Codec} that controls the encoding process.
    * @param node XML node to be decoded.
    * @param obj Object that represents the default decoding.
    */

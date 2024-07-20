@@ -17,17 +17,7 @@ limitations under the License.
 import Rectangle from '../geometry/Rectangle';
 import Point from '../geometry/Point';
 import PolylineShape from '../geometry/edge/PolylineShape';
-import { Graph } from '../Graph';
-import { mixInto } from '../../util/Utils';
-
-declare module '../Graph' {
-  interface Graph {
-    horizontalPageBreaks: any[] | null;
-    verticalPageBreaks: any[] | null;
-
-    updatePageBreaks: (visible: boolean, width: number, height: number) => void;
-  }
-}
+import type { Graph } from '../Graph';
 
 type PartialGraph = Pick<
   Graph,
@@ -47,18 +37,11 @@ type PartialPageBreaks = Pick<
 type PartialType = PartialGraph & PartialPageBreaks;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const PageBreaksMixin: PartialType = {
+export const PageBreaksMixin: PartialType = {
   horizontalPageBreaks: null,
   verticalPageBreaks: null,
 
-  /**
-   * Invokes from {@link sizeDidChange} to redraw the page breaks.
-   *
-   * @param visible Boolean that specifies if page breaks should be shown.
-   * @param width Specifies the width of the container in pixels.
-   * @param height Specifies the height of the container in pixels.
-   */
-  updatePageBreaks(visible, width, height) {
+  updatePageBreaks(visible, _width, _height) {
     const { scale, translate: tr } = this.getView();
     const fmt = this.getPageFormat();
     const ps = scale * this.getPageScale();
@@ -150,5 +133,3 @@ const PageBreaksMixin: PartialType = {
     drawPageBreaks(this.verticalPageBreaks);
   },
 };
-
-mixInto(Graph)(PageBreaksMixin);

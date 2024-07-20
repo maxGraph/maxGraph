@@ -19,39 +19,43 @@ import {
   Graph,
   InternalEvent,
   RubberBandHandler,
-  MaxLog,
+  GlobalConfig,
   GraphView,
   Point,
   DomHelpers,
   eventUtils,
 } from '@maxgraph/core';
 
-import { globalTypes } from '../.storybook/preview';
+import {
+  contextMenuTypes,
+  contextMenuValues,
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 export default {
   title: 'Backgrounds/Grid',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
-    contextMenu: {
-      type: 'boolean',
-      defaultValue: false,
-    },
-    rubberBand: {
-      type: 'boolean',
-      defaultValue: true,
-    },
+    ...rubberBandTypes,
+  },
+  args: {
+    ...contextMenuValues,
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
 const Template = ({ label, ...args }) => {
   const div = document.createElement('div');
-
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
+  container.style.background = ''; // no grid
   div.appendChild(container);
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
@@ -173,10 +177,10 @@ const Template = ({ label, ...args }) => {
         }
       };
     } catch (e) {
-      MaxLog.show();
-      MaxLog.debug('Using background image');
+      GlobalConfig.logger.show();
+      GlobalConfig.logger.debug('Using background image');
 
-      container.style.backgroundImage = "url('editors/images/grid.gif')";
+      container.style.backgroundImage = "url('./images/grid.gif')";
     }
 
     var mxGraphViewValidateBackground = GraphView.prototype.validateBackground;

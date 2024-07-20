@@ -9,10 +9,6 @@
     "esModuleInterop": true,
     "isolatedModules": true
   },
-  "paths": {
-    "@maxgraph/core": ["packages/core/src/index.ts"],
-    "@maxgraph/ts-example": ["packages/ts-example/src/main.ts"]
-  },
   "exclude": ["node_modules", "**/*.spec.ts"],
   "include": ["packages/*/src"]
 }

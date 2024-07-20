@@ -14,66 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../cell/Cell';
+import type Cell from '../cell/Cell';
 import Dictionary from '../../util/Dictionary';
-import { Graph } from '../Graph';
-import { mixInto } from '../../util/Utils';
-
-declare module '../Graph' {
-  interface Graph {
-    isTerminalPointMovable: (cell: Cell, source: boolean) => boolean;
-    getOpposites: (
-      edges: Cell[],
-      terminal: Cell | null,
-      sources?: boolean,
-      targets?: boolean
-    ) => Cell[];
-  }
-}
+import type { Graph } from '../Graph';
 
 type PartialGraph = Pick<Graph, 'getView'>;
 type PartialTerminal = Pick<Graph, 'isTerminalPointMovable' | 'getOpposites'>;
 type PartialType = PartialGraph & PartialTerminal;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const TerminalMixin: PartialType = {
-  /*****************************************************************************
-   * Group: Graph behaviour
-   *****************************************************************************/
-
-  /**
-   * Returns true if the given terminal point is movable. This is independent
-   * from {@link isCellConnectable} and {@link isCellDisconnectable} and controls if terminal
-   * points can be moved in the graph if the edge is not connected. Note that it
-   * is required for this to return true to connect unconnected edges. This
-   * implementation returns true.
-   *
-   * @param cell {@link mxCell} whose terminal point should be moved.
-   * @param source Boolean indicating if the source or target terminal should be moved.
-   */
+export const TerminalMixin: PartialType = {
   isTerminalPointMovable(cell, source) {
     return true;
   },
 
-  /*****************************************************************************
-   * Group: Cell retrieval
-   *****************************************************************************/
-
-  /**
-   * Returns all distinct visible opposite cells for the specified terminal
-   * on the given edges.
-   *
-   * @param edges Array of {@link Cell} that contains the edges whose opposite
-   * terminals should be returned.
-   * @param terminal Terminal that specifies the end whose opposite should be
-   * returned.
-   * @param sources Optional boolean that specifies if source terminals should be
-   * included in the result. Default is `true`.
-   * @param targets Optional boolean that specifies if targer terminals should be
-   * included in the result. Default is `true`.
-   */
-  getOpposites(edges, terminal = null, sources = true, targets = true) {
-    const terminals = [];
+  getOpposites(
+    edges,
+    terminal = null,
+    includeSources = true,
+    includeTargets = true
+  ): Cell[] {
+    const terminals: Cell[] = [];
 
     // Fast lookup to avoid duplicates in terminals array
     const dict = new Dictionary<Cell, boolean>();
@@ -90,7 +51,7 @@ const TerminalMixin: PartialType = {
 
       // Checks if the terminal is the source of the edge and if the
       // target should be stored in the result
-      if (source === terminal && target && target !== terminal && targets) {
+      if (source === terminal && target && target !== terminal && includeTargets) {
         if (!dict.get(target)) {
           dict.put(target, true);
           terminals.push(target);
@@ -99,7 +60,7 @@ const TerminalMixin: PartialType = {
 
       // Checks if the terminal is the taget of the edge and if the
       // source should be stored in the result
-      else if (target === terminal && source && source !== terminal && sources) {
+      else if (target === terminal && source && source !== terminal && includeSources) {
         if (!dict.get(source)) {
           dict.put(source, true);
           terminals.push(source);
@@ -109,5 +70,3 @@ const TerminalMixin: PartialType = {
     return terminals;
   },
 };
-
-mixInto(Graph)(TerminalMixin);

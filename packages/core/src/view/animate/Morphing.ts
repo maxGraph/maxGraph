@@ -56,7 +56,7 @@ import { Graph } from '../Graph';
  * @param delay Optional delay between the animation steps. Passed to <Animation>.
  */
 class Morphing extends Animation {
-  constructor(graph: Graph, steps = 6, ease = 1.5, delay: number) {
+  constructor(graph: Graph, steps = 6, ease = 1.5, delay?: number) {
     super(delay);
     this.graph = graph;
     this.steps = steps;

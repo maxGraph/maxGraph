@@ -16,8 +16,6 @@ limitations under the License.
 
 import Cell from '../cell/Cell';
 import GraphDataModel from '../GraphDataModel';
-import CodecRegistry from '../../serialization/CodecRegistry';
-import GenericChangeCodec from './GenericChangeCodec';
 
 import type { CellStyle, UndoableChange } from '../../types';
 
@@ -49,8 +47,4 @@ class StyleChange implements UndoableChange {
   }
 }
 
-const __dummy: any = undefined;
-CodecRegistry.register(
-  new GenericChangeCodec(new StyleChange(__dummy, __dummy, __dummy), 'style')
-);
 export default StyleChange;

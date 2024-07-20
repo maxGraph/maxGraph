@@ -14,36 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* Graph mixins */
-import './view/mixins/PortsMixin';
-import './view/mixins/PanningMixin';
-import './view/mixins/ZoomMixin';
-import './view/mixins/EventsMixin';
-import './view/mixins/ImageMixin';
-import './view/mixins/CellsMixin';
-import './view/mixins/SelectionMixin';
-import './view/mixins/ConnectionsMixin';
-import './view/mixins/EdgeMixin';
-import './view/mixins/VertexMixin';
-import './view/mixins/OverlaysMixin';
-import './view/mixins/EditingMixin';
-import './view/mixins/FoldingMixin';
-import './view/mixins/LabelMixin';
-import './view/mixins/ValidationMixin';
-import './view/mixins/SnapMixin';
-import './view/mixins/TooltipMixin';
-import './view/mixins/TerminalMixin';
-import './view/mixins/DragDropMixin';
-import './view/mixins/SwimlaneMixin';
-import './view/mixins/PageBreaksMixin';
-import './view/mixins/GroupingMixin';
-import './view/mixins/OrderMixin';
+// Contribution of Mixins to the Graph type (no side effects, types only)
+import './view/mixins/_graph-mixins-types';
 
-// GraphCodec
 export { Graph } from './view/Graph';
 
-export { GraphDataModel, ModelCodec } from './view/GraphDataModel';
-export { GraphView, GraphViewCodec } from './view/GraphView';
+export { GraphDataModel } from './view/GraphDataModel';
+export { GraphView } from './view/GraphView';
 export { default as LayoutManager } from './view/layout/LayoutManager';
 export { default as Outline } from './view/other/Outline';
 export { default as PrintPreview } from './view/other/PrintPreview';
@@ -51,28 +28,21 @@ export { default as SwimlaneManager } from './view/layout/SwimlaneManager';
 export { default as Client } from './Client';
 
 export { default as CellAttributeChange } from './view/undoable_changes/CellAttributeChange';
-export { ChildChange, ChildChangeCodec } from './view/undoable_changes/ChildChange';
+export { ChildChange } from './view/undoable_changes/ChildChange';
 export { default as CollapseChange } from './view/undoable_changes/CollapseChange';
 export { default as CurrentRootChange } from './view/undoable_changes/CurrentRootChange';
 export { default as GeometryChange } from './view/undoable_changes/GeometryChange';
-export { RootChange, RootChangeCodec } from './view/undoable_changes/RootChange';
+export { RootChange } from './view/undoable_changes/RootChange';
 export { default as SelectionChange } from './view/undoable_changes/SelectionChange';
 export { default as StyleChange } from './view/undoable_changes/StyleChange';
-export {
-  TerminalChange,
-  TerminalChangeCodec,
-} from './view/undoable_changes/TerminalChange';
+export { TerminalChange } from './view/undoable_changes/TerminalChange';
 export { default as ValueChange } from './view/undoable_changes/ValueChange';
 export { default as VisibleChange } from './view/undoable_changes/VisibleChange';
 
-export { EditorKeyHandler, EditorKeyHandlerCodec } from './editor/EditorKeyHandler';
-export { EditorPopupMenu, EditorPopupMenuCodec } from './editor/EditorPopupMenu';
-// TODO restore EditorToolbarCodec if needed
-// currently, the following error occurs when running vitejs build
-// [ERROR] No matching export in "../core/dist/esm/editor/EditorToolbar.js" for import "EditorToolbarCodec"
-// export { EditorToolbar, EditorToolbarCodec } from './editor/EditorToolbar';
+export { EditorKeyHandler } from './editor/EditorKeyHandler';
+export { EditorPopupMenu } from './editor/EditorPopupMenu';
 export { EditorToolbar } from './editor/EditorToolbar';
-export { Editor, EditorCodec } from './editor/Editor';
+export { Editor } from './editor/Editor';
 
 export { default as CellHighlight } from './view/cell/CellHighlight';
 export { default as CellMarker } from './view/cell/CellMarker';
@@ -91,6 +61,7 @@ export { default as RubberBandHandler } from './view/handler/RubberBandHandler';
 export { default as SelectionCellsHandler } from './view/handler/SelectionCellsHandler';
 export { default as TooltipHandler } from './view/handler/TooltipHandler';
 export { default as VertexHandler } from './view/handler/VertexHandler';
+export { VertexHandlerConfig } from './view/handler/config';
 
 export { default as CircleLayout } from './view/layout/CircleLayout';
 export { default as CompactTreeLayout } from './view/layout/CompactTreeLayout';
@@ -121,8 +92,10 @@ export { default as SwimlaneOrdering } from './view/layout/hierarchical/Swimlane
 
 export { default as Codec } from './serialization/Codec';
 export { default as CodecRegistry } from './serialization/CodecRegistry';
-export { default as GenericChangeCodec } from './view/undoable_changes/GenericChangeCodec';
 export { default as ObjectCodec } from './serialization/ObjectCodec';
+export * from './serialization/ModelXmlSerializer';
+export * from './serialization/codecs';
+export * from './serialization/register';
 
 export { default as ActorShape } from './view/geometry/ActorShape';
 export { default as LabelShape } from './view/geometry/node/LabelShape';
@@ -146,7 +119,10 @@ export { default as HexagonShape } from './view/geometry/node/HexagonShape';
 export { default as ImageShape } from './view/geometry/node/ImageShape';
 export { default as RectangleShape } from './view/geometry/node/RectangleShape';
 export { default as RhombusShape } from './view/geometry/node/RhombusShape';
-export { default as StencilShape } from './view/geometry/node/StencilShape';
+export {
+  default as StencilShape,
+  StencilShapeConfig,
+} from './view/geometry/node/StencilShape';
 export { default as StencilShapeRegistry } from './view/geometry/node/StencilShapeRegistry';
 
 export * as constants from './util/Constants';
@@ -162,6 +138,8 @@ export * as xmlUtils from './util/xmlUtils';
 export * as styleUtils from './util/styleUtils';
 export * as mathUtils from './util/mathUtils';
 export * as cellArrayUtils from './util/cellArrayUtils';
+export { GlobalConfig } from './util/config';
+export * from './util/logger';
 
 export { default as Animation } from './view/animate/Animation';
 export { default as Effects } from './view/animate/Effects';
@@ -180,10 +158,6 @@ export { default as Rectangle } from './view/geometry/Rectangle';
 export { default as EdgeStyle } from './view/style/EdgeStyle';
 export { default as Perimeter } from './view/style/Perimeter';
 export { default as StyleRegistry } from './view/style/StyleRegistry';
-// TODO restore StylesheetCodec if needed
-// currently, the following error occurs when running vitejs build
-// [ERROR] No matching export in "../core/dist/esm/view/style/Stylesheet.js" for import "StylesheetCodec"
-// export { Stylesheet, StylesheetCodec } from './view/style/Stylesheet';
 export { Stylesheet } from './view/style/Stylesheet';
 
 export * as DomHelpers from './util/domHelpers';
@@ -198,6 +172,7 @@ export { default as InternalMouseEvent } from './view/event/InternalMouseEvent';
 
 export { default as MaxForm } from './gui/MaxForm';
 export { default as MaxLog } from './gui/MaxLog';
+export { MaxLogAsLogger } from './gui/MaxLogAsLogger';
 export { default as MaxPopupMenu } from './gui/MaxPopupMenu';
 export { default as MaxToolbar } from './gui/MaxToolbar';
 export { default as MaxWindow } from './gui/MaxWindow';
@@ -217,7 +192,7 @@ export { default as Clipboard } from './util/Clipboard';
 export { default as UndoableEdit } from './view/undoable_changes/UndoableEdit';
 export { default as UndoManager } from './view/undoable_changes/UndoManager';
 
-export { Cell, CellCodec } from './view/cell/Cell';
+export { Cell } from './view/cell/Cell';
 export { default as CellEditorHandler } from './view/handler/CellEditorHandler';
 export { default as CellOverlay } from './view/cell/CellOverlay';
 export { default as CellPath } from './view/cell/CellPath';
@@ -229,4 +204,5 @@ export { default as ConnectionConstraint } from './view/other/ConnectionConstrai
 export { default as Multiplicity } from './view/other/Multiplicity';
 
 // Ensure types are exported in the type definitions
+export type { HTMLImageElementWithProps } from './gui/MaxToolbar';
 export * from './types';

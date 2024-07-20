@@ -44,7 +44,7 @@ import ConstraintHandler from './ConstraintHandler';
 import PolylineShape from '../geometry/edge/PolylineShape';
 import EventSource from '../event/EventSource';
 import Rectangle from '../geometry/Rectangle';
-import MaxLog from '../../gui/MaxLog';
+import { GlobalConfig } from '../../util/config';
 import {
   getClientX,
   getClientY,
@@ -145,11 +145,11 @@ type FactoryMethod = (
  * mxConstants.HIGHLIGHT_COLOR = null;
  * ```
  *
- * To install the image, the connectImage field of the mxConnectionHandler must
+ * To install the image, the connectImage field of the ConnectionHandler must
  * be assigned a new {@link Image} instance:
  *
  * ```javascript
- * connectImage = new mxImage('images/green-dot.gif', 14, 14);
+ * connectImage = new ImageBox('images/green-dot.gif', 14, 14);
  * ```
  *
  * This will use the green-dot.gif with a width and height of 14 pixels as the
@@ -184,7 +184,7 @@ type FactoryMethod = (
  * the port IDs, use <Transactions.getCell>.
  *
  * ```javascript
- * graph.getPlugin('ConnectionHandler').addListener(mxEvent.CONNECT, (sender, evt)=>
+ * graph.getPlugin('ConnectionHandler')?.addListener(mxEvent.CONNECT, (sender, evt) =>
  * {
  *   let edge = evt.getProperty('cell');
  *   let source = graph.getDataModel().getTerminal(edge, true);
@@ -194,8 +194,8 @@ type FactoryMethod = (
  *   let sourcePortId = style[mxConstants.STYLE_SOURCE_PORT];
  *   let targetPortId = style[mxConstants.STYLE_TARGET_PORT];
  *
- *   MaxLog.show();
- *   MaxLog.debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
+ *   GlobalConfig.logger.show();
+ *   GlobalConfig.logger.debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
  * });
  * ```
  *
@@ -220,7 +220,6 @@ type FactoryMethod = (
 class ConnectionHandler extends EventSource implements GraphPlugin {
   static pluginId = 'ConnectionHandler';
 
-  // TODO: Document me!
   previous: CellState | null = null;
   iconState: CellState | null = null;
   icons: ImageShape[] = [];
@@ -249,8 +248,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Specifies if icons should be displayed inside the graph container instead
    * of the overlay pane. This is used for HTML labels on vertices which hide
-   * the connect icon. This has precendence over {@link oveIconBack} when set
-   * to true. Default is false.
+   * the connect icon. This has precedence over {@link moveIconBack} when set
+   * to true.
+   * @default `false`
    */
   moveIconFront = false;
 
@@ -262,10 +262,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   moveIconBack = false;
 
   /**
-   * {@link Image} that is used to trigger the creation of a new connection. This
-   * is used in <createIcons>. Default is null.
+   * {@link Image} that is used to trigger the creation of a new connection.
+   * This is used in {@link createIcons}.
+   * @default null
    */
-
   connectImage: Image | null = null;
 
   /**
@@ -362,14 +362,16 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Switch to enable moving the preview away from the mousepointer. This is required in browsers
    * where the preview cannot be made transparent to events and if the built-in hit detection on
-   * the HTML elements in the page should be used. Default is the value of <Client.IS_VML>.
+   * the HTML elements in the page should be used.
+   * @default false
    */
   movePreviewAway = false;
 
   /**
    * Specifies if connections to the outline of a highlighted target should be
    * enabled. This will allow to place the connection point along the outline of
-   * the highlighted target. Default is false.
+   * the highlighted target.
+   * @default false
    */
   outlineConnect = false;
 
@@ -534,7 +536,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Starts a new connection for the given state and coordinates.
    */
-  start(state: CellState, x: number, y: number, edgeState: CellState) {
+  start(state: CellState, x: number, y: number, edgeState?: CellState) {
     this.previous = state;
     this.first = new Point(x, y);
     this.edgeState = edgeState ?? this.createEdgeState();
@@ -593,9 +595,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
 
   /**
    * Hook to return the {@link Image} used for the connection icon of the given
-   * <CellState>. This implementation returns <connectImage>.
+   * {@link CellState}. This implementation returns {@link connectImage}.
    *
-   * @param state <CellState> whose connect image should be returned.
+   * @param state {@link CellState} whose connect image should be returned.
    */
   getConnectImage(state: CellState) {
     return this.connectImage;
@@ -615,10 +617,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Creates the array {@link ImageShapes} that represent the connect icons for
-   * the given <CellState>.
+   * Creates the array {@link ImageShape}s that represent the connect icons for
+   * the given {@link CellState}.
    *
-   * @param state <CellState> whose connect icons should be returned.
+   * @param state {@link CellState} whose connect icons should be returned.
    */
   createIcons(state: CellState) {
     const image = this.getConnectImage(state);
@@ -1345,14 +1347,14 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Returns the perimeter point for the given target state.
    *
    * @param state <CellState> that represents the target cell state.
-   * @param me {@link MouseEvent} that represents the mouse move.
+   * @param _me {@link MouseEvent} that represents the mouse move.
    */
-  getTargetPerimeterPoint(state: CellState, me: InternalMouseEvent) {
+  getTargetPerimeterPoint(state: CellState, _me: InternalMouseEvent) {
     let result: Point | null = null;
     const { view } = state;
     const targetPerimeter = view.getPerimeterFunction(state);
 
-    if (targetPerimeter && this.previous) {
+    if (targetPerimeter && this.previous && this.edgeState) {
       const next =
         this.waypoints.length > 0
           ? this.waypoints[this.waypoints.length - 1]
@@ -1707,7 +1709,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
         let value = null;
         let style = {};
 
-        if (this.edgeState) {
+        if (this.edgeState?.cell) {
           value = this.edgeState.cell.value;
           style = this.edgeState.cell.style ?? {};
         }
@@ -1725,7 +1727,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
           );
 
           // Uses geometry of the preview edge state
-          if (this.edgeState && this.edgeState.cell && this.edgeState.cell.geometry) {
+          if (this.edgeState?.cell?.geometry) {
             model.setGeometry(edge, this.edgeState.cell.geometry);
           }
 
@@ -1804,9 +1806,12 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
             )
           );
         }
-      } catch (e) {
-        MaxLog.show();
-        // MaxLog.debug(e.message);
+      } catch (e: any) {
+        GlobalConfig.logger.show();
+        const errorMessage = `Error in ConnectionHandler: ${
+          e instanceof Error ? e.message + '\n' + e.stack : 'unknown cause'
+        }`;
+        GlobalConfig.logger.debug(errorMessage);
       } finally {
         model.endUpdate();
       }
@@ -2048,7 +2053,10 @@ class ConnectionHandlerCellMarker extends CellMarker {
             cell
           );
 
-          if (this.connectionHandler.error && this.connectionHandler.error.length === 0) {
+          if (
+            this.connectionHandler.error !== null &&
+            this.connectionHandler.error.length === 0
+          ) {
             cell = null;
 
             // Enables create target inside groups

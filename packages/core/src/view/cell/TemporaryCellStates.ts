@@ -65,8 +65,6 @@ class TemporaryCellStates {
     this.oldScale = view.getScale();
     this.oldDoRedrawShape = (<Graph>view.graph).cellRenderer.doRedrawShape;
 
-    const self = this;
-
     // Overrides doRedrawShape and paint shape to add links on shapes
     if (getLinkForCellState != null) {
       (<Graph>view.graph).cellRenderer.doRedrawShape = (state: CellState) => {
@@ -84,7 +82,7 @@ class TemporaryCellStates {
           }
         };
 
-        (<Function>self.oldDoRedrawShape).apply((<Graph>view.graph).cellRenderer, [
+        (<Function>this.oldDoRedrawShape).apply((<Graph>view.graph).cellRenderer, [
           state,
         ]);
         shape.paint = oldPaint;
@@ -94,7 +92,7 @@ class TemporaryCellStates {
     // Overrides validateCellState to ignore invisible cells
     view.validateCellState = (cell, recurse) => {
       if (cell == null || isCellVisibleFn == null || isCellVisibleFn(cell)) {
-        return (<Function>self.oldDoRedrawShape).apply(view, [cell, recurse]);
+        return (<Function>this.oldDoRedrawShape).apply(view, [cell, recurse]);
       }
       return null;
     };

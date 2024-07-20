@@ -14,31 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../cell/Cell';
+import type Cell from '../cell/Cell';
 import Translations from '../../util/Translations';
 import { isNode } from '../../util/domUtils';
-import CellState from '../cell/CellState';
-import Multiplicity from '../other/Multiplicity';
-import { Graph } from '../Graph';
-import { mixInto } from '../../util/Utils';
-
-declare module '../Graph' {
-  interface Graph {
-    multiplicities: Multiplicity[];
-
-    validationAlert: (message: string) => void;
-    isEdgeValid: (edge: Cell | null, source: Cell, target: Cell) => boolean;
-    getEdgeValidationError: (
-      edge: Cell | null,
-      source: Cell | null,
-      target: Cell | null
-    ) => string | null;
-    validateEdge: (edge: Cell, source: Cell, target: Cell) => string | null;
-    validateGraph: (cell?: Cell | null, context?: any) => string | null;
-    getCellValidationError: (cell: Cell) => string | null;
-    validateCell: (cell: Cell, context: CellState) => string | null;
-  }
-}
+import type { Graph } from '../Graph';
 
 type PartialGraph = Pick<
   Graph,
@@ -67,68 +46,15 @@ type PartialValidation = Pick<
 type PartialType = PartialGraph & PartialValidation;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const ValidationMixin: PartialType = {
-  /*****************************************************************************
-   * Group: Validation
-   *****************************************************************************/
-
-  /**
-   * Displays the given validation error in a dialog. This implementation uses
-   * mxUtils.alert.
-   */
+export const ValidationMixin: PartialType = {
   validationAlert(message: string) {
     alert(message);
   },
 
-  /**
-   * Checks if the return value of {@link getEdgeValidationError} for the given
-   * arguments is null.
-   *
-   * @param edge {@link mxCell} that represents the edge to validate.
-   * @param source {@link mxCell} that represents the source terminal.
-   * @param target {@link mxCell} that represents the target terminal.
-   */
   isEdgeValid(edge: Cell | null, source: Cell | null, target: Cell | null) {
     return !this.getEdgeValidationError(edge, source, target);
   },
 
-  /**
-   * Returns the validation error message to be displayed when inserting or
-   * changing an edges' connectivity. A return value of null means the edge
-   * is valid, a return value of '' means it's not valid, but do not display
-   * an error message. Any other (non-empty) string returned from this method
-   * is displayed as an error message when trying to connect an edge to a
-   * source and target. This implementation uses the {@link multiplicities}, and
-   * checks {@link multigraph}, {@link allowDanglingEdges} and {@link allowLoops} to generate
-   * validation errors.
-   *
-   * For extending this method with specific checks for source/target cells,
-   * the method can be extended as follows. Returning an empty string means
-   * the edge is invalid with no error message, a non-null string specifies
-   * the error message, and null means the edge is valid.
-   *
-   * ```javascript
-   * graph.getEdgeValidationError = function(edge, source, target)
-   * {
-   *   if (source != null && target != null &&
-   *     this.model.getValue(source) != null &&
-   *     this.model.getValue(target) != null)
-   *   {
-   *     if (target is not valid for source)
-   *     {
-   *       return 'Invalid Target';
-   *     }
-   *   }
-   *
-   *   // "Supercall"
-   *   return getEdgeValidationError.apply(this, arguments);
-   * }
-   * ```
-   *
-   * @param edge {@link mxCell} that represents the edge to validate.
-   * @param source {@link mxCell} that represents the source terminal.
-   * @param target {@link mxCell} that represents the target terminal.
-   */
   getEdgeValidationError(
     edge: Cell | null = null,
     source: Cell | null = null,
@@ -202,14 +128,6 @@ const ValidationMixin: PartialType = {
     return this.isAllowDanglingEdges() ? null : '';
   },
 
-  /**
-   * Hook method for subclassers to return an error message for the given
-   * edge and terminals. This implementation returns null.
-   *
-   * @param edge {@link mxCell} that represents the edge to validate.
-   * @param source {@link mxCell} that represents the source terminal.
-   * @param target {@link mxCell} that represents the target terminal.
-   */
   validateEdge(
     edge: Cell | null = null,
     source: Cell | null = null,
@@ -218,20 +136,6 @@ const ValidationMixin: PartialType = {
     return null;
   },
 
-  /**
-   * Validates the graph by validating each descendant of the given cell or
-   * the root of the model. Context is an object that contains the validation
-   * state for the complete validation run. The validation errors are
-   * attached to their cells using {@link setCellWarning}. Returns null in the case of
-   * successful validation or an array of strings (warnings) in the case of
-   * failed validations.
-   *
-   * Paramters:
-   *
-   * @param cell Optional {@link Cell} to start the validation recursion. Default is
-   * the graph root.
-   * @param context Object that represents the global validation state.
-   */
   validateGraph(cell: Cell | null = null, context) {
     cell = cell ?? this.getDataModel().getRoot();
 
@@ -302,13 +206,6 @@ const ValidationMixin: PartialType = {
     return warning.length > 0 || !isValid ? warning : null;
   },
 
-  /**
-   * Checks all {@link multiplicities} that cannot be enforced while the graph is
-   * being modified, namely, all multiplicities that require a minimum of
-   * 1 edge.
-   *
-   * @param cell {@link mxCell} for which the multiplicities should be checked.
-   */
   getCellValidationError(cell: Cell) {
     const outCount = cell.getDirectedEdgeCount(true);
     const inCount = cell.getDirectedEdgeCount(false);
@@ -336,17 +233,7 @@ const ValidationMixin: PartialType = {
     return error.length > 0 ? error : null;
   },
 
-  /**
-   * Hook method for subclassers to return an error message for the given
-   * cell and validation context. This implementation returns null. Any HTML
-   * breaks will be converted to linefeeds in the calling method.
-   *
-   * @param cell {@link mxCell} that represents the cell to validate.
-   * @param context Object that represents the global validation state.
-   */
   validateCell(cell: Cell, context) {
     return null;
   },
 };
-
-mixInto(Graph)(ValidationMixin);

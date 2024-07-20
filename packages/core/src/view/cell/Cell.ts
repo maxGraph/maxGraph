@@ -23,11 +23,6 @@ import { clone } from '../../util/cloneUtils';
 import Point from '../geometry/Point';
 import CellPath from './CellPath';
 import { isNotNullish } from '../../util/Utils';
-import ObjectCodec from '../../serialization/ObjectCodec';
-import CodecRegistry from '../../serialization/CodecRegistry';
-import { removeWhitespace } from '../../util/StringUtils';
-import { importNode } from '../../util/domUtils';
-import Codec from '../../serialization/Codec';
 
 import type { CellStyle, FilterFunction, IdentityObject } from '../../types';
 
@@ -247,14 +242,25 @@ export class Cell implements IdentityObject {
   }
 
   /**
-   * Returns a string that describes the <style>.
+   * Returns a string that describes the {@link style}.
+   *
+   * **IMPORTANT**: if you want to get the style object to later update it and propagate changes to the view, use {@link getClonedStyle} instead.
    */
   getStyle() {
     return this.style;
   }
 
   /**
-   * Sets the string to be used as the <style>.
+   * Use this method to get the style object to later update it and propagate changes to the view.
+   *
+   * See {@link GraphDataModel.setStyle} for more details.
+   */
+  getClonedStyle() {
+    return clone(this.getStyle());
+  }
+
+  /**
+   * Sets the string to be used as the {@link style}.
    */
   setStyle(style: CellStyle) {
     this.style = style;
@@ -371,9 +377,8 @@ export class Cell implements IdentityObject {
   /**
    * Sets the source or target terminal and returns the new terminal.
    *
-   * @param {Cell} terminal     mxCell that represents the new source or target terminal.
-   * @param {boolean} isSource  boolean that specifies if the source or target terminal
-   * should be set.
+   * @param terminal  Cell that represents the new source or target terminal.
+   * @param isSource  boolean that specifies if the source or target terminal should be set.
    */
   setTerminal(terminal: Cell | null, isSource: boolean) {
     if (isSource) {
@@ -395,7 +400,7 @@ export class Cell implements IdentityObject {
   /**
    * Returns the index of the specified child in the child array.
    *
-   * @param childChild whose index should be returned.
+   * @param child Child whose index should be returned.
    */
   getIndex(child: Cell | null) {
     if (child === null) return -1;
@@ -636,8 +641,8 @@ export class Cell implements IdentityObject {
     let path = CellPath.create(cell2);
 
     if (path.length > 0) {
-      // Bubbles through the ancestors of the first
-      // cell to find the nearest common ancestor.
+      // Bubbles through the ancestors of the first cell to find the nearest common ancestor.
+      // eslint-disable-next-line @typescript-eslint/no-this-alias -- we need to use `this` to refer to the instance to start processing
       let cell: Cell | null = this;
       let current: string | null = CellPath.create(cell);
 
@@ -872,8 +877,9 @@ export class Cell implements IdentityObject {
    * Returns the root of the model or the topmost parent of the given cell.
    */
   getRoot() {
-    let root: Cell = this;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias -- we need to use `this` to refer to the instance to start processing
     let cell: Cell | null = this;
+    let root: Cell = cell;
 
     while (cell) {
       root = cell;
@@ -884,164 +890,4 @@ export class Cell implements IdentityObject {
   }
 }
 
-/**
- * Codec for <Cell>s. This class is created and registered
- * dynamically at load time and used implicitly via <Codec>
- * and the <CodecRegistry>.
- *
- * Transient Fields:
- *
- * - children
- * - edges
- * - overlays
- * - mxTransient
- *
- * Reference Fields:
- *
- * - parent
- * - source
- * - target
- *
- * Transient fields can be added using the following code:
- *
- * CodecRegistry.getCodec(mxCell).exclude.push('name_of_field');
- *
- * To subclass <Cell>, replace the template and add an alias as
- * follows.
- *
- * ```javascript
- * function CustomCell(value, geometry, style)
- * {
- *   mxCell.apply(this, arguments);
- * }
- *
- * mxUtils.extend(CustomCell, mxCell);
- *
- * CodecRegistry.getCodec(mxCell).template = new CustomCell();
- * CodecRegistry.addAlias('CustomCell', 'mxCell');
- * ```
- */
-export class CellCodec extends ObjectCodec {
-  constructor() {
-    super(
-      new Cell(),
-      ['children', 'edges', 'overlays', 'mxTransient'],
-      ['parent', 'source', 'target']
-    );
-  }
-
-  /**
-   * Returns true since this is a cell codec.
-   */
-  isCellCodec() {
-    return true;
-  }
-
-  /**
-   * Overidden to disable conversion of value to number.
-   */
-  isNumericAttribute(dec: Codec, attr: Element, obj: any) {
-    return attr.nodeName !== 'value' && super.isNumericAttribute(dec, attr, obj);
-  }
-
-  /**
-   * Excludes user objects that are XML nodes.
-   */
-  isExcluded(obj: any, attr: string, value: Element, isWrite: boolean) {
-    return (
-      super.isExcluded(obj, attr, value, isWrite) ||
-      (isWrite && attr === 'value' && value.nodeType === NODETYPE.ELEMENT)
-    );
-  }
-
-  /**
-   * Encodes an <Cell> and wraps the XML up inside the
-   * XML of the user object (inversion).
-   */
-  afterEncode(enc: Codec, obj: Cell, node: Element) {
-    if (obj.value != null && obj.value.nodeType === NODETYPE.ELEMENT) {
-      // Wraps the graphical annotation up in the user object (inversion)
-      // by putting the result of the default encoding into a clone of the
-      // user object (node type 1) and returning this cloned user object.
-      const tmp = node;
-      node = importNode(enc.document, obj.value, true);
-      node.appendChild(tmp);
-
-      // Moves the id attribute to the outermost XML node, namely the
-      // node which denotes the object boundaries in the file.
-      const id = tmp.getAttribute('id');
-      node.setAttribute('id', String(id));
-      tmp.removeAttribute('id');
-    }
-
-    return node;
-  }
-
-  /**
-   * Decodes an <Cell> and uses the enclosing XML node as
-   * the user object for the cell (inversion).
-   */
-  beforeDecode(dec: Codec, node: Element, obj: Cell): Element | null {
-    let inner: Element | null = <Element>node.cloneNode(true);
-    const classname = this.getName();
-
-    if (node.nodeName !== classname) {
-      // Passes the inner graphical annotation node to the
-      // object codec for further processing of the cell.
-      const tmp = node.getElementsByTagName(classname)[0];
-
-      if (tmp != null && tmp.parentNode === node) {
-        removeWhitespace(<HTMLElement>tmp, true);
-        removeWhitespace(<HTMLElement>tmp, false);
-        tmp.parentNode.removeChild(tmp);
-        inner = tmp;
-      } else {
-        inner = null;
-      }
-
-      // Creates the user object out of the XML node
-      obj.value = node.cloneNode(true);
-      const id = obj.value.getAttribute('id');
-
-      if (id != null) {
-        obj.setId(id);
-        obj.value.removeAttribute('id');
-      }
-    } else {
-      // Uses ID from XML file as ID for cell in model
-      obj.setId(<string>node.getAttribute('id'));
-    }
-
-    // Preprocesses and removes all Id-references in order to use the
-    // correct encoder (this) for the known references to cells (all).
-    if (inner != null) {
-      for (let i = 0; i < this.idrefs.length; i += 1) {
-        const attr = this.idrefs[i];
-        const ref = inner.getAttribute(attr);
-
-        if (ref != null) {
-          inner.removeAttribute(attr);
-          let object = dec.objects[ref] || dec.lookup(ref);
-
-          if (object == null) {
-            // Needs to decode forward reference
-            const element = dec.getElementById(ref);
-
-            if (element != null) {
-              const decoder = CodecRegistry.codecs[element.nodeName] || this;
-              object = decoder.decode(dec, element);
-            }
-          }
-
-          // @ts-ignore dynamic assignment was in original implementation
-          obj[attr] = object;
-        }
-      }
-    }
-
-    return inner;
-  }
-}
-
-CodecRegistry.register(new CellCodec());
 export default Cell;

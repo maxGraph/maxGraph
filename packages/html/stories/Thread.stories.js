@@ -15,27 +15,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, Client } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import { Graph } from '@maxgraph/core';
+import { globalTypes, globalValues } from './shared/args.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 
 export default {
   title: 'Misc/Thread',
   argTypes: {
     ...globalTypes,
   },
+  args: {
+    ...globalValues,
+  },
 };
 
 const Template = ({ label, ...args }) => {
-  Client.setImageBasePath('/images');
-
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  configureImagesBasePath();
+  const container = createGraphContainer(args);
 
   // Creates the graph inside the given container
   const graph = new Graph(container);

@@ -534,8 +534,8 @@ class DragSource {
 
     // Guide is only needed if preview element is used
     if (this.isGuidesEnabled() && this.previewElement) {
-      const graphHandler = graph.getPlugin('SelectionHandler') as SelectionHandler;
-      this.currentGuide = new Guide(graph, graphHandler.getGuideStates());
+      const selectionHandler = graph.getPlugin('SelectionHandler') as SelectionHandler;
+      this.currentGuide = new Guide(graph, selectionHandler?.getGuideStates());
     }
 
     if (this.highlightDropTargets) {

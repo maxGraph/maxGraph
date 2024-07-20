@@ -27,8 +27,7 @@ import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
 import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils';
 import { getRotatedPoint, ptSegDistSq, relativeCcw, toRadians } from '../util/mathUtils';
-import MaxLog from '../gui/MaxLog';
-import Translations from '../util/Translations';
+import { GlobalConfig } from '../util/config';
 import CellState from './cell/CellState';
 import UndoableEdit from './undoable_changes/UndoableEdit';
 import ImageShape from './geometry/node/ImageShape';
@@ -45,10 +44,7 @@ import { clone } from '../util/cloneUtils';
 import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
 import TooltipHandler from './handler/TooltipHandler';
-import { MouseEventListener } from '../types';
-
-import ObjectCodec from '../serialization/ObjectCodec';
-import CodecRegistry from '../serialization/CodecRegistry';
+import type { EdgeStyleFunction, MouseEventListener } from '../types';
 
 /**
  * @class GraphView
@@ -57,7 +53,7 @@ import CodecRegistry from '../serialization/CodecRegistry';
  * Extends {@link EventSource} to implement a view for a graph. This class is in
  * charge of computing the absolute coordinates for the relative child
  * geometries, the points for perimeters and edge styles and keeping them
- * cached in {@link mxCellStates} for faster retrieval. The states are updated
+ * cached in {@link CellState}s for faster retrieval. The states are updated
  * whenever the model or the view state (translate, scale) changes. The scale
  * and translate are honoured in the bounds.
  *
@@ -224,7 +220,7 @@ export class GraphView extends EventSource {
 
   /**
    * Sets the scale and fires a {@link scale} event before calling {@link revalidate} followed
-   * by {@link graph.sizeDidChange}.
+   * by {@link Graph.sizeDidChange}.
    *
    * @param value Decimal value that specifies the new scale (1 is 100%).
    */
@@ -256,7 +252,7 @@ export class GraphView extends EventSource {
 
   /**
    * Sets the translation and fires a {@link translate} event before calling
-   * {@link revalidate} followed by {@link graph.sizeDidChange}. The translation is the
+   * {@link revalidate} followed by {@link Graph.sizeDidChange}. The translation is the
    * negative of the origin.
    *
    * @param dx X-coordinate of the translation.
@@ -532,9 +528,7 @@ export class GraphView extends EventSource {
    * Default is {@link currentRoot} or the root of the model.
    */
   validate(cell: Cell | null = null) {
-    const t0 = MaxLog.enter('mxGraphView.validate');
-    window.status =
-      Translations.get(this.updatingDocumentResource) || this.updatingDocumentResource;
+    const t0 = GlobalConfig.logger.enter('GraphView.validate');
 
     this.resetValidationState();
 
@@ -551,8 +545,7 @@ export class GraphView extends EventSource {
       this.resetValidationState();
     }
 
-    window.status = Translations.get(this.doneResource) || this.doneResource;
-    MaxLog.leave('mxGraphView.validate', <number>t0);
+    GlobalConfig.logger.leave('GraphView.validate', t0);
   }
 
   /**
@@ -900,11 +893,11 @@ export class GraphView extends EventSource {
 
           if (geo.relative && pState) {
             if (pState.cell.isEdge()) {
-              const origin = this.getPoint(pState, geo);
+              const point = this.getPoint(pState, geo);
 
-              if (origin) {
-                origin.x += origin.x / this.scale - pState.origin.x - this.translate.x;
-                origin.y += origin.y / this.scale - pState.origin.y - this.translate.y;
+              if (point) {
+                origin.x += point.x / this.scale - pState.origin.x - this.translate.x;
+                origin.y += point.y / this.scale - pState.origin.y - this.translate.y;
               }
             } else {
               origin.x += geo.x * pState.unscaledWidth + offset.x;
@@ -1278,8 +1271,8 @@ export class GraphView extends EventSource {
 
   /**
    * Returns true if the given edge should be routed with {@link graph.defaultLoopStyle}
-   * or the {@link mxConstants.STYLE_LOOP} defined for the given edge. This implementation
-   * returns true if the given edge is a loop and does not
+   * or the {@link CellStateStyle.STYLE_LOOP} defined for the given edge.
+   * This implementation returns `true` if the given edge is a loop and does not
    */
   isLoopStyleEnabled(
     edge: CellState,
@@ -1310,12 +1303,12 @@ export class GraphView extends EventSource {
     points: Point[] = [],
     source: CellState | null = null,
     target: CellState | null = null
-  ) {
+  ): EdgeStyleFunction | null {
     let edgeStyle = this.isLoopStyleEnabled(edge, points, source, target)
       ? edge.style.loopStyle ?? this.graph.defaultLoopStyle
       : !edge.style.noEdgeStyle ?? false
-      ? edge.style.edgeStyle
-      : null;
+        ? edge.style.edgeStyle
+        : null;
 
     // Converts string values to objects
     if (typeof edgeStyle === 'string') {
@@ -1329,7 +1322,7 @@ export class GraphView extends EventSource {
     }
 
     if (typeof edgeStyle === 'function') {
-      return edgeStyle;
+      return edgeStyle as EdgeStyleFunction;
     }
 
     return null;
@@ -1416,7 +1409,7 @@ export class GraphView extends EventSource {
       edge.style[source ? 'sourcePerimeterSpacing' : 'targetPerimeterSpacing'] ?? 0;
     let pt = this.getPerimeterPoint(start, <Point>next, alpha === 0 && orth, border);
 
-    if (alpha !== 0) {
+    if (pt && alpha !== 0) {
       const cos = Math.cos(alpha);
       const sin = Math.sin(alpha);
       pt = getRotatedPoint(pt, cos, sin, center);
@@ -1458,7 +1451,7 @@ export class GraphView extends EventSource {
    * the perimeter and the line between the center of the shape and the given point.
    *
    * @param terminal {@link CellState} for the source or target terminal.
-   * @param next {@link mxPoint} that lies outside of the given terminal.
+   * @param next {@link Point} that lies outside the given terminal.
    * @param orthogonal Boolean that specifies if the orthogonal projection onto
    * the perimeter should be returned. If this is false then the intersection
    * of the perimeter and the line between the next and the center point is
@@ -1470,14 +1463,14 @@ export class GraphView extends EventSource {
     next: Point,
     orthogonal: boolean,
     border = 0
-  ): Point {
+  ): Point | null {
     let point = null;
 
     if (terminal != null) {
       const perimeter = this.getPerimeterFunction(terminal);
 
       if (perimeter != null && next != null) {
-        const bounds = <Rectangle>this.getPerimeterBounds(terminal, border);
+        const bounds = this.getPerimeterBounds(terminal, border);
 
         if (bounds.width > 0 || bounds.height > 0) {
           point = new Point(next.x, next.y);
@@ -1571,14 +1564,12 @@ export class GraphView extends EventSource {
    * };
    * ```
    *
-   * @param {CellState} terminal CellState that represents the terminal.
-   * @param {number} border Number that adds a border between the shape and the perimeter.
+   * @param terminal CellState that represents the terminal.
+   * @param border Number that adds a border between the shape and the perimeter.
    */
-  getPerimeterBounds(terminal: CellState | null = null, border = 0): Rectangle | null {
-    if (terminal) {
-      border += terminal.style.perimeterSpacing ?? 0;
-    }
-    return (<CellState>terminal).getPerimeterBounds(border * this.scale);
+  getPerimeterBounds(terminal: CellState, border = 0): Rectangle {
+    border += terminal.style.perimeterSpacing ?? 0;
+    return terminal.getPerimeterBounds(border * this.scale);
   }
 
   /**
@@ -2165,8 +2156,7 @@ export class GraphView extends EventSource {
     graph.addMouseListener({
       mouseDown: (sender: any, me: InternalMouseEvent) => {
         const popupMenuHandler = graph.getPlugin('PopupMenuHandler') as PopupMenuHandler;
-
-        if (popupMenuHandler) popupMenuHandler.hideMenu();
+        popupMenuHandler?.hideMenu();
       },
       mouseMove: () => {
         return;
@@ -2394,160 +2384,4 @@ export class GraphView extends EventSource {
   moveHandler: MouseEventListener | null = null;
 }
 
-/**
- * Custom encoder for {@link GraphView}s. This class is created
- * and registered dynamically at load time and used implicitly via
- * <Codec> and the <CodecRegistry>. This codec only writes views
- * into a XML format that can be used to create an image for
- * the graph, that is, it contains absolute coordinates with
- * computed perimeters, edge styles and cell styles.
- */
-export class GraphViewCodec extends ObjectCodec {
-  constructor() {
-    const __dummy: any = undefined;
-    super(new GraphView(__dummy));
-  }
-
-  /**
-   * Encodes the given {@link GraphView} using <encodeCell>
-   * starting at the model's root. This returns the
-   * top-level graph node of the recursive encoding.
-   */
-  encode(enc: any, view: GraphView) {
-    return this.encodeCell(enc, view, <Cell>view.graph.getDataModel().getRoot());
-  }
-
-  /**
-   * Recursively encodes the specifed cell. Uses layer
-   * as the default nodename. If the cell's parent is
-   * null, then graph is used for the nodename. If
-   * <Transactions.isEdge> returns true for the cell,
-   * then edge is used for the nodename, else if
-   * <Transactions.isVertex> returns true for the cell,
-   * then vertex is used for the nodename.
-   *
-   * {@link Graph#getLabel} is used to create the label
-   * attribute for the cell. For graph nodes and vertices
-   * the bounds are encoded into x, y, width and height.
-   * For edges the points are encoded into a points
-   * attribute as a space-separated list of comma-separated
-   * coordinate pairs (eg. x0,y0 x1,y1 ... xn,yn). All
-   * values from the cell style are added as attribute
-   * values to the node.
-   */
-  encodeCell(enc: any, view: GraphView, cell: Cell) {
-    let node;
-    const model = view.graph.getDataModel();
-    const state = view.getState(cell);
-    const parent = cell.getParent();
-
-    if (parent == null || state != null) {
-      const childCount = cell.getChildCount();
-      const geo = cell.getGeometry();
-      let name = null;
-
-      if (parent === model.getRoot()) {
-        name = 'layer';
-      } else if (parent == null) {
-        name = 'graph';
-      } else if (cell.isEdge()) {
-        name = 'edge';
-      } else if (childCount > 0 && geo != null) {
-        name = 'group';
-      } else if (cell.isVertex()) {
-        name = 'vertex';
-      }
-
-      if (name != null) {
-        node = enc.document.createElement(name);
-        const lab = view.graph.getLabel(cell);
-
-        if (lab != null) {
-          node.setAttribute('label', view.graph.getLabel(cell));
-
-          if (view.graph.isHtmlLabel(cell)) {
-            node.setAttribute('html', true);
-          }
-        }
-
-        if (parent == null) {
-          const bounds = view.getGraphBounds();
-
-          if (bounds != null) {
-            node.setAttribute('x', Math.round(bounds.x));
-            node.setAttribute('y', Math.round(bounds.y));
-            node.setAttribute('width', Math.round(bounds.width));
-            node.setAttribute('height', Math.round(bounds.height));
-          }
-
-          node.setAttribute('scale', view.scale);
-        } else if (state != null && geo != null) {
-          // Writes each key, value in the style pair to an attribute
-          for (const i in state.style) {
-            // @ts-ignore
-            let value = state.style[i];
-
-            // Tries to turn objects and functions into strings
-            if (typeof value === 'function' && typeof value === 'object') {
-              value = StyleRegistry.getName(value);
-            }
-
-            if (
-              value != null &&
-              typeof value !== 'function' &&
-              typeof value !== 'object'
-            ) {
-              node.setAttribute(i, value);
-            }
-          }
-
-          const abs = state.absolutePoints;
-
-          // Writes the list of points into one attribute
-          if (abs != null && abs.length > 0) {
-            let pts = `${Math.round((<Point>abs[0]).x)},${Math.round((<Point>abs[0]).y)}`;
-
-            for (let i = 1; i < abs.length; i += 1) {
-              pts += ` ${Math.round((<Point>abs[i]).x)},${Math.round((<Point>abs[i]).y)}`;
-            }
-
-            node.setAttribute('points', pts);
-          }
-
-          // Writes the bounds into 4 attributes
-          else {
-            node.setAttribute('x', Math.round(state.x));
-            node.setAttribute('y', Math.round(state.y));
-            node.setAttribute('width', Math.round(state.width));
-            node.setAttribute('height', Math.round(state.height));
-          }
-
-          const offset = state.absoluteOffset;
-
-          // Writes the offset into 2 attributes
-          if (offset != null) {
-            if (offset.x !== 0) {
-              node.setAttribute('dx', Math.round(offset.x));
-            }
-
-            if (offset.y !== 0) {
-              node.setAttribute('dy', Math.round(offset.y));
-            }
-          }
-        }
-
-        for (let i = 0; i < childCount; i += 1) {
-          const childNode = this.encodeCell(enc, view, cell.getChildAt(i));
-
-          if (childNode != null) {
-            node.appendChild(childNode);
-          }
-        }
-      }
-    }
-    return node;
-  }
-}
-
-CodecRegistry.register(new GraphViewCodec());
 export default GraphView;

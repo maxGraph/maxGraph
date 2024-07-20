@@ -1,28 +1,20 @@
-node_modules
-javascript/dist
 .jshintrc
-javascript/examples/**/dist
 .idea/
-.vscode/
 *.iml
+.vscode/
 dist
-package-lock.json
 *.tgz
 
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
 
 # testing
-/coverage
-
-# next.js
-/.next/
-/out/
+coverage/
 
 # production
-/build
+build/
 
 # misc
 .DS_Store
@@ -39,6 +31,8 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# vercel
+# vercel/next.js
+.next/
 .vercel
-/src/.next/
+src/.next/
+out/

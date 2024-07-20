@@ -22,34 +22,34 @@ import Shape from '../geometry/Shape';
 import { Graph } from '../Graph';
 
 /**
- * Creates a new image export instance to be used with an export canvas. Here
- * is an example that uses this class to create an image via a backend using
- * {@link XmlExportCanvas}.
+ * Creates a new image export instance to be used with an export canvas.
+ *
+ * Here is an example that uses this class to create an image via a backend using {@link XmlCanvas2D}.
  *
  * ```javascript
- * var xmlDoc = mxUtils.createXmlDocument();
- * var root = xmlDoc.createElement('output');
+ * const xmlDoc = xmlUtils.createXmlDocument();
+ * const root = xmlDoc.createElement('output');
  * xmlDoc.appendChild(root);
  *
- * var xmlCanvas = new mxXmlCanvas2D(root);
- * var imgExport = new mxImageExport();
- * imgExport.drawState(graph.getView().getState(graph.model.root), xmlCanvas);
+ * const xmlCanvas = new XmlCanvas2D(root);
+ * const imageExport = new ImageExport();
  *
- * var bounds = graph.getGraphBounds();
- * var w = Math.ceil(bounds.x + bounds.width);
- * var h = Math.ceil(bounds.y + bounds.height);
+ * imageExport.drawState(graph.getView().getState(graph.model.root), xmlCanvas);
+ * const xml = xmlUtils.getXml(root);
  *
- * var xml = mxUtils.getXml(root);
+ * const bounds = graph.getGraphBounds();
+ * const w = Math.ceil(bounds.x + bounds.width);
+ * const h = Math.ceil(bounds.y + bounds.height);
+ *
  * new MaxXmlRequest('export', 'format=png&w=' + w +
  * 		'&h=' + h + '&bg=#F9F7ED&xml=' + encodeURIComponent(xml))
  * 		.simulate(document, '_blank');
  * ```
- *
- * @class ImageExport
  */
 class ImageExport {
   /**
-   * Specifies if overlays should be included in the export. Default is false.
+   * Specifies if overlays should be included in the export.
+   * @default false
    */
   includeOverlays = false;
 
@@ -58,15 +58,11 @@ class ImageExport {
    */
   drawState(state: CellState, canvas: AbstractCanvas2D): void {
     if (state) {
-      this.visitStatesRecursive(state, canvas, () => {
-        this.drawCellState(state, canvas);
-      });
+      this.visitStatesRecursive(state, canvas, this.drawCellState.bind(this));
 
       // Paints the overlays
       if (this.includeOverlays) {
-        this.visitStatesRecursive(state, canvas, () => {
-          this.drawOverlays(state, canvas);
-        });
+        this.visitStatesRecursive(state, canvas, this.drawOverlays.bind(this));
       }
     }
   }
@@ -74,11 +70,15 @@ class ImageExport {
   /**
    * Visits the given state and all its descendants to the given canvas recursively.
    */
-  visitStatesRecursive(state: CellState, canvas: AbstractCanvas2D, visitor: Function) {
+  visitStatesRecursive(
+    state: CellState,
+    canvas: AbstractCanvas2D,
+    visitor: (state: CellState, canvas: AbstractCanvas2D) => void
+  ) {
     if (state) {
       visitor(state, canvas);
 
-      const graph = <Graph>state.view.graph;
+      const graph = state.view.graph;
       const childCount = state.cell.getChildCount();
 
       for (let i = 0; i < childCount; i += 1) {
@@ -92,7 +92,7 @@ class ImageExport {
   /**
    * Returns the link for the given cell state and canvas. This returns null.
    */
-  getLinkForCellState(state: CellState, canvas: AbstractCanvas2D): any {
+  getLinkForCellState(_state: CellState, _canvas: AbstractCanvas2D): any {
     return null;
   }
 
@@ -152,7 +152,7 @@ class ImageExport {
    */
   drawOverlays(state: CellState, canvas: AbstractCanvas2D): void {
     if (state.overlays != null) {
-      state.overlays.visit((id, shape) => {
+      state.overlays.visit((_id, shape) => {
         if (shape instanceof Shape) {
           shape.paint(canvas);
         }

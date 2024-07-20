@@ -14,19 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mixInto } from '../../util/Utils';
 import { sortCells } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import { Graph } from '../Graph';
-import Cell from '../cell/Cell';
-
-declare module '../Graph' {
-  interface Graph {
-    orderCells: (back: boolean, cells?: Cell[]) => Cell[];
-    cellsOrdered: (cells: Cell[], back: boolean) => void;
-  }
-}
+import type { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
 
 type PartialGraph = Pick<
   Graph,
@@ -36,20 +28,7 @@ type PartialOrder = Pick<Graph, 'orderCells' | 'cellsOrdered'>;
 type PartialType = PartialGraph & PartialOrder;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const OrderMixin: PartialType = {
-  /*****************************************************************************
-   * Group: Order
-   *****************************************************************************/
-
-  /**
-   * Moves the given cells to the front or back. The change is carried out
-   * using {@link cellsOrdered}. This method fires {@link InternalEvent.ORDER_CELLS} while the
-   * transaction is in progress.
-   *
-   * @param back Boolean that specifies if the cells should be moved to back.
-   * @param cells Array of {@link mxCell} to move to the background. If null is
-   * specified then the selection cells are used.
-   */
+export const OrderMixin: PartialType = {
   orderCells(back = false, cells) {
     if (!cells) cells = this.getSelectionCells();
     if (!cells) {
@@ -71,13 +50,6 @@ const OrderMixin: PartialType = {
     return cells;
   },
 
-  /**
-   * Moves the given cells to the front or back. This method fires
-   * {@link InternalEvent.CELLS_ORDERED} while the transaction is in progress.
-   *
-   * @param cells Array of {@link mxCell} whose order should be changed.
-   * @param back Boolean that specifies if the cells should be moved to back.
-   */
   cellsOrdered(cells, back = false) {
     this.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
@@ -98,5 +70,3 @@ const OrderMixin: PartialType = {
     });
   },
 };
-
-mixInto(Graph)(OrderMixin);

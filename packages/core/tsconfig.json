@@ -3,19 +3,24 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "declarationDir": "./dist/types",
     "declarationMap": false,
-    "emitDeclarationOnly": true,
-    "outDir": "./dist/esm",
+    "emitDeclarationOnly": false,
+    "isolatedModules": true,
+    "outDir": "./dist",
     "strict": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*.ts"],
   "typedocOptions": {
-    "out": "../docs/build/api",
+    "out": "build/api",
     "readme": "none",
     "excludeExternals": true,
-    "excludePrivate": true
+    "excludePrivate": true,
+    "categoryOrder": ["Configuration", "Edge Shapes", "Logging", "*"],
+    "categorizeByGroup": false,
+    "navigation": {
+      "includeCategories": false, // not enough categories to warrant this
+    },
   }
 }

@@ -8,7 +8,7 @@ Initialize all packages
 > From the repository root, run `npm install`.
  
 Build maxgraph@core
-> From the `packages/core` directory, run `npm run generate-esm`.
+> From the `packages/core` directory, run `npm run build`.
 
 ## Run
 

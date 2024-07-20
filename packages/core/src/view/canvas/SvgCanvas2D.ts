@@ -480,8 +480,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       anchor !== 'start' && alt.setAttribute('text-anchor', anchor);
       const fontStyle = s.fontStyle;
       matchBinaryMask(fontStyle, FONT.BOLD) && alt.setAttribute('font-weight', 'bold');
-      matchBinaryMask(fontStyle, FONT.ITALIC) &&
-        alt.setAttribute('font-style', 'italic');
+      matchBinaryMask(fontStyle, FONT.ITALIC) && alt.setAttribute('font-style', 'italic');
 
       const txtDecor = [];
       matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
@@ -1285,15 +1284,15 @@ class SvgCanvas2D extends AbstractCanvas2D {
         valign === ALIGN.TOP
           ? 'flex-start'
           : valign === ALIGN.BOTTOM
-          ? 'flex-end'
-          : 'center'
+            ? 'flex-end'
+            : 'center'
       }; ` +
         `justify-content: unsafe ${
           align === ALIGN.LEFT
             ? 'flex-start'
             : align === ALIGN.RIGHT
-            ? 'flex-end'
-            : 'center'
+              ? 'flex-end'
+              : 'center'
         }; `,
       this.getTextCss(),
       s,

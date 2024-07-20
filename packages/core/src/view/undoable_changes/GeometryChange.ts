@@ -17,8 +17,6 @@ limitations under the License.
 import Geometry from '../geometry/Geometry';
 import Cell from '../cell/Cell';
 import GraphDataModel from '../GraphDataModel';
-import CodecRegistry from '../../serialization/CodecRegistry';
-import GenericChangeCodec from './GenericChangeCodec';
 
 import type { UndoableChange } from '../../types';
 
@@ -53,8 +51,4 @@ class GeometryChange implements UndoableChange {
   }
 }
 
-const __dummy: any = undefined;
-CodecRegistry.register(
-  new GenericChangeCodec(new GeometryChange(__dummy, __dummy, __dummy), 'geometry')
-);
 export default GeometryChange;

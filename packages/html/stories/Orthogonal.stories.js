@@ -26,25 +26,31 @@ import {
   EdgeHandler,
   GraphView,
   InternalEvent,
+  cellArrayUtils,
 } from '@maxgraph/core';
-
-import { globalTypes } from '../.storybook/preview';
+import {
+  globalTypes,
+  globalValues,
+  rubberBandTypes,
+  rubberBandValues,
+} from './shared/args.js';
+import { createGraphContainer } from './shared/configure.js';
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Connections/Orthogonal',
   argTypes: {
     ...globalTypes,
+    ...rubberBandTypes,
+  },
+  args: {
+    ...globalValues,
+    ...rubberBandValues,
   },
 };
 
 const Template = ({ label, ...args }) => {
-  const container = document.createElement('div');
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  container.style.width = `${args.width}px`;
-  container.style.height = `${args.height}px`;
-  container.style.background = 'url(/images/grid.gif)';
-  container.style.cursor = 'default';
+  const container = createGraphContainer(args);
 
   // Enables guides
   SelectionHandler.prototype.guidesEnabled = true;
@@ -63,7 +69,7 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given container
   const graph = new Graph(container);
   graph.disconnectOnMove = false;
-  graph.foldingEnabled = false;
+  graph.options.foldingEnabled = false;
   graph.cellsResizable = false;
   graph.extendParents = false;
   graph.setConnectable(true);
@@ -162,15 +168,15 @@ const Template = ({ label, ...args }) => {
     );
     v13.geometry.offset = new Point(0, -5);
 
-    const v2 = graph.addCell(graph.getDataModel().cloneCell(v1));
+    const v2 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v2.geometry.x = 200;
     v2.geometry.y = 60;
 
-    const v3 = graph.addCell(graph.getDataModel().cloneCell(v1));
+    const v3 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v3.geometry.x = 40;
     v3.geometry.y = 150;
 
-    const v4 = graph.addCell(graph.getDataModel().cloneCell(v1));
+    const v4 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v4.geometry.x = 200;
     v4.geometry.y = 170;
 

@@ -15,42 +15,13 @@ limitations under the License.
 */
 
 import Cell from '../cell/Cell';
-import { mixInto } from '../../util/Utils';
 import { sortCells } from '../../util/styleUtils';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
-import Point from '../geometry/Point';
-import { Graph } from '../Graph';
-
-declare module '../Graph' {
-  interface Graph {
-    groupCells: (group: Cell, border: number, cells?: Cell[] | null) => Cell;
-    getCellsForGroup: (cells: Cell[]) => Cell[];
-    getBoundsForGroup: (
-      group: Cell,
-      children: Cell[],
-      border: number | null
-    ) => Rectangle | null;
-    createGroupCell: (cells: Cell[]) => Cell;
-    ungroupCells: (cells?: Cell[] | null) => Cell[];
-    getCellsForUngroup: () => Cell[];
-    removeCellsAfterUngroup: (cells: Cell[]) => void;
-    removeCellsFromParent: (cells?: Cell[] | null) => Cell[];
-    updateGroupBounds: (
-      cells: Cell[],
-      border?: number,
-      moveGroup?: boolean,
-      topBorder?: number,
-      rightBorder?: number,
-      bottomBorder?: number,
-      leftBorder?: number
-    ) => Cell[];
-    enterGroup: (cell: Cell) => void;
-    exitGroup: () => void;
-  }
-}
+import type Point from '../geometry/Point';
+import type { Graph } from '../Graph';
 
 type PartialGraph = Pick<
   Graph,
@@ -94,25 +65,7 @@ type PartialGrouping = Pick<
 type PartialType = PartialGraph & PartialGrouping;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
-const GroupingMixin: PartialType = {
-  /*****************************************************************************
-   * Group: Grouping
-   *****************************************************************************/
-
-  /**
-   * Adds the cells into the given group. The change is carried out using
-   * {@link cellsAdded}, {@link cellsMoved} and {@link cellsResized}. This method fires
-   * {@link InternalEvent.GROUP_CELLS} while the transaction is in progress. Returns the
-   * new group. A group is only created if there is at least one entry in the
-   * given array of cells.
-   *
-   * @param group {@link mxCell} that represents the target group. If `null` is specified
-   * then a new group is created using {@link createGroupCell}.
-   * @param border Optional integer that specifies the border between the child
-   * area and the group bounds. Default is `0`.
-   * @param cells Optional array of {@link Cell} to be grouped. If `null` is specified
-   * then the selection cells are used.
-   */
+export const GroupingMixin: PartialType = {
   groupCells(group, border = 0, cells) {
     if (!cells) cells = sortCells(this.getSelectionCells(), true);
     if (!cells) cells = this.getCellsForGroup(cells);
@@ -158,10 +111,6 @@ const GroupingMixin: PartialType = {
     return group;
   },
 
-  /**
-   * Returns the cells with the same parent as the first cell
-   * in the given array.
-   */
   getCellsForGroup(cells) {
     const result = [];
     if (cells != null && cells.length > 0) {
@@ -178,9 +127,6 @@ const GroupingMixin: PartialType = {
     return result;
   },
 
-  /**
-   * Returns the bounds to be used for the given group and children.
-   */
   getBoundsForGroup(group, children, border) {
     const result = this.getBoundingBoxFromGeometry(children, true);
     if (result != null) {
@@ -204,22 +150,6 @@ const GroupingMixin: PartialType = {
     return result;
   },
 
-  /**
-   * Hook for creating the group cell to hold the given array of {@link Cell} if
-   * no group cell was given to the {@link group} function.
-   *
-   * The following code can be used to set the style of new group cells.
-   *
-   * ```javascript
-   * var graphCreateGroupCell = graph.createGroupCell;
-   * graph.createGroupCell = function(cells)
-   * {
-   *   var group = graphCreateGroupCell.apply(this, arguments);
-   *   group.setStyle('group');
-   *
-   *   return group;
-   * };
-   */
   createGroupCell(cells) {
     const group = new Cell('');
     group.setVertex(true);
@@ -228,14 +158,6 @@ const GroupingMixin: PartialType = {
     return group;
   },
 
-  /**
-   * Ungroups the given cells by moving the children the children to their
-   * parents parent and removing the empty groups. Returns the children that
-   * have been removed from the groups.
-   *
-   * @param cells Array of cells to be ungrouped. If null is specified then the
-   * selection cells are used.
-   */
   ungroupCells(cells) {
     let result: Cell[] = [];
 
@@ -282,9 +204,6 @@ const GroupingMixin: PartialType = {
     return result;
   },
 
-  /**
-   * Returns the selection cells that can be ungrouped.
-   */
   getCellsForUngroup() {
     const cells = this.getSelectionCells();
 
@@ -299,21 +218,10 @@ const GroupingMixin: PartialType = {
     return tmp;
   },
 
-  /**
-   * Hook to remove the groups after {@link ungroupCells}.
-   *
-   * @param cells Array of {@link Cell} that were ungrouped.
-   */
   removeCellsAfterUngroup(cells) {
     this.cellsRemoved(this.addAllEdges(cells));
   },
 
-  /**
-   * Removes the specified cells from their parents and adds them to the
-   * default parent. Returns the cells that were removed from their parents.
-   *
-   * @param cells Array of {@link Cell} to be removed from their parents.
-   */
   removeCellsFromParent(cells) {
     if (cells == null) {
       cells = this.getSelectionCells();
@@ -328,22 +236,6 @@ const GroupingMixin: PartialType = {
     return cells;
   },
 
-  /**
-   * Updates the bounds of the given groups to include all children and returns
-   * the passed-in cells. Call this with the groups in parent to child order,
-   * top-most group first, the cells are processed in reverse order and cells
-   * with no children are ignored.
-   *
-   * @param cells The groups whose bounds should be updated. If this is null, then
-   * the selection cells are used.
-   * @param border Optional border to be added in the group. Default is 0.
-   * @param moveGroup Optional boolean that allows the group to be moved. Default
-   * is false.
-   * @param topBorder Optional top border to be added in the group. Default is 0.
-   * @param rightBorder Optional top border to be added in the group. Default is 0.
-   * @param bottomBorder Optional top border to be added in the group. Default is 0.
-   * @param leftBorder Optional top border to be added in the group. Default is 0.
-   */
   updateGroupBounds(
     cells,
     border = 0,
@@ -413,14 +305,6 @@ const GroupingMixin: PartialType = {
    * Group: Drilldown
    *****************************************************************************/
 
-  /**
-   * Uses the given cell as the root of the displayed cell hierarchy. If no
-   * cell is specified then the selection cell is used. The cell is only used
-   * if {@link isValidRoot} returns true.
-   *
-   * @param cell Optional {@link Cell} to be used as the new root. Default is the
-   * selection cell.
-   */
   enterGroup(cell) {
     cell = cell || this.getSelectionCell();
 
@@ -430,10 +314,6 @@ const GroupingMixin: PartialType = {
     }
   },
 
-  /**
-   * Changes the current root to the next valid root in the displayed cell
-   * hierarchy.
-   */
   exitGroup() {
     const root = this.getDataModel().getRoot();
     const current = this.getCurrentRoot();
@@ -463,5 +343,3 @@ const GroupingMixin: PartialType = {
     }
   },
 };
-
-mixInto(Graph)(GroupingMixin);

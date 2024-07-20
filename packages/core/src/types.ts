@@ -15,17 +15,17 @@ limitations under the License.
 */
 
 import { DIRECTION, IDENTITY_FIELD_NAME } from './util/Constants';
+import type { Graph } from './view/Graph';
+import type AbstractCanvas2D from './view/canvas/AbstractCanvas2D';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
-import EventSource from './view/event/EventSource';
+import type EventSource from './view/event/EventSource';
 import type InternalMouseEvent from './view/event/InternalMouseEvent';
+import type Geometry from './view/geometry/Geometry';
+import type Point from './view/geometry/Point';
+import type Rectangle from './view/geometry/Rectangle';
 import type Shape from './view/geometry/Shape';
-import type { Graph } from './view/Graph';
 import type ImageBox from './view/image/ImageBox';
-
-export type CellMap = {
-  [id: string]: Cell;
-};
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -37,11 +37,34 @@ export type UndoableChange = {
 
 export type StyleValue = string | number;
 
-export type Properties = {
-  [k: string]: any;
-};
+export type Properties = Record<string, any>;
 
-export type CellStyle = CellStateStyle & { baseStyleNames?: string[] };
+export type CellStyle = CellStateStyle & {
+  /**
+   * Names of styles used to fill properties before applying the specific properties defined in {@link CellStateStyle}.
+   *
+   * Here's the initial algorithm for populating properties:
+   * - Take the style name in order from the table
+   * - Retrieve the style associated with the style registered in {@link StyleSheet}.
+   * Ignore unknown styles
+   * - Merge the current style with the style retrieved from `StyleSheet`.
+   *
+   * Once the initial population of properties is complete, merge the style with the properties defined {@link CellStateStyle}.
+   *
+   **NOTE**: the order of styles in the array is important: if the same property is defined in several styles,
+   * the value actually used is that defined in the last style declared in the array.
+   */
+  baseStyleNames?: string[];
+
+  /**
+   * If set to `true`, ignores the default style when computing the actual style for a cell.
+   * The {@link baseStyleNames} are still taken into account.
+   *
+   * @default false
+   * @since 0.11.0
+   */
+  ignoreDefaultStyle?: boolean;
+};
 
 export type CellStateStyle = {
   /**
@@ -146,6 +169,8 @@ export type CellStateStyle = {
    */
   direction?: DirectionValue;
   /**
+   * This defines the style of the edge if the current cell is an Edge.
+   *
    * The possible values for the style provided out-of-the box by maxGraph are defined in {@link EDGESTYLE}.
    *
    * See {@link noEdgeStyle}.
@@ -169,17 +194,29 @@ export type CellStateStyle = {
    * This defines the style of the end arrow marker.
    *
    * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
-   * This generally includes {@link ArrowType} values and the names of any new shapes.
+   * This includes {@link ArrowValue} values and custom names that have been registered.
    *
    * See {@link startArrow}.
    */
-  endArrow?: ArrowValue | string;
+  endArrow?: StyleArrowValue;
   /**
    * Use `false` to not fill or `true` to fill the end arrow marker.
    * See {@link startFill}.
    * @default true
    */
   endFill?: boolean;
+  /**
+   * Set the fill color of the end arrow marker if {@link endFill} is `true`.
+   * If not set, use {@link strokeColor}.
+   * @since 0.10.0
+   */
+  endFillColor?: ColorValue;
+  /**
+   * Set the stroke color of the end arrow marker.
+   * If not set, use {@link strokeColor}.
+   * @since 0.10.0
+   */
+  endStrokeColor?: ColorValue;
   /**
    * The value represents the size of the end marker in pixels.
    * See {@link startSize}.
@@ -230,11 +267,13 @@ export type CellStateStyle = {
    */
   exitY?: number;
   /**
-   * The possible values are all HTML color names or HEX codes, as well as special keywords such
-   * as `swimlane`, `inherit`, `indicated` to use the color code of a related cell or the
-   * indicator shape.
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such as:
+   * - `indicated` to use the color of a related cell or the indicator shape
+   * - `inherit` to use the color of the direct parent cell
+   * - `none` for no color
+   * - `swimlane` to use the color of the parent swimlane if one exists in the parent hierarchy
    */
-  fillColor?: ColorValue;
+  fillColor?: SpecialStyleColorValue;
   /**
    * Possible range is `0-100`.
    */
@@ -263,9 +302,13 @@ export type CellStateStyle = {
    */
   foldable?: boolean;
   /**
-   * The possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such as:
+   * - `indicated` to use the color of a related cell or the indicator shape
+   * - `inherit` to use the color of the direct parent cell
+   * - `none` for no color
+   * - `swimlane` to use the color of the parent swimlane if one exists in the parent hierarchy
    */
-  fontColor?: ColorValue;
+  fontColor?: SpecialStyleColorValue;
   /**
    * The possible values are names such as `Arial; Dialog; Verdana; Times New Roman`.
    */
@@ -285,9 +328,13 @@ export type CellStateStyle = {
    */
   glass?: boolean;
   /**
-   * The possible values are all HTML color names or HEX codes.
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such as:
+   * - `indicated` to use the color of a related cell or the indicator shape
+   * - `inherit` to use the color of the direct parent cell
+   * - `none` for no color
+   * - `swimlane` to use the color of the parent swimlane if one exists in the parent hierarchy
    */
-  gradientColor?: ColorValue;
+  gradientColor?: SpecialStyleColorValue;
   /**
    * Generally, and by default in maxGraph, gradient painting is done from the value of {@link fillColor} to the value of {@link gradientColor}.
    * If we take the example of 'north', this means that the {@link fillColor} color is at the bottom of paint pattern
@@ -375,11 +422,11 @@ export type CellStateStyle = {
   /**
    * The indicator shape used within an {@link LabelShape}.
    * The possible values are all names of registered Shapes with {@link CellRenderer.registerShape}.
-   * This usually includes {@link ShapeValue} values and the names of all new shapes.
+   * This includes {@link ShapeValue} values and custom names that have been registered.
    *
    * The `indicatorShape` property has precedence over the {@link indicatorImage} property.
    */
-  indicatorShape?: ShapeValue | string;
+  indicatorShape?: StyleShapeValue;
   /**
    * The color of the indicator stroke in {@link LabelShape}.
    * The possible values are all HTML color names or HEX codes.
@@ -411,20 +458,23 @@ export type CellStateStyle = {
    * - `left` means that the entire label bounds is placed completely just to the left of the vertex.
    * - `right` means that the label bounds are adjusted to the right.
    * - `center` means that the label bounds are vertically aligned with the bounds of the vertex.
+   * - `ignore` means that there is no alignment
    *
    * Note that this value does not affect the positioning of label within the label bounds.
    * To move the label bounds horizontally within the label bounds, use {@link align}
    * @default 'center'
    */
-  labelPosition?: AlignValue;
+  labelPosition?: AlignValue | 'ignore';
   /**
    * The width of the label if the label position is not `center`.
    */
   labelWidth?: number;
   /**
    * The possible values are the functions defined in {@link EdgeStyle}.
+   *
+   * See {@link edgeStyle}.
    */
-  loopStyle?: Function;
+  loopStyle?: EdgeStyleFunction;
   /**
    * The margin between the ellipses in {@link DoubleEllipseShape}.
    *
@@ -487,12 +537,17 @@ export type CellStateStyle = {
   /**
    * This defines the perimeter around a particular shape.
    *
-   * For `Function` types, the possible values are the functions defined in {@link Perimeter}.
+   * For {@link PerimeterFunction} types, some possible values are the functions defined in {@link Perimeter}.
    *
    * Alternatively, use a string or a value from {@link PERIMETER} to access perimeter styles
    * registered in {@link StyleRegistry}.
+   * If {@link GraphView.allowEval} is set to `true`, you can pass the {@link PerimeterFunction} implementation directly as a string.
+   * Remember that enabling this switch carries a possible security risk
+   *
+   * **WARNING**: explicitly set the value to null or undefined means to not use any perimeter.
+   * To use the perimeter defined in the default vertex, do not set this property.
    */
-  perimeter?: Function | string | null;
+  perimeter?: PerimeterFunction | PerimeterValue | (string & {}) | null;
   /**
    * This is the distance between the connection point and the perimeter in pixels.
    * - When used in a vertex style, this applies to all incoming edges to floating ports
@@ -521,7 +576,7 @@ export type CellStateStyle = {
    * - `true` makes the constraints rotate with the vertex.
    * @default false
    */
-  portConstraintRotation?: DIRECTION;
+  portConstraintRotation?: boolean;
   /**
    * This specifies if a cell can be resized.
    *
@@ -595,9 +650,9 @@ export type CellStateStyle = {
   shadow?: boolean;
   /**
    * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape}.
-   * This usually includes {@link ShapeValue} values and the names of all new shapes.
+   * This includes {@link ShapeValue} values and custom names that have been registered.
    */
-  shape?: ShapeValue | string;
+  shape?: StyleShapeValue;
   /**
    * The size of the source jetty in {@link EdgeStyle.OrthConnector}.
    *
@@ -668,11 +723,11 @@ export type CellStateStyle = {
    * This defines the style of the start arrow marker.
    *
    * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
-   * This generally includes {@link ArrowType} values and the names of any new shapes.
+   * This includes {@link ArrowValue} values and the names of any new shapes.
    *
    * See {@link endArrow}.
    */
-  startArrow?: ArrowValue | string;
+  startArrow?: StyleArrowValue;
   /**
    * Use `false` to not fill or `true` to fill the start arrow marker.
    * See {@link endFill}.
@@ -680,17 +735,31 @@ export type CellStateStyle = {
    */
   startFill?: boolean;
   /**
+   * Set the fill color of the start arrow marker if {@link startFill} is `true`.
+   * If not set, use {@link startStrokeColor}.
+   * @since 0.10.0
+   */
+  startFillColor?: ColorValue;
+  /**
+   * Set the stroke color of the start arrow marker.
+   * If not set, use {@link strokeColor}.
+   * @since 0.10.0
+   */
+  startStrokeColor?: ColorValue;
+  /**
    * The value represents the size of the start marker, in pixels, or the size of the title region
    * of a `swimlane` depending on the shape it is used for.
    * See {@link endSize}.
    */
   startSize?: number;
   /**
-   * The possible values are all HTML color names or HEX codes, as well as special keywords such
-   * as `swimlane`, `inherit`, `indicated` to use the color code of a related cell or the
-   * indicator shape or `none` for no color.
+   * The possible values are all HTML color names or HEX codes, as well as special keywords such as:
+   * - `indicated` to use the color of a related cell or the indicator shape
+   * - `inherit` to use the color of the direct parent cell
+   * - `none` for no color
+   * - `swimlane` to use the color of the parent swimlane if one exists in the parent hierarchy
    */
-  strokeColor?: ColorValue;
+  strokeColor?: SpecialStyleColorValue;
   /**
    * The possible range is `0-100`.
    */
@@ -705,7 +774,7 @@ export type CellStateStyle = {
   /**
    * The fill color of the `swimlane` background.
    * The possible values are all HTML color names or HEX codes.
-   * @default no backgroune
+   * @default no background
    */
   swimlaneFillColor?: ColorValue;
   /**
@@ -794,6 +863,14 @@ export type NumericCellStateStyleKeys = NonNullable<
 >;
 
 export type ColorValue = string;
+/** Color values and special placeholders used to resolve colors (see {@link CellRenderer.resolveColor}) for style properties. */
+export type SpecialStyleColorValue =
+  | 'indicated'
+  | 'inherit'
+  | 'none'
+  | 'swimlane'
+  | (string & {});
+
 export type DirectionValue = 'north' | 'south' | 'east' | 'west';
 export type TextDirectionValue = '' | 'ltr' | 'rtl' | 'auto';
 export type AlignValue = 'left' | 'center' | 'right';
@@ -814,6 +891,12 @@ export type ArrowValue =
   | 'oval'
   | 'diamond'
   | 'diamondThin';
+
+/**
+ * {@link ArrowValue} with support for extensions.
+ */
+export type StyleArrowValue = ArrowValue | (string & {});
+
 /**
  * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
  */
@@ -834,6 +917,11 @@ export type ShapeValue =
   | 'cloud'
   | 'triangle'
   | 'hexagon';
+
+/**
+ * {@link ShapeValue} with support for extensions.
+ */
+export type StyleShapeValue = ShapeValue | (string & {});
 
 export type CanvasState = {
   alpha: number;
@@ -879,8 +967,86 @@ export interface Gradient extends SVGLinearGradientElement {
   mxRefCount: number;
 }
 
-export type GradientMap = {
-  [k: string]: Gradient;
+export type GradientMap = Record<string, Gradient>;
+
+export type EdgeParametersValue = Record<string | number | symbol, any> | string;
+export type EdgeParameters = {
+  /**
+   * Optional string that defines the id of the new edge. If not set, the id is auto-generated when creating the vertex.
+   */
+  id?: string;
+  /**
+   * The parent of the new edge. If not set, use the default parent.
+   */
+  parent?: Cell | null;
+  /**
+   * The {@link Cell} that defines the source of the edge.
+   */
+  source?: Cell | null;
+  style?: CellStyle;
+  /**
+   * The {@link Cell} that defines the target of the edge.
+   */
+  target?: Cell | null;
+  /**
+   * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
+   */
+  value?: EdgeParametersValue;
+};
+
+export type VertexParameters = {
+  /**
+   * Class reference to a class derived from {@link Geometry}.
+   * This can be useful for defining custom constraints.
+   * @default {@link Geometry}
+   */
+  geometryClass?: typeof Geometry;
+  /**
+   * It is mandatory to set this value or the {@link size} property.
+   */
+  height?: number;
+  /**
+   * Optional string that defines the id of the new vertex. If not set, the id is auto-generated when creating the vertex.
+   */
+  id?: string;
+  /**
+   * The parent of the new vertex. If not set, use the default parent.
+   */
+  parent?: Cell | null;
+  /**
+   * Fallback when the {@link x} or the {@link y} parameters are not set.
+   * It is mandatory to set this value or the {@link x} and the {@link y} properties.
+   * Order of the elements: x, y
+   */
+  position?: [number, number];
+  /**
+   * Specifies if the geometry is relative.
+   * @default false
+   */
+  relative?: boolean;
+  /**
+   * Fallback when the {@link width} or the {@link height} parameters are not set.
+   * It is mandatory to set this value or the {@link width} and the {@link height} properties.
+   * Order of the elements: width, height
+   */
+  size?: [number, number];
+  style?: CellStyle;
+  /**
+   * Object to be used as the user object which is generally used to display the label of the vertex. The default implementation handles `string` object.
+   */
+  value?: any;
+  /**
+   * It is mandatory to set this value or the {@link size} property.
+   */
+  width?: number;
+  /**
+   * It is mandatory to set this value or the {@link position} property.
+   */
+  x?: number;
+  /**
+   * It is mandatory to set this value or the {@link position} property.
+   */
+  y?: number;
 };
 
 export interface GraphPluginConstructor {
@@ -949,10 +1115,105 @@ export interface PopupMenuItem extends HTMLElement {
 
 export type IdentityObject = {
   [IDENTITY_FIELD_NAME]?: string;
-  [k: string]: any;
-};
+} & Record<string, any>;
 
 export type IdentityFunction = {
   (): any;
   [IDENTITY_FIELD_NAME]?: string;
 };
+
+/**
+ * Describes a perimeter for the given bounds.
+ *
+ * @param bounds the {@link Rectangle} that represents the absolute bounds of the vertex.
+ * @param vertex the {@link CellState} that represents the vertex.
+ * @param next the {@link Point} that represents the nearest neighbour point on the given edge.
+ * @param orthogonal Boolean that specifies if the orthogonal projection onto the perimeter should be returned.
+ *                   If this is `false`, then the intersection of the perimeter and the line between the next and the center point is returned.
+ * @returns the resulting {@link Point} projected to the perimeter.
+ */
+export type PerimeterFunction = (
+  bounds: Rectangle,
+  vertex: CellState,
+  next: Point,
+  orthogonal: boolean
+) => Point | null;
+
+/**
+ * Names used to register the perimeter provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
+ */
+export type PerimeterValue =
+  | 'ellipsePerimeter'
+  | 'hexagonPerimeter'
+  | 'rectanglePerimeter'
+  | 'rhombusPerimeter'
+  | 'trianglePerimeter';
+
+/**
+ * Computes the actual points of the edge.
+ *
+ * @param state {@link CellState} that represents the edge to be updated.
+ * @param source {@link CellState} that represents the source terminal.
+ * @param target {@link CellState} that represents the target terminal.
+ * @param points List of relative control points.
+ * @param result Array of {@link Point} that represent the actual points of the edge.
+ */
+export type EdgeStyleFunction = (
+  state: CellState,
+  source: CellState,
+  target: CellState | null,
+  points: Point[],
+  result: Point[]
+) => void;
+
+/**
+ * @since 0.11.0
+ */
+export type MarkerFactoryFunction = (
+  canvas: AbstractCanvas2D,
+  shape: Shape,
+  type: StyleArrowValue,
+  pe: Point,
+  unitX: number,
+  unitY: number,
+  size: number,
+  source: boolean,
+  sw: number,
+  filled: boolean
+) => () => void;
+
+/**
+ * @experimental subject to change or removal. The logging system may be modified in the future without prior notice.
+ * @since 0.11.0
+ */
+export interface Logger {
+  /**
+   * Log the specified string at TRACE level and returns the current time in milliseconds.
+   *
+   * @return may return `undefined` hen the TRACE level is not enabled.
+   */
+  enter(message: string): number | undefined;
+
+  /**
+   * Log the specified string at TRACE level and also log the difference between the current
+   * time and t0 in milliseconds.
+   *
+   * @see {@link enter} for an example.
+   */
+  leave(message: string, baseTimestamp?: number): void;
+
+  /**
+   * Shows the console in the UI. This may produce no effect in some implementation which doesn't rely on the UI to log.
+   */
+  show(): void;
+
+  trace(message: string): void;
+
+  debug(message: string): void;
+
+  info(message: string): void;
+
+  warn(message: string): void;
+
+  error(message: string, ...optionalParams: any[]): void;
+}

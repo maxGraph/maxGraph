@@ -86,8 +86,7 @@ class ParallelEdgeLayout extends GraphLayout {
   execute(parent: Cell, cells: Cell[] | null = null): void {
     const lookup = this.findParallels(parent, cells);
 
-    this.graph.model.beginUpdate();
-    try {
+    this.graph.batchUpdate(() => {
       for (const i in lookup) {
         const parallels = lookup[i];
 
@@ -95,9 +94,7 @@ class ParallelEdgeLayout extends GraphLayout {
           this.layout(parallels);
         }
       }
-    } finally {
-      this.graph.model.endUpdate();
-    }
+    });
   }
 
   /**

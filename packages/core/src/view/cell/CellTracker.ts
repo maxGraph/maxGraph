@@ -64,15 +64,15 @@ import type { ColorValue } from '../../types';
  *   mouseUp: function(sender, me) { },
  *   dragEnter: function(evt, cell)
  *   {
- *     MaxLog.debug('dragEnter', cell.value);
+ *     GlobalConfig.logger.debug('dragEnter', cell.value);
  *   },
  *   dragOver: function(evt, cell)
  *   {
- *     MaxLog.debug('dragOver', cell.value);
+ *     GlobalConfig.logger.debug('dragOver', cell.value);
  *   },
  *   dragLeave: function(evt, cell)
  *   {
- *     MaxLog.debug('dragLeave', cell.value);
+ *     GlobalConfig.logger.debug('dragLeave', cell.value);
  *   }
  * });
  * ```

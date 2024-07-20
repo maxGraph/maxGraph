@@ -35,7 +35,7 @@ import Point from './geometry/Point';
 import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
 import Cell from './cell/Cell';
 import GraphDataModel from './GraphDataModel';
-import Stylesheet from './style/Stylesheet';
+import { Stylesheet } from './style/Stylesheet';
 import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants';
 
 import ChildChange from './undoable_changes/ChildChange';
@@ -52,14 +52,20 @@ import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 
-import CodecRegistry from '../serialization/CodecRegistry';
-import ObjectCodec from '../serialization/ObjectCodec';
-
-import type { GraphPlugin, GraphPluginConstructor, MouseListenerSet } from '../types';
+import type {
+  EdgeStyleFunction,
+  GraphPlugin,
+  GraphPluginConstructor,
+  MouseListenerSet,
+} from '../types';
 import Multiplicity from './other/Multiplicity';
 import ImageBundle from './image/ImageBundle';
 import GraphSelectionModel from './GraphSelectionModel';
 import HtmlCanvas2D from './canvas/HtmlCanvas2D';
+import { registerDefaultShapes } from './cell/register-shapes';
+import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
+import { registerDefaultStyleElements } from './style/register';
+import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 
 export const defaultPlugins: GraphPluginConstructor[] = [
   CellEditorHandler,
@@ -72,21 +78,19 @@ export const defaultPlugins: GraphPluginConstructor[] = [
 ];
 
 /**
- * Extends {@link EventSource} to implement a graph component for
- * the browser. This is the main class of the package. To activate
- * panning and connections use {@link setPanning} and {@link setConnectable}.
- * For rubberband selection you must create a new instance of
- * {@link rubberband}. The following listeners are added to
- * {@link mouseListeners} by default:
+ * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
+ *
+ * To activate panning and connections use {@link setPanning} and {@link setConnectable}.
+ * For rubberband selection you must create a new instance of {@link rubberband}.
+ *
+ * The following listeners are added to {@link mouseListeners} by default:
  *
  * - tooltipHandler: {@link TooltipHandler} that displays tooltips
  * - panningHandler: {@link PanningHandler} for panning and popup menus
  * - connectionHandler: {@link ConnectionHandler} for creating connections
- * - graphHandler: {@link SelectionHandler} for moving and cloning cells
+ * - selectionHandler: {@link SelectionHandler} for moving and cloning cells
  *
  * These listeners will be called in the above order if they are enabled.
- * @class graph
- * @extends {EventSource}
  */
 class Graph extends EventSource {
   container: HTMLElement;
@@ -94,7 +98,7 @@ class Graph extends EventSource {
   /** HTML canvas instance */
   htmlCanvas: HtmlCanvas2D;
 
-  /** 
+  /**
    * Specifies if the cells should be rendered by HTML canvas.
    */
   useCanvas = false;
@@ -103,12 +107,11 @@ class Graph extends EventSource {
 
   graphModelChangeListener: Function | null = null;
   paintBackground: Function | null = null;
-  foldingEnabled: null | boolean = null;
   isConstrainedMoving = false;
 
-  /*****************************************************************************
-   * Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)
-   *****************************************************************************/
+  // ===================================================================================================================
+  // Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)
+  // ===================================================================================================================
 
   cells: Cell[] = [];
 
@@ -120,14 +123,9 @@ class Graph extends EventSource {
   mouseListeners: MouseListenerSet[] = [];
 
   /**
-   * An array of {@link Multiplicity} describing the allowed
-   * connections in a graph.
+   * An array of {@link Multiplicity} describing the allowed connections in a graph.
    */
   multiplicities: Multiplicity[] = [];
-
-  /*****************************************************************************
-   * Group: Variables
-   *****************************************************************************/
 
   /**
    * Holds the {@link GraphDataModel} that contains the cells to be displayed.
@@ -169,8 +167,7 @@ class Graph extends EventSource {
   renderHint: string | null = null;
 
   /**
-   * Dialect to be used for drawing the graph. Possible values are all
-   * constants in {@link mxConstants} with a DIALECT-prefix.
+   * Dialect to be used for drawing the graph. Possible values are all constants in {@link DIALECT}.
    */
   dialect: 'svg' | 'mixedHtml' | 'preferHtml' | 'strictHtml' = 'svg';
 
@@ -244,7 +241,7 @@ class Graph extends EventSource {
 
   /**
    * Specifies the page format for the background page.
-   * This is used as the default in {@link printPreview} and for painting the background page
+   * This is used as the default in {@link PrintPreview} and for painting the background page
    * if {@link pageVisible} is `true` and the page breaks if {@link pageBreaksVisible} is `true`.
    * @default {@link mxConstants.PAGE_FORMAT_A4_PORTRAIT}
    */
@@ -421,6 +418,95 @@ class Graph extends EventSource {
   containsValidationErrorsResource: string =
     Client.language != 'none' ? 'containsValidationErrors' : '';
 
+  // ===================================================================================================================
+  // Group: "Create Class Instance" factory functions.
+  // These can be overridden in subclasses of Graph to allow the Graph to instantiate user-defined implementations with
+  // custom behavior.
+  // ===================================================================================================================
+
+  /**
+   * Creates a new {@link CellRenderer} to be used in this graph.
+   */
+  createCellRenderer(): CellRenderer {
+    return new CellRenderer();
+  }
+
+  /**
+   * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
+   *
+   * @param state {@link CellState} to create the handler for.
+   */
+  createEdgeHandlerInstance(state: CellState): EdgeHandler {
+    // Note this method not being called createEdgeHandler to keep compatibility
+    // with older code which overrides/calls createEdgeHandler
+    return new EdgeHandler(state);
+  }
+
+  /**
+   * Hooks to create a new {@link EdgeSegmentHandler} for the given {@link CellState}.
+   *
+   * @param state {@link CellState} to create the handler for.
+   */
+  createEdgeSegmentHandler(state: CellState) {
+    return new EdgeSegmentHandler(state);
+  }
+
+  /**
+   * Hooks to create a new {@link ElbowEdgeHandler} for the given {@link CellState}.
+   *
+   * @param state {@link CellState} to create the handler for.
+   */
+  createElbowEdgeHandler(state: CellState) {
+    return new ElbowEdgeHandler(state);
+  }
+
+  /**
+   * Creates a new {@link GraphDataModel} to be used in this graph.
+   */
+  createGraphDataModel(): GraphDataModel {
+    return new GraphDataModel();
+  }
+
+  /**
+   * Creates a new {@link GraphView} to be used in this graph.
+   */
+  createGraphView(): GraphView {
+    return new GraphView(this);
+  }
+
+  /**
+   * Creates a new {@link GraphSelectionModel} to be used in this graph.
+   */
+  createSelectionModel() {
+    return new GraphSelectionModel(this);
+  }
+
+  /**
+   * Creates a new {@link Stylesheet} to be used in this graph.
+   */
+  createStylesheet(): Stylesheet {
+    return new Stylesheet();
+  }
+
+  /**
+   * Hooks to create a new {@link VertexHandler} for the given {@link CellState}.
+   *
+   * @param state {@link CellState} to create the handler for.
+   */
+  createVertexHandler(state: CellState): VertexHandler {
+    return new VertexHandler(state);
+  }
+
+  // ===================================================================================================================
+  // Group: Main graph constructor and functions
+  // ===================================================================================================================
+
+  protected registerDefaults(): void {
+    registerDefaultShapes();
+    registerDefaultStyleElements();
+    registerDefaultEdgeMarkers();
+  }
+
   constructor(
     container: HTMLElement,
     model?: GraphDataModel,
@@ -428,14 +514,15 @@ class Graph extends EventSource {
     stylesheet: Stylesheet | null = null
   ) {
     super();
+    this.registerDefaults();
 
     this.container = container ?? document.createElement('div');
     this.htmlCanvas = new HtmlCanvas2D(this.container);
 
-    this.model = model ?? new GraphDataModel();
+    this.model = model ?? this.createGraphDataModel();
     this.plugins = plugins;
     this.cellRenderer = this.createCellRenderer();
-    this.setStylesheet(stylesheet != null ? stylesheet : this.createStylesheet());
+    this.setStylesheet(stylesheet ?? this.createStylesheet());
     this.view = this.createGraphView();
 
     // Adds a graph model listener to update the view
@@ -453,7 +540,7 @@ class Graph extends EventSource {
     // Set the selection model
     this.setSelectionModel(this.createSelectionModel());
 
-    // Initiailzes plugins
+    // Initializes plugins
     this.plugins.forEach((p: GraphPluginConstructor) => {
       this.pluginsMap[p.pluginId] = new p(this);
     });
@@ -461,7 +548,6 @@ class Graph extends EventSource {
     this.view.revalidate();
   }
 
-  createSelectionModel = () => new GraphSelectionModel(this);
   getContainer = () => this.container;
   getPlugin = (id: string) => this.pluginsMap[id] as unknown;
   getCellRenderer = () => this.cellRenderer;
@@ -494,35 +580,15 @@ class Graph extends EventSource {
 
   getContainsValidationErrorsResource = () => this.containsValidationErrorsResource;
 
-  // TODO: Document me!!
-  batchUpdate(fn: Function) {
-    this.getDataModel().beginUpdate();
-    try {
-      fn();
-    } finally {
-      this.getDataModel().endUpdate();
-    }
-  }
-
   /**
-   * Creates a new {@link mxGraphSelectionModel} to be used in this graph.
+   * Updates the model in a transaction.
+   *
+   * @param fn the update to be performed in the transaction.
+   *
+   * @see {@link GraphDataModel.batchUpdate}
    */
-  createStylesheet(): Stylesheet {
-    return new Stylesheet();
-  }
-
-  /**
-   * Creates a new {@link GraphView} to be used in this graph.
-   */
-  createGraphView() {
-    return new GraphView(this);
-  }
-
-  /**
-   * Creates a new {@link CellRenderer} to be used in this graph.
-   */
-  createCellRenderer(): CellRenderer {
-    return new CellRenderer();
+  batchUpdate(fn: () => void) {
+    this.getDataModel().batchUpdate(fn);
   }
 
   /**
@@ -602,7 +668,9 @@ class Graph extends EventSource {
       this.view.invalidate(change.child, true, true);
 
       if (
-        !newParent || !this.getDataModel().contains(newParent) || newParent.isCollapsed()
+        !newParent ||
+        !this.getDataModel().contains(newParent) ||
+        newParent.isCollapsed()
       ) {
         this.view.invalidate(change.child, true, true);
         this.removeStateForCell(change.child);
@@ -734,7 +802,11 @@ class Graph extends EventSource {
           }
         }
       }
-    } else if (this.isAllowAutoPanning() && !panningHandler.isActive()) {
+    } else if (
+      this.isAllowAutoPanning() &&
+      panningHandler &&
+      !panningHandler.isActive()
+    ) {
       panningHandler.getPanningManager().panTo(x + this.getPanDx(), y + this.getPanDy());
     }
   }
@@ -970,20 +1042,12 @@ class Graph extends EventSource {
   }
 
   /**
-   * Hooks to create a new {@link VertexHandler} for the given {@link CellState}.
-   *
-   * @param state {@link CellState} to create the handler for.
-   */
-  createVertexHandler(state: CellState): VertexHandler {
-    return new VertexHandler(state);
-  }
-
-  /**
    * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
    *
    * @param state {@link CellState} to create the handler for.
+   * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
    */
-  createEdgeHandler(state: CellState, edgeStyle: any) {
+  createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
     let result = null;
     if (
       edgeStyle == EdgeStyle.Loop ||
@@ -998,28 +1062,10 @@ class Graph extends EventSource {
     ) {
       result = this.createEdgeSegmentHandler(state);
     } else {
-      result = new EdgeHandler(state);
+      result = this.createEdgeHandlerInstance(state);
     }
 
-    return result as EdgeHandler;
-  }
-
-  /**
-   * Hooks to create a new {@link EdgeSegmentHandler} for the given {@link CellState}.
-   *
-   * @param state {@link CellState} to create the handler for.
-   */
-  createEdgeSegmentHandler(state: CellState) {
-    return new EdgeSegmentHandler(state);
-  }
-
-  /**
-   * Hooks to create a new {@link ElbowEdgeHandler} for the given {@link CellState}.
-   *
-   * @param state {@link CellState} to create the handler for.
-   */
-  createElbowEdgeHandler(state: CellState) {
-    return new ElbowEdgeHandler(state);
+    return result;
   }
 
   /*****************************************************************************
@@ -1250,13 +1296,12 @@ class Graph extends EventSource {
   }
 
   /**
-   * Returns the textual representation for the given cell. This
-   * implementation returns the nodename or string-representation of the user
-   * object.
+   * Returns the textual representation for the given cell.
+   *
+   * This implementation returns the node name or string-representation of the user object.
    *
    *
-   * The following returns the label attribute from the cells user
-   * object if it is an XML node.
+   * The following returns the label attribute from the cells user object if it is an XML node.
    *
    * @example
    * ```javascript
@@ -1268,7 +1313,7 @@ class Graph extends EventSource {
    *
    * See also: {@link cellLabelChanged}.
    *
-   * @param cell {@link mxCell} whose textual representation should be returned.
+   * @param cell {@link Cell} whose textual representation should be returned.
    */
   convertValueToString(cell: Cell): string {
     const value = cell.getValue();
@@ -1285,10 +1330,11 @@ class Graph extends EventSource {
   }
 
   /**
-   * Returns the string to be used as the link for the given cell. This
-   * implementation returns null.
+   * Returns the string to be used as the link for the given cell.
    *
-   * @param cell {@link mxCell} whose tooltip should be returned.
+   * This implementation returns null.
+   *
+   * @param cell {@link Cell} whose link should be returned.
    */
   getLinkForCell(cell: Cell): string | null {
     return null;
@@ -1475,36 +1521,9 @@ class Graph extends EventSource {
   }
 }
 
-/**
- * Codec for {@link Graph}s. This class is created and registered
- * dynamically at load time and used implicitly via <Codec>
- * and the <CodecRegistry>.
- *
- * Transient Fields:
- *
- * - graphListeners
- * - eventListeners
- * - view
- * - container
- * - cellRenderer
- * - editor
- * - selection
- */
+// This introduces a side effect, but it is necessary to ensure the Graph is enriched with all properties and methods defined in mixins.
+// It is only called when Graph is imported, so the Graph definition is always consistent.
+// And this doesn't impact the tree-shaking.
+applyGraphMixins();
 
-/*export class GraphCodec extends ObjectCodec {
-  constructor() {
-    // TODO: Register every possible plugin (i.e. all not being excluded via tree-shaking(?))
-    super(new Graph(), [
-      'graphListeners',
-      'eventListeners',
-      'view',
-      'container',
-      'cellRenderer',
-      'editor',
-      'selection',
-    ]);
-  }
-}*/
-
-//CodecRegistry.register(new GraphCodec());
 export { Graph };

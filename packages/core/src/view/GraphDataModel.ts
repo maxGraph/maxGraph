@@ -32,8 +32,6 @@ import TerminalChange from './undoable_changes/TerminalChange';
 import ValueChange from './undoable_changes/ValueChange';
 import VisibleChange from './undoable_changes/VisibleChange';
 import Geometry from './geometry/Geometry';
-import ObjectCodec from '../serialization/ObjectCodec';
-import CodecRegistry from '../serialization/CodecRegistry';
 import { cloneCells, filterCells } from '../util/cellArrayUtils';
 
 import type { CellStyle, FilterFunction } from '../types';
@@ -210,7 +208,7 @@ import type { CellStyle, FilterFunction } from '../types';
  * Event: mxEvent.BEFORE_UNDO
  *
  * Fires before the change is dispatched after the update level has reached 0
- * in {@link endUpdate}. The `edit` property contains the {@link curreneEdit}.
+ * in {@link endUpdate}. The `edit` property contains the {@link currentEdit}.
  *
  * Event: mxEvent.UNDO
  *
@@ -398,10 +396,10 @@ export class GraphDataModel extends EventSource {
   /**
    * Returns true if {@link isRoot} returns true for the parent of the given cell.
    *
-   * @param {Cell} cell  that represents the possible layer.
+   * @param cell  that represents the possible layer.
    */
-  isLayer(cell: Cell) {
-    return this.isRoot(cell.getParent());
+  isLayer(cell: Cell | null) {
+    return cell ? this.isRoot(cell.getParent()) : false;
   }
 
   /**
@@ -852,26 +850,30 @@ export class GraphDataModel extends EventSource {
   }
 
   /**
-   * Sets the style of the given {@link Cell} using {@link StyleChange} and
-   * adds the change to the current transaction.
+   * Sets the style of the given {@link Cell} using {@link StyleChange} and adds the change to the current transaction.
    *
-   * @param {Cell} cell  whose style should be changed.
-   * @param style  String of the form [stylename;|key=value;] to specify
-   * the new cell style.
+   * **IMPORTANT**: Do not pass {@link Cell.getStyle} as value of the `style` parameter. Otherwise, no style change is performed, so the view won't be updated.
+   * Always get a clone of the style of the cell with {@link Cell.getClonedStyle}, then update it and pass the updated style to this method.
+   *
+   * @param cell  whose style should be changed.
+   * @param style the new cell style to set.
    */
   setStyle(cell: Cell, style: CellStyle) {
+    // To investigate in the future: it may be more convenient to do a deep comparison to prevent unnecessary changes
+    // If the passed style is the same as the current style without being the same instance, we don't need to do anything
+    // With the current implementation, a style change is executed when the styles are deep equal.
     if (style !== cell.getStyle()) {
       this.execute(new StyleChange(this, cell, style));
     }
   }
 
   /**
-   * Inner callback to update the style of the given {@link Cell}
-   * using {@link Cell#setStyle} and return the previous style.
+   * Inner callback to update the style of the given {@link Cell}  using {@link Cell#setStyle} and return the previous style.
    *
-   * @param {Cell} cell  that specifies the cell to be updated.
-   * @param style  String of the form [stylename;|key=value;] to specify
-   * the new cell style.
+   * **IMPORTANT**: to fully work, this method should not receive `cell.getStyle` as value of the `style` parameter. See {@link setStyle} for more information.
+   *
+   * @param cell  whose style should be changed.
+   * @param style the new cell style to set.
    */
   styleForCellChanged(cell: Cell, style: CellStyle) {
     const previous = cell.getStyle();
@@ -899,7 +901,7 @@ export class GraphDataModel extends EventSource {
    * the previous collapsed state.
    *
    * @param {Cell} cell  that specifies the cell to be updated.
-   * @param collapsed  Boolean that specifies the new collpased state.
+   * @param collapsed  Boolean that specifies the new collapsed state.
    */
   collapsedStateForCellChanged(cell: Cell, collapsed: boolean): boolean {
     const previous = cell.isCollapsed();
@@ -957,6 +959,31 @@ export class GraphDataModel extends EventSource {
   }
 
   /**
+   * Updates the model in a transaction.
+   * This is a shortcut to the usage of {@link beginUpdate} and the {@link endUpdate} methods.
+   *
+   * ```javascript
+   * const model = graph.getDataModel();
+   * const parent = graph.getDefaultParent();
+   * const index = model.getChildCount(parent);
+   * model.batchUpdate(() => {
+   *   model.add(parent, v1, index);
+   *   model.add(parent, v2, index+1);
+   * });
+   * ```
+   *
+   * @param fn the update to be performed in the transaction.
+   */
+  batchUpdate(fn: () => void) {
+    this.beginUpdate();
+    try {
+      fn();
+    } finally {
+      this.endUpdate();
+    }
+  }
+
+  /**
    * Increments the {@link updateLevel} by one. The event notification
    * is queued until {@link updateLevel} reaches 0 by use of
    * {@link endUpdate}.
@@ -971,9 +998,9 @@ export class GraphDataModel extends EventSource {
    * and {@link endUpdate} calls as shown here:
    *
    * ```javascript
-   * var model = graph.getDataModel();
-   * var parent = graph.getDefaultParent();
-   * var index = model.getChildCount(parent);
+   * const model = graph.getDataModel();
+   * const parent = graph.getDefaultParent();
+   * const index = model.getChildCount(parent);
    * model.beginUpdate();
    * try
    * {
@@ -1077,7 +1104,6 @@ export class GraphDataModel extends EventSource {
    * id in the target model are reconnected to reflect the terminals of the
    * source edges.
    */
-  // mergeChildren(from: Transactions, to: Transactions, cloneAllEdges?: boolean): void;
   mergeChildren(from: Cell, to: Cell, cloneAllEdges = true): void {
     this.beginUpdate();
     try {
@@ -1114,7 +1140,6 @@ export class GraphDataModel extends EventSource {
    * cell to the target cell with the same id or the clone of the source cell
    * that was inserted into this model.
    */
-  // mergeChildrenImpl(from: Transactions, to: Transactions, cloneAllEdges: boolean, mapping: any): void;
   mergeChildrenImpl(from: Cell, to: Cell, cloneAllEdges: boolean, mapping: any = {}) {
     this.beginUpdate();
     try {
@@ -1156,80 +1181,6 @@ export class GraphDataModel extends EventSource {
       this.endUpdate();
     }
   }
-
-  //
-  // Cell Cloning
-  //
-
-  /**
-   * Returns a deep clone of the given {@link Cell}` (including
-   * the children) which is created using {@link cloneCells}`.
-   *
-   * @param {Cell} cell  to be cloned.
-   */
-  cloneCell(cell: Cell | null = null, includeChildren = true): Cell | null {
-    if (cell != null) {
-      return cloneCells(includeChildren)([cell])[0];
-    }
-    return null;
-  }
 }
 
-/**
- * Codec for <Transactions>s. This class is created and registered
- * dynamically at load time and used implicitly via <Codec>
- * and the <CodecRegistry>.
- */
-export class ModelCodec extends ObjectCodec {
-  constructor() {
-    super(new GraphDataModel());
-  }
-
-  /**
-   * Encodes the given <Transactions> by writing a (flat) XML sequence of
-   * cell nodes as produced by the <CellCodec>. The sequence is
-   * wrapped-up in a node with the name root.
-   */
-  encodeObject(enc: any, obj: Cell, node: Element) {
-    const rootNode = enc.document.createElement('root');
-    enc.encodeCell(obj.getRoot(), rootNode);
-    node.appendChild(rootNode);
-  }
-
-  /**
-   * Overrides decode child to handle special child nodes.
-   */
-  decodeChild(dec: any, child: Element, obj: Cell | GraphDataModel) {
-    if (child.nodeName === 'root') {
-      this.decodeRoot(dec, child, <GraphDataModel>obj);
-    } else {
-      this.decodeChild.apply(this, [dec, child, obj]);
-    }
-  }
-
-  /**
-   * Reads the cells into the graph model. All cells
-   * are children of the root element in the node.
-   */
-  decodeRoot(dec: any, root: Element, model: GraphDataModel) {
-    let rootCell = null;
-    let tmp = root.firstChild;
-
-    while (tmp != null) {
-      const cell = dec.decodeCell(tmp);
-
-      if (cell != null && cell.getParent() == null) {
-        rootCell = cell;
-      }
-      tmp = tmp.nextSibling;
-    }
-
-    // Sets the root on the model if one has been decoded
-    if (rootCell != null) {
-      model.setRoot(rootCell);
-    }
-  }
-}
-
-CodecRegistry.register(new ModelCodec());
 export default GraphDataModel;

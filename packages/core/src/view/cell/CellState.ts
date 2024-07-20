@@ -41,14 +41,6 @@ import { Graph } from '../Graph';
  * let bbox = (state.text != null) ? state.text.boundingBox : null;
  * ```
  *
- * Constructor: CellState
- *
- * Constructs a new object that represents the current state of the given
- * cell in the specified view.
- *
- * @param view {@link GraphView} that contains the state.
- * @param cell <Cell> that this state represents.
- * @param style Array of key, value pairs that constitute the style.
  */
 class CellState extends Rectangle {
   // referenced in mxCellRenderer
@@ -73,13 +65,12 @@ class CellState extends Rectangle {
   view!: GraphView;
 
   /**
-   * Reference to the <Cell> that is represented by this state.
+   * Reference to the {@link Cell} that is represented by this state.
    */
   cell!: Cell;
 
   /**
-   * Contains an array of key, value pairs that represent the style of the
-   * cell.
+   * The style of the {@link Cell}.
    */
   style!: CellStateStyle;
 
@@ -163,6 +154,13 @@ class CellState extends Rectangle {
 
   point: Point | null = null;
 
+  /**
+   * Constructs a new object that represents the current state of the given Cell in the specified view.
+   *
+   * @param view {@link GraphView} that contains the state.
+   * @param cell {@link Cell} that this state represents.
+   * @param style the style of the Cell.
+   */
   constructor(
     view: GraphView | null = null,
     cell: Cell | null = null,
