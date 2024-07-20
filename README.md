@@ -64,6 +64,7 @@ Here is an example that shows how to display a rectangle connected to an orange 
 
 This example assumes that
 - you are building an application that includes the maxGraph dependency, and it has been installed as explained above.
+- your application uses a build tool or a bundler for its packaging. Direct usage of `maxGraph` in a web page is not supported (for more details, see [#462](https://github.com/maxGraph/maxGraph/discussions/462)).
 - your application includes a page that defines an element with the id `graph-container`.
 - you want to use `TypeScript`, adapt it if you want to use `JavaScript` (mainly, remove references to the 'type' syntax).
 
