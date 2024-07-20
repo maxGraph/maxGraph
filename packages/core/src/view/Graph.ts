@@ -821,13 +821,13 @@ class Graph extends EventSource {
 
     return new Rectangle(
       parseCssNumber(css.paddingLeft) +
-      (css.borderLeftStyle != 'none' ? parseCssNumber(css.borderLeftWidth) : 0),
+        (css.borderLeftStyle != 'none' ? parseCssNumber(css.borderLeftWidth) : 0),
       parseCssNumber(css.paddingTop) +
-      (css.borderTopStyle != 'none' ? parseCssNumber(css.borderTopWidth) : 0),
+        (css.borderTopStyle != 'none' ? parseCssNumber(css.borderTopWidth) : 0),
       parseCssNumber(css.paddingRight) +
-      (css.borderRightStyle != 'none' ? parseCssNumber(css.borderRightWidth) : 0),
+        (css.borderRightStyle != 'none' ? parseCssNumber(css.borderRightWidth) : 0),
       parseCssNumber(css.paddingBottom) +
-      (css.borderBottomStyle != 'none' ? parseCssNumber(css.borderBottomWidth) : 0)
+        (css.borderBottomStyle != 'none' ? parseCssNumber(css.borderBottomWidth) : 0)
     );
   }
 
@@ -962,14 +962,14 @@ class Graph extends EventSource {
               const x0 =
                 bounds.x != null
                   ? Math.floor(
-                    this.view.translate.x - bounds.x / s + border / s2 + margin / 2
-                  )
+                      this.view.translate.x - bounds.x / s + border / s2 + margin / 2
+                    )
                   : border;
               const y0 =
                 bounds.y != null
                   ? Math.floor(
-                    this.view.translate.y - bounds.y / s + border / s2 + margin / 2
-                  )
+                      this.view.translate.y - bounds.y / s + border / s2 + margin / 2
+                    )
                   : border;
 
               this.view.scaleAndTranslate(s2, x0, y0);
