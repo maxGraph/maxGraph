@@ -53,8 +53,10 @@ jobs:
           path: packages/core/coverage/lcov-report
       - name: Test TypeScript support
         run: npm test -w packages/ts-support
-      - name: Build ts-example
+      - name: Build ts-example (custom shapes)
         run: npm run build -w packages/ts-example
+      - name: Build ts-example (without defaults)
+        run: npm run build -w packages/ts-example-without-defaults
       - name: Build Storybook mini-site
         run: npm run build -w packages/html
       - name: Build js-example
@@ -67,5 +69,6 @@ jobs:
             packages/html/dist/
             packages/js-example/dist/
             packages/ts-example/dist/
+            packages/ts-example-without-defaults/dist/
       - name: Ensure no lint errors
         run: npm run lint

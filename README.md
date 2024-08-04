@@ -138,8 +138,9 @@ For more complete examples than getting started,, please have a look at:
 - the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph.
   - The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
   - A live instance is available on the [maxGraph webiste](https://maxgraph.github.io/maxGraph/demo).
-- the [ts-example](packages/ts-example) project/application that demonstrates how to use `maxGraph` in a vanilla TypeScript application powered by [Vite](https://vitejs.dev/).
-- the [js-example](packages/js-example) project/application that demonstrates how import and export the `maxGraph` model with XML data. It is in a vanilla JavaScript application buit with [Webapck](https://webpack.js.org/).
+- the [ts-example](packages/ts-example) project/application that demonstrates how to define and use custom `Shapes` with `maxGraph`. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
+- the [ts-example-without-defaults](packages/ts-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
+- the [js-example](packages/js-example) project/application that demonstrates how import and export the `maxGraph` model with XML data. It is a vanilla JavaScript application built by [Webapck](https://webpack.js.org/).
 - the https://github.com/maxGraph/maxgraph-integration-examples repository which shows how to integrate `maxGraph` with different frameworks and build tools.
 
 

@@ -1,6 +1,12 @@
-# Integrate `maxGraph` in a vanilla TypeScript project built with Vite
+# Integrate `maxGraph` without defaults in a vanilla TypeScript project built with Vite
 
-Demonstrate how to define and use custom `Shapes`.
+Demonstrate how to integrate `maxGraph` without using defaults:
+  - plugins
+  - styles
+  - shapes
+  - perimeters
+  - connectors
+  - markers
 
 Initialized from https://github.com/vitejs/vite/tree/v2.9.8/packages/create-vite/template-vanilla-ts
 
