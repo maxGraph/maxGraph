@@ -28,7 +28,7 @@ import {
   SHADOW_OFFSET_Y,
 } from '../../util/Constants';
 import Point from './Point';
-import AbstractCanvas2D from '../canvas/AbstractCanvas2D';
+import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
 import SvgCanvas2D from '../canvas/SvgCanvas2D';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
@@ -193,13 +193,14 @@ class Shape {
   boundingBox: Rectangle | null = null;
 
   /**
-   * Holds the {@link Stencil} that defines the shape.
+   * Holds the {@link StencilShape} that defines the shape.
    */
   stencil: StencilShape | null = null;
 
   /**
-   * Event-tolerance for SVG strokes (in px). Default is 8. This is only passed
-   * to the canvas in <createSvgCanvas> if <pointerEvents> is true.
+   * Event-tolerance for SVG strokes (in px).
+   * This is only passed to the canvas in {@link createSvgCanvas} if {@link pointerEvents} is `true`.
+   * @default 8
    */
   svgStrokeTolerance = 8;
 
@@ -512,7 +513,7 @@ class Shape {
   }
 
   /**
-   * Creates and returns an <mxSvgCanvas2D> for rendering this shape.
+   * Creates and returns an {@link SvgCanvas2D} for rendering this shape.
    */
   createSvgCanvas() {
     if (!this.node) return null;

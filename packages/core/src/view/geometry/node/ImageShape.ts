@@ -17,19 +17,16 @@ limitations under the License.
 */
 
 import RectangleShape from './RectangleShape';
-import Rectangle from '../Rectangle';
+import type Rectangle from '../Rectangle';
 import CellState from '../../cell/CellState';
-import AbstractCanvas2D from '../../canvas/SvgCanvas2D';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import CellOverlay from '../../cell/CellOverlay';
 import { NONE } from '../../../util/Constants';
 import { ColorValue } from '../../../types';
 
 /**
- * Extends {@link mxShape} to implement an image shape.
- * This shape is registered under {@link mxConstants.SHAPE_IMAGE} in {@link cellRenderer}.
- *
- * @class ImageShape
- * @extends {RectangleShape}
+ * Extends {@link RectangleShape} to implement an image shape.
+ * This shape is registered under {@link Constants.SHAPE.SHAPE_IMAGE} in {@link CellRenderer}.
  */
 class ImageShape extends RectangleShape {
   constructor(
@@ -68,19 +65,15 @@ class ImageShape extends RectangleShape {
   }
 
   /**
-   * Overrides {@link mxShape.apply} to replace the fill and stroke colors with the
-   * respective values from {@link 'imageBackground'} and
-   * {@link 'imageBorder'}.
+   * Overrides to replace the fill and stroke colors with the respective values from {@link imageBackground} and {@link imageBorder}.
    *
-   * Applies the style of the given {@link CellState} to the shape. This
-   * implementation assigns the following styles to local fields:
+   * Applies the style of the given {@link CellState} to the shape. This implementation assigns the following styles to local fields:
    *
-   * - {@link 'imageBackground'} => fill
-   * - {@link 'imageBorder'} => stroke
+   * - {@link imageBackground} => fill
+   * - {@link imageBorder} => stroke
    *
    * @param {CellState} state   {@link CellState} of the corresponding cell.
    */
-  // apply(state: CellState): void;
   apply(state: CellState) {
     super.apply(state);
 

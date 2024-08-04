@@ -18,7 +18,7 @@ limitations under the License.
 
 import Rectangle from './Rectangle';
 import Shape from './Shape';
-import SvgCanvas2D from '../canvas/SvgCanvas2D';
+import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
 import { ColorValue } from '../../types';
 import { NONE } from '../../util/Constants';
 
@@ -61,7 +61,7 @@ class ActorShape extends Shape {
   /**
    * Redirects to redrawPath for subclasses to work.
    */
-  paintVertexShape(c: SvgCanvas2D, x: number, y: number, w: number, h: number) {
+  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     c.translate(x, y);
     c.begin();
     this.redrawPath(c, x, y, w, h);
@@ -71,7 +71,7 @@ class ActorShape extends Shape {
   /**
    * Draws the path for this shape.
    */
-  redrawPath(c: SvgCanvas2D, x: number, y: number, w: number, h: number) {
+  redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     const width = w / 3;
     c.moveTo(0, h);
     c.curveTo(0, (3 * h) / 5, 0, (2 * h) / 5, w / 2, (2 * h) / 5);
