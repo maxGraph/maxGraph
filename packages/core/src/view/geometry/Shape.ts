@@ -318,28 +318,13 @@ class Shape {
   }
 
   /**
-   * Creates and returns the DOM node(s) for the shape in
-   * the given container. This implementation invokes
-   * <createSvg>, <createHtml> or <createVml> depending
-   * on the <dialect> and style settings.
-   *
-   * @param container DOM node that will contain the shape.
+   * Creates and returns the DOM node for the shape.
+   * This implementation assumes that `maxGraph` produces SVG elements.
    */
   create() {
     return document.createElementNS('http://www.w3.org/2000/svg', 'g');
   }
 
-  /**
-   * Reconfigures this shape. This will update the colors etc in
-   * addition to the bounds or points.
-   */
-  reconfigure() {
-    this.redraw();
-  }
-
-  /**
-   * Creates and returns the SVG node(s) to represent this shape.
-   */
   redraw() {
     this.updateBoundsFromPoints();
 

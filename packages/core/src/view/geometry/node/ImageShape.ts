@@ -95,17 +95,6 @@ class ImageShape extends RectangleShape {
   }
 
   /**
-   * Creates and returns the HTML DOM node(s) to represent
-   * this shape. This implementation falls back to <createVml>
-   * so that the HTML creation is optional.
-   */
-  createHtml() {
-    const node = document.createElement('div');
-    node.style.position = 'absolute';
-    return node;
-  }
-
-  /**
    * Disables inherited roundable support.
    */
   isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
