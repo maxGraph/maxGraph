@@ -1,5 +1,4 @@
 // Generated using webpack-cli http://github.com/webpack-cli
-const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
