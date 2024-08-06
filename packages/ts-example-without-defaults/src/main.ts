@@ -48,41 +48,33 @@ const initializeGraph = (container: HTMLElement) => {
   MarkerShape.markers = {};
   StyleRegistry.values = {};
 
-  const parent = graph.getDefaultParent();
-
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
     // use the legacy insertVertex method
-    const vertex01 = graph.insertVertex(
-      parent,
-      null,
-      'a regular rectangle',
-      10,
-      10,
-      100,
-      100
-    );
-    const vertex02 = graph.insertVertex(
-      parent,
-      null,
-      'a regular ellipse',
-      350,
-      90,
-      50,
-      50,
-      {
+    const vertex01 = graph.insertVertex({
+      value: 'a regular rectangle',
+      position: [10, 10],
+      size: [100, 100],
+    });
+    const vertex02 = graph.insertVertex({
+      value: 'a regular ellipse',
+      position: [350, 90],
+      size: [50, 50],
+      style: {
         baseStyleNames: ['myEllipse'],
-      }
-    );
-    // use the legacy insertEdge method
-    graph.insertEdge(parent, null, 'an orthogonal style edge', vertex01, vertex02, {
-      edgeStyle: constants.EDGESTYLE.ORTHOGONAL,
-      rounded: true,
+      },
+    });
+    graph.insertEdge({
+      value: 'an orthogonal style edge',
+      source: vertex01,
+      target: vertex02,
+      style: {
+        edgeStyle: constants.EDGESTYLE.ORTHOGONAL,
+        rounded: true,
+      },
     });
 
-    // insert vertex using custom shapes using the new insertVertex method
     const vertex11 = graph.insertVertex({
-      parent,
       value: 'another rectangle',
       position: [20, 200],
       size: [100, 100],
@@ -91,9 +83,7 @@ const initializeGraph = (container: HTMLElement) => {
         fillOpacity: 20,
       },
     });
-    // use the new insertVertex method using position and size parameters
     const vertex12 = graph.insertVertex({
-      parent,
       value: 'another ellipse',
       x: 150,
       y: 350,
@@ -104,9 +94,7 @@ const initializeGraph = (container: HTMLElement) => {
         fillColor: 'orange',
       },
     });
-    // use the new insertEdge method
     graph.insertEdge({
-      parent,
       value: 'another edge',
       source: vertex11,
       target: vertex12,
