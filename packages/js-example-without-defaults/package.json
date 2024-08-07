@@ -1,5 +1,5 @@
 {
-  "name": "@maxgraph/js-example-webpack",
+  "name": "@maxgraph/js-example-webpack-without-defaults",
   "private": true,
   "scripts": {
     "dev": "webpack serve --open",

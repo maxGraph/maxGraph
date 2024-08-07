@@ -1,5 +1,5 @@
 {
-  "name": "@maxgraph/ts-example-vite-custom-shapes",
+  "name": "@maxgraph/ts-example-vite-without-defaults",
   "license": "Apache-2.0",
   "private": true,
   "type": "module",
