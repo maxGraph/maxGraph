@@ -141,6 +141,7 @@ For more complete examples than getting started,, please have a look at:
 - the [ts-example](packages/ts-example) project/application that demonstrates how to define and use custom `Shapes` with `maxGraph`. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [ts-example-without-defaults](packages/ts-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [js-example](packages/js-example) project/application that demonstrates how import and export the `maxGraph` model with XML data. It is a vanilla JavaScript application built by [Webapck](https://webpack.js.org/).
+- the [js-example-without-defaults](packages/js-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla JavaScript application built by [Webapck](https://webpack.js.org/).
 - the https://github.com/maxGraph/maxgraph-integration-examples repository which shows how to integrate `maxGraph` with different frameworks and build tools.
 
 
