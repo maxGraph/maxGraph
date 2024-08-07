@@ -8,6 +8,8 @@ Demonstrate how to integrate `maxGraph` without using defaults:
   - connectors
   - markers
 
+Note: This example should be kept in sync with the [js-example-without-defaults](../js-example-without-defaults) example.
+
 Initialized from https://github.com/vitejs/vite/tree/v2.9.8/packages/create-vite/template-vanilla-ts
 
 ## Setup
