@@ -43,6 +43,7 @@ import { NONE } from '../../../util/Constants.js';
  *
  * @category Vertex Shapes
  */
+// TODO move to node and rework JSDoc
 class ActorShape extends Shape {
   constructor(
     bounds: Rectangle | null = null,
@@ -67,6 +68,8 @@ class ActorShape extends Shape {
     c.fillAndStroke();
   }
 
+  // TODO create an AbstractPathShape with redrawPath (do not rename it drawPath, for consistency with existing method other shapes) made protected abstract to change the class hierarchy
+  // the other class will not extends ActorShape but AbstractPathShape
   /**
    * Draws the path for this shape.
    */

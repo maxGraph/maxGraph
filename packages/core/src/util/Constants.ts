@@ -334,6 +334,7 @@ export const RECTANGLE_ROUNDING_FACTOR = 0.15;
  * Defines the default size in pixels of the arcs for the rounded edges.
  * See {@link CellStateStyle.arcSize}.
  */
+// TODO wrong JSDoc, also applies to shape, see various implementation of vertex shapes
 export const LINE_ARCSIZE = 20;
 
 /**

@@ -62,12 +62,6 @@ class SwimlaneShape extends Shape {
 
   /**
    * Adds roundable support.
-   * @param {mxAbstractCanvas2D} c
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
-   * @param {number} h
-   * @returns {boolean}
    */
   isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     return true;
@@ -142,10 +136,13 @@ class SwimlaneShape extends Shape {
    * Returns the arcsize for the swimlane.
    */
   getSwimlaneArcSize(w: number, h: number, start: number) {
+    // TODO duplication with RectangleShape
     if (this.style?.absoluteArcSize ?? false) {
+      // TODO check parenthesis position (compare with mxGraph: incorrect migration)
       return Math.min(w / 2, Math.min(h / 2, this.style?.arcSize ?? LINE_ARCSIZE / 2));
     }
     const f = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+    // end of duplication
 
     return start * f * 3;
   }

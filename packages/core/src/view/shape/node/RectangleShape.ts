@@ -76,9 +76,12 @@ class RectangleShape extends Shape {
       }
 
       if (this.isRounded) {
-        let r = 0;
+        // TODO should call Shape.getArcSize
+        let r = 0; // TODO remove initializer
 
         if (this.style?.absoluteArcSize ?? false) {
+          // TODO check parenthesis in mxGraph
+          // TODO why not computing the min value, then divided by 2, instead of dividing everywhere?
           r = Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
         } else {
           const f = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;

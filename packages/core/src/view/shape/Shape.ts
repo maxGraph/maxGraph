@@ -762,13 +762,21 @@ class Shape {
    * Returns the arc size for the given dimension.
    */
   getArcSize(w: number, h: number) {
+    // TODO Shape.getArcSize should be used in RectangleShape.paintBackground to remove duplicate code
+
+    // TODO remove this var, return directly
     let r = 0;
 
     if (this.style?.absoluteArcSize ?? false) {
+      // TODO check parenthesis in mxGraph
+      // TODO why not computing the min value, then divided by 2, instead of dividing everywhere?
       r = Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
     } else {
-      const f = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
-      r = Math.min(w * f, h * f);
+      // TODO check parenthesis?
+      const roundingFactor =
+        (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+      // TODO compute min then multiply by roundingFactor
+      r = Math.min(w * roundingFactor, h * roundingFactor);
     }
     return r;
   }
@@ -1011,8 +1019,12 @@ class Shape {
   }
 
   /**
-   * Hook for subclassers.
+   * Hook for subclassers. This implementation returns `false`.
    */
+  // TODO this method is never call!! search in mxGraph
+  // added in https://github.com/jgraph/mxgraph/blob/ff141aab158417bd866e2dfebd06c61d40773cd2/ChangeLog#L154
+  // only use in https://github.com/jgraph/mxgraph/blob/ff141aab158417bd866e2dfebd06c61d40773cd2/javascript/examples/grapheditor/www/js/Format.js#L296
+  // alternatives exist so could be removed
   isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     return false;
   }
