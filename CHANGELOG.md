@@ -1,5 +1,11 @@
 # `maxGraph` Change Log
 
+## UNRELEASED
+
+**Breaking Changes**
+- In `Graph`, the properties related to the plugins are now private. This change should not impact users as these properties were not intended to be used directly.
+Plugins are supposed to be initialized with the constructor and retrieved with the `getPlugin` method.
+
 ## 0.12.0
 
 Release date: `2024-07-05`

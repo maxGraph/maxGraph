@@ -123,8 +123,7 @@ class Graph extends EventSource {
    */
   model: GraphDataModel;
 
-  plugins: GraphPluginConstructor[];
-  pluginsMap: Record<string, GraphPlugin> = {};
+  private plugins: Record<string, GraphPlugin> = {};
 
   /**
    * Holds the {@link GraphView} that caches the {@link CellState}s for the cells.
@@ -509,7 +508,6 @@ class Graph extends EventSource {
 
     this.container = container ?? document.createElement('div');
     this.model = model ?? this.createGraphDataModel();
-    this.plugins = plugins;
     this.cellRenderer = this.createCellRenderer();
     this.setStylesheet(stylesheet ?? this.createStylesheet());
     this.view = this.createGraphView();
@@ -530,15 +528,15 @@ class Graph extends EventSource {
     this.setSelectionModel(this.createSelectionModel());
 
     // Initializes plugins
-    this.plugins.forEach((p: GraphPluginConstructor) => {
-      this.pluginsMap[p.pluginId] = new p(this);
+    plugins.forEach((p: GraphPluginConstructor) => {
+      this.plugins[p.pluginId] = new p(this);
     });
 
     this.view.revalidate();
   }
 
   getContainer = () => this.container;
-  getPlugin = (id: string) => this.pluginsMap[id] as unknown;
+  getPlugin = (id: string) => this.plugins[id] as unknown;
   getCellRenderer = () => this.cellRenderer;
   getDialect = () => this.dialect;
   isPageVisible = () => this.pageVisible;
@@ -1498,7 +1496,7 @@ class Graph extends EventSource {
     if (!this.destroyed) {
       this.destroyed = true;
 
-      Object.values(this.pluginsMap).forEach((p) => p.onDestroy());
+      Object.values(this.plugins).forEach((p) => p.onDestroy());
 
       this.view.destroy();
 
