@@ -111,7 +111,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   style.edgeStyle = 'elbowEdgeStyle';
 
   // Enables panning with left mouse button
-  const panningHandler = graph.getPlugin('PanningHandler') as PanningHandler;
+  const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler');
   panningHandler.useLeftButtonForPanning = true;
   panningHandler.ignoreCell = true;
   graph.container.style.cursor = 'move';

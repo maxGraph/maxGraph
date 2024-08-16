@@ -116,8 +116,8 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       img.style.width = '16px';
       img.style.height = '16px';
 
-      const graphHandler = graph.getPlugin('SelectionHandler') as SelectionHandler;
-      const connectionHandler = graph.getPlugin('ConnectionHandler') as ConnectionHandler;
+      const graphHandler = graph.getPlugin<SelectionHandler>('SelectionHandler');
+      const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
 
       InternalEvent.addGestureListeners(img, (evt) => {
         graphHandler.start(
@@ -192,7 +192,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   const graph = new MyCustomGraph(container);
   graph.setConnectable(true);
 
-  const connectionHandler = graph.getPlugin('ConnectionHandler') as ConnectionHandler;
+  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
   connectionHandler.createTarget = true;
 
   // Uncomment the following if you want the container
