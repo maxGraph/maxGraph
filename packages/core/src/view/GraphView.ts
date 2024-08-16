@@ -680,7 +680,7 @@ export class GraphView extends EventSource {
               graph.fireMouseEvent(InternalEvent.MOUSE_DOWN, new InternalMouseEvent(evt));
             },
             (evt: MouseEvent) => {
-              const tooltipHandler = graph.getPlugin('TooltipHandler') as TooltipHandler;
+              const tooltipHandler = graph.getPlugin<TooltipHandler>('TooltipHandler');
 
               // Hides the tooltip if mouse is outside container
               if (tooltipHandler && tooltipHandler.isHideOnHover()) {
@@ -2155,7 +2155,7 @@ export class GraphView extends EventSource {
     // in Firefox and Chrome
     graph.addMouseListener({
       mouseDown: (sender: any, me: InternalMouseEvent) => {
-        const popupMenuHandler = graph.getPlugin('PopupMenuHandler') as PopupMenuHandler;
+        const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
         popupMenuHandler?.hideMenu();
       },
       mouseMove: () => {

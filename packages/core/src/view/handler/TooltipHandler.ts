@@ -235,9 +235,8 @@ class TooltipHandler implements GraphPlugin {
         const x = me.getX();
         const y = me.getY();
         const stateSource = me.isSource(state.shape) || me.isSource(state.text);
-        const popupMenuHandler = this.graph.getPlugin(
-          'PopupMenuHandler'
-        ) as PopupMenuHandler;
+        const popupMenuHandler =
+          this.graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
 
         this.thread = window.setTimeout(() => {
           if (

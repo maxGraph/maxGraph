@@ -1438,7 +1438,7 @@ export class Editor extends EventSource {
     this.installInsertHandler(graph);
 
     // Redirects the function for creating the popupmenu items
-    const popupMenuHandler = <PopupMenuHandler>graph.getPlugin('PopupMenuHandler');
+    const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
     if (popupMenuHandler) {
       popupMenuHandler.factoryMethod = (menu: any, cell: Cell | null, evt: any): void => {
         return this.createPopupMenu(menu, cell, evt);
@@ -1446,7 +1446,7 @@ export class Editor extends EventSource {
     }
 
     // Redirects the function for creating new connections in the diagram
-    const connectionHandler = <ConnectionHandler>graph.getPlugin('ConnectionHandler');
+    const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
     if (connectionHandler) {
       connectionHandler.factoryMethod = (
         source: Cell | null,
@@ -2428,20 +2428,14 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Puts the graph into the specified mode. The following modenames are
-   * supported:
-   *
-   * select - Selects using the left mouse button, new connections are disabled.
-   * connect - Selects using the left mouse button or creates new connections if mouse over cell hotspot.
-   * See {@link mxConnectionHandler}.
-   * pan - Pans using the left mouse button, new connections are disabled.
-   * @param modename
+   * Puts the graph into the specified mode. The following mode names are supported:
+   * - select - Selects using the left mouse button, new connections are disabled.
+   * - connect - Selects using the left mouse button or creates new connections if mouse over cell hotspot. See {@link ConnectionHandler}.
+   * - pan - Pans using the left mouse button, new connections are disabled.
    */
   setMode(modename: any): void {
-    const panningHandler: PanningHandler = <PanningHandler>(
-      this.graph.getPlugin('PanningHandler')
-    );
-
+    const panningHandler: PanningHandler =
+      this.graph.getPlugin<PanningHandler>('PanningHandler');
     if (modename === 'select') {
       panningHandler && (panningHandler.useLeftButtonForPanning = false);
       this.graph.setConnectable(false);

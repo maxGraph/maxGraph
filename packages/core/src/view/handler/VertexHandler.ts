@@ -245,7 +245,7 @@ class VertexHandler {
       this.selectionBorder.setCursor(CURSOR.MOVABLE_VERTEX);
     }
 
-    const selectionHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandler = this.graph.getPlugin<SelectionHandler>('SelectionHandler');
 
     // Adds the sizer handles
     if (
@@ -351,7 +351,7 @@ class VertexHandler {
    * Returns `true` if the rotation handle should be showing.
    */
   isRotationHandleVisible() {
-    const selectionHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandler = this.graph.getPlugin<SelectionHandler>('SelectionHandler');
     const selectionHandlerCheck = selectionHandler
       ? selectionHandler.maxCells <= 0 ||
         this.graph.getSelectionCount() < selectionHandler.maxCells
@@ -739,9 +739,9 @@ class VertexHandler {
         const edges = this.state.cell.getEdges();
         this.edgeHandlers = [];
 
-        const selectionCellsHandler = this.graph.getPlugin(
+        const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
           'SelectionCellsHandler'
-        ) as SelectionCellsHandler;
+        );
 
         for (let i = 0; i < edges.length; i += 1) {
           const handler = selectionCellsHandler?.getHandler(edges[i]);

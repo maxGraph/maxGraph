@@ -243,9 +243,8 @@ class KeyHandler {
     const source = <Element>getSource(evt);
 
     // Accepts events from the target object or in-place editing inside graph
-    const cellEditorHandler = this.graph?.getPlugin(
-      'CellEditorHandler'
-    ) as CellEditorHandler;
+    const cellEditorHandler =
+      this.graph?.getPlugin<CellEditorHandler>('CellEditorHandler');
     if (
       source === this.target ||
       source.parentNode === this.target ||

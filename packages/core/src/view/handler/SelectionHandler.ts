@@ -122,9 +122,9 @@ class SelectionHandler implements GraphPlugin {
             this.updateHint();
 
             if (this.livePreviewUsed) {
-              const selectionCellsHandler = this.graph.getPlugin(
+              const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
                 'SelectionCellsHandler'
-              ) as SelectionCellsHandler;
+              );
 
               // Forces update to ignore last visible state
               this.setHandlesVisibleForCells(
@@ -469,16 +469,15 @@ class SelectionHandler implements GraphPlugin {
   isDelayedSelection(cell: Cell, me: InternalMouseEvent) {
     let c: Cell | null = cell;
 
-    const selectionCellsHandler = this.graph.getPlugin(
+    const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
       'SelectionCellsHandler'
-    ) as SelectionCellsHandler;
+    );
 
     if (!this.graph.isToggleEvent(me.getEvent()) || !isAltDown(me.getEvent())) {
       while (c) {
         if (selectionCellsHandler?.isHandled(c)) {
-          const cellEditorHandler = this.graph.getPlugin(
-            'CellEditorHandler'
-          ) as CellEditorHandler;
+          const cellEditorHandler =
+            this.graph.getPlugin<CellEditorHandler>('CellEditorHandler');
           return cellEditorHandler?.getEditingCell() !== c;
         }
         c = c.getParent();
@@ -491,7 +490,7 @@ class SelectionHandler implements GraphPlugin {
    * Implements the delayed selection for the given mouse event.
    */
   selectDelayed(me: InternalMouseEvent) {
-    const popupMenuHandler = this.graph.getPlugin('PopupMenuHandler') as PopupMenuHandler;
+    const popupMenuHandler = this.graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
 
     if (!popupMenuHandler || !popupMenuHandler.isPopupTrigger(me)) {
       let cell = me.getCell();
@@ -1055,9 +1054,9 @@ class SelectionHandler implements GraphPlugin {
   updatePreview(remote = false) {
     if (this.livePreviewUsed && !remote) {
       if (this.cells) {
-        const selectionCellsHandler = this.graph.getPlugin(
+        const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
           'SelectionCellsHandler'
-        ) as SelectionCellsHandler;
+        );
 
         this.setHandlesVisibleForCells(
           selectionCellsHandler?.getHandledSelectionCells() ?? [],
@@ -1256,9 +1255,9 @@ class SelectionHandler implements GraphPlugin {
    * Redraws the preview shape for the given states array.
    */
   redrawHandles(states: CellState[][]) {
-    const selectionCellsHandler = this.graph.getPlugin(
+    const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
       'SelectionCellsHandler'
-    ) as SelectionCellsHandler;
+    );
 
     for (let i = 0; i < states.length; i += 1) {
       const handler = selectionCellsHandler?.getHandler(states[i][0].cell);
@@ -1371,9 +1370,9 @@ class SelectionHandler implements GraphPlugin {
     if (force || this.handlesVisible !== visible) {
       this.handlesVisible = visible;
 
-      const selectionCellsHandler = this.graph.getPlugin(
+      const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
         'SelectionCellsHandler'
-      ) as SelectionCellsHandler;
+      );
 
       for (let i = 0; i < cells.length; i += 1) {
         const handler = selectionCellsHandler?.getHandler(cells[i]);
@@ -1425,9 +1424,8 @@ class SelectionHandler implements GraphPlugin {
           cell.isConnectable() &&
           graph.isEdgeValid(null, this.cell, cell)
         ) {
-          const connectionHandler = graph.getPlugin(
-            'ConnectionHandler'
-          ) as ConnectionHandler;
+          const connectionHandler =
+            graph.getPlugin<ConnectionHandler>('ConnectionHandler');
 
           connectionHandler?.connect(this.cell, cell, me.getEvent());
         } else {
@@ -1479,9 +1477,9 @@ class SelectionHandler implements GraphPlugin {
     if (this.livePreviewUsed) {
       this.resetLivePreview();
 
-      const selectionCellsHandler = this.graph.getPlugin(
+      const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
         'SelectionCellsHandler'
-      ) as SelectionCellsHandler;
+      );
 
       this.setHandlesVisibleForCells(
         selectionCellsHandler?.getHandledSelectionCells() ?? [],

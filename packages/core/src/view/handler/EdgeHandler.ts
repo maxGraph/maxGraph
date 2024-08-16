@@ -311,7 +311,7 @@ class EdgeHandler {
       }
     }
 
-    const selectionHandler = this.graph.getPlugin('SelectionHandler') as SelectionHandler;
+    const selectionHandler = this.graph.getPlugin<SelectionHandler>('SelectionHandler');
 
     // Creates bends for the non-routed absolute points
     // or bends that don't correspond to points

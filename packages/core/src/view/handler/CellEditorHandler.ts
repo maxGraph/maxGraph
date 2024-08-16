@@ -711,7 +711,7 @@ class CellEditorHandler implements GraphPlugin {
       this.init();
     }
 
-    const tooltipHandler = this.graph.getPlugin('TooltipHandler') as TooltipHandler;
+    const tooltipHandler = this.graph.getPlugin<TooltipHandler>('TooltipHandler');
     tooltipHandler?.hideTooltip();
 
     const state = this.graph.getView().getState(cell);

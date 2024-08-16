@@ -101,7 +101,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   init() {
     // Hides the tooltip if the mouse is over the context menu
     InternalEvent.addGestureListeners(this.div, (evt) => {
-      const tooltipHandler = this.graph.getPlugin('TooltipHandler') as TooltipHandler;
+      const tooltipHandler = this.graph.getPlugin<TooltipHandler>('TooltipHandler');
       tooltipHandler?.hide();
     });
   }
@@ -174,7 +174,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
       }
 
       // Hides the tooltip if there is one
-      const tooltipHandler = this.graph.getPlugin('TooltipHandler') as TooltipHandler;
+      const tooltipHandler = this.graph.getPlugin<TooltipHandler>('TooltipHandler');
       tooltipHandler?.hide();
 
       // Menu is shifted by 1 pixel so that the mouse up event

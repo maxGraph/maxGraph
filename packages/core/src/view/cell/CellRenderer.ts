@@ -1382,9 +1382,9 @@ class CellRenderer {
         this.installListeners(state);
 
         // Forces a refresh of the handler if one exists
-        const selectionCellsHandler = graph.getPlugin(
+        const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
           'SelectionCellsHandler'
-        ) as SelectionCellsHandler;
+        );
         selectionCellsHandler?.updateHandler(state);
       }
     } else if (
@@ -1396,9 +1396,9 @@ class CellRenderer {
       state.shape.resetStyles();
       this.configureShape(state);
       // LATER: Ignore update for realtime to fix reset of current gesture
-      const selectionCellsHandler = graph.getPlugin(
+      const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
         'SelectionCellsHandler'
-      ) as SelectionCellsHandler;
+      );
       selectionCellsHandler?.updateHandler(state);
       force = true;
     }

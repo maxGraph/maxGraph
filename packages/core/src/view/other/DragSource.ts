@@ -534,7 +534,7 @@ class DragSource {
 
     // Guide is only needed if preview element is used
     if (this.isGuidesEnabled() && this.previewElement) {
-      const selectionHandler = graph.getPlugin('SelectionHandler') as SelectionHandler;
+      const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler');
       this.currentGuide = new Guide(graph, selectionHandler?.getGuideStates());
     }
 

@@ -720,7 +720,7 @@ class Graph extends EventSource {
    * specified.
    */
   scrollPointToVisible(x: number, y: number, extend = false, border = 20) {
-    const panningHandler = this.getPlugin('PanningHandler') as PanningHandler;
+    const panningHandler = this.getPlugin<PanningHandler>('PanningHandler');
 
     if (
       !this.isTimerAutoScroll() &&
