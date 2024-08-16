@@ -255,7 +255,7 @@ export class Cell implements IdentityObject {
    *
    * See {@link GraphDataModel.setStyle} for more details.
    */
-  getClonedStyle() {
+  getClonedStyle(): CellStyle {
     return clone(this.getStyle());
   }
 
