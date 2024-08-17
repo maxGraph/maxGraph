@@ -34,6 +34,8 @@ import { addLinkToHead, getChildNodes } from '../../../util/domUtils';
  * - undoManager
  * - graphContainer
  * - toolbarContainer
+ *
+ * @category Serialization with Codecs
  */
 export class EditorCodec extends ObjectCodec {
   constructor() {

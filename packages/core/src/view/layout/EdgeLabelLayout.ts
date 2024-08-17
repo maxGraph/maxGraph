@@ -32,9 +32,11 @@ import Rectangle from '../geometry/Rectangle';
  * can be executed.
  *
  * ```javascript
- * var layout = new mxEdgeLabelLayout(graph);
+ * const layout = new EdgeLabelLayout(graph);
  * layout.execute(graph.getDefaultParent());
  * ```
+ *
+ * @category Layout
  */
 class EdgeLabelLayout extends GraphLayout {
   constructor(graph: Graph, radius: number) {

@@ -27,23 +27,21 @@ import Cell from '../cell/Cell';
  * Example:
  *
  * ```javascript
- * let layout = new mxCircleLayout(graph);
+ * const layout = new CircleLayout(graph);
  * layout.execute(graph.getDefaultParent());
  * ```
  *
- * Constructor: mxCircleLayout
- *
- * Constructs a new circular layout for the specified radius.
- *
- * Arguments:
- *
- * graph - {@link Graph} that contains the cells.
- * radius - Optional radius as an int. Default is 100.
+ * @category Layout
  */
 class CircleLayout extends GraphLayout {
+  /**
+   * Constructs a new circular layout for the specified radius.
+   *
+   * @param graph {@link Graph} that contains the cells.
+   * @param radius Optional radius as an int. Default is 100.
+   */
   constructor(graph: Graph, radius = 100) {
     super(graph);
-    // mxGraphLayout.call(this, graph);
     this.radius = radius;
   }
 

@@ -18,6 +18,11 @@ limitations under the License.
 
 import Cell from '../../cell/Cell';
 
+/**
+ * An abstraction of an internal hierarchy node or edge.
+ *
+ * @category Layout
+ */
 abstract class GraphAbstractHierarchyCell extends Cell {
   swimlaneIndex: number | null = null;
 
@@ -72,15 +77,6 @@ abstract class GraphAbstractHierarchyCell extends Cell {
    */
   temp: number[];
 
-  /**
-   * Class: mxGraphAbstractHierarchyCell
-   *
-   * An abstraction of an internal hierarchy node or edge
-   *
-   * Constructor: mxGraphAbstractHierarchyCell
-   *
-   * Constructs a new hierarchical layout algorithm.
-   */
   constructor() {
     super();
 

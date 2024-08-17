@@ -32,6 +32,8 @@ import Translations from '../../../util/Translations';
  * This class is created and registered dynamically at load time and used implicitly via {@link Codec} and the {@link CodecRegistry}.
  *
  * This codec only reads configuration data for existing toolbars handlers, it does not encode or create toolbars.
+ *
+ * @category Serialization with Codecs
  */
 export class EditorToolbarCodec extends ObjectCodec {
   constructor() {

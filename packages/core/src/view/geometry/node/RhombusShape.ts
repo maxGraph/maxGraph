@@ -24,9 +24,9 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link Shape} to implement a rhombus (aka diamond) shape.
- * This shape is registered under {@link mxConstants.SHAPE_RHOMBUS} in {@link cellRenderer}.
- * @class RhombusShape
- * @extends {Shape}
+ * This shape is registered by default under {@link SHAPE.RHOMBUS} in {@link CellRenderer}.
+ *
+ * @category Vertex Shapes
  */
 class RhombusShape extends Shape {
   constructor(bounds: Rectangle, fill: string, stroke: string, strokewidth = 1) {

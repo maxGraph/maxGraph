@@ -195,6 +195,8 @@ import type Codec from './Codec';
  * functions on the resulting object.
  *
  * Expressions are only evaluated if {@link allowEval} is true.
+ *
+ * @category Serialization with Codecs
  */
 class ObjectCodec {
   private name?: string;

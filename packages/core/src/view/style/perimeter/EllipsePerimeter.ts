@@ -21,6 +21,9 @@ import type CellState from '../../cell/CellState';
 import Point from '../../geometry/Point';
 import type { PerimeterFunction } from '../../../types';
 
+/**
+ * @category Perimeter
+ */
 export const EllipsePerimeter: PerimeterFunction = (
   bounds: Rectangle,
   _vertex: CellState,

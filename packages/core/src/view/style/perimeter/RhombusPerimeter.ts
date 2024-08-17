@@ -22,6 +22,9 @@ import Point from '../../geometry/Point';
 import type { PerimeterFunction } from '../../../types';
 import { intersection } from '../../../util/mathUtils';
 
+/**
+ * @category Perimeter
+ */
 export const RhombusPerimeter: PerimeterFunction = (
   bounds: Rectangle,
   _vertex: CellState,

@@ -17,7 +17,17 @@
     "readme": "none",
     "excludeExternals": true,
     "excludePrivate": true,
-    "categoryOrder": ["Configuration", "Edge Shapes", "Logging", "Plugin", "*"],
+    "categoryOrder": [
+      "Configuration",
+      "Logging",
+      "Edge Shapes",
+      "Vertex Shapes",
+      "Layout",
+      "Perimeter",
+      "Plugin",
+      "Serialization with Codecs",
+      "*"
+    ],
     "categorizeByGroup": false,
     "navigation": {
       "includeCategories": false, // not enough categories to warrant this

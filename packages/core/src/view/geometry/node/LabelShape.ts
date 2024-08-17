@@ -23,22 +23,20 @@ import { ColorValue } from '../../../types';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
- * Extends {@link Shape} to implement an image shape with a label.
- * This shape is registered under {@link Constants#SHAPE_LABEL} in
- * {@link CellRenderer}.
+ * Extends {@link RectangleShape} to implement an image shape with a label.
+ * This shape is registered by default under {@link SHAPE.LABEL} in {@link CellRenderer}.
  *
- * Constructor: mxLabel
- *
- * Constructs a new label shape.
- *
- * @param bounds {@link Rectangle} that defines the bounds. This is stored in
- * {@link Shape#bounds}.
- * @param fill String that defines the fill color. This is stored in <fill>.
- * @param stroke String that defines the stroke color. This is stored in <stroke>.
- * @param strokewidth Optional integer that defines the stroke width. Default is
- * 1. This is stored in <strokewidth>.
+ * @category Vertex Shapes
  */
 class LabelShape extends RectangleShape {
+  /**
+   * Constructs a new label shape.
+   *
+   * @param bounds {@link Rectangle} that defines the bounds. This is stored in {@link bounds}.
+   * @param fill String that defines the fill color. This is stored in {@link fill}.
+   * @param stroke String that defines the stroke color. This is stored in {@link stroke}.
+   * @param strokeWidth Optional integer that defines the stroke width. Default is 1. This is stored in {@link strokeWidth}.
+   */
   constructor(
     bounds: Rectangle,
     fill: ColorValue,

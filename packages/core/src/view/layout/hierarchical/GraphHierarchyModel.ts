@@ -30,22 +30,20 @@ import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell'
  * The internal model also reverses edge direction were appropriate , ignores
  * self-loop and groups parallels together under one edge object.
  *
- * Constructor: mxGraphHierarchyModel
- *
- * Creates an internal ordered graph model using the vertices passed in. If
- * there are any, leftward edge need to be inverted in the internal model
- *
- * Arguments:
- *
- * graph - the facade describing the graph to be operated on
- * vertices - the vertices for this hierarchy
- * ordered - whether or not the vertices are already ordered
- * deterministic - whether or not this layout should be deterministic on each
- * tightenToSource - whether or not to tighten vertices towards the sources
- * scanRanksFromSinks - Whether rank assignment is from the sinks or sources.
- * usage
+ * @category Layout
  */
 class GraphHierarchyModel {
+  /**
+   *
+   * Creates an internal ordered graph model using the vertices passed in. If
+   * there are any, leftward edge need to be inverted in the internal model
+   *
+   * @param layout
+   * @param vertices the vertices for this hierarchy
+   * @param roots
+   * @param parent
+   * @param tightenToSource whether or not to tighten vertices towards the sources
+   */
   constructor(
     layout: HierarchicalLayout,
     vertices: Cell[],

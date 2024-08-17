@@ -24,13 +24,12 @@ import EventObject from '../event/EventObject';
 import Cell from '../cell/Cell';
 
 /**
- * @class SwimlaneManager
- * @extends EventSource
- *
  * Manager for swimlanes and nested swimlanes that sets the size of newly added
  * swimlanes to that of their siblings, and propagates changes to the size of a
  * swimlane to its siblings, if {@link siblings} is true, and its ancestors, if
  * {@link bubbling} is true.
+ *
+ * @category Layout
  */
 class SwimlaneManager extends EventSource {
   constructor(graph: Graph, horizontal = true, addEnabled = true, resizeEnabled = true) {

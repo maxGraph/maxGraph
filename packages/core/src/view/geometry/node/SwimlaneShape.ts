@@ -29,17 +29,17 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link Shape} to implement a swimlane shape.
- * This shape is registered under {@link mxConstants.SHAPE_SWIMLANE} in {@link mxCellRenderer}.
- * Use the {@link mxConstants.STYLE_STYLE_STARTSIZE} to define the size of the title
- * region, `'swimLaneFillColor'` for the content area fill,
- * `'separatorColor'` to draw an additional vertical separator and
- * {@link mxConstants.STYLE_SWIMLANE_LINE} to hide the line between the title region and
- * the content area.
- * The {@link 'horizontal'} affects the orientation of this shape,
- * not only its label.
+ * This shape is registered by default under {@link SHAPE.SWIMLANE} in {@link CellRenderer}.
  *
- * @class SwimlaneShape
- * @extends {Shape}
+ * Use:
+ * - {@link CellStateStyle.startSize} to define the size of the title region,
+ * - {@link CellStateStyle.swimlaneFillColor} for the content area fill,
+ * - {@link CellStateStyle.separatorColor} to draw an additional vertical separator,
+ * - {@link CellStateStyle.swimlaneLine} to hide the line between the title region and the content area
+ *
+ * {@link CellStateStyle.horizontal} affects the orientation of this shape, not only its label.
+ *
+ * @category Vertex Shapes
  */
 class SwimlaneShape extends Shape {
   constructor(bounds: Rectangle, fill: ColorValue, stroke: ColorValue, strokeWidth = 1) {

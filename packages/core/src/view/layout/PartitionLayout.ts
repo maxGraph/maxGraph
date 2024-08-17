@@ -24,7 +24,7 @@ import Cell from '../cell/Cell';
 /**
  * Extends {@link GraphLayout} for partitioning the parent cell vertically or
  * horizontally by filling the complete area with the child cells. A horizontal
- * layout partitions the height of the given parent whereas a a non-horizontal
+ * layout partitions the height of the given parent whereas a non-horizontal
  * layout partitions the width. If the parent is a layer (that is, a child of
  * the root node), then the current graph size is partitioned. The children do
  * not need to be connected for this layout to work.
@@ -32,10 +32,11 @@ import Cell from '../cell/Cell';
  * Example:
  *
  * ```javascript
- * var layout = new mxPartitionLayout(graph, true, 10, 20);
+ * const layout = new PartitionLayout(graph, true, 10, 20);
  * layout.execute(graph.getDefaultParent());
  * ```
- * @class
+ *
+ * @category Layout
  */
 class PartitionLayout extends GraphLayout {
   constructor(graph: Graph, horizontal = true, spacing = 0, border = 0) {

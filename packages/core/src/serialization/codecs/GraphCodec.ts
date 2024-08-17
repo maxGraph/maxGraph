@@ -33,6 +33,8 @@ import { Graph } from '../../view/Graph';
  * - cellRenderer
  * - editor
  * - selection
+ *
+ * @category Serialization with Codecs
  */
 export class GraphCodec extends ObjectCodec {
   constructor() {

@@ -19,7 +19,9 @@ import { CellCodec } from '../CellCodec';
 import type Codec from '../../Codec';
 
 /**
- * CellCodec to support the legacy `mxGraph` format.
+ * Add support for the legacy `mxGraph` format of {@link Cell}.
+ *
+ * @category Serialization with Codecs
  */
 export class mxCellCodec extends CellCodec {
   getName(): string {

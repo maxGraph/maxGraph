@@ -23,26 +23,24 @@ import { ColorValue } from '../../types';
 import { NONE } from '../../util/Constants';
 
 /**
- * Extends {@link Shape} to implement an actor shape. If a custom shape with one
- * filled area is needed, then this shape's {@link redrawPath} method should be overridden.
+ * Extends {@link Shape} to implement an actor shape.
+ * This shape is registered by default under {@link SHAPE.ACTOR} in {@link CellRenderer}.
  *
- * This shape is registered under {@link Constants.SHAPE_ACTOR} in {@link cellRenderer}.
+ * If a custom shape with one filled area is needed, then this shape's {@link redrawPath} method should be overridden
+ * like in the following example:
  *
- * ```javascript
- * function SampleShape() { }
- *
- * SampleShape.prototype = new mxActor();
- * SampleShape.prototype.constructor = vsAseShape;
- *
- * mxCellRenderer.registerShape('sample', SampleShape);
- * SampleShape.prototype.redrawPath = function(path, x, y, w, h)
- * {
- *   path.moveTo(0, 0);
- *   path.lineTo(w, h);
- *   // ...
- *   path.close();
+ * ```typescript
+ * class SampleShape extends ActorShape {
+ *   redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+ *     path.moveTo(0, 0);
+ *     path.lineTo(w, h);
+ *     // ...
+ *     path.close();
+ *   }
  * }
  * ```
+ *
+ * @category Vertex Shapes
  */
 class ActorShape extends Shape {
   constructor(

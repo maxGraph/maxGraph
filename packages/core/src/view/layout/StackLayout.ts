@@ -26,21 +26,17 @@ import Cell from '../cell/Cell';
 import Geometry from '../geometry/Geometry';
 
 /**
- * Extends {@link GraphLayout} to create a horizontal or vertical stack of the
- * child vertices. The children do not need to be connected for this layout
- * to work.
+ * Extends {@link GraphLayout} to create a horizontal or vertical stack of the child vertices.
+ * The children do not need to be connected for this layout to work.
  *
  * Example:
  *
  * ```javascript
- * let layout = new mxStackLayout(graph, true);
+ * const layout = new StackLayout(graph, true);
  * layout.execute(graph.getDefaultParent());
  * ```
  *
- * Constructor: mxStackLayout
- *
- * Constructs a new stack layout layout for the specified graph,
- * spacing, orientation and offset.
+ * @category Layout
  */
 class StackLayout extends GraphLayout {
   constructor(

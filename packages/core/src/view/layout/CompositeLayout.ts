@@ -34,15 +34,7 @@ import GraphLayout from './GraphLayout';
  * layout.execute(graph.getDefaultParent());
  * ```
  *
- * Constructs a new layout using the given layouts. The graph instance is
- * required for creating the transaction that contains all layouts.
- *
- * Arguments:
- *
- * graph - Reference to the enclosing {@link Graph}.
- * layouts - Array of {@link GraphLayout}s.
- * master - Optional layout that handles moves. If no layout is given then
- * the first layout of the above array is used to handle moves.
+ * @category Layout
  */
 class CompositeLayout extends GraphLayout {
   /**

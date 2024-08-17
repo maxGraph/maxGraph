@@ -22,10 +22,12 @@ import Rectangle from '../Rectangle';
 import { NONE } from '../../../util/Constants';
 
 /**
- * Extends {@link Shape} to implement an cylinder shape. If a custom shape with one filled area and an overlay path is
- * needed, then this shape's {@link redrawPath} should be overridden.
+ * Extends {@link Shape} to implement a cylinder shape.
+ * This shape is registered by default under {@link SHAPE.CYLINDER} in {@link CellRenderer}.
  *
- * This shape is registered under {@link mxConstants.SHAPE_CYLINDER} in {@link cellRenderer}.
+ * If a custom shape with one filled area and an overlay path is needed, then this shape's {@link redrawPath} should be overridden.
+ *
+ * @category Vertex Shapes
  */
 class CylinderShape extends Shape {
   constructor(bounds: Rectangle, fill: string, stroke: string, strokeWidth = 1) {

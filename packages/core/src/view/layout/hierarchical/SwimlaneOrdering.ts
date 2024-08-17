@@ -30,11 +30,12 @@ import SwimlaneModel from './SwimlaneModel';
  * An implementation of the first stage of the Sugiyama layout. Straightforward
  * longest path calculation of layer assignment
  *
- * Constructor: SwimlaneOrdering
- *
- * Creates a cycle remover for the given internal model.
+ * @category Layout
  */
 class SwimlaneOrdering extends HierarchicalLayoutStage {
+  /**
+   * Creates a cycle remover for the given internal model.
+   */
   constructor(layout: SwimlaneLayout) {
     super();
 

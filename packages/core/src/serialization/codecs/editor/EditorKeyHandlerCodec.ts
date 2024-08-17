@@ -24,6 +24,8 @@ import EditorKeyHandler from '../../../editor/EditorKeyHandler';
  * This class is created and registered dynamically at load time and used implicitly via {@link Codec} and the {@link CodecRegistry}.
  *
  * This codec only reads configuration data for existing key handlers, it does not encode or create key handlers.
+ *
+ * @category Serialization with Codecs
  */
 export class EditorKeyHandlerCodec extends ObjectCodec {
   constructor() {

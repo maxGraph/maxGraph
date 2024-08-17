@@ -50,14 +50,14 @@ import {
 import SvgCanvas2D from '../../canvas/SvgCanvas2D';
 
 /**
- * Extends mxShape to implement a text shape.
- * To change vertical text from bottom to top to top to bottom,
- * the following code can be used:
+ * Extends {@link Shape} to implement a text shape.
+ *
+ * To change vertical text from "bottom to top" to "top to bottom", the following code can be used:
  * ```javascript
- * mxText.prototype.verticalTextRotation = 90;
+ * TextShape.prototype.verticalTextRotation = 90;
  * ```
- * @class TextShape
- * @extends {Shape}
+ *
+ * @category Vertex Shapes
  */
 class TextShape extends Shape {
   constructor(

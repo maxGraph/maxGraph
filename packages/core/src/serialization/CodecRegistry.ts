@@ -44,6 +44,8 @@ import ObjectCodec from './ObjectCodec';
  *
  * {@link ObjectCodec.decode} may be used to either create a new instance of an object or to configure an existing instance,
  * in which case the into argument points to the existing object. In this case, we say the codec "configures" the object.
+ *
+ * @category Serialization with Codecs
  */
 class CodecRegistry {
   static codecs: { [key: string]: ObjectCodec | undefined } = {};

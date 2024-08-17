@@ -28,6 +28,8 @@ import { getTextContent } from '../../util/domUtils';
  * Codec for {@link Stylesheet}s.
  *
  * This class is created and registered dynamically at load time and used implicitly via {@link Codec} and the {@link CodecRegistry}.
+ *
+ * @category Serialization with Codecs
  */
 export class StylesheetCodec extends ObjectCodec {
   constructor() {

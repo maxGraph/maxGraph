@@ -27,6 +27,9 @@ import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
 import { findTreeRoots } from '../../util/treeTraversal';
 
+/**
+ * @category Layout
+ */
 export interface _mxCompactTreeLayoutNode {
   cell?: Cell;
   x?: number;
@@ -47,6 +50,9 @@ export interface _mxCompactTreeLayoutNode {
   theta?: number;
 }
 
+/**
+ * @category Layout
+ */
 export interface _mxCompactTreeLayoutLine {
   dx: number;
   dy: number;
@@ -55,9 +61,6 @@ export interface _mxCompactTreeLayoutLine {
 }
 
 /**
- * @class CompactTreeLayout
- * @extends {GraphLayout}
- *
  * Extends {@link GraphLayout} to implement a compact tree (Moen) algorithm. This
  * layout is suitable for graphs that have no cycles (trees). Vertices that are
  * not connected to the tree will be ignored by this layout.
@@ -65,9 +68,11 @@ export interface _mxCompactTreeLayoutLine {
  * ### Example
  *
  * ```javascript
- * var layout = new mxCompactTreeLayout(graph);
+ * const layout = new CompactTreeLayout(graph);
  * layout.execute(graph.getDefaultParent());
  * ```
+ *
+ * @category Layout
  */
 export class CompactTreeLayout extends GraphLayout {
   constructor(graph: Graph, horizontal = true, invert = false) {

@@ -33,6 +33,8 @@ import type Codec from '../Codec';
  * Reference Fields:
  *
  * - cell
+ *
+ * @category Serialization with Codecs
  */
 export class GenericChangeCodec extends ObjectCodec {
   /**
