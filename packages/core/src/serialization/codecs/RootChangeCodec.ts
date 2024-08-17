@@ -29,6 +29,8 @@ import { NODETYPE } from '../../util/Constants';
  * - model
  * - previous
  * - root
+ *
+ * @category Serialization with Codecs
  */
 export class RootChangeCodec extends ObjectCodec {
   constructor() {

@@ -34,6 +34,8 @@ import { NODETYPE } from '../../util/Constants';
  * Reference Fields:
  *
  * - parent
+ *
+ * @category Serialization with Codecs
  */
 export class ChildChangeCodec extends ObjectCodec {
   constructor() {

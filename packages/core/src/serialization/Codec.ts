@@ -125,7 +125,7 @@ const createXmlDocument = () => {
  * };
  * ```
  *
- * @class Codec
+ * @category Serialization with Codecs
  */
 class Codec {
   constructor(document: XMLDocument = createXmlDocument()) {

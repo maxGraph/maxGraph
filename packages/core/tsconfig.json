@@ -17,7 +17,7 @@
     "readme": "none",
     "excludeExternals": true,
     "excludePrivate": true,
-    "categoryOrder": ["Configuration", "Logging", "Edge Shapes", "Vertex Shapes","*"],
+    "categoryOrder": ["Configuration", "Logging", "Edge Shapes", "Vertex Shapes", "Serialization with Codecs", "*"],
     "categorizeByGroup": false,
     "navigation": {
       "includeCategories": false, // not enough categories to warrant this

@@ -27,6 +27,7 @@ import type GraphDataModel from '../view/GraphDataModel';
  * @alpha
  * @experimental
  * @since 0.6.0
+ * @category Serialization with Codecs
  */
 export type ModelExportOptions = {
   /**
@@ -44,6 +45,7 @@ export type ModelExportOptions = {
  * @alpha
  * @experimental
  * @since 0.6.0
+ * @category Serialization with Codecs
  */
 // Include 'XML' in the class name as there were past discussions about supporting other format like JSON for example
 // See https://github.com/maxGraph/maxGraph/discussions/60 for more details.

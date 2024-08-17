@@ -27,6 +27,7 @@ import EditorPopupMenu from '../../../editor/EditorPopupMenu';
  * Note that this codec only passes the configuration node to the popup menu, which uses the config to dynamically create menus.
  *
  * @see {@link EditorPopupMenu.createMenu}.
+ * @category Serialization with Codecs
  */
 export class EditorPopupMenuCodec extends ObjectCodec {
   constructor() {

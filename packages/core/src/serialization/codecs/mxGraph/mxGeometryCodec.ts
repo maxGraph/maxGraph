@@ -19,6 +19,11 @@ import ObjectCodec from '../../ObjectCodec';
 import Geometry from '../../../view/geometry/Geometry';
 import Point from '../../../view/geometry/Point';
 
+/**
+ * Add support for the legacy `mxGraph` format of {@link Geometry}.
+ *
+ * @category Serialization with Codecs
+ */
 export class mxGeometryCodec extends ObjectCodec {
   getName(): string {
     return 'mxGeometry';

@@ -32,6 +32,8 @@ import type Codec from '../Codec';
  *
  * - cell
  * - terminal
+ *
+ * @category Serialization with Codecs
  */
 export class TerminalChangeCodec extends ObjectCodec {
   constructor() {

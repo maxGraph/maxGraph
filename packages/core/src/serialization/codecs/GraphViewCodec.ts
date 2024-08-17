@@ -27,6 +27,8 @@ import Point from '../../view/geometry/Point';
  *
  * This codec only writes views into an XML format that can be used to create an image for the graph, that is,
  * it contains absolute coordinates with computed perimeters, edge styles and cell styles.
+ *
+ * @category Serialization with Codecs
  */
 export class GraphViewCodec extends ObjectCodec {
   constructor() {

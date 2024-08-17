@@ -49,6 +49,8 @@ import { removeWhitespace } from '../../util/StringUtils';
  * CodecRegistry.getCodec(Cell).template = new CustomCell();
  * CodecRegistry.addAlias('CustomCell', 'Cell');
  * ```
+ *
+ * @category Serialization with Codecs
  */
 export class CellCodec extends ObjectCodec {
   constructor() {
