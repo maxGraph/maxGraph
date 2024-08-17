@@ -1,4 +1,5 @@
 ---
+sidebar_position: 3
 description: How-to use plugins and create new plugins.
 ---
 

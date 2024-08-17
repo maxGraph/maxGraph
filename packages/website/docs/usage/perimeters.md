@@ -1,4 +1,5 @@
 ---
+sidebar_position: 2
 description: How-to use use and create new perimeters.
 ---
 

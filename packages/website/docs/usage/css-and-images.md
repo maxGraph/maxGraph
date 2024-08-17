@@ -1,4 +1,5 @@
 ---
+sidebar_position: 4
 description: Integrate CSS and Images assets required by maxGraph.
 ---
 
