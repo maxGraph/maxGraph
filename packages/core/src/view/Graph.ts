@@ -513,9 +513,7 @@ class Graph extends EventSource {
     this.setSelectionModel(this.createSelectionModel());
 
     // Initializes plugins
-    plugins.forEach((p: GraphPluginConstructor) => {
-      this.plugins[p.pluginId] = new p(this);
-    });
+    plugins.forEach((p) => (this.plugins[p.pluginId] = new p(this)));
 
     this.view.revalidate();
   }
