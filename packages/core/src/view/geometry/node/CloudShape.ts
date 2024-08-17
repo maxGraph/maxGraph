@@ -22,8 +22,9 @@ import Rectangle from '../Rectangle';
 
 /**
  * Extends {@link ActorShape} to implement a cloud shape.
+ * This shape is registered by default under {@link SHAPE.CLOUD} in {@link CellRenderer}.
  *
- * This shape is registered under {@link mxConstants.SHAPE_CLOUD} in {@link cellRenderer}.
+ * @category Vertex Shapes
  */
 class CloudShape extends ActorShape {
   constructor(bounds: Rectangle, fill: string, stroke: string, strokeWidth = 1) {

@@ -24,9 +24,9 @@ import { ColorValue } from '../../../types';
 
 /**
  * Extends {@link Shape} to implement a rectangle shape.
- * This shape is registered under {@link mxConstants.SHAPE_RECTANGLE} in {@link cellRenderer}.
- * @class RectangleShape
- * @extends {Shape}
+ * This shape is registered by default under {@link SHAPE.RECTANGLE} in {@link CellRenderer}.
+ *
+ * @category Vertex Shapes
  */
 class RectangleShape extends Shape {
   constructor(bounds: Rectangle, fill: ColorValue, stroke: ColorValue, strokeWidth = 1) {

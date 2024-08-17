@@ -21,8 +21,10 @@ import AbstractCanvas2D from '../../../view/canvas/AbstractCanvas2D';
 import Rectangle from '../Rectangle';
 
 /**
- * Extends mxShape to implement an ellipse shape.
- * This shape is registered under mxConstants.SHAPE_ELLIPSE in mxCellRenderer.
+ * Extends {@link Shape} to implement an ellipse shape.
+ * This shape is registered by default under {@link SHAPE.ELLIPSE} in {@link CellRenderer}.
+ *
+ * @category Vertex Shapes
  */
 class EllipseShape extends Shape {
   constructor(bounds: Rectangle, fill: string, stroke: string, strokeWidth = 1) {

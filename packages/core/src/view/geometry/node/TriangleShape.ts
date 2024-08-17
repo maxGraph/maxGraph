@@ -23,8 +23,8 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
  * Implementation of the triangle shape.
- * @class TriangleShape
- * @extends {ActorShape}
+ *
+ * @category Vertex Shapes
  */
 class TriangleShape extends ActorShape {
   constructor() {

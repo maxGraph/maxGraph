@@ -22,30 +22,33 @@ import AbstractCanvas2D from '../../../view/canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link Shape} to implement a double ellipse shape.
+ * This shape is registered by default under {@link SHAPE.DOUBLE_ELLIPSE} in {@link CellRenderer}.
  *
- * This shape is registered under {@link mxConstants.SHAPE_DOUBLE_ELLIPSE} in {@link cellRenderer}.
+ * If a custom shape is needed to only fill the inner ellipse, then this shape's {@link paintVertexShape} method should be overridden
+ * like in the following example:
  *
- * Use the following override to only fill the inner ellipse in this shape:
- * ```javascript
- * mxDoubleEllipse.prototype.paintVertexShape = function(c, x, y, w, h)
- * {
- *   c.ellipse(x, y, w, h);
- *   c.stroke();
- *
- *   var inset = mxUtils.getValue(this.style, 'margin', Math.min(3 + this.strokewidth, Math.min(w / 5, h / 5)));
- *   x += inset;
- *   y += inset;
- *   w -= 2 * inset;
- *   h -= 2 * inset;
- *
- *   if (w > 0 && h > 0)
- *   {
+ * ```typescript
+ * class SampleShape extends DoubleEllipseShape {
+ *   paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
  *     c.ellipse(x, y, w, h);
- *   }
+ *     c.stroke();
  *
- *   c.fillAndStroke();
- * };
+ *     const inset = this.style.margin ?? Math.min(3 + this.strokewidth, Math.min(w / 5, h / 5));
+ *     x += inset;
+ *     y += inset;
+ *     w -= 2 * inset;
+ *     h -= 2 * inset;
+ *
+ *     if (w > 0 && h > 0) {
+ *       c.ellipse(x, y, w, h);
+ *     }
+ *
+ *     c.fillAndStroke();
+ *   }
+ * }
  * ```
+ *
+ * @category Vertex Shapes
  */
 class DoubleEllipseShape extends Shape {
   constructor(bounds: Rectangle, fill: string, stroke: string, strokeWidth = 1) {
