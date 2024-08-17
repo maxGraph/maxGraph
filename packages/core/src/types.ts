@@ -1131,6 +1131,8 @@ export type IdentityFunction = {
  * @param orthogonal Boolean that specifies if the orthogonal projection onto the perimeter should be returned.
  *                   If this is `false`, then the intersection of the perimeter and the line between the next and the center point is returned.
  * @returns the resulting {@link Point} projected to the perimeter.
+ *
+ * @category Perimeter
  */
 export type PerimeterFunction = (
   bounds: Rectangle,
@@ -1141,6 +1143,8 @@ export type PerimeterFunction = (
 
 /**
  * Names used to register the perimeter provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
+ *
+ * @category Perimeter
  */
 export type PerimeterValue =
   | 'ellipsePerimeter'

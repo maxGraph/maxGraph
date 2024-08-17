@@ -23,6 +23,8 @@ import type { PerimeterFunction } from '../../../types';
 
 /**
  * Describes a rectangular perimeter for the given bounds.
+ *
+ * @category Perimeter
  */
 export const RectanglePerimeter: PerimeterFunction = (
   bounds: Rectangle,

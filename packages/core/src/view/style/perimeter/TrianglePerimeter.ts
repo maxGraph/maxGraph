@@ -23,6 +23,9 @@ import type { PerimeterFunction } from '../../../types';
 import { DIRECTION } from '../../../util/Constants';
 import { intersection } from '../../../util/mathUtils';
 
+/**
+ * @category Perimeter
+ */
 export const TrianglePerimeter: PerimeterFunction = (
   bounds: Rectangle,
   vertex: CellState,
