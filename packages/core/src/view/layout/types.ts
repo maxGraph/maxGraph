@@ -18,6 +18,9 @@ import type Cell from '../cell/Cell';
 import type Dictionary from '../../util/Dictionary';
 import type GraphHierarchyNode from './datatypes/GraphHierarchyNode';
 
+/**
+ * @category Layout
+ */
 export interface GraphLayoutTraverseArgs {
   vertex: Cell | null;
   directed: boolean | null;
@@ -26,6 +29,9 @@ export interface GraphLayoutTraverseArgs {
   visited: Dictionary<Cell, boolean> | null;
 }
 
+/**
+ * @category Layout
+ */
 export interface HierarchicalGraphLayoutTraverseArgs extends GraphLayoutTraverseArgs {
   allVertices: { [key: string]: Cell } | null;
   currentComp: { [key: string]: Cell | null };
@@ -33,6 +39,9 @@ export interface HierarchicalGraphLayoutTraverseArgs extends GraphLayoutTraverse
   filledVertexSet: { [key: string]: Cell } | null;
 }
 
+/**
+ * @category Layout
+ */
 export interface SwimlaneGraphLayoutTraverseArgs
   extends HierarchicalGraphLayoutTraverseArgs {
   swimlaneIndex: number;

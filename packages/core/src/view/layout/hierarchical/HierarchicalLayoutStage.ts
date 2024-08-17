@@ -17,13 +17,10 @@ limitations under the License.
 */
 
 /**
- * The specific layout interface for hierarchical layouts. It adds a
- * <code>run</code> method with a parameter for the hierarchical layout model
- * that is shared between the layout stages.
+ * The specific layout interface for hierarchical layouts. It adds a {@link execute}
+ * method for the hierarchical layout model that is shared between the layout stages.
  *
- * Constructor: mxHierarchicalLayoutStage
- *
- * Constructs a new hierarchical layout stage.
+ * @category Layout
  */
 abstract class HierarchicalLayoutStage {
   /**

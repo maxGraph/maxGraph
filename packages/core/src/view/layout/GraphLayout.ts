@@ -25,10 +25,12 @@ import Cell from '../cell/Cell';
 import { GraphLayoutTraverseArgs } from './types';
 
 /**
- * Base class for all layout algorithms in mxGraph.
+ * Base class for all layout algorithms in maxGraph.
  *
  * Main public methods are {@link moveCell} for handling a moved cell within a layouted parent,
  * and {@link execute} for running the layout on a given parent cell.
+ *
+ * @category Layout
  */
 class GraphLayout {
   constructor(graph: Graph) {

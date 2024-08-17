@@ -17,14 +17,10 @@ limitations under the License.
 import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
 
 /**
- * Class: MedianCellSorter
- *
  * A utility class used to track cells whilst sorting occurs on the median
  * values. Does not violate (x.compareTo(y)==0) == (x.equals(y))
  *
- * Constructor: MedianCellSorter
- *
- * Constructs a new median cell sorter.
+ * @category Layout
  */
 class MedianCellSorter {
   constructor() {

@@ -34,17 +34,13 @@ import GraphLayout from './GraphLayout';
 import UndoableEdit from '../undoable_changes/UndoableEdit';
 
 /**
- * @class LayoutManager
- * @extends {EventSource}
- *
  * Implements a layout manager that runs a given layout after any changes to the graph:
  *
  * ### Example
  *
  * ```javascript
- * var layoutMgr = new mxLayoutManager(graph);
- * layoutMgr.getLayout(cell, eventName)
- * {
+ * const layoutManager = new LayoutManager(graph);
+ * layoutManager.getLayout = (cell, eventName) => {
  *   return layout;
  * };
  * ```
@@ -56,6 +52,8 @@ import UndoableEdit from '../undoable_changes/UndoableEdit';
  * Fires between begin- and endUpdate after all cells have been layouted in
  * {@link layoutCells}. The `cells` property contains all cells that have
  * been passed to {@link layoutCells}.
+ *
+ * @category Layout
  */
 class LayoutManager extends EventSource {
   /**

@@ -18,12 +18,11 @@ import { _mxCompactTreeLayoutNode } from '../CompactTreeLayout';
 import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
 
 /**
- * @class WeightedCellSorter
- *
  * A utility class used to track cells whilst sorting occurs on the weighted
  * sum of their connected edges. Does not violate (x.compareTo(y)==0) ==
  * (x.equals(y))
  *
+ * @category Layout
  */
 class WeightedCellSorter {
   constructor(

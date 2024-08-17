@@ -25,14 +25,16 @@ import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
 
 /**
- * Extends {@link mxGraphLayout} to implement a radial tree algorithm. This
+ * Extends {@link CompactTreeLayout} to implement a radial tree algorithm. This
  * layout is suitable for graphs that have no cycles (trees). Vertices that are
  * not connected to the tree will be ignored by this layout.
  *
  * ```javascript
- * var layout = new mxRadialTreeLayout(graph);
+ * const layout = new RadialTreeLayout(graph);
  * layout.execute(graph.getDefaultParent());
  * ```
+ *
+ * @category Layout
  */
 class RadialTreeLayout extends CompactTreeLayout {
   constructor(graph: Graph) {

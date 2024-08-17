@@ -32,19 +32,16 @@ import { HierarchicalGraphLayoutTraverseArgs } from './types';
 /**
  * A hierarchical layout algorithm.
  *
- * Constructor: HierarchicalLayout
- *
- * Constructs a new hierarchical layout algorithm.
- *
- * Arguments:
- *
- * graph - Reference to the enclosing {@link Graph}.
- * orientation - Optional constant that defines the orientation of this
- * layout.
- * deterministic - Optional boolean that specifies if this layout should be
- * deterministic. Default is true.
+ * @category Layout
  */
 class HierarchicalLayout extends GraphLayout {
+  /**
+   * Constructs a new hierarchical layout algorithm.
+   *
+   * @param graph Reference to the enclosing {@link Graph}.
+   * @param orientation Optional constant that defines the orientation of this layout. Default is {@link DIRECTION.NORTH}.
+   * @param deterministic Optional boolean that specifies if this layout should be deterministic. Default is true.
+   */
   constructor(
     graph: Graph,
     orientation: DIRECTION = DIRECTION.NORTH,

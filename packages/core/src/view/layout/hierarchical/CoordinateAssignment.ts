@@ -35,21 +35,22 @@ import SwimlaneLayout from '../SwimlaneLayout';
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.
- * Uses median down and up weighings as well as heuristics to straighten edges as
+ * Uses median down and up weightings as well as heuristics to straighten edges as
  * far as possible.
  *
- * Constructor: mxCoordinateAssignment
- *
- * Creates a coordinate assignment.
- *
- * Arguments:
- *
- * intraCellSpacing - the minimum buffer between cells on the same rank
- * interRankCellSpacing - the minimum distance between cells on adjacent ranks
- * orientation - the position of the root node(s) relative to the graph
- * initialX - the leftmost coordinate node placement starts at
+ * @category Layout
  */
 class CoordinateAssignment extends HierarchicalLayoutStage {
+  /**
+   * Creates a coordinate assignment.
+   *
+   * @param layout
+   * @param intraCellSpacing the minimum buffer between cells on the same rank interRankCellSpacing
+   * @param interRankCellSpacing the minimum distance between cells on adjacent ranks
+   * @param orientation the position of the root node(s) relative to the graph
+   * @param initialX the leftmost coordinate node placement starts at
+   * @param parallelEdgeSpacing
+   */
   constructor(
     layout: HierarchicalLayout | SwimlaneLayout,
     intraCellSpacing = 30,

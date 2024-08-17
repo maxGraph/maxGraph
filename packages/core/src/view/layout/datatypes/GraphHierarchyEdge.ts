@@ -21,6 +21,11 @@ import ObjectIdentity from '../../../util/ObjectIdentity';
 import Cell from '../../cell/Cell';
 import GraphHierarchyNode from './GraphHierarchyNode';
 
+/**
+ * An abstraction of a hierarchical edge for the hierarchy layout
+ *
+ * @category Layout
+ */
 class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**
    * The graph edge(s) this object represents. Parallel edges are all grouped
@@ -50,17 +55,9 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   isReversed = false;
 
   /**
-   * Class: mxGraphHierarchyEdge
-   *
-   * An abstraction of a hierarchical edge for the hierarchy layout
-   *
-   * Constructor: mxGraphHierarchyEdge
-   *
    * Constructs a hierarchy edge
    *
-   * Arguments:
-   *
-   * edges - a list of real graph edges this abstraction represents
+   * @param edges a list of real graph edges this abstraction represents
    */
   constructor(edges: Cell[]) {
     super();

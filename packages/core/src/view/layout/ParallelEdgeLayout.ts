@@ -31,7 +31,7 @@ import Geometry from '../geometry/Geometry';
  * Example:
  *
  * ```javascript
- * let layout = new mxParallelEdgeLayout(graph);
+ * const layout = new ParallelEdgeLayout(graph);
  * layout.execute(graph.getDefaultParent());
  * ```
  *
@@ -39,19 +39,19 @@ import Geometry from '../geometry/Geometry';
  * following code can be used.
  *
  * ```javascript
- * let layout = new mxParallelEdgeLayout(graph);
+ * const layout = new ParallelEdgeLayout(graph);
  *
- * graph.addListener(mxEvent.CELL_CONNECTED, (sender, evt)=>
+ * graph.addListener(mxEvent.CELL_CONNECTED, (sender, evt) =>
  * {
- *   let model = graph.getDataModel();
- *   let edge = evt.getProperty('edge');
- *   let src = model.getTerminal(edge, true);
- *   let trg = model.getTerminal(edge, false);
+ *   const model = graph.getDataModel();
+ *   const edge = evt.getProperty('edge');
+ *   const src = model.getTerminal(edge, true);
+ *   const trg = model.getTerminal(edge, false);
  *
- *   layout.isEdgeIgnored = (edge2)=>
+ *   layout.isEdgeIgnored = (edge2) =>
  *   {
- *     var src2 = model.getTerminal(edge2, true);
- *     var trg2 = model.getTerminal(edge2, false);
+ *     const src2 = model.getTerminal(edge2, true);
+ *     const trg2 = model.getTerminal(edge2, false);
  *
  *     return !(model.isEdge(edge2) && ((src == src2 && trg == trg2) || (src == trg2 && trg == src2)));
  *   };
@@ -60,9 +60,7 @@ import Geometry from '../geometry/Geometry';
  * });
  * ```
  *
- * Constructor: mxParallelEdgeLayout
- *
- * Constructs a new parallel edge layout for the specified graph.
+ * @category Layout
  */
 class ParallelEdgeLayout extends GraphLayout {
   constructor(graph: Graph) {

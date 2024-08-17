@@ -24,15 +24,14 @@ import GraphHierarchyEdge from './GraphHierarchyEdge';
 /**
  * An abstraction of a hierarchical edge for the hierarchy layout
  *
- * Constructor: mxGraphHierarchyNode
- *
- * Constructs an internal node to represent the specified real graph cell
- *
- * Arguments:
- *
- * cell - the real graph cell this node represents
+ * @category Layout
  */
 class GraphHierarchyNode extends GraphAbstractHierarchyCell {
+  /**
+   * Constructs an internal node to represent the specified real graph cell
+   *
+   * @param cell the real graph cell this node represents
+   */
   constructor(cell: Cell) {
     super();
     this.cell = cell;

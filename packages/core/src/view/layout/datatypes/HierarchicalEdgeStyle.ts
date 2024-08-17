@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * @category Layout
+ */
 const HierarchicalEdgeStyle = {
   ORTHOGONAL: 1,
   POLYLINE: 2,

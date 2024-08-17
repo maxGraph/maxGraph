@@ -29,11 +29,12 @@ import GraphHierarchyModel from './GraphHierarchyModel';
  * An implementation of the first stage of the Sugiyama layout. Straightforward
  * longest path calculation of layer assignment
  *
- * Constructor: mxMinimumCycleRemover
- *
- * Creates a cycle remover for the given internal model.
+ * @category Layout
  */
 class MinimumCycleRemover extends HierarchicalLayoutStage {
+  /**
+   * Creates a cycle remover for the given internal model.
+   */
   constructor(layout: HierarchicalLayout) {
     super();
     this.layout = layout;

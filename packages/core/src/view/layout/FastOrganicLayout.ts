@@ -28,13 +28,11 @@ import Cell from '../cell/Cell';
  * Example:
  *
  * ```javascript
- * let layout = new mxFastOrganicLayout(graph);
+ * const layout = new FastOrganicLayout(graph);
  * layout.execute(graph.getDefaultParent());
  * ```
  *
- * Constructor: mxCompactTreeLayout
- *
- * Constructs a new fast organic layout for the specified graph.
+ * @category Layout
  */
 class MxFastOrganicLayout extends GraphLayout {
   constructor(graph: Graph) {
