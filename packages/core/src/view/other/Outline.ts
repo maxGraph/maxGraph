@@ -27,7 +27,7 @@ import {
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
 import RectangleShape from '../geometry/node/RectangleShape';
-import { Graph, defaultPlugins } from '../Graph';
+import { Graph } from '../Graph';
 import ImageShape from '../geometry/node/ImageShape';
 import InternalEvent from '../event/InternalEvent';
 import Image from '../image/ImageBox';
@@ -36,6 +36,7 @@ import { getSource, isMouseEvent } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 import { hasScrollbars } from '../../util/styleUtils';
 import { Listenable } from '../../types';
+import { getDefaultPlugins } from '../plugins';
 
 /**
  * @class Outline
@@ -322,7 +323,10 @@ class Outline {
     const graph = new Graph(
       container,
       this.source.getDataModel(),
-      defaultPlugins,
+      // TODO review the list of plugins for the Graph of an Outline
+      // we could pass an empty array or a selection of plugins
+      // it may be necessary to make the plugins array configurable to allow custom plugins and improve tree-shaking
+      getDefaultPlugins(),
       this.source.getStylesheet()
     );
     graph.options.foldingEnabled = false;

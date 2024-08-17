@@ -35,6 +35,8 @@ import EventSource from '../event/EventSource';
  * {@link Graph#getTooltip} is used to get the tooltip for a cell or handle.
  *
  * This handler is generally enabled using {@link Graph#setTooltips}.
+ *
+ * @category Plugin
  */
 class TooltipHandler implements GraphPlugin {
   static pluginId = 'TooltipHandler';

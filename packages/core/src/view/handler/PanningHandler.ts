@@ -36,15 +36,11 @@ import type { Graph } from '../Graph';
 
 /**
  * Event handler that pans and creates popupmenus. To use the left
- * mousebutton for panning without interfering with cell moving and
+ * mouse button for panning without interfering with cell moving and
  * resizing, use <isUseLeftButton> and <isIgnoreCell>. For grid size
- * steps while panning, use <useGrid>. This handler is built-into
- * {@link Graph#panningHandler} and enabled using {@link Graph#setPanning}.
+ * steps while panning, use <useGrid>.
  *
- * Constructor: mxPanningHandler
- *
- * Constructs an event handler that creates a {@link PopupMenu}
- * and pans the graph.
+ * When registered in the {@link Graph.constructor} plugins list, it can be enabled using {@link Graph.setPanning}.
  *
  * Event: mxEvent.PAN_START
  *
@@ -60,6 +56,8 @@ import type { Graph } from '../Graph';
  *
  * Fires when the panning handler changes its <active> state to false. The
  * <code>event</code> property contains the corresponding {@link MouseEvent}.
+ *
+ * @category Plugin
  */
 class PanningHandler extends EventSource implements GraphPlugin {
   static pluginId = 'PanningHandler';

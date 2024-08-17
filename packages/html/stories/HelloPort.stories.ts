@@ -18,6 +18,7 @@ limitations under the License.
 import {
   DomHelpers,
   EdgeStyle,
+  getDefaultPlugins,
   Graph,
   ModelXmlSerializer,
   Point,
@@ -53,8 +54,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
   // Creates the graph inside the given container
-  const graph = new Graph(container);
+  const graph = new Graph(container, undefined, plugins);
   graph.setConnectable(true);
   graph.setTooltips(true);
 
@@ -87,9 +92,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Removes the folding icon and disables any folding
   graph.isCellFoldable = (_cell) => false;
-
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

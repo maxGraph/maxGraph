@@ -30,9 +30,9 @@ import EventObject from '../event/EventObject';
 /**
  * Event handler that creates popupmenus.
  *
- * Constructor: mxPopupMenuHandler
+ * Relates to {@link MaxPopupMenu}.
  *
- * Constructs an event handler that creates a {@link PopupMenu}.
+ * @category Plugin
  */
 class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   static pluginId = 'PopupMenuHandler';

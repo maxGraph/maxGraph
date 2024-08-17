@@ -25,6 +25,7 @@ import {
   domUtils,
   GlobalConfig,
   MaxLogAsLogger,
+  getDefaultPlugins,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
@@ -71,14 +72,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     true
   );
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
   // Creates the graph inside the given container
-  const graph = new Graph(container);
+  const graph = new Graph(container, undefined, plugins);
 
   // Adds rubberband selection and keystrokes
   graph.setTooltips(true);
   graph.setPanning(true);
-
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   new KeyHandler(graph);
 

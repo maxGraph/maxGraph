@@ -31,6 +31,7 @@ import {
   Point,
   RubberBandHandler,
   cellArrayUtils,
+  getDefaultPlugins,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -84,8 +85,13 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   const container = createGraphContainer(args);
   toolbarAndGraphParentContainer.appendChild(container);
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
+  // Creates the graph inside the given container
   const model = new GraphDataModel();
-  const graph = new Graph(container, model);
+  const graph = new Graph(container, model, plugins);
   configureExpandedAndCollapsedImages(graph);
   graph.dropEnabled = true;
 
@@ -118,8 +124,6 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
 
   // Stops editing on enter or escape keypress (TODO not working, do we want to keep this here?)
   // const keyHandler = new KeyHandler(graph);
-
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   function addCell(
     isVertex: boolean,

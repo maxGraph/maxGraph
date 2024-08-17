@@ -19,6 +19,7 @@ import './style.css';
 import {
   Client,
   DomHelpers,
+  getDefaultPlugins,
   Graph,
   InternalEvent,
   ModelXmlSerializer,
@@ -59,9 +60,11 @@ const initializeGraph = (container) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  const graph = new Graph(container);
+  const graph = new Graph(container, undefined, [
+    ...getDefaultPlugins(),
+    RubberBandHandler, // Enables rubber band selection
+  ]);
   graph.setPanning(true); // Use mouse right button for panning
-  new RubberBandHandler(graph); // Enables rubber band selection
 
   const modelXmlSerializer = new ModelXmlSerializer(graph.model);
   modelXmlSerializer.import(xmlWithVerticesAndEdges);

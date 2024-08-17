@@ -31,6 +31,7 @@ import {
   ModelXmlSerializer,
   popup,
   type Cell,
+  getDefaultPlugins,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -87,8 +88,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const relation = doc.createElement('Knows');
   relation.setAttribute('since', '1985');
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
   // Creates the graph inside the given container
-  const graph = new Graph(container);
+  const graph = new Graph(container, undefined, plugins);
 
   // Optional disabling of sizing
   graph.setCellsResizable(false);
@@ -171,9 +176,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
     return getTooltipForCell.apply(this, [cell]);
   };
-
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   const buttons = document.createElement('div');
   mainDiv.appendChild(buttons);

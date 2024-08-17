@@ -63,13 +63,16 @@ import type { ColorValue, GraphPlugin } from '../../types';
  *
  * To avoid the container to scroll a moved cell into view, set {@link scrollOnMove} to `false`.
  *
- * Constructs an event handler that creates handles for the selection cells.
- *
- * @param graph Reference to the enclosing {@link Graph}.
+ * @category Plugin
  */
 class SelectionHandler implements GraphPlugin {
   static pluginId = 'SelectionHandler';
 
+  /**
+   * Constructs an event handler that creates handles for the selection cells.
+   *
+   * @param graph Reference to the enclosing {@link Graph}.
+   */
   constructor(graph: Graph) {
     this.graph = graph;
     this.graph.addMouseListener(this);

@@ -19,6 +19,7 @@ import './style.css';
 import {
   Client,
   constants,
+  getDefaultPlugins,
   Graph,
   InternalEvent,
   Perimeter,
@@ -30,9 +31,11 @@ const initializeGraph = (container: HTMLElement) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  const graph = new Graph(container);
+  const graph = new Graph(container, undefined, [
+    ...getDefaultPlugins(),
+    RubberBandHandler, // Enables rubber band selection
+  ]);
   graph.setPanning(true); // Use mouse right button for panning
-  new RubberBandHandler(graph); // Enables rubber band selection
 
   // shapes and styles
   registerCustomShapes();

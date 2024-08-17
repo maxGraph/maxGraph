@@ -15,7 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, RubberBandHandler, RadialTreeLayout } from '@maxgraph/core';
+import {
+  getDefaultPlugins,
+  Graph,
+  RubberBandHandler,
+  RadialTreeLayout,
+} from '@maxgraph/core';
 import {
   globalTypes,
   globalValues,
@@ -41,11 +46,12 @@ export default {
 const Template = ({ label, ...args }: Record<string, any>) => {
   const container = createGraphContainer(args);
 
-  // Creates the graph inside the given container
-  const graph = new Graph(container);
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
 
-  // Adds rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
+  // Creates the graph inside the given container
+  const graph = new Graph(container, undefined, plugins);
 
   // Changes the default vertex style in-place
   let style = graph.getStylesheet().getDefaultVertexStyle();

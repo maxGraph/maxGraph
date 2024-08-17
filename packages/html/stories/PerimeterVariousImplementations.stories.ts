@@ -16,6 +16,7 @@ limitations under the License.
 
 import {
   type CellStateStyle,
+  getDefaultPlugins,
   Graph,
   InternalEvent,
   RubberBandHandler,
@@ -54,11 +55,12 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   InternalEvent.disableContextMenu(container);
 
-  // Creates the graph inside the given container
-  const graph: Graph = new Graph(container);
-
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
+  // Creates the graph inside the given container
+  const graph = new Graph(container, undefined, plugins);
 
   // Gets the default parent for inserting new cells. This is normally the first child of the root (i.e. layer 0).
   const parent = graph.getDefaultParent();

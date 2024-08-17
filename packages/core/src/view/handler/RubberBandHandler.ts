@@ -37,8 +37,25 @@ import EventSource from '../event/EventSource';
 
 /**
  * Event handler that selects rectangular regions.
- * This is not built-into [mxGraph].
+ *
+ * **IMPORTANT**: This is not built-into `maxGraph` i.e. this plugin is not in the `maxGraph` default plugins, see {@link getDefaultPlugins}.
+ *
  * To enable rubberband selection in a graph, use the following code.
+ *
+ * ```javascript
+ * const plugins = [
+ *   ...getDefaultPlugins(), // or any other plugins you want
+ *   RubberBandHandler,
+ * ];
+ *
+ * // Creates the graph with the custom plugins
+ * const graph = new Graph(container, undefined, plugins);
+ * ```
+ *
+ * **IMPORTANT**: the RubberBandHandler requires CSS styles in order to work properly.
+ * See the CSS rules in the `css/common.css` file provided within the npm package. They relate to the `.mxRubberband` class.
+ *
+ * @category Plugin
  */
 class RubberBandHandler implements GraphPlugin {
   static pluginId = 'RubberBandHandler';

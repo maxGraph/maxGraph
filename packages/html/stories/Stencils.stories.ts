@@ -24,6 +24,7 @@ import {
   constants,
   DomHelpers,
   EdgeHandler,
+  getDefaultPlugins,
   Graph,
   InternalEvent,
   load,
@@ -111,11 +112,15 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return shape;
     }
   }
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
 
   class CustomGraph extends Graph {
     constructor(container: HTMLElement) {
-      super(container);
+      super(container, undefined, plugins);
     }
+
     createVertexHandler(state: CellState) {
       return new CustomVertexHandler(state);
     }
@@ -193,9 +198,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.fillColor = '#adc5ff';
   style.gradientColor = '#7d85df';
   style.shadow = true;
-
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

@@ -22,6 +22,7 @@ import {
   ConnectionConstraint,
   Geometry,
   Graph,
+  type GraphPluginConstructor,
   InternalMouseEvent,
   Point,
   RubberBandHandler,
@@ -63,19 +64,19 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
+  // Use a dedicated set of plugins to use MyCustomConnectionHandler and to not use extra plugins not needed here
+  const plugins: GraphPluginConstructor[] = [
+    CellEditorHandler,
+    SelectionCellsHandler,
+    MyCustomConnectionHandler,
+    SelectionHandler,
+  ];
+  // Enables rubberband selection
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
   class MyCustomGraph extends Graph {
     constructor(container: HTMLElement) {
-      super(
-        container,
-        undefined,
-        // Use a dedicated set of plugins to use MyCustomConnectionHandler and to not use extra plugins not needed here
-        [
-          CellEditorHandler,
-          SelectionCellsHandler,
-          MyCustomConnectionHandler,
-          SelectionHandler,
-        ]
-      );
+      super(container, undefined, plugins);
     }
     getAllConnectionConstraints = (terminal: CellState | null, _source: boolean) => {
       // Overridden to define per-geometry connection points
@@ -110,9 +111,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Specifies the default edge style
   graph.getStylesheet().getDefaultEdgeStyle().edgeStyle = 'orthogonalEdgeStyle';
-
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

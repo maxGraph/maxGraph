@@ -153,11 +153,7 @@ import TooltipHandler from './TooltipHandler';
  * };
  * ```
  *
- * Constructor: mxCellEditor
- *
- * Constructs a new in-place editor for the specified graph.
- *
- * @param graph Reference to the enclosing {@link Graph}.
+ * @category Plugin
  */
 class CellEditorHandler implements GraphPlugin {
   static pluginId = 'CellEditorHandler';

@@ -26,6 +26,7 @@ import {
   RubberBandHandler,
   ModelXmlSerializer,
   type Cell,
+  getDefaultPlugins,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -79,11 +80,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Disables the built-in context menu
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
-  // Creates the graph inside the given container
-  const graph = new Graph(container);
-
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
+  // Creates the graph inside the given container
+  const graph = new Graph(container, undefined, plugins);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

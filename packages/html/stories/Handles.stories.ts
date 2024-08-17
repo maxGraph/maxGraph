@@ -31,6 +31,8 @@ import {
   type CellState,
   type CellStateStyle,
   VertexHandlerConfig,
+  getDefaultPlugins,
+  type GraphPluginConstructor,
 } from '@maxgraph/core';
 
 import {
@@ -234,6 +236,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   class MyCustomGraph extends Graph {
+    constructor(container: HTMLElement, plugins: GraphPluginConstructor[]) {
+      super(container, undefined, plugins);
+    }
+
     createVertexHandler(state: CellState) {
       return new MyCustomVertexHandler(state);
     }
@@ -242,15 +248,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Disables the built-in context menu
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
   // Creates the graph inside the given container
-  const graph = new MyCustomGraph(container);
+  const graph = new MyCustomGraph(container, plugins);
   graph.setCellsCloneable(true);
   graph.setHtmlLabels(true);
   graph.setPanning(true);
   graph.centerZoom = false;
-
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

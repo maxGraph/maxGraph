@@ -16,21 +16,22 @@ limitations under the License.
 */
 
 import {
-  type CellStyle,
-  Graph,
-  type HTMLImageElementWithProps,
-  RubberBandHandler,
-  type ConnectionHandler,
-  ImageBox,
-  MaxToolbar,
-  GraphDataModel,
   Cell,
-  Geometry,
-  InternalEvent,
-  styleUtils,
-  gestureUtils,
-  Client,
   cellArrayUtils,
+  type CellStyle,
+  Client,
+  type ConnectionHandler,
+  Geometry,
+  gestureUtils,
+  getDefaultPlugins,
+  Graph,
+  GraphDataModel,
+  type HTMLImageElementWithProps,
+  ImageBox,
+  InternalEvent,
+  MaxToolbar,
+  RubberBandHandler,
+  styleUtils,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -77,10 +78,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  // Creates the model and the graph inside the container
-  // using the fastest rendering available on the browser
-  const model = new GraphDataModel();
-  const graph = new Graph(container, model);
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
+  // Creates the model and the graph inside the container using the fastest rendering available on the browser
+  const graph = new Graph(container, new GraphDataModel(), plugins);
 
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
@@ -97,8 +100,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Stops editing on enter or escape keypress (TODO not working, do we want to keep this here?)
   // const keyHandler = new KeyHandler(graph);
-
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   addVertex('images/rectangle.gif', 100, 40, {});
   addVertex('images/rounded.gif', 100, 40, { rounded: true });

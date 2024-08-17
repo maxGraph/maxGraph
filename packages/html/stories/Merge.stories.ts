@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, Perimeter, RubberBandHandler } from '@maxgraph/core';
+import { getDefaultPlugins, Graph, Perimeter, RubberBandHandler } from '@maxgraph/core';
 import {
   globalTypes,
   globalValues,
@@ -44,8 +44,12 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   // Should we allow overriding constants?
   // constants.SHADOWCOLOR = '#c0c0c0';
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
   // Creates the graph inside the given container
-  const graph = new Graph(container);
+  const graph = new Graph(container, undefined, plugins);
 
   // No size handles, please...
   graph.setCellsResizable(false);
@@ -66,9 +70,6 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   style.fontStyle = 1; // bold
   style.fontColor = 'black';
   style.strokeWidth = 2;
-
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).

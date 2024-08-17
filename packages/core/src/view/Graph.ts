@@ -21,16 +21,10 @@ import EventObject from './event/EventObject';
 import EventSource from './event/EventSource';
 import InternalEvent from './event/InternalEvent';
 import Rectangle from './geometry/Rectangle';
-import TooltipHandler from './handler/TooltipHandler';
 import Client from '../Client';
-import SelectionCellsHandler from './handler/SelectionCellsHandler';
-import ConnectionHandler from './handler/ConnectionHandler';
-import SelectionHandler from './handler/SelectionHandler';
-import PanningHandler from './handler/PanningHandler';
-import PopupMenuHandler from './handler/PopupMenuHandler';
+import type PanningHandler from './handler/PanningHandler';
 import GraphView from './GraphView';
 import CellRenderer from './cell/CellRenderer';
-import CellEditorHandler from './handler/CellEditorHandler';
 import Point from './geometry/Point';
 import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
 import Cell from './cell/Cell';
@@ -65,16 +59,7 @@ import { registerDefaultShapes } from './cell/register-shapes';
 import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
 import { registerDefaultStyleElements } from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
-
-export const defaultPlugins: GraphPluginConstructor[] = [
-  CellEditorHandler,
-  TooltipHandler,
-  SelectionCellsHandler,
-  PopupMenuHandler,
-  ConnectionHandler,
-  SelectionHandler,
-  PanningHandler,
-];
+import { getDefaultPlugins } from './plugins';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
@@ -500,7 +485,7 @@ class Graph extends EventSource {
   constructor(
     container: HTMLElement,
     model?: GraphDataModel,
-    plugins: GraphPluginConstructor[] = defaultPlugins,
+    plugins: GraphPluginConstructor[] = getDefaultPlugins(),
     stylesheet: Stylesheet | null = null
   ) {
     super();

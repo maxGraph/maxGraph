@@ -17,6 +17,7 @@ limitations under the License.
 
 import {
   type CellState,
+  getDefaultPlugins,
   Graph,
   GraphView,
   InternalEvent,
@@ -82,9 +83,13 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     }
   }
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
   class MyCustomGraph extends Graph {
     constructor(container: HTMLElement) {
-      super(container);
+      super(container, undefined, plugins);
     }
 
     createGraphView(): GraphView {
@@ -99,9 +104,6 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   // Uncomment the following if you want the container to fit the size of the graph
   // graph.setResizeContainer(true);
-
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This is normally the first child of the root (i.e. layer 0).
   const parent = graph.getDefaultParent();

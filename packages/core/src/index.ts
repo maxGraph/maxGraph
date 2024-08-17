@@ -18,6 +18,7 @@ limitations under the License.
 import './view/mixins/_graph-mixins-types';
 
 export { Graph } from './view/Graph';
+export * from './view/plugins';
 
 export { GraphDataModel } from './view/GraphDataModel';
 export { GraphView } from './view/GraphView';

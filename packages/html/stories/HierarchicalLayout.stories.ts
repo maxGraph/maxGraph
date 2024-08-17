@@ -18,6 +18,7 @@ limitations under the License.
 import {
   DomHelpers,
   FastOrganicLayout,
+  getDefaultPlugins,
   Graph,
   HierarchicalLayout,
   InternalEvent,
@@ -52,11 +53,12 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   InternalEvent.disableContextMenu(container);
 
-  // Creates the graph inside the given container
-  const graph = new Graph(container);
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
 
-  // Adds rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
+  // Creates the graph inside the given container
+  const graph = new Graph(container, undefined, plugins);
 
   // Changes the default vertex style in-place
   let style = graph.getStylesheet().getDefaultVertexStyle();

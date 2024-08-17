@@ -203,19 +203,7 @@ type FactoryMethod = (
  *
  * Fires when the <reset> method is invoked.
  *
- * Constructor: mxConnectionHandler
- *
- * Constructs an event handler that connects vertices using the specified
- * factory method to create the new edges. Modify
- * {@link Constants#ACTIVE_REGION} to setup the region on a cell which triggers
- * the creation of a new connection or use connect icons as explained
- * above.
- *
- * @param graph Reference to the enclosing {@link Graph}.
- * @param factoryMethod Optional function to create the edge. The function takes
- * the source and target <Cell> as the first and second argument and an
- * optional cell style from the preview as the third argument. It returns
- * the <Cell> that represents the new edge.
+ * @category Plugin
  */
 class ConnectionHandler extends EventSource implements GraphPlugin {
   static pluginId = 'ConnectionHandler';
@@ -394,6 +382,16 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
 
   escapeHandler: () => void;
 
+  /**
+   * Constructs an event handler that connects vertices using the specified
+   * factory method to create the new edges.
+   *
+   * @param graph Reference to the enclosing {@link Graph}.
+   * @param factoryMethod Optional function to create the edge. The function takes
+   * the source and target {@link Cell} as the first and second argument and an
+   * optional cell style from the preview as the third argument. It returns
+   * the {@link Cell} that represents the new edge.
+   */
   constructor(graph: Graph, factoryMethod: FactoryMethod | null = null) {
     super();
 
