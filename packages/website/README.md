@@ -22,7 +22,7 @@ Such resources are expected to be copied into the `generated` directory of the w
 - copy `/packages/html/dist` to `/packages/website/generated/demo`
 
 Run the following commands to copy the resources:
-```bash
+```
 npm run extra:copy-gen-resources
 ```
 
@@ -34,7 +34,7 @@ When building, you must run this command at least once before building the websi
 ## Local Development
 
 ```
-$ npm start
+npm start
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
@@ -42,7 +42,12 @@ This command starts a local development server and opens up a browser window. Mo
 ## Build
 
 ```
-$ npm build
+npm run build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
+
+To validate the build, run the following command:
+```
+npm run serve
+```
