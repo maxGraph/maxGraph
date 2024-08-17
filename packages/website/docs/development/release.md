@@ -52,10 +52,10 @@ the GitHub release page.
   - Run the git push command.
   - Update the ruleset to remove the bypass permission. 
 
-- Create a git tag, prefixing the version with a `v`. For example, if the version is 0.2.0, run:
+- Create a git annotated tag, prefixing the version with a `v`. For example, if the version is 0.2.0, run:
 ```
 git fetch --tags
-git tag v0.2.0
+git tag -a v0.2.0 -m "chore: release version 0.2.0"
 ```
 - Push the tag
   - As for the default branch, tags are protected by a GitHub ruleset that prevents direct pushing tags.
