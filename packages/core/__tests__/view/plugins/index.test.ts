@@ -22,6 +22,7 @@ describe('getDefaultPlugins', () => {
     const plugins1 = getDefaultPlugins();
     const plugins2 = getDefaultPlugins();
     expect(plugins1).not.toBe(plugins2);
+    expect(plugins1).toEqual(plugins2);
   });
 
   test('returns an array with the correct length', () => {
