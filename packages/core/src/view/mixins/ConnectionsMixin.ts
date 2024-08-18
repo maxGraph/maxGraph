@@ -23,7 +23,7 @@ import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Dictionary from '../../util/Dictionary';
 import type { Graph } from '../Graph';
-import ConnectionHandler from '../handler/ConnectionHandler';
+import type ConnectionHandler from '../handler/ConnectionHandler';
 
 type PartialGraph = Pick<Graph, 'getView' | 'getDataModel' | 'isPortsEnabled'>;
 type PartialConnections = Pick<
@@ -511,12 +511,12 @@ export const ConnectionsMixin: PartialType = {
   },
 
   setConnectable(connectable) {
-    const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
+    const connectionHandler = this.getPlugin<ConnectionHandler>('ConnectionHandler');
     connectionHandler?.setEnabled(connectable);
   },
 
   isConnectable() {
-    const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
+    const connectionHandler = this.getPlugin<ConnectionHandler>('ConnectionHandler');
     return connectionHandler?.isEnabled() ?? false;
   },
 };

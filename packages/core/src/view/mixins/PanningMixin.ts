@@ -17,11 +17,11 @@ limitations under the License.
 import { hasScrollbars } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import PanningHandler from '../handler/PanningHandler';
+import type PanningHandler from '../handler/PanningHandler';
 import { Graph } from '../Graph';
 import Rectangle from '../geometry/Rectangle';
 import Point from '../geometry/Point';
-import SelectionCellsHandler from '../handler/SelectionCellsHandler';
+import type SelectionCellsHandler from '../handler/SelectionCellsHandler';
 
 type PartialGraph = Pick<Graph, 'getContainer' | 'getView' | 'getPlugin' | 'fireEvent'>;
 type PartialPanning = Pick<
@@ -292,9 +292,9 @@ export const PanningMixin: PartialType = {
       if (isChanged) {
         this.getView().refresh();
 
-        const selectionCellsHandler = this.getPlugin(
+        const selectionCellsHandler = this.getPlugin<SelectionCellsHandler>(
           'SelectionCellsHandler'
-        ) as SelectionCellsHandler;
+        );
 
         // Repaints selection marker (ticket 18)
         if (selectionCellsHandler) {
@@ -307,7 +307,7 @@ export const PanningMixin: PartialType = {
   },
 
   setPanning(enabled) {
-    const panningHandler = this.getPlugin('PanningHandler') as PanningHandler;
+    const panningHandler = this.getPlugin<PanningHandler>('PanningHandler');
     panningHandler && (panningHandler.panningEnabled = enabled);
   },
 };

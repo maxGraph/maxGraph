@@ -53,9 +53,9 @@ export const TooltipMixin: PartialType = {
     }
 
     if (!tip) {
-      const selectionCellsHandler = this.getPlugin(
+      const selectionCellsHandler = this.getPlugin<SelectionCellsHandler>(
         'SelectionCellsHandler'
-      ) as SelectionCellsHandler;
+      );
 
       const handler = selectionCellsHandler?.getHandler(state.cell);
 
@@ -89,7 +89,7 @@ export const TooltipMixin: PartialType = {
   },
 
   setTooltips(enabled: boolean) {
-    const tooltipHandler = this.getPlugin('TooltipHandler') as TooltipHandler;
+    const tooltipHandler = this.getPlugin<TooltipHandler>('TooltipHandler');
     tooltipHandler?.setEnabled(enabled);
   },
 };

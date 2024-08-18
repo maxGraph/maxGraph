@@ -43,7 +43,7 @@ import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtil
 import { clone } from '../util/cloneUtils';
 import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
-import TooltipHandler from './handler/TooltipHandler';
+import type TooltipHandler from './handler/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
 
 /**
@@ -2167,7 +2167,7 @@ export class GraphView extends EventSource {
     });
 
     this.moveHandler = (evt: MouseEvent) => {
-      const tooltipHandler = graph.getPlugin('TooltipHandler') as TooltipHandler;
+      const tooltipHandler = graph.getPlugin<TooltipHandler>('TooltipHandler');
 
       // Hides the tooltip if mouse is outside container
       if (tooltipHandler && tooltipHandler.isHideOnHover()) {

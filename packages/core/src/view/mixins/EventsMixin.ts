@@ -34,15 +34,15 @@ import {
 } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import Cell from '../cell/Cell';
-import PanningHandler from '../handler/PanningHandler';
-import ConnectionHandler from '../handler/ConnectionHandler';
+import type PanningHandler from '../handler/PanningHandler';
+import type ConnectionHandler from '../handler/ConnectionHandler';
 import Point from '../geometry/Point';
 import { convertPoint } from '../../util/styleUtils';
 import { NONE } from '../../util/Constants';
 import Client from '../../Client';
-import CellEditorHandler from '../handler/CellEditorHandler';
+import type CellEditorHandler from '../handler/CellEditorHandler';
 import type { Graph } from '../Graph';
-import TooltipHandler from '../handler/TooltipHandler';
+import type TooltipHandler from '../handler/TooltipHandler';
 
 type PartialGraph = Pick<
   Graph,
@@ -338,8 +338,8 @@ export const EventsMixin: PartialType = {
       cell: me.getCell(),
     });
 
-    const panningHandler = this.getPlugin('PanningHandler') as PanningHandler;
-    const connectionHandler = this.getPlugin('ConnectionHandler') as ConnectionHandler;
+    const panningHandler = this.getPlugin<PanningHandler>('PanningHandler');
+    const connectionHandler = this.getPlugin<ConnectionHandler>('ConnectionHandler');
 
     // LATER: Check if event should be consumed if me is consumed
     this.fireEvent(mxe);
@@ -576,7 +576,7 @@ export const EventsMixin: PartialType = {
     sender = sender ?? (this as Graph);
 
     if (this.isEventSourceIgnored(evtName, me)) {
-      const tooltipHandler = this.getPlugin('TooltipHandler') as TooltipHandler;
+      const tooltipHandler = this.getPlugin<TooltipHandler>('TooltipHandler');
       if (tooltipHandler) {
         tooltipHandler.hide();
       }
@@ -758,7 +758,7 @@ export const EventsMixin: PartialType = {
           Math.abs(this.initialTouchY - me.getGraphY()) < this.tolerance;
       }
 
-      const cellEditorHandler = this.getPlugin('CellEditorHandler') as CellEditorHandler;
+      const cellEditorHandler = this.getPlugin<CellEditorHandler>('CellEditorHandler');
 
       // Stops editing for all events other than from cellEditorHandler
       if (

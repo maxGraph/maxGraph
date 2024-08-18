@@ -74,9 +74,7 @@ export const EditingMixin: PartialType = {
           new EventObject(InternalEvent.START_EDITING, { cell, event: evt })
         );
 
-        const cellEditorHandler = this.getPlugin(
-          'CellEditorHandler'
-        ) as CellEditorHandler;
+        const cellEditorHandler = this.getPlugin<CellEditorHandler>('CellEditorHandler');
         cellEditorHandler?.startEditing(cell, evt);
 
         this.fireEvent(
@@ -91,7 +89,7 @@ export const EditingMixin: PartialType = {
   },
 
   stopEditing(cancel = false) {
-    const cellEditorHandler = this.getPlugin('CellEditorHandler') as CellEditorHandler;
+    const cellEditorHandler = this.getPlugin<CellEditorHandler>('CellEditorHandler');
     cellEditorHandler?.stopEditing(cancel);
     this.fireEvent(new EventObject(InternalEvent.EDITING_STOPPED, { cancel }));
   },
@@ -127,7 +125,7 @@ export const EditingMixin: PartialType = {
    *****************************************************************************/
 
   isEditing(cell = null) {
-    const cellEditorHandler = this.getPlugin('CellEditorHandler') as CellEditorHandler;
+    const cellEditorHandler = this.getPlugin<CellEditorHandler>('CellEditorHandler');
     const editingCell = cellEditorHandler?.getEditingCell();
     return !cell ? !!editingCell : cell === editingCell;
   },
