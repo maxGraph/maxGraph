@@ -39,13 +39,15 @@ To visualize the documentation for a specific version (and the corresponding dem
 :::
 
 
-## Getting Started
+## Quick Start
 
 Please check the maxGraph repository **README**:
 - [installation](https://github.com/maxGraph/maxGraph#install)
 - [getting started](https://github.com/maxGraph/maxGraph#getting-started)
 
 
-## Usage
+## Next Steps
 
-Let's continue with the [Usage](/docs/category/usage) documentation.
+Let's continue with the [Manual](/docs/category/manual) to understand the `maxGraph` concepts.
+
+For more information on how to use specific features, please refer to the [Usage](/docs/category/usage) documentation.

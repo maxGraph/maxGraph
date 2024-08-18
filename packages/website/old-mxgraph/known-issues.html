@@ -1,3 +1,11 @@
+<!-- THIS DOCUMENT IS PROBABLY FULLY OUTDATED AND MOST OF THE INFORMATION IS NO LONGER RELEVANT.
+Last Update: 2017-04-12 (mxGraph 3.7.2 release) source: https://github.com/jgraph/mxgraph/blob/v4.2.2/docs/known-issues.html
+
+It won't be migrated, and it will be removed once all mxGraph documentation content has been integrated in the maxGraph documentation.
+
+See the `known-issues` page in the maxGraph documentation which explains how we take care of this out-dated content.
+-->
+
 <html>
 <head>
 	<title>mxGraph - Known Issues</title>
@@ -93,7 +101,7 @@ if (mxClient.IS_NS)
 graph.setHtmlLabels(true);
 graph.insertVertex(parent, null, '<span style="background:yellow;">Hello</span>', 20, 20, 80, 30, 'textOpacity=50');
 </pre>
-	For different CSS opacities inside the label, try using 
+	For different CSS opacities inside the label, try using
 	<code>mxClient.NO_FO = true</code> before rendering the graph.
 </p>
 <h2><a id="Chrome5LocalFiles"></a>Local XHR in Chrome</h2>
@@ -139,7 +147,7 @@ graph.insertVertex(parent, null, '<span style="background:yellow;">Hello</span>'
 	article also states the the access works for signed scripts, however, this
 	has not been tested.
 </p>
-<p>	
+<p>
 	For mxUtils.saveAs in Firefox, the same restrictions apply. However, the
 	function may be used in IE7 without any client-side settings.
 </p>
