@@ -25,57 +25,6 @@ import { TrianglePerimeter as TrianglePerimeterFunction } from './perimeter/Tria
 /**
  * Provides various perimeter functions to be used in a style as the value of {@link CellStateStyle.perimeter}.
  *
- * ### Example
- *
- * ```javascript
- * <add as="perimeter">Perimeter.RectanglePerimeter</add>
- * ```
- *
- * ### Or programmatically
- *
- * ```javascript
- * style.perimeter = Perimeter.RectanglePerimeter;
- * ```
- *
- * When adding new perimeter functions, it is recommended to use the Perimeter-namespace as follows:
- *
- * ```javascript
- * Perimeter.CustomPerimeter = function (bounds, vertex, next, orthogonal)
- * {
- *   const x = 0; // Calculate x-coordinate
- *   const y = 0; // Calculate y-coordinate
- *
- *   return new Point(x, y);
- * }
- * ```
- *
- * #### The new perimeter should then be registered in the {@link StyleRegistry} as follows
- * ```javascript
- * StyleRegistry.putValue('customPerimeter', Perimeter.CustomPerimeter);
- * ```
- *
- * #### The custom perimeter above can now be used in a specific vertex as follows:
- *
- * ```javascript
- * model.setStyle(vertex, {...vertex.style, perimeter: 'customPerimeter'});
- * ```
- *
- * Note that the key of the {@link StyleRegistry} entry for the function should
- * be used in string values, unless {@link GraphView.allowEval} is `true`, in
- * which case you can also use Perimeter.CustomPerimeter for the value in
- * the cell style above.
- *
- * #### Or it can be used for all vertices in the graph as follows:
- *
- * ```javascript
- * var style = graph.getStylesheet().getDefaultVertexStyle();
- * style.perimeter = Perimeter.CustomPerimeter;
- * ```
- *
- * Note that the object can be used directly when programmatically setting
- * the value, but the key in the {@link StyleRegistry} should be used when
- * setting the value via a key, value pair in a cell style.
- *
  * @category Perimeter
  */
 const Perimeter = {

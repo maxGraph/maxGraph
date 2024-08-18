@@ -1,4 +1,5 @@
 ---
+sidebar_position: 10
 description: How-to easily migrate from mxGraph to maxGraph
 ---
 

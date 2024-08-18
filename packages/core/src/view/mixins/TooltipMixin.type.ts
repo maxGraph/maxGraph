@@ -57,7 +57,7 @@ declare module '../Graph' {
      *
      * Replaces all tooltips with the string Hello, World!
      *
-     * @param cell {@link mxCell} whose tooltip should be returned.
+     * @param cell {@link Cell} whose tooltip should be returned.
      */
     getTooltipForCell: (cell: Cell) => HTMLElement | string;
 
@@ -65,6 +65,8 @@ declare module '../Graph' {
      * Specifies if tooltips should be enabled.
      *
      * This implementation updates {@link TooltipHandler.enabled}.
+     *
+     * **IMPORTANT**: only has an effect if the {@link TooltipHandler} plugin is available.
      *
      * @param enabled Boolean indicating if tooltips should be enabled.
      */
