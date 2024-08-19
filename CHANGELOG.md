@@ -10,7 +10,7 @@ This release contains enhancements, documentation improvements and bug fixes.
 
 **Breaking Changes**
 - In `Graph`, the properties related to the plugins are now private. This change should not impact users as these properties were not intended to be used directly.
-Plugins are supposed to be initialized with the constructor and retrieved with the `getPlugin` method.
+Plugins are assumed to be initialized only by passing them to the `Graph` constructor and retrieved with the `getPlugin` method.
 
 ## 0.12.0
 
