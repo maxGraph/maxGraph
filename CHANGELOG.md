@@ -1,6 +1,8 @@
 # `maxGraph` Change Log
 
-## UNRELEASED
+## 0.13.0
+
+Release date: `2024-08-19`
 
 **Breaking Changes**
 - In `Graph`, the properties related to the plugins are now private. This change should not impact users as these properties were not intended to be used directly.
