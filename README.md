@@ -127,7 +127,7 @@ The maxGraph documentation is available on the [maxGraph website](https://maxgra
 > This is a **work in progress**, the content of the original _mxGraph_ documentation will be progressively migrated there.
 > For more details, see [#345](https://github.com/maxGraph/maxGraph/issues/345).
 
-In progress migration:
+Documentation partially migrated:
 - https://maxgraph.github.io/maxGraph/docs/manual/
 
 Documentation to be migrated:
