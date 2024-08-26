@@ -6,7 +6,7 @@ Release date: `2024-08-19`
 
 For more details, see the [0.13.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.13.0) on the GitHub release page.
 
-This release contains enhancements and documentation improvements.
+This new version improves the management of plugins and the overall documentation available in the website.
 
 **Breaking Changes**
 - In `Graph`, the properties related to the plugins are now private. This change should not impact users as these properties were not intended to be used directly.
