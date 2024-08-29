@@ -42,7 +42,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/maxGraph/maxGraph/tree/main/packages/docs/',
+          editUrl: 'https://github.com/maxGraph/maxGraph/tree/main/packages/website/',
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
         },
