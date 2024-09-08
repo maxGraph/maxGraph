@@ -65,6 +65,7 @@ const Template = ({ label, ...args }) => {
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Sets a gradient background
+  // TODO use new props for gradient https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
   if (Client.IS_GC || Client.IS_SF) {
     container.style.background =
       '-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#E7E7E7))';
@@ -143,7 +144,7 @@ const Template = ({ label, ...args }) => {
   const keyHandler = new KeyHandler(graph);
 
   // Enables automatic layout on the graph and installs
-  // a tree layout for all groups who's children are
+  // a tree layout for all groups whose children are
   // being changed, added or removed.
   const layout = new CompactTreeLayout(graph, false);
   layout.useBoundingBox = false;
