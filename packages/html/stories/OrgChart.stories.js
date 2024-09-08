@@ -252,9 +252,11 @@ const Template = ({ label, ...args }) => {
   });
 
   tb.addItem('Poster Print', 'images/press32.png', function (evt) {
+    // TODO find a location for this
     const pageCount = utils.prompt('Enter maximum page count', '1');
 
     if (pageCount != null) {
+      // TODO in printUtils
       const scale = utils.getScaleForPageCount(pageCount, graph);
       const preview = new PrintPreview(graph, scale);
       preview.open();
