@@ -328,6 +328,7 @@ let config = mxUtils.load('editors/config/keyhandler-commons.xml').getDocumentEl
 let editor = new mxEditor(config);
 </pre>
 <p>
+  <b>TODO add link to the codecs page</b>
   The configuration file is an XML file that is passed to
   <a href="js-api/files/io/mxCodec-js.html">mxCodec</a>, which in
   turn uses <a href="js-api/files/io/mxEditorCodec-js.html">mxEditorCodec</a>
@@ -411,57 +412,68 @@ let editor = new mxEditor(config);
   in <a href="js-api/files/util/mxResources-js.html">mxResources</a>, then the
   attribute value is used as the label.
 </p>
+
+
+<!-- ================================================================================= -->
+<!-- already move to the codecs page -->
+<!-- ================================================================================= -->
 <h1><a id="InputOutput"></a>Input/Output</h1>
-<p>
-  The default encoding scheme maps all non-object fields to string
-  attributes and all object fields to child nodes, using the constructor
-  name of the object as the nodename and the fieldname for the as-attribute
-  value. This default encoding scheme may be overridden by custom codecs,
-  which are registered in the
-  <a href="js-api/files/io/mxCodecRegistry-js.html">mxCodecRegistry</a>.
-</p>
-<p>
-  For example, consider the following JavaScript object definition:
-</p>
-<pre>
-let object = {};
-object.myBool = true;
-object.myObject = {};
-object.myObject.name = 'Test';
-object.myArray = ['a', ['b', 'c'], 'd'];
-</pre>
-<p>
-  To encode this object and show the resulting XML in a new window,
-  the following code is used:
-</p>
-<pre>
-let encoder = new mxCodec();
-let node = encoder.encode(object);
-mxUtils.popup(mxUtils.getXml(node));
-</pre>
-<p>
-  And here is the XML structure that represents the object:
-</p>
-<pre>
-&lt;Object myBool="1"&gt;
-  &lt;Object name="Test" as="myObject"/&gt;
-  &lt;Array as="myArray"&gt;
-    &lt;add value="a"/&gt;
-    &lt;Array&gt;
-      &lt;add value="b"/&gt;
-      &lt;add value="c"/&gt;
-    &lt;/Array&gt;
-    &lt;add value="d"/&gt;
-  &lt;/Array&gt;
-&lt;/Object&gt;
-</pre>
-<p>
-  Note that the codecs will turn booleans into numeric values, no
-  array indices are stored if they are numeric and non-object
-  array members are stored inside the value-attribute.
-  Furthermore one may include other XML files by
-  use of the <code>include</code> directive in the XML structures.
-</p>
+<!--<p>-->
+<!--  The default encoding scheme maps all non-object fields to string-->
+<!--  attributes and all object fields to child nodes, using the constructor-->
+<!--  name of the object as the nodename and the fieldname for the as-attribute-->
+<!--  value. This default encoding scheme may be overridden by custom codecs,-->
+<!--  which are registered in the-->
+<!--  <a href="js-api/files/io/mxCodecRegistry-js.html">mxCodecRegistry</a>.-->
+<!--</p>-->
+<!--<p>-->
+<!--  For example, consider the following JavaScript object definition:-->
+<!--</p>-->
+<!--<pre>-->
+<!--let object = {};-->
+<!--object.myBool = true;-->
+<!--object.myObject = {};-->
+<!--object.myObject.name = 'Test';-->
+<!--object.myArray = ['a', ['b', 'c'], 'd'];-->
+<!--</pre>-->
+<!--<p>-->
+<!--  To encode this object and show the resulting XML in a new window,-->
+<!--  the following code is used:-->
+<!--</p>-->
+<!--<pre>-->
+<!--let encoder = new mxCodec();-->
+<!--let node = encoder.encode(object);-->
+<!--mxUtils.popup(mxUtils.getXml(node));-->
+<!--</pre>-->
+<!--<p>-->
+<!--  And here is the XML structure that represents the object:-->
+<!--</p>-->
+<!--<pre>-->
+<!--&lt;Object myBool="1"&gt;-->
+<!--  &lt;Object name="Test" as="myObject"/&gt;-->
+<!--  &lt;Array as="myArray"&gt;-->
+<!--    &lt;add value="a"/&gt;-->
+<!--    &lt;Array&gt;-->
+<!--      &lt;add value="b"/&gt;-->
+<!--      &lt;add value="c"/&gt;-->
+<!--    &lt;/Array&gt;-->
+<!--    &lt;add value="d"/&gt;-->
+<!--  &lt;/Array&gt;-->
+<!--&lt;/Object&gt;-->
+<!--</pre>-->
+<!--<p>-->
+<!--  Note that the codecs will turn booleans into numeric values, no-->
+<!--  array indices are stored if they are numeric and non-object-->
+<!--  array members are stored inside the value-attribute.-->
+<!--  Furthermore one may include other XML files by-->
+<!--  use of the <code>include</code> directive in the XML structures.-->
+<!--</p>-->
+
+<!-- ================================================================================= -->
+<!-- in 2 -->
+<!-- ================================================================================= -->
+
+
 <h2><a id="Files"></a>Files</h2>
 <p>
   The save, open, readGraphModel and writeGraphModel functions
