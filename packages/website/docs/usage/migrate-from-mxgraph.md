@@ -652,6 +652,8 @@ For example:
 
 :::
 
+For more details, see the [Codecs](codecs.md) documentation.
+
 ## Conclusion
 
 By following these guidelines and updating your codebase accordingly, you should be able to migrate your application from `mxGraph` to `maxGraph`.
