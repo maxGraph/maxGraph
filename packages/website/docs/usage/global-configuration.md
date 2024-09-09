@@ -50,7 +50,9 @@ See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues
 When instantiating a `Graph` object, the registries are filled with `maxGraph` default style configurations. There is no default stencil shapes registered by default.
 
 
-## Serialization
+## Codecs and Serialization
 
 `CodecRegistry` is used for serialization and deserialization of objects in XML object.
 By default, no codec is registered. Some functions are provided to register codecs for specific objects.
+
+For more details, see
