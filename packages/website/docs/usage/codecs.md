@@ -5,6 +5,12 @@ description: How-to use codecs.
 
 # Codecs
 
+TODO
+- add an intro
+- move the warning to the registering paragraph
+
+
+
 :::warning
 
 From [version 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) of `maxGraph`, codecs supplied by maxGraph are no longer registered by default, they **MUST** be registered before performing an `encode` or `decode`
@@ -94,3 +100,6 @@ TODO rationale (cf PR which introduced it)
 
 ## Other serialization methods
 
+XmlCanvas2D 
+
+purpose ImageExport, ....
