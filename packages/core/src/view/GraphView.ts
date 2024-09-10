@@ -1306,7 +1306,7 @@ export class GraphView extends EventSource {
   ): EdgeStyleFunction | null {
     let edgeStyle = this.isLoopStyleEnabled(edge, points, source, target)
       ? edge.style.loopStyle ?? this.graph.defaultLoopStyle
-      : !edge.style.noEdgeStyle ?? false
+      : !(edge.style.noEdgeStyle ?? false)
         ? edge.style.edgeStyle
         : null;
 

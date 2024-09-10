@@ -26,6 +26,15 @@ import { isNotNullish } from '../../util/Utils';
 
 import type { CellStyle, FilterFunction, IdentityObject } from '../../types';
 
+type UserObject = {
+  nodeType?: number;
+  getAttribute?: (name: string) => string | null;
+  hasAttribute?: (name: string) => boolean;
+  setAttribute?: (name: string, value: string) => void;
+  clone?: () => UserObject;
+  cloneNode?: (deep: boolean) => UserObject;
+};
+
 /**
  * Cells are the elements of the graph model. They represent the state
  * of the groups, vertices and edges in a graph.
@@ -557,58 +566,58 @@ export class Cell implements IdentityObject {
   }
 
   /**
-   * Returns true if the user object is an XML node that contains the given
-   * attribute.
+   * Returns true if the user object is an XML node that contains the given attribute.
    *
-   * @param nameName nameName of the attribute.
+   * @param name Name nameName of the attribute.
    */
   hasAttribute(name: string): boolean {
-    const userObject = this.getValue();
+    const userObject: UserObject = this.getValue();
 
     return (
       isNotNullish(userObject) &&
       (userObject.nodeType === NODETYPE.ELEMENT && userObject.hasAttribute
         ? userObject.hasAttribute(name)
-        : isNotNullish(userObject.getAttribute(name)))
+        : isNotNullish(userObject.getAttribute?.(name)))
     );
   }
 
   /**
-   * Returns the specified attribute from the user object if it is an XML
-   * node.
+   * Returns the specified attribute from the user object if it is an XML node.
    *
-   * @param nameName              of the attribute whose value should be returned.
-   * @param defaultValueOptional  default value to use if the attribute has no
+   * @param name Name of the attribute whose value should be returned.
+   * @param defaultValue Optional default value to use if the attribute has no
    * value.
    */
   getAttribute(name: string, defaultValue?: any): any {
-    const userObject = this.getValue();
+    const userObject: UserObject = this.getValue();
     const val =
       isNotNullish(userObject) && userObject.nodeType === NODETYPE.ELEMENT
-        ? userObject.getAttribute(name)
+        ? userObject.getAttribute?.(name)
         : null;
 
-    return val ? val : defaultValue;
+    return val ?? defaultValue;
   }
 
   /**
    * Sets the specified attribute on the user object if it is an XML node.
    *
-   * @param nameName    of the attribute whose value should be set.
-   * @param valueNew    value of the attribute.
+   * @param name Name of the attribute whose value should be set.
+   * @param value New value of the attribute.
    */
   setAttribute(name: string, value: any): void {
-    const userObject = this.getValue();
+    const userObject: UserObject = this.getValue();
 
     if (isNotNullish(userObject) && userObject.nodeType === NODETYPE.ELEMENT) {
-      userObject.setAttribute(name, value);
+      userObject.setAttribute?.(name, value);
     }
   }
 
   /**
-   * Returns a clone of the cell. Uses <cloneValue> to clone
-   * the user object. All fields in {@link Transient} are ignored
-   * during the cloning.
+   * Returns a clone of the cell.
+   *
+   * Uses {@link cloneValue} to clone the user object.
+   *
+   * All fields in {@link mxTransient} are ignored during the cloning.
    */
   clone(): Cell {
     const c = clone(this, this.mxTransient);
@@ -620,11 +629,11 @@ export class Cell implements IdentityObject {
    * Returns a clone of the cell's user object.
    */
   cloneValue(): any {
-    let value = this.getValue();
+    let value: UserObject = this.getValue();
     if (isNotNullish(value)) {
       if (typeof value.clone === 'function') {
         value = value.clone();
-      } else if (isNotNullish(value.nodeType)) {
+      } else if (isNotNullish(value.nodeType) && value.cloneNode) {
         value = value.cloneNode(true);
       }
     }
