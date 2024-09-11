@@ -3,7 +3,7 @@ sidebar_position: 10
 description: How-to easily migrate from mxGraph to maxGraph
 ---
 
-# Migrate from mxGraph to maxGraph
+# Migrate from mxGraph
 
 This documentation provides instructions for migrating from `mxGraph` to `maxGraph`.
 It includes information about application setup changes, code changes, styles, event handling and other relevant information.
@@ -152,8 +152,15 @@ In maxGraph@0.11.0, the `allowEval` and `defaultLocalized` properties have been 
 ### `mxUtils` split
 Several functions in `mxUtils` have been moved to their own namespaces in `maxGraph`. Some remain in `utils`.
 
+Here are a few examples of the methods that have been moved.
+
 #### `domUtils`
 - `extractTextWithWhitespace()`: : Update your code to use `domUtils.extractTextWithWhitespace()` instead of `mxUtils.extractTextWithWhitespace()`.
+
+#### `mathUtils`
+- `getBoundingBox()`: Update your code to use `mathUtils.getBoundingBox()` instead of `mxUtils.getBoundingBox()`.
+- `getPortConstraints()`: Update your code to use `mathUtils.getPortConstraints()` instead of `mxUtils.getPortConstraints()`.
+- `getRotatedPoint()`: Update your code to use `mathUtils.getRotatedPoint()` instead of `mxUtils.getRotatedPoint()`.
 
 #### `stringUtils`
 - `trim()`: Update your code to use `stringUtils.trim()` instead of `mxUtils.trim()`.
