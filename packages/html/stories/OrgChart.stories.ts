@@ -170,7 +170,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
   // Installs a popupmenu handler using local function (see below).
-  popupMenuHandler.factoryMethod = function (menu, cell, evt) {
+  // TODO https://github.com/maxGraph/maxGraph/issues/308 wrong type for factoryMethod
+  // @ts-ignore
+  popupMenuHandler.factoryMethod = function (
+    menu: PopupMenuHandler,
+    cell: Cell | null,
+    evt: MouseEvent
+  ) {
     return createPopupMenu(graph, menu, cell, evt);
   };
 
@@ -264,8 +270,14 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   });
 
   // Function to create the entries in the popupmenu
-  function createPopupMenu(graph, menu, cell, evt) {
-    const model = graph.getDataModel();
+  function createPopupMenu(
+    graph: Graph,
+    menu: PopupMenuHandler,
+    cell: Cell | null,
+    _evt: MouseEvent
+  ) {
+    // TODO managed image path when not served in the root context
+    // const model = graph.getDataModel();
 
     if (cell != null) {
       if (cell.isVertex()) {
@@ -303,6 +315,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     });
 
     menu.addItem('Poster Print', 'images/print.gif', function () {
+      // TODO find a location for this
       const pageCount = utils.prompt('Enter maximum page count', '1');
 
       if (pageCount != null) {
