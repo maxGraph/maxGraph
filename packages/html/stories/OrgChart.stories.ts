@@ -15,24 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Cell, PopupMenuHandler, PrintPreview } from '@maxgraph/core';
-
 import {
-  Graph,
-  constants,
-  InternalEvent,
-  Client,
-  Point,
-  Outline,
-  KeyHandler,
-  CompactTreeLayout,
-  LayoutManager,
+  Cell,
   CellOverlay,
+  Client,
+  CompactTreeLayout,
+  constants,
+  Graph,
   ImageBox,
-  utils,
+  InternalEvent,
+  KeyHandler,
+  LayoutManager,
   MaxToolbar,
+  Outline,
   PanningHandler,
+  Point,
+  PopupMenuHandler,
+  PrintPreview,
   printUtils,
+  utils,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
