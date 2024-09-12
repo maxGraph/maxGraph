@@ -64,13 +64,19 @@ const promptForPageCount = (): number => {
 const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
   const container = createGraphContainer(args);
+  // TODO see if we reset the style.cursor
   div.appendChild(container);
 
   // Makes the shadow brighter
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
 
-  // TODO create the outline container in the DOM
-  const outline = document.getElementById('outlineContainer');
+  const outlineContainer = document.createElement('div');
+  // TODO correctly assign the style, use flex if possible
+  outlineContainer.style =
+    'z-index:1;position:absolute;overflow:hidden;top:0px;right:0px;width:160px;height:120px;background:transparent;border-style:solid;border-color:lightgray;';
+  div.appendChild(outlineContainer);
+  // TODO manage image path when not served in the root context
+  // Client.imageBasePath = '/images'
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
@@ -105,7 +111,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Creates the outline (navigator, overview) for moving around the graph in the top, right corner of the window.
   // TODO do we need to keep the constant?
   // const outln = new Outline(graph, outline);
-  new Outline(graph, outline);
+  new Outline(graph, outlineContainer);
 
   // Disables tooltips on touch devices
   graph.setTooltips(!Client.IS_TOUCH);
@@ -284,9 +290,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     cell: Cell | null,
     _evt: MouseEvent
   ) {
-    // TODO managed image path when not served in the root context
-    // const model = graph.getDataModel();
-
     if (cell != null) {
       if (cell.isVertex()) {
         menu.addItem('Add child', 'images/overlays/check.png', function () {
