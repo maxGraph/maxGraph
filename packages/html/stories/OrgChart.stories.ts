@@ -66,9 +66,22 @@ const promptForPageCount = (): number => {
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
+
+  // const mainDiv = document.createElement('div');
+  //
+  // const div = document.createElement('div');
+  // mainDiv.appendChild(div);
+  // div.style.display = 'flex';
+  // div.style.gap = '2rem';
+
   const container = createGraphContainer(args);
   container.style.cursor = 'unset'; // TODO not enough to make the editing work
-  // TODO see if we reset the style.cursor
+  container.style.position = 'absolute';
+  container.style.left = '0px';
+  container.style.top = '0px';
+  container.style.right = '0px';
+  container.style.bottom = '0px';
+
   div.appendChild(container);
 
   // Makes the shadow brighter
@@ -90,7 +103,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // TODO manage image path when not served in the root context
   // Client.imageBasePath = '/images'
 
-  if (!args.contextMenu) InternalEvent.disableContextMenu(container);
+  if (!args.contextMenu) InternalEvent.disableContextMenu(div);
+  // if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Sets a gradient background
   // TODO use new props for gradient https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
