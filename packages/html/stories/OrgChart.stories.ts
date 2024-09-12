@@ -75,10 +75,18 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
 
   const outlineContainer = document.createElement('div');
-  // TODO correctly assign the style, use flex if possible
-  outlineContainer.style =
-    'z-index:1;position:absolute;overflow:hidden;top:0px;right:0px;width:160px;height:120px;background:transparent;border-style:solid;border-color:lightgray;';
+  const outlineContainerStyle = outlineContainer.style;
+  outlineContainerStyle.position = 'absolute';
+  outlineContainerStyle.overflow = 'hidden';
+  outlineContainerStyle.top = '0px';
+  outlineContainerStyle.right = '0px';
+  outlineContainerStyle.width = '160px';
+  outlineContainerStyle.height = '120px';
+  outlineContainerStyle.background = 'transparent';
+  outlineContainerStyle.borderStyle = 'solid';
+  outlineContainerStyle.borderColor = 'lightgray';
   div.appendChild(outlineContainer);
+
   // TODO manage image path when not served in the root context
   // Client.imageBasePath = '/images'
 
