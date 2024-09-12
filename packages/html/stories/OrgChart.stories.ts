@@ -28,6 +28,7 @@ import {
   KeyHandler,
   LayoutManager,
   MaxToolbar,
+  MaxWindow,
   Outline,
   type PanningHandler,
   Point,
@@ -43,6 +44,7 @@ import {
   globalValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import '@maxgraph/core/css/common.css'; // style required by MaxWindow
 
 export default {
   title: 'Layouts/OrgChart',
@@ -56,6 +58,7 @@ export default {
   },
 };
 
+// TODO should returns null if the user cancels the prompt
 const promptForPageCount = (): number => {
   const pageCount = window.prompt('Enter maximum page count', '1');
   return pageCount ? parseInt(pageCount) : 1;
@@ -64,6 +67,7 @@ const promptForPageCount = (): number => {
 const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
   const container = createGraphContainer(args);
+  container.style.cursor = 'unset'; // TODO not enough to make the editing work
   // TODO see if we reset the style.cursor
   div.appendChild(container);
 
@@ -145,6 +149,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Sets the default style for edges
   style = graph.getStylesheet().getDefaultEdgeStyle();
   style.rounded = true;
+  style.editable = true; // FIXME in Graph.isCellEditable the default value is not correctly managed
   style.strokeWidth = 3;
   style.exitX = 0.5; // center
   style.exitY = 1.0; // bottom
@@ -251,8 +256,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   });
 
   const content = document.createElement('div');
+  content.id = 'toolbar'; // TODO temp to debug, not in the mxGraph example
   content.style.padding = '4px';
-  div.appendChild(content);
+  // TODO remove this commented code when we are sure this works
+  // div.appendChild(content);
   const tb = new MaxToolbar(content);
 
   // TODO should accept a function without event
@@ -334,6 +341,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         preview.open();
       }
     });
+
+    const wnd = new MaxWindow('Tools', content, 0, 0, 200, 66, false);
+    wnd.setMaximizable(false);
+    wnd.setScrollable(false);
+    wnd.setResizable(false);
+    wnd.setVisible(true);
   }
 
   function addOverlays(graph: Graph, cell: Cell, addDeleteIcon: boolean) {
