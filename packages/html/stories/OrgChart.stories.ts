@@ -413,10 +413,23 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   function deleteSubtree(graph: Graph, cell: Cell) {
     // Gets the subtree from cell downwards
     const cells: Cell[] = [];
-    graph.traverse(cell, true, function (vertex: Cell) {
-      cells.push(vertex);
 
-      return true;
+    // TODO Graph.traverse is not implemented in maxGraph, check when and why it has been removed
+    // TODO the signature of the Layout method also changed, from multiple parameters to a single object --> to document in the migration guide
+    // in mxGraph, the implementation in Graph is almost the same as in GraphLayout. It has a "inverse" parameter at the end
+    // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/view/mxGraph.js#L12046
+    // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/layout/mxGraphLayout.js#L160
+    // graph.traverse(cell, true, function (vertex: Cell) {
+    layout.traverse({
+      vertex: cell,
+      directed: true,
+      func: function (vertex: Cell) {
+        cells.push(vertex);
+
+        return true;
+      },
+      edge: null,
+      visited: null,
     });
 
     graph.removeCells(cells);
