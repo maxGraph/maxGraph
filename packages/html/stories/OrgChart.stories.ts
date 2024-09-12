@@ -91,13 +91,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // on a cell (using the left mouse button) but
   // do not select the cell when the popup menu
   // is displayed
-  // TODO doesn' work, check the mxGraph code
+  // TODO doesn't work, check the mxGraph code
   // panningHandler.popupMenuHandler = false;
 
-  // Creates the outline (navigator, overview) for moving
-  // around the graph in the top, right corner of the window.
+  // Creates the outline (navigator, overview) for moving around the graph in the top, right corner of the window.
   // TODO do we need to keep the constant?
-  const outln = new Outline(graph, outline);
+  // const outln = new Outline(graph, outline);
+  new Outline(graph, outline);
 
   // Disables tooltips on touch devices
   graph.setTooltips(!Client.IS_TOUCH);
@@ -146,7 +146,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Stops editing on enter or escape keypress
   // TODO do we need to keep the constant?
-  const keyHandler = new KeyHandler(graph);
+  // const keyHandler = new KeyHandler(graph);
+  new KeyHandler(graph);
 
   // Enables automatic layout on the graph and installs
   // a tree layout for all groups whose children are
@@ -157,17 +158,14 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   layout.levelDistance = 60;
   layout.nodeDistance = 16;
 
-  // Allows the layout to move cells even though cells
-  // aren't movable in the graph
-  layout.isVertexMovable = function (cell) {
+  // Allows the layout to move cells even though cells aren't movable in the graph
+  layout.isVertexMovable = function (_cell: Cell) {
     return true;
   };
 
   const layoutMgr = new LayoutManager(graph);
-  layoutMgr.getLayout = function (cell: Cell) {
-    if (cell.getChildCount() > 0) {
-      return layout;
-    }
+  layoutMgr.getLayout = function (cell: Cell | null, _eventName: string) {
+    return cell && cell.getChildCount() > 0 ? layout : null;
   };
 
   const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
@@ -179,7 +177,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Fix for wrong preferred size
   const oldGetPreferredSizeForCell = graph.getPreferredSizeForCell;
   graph.getPreferredSizeForCell = function (cell: Cell, textWidth?: number | null) {
-    const result = oldGetPreferredSizeForCell.apply(this, arguments);
+    const result = oldGetPreferredSizeForCell.apply(this, [cell, textWidth]);
 
     if (result != null) {
       result.width = Math.max(120, result.width - 40);
