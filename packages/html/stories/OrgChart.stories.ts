@@ -24,9 +24,17 @@ import {
   Graph,
   ImageBox,
   InternalEvent,
+  type KeyboardEventListener,
   KeyHandler,
   LayoutManager,
   MaxToolbar,
+  Outline,
+  type PanningHandler,
+  Point,
+  PopupMenuHandler,
+  PrintPreview,
+  printUtils,
+  utils,
   StyleDefaultsConfig,
 } from '@maxgraph/core';
 import {
@@ -237,24 +245,25 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   div.appendChild(content);
   const tb = new MaxToolbar(content);
 
+  // TODO should accept a function without event
   tb.addItem('Zoom In', 'images/zoom_in32.png', function (_evt) {
     graph.zoomIn();
-  });
+  } as KeyboardEventListener);
 
-  tb.addItem('Zoom Out', 'images/zoom_out32.png', function (evt) {
+  tb.addItem('Zoom Out', 'images/zoom_out32.png', function (_evt) {
     graph.zoomOut();
-  });
+  } as KeyboardEventListener);
 
-  tb.addItem('Actual Size', 'images/view_1_132.png', function (evt) {
+  tb.addItem('Actual Size', 'images/view_1_132.png', function (_evt) {
     graph.zoomActual();
-  });
+  } as KeyboardEventListener);
 
-  tb.addItem('Print', 'images/print32.png', function (evt) {
+  tb.addItem('Print', 'images/print32.png', function (_evt) {
     const preview = new PrintPreview(graph, 1);
     preview.open();
-  });
+  } as KeyboardEventListener);
 
-  tb.addItem('Poster Print', 'images/press32.png', function (evt) {
+  tb.addItem('Poster Print', 'images/press32.png', function (_evt) {
     // TODO find a location for this
     const pageCount = utils.prompt('Enter maximum page count', '1');
 
@@ -263,7 +272,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       const preview = new PrintPreview(graph, scale);
       preview.open();
     }
-  });
+  } as KeyboardEventListener);
 
   // Function to create the entries in the popupmenu
   function createPopupMenu(
@@ -326,7 +335,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
     overlay.cursor = 'hand';
     overlay.align = constants.ALIGN.CENTER;
-    overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
+    overlay.addListener(InternalEvent.CLICK, () => {
       addChild(graph, cell);
     });
 
@@ -338,7 +347,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       overlay.offset = new Point(-4, 8);
       overlay.align = constants.ALIGN.RIGHT;
       overlay.verticalAlign = constants.ALIGN.TOP;
-      overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
+      overlay.addListener(InternalEvent.CLICK, () => {
         deleteSubtree(graph, cell);
       });
 
