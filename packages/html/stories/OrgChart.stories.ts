@@ -55,6 +55,11 @@ export default {
   },
 };
 
+const promptForPageCount = (): number => {
+  const pageCount = window.prompt('Enter maximum page count', '1');
+  return pageCount ? parseInt(pageCount) : 1;
+};
+
 const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
   const container = createGraphContainer(args);
@@ -262,7 +267,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   } as KeyboardEventListener);
 
   tb.addItem('Poster Print', 'images/press32.png', function (_evt) {
-    const pageCount = prompt('Enter maximum page count', '1');
+    const pageCount = promptForPageCount();
 
     if (pageCount != null) {
       const scale = printUtils.getScaleForPageCount(pageCount, graph);
@@ -317,7 +322,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     });
 
     menu.addItem('Poster Print', 'images/print.gif', function () {
-      const pageCount = prompt('Enter maximum page count', '1');
+      const pageCount = promptForPageCount();
 
       if (pageCount != null) {
         const scale = printUtils.getScaleForPageCount(pageCount, graph);
@@ -358,7 +363,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     model.beginUpdate();
     try {
-      vertex = graph.insertVertex(parent, null, 'Double click to set name');
+      vertex = graph.insertVertex({ parent, value: 'Double click to set name' });
       const geometry = vertex.getGeometry()!;
 
       // Updates the geometry of the vertex with the
