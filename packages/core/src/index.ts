@@ -129,16 +129,19 @@ export { default as StencilShapeRegistry } from './view/geometry/node/StencilSha
 export * as constants from './util/Constants';
 export { default as Guide } from './view/other/Guide';
 export { default as Translations } from './util/Translations';
-export * as utils from './util/Utils';
+
+export * as cellArrayUtils from './util/cellArrayUtils';
 export * as cloneUtils from './util/cloneUtils';
 export * as domUtils from './util/domUtils';
 export * as eventUtils from './util/EventUtils';
 export * as gestureUtils from './util/gestureUtils';
-export * as stringUtils from './util/StringUtils';
-export * as xmlUtils from './util/xmlUtils';
-export * as styleUtils from './util/styleUtils';
 export * as mathUtils from './util/mathUtils';
-export * as cellArrayUtils from './util/cellArrayUtils';
+export * as printUtils from './util/printUtils';
+export * as stringUtils from './util/StringUtils';
+export * as styleUtils from './util/styleUtils';
+export * as utils from './util/Utils';
+export * as xmlUtils from './util/xmlUtils';
+
 export { GlobalConfig } from './util/config';
 export * from './util/logger';
 
