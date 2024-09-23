@@ -39,8 +39,6 @@ import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
-
-
 export default {
   title: 'Printing/PageBreaks',
   argTypes: {
