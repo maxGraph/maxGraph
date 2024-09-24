@@ -21,6 +21,10 @@ import {
   RubberBandHandler,
   DomHelpers,
   InternalEvent,
+  SelectionHandler,
+  constants,
+  PrintPreview,
+  domUtils,
 } from '@maxgraph/core';
 
 import {
@@ -49,7 +53,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
   const container = createGraphContainer(args);
   div.appendChild(container);
@@ -72,7 +76,7 @@ const Template = ({ label, ...args }) => {
   // Removes header and footer from page height
   graph.pageFormat.height -= headerSize + footerSize;
 
-  const graphHandler = graph.getPlugin('SelectionHandler');
+  const graphHandler = graph.getPlugin<SelectionHandler>('SelectionHandler');
 
   // Takes zoom into account for moving cells
   graphHandler.scaleGrid = true;
@@ -96,33 +100,33 @@ const Template = ({ label, ...args }) => {
       280,
       330
     );
-    const e1 = graph.insertEdge(parent, null, '', v1, v2);
+    graph.insertEdge(parent, null, '', v1, v2);
   });
 
   const buttons = document.createElement('div');
   div.appendChild(buttons);
 
   buttons.appendChild(
-    DomHelpers.button('Toggle Page Breaks', function (evt) {
+    DomHelpers.button('Toggle Page Breaks', function (_evt) {
       graph.pageBreaksVisible = !graph.pageBreaksVisible;
       graph.sizeDidChange();
     })
   );
 
   buttons.appendChild(
-    DomHelpers.button('Zoom In', function (evt) {
+    DomHelpers.button('Zoom In', function (_evt) {
       graph.zoomIn();
     })
   );
 
   buttons.appendChild(
-    DomHelpers.button('Zoom Out', function (evt) {
+    DomHelpers.button('Zoom Out', function (_evt) {
       graph.zoomOut();
     })
   );
 
   buttons.appendChild(
-    DomHelpers.button('Print', function (evt) {
+    DomHelpers.button('Print', function (_evt) {
       // Matches actual printer paper size and avoids blank pages
       const scale = 0.5;
 
@@ -148,7 +152,7 @@ const Template = ({ label, ...args }) => {
 
       const oldRenderPage = preview.renderPage;
       preview.renderPage = function (w, h, x, y, content, pageNumber) {
-        const div = oldRenderPage.apply(this, arguments);
+        const div = oldRenderPage.apply(this, [w, h, x, y, content, pageNumber]);
 
         const header = document.createElement('div');
         header.style.position = 'absolute';
@@ -164,18 +168,18 @@ const Template = ({ label, ...args }) => {
         // Vertical centering for text in header/footer
         header.style.lineHeight = `${this.marginTop - 10}px`;
 
-        const footer = header.cloneNode(true);
+        const footer = header.cloneNode(true) as HTMLDivElement;
 
-        write(header, `Page ${pageNumber} - Header`);
+        domUtils.write(header, `Page ${pageNumber} - Header`);
         header.style.borderBottom = '1px solid gray';
         header.style.top = '0px';
 
-        write(footer, `Page ${pageNumber} - Footer`);
+        domUtils.write(footer, `Page ${pageNumber} - Footer`);
         footer.style.borderTop = '1px solid gray';
         footer.style.bottom = '0px';
 
-        div.firstChild.appendChild(footer);
-        div.firstChild.appendChild(header);
+        div.firstChild?.appendChild(footer);
+        div.firstChild?.appendChild(header);
 
         return div;
       };
@@ -185,7 +189,7 @@ const Template = ({ label, ...args }) => {
   );
 
   buttons.appendChild(
-    DomHelpers.button('Reset View', function (evt) {
+    DomHelpers.button('Reset View', function (_evt) {
       graph.view.scaleAndTranslate(0.15, 0, 0);
     })
   );
