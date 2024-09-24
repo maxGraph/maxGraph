@@ -44,6 +44,8 @@ jobs:
         uses: ./.github/actions/build-setup
       - name: Build @maxgraph/core - esm
         run: npm run build -w packages/core
+      - name: Check TS compilation of the tests of @maxgraph/core
+        run: npm run test-check -w packages/core
       - name: Test @maxgraph/core
         run: npm test -w packages/core -- --coverage
       - name: Upload test results as artifact
