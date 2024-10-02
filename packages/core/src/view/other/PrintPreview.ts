@@ -422,9 +422,7 @@ class PrintPreview {
         doc.writeln('<html>');
 
         doc.writeln('<head>');
-
         this.writeHead(doc, css);
-
         doc.writeln('</head>');
         doc.writeln('<body class="mxPage">');
       }
@@ -646,8 +644,8 @@ class PrintPreview {
     // position (absolute) needs to be updated in IE (see below)
     doc.writeln(
       '  table.mxPageSelector { position: fixed; right: 10px; top: 10px;' +
-      'font-family: Arial; font-size:10pt; border: solid 1px darkgray;' +
-      'background: white; border-collapse:collapse; }'
+        'font-family: Arial; font-size:10pt; border: solid 1px darkgray;' +
+        'background: white; border-collapse:collapse; }'
     );
     doc.writeln('  table.mxPageSelector td { border: solid 1px gray; padding:4px; }');
     doc.writeln('  body.mxPage { background: gray; }');
