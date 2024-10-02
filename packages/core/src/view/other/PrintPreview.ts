@@ -422,9 +422,9 @@ class PrintPreview {
         doc.writeln('<html>');
 
         doc.writeln('<head>');
-        if (css) {
-          this.writeHead(doc, css);
-        }
+
+        this.writeHead(doc, css);
+
         doc.writeln('</head>');
         doc.writeln('<body class="mxPage">');
       }
@@ -625,7 +625,7 @@ class PrintPreview {
    * Writes the HEAD section into the given document, without the opening
    * and closing HEAD tags.
    */
-  writeHead(doc: Document, css: string): void {
+  writeHead(doc: Document, css: string | null): void {
     if (this.title != null) {
       doc.writeln(`<title>${this.title}</title>`);
     }
@@ -646,8 +646,8 @@ class PrintPreview {
     // position (absolute) needs to be updated in IE (see below)
     doc.writeln(
       '  table.mxPageSelector { position: fixed; right: 10px; top: 10px;' +
-        'font-family: Arial; font-size:10pt; border: solid 1px darkgray;' +
-        'background: white; border-collapse:collapse; }'
+      'font-family: Arial; font-size:10pt; border: solid 1px darkgray;' +
+      'background: white; border-collapse:collapse; }'
     );
     doc.writeln('  table.mxPageSelector td { border: solid 1px gray; padding:4px; }');
     doc.writeln('  body.mxPage { background: gray; }');
