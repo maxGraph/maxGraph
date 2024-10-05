@@ -13,7 +13,7 @@ Note: core contributors are not required to use this template.
 
 - [ ] Addresses an existing open issue: closes #<the_issue_number_here>. If not, explain why (minor changes, etc.).
 - [ ] You have discussed this issue with the maintainers of `maxGraph`, and you are assigned to the issue.
-- [ ] The scope of the PR is small enough to review in a single session. PR targeting several issues should be split into separate PRs. Don't create large PR like https://github.com/maxGraph/maxGraph/pull/88.
+- [ ] The scope of the PR is sufficiently narrow to be examined in a single session. A PR covering several issues must be split into separate PRs. Do not create a large PR, otherwise it cannot be reviewed and you will be asked to split it later or the PR will be closed.
 - [ ] I have added tests to prove my fix is effective or my feature works. This can be done in the form of automatic tests in `packages/core/_tests_` or a new or altered Storybook story in `packages/html/stories` (an existing story may also demonstrate the change).
 - [ ] I have provided screenshot/videos to demonstrate the change. If no releavant, explain why.
 - [ ] I have added or edited necessary documentation, or no docs changes are needed.
