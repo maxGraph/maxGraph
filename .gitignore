@@ -3,6 +3,7 @@
 *.iml
 .vscode/
 dist
+lib/
 *.tgz
 
 # dependencies
