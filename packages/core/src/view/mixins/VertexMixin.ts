@@ -68,10 +68,11 @@ export const VertexMixin: PartialType = {
       id = params.id;
       value = params.value;
 
-      x = 'x' in params ? params.x : params.position[0];
-      y = 'y' in params ? params.y : params.position[1];
-      width = 'width' in params ? params.width : params.size[0];
-      height = 'height' in params ? params.height : params.size[1];
+      // FIXME fail if position or size is not provided --> add test
+      x = 'x' in params ? params.x : params.position?.[0];
+      y = 'y' in params ? params.y : params.position?.[1];
+      width = 'width' in params ? params.width : params.size?.[0];
+      height = 'height' in params ? params.height : params.size?.[1];
 
       style = params.style;
       relative = params.relative;

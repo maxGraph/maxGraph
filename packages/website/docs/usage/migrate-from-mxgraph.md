@@ -178,6 +178,7 @@ Here are a few examples of the methods that have been moved.
 The following methods of `mxUtils` have been removed without replacements in `maxGraph`. Use your own implementation or 3rd party libraries instead:
 - `mxUtils.button`
 - `mxUtils.error`
+- `mxUtils.prompt`: use `window.prompt` instead. The mxGraph method was just a wrapper around `window.prompt` to manage `nullish` values. See the [mxUtils.prompt](https://github.com/jgraph/mxgraph/blob/ff141aab158417bd866e2dfebd06c61d40773cd2/javascript/src/js/util/mxUtils.js#L4304) for more details. 
 
 
 ### `mxAbstractCanvas2D`
