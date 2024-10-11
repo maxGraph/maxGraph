@@ -28,9 +28,9 @@ import { Graph } from '../Graph';
  * Creates a temporary set of cell states.
  */
 class TemporaryCellStates {
-  oldValidateCellState: Function | null;
+  oldValidateCellState: (cell: Cell | null, recurse?: boolean) => CellState | null;
 
-  oldDoRedrawShape: Function | null;
+  oldDoRedrawShape: (state: CellState) => void;
 
   view: GraphView;
 
@@ -63,11 +63,11 @@ class TemporaryCellStates {
     this.oldBounds = view.getGraphBounds();
     this.oldStates = view.getStates();
     this.oldScale = view.getScale();
-    this.oldDoRedrawShape = (<Graph>view.graph).cellRenderer.doRedrawShape;
+    this.oldDoRedrawShape = view.graph.cellRenderer.doRedrawShape;
 
     // Overrides doRedrawShape and paint shape to add links on shapes
     if (getLinkForCellState != null) {
-      (<Graph>view.graph).cellRenderer.doRedrawShape = (state: CellState) => {
+      view.graph.cellRenderer.doRedrawShape = (state: CellState) => {
         const shape = <Shape>state?.shape;
         const oldPaint = shape.paint;
 
@@ -76,15 +76,13 @@ class TemporaryCellStates {
           if (link != null) {
             c.setLink(link);
           }
-          oldPaint.apply(this, [c]);
+          oldPaint.apply(shape, [c]);
           if (link != null) {
             c.setLink(null);
           }
         };
 
-        (<Function>this.oldDoRedrawShape).apply((<Graph>view.graph).cellRenderer, [
-          state,
-        ]);
+        this.oldDoRedrawShape.apply(view.graph.cellRenderer, [state]);
         shape.paint = oldPaint;
       };
     }
@@ -92,7 +90,7 @@ class TemporaryCellStates {
     // Overrides validateCellState to ignore invisible cells
     view.validateCellState = (cell, recurse) => {
       if (cell == null || isCellVisibleFn == null || isCellVisibleFn(cell)) {
-        return (<Function>this.oldDoRedrawShape).apply(view, [cell, recurse]);
+        return this.oldValidateCellState.apply(view, [cell, recurse]);
       }
       return null;
     };
@@ -124,10 +122,8 @@ class TemporaryCellStates {
     view.setScale(this.oldScale);
     view.setStates(this.oldStates);
     view.setGraphBounds(this.oldBounds);
-    // @ts-ignore
-    view.validateCellState = <Function>this.oldValidateCellState;
-    // @ts-ignore
-    view.graph.cellRenderer.doRedrawShape = <Function>this.oldDoRedrawShape;
+    view.validateCellState = this.oldValidateCellState;
+    view.graph.cellRenderer.doRedrawShape = this.oldDoRedrawShape;
   }
 }
 
