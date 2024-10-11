@@ -27,6 +27,7 @@ import { addLinkToHead, write } from '../../util/domUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Cell from '../cell/Cell';
+import { GlobalConfig } from '../../util/config';
 
 /**
  * @class PrintPreview
@@ -904,7 +905,7 @@ class PrintPreview {
           }
         }
 
-        redraw.apply(this, [state, force, rendering]); // CHECK ME!!!
+        redraw.apply(this.graph.cellRenderer, [state, force, rendering]);
       };
     }
 
@@ -917,6 +918,8 @@ class PrintPreview {
       temp = new TemporaryCellStates(view, scale, cells, null, (state: CellState) => {
         return this.getLinkForCellState(state);
       });
+    } catch (e: unknown) {
+      GlobalConfig.logger.error('PrintPreview unable to generate the preview', e);
     } finally {
       // Removes everything but the SVG node
       let tmp = <HTMLElement>div.firstChild;
@@ -965,6 +968,7 @@ class PrintPreview {
       view.overlayPane = overlayPane;
       view.translate = translate;
       if (temp) {
+        console.info('@@PrintPreview temp is set --> destroy');
         temp.destroy();
       }
       view.setEventsEnabled(eventsEnabled);
