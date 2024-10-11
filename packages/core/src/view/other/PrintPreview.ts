@@ -968,7 +968,6 @@ class PrintPreview {
       view.overlayPane = overlayPane;
       view.translate = translate;
       if (temp) {
-        console.info('@@PrintPreview temp is set --> destroy');
         temp.destroy();
       }
       view.setEventsEnabled(eventsEnabled);
