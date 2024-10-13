@@ -515,10 +515,9 @@ class PrintPreview {
       };
 
       const cov = this.getCoverPages(this.pageFormat.width, this.pageFormat.height);
-
-      if (cov != null) {
-        for (let i = 0; i < cov.length; i += 1) {
-          addPage(cov[i], true);
+      if (cov) {
+        for (const page of cov) {
+          addPage(page, true);
         }
       }
 
@@ -565,9 +564,9 @@ class PrintPreview {
         }
       }
 
-      if (apx != null) {
-        for (let i = 0; i < apx.length; i += 1) {
-          addPage(apx[i], i < apx.length - 1);
+      if (apx) {
+        for (const [index, page] of apx.entries()) {
+          addPage(page, index < apx.length - 1);
         }
       }
 
@@ -998,16 +997,16 @@ class PrintPreview {
   }
 
   /**
-   * Returns the pages to be added before the print output. This returns null.
+   * Returns the pages to be added before the print output. This returns `null`.
    */
-  getCoverPages(width: number, height: number): any {
+  getCoverPages(_width: number, _height: number): HTMLElement[] | null {
     return null;
   }
 
   /**
-   * Returns the pages to be added after the print output. This returns null.
+   * Returns the pages to be added after the print output. This returns `null`.
    */
-  getAppendices(width: number, height: number): any {
+  getAppendices(_width: number, _height: number): HTMLElement[] | null {
     return null;
   }
 
