@@ -30,81 +30,68 @@ import Cell from '../cell/Cell';
 import { GlobalConfig } from '../../util/config';
 
 /**
- * @class PrintPreview
+ * Implements printing of a diagram across multiple pages.
  *
- * Implements printing of a diagram across multiple pages. The following opens
- * a print preview for an existing graph:
+ * The following opens a print preview for an existing graph:
  *
  * ```javascript
- * var preview = new mxPrintPreview(graph);
+ * const preview = new PrintPreview(graph);
  * preview.open();
  * ```
  *
- * Use {@link getScaleForPageCount} as follows in order to print the graph
- * across a given number of pages:
+ * Use {@link getScaleForPageCount} as follows in order to print the graph across a given number of pages:
  *
  * ```javascript
- * var pageCount = mxUtils.prompt('Enter page count', '1');
- *
- * if (pageCount != null)
- * {
- *   var scale = mxUtils.getScaleForPageCount(pageCount, graph);
- *   var preview = new mxPrintPreview(graph, scale);
+ * const pageCount = window.prompt('Enter page count', '1');
+ * if (pageCount) {
+ *   const scale = printUtils.getScaleForPageCount(pageCount, graph);
+ *   const preview = new PrintPreview(graph, scale);
  *   preview.open();
  * }
  * ```
  *
  * ### Additional pages
  *
- * To add additional pages before and after the output, {@link getCoverPages} and
- * {@link getAppendices} can be used, respectively.
+ * To add additional pages before and after the output, {@link getCoverPages} and {@link getAppendices} can be used, respectively.
  *
  * ```javascript
- * var preview = new mxPrintPreview(graph, 1);
+ * const preview = new PrintPreview(graph, 1);
  *
- * preview.getCoverPages(w, h)
- * {
- *   return [this.renderPage(w, h, 0, 0, mxUtils.bind(this, function(div)
- *   {
+ * preview.getCoverPages = function(w, h) {
+ *   return [this.renderPage(w, h, 0, 0, (div) => {
  *     div.innerHTML = '<div style="position:relative;margin:4px;">Cover Page</p>'
- *   }))];
+ *   }];
  * };
  *
- * preview.getAppendices(w, h)
- * {
- *   return [this.renderPage(w, h, 0, 0, mxUtils.bind(this, function(div)
- *   {
+ * preview.getAppendices = function(w, h) {
+ *   return [this.renderPage(w, h, 0, 0, (div) => {
  *     div.innerHTML = '<div style="position:relative;margin:4px;">Appendix</p>'
- *   }))];
+ *   }];
  * };
- *
  * preview.open();
  * ```
  *
  * ### CSS
  *
  * The CSS from the original page is not carried over to the print preview.
- * To add CSS to the page, use the css argument in the {@link open} function or
+ * To add CSS to the page, use the `css` argument in the {@link open} function or
  * override {@link writeHead} to add the respective link tags as follows:
  *
- * ```javascript
- * var writeHead = preview.writeHead;
- * preview.writeHead(doc, css)
- * {
- *   writeHead.apply(this, arguments);
+ * ```typescript
+ * const writeHead = preview.writeHead;
+ * preview.writeHead = function(doc: Document, css: string | null): void {
+ *   writeHead.apply(this, [doc, css]);
  *   doc.writeln('<link rel="stylesheet" type="text/css" href="style.css">');
  * };
  * ```
  *
  * ### Padding
  *
- * To add a padding to the page in the preview (but not the print output), use
- * the following code:
+ * To add a padding to the page in the preview (but not the print output), use the following code:
  *
- * ```javascript
- * preview.writeHead(doc)
- * {
- *   writeHead.apply(this, arguments);
+ * ```typescript
+ * preview.writeHead = function(doc: Document, css: string | null): void {
+ *   writeHead.apply(this, [doc, css]);
  *
  *   doc.writeln('<style type="text/css">');
  *   doc.writeln('@media screen {');
@@ -116,21 +103,20 @@ import { GlobalConfig } from '../../util/config';
  *
  * ### Headers
  *
- * Apart from setting the title argument in the mxPrintPreview constructor you
+ * Apart from setting the title argument in the `PrintPreview` constructor you
  * can override {@link renderPage} as follows to add a header to any page:
  *
  * ```javascript
- * var oldRenderPage = renderPage;
- * renderPage(w, h, x, y, content, pageNumber)
- * {
- *   var div = oldRenderPage.apply(this, arguments);
+ * const renderPage = printPreview.renderPage;
+ * printPreview.renderPage = function(w, h, x, y, content, pageNumber) {
+ *   const div = renderPage.apply(this, [w, h, x, y, content, pageNumber]);
  *
- *   var header = document.createElement('div');
+ *   const header = document.createElement('div');
  *   header.style.position = 'absolute';
  *   header.style.top = '0px';
  *   header.style.width = '100%';
  *   header.style.textAlign = 'right';
- *   mxUtils.write(header, 'Your header here');
+ *   domUtils.write(header, 'Your header here');
  *   div.firstChild.appendChild(header);
  *
  *   return div;
@@ -143,7 +129,7 @@ import { GlobalConfig } from '../../util/config';
  *
  * ### Page Format
  *
- * For landscape printing, use {@link mxConstants.PAGE_FORMAT_A4_LANDSCAPE} as
+ * For landscape printing, use {@link PAGE_FORMAT_A4_LANDSCAPE} as
  * the pageFormat in {@link getScaleForPageCount} and {@link PrintPreview}.
  * Keep in mind that one can not set the defaults for the print dialog
  * of the operating system from JavaScript so the user must manually choose
@@ -157,22 +143,6 @@ import { GlobalConfig } from '../../util/config';
  * @page {
  *   size: landscape;
  * }
- * ```
- *
- * Note that the print preview behaves differently in IE when used from the
- * filesystem or via HTTP so printing should always be tested via HTTP.
- *
- * If you are using a DOCTYPE in the source page you can override {@link getDoctype}
- * and provide the same DOCTYPE for the print preview if required. Here is
- * an example for IE8 standards mode.
- *
- * ```javascript
- * var preview = new mxPrintPreview(graph);
- * preview.getDoctype()
- * {
- *   return '<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=8" ><![endif]-->';
- * };
- * preview.open();
  * ```
  */
 class PrintPreview {
@@ -516,10 +486,9 @@ class PrintPreview {
       };
 
       const cov = this.getCoverPages(this.pageFormat.width, this.pageFormat.height);
-
-      if (cov != null) {
-        for (let i = 0; i < cov.length; i += 1) {
-          addPage(cov[i], true);
+      if (cov) {
+        for (const page of cov) {
+          addPage(page, true);
         }
       }
 
@@ -566,9 +535,9 @@ class PrintPreview {
         }
       }
 
-      if (apx != null) {
-        for (let i = 0; i < apx.length; i += 1) {
-          addPage(apx[i], i < apx.length - 1);
+      if (apx) {
+        for (const [index, page] of apx.entries()) {
+          addPage(page, index < apx.length - 1);
         }
       }
 
@@ -621,8 +590,7 @@ class PrintPreview {
   }
 
   /**
-   * Writes the HEAD section into the given document, without the opening
-   * and closing HEAD tags.
+   * Writes the HEAD section into the given document, without the opening and closing HEAD tags.
    */
   writeHead(doc: Document, css: string | null): void {
     if (this.title != null) {
@@ -1001,16 +969,16 @@ class PrintPreview {
   }
 
   /**
-   * Returns the pages to be added before the print output. This returns null.
+   * Returns the pages to be added before the print output. This returns `null`.
    */
-  getCoverPages(width: number, height: number): any {
+  getCoverPages(_width: number, _height: number): HTMLElement[] | null {
     return null;
   }
 
   /**
-   * Returns the pages to be added after the print output. This returns null.
+   * Returns the pages to be added after the print output. This returns `null`.
    */
-  getAppendices(width: number, height: number): any {
+  getAppendices(_width: number, _height: number): HTMLElement[] | null {
     return null;
   }
 
