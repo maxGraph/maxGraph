@@ -1842,8 +1842,7 @@ export const CellsMixin: PartialType = {
   },
 
   isCellRotatable(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    return style.rotatable ?? true;
+    return this.getCurrentCellStyle(cell).rotatable ?? true;
   },
 
   getMovableCells(cells) {
