@@ -1866,9 +1866,10 @@ export const CellsMixin: PartialType = {
   },
 
   isCellResizable(cell) {
-    const style = this.getCurrentCellStyle(cell);
     return (
-      this.isCellsResizable() && !this.isCellLocked(cell) && (style.resizable ?? true)
+      this.isCellsResizable() &&
+      !this.isCellLocked(cell) &&
+      (this.getCurrentCellStyle(cell).resizable ?? true)
     );
   },
 
