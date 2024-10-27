@@ -28,7 +28,7 @@ import {
   KeyHandler,
   LayoutManager,
   MaxToolbar,
-  MaxWindow,
+  // MaxWindow,
   Outline,
   type PanningHandler,
   Point,
@@ -44,7 +44,7 @@ import {
   globalValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-import '@maxgraph/core/css/common.css'; // style required by MaxWindow
+// import '@maxgraph/core/css/common.css'; // style required by MaxWindow
 
 export default {
   title: 'Layouts/OrgChart',
@@ -66,6 +66,14 @@ const promptForPageCount = (): number => {
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
+  div.style.display = 'flex';
+
+  // Creates the div for the toolbar
+  const tbContainer = document.createElement('div');
+  // tbContainer.style.display = 'flex';
+  // tbContainer.style.flexDirection = 'column';
+  // tbContainer.style.marginRight = '.5rem';
+  div.appendChild(tbContainer);
 
   // const mainDiv = document.createElement('div');
   //
@@ -76,6 +84,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const container = createGraphContainer(args);
   container.style.cursor = 'unset'; // TODO not enough to make the editing work
+  // TODO use a main flex container
   container.style.position = 'absolute';
   container.style.left = '0px';
   container.style.top = '0px';
@@ -107,6 +116,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Sets a gradient background
+  // TODO this should be set in the flex main container
   // TODO use new props for gradient https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
   if (Client.IS_GC || Client.IS_SF) {
     container.style.background =
@@ -277,12 +287,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     addOverlays(graph, v1, false);
   });
 
-  const content = document.createElement('div');
-  content.id = 'toolbar'; // TODO temp to debug, not in the mxGraph example
-  content.style.padding = '4px';
+  // const content = document.createElement('div');
+  tbContainer.id = 'toolbar'; // TODO temp to debug, not in the mxGraph example
+  tbContainer.style.padding = '4px';
   // TODO remove this commented code when we are sure this works
   // div.appendChild(content);
-  const tb = new MaxToolbar(content);
+  const tb = new MaxToolbar(tbContainer);
 
   // TODO should accept a function without event
   tb.addItem('Zoom In', 'images/zoom_in32.png', function (_evt) {
@@ -364,11 +374,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
     });
 
-    const wnd = new MaxWindow('Tools', content, 0, 0, 200, 66, false);
-    wnd.setMaximizable(false);
-    wnd.setScrollable(false);
-    wnd.setResizable(false);
-    wnd.setVisible(true);
+    // const wnd = new MaxWindow('Tools', content, 0, 0, 200, 66, false);
+    // wnd.setMaximizable(false);
+    // wnd.setScrollable(false);
+    // wnd.setResizable(false);
+    // wnd.setVisible(true);
   }
 
   function addOverlays(graph: Graph, cell: Cell, addDeleteIcon: boolean) {
