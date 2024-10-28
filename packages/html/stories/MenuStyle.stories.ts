@@ -46,7 +46,7 @@ import { configureImagesBasePath, createGraphContainer } from './shared/configur
 // style required by RubberBand and MaxPopupMenu
 import '@maxgraph/core/css/common.css';
 
-//Use custom CSS for the popup menu
+// Use custom CSS for the popup menu
 const CSS_TEMPLATE = `
 body div.mxPopupMenu {
   -webkit-box-shadow: 3px 3px 6px #C0C0C0;
