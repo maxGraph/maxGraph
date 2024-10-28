@@ -25,6 +25,7 @@ import {
   Client,
   CellOverlay,
   CellRenderer,
+  type CellState,
   EventObject,
   ImageBox,
   InternalEvent,
@@ -38,12 +39,14 @@ import {
   ConnectionHandler,
   SelectionHandler,
   PanningHandler,
+  type Shape,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
-// style required by RubberBand
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+// style required by RubberBand and MaxPopupMenu
 import '@maxgraph/core/css/common.css';
 
+//Use custom CSS for the popup menu
 const CSS_TEMPLATE = `
 body div.mxPopupMenu {
   -webkit-box-shadow: 3px 3px 6px #C0C0C0;
@@ -83,17 +86,6 @@ table.mxPopupMenu tr {
 }
 `;
 
-// TODO apply this settings to the container used by the Graph
-const HTML_TEMPLATE = `
-<body onload="main(document.getElementById('graphContainer'))">
-  <!-- Creates a container for the graph with a grid wallpaper -->
-  <div id="graphContainer"
-    style="overflow:hidden;width:321px;height:241px;background:url('./images/grid.gif');cursor:default;">
-  </div>
-</body>
-</html>
-`;
-
 export default {
   title: 'Misc/MenuStyle',
   argTypes: {
@@ -104,7 +96,9 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
+  configureImagesBasePath();
+
   const styleElm = document.createElement('style');
   styleElm.innerText = CSS_TEMPLATE;
   document.head.appendChild(styleElm);
@@ -121,9 +115,9 @@ const Template = ({ label, ...args }) => {
   //constants.VERTEX_SELECTION_COLOR = '#00a8ff';
 
   class MyCustomCellRenderer extends CellRenderer {
-    installCellOverlayListeners(state, overlay, shape) {
-      super.installCellOverlayListeners.apply(this, arguments);
-      let graph = state.view.graph;
+    installCellOverlayListeners(state: CellState, overlay: CellOverlay, shape: Shape) {
+      super.installCellOverlayListeners(state, overlay, shape);
+      const graph = state.view.graph;
 
       InternalEvent.addGestureListeners(
         shape.node,
@@ -139,11 +133,11 @@ const Template = ({ label, ...args }) => {
             new InternalMouseEvent(evt, state)
           );
         },
-        function (evt) {}
+        function (_evt) {}
       );
 
       if (!Client.IS_TOUCH) {
-        InternalEvent.addListener(shape.node, 'mouseup', function (evt) {
+        InternalEvent.addListener(shape.node, 'mouseup', function (evt: MouseEvent) {
           overlay.fireEvent(
             new EventObject(InternalEvent.CLICK, 'event', evt, 'cell', state.cell)
           );
@@ -153,14 +147,14 @@ const Template = ({ label, ...args }) => {
   }
 
   class MyCustomPopupMenuHandler extends PopupMenuHandler {
-    // Configures automatic expand on mouseover
-    autoExpand = true;
-
-    constructor(graph) {
+    constructor(graph: Graph) {
       super(graph);
+      // Configures automatic expand on mouseover
+      this.autoExpand = true; // TODO autoExpand is not working
 
       // Installs context menu
-      this.factoryMethod = function (menu, cell, evt) {
+      // @ts-ignore TODO fix https://github.com/maxGraph/maxGraph/issues/308
+      this.factoryMethod = function (menu: PopupMenuHandler, _cell, _evt) {
         menu.addItem('Item 1', null, function () {
           alert('Item 1');
         });
@@ -169,7 +163,8 @@ const Template = ({ label, ...args }) => {
         });
         menu.addSeparator();
 
-        let submenu1 = menu.addItem('Submenu 1', null, null);
+        // TODO as part of fix https://github.com/maxGraph/maxGraph/issues/308, allow unset function
+        const submenu1 = menu.addItem('Submenu 1', null, null!);
         menu.addItem(
           'Subitem 1',
           null,
@@ -179,7 +174,7 @@ const Template = ({ label, ...args }) => {
           submenu1
         );
         menu.addItem(
-          'Subitem 1',
+          'Subitem 2',
           null,
           function () {
             alert('Subitem 2');
@@ -197,7 +192,7 @@ const Template = ({ label, ...args }) => {
   }
 
   // Creates the graph inside the given container
-  let graph = new MyCustomGraph(container, null, [
+  const graph = new MyCustomGraph(container, undefined, [
     CellEditorHandler,
     TooltipHandler,
     SelectionCellsHandler,
@@ -211,23 +206,23 @@ const Template = ({ label, ...args }) => {
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
-  let parent = graph.getDefaultParent();
+  const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
   let v1;
   graph.batchUpdate(() => {
     v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-    let v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-    let e1 = graph.insertEdge(parent, null, '', v1, v2);
+    const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+    graph.insertEdge(parent, null, '', v1, v2);
   });
 
   // Creates a new overlay with an image and a tooltip and makes it "transparent" to events
   // and sets the overlay for the cell in the graph
-  let overlay = new CellOverlay(
+  const overlay = new CellOverlay(
     new ImageBox('images/overlays/check.png', 16, 16),
     'Overlay tooltip'
   );
-  graph.addCellOverlay(v1, overlay);
+  graph.addCellOverlay(v1!, overlay);
 
   return container;
 };
