@@ -331,12 +331,12 @@ For example, to set the `foldingEnabled` property, instead of doing `Graph.foldi
 
 - the `tolerance` property has been renamed (and the get/set method as well). It is now named `snapTolerance`.
 
-### mxResources
+### `mxResources`
 
 The `mxResources` class has been renamed to `Translations` in `maxGraph`.
 
 
-### Client
+### `mxClient`
 
 The `mxClient` class has been removed into `Client`.
 
@@ -383,14 +383,15 @@ Some methods were removed:
 - `mxGraph.isCellVisible(cell)` see https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942 for rationale
 
 
-#### `mxGraphDataModel`
+#### `mxGraphModel`
 
-Several methods from the `mxGraphDataModel` class have been moved to the `Cell` class. These methods no longer need the `cell` parameter:
+Several methods from the `mxGraphModel` class have been moved to the `Cell` class. These methods no longer need the `cell` parameter:
 
 - `filterDescendants()`
 - `getGeometry()`
+- `getParent(cell)`, use `Cell.getParent()` instead
+- `isAncestor(parent, child)`, use `Cell.isAncestor(child)` instead
 - `isEdge()`
-- `getParent()`
 
 Some methods in `mxGraphModel` that were general manipulation of cells and independent of the model have been moved to the `cellArrayUtils` namespace and are now available as individual functions.
 - `cloneCell()` (from version 0.11.0)
