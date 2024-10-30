@@ -155,12 +155,16 @@ Several functions in `mxUtils` have been moved to their own namespaces in `maxGr
 Here are a few examples of the methods that have been moved.
 
 #### `domUtils`
-- `extractTextWithWhitespace()`: : Update your code to use `domUtils.extractTextWithWhitespace()` instead of `mxUtils.extractTextWithWhitespace()`.
+- `extractTextWithWhitespace()`: Update your code to use `domUtils.extractTextWithWhitespace()` instead of `mxUtils.extractTextWithWhitespace()`.
 
 #### `mathUtils`
 - `getBoundingBox()`: Update your code to use `mathUtils.getBoundingBox()` instead of `mxUtils.getBoundingBox()`.
 - `getPortConstraints()`: Update your code to use `mathUtils.getPortConstraints()` instead of `mxUtils.getPortConstraints()`.
 - `getRotatedPoint()`: Update your code to use `mathUtils.getRotatedPoint()` instead of `mxUtils.getRotatedPoint()`.
+
+#### `printUtils`
+- `printScreen()`: Update your code to use `printUtils.printScreen()` instead of `mxUtils.printScreen()`.
+- `show()`: Update your code to use `printUtils.show()` instead of `mxUtils.show()`.
 
 #### `stringUtils`
 - `trim()`: Update your code to use `stringUtils.trim()` instead of `mxUtils.trim()`.

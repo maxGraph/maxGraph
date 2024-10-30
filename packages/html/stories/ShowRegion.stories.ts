@@ -25,9 +25,9 @@ import {
   eventUtils,
   Graph,
   InternalEvent,
-  MaxLog as domUtils,
   MaxPopupMenu,
-  Rectangle,
+  type PopupMenuHandler,
+  printUtils,
   RubberBandHandler,
   styleUtils,
 } from '@maxgraph/core';
@@ -38,6 +38,10 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import EventSource from '@maxgraph/core/lib/view/event/EventSource.ts';
+import InternalMouseEvent from '@maxgraph/core/lib/view/event/InternalMouseEvent.ts';
+// style required by RubberBand
+import '@maxgraph/core/css/common.css';
 
 const CSS_TEMPLATE = `
 body div.mxPopupMenu {
@@ -78,19 +82,6 @@ table.mxPopupMenu tr {
 }
 `;
 
-// TODO apply this settings to the container used by the Graph
-const HTML_TEMPLATE = `
-<!-- Page passes the container for the graph to the program -->
-<body onload="main(document.getElementById('graphContainer'))">
-
-  <!-- Creates a container for the graph with a grid wallpaper -->
-  <div id="graphContainer"
-    style="overflow:hidden;width:321px;height:241px;background:url('./images/grid.gif');cursor:default;">
-  </div>
-  Use the right mouse button to select a region of the diagram and select <i>Show this</i>.
-</body>
-`;
-
 export default {
   title: 'Misc/ShowRegion',
   argTypes: {
@@ -103,12 +94,19 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   const styleElm = document.createElement('style');
   styleElm.innerText = CSS_TEMPLATE;
   document.head.appendChild(styleElm);
 
+  const mainDiv = document.createElement('div');
+  const divMessage = document.createElement('div');
+  divMessage.innerHTML =
+    'Use the right mouse button to select a region of the diagram and select <i>Show this</i>.';
+  mainDiv.appendChild(divMessage);
+
   const container = createGraphContainer(args);
+  mainDiv.appendChild(container);
 
   // Disables built-in context menu
   InternalEvent.disableContextMenu(container);
@@ -120,26 +118,20 @@ const Template = ({ label, ...args }) => {
   //constants.VERTEX_SELECTION_COLOR = '#00a8ff';
 
   // Creates the graph inside the given container
-  let graph = new Graph(container);
+  const graph = new Graph(container);
 
   class MyCustomRubberBandHandler extends RubberBandHandler {
-    isForceRubberbandEvent(me) {
+    isForceRubberbandEvent(me: InternalMouseEvent) {
       return super.isForceRubberbandEvent(me) || me.isPopupTrigger();
     }
 
     // Defines a new popup menu for region selection in the rubberband handler
-    popupMenu = new MaxPopupMenu(function (menu, cell, evt) {
-      let rect = new Rectangle(
-        rubberband.x,
-        rubberband.y,
-        rubberband.width,
-        rubberband.height
-      );
-
+    popupMenu = new MaxPopupMenu(function (menu, _cell, _evt) {
+      // @ts-ignore TODO fix https://github.com/maxGraph/maxGraph/issues/308
       menu.addItem('Show this', null, function () {
         rubberband.popupMenu.hideMenu();
-        let bounds = graph.getGraphBounds();
-        domUtils.show(
+        const bounds = graph.getGraphBounds();
+        printUtils.show(
           graph,
           null,
           bounds.x - rubberband.x,
@@ -150,15 +142,15 @@ const Template = ({ label, ...args }) => {
       });
     });
 
-    mouseDown(sender, me) {
+    mouseDown(sender: EventSource, me: InternalMouseEvent) {
       this.popupMenu.hideMenu();
       super.mouseDown(sender, me);
     }
 
-    mouseUp(sender, me) {
+    mouseUp(sender: EventSource, me: InternalMouseEvent) {
       if (eventUtils.isPopupTrigger(me.getEvent())) {
-        if (!graph.getPlugin('PopupMenuHandler').isMenuShowing()) {
-          let origin = styleUtils.getScrollOrigin();
+        if (!graph.getPlugin<PopupMenuHandler>('PopupMenuHandler').isMenuShowing()) {
+          const origin = styleUtils.getScrollOrigin();
           this.popupMenu.popup(
             me.getX() + origin.x + 1,
             me.getY() + origin.y + 1,
@@ -174,19 +166,20 @@ const Template = ({ label, ...args }) => {
   }
 
   // Enables rubberband selection
-  let rubberband = new MyCustomRubberBandHandler(graph);
+  const rubberband = new MyCustomRubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
-  let parent = graph.getDefaultParent();
+  const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    let v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-    let v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-    let e1 = graph.insertEdge(parent, null, '', v1, v2);
+    const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
+    const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
+    graph.insertEdge(parent, null, '', v1, v2);
   });
-  return container;
+
+  return mainDiv;
 };
 
 export const Default = Template.bind({});
