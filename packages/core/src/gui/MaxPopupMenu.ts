@@ -28,11 +28,14 @@ import InternalMouseEvent from '../view/event/InternalMouseEvent';
 import type { PopupMenuItem } from '../types';
 
 /**
- * Basic popup menu. To add a vertical scrollbar to a given submenu, the following code can be used.
+ * Basic popup menu.
+ *
+ * To add a vertical scrollbar to a given submenu, the following code can be used:
  *
  * ```javascript
- * const popupMenuShowMenu = showMenu;
- * showMenu = function() {
+ * const popupMenu = new MaxPopupMenu(...);
+ * const popupMenuShowMenu = popupMenu.showMenu;
+ * popupMenu.showMenu = function() {
  *   popupMenuShowMenu.apply(this, []);
  *
  *   this.div.style.overflowY = 'auto';
