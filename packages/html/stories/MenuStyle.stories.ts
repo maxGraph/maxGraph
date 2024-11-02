@@ -153,8 +153,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       this.autoExpand = true; // TODO autoExpand is not working
 
       // Installs context menu
-      // @ts-ignore TODO fix https://github.com/maxGraph/maxGraph/issues/308
-      this.factoryMethod = function (menu: PopupMenuHandler, _cell, _evt) {
+      this.factoryMethod = function (menu, _cell, _evt) {
         menu.addItem('Item 1', null, function () {
           alert('Item 1');
         });
@@ -163,8 +162,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         });
         menu.addSeparator();
 
-        // TODO as part of fix https://github.com/maxGraph/maxGraph/issues/308, allow unset function
-        const submenu1 = menu.addItem('Submenu 1', null, null!);
+        const submenu1 = menu.addItem('Submenu 1');
         menu.addItem(
           'Subitem 1',
           null,

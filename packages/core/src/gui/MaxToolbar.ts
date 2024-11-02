@@ -36,16 +36,13 @@ export interface HTMLImageElementWithProps extends HTMLImageElement {
 }
 
 /**
- * Creates a toolbar inside a given DOM node. The toolbar may contain icons,
- * buttons and combo boxes.
+ * Creates a toolbar inside a given DOM node. The toolbar may contain icons, buttons and combo boxes.
  *
- * ### Event: mxEvent.SELECT
+ * ### `InternalEvent.SELECT`
  *
- * Fires when an item was selected in the toolbar. The <code>function</code>
- * property contains the function that was selected in <selectMode>.
+ * Fires when an item was selected in the toolbar. The EventObject {@link InternalEvent.function}
+ * property contains the function that was selected in {@link selectMode}.
  *
- * @class MaxToolbar
- * @extends {EventSource}
  */
 class MaxToolbar extends EventSource {
   constructor(container: HTMLElement) {
@@ -109,12 +106,11 @@ class MaxToolbar extends EventSource {
     pressedIcon: string | null = null,
     style: string | null = null,
     factoryMethod:
-      | ((handler: PopupMenuItem, cell: Cell | null, me: MouseEvent) => void)
+      | ((handler: MaxPopupMenu, cell: Cell | null, me: MouseEvent) => void)
       | null = null
   ) {
     const img = document.createElement(icon != null ? 'img' : 'button');
-    const initialClassName =
-      style || (factoryMethod != null ? 'mxToolbarMode' : 'mxToolbarItem');
+    const initialClassName = style || (factoryMethod ? 'mxToolbarMode' : 'mxToolbarItem');
     img.className = initialClassName;
     if (icon) {
       img.setAttribute('src', icon);
@@ -159,9 +155,10 @@ class MaxToolbar extends EventSource {
         }
 
         // Popup Menu
-        if (factoryMethod != null) {
+        if (factoryMethod) {
           if (this.menu == null) {
             this.menu = new MaxPopupMenu();
+            // TODO the removal of the init method in the MaxPopupMenu class changed the behavior here
             //this.menu.init();
           }
 

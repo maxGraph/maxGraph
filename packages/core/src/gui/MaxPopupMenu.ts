@@ -25,17 +25,15 @@ import { write } from '../util/domUtils';
 import { isLeftMouseButton } from '../util/EventUtils';
 import Cell from '../view/cell/Cell';
 import InternalMouseEvent from '../view/event/InternalMouseEvent';
-import { PopupMenuItem } from '../types';
+import type { PopupMenuItem } from '../types';
 
 /**
- * Basic popup menu. To add a vertical scrollbar to a given submenu, the
- * following code can be used.
+ * Basic popup menu. To add a vertical scrollbar to a given submenu, the following code can be used.
  *
  * ```javascript
- * let mxPopupMenuShowMenu = showMenu;
- * showMenu = ()=>
- * {
- *   mxPopupMenuShowMenu.apply(this, arguments);
+ * const popupMenuShowMenu = showMenu;
+ * showMenu = function() {
+ *   popupMenuShowMenu.apply(this, []);
  *
  *   this.div.style.overflowY = 'auto';
  *   this.div.style.overflowX = 'hidden';
@@ -43,17 +41,13 @@ import { PopupMenuItem } from '../types';
  * };
  * ```
  *
- * Constructor: mxPopupMenu
+ * ### `InternalEvent.SHOW`
  *
- * Constructs a popupmenu.
- *
- * Event: mxEvent.SHOW
- *
- * Fires after the menu has been shown in <popup>.
+ * Fires after the menu has been shown in {@link popup}.
  */
 class MaxPopupMenu extends EventSource {
   constructor(
-    factoryMethod?: (handler: PopupMenuItem, cell: Cell | null, me: MouseEvent) => void
+    factoryMethod?: (handler: MaxPopupMenu, cell: Cell | null, me: MouseEvent) => void
   ) {
     super();
 
@@ -97,10 +91,10 @@ class MaxPopupMenu extends EventSource {
 
   /**
    * Function that is used to create the popup menu. The function takes the
-   * current panning handler, the <Cell> under the mouse and the mouse
+   * current panning handler, the {@link Cell} under the mouse and the mouse
    * event that triggered the call as arguments.
    */
-  factoryMethod?: (handler: PopupMenuItem, cell: Cell | null, me: MouseEvent) => void;
+  factoryMethod?: (handler: MaxPopupMenu, cell: Cell | null, me: MouseEvent) => void;
 
   /**
    * Specifies if popupmenus should be activated by clicking the left mouse
@@ -187,8 +181,8 @@ class MaxPopupMenu extends EventSource {
    */
   addItem(
     title: string,
-    image: string | null,
-    funct: Function,
+    image?: string | null,
+    funct?: ((evt: MouseEvent) => void) | null,
     parent: PopupMenuItem | null = null,
     iconCls: string | null = null,
     enabled = true,
@@ -256,11 +250,11 @@ class MaxPopupMenu extends EventSource {
           this.eventReceiver = tr;
 
           if (parent && parent.activeRow != tr && parent.activeRow != parent) {
-            if (parent.activeRow != null && parent.activeRow.div.parentNode != null) {
+            if (parent.activeRow && parent.activeRow.div.parentNode) {
               this.hideSubmenu(parent);
             }
 
-            if (tr.div != null) {
+            if (tr.div) {
               this.showSubmenu(parent, tr);
               parent.activeRow = tr;
             }
@@ -268,13 +262,13 @@ class MaxPopupMenu extends EventSource {
 
           InternalEvent.consume(evt);
         },
-        (evt) => {
+        (_evt) => {
           if (parent && parent.activeRow != tr && parent.activeRow != parent) {
-            if (parent.activeRow != null && parent.activeRow.div.parentNode != null) {
+            if (parent.activeRow && parent.activeRow.div.parentNode) {
               this.hideSubmenu(parent);
             }
 
-            if (this.autoExpand && tr.div != null) {
+            if (this.autoExpand && tr.div) {
               this.showSubmenu(parent, tr);
               parent.activeRow = tr;
             }
@@ -293,9 +287,7 @@ class MaxPopupMenu extends EventSource {
               this.hideMenu();
             }
 
-            if (funct != null) {
-              funct(evt);
-            }
+            funct?.(evt);
           }
 
           this.eventReceiver = null;
@@ -305,7 +297,7 @@ class MaxPopupMenu extends EventSource {
 
       // Resets hover style because TR in IE doesn't have hover
       if (!noHover) {
-        InternalEvent.addListener(tr, 'mouseout', (evt: MouseEvent) => {
+        InternalEvent.addListener(tr, 'mouseout', (_evt: MouseEvent) => {
           tr.className = 'mxPopupMenuItem';
         });
       }
@@ -363,7 +355,7 @@ class MaxPopupMenu extends EventSource {
    * Shows the submenu inside the given parent row.
    */
   showSubmenu(parent: PopupMenuItem, row: PopupMenuItem): void {
-    if (row.div != null) {
+    if (row.div) {
       row.div.style.left = `${
         parent.div.offsetLeft + row.offsetLeft + row.offsetWidth - 1
       }px`;
@@ -439,18 +431,18 @@ class MaxPopupMenu extends EventSource {
    * ```
    */
   popup(x: number, y: number, cell: Cell | null, evt: MouseEvent) {
-    if (this.div != null && this.tbody != null && this.factoryMethod != null) {
+    if (this.div && this.tbody && this.factoryMethod) {
       this.div.style.left = `${x}px`;
       this.div.style.top = `${y}px`;
 
       // Removes all child nodes from the existing menu
-      while (this.tbody.firstChild != null) {
+      while (this.tbody.firstChild) {
         InternalEvent.release(this.tbody.firstChild);
         this.tbody.removeChild(this.tbody.firstChild);
       }
 
       this.itemCount = 0;
-      this.factoryMethod(<PopupMenuItem>(<unknown>this), cell, evt);
+      this.factoryMethod(this, cell, evt);
 
       if (this.itemCount > 0) {
         this.showMenu();
@@ -463,7 +455,7 @@ class MaxPopupMenu extends EventSource {
    * Returns true if the menu is showing.
    */
   isMenuShowing(): boolean {
-    return this.div != null && this.div.parentNode == document.body;
+    return this.div && this.div.parentNode == document.body;
   }
 
   /**
@@ -479,8 +471,8 @@ class MaxPopupMenu extends EventSource {
    * Removes the menu and all submenus.
    */
   hideMenu(): void {
-    if (this.div != null) {
-      if (this.div.parentNode != null) {
+    if (this.div) {
+      if (this.div.parentNode) {
         this.div.parentNode.removeChild(this.div);
       }
 
@@ -496,10 +488,10 @@ class MaxPopupMenu extends EventSource {
    * @param parent An item returned by <addItem>.
    */
   hideSubmenu(parent: PopupMenuItem): void {
-    if (parent.activeRow != null) {
+    if (parent.activeRow) {
       this.hideSubmenu(parent.activeRow);
 
-      if (parent.activeRow.div.parentNode != null) {
+      if (parent.activeRow.div.parentNode) {
         parent.activeRow.div.parentNode.removeChild(parent.activeRow.div);
       }
 
@@ -511,10 +503,10 @@ class MaxPopupMenu extends EventSource {
    * Destroys the handler and all its resources and DOM nodes.
    */
   destroy(): void {
-    if (this.div != null) {
+    if (this.div) {
       InternalEvent.release(this.div);
 
-      if (this.div.parentNode != null) {
+      if (this.div.parentNode) {
         this.div.parentNode.removeChild(this.div);
       }
     }

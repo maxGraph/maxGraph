@@ -128,7 +128,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     // Defines a new popup menu for region selection in the rubberband handler
     popupMenu = new MaxPopupMenu(function (menu, _cell, _evt) {
-      // @ts-ignore TODO fix https://github.com/maxGraph/maxGraph/issues/308
       menu.addItem('Show this', null, function () {
         rubberband.popupMenu.hideMenu();
         const bounds = graph.getGraphBounds();
