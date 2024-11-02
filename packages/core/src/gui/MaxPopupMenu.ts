@@ -475,9 +475,7 @@ class MaxPopupMenu extends EventSource {
    */
   hideMenu(): void {
     if (this.div) {
-      if (this.div.parentNode) {
-        this.div.parentNode.removeChild(this.div);
-      }
+      this.div.parentNode?.removeChild(this.div);
 
       this.hideSubmenu(<PopupMenuItem>(<unknown>this));
       this.containsItems = false;
@@ -494,10 +492,7 @@ class MaxPopupMenu extends EventSource {
     if (parent.activeRow) {
       this.hideSubmenu(parent.activeRow);
 
-      if (parent.activeRow.div.parentNode) {
-        parent.activeRow.div.parentNode.removeChild(parent.activeRow.div);
-      }
-
+      parent.activeRow.div.parentNode?.removeChild(parent.activeRow.div);
       parent.activeRow = null;
     }
   }
@@ -509,9 +504,7 @@ class MaxPopupMenu extends EventSource {
     if (this.div) {
       InternalEvent.release(this.div);
 
-      if (this.div.parentNode) {
-        this.div.parentNode.removeChild(this.div);
-      }
+      this.div.parentNode?.removeChild(this.div);
     }
   }
 }
