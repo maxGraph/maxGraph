@@ -103,6 +103,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const divMessage = document.createElement('div');
   divMessage.innerHTML =
     'Use the right mouse button to select a region of the diagram and select <i>Show this</i>.';
+  divMessage.style.marginBottom = '1rem';
   mainDiv.appendChild(divMessage);
 
   const container = createGraphContainer(args);
