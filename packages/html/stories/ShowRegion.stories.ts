@@ -22,9 +22,11 @@ This example demonstrates using a custom rubberband handler to show the selected
 */
 
 import {
+  type EventSource,
   eventUtils,
   Graph,
   InternalEvent,
+  type InternalMouseEvent,
   MaxPopupMenu,
   type PopupMenuHandler,
   printUtils,
@@ -38,9 +40,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-import EventSource from '@maxgraph/core/lib/view/event/EventSource.ts';
-import InternalMouseEvent from '@maxgraph/core/lib/view/event/InternalMouseEvent.ts';
-// style required by RubberBand
+// style required by RubberBand and MaxPopupMenu
 import '@maxgraph/core/css/common.css';
 
 const CSS_TEMPLATE = `
