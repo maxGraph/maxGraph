@@ -31,7 +31,7 @@ type PartialVertex = Pick<
   | 'isVertexLabelsMovable'
   | 'setVertexLabelsMovable'
 > & {
-  // handle the methods defined in the Graph interface with a single implementation
+  // handle the various methods defined in the Graph interface with a single implementation
   insertVertex: (...args: any[]) => Cell;
 };
 type PartialType = PartialGraph & PartialVertex;
@@ -68,10 +68,10 @@ export const VertexMixin: PartialType = {
       id = params.id;
       value = params.value;
 
-      x = 'x' in params ? params.x : params.position[0];
-      y = 'y' in params ? params.y : params.position[1];
-      width = 'width' in params ? params.width : params.size[0];
-      height = 'height' in params ? params.height : params.size[1];
+      x = 'x' in params ? params.x : params.position?.[0];
+      y = 'y' in params ? params.y : params.position?.[1];
+      width = 'width' in params ? params.width : params.size?.[0];
+      height = 'height' in params ? params.height : params.size?.[1];
 
       style = params.style;
       relative = params.relative;

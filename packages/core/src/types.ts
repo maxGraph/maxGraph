@@ -1014,9 +1014,10 @@ export type VertexParameters = {
    */
   parent?: Cell | null;
   /**
-   * Fallback when the {@link x} or the {@link y} parameters are not set.
-   * It is mandatory to set this value or the {@link x} and the {@link y} properties.
+   * Fallback when the {@link x} or the {@link y} properties are not set.
    * Order of the elements: x, y
+   *
+   * **NOTE:** If the position of the vertex is not set at vertex creation (by setting the {@link x} or the {@link y} properties or this property), it is advised to use a {@link GraphLayout} or a {@link LayoutManager} to automatically compute the actual position.
    */
   position?: [number, number];
   /**
@@ -1025,9 +1026,11 @@ export type VertexParameters = {
    */
   relative?: boolean;
   /**
-   * Fallback when the {@link width} or the {@link height} parameters are not set.
-   * It is mandatory to set this value or the {@link width} and the {@link height} properties.
+   * Fallback when the {@link width} or the {@link height} properties are not set.
    * Order of the elements: width, height
+   *
+   * **NOTE:** If the size of the vertex is not set at vertex creation (by setting the {@link width} and the {@link height} properties or this property), it is advised to later set the size on the geometry of the vertex instance.
+   * Otherwise, the vertex has no size and it is not displayed.
    */
   size?: [number, number];
   style?: CellStyle;

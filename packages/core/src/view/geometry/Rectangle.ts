@@ -31,18 +31,19 @@ class Rectangle extends Point {
   constructor(x = 0, y = 0, width = 0, height = 0) {
     super(x, y);
 
-    // replace super of mxPoint
     this.width = width;
     this.height = height;
   }
 
   /**
-   * Holds the width of the rectangle. Default is 0.
+   * Holds the width of the rectangle.
+   * @default 0
    */
   _width = 0;
 
   /**
-   * Holds the height of the rectangle. Default is 0.
+   * Holds the height of the rectangle.
+   * @default 0
    */
   _height = 0;
 

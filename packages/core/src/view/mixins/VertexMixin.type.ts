@@ -44,7 +44,11 @@ declare module '../Graph' {
      * object and the given coordinates as the {@link Geometry} of the new vertex.
      * The id and style are used for the respective properties of the new `Cell`, which is returned.
      *
-     * **IMPORTANT**: this is a legacy method to ease the migration from `mxGraph`. Use the {@link insertVertex} method with a single object parameter instead.
+     * **IMPORTANT**:
+     * - This is a legacy method to ease the migration from `mxGraph`. Use the {@link insertVertex} method with a single object parameter instead.
+     * - If the position of the vertex is not set at vertex creation (by setting the `x` and `y` parameters), it is advised to use a {@link GraphLayout} or a {@link LayoutManager} to automatically compute the actual position.
+     * - If the size of the vertex is not set at vertex creation (by setting the `width` and the `height` parameters), it is advised to later set the size on the geometry of the vertex instance.
+     * Otherwise, the vertex has no size and it is not displayed.
      *
      * When adding new vertices from a mouse event, one should take into
      * account the offset of the graph container and the scale and translation
@@ -83,10 +87,10 @@ declare module '../Graph' {
       parent: Cell | null,
       id: string | null | undefined,
       value: any,
-      x: number,
-      y: number,
-      width: number,
-      height: number,
+      x?: number,
+      y?: number,
+      width?: number,
+      height?: number,
       style?: CellStyle,
       relative?: boolean,
       geometryClass?: typeof Geometry
@@ -130,6 +134,11 @@ declare module '../Graph' {
     /**
      * Hook method that creates the new vertex for {@link insertVertex}.
      *
+     * **IMPORTANT**:
+     * - If the position of the vertex is not set at vertex creation (by setting the `x` and `y` parameters), it is advised to use a {@link GraphLayout} or a {@link LayoutManager} to automatically compute the actual position.
+     * - If the size of the vertex is not set at vertex creation (by setting the `width` and the `height` parameters), it is advised to later set the size on the geometry of the vertex instance.
+     * Otherwise, the vertex has no size and it is not displayed.
+     *
      * @param parent the parent of the new vertex. If not set, use the default parent.
      * @param id Optional string that defines the id of the new vertex. If not set, the id is auto-generated when creating the vertex.
      * @param value Object to be used as the user object.
@@ -146,10 +155,10 @@ declare module '../Graph' {
       parent: Cell | null,
       id: string | null | undefined,
       value: any,
-      x: number,
-      y: number,
-      width: number,
-      height: number,
+      x?: number,
+      y?: number,
+      width?: number,
+      height?: number,
       style?: CellStyle,
       relative?: boolean,
       geometryClass?: typeof Geometry
