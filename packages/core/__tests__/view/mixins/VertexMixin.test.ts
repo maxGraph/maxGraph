@@ -29,7 +29,7 @@ const expectCellInModel = (graph: Graph, expectedCell: Cell) => {
   expect(cellFromModel).toBe(expectedCell);
 };
 
-const expectIsChildOfDefaultParent = (cell: Cell) => {
+const expectIsTheOnlyChildOfDefaultParent = (cell: Cell) => {
   expect(cell.parent).not.toBeNull();
   expect(cell.parent?.id).toBe('1'); // default parent
   const children = cell.parent?.children;
@@ -69,7 +69,7 @@ describe('insertVertex', () => {
       expect(cell.style).toStrictEqual(style);
       expect(cell.geometry).toStrictEqual(nonRelativeGeometry(10, 20, 110, 120));
 
-      expectIsChildOfDefaultParent(cell);
+      expectIsTheOnlyChildOfDefaultParent(cell);
       expectCellInModel(graph, cell);
     });
 
@@ -87,7 +87,7 @@ describe('insertVertex', () => {
       expect(cell.style).toStrictEqual({});
       expect(cell.geometry).toStrictEqual(nonRelativeGeometry(0, 0, 0, 0));
 
-      expectIsChildOfDefaultParent(cell);
+      expectIsTheOnlyChildOfDefaultParent(cell);
       expectCellInModel(graph, cell);
     });
   });
@@ -111,7 +111,7 @@ describe('insertVertex', () => {
       expect(cell.style).toStrictEqual(style);
       expect(cell.geometry).toStrictEqual(nonRelativeGeometry(10, 20, 110, 120));
 
-      expectIsChildOfDefaultParent(cell);
+      expectIsTheOnlyChildOfDefaultParent(cell);
       expectCellInModel(graph, cell);
     });
 
@@ -127,7 +127,7 @@ describe('insertVertex', () => {
       expect(parentCell.value).toBe('non default');
       expect(parentCell.style).toStrictEqual({});
       expect(parentCell.geometry).toStrictEqual(nonRelativeGeometry(10, 10, 400, 400));
-      expectIsChildOfDefaultParent(parentCell);
+      expectIsTheOnlyChildOfDefaultParent(parentCell);
       expectCellInModel(graph, parentCell);
 
       const childCellId = 'childId';
@@ -160,7 +160,7 @@ describe('insertVertex', () => {
       expect(cell.style).toStrictEqual({});
       expect(cell.geometry).toStrictEqual(nonRelativeGeometry(0, 0, 0, 0));
 
-      expectIsChildOfDefaultParent(cell);
+      expectIsTheOnlyChildOfDefaultParent(cell);
       expectCellInModel(graph, cell);
     });
   });
