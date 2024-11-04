@@ -48,6 +48,6 @@ Please check the maxGraph repository **README**:
 
 ## Next Steps
 
-Let's continue with the [Manual](/docs/category/manual) to understand the `maxGraph` concepts.
+Let's continue with the [Manual](./manual/index.md) to understand the `maxGraph` concepts.
 
 For more information on how to use specific features, please refer to the [Usage](/docs/category/usage) documentation.
