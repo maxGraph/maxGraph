@@ -62,7 +62,7 @@ export { default as RubberBandHandler } from './view/handler/RubberBandHandler';
 export { default as SelectionCellsHandler } from './view/handler/SelectionCellsHandler';
 export { default as TooltipHandler } from './view/handler/TooltipHandler';
 export { default as VertexHandler } from './view/handler/VertexHandler';
-export { VertexHandlerConfig } from './view/handler/config';
+export * from './view/handler/config';
 
 export { default as CircleLayout } from './view/layout/CircleLayout';
 export { default as CompactTreeLayout } from './view/layout/CompactTreeLayout';

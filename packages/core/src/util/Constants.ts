@@ -212,14 +212,14 @@ export const INVALID_COLOR = '#FF0000';
 export const EDGE_SELECTION_COLOR = '#00FF00';
 
 /**
- * Defines the color to be used for the selection border of vertices. Use
- * 'none' for no color. Default is #00FF00.
+ * Defines the color to be used for the selection border of vertices. Use `none` for no color.
+ * @default #00FF00
  */
 export const VERTEX_SELECTION_COLOR = '#00FF00';
 
 /**
  * Defines the strokewidth to be used for vertex selections.
- * Default is 1.
+ * @default 1
  */
 export const VERTEX_SELECTION_STROKEWIDTH = 1;
 
@@ -230,8 +230,8 @@ export const VERTEX_SELECTION_STROKEWIDTH = 1;
 export const EDGE_SELECTION_STROKEWIDTH = 1;
 
 /**
- * Defines the dashed state to be used for the vertex selection
- * border. Default is true.
+ * Defines the dashed state to be used for the vertex selection border.
+ * @default true
  */
 export const VERTEX_SELECTION_DASHED = true;
 
@@ -266,7 +266,8 @@ export const OUTLINE_COLOR = '#0099FF';
 export const OUTLINE_STROKEWIDTH = 3;
 
 /**
- * Defines the default size for handles. Default is 6.
+ * Defines the default size for handles.
+ * @default 6
  */
 export const HANDLE_SIZE = 6;
 
@@ -276,14 +277,14 @@ export const HANDLE_SIZE = 6;
 export const LABEL_HANDLE_SIZE = 4;
 
 /**
- * Defines the color to be used for the handle fill color. Use 'none' for
- * no color. Default is #00FF00 (green).
+ * Defines the color to be used for the handle fill color. Use `none` for no color.
+ * @default #00FF00 (green)
  */
 export const HANDLE_FILLCOLOR = '#00FF00';
 
 /**
- * Defines the color to be used for the handle stroke color. Use 'none' for
- * no color. Default is black.
+ * Defines the color to be used for the handle stroke color. Use `none` for no color.
+ * @default black
  */
 export const HANDLE_STROKECOLOR = 'black';
 

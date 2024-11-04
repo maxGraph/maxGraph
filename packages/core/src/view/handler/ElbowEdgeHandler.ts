@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import EdgeHandler from './EdgeHandler';
-import { CURSOR, EDGESTYLE, ELBOW, HANDLE_SIZE } from '../../util/Constants';
+import { CURSOR, EDGESTYLE, ELBOW } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import Translations from '../../util/Translations';
@@ -26,6 +26,7 @@ import { intersects } from '../../util/mathUtils';
 import Client from '../../Client';
 import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
+import { HandleConfig } from './config';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and
@@ -207,8 +208,8 @@ class ElbowEdgeHandler extends EdgeHandler {
       this.labelShape.bounds &&
       intersects(bounds, this.labelShape.bounds)
     ) {
-      w = HANDLE_SIZE + 3;
-      h = HANDLE_SIZE + 3;
+      w = HandleConfig.size + 3;
+      h = HandleConfig.size + 3;
       bounds = new Rectangle(Math.floor(pt.x - w / 2), Math.floor(pt.y - h / 2), w, h);
     }
 

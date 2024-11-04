@@ -28,9 +28,6 @@ import {
   EDGE_SELECTION_COLOR,
   EDGE_SELECTION_DASHED,
   EDGE_SELECTION_STROKEWIDTH,
-  HANDLE_FILLCOLOR,
-  HANDLE_SIZE,
-  HANDLE_STROKECOLOR,
   HIGHLIGHT_STROKEWIDTH,
   LABEL_HANDLE_FILLCOLOR,
   LABEL_HANDLE_SIZE,
@@ -71,20 +68,21 @@ import ImageBox from '../image/ImageBox';
 import EventSource from '../event/EventSource';
 import SelectionHandler from './SelectionHandler';
 import { equalPoints } from '../../util/arrayUtils';
+import { HandleConfig } from './config';
 
 /**
- * Graph event handler that reconnects edges and modifies control points and the edge
- * label location.
+ * Graph event handler that reconnects edges and modifies control points and the edge label location.
+ *
  * Uses {@link CellMarker} for finding and highlighting new source and target vertices.
- * This handler is automatically created in mxGraph.createHandler for each selected edge.
- * **To enable adding/removing control points, the following code can be used**
- * @example
- * ```
- * mxEdgeHandler.prototype.addEnabled = true;
- * mxEdgeHandler.prototype.removeEnabled = true;
+ *
+ * This handler is automatically created in {@link Graph.createHandler} for each selected edge.
+ *
+ * To enable adding/removing control points, the following code can be used:
+ * ```javascript
+ * EdgeHandler.prototype.addEnabled = true;
+ * EdgeHandler.prototype.removeEnabled = true;
  * ```
  * Note: This experimental feature is not recommended for production use.
- * @class EdgeHandler
  */
 class EdgeHandler {
   /**
@@ -659,7 +657,7 @@ class EdgeHandler {
 
       return shape;
     }
-    let s = HANDLE_SIZE;
+    let s = HandleConfig.size;
 
     if (this.preferHtml) {
       s -= 1;
@@ -667,8 +665,8 @@ class EdgeHandler {
 
     return new RectangleShape(
       new Rectangle(0, 0, s, s),
-      HANDLE_FILLCOLOR,
-      HANDLE_STROKECOLOR
+      HandleConfig.fillColor,
+      HandleConfig.strokeColor
     );
   }
 
@@ -691,7 +689,7 @@ class EdgeHandler {
     return new RectangleShape(
       new Rectangle(0, 0, s, s),
       LABEL_HANDLE_FILLCOLOR,
-      HANDLE_STROKECOLOR
+      HandleConfig.strokeColor
     );
   }
 
@@ -1870,7 +1868,7 @@ class EdgeHandler {
     const isSource = index === 0;
     const { cell } = this.state;
     const terminal = cell.getTerminal(isSource);
-    let color = HANDLE_FILLCOLOR;
+    let color = HandleConfig.fillColor;
 
     if (
       (terminal != null && !this.graph.isCellDisconnectable(cell, terminal, isSource)) ||
@@ -2098,8 +2096,8 @@ class EdgeHandler {
               this.labelShape.bounds as Rectangle
             )
           ) {
-            const w = HANDLE_SIZE + 3;
-            const h = HANDLE_SIZE + 3;
+            const w = HandleConfig.size + 3;
+            const h = HandleConfig.size + 3;
             this.bends[i].bounds = new Rectangle(
               Math.round(x - w / 2),
               Math.round(y - h / 2),

@@ -1,5 +1,10 @@
 import type { Preview } from '@storybook/html';
-import { GlobalConfig, NoOpLogger, VertexHandlerConfig } from '@maxgraph/core';
+import {
+  GlobalConfig,
+  NoOpLogger,
+  resetHandleConfig,
+  resetVertexHandlerConfig,
+} from '@maxgraph/core';
 
 const defaultLogger = new NoOpLogger();
 // if you want to debug using the browser console, use the following configuration
@@ -11,7 +16,8 @@ const defaultLogger = new NoOpLogger();
 const resetMaxGraphConfigs = (): void => {
   GlobalConfig.logger = defaultLogger;
 
-  VertexHandlerConfig.rotationEnabled = false;
+  resetVertexHandlerConfig();
+  resetHandleConfig();
 };
 
 const preview: Preview = {
