@@ -369,7 +369,7 @@ Moved methods
 
 The `mxConstants` value object has been replaced by the `constants` namespace.
 
-The properties prefixed by `STYLE_` like `mxConstants.STYLE_FILLCOLOR` have been removed because they are no longer used. See the [Styling Properties](#styling-properties) paragraph for a replacement.
+The properties prefixed by `STYLE_` like `mxConstants.STYLE_FILLCOLOR` have been removed because they are no longer used. See the [Styling Properties](#properties) paragraph for a replacement.
 
 The other properties are still available.
 
@@ -466,7 +466,6 @@ The event handling mechanism in `maxGraph` has been updated. Use the following g
 - Style of a Cell: a dedicated `CellStyle` object that reuses the same properties as the string form used by mxGraph (see below for changes).
 - Style of a State Cell: a `CellStateStyle` instance.
 
-<a id="styling-properties" name="styling-properties"></a>
 #### Properties
 
 In `mxGraph`, the properties are defined as string. The property keys are defined in `mxConstants` and are prefixed by `STYLE_` like `mxConstants.STYLE_FILLCOLOR`.
@@ -534,11 +533,11 @@ See also
 The migration consists of converting [`StyleMap`](https://github.com/typed-mxgraph/typed-mxgraph/blob/187dd4f0dc7644c0cfbc998dae5fc90879597d81/lib/view/mxStylesheet.d.ts#L2-L4) objects to `CellStyle` objects.
 
 If you have been using string or named properties, you can keep that syntax.
-You just need to rename the property or update its value as described in the [Styling Properties](#styling-properties) paragraph.
+You just need to rename the property or update its value as described in the [Styling Properties](#properties) paragraph.
 
 :::warning
 
-Be aware of the properties that have been renamed or whose value types have changed, as described in the [Styling Properties](#styling-properties) paragraph.
+Be aware of the properties that have been renamed or whose value types have changed, as described in the [Styling Properties](#properties) paragraph.
 
 :::
 
@@ -601,7 +600,7 @@ For more details about styles in maxGraph, see the [Styles documentation](../man
 
 :::warning
 
-Be aware of the properties that have been renamed or whose value types have changed, as described in the [Styling Properties](#styling-properties) paragraph.
+Be aware of the properties that have been renamed or whose value types have changed, as described in the [Styling Properties](#properties) paragraph.
 
 :::
 
