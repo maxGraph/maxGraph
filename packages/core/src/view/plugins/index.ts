@@ -29,6 +29,7 @@ import PanningHandler from '../handler/PanningHandler';
  * The function returns a new array each time it is called.
  *
  * @category Plugin
+ * @since 0.13.0
  */
 export const getDefaultPlugins = (): GraphPluginConstructor[] => [
   CellEditorHandler,

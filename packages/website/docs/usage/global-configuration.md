@@ -13,10 +13,11 @@ This guide explains how to configure `maxGraph` globally. This global configurat
 The following objects can be used to configure `maxGraph` globally:
 
   - `Client`: this is the historical entry point for global configuration, coming from the `mxGraph` library.
-  - `StencilShapeConfig`: introduced in version _0.11.0_. This object is used to configure stencil shapes globally.
-  - `GlobalConfig`: introduced in version _0.11.0_.
+  - `GlobalConfig` (since 0.11.0): for shared resources (logger).
+  - `StencilShapeConfig` (since 0.11.0): for stencil shapes.
+  - `VertexHandlerConfig` (since 0.12.0): for `VertexHandler`.
 
-Notice that the new global configuration elements introduced in version _0.11.0_ are experimental and are subject to change in future versions. 
+Notice that the new global configuration elements introduced as version _0.11.0_ are experimental and are subject to change in future versions.
 
 ## Styles
 

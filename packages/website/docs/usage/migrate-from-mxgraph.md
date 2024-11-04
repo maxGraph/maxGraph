@@ -413,7 +413,7 @@ Others were removed:
 
 - Codec renaming and output: https://github.com/maxGraph/maxGraph/pull/70
 - `mxDictionary`&lt;T&gt; to `Dictionary`&lt;K, V&gt;
-
+- `mxVertexHandler.rotationEnabled` has been removed. Use `VertexHandlerConfig.rotationEnabled` instead (since `0.12.0`).
 
 ### Event handling
 
