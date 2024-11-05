@@ -1,5 +1,14 @@
 # `maxGraph` Change Log
 
+All versions and breaking changes to [maxGraph](https://github.com/maxGraph/maxGraph) are documented here. We use [semantic versioning](http://semver.org/) for releases.
+
+For details about the content of a version, see [the GitHub release page](https://github.com/maxGraph/maxGraph/releases).
+
+
+## Unreleased
+
+_**Note:** Yet to be released breaking changes appear here._
+
 ## 0.13.1
 
 Release date: `2024-11-04`
