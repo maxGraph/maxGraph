@@ -1,8 +1,8 @@
 # `maxGraph` Change Log
 
-All versions and breaking changes to [maxGraph](https://github.com/maxGraph/maxGraph) are documented here. We use [semantic versioning](http://semver.org/) for releases.
+All versions and breaking changes of [maxGraph](https://github.com/maxGraph/maxGraph) are documented here. We use [semantic versioning](http://semver.org/) for versions.
 
-For details about the content of a version, see [the GitHub release page](https://github.com/maxGraph/maxGraph/releases).
+For more details on the contents of a release, see [the GitHub release page] (https://github.com/maxGraph/maxGraph/releases).
 
 
 ## Unreleased
