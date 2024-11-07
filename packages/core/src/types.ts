@@ -391,12 +391,12 @@ export type CellStateStyle = {
   imageBorder?: ColorValue;
   /**
    * The value is the image height in pixels and must be greater than `0`.
-   * @default constants.DEFAULT_IMAGESIZE
+   * @default {@link DEFAULT_IMAGESIZE}
    */
   imageHeight?: number;
   /**
    * The value is the image width in pixels and must be greater than `0`.
-   * @default constants.DEFAULT_IMAGESIZE
+   * @default {@link DEFAULT_IMAGESIZE}
    */
   imageWidth?: number;
   /**
@@ -636,7 +636,7 @@ export type CellStateStyle = {
   /**
    * The type of this value is float and the value represents the size of the horizontal
    * segment of the entity relation style.
-   * @default constants.ENTITY_SEGMENT
+   * @default {@link ENTITY_SEGMENT}
    */
   segment?: number;
   /**
@@ -812,7 +812,7 @@ export type CellStateStyle = {
    */
   targetPortConstraint?: DIRECTION;
   /**
-   * @default constants.DEFAULT_TEXT_DIRECTION
+   * @default {@link DEFAULT_TEXT_DIRECTION}
    */
   textDirection?: TextDirectionValue;
   /**
