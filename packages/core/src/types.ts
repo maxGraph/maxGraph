@@ -174,9 +174,11 @@ export type CellStateStyle = {
    * The possible values are all names of the shapes registered with {@link StyleRegistry.putValue}.
    * This includes {@link DefaultEdgeStyleValue} values and custom names that have been registered.
    *
+   * It is also possible to pass a {@link EdgeStyleFunction}.
+   *
    * See {@link noEdgeStyle}.
    */
-  edgeStyle?: DefaultEdgeStyleValue | (string & {}) | EdgeStyleFunction;
+  edgeStyle?: EdgeStyleValue;
   /**
    * This specifies if the value of a cell can be edited using the in-place editor.
    * See {@link Graph.isCellEditable}.
@@ -1187,6 +1189,12 @@ export type DefaultEdgeStyleValue =
   | 'segmentEdgeStyle'
   | 'sideToSideEdgeStyle'
   | 'topToBottomEdgeStyle';
+
+/**
+ * {@link DefaultEdgeStyleValue} with support for extensions and {@link EdgeStyleFunction}.
+ * @since 0.14.0
+ */
+export type EdgeStyleValue = DefaultEdgeStyleValue | (string & {}) | EdgeStyleFunction;
 
 /**
  * @since 0.11.0
