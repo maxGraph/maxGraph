@@ -172,11 +172,11 @@ export type CellStateStyle = {
    * This defines the style of the edge if the current cell is an Edge.
    *
    * The possible values are all names of the shapes registered with {@link StyleRegistry.putValue}.
-   * This includes {@link EdgeStyleValue} values and custom names that have been registered.
+   * This includes {@link DefaultEdgeStyleValue} values and custom names that have been registered.
    *
    * See {@link noEdgeStyle}.
    */
-  edgeStyle?: EdgeStyleValue | (string & {}) | EdgeStyleFunction;
+  edgeStyle?: DefaultEdgeStyleValue | (string & {}) | EdgeStyleFunction;
   /**
    * This specifies if the value of a cell can be edited using the in-place editor.
    * See {@link Graph.isCellEditable}.
@@ -1178,7 +1178,7 @@ export type EdgeStyleFunction = (
  * Names used to register the edge styles provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
  * @since 0.14.0
  */
-export type EdgeStyleValue =
+export type DefaultEdgeStyleValue =
   | 'elbowEdgeStyle'
   | 'entityRelationEdgeStyle'
   | 'loopEdgeStyle'
