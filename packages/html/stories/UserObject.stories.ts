@@ -204,7 +204,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style = graph.getStylesheet().getDefaultEdgeStyle();
   style.strokeColor = '#0C0C0C';
   style.labelBackgroundColor = 'white';
-  // @ts-ignore TODO fix the type, this works
   style.edgeStyle = EdgeStyle.ElbowConnector;
   style.rounded = true;
   style.fontColor = 'black';
