@@ -508,24 +508,16 @@ export enum TEXT_DIRECTION {
 }
 
 /**
- * - DIRECTION_MASK_NONE: Constant for no direction.
- *
- * - DIRECTION_MASK_WEST: Bitwise mask for west direction.
- *
- * - DIRECTION_MASK_NORTH: Bitwise mask for north direction.
- *
- * - DIRECTION_MASK_SOUTH: Bitwise mask for south direction.
- *
- * - DIRECTION_MASK_EAST: Bitwise mask for east direction.
- *
- * - DIRECTION_MASK_ALL: Bitwise mask for all directions.
+ * Bitwise mask for all directions.
  */
 export const DIRECTION_MASK = {
+  /** No direction. */
   NONE: 0,
   WEST: 1,
   NORTH: 2,
   SOUTH: 4,
   EAST: 8,
+  /** All directions. */
   ALL: 15,
 };
 
@@ -538,7 +530,8 @@ export enum ELBOW {
 }
 
 /**
- * Can be used as a string value for the STYLE_EDGE style.
+ * Names used to register the edge styles (a.k.a. connectors) provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
+ * Can be used as a value for {@link CellStateStyle.edgeStyle}.
  */
 export enum EDGESTYLE {
   ELBOW = 'elbowEdgeStyle',
@@ -552,7 +545,8 @@ export enum EDGESTYLE {
 }
 
 /**
- * Can be used as a string value for the STYLE_PERIMETER style.
+ * Names used to register the perimeters provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
+ * Can be used as a value for {@link CellStateStyle.perimeter}.
  */
 export enum PERIMETER {
   ELLIPSE = 'ellipsePerimeter',
@@ -562,96 +556,88 @@ export enum PERIMETER {
   TRIANGLE = 'trianglePerimeter',
 }
 
+/**
+ * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
+ * Can be used as a value for {@link CellStateStyle.shape}.
+ */
 export enum SHAPE {
   /**
-   * Name under which {@link RectangleShape} is registered in {@link CellRenderer}.
-   * Default is rectangle.
+   * Name under which {@link RectangleShape} is registered.
    */
   RECTANGLE = 'rectangle',
 
   /**
-   * Name under which {@link Ellipse} is registered in {@link CellRenderer}.
-   * Default is ellipse.
+   * Name under which {@link Ellipse} is registered.
    */
   ELLIPSE = 'ellipse',
 
   /**
-   * Name under which {@link DoubleEllipse} is registered in {@link CellRenderer}.
-   * Default is doubleEllipse.
+   * Name under which {@link DoubleEllipse} is registered.
    */
   DOUBLE_ELLIPSE = 'doubleEllipse',
 
   /**
-   * Name under which {@link Rhombus} is registered in {@link CellRenderer}.
-   * Default is rhombus.
+   * Name under which {@link Rhombus} is registered.
    */
   RHOMBUS = 'rhombus',
 
   /**
-   * Name under which {@link LineShape} is registered in {@link CellRenderer} by default.
+   * Name under which {@link LineShape} is registered.
    */
   LINE = 'line',
 
   /**
-   * Name under which {@link ImageShape} is registered in {@link CellRenderer}.
-   * Default is image.
+   * Name under which {@link ImageShape} is registered.
    */
   IMAGE = 'image',
 
   /**
-   * Name under which {@link ArrowShape} is registered in {@link CellRenderer} by default.
+   * Name under which {@link ArrowShape} is registered.
    */
   ARROW = 'arrow',
 
   /**
-   * Name under which {@link ArrowConnectorShape} is registered in {@link CellRenderer} by default.
+   * Name under which {@link ArrowConnectorShape} is registered.
    */
   ARROW_CONNECTOR = 'arrowConnector',
 
   /**
-   * Name under which {@link Label} is registered in {@link CellRenderer}.
-   * Default is label.
+   * Name under which {@link Label} is registered.
    */
   LABEL = 'label',
 
   /**
-   * Name under which {@link Cylinder} is registered in {@link CellRenderer}.
-   * Default is cylinder.
+   * Name under which {@link Cylinder} is registered.
    */
   CYLINDER = 'cylinder',
 
   /**
-   * Name under which {@link Swimlane} is registered in {@link CellRenderer}.
-   * Default is swimlane.
+   * Name under which {@link Swimlane} is registered.
    */
   SWIMLANE = 'swimlane',
 
   /**
-   * Name under which {@link ConnectorShape} is registered in {@link CellRenderer} by default.
+   * Name under which {@link ConnectorShape} is registered.
    */
   CONNECTOR = 'connector',
 
   /**
-   * Name under which {@link Actor} is registered in {@link CellRenderer}.
-   * Default is actor.
+   * Name under which {@link Actor} is registered.
    */
   ACTOR = 'actor',
 
   /**
-   * Name under which {@link Cloud} is registered in {@link CellRenderer}.
-   * Default is cloud.
+   * Name under which {@link Cloud} is registered.
    */
   CLOUD = 'cloud',
 
   /**
-   * Name under which {@link Triangle} is registered in {@link CellRenderer}.
-   * Default is triangle.
+   * Name under which {@link Triangle} is registered.
    */
   TRIANGLE = 'triangle',
 
   /**
-   * Name under which {@link Hexagon} is registered in {@link CellRenderer}.
-   * Default is hexagon.
+   * Name under which {@link Hexagon} is registered.
    */
   HEXAGON = 'hexagon',
 }
