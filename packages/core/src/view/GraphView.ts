@@ -2027,10 +2027,17 @@ export class GraphView extends EventSource {
    * Returns true if the event origin is one of the scrollbars of the
    * container in IE. Such events are ignored.
    */
-  isScrollEvent(evt: MouseEvent) {
+  isScrollEvent(evt: MouseEvent | TouchEvent) {
     const graph = this.graph;
     const offset = getOffset(graph.container);
-    const pt = new Point(evt.clientX - offset.x, evt.clientY - offset.y);
+    let points = [0, 0];
+    if (evt instanceof MouseEvent) {
+      points = [evt.clientX, evt.clientY];
+    } else if (evt instanceof TouchEvent) {
+      points = [evt.touches[0].clientX, evt.touches[0].clientY];
+    }
+
+    const pt = new Point(points[0] - offset.x, points[1] - offset.y);
     const container = graph.container;
 
     const outWidth = container.offsetWidth;
