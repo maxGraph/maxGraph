@@ -65,7 +65,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Sets the default edge style
   const style = graph.getStylesheet().getDefaultEdgeStyle();
-  // @ts-ignore TODO fix the type, this works
   style.edgeStyle = EdgeStyle.ElbowConnector;
 
   // Ports are not used as terminals for edges, they are

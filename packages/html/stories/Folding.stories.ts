@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { constants, Graph, LayoutManager, StackLayout } from '@maxgraph/core';
+import { constants, EdgeStyle, Graph, LayoutManager, StackLayout } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import {
   configureExpandedAndCollapsedImages,
@@ -57,9 +57,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Sets global styles
   let style = graph.getStylesheet().getDefaultEdgeStyle();
-  // TODO was working in mxGraph, currently edgeStyle must be a string, but passing the function works at runtime
-  // style.edgeStyle = EdgeStyle.EntityRelation;
-  style.edgeStyle = constants.EDGESTYLE.ENTITY_RELATION;
+  style.edgeStyle = EdgeStyle.EntityRelation;
   style.rounded = true;
 
   style = graph.getStylesheet().getDefaultVertexStyle();
