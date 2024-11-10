@@ -24,6 +24,28 @@ import {
 } from '../../util/Constants';
 
 /**
+ * Global configuration for handles, used {@link VertexHandler} and EdgeHandler (including subclasses).
+ *
+ * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
+ */
+export const HandleConfig = {
+  fillColor: HANDLE_FILLCOLOR,
+  size: HANDLE_SIZE,
+  strokeColor: HANDLE_STROKECOLOR,
+};
+
+/**
+ * Resets {@link HandleConfig} to default values.
+ */
+export const resetHandleConfig = (): void => {
+  HandleConfig.fillColor = HANDLE_FILLCOLOR;
+  HandleConfig.size = HANDLE_SIZE;
+  HandleConfig.strokeColor = HANDLE_STROKECOLOR;
+};
+
+/**
  * Global configuration for {@link VertexHandler}.
  *
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
@@ -68,26 +90,4 @@ export const resetVertexHandlerConfig = (): void => {
   VertexHandlerConfig.selectionColor = VERTEX_SELECTION_COLOR;
   VertexHandlerConfig.selectionStrokeWidth = VERTEX_SELECTION_STROKEWIDTH;
   VertexHandlerConfig.selectionDashed = VERTEX_SELECTION_DASHED;
-};
-
-/**
- * Global configuration for handles, used {@link VertexHandler} and EdgeHandler (including subclasses).
- *
- * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
- * @since 0.14.0
- * @category Configuration
- */
-export const HandleConfig = {
-  fillColor: HANDLE_FILLCOLOR,
-  size: HANDLE_SIZE,
-  strokeColor: HANDLE_STROKECOLOR,
-};
-
-/**
- * Resets {@link HandleConfig} to default values.
- */
-export const resetHandleConfig = (): void => {
-  HandleConfig.fillColor = HANDLE_FILLCOLOR;
-  HandleConfig.size = HANDLE_SIZE;
-  HandleConfig.strokeColor = HANDLE_STROKECOLOR;
 };
