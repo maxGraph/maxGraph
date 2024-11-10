@@ -2097,7 +2097,7 @@ class EdgeHandler {
             )
           ) {
             const w = HandleConfig.size + 3;
-            const h = HandleConfig.size + 3;
+            const h = w;
             this.bends[i].bounds = new Rectangle(
               Math.round(x - w / 2),
               Math.round(y - h / 2),

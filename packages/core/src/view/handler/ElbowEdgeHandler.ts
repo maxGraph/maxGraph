@@ -209,7 +209,7 @@ class ElbowEdgeHandler extends EdgeHandler {
       intersects(bounds, this.labelShape.bounds)
     ) {
       w = HandleConfig.size + 3;
-      h = HandleConfig.size + 3;
+      h = w;
       bounds = new Rectangle(Math.floor(pt.x - w / 2), Math.floor(pt.y - h / 2), w, h);
     }
 

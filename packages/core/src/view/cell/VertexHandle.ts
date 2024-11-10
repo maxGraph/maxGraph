@@ -192,7 +192,8 @@ class VertexHandle implements CellHandle {
    * Creates and returns the shape for this handle.
    */
   createShape(_html: boolean): Shape {
-    const bounds = new Rectangle(0, 0, HandleConfig.size, HandleConfig.size);
+    const handleSize = HandleConfig.size;
+    const bounds = new Rectangle(0, 0, handleSize, handleSize);
     return new RectangleShape(bounds, HandleConfig.fillColor, HandleConfig.strokeColor);
   }
 
