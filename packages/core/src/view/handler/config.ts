@@ -24,20 +24,36 @@ import {
 } from '../../util/Constants';
 
 /**
- * Global configuration for handles, used {@link VertexHandler} and EdgeHandler (including subclasses).
+ * Global configuration for handles, used {@link VertexHandler} and {@link EdgeHandler} (including subclasses).
  *
- * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.14.0
  * @category Configuration
  */
 export const HandleConfig = {
+  /**
+   * Defines the default color to be used for the handle fill color. Use `none` for no color.
+   * @default {@link HANDLE_FILLCOLOR}
+   */
   fillColor: HANDLE_FILLCOLOR,
+  /**
+   * Defines the default size for handles.
+   * @default {@link HANDLE_SIZE}
+   */
   size: HANDLE_SIZE,
+  /**
+   * Defines the default color to be used for the handle stroke color. Use `none` for no color.
+   * @default {@link HANDLE_STROKECOLOR}
+   */
   strokeColor: HANDLE_STROKECOLOR,
 };
 
 /**
  * Resets {@link HandleConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
  */
 export const resetHandleConfig = (): void => {
   HandleConfig.fillColor = HANDLE_FILLCOLOR;
@@ -48,7 +64,7 @@ export const resetHandleConfig = (): void => {
 /**
  * Global configuration for {@link VertexHandler}.
  *
- * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.12.0
  * @category Configuration
  */
@@ -60,22 +76,21 @@ export const VertexHandlerConfig = {
   rotationEnabled: false,
 
   /**
-   * Defines the color to be used for the selection border of vertices. Use
-   * 'none' for no color.
+   * Defines the default color to be used for the selection border of vertices. Use `none` for no color.
    * @default {@link VERTEX_SELECTION_COLOR}
    * @since 0.14.0
    */
   selectionColor: VERTEX_SELECTION_COLOR,
 
   /**
-   * Defines the strokewidth to be used for vertex selections.
+   * Defines the default stroke width to be used for vertex selections.
    * @default {@link VERTEX_SELECTION_STROKEWIDTH}
    * @since 0.14.0
    */
   selectionStrokeWidth: VERTEX_SELECTION_STROKEWIDTH,
 
   /**
-   * Defines the dashed state to be used for the vertex selection border.
+   * Defines the default dashed state to be used for the vertex selection border.
    * @default {@link VERTEX_SELECTION_DASHED}
    * @since 0.14.0
    */
@@ -84,6 +99,10 @@ export const VertexHandlerConfig = {
 
 /**
  * Resets {@link VertexHandlerConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
  */
 export const resetVertexHandlerConfig = (): void => {
   VertexHandlerConfig.rotationEnabled = false;
