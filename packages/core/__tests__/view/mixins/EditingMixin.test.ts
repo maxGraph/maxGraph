@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import { describe, expect, jest, test } from '@jest/globals';
-import { createGraphWithoutContainer } from '../../utils';
+import { createGraphWithoutPlugins } from '../../utils';
 import { Cell, type CellStateStyle } from '../../../src';
 
 describe('isCellEditable', () => {
   const createGraphMockingGetCurrentCellStyle = (cellIsEditable?: boolean) => {
-    const graph = createGraphWithoutContainer();
+    const graph = createGraphWithoutPlugins();
     graph.getCurrentCellStyle = jest
       .fn<(cell: Cell, ignoreState?: boolean) => CellStateStyle>()
       .mockReturnValue(cellIsEditable !== undefined ? { editable: cellIsEditable } : {});
@@ -40,20 +40,19 @@ describe('isCellEditable', () => {
   });
 
   test('Using Cell with "editable" property set to "false"', () => {
-    const graph = createGraphWithoutContainer();
     expect(
       createGraphMockingGetCurrentCellStyle(false).isCellEditable(new Cell())
     ).toBeFalsy();
   });
 
   test('Cells not editable in Graph', () => {
-    const graph = createGraphWithoutContainer();
+    const graph = createGraphWithoutPlugins();
     graph.setCellsEditable(false);
     expect(graph.isCellEditable(new Cell())).toBeFalsy();
   });
 
   test('Cells locked in Graph', () => {
-    const graph = createGraphWithoutContainer();
+    const graph = createGraphWithoutPlugins();
     graph.setCellsLocked(true);
     expect(graph.isCellEditable(new Cell())).toBeFalsy();
   });
