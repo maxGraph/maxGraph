@@ -181,7 +181,8 @@ export type CellStateStyle = {
   edgeStyle?: StyleEdgeStyleValue;
   /**
    * This specifies if the value of a cell can be edited using the in-place editor.
-   * See {@link Graph.isCellEditable}.
+   *
+   * Note that a cell is in fact editable according to the value returned by {@link Graph.isCellEditable}.
    * @default true
    */
   editable?: boolean;
