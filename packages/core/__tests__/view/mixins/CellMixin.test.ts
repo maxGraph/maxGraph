@@ -14,9 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { expect, test } from '@jest/globals';
-import { createGraphWithoutPlugins } from '../../utils';
-import type { CellStyle } from '../../../src';
+import { describe, expect, test } from '@jest/globals';
+import {
+  createGraphMockingGetCurrentCellStyle,
+  createGraphWithoutPlugins,
+} from '../../utils';
+import { Cell, CellStyle } from '../../../src';
 import { FONT } from '../../../src/util/Constants';
 
 test('setCellStyles on vertex', () => {
@@ -53,4 +56,224 @@ test('setCellStyleFlags on vertex', () => {
   graph.setCellStyleFlags('fontStyle', FONT.UNDERLINE, null, [cell]);
   expect(cell.style.fontStyle).toBe(7);
   expect(graph.getView().getState(cell)?.style?.fontStyle).toBe(7);
+});
+
+describe('isAutoSizeCell', () => {
+  test('Using defaults', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({}).isAutoSizeCell(new Cell())
+    ).toBeFalsy();
+  });
+
+  test('Using Cell with the "autoSize" style property set to "true"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ autoSize: true }).isAutoSizeCell(new Cell())
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "autoSize" style property set to "false"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ cloneable: false }).isAutoSizeCell(
+        new Cell()
+      )
+    ).toBeFalsy();
+  });
+
+  test('Cells not "autoSize" in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setAutoSizeCells(false);
+    expect(graph.isAutoSizeCell(new Cell())).toBeFalsy();
+  });
+
+  test('Cells "autoSize" in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setAutoSizeCells(true);
+    expect(graph.isAutoSizeCell(new Cell())).toBeTruthy();
+  });
+});
+
+describe('isCellBendable', () => {
+  test('Using defaults', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({}).isCellBendable(new Cell())
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "bendable" style property set to "true"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ bendable: true }).isCellBendable(new Cell())
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "bendable" style property set to "false"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ bendable: false }).isCellBendable(
+        new Cell()
+      )
+    ).toBeFalsy();
+  });
+
+  test('Cells not "bendable" in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setCellsBendable(false);
+    expect(graph.isCellBendable(new Cell())).toBeFalsy();
+  });
+
+  test('Cells locked in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setCellsLocked(true);
+    expect(graph.isCellBendable(new Cell())).toBeFalsy();
+  });
+});
+
+describe('isCellCloneable', () => {
+  test('Using defaults', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({}).isCellCloneable(new Cell())
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "cloneable" style property set to "true"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ cloneable: true }).isCellCloneable(
+        new Cell()
+      )
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "cloneable" style property set to "false"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ cloneable: false }).isCellCloneable(
+        new Cell()
+      )
+    ).toBeFalsy();
+  });
+
+  test('Cells not "cloneable" in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setCellsCloneable(false);
+    expect(graph.isCellCloneable(new Cell())).toBeFalsy();
+  });
+});
+
+describe('isCellDeletable', () => {
+  test('Using defaults', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({}).isCellDeletable(new Cell())
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "deletable" style property set to "true"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ deletable: true }).isCellDeletable(
+        new Cell()
+      )
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "deletable" style property set to "false"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ deletable: false }).isCellDeletable(
+        new Cell()
+      )
+    ).toBeFalsy();
+  });
+
+  test('Cells not "deletable" in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setCellsDeletable(false);
+    expect(graph.isCellDeletable(new Cell())).toBeFalsy();
+  });
+});
+
+describe('isCellMovable', () => {
+  test('Using defaults', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({}).isCellMovable(new Cell())
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "movable" style property set to "true"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ movable: true }).isCellMovable(new Cell())
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "movable" style property set to "false"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ movable: false }).isCellMovable(new Cell())
+    ).toBeFalsy();
+  });
+
+  test('Cells not "movable" in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setCellsMovable(false);
+    expect(graph.isCellMovable(new Cell())).toBeFalsy();
+  });
+
+  test('Cells locked in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setCellsLocked(true);
+    expect(graph.isCellMovable(new Cell())).toBeFalsy();
+  });
+});
+
+describe('isCellResizable', () => {
+  test('Using defaults', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({}).isCellResizable(new Cell())
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "resizable" style property set to "true"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ resizable: true }).isCellResizable(
+        new Cell()
+      )
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "resizable" style property set to "false"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ resizable: false }).isCellResizable(
+        new Cell()
+      )
+    ).toBeFalsy();
+  });
+
+  test('Cells not "resizable" in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setCellsResizable(false);
+    expect(graph.isCellResizable(new Cell())).toBeFalsy();
+  });
+
+  test('Cells locked in Graph', () => {
+    const graph = createGraphWithoutPlugins();
+    graph.setCellsLocked(true);
+    expect(graph.isCellResizable(new Cell())).toBeFalsy();
+  });
+});
+
+describe('isCellRotatable', () => {
+  test('Using defaults', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({}).isCellRotatable(new Cell())
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "rotatable" style property set to "true"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ rotatable: true }).isCellRotatable(
+        new Cell()
+      )
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "rotatable" style property set to "false"', () => {
+    expect(
+      createGraphMockingGetCurrentCellStyle({ rotatable: false }).isCellRotatable(
+        new Cell()
+      )
+    ).toBeFalsy();
+  });
 });

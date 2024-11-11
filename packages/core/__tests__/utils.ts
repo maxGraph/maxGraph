@@ -14,9 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph } from '../src';
+import { type Cell, type CellStateStyle, Graph } from '../src';
+import { jest } from '@jest/globals';
 
 // no need for a container, we don't check the view here
 export const createGraphWithoutContainer = (): Graph => new Graph(null!);
 
 export const createGraphWithoutPlugins = (): Graph => new Graph(null!, null!, []);
+
+export const createGraphMockingGetCurrentCellStyle = (style: CellStateStyle) => {
+  const graph = createGraphWithoutPlugins();
+  graph.getCurrentCellStyle = jest
+    .fn<(cell: Cell, ignoreState?: boolean) => CellStateStyle>()
+    .mockReturnValue(style);
+  return graph;
+};

@@ -133,7 +133,8 @@ export type CellStateStyle = {
   bendable?: boolean;
   /**
    * This specifies if a cell can be cloned.
-   * See {@link Graph.isCellCloneable}.
+   *
+   * Note that a cell is in fact cloneable according to the value returned by {@link Graph.isCellCloneable}.
    * @default true
    */
   cloneable?: boolean;
