@@ -33,13 +33,13 @@ describe('isCellEditable', () => {
     ).toBeTruthy();
   });
 
-  test('Using Cell with "editable" property set to "true"', () => {
+  test('Using Cell with the "editable" style property set to "true"', () => {
     expect(
       createGraphMockingGetCurrentCellStyle(true).isCellEditable(new Cell())
     ).toBeTruthy();
   });
 
-  test('Using Cell with "editable" property set to "false"', () => {
+  test('Using Cell with the "editable" style property set to "false"', () => {
     expect(
       createGraphMockingGetCurrentCellStyle(false).isCellEditable(new Cell())
     ).toBeFalsy();
