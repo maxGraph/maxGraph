@@ -15,10 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import {
-  createGraphMockingGetCurrentCellStyle,
-  createGraphWithoutPlugins,
-} from '../../utils';
+import { createCellWithStyle, createGraphWithoutPlugins } from '../../utils';
 import { Cell, CellStyle } from '../../../src';
 import { FONT } from '../../../src/util/Constants';
 
@@ -60,22 +57,18 @@ test('setCellStyleFlags on vertex', () => {
 
 describe('isAutoSizeCell', () => {
   test('Using defaults', () => {
-    expect(
-      createGraphMockingGetCurrentCellStyle({}).isAutoSizeCell(new Cell())
-    ).toBeFalsy();
+    expect(createGraphWithoutPlugins().isAutoSizeCell(new Cell())).toBeFalsy();
   });
 
   test('Using Cell with the "autoSize" style property set to "true"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ autoSize: true }).isAutoSizeCell(new Cell())
+      createGraphWithoutPlugins().isAutoSizeCell(createCellWithStyle({ autoSize: true }))
     ).toBeTruthy();
   });
 
   test('Using Cell with the "autoSize" style property set to "false"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ cloneable: false }).isAutoSizeCell(
-        new Cell()
-      )
+      createGraphWithoutPlugins().isAutoSizeCell(createCellWithStyle({ autoSize: false }))
     ).toBeFalsy();
   });
 
@@ -94,22 +87,18 @@ describe('isAutoSizeCell', () => {
 
 describe('isCellBendable', () => {
   test('Using defaults', () => {
-    expect(
-      createGraphMockingGetCurrentCellStyle({}).isCellBendable(new Cell())
-    ).toBeTruthy();
+    expect(createGraphWithoutPlugins().isCellBendable(new Cell())).toBeTruthy();
   });
 
   test('Using Cell with the "bendable" style property set to "true"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ bendable: true }).isCellBendable(new Cell())
+      createGraphWithoutPlugins().isCellBendable(createCellWithStyle({ bendable: true }))
     ).toBeTruthy();
   });
 
   test('Using Cell with the "bendable" style property set to "false"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ bendable: false }).isCellBendable(
-        new Cell()
-      )
+      createGraphWithoutPlugins().isCellBendable(createCellWithStyle({ bendable: false }))
     ).toBeFalsy();
   });
 
@@ -128,23 +117,21 @@ describe('isCellBendable', () => {
 
 describe('isCellCloneable', () => {
   test('Using defaults', () => {
-    expect(
-      createGraphMockingGetCurrentCellStyle({}).isCellCloneable(new Cell())
-    ).toBeTruthy();
+    expect(createGraphWithoutPlugins().isCellCloneable(new Cell())).toBeTruthy();
   });
 
   test('Using Cell with the "cloneable" style property set to "true"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ cloneable: true }).isCellCloneable(
-        new Cell()
+      createGraphWithoutPlugins().isCellCloneable(
+        createCellWithStyle({ cloneable: true })
       )
     ).toBeTruthy();
   });
 
   test('Using Cell with the "cloneable" style property set to "false"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ cloneable: false }).isCellCloneable(
-        new Cell()
+      createGraphWithoutPlugins().isCellCloneable(
+        createCellWithStyle({ cloneable: false })
       )
     ).toBeFalsy();
   });
@@ -158,23 +145,21 @@ describe('isCellCloneable', () => {
 
 describe('isCellDeletable', () => {
   test('Using defaults', () => {
-    expect(
-      createGraphMockingGetCurrentCellStyle({}).isCellDeletable(new Cell())
-    ).toBeTruthy();
+    expect(createGraphWithoutPlugins().isCellDeletable(new Cell())).toBeTruthy();
   });
 
   test('Using Cell with the "deletable" style property set to "true"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ deletable: true }).isCellDeletable(
-        new Cell()
+      createGraphWithoutPlugins().isCellDeletable(
+        createCellWithStyle({ deletable: true })
       )
     ).toBeTruthy();
   });
 
   test('Using Cell with the "deletable" style property set to "false"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ deletable: false }).isCellDeletable(
-        new Cell()
+      createGraphWithoutPlugins().isCellDeletable(
+        createCellWithStyle({ deletable: false })
       )
     ).toBeFalsy();
   });
@@ -188,20 +173,18 @@ describe('isCellDeletable', () => {
 
 describe('isCellMovable', () => {
   test('Using defaults', () => {
-    expect(
-      createGraphMockingGetCurrentCellStyle({}).isCellMovable(new Cell())
-    ).toBeTruthy();
+    expect(createGraphWithoutPlugins().isCellMovable(new Cell())).toBeTruthy();
   });
 
   test('Using Cell with the "movable" style property set to "true"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ movable: true }).isCellMovable(new Cell())
+      createGraphWithoutPlugins().isCellMovable(createCellWithStyle({ movable: true }))
     ).toBeTruthy();
   });
 
   test('Using Cell with the "movable" style property set to "false"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ movable: false }).isCellMovable(new Cell())
+      createGraphWithoutPlugins().isCellMovable(createCellWithStyle({ movable: false }))
     ).toBeFalsy();
   });
 
@@ -220,23 +203,21 @@ describe('isCellMovable', () => {
 
 describe('isCellResizable', () => {
   test('Using defaults', () => {
-    expect(
-      createGraphMockingGetCurrentCellStyle({}).isCellResizable(new Cell())
-    ).toBeTruthy();
+    expect(createGraphWithoutPlugins().isCellResizable(new Cell())).toBeTruthy();
   });
 
   test('Using Cell with the "resizable" style property set to "true"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ resizable: true }).isCellResizable(
-        new Cell()
+      createGraphWithoutPlugins().isCellResizable(
+        createCellWithStyle({ resizable: true })
       )
     ).toBeTruthy();
   });
 
   test('Using Cell with the "resizable" style property set to "false"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ resizable: false }).isCellResizable(
-        new Cell()
+      createGraphWithoutPlugins().isCellResizable(
+        createCellWithStyle({ resizable: false })
       )
     ).toBeFalsy();
   });
@@ -256,23 +237,21 @@ describe('isCellResizable', () => {
 
 describe('isCellRotatable', () => {
   test('Using defaults', () => {
-    expect(
-      createGraphMockingGetCurrentCellStyle({}).isCellRotatable(new Cell())
-    ).toBeTruthy();
+    expect(createGraphWithoutPlugins().isCellRotatable(new Cell())).toBeTruthy();
   });
 
   test('Using Cell with the "rotatable" style property set to "true"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ rotatable: true }).isCellRotatable(
-        new Cell()
+      createGraphWithoutPlugins().isCellRotatable(
+        createCellWithStyle({ rotatable: true })
       )
     ).toBeTruthy();
   });
 
   test('Using Cell with the "rotatable" style property set to "false"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ rotatable: false }).isCellRotatable(
-        new Cell()
+      createGraphWithoutPlugins().isCellRotatable(
+        createCellWithStyle({ rotatable: false })
       )
     ).toBeFalsy();
   });

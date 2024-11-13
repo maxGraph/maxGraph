@@ -15,30 +15,23 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import {
-  createGraphMockingGetCurrentCellStyle,
-  createGraphWithoutPlugins,
-} from '../../utils';
+import { createCellWithStyle, createGraphWithoutPlugins } from '../../utils';
 import { Cell } from '../../../src';
 
 describe('isCellEditable', () => {
   test('Using defaults', () => {
-    expect(
-      createGraphMockingGetCurrentCellStyle({}).isCellEditable(new Cell())
-    ).toBeTruthy();
+    expect(createGraphWithoutPlugins().isCellEditable(new Cell())).toBeTruthy();
   });
 
   test('Using Cell with the "editable" style property set to "true"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ editable: true }).isCellEditable(new Cell())
+      createGraphWithoutPlugins().isCellEditable(createCellWithStyle({ editable: true }))
     ).toBeTruthy();
   });
 
   test('Using Cell with the "editable" style property set to "false"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle({ editable: false }).isCellEditable(
-        new Cell()
-      )
+      createGraphWithoutPlugins().isCellEditable(createCellWithStyle({ editable: false }))
     ).toBeFalsy();
   });
 
