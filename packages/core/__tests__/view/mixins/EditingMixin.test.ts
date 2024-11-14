@@ -14,34 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { describe, expect, jest, test } from '@jest/globals';
-import { createGraphWithoutPlugins } from '../../utils';
-import { Cell, type CellStateStyle } from '../../../src';
+import { describe, expect, test } from '@jest/globals';
+import { createCellWithStyle, createGraphWithoutPlugins } from '../../utils';
+import { Cell } from '../../../src';
 
 describe('isCellEditable', () => {
-  const createGraphMockingGetCurrentCellStyle = (cellIsEditable?: boolean) => {
-    const graph = createGraphWithoutPlugins();
-    graph.getCurrentCellStyle = jest
-      .fn<(cell: Cell, ignoreState?: boolean) => CellStateStyle>()
-      .mockReturnValue(cellIsEditable !== undefined ? { editable: cellIsEditable } : {});
-    return graph;
-  };
-
   test('Using defaults', () => {
-    expect(
-      createGraphMockingGetCurrentCellStyle().isCellEditable(new Cell())
-    ).toBeTruthy();
+    expect(createGraphWithoutPlugins().isCellEditable(new Cell())).toBeTruthy();
   });
 
   test('Using Cell with the "editable" style property set to "true"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle(true).isCellEditable(new Cell())
+      createGraphWithoutPlugins().isCellEditable(createCellWithStyle({ editable: true }))
     ).toBeTruthy();
   });
 
   test('Using Cell with the "editable" style property set to "false"', () => {
     expect(
-      createGraphMockingGetCurrentCellStyle(false).isCellEditable(new Cell())
+      createGraphWithoutPlugins().isCellEditable(createCellWithStyle({ editable: false }))
     ).toBeFalsy();
   });
 

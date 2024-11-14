@@ -1778,9 +1778,7 @@ export const CellsMixin: PartialType = {
   },
 
   isCellCloneable(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    const cloneable = style.cloneable == null ? true : style.cloneable;
-    return this.isCellsCloneable() && cloneable;
+    return this.isCellsCloneable() && (this.getCurrentCellStyle(cell).cloneable ?? true);
   },
 
   isCellsCloneable() {
@@ -1830,9 +1828,7 @@ export const CellsMixin: PartialType = {
   },
 
   isCellDeletable(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    const deletable = style.deletable == null ? true : style.deletable;
-    return this.isCellsDeletable() && deletable;
+    return this.isCellsDeletable() && (this.getCurrentCellStyle(cell).deletable ?? true);
   },
 
   isCellsDeletable() {
@@ -1844,8 +1840,7 @@ export const CellsMixin: PartialType = {
   },
 
   isCellRotatable(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    return style.rotatable == null ? true : style.rotatable;
+    return this.getCurrentCellStyle(cell).rotatable ?? true;
   },
 
   getMovableCells(cells) {
@@ -1855,8 +1850,11 @@ export const CellsMixin: PartialType = {
   },
 
   isCellMovable(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    return this.isCellsMovable() && !this.isCellLocked(cell) && (style.movable ?? true);
+    return (
+      this.isCellsMovable() &&
+      !this.isCellLocked(cell) &&
+      (this.getCurrentCellStyle(cell).movable ?? true)
+    );
   },
 
   isCellsMovable() {
@@ -1868,9 +1866,10 @@ export const CellsMixin: PartialType = {
   },
 
   isCellResizable(cell) {
-    const style = this.getCurrentCellStyle(cell);
     return (
-      this.isCellsResizable() && !this.isCellLocked(cell) && (style.resizable ?? true)
+      this.isCellsResizable() &&
+      !this.isCellLocked(cell) &&
+      (this.getCurrentCellStyle(cell).resizable ?? true)
     );
   },
 
@@ -1883,8 +1882,11 @@ export const CellsMixin: PartialType = {
   },
 
   isCellBendable(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    return this.isCellsBendable() && !this.isCellLocked(cell) && style.bendable != false;
+    return (
+      this.isCellsBendable() &&
+      !this.isCellLocked(cell) &&
+      (this.getCurrentCellStyle(cell).bendable ?? true)
+    );
   },
 
   isCellsBendable() {
@@ -1896,8 +1898,7 @@ export const CellsMixin: PartialType = {
   },
 
   isAutoSizeCell(cell) {
-    const style = this.getCurrentCellStyle(cell);
-    return this.isAutoSizeCells() || (style.autoSize ?? false);
+    return this.isAutoSizeCells() || (this.getCurrentCellStyle(cell).autoSize ?? false);
   },
 
   isAutoSizeCells() {
