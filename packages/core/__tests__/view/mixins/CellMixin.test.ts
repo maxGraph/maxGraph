@@ -16,7 +16,7 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { createCellWithStyle, createGraphWithoutPlugins } from '../../utils';
-import { Cell, CellStyle } from '../../../src';
+import { Cell, type CellStyle } from '../../../src';
 import { FONT } from '../../../src/util/Constants';
 
 test('setCellStyles on vertex', () => {
