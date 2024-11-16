@@ -66,15 +66,15 @@ type FactoryMethod = (
 ) => Cell;
 
 /**
- * Graph event handler that creates new connections. Uses {@link TerminalMarker}
- * for finding and highlighting the source and target vertices and
- * <factoryMethod> to create the edge instance. This handler is built-into
- * {@link Graph#connectionHandler} and enabled using {@link Graph#setConnectable}.
+ * Graph event handler that creates new connections.
+ * Uses {@link CellMarker} for finding and highlighting the source and target vertices and {@link factoryMethod} to create the edge instance.
+ *
+ * This handler is enabled using {@link Graph.setConnectable}.
  *
  * Example:
  *
  * ```javascript
- * new mxConnectionHandler(graph, (source, target, style)=>
+ * new ConnectionHandler(graph, (source, target, style)=>
  * {
  *   edge = new mxCell('', new mxGeometry());
  *   edge.setEdge(true);
@@ -84,69 +84,63 @@ type FactoryMethod = (
  * });
  * ```
  *
- * Here is an alternative solution that just sets a specific user object for
- * new edges by overriding <insertEdge>.
+ * Here is an alternative solution that just sets a specific user object for new edges by overriding {@link insertEdge}.
  *
  * ```javascript
- * mxConnectionHandlerInsertEdge = insertEdge;
- * insertEdge = (parent, id, value, source, target, style)=>
- * {
+ * originalConnectionHandlerInsertEdge = connectionHandler.insertEdge;
+ * connectionHandler.insertEdge = (parent, id, value, source, target, style) => {
  *   value = 'Test';
- *
- *   return mxConnectionHandlerInsertEdge.apply(this, arguments);
+ *   return originalConnectionHandlerInsertEdge.apply(this, arguments);
  * };
  * ```
  *
- * Using images to trigger connections:
+ * ### Using images to trigger connections
  *
- * This handler uses mxTerminalMarker to find the source and target cell for
- * the new connection and creates a new edge using <connect>. The new edge is
- * created using <createEdge> which in turn uses <factoryMethod> or creates a
+ * This handler uses {@link CellMarker} to find the source and target cell for
+ * the new connection and creates a new edge using {@link connect}. The new edge is
+ * created using {@link createEdge} which in turn uses {@link factoryMethod} or creates a
  * new default edge.
  *
  * The handler uses a "highlight-paradigm" for indicating if a cell is being
  * used as a source or target terminal, as seen in other diagramming products.
  * In order to allow both, moving and connecting cells at the same time,
- * {@link Constants#DEFAULT_HOTSPOT} is used in the handler to determine the hotspot
+ * {@link DEFAULT_HOTSPOT} is used in the handler to determine the hotspot
  * of a cell, that is, the region of the cell which is used to trigger a new
  * connection. The constant is a value between 0 and 1 that specifies the
  * amount of the width and height around the center to be used for the hotspot
  * of a cell and its default value is 0.5. In addition,
- * {@link Constants#MIN_HOTSPOT_SIZE} defines the minimum number of pixels for the
+ * {@link MIN_HOTSPOT_SIZE} defines the minimum number of pixels for the
  * width and height of the hotspot.
  *
  * This solution, while standards compliant, may be somewhat confusing because
  * there is no visual indicator for the hotspot and the highlight is seen to
  * switch on and off while the mouse is being moved in and out. Furthermore,
  * this paradigm does not allow to create different connections depending on
- * the highlighted hotspot as there is only one hotspot per cell and it
+ * the highlighted hotspot as there is only one hotspot per cell, and it
  * normally does not allow cells to be moved and connected at the same time as
  * there is no clear indication of the connectable area of the cell.
  *
- * To come across these issues, the handle has an additional <createIcons> hook
+ * To come across these issues, the handle has an additional {@link createIcons} hook
  * with a default implementation that allows to create one icon to be used to
  * trigger new connections. If this icon is specified, then new connections can
  * only be created if the image is clicked while the cell is being highlighted.
- * The <createIcons> hook may be overridden to create more than one
+ * The {@link createIcons} hook may be overridden to create more than one
  * {@link ImageShape} for creating new connections, but the default implementation
  * supports one image and is used as follows:
  *
- * In order to display the "connect image" whenever the mouse is over the cell,
- * an DEFAULT_HOTSPOT of 1 should be used:
+ * In order to display the "connect image" whenever the mouse is over the cell, an DEFAULT_HOTSPOT of 1 should be used:
  *
  * ```javascript
  * mxConstants.DEFAULT_HOTSPOT = 1;
  * ```
  *
- * In order to avoid confusion with the highlighting, the highlight color
- * should not be used with a connect image:
+ * In order to avoid confusion with the highlighting, the highlight color should not be used with a connect image:
  *
  * ```javascript
  * mxConstants.HIGHLIGHT_COLOR = null;
  * ```
  *
- * To install the image, the connectImage field of the ConnectionHandler must
- * be assigned a new {@link Image} instance:
+ * To install the image, the connectImage field of the ConnectionHandler must be assigned a new {@link Image} instance:
  *
  * ```javascript
  * connectImage = new ImageBox('images/green-dot.gif', 14, 14);
@@ -160,48 +154,47 @@ type FactoryMethod = (
  * triggered the new connection into account. This is useful if more than one
  * icon may be used to create a connection.
  *
- * Group: Events
+ * ### Events
  *
- * Event: mxEvent.START
+ * #### InternalEvent.START
  *
- * Fires when a new connection is being created by the user. The <code>state</code>
+ * Fires when a new connection is being created by the user. The `state`
  * property contains the state of the source cell.
  *
- * Event: mxEvent.CONNECT
+ * #### InternalEvent.CONNECT
  *
- * Fires between begin- and endUpdate in <connect>. The <code>cell</code>
- * property contains the inserted edge, the <code>event</code> and <code>target</code>
- * properties contain the respective arguments that were passed to <connect> (where
- * target corresponds to the dropTarget argument). Finally, the <code>terminal</code>
- * property corresponds to the target argument in <connect> or the clone of the source
- * terminal if <createTarget> is enabled.
+ * Fires between begin- and endUpdate in {@link connect}. The `cell`
+ * property contains the inserted edge, the `event` and `target`
+ * properties contain the respective arguments that were passed to {@link connect} (where
+ * target corresponds to the dropTarget argument). Finally, the `terminal`
+ * property corresponds to the target argument in {@link connect} or the clone of the source
+ * terminal if {@link createTarget} is enabled.
  *
  * Note that the target is the cell under the mouse where the mouse button was released.
  * Depending on the logic in the handler, this doesn't necessarily have to be the target
  * of the inserted edge. To print the source, target or any optional ports IDs that the
  * edge is connected to, the following code can be used. To get more details about the
- * actual connection point, {@link Graph#getConnectionConstraint} can be used. To resolve
+ * actual connection point, {@link Graph.getConnectionConstraint} can be used. To resolve
  * the port IDs, use <Transactions.getCell>.
  *
  * ```javascript
- * graph.getPlugin('ConnectionHandler')?.addListener(mxEvent.CONNECT, (sender, evt) =>
- * {
- *   let edge = evt.getProperty('cell');
- *   let source = graph.getDataModel().getTerminal(edge, true);
- *   let target = graph.getDataModel().getTerminal(edge, false);
+ * graph.getPlugin('ConnectionHandler')?.addListener(mxEvent.CONNECT, (sender, evt) => {
+ *   const edge = evt.getProperty('cell');
+ *   const source = graph.getDataModel().getTerminal(edge, true);
+ *   const target = graph.getDataModel().getTerminal(edge, false);
  *
- *   let style = graph.getCellStyle(edge);
- *   let sourcePortId = style[mxConstants.STYLE_SOURCE_PORT];
- *   let targetPortId = style[mxConstants.STYLE_TARGET_PORT];
+ *   const style = graph.getCellStyle(edge);
+ *   const sourcePortId = style.sourcePort;
+ *   const targetPortId = style.targetPort;
  *
  *   GlobalConfig.logger.show();
  *   GlobalConfig.logger.debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
  * });
  * ```
  *
- * Event: mxEvent.RESET
+ * #### InternalEvent.RESET
  *
- * Fires when the <reset> method is invoked.
+ * Fires when the {@link reset} method is invoked.
  *
  * @category Plugin
  */
@@ -228,8 +221,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
 
   /**
    * Function that is used for creating new edges. The function takes the
-   * source and target <Cell> as the first and second argument and returns
-   * a new <Cell> that represents the edge. This is used in <createEdge>.
+   * source and target {@link Cell} as the first and second argument and returns
+   * a new {@link Cell} that represents the edge. This is used in {@link createEdge}.
    */
   factoryMethod: FactoryMethod | null = null;
 
@@ -283,7 +276,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   createTarget = false;
 
   /**
-   * Holds the {@link TerminalMarker} used for finding source and target cells.
+   * Holds the {@link CellMarker} used for finding source and target cells.
    */
   marker: CellMarker;
 

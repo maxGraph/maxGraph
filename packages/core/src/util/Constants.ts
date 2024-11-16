@@ -169,6 +169,7 @@ export enum CURSOR {
  * Defines the color to be used for the cell highlighting.
  * Use 'none' for no color. Default is #00FF00.
  */
+// TODO this constants is unused (wasn't used in mxGraph as well)--> remove it (and all documentation references as well)
 export const HIGHLIGHT_COLOR = '#00FF00';
 
 /**
@@ -177,10 +178,11 @@ export const HIGHLIGHT_COLOR = '#00FF00';
  * target terminal in the graph. Use 'none' for no color.
  * Default is #0000FF.
  */
+// TODO this constants is unused (wasn't used in mxGraph as well)--> remove it (and all documentation references as well)
 export const CONNECT_TARGET_COLOR = '#0000FF';
 
 /**
- * Defines the color to be used for highlighting a invalid target cells
+ * Defines the color to be used for highlighting an invalid target cells
  * for a new or changed connections. Note that this may be either a source
  * or target terminal in the graph. Use 'none' for no color. Default is
  * #FF0000.
@@ -390,27 +392,29 @@ export const ARROW_WIDTH = 30;
 export const ARROW_SIZE = 30;
 
 /**
- * Defines the rectangle for the A4 portrait page format. The dimensions
- * of this page format are 826x1169 pixels.
+ * Defines the rectangle for the A4 portrait page format.
+ * The dimensions of this page format are 827x1169 pixels.
  */
 export const PAGE_FORMAT_A4_PORTRAIT = [0, 0, 827, 1169];
 
 /**
- * Defines the rectangle for the A4 portrait page format. The dimensions
- * of this page format are 826x1169 pixels.
+ * Defines the rectangle for the A4 landscape page format.
+ * The dimensions of this page format are 1169x827 pixels.
  */
 export const PAGE_FORMAT_A4_LANDSCAPE = [0, 0, 1169, 827];
 
 /**
- * Defines the rectangle for the Letter portrait page format. The
- * dimensions of this page format are 850x1100 pixels.
+ * Defines the rectangle for the Letter portrait page format.
+ * The dimensions of this page format are 850x1100 pixels.
  */
+// It may not be used in @maxGraph/core for now, but helpful for users. So don't remove it.
 export const PAGE_FORMAT_LETTER_PORTRAIT = [0, 0, 850, 1100];
 
 /**
- * Defines the rectangle for the Letter portrait page format. The dimensions
- * of this page format are 850x1100 pixels.
+ * Defines the rectangle for the Letter landscape page format.
+ * The dimensions of this page format are 1100x850 pixels.
  */
+// It may not be used in @maxGraph/core for now, but helpful for users. So don't remove it.
 export const PAGE_FORMAT_LETTER_LANDSCAPE = [0, 0, 1100, 850];
 
 /**
