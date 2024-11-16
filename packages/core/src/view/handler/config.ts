@@ -15,13 +15,65 @@ limitations under the License.
 */
 
 import {
+  CONNECT_HANDLE_FILLCOLOR,
+  EDGE_SELECTION_COLOR,
+  EDGE_SELECTION_DASHED,
+  EDGE_SELECTION_STROKEWIDTH,
   HANDLE_FILLCOLOR,
   HANDLE_SIZE,
   HANDLE_STROKECOLOR,
+  LABEL_HANDLE_FILLCOLOR,
+  LABEL_HANDLE_SIZE,
   VERTEX_SELECTION_COLOR,
   VERTEX_SELECTION_DASHED,
   VERTEX_SELECTION_STROKEWIDTH,
 } from '../../util/Constants';
+
+/**
+ * Global configuration for {@link EdgeHandler} (including subclasses).
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
+ */
+export const EdgeHandlerConfig = {
+  /**
+   * Defines the color to be used for the connect handle fill color. Use `none` for no color.
+   * @default {@link CONNECT_HANDLE_FILLCOLOR}
+   */
+  connectFillColor: CONNECT_HANDLE_FILLCOLOR,
+  /**
+   * Defines the default color to be used for the selection border of edges. Use `none` for no color.
+   * @default {@link EDGE_SELECTION_COLOR}
+   */
+  selectionColor: EDGE_SELECTION_COLOR,
+
+  /**
+   * Defines the default stroke width to be used for edge selections.
+   * @default {@link EDGE_SELECTION_STROKEWIDTH}
+   */
+  selectionStrokeWidth: EDGE_SELECTION_STROKEWIDTH,
+
+  /**
+   * Defines the default dashed state to be used for the edge selection border.
+   * @default {@link EDGE_SELECTION_DASHED}
+   */
+  selectionDashed: EDGE_SELECTION_DASHED,
+};
+
+/**
+ * Resets {@link EdgeHandlerConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
+ */
+export const resetEdgeHandlerConfig = () => {
+  EdgeHandlerConfig.connectFillColor = CONNECT_HANDLE_FILLCOLOR;
+  EdgeHandlerConfig.selectionColor = EDGE_SELECTION_COLOR;
+  EdgeHandlerConfig.selectionStrokeWidth = EDGE_SELECTION_STROKEWIDTH;
+  EdgeHandlerConfig.selectionDashed = EDGE_SELECTION_DASHED;
+};
 
 /**
  * Global configuration for handles, used {@link VertexHandler} and {@link EdgeHandler} (including subclasses).
@@ -36,6 +88,19 @@ export const HandleConfig = {
    * @default {@link HANDLE_FILLCOLOR}
    */
   fillColor: HANDLE_FILLCOLOR,
+
+  /**
+   * Defines the color to be used for the label handle fill color. Use `none` for no color.
+   * @default {@link LABEL_HANDLE_FILLCOLOR}
+   */
+  labelFillColor: LABEL_HANDLE_FILLCOLOR,
+
+  /**
+   * Defines the default size for label handles.
+   * @default {@link LABEL_HANDLE_SIZE}
+   */
+  labelSize: LABEL_HANDLE_SIZE,
+
   /**
    * Defines the default size for handles.
    * @default {@link HANDLE_SIZE}
@@ -57,6 +122,8 @@ export const HandleConfig = {
  */
 export const resetHandleConfig = (): void => {
   HandleConfig.fillColor = HANDLE_FILLCOLOR;
+  HandleConfig.labelFillColor = LABEL_HANDLE_FILLCOLOR;
+  HandleConfig.labelSize = LABEL_HANDLE_SIZE;
   HandleConfig.size = HANDLE_SIZE;
   HandleConfig.strokeColor = HANDLE_STROKECOLOR;
 };

@@ -205,28 +205,18 @@ export const VALID_COLOR = '#00FF00';
  */
 export const INVALID_COLOR = '#FF0000';
 
-/**
- * Defines the color to be used for the selection border of edges. Use
- * 'none' for no color. Default is #00FF00.
- */
+/** The 'green' color. */
 export const EDGE_SELECTION_COLOR = '#00FF00';
 
+/** The 'green' color. */
 export const VERTEX_SELECTION_COLOR = '#00FF00';
 
 export const VERTEX_SELECTION_STROKEWIDTH = 1;
 
-/**
- * Defines the strokewidth to be used for edge selections.
- * Default is 1.
- */
 export const EDGE_SELECTION_STROKEWIDTH = 1;
 
 export const VERTEX_SELECTION_DASHED = true;
 
-/**
- * Defines the dashed state to be used for the edge selection
- * border. Default is true.
- */
 export const EDGE_SELECTION_DASHED = true;
 
 /**
@@ -255,25 +245,16 @@ export const OUTLINE_STROKEWIDTH = 3;
 
 export const HANDLE_SIZE = 6;
 
-/**
- * Defines the default size for label handles. Default is 4.
- */
 export const LABEL_HANDLE_SIZE = 4;
 
+/** The 'green' color. */
 export const HANDLE_FILLCOLOR = '#00FF00';
 
 export const HANDLE_STROKECOLOR = 'black';
 
-/**
- * Defines the color to be used for the label handle fill color. Use 'none'
- * for no color. Default is yellow.
- */
 export const LABEL_HANDLE_FILLCOLOR = 'yellow';
 
-/**
- * Defines the color to be used for the connect handle fill color. Use
- * 'none' for no color. Default is #0000FF (blue).
- */
+/** The 'blue' color. */
 export const CONNECT_HANDLE_FILLCOLOR = '#0000FF';
 
 /**

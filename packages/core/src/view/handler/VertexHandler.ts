@@ -17,13 +17,7 @@ limitations under the License.
 */
 
 import Rectangle from '../geometry/Rectangle';
-import {
-  CURSOR,
-  DIALECT,
-  LABEL_HANDLE_FILLCOLOR,
-  LABEL_HANDLE_SIZE,
-  NONE,
-} from '../../util/Constants';
+import { CURSOR, DIALECT, NONE } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ImageShape from '../geometry/node/ImageShape';
@@ -284,8 +278,8 @@ class VertexHandler {
           this.labelShape = this.createSizer(
             CURSOR.LABEL_HANDLE,
             InternalEvent.LABEL_HANDLE,
-            LABEL_HANDLE_SIZE,
-            LABEL_HANDLE_FILLCOLOR
+            HandleConfig.labelSize,
+            HandleConfig.labelFillColor
           );
           this.sizers.push(this.labelShape);
         }
@@ -299,7 +293,7 @@ class VertexHandler {
           CURSOR.MOVABLE_VERTEX,
           InternalEvent.LABEL_HANDLE,
           undefined,
-          LABEL_HANDLE_FILLCOLOR
+          HandleConfig.labelFillColor
         );
         this.sizers.push(this.labelShape);
       }
