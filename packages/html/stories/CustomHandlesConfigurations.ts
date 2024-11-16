@@ -37,7 +37,7 @@ import { createGraphContainer } from './shared/configure.js';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
-  title: 'Styles/HandlesChangeDefaults',
+  title: 'Styles/CustomHandlesConfigurations',
   argTypes: {
     ...contextMenuTypes,
     ...globalTypes,
