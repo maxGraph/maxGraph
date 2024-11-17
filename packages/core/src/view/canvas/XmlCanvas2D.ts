@@ -17,42 +17,11 @@ limitations under the License.
 */
 
 import AbstractCanvas2D from './AbstractCanvas2D';
-import {
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
-  NONE,
-  SHADOWCOLOR,
-  SHADOW_OFFSET_X,
-  SHADOW_OFFSET_Y,
-  SHADOW_OPACITY,
-} from '../../util/Constants';
+import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, NONE } from '../../util/Constants';
 import { getOuterHtml, isNode } from '../../util/domUtils';
 import { DirectionValue, TextDirectionValue } from '../../types';
+import { StyleDefaultsConfig } from '../../util/config';
 
-/**
- * Base class for all canvases. The following methods make up the public
- * interface of the canvas 2D for all painting in mxGraph:
- *
- * - <save>, <restore>
- * - <scale>, <translate>, <rotate>
- * - <setAlpha>, <setFillAlpha>, <setStrokeAlpha>, <setFillColor>, <setGradient>,
- *   <setStrokeColor>, <setStrokeWidth>, <setDashed>, <setDashPattern>, <setLineCap>,
- *   <setLineJoin>, <setMiterLimit>
- * - <setFontColor>, <setFontBackgroundColor>, <setFontBorderColor>, <setFontSize>,
- *   <setFontFamily>, <setFontStyle>
- * - <setShadow>, <setShadowColor>, <setShadowAlpha>, <setShadowOffset>
- * - <rect>, <roundrect>, <ellipse>, <image>, <text>
- * - <begin>, {@link moveTo}, <lineTo>, <quadTo>, <curveTo>
- * - <stroke>, <fill>, <fillAndStroke>
- *
- * <AbstractCanvas2D.arcTo> is an additional method for drawing paths. This is
- * a synthetic method, meaning that it is turned into a sequence of curves by
- * default. Subclassers may add native support for arcs.
- *
- * Constructor: D
- *
- * Constructs a new abstract canvas.
- */
 class XmlCanvas2D extends AbstractCanvas2D {
   constructor(root: Element) {
     super();
@@ -97,16 +66,16 @@ class XmlCanvas2D extends AbstractCanvas2D {
 
     // Writes shadow defaults
     elem = this.createElement('shadowcolor');
-    elem.setAttribute('color', SHADOWCOLOR);
+    elem.setAttribute('color', StyleDefaultsConfig.shadowColor);
     this.root.appendChild(elem);
 
     elem = this.createElement('shadowalpha');
-    elem.setAttribute('alpha', String(SHADOW_OPACITY));
+    elem.setAttribute('alpha', String(StyleDefaultsConfig.shadowOpacity));
     this.root.appendChild(elem);
 
     elem = this.createElement('shadowoffset');
-    elem.setAttribute('dx', String(SHADOW_OFFSET_X));
-    elem.setAttribute('dy', String(SHADOW_OFFSET_Y));
+    elem.setAttribute('dx', String(StyleDefaultsConfig.shadowOffsetX));
+    elem.setAttribute('dy', String(StyleDefaultsConfig.shadowOffsetY));
     this.root.appendChild(elem);
   }
 
@@ -635,12 +604,6 @@ class XmlCanvas2D extends AbstractCanvas2D {
     this.root.appendChild(elem);
   }
 
-  /**
-   * Sets the current shadow color. Default {@link mxConstants.SHADOWCOLOR}
-   *
-   *
-   * @param value Hexadecimal representation of the color or 'none'.
-   */
   setShadowColor(value: string | null = null): void {
     if (this.compressed) {
       if (value === NONE) {
@@ -659,11 +622,6 @@ class XmlCanvas2D extends AbstractCanvas2D {
     this.root.appendChild(elem);
   }
 
-  /**
-   * Sets the current shadows alpha. Default is {@link mxConstants.SHADOW_OPACITY}
-   *
-   * @param value Number that represents the new alpha. Possible values are between 1 (opaque) and 0 (transparent).
-   */
   setShadowAlpha(value: number): void {
     if (this.compressed) {
       if (this.state.shadowAlpha === value) {
@@ -677,12 +635,6 @@ class XmlCanvas2D extends AbstractCanvas2D {
     this.root.appendChild(elem);
   }
 
-  /**
-   * Sets the current shadow offset.
-   *
-   * @param dx Number that represents the horizontal offset of the shadow.
-   * @param dy Number that represents the vertical offset of the shadow.
-   */
   setShadowOffset(dx: number, dy: number): void {
     if (this.compressed) {
       if (this.state.shadowDx === dx && this.state.shadowDy === dy) {

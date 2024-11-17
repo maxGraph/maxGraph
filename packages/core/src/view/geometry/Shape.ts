@@ -24,8 +24,6 @@ import {
   LINE_ARCSIZE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
-  SHADOW_OFFSET_X,
-  SHADOW_OFFSET_Y,
 } from '../../util/Constants';
 import Point from './Point';
 import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
@@ -44,6 +42,7 @@ import type {
   DirectionValue,
   GradientMap,
 } from '../../types';
+import { StyleDefaultsConfig } from '../../util/config';
 
 /**
  * Base class for all shapes.
@@ -1078,8 +1077,8 @@ class Shape {
    */
   augmentBoundingBox(bbox: Rectangle) {
     if (this.isShadow) {
-      bbox.width += Math.ceil(SHADOW_OFFSET_X * this.scale);
-      bbox.height += Math.ceil(SHADOW_OFFSET_Y * this.scale);
+      bbox.width += Math.ceil(StyleDefaultsConfig.shadowOffsetX * this.scale);
+      bbox.height += Math.ceil(StyleDefaultsConfig.shadowOffsetX * this.scale);
     }
 
     // Adds strokeWidth

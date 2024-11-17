@@ -22,10 +22,6 @@ import {
   DEFAULT_FONTSIZE,
   DIRECTION,
   NONE,
-  SHADOWCOLOR,
-  SHADOW_OFFSET_X,
-  SHADOW_OFFSET_Y,
-  SHADOW_OPACITY,
 } from '../../util/Constants';
 import UrlConverter from '../../util/UrlConverter';
 import Point from '../geometry/Point';
@@ -40,17 +36,33 @@ import type {
   TextDirectionValue,
   VAlignValue,
 } from '../../types';
+import { StyleDefaultsConfig } from '../../util/config';
 
 /**
- * Base class for all canvases. A description of the public API is available in <mxXmlCanvas2D>.
- * All color values of {@link Constants#NONE} will be converted to null in the state.
+ * Base class for all canvases.
  *
- * Constructor: D
+ * The following methods make up the public interface of the canvas 2D for all painting in mxGraph:
  *
- * Constructs a new abstract canvas.
+ * - {@link save}, {@link restore}
+ * - {@link scale}, {@link translate}, {@link rotate}
+ * - {@link setAlpha}, {@link setFillAlpha}, {@link setStrokeAlpha}, {@link setFillColor}, {@link setGradient},
+ *   {@link setStrokeColor}, {@link setStrokeWidth}, {@link setDashed}, {@link setDashPattern}, {@link setLineCap},
+ *   {@link setLineJoin}, {@link setMiterLimit}
+ * - {@link setFontColor}, {@link setFontBackgroundColor}, {@link setFontBorderColor}, {@link setFontSize},
+ *   {@link setFontFamily}, {@link setFontStyle}
+ * - {@link setShadow}, {@link setShadowColor}, {@link setShadowAlpha}, {@link setShadowOffset}
+ * - {@link rect}, {@link roundrect}, {@link ellipse}, {@link image}, {@link text}
+ * - {@link begin}, {@link moveTo}, {@link lineTo}, {@link quadTo}, {@link curveTo}
+ * - {@link stroke}, {@link fill}, {@link fillAndStroke}
+ *
+ * {@link arcTo} is an additional method for drawing paths.
+ * This is a synthetic method, meaning that it is turned into a sequence of curves by default.
+ * Subclasses may add native support for arcs.
+ *
+ * All color values of {@link NONE} will be converted to null in the state.
  */
 abstract class AbstractCanvas2D {
-  constructor() {
+  protected constructor() {
     this.converter = this.createUrlConverter();
     this.reset();
   }
@@ -169,10 +181,10 @@ abstract class AbstractCanvas2D {
       fontFamily: DEFAULT_FONTFAMILY,
       fontStyle: 0,
       shadow: false,
-      shadowColor: SHADOWCOLOR,
-      shadowAlpha: SHADOW_OPACITY,
-      shadowDx: SHADOW_OFFSET_X,
-      shadowDy: SHADOW_OFFSET_Y,
+      shadowColor: StyleDefaultsConfig.shadowColor,
+      shadowAlpha: StyleDefaultsConfig.shadowOpacity,
+      shadowDx: StyleDefaultsConfig.shadowOffsetX,
+      shadowDy: StyleDefaultsConfig.shadowOffsetY,
       rotation: 0,
       rotationCx: 0,
       rotationCy: 0,
@@ -418,21 +430,28 @@ abstract class AbstractCanvas2D {
   }
 
   /**
-   * Enables or disables and configures the current shadow.
+   * Sets the current shadow color. Default {@link StyleDefaultsConfig.shadowColor}
+   *
+   * @param value Hexadecimal representation of the color or `none`.
    */
   setShadowColor(value: ColorValue | null) {
     this.state.shadowColor = value ?? NONE;
   }
 
   /**
-   * Enables or disables and configures the current shadow.
+   * Sets the current shadow alpha. Default is {@link StyleDefaultsConfig.shadowOpacity}
+   *
+   * @param value Number that represents the new alpha. Possible values are between 1 (opaque) and 0 (transparent).
    */
   setShadowAlpha(value: number) {
     this.state.shadowAlpha = value;
   }
 
   /**
-   * Enables or disables and configures the current shadow.
+   * Sets the current shadow offset.
+   *
+   * @param dx Number that represents the horizontal offset of the shadow.
+   * @param dy Number that represents the vertical offset of the shadow.
    */
   setShadowOffset(dx: number, dy: number) {
     this.state.shadowDx = dx;

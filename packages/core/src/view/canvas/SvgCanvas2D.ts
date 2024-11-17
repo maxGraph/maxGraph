@@ -31,7 +31,6 @@ import {
   NONE,
   NS_SVG,
   NS_XLINK,
-  SHADOWCOLOR,
   WORD_WRAP,
 } from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
@@ -49,6 +48,7 @@ import {
   TextDirectionValue,
   VAlignValue,
 } from '../../types';
+import { StyleDefaultsConfig } from '../../util/config';
 
 // Activates workaround for gradient ID resolution if base tag is used.
 const useAbsoluteIds =
@@ -858,7 +858,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       shadow.getAttribute('fill') !== 'none' &&
       (!Client.IS_FF || shadow.getAttribute('fill') !== 'transparent')
     ) {
-      shadow.setAttribute('fill', <string>(s.shadowColor ? s.shadow : SHADOWCOLOR));
+      shadow.setAttribute('fill', s.shadowColor);
     }
 
     if (

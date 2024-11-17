@@ -3,6 +3,7 @@ import {
   GlobalConfig,
   NoOpLogger,
   resetHandleConfig,
+  resetStyleDefaultsConfig,
   resetVertexHandlerConfig,
 } from '@maxgraph/core';
 
@@ -16,8 +17,9 @@ const defaultLogger = new NoOpLogger();
 const resetMaxGraphConfigs = (): void => {
   GlobalConfig.logger = defaultLogger;
 
-  resetVertexHandlerConfig();
   resetHandleConfig();
+  resetStyleDefaultsConfig();
+  resetVertexHandlerConfig();
 };
 
 const preview: Preview = {

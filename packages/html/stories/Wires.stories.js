@@ -82,6 +82,7 @@ import {
   SelectionCellsHandler,
   PopupMenuHandler,
   cellArrayUtils,
+  StyleDefaultsConfig,
 } from '@maxgraph/core';
 
 import {
@@ -125,8 +126,7 @@ const Template = ({ label, ...args }) => {
   parentContainer.appendChild(container);
 
   // Changes some default colors
-  // TODO Find a way of modifying globally or setting locally! See https://github.com/maxGraph/maxGraph/issues/192
-  //constants.SHADOWCOLOR = '#C0C0C0';
+  StyleDefaultsConfig.shadowColor = '#C0C0C0';
 
   let joinNodeSize = 7;
   let strokeWidth = 2;
