@@ -76,7 +76,7 @@ type FactoryMethod = (
  * ```javascript
  * new ConnectionHandler(graph, (source, target, style)=>
  * {
- *   edge = new mxCell('', new mxGeometry());
+ *   edge = new Cell('', new Geometry());
  *   edge.setEdge(true);
  *   edge.setStyle(style);
  *   edge.geometry.relative = true;

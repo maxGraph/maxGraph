@@ -169,7 +169,7 @@ export enum CURSOR {
  * Defines the color to be used for the cell highlighting.
  * Use 'none' for no color. Default is #00FF00.
  */
-// TODO this constants is unused (wasn't used in mxGraph as well)--> remove it (and all documentation references as well)
+// TODO this constants is unused (it wasn't used in mxGraph as well)--> remove it (and all documentation references as well)
 export const HIGHLIGHT_COLOR = '#00FF00';
 
 /**
@@ -178,7 +178,7 @@ export const HIGHLIGHT_COLOR = '#00FF00';
  * target terminal in the graph. Use 'none' for no color.
  * Default is #0000FF.
  */
-// TODO this constants is unused (wasn't used in mxGraph as well)--> remove it (and all documentation references as well)
+// TODO this constants is unused (it wasn't used in mxGraph as well)--> remove it (and all documentation references as well)
 export const CONNECT_TARGET_COLOR = '#0000FF';
 
 /**
