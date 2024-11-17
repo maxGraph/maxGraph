@@ -65,18 +65,13 @@ import { equalPoints } from '../../util/arrayUtils';
 import { EdgeHandlerConfig, HandleConfig } from './config';
 
 /**
- * Graph event handler that reconnects edges and modifies control points and the edge label location.
+ * Graph event handler that reconnects edges, modifies control points and the edge label location.
  *
  * Uses {@link CellMarker} for finding and highlighting new source and target vertices.
  *
  * This handler is automatically created in {@link Graph.createHandler} for each selected edge.
  *
- * To enable adding/removing control points, the following code can be used:
- * ```javascript
- * EdgeHandler.prototype.addEnabled = true;
- * EdgeHandler.prototype.removeEnabled = true;
- * ```
- * Note: This experimental feature is not recommended for production use.
+ * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
 class EdgeHandler {
   /**

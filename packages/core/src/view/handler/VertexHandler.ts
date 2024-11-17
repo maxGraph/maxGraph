@@ -43,6 +43,8 @@ import { HandleConfig, VertexHandlerConfig } from './config';
  * Event handler for resizing cells.
  *
  * This handler is automatically created in {@link Graph#createHandler}.
+ *
+ * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
 class VertexHandler {
   escapeHandler: (sender: Listenable, evt: Event) => void;
