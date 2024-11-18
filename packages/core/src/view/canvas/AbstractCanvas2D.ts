@@ -430,7 +430,7 @@ abstract class AbstractCanvas2D {
   }
 
   /**
-   * Sets the current shadow color. Default {@link StyleDefaultsConfig.shadowColor}
+   * Sets the current shadow color.
    *
    * @param value Hexadecimal representation of the color or `none`.
    */
@@ -439,7 +439,7 @@ abstract class AbstractCanvas2D {
   }
 
   /**
-   * Sets the current shadow alpha. Default is {@link StyleDefaultsConfig.shadowOpacity}
+   * Sets the current shadow alpha.
    *
    * @param value Number that represents the new alpha. Possible values are between 1 (opaque) and 0 (transparent).
    */
