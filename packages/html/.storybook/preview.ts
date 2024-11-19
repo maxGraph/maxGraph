@@ -18,6 +18,10 @@ const resetMaxGraphConfigs = (): void => {
 
   resetVertexHandlerConfig();
   resetHandleConfig();
+  const classesToRemove = ['.mxPopupMenu', '.mxWindow', '.mxTooltip'];
+  classesToRemove.forEach(cls => {
+    document.querySelectorAll(cls).forEach(e => e.remove());
+  })
 };
 
 const preview: Preview = {
