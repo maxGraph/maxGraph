@@ -256,6 +256,7 @@ an array of plugins to the constructor.
 
 | property removed        | method removed                | new plugin              |
 |-------------------------|-------------------------------|-------------------------|
+| `cellEditor`            | `createCellEditor`            | `CellEditorHandler`     |
 | `connectionHandler`     | `createConnectionHandler`     | `ConnectionHandler`     |
 | `graphHandler`          | `createGraphHandler`          | `SelectionHandler`      |
 | `panningHandler`        | `createPanningHandler`        | `PanningHandler`        |
@@ -375,9 +376,12 @@ The other properties are still available.
 
 :::warning
 
-It is currently no longer possible to update the value of the properties in the `constants` namespace.
+In `mxGraph`, the constants were used everywhere in the code and changing them would have a global effect.
 
-See discussion in [issue #192](https://github.com/maxGraph/maxGraph/issues/192) for a future alternative.
+In `maxGraph`, it is no longer possible to update the value of the properties in the `constants` namespace.
+There are global configuration objects that allow to set the default values previously defined in `mxConstants` and these configurations are used everywhere in the code.
+
+But it is possible to configure their values globally. See the [Global Configuration](./global-configuration.md#general) documentation for more details.
 
 :::
 
@@ -432,6 +436,7 @@ Others were removed:
 ### Misc
 
 - Codec renaming and output: see [Pull Request #70](https://github.com/maxGraph/maxGraph/pull/70)
+- `mxCellEditor` to `CellEditorHandler`
 - `mxDictionary`&lt;T&gt; to `Dictionary`&lt;K, V&gt;
 - `mxRubberband` to `RubberBandHandler`
 - `mxVertexHandler.rotationEnabled` has been removed. Use `VertexHandlerConfig.rotationEnabled` instead (since `0.12.0`).

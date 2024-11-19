@@ -21,12 +21,7 @@ import Point from '../geometry/Point';
 import ImageShape from '../geometry/node/ImageShape';
 import Rectangle from '../geometry/Rectangle';
 import RectangleShape from '../geometry/node/RectangleShape';
-import {
-  DIALECT,
-  HANDLE_FILLCOLOR,
-  HANDLE_SIZE,
-  HANDLE_STROKECOLOR,
-} from '../../util/Constants';
+import { DIALECT } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -35,6 +30,7 @@ import CellState from './CellState';
 
 import type { Graph } from '../Graph';
 import type { CellHandle, CellStateStyle } from '../../types';
+import { HandleConfig } from '../handler/config';
 
 /**
  * Implements a single custom handle for vertices.
@@ -195,9 +191,10 @@ class VertexHandle implements CellHandle {
   /**
    * Creates and returns the shape for this handle.
    */
-  createShape(html: boolean): Shape {
-    const bounds = new Rectangle(0, 0, HANDLE_SIZE, HANDLE_SIZE);
-    return new RectangleShape(bounds, HANDLE_FILLCOLOR, HANDLE_STROKECOLOR);
+  createShape(_html: boolean): Shape {
+    const handleSize = HandleConfig.size;
+    const bounds = new Rectangle(0, 0, handleSize, handleSize);
+    return new RectangleShape(bounds, HandleConfig.fillColor, HandleConfig.strokeColor);
   }
 
   /**

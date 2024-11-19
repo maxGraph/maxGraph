@@ -116,7 +116,9 @@ export type CellStateStyle = {
   aspect?: string;
   /**
    * This specifies if a cell should be resized automatically if its value changed.
-   * See {@link Graph.isAutoSizeCell}. This is normally combined with {@link resizable} to disable manual resizing.
+   * This is normally combined with {@link resizable} to disable manual resizing.
+   *
+   * Note that a cell is in fact auto-resizable according to the value returned by {@link Graph.isAutoSizeCell}.
    * @default false
    */
   autoSize?: boolean;
@@ -127,13 +129,15 @@ export type CellStateStyle = {
   backgroundOutline?: boolean;
   /**
    * This specifies if the control points of an edge can be moved.
-   * See {@link Graph.isCellBendable}.
+   *
+   * Note that a cell is in fact bendable according to the value returned by {@link Graph.isCellBendable}.
    * @default true
    */
   bendable?: boolean;
   /**
    * This specifies if a cell can be cloned.
-   * See {@link Graph.isCellCloneable}.
+   *
+   * Note that a cell is in fact cloneable according to the value returned by {@link Graph.isCellCloneable}.
    * @default true
    */
   cloneable?: boolean;
@@ -159,7 +163,8 @@ export type CellStateStyle = {
   dashPattern?: string;
   /**
    * This specifies if a cell can be deleted.
-   * See {@link Graph.isCellDeletable}.
+   *
+   * Note that a cell is in fact deletable according to the value returned by {@link Graph.isCellDeletable}.
    * @default true
    */
   deletable?: boolean;
@@ -171,14 +176,18 @@ export type CellStateStyle = {
   /**
    * This defines the style of the edge if the current cell is an Edge.
    *
-   * The possible values for the style provided out-of-the box by maxGraph are defined in {@link EDGESTYLE}.
+   * The possible values are all names of the shapes registered with {@link StyleRegistry.putValue}.
+   * This includes {@link EdgeStyleValue} values and custom names that have been registered.
+   *
+   * It is also possible to pass a {@link EdgeStyleFunction}.
    *
    * See {@link noEdgeStyle}.
    */
-  edgeStyle?: string;
+  edgeStyle?: StyleEdgeStyleValue;
   /**
    * This specifies if the value of a cell can be edited using the in-place editor.
-   * See {@link Graph.isCellEditable}.
+   *
+   * Note that a cell is in fact editable according to the value returned by {@link Graph.isCellEditable}.
    * @default true
    */
   editable?: boolean;
@@ -390,12 +399,12 @@ export type CellStateStyle = {
   imageBorder?: ColorValue;
   /**
    * The value is the image height in pixels and must be greater than `0`.
-   * @default constants.DEFAULT_IMAGESIZE
+   * @default {@link DEFAULT_IMAGESIZE}
    */
   imageHeight?: number;
   /**
    * The value is the image width in pixels and must be greater than `0`.
-   * @default constants.DEFAULT_IMAGESIZE
+   * @default {@link DEFAULT_IMAGESIZE}
    */
   imageWidth?: number;
   /**
@@ -484,7 +493,7 @@ export type CellStateStyle = {
   /**
    * This specifies if a cell can be moved.
    *
-   * See {@link Graph.isCellMovable}.
+   * Note that a cell is in fact movable according to the value returned by {@link Graph.isCellMovable}.
    * @default true
    */
   movable?: boolean;
@@ -580,7 +589,7 @@ export type CellStateStyle = {
   /**
    * This specifies if a cell can be resized.
    *
-   * See {@link Graph.isCellResizable}.
+   * Note that a cell is in fact resizable according to the value returned by {@link Graph.isCellResizable}.
    * @default true
    */
   resizable?: boolean;
@@ -600,6 +609,8 @@ export type CellStateStyle = {
   resizeWidth?: boolean;
   /**
    * This specifies if a cell can be rotated.
+   *
+   * Note that a cell is in fact rotatable according to the value returned by {@link Graph.isCellRotatable}.
    * @default true
    */
   rotatable?: boolean;
@@ -635,7 +646,7 @@ export type CellStateStyle = {
   /**
    * The type of this value is float and the value represents the size of the horizontal
    * segment of the entity relation style.
-   * @default constants.ENTITY_SEGMENT
+   * @default {@link ENTITY_SEGMENT}
    */
   segment?: number;
   /**
@@ -811,7 +822,7 @@ export type CellStateStyle = {
    */
   targetPortConstraint?: DIRECTION;
   /**
-   * @default constants.DEFAULT_TEXT_DIRECTION
+   * @default {@link DEFAULT_TEXT_DIRECTION}
    */
   textDirection?: TextDirectionValue;
   /**
@@ -1172,6 +1183,30 @@ export type EdgeStyleFunction = (
   points: Point[],
   result: Point[]
 ) => void;
+
+/**
+ * Names used to register the edge styles (a.k.a. connectors) provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
+ * @since 0.14.0
+ */
+export type EdgeStyleValue =
+  | 'elbowEdgeStyle'
+  | 'entityRelationEdgeStyle'
+  | 'loopEdgeStyle'
+  | 'manhattanEdgeStyle'
+  | 'orthogonalEdgeStyle'
+  | 'segmentEdgeStyle'
+  | 'sideToSideEdgeStyle'
+  | 'topToBottomEdgeStyle';
+
+/**
+ * {@link EdgeStyleValue} with support for extensions and {@link EdgeStyleFunction}.
+ * @since 0.14.0
+ */
+export type StyleEdgeStyleValue =
+  | EdgeStyleFunction
+  | EdgeStyleValue
+  | (string & {})
+  | null;
 
 /**
  * @since 0.11.0

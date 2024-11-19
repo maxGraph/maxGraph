@@ -17,7 +17,14 @@ limitations under the License.
 import { describe, expect, test } from '@jest/globals';
 import { ModelChecker } from './utils';
 import { createGraphWithoutContainer } from '../utils';
-import { Cell, Geometry, GraphDataModel, ModelXmlSerializer, Point } from '../../src';
+import {
+  Cell,
+  EdgeStyle,
+  Geometry,
+  GraphDataModel,
+  ModelXmlSerializer,
+  Point,
+} from '../../src';
 
 // inspired by VertexMixin.createVertex
 const newVertex = (id: string, value: string) => {
@@ -242,6 +249,58 @@ describe('export', () => {
         </Array>
       </Geometry>
       <Object as="style" />
+    </Cell>
+  </root>
+</GraphDataModel>
+`
+    );
+  });
+
+  test('model with edges using style.edgeStyle', () => {
+    const model = new GraphDataModel();
+    const parent = getParent(model);
+
+    const vertex1 = newVertex('v1', 'vertex 1');
+    model.add(parent, vertex1);
+    const vertex2 = newVertex('v2', 'vertex 2');
+    model.add(parent, vertex2);
+
+    const edge1 = newEdge('e1', 'edge 1');
+    // when passing a function for the edgeStyle, it is not serialized
+    edge1.setStyle({ edgeStyle: EdgeStyle.ElbowConnector, strokeColor: 'green' });
+    model.add(parent, edge1);
+    model.setTerminal(edge1, vertex1, true);
+    model.setTerminal(edge1, vertex2, false);
+
+    const edge2 = newEdge('e2', 'edge 2');
+    edge2.setStyle({ edgeStyle: 'manhattanEdgeStyle', strokeColor: 'orange' });
+    model.add(parent, edge2);
+    model.setTerminal(edge2, vertex1, false);
+    model.setTerminal(edge2, vertex2, true);
+
+    // FIX boolean values should be set to true/false instead of 1/0
+    expect(new ModelXmlSerializer(model).export()).toEqual(
+      `<GraphDataModel>
+  <root>
+    <Cell id="0">
+      <Object as="style" />
+    </Cell>
+    <Cell id="1" parent="0">
+      <Object as="style" />
+    </Cell>
+    <Cell id="v1" value="vertex 1" vertex="1" parent="1">
+      <Object as="style" />
+    </Cell>
+    <Cell id="v2" value="vertex 2" vertex="1" parent="1">
+      <Object as="style" />
+    </Cell>
+    <Cell id="e1" value="edge 1" edge="1" parent="1" source="v1" target="v2">
+      <Geometry as="geometry" />
+      <Object strokeColor="green" as="style" />
+    </Cell>
+    <Cell id="e2" value="edge 2" edge="1" parent="1" source="v2" target="v1">
+      <Geometry as="geometry" />
+      <Object edgeStyle="manhattanEdgeStyle" strokeColor="orange" as="style" />
     </Cell>
   </root>
 </GraphDataModel>

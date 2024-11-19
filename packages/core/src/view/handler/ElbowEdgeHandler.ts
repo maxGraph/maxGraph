@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import EdgeHandler from './EdgeHandler';
-import { CURSOR, EDGESTYLE, ELBOW, HANDLE_SIZE } from '../../util/Constants';
+import { CURSOR, EDGESTYLE, ELBOW } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import Translations from '../../util/Translations';
@@ -26,18 +26,19 @@ import { intersects } from '../../util/mathUtils';
 import Client from '../../Client';
 import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
+import { HandleConfig } from './config';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and
- * the edge label location. Uses {@link TerminalMarker} for finding and
+ * the edge label location. Uses {@link CellMarker} for finding and
  * highlighting new source and target vertices. This handler is automatically
- * created in {@link Graph#createHandler}. It extends {@link EdgeHandler}.
+ * created in {@link Graph.createHandler}. It extends {@link EdgeHandler}.
  *
  * Constructor: mxEdgeHandler
  *
- * Constructs an edge handler for the specified <CellState>.
+ * Constructs an edge handler for the specified {@link CellState}.
  *
- * @param state <CellState> of the cell to be modified.
+ * @param state {@link CellState} of the cell to be modified.
  */
 class ElbowEdgeHandler extends EdgeHandler {
   constructor(state: CellState) {
@@ -45,23 +46,22 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-   * Specifies if a double click on the middle handle should call
-   * {@link Graph#flipEdge}. Default is true.
+   * Specifies if a double click on the middle handle should call {@link Graph#flipEdge}.
+   * @default true
    */
   flipEnabled = true;
 
   /**
    * Specifies the resource key for the tooltip to be displayed on the single
    * control point for routed edges. If the resource for this key does not
-   * exist then the value is used as the error message. Default is
-   * 'doubleClickOrientation'.
+   * exist then the value is used as the error message.
+   * @default 'doubleClickOrientation'.
    */
-  // doubleClickOrientationResource: string;
   doubleClickOrientationResource =
     Client.language !== 'none' ? 'doubleClickOrientation' : '';
 
   /**
-   * Overrides {@link EdgeHandler#createBends} to create custom bends.
+   * Overrides {@link EdgeHandler.createBends} to create custom bends.
    */
   createBends() {
     const bends = [];
@@ -94,8 +94,7 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-   * Creates a virtual bend that supports double clicking and calls
-   * {@link Graph#flipEdge}.
+   * Creates a virtual bend that supports double-clicking and calls {@link Graph#flipEdge}.
    */
   createVirtualBend(dblClickHandler?: (evt: MouseEvent) => void) {
     const bend = this.createHandleShape();
@@ -207,8 +206,8 @@ class ElbowEdgeHandler extends EdgeHandler {
       this.labelShape.bounds &&
       intersects(bounds, this.labelShape.bounds)
     ) {
-      w = HANDLE_SIZE + 3;
-      h = HANDLE_SIZE + 3;
+      w = HandleConfig.size + 3;
+      h = w;
       bounds = new Rectangle(Math.floor(pt.x - w / 2), Math.floor(pt.y - h / 2), w, h);
     }
 

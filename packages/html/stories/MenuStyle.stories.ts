@@ -40,6 +40,8 @@ import {
   SelectionHandler,
   PanningHandler,
   type Shape,
+  VertexHandlerConfig,
+  HandleConfig,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
@@ -109,10 +111,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   InternalEvent.disableContextMenu(container);
 
   // Changes some default colors
-  // TODO Find a way of modifying globally or setting locally! See https://github.com/maxGraph/maxGraph/issues/192
-  //constants.HANDLE_FILLCOLOR = '#99ccff';
-  //constants.HANDLE_STROKECOLOR = '#0088cf';
-  //constants.VERTEX_SELECTION_COLOR = '#00a8ff';
+  HandleConfig.fillColor = '#99ccff';
+  HandleConfig.strokeColor = '#0088cf';
+  VertexHandlerConfig.selectionColor = '#00a8ff';
 
   class MyCustomCellRenderer extends CellRenderer {
     installCellOverlayListeners(state: CellState, overlay: CellOverlay, shape: Shape) {

@@ -46,28 +46,24 @@ import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
 /**
  * Provides various edge styles to be used as the values for `edgeStyle` in a cell style.
  *
- * Example:
+ * The following example sets the default edge style to `ElbowConnector`:
  *
  * ```javascript
- * let style = stylesheet.getDefaultEdgeStyle();
+ * const style = stylesheet.getDefaultEdgeStyle();
  * style.edgeStyle = EdgeStyle.ElbowConnector;
  * ```
  *
- * Sets the default edge style to `ElbowConnector`.
- *
- * Custom edge style:
- *
- * To write a custom edge style, a function must be added to the EdgeStyle object as follows:
+ * To write a custom edge style, a function can be added to the `EdgeStyle` object as follows.
+ * In the example below, a right angle is created using a point on the horizontal center of the target vertex and the vertical center of the source vertex.
+ * The code checks if that point intersects the source vertex and makes the edge straight if it does.
+ * The point is then added into the result array, which acts as the return value of the function.
  *
  * ```javascript
- * EdgeStyle.MyStyle = (state, source, target, points, result)=>
- * {
- *   if (source != null && target != null)
- *   {
- *     let pt = new Point(target.getCenterX(), source.getCenterY());
+ * EdgeStyle.MyStyle = (state, source, target, points, result) => {
+ *   if (source && target) {
+ *     const pt = new Point(target.getCenterX(), source.getCenterY());
  *
- *     if (Utils.contains(source, pt.x, pt.y))
- *     {
+ *     if (mathUtils.contains(source, pt.x, pt.y)) {
  *       pt.y = source.y + source.height;
  *     }
  *
@@ -76,38 +72,30 @@ import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
  * };
  * ```
  *
- * In the above example, a right angle is created using a point on the
- * horizontal center of the target vertex and the vertical center of the source
- * vertex. The code checks if that point intersects the source vertex and makes
- * the edge straight if it does. The point is then added into the result array,
- * which acts as the return value of the function.
- *
- * The new edge style should then be registered in the {@link StyleRegistry} as follows:
+ * The new edge style can then be registered in the {@link StyleRegistry} as follows:
  * ```javascript
  * StyleRegistry.putValue('myEdgeStyle', EdgeStyle.MyStyle);
  * ```
  *
  * The custom edge style above can now be used in a specific edge as follows:
- *
  * ```javascript
  * style.edgeStyle = 'myEdgeStyle';
  * ```
  *
- * Note that the key of the {@link StyleRegistry} entry for the function should
- * be used in string values, unless {@link GraphView#allowEval} is true, in
- * which case you can also use `EdgeStyle.MyStyle` for the value in the
- * cell style above.
+ * The key of the {@link StyleRegistry} entry for the function should be used in the {@link CellState.edgeStyle} values, unless {@link GraphView#allowEval} is `true.
+ * In this case, you can also use the `'EdgeStyle.MyStyle'` string for the value in the cell style above.
  *
- * Or it can be used for all edges in the graph as follows:
+ * The custom EdgeStyle can be used for all edges in the graph as follows:
  *
  * ```javascript
  * let style = graph.getStylesheet().getDefaultEdgeStyle();
  * style.edgeStyle = EdgeStyle.MyStyle;
  * ```
  *
- * Note that the object can be used directly when programmatically setting
- * the value, but the key in the {@link StyleRegistry} should be used when
- * setting the value via a key, value pair in a cell style.
+ * It can also be used directly when setting the value of the `edgeStyle` key in a style of a specific edge as follows:
+ * ```javascript
+ * style.edgeStyle = EdgeStyle.MyStyle;
+ * ```
  */
 class EdgeStyle {
   /**
