@@ -22,7 +22,7 @@ import Dictionary from '../util/Dictionary';
 import EventSource from './event/EventSource';
 import EventObject from './event/EventObject';
 import RectangleShape from './geometry/node/RectangleShape';
-import { ALIGN } from '../util/Constants';
+import { ALIGN, NS_SVG } from '../util/Constants';
 import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
 import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils';
@@ -2215,26 +2215,23 @@ export class GraphView extends EventSource {
    */
   createSvg(): void {
     const { container } = this.graph;
-    const canvas = (this.canvas = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'g'
-    ));
+    const canvas = (this.canvas = document.createElementNS(NS_SVG, 'g'));
 
     // For background image
-    this.backgroundPane = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    this.backgroundPane = document.createElementNS(NS_SVG, 'g');
     canvas.appendChild(this.backgroundPane);
 
     // Adds two layers (background is early feature)
-    this.drawPane = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    this.drawPane = document.createElementNS(NS_SVG, 'g');
     canvas.appendChild(this.drawPane);
 
-    this.overlayPane = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    this.overlayPane = document.createElementNS(NS_SVG, 'g');
     canvas.appendChild(this.overlayPane);
 
-    this.decoratorPane = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    this.decoratorPane = document.createElementNS(NS_SVG, 'g');
     canvas.appendChild(this.decoratorPane);
 
-    const root = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const root = document.createElementNS(NS_SVG, 'svg');
     root.style.left = '0px';
     root.style.top = '0px';
     root.style.width = '100%';

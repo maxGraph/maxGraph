@@ -56,7 +56,7 @@ type ImageMap = {
  * turned into a data URI if the returned value has a short data URI format
  * as specified above.
  *
- * A typical value for the fallback is a MTHML link as defined in RFC 2557.
+ * A typical value for the fallback is a HTML link as defined in RFC 2557.
  * Note that this format requires a file to be dynamically created on the
  * server-side, or the page that contains the graph to be modified to contain
  * the resources, this can be done by adding a comment that contains the

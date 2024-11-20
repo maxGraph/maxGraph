@@ -23,6 +23,7 @@ import {
   DIRECTION,
   LINE_ARCSIZE,
   NONE,
+  NS_SVG,
   RECTANGLE_ROUNDING_FACTOR,
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
@@ -322,7 +323,7 @@ class Shape {
    * This implementation assumes that `maxGraph` produces SVG elements.
    */
   create() {
-    return document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    return document.createElementNS(NS_SVG, 'g');
   }
 
   redraw() {
@@ -1138,7 +1139,7 @@ class Shape {
    * Adds a transparent rectangle that catches all events.
    */
   createTransparentSvgRectangle(x: number, y: number, w: number, h: number) {
-    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    const rect = document.createElementNS(NS_SVG, 'rect');
     rect.setAttribute('x', String(x));
     rect.setAttribute('y', String(y));
     rect.setAttribute('width', String(w));
