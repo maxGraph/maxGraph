@@ -5,19 +5,16 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
-    "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
     "extra:copy-gen-resources": "node scripts/copy-generated-resources.mjs"
   },
   "dependencies": {
-    "@docusaurus/core": "3.6.0",
-    "@docusaurus/faster": "3.6.0",
-    "@docusaurus/preset-classic": "3.6.0",
+    "@docusaurus/core": "3.6.2",
+    "@docusaurus/faster": "3.6.2",
+    "@docusaurus/preset-classic": "3.6.2",
     "@mdx-js/react": "^3.1.0",
     "clsx": "^2.1.1",
     "prism-react-renderer": "^2.4.0",
@@ -25,9 +22,9 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.6.0",
-    "@docusaurus/tsconfig": "3.6.0",
-    "@docusaurus/types": "3.6.0"
+    "@docusaurus/module-type-aliases": "3.6.2",
+    "@docusaurus/tsconfig": "3.6.2",
+    "@docusaurus/types": "3.6.2"
   },
   "browserslist": {
     "production": [
