@@ -142,7 +142,7 @@ export * as styleUtils from './util/styleUtils';
 export * as utils from './util/Utils';
 export * as xmlUtils from './util/xmlUtils';
 
-export { GlobalConfig } from './util/config';
+export * from './util/config';
 export * from './util/logger';
 
 export { default as Animation } from './view/animate/Animation';

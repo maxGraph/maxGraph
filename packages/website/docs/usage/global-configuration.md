@@ -17,12 +17,14 @@ The following objects can be used to configure `maxGraph` globally:
   - `GlobalConfig` (since 0.11.0): for shared resources (logger).
   - `HandleConfig` (since 0.14.0): for shared handle configurations.
   - `StencilShapeConfig` (since 0.11.0): for stencil shapes.
+  - `StyleDefaultsConfig` (since 0.14.0): for the default values of the Cell styles.
   - `VertexHandlerConfig` (since 0.12.0): for `VertexHandler`.
 
 Some functions are provided to reset the global configuration to the default values. For example:
 
   - `resetEdgeHandlerConfig` (since 0.14.0)
   - `resetHandleConfig` (since 0.14.0)
+  - `resetStyleDefaultsConfig` (since 0.14.0)
   - `resetVertexHandlerConfig` (since 0.14.0)
 
 :::note

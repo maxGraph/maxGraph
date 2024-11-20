@@ -37,7 +37,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
   const container = createGraphContainer(args);
 
-  // Should we allow overriding constant values?
+  // TODO Allow overriding constants. See https://github.com/maxGraph/maxGraph/issues/192
   // Enables crisp rendering of rectangles in SVG
   // constants.ENTITY_SEGMENT = 20;
 

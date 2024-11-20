@@ -30,6 +30,7 @@ import {
   ImageBox,
   utils,
   MaxToolbar,
+  StyleDefaultsConfig,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
@@ -56,9 +57,8 @@ const Template = ({ label, ...args }) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  // Should we allow overriding constants?
   // Makes the shadow brighter
-  //constants.SHADOWCOLOR = '#C0C0C0';
+  StyleDefaultsConfig.shadowColor = '#C0C0C0';
 
   const outline = document.getElementById('outlineContainer');
 

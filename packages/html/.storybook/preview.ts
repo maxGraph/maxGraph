@@ -4,6 +4,7 @@ import {
   NoOpLogger,
   resetEdgeHandlerConfig,
   resetHandleConfig,
+  resetStyleDefaultsConfig,
   resetVertexHandlerConfig,
 } from '@maxgraph/core';
 
@@ -19,6 +20,7 @@ const resetMaxGraphConfigs = (): void => {
 
   resetEdgeHandlerConfig();
   resetHandleConfig();
+  resetStyleDefaultsConfig();
   resetVertexHandlerConfig();
 };
 

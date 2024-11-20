@@ -15,7 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getDefaultPlugins, Graph, Perimeter, RubberBandHandler } from '@maxgraph/core';
+import {
+  getDefaultPlugins,
+  Graph,
+  Perimeter,
+  RubberBandHandler,
+  StyleDefaultsConfig,
+} from '@maxgraph/core';
 import {
   globalTypes,
   globalValues,
@@ -41,8 +47,7 @@ export default {
 const Template = ({ label, ...args }: Record<string, any>) => {
   const container = createGraphContainer(args);
 
-  // Should we allow overriding constants?
-  // constants.SHADOWCOLOR = '#c0c0c0';
+  StyleDefaultsConfig.shadowColor = '#c0c0c0';
 
   // Enables rubberband selection
   const plugins = getDefaultPlugins();

@@ -67,25 +67,16 @@ export const NS_SVG = 'http://www.w3.org/2000/svg';
  */
 export const NS_XLINK = 'http://www.w3.org/1999/xlink';
 
-/**
- * Defines the color to be used to draw shadows in shapes and windows.
- * Default is gray.
- */
+/** Default value of {@link StyleDefaultsConfig.shadowColor}. */
 export const SHADOWCOLOR = 'gray';
 
-/**
- * Specifies the x-offset of the shadow. Default is 2.
- */
+/** Default value of {@link StyleDefaultsConfig.shadowOffsetX}. */
 export const SHADOW_OFFSET_X = 2;
 
-/**
- * Specifies the y-offset of the shadow. Default is 3.
- */
+/** Default value of {@link StyleDefaultsConfig.shadowOffsetY}. */
 export const SHADOW_OFFSET_Y = 3;
 
-/**
- * Defines the opacity for shadows. Default is 1.
- */
+/** Default value of {@link StyleDefaultsConfig.shadowOpacity}. */
 export const SHADOW_OPACITY = 1;
 
 export enum NODETYPE {
