@@ -22,7 +22,7 @@ import {
   SHADOW_OPACITY,
   SHADOWCOLOR,
 } from './Constants';
-import { copyProperties } from './cloneUtils';
+import { shallowCopyProperties } from './cloneUtils';
 
 /**
  * Global configuration for maxGraph.
@@ -92,5 +92,5 @@ const defaultStyleDefaultsConfig = { ...StyleDefaultsConfig };
  * @category Configuration
  */
 export const resetStyleDefaultsConfig = (): void => {
-  copyProperties(defaultStyleDefaultsConfig, StyleDefaultsConfig);
+  shallowCopyProperties(defaultStyleDefaultsConfig, StyleDefaultsConfig);
 };
