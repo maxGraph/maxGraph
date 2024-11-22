@@ -1887,7 +1887,7 @@ class VertexHandler {
     }
 
     if (this.rotationShape) {
-      const alpha = toRadians(this.currentAlpha);
+      const alpha = toRadians(this.state.style.rotation ?? 0);
       const cos = Math.cos(alpha);
       const sin = Math.sin(alpha);
 
