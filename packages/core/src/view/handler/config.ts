@@ -28,6 +28,7 @@ import {
   VERTEX_SELECTION_DASHED,
   VERTEX_SELECTION_STROKEWIDTH,
 } from '../../util/Constants';
+import { copyProperties } from '../../util/cloneUtils';
 
 /**
  * Global configuration for {@link EdgeHandler} (including subclasses).
@@ -61,6 +62,7 @@ export const EdgeHandlerConfig = {
   selectionDashed: EDGE_SELECTION_DASHED,
 };
 
+const defaultEdgeHandlerConfig = { ...EdgeHandlerConfig };
 /**
  * Resets {@link EdgeHandlerConfig} to default values.
  *
@@ -68,11 +70,8 @@ export const EdgeHandlerConfig = {
  * @since 0.14.0
  * @category Configuration
  */
-export const resetEdgeHandlerConfig = () => {
-  EdgeHandlerConfig.connectFillColor = CONNECT_HANDLE_FILLCOLOR;
-  EdgeHandlerConfig.selectionColor = EDGE_SELECTION_COLOR;
-  EdgeHandlerConfig.selectionStrokeWidth = EDGE_SELECTION_STROKEWIDTH;
-  EdgeHandlerConfig.selectionDashed = EDGE_SELECTION_DASHED;
+export const resetEdgeHandlerConfig = (): void => {
+  copyProperties(defaultEdgeHandlerConfig, EdgeHandlerConfig);
 };
 
 /**
@@ -113,6 +112,7 @@ export const HandleConfig = {
   strokeColor: HANDLE_STROKECOLOR,
 };
 
+const defaultHandleConfig = { ...HandleConfig };
 /**
  * Resets {@link HandleConfig} to default values.
  *
@@ -121,11 +121,7 @@ export const HandleConfig = {
  * @category Configuration
  */
 export const resetHandleConfig = (): void => {
-  HandleConfig.fillColor = HANDLE_FILLCOLOR;
-  HandleConfig.labelFillColor = LABEL_HANDLE_FILLCOLOR;
-  HandleConfig.labelSize = LABEL_HANDLE_SIZE;
-  HandleConfig.size = HANDLE_SIZE;
-  HandleConfig.strokeColor = HANDLE_STROKECOLOR;
+  copyProperties(defaultHandleConfig, HandleConfig);
 };
 
 /**
@@ -164,6 +160,7 @@ export const VertexHandlerConfig = {
   selectionDashed: VERTEX_SELECTION_DASHED,
 };
 
+const defaultVertexHandlerConfig = { ...VertexHandlerConfig };
 /**
  * Resets {@link VertexHandlerConfig} to default values.
  *
@@ -172,8 +169,5 @@ export const VertexHandlerConfig = {
  * @category Configuration
  */
 export const resetVertexHandlerConfig = (): void => {
-  VertexHandlerConfig.rotationEnabled = false;
-  VertexHandlerConfig.selectionColor = VERTEX_SELECTION_COLOR;
-  VertexHandlerConfig.selectionStrokeWidth = VERTEX_SELECTION_STROKEWIDTH;
-  VertexHandlerConfig.selectionDashed = VERTEX_SELECTION_DASHED;
+  copyProperties(defaultVertexHandlerConfig, VertexHandlerConfig);
 };

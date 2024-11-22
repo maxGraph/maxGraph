@@ -56,3 +56,20 @@ export const clone = function _clone(
 
   return clone;
 };
+
+/**
+ * Copies properties from the source object to the target object.
+ *
+ * @template T The type of the objects.
+ *
+ * @param source The source object from which properties will be copied.
+ * @param target The target object to which properties will be copied.
+ *
+ * @private not part of the public API, can be removed or changed without prior notice
+ * @since 0.14.0
+ */
+export const copyProperties = <T>(source: T, target: T) => {
+  for (const key in source) {
+    target[key] = source[key];
+  }
+};

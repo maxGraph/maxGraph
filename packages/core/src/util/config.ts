@@ -22,6 +22,7 @@ import {
   SHADOW_OPACITY,
   SHADOWCOLOR,
 } from './Constants';
+import { copyProperties } from './cloneUtils';
 
 /**
  * Global configuration for maxGraph.
@@ -82,6 +83,7 @@ export const StyleDefaultsConfig = {
   shadowOpacity: SHADOW_OPACITY,
 };
 
+const defaultStyleDefaultsConfig = { ...StyleDefaultsConfig };
 /**
  * Resets {@link StyleDefaultsConfig} to default values.
  *
@@ -90,8 +92,5 @@ export const StyleDefaultsConfig = {
  * @category Configuration
  */
 export const resetStyleDefaultsConfig = (): void => {
-  StyleDefaultsConfig.shadowColor = SHADOWCOLOR;
-  StyleDefaultsConfig.shadowOffsetX = SHADOW_OFFSET_X;
-  StyleDefaultsConfig.shadowOffsetY = SHADOW_OFFSET_Y;
-  StyleDefaultsConfig.shadowOpacity = SHADOW_OPACITY;
+  copyProperties(defaultStyleDefaultsConfig, StyleDefaultsConfig);
 };
