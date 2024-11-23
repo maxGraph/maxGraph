@@ -28,7 +28,7 @@ import {
   VERTEX_SELECTION_DASHED,
   VERTEX_SELECTION_STROKEWIDTH,
 } from '../../util/Constants';
-import { shallowCopyProperties } from '../../util/cloneUtils';
+import { shallowCopy } from '../../util/cloneUtils';
 
 /**
  * Global configuration for {@link EdgeHandler} (including subclasses).
@@ -71,7 +71,7 @@ const defaultEdgeHandlerConfig = { ...EdgeHandlerConfig };
  * @category Configuration
  */
 export const resetEdgeHandlerConfig = (): void => {
-  shallowCopyProperties(defaultEdgeHandlerConfig, EdgeHandlerConfig);
+  shallowCopy(defaultEdgeHandlerConfig, EdgeHandlerConfig);
 };
 
 /**
@@ -121,7 +121,7 @@ const defaultHandleConfig = { ...HandleConfig };
  * @category Configuration
  */
 export const resetHandleConfig = (): void => {
-  shallowCopyProperties(defaultHandleConfig, HandleConfig);
+  shallowCopy(defaultHandleConfig, HandleConfig);
 };
 
 /**
@@ -169,5 +169,5 @@ const defaultVertexHandlerConfig = { ...VertexHandlerConfig };
  * @category Configuration
  */
 export const resetVertexHandlerConfig = (): void => {
-  shallowCopyProperties(defaultVertexHandlerConfig, VertexHandlerConfig);
+  shallowCopy(defaultVertexHandlerConfig, VertexHandlerConfig);
 };
