@@ -35,6 +35,7 @@ import {
   PopupMenuHandler,
   PrintPreview,
   printUtils,
+  treeTraversalUtils,
   StyleDefaultsConfig,
 } from '@maxgraph/core';
 import {
@@ -452,17 +453,22 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/view/mxGraph.js#L12046
     // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/layout/mxGraphLayout.js#L160
     // graph.traverse(cell, true, function (vertex: Cell) {
-    layout.traverse({
-      vertex: cell,
-      directed: true,
-      func: function (vertex: Cell) {
-        cells.push(vertex);
-
-        return true;
-      },
-      edge: null,
-      visited: null,
+    treeTraversalUtils.traverse(cell, true, function (vertex: Cell) {
+      cells.push(vertex);
+      return true;
     });
+
+    // layout.traverse({
+    //   vertex: cell,
+    //   directed: true,
+    //   func: function (vertex: Cell) {
+    //     cells.push(vertex);
+    //
+    //     return true;
+    //   },
+    //   edge: null,
+    //   visited: null,
+    // });
 
     graph.removeCells(cells);
   }
