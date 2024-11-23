@@ -70,7 +70,7 @@ export const clone = function _clone(
  * @private not part of the public API, can be removed or changed without prior notice
  * @since 0.14.0
  */
-export const shallowCopy = <T>(source: T, target: T) => {
+export const shallowCopy = <T extends object>(source: T, target: T): void => {
   for (const key in source) {
     // attempt to prevent prototype pollution
     if (Object.prototype.hasOwnProperty.call(source, key)) {
