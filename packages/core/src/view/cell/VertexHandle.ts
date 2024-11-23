@@ -129,6 +129,7 @@ class VertexHandle implements CellHandle {
         alpha2
       )
     );
+    this.setPosition(this.state.getPaintBounds(), pt, me);
     this.redraw();
   }
 
