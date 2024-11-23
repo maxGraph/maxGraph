@@ -115,6 +115,8 @@ export function findTreeRoots(
  * @param inverse Optional boolean to traverse in inverse direction. Default is false.
  * This is ignored if directed is false.
  */
+// TODO move from mxGraph class --> document in migration guide
+// check if we change the signature of the function by using an object as parameter as in graphlayout
 export function traverse(
   vertex: Cell | null = null,
   directed = true,
@@ -123,7 +125,9 @@ export function traverse(
   visited: Dictionary<Cell, boolean> | null = null,
   inverse = false
 ) {
+  // TODO simplify: exit right away if the 2 parameters are null
   if (func != null && vertex != null) {
+    // TODO remove the default values management here as this can be done in the signature (visited = new Dictionary<Cell, boolean>())
     directed = directed != null ? directed : true;
     inverse = inverse != null ? inverse : false;
     visited = visited || new Dictionary<Cell, boolean>();
