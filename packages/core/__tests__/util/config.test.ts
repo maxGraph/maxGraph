@@ -18,16 +18,17 @@ import { expect, test } from '@jest/globals';
 import { resetStyleDefaultsConfig, StyleDefaultsConfig } from '../../src';
 
 test('resetStyleDefaultsConfig', () => {
-  // Ensure that some default values are correctly set
-  expect(StyleDefaultsConfig.shadowColor).toBe('gray');
-  expect(StyleDefaultsConfig.shadowOffsetX).toBe(2);
+  // Keep track of original default values
+  const originalStyleDefaultsConfig = { ...StyleDefaultsConfig };
 
-  // Change the default values
+  // Change some values
   StyleDefaultsConfig.shadowColor = 'pink';
   StyleDefaultsConfig.shadowOffsetX = 20;
 
-  // Ensure that the values are correctly reset
   resetStyleDefaultsConfig();
+
+  // Ensure that the values are correctly reset
   expect(StyleDefaultsConfig.shadowColor).toBe('gray');
   expect(StyleDefaultsConfig.shadowOffsetX).toBe(2);
+  expect(StyleDefaultsConfig).toStrictEqual(originalStyleDefaultsConfig);
 });

@@ -25,46 +25,49 @@ import {
 } from '../../../src';
 
 test('resetEdgeHandlerConfig', () => {
-  // Ensure that some default values are correctly set
-  expect(EdgeHandlerConfig.connectFillColor).toBe('#0000FF');
-  expect(EdgeHandlerConfig.selectionStrokeWidth).toBe(1);
+  // Keep track of original default values
+  const originalEdgeHandlerConfig = { ...EdgeHandlerConfig };
 
-  // Change the default values
+  // Change some values
   EdgeHandlerConfig.connectFillColor = 'red';
   EdgeHandlerConfig.selectionStrokeWidth = 4;
 
-  // Ensure that the values are correctly reset
   resetEdgeHandlerConfig();
+
+  // Ensure that the values have correctly been reset
   expect(EdgeHandlerConfig.connectFillColor).toBe('#0000FF');
   expect(EdgeHandlerConfig.selectionStrokeWidth).toBe(1);
+  expect(EdgeHandlerConfig).toStrictEqual(originalEdgeHandlerConfig);
 });
 
 test('resetHandleConfig', () => {
-  // Ensure that some default values are correctly set
-  expect(HandleConfig.labelSize).toBe(4);
-  expect(HandleConfig.strokeColor).toBe('black');
+  // Keep track of original default values
+  const originalHandleConfig = { ...HandleConfig };
 
-  // Change the default values
+  // Change some values
   HandleConfig.labelSize = 12;
   HandleConfig.strokeColor = 'chartreuse';
 
-  // Ensure that the values are correctly reset
   resetHandleConfig();
+
+  // Ensure that the values have correctly been reset
   expect(HandleConfig.labelSize).toBe(4);
   expect(HandleConfig.strokeColor).toBe('black');
+  expect(HandleConfig).toStrictEqual(originalHandleConfig);
 });
 
 test('resetVertexHandlerConfig', () => {
-  // Ensure that some default values are correctly set
-  expect(VertexHandlerConfig.rotationEnabled).toBe(false);
-  expect(VertexHandlerConfig.selectionColor).toBe('#00FF00');
+  // Keep track of original default values
+  const originalVertexHandlerConfig = { ...VertexHandlerConfig };
 
-  // Change the default values
+  // Change some values
   VertexHandlerConfig.rotationEnabled = true;
   VertexHandlerConfig.selectionColor = 'chartreuse';
 
-  // Ensure that the values are correctly reset
   resetVertexHandlerConfig();
+
+  // Ensure that the values have correctly been reset
   expect(VertexHandlerConfig.rotationEnabled).toBe(false);
   expect(VertexHandlerConfig.selectionColor).toBe('#00FF00');
+  expect(VertexHandlerConfig).toStrictEqual(originalVertexHandlerConfig);
 });
