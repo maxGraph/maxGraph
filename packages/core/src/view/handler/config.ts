@@ -45,6 +45,7 @@ export type EdgeHandlerConfigType = {
   connectFillColor: string;
   /**
    * Kind of shape to be used for edge handles.
+   * @default 'square'
    */
   handleShape: 'circle' | 'square';
   /**
