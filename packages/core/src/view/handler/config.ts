@@ -31,34 +31,55 @@ import {
 import { shallowCopy } from '../../util/cloneUtils';
 
 /**
+ * Describes {@link EdgeHandlerConfig}.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
+ */
+export type EdgeHandlerConfigType = {
+  /**
+   * Defines the color to be used for the connect handle fill color. Use `none` for no color.
+   * @default {@link CONNECT_HANDLE_FILLCOLOR}
+   */
+  connectFillColor: string;
+  /**
+   * Kind of shape to be used for edge handles.
+   */
+  handleShape: 'circle' | 'square';
+  /**
+   * Defines the default color to be used for the selection border of edges. Use `none` for no color.
+   * @default {@link EDGE_SELECTION_COLOR}
+   */
+  selectionColor: string;
+  /**
+   * Defines the default stroke width to be used for edge selections.
+   * @default {@link EDGE_SELECTION_STROKEWIDTH}
+   */
+  selectionStrokeWidth: number;
+  /**
+   * Defines the default dashed state to be used for the edge selection border.
+   * @default {@link EDGE_SELECTION_DASHED}
+   */
+  selectionDashed: boolean;
+};
+
+/**
  * Global configuration for {@link EdgeHandler} (including subclasses).
  *
  * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.14.0
  * @category Configuration
  */
-export const EdgeHandlerConfig = {
-  /**
-   * Defines the color to be used for the connect handle fill color. Use `none` for no color.
-   * @default {@link CONNECT_HANDLE_FILLCOLOR}
-   */
+export const EdgeHandlerConfig: EdgeHandlerConfigType = {
   connectFillColor: CONNECT_HANDLE_FILLCOLOR,
-  /**
-   * Defines the default color to be used for the selection border of edges. Use `none` for no color.
-   * @default {@link EDGE_SELECTION_COLOR}
-   */
+
+  handleShape: 'square',
+
   selectionColor: EDGE_SELECTION_COLOR,
 
-  /**
-   * Defines the default stroke width to be used for edge selections.
-   * @default {@link EDGE_SELECTION_STROKEWIDTH}
-   */
   selectionStrokeWidth: EDGE_SELECTION_STROKEWIDTH,
 
-  /**
-   * Defines the default dashed state to be used for the edge selection border.
-   * @default {@link EDGE_SELECTION_DASHED}
-   */
   selectionDashed: EDGE_SELECTION_DASHED,
 };
 

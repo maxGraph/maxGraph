@@ -37,6 +37,7 @@ import {
   ptSegDistSq,
 } from '../../util/mathUtils';
 import { convertPoint, getOffset, setOpacity } from '../../util/styleUtils';
+import EllipseShape from '../geometry/node/EllipseShape';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ConnectionConstraint from '../other/ConnectionConstraint';
@@ -633,13 +634,14 @@ class EdgeHandler {
   }
 
   /**
-   * Creates the shape used to display the given bend. Note that the index may be
-   * null for special cases, such as when called from
-   * {@link ElbowEdgeHandler#createVirtualBend}. Only images and rectangles should be
-   * returned if support for HTML labels with not foreign objects is required.
-   * Index if null for virtual handles.
+   * Creates the shape used to display the given bend.
+   * Note that the index
+   * - may be `null` for special cases, such as when called from {@link ElbowEdgeHandler.createVirtualBend}.
+   * - is `null` for virtual handles.
+   *
+   * Only images and rectangles should be returned if support for HTML labels with not foreign objects is required.
    */
-  createHandleShape(index?: number) {
+  createHandleShape(_index?: number): Shape {
     if (this.handleImage) {
       const shape = new ImageShape(
         new Rectangle(0, 0, this.handleImage.width, this.handleImage.height),
@@ -657,7 +659,9 @@ class EdgeHandler {
       s -= 1;
     }
 
-    return new RectangleShape(
+    const shapeConstructor =
+      EdgeHandlerConfig.handleShape === 'circle' ? EllipseShape : RectangleShape;
+    return new shapeConstructor(
       new Rectangle(0, 0, s, s),
       HandleConfig.fillColor,
       HandleConfig.strokeColor
@@ -926,7 +930,6 @@ class EdgeHandler {
   /**
    * Returns the point for the given event.
    */
-  // getPointForEvent(me: mxMouseEvent): mxPoint;
   getPointForEvent(me: InternalMouseEvent) {
     const view = this.graph.getView();
     const { scale } = view;

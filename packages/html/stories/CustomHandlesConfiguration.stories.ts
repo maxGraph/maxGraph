@@ -65,6 +65,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     const selectionColor = '#00a8ff';
 
     EdgeHandlerConfig.connectFillColor = 'pink';
+    EdgeHandlerConfig.handleShape = 'circle';
     EdgeHandlerConfig.selectionColor = selectionColor;
     EdgeHandlerConfig.selectionDashed = false;
     EdgeHandlerConfig.selectionStrokeWidth = 3;
