@@ -27,11 +27,11 @@ jobs:
 
             **TODO: Update the milestone URL**
 
-            - **npm package**: [${{ env.VERSION }}](https://www.npmjs.com/package/@maxgraph/core/v/${{ env.VERSION }})
+            - **npm package**: [@maxgraph/core ${{ env.VERSION }}](https://www.npmjs.com/package/@maxgraph/core/v/${{ env.VERSION }})
             - **Fixed issues**: [milestone ${{ env.VERSION }}](https://github.com/maxGraph/maxGraph/milestone/x?closed=1)
             - **Documentation**: [maxgraph_${{ env.VERSION }}_website.zip](https://github.com/maxGraph/maxGraph/releases/download/v${{ env.VERSION }}/maxgraph_${{ env.VERSION }}_website.zip)
             - **Examples**: [maxgraph_${{ env.VERSION }}_examples.zip](https://github.com/maxGraph/maxGraph/releases/download/v${{ env.VERSION }}/maxgraph_${{ env.VERSION }}_examples.zip)
-            - **Changelog** (only includes a summary and breaking changes): [Changelog](https://github.com/maxGraph/maxGraph/tree/v${{ env.VERSION }}/CHANGELOG.md)
+            - **Changelog** (only includes a summary and breaking changes): [changelog](https://github.com/maxGraph/maxGraph/tree/v${{ env.VERSION }}/CHANGELOG.md)
 
 
             ## Breaking changes
