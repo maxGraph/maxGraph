@@ -18,12 +18,15 @@ import '@maxgraph/core/css/common.css';
 import './style.css';
 import {
   Client,
+  Codec,
   DomHelpers,
   getDefaultPlugins,
   Graph,
   InternalEvent,
   ModelXmlSerializer,
+  registerCoreCodecs,
   RubberBandHandler,
+  xmlUtils,
 } from '@maxgraph/core';
 
 const xmlWithVerticesAndEdges = `<GraphDataModel>
@@ -34,9 +37,10 @@ const xmlWithVerticesAndEdges = `<GraphDataModel>
       <Cell id="1" parent="0">
         <Object as="style" />
       </Cell>
-      <Cell id="v1" value="vertex 1" vertex="1" parent="1">
+      <Cell id="v1" value="&lt;i&gt;Simple&lt;/i&gt; &lt;b&gt;Test&lt;/b&gt;, quite long, which requires &lt;b&gt;wrapping&lt;/b&gt;" vertex="1" parent="1">
         <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry" />
-        <Object fillColor="green" strokeWidth="4" as="style" />
+        <Object fontColor="black" strokeWidth="4" whiteSpace="wrap" as="style" />
+<!--        <Object fillColor="green" strokeWidth="4" as="style" />-->
       </Cell>
       <Cell id="v2" value="vertex 2" vertex="1" parent="1">
         <Geometry _x="0" _y="0" _width="100" _height="80" as="geometry" />
@@ -65,6 +69,7 @@ const initializeGraph = (container) => {
     RubberBandHandler, // Enables rubber band selection
   ]);
   graph.setPanning(true); // Use mouse right button for panning
+  graph.setHtmlLabels(true); // Ensure that the Cell value is interpreted as HTML when rendering the label
 
   const modelXmlSerializer = new ModelXmlSerializer(graph.model);
   modelXmlSerializer.import(xmlWithVerticesAndEdges);
@@ -79,6 +84,29 @@ footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 // Creates the graph inside the given container
 const container = document.querySelector('#graph-container');
 const graph = initializeGraph(container);
+
+// EXTRA: check the result of encoding the graph view
+console.info('Encoding Graph view...');
+registerCoreCodecs();
+const encodedNode = new Codec().encode(graph.view);
+console.info('Graph view encoded:', xmlUtils.getPrettyXml(encodedNode));
+// with htmlLabels
+// <graph label="" html="true" x="0" y="0" width="250" height="183" scale="1">
+//   <layer label="" html="true">
+//     <vertex label="vertex 1" html="true" shape="rectangle" perimeter="rectanglePerimeter" verticalAlign="middle" align="center" fillColor="green" strokeColor="#6482B9" fontColor="#774400" strokeWidth="4" x="100" y="100" width="100" height="80" />
+//     <vertex label="vertex 2" html="true" shape="rectangle" perimeter="rectanglePerimeter" verticalAlign="middle" align="center" fillColor="#C3D9FF" strokeColor="#6482B9" fontColor="yellow" bendable="0" rounded="1" x="0" y="0" width="100" height="80" />
+//     <edge label="" html="true" shape="connector" endArrow="classic" verticalAlign="middle" align="center" strokeColor="#6482B9" fontColor="#446299" points="200,118 240,100 210,80 140,80 100,62" dx="150" dy="90" />
+//   </layer>
+// </graph>
+
+// Implementation seen in from Graph editor examples (and probably the same in draw.io)
+// In the current implementation (and default mxGraph) whiteSpace is documented as only been considered if Graph.isHtmlLabels is true
+// "this" is an instance of Graph (or a class that extends it)
+//   this.isHtmlLabel = function (cell) {
+//     let style = this.getCurrentCellStyle(cell);
+//
+//     return style != null ? style.html == '1' || style.whiteSpace == 'wrap' : false;
+//   };
 
 // poor way to display the XML
 const popup = (content) => {
