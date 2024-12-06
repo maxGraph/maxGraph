@@ -9,23 +9,25 @@ TODO
 - review the order in the sidebar
 - name: XML serialization? Codecs and Serialization?
 - add an intro
-- move the warning to the registering paragraph
+- reorg paragraphs
 - link to the codec API class provides other examples
 
 
-
-:::warning
-
-From [version 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) of `maxGraph`, codecs supplied by maxGraph are no longer registered by default, they **MUST** be registered before performing an `encode` or `decode`
-
-For example:
-- You can use the `registerModelCodecs` function (or other related functions) to register the Model codecs.
-- To serialize the `maxGraph` model, you can use the `ModelXmlSerializer` class, which registers codecs under the hood and provide a simpler syntax.
-
-:::
+## Examples
 
 
-## Example with a custom object
+Taken from https://github.com/maxGraph/maxGraph/discussions/596#discussioncomment-11449016
+
+For the "demos", the UI provides a tab including some source code, but as you noticed, it miss imports and other things.
+The source code is available in the repository:
+- https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-fileio--default --> https://github.com/maxGraph/maxGraph/blob/v0.14.0/packages/html/stories/FileIO.stories.ts
+- https://maxgraph.github.io/maxGraph/demo/?path=/story/editing-editing--default --> https://github.com/maxGraph/maxGraph/blob/v0.14.0/packages/html/stories/Editing.stories.js
+
+In addition, the `js-example` package in this repository is importing an maxGraph model stored as XML string. This is a vanilla JS project built with webpack.
+So, it should contain everything you need for your use case. See https://github.com/maxGraph/maxGraph/blob/v0.14.0/packages/js-example/src/index.js
+
+
+### Example with a custom object
 
 :::note
 
@@ -90,7 +92,25 @@ To register codecs, you can use the `registerModelCodecs` function, which regist
 
 list of function here
 
+
+:::warning
+
+From [version 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) of `maxGraph`, codecs supplied by maxGraph are no longer registered by default, they **MUST** be registered before performing an `encode` or `decode`
+
+For example:
+- You can use the `registerModelCodecs` function (or other related functions) to register the Model codecs.
+- To serialize the `maxGraph` model, you can use the `ModelXmlSerializer` class, which registers codecs under the hood and provide a simpler syntax.
+
+:::
+
+
 ### Registering custom codecs
+
+**TODO**
+
+- provide examples of how to register custom codecs
+- links to the API (codec category)
+- 
 
 
 ## Encoding and Decoding
@@ -109,3 +129,13 @@ TODO rationale (cf PR which introduced it)
 XmlCanvas2D 
 
 purpose ImageExport, ....
+
+
+## Troubleshooting
+
+https://github.com/maxGraph/maxGraph/issues/323
+
+
+https://github.com/maxGraph/maxGraph/discussions/523 example of "maximum call stack trace" error
+
+fix stories: https://github.com/maxGraph/maxGraph/issues/353
