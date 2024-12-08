@@ -111,7 +111,7 @@ graph.batchUpdate(() => {
 ```
 If you paste this code into your application, you should have minimal graph displayed with a rectangle connected to an orange circle.
 
-![](./assets/getting-started/first-graph.gif)
+![Animated GIF showing a rectangle connected to an orange circle with an edge](./assets/getting-started/first-graph.gif)
 
 ### Key Concepts
 
