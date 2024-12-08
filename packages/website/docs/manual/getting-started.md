@@ -204,7 +204,7 @@ vertexStyle.strokeWidth = 2;
 vertexStyle.strokeColor = 'green';
 
 Your vertices will now have a dashed green border with a width of 2 pixels.
-![](./assets/getting-started/vertex-style.png)
+![Example of a vertex with green dashed border styling](./assets/getting-started/vertex-style.png)
 
 
 ## Need Help?
