@@ -197,13 +197,12 @@ To extend the example from setting up your first graph, let's add some styling t
 
 ```javascript
 // Put this code when initializing graph, before any insertVertex call has been made.
-const edgeStyle = graph.getStylesheet().getDefaultVertexStyle();
-edgeStyle.rounded = true;
-edgeStyle.dashed = true;
-edgeStyle.strokeWidth = 2;
-edgeStyle.strokeColor = 'green';
+const vertexStyle = graph.getStylesheet().getDefaultVertexStyle();
+vertexStyle.rounded = true;
+vertexStyle.dashed = true;
+vertexStyle.strokeWidth = 2;
+vertexStyle.strokeColor = 'green';
 
-```
 Your vertices will now have a dashed green border with a width of 2 pixels.
 ![](./assets/getting-started/vertex-style.png)
 
