@@ -72,13 +72,12 @@ const createXmlDocument = () => {
  *
  * ```javascript
  * const xml = '<root><mxCell id="2" value="Hello," vertex="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell><mxCell id="3" value="World!" vertex="1"><mxGeometry x="200" y="150" width="80" height="30" as="geometry"/></mxCell><mxCell id="4" value="" edge="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></root>';
- * const doc = mxUtils.parseXml(xml);
+ * const doc = xmlUtils.parseXml(xml);
  * const codec = new Codec(doc);
  * let elt = doc.documentElement.firstChild;
  * const cells = [];
  *
- * while (elt != null)
- * {
+ * while (elt != null) {
  *   cells.push(codec.decode(elt));
  *   elt = elt.nextSibling;
  * }
@@ -101,7 +100,7 @@ const createXmlDocument = () => {
  *
  * ### Debugging
  *
- * For debugging I/O you can use the following code to get the sequence of
+ * For debugging, I/O you can use the following code to get the sequence of
  * encoded objects:
  *
  * ```javascript
