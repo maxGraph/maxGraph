@@ -137,12 +137,13 @@ Documentation to be migrated:
 
 
 ## Examples
+<!-- copied into packages/website/docs/demo-and-examples.md -->
 
-For more complete examples than getting started,, please have a look at:
+For more complete examples than the “Getting started” example, please have a look at:
 
 - the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph.
   - The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
-  - A live instance is available on the [maxGraph webiste](https://maxgraph.github.io/maxGraph/demo).
+  - A live instance is available on the [maxGraph website](https://maxgraph.github.io/maxGraph/demo).
 - the [ts-example](packages/ts-example) project/application that demonstrates how to define and use custom `Shapes` with `maxGraph`. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [ts-example-without-defaults](packages/ts-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [js-example](packages/js-example) project/application that demonstrates how import and export the `maxGraph` model with XML data. It is a vanilla JavaScript application built by [Webapck](https://webpack.js.org/).
@@ -151,6 +152,7 @@ For more complete examples than getting started,, please have a look at:
 
 
 Notice that some elements produced by `maxGraph` require to use [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
+<!-- END OF 'copied into packages/website/docs/demo-and-examples.md' -->
 
 
 ## <a id="migrate-from-mxgraph"></a> Migrating from mxGraph
