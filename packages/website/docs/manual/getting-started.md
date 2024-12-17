@@ -65,8 +65,8 @@ Here is an example that shows how to display a rectangle connected to an orange 
 
 This example assumes that:
 
-- you are building an application that includes the maxGraph dependency, and it has been installed as explained above.
-- your application uses a build tool or a bundler for its packaging. Direct usage of maxGraph in a web page is not supported.
+- you are building an application that includes the `maxGraph` dependency, and it has been installed as explained above.
+- your application uses a build tool or a bundler for its packaging. Direct usage of `maxGraph` in a web page is not supported.
 - your application includes a page that defines an element with the id graph-container.
 you want to use TypeScript, adapt it if you want to use JavaScript (mainly, remove references to the 'type' syntax).
 
@@ -125,23 +125,26 @@ If you paste this code into your application, you should have minimal graph disp
 ### Key Concepts
 
 #### Graph Model
-The graph model represents the structure of your graph. It is the foundation of maxGraph and manages three primary elements: vertices, edges, and groups.
+The graph model represents the structure of your graph. It is the foundation of `maxGraph` and manages three primary elements: vertices, edges, and groups.
 
 #### Vertices
-Vertices are the fundamental elements of your graph that represent 
-individual nodes or objects. They can contain labels, data, and visual properties.
+Vertices are the fundamental elements of your graph that represent individual nodes or objects. They can contain labels, data, and visual properties. \
 Each vertex can be styled independently with different shapes, colors, sizes, and other visual attributes. 
+
 Vertices serve as connection points for edges and can be either standalone or part of a group. They are typically used to represent entities in your diagram, such as process steps in a flowchart, nodes in a network diagram, or components in an architectural diagram.
 
 #### Edges
 Edges are the connections in your graph that typically represent relationships or flows. While edges commonly connect two vertices (a source and a target), 
-they can also exist as "dangling" edges - edges that are connected to only one vertex or even no vertices at all.
+they can also exist as "dangling" edges - edges that are connected to only one vertex or even no vertices at all. \
 This flexibility allows for various use cases such as partially completed diagrams, interactive drawing scenarios, or representing incomplete connections.
+
 Edges can be styled with different line styles, colors, and thicknesses, and can optionally include labels or weights.
 They can be directed (showing flow in one direction) or undirected. Common uses include showing data flow in process diagrams, dependencies in architectural diagrams, or relationships in organization charts.
 
 #### Groups
-Groups in maxGraph allow you to logically organize and structure your graph elements. A group is essentially a parent cell (typically a vertex) that can contain other cells (vertices and edges) as its children, creating what's sometimes called a sub-graph. Think of groups like folders in a file system - they help organize and manage related elements together.
+Groups in `maxGraph` allow you to logically organize and structure your graph elements. \
+A group is essentially a parent cell (typically a vertex) that can contain other cells (vertices and edges) as its children, creating what's sometimes called a sub-graph. \
+Think of groups like folders in a file system - they help organize and manage related elements together.
 
 Groups enable several powerful features in maxGraph:
 - Hierarchical organization of your graph elements
@@ -200,7 +203,7 @@ graph.addListener(InternalEvent.CELLS_MOVED, (sender, evt) =>{
 
 ### Styling
 
-maxGraph supports  styling both vertices and edges. Here is an example of how to apply a default style to vertex.
+`maxGraph` supports  styling both vertices and edges. Here is an example of how to apply a default style to vertex.
 
 To extend the example from setting up your first graph, let's add some styling to the vertices.
 
@@ -211,6 +214,7 @@ vertexStyle.rounded = true;
 vertexStyle.dashed = true;
 vertexStyle.strokeWidth = 2;
 vertexStyle.strokeColor = 'green';
+```
 
 Your vertices will now have a dashed green border with a width of 2 pixels.
 ![Example of a vertex with green dashed border styling](./assets/getting-started/vertex-style.png)
