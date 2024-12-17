@@ -36,8 +36,9 @@ The content of each release is documented on the [maxGraph releases](https://git
 
 ## Installation
 
-### Using npm
+[//]: # (extract of <rootdir>/README.md)
 
+### Using npm
 
 ```bash
 npm install @maxgraph/core
@@ -51,9 +52,15 @@ If you're using yarn:
 yarn add @maxgraph/core
 ```
 
+[//]: # (END OF 'extract of <rootdir>/README.md')
+
+
 ## Basic Usage
 
 ### Setting up your first graph
+
+[//]: # (extract of <rootdir>/README.md)
+
 Here is an example that shows how to display a rectangle connected to an orange circle.
 
 This example assumes that:
@@ -112,6 +119,8 @@ graph.batchUpdate(() => {
 If you paste this code into your application, you should have minimal graph displayed with a rectangle connected to an orange circle.
 
 ![Animated GIF showing a rectangle connected to an orange circle with an edge](./assets/getting-started/first-graph.gif)
+
+[//]: # (END OF 'extract of <rootdir>/README.md')
 
 ### Key Concepts
 

@@ -40,6 +40,7 @@ Please try it in your application and [submit an issue](https://github.com/maxGr
 You can also test `maxGraph` by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
 
 ## Install
+<!-- copied into packages/website/docs/manual/getting-started.md -->
 
 Install the latest version of `maxGraph` from the [npm registry](https://www.npmjs.com/package/@maxgraph/core).
 
@@ -58,7 +59,10 @@ pnpm
 pnpm add @maxgraph/core
 ```
 
+<!-- END OF 'copied into packages/website/docs/manual/getting-started.md' -->
+
 ## Getting Started
+<!-- copied into packages/website/docs/manual/getting-started.md -->
 
 Here is an example that shows how to display a rectangle connected to an orange circle.
 
@@ -118,6 +122,7 @@ You will see something like in the following _maxGraph panning_ demo:
 
 ![maxGraph panning demo](packages/website/docs/manual/assets/getting-started/first-graph.gif "maxGraph panning demo")
 
+<!-- END OF 'copied into packages/website/docs/manual/getting-started.md' -->
 
 ## Documentation
 
