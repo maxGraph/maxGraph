@@ -116,7 +116,7 @@ graph.batchUpdate(() => {
 
 You will see something like in the following _maxGraph panning_ demo:
 
-![maxGraph panning demo](packages/website/docs/manual/assets/getting-started/maxgraph_demo.gif "maxGraph panning demo")
+![maxGraph panning demo](packages/website/docs/manual/assets/getting-started/first-graph.gif "maxGraph panning demo")
 
 
 ## Documentation
