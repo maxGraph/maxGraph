@@ -40,7 +40,7 @@ Please try it in your application and [submit an issue](https://github.com/maxGr
 You can also test `maxGraph` by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
 
 ## Install
-<!-- copied into packages/website/docs/manual/getting-started.md -->
+<!-- copied into packages/website/docs/manual/getting-started.mdx -->
 
 Install the latest version of `maxGraph` from the [npm registry](https://www.npmjs.com/package/@maxgraph/core).
 
@@ -59,10 +59,10 @@ pnpm
 pnpm add @maxgraph/core
 ```
 
-<!-- END OF 'copied into packages/website/docs/manual/getting-started.md' -->
+<!-- END OF 'copied into packages/website/docs/manual/getting-started.mdx' -->
 
 ## Getting Started
-<!-- copied into packages/website/docs/manual/getting-started.md -->
+<!-- copied into packages/website/docs/manual/getting-started.mdx -->
 
 Here is an example that shows how to display a rectangle connected to an orange circle.
 
@@ -122,7 +122,7 @@ You will see something like in the following _maxGraph panning_ demo:
 
 ![maxGraph panning demo](packages/website/docs/manual/assets/getting-started/first-graph.gif "maxGraph panning demo")
 
-<!-- END OF 'copied into packages/website/docs/manual/getting-started.md' -->
+<!-- END OF 'copied into packages/website/docs/manual/getting-started.mdx' -->
 
 ## Documentation
 
@@ -174,12 +174,12 @@ For a complete guide, see the [dedicated migration page](packages/website/docs/u
 
 ## Support
 
-<!-- copied into packages/website/docs/manual/getting-started.md -->
+<!-- copied into packages/website/docs/manual/getting-started.mdx -->
 For usage question, please open a new [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a) on GitHub. You can also use
 [GitHub discussions](https://github.com/maxGraph/maxGraph/discussions) for other topics like `maxGraph` development or to get the latest news.
 
 For bug reports, feature requests, or other issues, please open a new [issue](https://github.com/maxGraph/maxGraph/issues) on GitHub.
-<!-- END OF 'copied into packages/website/docs/manual/getting-started.md' -->
+<!-- END OF 'copied into packages/website/docs/manual/getting-started.mdx' -->
 
 
 ## History

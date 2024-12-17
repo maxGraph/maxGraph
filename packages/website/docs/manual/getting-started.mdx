@@ -2,6 +2,10 @@
 sidebar_position: 2
 description: Getting started with maxGraph.
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Getting Started
 
 :::warning
@@ -35,22 +39,26 @@ Released versions are tagged "va.b.c", where a, b and c are version number parts
 The content of each release is documented on the [maxGraph releases](https://github.com/maxGraph/maxGraph/releases) GitHub page.
 
 ## Installation
-
 [//]: # (extract of <rootdir>/README.md)
+Install the latest version of `maxGraph` from the [npm registry](https://www.npmjs.com/package/@maxgraph/core).
 
-### Using npm
-
-```bash
-npm install @maxgraph/core
-```
-
-### Using yarn
-
-If you're using yarn:
-
-```bash
-yarn add @maxgraph/core
-```
+<Tabs>
+  <TabItem value="npm" label="npm" default>
+    ```bash
+    npm install @maxgraph/core
+    ```
+  </TabItem>
+  <TabItem value="yarn" label="yarn">
+    ```bash
+    yarn add @maxgraph/core
+    ```
+  </TabItem>
+  <TabItem value="pnpm" label="pnpm">
+    ```
+    pnpm add @maxgraph/core
+    ```
+  </TabItem>
+</Tabs>
 
 [//]: # (END OF 'extract of <rootdir>/README.md')
 
@@ -129,12 +137,12 @@ The graph model represents the structure of your graph. It is the foundation of 
 
 #### Vertices
 Vertices are the fundamental elements of your graph that represent individual nodes or objects. They can contain labels, data, and visual properties. \
-Each vertex can be styled independently with different shapes, colors, sizes, and other visual attributes. 
+Each vertex can be styled independently with different shapes, colors, sizes, and other visual attributes.
 
 Vertices serve as connection points for edges and can be either standalone or part of a group. They are typically used to represent entities in your diagram, such as process steps in a flowchart, nodes in a network diagram, or components in an architectural diagram.
 
 #### Edges
-Edges are the connections in your graph that typically represent relationships or flows. While edges commonly connect two vertices (a source and a target), 
+Edges are the connections in your graph that typically represent relationships or flows. While edges commonly connect two vertices (a source and a target),
 they can also exist as "dangling" edges - edges that are connected to only one vertex or even no vertices at all. \
 This flexibility allows for various use cases such as partially completed diagrams, interactive drawing scenarios, or representing incomplete connections.
 
@@ -179,7 +187,7 @@ const vertex01 = graph.insertVertex({
     source: vertex01, // Source vertex
     target: vertex02, // Second vertex that edge should point to
     style: {
-      edgeStyle: 'orthogonalEdgeStyle', 
+      edgeStyle: 'orthogonalEdgeStyle',
       rounded: true,
     },
   });
