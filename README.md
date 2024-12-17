@@ -174,8 +174,12 @@ For a complete guide, see the [dedicated migration page](packages/website/docs/u
 
 ## Support
 
+<!-- copied into packages/website/docs/manual/getting-started.md -->
 For usage question, please open a new [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a) on GitHub. You can also use
 [GitHub discussions](https://github.com/maxGraph/maxGraph/discussions) for other topics like `maxGraph` development or to get the latest news.
+
+For bug reports, feature requests, or other issues, please open a new [issue](https://github.com/maxGraph/maxGraph/issues) on GitHub.
+<!-- END OF 'copied into packages/website/docs/manual/getting-started.md' -->
 
 
 ## History

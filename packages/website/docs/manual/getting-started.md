@@ -221,5 +221,10 @@ Your vertices will now have a dashed green border with a width of 2 pixels.
 
 
 ## Need Help?
+[//]: # (extract of <rootdir>/README.md)
 
-- Check our [GitHub Issues](https://github.com/maxGraph/maxGraph/issues) and [GitHub Discussions](https://github.com/maxGraph/maxGraph/discussions)
+- For usage question, please open a new [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a) on GitHub. You can also use
+[GitHub discussions](https://github.com/maxGraph/maxGraph/discussions) for other topics like `maxGraph` development or to get the latest news.
+- For bug reports, feature requests, or other issues, please open a new [issue](https://github.com/maxGraph/maxGraph/issues) on GitHub.
+
+[//]: # (END OF 'extract of <rootdir>/README.md')
