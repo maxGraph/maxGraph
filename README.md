@@ -141,7 +141,7 @@ Documentation to be migrated:
 
 For more comprehensive examples than the “Getting started” example, here is a list of demos and examples to help you understand how to use `maxGraph` and integrate it into your projects.
 
-Note that they are based on `maxGraph` features, which require the use of [CSS and images](./usage/css-and-images.md) provided in the npm package.
+Note that they are based on `maxGraph` features, which require the use of [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
 
 - the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph.
   - The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
