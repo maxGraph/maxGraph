@@ -109,20 +109,28 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
-  graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(parent, null, 'Label 1', 20, 20, 80, 30, {
-      verticalLabelPosition: 'bottom',
+
+  /* 
+   WARNING:
+   setTimeout should be removed in production. It was added because of incompatibility with Storybook.
+   In regular environment batchUpdate call should not be inside timeout and should be called regularly.
+   */
+  setTimeout(() => {
+    graph.batchUpdate(() => {
+      const v1 = graph.insertVertex(parent, null, 'Label 1', 20, 20, 80, 30, {
+        verticalLabelPosition: 'bottom',
+      });
+      const v2 = graph.insertVertex(parent, null, 'Label 2', 250, 20, 80, 30, {
+        labelPosition: 'left',
+        verticalLabelPosition: 'middle',
+      });
+      const v3 = graph.insertVertex(parent, null, 'Label 3', 20, 200, 80, 30, {
+        verticalLabelPosition: 'top',
+      });
+      graph.insertEdge(parent, null, '', v1, v2);
+      graph.insertEdge(parent, null, '', v1, v3);
     });
-    const v2 = graph.insertVertex(parent, null, 'Label 2', 250, 20, 80, 30, {
-      labelPosition: 'left',
-      verticalLabelPosition: 'middle',
-    });
-    const v3 = graph.insertVertex(parent, null, 'Label 3', 20, 200, 80, 30, {
-      verticalLabelPosition: 'top',
-    });
-    graph.insertEdge(parent, null, '', v1, v2);
-    graph.insertEdge(parent, null, '', v1, v3);
-  });
+  }, 200);
 
   return container;
 };
