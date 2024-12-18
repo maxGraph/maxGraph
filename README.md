@@ -139,7 +139,9 @@ Documentation to be migrated:
 ## Examples
 <!-- copied into packages/website/docs/demo-and-examples.md -->
 
-For more complete examples than the “Getting started” example, please see :
+For more comprehensive examples than the “Getting started” example, here is a list of demos and examples to help you understand how to use `maxGraph` and integrate it into your projects.
+
+Note that they are based on `maxGraph` features, which require the use of [CSS and images](./usage/css-and-images.md) provided in the npm package.
 
 - the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph.
   - The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
@@ -150,8 +152,6 @@ For more complete examples than the “Getting started” example, please see :
 - the [js-example-without-defaults](packages/js-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
 - the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository which shows how to integrate `maxGraph` with different frameworks and build tools.
 
-
-Notice that some elements produced by `maxGraph` require [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
 <!-- END OF 'copied into packages/website/docs/demo-and-examples.md' -->
 
 
