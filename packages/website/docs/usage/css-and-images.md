@@ -33,6 +33,11 @@ import '@maxgraph/core/css/common.css';
 import './custom.css'
 ```
 
+:::tip
+You can see this technique in action in the [TypeScript example](https://github.com/maxGraph/maxGraph/blob/main/packages/ts-example/src/main.ts) provided in the `maxGraph` repository.
+:::
+
+
 ## Images
 
 The `@maxgraph/core` npm package includes images that are required by some features.
