@@ -64,15 +64,23 @@ example
 
 ## Examples and Demos
 
-Taken from https://github.com/maxGraph/maxGraph/discussions/596#discussioncomment-11449016
-
 More complex examples and demos involving Codecs are available in the `maxGraph` repository.
 
+Load a data model from an XML file using ModelXmlSerializer or a custom text file with custom parsing (no Codecs involved)
+- live demo: [FileIO](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-fileio--default) 
+- source code: [FileIO.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/FileIO.stories.ts)
 
-For the "demos", the UI provides a tab including some source code, but as you noticed, it miss imports and other things.
-The source code is available in the repository:
-- https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-fileio--default --> https://github.com/maxGraph/maxGraph/blob/v0.14.0/packages/html/stories/FileIO.stories.ts
-- https://maxgraph.github.io/maxGraph/demo/?path=/story/editing-editing--default --> https://github.com/maxGraph/maxGraph/blob/v0.14.0/packages/html/stories/Editing.stories.js
+Import mxGraph data model
+- live demo: [CodecImport_mxGraph](https://maxgraph.github.io/maxGraph/demo/?path=/story/misc-codecimport-mxgraph--default)
+- source code: [Codec.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/Codec.stories.ts)
+
+Import vertex including custom XML data in the Cell value, with ModelXmlSerializer and a CustomCodec to handle the custom XML data
+- live demo: [JsonData](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-jsondata--default)
+- source code: [JsonData.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/JsonData.stories.ts)
+
+Export the data model to an XML file using ModelXmlSerializer, custom data in the Cell value?
+- live demo: [UserObject](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-userobject--default)
+- source code: [UserObject.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/UserObject.stories.ts)
 
 In addition, the `js-example` package in this repository is importing an maxGraph model stored as XML string. This is a vanilla JS project built with Webpack.
 So, it should contain everything you need for your use case. See https://github.com/maxGraph/maxGraph/blob/v0.14.0/packages/js-example/src/index.js
@@ -81,15 +89,39 @@ So, it should contain everything you need for your use case. See https://github.
 
 ## Troubleshooting
 
-https://github.com/maxGraph/maxGraph/issues/323
+The most common error you may encounter when using Codecs is the "maximum call stack trace" error. It occurs when a class that you are trying to encode doesn't have a codec registered.
+
+```
+Uncaught RangeError: Maximum call stack size exceeded
+    at ObjectCodec.writeAttribute (ObjectCodec.js:384:19)
+    at ObjectCodec.encodeValue (ObjectCodec.js:376:22)
+    at ObjectCodec.encodeObject (ObjectCodec.js:346:22)
+    at ObjectCodec.encode (ObjectCodec.js:326:14)
+    at Codec.encode (Codec.js:285:28)
+    at ObjectCodec.writeComplexAttribute (ObjectCodec.js:415:27)
+    at ObjectCodec.writeAttribute (ObjectCodec.js:389:18)
+    at ObjectCodec.encodeValue (ObjectCodec.js:376:22)
+    at ObjectCodec.encodeObject (ObjectCodec.js:346:22)
+    at ObjectCodec.encode (ObjectCodec.js:326:14)
+```
+
+Generally, this error is thrown when you try to encode a class that is not registered in the `CodecRegistry`. To fix this error, you need to register the codec for the class.
+Start by using one of the [_register_ functions](xx) provided by `maxGraph`.
 
 
-https://github.com/maxGraph/maxGraph/discussions/523 example of "maximum call stack trace" error
+### Example
 
-fix stories: https://github.com/maxGraph/maxGraph/issues/353
+Here is a real example taken from [issue #323](https://github.com/maxGraph/maxGraph/issues/323):
 
+```js
+const encoder = new Codec();
+const result = encoder.encode(graph.getDataModel());
+xmlUtils.getPrettyXml(result);
+```
 
-
+Solution: 
+- Call the `` function use the code above prior calling the code above 
+- Alternatively, you can use the `ModelXmlSerializer` class to import the `GraphDataModel`
 
 
 ## Using custom object and custom Codec
