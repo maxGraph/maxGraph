@@ -19,6 +19,7 @@ It can be used to export and import `maxGraph` data, for example to save and loa
 The serialization/deserialization process is based on `Codec` classes that maps the maxGraph objects to XML nodes and attributes.
 The codecs are registered in the `CodecRegistry` to let `maxGraph` knows how to map a class to its related `Codec`.
 
+**TODO:** explain import/export, encode/decode
 
 ## Codecs registration
 
