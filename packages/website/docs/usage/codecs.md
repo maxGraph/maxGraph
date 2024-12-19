@@ -9,7 +9,7 @@ TODO
 - review the order in the sidebar
 - name: XML serialization? Codecs and Serialization?
 - add an intro
-- reorg paragraphs
+- reorg paragraphs, in particular where to put the paragraph about registering codecs
 - link to the codec API class provides other examples
 
 
@@ -120,9 +120,20 @@ To encode and decode data, you can use the `encode` and `decode` functions.
 
 TODO example
 
+
+## Special support of the GraphDataModel
+
+
 ### ModelXmlSerializer
 
 TODO rationale (cf PR which introduced it)
+
+### import/decode mxGraph models
+
+- rationale: allow interoperability with mxGraph and possibility draw.io/diagrams.net
+- example
+
+
 
 ## Other serialization methods
 
