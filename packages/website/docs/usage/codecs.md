@@ -1,12 +1,11 @@
 ---
-sidebar_position: 6
+sidebar_position: 10
 description: How-to use codecs.
 ---
 
 # Codecs
 
 TODO
-- review the order in the sidebar
 - name: XML serialization? Codecs and Serialization?
 - add an intro
 - reorg paragraphs, in particular where to put the paragraph about registering codecs
