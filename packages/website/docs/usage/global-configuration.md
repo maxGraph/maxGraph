@@ -55,4 +55,4 @@ When instantiating a `Graph` object, the registries are filled with `maxGraph` d
 `CodecRegistry` is used for serialization and deserialization of objects in XML object.
 By default, no codec is registered. Some functions are provided to register codecs for specific objects.
 
-For more details, see
+For more details about the codecs, see the Codec [documentation page](./codecs.md).
