@@ -85,7 +85,7 @@ const exportedXml = serializer.export();
 
 ### import/decode mxGraph models
 
-`maxGraph` provides a special support to import `mxGraph` models which you a different XML structure (mainly because the name of the class are prefixed by `mx` in `mxGraph`).
+`maxGraph` provides a special support to import `mxGraph` models which have a different XML structure (mainly because the name of the class are prefixed by `mx` in `mxGraph`).
 
 This allows interoperability with `draw.io/diagrams.net` and ease the migration from `mxGraph`.
 
