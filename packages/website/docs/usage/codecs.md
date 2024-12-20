@@ -7,7 +7,6 @@ description: How-to use codecs.
 
 TODO
 - name: XML serialization? Codecs and Serialization?
-- add an intro
 - reorg paragraphs, in particular where to put the paragraph about registering codecs
 - link to the codec API class provides other examples
 
@@ -21,20 +20,21 @@ The codecs are registered in the `CodecRegistry` to let `maxGraph` knows how to 
 
 **TODO:** explain import/export, encode/decode
 
+
 ## Codecs registration
 
-To register codecs, you can use the `registerModelCodecs` function, which registers the codecs for the `maxGraph` model.
+The use of codecs requires to register the codecs for the classes you want to encode/decode prior using a `Codec`.
 
-list of function here
+`maxGraph` provides several functions to register the codecs provided out of the box:
+- `registerModelCodecs` to register the Model codecs.
+
+**TODO list of function here**
+
 
 
 :::warning
 
-From [version 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) of `maxGraph`, codecs supplied by maxGraph are no longer registered by default, they **MUST** be registered before performing an `encode` or `decode`
-
-For example:
-- You can use the `registerModelCodecs` function (or other related functions) to register the Model codecs.
-- To serialize the `maxGraph` model, you can use the `ModelXmlSerializer` class, which registers codecs under the hood and provide a simpler syntax.
+From [version 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) of `maxGraph`, codecs supplied by `maxGraph` are no longer registered by default, they **MUST** be registered before performing an `encode` or `decode`
 
 :::
 
@@ -44,48 +44,46 @@ For example:
 also named import/export
 To encode and decode data, you can use the `encode` and `decode` functions.
 
-TODO example
+**TODO example decode**
+
+```typescript
+import { Codec, popup, xmlUtils } from '@mxgraph/core';
+
+// encode/export
+const object = ....; // your object
+const encoder = new Codec();
+const node = encoder.encode(object);
+const xml = xmlUtils.getPrettyXml(result);
+
+// decode/import
+const decoder = new Codec();
+```
+
 
 
 ## Special support of the GraphDataModel
 
+### `ModelXmlSerializer`
 
-### ModelXmlSerializer
+As explained above, the typical usage of the `Codec` class requires
+- to register the codecs for the classes you want to encode/decode, here with `registerModelCodecs`
+- to call the `encode` or `decode` method
 
-TODO rationale (cf PR which introduced it)
+To simplify the process of encoding and decoding the `GraphDataModel`, the `ModelXmlSerializer` class is provided.
+It registers codecs under the hood and provide a simpler syntax.
 
-example
+The code becomes:
+
+```typescript
+import { ModelXmlSerializer } from '@mxgraph/core';
+```
+
 
 ### import/decode mxGraph models
 
 - rationale: allow interoperability with mxGraph and possibility draw.io/diagrams.net
 - example
 - no support for export/encode mxGraph models
-
-
-## Examples and Demos
-
-More complex examples and demos involving Codecs are available in the `maxGraph` repository.
-
-Load a data model from an XML file using ModelXmlSerializer or a custom text file with custom parsing (no Codecs involved)
-- live demo: [FileIO](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-fileio--default) 
-- source code: [FileIO.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/FileIO.stories.ts)
-
-Import mxGraph data model
-- live demo: [CodecImport_mxGraph](https://maxgraph.github.io/maxGraph/demo/?path=/story/misc-codecimport-mxgraph--default)
-- source code: [Codec.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/Codec.stories.ts)
-
-Import vertex including custom XML data in the Cell value, with ModelXmlSerializer and a CustomCodec to handle the custom XML data
-- live demo: [JsonData](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-jsondata--default)
-- source code: [JsonData.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/JsonData.stories.ts)
-
-Export the data model to an XML file using ModelXmlSerializer, custom data in the Cell value?
-- live demo: [UserObject](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-userobject--default)
-- source code: [UserObject.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/UserObject.stories.ts)
-
-In addition, the `js-example` package in this repository is importing an maxGraph model stored as XML string. This is a vanilla JS project built with Webpack.
-So, it should contain everything you need for your use case. See https://github.com/maxGraph/maxGraph/blob/v0.14.0/packages/js-example/src/index.js
-
 
 
 ## Troubleshooting
@@ -121,7 +119,7 @@ xmlUtils.getPrettyXml(result);
 ```
 
 Solution: 
-- Call the `` function use the code above prior calling the code above 
+- Call the `registerModelCodecs` function use the code above prior calling the code above 
 - Alternatively, you can use the `ModelXmlSerializer` class to import the `GraphDataModel`
 
 
@@ -160,7 +158,7 @@ import { Codec, popup } from '@mxgraph/core';
 
 const encoder = new Codec();
 const node = encoder.encode(object);
-popup(mxUtils.getXml(node));
+popup(xmlUtils.getXml(node));
 ```
 
 
@@ -184,16 +182,6 @@ array members are stored inside the value-attribute.
 Furthermore, one may include other XML files by use of the `include` directive in the XML structures.
 
 
-### Registering custom codecs
-
-**TODO**
-
-- provide examples of how to register custom codecs
-- links to the API (codec category)
-- 
-
-
-
 ## Other serialization methods
 
 XmlCanvas2D 
@@ -201,4 +189,25 @@ XmlCanvas2D
 purpose ImageExport, ....
 
 
+## Examples and Demos
 
+More complex examples and demos involving Codecs are available in the `maxGraph` repository.
+
+Load a data model from an XML file using ModelXmlSerializer or from a custom text file with custom parsing (no Codecs involved)
+- live demo: [FileIO](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-fileio--default)
+- source code: [FileIO.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/FileIO.stories.ts)
+
+Import mxGraph data model
+- live demo: [CodecImport_mxGraph](https://maxgraph.github.io/maxGraph/demo/?path=/story/misc-codecimport-mxgraph--default)
+- source code: [Codec.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/Codec.stories.ts)
+
+Import vertex including custom XML data in the Cell value, with ModelXmlSerializer and a Custom Codec to handle the custom XML data
+- live demo: [JsonData](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-jsondata--default)
+- source code: [JsonData.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/JsonData.stories.ts)
+
+Export the data model to an XML file using ModelXmlSerializer, custom data in the Cell value?
+- live demo: [UserObject](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-userobject--default)
+- source code: [UserObject.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/UserObject.stories.ts)
+
+In addition, the `js-example` package in this repository is importing an maxGraph model stored as XML string. This is a vanilla JS project built with Webpack.
+So, it should contain everything you need for your use case. See https://github.com/maxGraph/maxGraph/blob/v0.14.0/packages/js-example/src/index.js
