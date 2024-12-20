@@ -205,13 +205,6 @@ array members are stored inside the value-attribute.
 Furthermore, one may include other XML files by use of the `include` directive in the XML structures.
 
 
-## Other serialization methods
-
-XmlCanvas2D 
-
-purpose ImageExport, ....
-
-
 ## Examples and Demos
 
 More complex examples and demos involving Codecs are available in the `maxGraph` repository.
