@@ -18,7 +18,7 @@ The codecs are registered in the `CodecRegistry` to let `maxGraph` knows how to 
 
 ## Codecs registration
 
-The use of codecs requires to register the codecs for the classes you want to encode/decode prior using a `Codec`.
+The use of codecs requires registering the codecs for the classes you want to encode/decode prior using a `Codec`.
 
 `maxGraph` provides several functions to register the codecs provided out of the box:
 - [registerAllCodecs](https://maxgraph.github.io/maxGraph/api-docs/functions/registerAllCodecs.html)
