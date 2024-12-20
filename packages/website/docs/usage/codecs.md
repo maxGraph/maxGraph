@@ -146,21 +146,6 @@ Generally, this error is thrown when you try to encode a class that is not regis
 Start by using one of the [_register_ functions](xx) provided by `maxGraph`.
 
 
-### Example
-
-Here is a real example taken from [issue #323](https://github.com/maxGraph/maxGraph/issues/323):
-
-```js
-const encoder = new Codec();
-const result = encoder.encode(graph.getDataModel());
-xmlUtils.getPrettyXml(result);
-```
-
-Solution: 
-- Call the `registerModelCodecs` function use the code above prior calling the code above 
-- Alternatively, you can use the `ModelXmlSerializer` class to import the `GraphDataModel`
-
-
 ## Using custom object and custom Codec
 
 :::note
