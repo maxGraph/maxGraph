@@ -89,9 +89,43 @@ const exportedXml = serializer.export();
 
 ### import/decode mxGraph models
 
-- rationale: allow interoperability with mxGraph and possibility draw.io/diagrams.net
-- example
-- no support for export/encode mxGraph models
+`maxGraph` provides a special support to import `mxGraph` models which you a different XML structure (mainly because the name of the class are prefixed by `mx` in `mxGraph`).
+
+This allows interoperability with `draw.io/diagrams.net` and ease the migration from `mxGraph`.
+
+Here is an example of how to import an `mxGraph` model:
+
+```typescript
+    const mxGraphModelAsXml = `<mxGraphModel>
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2" vertex="1" parent="1" value="Vertex #2">
+      <mxGeometry x="380" y="20" width="140" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="3" vertex="1" parent="1" value="Vertex #3">
+      <mxGeometry x="200" y="80" width="380" height="30" as="geometry">
+        <mxPoint x="1" y="1" as="offset"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="7" edge="1" source="2" target="3" parent="1" value="Edge #7">
+      <mxGeometry as="geometry">
+        <Array as="points">
+          <Object x="420" y="60"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+  </root>
+</mxGraphModel>
+  `;
+
+const model = new GraphDataModel();
+new ModelXmlSerializer(model).import(mxGraphModelAsXml);
+````
+
+:::info
+There is no support for export/encode mxGraph models
+:::
 
 
 ## Troubleshooting
