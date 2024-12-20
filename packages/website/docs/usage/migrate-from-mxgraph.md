@@ -652,7 +652,8 @@ For example:
 
 :::
 
-For more details, see the [Codecs](codecs.md) documentation.
+For more details, see the [Codecs](codecs.md) documentation. 
+This documentation covers topics such as codec registration, serialization processes, and configuration options.
 
 ## Conclusion
 
