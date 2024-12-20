@@ -143,7 +143,7 @@ Uncaught RangeError: Maximum call stack size exceeded
 ```
 
 Generally, this error is thrown when you try to encode a class that is not registered in the `CodecRegistry`. To fix this error, you need to register the codec for the class.
-Start by using one of the [_register_ functions](xx) provided by `maxGraph`.
+Start by using one of the [_register_ functions](#codecs-registration) provided by `maxGraph`.
 
 
 ## Using custom object and custom Codec
