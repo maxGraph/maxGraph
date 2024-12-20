@@ -128,7 +128,7 @@ There is no support for export/encode mxGraph models
 
 The most common error you may encounter when using Codecs is the "maximum call stack trace" error. It occurs when a class that you are trying to encode doesn't have a codec registered.
 
-```
+```bash
 Uncaught RangeError: Maximum call stack size exceeded
     at ObjectCodec.writeAttribute (ObjectCodec.js:384:19)
     at ObjectCodec.encodeValue (ObjectCodec.js:376:22)
