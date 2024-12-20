@@ -6,7 +6,6 @@ description: How-to use codecs.
 # Codecs
 
 TODO
-- name: XML serialization? Codecs and Serialization?
 - reorg paragraphs, in particular where to put the paragraph about registering codecs
 - link to the codec API class provides other examples
 
@@ -41,10 +40,7 @@ Registering codecs has an impact on the tree-shaking, so, only register the code
 
 ## Encoding/Export and Decoding/Import
 
-also named import/export
 To encode and decode data, you can use the `encode` and `decode` functions.
-
-**TODO example decode**
 
 ```typescript
 import { Codec, popup, xmlUtils } from '@mxgraph/core';
@@ -53,12 +49,14 @@ import { Codec, popup, xmlUtils } from '@mxgraph/core';
 const object = ....; // your object
 const encoder = new Codec();
 const node = encoder.encode(object);
-const xml = xmlUtils.getPrettyXml(result);
+const encodedXml = xmlUtils.getPrettyXml(result);
 
 // decode/import
+const xml = ...; // your XML string
 const decoder = new Codec();
+const doc = xmlUtils.parseXml(input);
+new Codec(doc).decode(doc.documentElement, object);
 ```
-
 
 
 ## Special support of the GraphDataModel
@@ -75,7 +73,17 @@ It registers codecs under the hood and provide a simpler syntax.
 The code becomes:
 
 ```typescript
-import { ModelXmlSerializer } from '@mxgraph/core';
+import { GraphDataModel, ModelXmlSerializer } from '@mxgraph/core';
+
+const model = new GraphDataModel();
+const serializer = new ModelXmlSerializer(model);
+
+// import/decode
+const xml = ...; // your XML string
+serializer.import(xml);
+
+// export/encode
+const exportedXml = serializer.export();
 ```
 
 
