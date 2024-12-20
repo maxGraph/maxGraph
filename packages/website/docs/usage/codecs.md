@@ -26,16 +26,16 @@ The codecs are registered in the `CodecRegistry` to let `maxGraph` knows how to 
 The use of codecs requires to register the codecs for the classes you want to encode/decode prior using a `Codec`.
 
 `maxGraph` provides several functions to register the codecs provided out of the box:
-- `registerModelCodecs` to register the Model codecs.
-
-**TODO list of function here**
-
-
+- [registerAllCodecs](https://maxgraph.github.io/maxGraph/api-docs/functions/registerAllCodecs.html)
+- [registerCoreCodecs](https://maxgraph.github.io/maxGraph/api-docs/functions/registerCoreCodecs.html)
+- [registerEditorCodecs](https://maxgraph.github.io/maxGraph/api-docs/functions/registerEditorCodecs.html)
+- [registerModelCodecs](https://maxgraph.github.io/maxGraph/api-docs/functions/registerModelCodecs.html)
 
 :::warning
 
 From [version 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) of `maxGraph`, codecs supplied by `maxGraph` are no longer registered by default, they **MUST** be registered before performing an `encode` or `decode`
 
+Registering codecs has an impact on the tree-shaking, so, only register the codecs you need to reduce the size of the final bundle.
 :::
 
 
