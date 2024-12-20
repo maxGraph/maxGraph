@@ -71,7 +71,6 @@ const createXmlDocument = () => {
  * be added anywhere in the cell hierarchy after parsing.
  *
  * ```javascript
- * const xml = '<root><mxCell id="2" value="Hello," vertex="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell><mxCell id="3" value="World!" vertex="1"><mxGeometry x="200" y="150" width="80" height="30" as="geometry"/></mxCell><mxCell id="4" value="" edge="1" source="2" target="3"><mxGeometry relative="1" as="geometry"/></mxCell></root>';
  * const xml = `<GraphDataModel>
  *   <root>
  *     <Cell id="2" value="Hello," vertex="1">
