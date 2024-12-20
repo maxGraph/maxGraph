@@ -226,4 +226,4 @@ Export the data model to an XML file using ModelXmlSerializer, custom data in th
 - source code: [UserObject.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/UserObject.stories.ts)
 
 In addition, the `js-example` package in this repository is importing an maxGraph model stored as XML string. This is a vanilla JS project built with Webpack.
-So, it should contain everything you need for your use case. See https://github.com/maxGraph/maxGraph/blob/v0.14.0/packages/js-example/src/index.js
+So, it should contain everything you need for your use case. See [js-example source code](https://github.com/maxGraph/maxGraph/blob/main/packages/js-example/src/index.js)
