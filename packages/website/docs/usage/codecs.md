@@ -5,19 +5,15 @@ description: How-to use codecs.
 
 # Codecs
 
-TODO
-- reorg paragraphs, in particular where to put the paragraph about registering codecs
-- link to the codec API class provides other examples
-
 ## Introduction
 
 The `Codec` feature is used for serialization and deserialization of objects in XML format.
-It can be used to export and import `maxGraph` data, for example to save and load the state of graphs or the configuration of a graph.
+It can be used to export/encode and import/decode `maxGraph` data, for example to save and load the state of graphs or the configuration of a graph.
+- export/encode: convert a `maxGraph` object to an XML string
+- import/decode: convert an XML string to a `maxGraph` object
 
 The serialization/deserialization process is based on `Codec` classes that maps the maxGraph objects to XML nodes and attributes.
 The codecs are registered in the `CodecRegistry` to let `maxGraph` knows how to map a class to its related `Codec`.
-
-**TODO:** explain import/export, encode/decode
 
 
 ## Codecs registration
