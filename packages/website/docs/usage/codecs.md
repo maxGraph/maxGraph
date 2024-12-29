@@ -13,12 +13,18 @@ It can be used to export/encode and import/decode `maxGraph` data, for example t
 - import/decode: convert an XML string to a `maxGraph` object
 
 The serialization/deserialization process is based on `Codec` classes that maps the maxGraph objects to XML nodes and attributes.
-The codecs are registered in the `CodecRegistry` to let `maxGraph` knows how to map a class to its related `Codec`.
+The codecs are registered with `CodecRegistry` to let `maxGraph` knows how to map a class to its related `Codec`.
 
 
 ## Codecs registration
 
-The use of codecs requires registering the codecs for the classes you want to encode/decode prior using a `Codec`.
+The use of codecs requires registering the codecs for the classes you want to encode/decode prior using a `Codec`. The registration is done with the `CodecRegistry` class.
+
+:::note
+
+`CodecRegistry` is a singleton so it holds a [global state](./global-configuration.md).
+
+:::
 
 `maxGraph` provides several functions to register the codecs provided out of the box:
 - [registerAllCodecs](https://maxgraph.github.io/maxGraph/api-docs/functions/registerAllCodecs.html)
