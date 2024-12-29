@@ -40,7 +40,7 @@ Registering codecs has an impact on the tree-shaking, so, only register the code
 :::
 
 
-## Encoding/Export and Decoding/Import
+## Encode/Export and Decode/Import
 
 To encode and decode data, you can use the `encode` and `decode` functions.
 
@@ -89,7 +89,7 @@ const exportedXml = serializer.export();
 ```
 
 
-### import/decode mxGraph models
+### Import/Decode `mxGraph` models
 
 `maxGraph` provides a special support to import `mxGraph` models which have a different XML structure (mainly because the name of the class are prefixed by `mx` in `mxGraph`).
 
