@@ -227,7 +227,7 @@ Import vertex including custom XML data in the Cell value, with ModelXmlSerializ
 - live demo: [JsonData](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-jsondata--default)
 - source code: [JsonData.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/JsonData.stories.ts)
 
-Export the data model to an XML file using ModelXmlSerializer, custom data in the Cell value?
+Export the data model to an XML file using ModelXmlSerializer, custom data in the Cell value
 - live demo: [UserObject](https://maxgraph.github.io/maxGraph/demo/?path=/story/xml-json-userobject--default)
 - source code: [UserObject.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/UserObject.stories.ts)
 
