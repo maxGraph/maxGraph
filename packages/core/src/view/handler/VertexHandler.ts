@@ -273,7 +273,7 @@ class VertexHandler {
         if (
           geo != null &&
           !geo.relative &&
-          //!this.graph.isSwimlane(this.state.cell) &&      disable for now
+          !this.graph.isSwimlane(this.state.cell) &&
           this.graph.isLabelMovable(this.state.cell)
         ) {
           // Marks this as the label handle for getHandleForEvent
