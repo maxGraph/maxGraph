@@ -48,16 +48,17 @@ To encode and decode data, you can use the `encode` and `decode` functions.
 import { Codec, popup, xmlUtils } from '@mxgraph/core';
 
 // encode/export
-const object = ....; // your object
+const sourceObject = {}; // your object
 const encoder = new Codec();
-const node = encoder.encode(object);
-const encodedXml = xmlUtils.getPrettyXml(result);
+const node = encoder.encode(sourceObject);
+const encodedXml = xmlUtils.getPrettyXml(node);
 
 // decode/import
-const xml = ...; // your XML string
+const xml = '...'; // your XML string
+const targetObject = {}; // object to decode into
 const decoder = new Codec();
 const doc = xmlUtils.parseXml(input);
-new Codec(doc).decode(doc.documentElement, object);
+new Codec(doc).decode(doc.documentElement, targetObject);
 ```
 
 
@@ -81,7 +82,7 @@ const model = new GraphDataModel();
 const serializer = new ModelXmlSerializer(model);
 
 // import/decode
-const xml = ...; // your XML string
+const xml = '...'; // your XML string
 serializer.import(xml);
 
 // export/encode
