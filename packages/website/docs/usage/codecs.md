@@ -123,7 +123,7 @@ Here is an example of how to import an `mxGraph` model:
 
 const model = new GraphDataModel();
 new ModelXmlSerializer(model).import(mxGraphModelAsXml);
-````
+```
 
 :::info
 There is no support for export/encode mxGraph models
