@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-description: How-to use codecs.
+description: Learn how to use codecs for serializing/exporting and deserializing/importing maxGraph objects in XML format.
 ---
 
 # Codecs
