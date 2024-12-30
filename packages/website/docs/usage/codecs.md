@@ -66,9 +66,9 @@ new Codec(doc).decode(doc.documentElement, targetObject);
 
 ### `ModelXmlSerializer`
 
-As explained above, the typical usage of the `Codec` class requires
-- to register the codecs for the classes you want to encode/decode, here with `registerModelCodecs`
-- to call the `encode` or `decode` method
+As explained above, the typical usage of the `Codec` class requires you to:
+- Register the codecs for the classes you want to encode/decode (using `registerModelCodecs`)
+- Call the `encode` or `decode` method
 
 To simplify the process of encoding and decoding the `GraphDataModel`, the `ModelXmlSerializer` class is provided.
 It registers codecs under the hood and provide a simpler syntax.
