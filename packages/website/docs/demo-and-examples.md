@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Demos and Examples
 [//]: # (extract of <rootdir>/README.md)
-For more comprehensive examples than the [“Getting started” example](./manual/getting-started.md), this page provides a list of demos and examples to help you understand how to use `maxGraph` and integrate it into your projects.
+For more comprehensive examples than the [“Getting started” example](./manual/getting-started.mdx), this page provides a list of demos and examples to help you understand how to use `maxGraph` and integrate it into your projects.
 
 Note that they are based on `maxGraph` features, which require the use of [CSS and images](./usage/css-and-images.md) provided in the npm package.
 
