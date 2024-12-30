@@ -12,7 +12,7 @@ It can be used to export/encode and import/decode `maxGraph` data, for example t
 - export/encode: convert a `maxGraph` object to an XML string
 - import/decode: convert an XML string to a `maxGraph` object
 
-The serialization/deserialization process is based on `Codec` classes that maps the maxGraph objects to XML nodes and attributes.
+The serialization/deserialization process is based on `Codec` classes that map the maxGraph objects to XML nodes and attributes.
 The codecs are registered with `CodecRegistry` to let `maxGraph` know how to map a class to its related `Codec`.
 
 
@@ -71,7 +71,7 @@ As explained above, the typical usage of the `Codec` class requires you to:
 - Call the `encode` or `decode` method
 
 To simplify the process of encoding and decoding the `GraphDataModel`, the `ModelXmlSerializer` class is provided.
-It registers codecs under the hood and provide a simpler syntax.
+It registers codecs under the hood and provides a simpler syntax.
 
 The code becomes:
 
