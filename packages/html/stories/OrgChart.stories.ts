@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Cell, PopupMenuHandler, PrintPreview } from '@maxgraph/core';
+
 import {
   Graph,
   constants,
@@ -22,7 +24,6 @@ import {
   Client,
   Point,
   Outline,
-  EdgeStyle,
   KeyHandler,
   CompactTreeLayout,
   LayoutManager,
@@ -52,7 +53,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
   const container = createGraphContainer(args);
   div.appendChild(container);
@@ -60,6 +61,7 @@ const Template = ({ label, ...args }) => {
   // Makes the shadow brighter
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
 
+  // TODO create the outline container in the DOM
   const outline = document.getElementById('outlineContainer');
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
@@ -83,18 +85,18 @@ const Template = ({ label, ...args }) => {
   graph.setPanning(true);
   graph.centerZoom = false;
 
-  const panningHandler = graph.getPlugin('PanningHandler');
-
+  const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler');
   panningHandler.useLeftButtonForPanning = true;
-
   // Displays a popupmenu when the user clicks
   // on a cell (using the left mouse button) but
   // do not select the cell when the popup menu
   // is displayed
-  panningHandler.popupMenuHandler = false;
+  // TODO doesn' work, check the mxGraph code
+  // panningHandler.popupMenuHandler = false;
 
   // Creates the outline (navigator, overview) for moving
   // around the graph in the top, right corner of the window.
+  // TODO do we need to keep the constant?
   const outln = new Outline(graph, outline);
 
   // Disables tooltips on touch devices
@@ -114,16 +116,16 @@ const Template = ({ label, ...args }) => {
 
   style.fontColor = '#1d258f';
   style.fontFamily = 'Verdana';
-  style.fontSize = '12';
-  style.fontStyle = '1';
+  style.fontSize = 12;
+  style.fontStyle = 1;
 
-  style.shadow = '1';
-  style.rounded = '1';
-  style.glass = '1';
+  style.shadow = true;
+  style.rounded = true;
+  style.glass = true;
 
   style.image = 'images/dude3.png';
-  style.imageWidth = '48';
-  style.imageHeight = '48';
+  style.imageWidth = 48;
+  style.imageHeight = 48;
   style.spacing = 8;
 
   // Sets the default style for edges
@@ -132,15 +134,18 @@ const Template = ({ label, ...args }) => {
   style.strokeWidth = 3;
   style.exitX = 0.5; // center
   style.exitY = 1.0; // bottom
-  style.exitPerimeter = 0; // disabled
+  style.exitPerimeter = false; // disabled
   style.entryX = 0.5; // center
   style.entryY = 0; // top
-  style.entryPerimeter = 0; // disabled
+  style.entryPerimeter = false; // disabled
 
   // Disable the following for straight lines
-  style.edge = EdgeStyle.TopToBottom;
+  // TODO style.edgeStyle should accept a EdgeStyleFunction
+  // style.edgeStyle = EdgeStyle.TopToBottom;
+  style.edgeStyle = 'topToBottomEdgeStyle';
 
   // Stops editing on enter or escape keypress
+  // TODO do we need to keep the constant?
   const keyHandler = new KeyHandler(graph);
 
   // Enables automatic layout on the graph and installs
@@ -159,15 +164,13 @@ const Template = ({ label, ...args }) => {
   };
 
   const layoutMgr = new LayoutManager(graph);
-
-  layoutMgr.getLayout = function (cell) {
+  layoutMgr.getLayout = function (cell: Cell) {
     if (cell.getChildCount() > 0) {
       return layout;
     }
   };
 
-  const popupMenuHandler = graph.getPlugin('PopupMenuHandler');
-
+  const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
   // Installs a popupmenu handler using local function (see below).
   popupMenuHandler.factoryMethod = function (menu, cell, evt) {
     return createPopupMenu(graph, menu, cell, evt);
@@ -175,7 +178,7 @@ const Template = ({ label, ...args }) => {
 
   // Fix for wrong preferred size
   const oldGetPreferredSizeForCell = graph.getPreferredSizeForCell;
-  graph.getPreferredSizeForCell = function (cell) {
+  graph.getPreferredSizeForCell = function (cell: Cell, textWidth?: number | null) {
     const result = oldGetPreferredSizeForCell.apply(this, arguments);
 
     if (result != null) {
@@ -234,7 +237,7 @@ const Template = ({ label, ...args }) => {
   div.appendChild(content);
   const tb = new MaxToolbar(content);
 
-  tb.addItem('Zoom In', 'images/zoom_in32.png', function (evt) {
+  tb.addItem('Zoom In', 'images/zoom_in32.png', function (_evt) {
     graph.zoomIn();
   });
 
@@ -256,8 +259,7 @@ const Template = ({ label, ...args }) => {
     const pageCount = utils.prompt('Enter maximum page count', '1');
 
     if (pageCount != null) {
-      // TODO in printUtils
-      const scale = utils.getScaleForPageCount(pageCount, graph);
+      const scale = printUtils.getScaleForPageCount(pageCount, graph);
       const preview = new PrintPreview(graph, scale);
       preview.open();
     }
@@ -306,14 +308,14 @@ const Template = ({ label, ...args }) => {
       const pageCount = utils.prompt('Enter maximum page count', '1');
 
       if (pageCount != null) {
-        const scale = utils.getScaleForPageCount(pageCount, graph);
+        const scale = printUtils.getScaleForPageCount(pageCount, graph);
         const preview = new PrintPreview(graph, scale);
         preview.open();
       }
     });
   }
 
-  function addOverlays(graph, cell, addDeleteIcon) {
+  function addOverlays(graph: Graph, cell: Cell, addDeleteIcon: boolean) {
     let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
     overlay.cursor = 'hand';
     overlay.align = constants.ALIGN.CENTER;
@@ -337,7 +339,7 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  function addChild(graph, cell) {
+  function addChild(graph: Graph, cell: Cell) {
     const model = graph.getDataModel();
     const parent = graph.getDefaultParent();
     let vertex;
@@ -345,11 +347,11 @@ const Template = ({ label, ...args }) => {
     model.beginUpdate();
     try {
       vertex = graph.insertVertex(parent, null, 'Double click to set name');
-      const geometry = vertex.getGeometry();
+      const geometry = vertex.getGeometry()!;
 
       // Updates the geometry of the vertex with the
       // preferred size computed in the graph
-      const size = graph.getPreferredSizeForCell(vertex);
+      const size = graph.getPreferredSizeForCell(vertex)!;
       geometry.width = size.width;
       geometry.height = size.height;
 
@@ -361,9 +363,10 @@ const Template = ({ label, ...args }) => {
       // Configures the edge label "in-place" to reside
       // at the end of the edge (x = 1) and with an offset
       // of 20 pixels in negative, vertical direction.
-      edge.geometry.x = 1;
-      edge.geometry.y = 0;
-      edge.geometry.offset = new Point(0, -20);
+      const edgeGeometry = edge.geometry!;
+      edgeGeometry.x = 1;
+      edgeGeometry.y = 0;
+      edgeGeometry.offset = new Point(0, -20);
 
       addOverlays(graph, vertex, true);
     } finally {
@@ -373,10 +376,10 @@ const Template = ({ label, ...args }) => {
     return vertex;
   }
 
-  function deleteSubtree(graph, cell) {
+  function deleteSubtree(graph: Graph, cell: Cell) {
     // Gets the subtree from cell downwards
-    const cells = [];
-    graph.traverse(cell, true, function (vertex) {
+    const cells: Cell[] = [];
+    graph.traverse(cell, true, function (vertex: Cell) {
       cells.push(vertex);
 
       return true;
