@@ -323,6 +323,7 @@ class TooltipHandler implements GraphPlugin {
    */
   onDestroy() {
     if (!this.destroyed) {
+      this.resetTimer();
       this.graph.removeMouseListener(this);
       if (this.div) {
         InternalEvent.release(this.div);
