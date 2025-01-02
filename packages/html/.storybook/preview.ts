@@ -27,7 +27,9 @@ const resetMaxGraphConfigs = (): void => {
 // This function is a workaround to destroy mxGraph elements that are not released by the previous story.
 // See https://github.com/maxGraph/maxGraph/issues/400
 function destroyUnreleasedElements() {
-  document.querySelectorAll('.mxPopupMenu,.mxWindow').forEach((e) => e.remove());
+  document
+    .querySelectorAll('.mxPopupMenu,.mxTooltip,.mxWindow')
+    .forEach((e) => e.remove());
 }
 
 const preview: Preview = {
