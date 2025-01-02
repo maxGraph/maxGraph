@@ -22,11 +22,13 @@ const resetMaxGraphConfigs = (): void => {
   resetHandleConfig();
   resetStyleDefaultsConfig();
   resetVertexHandlerConfig();
-  const classesToRemove = ['.mxPopupMenu', '.mxWindow', '.mxTooltip'];
-  classesToRemove.forEach(cls => {
-    document.querySelectorAll(cls).forEach(e => e.remove());
-  })
 };
+
+// This function is a workaround to destroy mxGraph elements that are not released by the previous story.
+// See https://github.com/maxGraph/maxGraph/issues/400
+function destroyUnreleasedElements() {
+  document.querySelectorAll('.mxPopupMenu,.mxWindow').forEach((e) => e.remove());
+}
 
 const preview: Preview = {
   parameters: {
@@ -43,6 +45,7 @@ const preview: Preview = {
     // inspired by https://github.com/storybookjs/storybook/issues/4997#issuecomment-447301514
     (storyFn) => {
       resetMaxGraphConfigs();
+      destroyUnreleasedElements();
       return storyFn();
     },
   ],
