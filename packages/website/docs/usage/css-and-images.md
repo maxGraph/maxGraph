@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 10
 description: Integrate CSS and Images assets required by maxGraph.
 ---
 
@@ -32,6 +32,11 @@ Then, import it in the application:
 import '@maxgraph/core/css/common.css';
 import './custom.css'
 ```
+
+:::tip
+You can see this technique in action in the [TypeScript example](https://github.com/maxGraph/maxGraph/blob/main/packages/ts-example/src/main.ts) provided in the `maxGraph` repository.
+:::
+
 
 ## Images
 

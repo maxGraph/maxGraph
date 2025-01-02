@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 20
 description: How-to easily migrate from mxGraph to maxGraph
 ---
 
@@ -644,13 +644,16 @@ From version 0.11.0 of `maxGraph`, you can replicate this behavior by setting `i
 
 :::warning
 
-From version 0.6.0 of `maxGraph`, codecs supplied by maxGraph are no longer registered by default, they ** MUST** be registered before performing an `encode` or `decode`
+From [version 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) of `maxGraph`, codecs supplied by maxGraph are no longer registered by default, they **MUST** be registered before performing an `encode` or `decode`
 
 For example:
 - You can use the `registerCoreCodecs` function (or other related functions) to register codecs.
 - To serialize the `maxGraph` model, you can use the `ModelXmlSerializer` class, which registers codecs under the hood.
 
 :::
+
+For more details, see the [Codecs](codecs.md) documentation. 
+This documentation covers topics such as codec registration, serialization processes, and configuration options.
 
 ## Conclusion
 

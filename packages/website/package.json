@@ -12,19 +12,19 @@
     "extra:copy-gen-resources": "node scripts/copy-generated-resources.mjs"
   },
   "dependencies": {
-    "@docusaurus/core": "3.6.2",
-    "@docusaurus/faster": "3.6.2",
-    "@docusaurus/preset-classic": "3.6.2",
+    "@docusaurus/core": "3.6.3",
+    "@docusaurus/faster": "3.6.3",
+    "@docusaurus/preset-classic": "3.6.3",
     "@mdx-js/react": "^3.1.0",
     "clsx": "^2.1.1",
-    "prism-react-renderer": "^2.4.0",
+    "prism-react-renderer": "^2.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.6.2",
-    "@docusaurus/tsconfig": "3.6.2",
-    "@docusaurus/types": "3.6.2"
+    "@docusaurus/module-type-aliases": "3.6.3",
+    "@docusaurus/tsconfig": "3.6.3",
+    "@docusaurus/types": "3.6.3"
   },
   "browserslist": {
     "production": [

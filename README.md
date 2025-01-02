@@ -40,6 +40,7 @@ Please try it in your application and [submit an issue](https://github.com/maxGr
 You can also test `maxGraph` by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
 
 ## Install
+<!-- copied into packages/website/docs/manual/getting-started.mdx -->
 
 Install the latest version of `maxGraph` from the [npm registry](https://www.npmjs.com/package/@maxgraph/core).
 
@@ -58,7 +59,10 @@ pnpm
 pnpm add @maxgraph/core
 ```
 
+<!-- END OF 'copied into packages/website/docs/manual/getting-started.mdx' -->
+
 ## Getting Started
+<!-- copied into packages/website/docs/manual/getting-started.mdx -->
 
 Here is an example that shows how to display a rectangle connected to an orange circle.
 
@@ -116,8 +120,9 @@ graph.batchUpdate(() => {
 
 You will see something like in the following _maxGraph panning_ demo:
 
-![maxGraph panning demo](docs/images/maxgraph_demo.gif "maxGraph panning demo")
+![maxGraph panning demo](packages/website/docs/manual/assets/getting-started/first-graph.gif "maxGraph panning demo")
 
+<!-- END OF 'copied into packages/website/docs/manual/getting-started.mdx' -->
 
 ## Documentation
 
@@ -137,20 +142,22 @@ Documentation to be migrated:
 
 
 ## Examples
+<!-- copied into packages/website/docs/demo-and-examples.md -->
 
-For more complete examples than getting started,, please have a look at:
+For more comprehensive examples than the “Getting started” example, here is a list of demos and examples to help you understand how to use `maxGraph` and integrate it into your projects.
+
+Note that they are based on `maxGraph` features, which require the use of [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
 
 - the [storybook stories](packages/html/stories) which demonstrates various features of maxGraph.
   - The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
-  - A live instance is available on the [maxGraph webiste](https://maxgraph.github.io/maxGraph/demo).
+  - A live instance is available on the [maxGraph website](https://maxgraph.github.io/maxGraph/demo).
 - the [ts-example](packages/ts-example) project/application that demonstrates how to define and use custom `Shapes` with `maxGraph`. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [ts-example-without-defaults](packages/ts-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
-- the [js-example](packages/js-example) project/application that demonstrates how import and export the `maxGraph` model with XML data. It is a vanilla JavaScript application built by [Webapck](https://webpack.js.org/).
-- the [js-example-without-defaults](packages/js-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla JavaScript application built by [Webapck](https://webpack.js.org/).
-- the https://github.com/maxGraph/maxgraph-integration-examples repository which shows how to integrate `maxGraph` with different frameworks and build tools.
+- the [js-example](packages/js-example) project/application that demonstrates how to import and export the `maxGraph` model with XML data. It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
+- the [js-example-without-defaults](packages/js-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
+- the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository which shows how to integrate `maxGraph` with different frameworks and build tools.
 
-
-Notice that some elements produced by `maxGraph` require to use [CSS and images](packages/website/docs/usage/css-and-images.md) provided in the npm package.
+<!-- END OF 'copied into packages/website/docs/demo-and-examples.md' -->
 
 
 ## <a id="migrate-from-mxgraph"></a> Migrating from mxGraph
@@ -169,8 +176,12 @@ For a complete guide, see the [dedicated migration page](packages/website/docs/u
 
 ## Support
 
+<!-- copied into packages/website/docs/manual/getting-started.mdx -->
 For usage question, please open a new [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a) on GitHub. You can also use
 [GitHub discussions](https://github.com/maxGraph/maxGraph/discussions) for other topics like `maxGraph` development or to get the latest news.
+
+For bug reports, feature requests, or other issues, please open a new [issue](https://github.com/maxGraph/maxGraph/issues) on GitHub.
+<!-- END OF 'copied into packages/website/docs/manual/getting-started.mdx' -->
 
 
 ## History
