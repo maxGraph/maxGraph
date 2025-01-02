@@ -46,7 +46,7 @@ class TooltipHandler implements GraphPlugin {
    *
    */
   init() {
-    if (document.body != null) {
+    if (document.body) {
       this.div = document.createElement('div');
       this.div.className = 'mxTooltip';
       this.div.style.visibility = 'hidden';
@@ -236,7 +236,7 @@ class TooltipHandler implements GraphPlugin {
       if (
         restart &&
         this.isEnabled() &&
-        state != null &&
+        state &&
         (!this.div || this.div.style.visibility == 'hidden')
       ) {
         const node = me.getSource();
@@ -286,7 +286,7 @@ class TooltipHandler implements GraphPlugin {
    * Hides the tooltip.
    */
   hideTooltip() {
-    if (this.div != null) {
+    if (this.div) {
       this.div.style.visibility = 'hidden';
       this.div.innerHTML = '';
     }
@@ -299,7 +299,7 @@ class TooltipHandler implements GraphPlugin {
   show(tip: HTMLElement | string | null, x: number, y: number) {
     if (!this.destroyed && tip && tip !== '') {
       const origin = getScrollOrigin();
-      if (this.div == null) {
+      if (!this.div) {
         this.init();
       }
       this.div!.style.zIndex = String(this.zIndex);
@@ -324,11 +324,11 @@ class TooltipHandler implements GraphPlugin {
   onDestroy() {
     if (!this.destroyed) {
       this.graph.removeMouseListener(this);
-      if (this.div != null) {
+      if (this.div) {
         InternalEvent.release(this.div);
       }
 
-      if (this.div != null && this.div.parentNode != null) {
+      if (this.div?.parentNode) {
         this.div.parentNode.removeChild(this.div);
       }
 
