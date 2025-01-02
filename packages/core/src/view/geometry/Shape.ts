@@ -23,9 +23,8 @@ import {
   DIRECTION,
   LINE_ARCSIZE,
   NONE,
+  NS_SVG,
   RECTANGLE_ROUNDING_FACTOR,
-  SHADOW_OFFSET_X,
-  SHADOW_OFFSET_Y,
 } from '../../util/Constants';
 import Point from './Point';
 import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
@@ -44,6 +43,7 @@ import type {
   DirectionValue,
   GradientMap,
 } from '../../types';
+import { StyleDefaultsConfig } from '../../util/config';
 
 /**
  * Base class for all shapes.
@@ -322,7 +322,7 @@ class Shape {
    * This implementation assumes that `maxGraph` produces SVG elements.
    */
   create() {
-    return document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    return document.createElementNS(NS_SVG, 'g');
   }
 
   redraw() {
@@ -1078,8 +1078,8 @@ class Shape {
    */
   augmentBoundingBox(bbox: Rectangle) {
     if (this.isShadow) {
-      bbox.width += Math.ceil(SHADOW_OFFSET_X * this.scale);
-      bbox.height += Math.ceil(SHADOW_OFFSET_Y * this.scale);
+      bbox.width += Math.ceil(StyleDefaultsConfig.shadowOffsetX * this.scale);
+      bbox.height += Math.ceil(StyleDefaultsConfig.shadowOffsetX * this.scale);
     }
 
     // Adds strokeWidth
@@ -1138,7 +1138,7 @@ class Shape {
    * Adds a transparent rectangle that catches all events.
    */
   createTransparentSvgRectangle(x: number, y: number, w: number, h: number) {
-    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    const rect = document.createElementNS(NS_SVG, 'rect');
     rect.setAttribute('x', String(x));
     rect.setAttribute('y', String(y));
     rect.setAttribute('width', String(w));

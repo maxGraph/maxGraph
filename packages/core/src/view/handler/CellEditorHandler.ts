@@ -312,7 +312,7 @@ class CellEditorHandler implements GraphPlugin {
       this.textarea.style.minHeight = '1em';
     }
 
-    this.textarea.style.position = 'relative';
+    this.textarea.style.position = 'absolute';
     this.installListeners(this.textarea);
   }
 
@@ -854,7 +854,6 @@ class CellEditorHandler implements GraphPlugin {
       const initial = this.initialValue;
       this.initialValue = null;
       this.editingCell = null;
-      this.trigger = null;
       this.bounds = null;
       textarea.blur();
       clearSelection();
@@ -882,7 +881,7 @@ class CellEditorHandler implements GraphPlugin {
           }
         });
       }
-
+      this.trigger = null;
       // Forces new instance on next edit for undo history reset
       if (this.textarea) InternalEvent.release(this.textarea);
 

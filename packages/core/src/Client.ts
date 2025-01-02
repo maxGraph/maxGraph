@@ -16,11 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { NS_SVG } from './util/Constants';
+
 class Client {
   /**
    * The version of the `maxGraph` library.
    */
-  static VERSION = '0.13.1';
+  static VERSION = '0.14.0';
 
   /**
    * Base path for all URLs in the core without trailing slash.
@@ -215,9 +217,8 @@ class Client {
   static NO_FO =
     typeof window !== 'undefined' &&
     (!document.createElementNS ||
-      document
-        .createElementNS('http://www.w3.org/2000/svg', 'foreignObject')
-        .toString() !== '[object SVGForeignObjectElement]' ||
+      document.createElementNS(NS_SVG, 'foreignObject').toString() !==
+        '[object SVGForeignObjectElement]' ||
       navigator.userAgent.indexOf('Opera/') >= 0);
 
   /**

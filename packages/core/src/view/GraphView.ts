@@ -22,7 +22,7 @@ import Dictionary from '../util/Dictionary';
 import EventSource from './event/EventSource';
 import EventObject from './event/EventObject';
 import RectangleShape from './geometry/node/RectangleShape';
-import { ALIGN } from '../util/Constants';
+import { ALIGN, NS_SVG } from '../util/Constants';
 import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
 import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils';
@@ -2023,14 +2023,18 @@ export class GraphView extends EventSource {
     );
   }
 
-  /**
-   * Returns true if the event origin is one of the scrollbars of the
-   * container in IE. Such events are ignored.
-   */
-  isScrollEvent(evt: MouseEvent) {
+  isScrollEvent(evt: MouseEvent | TouchEvent) {
     const graph = this.graph;
     const offset = getOffset(graph.container);
-    const pt = new Point(evt.clientX - offset.x, evt.clientY - offset.y);
+    const eventClientPosition =
+      evt instanceof MouseEvent
+        ? [evt.clientX, evt.clientY]
+        : [evt.touches[0].clientX, evt.touches[0].clientY];
+
+    const pt = new Point(
+      eventClientPosition[0] - offset.x,
+      eventClientPosition[1] - offset.y
+    );
     const container = graph.container;
 
     const outWidth = container.offsetWidth;
@@ -2211,26 +2215,23 @@ export class GraphView extends EventSource {
    */
   createSvg(): void {
     const { container } = this.graph;
-    const canvas = (this.canvas = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'g'
-    ));
+    const canvas = (this.canvas = document.createElementNS(NS_SVG, 'g'));
 
     // For background image
-    this.backgroundPane = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    this.backgroundPane = document.createElementNS(NS_SVG, 'g');
     canvas.appendChild(this.backgroundPane);
 
     // Adds two layers (background is early feature)
-    this.drawPane = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    this.drawPane = document.createElementNS(NS_SVG, 'g');
     canvas.appendChild(this.drawPane);
 
-    this.overlayPane = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    this.overlayPane = document.createElementNS(NS_SVG, 'g');
     canvas.appendChild(this.overlayPane);
 
-    this.decoratorPane = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    this.decoratorPane = document.createElementNS(NS_SVG, 'g');
     canvas.appendChild(this.decoratorPane);
 
-    const root = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const root = document.createElementNS(NS_SVG, 'svg');
     root.style.left = '0px';
     root.style.top = '0px';
     root.style.width = '100%';

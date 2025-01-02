@@ -22,6 +22,7 @@ import {
   constants,
   utils,
   LabelShape,
+  StyleDefaultsConfig,
 } from '@maxgraph/core';
 
 import {
@@ -61,9 +62,8 @@ const Template = ({ label, ...args }) => {
     return new Rectangle(x + ix, y + iy, iw, ih);
   };
 
-  // Should we allow overriding constants?
   // Makes the shadow brighter
-  //constants.SHADOWCOLOR = '#C0C0C0';
+  StyleDefaultsConfig.shadowColor = '#C0C0C0';
 
   // Creates the graph inside the given container
   const graph = new Graph(container);

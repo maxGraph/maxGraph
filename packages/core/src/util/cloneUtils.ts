@@ -17,7 +17,7 @@ limitations under the License.
 import ObjectIdentity from './ObjectIdentity';
 
 /**
- * Recursively clones the specified object ignoring all fieldnames in the
+ * Recursively clones the specified object ignoring all field names in the
  * given array of transient fields. {@link ObjectIdentity#FIELD_NAME} is always
  * ignored by this function.
  *
@@ -55,4 +55,26 @@ export const clone = function _clone(
   }
 
   return clone;
+};
+
+/**
+ * Shallow copies properties from the source object to the target object.
+ *
+ * **WARNING**: This function performs only a **shallow** copy i.e. there is no deep copy of the properties that are objects.
+ *
+ * @template T The type of the objects.
+ *
+ * @param source The source object from which properties will be copied.
+ * @param target The target object to which properties will be copied.
+ *
+ * @private not part of the public API, can be removed or changed without prior notice
+ * @since 0.14.0
+ */
+export const shallowCopy = <T extends object>(source: T, target: T): void => {
+  for (const key in source) {
+    // attempt to prevent prototype pollution
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      target[key] = source[key];
+    }
+  }
 };

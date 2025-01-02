@@ -116,7 +116,9 @@ export type CellStateStyle = {
   aspect?: string;
   /**
    * This specifies if a cell should be resized automatically if its value changed.
-   * See {@link Graph.isAutoSizeCell}. This is normally combined with {@link resizable} to disable manual resizing.
+   * This is normally combined with {@link resizable} to disable manual resizing.
+   *
+   * Note that a cell is in fact auto-resizable according to the value returned by {@link Graph.isAutoSizeCell}.
    * @default false
    */
   autoSize?: boolean;
@@ -127,13 +129,15 @@ export type CellStateStyle = {
   backgroundOutline?: boolean;
   /**
    * This specifies if the control points of an edge can be moved.
-   * See {@link Graph.isCellBendable}.
+   *
+   * Note that a cell is in fact bendable according to the value returned by {@link Graph.isCellBendable}.
    * @default true
    */
   bendable?: boolean;
   /**
    * This specifies if a cell can be cloned.
-   * See {@link Graph.isCellCloneable}.
+   *
+   * Note that a cell is in fact cloneable according to the value returned by {@link Graph.isCellCloneable}.
    * @default true
    */
   cloneable?: boolean;
@@ -159,7 +163,8 @@ export type CellStateStyle = {
   dashPattern?: string;
   /**
    * This specifies if a cell can be deleted.
-   * See {@link Graph.isCellDeletable}.
+   *
+   * Note that a cell is in fact deletable according to the value returned by {@link Graph.isCellDeletable}.
    * @default true
    */
   deletable?: boolean;
@@ -181,7 +186,8 @@ export type CellStateStyle = {
   edgeStyle?: StyleEdgeStyleValue;
   /**
    * This specifies if the value of a cell can be edited using the in-place editor.
-   * See {@link Graph.isCellEditable}.
+   *
+   * Note that a cell is in fact editable according to the value returned by {@link Graph.isCellEditable}.
    * @default true
    */
   editable?: boolean;
@@ -487,7 +493,7 @@ export type CellStateStyle = {
   /**
    * This specifies if a cell can be moved.
    *
-   * See {@link Graph.isCellMovable}.
+   * Note that a cell is in fact movable according to the value returned by {@link Graph.isCellMovable}.
    * @default true
    */
   movable?: boolean;
@@ -583,7 +589,7 @@ export type CellStateStyle = {
   /**
    * This specifies if a cell can be resized.
    *
-   * See {@link Graph.isCellResizable}.
+   * Note that a cell is in fact resizable according to the value returned by {@link Graph.isCellResizable}.
    * @default true
    */
   resizable?: boolean;
@@ -603,6 +609,8 @@ export type CellStateStyle = {
   resizeWidth?: boolean;
   /**
    * This specifies if a cell can be rotated.
+   *
+   * Note that a cell is in fact rotatable according to the value returned by {@link Graph.isCellRotatable}.
    * @default true
    */
   rotatable?: boolean;

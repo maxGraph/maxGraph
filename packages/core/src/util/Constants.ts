@@ -67,25 +67,16 @@ export const NS_SVG = 'http://www.w3.org/2000/svg';
  */
 export const NS_XLINK = 'http://www.w3.org/1999/xlink';
 
-/**
- * Defines the color to be used to draw shadows in shapes and windows.
- * Default is gray.
- */
+/** Default value of {@link StyleDefaultsConfig.shadowColor}. */
 export const SHADOWCOLOR = 'gray';
 
-/**
- * Specifies the x-offset of the shadow. Default is 2.
- */
+/** Default value of {@link StyleDefaultsConfig.shadowOffsetX}. */
 export const SHADOW_OFFSET_X = 2;
 
-/**
- * Specifies the y-offset of the shadow. Default is 3.
- */
+/** Default value of {@link StyleDefaultsConfig.shadowOffsetY}. */
 export const SHADOW_OFFSET_Y = 3;
 
-/**
- * Defines the opacity for shadows. Default is 1.
- */
+/** Default value of {@link StyleDefaultsConfig.shadowOpacity}. */
 export const SHADOW_OPACITY = 1;
 
 export enum NODETYPE {
@@ -121,13 +112,13 @@ export const DEFAULT_INVALID_COLOR = '#FF0000';
 
 /**
  * Specifies the default highlight color for shape outlines.
- * Default is #0000FF. This is used in {@link EdgeHandler}.
+ * Default is #0000FF. This is used in {@link ConnectionHandler} and {@link EdgeHandler}.
  */
 export const OUTLINE_HIGHLIGHT_COLOR = '#00FF00';
 
 /**
  * Defines the strokewidth to be used for shape outlines.
- * Default is 5. This is used in {@link EdgeHandler}.
+ * Default is 5. This is used in {@link ConnectionHandler} and {@link EdgeHandler}.
  */
 export const OUTLINE_HIGHLIGHT_STROKEWIDTH = 5;
 
@@ -169,6 +160,7 @@ export enum CURSOR {
  * Defines the color to be used for the cell highlighting.
  * Use 'none' for no color. Default is #00FF00.
  */
+// TODO this constants is unused (it wasn't used in mxGraph as well)--> remove it (and all documentation references as well)
 export const HIGHLIGHT_COLOR = '#00FF00';
 
 /**
@@ -177,10 +169,11 @@ export const HIGHLIGHT_COLOR = '#00FF00';
  * target terminal in the graph. Use 'none' for no color.
  * Default is #0000FF.
  */
+// TODO this constants is unused (it wasn't used in mxGraph as well)--> remove it (and all documentation references as well)
 export const CONNECT_TARGET_COLOR = '#0000FF';
 
 /**
- * Defines the color to be used for highlighting a invalid target cells
+ * Defines the color to be used for highlighting an invalid target cells
  * for a new or changed connections. Note that this may be either a source
  * or target terminal in the graph. Use 'none' for no color. Default is
  * #FF0000.
@@ -206,26 +199,32 @@ export const VALID_COLOR = '#00FF00';
 export const INVALID_COLOR = '#FF0000';
 
 /**
- * Defines the color to be used for the selection border of edges. Use
- * 'none' for no color. Default is #00FF00.
+ * Default value ('green' color) of {@link EdgeHandlerConfig.selectionColor}.
  */
 export const EDGE_SELECTION_COLOR = '#00FF00';
 
+/**
+ * Default value ('green' color) of {@link VertexHandlerConfig.selectionColor}.
+ */
 export const VERTEX_SELECTION_COLOR = '#00FF00';
 
+/**
+ * Default value of {@link VertexHandlerConfig.selectionStrokeWidth}.
+ */
 export const VERTEX_SELECTION_STROKEWIDTH = 1;
 
 /**
- * Defines the strokewidth to be used for edge selections.
- * Default is 1.
+ * Default value of {@link EdgeHandlerConfig.selectionStrokeWidth}.
  */
 export const EDGE_SELECTION_STROKEWIDTH = 1;
 
+/**
+ * Default value of {@link VertexHandlerConfig.selectionDashed}.
+ */
 export const VERTEX_SELECTION_DASHED = true;
 
 /**
- * Defines the dashed state to be used for the edge selection
- * border. Default is true.
+ * Default value of {@link EdgeHandlerConfig.selectionDashed}.
  */
 export const EDGE_SELECTION_DASHED = true;
 
@@ -253,26 +252,33 @@ export const OUTLINE_COLOR = '#0099FF';
  */
 export const OUTLINE_STROKEWIDTH = 3;
 
+/**
+ * Default value of {@link HandleConfig.size}.
+ */
 export const HANDLE_SIZE = 6;
 
 /**
- * Defines the default size for label handles. Default is 4.
+ * Default value of {@link HandleConfig.labelSize}.
  */
 export const LABEL_HANDLE_SIZE = 4;
 
+/**
+ * Default value ('green' color) of {@link HandleConfig.fillColor}.
+ */
 export const HANDLE_FILLCOLOR = '#00FF00';
 
+/**
+ * Default value of {@link HandleConfig.strokeColor}.
+ */
 export const HANDLE_STROKECOLOR = 'black';
 
 /**
- * Defines the color to be used for the label handle fill color. Use 'none'
- * for no color. Default is yellow.
+ * Default value of {@link HandleConfig.labelFillColor}.
  */
 export const LABEL_HANDLE_FILLCOLOR = 'yellow';
 
 /**
- * Defines the color to be used for the connect handle fill color. Use
- * 'none' for no color. Default is #0000FF (blue).
+ * Default value ('blue' color) of {@link EdgeHandlerConfig.connectFillColor}.
  */
 export const CONNECT_HANDLE_FILLCOLOR = '#0000FF';
 
@@ -390,27 +396,29 @@ export const ARROW_WIDTH = 30;
 export const ARROW_SIZE = 30;
 
 /**
- * Defines the rectangle for the A4 portrait page format. The dimensions
- * of this page format are 826x1169 pixels.
+ * Defines the rectangle for the A4 portrait page format.
+ * The dimensions of this page format are 827x1169 pixels.
  */
 export const PAGE_FORMAT_A4_PORTRAIT = [0, 0, 827, 1169];
 
 /**
- * Defines the rectangle for the A4 portrait page format. The dimensions
- * of this page format are 826x1169 pixels.
+ * Defines the rectangle for the A4 landscape page format.
+ * The dimensions of this page format are 1169x827 pixels.
  */
 export const PAGE_FORMAT_A4_LANDSCAPE = [0, 0, 1169, 827];
 
 /**
- * Defines the rectangle for the Letter portrait page format. The
- * dimensions of this page format are 850x1100 pixels.
+ * Defines the rectangle for the Letter portrait page format.
+ * The dimensions of this page format are 850x1100 pixels.
  */
+// It may not be used in @maxGraph/core for now, but helpful for users. So don't remove it.
 export const PAGE_FORMAT_LETTER_PORTRAIT = [0, 0, 850, 1100];
 
 /**
- * Defines the rectangle for the Letter portrait page format. The dimensions
- * of this page format are 850x1100 pixels.
+ * Defines the rectangle for the Letter landscape page format.
+ * The dimensions of this page format are 1100x850 pixels.
  */
+// It may not be used in @maxGraph/core for now, but helpful for users. So don't remove it.
 export const PAGE_FORMAT_LETTER_LANDSCAPE = [0, 0, 1100, 850];
 
 /**

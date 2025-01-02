@@ -15,13 +15,86 @@ limitations under the License.
 */
 
 import {
+  CONNECT_HANDLE_FILLCOLOR,
+  EDGE_SELECTION_COLOR,
+  EDGE_SELECTION_DASHED,
+  EDGE_SELECTION_STROKEWIDTH,
   HANDLE_FILLCOLOR,
   HANDLE_SIZE,
   HANDLE_STROKECOLOR,
+  LABEL_HANDLE_FILLCOLOR,
+  LABEL_HANDLE_SIZE,
   VERTEX_SELECTION_COLOR,
   VERTEX_SELECTION_DASHED,
   VERTEX_SELECTION_STROKEWIDTH,
 } from '../../util/Constants';
+import { shallowCopy } from '../../util/cloneUtils';
+
+/**
+ * Describes {@link EdgeHandlerConfig}.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
+ */
+export type EdgeHandlerConfigType = {
+  /**
+   * Defines the color to be used for the connect handle fill color. Use `none` for no color.
+   * @default {@link CONNECT_HANDLE_FILLCOLOR}
+   */
+  connectFillColor: string;
+  /**
+   * Kind of shape to be used for edge handles.
+   * @default 'square'
+   */
+  handleShape: 'circle' | 'square';
+  /**
+   * Defines the default color to be used for the selection border of edges. Use `none` for no color.
+   * @default {@link EDGE_SELECTION_COLOR}
+   */
+  selectionColor: string;
+  /**
+   * Defines the default stroke width to be used for edge selections.
+   * @default {@link EDGE_SELECTION_STROKEWIDTH}
+   */
+  selectionStrokeWidth: number;
+  /**
+   * Defines the default dashed state to be used for the edge selection border.
+   * @default {@link EDGE_SELECTION_DASHED}
+   */
+  selectionDashed: boolean;
+};
+
+/**
+ * Global configuration for {@link EdgeHandler} (including subclasses).
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
+ */
+export const EdgeHandlerConfig: EdgeHandlerConfigType = {
+  connectFillColor: CONNECT_HANDLE_FILLCOLOR,
+
+  handleShape: 'square',
+
+  selectionColor: EDGE_SELECTION_COLOR,
+
+  selectionStrokeWidth: EDGE_SELECTION_STROKEWIDTH,
+
+  selectionDashed: EDGE_SELECTION_DASHED,
+};
+
+const defaultEdgeHandlerConfig = { ...EdgeHandlerConfig };
+/**
+ * Resets {@link EdgeHandlerConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
+ */
+export const resetEdgeHandlerConfig = (): void => {
+  shallowCopy(defaultEdgeHandlerConfig, EdgeHandlerConfig);
+};
 
 /**
  * Global configuration for handles, used {@link VertexHandler} and {@link EdgeHandler} (including subclasses).
@@ -36,6 +109,19 @@ export const HandleConfig = {
    * @default {@link HANDLE_FILLCOLOR}
    */
   fillColor: HANDLE_FILLCOLOR,
+
+  /**
+   * Defines the color to be used for the label handle fill color. Use `none` for no color.
+   * @default {@link LABEL_HANDLE_FILLCOLOR}
+   */
+  labelFillColor: LABEL_HANDLE_FILLCOLOR,
+
+  /**
+   * Defines the default size for label handles.
+   * @default {@link LABEL_HANDLE_SIZE}
+   */
+  labelSize: LABEL_HANDLE_SIZE,
+
   /**
    * Defines the default size for handles.
    * @default {@link HANDLE_SIZE}
@@ -48,6 +134,7 @@ export const HandleConfig = {
   strokeColor: HANDLE_STROKECOLOR,
 };
 
+const defaultHandleConfig = { ...HandleConfig };
 /**
  * Resets {@link HandleConfig} to default values.
  *
@@ -56,9 +143,7 @@ export const HandleConfig = {
  * @category Configuration
  */
 export const resetHandleConfig = (): void => {
-  HandleConfig.fillColor = HANDLE_FILLCOLOR;
-  HandleConfig.size = HANDLE_SIZE;
-  HandleConfig.strokeColor = HANDLE_STROKECOLOR;
+  shallowCopy(defaultHandleConfig, HandleConfig);
 };
 
 /**
@@ -97,6 +182,7 @@ export const VertexHandlerConfig = {
   selectionDashed: VERTEX_SELECTION_DASHED,
 };
 
+const defaultVertexHandlerConfig = { ...VertexHandlerConfig };
 /**
  * Resets {@link VertexHandlerConfig} to default values.
  *
@@ -105,8 +191,5 @@ export const VertexHandlerConfig = {
  * @category Configuration
  */
 export const resetVertexHandlerConfig = (): void => {
-  VertexHandlerConfig.rotationEnabled = false;
-  VertexHandlerConfig.selectionColor = VERTEX_SELECTION_COLOR;
-  VertexHandlerConfig.selectionStrokeWidth = VERTEX_SELECTION_STROKEWIDTH;
-  VertexHandlerConfig.selectionDashed = VERTEX_SELECTION_DASHED;
+  shallowCopy(defaultVertexHandlerConfig, VertexHandlerConfig);
 };

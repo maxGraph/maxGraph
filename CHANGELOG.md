@@ -9,6 +9,14 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+## 0.14.0
+
+Release date: `2024-11-27`
+
+For more details, see the [0.14.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.14.0) on the GitHub release page.
+
+This new version offers more configuration options for vertex and edge handles, and allows certain default style configurations to be globally replaced.
+
 ## 0.13.1
 
 Release date: `2024-11-04`

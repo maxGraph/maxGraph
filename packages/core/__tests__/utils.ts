@@ -14,9 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph } from '../src';
+import { Cell, type CellStateStyle, Graph } from '../src';
+import { jest } from '@jest/globals';
 
 // no need for a container, we don't check the view here
 export const createGraphWithoutContainer = (): Graph => new Graph(null!);
 
 export const createGraphWithoutPlugins = (): Graph => new Graph(null!, null!, []);
+
+export const createCellWithStyle = (style: CellStateStyle): Cell => {
+  const cell = new Cell();
+  cell.style = style;
+  return cell;
+};

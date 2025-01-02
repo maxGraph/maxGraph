@@ -35,6 +35,7 @@ import {
   Shape,
   StencilShape,
   StencilShapeRegistry,
+  StyleDefaultsConfig,
   VertexHandler,
   VertexHandlerConfig,
 } from '@maxgraph/core';
@@ -68,12 +69,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  // TODO Allow overriding constants. See https://github.com/maxGraph/maxGraph/issues/192
-  // Sets the global shadow color
-  // constants.SHADOWCOLOR = '#C0C0C0';
-  // constants.SHADOW_OPACITY = 0.5;
-  // constants.SHADOW_OFFSET_X = 4;
-  // constants.SHADOW_OFFSET_Y = 4;
+  // Sets the global configurations
+  StyleDefaultsConfig.shadowColor = '#C0C0C0';
+  StyleDefaultsConfig.shadowOpacity = 0.5;
+  StyleDefaultsConfig.shadowOffsetX = 4;
+  StyleDefaultsConfig.shadowOffsetY = 4;
+
   HandleConfig.fillColor = '#99ccff';
   HandleConfig.strokeColor = '#0088cf';
   VertexHandlerConfig.selectionColor = '#00a8ff';

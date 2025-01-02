@@ -19,18 +19,12 @@ limitations under the License.
 import CellMarker from '../cell/CellMarker';
 import Point from '../geometry/Point';
 import {
-  CONNECT_HANDLE_FILLCOLOR,
   CURSOR,
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
   DEFAULT_VALID_COLOR,
   DIALECT,
-  EDGE_SELECTION_COLOR,
-  EDGE_SELECTION_DASHED,
-  EDGE_SELECTION_STROKEWIDTH,
   HIGHLIGHT_STROKEWIDTH,
-  LABEL_HANDLE_FILLCOLOR,
-  LABEL_HANDLE_SIZE,
   LOCKED_HANDLE_FILLCOLOR,
   NONE,
   OUTLINE_HIGHLIGHT_COLOR,
@@ -43,6 +37,7 @@ import {
   ptSegDistSq,
 } from '../../util/mathUtils';
 import { convertPoint, getOffset, setOpacity } from '../../util/styleUtils';
+import EllipseShape from '../geometry/node/EllipseShape';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ConnectionConstraint from '../other/ConnectionConstraint';
@@ -58,7 +53,7 @@ import {
   isMouseEvent,
   isShiftDown,
 } from '../../util/EventUtils';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 import { CellHandle, ColorValue, Listenable } from '../../types';
@@ -68,21 +63,16 @@ import ImageBox from '../image/ImageBox';
 import EventSource from '../event/EventSource';
 import SelectionHandler from './SelectionHandler';
 import { equalPoints } from '../../util/arrayUtils';
-import { HandleConfig } from './config';
+import { EdgeHandlerConfig, HandleConfig } from './config';
 
 /**
- * Graph event handler that reconnects edges and modifies control points and the edge label location.
+ * Graph event handler that reconnects edges, modifies control points and the edge label location.
  *
  * Uses {@link CellMarker} for finding and highlighting new source and target vertices.
  *
  * This handler is automatically created in {@link Graph.createHandler} for each selected edge.
  *
- * To enable adding/removing control points, the following code can be used:
- * ```javascript
- * EdgeHandler.prototype.addEnabled = true;
- * EdgeHandler.prototype.removeEnabled = true;
- * ```
- * Note: This experimental feature is not recommended for production use.
+ * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
 class EdgeHandler {
   /**
@@ -91,7 +81,7 @@ class EdgeHandler {
   graph: Graph;
 
   /**
-   * Reference to the <CellState> being modified.
+   * Reference to the {@link CellState} being modified.
    */
   state: CellState;
 
@@ -117,7 +107,7 @@ class EdgeHandler {
   shape: Shape;
 
   /**
-   * Holds the {@link Shapes} that represent the points.
+   * Holds the {@link Shape}s that represent the points.
    */
   bends: Shape[] = [];
 
@@ -129,89 +119,95 @@ class EdgeHandler {
   labelShape: Shape;
 
   /**
-   * Specifies if cloning by control-drag is enabled. Default is true.
+   * Specifies if cloning by control-drag is enabled.
+   * @default true
    */
   cloneEnabled = true;
 
   /**
-   * Specifies if adding bends by shift-click is enabled. Default is false.
-   * Note: This experimental feature is not recommended for production use.
+   * Specifies if adding bends by shift-click is enabled.
+   *
+   * **Note**: This experimental feature is not recommended for production use.
+   * @default false
    */
   addEnabled = false;
 
   /**
-   * Specifies if removing bends by shift-click is enabled. Default is false.
-   * Note: This experimental feature is not recommended for production use.
+   * Specifies if removing bends by shift-click is enabled.
+   *
+   * **Note**: This experimental feature is not recommended for production use.
+   * @default false
    */
   removeEnabled = false;
 
   /**
-   * Specifies if removing bends by double click is enabled. Default is false.
+   * Specifies if removing bends by double click is enabled.
+   * @default false
    */
   dblClickRemoveEnabled = false;
 
   /**
    * Specifies if removing bends by dropping them on other bends is enabled.
-   * Default is false.
+   * @default false
    */
   mergeRemoveEnabled = false;
 
   /**
    * Specifies if removing bends by creating straight segments should be enabled.
    * If enabled, this can be overridden by holding down the alt key while moving.
-   * Default is false.
+   * @default false
    */
   straightRemoveEnabled = false;
 
   /**
-   * Specifies if virtual bends should be added in the center of each
-   * segments. These bends can then be used to add new waypoints.
-   * Default is false.
+   * Specifies if virtual bends should be added in the center of each segment.
+   * These bends can then be used to add new waypoints.
+   * @default false
    */
   virtualBendsEnabled = false;
 
   /**
-   * Opacity to be used for virtual bends (see <virtualBendsEnabled>).
-   * Default is 20.
+   * Opacity to be used for virtual bends (see {@link virtualBendsEnabled}).
+   * @default 20
    */
   virtualBendOpacity = 20;
 
   /**
    * Specifies if the parent should be highlighted if a child cell is selected.
-   * Default is false.
+   * @default false
    */
   parentHighlightEnabled = false;
 
   /**
-   * Specifies if bends should be added to the graph container. This is updated
-   * in <init> based on whether the edge or one of its terminals has an HTML
-   * label in the container.
+   * Specifies if bends should be added to the graph container.
+   * This is updated in {@link init} based on whether the edge or one of its terminals has an HTML label in the container.
    */
   preferHtml = false;
 
   /**
-   * Specifies if the bounds of handles should be used for hit-detection in IE
-   * Default is true.
+   * Specifies if the bounds of handles should be used for hit-detection in IE.
+   * @default true
    */
   allowHandleBoundsCheck = true;
 
   /**
    * Specifies if waypoints should snap to the routing centers of terminals.
-   * Default is false.
+   * @default false
    */
   snapToTerminals = false;
 
   /**
-   * Optional {@link Image} to be used as handles. Default is null.
+   * Optional {@link Image} to be used as handles.
+   * @default null
    */
   handleImage: ImageBox | null = null;
 
   labelHandleImage: ImageBox | null = null;
 
   /**
-   * Optional tolerance for hit-detection in <getHandleForEvent>. Default is 0.
+   * Optional tolerance for hit-detection in {@link getHandleForEvent}.
+   * @default 0
    */
-  // tolerance: number;
   tolerance = 0;
 
   /**
@@ -264,7 +260,7 @@ class EdgeHandler {
     // `state.shape` must exists.
     this.state = state;
 
-    this.graph = <Graph>this.state.view.graph;
+    this.graph = this.state.view.graph;
     this.marker = this.createMarker();
     this.constraintHandler = new ConstraintHandler(this.graph);
 
@@ -346,7 +342,7 @@ class EdgeHandler {
       }
     };
 
-    (<Graph>this.state.view.graph).addListener(InternalEvent.ESCAPE, this.escapeHandler);
+    this.state.view.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
   }
 
   /**
@@ -359,7 +355,7 @@ class EdgeHandler {
   }
 
   /**
-   * Updates the highlight of the parent if <parentHighlightEnabled> is true.
+   * Updates the highlight of the parent if {@link parentHighlightEnabled} is true.
    */
   updateParentHighlight() {
     if (!this.isDestroyed()) {
@@ -418,7 +414,7 @@ class EdgeHandler {
 
   /**
    * Returns true if virtual bends should be added. This returns true if
-   * <virtualBendsEnabled> is true and the current style allows and
+   * {@link virtualBendsEnabled} is true and the current style allows and
    * renders custom waypoints.
    */
   isVirtualBendsEnabled(evt?: Event) {
@@ -495,24 +491,24 @@ class EdgeHandler {
   }
 
   /**
-   * Returns {@link EDGE_SELECTION_COLOR}.
+   * Returns {@link EdgeHandlerConfig.selectionColor}.
    */
   getSelectionColor() {
-    return EDGE_SELECTION_COLOR;
+    return EdgeHandlerConfig.selectionColor;
   }
 
   /**
-   * Returns {@link EDGE_SELECTION_STROKEWIDTH}.
+   * Returns {@link EdgeHandlerConfig.selectionStrokeWidth}.
    */
   getSelectionStrokeWidth() {
-    return EDGE_SELECTION_STROKEWIDTH;
+    return EdgeHandlerConfig.selectionStrokeWidth;
   }
 
   /**
-   * Returns {@link EDGE_SELECTION_DASHED}.
+   * Returns {@link EdgeHandlerConfig.selectionDashed}.
    */
   isSelectionDashed() {
-    return EDGE_SELECTION_DASHED;
+    return EdgeHandlerConfig.selectionDashed;
   }
 
   /**
@@ -539,11 +535,11 @@ class EdgeHandler {
 
   /**
    * Returns the error message or an empty string if the connection for the
-   * given source, target pair is not valid. Otherwise it returns null. This
+   * given source, target pair is not valid. Otherwise, it returns null. This
    * implementation uses {@link Graph#getEdgeValidationError}.
    *
-   * @param source <Cell> that represents the source terminal.
-   * @param target <Cell> that represents the target terminal.
+   * @param source {@link Cell} that represents the source terminal.
+   * @param target {@link Cell} that represents the target terminal.
    */
   validateConnection(source: Cell | null, target: Cell | null) {
     return this.graph.getEdgeValidationError(this.state.cell, source, target);
@@ -594,7 +590,6 @@ class EdgeHandler {
    * Creates and returns the bends used for modifying the edge. This is
    * typically an array of {@link RectangleShape}.
    */
-  // createVirtualBends(): mxRectangleShape[];
   createVirtualBends() {
     const { cell } = this.state;
     const last = this.abspoints[0];
@@ -639,13 +634,14 @@ class EdgeHandler {
   }
 
   /**
-   * Creates the shape used to display the given bend. Note that the index may be
-   * null for special cases, such as when called from
-   * {@link ElbowEdgeHandler#createVirtualBend}. Only images and rectangles should be
-   * returned if support for HTML labels with not foreign objects is required.
-   * Index if null for virtual handles.
+   * Creates the shape used to display the given bend.
+   * Note that the index
+   * - may be `null` for special cases, such as when called from {@link ElbowEdgeHandler.createVirtualBend}.
+   * - is `null` for virtual handles.
+   *
+   * Only images and rectangles should be returned if support for HTML labels with not foreign objects is required.
    */
-  createHandleShape(index?: number) {
+  createHandleShape(_index?: number): Shape {
     if (this.handleImage) {
       const shape = new ImageShape(
         new Rectangle(0, 0, this.handleImage.width, this.handleImage.height),
@@ -663,7 +659,9 @@ class EdgeHandler {
       s -= 1;
     }
 
-    return new RectangleShape(
+    const shapeConstructor =
+      EdgeHandlerConfig.handleShape === 'circle' ? EllipseShape : RectangleShape;
+    return new shapeConstructor(
       new Rectangle(0, 0, s, s),
       HandleConfig.fillColor,
       HandleConfig.strokeColor
@@ -671,7 +669,7 @@ class EdgeHandler {
   }
 
   /**
-   * Creates the shape used to display the the label handle.
+   * Creates the shape used to display the label handle.
    */
   createLabelHandleShape() {
     if (this.labelHandleImage) {
@@ -685,10 +683,10 @@ class EdgeHandler {
 
       return shape;
     }
-    const s = LABEL_HANDLE_SIZE;
+    const s = HandleConfig.labelSize;
     return new RectangleShape(
       new Rectangle(0, 0, s, s),
-      LABEL_HANDLE_FILLCOLOR,
+      HandleConfig.labelFillColor,
       HandleConfig.strokeColor
     );
   }
@@ -810,7 +808,7 @@ class EdgeHandler {
   /**
    * Handles the event by checking if a special element of the handler
    * was clicked, in which case the index parameter is non-null. The
-   * indices may be one of <LABEL_HANDLE> or the number of the respective
+   * indices may be one of {@link InternalEvent.LABEL_HANDLE} or the number of the respective
    * control point. The source and target points are used for reconnecting
    * the edge.
    */
@@ -923,7 +921,7 @@ class EdgeHandler {
   }
 
   /**
-   * Returns true if <snapToTerminals> is true and if alt is not pressed.
+   * Returns true if {@link snapToTerminals} is true and if alt is not pressed.
    */
   isSnapToTerminalsEvent(me: InternalMouseEvent) {
     return this.snapToTerminals && !isAltDown(me.getEvent());
@@ -932,7 +930,6 @@ class EdgeHandler {
   /**
    * Returns the point for the given event.
    */
-  // getPointForEvent(me: mxMouseEvent): mxPoint;
   getPointForEvent(me: InternalMouseEvent) {
     const view = this.graph.getView();
     const { scale } = view;
@@ -1173,7 +1170,7 @@ class EdgeHandler {
   }
 
   /**
-   * Returns true if <outlineConnect> is true and the source of the event is the outline shape
+   * Returns true if {@link outlineConnect} is true and the source of the event is the outline shape
    * or shift is pressed.
    */
   isOutlineConnectEvent(me: InternalMouseEvent) {
@@ -1438,7 +1435,7 @@ class EdgeHandler {
 
   /**
    * Handles the event to applying the previewed changes on the edge by
-   * using {@link moveLabel}, <connect> or <changePoints>.
+   * using {@link moveLabel}, {@link connect} or {@link changePoints}.
    */
   mouseUp(sender: EventSource, me: InternalMouseEvent) {
     // Workaround for wrong event source in Webkit
@@ -1613,7 +1610,7 @@ class EdgeHandler {
       }
     }
 
-    this.setPreviewColor(EDGE_SELECTION_COLOR);
+    this.setPreviewColor(EdgeHandlerConfig.selectionColor);
     this.removeHint();
     this.redraw();
   }
@@ -1659,7 +1656,7 @@ class EdgeHandler {
   /**
    * Changes the coordinates for the label of the given edge.
    *
-   * @param edge <Cell> that represents the edge.
+   * @param edge {@link Cell} that represents the edge.
    * @param x Integer that specifies the x-coordinate of the new location.
    * @param y Integer that specifies the y-coordinate of the new location.
    */
@@ -1711,8 +1708,8 @@ class EdgeHandler {
    * Changes the terminal or terminal point of the given edge in the graph
    * model.
    *
-   * @param edge <Cell> that represents the edge to be reconnected.
-   * @param terminal <Cell> that represents the new terminal.
+   * @param edge {@link Cell} that represents the edge to be reconnected.
+   * @param terminal {@link Cell} that represents the new terminal.
    * @param isSource Boolean indicating if the new terminal is the source or
    * target terminal.
    * @param isClone Boolean indicating if the new connection should be a clone of
@@ -1879,7 +1876,7 @@ class EdgeHandler {
       terminal != null &&
       this.graph.isCellDisconnectable(cell, terminal, isSource)
     ) {
-      color = CONNECT_HANDLE_FILLCOLOR;
+      color = EdgeHandlerConfig.connectFillColor;
     }
 
     return color;
@@ -2036,13 +2033,11 @@ class EdgeHandler {
    * Returns true if the given custom handle is visible.
    */
   isCustomHandleVisible(handle: CellHandle) {
-    return (
-      !this.graph.isEditing() && (<Graph>this.state.view.graph).getSelectionCount() === 1
-    );
+    return !this.graph.isEditing() && this.state.view.graph.getSelectionCount() === 1;
   }
 
   /**
-   * Shortcut to <hideSizers>.
+   * Shortcut to {@link hideSizers}.
    */
   setHandlesVisible(visible: boolean) {
     for (let i = 0; i < this.bends.length; i += 1) {
@@ -2201,14 +2196,14 @@ class EdgeHandler {
   }
 
   /**
-   * Returns true if <destroy> was called.
+   * Returns true if {@link destroy} was called.
    */
   isDestroyed() {
     return this.shape == null;
   }
 
   /**
-   * Destroys all elements in <bends>.
+   * Destroys all elements in {@link bends}.
    */
   destroyBends(bends: Shape[] | CellHandle[]) {
     if (bends != null) {
@@ -2226,7 +2221,7 @@ class EdgeHandler {
    * when the corresponding cell is deselected.
    */
   onDestroy() {
-    (<Graph>this.state.view.graph).removeListener(this.escapeHandler);
+    this.state.view.graph.removeListener(this.escapeHandler);
 
     this.marker.destroy();
     // @ts-expect-error Can be null when destroyed.

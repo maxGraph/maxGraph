@@ -16,6 +16,13 @@ limitations under the License.
 
 import type { Logger } from '../types';
 import { NoOpLogger } from './logger';
+import {
+  SHADOW_OFFSET_X,
+  SHADOW_OFFSET_Y,
+  SHADOW_OPACITY,
+  SHADOWCOLOR,
+} from './Constants';
+import { shallowCopy } from './cloneUtils';
 
 /**
  * Global configuration for maxGraph.
@@ -41,7 +48,49 @@ export const GlobalConfig = {
    * GlobalConfig.logger = new MaxLogAsLogger();
    * ```
    *
-   * @default `NoOpLogger`
+   * @default {@link NoOpLogger}
    */
   logger: new NoOpLogger() as Logger,
+};
+
+/**
+ * Configure style defaults for maxGraph.
+ *
+ * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
+ */
+export const StyleDefaultsConfig = {
+  /**
+   * Defines the color to be used to draw shadows in shapes and windows.
+   * @default {@link SHADOWCOLOR}
+   */
+  shadowColor: SHADOWCOLOR,
+  /**
+   * Specifies the x-offset of the shadow.
+   * @default {@link SHADOW_OFFSET_X}
+   */
+  shadowOffsetX: SHADOW_OFFSET_X,
+  /**
+   * Specifies the y-offset of the shadow.
+   * @default {@link SHADOW_OFFSET_Y}
+   */
+  shadowOffsetY: SHADOW_OFFSET_Y,
+  /**
+   * Defines the opacity for shadow. Possible values are between 1 (opaque) and 0 (transparent).
+   * @default {@link SHADOW_OPACITY}
+   */
+  shadowOpacity: SHADOW_OPACITY,
+};
+
+const defaultStyleDefaultsConfig = { ...StyleDefaultsConfig };
+/**
+ * Resets {@link StyleDefaultsConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.14.0
+ * @category Configuration
+ */
+export const resetStyleDefaultsConfig = (): void => {
+  shallowCopy(defaultStyleDefaultsConfig, StyleDefaultsConfig);
 };

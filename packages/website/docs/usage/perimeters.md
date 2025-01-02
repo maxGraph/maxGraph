@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 10
 description: How-to use use and create new perimeters.
 ---
 
@@ -25,6 +25,12 @@ The following image shows various perimeters in action and illustrates the diffe
 It is taken from the Storybook demo.
 
 ![Perimeters Example](./assets/perimeters.png)
+
+:::note
+The image above has been produced using the Storybook demo:
+- live demo: [PerimeterVariousImplementations](https://maxgraph.github.io/maxGraph/?path=/story/perimeters--perimeter-various-implementations)
+- source code: [PerimeterVariousImplementations.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/PerimeterVariousImplementations.stories.ts)
+:::
 
 
 ## How to Use a Specific Perimeter
@@ -99,3 +105,9 @@ Or it can be used for all vertices in the `Graph` as follows:
 const style = graph.getStylesheet().getDefaultVertexStyle();
 style.perimeter = CustomPerimeter;
 ```
+
+## Example of custom behavior
+
+It is possible to create a perimeter that places the edge on the bounds of the label of a vertex. See the Storybook demo:
+- live demo: [PerimeterOnLabelBounds](https://maxgraph.github.io/maxGraph/demo/?path=/story/labels-perimeteronlabelbounds--default)
+- source code: [PerimeterOnLabelBounds.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/PerimeterOnLabelBounds.stories.ts)

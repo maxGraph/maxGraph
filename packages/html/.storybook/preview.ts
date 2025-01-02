@@ -2,7 +2,9 @@ import type { Preview } from '@storybook/html';
 import {
   GlobalConfig,
   NoOpLogger,
+  resetEdgeHandlerConfig,
   resetHandleConfig,
+  resetStyleDefaultsConfig,
   resetVertexHandlerConfig,
 } from '@maxgraph/core';
 
@@ -16,8 +18,10 @@ const defaultLogger = new NoOpLogger();
 const resetMaxGraphConfigs = (): void => {
   GlobalConfig.logger = defaultLogger;
 
-  resetVertexHandlerConfig();
+  resetEdgeHandlerConfig();
   resetHandleConfig();
+  resetStyleDefaultsConfig();
+  resetVertexHandlerConfig();
   const classesToRemove = ['.mxPopupMenu', '.mxWindow', '.mxTooltip'];
   classesToRemove.forEach(cls => {
     document.querySelectorAll(cls).forEach(e => e.remove());

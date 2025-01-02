@@ -13,14 +13,18 @@ This guide explains how to configure `maxGraph` globally. This global configurat
 The following objects can be used to configure `maxGraph` globally:
 
   - `Client`: this is the historical entry point for global configuration, coming from the `mxGraph` library.
+  - `EdgeHandlerConfig` (since 0.14.0): for `EdgeHandler` (including subclasses).
   - `GlobalConfig` (since 0.11.0): for shared resources (logger).
   - `HandleConfig` (since 0.14.0): for shared handle configurations.
   - `StencilShapeConfig` (since 0.11.0): for stencil shapes.
+  - `StyleDefaultsConfig` (since 0.14.0): for the default values of the Cell styles.
   - `VertexHandlerConfig` (since 0.12.0): for `VertexHandler`.
 
 Some functions are provided to reset the global configuration to the default values. For example:
 
+  - `resetEdgeHandlerConfig` (since 0.14.0)
   - `resetHandleConfig` (since 0.14.0)
+  - `resetStyleDefaultsConfig` (since 0.14.0)
   - `resetVertexHandlerConfig` (since 0.14.0)
 
 :::note
@@ -46,7 +50,9 @@ See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues
 When instantiating a `Graph` object, the registries are filled with `maxGraph` default style configurations. There is no default stencil shapes registered by default.
 
 
-## Serialization
+## Codecs and Serialization
 
 `CodecRegistry` is used for serialization and deserialization of objects in XML object.
 By default, no codec is registered. Some functions are provided to register codecs for specific objects.
+
+For more details about the codecs, see the Codec [documentation page](./codecs.md).

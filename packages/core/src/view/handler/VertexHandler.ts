@@ -17,13 +17,7 @@ limitations under the License.
 */
 
 import Rectangle from '../geometry/Rectangle';
-import {
-  CURSOR,
-  DIALECT,
-  LABEL_HANDLE_FILLCOLOR,
-  LABEL_HANDLE_SIZE,
-  NONE,
-} from '../../util/Constants';
+import { CURSOR, DIALECT, NONE } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ImageShape from '../geometry/node/ImageShape';
@@ -49,6 +43,8 @@ import { HandleConfig, VertexHandlerConfig } from './config';
  * Event handler for resizing cells.
  *
  * This handler is automatically created in {@link Graph#createHandler}.
+ *
+ * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
 class VertexHandler {
   escapeHandler: (sender: Listenable, evt: Event) => void;
@@ -188,7 +184,7 @@ class VertexHandler {
 
   rotationShape: Shape | null = null;
 
-  currentAlpha = 100;
+  currentAlpha: null | number = null;
   startAngle = 0;
   startDist = 0;
 
@@ -277,15 +273,15 @@ class VertexHandler {
         if (
           geo != null &&
           !geo.relative &&
-          //!this.graph.isSwimlane(this.state.cell) &&      disable for now
+          !this.graph.isSwimlane(this.state.cell) &&
           this.graph.isLabelMovable(this.state.cell)
         ) {
           // Marks this as the label handle for getHandleForEvent
           this.labelShape = this.createSizer(
             CURSOR.LABEL_HANDLE,
             InternalEvent.LABEL_HANDLE,
-            LABEL_HANDLE_SIZE,
-            LABEL_HANDLE_FILLCOLOR
+            HandleConfig.labelSize,
+            HandleConfig.labelFillColor
           );
           this.sizers.push(this.labelShape);
         }
@@ -299,7 +295,7 @@ class VertexHandler {
           CURSOR.MOVABLE_VERTEX,
           InternalEvent.LABEL_HANDLE,
           undefined,
-          LABEL_HANDLE_FILLCOLOR
+          HandleConfig.labelFillColor
         );
         this.sizers.push(this.labelShape);
       }
@@ -1357,6 +1353,7 @@ class VertexHandler {
     }
 
     this.index = null;
+    this.currentAlpha = null;
 
     // TODO: Reset and redraw cell states for live preview
     if (this.preview) {
@@ -1887,7 +1884,7 @@ class VertexHandler {
     }
 
     if (this.rotationShape) {
-      const alpha = toRadians(this.currentAlpha);
+      const alpha = toRadians(this.currentAlpha ?? this.state.style.rotation ?? 0);
       const cos = Math.cos(alpha);
       const sin = Math.sin(alpha);
 

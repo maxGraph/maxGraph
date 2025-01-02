@@ -1,6 +1,6 @@
 {
   "label": "Manual",
-  "position": 1,
+  "position": 11,
   "link": {
     "type": "generated-index",
     "description": "An introduction to the concepts used in maxGraph."
