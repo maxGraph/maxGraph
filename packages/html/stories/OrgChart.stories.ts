@@ -37,6 +37,7 @@ import {
   printUtils,
   treeTraversalUtils,
   StyleDefaultsConfig,
+  EdgeStyle,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
@@ -192,9 +193,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.entryPerimeter = false; // disabled
 
   // Disable the following for straight lines
-  // TODO style.edgeStyle should accept a EdgeStyleFunction
-  // style.edgeStyle = EdgeStyle.TopToBottom;
-  style.edgeStyle = 'topToBottomEdgeStyle';
+  style.edgeStyle = EdgeStyle.TopToBottom;
 
   // Stops editing on enter or escape keypress
   // TODO do we need to keep the constant?
