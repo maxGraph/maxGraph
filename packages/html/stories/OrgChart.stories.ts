@@ -21,12 +21,14 @@ import {
   Client,
   CompactTreeLayout,
   constants,
+  EdgeStyle,
   Graph,
   ImageBox,
   InternalEvent,
   type KeyboardEventListener,
   KeyHandler,
   LayoutManager,
+  type MaxPopupMenu,
   MaxToolbar,
   // MaxWindow,
   Outline,
@@ -37,7 +39,6 @@ import {
   printUtils,
   treeTraversalUtils,
   StyleDefaultsConfig,
-  EdgeStyle,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
@@ -46,7 +47,6 @@ import {
   globalValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-// import '@maxgraph/core/css/common.css'; // style required by MaxWindow
 
 export default {
   title: 'Layouts/OrgChart',
@@ -221,10 +221,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
   // Installs a popupmenu handler using local function (see below).
-  // TODO https://github.com/maxGraph/maxGraph/issues/308 wrong type for factoryMethod
-  // @ts-ignore
   popupMenuHandler.factoryMethod = function (
-    menu: PopupMenuHandler,
+    menu: MaxPopupMenu,
     cell: Cell | null,
     evt: MouseEvent
   ) {
@@ -325,7 +323,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Function to create the entries in the popupmenu
   function createPopupMenu(
     graph: Graph,
-    menu: PopupMenuHandler,
+    menu: MaxPopupMenu,
     cell: Cell | null,
     _evt: MouseEvent
   ) {
