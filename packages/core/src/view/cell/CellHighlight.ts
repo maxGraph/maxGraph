@@ -47,7 +47,7 @@ class CellHighlight {
 
   opacity = 100;
 
-  repaintHandler: Function;
+  repaintHandler: () => void;
 
   shape: Shape | null = null;
 
