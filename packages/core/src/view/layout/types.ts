@@ -24,7 +24,7 @@ import type GraphHierarchyNode from './datatypes/GraphHierarchyNode';
 export interface GraphLayoutTraverseArgs {
   vertex: Cell | null;
   directed: boolean | null;
-  func: Function | null;
+  func: ((vertex: Cell, edge: Cell | null) => void) | null;
   edge: Cell | null;
   visited: Dictionary<Cell, boolean> | null;
 }
