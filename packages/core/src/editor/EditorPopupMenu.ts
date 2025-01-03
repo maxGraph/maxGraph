@@ -263,6 +263,7 @@ export class EditorPopupMenu {
     editor: Editor,
     lab: string,
     icon: string | null = null,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- unable to identify the function signature for now
     funct: Function | null = null,
     action: string | null = null,
     cell: Cell | null = null,
