@@ -75,7 +75,7 @@ export class EditorToolbar {
   /**
    * Reference to the function used to reset the {@link toolbar}.
    */
-  resetHandler: Function | null = null;
+  resetHandler: (() => void) | null = null;
 
   /**
    * Defines the spacing between existing and new vertices in gridSize units when a new vertex is dropped on an existing cell.  Default is 4 (40 pixels).
