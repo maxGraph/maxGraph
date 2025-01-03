@@ -5,7 +5,15 @@ description: XXXX.
 
 # Input/Output
 
-[//]: # (TODO add mxGraph copyright)
+:::note
+
+This tutorial is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). \
+It is adapted from the original [mxGraph tutorial](https://github.com/jgraph/mxgraph/blob/v4.2.2/docs/tutorial.html).
+
+> Copyright 2021-present The maxGraph project Contributors \
+Copyright (c) JGraph Ltd 2006-2017
+
+:::
 
 
 ## Codecs
