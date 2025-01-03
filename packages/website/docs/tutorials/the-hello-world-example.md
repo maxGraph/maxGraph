@@ -3,6 +3,9 @@ sidebar_position: 1
 description: XXXX.
 ---
 
+[//]: # (TODO add mxGraph copyright)
+
+
 # The Hello World Example
 
 
