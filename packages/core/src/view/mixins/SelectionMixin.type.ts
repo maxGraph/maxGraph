@@ -218,7 +218,7 @@ declare module '../Graph' {
      */
     getSelectionCellsForChanges: (
       changes: any[],
-      ignoreFn?: ((change: any) => void) | null
+      ignoreFn?: ((change: any) => boolean) | null
     ) => Cell[];
 
     /**
