@@ -216,7 +216,10 @@ declare module '../AbstractGraph' {
      * @param changes
      * @param ignoreFn Optional function that takes a change and returns true if the change should be ignored.
      */
-    getSelectionCellsForChanges: (changes: any[], ignoreFn?: Function | null) => Cell[];
+    getSelectionCellsForChanges: (
+      changes: any[],
+      ignoreFn?: (change: any) => void | null
+    ) => Cell[];
 
     /**
      * Removes selection cells that are not in the model from the selection.
