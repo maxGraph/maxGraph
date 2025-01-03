@@ -86,7 +86,7 @@ import type Cell from '../view/cell/Cell';
  */
 export const makeDraggable = (
   element: Element,
-  graphF: AbstractGraph | Function,
+  graphF: AbstractGraph | ((evt: MouseEvent) => Graph),
   funct: DropHandler,
   dragElement: Element | null = null,
   dx: number | null = null,
