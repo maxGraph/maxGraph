@@ -218,7 +218,7 @@ declare module '../AbstractGraph' {
      */
     getSelectionCellsForChanges: (
       changes: any[],
-      ignoreFn?: (change: any) => void | null
+      ignoreFn?: ((change: any) => void) | null
     ) => Cell[];
 
     /**
