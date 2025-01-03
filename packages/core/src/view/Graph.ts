@@ -81,7 +81,7 @@ class Graph extends EventSource {
 
   destroyed = false;
 
-  graphModelChangeListener: Function | null = null;
+  graphModelChangeListener: ((sender: any, evt: EventObject) => void) | null = null;
   paintBackground: Function | null = null;
   isConstrainedMoving = false;
 
