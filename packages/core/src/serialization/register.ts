@@ -42,6 +42,16 @@ import StyleChange from '../view/undoable_changes/StyleChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
 import VisibleChange from '../view/undoable_changes/VisibleChange';
 
+let isBaseCodecsRegistered = false;
+const registerBaseCodecs = (force = false) => {
+  if (!isBaseCodecsRegistered || force) {
+    CodecRegistry.register(new ObjectCodec({})); // Object
+    CodecRegistry.register(new ObjectCodec([])); // Array
+
+    isBaseCodecsRegistered = true;
+  }
+};
+
 const registerGenericChangeCodecs = () => {
   const __dummy: any = undefined;
   CodecRegistry.register(
@@ -88,8 +98,7 @@ export const registerModelCodecs = (force = false) => {
     // Codecs are currently only registered automatically during encode/export
     CodecRegistry.register(createObjectCodec(new Geometry(), 'Geometry'));
     CodecRegistry.register(createObjectCodec(new Point(), 'Point'));
-    CodecRegistry.register(new ObjectCodec({})); // Object
-    CodecRegistry.register(new ObjectCodec([])); // Array
+    registerBaseCodecs(force);
 
     // mxGraph support
     CodecRegistry.addAlias('mxGraphModel', 'GraphDataModel');
@@ -136,6 +145,8 @@ let isEditorCodecsRegistered = false;
  */
 export const registerEditorCodecs = (force = false) => {
   if (!isEditorCodecsRegistered || force) {
+    registerBaseCodecs(force);
+
     CodecRegistry.register(new EditorCodec());
     CodecRegistry.register(new EditorKeyHandlerCodec());
     CodecRegistry.register(new EditorPopupMenuCodec());
