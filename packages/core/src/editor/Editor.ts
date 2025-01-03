@@ -62,6 +62,10 @@ import { isI18nEnabled, translate } from '../internal/i18n-utils';
 import { error } from '../gui/guiUtils';
 import type { FitPlugin } from '../view/plugins';
 
+export type EditorActionFunction =
+  | ((editor: Editor, cell: Cell) => void)
+  | ((editor: Editor, cell: Cell | null, evt: Event | null) => void);
+
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
  * adds {@link actions}, I/O using {@link Codec}, auto-layout using {@link LayoutManager},
@@ -553,7 +557,7 @@ export class Editor extends EventSource {
    * by name, passing the cell to be operated upon as the second
    * argument.
    */
-  actions: { [key: string]: Function } = {};
+  actions: { [key: string]: EditorActionFunction } = {};
 
   // =====================================================================================
   // Group: Actions and Options
@@ -601,7 +605,8 @@ export class Editor extends EventSource {
    * cells into the graph. This is assigned from the
    * {@link EditorToolbar} if a vertex-tool is clicked.
    */
-  insertFunction: Function | null = null;
+  // TODO more event?
+  insertFunction: ((evt: MouseEvent, cell: Cell | null) => void) | null = null;
 
   // =====================================================================================
   // Group: Templates
@@ -1328,7 +1333,7 @@ export class Editor extends EventSource {
    * of the function is the editor it is used with,
    * the second argument is the cell it operates upon.
    */
-  addAction(actionname: string, funct: Function): void {
+  addAction(actionname: string, funct: EditorActionFunction): void {
     this.actions[actionname] = funct;
   }
 
@@ -1353,12 +1358,7 @@ export class Editor extends EventSource {
 
     if (action) {
       try {
-        // Creates the array of arguments by replacing the actionname
-        // with the editor instance in the args of this function
-        const args = [this, cell, evt];
-
-        // Invokes the function on the editor using the args
-        action.apply(this, args);
+        action(this, cell, evt);
       } catch (e: any) {
         error(`Cannot execute ${actionname}: ${e.message}`, 280, true);
 
