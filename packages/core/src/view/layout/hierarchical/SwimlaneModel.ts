@@ -558,7 +558,13 @@ class SwimlaneModel {
    * directly above this one in the search path.
    */
   visit(
-    visitor: Function,
+    visitor: (
+      parent: Cell | null,
+      root: GraphHierarchyNode,
+      connectingEdge: Cell | null,
+      layer: number,
+      seen: number
+    ) => void,
     dfsRoots: GraphHierarchyNode[] | null,
     trackAncestors: boolean,
     seenNodes: { [key: string]: Cell } | null
@@ -614,7 +620,13 @@ class SwimlaneModel {
     parent: Cell | null,
     root: GraphHierarchyNode,
     connectingEdge: Cell | null,
-    visitor: Function,
+    visitor: (
+      parent: Cell | null,
+      root: GraphHierarchyNode,
+      connectingEdge: Cell | null,
+      layer: number,
+      seen: number
+    ) => void,
     seen: { [key: string]: Cell },
     layer: number
   ) {
@@ -663,7 +675,13 @@ class SwimlaneModel {
     parent: GraphHierarchyNode | null,
     root: GraphHierarchyNode,
     connectingEdge: Cell | null,
-    visitor: Function,
+    visitor: (
+      parent: Cell | null,
+      root: GraphHierarchyNode,
+      connectingEdge: Cell | null,
+      layer: number,
+      seen: number
+    ) => void,
     seen: { [key: string]: Cell },
     ancestors: any,
     childHash: string | number,

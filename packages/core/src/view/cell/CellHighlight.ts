@@ -48,7 +48,7 @@ class CellHighlight {
 
   opacity = 100;
 
-  repaintHandler: Function;
+  repaintHandler: () => void;
 
   shape: Shape | null = null;
 
@@ -78,9 +78,8 @@ class CellHighlight {
 
   /**
    * Holds the handler that automatically invokes reset if the highlight should be hidden.
-   * @default null
    */
-  resetHandler: Function;
+  resetHandler: () => void;
 
   constructor(
     graph: Graph,
