@@ -3,9 +3,10 @@ sidebar_position: 2
 description: XXXX.
 ---
 
+# Graphs
+
 [//]: # (TODO add mxGraph copyright)
 
-# Graphs
 
 <p>
   Instantiate <a href="js-api/files/view/mxGraph-js.html">mxGraph</a>
@@ -71,25 +72,26 @@ const model = new GraphDataModel(root);
 <p>
   The appearance of the cells in a graph is defined by the
   stylesheet, which is an instance of
-  <a href="js-api/files/view/mxStylesheet-js.html">
-  mxStylesheet</a>.
+  <a href="js-api/files/view/mxStylesheet-js.html">mxStylesheet</a>.
   The stylesheet maps from stylenames to styles.
   A style is an array of key, value pairs to be
   used with the cells. The keys are defined in
-  <a href="js-api/files/util/mxConstants-js.html">
-  mxConstants</a> and the values may be
+  <a href="js-api/files/util/mxConstants-js.html">mxConstants</a> and the values may be
   strings and numbers or JavaScript objects or functions.
 </p>
 <p>
   To modify the default styles for vertices and edges in an existing graph:
 </p>
-<pre>
+
+```javascript
 let vertexStyle = graph.getStylesheet().getDefaultVertexStyle();
 vertexStyle[mxConstants.STYLE_ROUNDED] = true;
 
 let edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
 edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.TopToBottom;
-</pre>
+```
+
+
 <h2><a id="Styles"></a>Styles</h2>
 <p>
   The style information for a cell is stored in <code>cell.style</code>.
@@ -130,7 +132,8 @@ var v1 = graph.insertVertex(parent, null, 'Hello',
   cell's style. Hence, the default implementation for <code>getImage</code>
   looks as follows:
 </p>
-<pre>
+
+```javascript
 mxGraph.prototype.getImage = function(state)
 {
   if (state != null &amp;&amp; state.style != null)
@@ -139,7 +142,8 @@ mxGraph.prototype.getImage = function(state)
   }
   return null;
 }
-</pre>
+```
+
 <p>
   This method may be overridden to return any image for the given state.
   Typically, the image is defined by either <code>state.cell</code>,
