@@ -57,7 +57,7 @@ class Effects {
   static animateChanges(
     graph: AbstractGraph,
     changes: UndoableChange[],
-    done?: Function
+    done?: () => void
   ): void {
     const maxStep = 10;
     let step = 0;
