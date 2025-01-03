@@ -55,7 +55,11 @@ class Effects {
    * @param done - Optional function argument that is invoked after the
    * last step of the animation.
    */
-  static animateChanges(graph: Graph, changes: UndoableChange[], done?: Function): void {
+  static animateChanges(
+    graph: Graph,
+    changes: UndoableChange[],
+    done?: () => void
+  ): void {
     const maxStep = 10;
     let step = 0;
 
