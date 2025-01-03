@@ -396,20 +396,20 @@ if (mxLoadResources) {
  * Fires when the escape key is pressed. The <code>event</code> property
  * contains the key event.
  *
- * ### Constructor: Editor
- *
- * Constructs a new editor. This function invokes the {@link onInit} callback
- * upon completion.
- *
- * ```javascript
- * var config = mxUtils.load('config/diagrameditor.xml').getDocumentElement();
- * var editor = new Editor(config);
- * ```
- *
- * @class Editor
- * @extends EventSource
  */
 export class Editor extends EventSource {
+  /**
+   * Constructs a new editor.
+   *
+   * It invokes the {@link onInit} callback upon completion.
+   *
+   * ```javascript
+   * const config = mxUtils.load('config/diagrameditor.xml').getDocumentElement();
+   * const editor = new Editor(config);
+   * ```
+   *
+   * @param config
+   */
   constructor(config: Element) {
     super();
 
@@ -446,7 +446,7 @@ export class Editor extends EventSource {
     }
   }
 
-  onInit: Function | null = null;
+  onInit: (() => void) | null = null;
   lastSnapshot: number | null = null;
   ignoredChanges: number | null = null;
   swimlaneLayout: any;
