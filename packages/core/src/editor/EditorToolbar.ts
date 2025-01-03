@@ -224,7 +224,7 @@ export class EditorToolbar {
     icon: string,
     mode: string,
     pressed: string | null = null,
-    funct: Function | null = null
+    funct: ((editor: Editor) => void) | null = null
   ): any {
     const clickHandler = () => {
       (<Editor>this.editor).setMode(mode);
@@ -256,7 +256,7 @@ export class EditorToolbar {
   addPrototype(
     title: string,
     icon: string,
-    ptype: Function | Cell,
+    ptype: (() => Cell) | Cell,
     pressed: string,
     insert: (
       editor: Editor,
@@ -272,10 +272,7 @@ export class EditorToolbar {
       if (typeof ptype === 'function') {
         return ptype();
       }
-      if (ptype != null) {
-        return (<Editor>this.editor).graph.cloneCell(ptype);
-      }
-      return null;
+      return (<Editor>this.editor).graph.cloneCell(ptype);
     };
 
     // Defines the function for a click event on the graph
