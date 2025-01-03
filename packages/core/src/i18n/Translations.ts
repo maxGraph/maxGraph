@@ -189,7 +189,7 @@ export default class Translations {
   static add = (
     basename: string | null = null,
     lan: string | null = null,
-    callback: Function | null = null
+    callback: (() => void) | null = null
   ): void => {
     lan ??= TranslationsConfig.getLanguage()?.toLowerCase() ?? NONE;
 
@@ -373,7 +373,7 @@ export default class Translations {
    *
    * @param callback Callback function for asynchronous loading.
    */
-  static loadResources = (callback: Function): void => {
+  static loadResources = (callback: () => void): void => {
     Translations.add(`${Client.basePath}/resources/editor`, null, () => {
       Translations.add(`${Client.basePath}/resources/graph`, null, callback);
     });
