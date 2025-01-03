@@ -92,7 +92,7 @@ class AutoSaveManager extends EventSource {
   /**
    * Holds the function that handles graph model changes.
    */
-  changeHandler: Function;
+  changeHandler: (sender: any, evt: any) => void;
 
   /**
    * Returns true if events are handled. This implementation
@@ -103,10 +103,9 @@ class AutoSaveManager extends EventSource {
   }
 
   /**
-   * Enables or disables event handling. This implementation
-   * updates <enabled>.
+   * Enables or disables event handling. This implementation updates {@link enabled}.
    *
-   * @param enabled - Boolean that specifies the new enabled state.
+   * @param value - Boolean that specifies the new enabled state.
    */
   setEnabled(value: boolean): void {
     this.enabled = value;
