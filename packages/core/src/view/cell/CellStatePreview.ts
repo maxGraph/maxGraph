@@ -97,7 +97,6 @@ class CellStatePreview {
   /**
    *
    * @param {Function} visitor
-   * @memberof mxCellStatePreview
    */
   show(visitor: Function | null = null): void {
     this.deltas.visit((key: string, delta: any) => {
@@ -114,7 +113,6 @@ class CellStatePreview {
    * @param {CellState} state
    * @param {number} dx
    * @param {number} dy
-   * @memberof mxCellStatePreview
    */
   translateState(state: CellState, dx: number, dy: number): void {
     if (state != null) {
