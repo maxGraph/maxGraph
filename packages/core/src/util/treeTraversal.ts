@@ -119,7 +119,7 @@ export function findTreeRoots(
 export function traverse(
   vertex: Cell | null = null,
   directed = true,
-  func: Function | null = null,
+  func: ((vertex: Cell, edge: Cell | null) => boolean) | null = null,
   edge: Cell | null = null,
   visited: Dictionary<Cell, boolean> | null = null,
   inverse = false
