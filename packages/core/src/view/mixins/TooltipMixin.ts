@@ -47,7 +47,7 @@ export const TooltipMixin: PartialType = {
       state.overlays.visit((id: string, shape: Shape) => {
         // LATER: Exit loop if tip is not null
         if (!tip && (node === shape.node || node.parentNode === shape.node)) {
-          tip = shape.overlay ? shape.overlay.toString() ?? null : null;
+          tip = shape.overlay ? (shape.overlay.toString() ?? null) : null;
         }
       });
     }

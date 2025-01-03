@@ -312,7 +312,7 @@ class Shape {
     const sw =
       this.stencil && this.stencil.strokeWidthValue !== 'inherit'
         ? Number(this.stencil.strokeWidthValue)
-        : this.strokeWidth ?? 0;
+        : (this.strokeWidth ?? 0);
 
     return mod(Math.max(1, Math.round(sw * this.scale)), 2) === 1 ? 0.5 : 0;
   }
