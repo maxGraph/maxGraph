@@ -108,22 +108,22 @@ class KeyHandler {
   /**
    * Maps from keycodes to functions for non-pressed control keys.
    */
-  normalKeys: { [key: number]: () => void } = {};
+  normalKeys: { [key: number]: (evt: KeyboardEvent) => void } = {};
 
   /**
    * Maps from keycodes to functions for pressed shift keys.
    */
-  shiftKeys: { [key: number]: Function } = {};
+  shiftKeys: { [key: number]: (evt: KeyboardEvent) => void } = {};
 
   /**
    * Maps from keycodes to functions for pressed control keys.
    */
-  controlKeys: { [key: number]: Function } = {};
+  controlKeys: { [key: number]: (evt: KeyboardEvent) => void } = {};
 
   /**
    * Maps from keycodes to functions for pressed control and shift keys.
    */
-  controlShiftKeys: { [key: number]: Function } = {};
+  controlShiftKeys: { [key: number]: (evt: KeyboardEvent) => void } = {};
 
   /**
    * Specifies if events are handled. Default is true.
@@ -154,7 +154,7 @@ class KeyHandler {
    * @param code Integer that specifies the keycode.
    * @param funct JavaScript function that takes the key event as an argument.
    */
-  bindKey(code: number, funct: () => void) {
+  bindKey(code: number, funct: (evt: KeyboardEvent) => void) {
     this.normalKeys[code] = funct;
   }
 
@@ -165,7 +165,7 @@ class KeyHandler {
    * @param code Integer that specifies the keycode.
    * @param funct JavaScript function that takes the key event as an argument.
    */
-  bindShiftKey(code: number, funct: () => void) {
+  bindShiftKey(code: number, funct: (evt: KeyboardEvent) => void) {
     this.shiftKeys[code] = funct;
   }
 
@@ -176,7 +176,7 @@ class KeyHandler {
    * @param code Integer that specifies the keycode.
    * @param funct JavaScript function that takes the key event as an argument.
    */
-  bindControlKey(code: number, funct: Function) {
+  bindControlKey(code: number, funct: (evt: KeyboardEvent) => void) {
     this.controlKeys[code] = funct;
   }
 
@@ -187,7 +187,7 @@ class KeyHandler {
    * @param code Integer that specifies the keycode.
    * @param funct JavaScript function that takes the key event as an argument.
    */
-  bindControlShiftKey(code: number, funct: Function) {
+  bindControlShiftKey(code: number, funct: (evt: KeyboardEvent) => void) {
     this.controlShiftKeys[code] = funct;
   }
 
@@ -206,7 +206,7 @@ class KeyHandler {
    *
    * @param evt Key event whose associated function should be returned.
    */
-  getFunction(evt: KeyboardEvent): () => void {
+  getFunction(evt: KeyboardEvent): ((evt: KeyboardEvent) => void) | null {
     if (evt != null && !isAltDown(evt)) {
       if (this.isControlDown(evt)) {
         if (isShiftDown(evt)) {
