@@ -76,9 +76,8 @@ class CellHighlight {
 
   /**
    * Holds the handler that automatically invokes reset if the highlight should be hidden.
-   * @default null
    */
-  resetHandler: Function;
+  resetHandler: () => void;
 
   constructor(
     graph: AbstractGraph,
