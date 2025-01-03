@@ -28,10 +28,13 @@ Copyright (c) JGraph Ltd 2006-2017
   To create a new graph instance, a DOM node (typically a DIV) is
   required:
 </p>
-<pre>
-let node = document.getElementById('id-of-graph-container');
-let graph = new mxGraph(node);
-</pre>
+
+
+```javascript
+const node = document.getElementById('id-of-graph-container');
+const graph = new mxGraph(node);
+```
+
 <h2><a id="Model"></a>Model</h2>
 <p>
   <a href="js-api/files/model/mxCell-js.html">mxCell</a> defines the
