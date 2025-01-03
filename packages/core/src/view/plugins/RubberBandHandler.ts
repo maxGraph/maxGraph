@@ -98,9 +98,9 @@ class RubberBandHandler implements GraphPlugin, MouseListenerSet {
     this.graph.addListener(InternalEvent.GESTURE, this.gestureHandler);
   }
 
-  forceRubberbandHandler: Function;
-  panHandler: Function;
-  gestureHandler: Function;
+  forceRubberbandHandler: (sender: EventSource, evt: EventObject) => void;
+  panHandler: () => void;
+  gestureHandler: (sender: EventSource, eo: EventObject) => void;
   graph: AbstractGraph;
   first: Point | null = null;
   destroyed = false;
