@@ -54,7 +54,7 @@ class MaxToolbar extends EventSource {
   currentImg: HTMLImageElementWithProps | HTMLButtonElement | null = null;
   selectedMode: HTMLImageElementWithProps | null = null;
   defaultMode: HTMLImageElementWithProps | HTMLButtonElement | null = null;
-  defaultFunction: Function | null = null;
+  defaultFunction: ((evt: MouseEvent, cell: Cell | null) => void) | null = null;
 
   /**
    * Reference to the DOM nodes that contains the toolbar.
@@ -347,7 +347,7 @@ class MaxToolbar extends EventSource {
   addMode(
     title: string | null = null,
     icon: string | null = null,
-    funct: Function,
+    funct: (evt: MouseEvent, cell: Cell | null) => void,
     pressedIcon: string,
     style: string | null = null,
     toggle = false
@@ -395,7 +395,10 @@ class MaxToolbar extends EventSource {
    * DOM node as selected. This function fires a select event with the given
    * function as a parameter.
    */
-  selectMode(domNode: HTMLImageElement, funct: Function | null = null): void {
+  selectMode(
+    domNode: HTMLImageElement,
+    funct: ((evt: MouseEvent, cell: Cell | null) => void) | null = null
+  ): void {
     if (this.selectedMode != domNode) {
       if (this.selectedMode != null) {
         const tmp = this.selectedMode.altIcon;
