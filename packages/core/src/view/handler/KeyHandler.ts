@@ -116,7 +116,7 @@ class KeyHandler {
   /**
    * Maps from keycodes to functions for non-pressed control keys.
    */
-  normalKeys: { [key: number]: Function } = {};
+  normalKeys: { [key: number]: () => void } = {};
 
   /**
    * Maps from keycodes to functions for pressed shift keys.
@@ -162,7 +162,7 @@ class KeyHandler {
    * @param code Integer that specifies the keycode.
    * @param funct JavaScript function that takes the key event as an argument.
    */
-  bindKey(code: number, funct: Function) {
+  bindKey(code: number, funct: () => void) {
     this.normalKeys[code] = funct;
   }
 
@@ -173,7 +173,7 @@ class KeyHandler {
    * @param code Integer that specifies the keycode.
    * @param funct JavaScript function that takes the key event as an argument.
    */
-  bindShiftKey(code: number, funct: Function) {
+  bindShiftKey(code: number, funct: () => void) {
     this.shiftKeys[code] = funct;
   }
 
@@ -214,7 +214,7 @@ class KeyHandler {
    *
    * @param evt Key event whose associated function should be returned.
    */
-  getFunction(evt: KeyboardEvent) {
+  getFunction(evt: KeyboardEvent): () => void {
     if (evt != null && !isAltDown(evt)) {
       if (this.isControlDown(evt)) {
         if (isShiftDown(evt)) {
