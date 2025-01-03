@@ -432,7 +432,7 @@ export class Editor extends EventSource {
     }
   }
 
-  onInit: Function | null = null;
+  onInit: (() => void) | null = null;
   lastSnapshot: number | null = null;
   ignoredChanges: number | null = null;
   swimlaneLayout: any;
