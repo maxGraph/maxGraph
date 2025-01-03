@@ -188,7 +188,7 @@ class Translations {
   static add = (
     basename: string,
     lan: string | null = null,
-    callback: Function | null = null
+    callback: (() => void) | null = null
   ): void => {
     lan =
       lan != null ? lan : Client.language != null ? Client.language.toLowerCase() : NONE;
@@ -373,7 +373,7 @@ class Translations {
    *
    * @param callback Callback function for asynchronous loading.
    */
-  static loadResources = (callback: Function): void => {
+  static loadResources = (callback: () => void): void => {
     Translations.add(`${Client.basePath}/resources/editor`, null, () => {
       Translations.add(`${Client.basePath}/resources/graph`, null, callback);
     });
