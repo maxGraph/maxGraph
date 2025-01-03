@@ -238,15 +238,15 @@ class DragSource {
 
   /**
    * Returns the graph for the given mouse event. This implementation returns
-   * null.
+   * `null`.
    */
-  getGraphForEvent(evt: MouseEvent) {
+  getGraphForEvent(evt: MouseEvent): Graph | null {
     return null;
   }
 
   /**
    * Returns the drop target for the given graph and coordinates. This
-   * implementation uses {@link mxGraph.getCellAt}.
+   * implementation uses {@link Graph.getCellAt}.
    */
   getDropTarget(graph: Graph, x: number, y: number, evt: MouseEvent) {
     return graph.getCellAt(x, y);
