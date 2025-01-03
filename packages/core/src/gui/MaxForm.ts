@@ -58,7 +58,7 @@ class MaxForm {
    * Helper method to add an OK and Cancel button using the respective
    * functions.
    */
-  addButtons(okFunct: Function, cancelFunct: Function): void {
+  addButtons(okFunct: () => void, cancelFunct: () => void): void {
     const tr = document.createElement('tr');
     let td = document.createElement('td');
     tr.appendChild(td);
