@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-description: Learn how-to save and open Editor data stored in a XML file.
+description: Learn how to save and open Editor data stored in a XML file.
 ---
 
 # Editor Input/Output
