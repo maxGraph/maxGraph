@@ -23,11 +23,10 @@ See the dedicated [codecs page](../usage/codecs.md) for more information on how 
 For encoding other objects, or if no editor instance is available, the [Codec](https://maxgraph.github.io/maxGraph/api-docs/classes/Codec.html) can be used to create and read XML data.
 
 
-
 <a id="Files"></a>
 ## Files
 
-The `save`, `open`, `readGraphModel` and `writeGraphModel` functions implement a standard mechanism for handling files in [Editor]()https://maxgraph.github.io/maxGraph/api-docs/classes/Editor.html.
+The `save`, `open`, `readGraphModel` and `writeGraphModel` functions implement a standard mechanism for handling files in [Editor](https://maxgraph.github.io/maxGraph/api-docs/classes/Editor.html).
 
 The default implementation of `Editor.save` is called with an argument to indicate if the save was triggered by the user or by the system.
 It then uses the `urlPost` variable of the editor object to check if a post request should be issued.
