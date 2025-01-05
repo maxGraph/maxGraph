@@ -110,32 +110,27 @@ edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.TopToBottom;
 <a id="Styles"></a>
 ## Styles
 
-<p>
-  The style information for a cell is stored in `cell.style`.
-  The style is part of the cell's state and is normally changed via
-  `mxGraphModel.setStyle`, which will update all views.
-  The cell style is a string of the form
-</p>
-<pre>
-[stylename;|key=value;]
-</pre>
-<p>
-  which tells the graph to use the given named styles and override the
-  specified key, value pairs in the given order. For example, to use the
-  <a href="js-api/files/view/mxStylesheet-js.html#mxStylesheet.putCellStyle">rounded</a>
-  style and override the stroke- and fillColor, the style would be defined as:
-</p>
-<pre>
-rounded;strokeColor=red;fillColor=green
-</pre>
-<p>
-  To use the above in Hello, World!, the stylename would be passed to the
-  insertVertex method as follows:
-</p>
-<pre>
-var v1 = graph.insertVertex(parent, null, 'Hello',
-  20, 20, 80, 30, 'rounded;strokeColor=red;fillColor=green');
-</pre>
+The style information for a cell is stored in `cell.style`.
+The style is part of the cell's state and is normally changed via `GraphDataModel.setStyle`, which will update all views.
+The cell style is a [CellStateStyle object ](https://maxgraph.github.io/maxGraph/api-docs/types/CellStateStyle.html) which tells the graph to use the given named styles and override the specified keys. 
+
+For example, use the [Stylesheet.putCellStyle](https://maxgraph.github.io/maxGraph/api-docs/classes/Stylesheet.html#putcellstyle) method to set to `rounded` style
+and override the stroke and fill colors, the style would be defined as:
+
+```javascript
+{
+  baseStyleNames: ['rounded'],
+  strokeColor: 'red',
+  fillColor: 'green'
+}
+```
+
+To use the above in Hello, World!, the stylename would be passed to the insertVertex method as follows:
+
+[//]: # (TODO migrate to the new insertVertex method using object and use maxGraph style object)
+```javascript
+const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30, 'rounded;strokeColor=red;fillColor=green');
+```
 
 
 <a id="Appearance"></a>
@@ -163,4 +158,3 @@ which refers to the cell's user object.
   
 Due to the nature of the display, where all cells are created once and updated only if the model fires a notification for a change,
 you must invoke `view.invalidate(cell)` for each cell whose image has changed, and call `view.validate` to update the display.
-
