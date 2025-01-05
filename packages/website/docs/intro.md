@@ -18,14 +18,6 @@ which requires finer-grained customization of functionality than off-the-shelf p
 
 ## About this documentation
 
-:::warning
-
-This documentation is a **work in progress**.
-
-Please be patient, as content will be gradually updated, especially the content of the original `mxGraph` documentation.
-
-:::
-
 :::tip
 
 The documentation hosted at https://maxgraph.github.io/maxGraph includes the latest development changes.
