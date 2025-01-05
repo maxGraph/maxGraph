@@ -8,7 +8,7 @@ description: Learn how to instantiate your first Graph.
 :::warning
 
 The content of this page is a **work in progress**.
-The original `mxGraph` tutorial was used to create this page which still contains `mxGraph` code to migrate to the maxGraph API.
+The original `mxGraph` tutorial was used to create this page which still contains `mxGraph` class diagrams to migrate to the maxGraph API.
 
 :::
 
@@ -38,11 +38,7 @@ const graph = new mxGraph(node);
 <a id="Model"></a>
 ## Model
 
-<p>
-  <a href="js-api/files/model/mxCell-js.html">mxCell</a> defines the
-  elements of the graph model, which is implemented by
-  <a href="js-api/files/model/mxGraphModel-js.html">mxGraphModel</a>.
-</p>
+[Cell](https://maxgraph.github.io/maxGraph/api-docs/classes/Cell.html) defines the elements of the graph model, which is implemented by [GraphDataModel](https://maxgraph.github.io/maxGraph/api-docs/classes/GraphDataModel.html).
 
 ![](assets/graphs/model.png)
 
