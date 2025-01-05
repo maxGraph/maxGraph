@@ -47,44 +47,42 @@ This is normally done at startup time to configure the editor, graph, model, too
 <a id="CSS"></a>
 ## CSS
 
-<p>
-  The CSS stylesheet contains the style definitions for various
-  elements of the user interface, such as the rubberband selection,
-  the in-place editor or the popup menu. It also contains the directives
-  required to enable VML support in Internet Explorer, so it is substantial
-  that the stylesheet is included in the page.
-</p>
-<p>
-  Additional stylesheets may either be added programmatically using
-  <code>mxClient.link('stylesheet', filename)</code> or
-  via a stylesheet tag of the UI section in the editor configuration, eg.:
-</p>
+The CSS stylesheet contains the style definitions for various elements of the user interface, such as the rubberband selection,
+the in-place editor or the popup menu.
+
+Additional stylesheets may either be added via a stylesheet tag of the UI section in the editor configuration, e.g.:
 
 
 ```xml
-&lt;Editor&gt;
-  &lt;ui&gt;
-    &lt;stylesheet name="examples/editors/css/process.css"/&gt;
-    ...
+<Editor>
+  <ui>
+    <stylesheet name="examples/editors/css/process.css"/>
+  </ui>
+</Editor>
 ```
 
 
-<h2><a id="Templates"></a>Templates</h2>
-<p>
-  To add new cell types, create a template in the templates array section of
-  the model in the config file (mxEditor/mxGraph/mxGraphModel/Array[as=templates])
-  as follows:
-</p>
-<pre>
-&lt;add as="symbol"&gt;
-  &lt;Symbol label="Symbol" customAttribute="whatever"&gt;
-    &lt;mxCell vertex="1" connectable="1" style="symbol;image=images/event.png"&gt;
-      &lt;mxGeometry as="geometry" width="32" height="32"/&gt;
-    &lt;/mxCell&gt;
-    &lt;CustomChild customAttribute="whatever"/&gt;
-  &lt;/Symbol&gt;
-&lt;/add&gt;
-</pre>
+<a id="Templates"></a>
+## Templates
+
+To add new cell types, create a template in the templates array section of the model in the config file (Editor/Graph/GraphDataModel/Array[as=templates]) as follows:
+
+```xml
+<add as="symbol">
+  <Symbol label="Symbol" customAttribute="whatever">
+    <Cell vertex="1" connectable="true">
+      <Geometry as="geometry" width="32" height="32"/>
+      <Object fillColor="green" image="images/event.png" as="style">
+        <Array as="baseStyleNames">
+          <add value="symbol" />
+        </Array>
+      </Object>        
+    </Cell>
+    <CustomChild customAttribute="whatever"/>
+  </Symbol>
+</add>
+```
+
 <p>
   The <code>as</code>-attribute of the <code>add</code>-element contains the
   name under which the template will be accessible for later use. The
@@ -110,9 +108,9 @@ This is normally done at startup time to configure the editor, graph, model, too
   (mxEditor/mxDefaultToolbar[as=toolbar]) as follows:
 </p>
 <pre>
-&lt;add as="symbolTool" template="symbol"
+<add as="symbolTool" template="symbol"
   style="symbol;image=wf/images/bpmn/special_event.png"
-  icon="wf/images/bpmn/small_event.gif"/&gt;
+  icon="wf/images/bpmn/small_event.gif"/>
 </pre>
 <p>
   The <code>as</code> attribute specifies the tooltip to be displayed for the
