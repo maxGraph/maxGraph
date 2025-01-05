@@ -129,16 +129,7 @@ You will see something like in the following _maxGraph panning_ demo:
 The maxGraph documentation is available on the [maxGraph website](https://maxgraph.github.io/maxGraph).
 
 > [!WARNING]  
-> This is a **work in progress**, the content of the original _mxGraph_ documentation will be progressively migrated there.
-> For more details, see [#345](https://github.com/maxGraph/maxGraph/issues/345).
-
-Documentation partially migrated:
-- https://maxgraph.github.io/maxGraph/docs/manual/
-
-Documentation to be migrated:
-- https://jgraph.github.io/mxgraph/docs/tutorial.html
- 
-> Be aware that the maxGraph API doesn't fully match the mxGraph API (see the paragraph below about "[Migrating from mxGraph](#migrate-from-mxgraph)").
+> This is a **work in progress**, the content will be progressively improved.
 
 
 ## Examples
