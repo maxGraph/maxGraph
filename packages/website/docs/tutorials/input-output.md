@@ -53,14 +53,10 @@ See the dedicated [codecs page](../usage/codecs.md) for more information on how 
 <a id="Post"></a>
 ## Post
 
-<p>
-  As an example, consider the following PHP file which is located
-  in the same directory as the HTML page. If the filename is server.php
-  then the urlPost variable must be set to server.php on the editor
-  in order to post the diagram to the server. The PHP file will get
-  the XML from the POST request and write it to a file called
-  diagram.xml.
-</p>
+As an example, consider the following PHP file which is located in the same directory as the HTML page.
+If the filename is `server.php` then the `urlPost` variable must be set to `server.php` on the editor in order to post the diagram to the server.
+The PHP file will get the XML from the POST request and write it to a file called `diagram.xml`.
+
 ```php
 <?php
 $xml = $HTTP_POST_VARS['xml'];
