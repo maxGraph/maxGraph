@@ -83,22 +83,14 @@ To add new cell types, create a template in the templates array section of the m
 </add>
 ```
 
-<p>
-  The <code>as</code>-attribute of the <code>add</code>-element contains the
-  name under which the template will be accessible for later use. The
-  <code>Symbol</code>-child element is a custom (ie workflow) element, and
-  can have any name and any number of child elements and custom attributes.
-  The label attribute is a special one that is used for the textual
-  representation of the cell in the graph. The <code>mxCell</code> element
-  is another special child node which contains the graphical information for
-  the cell, namely, the cell-type, -style, -size and -position.
-</p>
-<p>
-  See mxGraph.convertValueToString if you would like to use another
-  attribute or a combination of attributes for the textual representation,
-  and <code>mxCell.valueChanged</code> to handle in-place editing by storing
-  the new text value in the respective attribute(s).
-</p>
+The `as`-attribute of the `add`-element contains the name under which the template will be accessible for later use.
+The `Symbol`-child element is a custom (ie workflow) element, and can have any name and any number of child elements and custom attributes.
+
+The label attribute is a special one that is used for the textual representation of the cell in the graph.
+The `Cell` element is another special child node which contains the graphical information for the cell, namely, the cell-type, -style, -size and -position.
+
+See `Graph.convertValueToString` if you would like to use another attribute or a combination of attributes for the textual representation,
+and `Cell.valueChanged` to handle in-place editing by storing the new text value in the respective attribute(s).
 
 
 <h2><a id="Toolbar"></a>Toolbar</h2>
@@ -113,16 +105,16 @@ To add new cell types, create a template in the templates array section of the m
   icon="wf/images/bpmn/small_event.gif"/>
 </pre>
 <p>
-  The <code>as</code> attribute specifies the tooltip to be displayed for the
-  icon in the toolbar, the <code>template</code>-attribute refers to the name
-  under which the template was previously added. The <code>style</code>-
+  The `as` attribute specifies the tooltip to be displayed for the
+  icon in the toolbar, the `template`-attribute refers to the name
+  under which the template was previously added. The `style`-
   attribute is optional, and may be used to override the style defined in the
   template definition. Finally, the icon specifies the icon to be used for the
   toolbar item.
 </p>
 <p>
-  Note that the <code>as</code> attribute is assumed to be the key for a language
-  resource, in this case <code>symbolTool</code>. If the resource is not defined
+  Note that the `as` attribute is assumed to be the key for a language
+  resource, in this case `symbolTool`. If the resource is not defined
   in <a href="js-api/files/util/mxResources-js.html">mxResources</a>, then the
   attribute value is used as the label.
 </p>
