@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-description: XXXX.
+description: Learn how to use the maxGraph Editor.
 ---
 
 # Editor
@@ -93,28 +93,22 @@ See `Graph.convertValueToString` if you would like to use another attribute or a
 and `Cell.valueChanged` to handle in-place editing by storing the new text value in the respective attribute(s).
 
 
-<h2><a id="Toolbar"></a>Toolbar</h2>
-<p>
-  To use the template in the graph, a toolbar item must be added which refers
-  to the template in the mxDefaultToolbar section of the config file
-  (mxEditor/mxDefaultToolbar[as=toolbar]) as follows:
-</p>
-<pre>
+<a id="Toolbar"></a>
+## Toolbar
+
+
+To use the template in the graph, a toolbar item must be added which refers to the template in the `DefaultToolbar` section
+of the config file (Editor/DefaultToolbar[as=toolbar]) as follows:
+
+```xml
 <add as="symbolTool" template="symbol"
   style="symbol;image=wf/images/bpmn/special_event.png"
   icon="wf/images/bpmn/small_event.gif"/>
-</pre>
-<p>
-  The `as` attribute specifies the tooltip to be displayed for the
-  icon in the toolbar, the `template`-attribute refers to the name
-  under which the template was previously added. The `style`-
-  attribute is optional, and may be used to override the style defined in the
-  template definition. Finally, the icon specifies the icon to be used for the
-  toolbar item.
-</p>
-<p>
-  Note that the `as` attribute is assumed to be the key for a language
-  resource, in this case `symbolTool`. If the resource is not defined
-  in <a href="js-api/files/util/mxResources-js.html">mxResources</a>, then the
-  attribute value is used as the label.
-</p>
+```
+
+The `as` attribute specifies the tooltip to be displayed for the icon in the toolbar, the `template`-attribute refers to the name under which the template was previously added.
+The `style`- attribute is optional, and may be used to override the style defined in the template definition.
+Finally, the icon specifies the icon to be used for the toolbar item.
+
+Note that the `as` attribute is assumed to be the key for a language resource, in this case `symbolTool`.
+If the resource is not defined in [Translations resources](https://maxgraph.github.io/maxGraph/api-docs/classes/Translations.html#resources), then the attribute value is used as the label.
