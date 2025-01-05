@@ -27,15 +27,14 @@ Copyright (c) JGraph Ltd 2006-2017
 
 See the dedicated [codecs page](../usage/codecs.md) for more information on how to use codecs.
 
-<p>
   For encoding other objects, or if no editor instance is available,
   the <a href="js-api/files/io/mxCodec-js.html">mxCodec</a> can be
   used to create and read XML data.
-</p>
 
 
 
-<h2><a id="Files"></a>Files</h2>
+<a id="Files"></a>
+## Files
 <p>
   The save, open, readGraphModel and writeGraphModel functions
   implement a standard mechanism for handling files in
@@ -49,7 +48,11 @@ See the dedicated [codecs page](../usage/codecs.md) for more information on how 
   the variable is defined, the editor issues a post request to the
   specified URL passing the XML along as a POST variable called xml.
 </p>
-<h2><a id="Post"></a>Post</h2>
+
+
+<a id="Post"></a>
+## Post
+
 <p>
   As an example, consider the following PHP file which is located
   in the same directory as the HTML page. If the filename is server.php
@@ -69,25 +72,18 @@ if ($xml != null) {
 ?>
 ```
 
-<p>
-  To set the URL to post to, change the respective entry in the mxEditor node of the config file as follows:
-</p>
+To set the URL to post to, change the respective entry in the `Editor` node of the config file as follows:
 
 ```xml
-&lt;mxEditor urlPost="http://www.example.com/server.php" ... &gt;
+<Editor urlPost="http://www.example.com/server.php" ... >
 ```
 
-<p>
-  Keep in mind that the JavaScript can only post to the server where it originated from, so we recommend
-  to use relative URLs, eg. server.php.
-</p>
+Keep in mind that the JavaScript can only post to the server where it originated from, so we recommend to use relative URLs, e.g. `server.php`.
 
-<h2><a id="FormFields"></a>Form Fields</h2>
-<p>
-  If you need to read/write the graph from/to a string (eg. to fill a form-field), you can use the
-  following methods:
-</p>
+<a id="FormFields"></a>
+## Form Fields
 
+If you need to read/write the graph from/to a string (e.g. to fill a form-field), you can use the following methods:
 
 ```javascript
 const data = editor.writeGraphModel();
