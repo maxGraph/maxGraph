@@ -8,7 +8,7 @@ description: XXXX.
 :::warning
 
 The content of this page is a **work in progress**.
-The original `mxGraph` tutorial was used to create this page which still contains `mxGraph` code to migrate to the maxGraph API.
+The original `mxGraph` tutorial was used to create this page which still contains `mxGraph` class diagrams to migrate to the maxGraph API.
 
 :::
 
@@ -23,37 +23,30 @@ Copyright (c) JGraph Ltd 2006-2017
 :::
 
 
-<p>
-  Instantiate <a href="js-api/files/editor/mxEditor-js.html">mxEditor</a> in
-  order to create an editor. This is the central class in the editor
-  package. Everything else in this package is auxiliary.
-  To create a new editor instance and configure it using a config
-  file, you can pass the name of the config file to the
-  <a href="js-api/files/editor/mxEditor-js.html#mxEditor.mxEditor">mxEditor constructor</a>.
-</p>
+Instantiate [Editor](https://maxgraph.github.io/maxGraph/api-docs/classes/Editor.html) in order to create an editor.
+This is the central class in the editor package. Everything else in this package is auxiliary.
 
+To create a new editor instance and configure it using a config file, you can pass the name of the config file to the
+[Editor constructor](https://maxgraph.github.io/maxGraph/api-docs/classes/Editor.html).
 
 ![](assets/graphs/editor.png)
 
-<p>
-  To create a new editor instance and configure it, the following code is used:
-</p>
-<pre>
-let config = mxUtils.load('editors/config/keyhandler-commons.xml').getDocumentElement();
-let editor = new mxEditor(config);
-</pre>
-<p>
-  <b>TODO add link to the codecs page</b>
-  The configuration file is an XML file that is passed to
-  <a href="js-api/files/io/mxCodec-js.html">mxCodec</a>, which in
-  turn uses <a href="js-api/files/io/mxEditorCodec-js.html">mxEditorCodec</a>
-  and others to read the XML into the editor object hierarchy. This is normally
-  done at startup time to configure the editor, graph, model, toolbar, popupmenus
-  etc using the <a href="#InputOutput">I/O subsystem</a>.
-</p>
+To create a new editor instance and configure it, the following code is used:
+
+```javascript
+const config = mxUtils.load('editors/config/keyhandler-commons.xml').getDocumentElement();
+const editor = new Editor(config);
+```
+
+The configuration file is an XML file that is passed to [Codec](https://maxgraph.github.io/maxGraph/api-docs/classes/Codec.html),
+which in turn uses [EditorCodec](https://maxgraph.github.io/maxGraph/api-docs/classes/EditorCodec.html) and others to read the XML into the editor object hierarchy.
+
+This is normally done at startup time to configure the editor, graph, model, toolbar, popupmenus, etc. using the [I/O subsystem](./editor-input-output.md).
 
 
-<h2><a id="CSS"></a>CSS</h2>
+<a id="CSS"></a>
+## CSS
+
 <p>
   The CSS stylesheet contains the style definitions for various
   elements of the user interface, such as the rubberband selection,
@@ -68,13 +61,12 @@ let editor = new mxEditor(config);
 </p>
 
 
-<pre>
-&lt;mxEditor&gt;
+```xml
+&lt;Editor&gt;
   &lt;ui&gt;
     &lt;stylesheet name="examples/editors/css/process.css"/&gt;
     ...
-</pre>
-
+```
 
 
 <h2><a id="Templates"></a>Templates</h2>
