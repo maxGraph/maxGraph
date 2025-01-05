@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-description: XXXX.
+description: Learn how to instantiate your first Graph.
 ---
 
 # Graph
@@ -23,26 +23,21 @@ Copyright (c) JGraph Ltd 2006-2017
 :::
 
 
-<p>
-  Instantiate <a href="js-api/files/view/mxGraph-js.html">mxGraph</a>
-  in order to create a graph. This is the central class in the API.
-  Everything else is auxiliary.
-</p>
+Instantiate [Graph](https://maxgraph.github.io/maxGraph/api-docs/classes/Graph.html) in order to create a graph. This is the central class in the API.
+Everything else is auxiliary.
 
-![](assets/graphs/graph.png)
+![The Graph class hierarchy](assets/graphs/graph.png)
 
-<p>
-  To create a new graph instance, a DOM node (typically a DIV) is
-  required:
-</p>
-
+To create a new graph instance, a DOM node (typically a DIV) is required:
 
 ```javascript
 const node = document.getElementById('id-of-graph-container');
 const graph = new mxGraph(node);
 ```
 
-<h2><a id="Model"></a>Model</h2>
+<a id="Model"></a>
+## Model
+
 <p>
   <a href="js-api/files/model/mxCell-js.html">mxCell</a> defines the
   elements of the graph model, which is implemented by
@@ -86,12 +81,14 @@ const model = new GraphDataModel(root);
 ```
 
 
-<h2><a id="Stylesheet"></a>Stylesheet</h2>
+<a id="Stylesheet"></a>
+## Stylesheet
+
 <p>
   The appearance of the cells in a graph is defined by the
   stylesheet, which is an instance of
   <a href="js-api/files/view/mxStylesheet-js.html">mxStylesheet</a>.
-  The stylesheet maps from stylenames to styles.
+  The stylesheet maps from style names to styles.
   A style is an array of key, value pairs to be
   used with the cells. The keys are defined in
   <a href="js-api/files/util/mxConstants-js.html">mxConstants</a> and the values may be
@@ -110,11 +107,13 @@ edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.TopToBottom;
 ```
 
 
-<h2><a id="Styles"></a>Styles</h2>
+<a id="Styles"></a>
+## Styles
+
 <p>
-  The style information for a cell is stored in <code>cell.style</code>.
+  The style information for a cell is stored in `cell.style`.
   The style is part of the cell's state and is normally changed via
-  <code>mxGraphModel.setStyle</code>, which will update all views.
+  `mxGraphModel.setStyle`, which will update all views.
   The cell style is a string of the form
 </p>
 <pre>
@@ -137,41 +136,31 @@ rounded;strokeColor=red;fillColor=green
 var v1 = graph.insertVertex(parent, null, 'Hello',
   20, 20, 80, 30, 'rounded;strokeColor=red;fillColor=green');
 </pre>
-<h2><a id="Appearance"></a>Appearance</h2>
-<p>
-  In certain cases you may want to override specific attributes based on
-  dynamic properties of a cell (ie. it's value, aka. userobject), such as
-  the image, indicator shape, -image, -color or -gradient color), in
-  which case you can override <code>getImage</code>,
-  <code>getIndicatorShape</code>, <code>getIndicatorImage</code>,
-  <code>getIndicatorColor</code> and <code>getIndicatorGradientColor</code>
-  respectively. Note that these methods take a cell state as an argument,
-  which points to a "resolved" (that is, an array) version of the
-  cell's style. Hence, the default implementation for <code>getImage</code>
-  looks as follows:
-</p>
 
-```javascript
-mxGraph.prototype.getImage = function(state)
-{
-  if (state != null &amp;&amp; state.style != null)
-  {
-    return state.style[mxConstants.STYLE_IMAGE];
+
+<a id="Appearance"></a>
+## Appearance
+
+In certain cases you may want to override specific attributes based on dynamic properties of a cell (i.e. it's value, aka. `UserObject`), such as
+the image, indicator shape, -image, -color or -gradient color), in which case you can override
+`getImage`, `getIndicatorShape`, `getIndicatorImage`, `getIndicatorColor` and `getIndicatorGradientColor` respectively.
+Note that these methods take a cell state as an argument, which points to a "resolved" version of the cell's style.
+
+Hence, the default implementation for `getImage`looks as follows:
+
+```typescript
+graph.getImage = function(state: CellState) {
+  if (state?.style) {
+    return state.style.image;
   }
   return null;
 }
 ```
 
-<p>
-  This method may be overridden to return any image for the given state.
-  Typically, the image is defined by either <code>state.cell</code>,
-  which points to the graph cell associated with the state, or by
-  <code>state.cell.value</code>, which refers to the cell's user object.
-</p>
-<p>
-  Due to the nature of the display, where all cells are created once and
-  updated only if the model fires a notification for a change, you must
-  invoke <code>view.invalidate(cell)</code> for each cell whose image
-  has changed, and call <code>view.validate</code> to update the display.
-</p>
+This method may be overridden to return any image for the given state.
+Typically, the image is defined by either `state.cell`, which points to the graph cell associated with the state, or by `state.cell.value`,
+which refers to the cell's user object.
+  
+Due to the nature of the display, where all cells are created once and updated only if the model fires a notification for a change,
+you must invoke `view.invalidate(cell)` for each cell whose image has changed, and call `view.validate` to update the display.
 
