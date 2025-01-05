@@ -84,26 +84,18 @@ const model = new GraphDataModel(root);
 <a id="Stylesheet"></a>
 ## Stylesheet
 
-<p>
-  The appearance of the cells in a graph is defined by the
-  stylesheet, which is an instance of
-  <a href="js-api/files/view/mxStylesheet-js.html">mxStylesheet</a>.
-  The stylesheet maps from style names to styles.
-  A style is an array of key, value pairs to be
-  used with the cells. The keys are defined in
-  <a href="js-api/files/util/mxConstants-js.html">mxConstants</a> and the values may be
-  strings and numbers or JavaScript objects or functions.
-</p>
-<p>
-  To modify the default styles for vertices and edges in an existing graph:
-</p>
+The appearance of the cells in a graph is defined by the stylesheet, which is an instance of [Stylesheet](https://maxgraph.github.io/maxGraph/api-docs/classes/Stylesheet.html).
+The stylesheet maps from style names to styles.
 
+A style is a [CellStateStyle object ](https://maxgraph.github.io/maxGraph/api-docs/types/CellStateStyle.html), to be used with the cells. 
+
+To modify the default styles for vertices and edges in an existing graph:
 ```javascript
-let vertexStyle = graph.getStylesheet().getDefaultVertexStyle();
-vertexStyle[mxConstants.STYLE_ROUNDED] = true;
+const vertexStyle = graph.getStylesheet().getDefaultVertexStyle();
+vertexStyle.rounded = true;
 
-let edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
-edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.TopToBottom;
+const edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
+edgeStyle.edgeStyle = EdgeStyle.TopToBottom;
 ```
 
 
@@ -127,9 +119,15 @@ and override the stroke and fill colors, the style would be defined as:
 
 To use the above in Hello, World!, the stylename would be passed to the insertVertex method as follows:
 
-[//]: # (TODO migrate to the new insertVertex method using object and use maxGraph style object)
+[//]: # (TODO migrate to the new insertVertex method using a single object parameter)
 ```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30, 'rounded;strokeColor=red;fillColor=green');
+const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
+  {
+    baseStyleNames: ['rounded'],
+    strokeColor: 'red',
+    fillColor: 'green'
+  }
+);
 ```
 
 
