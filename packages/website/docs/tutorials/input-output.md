@@ -3,14 +3,7 @@ sidebar_position: 4
 description: XXXX.
 ---
 
-# Input/Output
-
-:::warning
-
-The content of this page is a **work in progress**.
-The original `mxGraph` tutorial was used to create this page which still contains `mxGraph` code to migrate to the maxGraph API.
-
-:::
+# Editor Input/Output
 
 :::note
 
@@ -27,27 +20,18 @@ Copyright (c) JGraph Ltd 2006-2017
 
 See the dedicated [codecs page](../usage/codecs.md) for more information on how to use codecs.
 
-  For encoding other objects, or if no editor instance is available,
-  the <a href="js-api/files/io/mxCodec-js.html">mxCodec</a> can be
-  used to create and read XML data.
+For encoding other objects, or if no editor instance is available, the [Codec](https://maxgraph.github.io/maxGraph/api-docs/classes/Codec.html) can be used to create and read XML data.
 
 
 
 <a id="Files"></a>
 ## Files
-<p>
-  The save, open, readGraphModel and writeGraphModel functions
-  implement a standard mechanism for handling files in
-  <a href="js-api/files/editor/mxEditor-js.html">mxEditor</a>.
-</p>
-<p>
-  The default implementation of <code>mxEditor.save</code> is called
-  with an argument to indicate if the save was triggered by the user or
-  by the system. It then uses the <code>urlPost</code> variable of
-  the editor object to check if a post request should be issued. If
-  the variable is defined, the editor issues a post request to the
-  specified URL passing the XML along as a POST variable called xml.
-</p>
+
+The `save`, `open`, `readGraphModel` and `writeGraphModel` functions implement a standard mechanism for handling files in [Editor]()https://maxgraph.github.io/maxGraph/api-docs/classes/Editor.html.
+
+The default implementation of `Editor.save` is called with an argument to indicate if the save was triggered by the user or by the system.
+It then uses the `urlPost` variable of the editor object to check if a post request should be issued.
+If the variable is defined, the editor issues a post request to the specified URL passing the XML along as a POST variable called xml.
 
 
 <a id="Post"></a>
@@ -83,5 +67,5 @@ If you need to read/write the graph from/to a string (e.g. to fill a form-field)
 
 ```javascript
 const data = editor.writeGraphModel();
-editor.readGraphModel(mxUtils.parseXml(data));
+editor.readGraphModel(xmlUtils.parseXml(data));
 ```
