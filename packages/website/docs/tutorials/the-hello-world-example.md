@@ -15,17 +15,14 @@ Copyright (c) JGraph Ltd 2006-2017
 
 :::
 
+<a id="HelloWorld"></a>
+## Hello, World!
 
-<h2><a id="HelloWorld"></a>Hello, World!</h2>
-<p>
-  The Hello, World! example of maxGraph ships in a
-  single <a href="../javascript/examples/helloworld.html">HTML file</a>,
-  which contains the required namespaces, the mxGraph library script
-  and the example code. The example can be viewed by pointing Firefox or
-  Internet Explorer to the link above either on the local
-  filesystem or on a webserver. To display the source of the example
-  press Control-U in Firefox or click Page, View Source in Internet Explorer.
-</p>
+The _Hello, World!_ example of `maxGraph` ships in a Storybook story called `HelloWorld` which is available in the `HelloWorld` page of the [maxGraph demo](https://maxgraph.github.io/maxGraph/demo/?path=/story/basic-helloworld--default).
+
+The source of the example is available in [HelloWorld.stories.js](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/HelloWorld.stories.js).
+
+![Screenshot of the Hello World example](./assets/hello-world-example.png)
 
 
 ## Container
