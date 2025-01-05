@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-description: XXXX.
+description: A step-by-step guide to display a simple Graph and understand the maxGraph concepts.
 ---
 
 # The Hello World Example
@@ -27,34 +27,26 @@ The source of the example is available in [HelloWorld.stories.js](https://github
 
 ## Container
 
-<p>
-  For the JavaScript to actually render the graph, the page
-  contains an DOM node which will display the graph. This
-  DOM node is either dynamically created or it is obtained via
-  an ID using <code>document.getElementById</code> as in the
-  Hello, World! example. The DOM node is passed to the main
-  function and is used to construct the graph instance as shown
-  below.
-</p>
-<p>
-  If you want the container to have scrollbars, use the `overflow:auto` CSS
-  directive instead of overflow:hidden in the style of the container.
-</p>
-<h2><a id="Graph"></a>Graph</h2>
-<p>
-  The code constructs an empty graph model and passes the container
-  and the empty model to the graph constructor. For this example,
-  all default event handling is disabled in the last line.
-</p>
+For the JavaScript to actually render the graph, the page contains an DOM node which will display the graph.
+This DOM node is either dynamically created or it is obtained via an ID using `document.getElementById` as in the _Hello, World!_ example.
+The DOM node is passed to the main function and is used to construct the graph instance as shown below.
+
+If you want the container to have scrollbars, use the `overflow:auto` CSS directive instead of overflow:hidden in the style of the container.
+
+
+<a id="Graph"></a>
+## Graph
+
+The code constructs an empty graph model and passes the container and the empty model to the graph constructor.
+For this example, all default event handling is disabled in the last line.
 
 ```javascript
 const model = new GraphDataModel();
 const graph = new Graph(container, model);
 ```
 
-<p>
-	If you want the graph to be read-only you can use <code>graph.setEnabled(false)</code>.
-</p>
+If you want the graph to be read-only you can use <code>graph.setEnabled(false)</code>.
+
 
 <h2><a id="VerticesAndEdges"></a>Vertices and Edges</h2>
 <p>
