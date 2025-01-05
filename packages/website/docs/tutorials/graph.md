@@ -46,33 +46,15 @@ const graph = new mxGraph(node);
 
 ![](assets/graphs/model.png)
 
+The graph model has the following properties:
+*  The root element of the graph contains the layers. The parent of each layer is the root element.
+* A layer may contain elements of the graph model, namely vertices, edges and groups.
+* Groups may contain elements of the graph model, recursively.
 
+The graph and structural information is stored in the cells, as well as the _user objects_,
+which are used to store the _value_ associated with the cells (aka business objects).
 
-<p>
-  The graph model has the following properties:
-</p>
-<ul>
-  <li>
-    The root element of the graph contains the layers.
-    The parent of each layer is the root element.
-  </li>
-  <li>
-    A layer may contain elements of the graph model,
-    namely vertices, edges and groups.
-  </li>
-  <li>
-    Groups may contain elements of the graph model,
-    recursively.
-  </li>
-</ul>
-<p>
-  The graph and structural information is stored in the cells, as well as the
-  <i>user objects</i>, which are used to store the <i>value</i> associated with
-  the cells (aka business objects).
-</p>
-<p>
-  To create a new graph model with a root cell and a default layer (first child):
-</p>
+To create a new graph model with a root cell and a default layer (first child):
 
 ```javascript
 const root = new Cell();
