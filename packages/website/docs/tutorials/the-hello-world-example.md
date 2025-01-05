@@ -45,31 +45,25 @@ const model = new GraphDataModel();
 const graph = new Graph(container, model);
 ```
 
-If you want the graph to be read-only you can use <code>graph.setEnabled(false)</code>.
+If you want the graph to be read-only you can use `graph.setEnabled(false)`.
 
 
-<h2><a id="VerticesAndEdges"></a>Vertices and Edges</h2>
-<p>
-  To insert vertices and edges, <code>beginUpdate</code> and <code>endUpdate</code>
-  are used to create a transaction. The <code>endUpdate</code> should always go
-  into a finally-block to make sure it is always executed if the <code>beginUpdate</code>
-  was executed. However, the <code>beginUpdate</code> should not be part of the
-  try-block to make sure <code>endUpdate</code> is never executed if <code>beginUpdate</code>
-  fails. This is required for the model to remain in a consistent state, that is, for
-  each call to <code>beginUpdate</code> there should always be exactly one call to
-  <code>endUpdate</code>.
-</p>
-<p>
-  The part within the try-block creates the vertices and edges for the graph.
-  The default parent is obtained from the graph and is typically the first
-  child of the root cell in the model, which is created automatically when
-  using the graph model constructor with no arguments.
-</p>
+<a id="VerticesAndEdges"></a>
+## Vertices and Edges
+
+To insert vertices and edges, `beginUpdate` and `endUpdate` are used to create a transaction.
+The `endUpdate` should always go into a finally-block to make sure it is always executed if the `beginUpdate` was executed. 
+However, the `beginUpdate` should not be part of the try-block to make sure `endUpdate` is never executed if `beginUpdate` fails. 
+This is required for the model to remain in a consistent state, that is, for each call to `beginUpdate` there should always be exactly one call to `endUpdate`.
+
+The part within the try-block creates the vertices and edges for the graph.
+The default parent is obtained from the graph and is typically the first child of the root cell in the model,
+which is created automatically when using the graph model constructor with no arguments.
 
 ```javascript
-// Gets the default parent for inserting new cells. This
-// is normally the first child of the root (ie. layer 0).
-let parent = graph.getDefaultParent();
+// Gets the default parent for inserting new cells.
+// This is normally the first child of the root (ie. layer 0).
+const parent = graph.getDefaultParent();
 
 // Adds cells to the model in a single step
 model.beginUpdate();
@@ -84,8 +78,5 @@ finally {
 }
 ```
 
-<p>
-  The use of <code>beginUpdate</code> and <code>endUpdate</code> does not
-  only improve the display performance, but it is also used to mark the
-  boundaries for undoable changes when undo/redo is used.
-</p>
+The use of `beginUpdate` and `endUpdate` does not only improve the display performance,
+but it is also used to mark the boundaries for undoable changes when undo/redo is used.
