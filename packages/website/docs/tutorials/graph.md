@@ -5,6 +5,13 @@ description: XXXX.
 
 # Graph
 
+:::warning
+
+The content of this page is a **work in progress**.
+The original `mxGraph` tutorial was used to create this page which still contains `mxGraph` code to migrate to the maxGraph API.
+
+:::
+
 :::note
 
 This tutorial is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). \
