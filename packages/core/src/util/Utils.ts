@@ -54,9 +54,9 @@ export const utils = {
   errorImage: `${Client.imageBasePath}/error.gif`,
 };
 
-export const isNullish = (v: string | object | null | undefined | number) =>
+export const isNullish = (v: string | object | null | undefined | number | boolean) =>
   v === null || v === undefined;
-export const isNotNullish = (v: string | object | null | undefined | number) =>
+export const isNotNullish = (v: string | object | null | undefined | number | boolean) =>
   !isNullish(v);
 
 /**
@@ -88,7 +88,7 @@ export const mixInto = (dest: any) => (mixin: any) => {
  * @param defaultValue Value to be returned if the value for the given
  * key is null.
  */
-export const getValue = (array: any, key: string, defaultValue?: any) => {
+export const getValue = <T>(array: T, key: keyof T, defaultValue?: any) => {
   let value = array != null ? array[key] : null;
   if (value == null) {
     value = defaultValue;
