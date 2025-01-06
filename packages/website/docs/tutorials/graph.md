@@ -95,7 +95,7 @@ and override the stroke and fill colors, the style would be defined as:
 }
 ```
 
-To use the above in Hello, World!, the stylename would be passed to the insertVertex method as follows:
+To use the above in Hello, World!, the style name would be passed to the insertVertex method as follows:
 
 [//]: # (TODO migrate to the new insertVertex method using a single object parameter)
 ```javascript
