@@ -221,7 +221,7 @@ class StencilShape extends Shape {
     // (start, segment, end blocks), pluggable markers, how to implement
     // swimlanes (title area) with this API, add icon, horizontal/vertical
     // label, indicator for all shapes, rotation
-    const direction = getValue(shape.style, 'direction', null);
+    const direction = getValue(shape.style!, 'direction', null);
     const aspect = this.computeAspect(shape, x, y, w, h, direction);
     const minScale = Math.min(aspect.width, aspect.height);
     const sw =
@@ -527,8 +527,8 @@ class StencilShape extends Shape {
             const dr = shape.rotation;
 
             // Depends on flipping
-            const flipH = getValue(shape.style, 'flipH', 0) == 1;
-            const flipV = getValue(shape.style, 'flipV', 0) == 1;
+            const flipH = getValue(shape.style!, 'flipH', 0) == 1;
+            const flipV = getValue(shape.style!, 'flipV', 0) == 1;
 
             if (flipH && flipV) {
               rotation -= dr;
