@@ -44,8 +44,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
   const container = createGraphContainer(args);
 
-  // TODO Allow overriding constants. See https://github.com/maxGraph/maxGraph/issues/192
-  // Enables crisp rendering of rectangles in SVG
+  // Override default values
   EntityRelationConnectorConfig.segment = 20;
 
   // Creates the graph inside the given container
