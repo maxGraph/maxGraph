@@ -40,7 +40,7 @@ const graph = new Graph(node);
 
 [Cell](https://maxgraph.github.io/maxGraph/api-docs/classes/Cell.html) defines the elements of the graph model, which is implemented by [GraphDataModel](https://maxgraph.github.io/maxGraph/api-docs/classes/GraphDataModel.html).
 
-![](assets/graphs/model.png)
+![Class diagram showing the relationship between Cell and GraphDataModel classes](assets/graphs/model.png)
 
 The graph model has the following properties:
 *  The root element of the graph contains the layers. The parent of each layer is the root element.
