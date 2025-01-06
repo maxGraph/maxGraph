@@ -29,7 +29,7 @@ This is the central class in the editor package. Everything else in this package
 To create a new editor instance and configure it using a config file, you can pass the name of the config file to the
 [Editor constructor](https://maxgraph.github.io/maxGraph/api-docs/classes/Editor.html).
 
-![](assets/graphs/editor.png)
+![Class diagram showing the Editor class hierarchy and its relationships](assets/graphs/editor.png)
 
 To create a new editor instance and configure it, the following code is used:
 
