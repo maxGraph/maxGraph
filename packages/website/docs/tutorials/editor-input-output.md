@@ -42,11 +42,22 @@ The PHP file will get the XML from the POST request and write it to a file calle
 
 ```php
 <?php
-$xml = $HTTP_POST_VARS['xml'];
+// Validate request method
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    exit('Method not allowed');
+}
+
+$xml = $_POST['xml'] ?? null;
 if ($xml != null) {
-  $fh=fopen("diagram.xml","w");
-  fputs($fh, stripslashes($xml));
-  fclose($fh);
+    // Validate XML content
+    if (!simplexml_load_string($xml)) {
+        http_response_code(400);
+        exit('Invalid XML');
+    }
+    $fh=fopen("diagram.xml","w");
+    fputs($fh, stripslashes($xml));
+    fclose($fh);
 }
 ?>
 ```
