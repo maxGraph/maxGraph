@@ -58,6 +58,9 @@ root.insert(new Cell());
 const model = new GraphDataModel(root);
 ```
 
+The method call hierarchy is as follows:
+
+![Method call hierarchy for the Graph class](./assets/graphs/method_call_hierarchy.png)
 
 <a id="Stylesheet"></a>
 ## Stylesheet
