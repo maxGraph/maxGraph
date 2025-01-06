@@ -184,7 +184,7 @@ class VertexHandler {
 
   rotationShape: Shape | null = null;
 
-  currentAlpha = 100;
+  currentAlpha: null | number = null;
   startAngle = 0;
   startDist = 0;
 
@@ -273,7 +273,7 @@ class VertexHandler {
         if (
           geo != null &&
           !geo.relative &&
-          //!this.graph.isSwimlane(this.state.cell) &&      disable for now
+          !this.graph.isSwimlane(this.state.cell) &&
           this.graph.isLabelMovable(this.state.cell)
         ) {
           // Marks this as the label handle for getHandleForEvent
@@ -1353,6 +1353,7 @@ class VertexHandler {
     }
 
     this.index = null;
+    this.currentAlpha = null;
 
     // TODO: Reset and redraw cell states for live preview
     if (this.preview) {
@@ -1883,7 +1884,7 @@ class VertexHandler {
     }
 
     if (this.rotationShape) {
-      const alpha = toRadians(this.currentAlpha);
+      const alpha = toRadians(this.currentAlpha ?? this.state.style.rotation ?? 0);
       const cos = Math.cos(alpha);
       const sin = Math.sin(alpha);
 

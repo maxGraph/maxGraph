@@ -344,7 +344,7 @@ class MaxXmlRequest {
     const params = <string>this.params;
     const pars = params.indexOf('&') > 0 ? params.split('&') : params.split(' ');
 
-    // Adds the parameters as textareas to the form
+    // Adds the parameters as text areas to the form
     for (let i = 0; i < pars.length; i += 1) {
       const pos = pars[i].indexOf('=');
 
@@ -378,57 +378,51 @@ class MaxXmlRequest {
 }
 
 /**
- * Loads the specified URL *synchronously* and returns the <MaxXmlRequest>.
- * Throws an exception if the file cannot be loaded. See {@link Utils#get} for
- * an asynchronous implementation.
+ * Loads the specified URL *synchronously* and returns the {@link MaxXmlRequest}.
+ * Throws an exception if the file cannot be loaded.
+ * See {@link get} for  an asynchronous implementation.
  *
  * Example:
  *
  * ```javascript
- * try
- * {
- *   let req = mxUtils.load(filename);
- *   let root = req.getDocumentElement();
+ * try {
+ *   const req = load(filename);
+ *   cont root = req.getDocumentElement();
  *   // Process XML DOM...
- * }
- * catch (ex)
- * {
- *   mxUtils.alert('Cannot load '+filename+': '+ex);
+ * } catch (e) {
+ *   console.error(`Cannot load $filename`, e);
  * }
  * ```
  *
  * @param url URL to get the data from.
  */
-export const load = (url: string) => {
+export const load = (url: string): MaxXmlRequest => {
   const req = new MaxXmlRequest(url, null, 'GET', false);
   req.send();
   return req;
 };
 
 /**
- * Loads the specified URL *asynchronously* and invokes the given functions
- * depending on the request status. Returns the <MaxXmlRequest> in use. Both
- * functions take the <MaxXmlRequest> as the only parameter. See
- * {@link Utils#load} for a synchronous implementation.
+ * Loads the specified URL *asynchronously* and invokes the given functions depending on the request status.
+ * Returns the {@link MaxXmlRequest} in use.
+ * Both functions take the {@link MaxXmlRequest} as the only parameter.
+ * See {@link load} for a synchronous implementation.
  *
  * Example:
  *
  * ```javascript
- * mxUtils.get(url, (req)=>
- * {
- *    let node = req.getDocumentElement();
+ * get(url, (req) => {
+ *    const node = req.getDocumentElement();
  *    // Process XML DOM...
  * });
  * ```
  *
- * So for example, to load a diagram into an existing graph model, the
- * following code is used.
+ * So for example, to load a diagram into an existing graph model, the following code is used.
  *
  * ```javascript
- * mxUtils.get(url, (req)=>
- * {
- *   let node = req.getDocumentElement();
- *   let dec = new Codec(node.ownerDocument);
+ * get(url, (req) => {
+ *   const node = req.getDocumentElement();
+ *   const dec = new Codec(node.ownerDocument);
  *   dec.decode(node, graph.getDataModel());
  * });
  * ```

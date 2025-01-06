@@ -42,6 +42,38 @@ class TooltipHandler implements GraphPlugin {
   static pluginId = 'TooltipHandler';
 
   /**
+   * Creates the tooltip element and appends it to the document body.
+   *
+   */
+  init() {
+    if (document.body) {
+      this.div = document.createElement('div');
+      this.div.className = 'mxTooltip';
+      this.div.style.visibility = 'hidden';
+      document.body.appendChild(this.div);
+
+      InternalEvent.addGestureListeners(this.div, (evt) => {
+        const source = getSource(evt);
+        // @ts-ignore nodeName may exist
+        if (source && source.nodeName !== 'A') {
+          this.hideTooltip();
+        }
+      });
+
+      // Hides tooltips and resets tooltip timer if mouse leaves container
+      InternalEvent.addListener(
+        this.graph.getContainer(),
+        'mouseleave',
+        (evt: MouseEvent) => {
+          if (this.div !== evt.relatedTarget) {
+            this.hide();
+          }
+        }
+      );
+    }
+  }
+
+  /**
    * Constructs an event handler that displays tooltips.
    *
    * @param graph Reference to the enclosing {@link Graph}.
@@ -49,35 +81,9 @@ class TooltipHandler implements GraphPlugin {
   constructor(graph: Graph) {
     this.graph = graph;
     this.graph.addMouseListener(this);
-
-    this.div = document.createElement('div');
-    this.div.className = 'mxTooltip';
-    this.div.style.visibility = 'hidden';
-
-    document.body.appendChild(this.div);
-
-    InternalEvent.addGestureListeners(this.div, (evt) => {
-      const source = getSource(evt);
-
-      // @ts-ignore nodeName may exist
-      if (source && source.nodeName !== 'A') {
-        this.hideTooltip();
-      }
-    });
-
-    // Hides tooltips and resets tooltip timer if mouse leaves container
-    InternalEvent.addListener(
-      this.graph.getContainer(),
-      'mouseleave',
-      (evt: MouseEvent) => {
-        if (this.div !== evt.relatedTarget) {
-          this.hide();
-        }
-      }
-    );
   }
 
-  div: HTMLElement;
+  div?: HTMLElement | null;
 
   /**
    * Specifies the zIndex for the tooltip and its shadow.
@@ -231,7 +237,7 @@ class TooltipHandler implements GraphPlugin {
         restart &&
         this.isEnabled() &&
         state &&
-        this.div.style.visibility === 'hidden'
+        (!this.div || this.div.style.visibility == 'hidden')
       ) {
         const node = me.getSource();
         const x = me.getX();
@@ -280,8 +286,10 @@ class TooltipHandler implements GraphPlugin {
    * Hides the tooltip.
    */
   hideTooltip() {
-    this.div.style.visibility = 'hidden';
-    this.div.innerHTML = '';
+    if (this.div) {
+      this.div.style.visibility = 'hidden';
+      this.div.innerHTML = '';
+    }
   }
 
   /**
@@ -291,20 +299,22 @@ class TooltipHandler implements GraphPlugin {
   show(tip: HTMLElement | string | null, x: number, y: number) {
     if (!this.destroyed && tip && tip !== '') {
       const origin = getScrollOrigin();
-
-      this.div.style.zIndex = String(this.zIndex);
-      this.div.style.left = `${x + origin.x}px`;
-      this.div.style.top = `${y + TOOLTIP_VERTICAL_OFFSET + origin.y}px`;
+      if (!this.div) {
+        this.init();
+      }
+      this.div!.style.zIndex = String(this.zIndex);
+      this.div!.style.left = `${x + origin.x}px`;
+      this.div!.style.top = `${y + TOOLTIP_VERTICAL_OFFSET + origin.y}px`;
 
       if (!isNode(tip)) {
-        this.div.innerHTML = (tip as string).replace(/\n/g, '<br>');
+        this.div!.innerHTML = (tip as string).replace(/\n/g, '<br>');
       } else {
-        this.div.innerHTML = '';
-        this.div.appendChild(tip as HTMLElement);
+        this.div!.innerHTML = '';
+        this.div!.appendChild(tip as HTMLElement);
       }
 
-      this.div.style.visibility = '';
-      fit(this.div);
+      this.div!.style.visibility = '';
+      fit(this.div!);
     }
   }
 
@@ -313,14 +323,18 @@ class TooltipHandler implements GraphPlugin {
    */
   onDestroy() {
     if (!this.destroyed) {
+      this.resetTimer();
       this.graph.removeMouseListener(this);
-      InternalEvent.release(this.div);
+      if (this.div) {
+        InternalEvent.release(this.div);
+      }
 
-      if (this.div.parentNode) {
+      if (this.div?.parentNode) {
         this.div.parentNode.removeChild(this.div);
       }
 
       this.destroyed = true;
+      this.div = null;
     }
   }
 }

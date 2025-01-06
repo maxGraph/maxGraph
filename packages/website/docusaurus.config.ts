@@ -61,12 +61,12 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     // image: 'img/docusaurus-social-card.jpg',
-    announcementBar: {
-      content:
-        '⚠️ This is a <b>work in progress</b>, the content of the original <i>mxGraph</i> documentation will be progressively migrated here ⚠️',
-      backgroundColor: 'rgb(255, 248, 230)',
-      isCloseable: false,
-    },
+    // announcementBar: {
+    //   content:
+    //     '⚠️ This is a <b>work in progress</b>, the content of the original <i>mxGraph</i> documentation will be progressively migrated here ⚠️',
+    //   backgroundColor: 'rgb(255, 248, 230)',
+    //   isCloseable: false,
+    // },
     docs: {
       sidebar: {
         hideable: true,
