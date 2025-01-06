@@ -159,6 +159,7 @@ export { default as ObjectIdentity } from './util/ObjectIdentity';
 export { default as Point } from './view/geometry/Point';
 export { default as Rectangle } from './view/geometry/Rectangle';
 
+export * from './view/style/config';
 export { default as EdgeStyle } from './view/style/EdgeStyle';
 export { default as Perimeter } from './view/style/Perimeter';
 export { default as StyleRegistry } from './view/style/StyleRegistry';

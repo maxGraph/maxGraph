@@ -19,11 +19,10 @@ limitations under the License.
 import CellState from '../../cell/CellState';
 import Geometry from '../../geometry/Geometry';
 import Point from '../../geometry/Point';
-import { DIRECTION_MASK, ENTITY_SEGMENT } from '../../../util/Constants';
+import { DIRECTION_MASK } from '../../../util/Constants';
 import { getPortConstraints } from '../../../util/mathUtils';
-import { getValue } from '../../../util/Utils';
-
 import type { EdgeStyleFunction } from '../../../types';
+import { EntityRelationConnectorConfig } from '../config';
 
 export const EntityRelation: EdgeStyleFunction = (
   state: CellState,
@@ -33,7 +32,8 @@ export const EntityRelation: EdgeStyleFunction = (
   result: Point[]
 ) => {
   const { view } = state;
-  const segment = getValue(state.style, 'segment', ENTITY_SEGMENT) * view.scale;
+  const segment =
+    (state.style?.segment ?? EntityRelationConnectorConfig.segment) * view.scale;
 
   const pts = state.absolutePoints;
   const p0 = pts[0];

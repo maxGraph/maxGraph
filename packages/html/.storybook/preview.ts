@@ -3,6 +3,7 @@ import {
   GlobalConfig,
   NoOpLogger,
   resetEdgeHandlerConfig,
+  resetEntityRelationConnectorConfig,
   resetHandleConfig,
   resetStyleDefaultsConfig,
   resetVertexHandlerConfig,
@@ -19,6 +20,7 @@ const resetMaxGraphConfigs = (): void => {
   GlobalConfig.logger = defaultLogger;
 
   resetEdgeHandlerConfig();
+  resetEntityRelationConnectorConfig();
   resetHandleConfig();
   resetStyleDefaultsConfig();
   resetVertexHandlerConfig();
