@@ -173,9 +173,12 @@ Here are a few examples of the methods that have been moved.
 - `convertPoint()`: Update your code to use `styleUtils.convertPoint()` instead of `mxUtils.convertPoint()`.
 
 #### `xmlUtils`
-- `getXml`(): Update your code to use `xmlUtils.getXml()` instead of `mxUtils.getXml()`.
+- `getXml()`: Update your code to use `xmlUtils.getXml()` instead of `mxUtils.getXml()`.
 - `createXmlDocument()`: Update your code to use `xmlUtils.createXmlDocument()` instead of `mxUtils.createXmlDocument()`.
 
+#### In the default namespace
+- `get()`: Update your code to use `get()` instead of `mxUtils.get()`.
+- `load()`: Update your code to use `load()` instead of `mxUtils.load()`.
 
 ### Removed methods from `mxUtils`
 
