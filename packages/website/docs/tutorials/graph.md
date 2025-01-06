@@ -32,7 +32,7 @@ To create a new graph instance, a DOM node (typically a DIV) is required:
 
 ```javascript
 const node = document.getElementById('id-of-graph-container');
-const graph = new mxGraph(node);
+const graph = new Graph(node);
 ```
 
 <a id="Model"></a>
