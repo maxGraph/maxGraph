@@ -20,7 +20,7 @@ import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
 import Translations from '../../../util/Translations';
-import { getValue, isNotNullish } from '../../../util/Utils';
+import { isNotNullish } from '../../../util/Utils';
 import {
   ALIGN,
   DIRECTION,
@@ -221,7 +221,8 @@ class StencilShape extends Shape {
     // (start, segment, end blocks), pluggable markers, how to implement
     // swimlanes (title area) with this API, add icon, horizontal/vertical
     // label, indicator for all shapes, rotation
-    const direction = getValue(shape.style!, 'direction', null);
+    // TODO when using getValue, the default value was null, but the JSDoc of style.direction says the default is 'east'
+    const direction = shape.style?.direction ?? 'east';
     const aspect = this.computeAspect(shape, x, y, w, h, direction);
     const minScale = Math.min(aspect.width, aspect.height);
     const sw =
@@ -527,8 +528,8 @@ class StencilShape extends Shape {
             const dr = shape.rotation;
 
             // Depends on flipping
-            const flipH = getValue(shape.style!, 'flipH', 0) == 1;
-            const flipV = getValue(shape.style!, 'flipV', 0) == 1;
+            const flipH = shape.style?.flipH ?? false;
+            const flipV = shape.style?.flipV ?? false;
 
             if (flipH && flipV) {
               rotation -= dr;
