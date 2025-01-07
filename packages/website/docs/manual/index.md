@@ -26,7 +26,6 @@ Being a developer library, `maxGraph` is not designed specifically to provide a 
 `maxGraph` provides all the commonly required functionality to draw, interact with and associate a context with a diagram.
 `maxGraph` comes with a number of examples that help explain how a basic application is put together and showcases individual features of the library.
 
-[//]: # (TODO link for bellow)
 Developers integrating the library in their application should read the section &ldquo;Pre-requisites&rdquo; below.
 Given that `maxGraph` is a component part of your application, you must understand how JavaScript web applications are constructed at an architectural level, and how to program both in JavaScript, and any server-side languages used.
 
