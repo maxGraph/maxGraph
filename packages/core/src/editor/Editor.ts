@@ -58,11 +58,6 @@ import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
 
 export type EditorActionFunction =
-  //   (
-  //   editor: Editor,
-  //   cell: Cell | null,
-  //   evt?: Event | null
-  // ) => void;
   | ((editor: Editor, cell: Cell | null) => void)
   | ((editor: Editor, cell: Cell | null, evt: Event | null) => void);
 
