@@ -104,7 +104,7 @@ class EventSource {
   }
 
   /**
-   * Removes all occurrences of the given listener from <eventListeners>.
+   * Removes all occurrences of the given listener from {@link eventListeners}.
    */
   removeListener(funct: Function) {
     let i = 0;
