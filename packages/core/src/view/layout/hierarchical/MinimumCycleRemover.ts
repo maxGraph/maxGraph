@@ -75,16 +75,16 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
 
     model.visit(
       (
-        parent: GraphHierarchyNode,
+        parent: GraphHierarchyNode | null,
         node: GraphHierarchyNode,
-        connectingEdge: GraphHierarchyEdge,
-        layer: any,
-        seen: any
+        connectingEdge: GraphHierarchyEdge | null,
+        layer: number,
+        seen: number
       ) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
         // relationship to that edge in the parent and the cell
-        if (node.isAncestor(parent)) {
+        if (parent && connectingEdge && node.isAncestor(parent)) {
           connectingEdge.invert();
           remove(connectingEdge, parent.connectsAsSource);
           parent.connectsAsTarget.push(connectingEdge);
@@ -108,16 +108,16 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
     // Pick a random cell and dfs from it
     model.visit(
       (
-        parent: GraphHierarchyNode,
+        parent: GraphHierarchyNode | null,
         node: GraphHierarchyNode,
-        connectingEdge: GraphHierarchyEdge,
+        connectingEdge: GraphHierarchyEdge | null,
         layer: any,
         seen: any
       ) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
         // relationship to that edge in the parent and the cell
-        if (node.isAncestor(parent)) {
+        if (parent && connectingEdge && node.isAncestor(parent)) {
           connectingEdge.invert();
           remove(connectingEdge, parent.connectsAsSource);
           node.connectsAsSource.push(connectingEdge);
