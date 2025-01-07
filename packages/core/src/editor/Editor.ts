@@ -57,9 +57,11 @@ import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
 
-export type EditorActionFunction =
-  | ((editor: Editor, cell: Cell | null) => void)
-  | ((editor: Editor, cell: Cell | null, evt: Event | null) => void);
+export type EditorActionFunction = (
+  editor: Editor,
+  cell: Cell | null,
+  evt?: Event | null
+) => void;
 
 // TODO disabled side effects, so editor resources are not loaded by default
 // This should be done in a different way
