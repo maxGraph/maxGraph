@@ -63,11 +63,6 @@ import { error } from '../gui/guiUtils';
 import type { FitPlugin } from '../view/plugins';
 
 export type EditorActionFunction =
-  //   (
-  //   editor: Editor,
-  //   cell: Cell | null,
-  //   evt?: Event | null
-  // ) => void;
   | ((editor: Editor, cell: Cell | null) => void)
   | ((editor: Editor, cell: Cell | null, evt: Event | null) => void);
 
