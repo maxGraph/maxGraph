@@ -89,7 +89,7 @@ A graph consists of vertices, also called nodes, and of edges (the connecting li
 Exactly how a graph appears visually is not defined in graph theory.
 The term **Cell** will be used throughout this manual to describe an element of a graph, either edges, vertices or groups.
 
-![image](assets/intro/graph_simple.png)
+![A simple Graph](assets/intro/graph_simple.png)
 
 _A simple Graph_
 

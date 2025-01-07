@@ -604,7 +604,7 @@ In maxGraph, the style is no longer defined as a string but as a `CellStyle` obj
 
 Most of the time, the name of `CellStyle` properties is the same as the style keys in the mxGraph style.
 
-For more details about styles in maxGraph, see the [Styles documentation](../manual/cells.md#styles) manual.
+For more details about styles in maxGraph, see the [Styles section](../manual/cells.md#styles) in the Cells documentation.
 
 :::warning
 

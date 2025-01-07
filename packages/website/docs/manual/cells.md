@@ -30,8 +30,15 @@ We will now explore these 3 concepts before returning to the cell.
 ## Styles
 
 :::warning
-The following section includes screenshots that relates to the `mxGraph` style mechanism.
-The style mechanism has changed in `maxGraph` (style is now an object, and no longer a string). The screenshots will be later updated.
+
+Style Mechanism Changes
+
+The screenshots in this section show the legacy `mxGraph` style mechanism. In `maxGraph`:
+- Styles are now defined as objects instead of strings
+- Properties are accessed directly through object notation
+- The visual representation will be updated in future documentation
+
+See the [Migrate from mxGraph](../usage/migrate-from-mxgraph.md#styling) guide for detailed migration instructions.
 :::
 
 The concept of styles and stylesheets in conceptually similar to CSS stylesheets, though note that CSS are actually used in `maxGraph`, but only to affect global styles in the DOM of the HTML page.
@@ -41,7 +48,7 @@ Some of the styles apply to vertices, some to edges and some to both. As you can
 
 The Stylesheet holds a Map that associates style names with style objects:
 
-![](./assets/model/styles.png)
+![Style properties within the styles collection](./assets/model/styles.png)
 
 _Style properties within the styles collection_
 
@@ -158,7 +165,7 @@ For vertices in relative mode, `(x, y)` is the proportion along the parent cell'
 (0, 0) is the same origin as the parent, (1, 1) places the origin in the bottom right corner of the parent.
 The same relative positioning extends below 0 and above 1 for both dimensions. This positioning is useful for keeping child cells fixed relative to the overall parent cell size.
 
-![](./assets/model/relative_positioning_vertex.png)
+![Relative vertex positioning](./assets/model/relative_positioning_vertex.png)
 
 _Relative vertex positions_
 
@@ -199,7 +206,7 @@ Some attribute of that object will generally be the label that the visual cell w
 Using the example of a simple workflow or process application, say we have the graph below:
 
 
-![](./assets/model/simple_workflow.png)
+![Example of a simple workflow diagram](./assets/model/simple_workflow.png)
 
 _A simple workflow_
 
@@ -222,7 +229,7 @@ The following demo is currently not available in `maxGraph`. See the original [w
 :::
 In the online demo, if you right-click and select properties of the "Check Inventory" diamond you will see this dialog:
 
-![](./assets/model/properties_vertex.png)
+![Displaying the properties of a Vertex in a popup](./assets/model/properties_vertex.png)
 
 _The properties of a vertex_
 
