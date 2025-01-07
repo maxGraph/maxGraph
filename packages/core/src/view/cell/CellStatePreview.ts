@@ -88,11 +88,7 @@ class CellStatePreview {
     return delta.point;
   }
 
-  /**
-   *
-   * @param {Function} visitor
-   */
-  show(visitor: Function | null = null): void {
+  show(visitor: ((state: CellState) => void) | null = null): void {
     this.deltas.visit((key: string, delta: any) => {
       this.translateState(delta.state, delta.point.x, delta.point.y);
     });
@@ -133,18 +129,11 @@ class CellStatePreview {
     }
   }
 
-  /**
-   *
-   * @param {CellState} state
-   * @param {number} dx
-   * @param {number} dy
-   * @param {Function} visitor
-   */
   revalidateState(
     state: CellState,
     dx: number,
     dy: number,
-    visitor: Function | null = null
+    visitor: ((state: CellState) => void) | null = null
   ): void {
     // Updates the edge terminal points and restores the
     // (relative) positions of any (relative) children
