@@ -18,12 +18,12 @@ limitations under the License.
 
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
 import CellPath from '../../cell/CellPath';
 import Dictionary from '../../../util/Dictionary';
 import Cell from '../../cell/Cell';
 import { clone } from '../../../util/cloneUtils';
 import SwimlaneLayout from '../SwimlaneLayout';
-import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges
