@@ -413,12 +413,15 @@ class GraphHierarchyModel {
 
     this.visit(
       (
-        parent: GraphHierarchyNode,
-        node: GraphHierarchyNode,
-        edge: GraphHierarchyNode,
+        parent: GraphHierarchyNode | null,
+        node: GraphHierarchyNode | null,
+        edge: GraphHierarchyEdge | null,
         layer: number,
         seen: number
       ) => {
+        if (!node) {
+          return;
+        }
         if (seen == 0 && node.maxRank < 0 && node.minRank < 0) {
           rankList[node.temp[0]].push(node);
           node.maxRank = node.temp[0];
@@ -455,14 +458,20 @@ class GraphHierarchyModel {
   }
 
   /**
-   * A depth first search through the internal heirarchy model.
+   * A depth first search through the internal hierarchy model.
    *
    * @param visitor The visitor function pattern to be called for each node.
    * @param trackAncestors Whether or not the search is to keep track all nodes
    * directly above this one in the search path.
    */
   visit(
-    visitor: Function,
+    visitor: (
+      parent: GraphHierarchyNode | null,
+      node: GraphHierarchyNode | null,
+      edge: GraphHierarchyEdge | null,
+      layer: number,
+      seen: number
+    ) => void,
     dfsRoots: GraphHierarchyNode[] | null,
     trackAncestors: boolean,
     seenNodes: { [key: string]: GraphHierarchyNode } | null = null
@@ -518,7 +527,13 @@ class GraphHierarchyModel {
     parent: GraphHierarchyNode | null,
     root: GraphHierarchyNode | null,
     connectingEdge: GraphHierarchyEdge | null,
-    visitor: Function,
+    visitor: (
+      parent: GraphHierarchyNode | null,
+      node: GraphHierarchyNode | null,
+      edge: GraphHierarchyEdge | null,
+      layer: number,
+      seen: number
+    ) => void,
     seen: { [key: string]: GraphHierarchyNode | null },
     layer: number
   ): void {
@@ -567,7 +582,13 @@ class GraphHierarchyModel {
     parent: GraphHierarchyNode | null,
     root: GraphHierarchyNode,
     connectingEdge: GraphHierarchyEdge | null,
-    visitor: Function,
+    visitor: (
+      parent: GraphHierarchyNode | null,
+      node: GraphHierarchyNode | null,
+      edge: GraphHierarchyEdge | null,
+      layer: number,
+      seen: number
+    ) => void,
     seen: { [key: string]: GraphHierarchyNode },
     ancestors: any,
     childHash: string | number,
