@@ -111,8 +111,8 @@ class MinimumCycleRemover extends HierarchicalLayoutStage {
         parent: GraphHierarchyNode | null,
         node: GraphHierarchyNode,
         connectingEdge: GraphHierarchyEdge | null,
-        layer: any,
-        seen: any
+        layer: number,
+        seen: number
       ) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
