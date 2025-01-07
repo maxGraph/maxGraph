@@ -80,8 +80,11 @@ All the concepts associated with grouping, listed above, can be used to reduce t
 
 ### Folding
 
-Folding is the collective term we use for expanding and collapsing groups.
-We say a cell is folded by making its child vertices invisible. There are a number of functions relating to this feature:
+Folding refers to the ability to expand or collapse groups of cells:
+- **Collapsing** a group hides its child vertices and shows a simplified representation
+- **Expanding** a group reveals all its child vertices and their connections
+
+This feature is controlled through several functions:
 
 **Core API function:**
 - **Graph.foldCells(collapse, recurse, cells)**: States the collapsed state of the specified cells, within a begin/end update.
