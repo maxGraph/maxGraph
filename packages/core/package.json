@@ -24,12 +24,14 @@
     },
     "./css/*": "./css/*",
     "./images/*": "./images/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./xsd/*": "./xsd/*"
   },
   "files": [
     "css",
     "lib",
-    "images"
+    "images",
+    "xsd"
   ],
   "homepage": "https://github.com/maxGraph/maxGraph",
   "repository": {
