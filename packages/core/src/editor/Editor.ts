@@ -62,9 +62,11 @@ import { isI18nEnabled, translate } from '../internal/i18n-utils';
 import { error } from '../gui/guiUtils';
 import type { FitPlugin } from '../view/plugins';
 
-export type EditorActionFunction =
-  | ((editor: Editor, cell: Cell | null) => void)
-  | ((editor: Editor, cell: Cell | null, evt: Event | null) => void);
+export type EditorActionFunction = (
+  editor: Editor,
+  cell: Cell | null,
+  evt?: Event | null
+) => void;
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
