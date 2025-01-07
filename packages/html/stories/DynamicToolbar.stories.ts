@@ -168,7 +168,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     const img: InternalHTMLImageElementWithProps = toolbar.addMode(
       null,
       image,
-      (evt: MouseEvent, cell: Cell) => {
+      (evt: MouseEvent, cell: Cell | null) => {
         const pt = graph.getPointForEvent(evt);
         dropHandler(graph, evt, cell, pt.x, pt.y);
       },
