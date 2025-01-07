@@ -23,6 +23,7 @@ import Dictionary from '../../../util/Dictionary';
 import Cell from '../../cell/Cell';
 import { clone } from '../../../util/cloneUtils';
 import SwimlaneLayout from '../SwimlaneLayout';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges
@@ -137,7 +138,7 @@ class SwimlaneModel {
   /**
    * Mapping from rank number to actual rank
    */
-  ranks: GraphHierarchyNode[][] = [];
+  ranks: GraphAbstractHierarchyCell[][] = [];
 
   /**
    * Store of roots of this hierarchy model, these are real graph cells, not
@@ -483,7 +484,7 @@ class SwimlaneModel {
    * to create dummy nodes for edges that cross layers.
    */
   fixRanks(): void {
-    const rankList: GraphHierarchyNode[][] = [];
+    const rankList: GraphAbstractHierarchyCell[][] = [];
     this.ranks = [];
 
     for (let i = 0; i < this.maxRank + 1; i += 1) {
@@ -509,9 +510,9 @@ class SwimlaneModel {
 
     this.visit(
       (
-        parent: GraphHierarchyNode,
+        parent: GraphHierarchyNode | null,
         node: GraphHierarchyNode,
-        edge: GraphHierarchyNode,
+        edge: GraphHierarchyEdge | null,
         layer: number,
         seen: number
       ) => {
@@ -559,9 +560,9 @@ class SwimlaneModel {
    */
   visit(
     visitor: (
-      parent: Cell | null,
+      parent: GraphHierarchyNode | null,
       root: GraphHierarchyNode,
-      connectingEdge: Cell | null,
+      connectingEdge: GraphHierarchyEdge | null,
       layer: number,
       seen: number
     ) => void,
@@ -617,13 +618,13 @@ class SwimlaneModel {
    * @param layer the layer on the dfs tree ( not the same as the model ranks )
    */
   dfs(
-    parent: Cell | null,
+    parent: GraphHierarchyNode | null,
     root: GraphHierarchyNode,
-    connectingEdge: Cell | null,
+    connectingEdge: GraphHierarchyEdge | null,
     visitor: (
-      parent: Cell | null,
+      parent: GraphHierarchyNode | null,
       root: GraphHierarchyNode,
-      connectingEdge: Cell | null,
+      connectingEdge: GraphHierarchyEdge | null,
       layer: number,
       seen: number
     ) => void,
@@ -674,11 +675,11 @@ class SwimlaneModel {
   extendedDfs(
     parent: GraphHierarchyNode | null,
     root: GraphHierarchyNode,
-    connectingEdge: Cell | null,
+    connectingEdge: GraphHierarchyEdge | null,
     visitor: (
-      parent: Cell | null,
+      parent: GraphHierarchyNode | null,
       root: GraphHierarchyNode,
-      connectingEdge: Cell | null,
+      connectingEdge: GraphHierarchyEdge | null,
       layer: number,
       seen: number
     ) => void,

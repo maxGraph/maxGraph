@@ -467,7 +467,7 @@ class GraphHierarchyModel {
   visit(
     visitor: (
       parent: GraphHierarchyNode | null,
-      node: GraphHierarchyNode | null,
+      node: GraphHierarchyNode,
       edge: GraphHierarchyEdge | null,
       layer: number,
       seen: number
@@ -529,7 +529,7 @@ class GraphHierarchyModel {
     connectingEdge: GraphHierarchyEdge | null,
     visitor: (
       parent: GraphHierarchyNode | null,
-      node: GraphHierarchyNode | null,
+      node: GraphHierarchyNode,
       edge: GraphHierarchyEdge | null,
       layer: number,
       seen: number
@@ -584,7 +584,7 @@ class GraphHierarchyModel {
     connectingEdge: GraphHierarchyEdge | null,
     visitor: (
       parent: GraphHierarchyNode | null,
-      node: GraphHierarchyNode | null,
+      node: GraphHierarchyNode,
       edge: GraphHierarchyEdge | null,
       layer: number,
       seen: number
