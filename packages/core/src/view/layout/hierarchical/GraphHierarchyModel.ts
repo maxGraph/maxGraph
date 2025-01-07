@@ -414,14 +414,11 @@ class GraphHierarchyModel {
     this.visit(
       (
         parent: GraphHierarchyNode | null,
-        node: GraphHierarchyNode | null,
+        node: GraphHierarchyNode,
         edge: GraphHierarchyEdge | null,
         layer: number,
         seen: number
       ) => {
-        if (!node) {
-          return;
-        }
         if (seen == 0 && node.maxRank < 0 && node.minRank < 0) {
           rankList[node.temp[0]].push(node);
           node.maxRank = node.temp[0];
