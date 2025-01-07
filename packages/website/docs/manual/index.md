@@ -27,7 +27,7 @@ Being a developer library, `maxGraph` is not designed specifically to provide a 
 `maxGraph` comes with a number of examples that help explain how a basic application is put together and showcases individual features of the library.
 
 Developers integrating the library in their application should read the section ["Pre-requisites" below](#pre-requisites-for-maxgraph).
-Given that `maxGraph` is a component part of your application, you must understand how JavaScript web applications are constructed at an architectural level, and how to program both in JavaScript, and any server-side languages used.
+Given that `maxGraph` is a component of your application, you must understand how JavaScript web applications are constructed at an architectural level, and how to program both in JavaScript, and any server-side languages used.
 
 `maxGraph` mainly comprises one JavaScript file that contains all the `maxGraph` functionality. This is loaded into an HTML web page in a JavaScript section and executes in an HTML container in the browser.
 This is an incredibly simple architecture that only requires a web server capable of serving html pages and a JavaScript enabled web browser.
@@ -39,10 +39,10 @@ The key advantages of this technology are:
 Large corporate environments often dislike allowing individuals to install browser plug-ins and do not like to change the standard build rolled out to all machines.
 
 The key disadvantage of this technology is:
-- Rendering speed. As the number of cells visible on the users screen climbs into the hundreds, redrawing slows on most browsers beyond acceptable levels.
+- Rendering speed. As the number of cells visible on the user's screen climbs into the hundreds, redrawing slows on most browsers beyond acceptable levels.
 In information management theory displaying several hundred cells is generally incorrect, since the user cannot interpret the data.
 There are a number of mechanisms, collectively known as complexity management used to limit the amount of information to sensible levels, and thus maintaining reactive redraw rates for the user.
-Complexity management is described in a later section of this user manual.
+Complexity management is described in [a later section](group-and-complexity-management.md#complexity-management) of this user manual.
 
 <a id="mxgraph_applications"></a>
 ## What Applications can `maxGraph` be used for?
