@@ -605,7 +605,6 @@ export class Editor extends EventSource {
    * cells into the graph. This is assigned from the
    * {@link EditorToolbar} if a vertex-tool is clicked.
    */
-  // TODO more event?
   insertFunction: ((evt: MouseEvent, cell: Cell | null) => void) | null = null;
 
   // =====================================================================================
