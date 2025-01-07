@@ -63,7 +63,12 @@ import { error } from '../gui/guiUtils';
 import type { FitPlugin } from '../view/plugins';
 
 export type EditorActionFunction =
-  | ((editor: Editor, cell: Cell) => void)
+  //   (
+  //   editor: Editor,
+  //   cell: Cell | null,
+  //   evt?: Event | null
+  // ) => void;
+  | ((editor: Editor, cell: Cell | null) => void)
   | ((editor: Editor, cell: Cell | null, evt: Event | null) => void);
 
 /**
@@ -1036,7 +1041,7 @@ export class Editor extends EventSource {
       editor.graph.getPlugin<FitPlugin>('fit')?.fit();
     });
 
-    this.addAction('showProperties', (editor: Editor, cell: Cell) => {
+    this.addAction('showProperties', (editor: Editor, cell: Cell | null) => {
       editor.showProperties(cell);
     });
 
@@ -1064,26 +1069,26 @@ export class Editor extends EventSource {
       }
     });
 
-    this.addAction('edit', (editor: Editor, cell: Cell) => {
-      if (editor.graph.isEnabled() && editor.graph.isCellEditable(cell)) {
+    this.addAction('edit', (editor: Editor, cell: Cell | null) => {
+      if (editor.graph.isEnabled() && (!cell || editor.graph.isCellEditable(cell))) {
         editor.graph.startEditingAtCell(cell);
       }
     });
 
-    this.addAction('toBack', (editor: Editor, cell: Cell) => {
+    this.addAction('toBack', (editor: Editor, _cell: Cell | null) => {
       if (editor.graph.isEnabled()) {
         editor.graph.orderCells(true);
       }
     });
 
-    this.addAction('toFront', (editor: Editor, cell: Cell) => {
+    this.addAction('toFront', (editor: Editor, _cell: Cell | null) => {
       if (editor.graph.isEnabled()) {
         editor.graph.orderCells(false);
       }
     });
 
-    this.addAction('enterGroup', (editor: Editor, cell: Cell) => {
-      editor.graph.enterGroup(cell);
+    this.addAction('enterGroup', (editor: Editor, cell: Cell | null) => {
+      cell && editor.graph.enterGroup(cell);
     });
 
     this.addAction('exitGroup', (editor: Editor) => {
