@@ -19,6 +19,7 @@ limitations under the License.
 import EventObject from './EventObject';
 
 type EventListenerObject = {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   funct: Function;
   name: string;
 };
@@ -99,6 +100,7 @@ class EventSource {
    *
    * The parameters of the listener are the sender and an {@link EventObject}.
    */
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   addListener(name: string, funct: Function) {
     this.eventListeners.push({ name, funct });
   }
@@ -106,6 +108,7 @@ class EventSource {
   /**
    * Removes all occurrences of the given listener from {@link eventListeners}.
    */
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   removeListener(funct: Function) {
     let i = 0;
 
