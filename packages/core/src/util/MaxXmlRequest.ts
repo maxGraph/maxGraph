@@ -250,9 +250,12 @@ export default class MaxXmlRequest {
    * @param ontimeout Optional function to execute on timeout.
    */
   send(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
     onload: Function | null = null,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
     onerror: Function | null = null,
     timeout: number | null = null,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
     ontimeout: Function | null = null
   ): void {
     this.request = this.create();
