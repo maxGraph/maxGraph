@@ -99,8 +99,8 @@ if (mxLoadResources) {
  * page, the following code is used:
  *
  * ```javascript
- * var doc = mxUtils.parseXML(xmlString);
- * var node = doc.documentElement;
+ * const doc = xmlUtils.parseXML(xmlString);
+ * const node = doc.documentElement;
  * editor.readGraphModel(node);
  * ```
  *
