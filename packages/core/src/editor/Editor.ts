@@ -408,7 +408,7 @@ export class Editor extends EventSource {
    * It invokes the {@link onInit} callback upon completion.
    *
    * ```javascript
-   * const config = mxUtils.load('config/diagrameditor.xml').getDocumentElement();
+   * const config = load('config/diagram-editor.xml').getDocumentElement();
    * const editor = new Editor(config);
    * ```
    *
