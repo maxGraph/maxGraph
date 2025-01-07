@@ -577,7 +577,7 @@ class GraphHierarchyModel {
    */
   extendedDfs(
     parent: GraphHierarchyNode | null,
-    root: GraphHierarchyNode,
+    root: GraphHierarchyNode | null,
     connectingEdge: GraphHierarchyEdge | null,
     visitor: (
       parent: GraphHierarchyNode | null,
