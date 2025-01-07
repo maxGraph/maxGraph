@@ -160,6 +160,21 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          // docs/manual/model-and-cells -> /docs/manual/model-and-transactions
+          {
+            to: '/docs/manual/model-and-transactions',
+            from: '/docs/manual/model-and-cells',
+          },
+        ],
+      },
+    ],
+  ],
 };
 
 export default config;

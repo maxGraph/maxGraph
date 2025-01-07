@@ -1,9 +1,7 @@
 ---
 sidebar_position: 3
 description: An overview of the maxGraph model and transactions.
-toc_max_heading_level: 6
-# TODO rename the file and add redirect if possible
----
+--- 
 
 # Model and Transactions
 
