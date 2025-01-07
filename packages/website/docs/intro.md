@@ -34,9 +34,7 @@ To visualize the documentation for a specific version (and the corresponding dem
 
 ## Quick Start
 
-Please check the maxGraph repository **README**:
-- [installation](https://github.com/maxGraph/maxGraph#install)
-- [getting started](https://github.com/maxGraph/maxGraph#getting-started)
+To know how to install maxGraph and how to implement a first example, have a look at the [Getting Started](./getting-started.mdx) guide.
 
 
 ## Next Steps
@@ -45,12 +43,4 @@ Let's continue with the [Manual](./manual/index.md) to understand the `maxGraph`
 
 For more information on how to use specific features, please refer to the [Usage](/docs/category/usage) documentation.
 
-:::tip
 
-The documentation does not cover all the features available in `maxGraph`. However, `maxGraph` does provide numerous examples. These examples show how to use the features and how `maxGraph` can be extended to meet new needs:
-- To see the features in action, please play with the [live demo](https://maxgraph.github.io/maxGraph/demo/)
-- Source code for the stories is available at https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories
-
-Other examples are also listed in the [project README](https://github.com/maxGraph/maxGraph/blob/main/README.md#examples).
-
-:::

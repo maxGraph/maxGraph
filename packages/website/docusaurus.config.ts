@@ -166,6 +166,11 @@ const config: Config = {
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
+          // docs/manual/getting-started -> /docs/getting-started
+          {
+            to: '/docs/getting-started',
+            from: '/docs/manual/getting-started',
+          },
           // docs/manual/model-and-cells -> /docs/manual/model-and-transactions
           {
             to: '/docs/manual/model-and-transactions',

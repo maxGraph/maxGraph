@@ -1,10 +1,20 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Demos and Examples
 [//]: # (extract of <rootdir>/README.md)
-For more comprehensive examples than the [“Getting started” example](./manual/getting-started.mdx), this page provides a list of demos and examples to help you understand how to use `maxGraph` and integrate it into your projects.
+
+
+:::tip
+
+The documentation does not cover all the features available in `maxGraph`. However, `maxGraph` does provide numerous examples. These examples show how to use the features and how `maxGraph` can be extended to meet new needs.
+
+This page includes links to the examples and demos available in the `maxGraph` repository.
+
+:::
+
+For more comprehensive examples than the [“Getting started” example](./getting-started.mdx), this page provides a list of demos and examples to help you understand how to use `maxGraph` and integrate it into your projects.
 
 Note that they are based on `maxGraph` features, which require the use of [CSS and images](./usage/css-and-images.md) provided in the npm package.
 
