@@ -34,7 +34,7 @@ To visualize the documentation for a specific version (and the corresponding dem
 
 ## Quick Start
 
-To know how to install maxGraph and how to implement a first example, have a look at the [Getting Started](./getting-started.mdx) guide.
+To know how to install maxGraph and how to implement a first example, take a look at the [Getting Started](./getting-started.mdx) guide.
 
 
 ## Next Steps
