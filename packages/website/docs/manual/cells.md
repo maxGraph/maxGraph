@@ -99,7 +99,7 @@ const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
 ```javascript
 const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
   {
-    baseStyleNames: ['defaultVertex'], // This can be ommited, as it is the default style apply for vertices
+    baseStyleNames: ['defaultVertex'], // This can be ommited, as it is the default style applied for vertices
     fillColor: 'blue',
   });
 ```
