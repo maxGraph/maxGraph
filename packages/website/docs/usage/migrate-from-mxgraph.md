@@ -120,7 +120,7 @@ Please update your code accordingly.
 
 :::note
 
-A wide range of information is available in [Pull Request #70] (https://github.com/maxGraph/maxGraph/pull/70) to explain the reasons for some of the major changes.
+A wide range of information is available in [Pull Request #70](https://github.com/maxGraph/maxGraph/pull/70) to explain the reasons for some of the major changes.
 
 :::
 
