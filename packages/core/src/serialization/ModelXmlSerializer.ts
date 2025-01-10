@@ -61,7 +61,7 @@ export class ModelXmlSerializer {
 
   export(options?: ModelExportOptions): string {
     const encodedNode = new Codec().encode(this.dataModel);
-    return options?.pretty ?? true ? getPrettyXml(encodedNode) : getXml(encodedNode!);
+    return (options?.pretty ?? true) ? getPrettyXml(encodedNode) : getXml(encodedNode!);
   }
 
   /**

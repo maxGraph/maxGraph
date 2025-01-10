@@ -389,7 +389,7 @@ class ConstraintHandler {
     this.constraints =
       state && !this.isStateIgnored(state, source) && state.cell.isConnectable()
         ? this.isEnabled()
-          ? this.graph.getAllConnectionConstraints(state, source) ?? []
+          ? (this.graph.getAllConnectionConstraints(state, source) ?? [])
           : []
         : null;
 

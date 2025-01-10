@@ -333,7 +333,7 @@ export const CellsMixin: PartialType = {
 
     if (cells.length > 0) {
       const style = this.getCurrentCellStyle(cells[0]);
-      value = style[key] ?? defaultValue ? false : true;
+      value = (style[key] ?? defaultValue) ? false : true;
       this.setCellStyles(key, value, cells);
     }
 

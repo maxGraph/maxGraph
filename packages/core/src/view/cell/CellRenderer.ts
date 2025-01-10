@@ -1152,7 +1152,7 @@ class CellRenderer {
       const bounds = this.getControlBounds(state, image.width, image.height);
 
       const r = this.legacyControlPosition
-        ? state.style.rotation ?? 0
+        ? (state.style.rotation ?? 0)
         : state.shape!.getTextRotation();
       const s = state.view.scale;
 

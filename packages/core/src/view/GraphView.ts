@@ -1305,7 +1305,7 @@ export class GraphView extends EventSource {
     target: CellState | null = null
   ): EdgeStyleFunction | null {
     let edgeStyle = this.isLoopStyleEnabled(edge, points, source, target)
-      ? edge.style.loopStyle ?? this.graph.defaultLoopStyle
+      ? (edge.style.loopStyle ?? this.graph.defaultLoopStyle)
       : !(edge.style.noEdgeStyle ?? false)
         ? edge.style.edgeStyle
         : null;
@@ -1515,7 +1515,7 @@ export class GraphView extends EventSource {
    * Returns the x-coordinate of the center point for automatic routing.
    */
   getRoutingCenterX(state: CellState): number {
-    const f = state.style ? state.style.routingCenterX ?? 0 : 0;
+    const f = state.style ? (state.style.routingCenterX ?? 0) : 0;
     return state.getCenterX() + f * state.width;
   }
 
@@ -1523,7 +1523,7 @@ export class GraphView extends EventSource {
    * Returns the y-coordinate of the center point for automatic routing.
    */
   getRoutingCenterY(state: CellState): number {
-    const f = state.style ? state.style.routingCenterY ?? 0 : 0;
+    const f = state.style ? (state.style.routingCenterY ?? 0) : 0;
     return state.getCenterY() + f * state.height;
   }
 
