@@ -23,9 +23,9 @@ updates:
       # We must use a version that matches the version of node used to build. This is not the latest one, so manage this manually.
       - dependency-name: "@types/node"
       # Bumping to eslint v9 requires all plugins to support it and configuration changes (flat configuration)
-      - "eslint"
+      - dependency-name: "eslint"
       # Bumping to v8 introduces new rules in the recommended configuration which require updating a large part of the code. This will be done manually, then automatic updates can be re-enabled.
-      - "@typescript-eslint/*"
+      - dependency-name: "@typescript-eslint/*"
       # use storybook 7.x for now, bumping to a major version requires a migration
       - dependency-name: "@storybook/*"
       - dependency-name: "storybook"
