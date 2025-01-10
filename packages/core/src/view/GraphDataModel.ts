@@ -32,7 +32,7 @@ import TerminalChange from './undoable_changes/TerminalChange';
 import ValueChange from './undoable_changes/ValueChange';
 import VisibleChange from './undoable_changes/VisibleChange';
 import Geometry from './geometry/Geometry';
-import { cloneCells, filterCells } from '../util/cellArrayUtils';
+import { filterCells } from '../util/cellArrayUtils';
 
 import type { CellStyle, FilterFunction } from '../types';
 
