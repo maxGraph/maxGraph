@@ -2,6 +2,66 @@
 
 version: 2
 updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: tuesday
+    open-pull-requests-limit: 2
+    versioning-strategy: increase
+    rebase-strategy: "disabled"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    labels:
+      - dependencies
+      - javascript
+      - skip-changelog
+    ignore:
+      # typescript must not be updated in packages/check-ts-support. Its version must remain unchanged to test the minimum version supported by bpmn-visualization-addons
+      - dependency-name: "typescript"
+      # We must use a version that matches the version of node used to build. This is not the latest one, so manage this manually.
+      - dependency-name: "@types/node"
+      # Bumping to eslint v9 requires all plugins to support it and configuration changes (flat configuration)
+      - "eslint"
+      # Bumping to v8 introduces new rules in the recommended configuration which require updating a large part of the code. This will be done manually, then automatic updates can be re-enabled.
+      - "@typescript-eslint/*"
+      # use storybook 7.x for now, bumping to a major version requires a migration
+      - dependency-name: "@storybook/*"
+      - dependency-name: "storybook"
+      # storybook 7.x only support vite v5, bumping manually in other packages
+      - dependency-name: "vite"
+
+    groups:
+      docusaurus:
+        patterns:
+          - "@docusaurus/*"
+          - "@mdx-js/"
+          - "clsx"
+          - "prism-react-renderer"
+          - "react"
+          - "react-*"
+      lint:
+        patterns:
+          - "eslint-*"
+          - "prettier"
+      test:
+        patterns:
+          - "@jest/*"
+          - "@testing-library/*"
+          - "@swc/*"
+          - "jest"
+          - "jest-*"
+      webpack:
+        patterns:
+          - "copy-webpack-plugin"
+          - "css-loader"
+          - "html-webpack-plugin"
+          - "mini-css-extract-plugin"
+          - "style-loader"
+          - "webpack"
+          - "webpack-*"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
