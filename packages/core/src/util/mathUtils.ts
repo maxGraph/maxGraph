@@ -617,11 +617,10 @@ export const intersectsHotspot = (
     let w = state.width;
     let h = state.height;
 
-    // TODO WIP remove the getValue function
-    // TODO add a style constant
+    // TODO add a style constant when this is used for start marker
     // const start = getValue(state.style, 'startSize') * state.view.scale;
     const style = state.style;
-    const start = style?.startSize ?? 0 * state.view.scale;
+    const start = (style?.startSize ?? 0) * state.view.scale;
 
     if (start > 0) {
       // if (getValue(state.style, 'horizontal', true)) {
