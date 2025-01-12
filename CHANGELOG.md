@@ -9,6 +9,15 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- Some properties have been removed from `EdgeHandler` as it was not possible to correctly change their value.
+They are replaced by global configuration in `EdgeHandlerConfig`:
+  - addEnabled --> addBendOnShiftClickEnabled
+  - removeEnabled --> removeBendOnShiftClickEnabled
+  - virtualBendOpacity
+  - virtualBendsEnabled
+
+
 ## 0.14.0
 
 Release date: `2024-11-27`
