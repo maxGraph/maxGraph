@@ -150,6 +150,7 @@ export const htmlEntities = (s: string, newline = true): string => {
   return s;
 };
 
+// TODO remove as well
 export const getStringValue = (array: any, key: string, defaultValue: string) => {
   let value = array != null ? array[key] : null;
   if (value == null) {
@@ -158,6 +159,7 @@ export const getStringValue = (array: any, key: string, defaultValue: string) =>
   return value == null ? null : String(value);
 };
 
+// TODO remove as well
 /**
  * Returns the numeric value for the given key in the given associative
  * array or the given default value (or 0) if the value is null. The value
@@ -178,10 +180,11 @@ export const getNumber = (array: any, key: string, defaultValue: number) => {
   return Number(value);
 };
 
+// TODO check if we can remove as well (special mgt of the NONE value)
 /**
  * Returns the color value for the given key in the given associative
  * array or the given default value if the value is null. If the value
- * is {@link Constants#NONE} then null is returned.
+ * is {@link NONE} then null is returned.
  *
  * @param array Associative array that contains the value for the key.
  * @param key Key whose value should be returned.
