@@ -57,6 +57,16 @@ export default {
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
+
+  const divMessage = document.createElement('div');
+  divMessage.innerHTML = `To add a new edge bend, shift-click on the edge where you wish to add it.
+  <br>
+    To remove an existing edge bend, shift-click on it.
+  `;
+  divMessage.style.fontFamily = 'Arial,Helvetica';
+  divMessage.style.marginBottom = '1rem';
+  div.appendChild(divMessage);
+
   const container = createGraphContainer(args);
   div.appendChild(container);
 
@@ -64,11 +74,15 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   if (args.customHandleDefaults) {
     const selectionColor = '#00a8ff';
 
+    EdgeHandlerConfig.addBendOnShiftClickEnabled = true;
     EdgeHandlerConfig.connectFillColor = 'pink';
     EdgeHandlerConfig.handleShape = 'circle';
+    EdgeHandlerConfig.removeBendOnShiftClickEnabled = true;
     EdgeHandlerConfig.selectionColor = selectionColor;
     EdgeHandlerConfig.selectionDashed = false;
     EdgeHandlerConfig.selectionStrokeWidth = 3;
+    EdgeHandlerConfig.virtualBendOpacity = 40;
+    EdgeHandlerConfig.virtualBendsEnabled = true;
 
     HandleConfig.fillColor = '#99ccff';
     HandleConfig.labelFillColor = 'orange';

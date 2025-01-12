@@ -25,6 +25,7 @@ import ElbowEdgeHandler from './ElbowEdgeHandler';
 import CellState from '../cell/CellState';
 import Cell from '../cell/Cell';
 import InternalMouseEvent from '../event/InternalMouseEvent';
+import { EdgeHandlerConfig } from './config';
 
 class EdgeSegmentHandler extends ElbowEdgeHandler {
   constructor(state: CellState) {
@@ -404,8 +405,8 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
         }
 
         if (straight) {
-          setOpacity(this.bends[1].node, this.virtualBendOpacity);
-          setOpacity(this.bends[3].node, this.virtualBendOpacity);
+          setOpacity(this.bends[1].node, EdgeHandlerConfig.virtualBendOpacity);
+          setOpacity(this.bends[3].node, EdgeHandlerConfig.virtualBendOpacity);
         }
       }
     }

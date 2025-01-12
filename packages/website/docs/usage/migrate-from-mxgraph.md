@@ -436,13 +436,26 @@ Others were removed:
 - `isVisible(cell)` see [discussion #179](https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942) for rationale
 - `restoreClone()` (from version 0.11.0)
 
+### Cell handlers
+
+The following Cell handler classes have been renamed in `maxGraph`:
+- `mxEdgeHandler` to `EdgeHandler`
+- `mxEdgeSegmentHandler` to `EdgeSegmentHandler`
+- `mxElbowEdgeHandler` to `ElbowEdgeHandler`
+- `mxVertexHandler` to `VertexHandler`
+
+In `mxGraph`, the handlers were configured by updating their properties on the prototype. 
+In `maxGraph`, the handlers are configured with global configuration object. For more details, see the [Global Configuration](./global-configuration.md#general) documentation.
+
+For example, the `mxVertexHandler` class had a `rotationEnabled` property. 
+This property has been removed in `maxGraph`. Use the `VertexHandlerConfig.rotationEnabled` property instead (since `0.12.0`).
+
 ### Misc
 
 - Codec renaming and output: see [Pull Request #70](https://github.com/maxGraph/maxGraph/pull/70)
 - `mxCellEditor` to `CellEditorHandler`
 - `mxDictionary`&lt;T&gt; to `Dictionary`&lt;K, V&gt;
 - `mxRubberband` to `RubberBandHandler`
-- `mxVertexHandler.rotationEnabled` has been removed. Use `VertexHandlerConfig.rotationEnabled` instead (since `0.12.0`).
 
 ### Event handling
 

@@ -125,22 +125,6 @@ class EdgeHandler {
   cloneEnabled = true;
 
   /**
-   * Specifies if adding bends by shift-click is enabled.
-   *
-   * **Note**: This experimental feature is not recommended for production use.
-   * @default false
-   */
-  addEnabled = false;
-
-  /**
-   * Specifies if removing bends by shift-click is enabled.
-   *
-   * **Note**: This experimental feature is not recommended for production use.
-   * @default false
-   */
-  removeEnabled = false;
-
-  /**
    * Specifies if removing bends by double click is enabled.
    * @default false
    */
@@ -160,19 +144,6 @@ class EdgeHandler {
   straightRemoveEnabled = false;
 
   /**
-   * Specifies if virtual bends should be added in the center of each segment.
-   * These bends can then be used to add new waypoints.
-   * @default false
-   */
-  virtualBendsEnabled = false;
-
-  /**
-   * Opacity to be used for virtual bends (see {@link virtualBendsEnabled}).
-   * @default 20
-   */
-  virtualBendOpacity = 20;
-
-  /**
    * Specifies if the parent should be highlighted if a child cell is selected.
    * @default false
    */
@@ -180,7 +151,7 @@ class EdgeHandler {
 
   /**
    * Specifies if bends should be added to the graph container.
-   * This is updated in {@link init} based on whether the edge or one of its terminals has an HTML label in the container.
+   * This is updated in {@link constructor} based on whether the edge or one of its terminals has an HTML label in the container.
    */
   preferHtml = false;
 
@@ -333,7 +304,7 @@ class EdgeHandler {
     this.redraw();
 
     // Handles escape keystrokes
-    this.escapeHandler = (sender: Listenable, evt: Event) => {
+    this.escapeHandler = (_sender: Listenable, _evt: Event) => {
       const dirty = this.index != null;
       this.reset();
 
@@ -419,7 +390,7 @@ class EdgeHandler {
    */
   isVirtualBendsEnabled(evt?: Event) {
     return (
-      this.virtualBendsEnabled &&
+      EdgeHandlerConfig.virtualBendsEnabled &&
       (this.state.style.edgeStyle == null ||
         this.state.style.edgeStyle === NONE ||
         this.state.style.noEdgeStyle) &&
@@ -695,6 +666,7 @@ class EdgeHandler {
    * Helper method to initialize the given bend.
    *
    * @param bend {@link Shape} that represents the bend to be initialized.
+   * @param dblClick Optional function to be called on double click.
    */
   initBend(bend: Shape, dblClick?: (evt: MouseEvent) => void) {
     if (this.preferHtml) {
@@ -820,13 +792,20 @@ class EdgeHandler {
       if (b) this.snapPoint = new Point(b.getCenterX(), b.getCenterY());
     }
 
-    if (this.addEnabled && handle === null && this.isAddPointEvent(me.getEvent())) {
+    if (
+      EdgeHandlerConfig.addBendOnShiftClickEnabled &&
+      handle === null &&
+      this.isAddPointEvent(me.getEvent())
+    ) {
       this.addPoint(this.state, me.getEvent());
       me.consume();
     } else if (handle !== null && !me.isConsumed() && this.graph.isEnabled()) {
       const cell = me.getCell();
 
-      if (this.removeEnabled && this.isRemovePointEvent(me.getEvent())) {
+      if (
+        EdgeHandlerConfig.removeBendOnShiftClickEnabled &&
+        this.isRemovePointEvent(me.getEvent())
+      ) {
         this.removePoint(this.state, handle);
       } else if (
         handle !== InternalEvent.LABEL_HANDLE ||
@@ -2000,7 +1979,7 @@ class EdgeHandler {
             b.redraw();
           }
 
-          setOpacity(b.node, this.virtualBendOpacity);
+          setOpacity(b.node, EdgeHandlerConfig.virtualBendOpacity);
           last = pt;
 
           if (this.manageLabelHandle) {

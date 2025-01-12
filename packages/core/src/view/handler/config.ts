@@ -39,6 +39,14 @@ import { shallowCopy } from '../../util/cloneUtils';
  */
 export type EdgeHandlerConfigType = {
   /**
+   * Specifies if adding bends by shift-click is enabled.
+   *
+   * **Note**: This experimental feature is not recommended for production use.
+   * @default false
+   * @since 0.15.0
+   */
+  addBendOnShiftClickEnabled: boolean;
+  /**
    * Defines the color to be used for the connect handle fill color. Use `none` for no color.
    * @default {@link CONNECT_HANDLE_FILLCOLOR}
    */
@@ -49,20 +57,41 @@ export type EdgeHandlerConfigType = {
    */
   handleShape: 'circle' | 'square';
   /**
+   * Specifies if removing bends by shift-click is enabled.
+   *
+   * **Note**: This experimental feature is not recommended for production use.
+   * @default false
+   * @since 0.15.0
+   */
+  removeBendOnShiftClickEnabled: boolean;
+  /**
    * Defines the default color to be used for the selection border of edges. Use `none` for no color.
    * @default {@link EDGE_SELECTION_COLOR}
    */
   selectionColor: string;
+  /**
+   * Defines the default dashed state to be used for the edge selection border.
+   * @default {@link EDGE_SELECTION_DASHED}
+   */
+  selectionDashed: boolean;
   /**
    * Defines the default stroke width to be used for edge selections.
    * @default {@link EDGE_SELECTION_STROKEWIDTH}
    */
   selectionStrokeWidth: number;
   /**
-   * Defines the default dashed state to be used for the edge selection border.
-   * @default {@link EDGE_SELECTION_DASHED}
+   * Opacity to be used for virtual bends (see {@link virtualBendsEnabled}).
+   * @default 20
+   * @since 0.15.0
    */
-  selectionDashed: boolean;
+  virtualBendOpacity: number;
+  /**
+   * Specifies if virtual bends should be added in the center of each segment.
+   * These bends can then be used to add new waypoints.
+   * @default false
+   * @since 0.15.0
+   */
+  virtualBendsEnabled: boolean;
 };
 
 /**
@@ -73,18 +102,26 @@ export type EdgeHandlerConfigType = {
  * @category Configuration
  */
 export const EdgeHandlerConfig: EdgeHandlerConfigType = {
+  addBendOnShiftClickEnabled: false,
+
   connectFillColor: CONNECT_HANDLE_FILLCOLOR,
 
   handleShape: 'square',
 
+  removeBendOnShiftClickEnabled: false,
+
   selectionColor: EDGE_SELECTION_COLOR,
+
+  selectionDashed: EDGE_SELECTION_DASHED,
 
   selectionStrokeWidth: EDGE_SELECTION_STROKEWIDTH,
 
-  selectionDashed: EDGE_SELECTION_DASHED,
+  virtualBendOpacity: 20,
+
+  virtualBendsEnabled: false,
 };
 
-const defaultEdgeHandlerConfig = { ...EdgeHandlerConfig };
+const defaultEdgeHandlerConfig: EdgeHandlerConfigType = { ...EdgeHandlerConfig };
 /**
  * Resets {@link EdgeHandlerConfig} to default values.
  *
