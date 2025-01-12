@@ -150,29 +150,6 @@ export const htmlEntities = (s: string, newline = true): string => {
   return s;
 };
 
-// TODO check if we can remove as well (special mgt of the NONE value)
-/**
- * Returns the color value for the given key in the given associative
- * array or the given default value if the value is null. If the value
- * is {@link NONE} then null is returned.
- *
- * @param array Associative array that contains the value for the key.
- * @param key Key whose value should be returned.
- * @param defaultValue Value to be returned if the value for the given
- * key is null. Default is null.
- */
-export const getColor = (array: any, key: string, defaultValue: any) => {
-  let value = array != null ? array[key] : null;
-
-  if (value == null) {
-    value = defaultValue;
-  } else if (value === NONE) {
-    value = null;
-  }
-
-  return value;
-};
-
 /**
  * Returns a textual representation of the specified object.
  *
