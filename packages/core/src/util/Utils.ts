@@ -88,8 +88,13 @@ export const mixInto = (dest: any) => (mixin: any) => {
  * @param defaultValue Value to be returned if the value for the given
  * key is null.
  */
-export const getValue = <T>(array: T, key: keyof T, defaultValue?: any) => {
-  let value = array != null ? array[key] : null;
+export const getValue = <T>(
+  array: T,
+  key: keyof T,
+  defaultValue?: NonNullable<T>[keyof T]
+): NonNullable<T>[keyof T] | null | undefined => {
+  let value: NonNullable<T>[keyof T] | null | undefined =
+    array != null ? array[key] : null;
   if (value == null) {
     value = defaultValue;
   }
