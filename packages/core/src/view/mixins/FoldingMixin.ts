@@ -78,7 +78,7 @@ export const FoldingMixin: PartialType = {
     });
   },
 
-  isCellFoldable(cell, collapse?: boolean): boolean {
+  isCellFoldable(cell, _collapse?: boolean): boolean {
     return cell.getChildCount() > 0 && (this.getCurrentCellStyle(cell).foldable ?? true);
   },
 
@@ -166,7 +166,7 @@ export const FoldingMixin: PartialType = {
     }
   },
 
-  updateAlternateBounds(cell = null, geo = null, willCollapse = false) {
+  updateAlternateBounds(cell = null, geo = null, _willCollapse = false) {
     if (cell != null && geo != null) {
       const style = this.getCurrentCellStyle(cell);
 
