@@ -219,11 +219,9 @@ export const getPortConstraints = (
   source: boolean,
   defaultValue: number
 ): number => {
-  const value = getValue(
-    terminal.style,
-    'portConstraint',
-    getValue(edge.style, source ? 'sourcePortConstraint' : 'targetPortConstraint', null)
-  );
+  const value =
+    terminal.style.portConstraint ??
+    getValue(edge.style, source ? 'sourcePortConstraint' : 'targetPortConstraint', null);
 
   if (isNullish(value)) {
     return defaultValue;
