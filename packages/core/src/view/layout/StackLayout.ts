@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import GraphLayout from './GraphLayout';
-import { getNumber } from '../../util/StringUtils';
 import { DEFAULT_STARTSIZE } from '../../util/Constants';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
