@@ -151,15 +151,6 @@ export const htmlEntities = (s: string, newline = true): string => {
 };
 
 // TODO remove as well
-export const getStringValue = (array: any, key: string, defaultValue: string) => {
-  let value = array != null ? array[key] : null;
-  if (value == null) {
-    value = defaultValue;
-  }
-  return value == null ? null : String(value);
-};
-
-// TODO remove as well
 /**
  * Returns the numeric value for the given key in the given associative
  * array or the given default value (or 0) if the value is null. The value
