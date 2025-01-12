@@ -288,7 +288,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
             const state = graph.view.getState(cell);
 
             if (state != null) {
-              let dir = state.style.direction || 'east'; /* default */
+              let dir = state.style.direction ?? 'east';
 
               if (dir === 'east') {
                 dir = 'south';

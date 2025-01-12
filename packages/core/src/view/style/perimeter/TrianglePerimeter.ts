@@ -32,7 +32,7 @@ export const TrianglePerimeter: PerimeterFunction = (
   next: Point,
   orthogonal = false
 ): Point | null => {
-  const direction = vertex != null ? vertex.style.direction : null;
+  const direction = vertex != null ? (vertex.style.direction ?? DIRECTION.EAST) : null;
   const vertical = direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH;
 
   const { x } = bounds;

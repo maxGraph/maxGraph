@@ -66,7 +66,10 @@ export const Loop: EdgeStyleFunction = (
     let dy = 0;
 
     const seg = getValue(state.style, 'segment', graph.gridSize) * view.scale;
-    const dir = getValue(state.style, 'direction', DIRECTION.WEST);
+    // FIXME JSDoc of style.direction mention default value to east, but this is not the same here
+    // the api doc of mxGraph does not mention the default value of direction
+    // const dir = getValue(state.style, 'direction', DIRECTION.WEST);
+    const dir = state.style?.direction ?? DIRECTION.WEST;
 
     if (dir === DIRECTION.NORTH || dir === DIRECTION.SOUTH) {
       x = view.getRoutingCenterX(source);
