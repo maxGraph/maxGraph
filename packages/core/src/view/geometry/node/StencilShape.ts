@@ -34,7 +34,6 @@ import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
-import { getNumber } from '../../../util/StringUtils';
 
 /**
  * Configure global settings for stencil shapes.
@@ -227,7 +226,7 @@ class StencilShape extends Shape {
     const minScale = Math.min(aspect.width, aspect.height);
     const sw =
       this.strokeWidthValue === 'inherit'
-        ? Number(getNumber(shape.style, 'strokeWidth', 1))
+        ? (shape.style?.strokeWidth ?? 1)
         : Number(this.strokeWidthValue) * minScale;
     canvas.setStrokeWidth(sw);
 
