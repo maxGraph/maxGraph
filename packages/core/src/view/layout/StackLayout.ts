@@ -297,7 +297,7 @@ class StackLayout extends GraphLayout {
       if (this.graph.isSwimlane(parent)) {
         // Uses computed style to get latest
         const style = this.graph.getCellStyle(parent);
-        let start = getNumber(style, 'startSize', DEFAULT_STARTSIZE);
+        let start = style.startSize ?? DEFAULT_STARTSIZE;
         const horz = style.horizontal ?? true;
 
         if (pgeo != null) {
@@ -358,7 +358,7 @@ class StackLayout extends GraphLayout {
 
             if (!this.borderCollapse) {
               const childStyle = this.graph.getCellStyle(child);
-              sw = getNumber(childStyle, 'strokeWidth', 1);
+              sw = childStyle.strokeWidth ?? 1;
             }
 
             if (last != null) {
