@@ -689,9 +689,12 @@ class VertexHandler {
         this.preview = this.createSelectionShape(this.bounds);
 
         if (
-          !(Client.IS_SVG && Number(this.state.style.rotation || '0') !== 0) &&
-          this.state.text != null &&
-          this.state.text.node.parentNode === this.graph.container
+          !(
+            Client.IS_SVG &&
+            (this.state.style.rotation ?? 0) != 0 &&
+            this.state.text != null &&
+            this.state.text.node.parentNode === this.graph.container
+          )
         ) {
           this.preview.dialect = DIALECT.STRICTHTML;
           this.preview.init(this.graph.container);
@@ -1316,7 +1319,7 @@ class VertexHandler {
       if (cell.isVertex() || cell.isEdge()) {
         if (!cell.isEdge()) {
           const style = this.graph.getCurrentCellStyle(cell);
-          const total = (style.rotation || 0) + angle;
+          const total = (style.rotation ?? 0) + angle;
           this.graph.setCellStyles('rotation', total, [cell]);
         }
 
