@@ -79,10 +79,7 @@ export const FoldingMixin: PartialType = {
   },
 
   isCellFoldable(cell, _collapse?: boolean): boolean {
-    // TODO test with this former implementation, then switch to the new one
-    const style = this.getCurrentCellStyle(cell);
-    return cell.getChildCount() > 0 && (style.foldable ?? true);
-    // return cell.getChildCount() > 0 && (this.getCurrentCellStyle(cell).foldable ?? true);
+    return cell.getChildCount() > 0 && (this.getCurrentCellStyle(cell).foldable ?? true);
   },
 
   getFoldingImage(state) {
