@@ -88,7 +88,7 @@ export const ConnectionsMixin: PartialType = {
   getOutlineConstraint(point, terminalState, me) {
     if (terminalState.shape) {
       const bounds = this.getView().getPerimeterBounds(terminalState);
-      const direction = terminalState.style.direction ?? DIRECTION.EAST;
+      const direction = terminalState.style.direction;
 
       if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
         bounds.x += bounds.width / 2 - bounds.height / 2;
