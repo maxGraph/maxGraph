@@ -38,11 +38,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/domUtils';
-import {
-  getStringValue,
-  htmlEntities,
-  replaceTrailingNewlines,
-} from '../../util/StringUtils';
+import { htmlEntities, replaceTrailingNewlines } from '../../util/StringUtils';
 import {
   getSource,
   isConsumed,
@@ -1006,9 +1002,7 @@ class CellEditorHandler implements GraphPlugin {
 
       // Applies the horizontal and vertical label positions
       if (state.cell.isVertex()) {
-        const horizontal: string = <string>(
-          getStringValue(state.style, 'labelPosition', ALIGN.CENTER)
-        );
+        const horizontal = state.style.labelPosition ?? ALIGN.CENTER;
 
         if (horizontal === 'left') {
           result.x -= state.width;
@@ -1016,10 +1010,7 @@ class CellEditorHandler implements GraphPlugin {
           result.x += state.width;
         }
 
-        const vertical: string =
-          state.style.verticalLabelPosition != null
-            ? state.style.verticalLabelPosition
-            : 'middle';
+        const vertical = state.style.verticalLabelPosition ?? 'middle';
 
         if (vertical === 'top') {
           result.y -= state.height;
