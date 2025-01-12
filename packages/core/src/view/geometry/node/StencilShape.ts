@@ -220,8 +220,7 @@ class StencilShape extends Shape {
     // (start, segment, end blocks), pluggable markers, how to implement
     // swimlanes (title area) with this API, add icon, horizontal/vertical
     // label, indicator for all shapes, rotation
-    // TODO when using getValue, the default value was null, but the JSDoc of style.direction says the default is 'east'
-    const direction = shape.style?.direction ?? 'east';
+    const direction = shape.style?.direction;
     const aspect = this.computeAspect(shape, x, y, w, h, direction);
     const minScale = Math.min(aspect.width, aspect.height);
     const sw =
