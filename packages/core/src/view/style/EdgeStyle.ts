@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getNumber } from '../../util/StringUtils';
 import {
   getBoundingBox,
   getPortConstraints,
@@ -260,11 +259,8 @@ class EdgeStyle {
       const type = (isSource ? state.style.startArrow : state.style.endArrow) ?? NONE;
 
       if (type !== NONE) {
-        const size = getNumber(
-          state.style,
-          isSource ? 'startSize' : 'endSize',
-          DEFAULT_MARKERSIZE
-        );
+        const size =
+          (isSource ? state.style.startSize : state.style.endSize) ?? DEFAULT_MARKERSIZE;
         value =
           Math.max(2, Math.ceil((size + EdgeStyle.orthBuffer) / EdgeStyle.orthBuffer)) *
           EdgeStyle.orthBuffer;
