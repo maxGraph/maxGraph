@@ -79,28 +79,6 @@ export const mixInto = (dest: any) => (mixin: any) => {
   }
 };
 
-/**
- * Returns the value for the given key in the given associative array or
- * the given default value if the value is null.
- *
- * @param array Associative array that contains the value for the key.
- * @param key Key whose value should be returned.
- * @param defaultValue Value to be returned if the value for the given
- * key is null.
- */
-export const getValue = <T>(
-  array: T,
-  key: keyof T,
-  defaultValue?: NonNullable<T>[keyof T]
-): NonNullable<T>[keyof T] | null | undefined => {
-  let value: NonNullable<T>[keyof T] | null | undefined =
-    array != null ? array[key] : null;
-  if (value == null) {
-    value = defaultValue;
-  }
-  return value;
-};
-
 export const copyTextToClipboard = (text: string): void => {
   // Credit: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
   if (!navigator.clipboard) {
