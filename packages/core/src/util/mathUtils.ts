@@ -21,7 +21,7 @@ import Point from '../view/geometry/Point';
 import Rectangle from '../view/geometry/Rectangle';
 import CellState from '../view/cell/CellState';
 import type { CellStateStyle } from '../types';
-import { getValue, isNullish } from './Utils';
+import { isNullish } from './Utils';
 
 /**
  * Converts the given degree to radians.
@@ -221,7 +221,8 @@ export const getPortConstraints = (
 ): number => {
   const value =
     terminal.style.portConstraint ??
-    getValue(edge.style, source ? 'sourcePortConstraint' : 'targetPortConstraint', null);
+    (source ? edge.style.sourcePortConstraint : edge.style.targetPortConstraint) ??
+    null;
 
   if (isNullish(value)) {
     return defaultValue;
