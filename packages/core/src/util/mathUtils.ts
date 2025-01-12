@@ -377,12 +377,8 @@ export const getDirectedBounds = (
   flipH: boolean,
   flipV: boolean
 ) => {
-  // TODO WIP remove the getValue function
-  // const d = getValue(style, 'direction', DIRECTION.EAST);
   const d = style?.direction ?? 'east';
-  // flipH = flipH != null ? flipH : getValue(style, 'flipH', false);
   flipH ??= style?.flipH ?? false;
-  // flipV = flipV != null ? flipV : getValue(style, 'flipH', false);
   flipV ??= style?.flipV ?? false;
 
   m.x = Math.round(Math.max(0, Math.min(rect.width, m.x)));
@@ -618,12 +614,10 @@ export const intersectsHotspot = (
     let h = state.height;
 
     // TODO add a style constant when this is used for start marker
-    // const start = getValue(state.style, 'startSize') * state.view.scale;
     const style = state.style;
     const start = (style?.startSize ?? 0) * state.view.scale;
 
     if (start > 0) {
-      // if (getValue(state.style, 'horizontal', true)) {
       if (style?.horizontal ?? true) {
         cy = state.y + start / 2;
         h = start;
