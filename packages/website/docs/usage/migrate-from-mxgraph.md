@@ -444,8 +444,8 @@ The following Cell handler classes have been renamed in `maxGraph`:
 - `mxElbowEdgeHandler` to `ElbowEdgeHandler`
 - `mxVertexHandler` to `VertexHandler`
 
-In `mxGraph`, the handlers were configured by updating their properties on the prototype. 
-In `maxGraph`, the handlers are configured with global configuration object. For more details, see the [Global Configuration](./global-configuration.md#general) documentation.
+In `mxGraph`, the handlers were configured by updating their properties on the prototype.
+In `maxGraph`, the handlers are configured with a global configuration object. For more details, see the [Global Configuration](./global-configuration.md#general) documentation.
 
 For example, the `mxVertexHandler` class had a `rotationEnabled` property. 
 This property has been removed in `maxGraph`. Use the `VertexHandlerConfig.rotationEnabled` property instead (since `0.12.0`).
