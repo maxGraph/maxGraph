@@ -16,12 +16,12 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { createCellWithStyle, createGraphWithoutPlugins } from '../../utils';
-import { Cell } from '../../../src';
+import { Cell, type CellStateStyle } from '../../../src';
 
 const ignoredFoldableParameter = false;
 
-function createCellWithChilden() {
-  const cell = new Cell();
+function createCellWithChildren(style?: CellStateStyle): Cell {
+  const cell = createCellWithStyle(style ?? {});
   cell.children.push(new Cell());
   return cell;
 }
@@ -34,25 +34,27 @@ describe('isCellFoldable', () => {
   });
 
   test('Using defaults, Cell with children', () => {
-    const cell = createCellWithChilden();
+    const cell = createCellWithChildren();
     expect(
       createGraphWithoutPlugins().isCellFoldable(cell, ignoredFoldableParameter)
     ).toBeTruthy();
   });
 
-  // test('Using Cell with the "foldable" style property set to "true"', () => {
-  //   expect(
-  //     createGraphWithoutPlugins().isCellCloneable(
-  //       createCellWithStyle({ foldable: true })
-  //     )
-  //   ).toBeTruthy();
-  // });
-  //
-  // test('Using Cell with the "foldable" style property set to "false"', () => {
-  //   expect(
-  //     createGraphWithoutPlugins().isCellCloneable(
-  //       createCellWithStyle({ foldable: false })
-  //     )
-  //   ).toBeFalsy();
-  // });
+  test('Using Cell with the "foldable" style property set to "true"', () => {
+    expect(
+      createGraphWithoutPlugins().isCellFoldable(
+        createCellWithChildren({ foldable: true }),
+        ignoredFoldableParameter
+      )
+    ).toBeTruthy();
+  });
+
+  test('Using Cell with the "foldable" style property set to "false"', () => {
+    expect(
+      createGraphWithoutPlugins().isCellFoldable(
+        createCellWithChildren({ foldable: false }),
+        ignoredFoldableParameter
+      )
+    ).toBeFalsy();
+  });
 });
