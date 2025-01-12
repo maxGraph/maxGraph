@@ -17,8 +17,6 @@ limitations under the License.
 */
 
 import GraphLayout from './GraphLayout';
-import Rectangle from '../geometry/Rectangle';
-import { getValue } from '../../util/Utils';
 import { getNumber } from '../../util/StringUtils';
 import { DEFAULT_STARTSIZE } from '../../util/Constants';
 import { Graph } from '../Graph';
@@ -300,7 +298,7 @@ class StackLayout extends GraphLayout {
         // Uses computed style to get latest
         const style = this.graph.getCellStyle(parent);
         let start = getNumber(style, 'startSize', DEFAULT_STARTSIZE);
-        const horz = getValue(style, 'horizontal', true) == 1;
+        const horz = style.horizontal ?? true;
 
         if (pgeo != null) {
           if (horz) {
