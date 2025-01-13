@@ -718,9 +718,11 @@ class CellEditorHandler implements GraphPlugin {
       const italic = (state.style.fontStyle ?? 0) & FONT.ITALIC;
 
       const txtDecor = [];
+      // TODO make this change in a dedicated PR about the Nullish coalescing operator
       if ((state.style.fontStyle ?? 0) & FONT.UNDERLINE) {
         txtDecor.push('underline');
       }
+      // TODO make this change in a dedicated PR about the Nullish coalescing operator
       if ((state.style.fontStyle ?? 0) & FONT.STRIKETHROUGH) {
         txtDecor.push('line-through');
       }
