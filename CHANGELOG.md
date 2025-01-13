@@ -14,10 +14,10 @@ _**Note:** Yet to be released breaking changes appear here._
   - Use the [nullish coalescing operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
   and the [Optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) instead.
   - Removed functions:
-    - utils.getValue 
-    - stringUtils.getColor
-    - stringUtils.getNumber
-    - stringUtils.getStringValue
+    - `utils.getValue`
+    - `stringUtils.getColor`
+    - `stringUtils.getNumber`
+    - `stringUtils.getStringValue`
 
 ## 0.14.0
 
