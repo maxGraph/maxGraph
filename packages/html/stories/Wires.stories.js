@@ -616,6 +616,7 @@ const Template = ({ label, ...args }) => {
 
     // Gets the initial connection from the source terminal or edge
     if (source != null && source.cell.isEdge()) {
+      // TODO make this change in a dedicated PR (better check equality with nullish values)
       horizontal = state.style.sourceConstraint === 'horizontal';
     } else if (source != null) {
       horizontal = source.style.portConstraint !== 'vertical';
