@@ -971,10 +971,12 @@ export const CellsMixin: PartialType = {
       }
 
       // Adds spacings
+      // TODO make this change in a dedicated PR about the Nullish coalescing operator
       dx += 2 * (style.spacing ?? 0);
       dx += style.spacingLeft ?? 0;
       dx += style.spacingRight ?? 0;
 
+      // TODO make this change in a dedicated PR about the Nullish coalescing operator
       dy += 2 * (style.spacing ?? 0);
       dy += style.spacingTop ?? 0;
       dy += style.spacingBottom ?? 0;
