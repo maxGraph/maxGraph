@@ -17,15 +17,14 @@ They are replaced by global configuration in `EdgeHandlerConfig`:
   - virtualBendOpacity
   - virtualBendsEnabled
 
-- Some utils function to retrieve default value of CellStateStyle properties, mainly intended to only be used internally, have been removed
-- use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing operator instead of `||` for default values
-
-TODO check the name of the exported namespace
-- utils.getValue has been removed, use
-- StringUtils
-  getColor not used
-  getNumber
-  getStringValue
+- Some utility functions formerly used to retrieve default value of `CellStateStyle` and `CellStyle` properties, mainly intended to only be used internally, have been removed.
+    - Use the [nullish coalescing operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
+      and the [Optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) instead.
+    - Removed functions:
+        - utils.getValue
+        - stringUtils.getColor
+        - stringUtils.getNumber
+        - stringUtils.getStringValue
 
 TODO update migration guide from mxUtils
 ts-example: 445.50 kB to 445.10 kB
