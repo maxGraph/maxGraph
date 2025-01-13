@@ -54,6 +54,7 @@ export const utils = {
   errorImage: `${Client.imageBasePath}/error.gif`,
 };
 
+// TODO make this 2 functions API private --> describe in the changelog
 export const isNullish = (v: string | object | null | undefined | number | boolean) =>
   v === null || v === undefined;
 export const isNotNullish = (v: string | object | null | undefined | number | boolean) =>
