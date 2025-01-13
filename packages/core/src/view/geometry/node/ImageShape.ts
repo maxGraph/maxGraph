@@ -83,6 +83,7 @@ class ImageShape extends RectangleShape {
     this.stroke = NONE;
     this.gradient = NONE;
 
+    // TODO make this change in a dedicated PR about the null check simplification
     // TODO decide what we want to do with this
     // former implementation: if (this.style && this.style.imageAspect != null)
     if (this.style) {
