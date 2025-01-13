@@ -530,7 +530,7 @@ class CellEditorHandler implements GraphPlugin {
           }
         }
       } else {
-        const lw = state.style.labelWidth;
+        const lw = state.style.labelWidth ?? null;
         m = state.text != null && this.align == null ? state.text.margin : null;
 
         if (m == null) {
