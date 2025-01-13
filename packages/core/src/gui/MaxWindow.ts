@@ -695,6 +695,7 @@ class MaxWindow extends EventSource {
           this.div.style.left = '0px';
           this.div.style.top = '0px';
           const docHeight = Math.max(
+            // TODO make this change in a dedicated PR about the Nullish coalescing operator
             document.body.clientHeight ?? 0,
             document.documentElement.clientHeight ?? 0
           );
@@ -985,6 +986,7 @@ export const popup = (content: string, isInternalWindow = false) => {
 
     const w = document.body.clientWidth;
     const h = Math.max(
+      // TODO make this change in a dedicated PR about the Nullish coalescing operator
       document.body.clientHeight ?? 0,
       document.documentElement.clientHeight
     );
