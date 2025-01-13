@@ -221,6 +221,7 @@ export const ConnectionsMixin: PartialType = {
     if (constraint.point) {
       const bounds = this.getView().getPerimeterBounds(vertex);
       const cx = new Point(bounds.getCenterX(), bounds.getCenterY());
+      // TODO make this change in a dedicated PR about the Nullish coalescing operator
       const style = vertex.style;
       const direction = style.direction ?? DIRECTION.EAST;
       let r1 = 0;
