@@ -1012,6 +1012,7 @@ class CellEditorHandler implements GraphPlugin {
           result.x += state.width;
         }
 
+        // TODO make this change in a dedicated PR about the Nullish coalescing operator
         const vertical = state.style.verticalLabelPosition ?? 'middle';
 
         if (vertical === 'top') {
