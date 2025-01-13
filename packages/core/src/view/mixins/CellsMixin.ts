@@ -359,6 +359,7 @@ export const CellsMixin: PartialType = {
       if (value === null) {
         const style = this.getCurrentCellStyle(cells[0]);
 
+        // TODO make this change in a dedicated PR about the Nullish coalescing operator
         const current = (style[key] as number) ?? 0;
         value = !((current & flag) === flag);
       }
