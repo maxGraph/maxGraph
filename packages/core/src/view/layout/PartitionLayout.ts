@@ -42,6 +42,7 @@ class PartitionLayout extends GraphLayout {
   constructor(graph: Graph, horizontal = true, spacing = 0, border = 0) {
     super(graph);
     this.horizontal = horizontal != null ? horizontal : true;
+    // TODO make this change in a dedicated PR about the Nullish coalescing operator
     this.spacing = spacing ?? 0;
     this.border = border ?? 0;
   }
