@@ -249,6 +249,7 @@ export const ConnectionsMixin: PartialType = {
       );
 
       // Rotation for direction before projection on perimeter
+      // TODO make this change in a dedicated PR about the Nullish coalescing operator
       let r2 = style.rotation ?? 0;
 
       if (constraint.perimeter) {
