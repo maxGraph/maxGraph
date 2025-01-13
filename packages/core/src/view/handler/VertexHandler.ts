@@ -1316,6 +1316,7 @@ class VertexHandler {
       if (cell.isVertex() || cell.isEdge()) {
         if (!cell.isEdge()) {
           const style = this.graph.getCurrentCellStyle(cell);
+          // TODO make this change in a dedicated PR about the Nullish coalescing operator
           const total = (style.rotation ?? 0) + angle;
           this.graph.setCellStyles('rotation', total, [cell]);
         }
