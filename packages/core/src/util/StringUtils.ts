@@ -150,6 +150,11 @@ export const htmlEntities = (s: string, newline = true): string => {
   return s;
 };
 
+/**
+ *
+ * @private for internal use only, not part of the public API.
+ */
+// TODO decide if we place this function here or in a different file not exported by the library
 export const replaceLineFeedsForInnerHtml = (input: string): string =>
   input.replace(/\n/g, '<br>');
 
