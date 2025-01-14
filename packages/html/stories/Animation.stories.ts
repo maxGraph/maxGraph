@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, Point } from '@maxgraph/core';
+import { type CellStyle, Graph, Point } from '@maxgraph/core';
 
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
@@ -32,14 +32,14 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
 
   const graph = new Graph(container);
   graph.setEnabled(false);
   const parent = graph.getDefaultParent();
 
-  const vertexStyle = {
+  const vertexStyle: CellStyle = {
     shape: 'cylinder',
     strokeWidth: 2,
     fillColor: '#ffffff',
@@ -74,21 +74,21 @@ const Template = ({ label, ...args }) => {
         strokeWidth: 3,
         endArrow: 'block',
         endSize: 2,
-        endFill: 1,
+        endFill: true,
         strokeColor: 'black',
-        rounded: 1,
+        rounded: true,
       },
     });
-    e1.geometry.points = [new Point(230, 50)];
+    e1.geometry && (e1.geometry.points = [new Point(230, 50)]);
     graph.orderCells(true, [e1]);
   });
 
   // Adds animation to edge shape and makes "pipe" visible
-  const state = graph.view.getState(e1);
-  state.shape.node.getElementsByTagName('path')[0].removeAttribute('visibility');
-  state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke-width', '6');
-  state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke', 'lightGray');
-  state.shape.node.getElementsByTagName('path')[1].setAttribute('class', 'flow');
+  const state = graph.view.getState(e1!);
+  state?.shape?.node.getElementsByTagName('path')[0].removeAttribute('visibility');
+  state?.shape?.node.getElementsByTagName('path')[0].setAttribute('stroke-width', '6');
+  state?.shape?.node.getElementsByTagName('path')[0].setAttribute('stroke', 'lightGray');
+  state?.shape?.node.getElementsByTagName('path')[1].setAttribute('class', 'flow');
 
   return container;
 };
