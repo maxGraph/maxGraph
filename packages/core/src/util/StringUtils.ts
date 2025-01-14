@@ -133,7 +133,7 @@ export const removeWhitespace = (node: HTMLElement, before: boolean) => {
  * their HTML entities in the given string and returns the result.
  *
  * @param s String that contains the characters to be converted.
- * @param newline If newlines should be replaced. Default is `true`.
+ * @param newline If newlines should be replaced by `&#xa;`. Default is `true`.
  */
 export const htmlEntities = (s: string, newline = true): string => {
   s = String(s || '');
