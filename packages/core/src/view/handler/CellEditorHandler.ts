@@ -42,6 +42,7 @@ import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/do
 import {
   getStringValue,
   htmlEntities,
+  replaceLineFeedsForInnerHtml,
   replaceTrailingNewlines,
 } from '../../util/StringUtils';
 import {
@@ -342,7 +343,7 @@ class CellEditorHandler implements GraphPlugin {
   getInitialValue(state: CellState, trigger: MouseEvent | null) {
     let result = htmlEntities(this.graph.getEditingValue(state.cell, trigger), false);
     result = replaceTrailingNewlines(result, '<div><br></div>');
-    return result.replace(/\n/g, '<br>');
+    return replaceLineFeedsForInnerHtml(result);
   }
 
   /**

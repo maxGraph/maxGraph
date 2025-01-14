@@ -18,6 +18,7 @@ import type Cell from '../cell/Cell';
 import Translations from '../../util/Translations';
 import { isNode } from '../../util/domUtils';
 import type { Graph } from '../Graph';
+import { replaceLineFeedsForInnerHtml } from '../../util/StringUtils';
 
 type PartialGraph = Pick<
   Graph,
@@ -159,7 +160,7 @@ export const ValidationMixin: PartialType = {
       const warn = this.validateGraph(tmp, ctx);
 
       if (warn) {
-        this.setCellWarning(tmp, warn.replace(/\n/g, '<br>'));
+        this.setCellWarning(tmp, replaceLineFeedsForInnerHtml(warn));
       } else {
         this.setCellWarning(tmp, null);
       }

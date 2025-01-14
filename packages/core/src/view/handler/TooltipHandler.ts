@@ -28,6 +28,7 @@ import PopupMenuHandler from './PopupMenuHandler';
 
 import type { GraphPlugin } from '../../types';
 import EventSource from '../event/EventSource';
+import { replaceLineFeedsForInnerHtml } from '../../util/StringUtils';
 
 /**
  * Graph event handler that displays tooltips.
@@ -307,7 +308,7 @@ class TooltipHandler implements GraphPlugin {
       this.div!.style.top = `${y + TOOLTIP_VERTICAL_OFFSET + origin.y}px`;
 
       if (!isNode(tip)) {
-        this.div!.innerHTML = (tip as string).replace(/\n/g, '<br>');
+        this.div!.innerHTML = replaceLineFeedsForInnerHtml(tip as string);
       } else {
         this.div!.innerHTML = '';
         this.div!.appendChild(tip as HTMLElement);

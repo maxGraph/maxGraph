@@ -41,7 +41,7 @@ import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
 import Dictionary from '../../util/Dictionary';
 import Point from '../geometry/Point';
-import { htmlEntities } from '../../util/StringUtils';
+import { htmlEntities, replaceLineFeedsForInnerHtml } from '../../util/StringUtils';
 import CellState from '../cell/CellState';
 import type { Graph } from '../Graph';
 import { cloneCells, getTopmostCells } from '../../util/cellArrayUtils';
@@ -995,7 +995,7 @@ export const CellsMixin: PartialType = {
           value = htmlEntities(value, false);
         }
 
-        value = value.replace(/\n/g, '<br>');
+        value = replaceLineFeedsForInnerHtml(value);
 
         const size = getSizeForString(
           value,
