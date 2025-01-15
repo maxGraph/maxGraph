@@ -19,10 +19,11 @@ limitations under the License.
 import EventObject from './EventObject';
 
 type EventListenerObject = {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
-  funct: Function;
+  funct: EventListenerFunction;
   name: string;
 };
+
+type EventListenerFunction = (sender: string, eventObject: EventObject) => void;
 
 /**
  * Base class for objects that dispatch named events.
@@ -52,66 +53,65 @@ class EventSource {
   }
 
   /**
-   * Holds the event names and associated listeners in an array. The array
-   * contains the event name followed by the respective listener for each
-   * registered listener.
+   * Holds the event names and associated listeners in an array.
+   * The array  contains the event name followed by the respective listener for each registered listener.
    */
   eventListeners: EventListenerObject[] = [];
 
   /**
-   * Specifies if events can be fired. Default is true.
+   * Specifies if events can be fired.
+   * @default true
    */
   eventsEnabled = true;
 
   /**
-   * Optional source for events. Default is null.
+   * Optional source for events.
+   * @default null
    */
   eventSource: EventTarget | null = null;
 
   /**
-   * Returns <eventsEnabled>.
+   * Returns {@link eventsEnabled}.
    */
   isEventsEnabled() {
     return this.eventsEnabled;
   }
 
   /**
-   * Sets <eventsEnabled>.
+   * Sets {@link eventsEnabled}.
    */
   setEventsEnabled(value: boolean) {
     this.eventsEnabled = value;
   }
 
   /**
-   * Returns <eventSource>.
+   * Returns {@link eventSource}.
    */
   getEventSource() {
     return this.eventSource;
   }
 
   /**
-   * Sets <eventSource>.
+   * Sets {@link eventSource}.
    */
   setEventSource(value: EventTarget | null) {
     this.eventSource = value;
   }
 
   /**
-   * Binds the specified function to the given event name. If no event name
-   * is given, then the listener is registered for all events.
+   * Binds the specified function to the given event name.
+   * If no event name is given, then the listener is registered for all events.
    *
    * The parameters of the listener are the sender and an {@link EventObject}.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
-  addListener(name: string, funct: Function) {
+  addListener(name: string, funct: EventListenerFunction) {
     this.eventListeners.push({ name, funct });
   }
 
   /**
    * Removes all occurrences of the given listener from {@link eventListeners}.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
-  removeListener(funct: Function) {
+  removeListener(funct: EventListenerFunction) {
     let i = 0;
 
     while (i < this.eventListeners.length) {
@@ -126,7 +126,7 @@ class EventSource {
   /**
    * Dispatches the given event to the listeners which are registered for
    * the event. The sender argument is optional. The current execution scope
-   * ("this") is used for the listener invocation (see {@link Utils#bind}).
+   * ("this") is used for the listener invocation (see {@link utils.bind}).
    *
    * Example:
    *
