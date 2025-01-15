@@ -23,7 +23,10 @@ type EventListenerObject = {
   name: string;
 };
 
-type EventListenerFunction = (sender: string, eventObject: EventObject) => void;
+export type EventListenerFunction = (
+  sender: EventTarget,
+  eventObject: EventObject
+) => void;
 
 /**
  * Base class for objects that dispatch named events.
@@ -135,8 +138,7 @@ class EventSource {
    * ```
    *
    * @param evt {@link EventObject} that represents the event.
-   * @param sender Optional sender to be passed to the listener. Default value is
-   * the return value of <getEventSource>.
+   * @param sender Optional sender to be passed to the listener. Default value is the returned value of {@link getEventSource}.
    */
   fireEvent(evt: EventObject, sender: EventTarget | null = null) {
     if (this.isEventsEnabled()) {
