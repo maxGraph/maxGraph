@@ -695,8 +695,8 @@ class MaxWindow extends EventSource {
           this.div.style.left = '0px';
           this.div.style.top = '0px';
           const docHeight = Math.max(
-            document.body.clientHeight ?? 0,
-            document.documentElement.clientHeight ?? 0
+            document.body.clientHeight || 0,
+            document.documentElement.clientHeight || 0
           );
 
           this.div.style.width = `${document.body.clientWidth - 2}px`;
