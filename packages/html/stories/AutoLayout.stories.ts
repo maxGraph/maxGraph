@@ -181,32 +181,35 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     overlay.cursor = 'hand';
 
     // Installs a handler for clicks on the overlay
-    overlay.addListener(InternalEvent.CLICK, (_name: string, _funct: Function) => {
-      graph.clearSelection();
+    overlay.addListener(
+      InternalEvent.CLICK,
+      (_name: string, _funct: (sender: EventTarget, evt: EventObject) => void) => {
+        graph.clearSelection();
 
-      let vertex: Cell;
-      executeLayout(
-        () => {
-          const geo = cell.getGeometry();
-          vertex = graph.insertVertex({
-            parent,
-            value: 'World!',
-            position: [geo!.x, geo!.y],
-            size: [80, 30],
-          });
-          addOverlay(vertex);
-          graph.view.refresh();
-          graph.insertEdge({
-            parent,
-            source: cell,
-            target: vertex,
-          });
-        },
-        () => {
-          graph.scrollCellToVisible(vertex);
-        }
-      );
-    });
+        let vertex: Cell;
+        executeLayout(
+          () => {
+            const geo = cell.getGeometry();
+            vertex = graph.insertVertex({
+              parent,
+              value: 'World!',
+              position: [geo!.x, geo!.y],
+              size: [80, 30],
+            });
+            addOverlay(vertex);
+            graph.view.refresh();
+            graph.insertEdge({
+              parent,
+              source: cell,
+              target: vertex,
+            });
+          },
+          () => {
+            graph.scrollCellToVisible(vertex);
+          }
+        );
+      }
+    );
 
     // Special CMS event, automatically connect the new vertex to its predecessor
     overlay.addListener('pointerdown', (_sender: EventTarget, eo: EventObject) => {
