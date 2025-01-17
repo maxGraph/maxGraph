@@ -985,7 +985,7 @@ export const popup = (content: string, isInternalWindow = false) => {
 
     const w = document.body.clientWidth;
     const h = Math.max(
-      document.body.clientHeight ?? 0,
+      document.body.clientHeight || 0,
       document.documentElement.clientHeight
     );
     const wnd = new MaxWindow(
