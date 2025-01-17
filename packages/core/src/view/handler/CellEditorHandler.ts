@@ -714,16 +714,14 @@ class CellEditorHandler implements GraphPlugin {
       const family = state.style.fontFamily ?? DEFAULT_FONTFAMILY;
       const color = state.style.fontColor ?? 'black';
       const align = state.style.align ?? ALIGN.LEFT;
-      const bold = (state.style.fontStyle ?? 0) & FONT.BOLD;
-      const italic = (state.style.fontStyle ?? 0) & FONT.ITALIC;
+      const bold = (state.style.fontStyle || 0) & FONT.BOLD;
+      const italic = (state.style.fontStyle || 0) & FONT.ITALIC;
 
       const txtDecor = [];
-      // TODO make this change in a dedicated PR about the Nullish coalescing operator
-      if ((state.style.fontStyle ?? 0) & FONT.UNDERLINE) {
+      if ((state.style.fontStyle || 0) & FONT.UNDERLINE) {
         txtDecor.push('underline');
       }
-      // TODO make this change in a dedicated PR about the Nullish coalescing operator
-      if ((state.style.fontStyle ?? 0) & FONT.STRIKETHROUGH) {
+      if ((state.style.fontStyle || 0) & FONT.STRIKETHROUGH) {
         txtDecor.push('line-through');
       }
 
