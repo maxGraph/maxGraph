@@ -201,12 +201,9 @@ export const ConnectionsMixin: PartialType = {
           this.setCellStyles(source ? 'exitDx' : 'entryDx', constraint.dx, [edge]);
           this.setCellStyles(source ? 'exitDy' : 'entryDy', constraint.dy, [edge]);
 
-          // TODO decide if we keep this change in this PR
-          // Only writes false since true is default
+          // Only writes 0 since 1 is default
           if (!constraint.perimeter) {
-            this.setCellStyles(source ? 'exitPerimeter' : 'entryPerimeter', false, [
-              edge,
-            ]);
+            this.setCellStyles(source ? 'exitPerimeter' : 'entryPerimeter', '0', [edge]);
           } else {
             this.setCellStyles(source ? 'exitPerimeter' : 'entryPerimeter', null, [edge]);
           }
@@ -221,13 +218,11 @@ export const ConnectionsMixin: PartialType = {
     if (constraint.point) {
       const bounds = this.getView().getPerimeterBounds(vertex);
       const cx = new Point(bounds.getCenterX(), bounds.getCenterY());
-      // TODO make this change in a dedicated PR about the Nullish coalescing operator
-      const style = vertex.style;
-      const direction = style.direction ?? DIRECTION.EAST;
+      const direction = vertex.style.direction;
       let r1 = 0;
 
       // Bounds need to be rotated by 90 degrees for further computation
-      if (style.anchorPointDirection ?? true) {
+      if (vertex.style.anchorPointDirection) {
         if (direction === DIRECTION.NORTH) {
           r1 += 270;
         } else if (direction === DIRECTION.WEST) {
@@ -249,8 +244,7 @@ export const ConnectionsMixin: PartialType = {
       );
 
       // Rotation for direction before projection on perimeter
-      // TODO make this change in a dedicated PR about the Nullish coalescing operator
-      let r2 = style.rotation ?? 0;
+      let r2 = vertex.style.rotation || 0;
 
       if (constraint.perimeter) {
         if (r1 !== 0) {
@@ -274,8 +268,8 @@ export const ConnectionsMixin: PartialType = {
         r2 += r1;
 
         if (vertex.cell.isVertex()) {
-          let flipH = style.flipH;
-          let flipV = style.flipV;
+          let flipH = vertex.style.flipH;
+          let flipV = vertex.style.flipV;
 
           if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
             const temp = flipH;

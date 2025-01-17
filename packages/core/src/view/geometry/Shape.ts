@@ -539,8 +539,7 @@ class Shape {
         const gradient = canvas.gradients[key];
 
         if (gradient) {
-          // TODO make this change in a dedicated PR about the Nullish coalescing operator
-          gradient.mxRefCount = (gradient.mxRefCount ?? 0) + 1;
+          gradient.mxRefCount = (gradient.mxRefCount || 0) + 1;
         }
       }
 
@@ -1171,8 +1170,7 @@ class Shape {
       const gradient = grads[key];
 
       if (gradient) {
-        // TODO make this change in a dedicated PR about the Nullish coalescing operator
-        gradient.mxRefCount = (gradient.mxRefCount ?? 0) - 1;
+        gradient.mxRefCount = (gradient.mxRefCount || 0) - 1;
 
         if (gradient.mxRefCount === 0 && gradient.parentNode) {
           gradient.parentNode.removeChild(gradient);

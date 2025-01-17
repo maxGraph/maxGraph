@@ -74,10 +74,7 @@ class PolylineShape extends Shape {
     const prev = c.pointerEventsValue;
     c.pointerEventsValue = 'stroke';
 
-    // TODO make this change in a dedicated PR about the Nullish coalescing operator
-    // TODO not consistent with default doc in API and in ConnectorShape (see mxGraph implementation)
-    // TODO may introduce behavior change, see the Animation story for example
-    if (!this.style || !(this.style.curved ?? true)) {
+    if (!this.style || !this.style.curved) {
       this.paintLine(c, pts, this.isRounded);
     } else {
       this.paintCurvedLine(c, pts);

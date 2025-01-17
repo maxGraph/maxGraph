@@ -288,8 +288,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
             const state = graph.view.getState(cell);
 
             if (state != null) {
-              // TODO make this change in a dedicated PR about the Nullish coalescing operator
-              let dir = state.style.direction ?? 'east';
+              let dir = state.style.direction || 'east'; /* default */
 
               if (dir === 'east') {
                 dir = 'south';

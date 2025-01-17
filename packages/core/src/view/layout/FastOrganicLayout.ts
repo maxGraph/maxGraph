@@ -328,9 +328,8 @@ class MxFastOrganicLayout extends GraphLayout {
       // Modifies the cloned geometries in-place. Not needed
       // to clone the geometries again as we're in the same
       // undoable change.
-      // TODO make this change in a dedicated PR about the Nullish coalescing operator
-      let dx = -(minx ?? 0) + 1;
-      let dy = -(miny ?? 0) + 1;
+      let dx = -(minx || 0) + 1;
+      let dy = -(miny || 0) + 1;
 
       if (initialBounds != null) {
         dx += initialBounds.x;

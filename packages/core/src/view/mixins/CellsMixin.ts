@@ -359,8 +359,7 @@ export const CellsMixin: PartialType = {
       if (value === null) {
         const style = this.getCurrentCellStyle(cells[0]);
 
-        // TODO make this change in a dedicated PR about the Nullish coalescing operator
-        const current = (style[key] as number) ?? 0;
+        const current = (style[key] as number) || 0;
         value = !((current & flag) === flag);
       }
       setCellStyleFlags(this.getDataModel(), cells, key, flag, value);
@@ -971,15 +970,13 @@ export const CellsMixin: PartialType = {
       }
 
       // Adds spacings
-      // TODO make this change in a dedicated PR about the Nullish coalescing operator
-      dx += 2 * (style.spacing ?? 0);
-      dx += style.spacingLeft ?? 0;
-      dx += style.spacingRight ?? 0;
+      dx += 2 * (style.spacing || 0);
+      dx += style.spacingLeft || 0;
+      dx += style.spacingRight || 0;
 
-      // TODO make this change in a dedicated PR about the Nullish coalescing operator
-      dy += 2 * (style.spacing ?? 0);
-      dy += style.spacingTop ?? 0;
-      dy += style.spacingBottom ?? 0;
+      dy += 2 * (style.spacing || 0);
+      dy += style.spacingTop || 0;
+      dy += style.spacingBottom || 0;
 
       // Add spacing for collapse/expand icon
       // LATER: Check alignment and use constants
@@ -1153,14 +1150,12 @@ export const CellsMixin: PartialType = {
 
       geo.scale(dx, dy, style.aspect === 'fixed');
 
-      // TODO simplify expression. Use ternary. 'resizeWidth default is false'
       if (style.resizeWidth) {
         geo.width = w * dx;
       } else if (!style.resizeWidth) {
         geo.width = w;
       }
 
-      // TODO simplify expression. Use ternary. 'resizeHeight default is false'
       if (style.resizeHeight) {
         geo.height = h * dy;
       } else if (!style.resizeHeight) {

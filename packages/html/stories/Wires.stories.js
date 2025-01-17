@@ -616,14 +616,14 @@ const Template = ({ label, ...args }) => {
 
     // Gets the initial connection from the source terminal or edge
     if (source != null && source.cell.isEdge()) {
-      // TODO make this change in a dedicated PR (better check equality with nullish values)
-      horizontal = state.style.sourceConstraint === 'horizontal';
+      horizontal = state.style.sourceConstraint == 'horizontal';
     } else if (source != null) {
-      horizontal = source.style.portConstraint !== 'vertical';
+      horizontal = source.style.portConstraint != 'vertical';
 
       // Checks the direction of the shape and rotates
-      let direction = source.style.direction ?? 'east';
-      if (direction === 'north' || direction === 'south') {
+      let direction = source.style.direction;
+
+      if (direction == 'north' || direction == 'south') {
         horizontal = !horizontal;
       }
     }

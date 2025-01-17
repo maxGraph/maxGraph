@@ -349,13 +349,11 @@ class CellRenderer {
    * Creates the label for the given cell state.
    *
    * @param state <CellState> for which the label should be created.
-   * @param value
    */
   createLabel(state: CellState, value: string) {
     const graph = <Graph>state.view.graph;
 
-    // TODO make this change in a dedicated PR about the Nullish coalescing operator
-    if ((state.style.fontSize ?? 0) > 0 || state.style.fontSize == null) {
+    if ((state.style.fontSize || 0) > 0 || state.style.fontSize == null) {
       // Avoids using DOM node for empty labels
       const isForceHtml = graph.isHtmlLabel(state.cell) || isNode(value);
 

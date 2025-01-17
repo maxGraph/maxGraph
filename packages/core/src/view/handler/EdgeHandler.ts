@@ -1162,9 +1162,8 @@ class EdgeHandler {
     const clientY = getClientY(evt);
 
     const doc = document.documentElement;
-    // TODO make this change in a dedicated PR about the Nullish coalescing operator
-    const left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft ?? 0);
-    const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop ?? 0);
+    const left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+    const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
     const gridX = this.currentPoint.x - this.graph.container.scrollLeft + offset.x - left;
     const gridY = this.currentPoint.y - this.graph.container.scrollTop + offset.y - top;

@@ -32,8 +32,7 @@ export const TrianglePerimeter: PerimeterFunction = (
   next: Point,
   orthogonal = false
 ): Point | null => {
-  // TODO make this change in a dedicated PR about the Nullish coalescing operator
-  const direction = vertex != null ? (vertex.style.direction ?? DIRECTION.EAST) : null;
+  const direction = vertex != null ? vertex.style.direction : null;
   const vertical = direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH;
 
   const { x } = bounds;
