@@ -1684,23 +1684,20 @@ class EdgeHandler {
   }
 
   /**
-   * Changes the terminal or terminal point of the given edge in the graph
-   * model.
+   * Changes the terminal or terminal point of the given edge in the graph model.
    *
    * @param edge {@link Cell} that represents the edge to be reconnected.
    * @param terminal {@link Cell} that represents the new terminal.
-   * @param isSource Boolean indicating if the new terminal is the source or
-   * target terminal.
-   * @param isClone Boolean indicating if the new connection should be a clone of
-   * the old edge.
-   * @param me {@link MouseEvent} that contains the mouse up event.
+   * @param isSource Boolean indicating if the new terminal is the source or target terminal.
+   * @param _isClone Boolean indicating if the new connection should be a clone of the old edge.
+   * @param _me {@link MouseEvent} that contains the mouse up event.
    */
   connect(
     edge: Cell,
     terminal: Cell,
     isSource: boolean,
-    isClone: boolean,
-    me: InternalMouseEvent
+    _isClone: boolean,
+    _me: InternalMouseEvent
   ) {
     const parent = edge.getParent();
 

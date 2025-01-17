@@ -24,12 +24,22 @@ import {
   HierarchicalLayout,
   constants,
   CellOverlay,
+  getDefaultPlugins,
   ImageBox,
   Client,
   Morphing,
   EventObject,
   eventUtils,
   styleUtils,
+  type Cell,
+  type CellState,
+  type ConnectionHandler,
+  type EdgeStyleFunction,
+  type InternalMouseEvent,
+  type PopupMenuHandler,
+  type Rectangle,
+  type Shape,
+  type GraphPluginConstructor,
 } from '@maxgraph/core';
 
 import {
@@ -58,61 +68,86 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   class MyCustomCellRenderer extends CellRenderer {
-    installCellOverlayListeners(state, overlay, shape) {
+    installCellOverlayListeners(state: CellState, overlay: CellOverlay, shape: Shape) {
       super.installCellOverlayListeners(state, overlay, shape);
 
       InternalEvent.addListener(
         shape.node,
         Client.IS_POINTER ? 'pointerdown' : 'mousedown',
-        (evt) => {
+        (evt: MouseEvent | KeyboardEvent) => {
           overlay.fireEvent(new EventObject('pointerdown', { event: evt, state }));
         }
       );
 
       if (!Client.IS_POINTER && Client.IS_TOUCH) {
-        InternalEvent.addListener(shape.node, 'touchstart', (evt) => {
-          overlay.fireEvent(new EventObject('pointerdown', { event: evt, state }));
-        });
+        InternalEvent.addListener(
+          shape.node,
+          'touchstart',
+          (evt: MouseEvent | KeyboardEvent) => {
+            overlay.fireEvent(new EventObject('pointerdown', { event: evt, state }));
+          }
+        );
       }
     }
   }
 
   class MyCustomEdgeHandler extends EdgeHandler {
-    connect(edge, terminal, isSource, isClone, me) {
-      super.connect(edge, terminal, isSource, isClone, me);
+    connect(
+      edge: Cell,
+      terminal: Cell,
+      isSource: boolean,
+      _isClone: boolean,
+      _me: InternalMouseEvent
+    ): Cell {
+      const cell = super.connect(edge, terminal, isSource, _isClone, _me);
       executeLayout();
+      return cell;
     }
   }
 
   class MyCustomGraph extends Graph {
-    createEdgeHandler(state, edgeStyle) {
-      return new MyCustomEdgeHandler(state, edgeStyle);
+    constructor(container: HTMLElement, plugins: GraphPluginConstructor[]) {
+      super(container, undefined, plugins);
+    }
+
+    createEdgeHandler(
+      state: CellState,
+      _edgeStyle: EdgeStyleFunction | null
+    ): EdgeHandler {
+      return new MyCustomEdgeHandler(state);
     }
 
     createCellRenderer() {
       return new MyCustomCellRenderer();
     }
+
+    resizeCell = (cell: Cell, bounds: Rectangle, recurse?: boolean): Cell => {
+      const resizedCell = super.resizeCell(cell, bounds, recurse);
+      executeLayout();
+      return resizedCell;
+    };
   }
 
-  // Creates the graph inside the given this.el
-  const graph = new MyCustomGraph(container);
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
+  // Creates the graph inside the given container
+  const graph = new MyCustomGraph(container, plugins);
   graph.setPanning(true);
 
   graph.setAllowDanglingEdges(false);
 
-  const connectionHandler = graph.getPlugin('ConnectionHandler');
+  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
   connectionHandler.select = false;
 
   graph.view.setTranslate(20, 20);
-
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
 
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
@@ -120,30 +155,24 @@ const Template = ({ label, ...args }) => {
 
   const layout = new HierarchicalLayout(graph, constants.DIRECTION.WEST);
 
-  let v1;
-  const executeLayout = (change, post) => {
+  let vertex1: Cell;
+  const executeLayout = (change?: () => void, post?: () => void) => {
     graph.getDataModel().beginUpdate();
     try {
-      if (change != null) {
-        change();
-      }
-      layout.execute(graph.getDefaultParent(), v1);
-    } catch (e) {
-      throw e;
+      change?.();
+      layout.execute(graph.getDefaultParent(), vertex1);
     } finally {
       // New API for animating graph layout results asynchronously
       const morph = new Morphing(graph);
       morph.addListener(InternalEvent.DONE, () => {
         graph.getDataModel().endUpdate();
-        if (post != null) {
-          post();
-        }
+        post?.();
       });
       morph.startAnimation();
     }
   };
 
-  const addOverlay = (cell) => {
+  const addOverlay = (cell: Cell) => {
     // Creates a new overlay with an image and a tooltip
     const overlay = new CellOverlay(
       new ImageBox('images/add.png', 24, 24),
@@ -152,40 +181,39 @@ const Template = ({ label, ...args }) => {
     overlay.cursor = 'hand';
 
     // Installs a handler for clicks on the overlay
-    overlay.addListener(InternalEvent.CLICK, (sender, evt2) => {
+    overlay.addListener(InternalEvent.CLICK, (_name: string, _funct: Function) => {
       graph.clearSelection();
-      const geo = cell.getGeometry();
 
-      let v2;
-
+      let vertex: Cell;
       executeLayout(
         () => {
-          v2 = graph.insertVertex({
+          const geo = cell.getGeometry();
+          vertex = graph.insertVertex({
             parent,
             value: 'World!',
-            position: [geo.x, geo.y],
+            position: [geo!.x, geo!.y],
             size: [80, 30],
           });
-          addOverlay(v2);
-          graph.view.refresh(v2);
-          const e1 = graph.insertEdge({
+          addOverlay(vertex);
+          graph.view.refresh();
+          graph.insertEdge({
             parent,
             source: cell,
-            target: v2,
+            target: vertex,
           });
         },
         () => {
-          graph.scrollCellToVisible(v2);
+          graph.scrollCellToVisible(vertex);
         }
       );
     });
 
-    // Special CMS event
-    overlay.addListener('pointerdown', (sender, eo) => {
+    // Special CMS event, automatically connect the new vertex to its predecessor
+    overlay.addListener('pointerdown', (_sender: EventTarget, eo: EventObject) => {
       const evt2 = eo.getProperty('event');
       const state = eo.getProperty('state');
 
-      const popupMenuHandler = graph.getPlugin('PopupMenuHandler');
+      const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
       popupMenuHandler.hideMenu();
 
       graph.stopEditing(false);
@@ -209,19 +237,20 @@ const Template = ({ label, ...args }) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    v1 = graph.insertVertex({
+    vertex1 = graph.insertVertex({
       parent,
       value: 'Hello,',
       position: [0, 0],
       size: [80, 30],
     });
-    addOverlay(v1);
+    addOverlay(vertex1);
   });
 
-  graph.resizeCell = function () {
-    Graph.prototype.resizeCell.apply(this, arguments);
-    executeLayout();
-  };
+  // TODO remove
+  // graph.resizeCell = function () {
+  //   Graph.prototype.resizeCell.apply(this, arguments);
+  //   executeLayout();
+  // };
 
   connectionHandler.addListener(InternalEvent.CONNECT, function () {
     executeLayout();
