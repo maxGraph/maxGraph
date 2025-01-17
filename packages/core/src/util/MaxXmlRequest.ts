@@ -251,9 +251,12 @@ class MaxXmlRequest {
    * @param ontimeout Optional function to execute on timeout.
    */
   send(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
     onload: Function | null = null,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
     onerror: Function | null = null,
     timeout: number | null = null,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
     ontimeout: Function | null = null
   ): void {
     this.request = this.create();
@@ -438,10 +441,13 @@ export const load = (url: string): MaxXmlRequest => {
  */
 export const get = (
   url: string,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   onload: Function | null = null,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   onerror: Function | null = null,
   binary = false,
   timeout: number | null = null,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   ontimeout: Function | null = null,
   headers: { [key: string]: string } | null = null
 ) => {
@@ -542,7 +548,9 @@ export const getAll = (
 export const post = (
   url: string,
   params: string | null = null,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   onload: Function,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   onerror: Function | null = null
 ) => {
   return new MaxXmlRequest(url, params).send(onload, onerror);

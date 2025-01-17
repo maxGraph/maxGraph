@@ -57,6 +57,12 @@ import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
 
+export type EditorActionFunction = (
+  editor: Editor,
+  cell: Cell | null,
+  evt?: Event | null
+) => void;
+
 // TODO disabled side effects, so editor resources are not loaded by default
 // This should be done in a different way
 /**
@@ -95,8 +101,8 @@ if (mxLoadResources) {
  * page, the following code is used:
  *
  * ```javascript
- * var doc = mxUtils.parseXML(xmlString);
- * var node = doc.documentElement;
+ * const doc = xmlUtils.parseXML(xmlString);
+ * const node = doc.documentElement;
  * editor.readGraphModel(node);
  * ```
  *
@@ -396,20 +402,20 @@ if (mxLoadResources) {
  * Fires when the escape key is pressed. The <code>event</code> property
  * contains the key event.
  *
- * ### Constructor: Editor
- *
- * Constructs a new editor. This function invokes the {@link onInit} callback
- * upon completion.
- *
- * ```javascript
- * var config = mxUtils.load('config/diagrameditor.xml').getDocumentElement();
- * var editor = new Editor(config);
- * ```
- *
- * @class Editor
- * @extends EventSource
  */
 export class Editor extends EventSource {
+  /**
+   * Constructs a new editor.
+   *
+   * It invokes the {@link onInit} callback upon completion.
+   *
+   * ```javascript
+   * const config = load('config/diagram-editor.xml').getDocumentElement();
+   * const editor = new Editor(config);
+   * ```
+   *
+   * @param config
+   */
   constructor(config: Element) {
     super();
 
@@ -446,7 +452,7 @@ export class Editor extends EventSource {
     }
   }
 
-  onInit: Function | null = null;
+  onInit: (() => void) | null = null;
   lastSnapshot: number | null = null;
   ignoredChanges: number | null = null;
   swimlaneLayout: any;
@@ -568,7 +574,7 @@ export class Editor extends EventSource {
    * by name, passing the cell to be operated upon as the second
    * argument.
    */
-  actions: { [key: string]: Function } = {};
+  actions: { [key: string]: EditorActionFunction } = {};
 
   /**
    * Group: Actions and Options
@@ -618,7 +624,7 @@ export class Editor extends EventSource {
    * cells into the graph. This is assigned from the
    * {@link EditorToolbar} if a vertex-tool is clicked.
    */
-  insertFunction: Function | null = null;
+  insertFunction: ((evt: MouseEvent, cell: Cell | null) => void) | null = null;
 
   /**
    * Group: Templates
@@ -1050,7 +1056,7 @@ export class Editor extends EventSource {
       editor.graph.fit();
     });
 
-    this.addAction('showProperties', (editor: Editor, cell: Cell) => {
+    this.addAction('showProperties', (editor: Editor, cell: Cell | null) => {
       editor.showProperties(cell);
     });
 
@@ -1078,26 +1084,26 @@ export class Editor extends EventSource {
       }
     });
 
-    this.addAction('edit', (editor: Editor, cell: Cell) => {
-      if (editor.graph.isEnabled() && editor.graph.isCellEditable(cell)) {
+    this.addAction('edit', (editor: Editor, cell: Cell | null) => {
+      if (editor.graph.isEnabled() && (!cell || editor.graph.isCellEditable(cell))) {
         editor.graph.startEditingAtCell(cell);
       }
     });
 
-    this.addAction('toBack', (editor: Editor, cell: Cell) => {
+    this.addAction('toBack', (editor: Editor, _cell: Cell | null) => {
       if (editor.graph.isEnabled()) {
         editor.graph.orderCells(true);
       }
     });
 
-    this.addAction('toFront', (editor: Editor, cell: Cell) => {
+    this.addAction('toFront', (editor: Editor, _cell: Cell | null) => {
       if (editor.graph.isEnabled()) {
         editor.graph.orderCells(false);
       }
     });
 
-    this.addAction('enterGroup', (editor: Editor, cell: Cell) => {
-      editor.graph.enterGroup(cell);
+    this.addAction('enterGroup', (editor: Editor, cell: Cell | null) => {
+      cell && editor.graph.enterGroup(cell);
     });
 
     this.addAction('exitGroup', (editor: Editor) => {
@@ -1347,7 +1353,7 @@ export class Editor extends EventSource {
    * of the function is the editor it is used with,
    * the second argument is the cell it operates upon.
    */
-  addAction(actionname: string, funct: Function): void {
+  addAction(actionname: string, funct: EditorActionFunction): void {
     this.actions[actionname] = funct;
   }
 
@@ -1372,12 +1378,7 @@ export class Editor extends EventSource {
 
     if (action != null) {
       try {
-        // Creates the array of arguments by replacing the actionname
-        // with the editor instance in the args of this function
-        const args = [this, cell, evt];
-
-        // Invokes the function on the editor using the args
-        action.apply(this, args);
+        action(this, cell, evt);
       } catch (e: any) {
         error(`Cannot execute ${actionname}: ${e.message}`, 280, true);
 

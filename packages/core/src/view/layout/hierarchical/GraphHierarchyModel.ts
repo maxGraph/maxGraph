@@ -413,9 +413,9 @@ class GraphHierarchyModel {
 
     this.visit(
       (
-        parent: GraphHierarchyNode,
+        parent: GraphHierarchyNode | null,
         node: GraphHierarchyNode,
-        edge: GraphHierarchyNode,
+        edge: GraphHierarchyEdge | null,
         layer: number,
         seen: number
       ) => {
@@ -455,14 +455,20 @@ class GraphHierarchyModel {
   }
 
   /**
-   * A depth first search through the internal heirarchy model.
+   * A depth first search through the internal hierarchy model.
    *
    * @param visitor The visitor function pattern to be called for each node.
    * @param trackAncestors Whether or not the search is to keep track all nodes
    * directly above this one in the search path.
    */
   visit(
-    visitor: Function,
+    visitor: (
+      parent: GraphHierarchyNode | null,
+      node: GraphHierarchyNode,
+      edge: GraphHierarchyEdge | null,
+      layer: number,
+      seen: number
+    ) => void,
     dfsRoots: GraphHierarchyNode[] | null,
     trackAncestors: boolean,
     seenNodes: { [key: string]: GraphHierarchyNode } | null = null
@@ -518,7 +524,13 @@ class GraphHierarchyModel {
     parent: GraphHierarchyNode | null,
     root: GraphHierarchyNode | null,
     connectingEdge: GraphHierarchyEdge | null,
-    visitor: Function,
+    visitor: (
+      parent: GraphHierarchyNode | null,
+      node: GraphHierarchyNode,
+      edge: GraphHierarchyEdge | null,
+      layer: number,
+      seen: number
+    ) => void,
     seen: { [key: string]: GraphHierarchyNode | null },
     layer: number
   ): void {
@@ -565,9 +577,15 @@ class GraphHierarchyModel {
    */
   extendedDfs(
     parent: GraphHierarchyNode | null,
-    root: GraphHierarchyNode,
+    root: GraphHierarchyNode | null,
     connectingEdge: GraphHierarchyEdge | null,
-    visitor: Function,
+    visitor: (
+      parent: GraphHierarchyNode | null,
+      node: GraphHierarchyNode,
+      edge: GraphHierarchyEdge | null,
+      layer: number,
+      seen: number
+    ) => void,
     seen: { [key: string]: GraphHierarchyNode },
     ancestors: any,
     childHash: string | number,

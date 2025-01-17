@@ -60,6 +60,7 @@ import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
 import { registerDefaultStyleElements } from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
+import type AbstractCanvas2D from './canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
@@ -81,8 +82,10 @@ class Graph extends EventSource {
 
   destroyed = false;
 
-  graphModelChangeListener: Function | null = null;
-  paintBackground: Function | null = null;
+  graphModelChangeListener: ((sender: any, evt: EventObject) => void) | null = null;
+  paintBackground:
+    | ((c: AbstractCanvas2D, x: number, y: number, w: number, h: number) => void)
+    | null = null;
   isConstrainedMoving = false;
 
   // ===================================================================================================================

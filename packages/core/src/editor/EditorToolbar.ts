@@ -75,7 +75,7 @@ export class EditorToolbar {
   /**
    * Reference to the function used to reset the {@link toolbar}.
    */
-  resetHandler: Function | null = null;
+  resetHandler: (() => void) | null = null;
 
   /**
    * Defines the spacing between existing and new vertices in gridSize units when a new vertex is dropped on an existing cell.  Default is 4 (40 pixels).
@@ -221,7 +221,7 @@ export class EditorToolbar {
     icon: string,
     mode: string,
     pressed: string | null = null,
-    funct: Function | null = null
+    funct: ((editor: Editor) => void) | null = null
   ): any {
     const clickHandler = () => {
       (<Editor>this.editor).setMode(mode);
@@ -253,7 +253,7 @@ export class EditorToolbar {
   addPrototype(
     title: string,
     icon: string,
-    ptype: Function | Cell,
+    ptype: (() => Cell) | Cell,
     pressed: string,
     insert: (
       editor: Editor,
@@ -269,10 +269,7 @@ export class EditorToolbar {
       if (typeof ptype === 'function') {
         return ptype();
       }
-      if (ptype != null) {
-        return (<Editor>this.editor).graph.cloneCell(ptype);
-      }
-      return null;
+      return (<Editor>this.editor).graph.cloneCell(ptype);
     };
 
     // Defines the function for a click event on the graph

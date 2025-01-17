@@ -136,7 +136,7 @@ class Outline {
 
     this.panHandler = (sender: any, evt: EventObject) => {
       if (this.updateOnPan) {
-        (<Function>this.updateHandler)(sender, evt);
+        this.updateHandler?.(sender, evt);
       }
     };
     this.source.addListener(InternalEvent.PAN, this.panHandler);
