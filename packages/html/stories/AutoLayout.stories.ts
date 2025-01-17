@@ -246,12 +246,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     addOverlay(vertex1);
   });
 
-  // TODO remove
-  // graph.resizeCell = function () {
-  //   Graph.prototype.resizeCell.apply(this, arguments);
-  //   executeLayout();
-  // };
-
   connectionHandler.addListener(InternalEvent.CONNECT, function () {
     executeLayout();
   });
