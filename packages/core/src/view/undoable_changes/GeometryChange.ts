@@ -42,8 +42,7 @@ class GeometryChange implements UndoableChange {
   }
 
   /**
-   * Changes the geometry of {@link cell}` ro {@link previous}` using
-   * <Transactions.geometryForCellChanged>.
+   * Changes the geometry of {@link cell} to {@link previous} using{@link GraphDataModel.geometryForCellChanged}.
    */
   execute() {
     this.geometry = this.previous;

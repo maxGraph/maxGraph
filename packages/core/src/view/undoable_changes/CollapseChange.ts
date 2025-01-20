@@ -41,8 +41,7 @@ class CollapseChange implements UndoableChange {
   }
 
   /**
-   * Changes the collapsed state of {@link cell}` to {@link previous}` using
-   * <Transactions.collapsedStateForCellChanged>.
+   * Changes the collapsed state of {@link cell} to {@link previous} using {@link GraphDataModel.collapsedStateForCellChanged}.
    */
   execute() {
     this.collapsed = this.previous;

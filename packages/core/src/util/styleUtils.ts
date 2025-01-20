@@ -319,7 +319,7 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
  * Assigns the value for the given key in the styles of the given cells, or
  * removes the key from the styles if the value is null.
  *
- * @param model <Transactions> to execute the transaction in.
+ * @param model {@link GraphDataModel} to execute the transaction in.
  * @param cells Array of {@link Cell}s to be updated.
  * @param key Key of the style to be changed.
  * @param value New value for the given key.
@@ -361,7 +361,7 @@ export const setCellStyles = (
  *       constants.FONT.BOLD);
  * ```
  *
- * @param model <Transactions> that contains the cells.
+ * @param model {@link GraphDataModel} that contains the cells.
  * @param cells Array of {@link Cell}s to change the style for.
  * @param key Key of the style to be changed.
  * @param flag Integer for the bit to be changed.

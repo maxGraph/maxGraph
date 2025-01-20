@@ -31,8 +31,8 @@ import { getFunctionName } from './StringUtils';
  */
 class ObjectIdentity {
   /**
-   * Name of the field to be used to store the object ID. Default is
-   * <code>mxObjectId</code>.
+   * Name of the field to be used to store the object ID.
+   * @default {@IDENTITY_FIELD_NAME}
    */
   static FIELD_NAME = IDENTITY_FIELD_NAME;
 

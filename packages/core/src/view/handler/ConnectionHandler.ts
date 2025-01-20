@@ -175,7 +175,7 @@ type FactoryMethod = (
  * of the inserted edge. To print the source, target or any optional ports IDs that the
  * edge is connected to, the following code can be used. To get more details about the
  * actual connection point, {@link Graph.getConnectionConstraint} can be used. To resolve
- * the port IDs, use <Transactions.getCell>.
+ * the port IDs, use {@link GraphDataModel.getCell}.
  *
  * ```javascript
  * graph.getPlugin('ConnectionHandler')?.addListener(mxEvent.CONNECT, (sender, evt) => {

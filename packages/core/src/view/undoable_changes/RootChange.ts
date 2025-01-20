@@ -41,8 +41,7 @@ export class RootChange implements UndoableChange {
   }
 
   /**
-   * Carries out a change of the root using
-   * <Transactions.rootChanged>.
+   * Carries out a change of the root using {@link GraphDataModel.rootChanged}.
    */
   execute() {
     this.root = this.previous;

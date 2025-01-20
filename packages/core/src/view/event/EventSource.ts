@@ -35,13 +35,14 @@ type EventListenerObject = {
  * ```
  *
  * Known Subclasses:
+ * - {@link CellOverlay}
+ * - {@link Editor}
+ * - {@link Graph}
+ * - {@link GraphDataModel}
+ * - {@link GraphView}
+ * - {@link MaxToolbar}
+ * - {@link MaxWindow}
  *
- * <Transactions>, {@link Graph}, {@link GraphView}, <Editor>, <CellOverlay>,
- * <MaxToolbar>, <MaxWindow>
- *
- * Constructor: mxEventSource
- *
- * Constructs a new event source.
  */
 class EventSource {
   constructor(eventSource: EventTarget | null = null) {
