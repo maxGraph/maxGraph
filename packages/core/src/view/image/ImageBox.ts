@@ -18,10 +18,6 @@ limitations under the License.
 
 /**
  * Encapsulates the URL, width and height of an image.
- *
- * Constructor: mxImage
- *
- * Constructs a new image.
  */
 class ImageBox {
   constructor(src: string, width: number, height: number) {
