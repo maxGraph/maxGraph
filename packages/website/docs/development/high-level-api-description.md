@@ -6,7 +6,7 @@ description: High-level API description of maxGraph, including its structure, co
 
 :::note
 
-The following is adapted from the [mxGraph API Specification]https://github.com/jgraph/graph/blob/v4.2.2/javascript/src/js/index.txt).
+The following is adapted from the [mxGraph API Specification](https://github.com/jgraph/graph/blob/v4.2.2/javascript/src/js/index.txt).
 
 :::
 
