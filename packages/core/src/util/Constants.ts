@@ -52,8 +52,7 @@ export enum DIALECT {
 }
 
 /**
- * Name of the field to be used to store the object ID. Default is
- * <code>mxObjectId</code>.
+ * Name of the field to be used to store the object ID.
  */
 export const IDENTITY_FIELD_NAME = 'mxObjectId';
 
