@@ -6,7 +6,7 @@ description: Explain how to do a release of maxGraph.
 
 :::note
 
-The following is adapted from the [mxGraph API Specification](ttps://github.com/jgraph/graph/blob/v4.2.2/javascript/src/js/index.txt).
+The following is adapted from the [mxGraph API Specification]https://github.com/jgraph/graph/blob/v4.2.2/javascript/src/js/index.txt).
 
 :::
 
@@ -123,11 +123,16 @@ The basename of the warning image (images/warning without extension) used in `Gr
 The following comes from `mxGraph` and needs to be reworked.
 :::
 
-The `Editor` and `Graph` classes add the following resources to `Translations` at class loading time:
-- resources/editor*.properties
-- resources/graph*.properties
+They are managed by the `Translations` class. \
+By default, the following conventions are used:
+- Resource files use .txt extension
+- Translation files are loaded from `${Client.basePath}/resources/`
 
-By default, the library ships with English and German resource files.
+Language support is configurable via `Client.languages`. The library ships with English and German resource files.
+
+The `Editor` and `Graph` classes add the following resources to `Translations` at class loading time:
+- resources/editor*.txt
+- resources/graph*.txt
 
 
 ## Images
