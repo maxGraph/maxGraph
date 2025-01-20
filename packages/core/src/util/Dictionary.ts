@@ -26,7 +26,7 @@ type Visitor<MapKey, U> = (key: MapKey, value: U) => void;
 /**
  * A wrapper class for an associative array with object keys.
  *
- * Note: This implementation uses {@link ObjectIdentity} to turn object keys into strings.
+ * Note: This implementation uses {@link IdentityObject} to turn object keys into strings.
  *
  */
 class Dictionary<T extends IdentityObject | IdentityFunction | null, U> {
