@@ -68,7 +68,7 @@ class Client {
   /**
    * Defines the language of the client, eg. `en` for english, `de` for german etc.
    * The special value `none` will disable all built-in internationalization and
-   * resource loading. See {@link Resources#getSpecialBundle} for handling identifiers
+   * resource loading. See {@link Translations.getSpecialBundle} for handling identifiers
    * with and without a dash.
    *
    * If internationalization is disabled, then the following variables should be
@@ -77,8 +77,8 @@ class Client {
    * {@link Editor.askZoomResource}, {@link Editor.lastSavedResource},
    * {@link Editor.currentFileResource}, {@link Editor.propertiesResource},
    * {@link Editor.tasksResource}, {@link Editor.helpResource}, {@link Editor.outlineResource},
-   * {@link ElbowEdgeHandler#doubleClickOrientationResource}, {@link Utils#errorResource},
-   * {@link Utils#closeResource}, {@link GraphSelectionModel#doneResource},
+   * {@link ElbowEdgeHandler#doubleClickOrientationResource}, {@link utils.errorResource},
+   * {@link utils.closeResource}, {@link GraphSelectionModel#doneResource},
    * {@link GraphSelectionModel#updatingSelectionResource}, {@link GraphView#doneResource},
    * {@link GraphView#updatingDocumentResource}, {@link CellRenderer#collapseExpandResource},
    * {@link Graph#containsValidationErrorsResource} and
