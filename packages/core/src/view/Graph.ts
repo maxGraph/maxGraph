@@ -60,6 +60,7 @@ import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
 import { registerDefaultStyleElements } from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
+import type TooltipHandler from './handler/TooltipHandler';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
@@ -1470,6 +1471,11 @@ class Graph extends EventSource {
    */
   setDefaultParent(cell: Cell | null) {
     this.defaultParent = cell;
+  }
+
+  setTooltips(enabled: boolean) {
+    const tooltipHandler = this.getPlugin<TooltipHandler>('TooltipHandler');
+    tooltipHandler?.setEnabled(enabled);
   }
 
   /**
