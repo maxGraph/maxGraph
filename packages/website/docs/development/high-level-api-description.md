@@ -149,6 +149,6 @@ and PNG images (24 bit) for all images which appear inside the graph component.
 For faster image rendering during application runtime, images can be prefetched using the following code:
 
 ```javascript
-const image = new ImageBox();
+const image = new Image(); // for more details, see https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image
 image.src = url_to_image;
 ```
