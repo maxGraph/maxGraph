@@ -122,33 +122,31 @@ Built-in Images:
   The basename of the warning image (images/warning without extension) used in
   <mxGraph.setCellWarning> is defined in <mxGraph.warningImage>.
 
-Translations:
 
-  The <Editor> and <mxGraph> classes add the following resources to
-  <mxResources> at class loading time:
+### Translations
 
-  - resources/editor*.properties
-  - resources/graph*.properties
+The <Editor> and <mxGraph> classes add the following resources to <mxResources> at class loading time:
 
-  By default, the library ships with English and German resource files.
+- resources/editor*.properties
+- resources/graph*.properties
 
-Images:
+By default, the library ships with English and German resource files.
 
-  Recommendations for using images. Use GIF images (256 color palette) in HTML
-  elements (such as the toolbar and context menu), and PNG images (24 bit) for
-  all images which appear inside the graph component.
 
-  - For PNG images inside HTML elements, Internet Explorer will ignore any
-    transparency information.
-  - For GIF images inside the graph, Firefox on the Mac will display strange
-    colors. Furthermore, only the first image for animated GIFs is displayed
-    on the Mac.
+## Images
 
-  For faster image rendering during application runtime, images can be
-  prefetched using the following code:
+The following comes from `mxGraph` and needs to be updated to reflect the current state of `maxGraph`.
 
-  ```javascript
-  let image = new Image();
-  image.src = url_to_image;
-  ```
+### Recommendations for using images
 
+Use GIF images (256 color palette) in HTML elements (such as the toolbar and context menu),
+and PNG images (24 bit) for all images which appear inside the graph component.
+
+### Image rendering
+
+For faster image rendering during application runtime, images can be prefetched using the following code:
+
+```javascript
+const image = new ImageBox();
+image.src = url_to_image;
+```
