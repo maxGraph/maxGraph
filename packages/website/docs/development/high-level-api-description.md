@@ -1,5 +1,5 @@
 ---
-description: Explain how to do a release of maxGraph.
+description: High-level API description of maxGraph, including its structure, components, and configuration.
 ---
 
 # High-level API description
