@@ -38,8 +38,7 @@ export class TerminalChange implements UndoableChange {
   }
 
   /**
-   * Changes the terminal of {@link cell}` to {@link previous}` using
-   * <Transactions.terminalForCellChanged>.
+   * Changes the terminal of {@link cell} to {@link previous} using{@link GraphDataModel.terminalForCellChanged}.
    */
   execute() {
     this.terminal = this.previous;

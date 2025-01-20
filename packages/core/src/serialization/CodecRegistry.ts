@@ -26,7 +26,7 @@ import ObjectCodec from './ObjectCodec';
  * 1. Define a default codec with a new instance of the object to be handled.
  *
  *     ```javascript
- *     const codec = new ObjectCodec(new Transactions());
+ *     const codec = new ObjectCodec(new GraphDataModel());
  *     ```
  *
  * 2. Define the functions required for encoding and decoding objects.

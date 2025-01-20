@@ -41,8 +41,7 @@ class VisibleChange implements UndoableChange {
   }
 
   /**
-   * Changes the visible state of {@link cell}` to {@link previous}` using
-   * <Transactions.visibleStateForCellChanged>.
+   * Changes the visible state of {@link cell} to {@link previous} using {@link GraphDataModel.visibleStateForCellChanged}.
    */
   execute() {
     this.visible = this.previous;

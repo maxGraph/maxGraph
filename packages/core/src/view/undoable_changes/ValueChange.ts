@@ -41,8 +41,7 @@ class ValueChange implements UndoableChange {
   }
 
   /**
-   * Changes the value of {@link cell}` to {@link previous}` using
-   * <Transactions.valueForCellChanged>.
+   * Changes the value of {@link cell} to {@link previous} using {@link GraphDataModel.valueForCellChanged}.
    */
   execute() {
     this.value = this.previous;

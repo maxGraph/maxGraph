@@ -38,8 +38,7 @@ class StyleChange implements UndoableChange {
   }
 
   /**
-   * Changes the style of {@link cell}` to {@link previous}` using
-   * <Transactions.styleForCellChanged>.
+   * Changes the style of {@link cell} to {@link previous} using {@link GraphDataModel.styleForCellChanged}.
    */
   execute() {
     this.style = this.previous;

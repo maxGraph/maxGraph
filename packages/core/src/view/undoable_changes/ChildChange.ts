@@ -47,10 +47,7 @@ export class ChildChange implements UndoableChange {
   }
 
   /**
-   * Changes the parent of {@link child}` using
-   * <Transactions.parentForCellChanged> and
-   * removes or restores the cell's
-   * connections.
+   * Changes the parent of {@link child} using {@link GraphDataModel.parentForCellChanged} and removes or restores the cell's connections.
    */
   execute() {
     let tmp = this.child.getParent();

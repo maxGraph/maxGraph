@@ -3,17 +3,18 @@ Document: API Specification
 TODO find the right title for this document
 
 The following comes from `mxGraph` and needs to be updated to reflect the current state of `maxGraph`.
-TODO link to mxGraph file
+
+From https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/index.txt
 
 
 ## Overview
 
-  This JavaScript library is divided into 8 packages. The top-level `Client`
-  class includes (or dynamically imports) everything else. The current version
-  is stored in `Client.VERSION`.
+This JavaScript library is divided into 8 packages.
 
-  The *editor* package provides the classes required to implement a diagram
-  editor. The main class in this package is `Editor`.
+The current version is stored in `Client.VERSION`.
+
+The *editor* folder provides the classes required to implement a diagram editor.
+The main class is `Editor`.
 
   The *view* and *model* packages implement the graph component, represented
   by `mxGraph`. It refers to a `Transactions` which contains `mxCell`s and
@@ -69,11 +70,11 @@ It  also takes care of resolving cycles between DOM nodes and JavaScript event h
   all browsers and platforms:
 
   - Control-Drag: Duplicates (clones) selected cells
-  - Shift-Rightlick: Shows the context menu
+  - Shift-Right-click: Shows the context menu
   - Alt-Click: Forces rubberband (aka. marquee)
   - Control-Select: Toggles the selection state
   - Shift-Drag: Constrains the offset to one direction
-  - Shift-Control-Drag: Panning (also Shift-Rightdrag)
+  - Shift-Control-Drag: Panning (also Shift-Right-drag)
 
 
 ## Configuration
@@ -100,12 +101,11 @@ The following field names should not be used in objects:
 - *mxListenerList*: Added to DOM nodes when used with `mxEvent`
 
 
-
 ## Files
 
 The library contains these relative filenames. All filenames are relative to `Client.basePath`.
 
-Built-in Images:
+### Built-in Images
 
   All images are loaded from the `Client.imageBasePath`,
   which you can change to reflect your environment. The image variables can
