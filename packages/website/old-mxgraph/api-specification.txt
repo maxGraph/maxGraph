@@ -1,63 +1,69 @@
 Document: API Specification
 
-Overview:
+TODO find the right title for this document
 
-  This JavaScript library is divided into 8 packages. The top-level <Client>
+The following comes from `mxGraph` and needs to be updated to reflect the current state of `maxGraph`.
+TODO link to mxGraph file
+
+
+## Overview
+
+  This JavaScript library is divided into 8 packages. The top-level `Client`
   class includes (or dynamically imports) everything else. The current version
-  is stored in <Client.VERSION>.
+  is stored in `Client.VERSION`.
 
   The *editor* package provides the classes required to implement a diagram
-  editor. The main class in this package is <Editor>.
+  editor. The main class in this package is `Editor`.
 
   The *view* and *model* packages implement the graph component, represented
-  by <mxGraph>. It refers to a <Transactions> which contains <mxCell>s and
-  caches the state of the cells in a <mxGraphView>. The cells are painted
-  using a <mxCellRenderer> based on the appearance defined in <mxStylesheet>.
-  Undo history is implemented in <UndoManager>. To display an icon on the
-  graph, <CellOverlay> may be used. Validation rules are defined with
-  <mxMultiplicity>.
+  by `mxGraph`. It refers to a `Transactions` which contains `mxCell`s and
+  caches the state of the cells in a `mxGraphView`. The cells are painted
+  using a `mxCellRenderer` based on the appearance defined in `mxStylesheet`.
+  Undo history is implemented in `UndoManager`. To display an icon on the
+  graph, `CellOverlay` may be used. Validation rules are defined with
+  `mxMultiplicity`.
 
   The *handler*, *layout* and *shape* packages contain event listeners,
   layout algorithms and shapes, respectively. The graph event listeners
-  include <mxRubberband> for rubberband selection, <mxTooltipHandler>
-  for tooltips and <mxGraphHandler> for  basic cell modifications.
-  <mxCompactTreeLayout> implements a tree layout algorithm, and the
+  include `mxRubberband` for rubberband selection, `mxTooltipHandler`
+  for tooltips and `mxGraphHandler` for  basic cell modifications.
+  `mxCompactTreeLayout` implements a tree layout algorithm, and the
   shape package provides various shapes, which are subclasses of
-  <mxShape>.
+  `mxShape`.
 
-  The *util* package provides utility classes including <mxClipboard> for
-  copy-paste, <mxDatatransfer> for drag-and-drop, <mxConstants> for keys and
-  values of stylesheets, <mxEvent> and <mxUtils> for cross-browser
-  event-handling and general purpose functions, <mxResources> for
-  internationalization and <MaxLog> for console output.
+  The *util* package provides utility classes including `mxClipboard` for
+  copy-paste, `mxDatatransfer` for drag-and-drop, `mxConstants` for keys and
+  values of stylesheets, `mxEvent` and `mxUtils` for cross-browser
+  event-handling and general purpose functions, `mxResources` for
+  internationalization and `MaxLog` for console output.
 
-  The *io* package implements a generic <ObjectCodec> for turning
-  JavaScript objects into XML. The main class is <Codec>.
-  <CodecRegistry> is the global registry for custom codecs.
+  The *io* package implements a generic `ObjectCodec` for turning
+  JavaScript objects into XML. The main class is `Codec`.
+  `CodecRegistry` is the global registry for custom codecs.
 
-Events:
 
-  There are three different types of events, namely native DOM events,
-  <mxEventObjects> which are fired in an <mxEventSource>, and <mxMouseEvents>
-  which are fired in <mxGraph>.
+## Events
 
-  Some helper methods for handling native events are provided in <mxEvent>. It
-  also takes care of resolving cycles between DOM nodes and JavaScript event
-  handlers, which can lead to memory leaks in IE6.
+There are three different types of events, namely native DOM events,
+`mxEventObjects` which are fired in an `mxEventSource`, and `mxMouseEvents` which are fired in `Graph`.
 
-  Most custom events in mxGraph are implemented using <mxEventSource>. Its
-  listeners are functions that take a sender and <mxEventObject>. Additionally,
-  the <mxGraph> class fires special <mxMouseEvents> which are handled using
+Some helper methods for handling native events are provided in `mxEvent`.
+It  also takes care of resolving cycles between DOM nodes and JavaScript event handlers.
+
+  Most custom events in mxGraph are implemented using `mxEventSource`. Its
+  listeners are functions that take a sender and `mxEventObject`. Additionally,
+  the `mxGraph` class fires special `mxMouseEvents` which are handled using
   mouse listeners, which are objects that provide a mousedown, mousemove and
   mouseup method.
 
-  Events in <mxEventSource> are fired using <mxEventSource.fireEvent>.
-  Listeners are added and removed using <mxEventSource.addListener> and
-  <mxEventSource.removeListener>. <mxMouseEvents> in <mxGraph> are fired using
-  <mxGraph.fireMouseEvent>. Listeners are added and removed using
-  <mxGraph.addMouseListener> and <mxGraph.removeMouseListener>, respectively.
+  Events in `mxEventSource` are fired using `mxEventSource.fireEvent`.
+  Listeners are added and removed using `mxEventSource.addListener` and
+  `mxEventSource.removeListener`. `mxMouseEvents` in `mxGraph` are fired using
+  `mxGraph.fireMouseEvent`. Listeners are added and removed using
+  `mxGraph.addMouseListener` and `mxGraph.removeMouseListener`, respectively.
 
-Key bindings:
+
+## Key bindings
 
   The following key bindings are defined for mouse events in the client across
   all browsers and platforms:
@@ -69,41 +75,39 @@ Key bindings:
   - Shift-Drag: Constrains the offset to one direction
   - Shift-Control-Drag: Panning (also Shift-Rightdrag)
 
-Configuration:
+
+## Configuration
 
   The following global variables may be defined before the client is loaded to
   specify its language or base path, respectively.
 
-  - mxBasePath: Specifies the path in <Client.basePath>.
-  - mxImageBasePath: Specifies the path in <Client.imageBasePath>.
-  - mxLanguage: Specifies the language for resources in <Client.language>.
-  - mxDefaultLanguage: Specifies the default language in <Client.defaultLanguage>.
+  - mxBasePath: Specifies the path in `Client.basePath`.
+  - mxImageBasePath: Specifies the path in `Client.imageBasePath`.
+  - mxLanguage: Specifies the language for resources in `Client.language`.
+  - mxDefaultLanguage: Specifies the default language in `Client.defaultLanguage`.
   - mxLoadResources: Specifies if any resources should be loaded. Default is true.
   - mxLoadStylesheets: Specifies if any stylesheets should be loaded. Default is true.
 
-Reserved Words:
 
-  The mx prefix is used for all classes and objects in mxGraph. The mx prefix
-  can be seen as the global namespace for all JavaScript code in mxGraph. The
-  following fieldnames should not be used in objects.
+## Reserved Words
 
-  - *mxObjectId*: If the object is used with mxObjectIdentity
-  - *as*: If the object is a field of another object
-  - *id*: If the object is an idref in a codec
-  - *mxListenerList*: Added to DOM nodes when used with <mxEvent>
-  - *window._mxDynamicCode*: Temporarily used to load code in Safari and Chrome
-  (see <Client.include>).
-  - *_mxJavaScriptExpression*: Global variable that is temporarily used to
-  evaluate code in Safari, Opera, Firefox 3 and IE (see <mxUtils.eval>).
+The _mx_ prefix was used for all classes and objects in mxGraph. Some remains in some properties of objects and classes defined in `maxGraph`.
+The following field names should not be used in objects:
 
-Files:
+- *mxObjectId*: If the object is used with mxObjectIdentity
+- *as*: If the object is a field of another object
+- *id*: If the object is an idref in a codec
+- *mxListenerList*: Added to DOM nodes when used with `mxEvent`
 
-  The library contains these relative filenames. All filenames are relative
-  to <Client.basePath>.
+
+
+## Files
+
+The library contains these relative filenames. All filenames are relative to `Client.basePath`.
 
 Built-in Images:
 
-  All images are loaded from the <Client.imageBasePath>,
+  All images are loaded from the `Client.imageBasePath`,
   which you can change to reflect your environment. The image variables can
   also be changed individually.
 
@@ -119,13 +123,12 @@ Built-in Images:
   - mxUtils.errorImage
   - pointImage
 
-  The basename of the warning image (images/warning without extension) used in
-  <mxGraph.setCellWarning> is defined in <mxGraph.warningImage>.
+The basename of the warning image (images/warning without extension) used in `Graph.setCellWarning` is defined in `Graph.warningImage`.
 
 
 ### Translations
 
-The <Editor> and <mxGraph> classes add the following resources to <mxResources> at class loading time:
+The `Editor` and `mxGraph` classes add the following resources to `mxResources` at class loading time:
 
 - resources/editor*.properties
 - resources/graph*.properties
