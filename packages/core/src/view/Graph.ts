@@ -1473,6 +1473,15 @@ class Graph extends EventSource {
     this.defaultParent = cell;
   }
 
+  /**
+   * Specifies if tooltips should be enabled.
+   *
+   * This implementation updates {@link TooltipHandler.enabled}.
+   *
+   * **IMPORTANT**: only has an effect if the {@link TooltipHandler} plugin is available.
+   *
+   * @param enabled Boolean indicating if tooltips should be enabled.
+   */
   setTooltips(enabled: boolean) {
     const tooltipHandler = this.getPlugin<TooltipHandler>('TooltipHandler');
     tooltipHandler?.setEnabled(enabled);
