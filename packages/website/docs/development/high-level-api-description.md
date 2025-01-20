@@ -31,7 +31,7 @@ The *util* folder provides utility classes including
 
 The *view* folder implement the graph component, represented by `Graph`:
 - It refers to a `GraphDataModel` which contains `Cell`s and caches the state of the cells in a `GraphView`
-- The cells are painted using a `CellRenderer` based on the appearance defined in `Stylesheet`
+- These cells are painted using a `CellRenderer` based on the appearance defined in `Stylesheet`.
 - Undo history is implemented in `UndoManager`
 - To display an icon on the graph, `CellOverlay` may be used
 - Validation rules are defined with `Multiplicity`
@@ -85,12 +85,13 @@ The following global variables may be defined before the client is loaded to spe
 
 ## Reserved Words
 
-The __ prefix was used for all classes and objects in Graph. Some remains in some properties of objects and classes defined in `maxGraph`.
+The `mx` prefix was used for all classes and objects in `mxGraph`. It still remains in some properties of objects and classes defined in `maxGraph`.
+
 The following field names should not be used in objects:
-- *ObjectId*: If the object is used with ObjectIdentity
+- *mxObjectId*: If the object is used with `ObjectIdentity`
 - *as*: If the object is a field of another object
 - *id*: If the object is an idref in a codec
-- *ListenerList*: Added to DOM nodes when used with `Event`
+- *mxListenerList*: Added to DOM nodes when used with `Event`
 
 
 ## Files
