@@ -42,7 +42,7 @@ import RootChange from '../view/undoable_changes/RootChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
 import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
 import PrintPreview from '../view/other/PrintPreview';
-import mxClipboard from '../util/Clipboard';
+import Clipboard from '../util/Clipboard';
 import MaxLog from '../gui/MaxLog';
 import { isNode } from '../util/domUtils';
 import { getViewXml, getXml } from '../util/xmlUtils';
@@ -982,19 +982,19 @@ export class Editor extends EventSource {
 
     this.addAction('cut', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        mxClipboard.cut(editor.graph);
+        Clipboard.cut(editor.graph);
       }
     });
 
     this.addAction('copy', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        mxClipboard.copy(editor.graph);
+        Clipboard.copy(editor.graph);
       }
     });
 
     this.addAction('paste', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        mxClipboard.paste(editor.graph);
+        Clipboard.paste(editor.graph);
       }
     });
 
