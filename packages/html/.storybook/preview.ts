@@ -34,6 +34,7 @@ const resetMaxGraphConfigs = (): void => {
 
   // TODO also reset languages config
 
+  // The purpose of reseting the registries contents is to remove extra/speicif implem registered in a story
   // TODO decide if we introduce clear methods in registry classes and mark the properties as private (not in public api so subject to change)
   // Codec resets
   CodecRegistry.aliases = {};
