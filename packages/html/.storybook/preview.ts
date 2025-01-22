@@ -32,6 +32,8 @@ const resetMaxGraphConfigs = (): void => {
   resetStyleDefaultsConfig();
   resetVertexHandlerConfig();
 
+  // TODO also reset languages config
+
   // TODO decide if we introduce clear methods in registry classes and mark the properties as private (not in public api so subject to change)
   // Codec resets
   CodecRegistry.aliases = {};
@@ -41,9 +43,11 @@ const resetMaxGraphConfigs = (): void => {
 
   // Custom code to unregister various registries used for styling
   // TODO this is duplicated with ts-example-without-defaults
+  // The following is filled at Graph initialization. The default elements are then registered. 
   CellRenderer.defaultShapes = {};
   MarkerShape.markers = {};
   StyleRegistry.values = {};
+
   StencilShapeRegistry.stencils = {};
 };
 
