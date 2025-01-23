@@ -35,7 +35,6 @@ import './SelectionMixin.type';
 import './SnapMixin.type';
 import './SwimlaneMixin.type';
 import './TerminalMixin.type';
-import './TooltipMixin.type';
 import './ValidationMixin.type';
 import './VertexMixin.type';
 import './ZoomMixin.type';
