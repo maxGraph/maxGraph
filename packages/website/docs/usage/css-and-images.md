@@ -37,6 +37,17 @@ import './custom.css'
 You can see this technique in action in the [TypeScript example](https://github.com/maxGraph/maxGraph/blob/main/packages/ts-example/src/main.ts) provided in the `maxGraph` repository.
 :::
 
+### Configuring your build tool to import CSS files
+
+When using a build tool or bundler, additional configuration is often required to import CSS files into the application code (i.e. to make the CSS import work in the examples of the previous paragraph).
+Some manage this automatically, like [Vite](https://vite.dev/), others require specific plugins. See the documentation of your build tool or framework for more information.
+
+For example, with Webpack, you can use the `style-loader` and `css-loader` plugins. For more details, see:
+- [Webpack: Loading CSS](https://webpack.js.org/guides/asset-management/#loading-css)
+- [Webpack: style-loader](https://webpack.js.org/loaders/style-loader/)
+- [Webpack: css-loader](https://webpack.js.org/loaders/css-loader/)
+
+You can also check the [JavaScript Webpack example](https://github.com/maxGraph/maxGraph/blob/main/packages/js-example/webpack.config.js) provided in the `maxGraph` repository.
 
 ## Images
 

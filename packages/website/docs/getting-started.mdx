@@ -8,24 +8,12 @@ import TabItem from '@theme/TabItem';
 
 # Getting Started
 
-:::note
-
-This manual is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). \
-It is adapted from the original [mxGraph manual](https://github.com/jgraph/mxgraph/blob/v4.2.2/docs/manual.html).
-
-> Copyright 2021-present The maxGraph project Contributors \
-Copyright (c) JGraph Ltd 2006-2020
-
-:::
-
-
 ## The `maxGraph` Package
 
 ### Obtaining `maxGraph`
 
 `maxGraph` is available from the <a href="https://github.com/maxGraph/maxGraph">GitHub project</a>.
-Released versions are tagged "va.b.c", where a, b and c are version number parts following
-[semantic versioning](https://semver.org/).
+Released versions are following [semantic versioning](https://semver.org/).
 
 The content of each release is documented on the [maxGraph releases](https://github.com/maxGraph/maxGraph/releases) GitHub page.
 
@@ -39,14 +27,14 @@ Install the latest version of `maxGraph` from the [npm registry](https://www.npm
     npm install @maxgraph/core
     ```
   </TabItem>
-  <TabItem value="yarn" label="yarn">
-    ```bash
-    yarn add @maxgraph/core
-    ```
-  </TabItem>
   <TabItem value="pnpm" label="pnpm">
     ```
     pnpm add @maxgraph/core
+    ```
+  </TabItem>
+  <TabItem value="yarn" label="yarn">
+    ```bash
+    yarn add @maxgraph/core
     ```
   </TabItem>
 </Tabs>
@@ -70,7 +58,7 @@ This example assumes that:
 you want to use TypeScript, adapt it if you want to use JavaScript (mainly, remove references to the 'type' syntax).
 
 
-```javascript
+```typescript
 import {type CellStyle, Graph, InternalEvent} from '@maxgraph/core';
 // Make sure you have element with id 'graph-container' in your HTML
 const container = <HTMLElement>document.getElementById('graph-container');
@@ -79,8 +67,8 @@ InternalEvent.disableContextMenu(container);
 
 const graph = new Graph(container);
 graph.setPanning(true); // Use mouse right button for panning
-// Gets the default parent for inserting new cells. This
-// is normally the first child of the root (ie. layer 0).
+// Gets the default parent for inserting new cells.
+// This is normally the first child of the root (ie. layer 0).
 const parent = graph.getDefaultParent();
 
 // Adds cells to the model in a single step

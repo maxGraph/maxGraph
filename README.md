@@ -49,16 +49,15 @@ npm
 npm install @maxgraph/core
 ```
 
-yarn
-```
-yarn add @maxgraph/core
-```
-
 pnpm
 ```
 pnpm add @maxgraph/core
 ```
 
+yarn
+```
+yarn add @maxgraph/core
+```
 <!-- END OF 'copied into packages/website/docs/getting-started.mdx' -->
 
 ## Getting Started
@@ -81,8 +80,8 @@ InternalEvent.disableContextMenu(container);
 
 const graph = new Graph(container);
 graph.setPanning(true); // Use mouse right button for panning
-// Gets the default parent for inserting new cells. This
-// is normally the first child of the root (ie. layer 0).
+// Gets the default parent for inserting new cells.
+// This is normally the first child of the root (ie. layer 0).
 const parent = graph.getDefaultParent();
 
 // Adds cells to the model in a single step
