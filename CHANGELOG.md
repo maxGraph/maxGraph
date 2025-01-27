@@ -16,7 +16,7 @@ They are replaced by global configuration in `EdgeHandlerConfig`:
   - removeEnabled --> removeBendOnShiftClickEnabled
   - virtualBendOpacity
   - virtualBendsEnabled
-
+- `domUtils.importNodeImplementation` has been removed because it was unused. It was only used internally in `mxGraph` and should not have been exposed.
 
 ## 0.14.0
 

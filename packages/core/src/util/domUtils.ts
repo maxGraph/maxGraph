@@ -298,51 +298,6 @@ export const importNode = (doc: Document, node: Element, allChildren: boolean) =
 };
 
 /**
- * Full DOM API implementation for importNode without using importNode API call.
- *
- * @param doc Document to import the node into.
- * @param node Node to be imported.
- * @param allChildren If all children should be imported.
- */
-export const importNodeImplementation = (
-  doc: Document,
-  node: Element,
-  allChildren: boolean
-) => {
-  switch (node.nodeType) {
-    case 1 /* element */: {
-      const newNode = doc.createElement(node.nodeName);
-
-      if (node.attributes && node.attributes.length > 0) {
-        for (let i = 0; i < node.attributes.length; i += 1) {
-          newNode.setAttribute(
-            node.attributes[i].nodeName,
-            <string>node.getAttribute(node.attributes[i].nodeName)
-          );
-        }
-      }
-
-      if (allChildren && node.childNodes && node.childNodes.length > 0) {
-        for (let i = 0; i < node.childNodes.length; i += 1) {
-          newNode.appendChild(
-            <Node>importNodeImplementation(doc, <Element>node.childNodes[i], allChildren)
-          );
-        }
-      }
-
-      return newNode;
-      break;
-    }
-    case 3: /* text */
-    case 4: /* cdata-section */
-    case 8 /* comment */: {
-      return doc.createTextNode(node.nodeValue || '');
-      break;
-    }
-  }
-};
-
-/**
  * Clears the current selection in the page.
  */
 export const clearSelection = () => {
