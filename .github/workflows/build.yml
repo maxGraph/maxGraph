@@ -1,49 +1,76 @@
 name: Build
 
-# TMP validate the graphql query
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/actions/build-setup/**/*'
+      - '.github/workflows/build.yml'
+      - '.eslint*'
+      - '.nvmrc'
+      - 'packages/**/*'
+      - '!packages/**/*.md'
+      - '!packages/website/**/*'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
   pull_request:
     branches:
       - main
     paths:
+      - '.github/actions/build-setup/**/*'
       - '.github/workflows/build.yml'
+      - '.eslint*'
+      - '.nvmrc'
+      - 'packages/**/*'
+      - '!packages/**/*.md'
+      - '!packages/website/**/*'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      # we want to run the full build on all os: don't cancel running jobs even if one fails
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-22.04', 'macos-14', 'windows-2022']
     steps:
-    - name: Get milestone number (do not exist)
-      env:
-        GH_TOKEN: ${{ github.token }}
-        VERSION: 0.1.8
-      run: |
-        MILESTONE_NUMBER=$(gh api graphql -f query='
-          query($version: String!) {
-            repository(owner: "maxGraph", name: "maxGraph") {
-              milestones(first: 1, query: $version) {
-                nodes { number }
-              }
-            }
-          }' -f version="${{ env.VERSION }}" --jq '.data.repository.milestones.nodes[0].number')
-        echo "MILESTONE_NUMBER_1=${MILESTONE_NUMBER:-unknown}" >> $GITHUB_ENV
-
-    - name: Get milestone number (exist)
-      env:
-        GH_TOKEN: ${{ github.token }}
-        VERSION: 0.15.0
-      run: |
-        MILESTONE_NUMBER=$(gh api graphql -f query='
-          query($version: String!) {
-            repository(owner: "maxGraph", name: "maxGraph") {
-              milestones(first: 1, query: $version) {
-                nodes { number }
-              }
-            }
-          }' -f version="${{ env.VERSION }}" --jq '.data.repository.milestones.nodes[0].number')
-        echo "MILESTONE_NUMBER_2=${MILESTONE_NUMBER:-unknown}" >> $GITHUB_ENV
-
-    - name: List milestone numbers
-      run: |
-        echo "MILESTONE_NUMBER_1=${{ env.MILESTONE_NUMBER_1 }}"
-        echo "MILESTONE_NUMBER_2=${{ env.MILESTONE_NUMBER_2 }}"
-
+      - uses: actions/checkout@v4
+      - name: Build Setup
+        uses: ./.github/actions/build-setup
+      - name: Build @maxgraph/core - esm
+        run: npm run build -w packages/core
+      - name: Check TS compilation of the tests of @maxgraph/core
+        run: npm run test-check -w packages/core
+      - name: Test @maxgraph/core
+        run: npm test -w packages/core -- --coverage
+      - name: Upload test results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-coverage-${{runner.os}}-${{github.sha}}
+          path: packages/core/coverage/lcov-report
+      - name: Test TypeScript support
+        run: npm test -w packages/ts-support
+      - name: Build ts-example (custom shapes)
+        run: npm run build -w packages/ts-example
+      - name: Build ts-example (without defaults)
+        run: npm run build -w packages/ts-example-without-defaults
+      - name: Build Storybook mini-site
+        run: npm run build -w packages/html
+      - name: Build js-example
+        run: npm run build -w packages/js-example
+      - name: Upload all examples as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: examples-${{runner.os}}-${{github.sha}}
+          path: |
+            packages/html/dist/
+            packages/js-example/dist/
+            packages/ts-example/dist/
+            packages/ts-example-without-defaults/dist/
+      - name: Ensure no lint errors
+        run: npm run lint
