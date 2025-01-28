@@ -14,6 +14,20 @@ jobs:
       - name: Set env
         run: |
           echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+      - name: Get milestone number
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          MILESTONE_NUMBER=$(gh api graphql -f query='
+          query($version: String!) {
+           repository(owner: "maxGraph", name: "maxGraph") {
+             milestones(first: 1, query: $version) {
+               nodes { number }
+             }
+           }
+          }' -f version="${{ env.VERSION }}" --jq '.data.repository.milestones.nodes[0].number')
+          echo "MILESTONE_NUMBER=${MILESTONE_NUMBER:-x}" >> $GITHUB_ENV
+
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
@@ -25,10 +39,10 @@ jobs:
 
             ## Resources
 
-            **TODO: Update the milestone URL**
+            **TODO: Validate the milestone URL and update it if needed**
 
             - **npm package**: [@maxgraph/core ${{ env.VERSION }}](https://www.npmjs.com/package/@maxgraph/core/v/${{ env.VERSION }})
-            - **Fixed issues**: [milestone ${{ env.VERSION }}](https://github.com/maxGraph/maxGraph/milestone/x?closed=1)
+            - **Fixed issues**: [milestone ${{ env.VERSION }}](https://github.com/maxGraph/maxGraph/milestone/${{ env.MILESTONE_NUMBER }}?closed=1)
             - **Documentation**: [maxgraph_${{ env.VERSION }}_website.zip](https://github.com/maxGraph/maxGraph/releases/download/v${{ env.VERSION }}/maxgraph_${{ env.VERSION }}_website.zip)
             - **Examples**: [maxgraph_${{ env.VERSION }}_examples.zip](https://github.com/maxGraph/maxGraph/releases/download/v${{ env.VERSION }}/maxgraph_${{ env.VERSION }}_examples.zip)
             - **Changelog** (only includes a summary and breaking changes): [changelog](https://github.com/maxGraph/maxGraph/tree/v${{ env.VERSION }}/CHANGELOG.md)
