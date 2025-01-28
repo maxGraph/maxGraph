@@ -18,14 +18,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          echo "Fetching milestone for version ${{ env.VERSION }}..."
           MILESTONE_NUMBER=$(gh api graphql -f query='
           query($version: String!) {
-           repository(owner: "maxGraph", name: "maxGraph") {
+           repository(owner: "${{ github.repository_owner }}", name: "${{ github.event.repository.name }}) {
              milestones(first: 1, query: $version) {
                nodes { number }
              }
            }
           }' -f version="${{ env.VERSION }}" --jq '.data.repository.milestones.nodes[0].number')
+          echo "Found milestone: ${MILESTONE_NUMBER}"
           echo "MILESTONE_NUMBER=${MILESTONE_NUMBER:-x}" >> $GITHUB_ENV
 
       - name: Create release
