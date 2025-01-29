@@ -21,7 +21,7 @@ jobs:
           echo "Fetching milestone for version ${{ env.VERSION }}..."
           MILESTONE_NUMBER=$(gh api graphql -f query='
           query($version: String!) {
-           repository(owner: "${{ github.repository_owner }}", name: "${{ github.event.repository.name }}) {
+           repository(owner: "${{ github.repository_owner }}", name: "${{ github.event.repository.name }}") {
              milestones(first: 1, query: $version) {
                nodes { number }
              }
