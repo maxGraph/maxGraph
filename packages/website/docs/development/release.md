@@ -35,8 +35,7 @@ Apply changes in the source code
   - Releases are done from the default branch, so all changes are done in the `main` branch.
   - These changes are going to be done locally, and then pushed to the repository.
   - Make sure that the code is up-to-date with the `main` branch. Run `git pull` to get the latest changes.
-- Update the version in `packages/core/package.json` and the `VERSION` constant in the `packages/core/src/Client.ts` file.
-- Update the `package-lock.json` file by running `npm install` at the root of the repository. It should only change the version of `@maxgraph/core`.
+- Update the version in various files by running, from the repository root: `node scripts/update-versions.mjs <version>` (replace `<version>` with the new version).
 - Update the `CHANGELOG` file to list the major changes included in the new version. Be generic and add a
 link to the future GitHub release that will contain detailed release notes, as shown below.
 ```

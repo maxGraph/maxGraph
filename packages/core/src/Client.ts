@@ -22,6 +22,8 @@ class Client {
   /**
    * The version of the `maxGraph` library.
    */
+  // WARN: this constant is updated at release time by the script located at `scripts/update-versions.mjs`.
+  // So, if you modify the name of this file or this constant, please update the script accordingly.
   static VERSION = '0.14.0';
 
   /**
