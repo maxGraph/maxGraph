@@ -11,7 +11,7 @@ _**Note:** Yet to be released breaking changes appear here._
 
 ## 0.15.0
 
-Release date: `2025-01-2ç`
+Release date: `2025-01-29`
 
 For more details, see the [0.15.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.15.0) on the GitHub release page.
 
