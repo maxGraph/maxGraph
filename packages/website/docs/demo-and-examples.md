@@ -10,7 +10,7 @@ sidebar_position: 3
 
 The documentation does not cover all the features available in `maxGraph`. However, `maxGraph` does provide numerous examples. These examples show how to use the features and how `maxGraph` can be extended to meet new needs.
 
-This page includes links to the examples and demos available in the `maxGraph` GitHub organization.
+This page includes links to the examples and demos available in the `maxGraph` [GitHub organization](https://github.com/maxGraph).
 
 :::
 
