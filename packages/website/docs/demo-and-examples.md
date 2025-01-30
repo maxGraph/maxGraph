@@ -10,7 +10,7 @@ sidebar_position: 3
 
 The documentation does not cover all the features available in `maxGraph`. However, `maxGraph` does provide numerous examples. These examples show how to use the features and how `maxGraph` can be extended to meet new needs.
 
-This page includes links to the examples and demos available in the `maxGraph` repository.
+This page includes links to the examples and demos available in the `maxGraph` GitHub organization.
 
 :::
 
@@ -33,6 +33,6 @@ Note that they are based on `maxGraph` features, which require the use of [CSS a
 - the [js-example-without-defaults](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example-without-defaults) project/application demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
 
 ## Framework Integration and Bundlers
-- the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository which shows how to integrate `maxGraph` with different frameworks and build tools.
+- the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository shows how to integrate `maxGraph` with different frameworks and build tools.
 
 [//]: # (END OF 'extract of <rootdir>/README.md')
