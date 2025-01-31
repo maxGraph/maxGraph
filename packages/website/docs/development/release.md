@@ -19,7 +19,11 @@ Currently, the release process is completely manual. Automation will come later 
 Decide on the new version depending on the type of changes:
 - Follow [semver](https://semver.org/)
 - Check the new commits since the latest release to determine the types of changes included in the new version. This can be done by:
-    - running locally `git log --oneline <latest-release-tag>..HEAD`
+    - running locally `git log --oneline <latest-release-tag>..HEAD` or by automatically retrieving the latest tag:
+      ```bash
+      LATEST_TAG=$(git describe --tags --abbrev=0)
+      git log --oneline ${LATEST_TAG}..HEAD
+      ```
     - going to the [latest GitHub release page](https://github.com/maxGraph/maxGraph/releases/latest) and checking the commits since this release (a link is available just above the release title).
 - Until we release the first major version, bump the minor version if the release contains new features or breaking changes.
 
