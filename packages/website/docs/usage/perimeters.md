@@ -67,7 +67,7 @@ Instead of computing the intersection of the final segment with the perimeter, `
 
 To enable this behavior, set `style.orthogonal` to `true` in the edge style.
 
-By default, this is also applied when `style.orthogonal` is not explicitly set but the edge style belongs to one of the "orthogonal" `EdgeStyle` connectors.
+By default, this is also applied when `style.orthogonal` is not explicitly set, but the edge style belongs to one of the "orthogonal" `EdgeStyle` connectors.
 
 
 | Context                                                                                        | Computation with orthogonal projection                                                                                              |
