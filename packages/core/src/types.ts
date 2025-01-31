@@ -515,10 +515,13 @@ export type CellStateStyle = {
   /**
    * Defines if the connection points on either end of the edge should be computed so that
    * the edge is vertical or horizontal if possible and if the point is not at a fixed location.
+   * The computation of the connection points involves the {@link perimeter}.
    *
-   * This is used in {@link Graph.isOrthogonal}, which also returns `true` if the {@link edgeStyle}
-   * of the edge is an `elbow` or `entity`.
-   * @default false
+   * This is used in {@link Graph.isOrthogonal}, which is in charge of determining if the edge terminals should be orthogonal.
+   *
+   * If the {@link orthogonal} property is not explicitly set but the {@link edgeStyle} belongs to one of the "orthogonal" `EdgeStyle` connectors,
+   * for example when using {@link EdgeStyle.SegmentConnector} or {@link EdgeStyle.EntityRelation}, the {@link Graph.isOrthogonal} method which also returns `true`.
+   * @default undefined
    */
   orthogonal?: boolean | null;
   /**

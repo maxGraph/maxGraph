@@ -12,24 +12,76 @@ Don't forget to adapt them if you use `JavaScript`.
 
 ## What is a Perimeter?
 
-A `Perimeter` is a function that calculates the start or end point of the edge so that it is placed on the source or target shape.
+A `Perimeter` is a function that determines the start or end point of an edge, ensuring it is placed correctly on the source or target vertex.
 
-A perimeter is then configured on the vertex. It must also match the shape of the vertex, otherwise the terminal point of the edge isn't placed on the visual perimeter of the vertex.
+A perimeter is generally configured within the vertex style. When setting it up, ensure it aligns with the shape of the vertex. Otherwise, the terminal point of the edge may not appear on the visual perimeter of the vertex.  
+By default, a vertex perimeter is a _rectangle_.
 
-By default, the perimeter of a vertex is a _rectangle_.
+**Note**: All perimeters provided by `maxGraph` are automatically registered in the `StyleRegistry` when a `Graph` instance is created. For more details, see the [Global Configuration](global-configuration.md#styles) documentation.  
+To check the list of registered perimeters, refer to the `registerDefaultStyleElements` function.
 
-It is possible to configure a vertex to not use a perimeter. In this case, the edge is connected to the center of the vertex. 
-This center is calculated based on the bounds (i.e. the rectangle taken width and height of the shape) of the vertex.
+### Disabling the Perimeter
+
+It is possible to configure a vertex to ignore the perimeter. To do so, set `style.perimeter` to `null` or `undefined`.  
+In this case, the edge connects directly to the center of the vertex.  
+This center is calculated based on the vertex’s bounding box (i.e., the rectangle defined by its width and height).
+
+### Example
 
 The following image shows various perimeters in action and illustrates the difference between a vertex with a perimeter and a vertex without a perimeter.
 It is taken from the Storybook demo.
 
-![Perimeters Example](./assets/perimeters.png)
+![Perimeters Example](assets/perimeters/story-overview.png)
 
 :::note
 The image above has been produced using the Storybook demo:
 - live demo: [PerimeterVariousImplementations](https://maxgraph.github.io/maxGraph/?path=/story/perimeters--perimeter-various-implementations)
 - source code: [PerimeterVariousImplementations.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/PerimeterVariousImplementations.stories.ts)
+  :::
+
+
+## Terminal Edge Points Computation with a Perimeter
+
+When rendering an edge, `maxGraph` retrieves the perimeter of its source vertex.  
+Using the edge’s points and this function, it computes the terminal point on the perimeter.  
+The same process is applied to the target vertex.
+
+If an edge has no source and/or no target, the concept of a perimeter does not apply. In such cases, no terminal point is computed for the edge.  
+These edges, known as _dangling edges_ (edges without a source and/or target), simply extend from their assigned points.
+
+To compute the "perimeter point" of an edge, `maxGraph` follows these steps:
+1. Use the last point of the edge.
+2. Create a segment between the center of the shape and this point.
+3. Compute the intersection of this segment with the perimeter.  
+   The resulting point is then used as the terminal point of the edge.
+
+| Context                                                                                        | Computation based on the center            |
+|------------------------------------------------------------------------------------------------|--------------------------------------------|
+| ![perimeter computation context](assets/perimeters/perimeter-point-computation-01-context.png) | ![perimeter computation based on center](assets/perimeters/perimeter-point-computation-02-center.png) |
+
+
+### Orthogonal Projection on the Perimeter
+
+An alternative method is available, using an orthogonal projection onto the perimeter.  
+Instead of computing the intersection of the final segment with the perimeter, `maxGraph` calculates the orthogonal projection of the point onto the perimeter.
+
+To enable this behavior, set `style.orthogonal` to `true` in the edge style.
+
+By default, this is also applied when `style.orthogonal` is not explicitly set but the edge style belongs to one of the "orthogonal" `EdgeStyle` connectors.
+
+
+| Context                                                                                        | Computation with orthogonal projection                                                                                              |
+|------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| ![perimeter computation context](assets/perimeters/perimeter-point-computation-01-context.png) | ![perimeter computation based on orthogonal projection](assets/perimeters/perimeter-point-computation-03-orthogonal_projection.png) |
+
+
+The list of `EdgeStyle` configurations considered orthogonal is defined in `Graph.isOrthogonal`.  
+This includes, for example, `SegmentConnector` and `EntityRelation`.
+
+:::note  
+An example of orthogonal projection is available in the Storybook demo:
+- **Live demo**: [Orthogonal](https://maxgraph.github.io/maxGraph/demo/?path=/story/connections-orthogonal--default)
+- **Source code**: [Orthogonal.stories.js](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/Orthogonal.stories.js)  
 :::
 
 

@@ -1216,24 +1216,17 @@ class Graph extends EventSource {
   }
 
   /**
-   * Returns true if perimeter points should be computed such that the
-   * resulting edge has only horizontal or vertical segments.
+   * Returns `true` if perimeter points should be computed such that the resulting edge has only horizontal or vertical segments.
    *
    * @param edge {@link CellState} that represents the edge.
    */
   isOrthogonal(edge: CellState): boolean {
-    /*
-    'orthogonal' defines if the connection points on either end of the edge should
-    be computed so that the edge is vertical or horizontal if possible
-    and if the point is not at a fixed location. Default is false.
-    This also returns true if the edgeStyle of the edge is an elbow or
-    entity.
-     */
     const orthogonal = edge.style.orthogonal;
     if (orthogonal != null) {
       return orthogonal;
     }
 
+    // fallback when the orthogonal style is not defined
     const tmp = this.view.getEdgeStyle(edge);
     return (
       tmp === EdgeStyle.SegmentConnector ||

@@ -1270,8 +1270,8 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Returns true if the given edge should be routed with {@link graph.defaultLoopStyle}
-   * or the {@link CellStateStyle.STYLE_LOOP} defined for the given edge.
+   * Returns `true` if the given edge should be routed with {@link graph.defaultLoopStyle}
+   * or the {@link CellStateStyle.orthogonalLoop} defined for the given edge.
    * This implementation returns `true` if the given edge is a loop and does not
    */
   isLoopStyleEnabled(

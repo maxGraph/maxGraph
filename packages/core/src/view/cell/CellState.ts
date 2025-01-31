@@ -32,18 +32,16 @@ import { Graph } from '../Graph';
 /**
  * Represents the current state of a cell in a given {@link GraphView}.
  *
- * For edges, the edge label position is stored in <absoluteOffset>.
+ * For edges, the edge label position is stored in {@link absoluteOffset}.
  *
- * The size for oversize labels can be retrieved using the boundingBox property
- * of the <text> field as shown below.
+ * The size for oversize labels can be retrieved using the `boundingBox` property of the {@link text} field as shown below.
  *
  * ```javascript
- * let bbox = (state.text != null) ? state.text.boundingBox : null;
+ * const bbox = state.text?.boundingBox ?? null;
  * ```
- *
  */
 class CellState extends Rectangle {
-  // referenced in mxCellRenderer
+  // referenced in CellRenderer
   node: HTMLElement | null = null;
 
   // TODO: Document me!!
@@ -53,10 +51,10 @@ class CellState extends Rectangle {
 
   boundingBox: Rectangle | null = null;
 
-  // Used by mxCellRenderer's createControl()
+  // Used by CellRenderer.createControl
   control: Shape | null = null;
 
-  // Used by mxCellRenderer's createCellOverlays()
+  // Used by CellRenderer.createCellOverlays
   overlays: Dictionary<CellOverlay, Shape> = new Dictionary();
 
   /**
@@ -75,31 +73,33 @@ class CellState extends Rectangle {
   style!: CellStateStyle;
 
   /**
-   * Specifies if the style is invalid. Default is false.
+   * Specifies if the style is invalid.
+   * @default false
    */
   invalidStyle = false;
 
   /**
-   * Specifies if the state is invalid. Default is true.
+   * Specifies if the state is invalid.
+   * @default true
    */
   invalid = true;
 
   /**
-   * {@link Point} that holds the origin for all child cells. Default is a new
-   * empty {@link Point}.
+   * {@link Point} that holds the origin for all child cells.
+   * @default a new empty {@link Point}.
    */
   origin: Point;
 
   /**
-   * Holds an array of <Point> that represent the absolute points of an
-   * edge.
+   * Holds an array of <Point> that represent the absolute points of an edge.
    */
   absolutePoints: (null | Point)[] = [];
 
   /**
-   * {@link Point} that holds the absolute offset. For edges, this is the
-   * absolute coordinates of the label position. For vertices, this is the
-   * offset of the label relative to the top, left corner of the vertex.
+   * {@link Point} that holds the absolute offset.
+   *
+   * - For edges, this is the absolute coordinates of the label position.
+   * - For vertices, this is the offset of the label relative to the top, left corner of the vertex.
    */
   absoluteOffset: Point;
 
@@ -124,8 +124,7 @@ class CellState extends Rectangle {
   length = 0;
 
   /**
-   * Array of numbers that represent the cached length of each segment of the
-   * edge.
+   * Array of numbers that represent the cached length of each segment of the edge.
    */
   segments: number[] = [];
 
@@ -135,8 +134,8 @@ class CellState extends Rectangle {
   shape: Shape | null = null;
 
   /**
-   * Holds the {@link Text} that represents the label of the cell. Thi smay be
-   * null if the cell has no label.
+   * Holds the {@link Text} that represents the label of the cell.
+   * This may be `null` if the cell has no label.
    */
   text: TextShape | null = null;
 
@@ -181,8 +180,7 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Returns the {@link Rectangle} that should be used as the perimeter of the
-   * cell.
+   * Returns the {@link Rectangle} that should be used as the perimeter of the cell.
    *
    * @param border Optional border to be added around the perimeter bounds.
    * @param bounds Optional {@link Rectangle} to be used as the initial bounds.
@@ -217,8 +215,7 @@ class CellState extends Rectangle {
    * Sets the first or last point in <absolutePoints> depending on isSource.
    *
    * @param point {@link Point} that represents the terminal point.
-   * @param isSource Boolean that specifies if the first or last point should
-   * be assigned.
+   * @param isSource Boolean that specifies if the first or last point should be assigned.
    */
   setAbsoluteTerminalPoint(point: Point | null, isSource = false) {
     if (isSource) {
@@ -252,8 +249,7 @@ class CellState extends Rectangle {
   /**
    * Returns the visible source or target terminal cell.
    *
-   * @param source Boolean that specifies if the source or target cell should be
-   * returned.
+   * @param source Boolean that specifies if the source or target cell should be returned.
    */
   getVisibleTerminal(source = false) {
     return this.getVisibleTerminalState(source)?.cell ?? null;
@@ -262,8 +258,7 @@ class CellState extends Rectangle {
   /**
    * Returns the visible source or target terminal state.
    *
-   * @param source Boolean that specifies if the source or target state should be
-   * returned.
+   * @param source Boolean that specifies if the source or target state should be returned.
    */
   getVisibleTerminalState(source = false): CellState | null {
     return source ? this.visibleSourceState : this.visibleTargetState;
@@ -272,7 +267,7 @@ class CellState extends Rectangle {
   /**
    * Sets the visible source or target terminal state.
    *
-   * @param terminalState <CellState> that represents the terminal.
+   * @param terminalState {@link CellState} that represents the terminal.
    * @param source Boolean that specifies if the source or target state should be set.
    */
   setVisibleTerminalState(terminalState: CellState | null, source = false) {
@@ -291,16 +286,16 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Returns the unscaled, untranslated paint bounds. This is the same as
-   * <getCellBounds> but with a 90 degree rotation if the shape's
-   * isPaintBoundsInverted returns true.
+   * Returns the unscaled, untranslated paint bounds.
+   *
+   * This is the same as {@link getCellBounds} but with a 90-degrees rotation if the  {@link Shape.isPaintBoundsInverted} returns `true`.
    */
   getPaintBounds() {
     return this.paintBounds;
   }
 
   /**
-   * Updates the cellBounds and paintBounds.
+   * Updates the {@link cellBounds} and {@link paintBounds}.
    */
   updateCachedBounds() {
     const view = this.view;
@@ -321,8 +316,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Destructor: setState
-   *
    * Copies all fields from the given state to this state.
    */
   setState(state: CellState) {
@@ -382,8 +375,6 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Destructor: destroy
-   *
    * Destroys the state and all associated resources.
    */
   destroy() {
@@ -391,7 +382,7 @@ class CellState extends Rectangle {
   }
 
   /**
-   * Returns true if the given cell state is a loop.
+   * Returns `true` if the given cell state is a loop.
    *
    * @param state {@link CellState} that represents a potential loop.
    */
