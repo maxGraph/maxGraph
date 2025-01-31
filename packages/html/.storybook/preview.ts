@@ -1,12 +1,19 @@
 import type { Preview } from '@storybook/html';
 import {
+  CellRenderer,
+  CodecRegistry,
   GlobalConfig,
+  MarkerShape,
   NoOpLogger,
+  ObjectCodec,
   resetEdgeHandlerConfig,
   resetEntityRelationConnectorConfig,
   resetHandleConfig,
   resetStyleDefaultsConfig,
   resetVertexHandlerConfig,
+  StencilShapeRegistry,
+  StyleRegistry,
+  StylesheetCodec,
 } from '@maxgraph/core';
 
 const defaultLogger = new NoOpLogger();
@@ -24,6 +31,25 @@ const resetMaxGraphConfigs = (): void => {
   resetHandleConfig();
   resetStyleDefaultsConfig();
   resetVertexHandlerConfig();
+
+  // TODO also reset languages config
+
+  // The purpose of reseting the registries contents is to remove extra/speicif implem registered in a story
+  // TODO decide if we introduce clear methods in registry classes and mark the properties as private (not in public api so subject to change)
+  // Codec resets
+  CodecRegistry.aliases = {};
+  CodecRegistry.codecs = {};
+  ObjectCodec.allowEval = false;
+  StylesheetCodec.allowEval = true;
+
+  // Custom code to unregister various registries used for styling
+  // TODO this is duplicated with ts-example-without-defaults
+  // The following is filled at Graph initialization. The default elements are then registered. 
+  CellRenderer.defaultShapes = {};
+  MarkerShape.markers = {};
+  StyleRegistry.values = {};
+
+  StencilShapeRegistry.stencils = {};
 };
 
 // This function is a workaround to destroy mxGraph elements that are not released by the previous story.
