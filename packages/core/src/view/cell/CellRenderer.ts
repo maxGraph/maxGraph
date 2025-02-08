@@ -461,7 +461,8 @@ class CellRenderer {
   createCellOverlays(state: CellState): void {
     const graph = state.view.graph;
     const cellOverlays = graph.getCellOverlays(state.cell);
-    const createdOverlays = new Map<CellOverlay, Shape>(); // TODO what is the purpose of this var which is no used after storing data in it?
+    // TODO rename into updatedOverlays or something similar
+    const createdOverlays = new Map<CellOverlay, Shape>();
 
     for (const cellOverlay of cellOverlays) {
       const shape = state.overlays.get(overlays[i]);
@@ -479,9 +480,9 @@ class CellRenderer {
           overlayShape.node.style.cursor = cellOverlay.cursor;
         }
 
-        createdOverlays.put(cellOverlay, overlayShape);
+        createdOverlays.set(cellOverlay, overlayShape);
       } else {
-        createdOverlays.put(cellOverlay, shape);
+        createdOverlays.set(cellOverlay, shape);
       }
     }
 
