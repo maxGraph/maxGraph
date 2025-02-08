@@ -1487,6 +1487,6 @@ class Graph extends EventSource {
 // This introduces a side effect, but it is necessary to ensure the Graph is enriched with all properties and methods defined in mixins.
 // It is only called when Graph is imported, so the Graph definition is always consistent.
 // And this doesn't impact the tree-shaking.
-applyGraphMixins();
+applyGraphMixins(Graph);
 
 export { Graph };
