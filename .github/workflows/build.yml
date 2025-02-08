@@ -72,5 +72,7 @@ jobs:
             packages/js-example/dist/
             packages/ts-example/dist/
             packages/ts-example-without-defaults/dist/
+      - name: Ensure no circular dependencies in the @maxgraph/core produced JS files
+        run: npm run check:circular-dependencies -w packages/core
       - name: Ensure no lint errors
         run: npm run lint
