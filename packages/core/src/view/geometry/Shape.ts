@@ -86,7 +86,10 @@ import { StyleDefaultsConfig } from '../../util/config';
  * ```
  */
 class Shape {
-  // Assigned in mxCellRenderer
+  /**
+   * Switch to preserve image aspect.
+   * @default false
+   */
   preserveImageAspect = false;
   overlay: CellOverlay | null = null;
   indicator: Shape | null = null;

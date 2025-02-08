@@ -20,7 +20,6 @@ import RectangleShape from './RectangleShape';
 import type Rectangle from '../Rectangle';
 import CellState from '../../cell/CellState';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import CellOverlay from '../../cell/CellOverlay';
 import { NONE } from '../../../util/Constants';
 import { ColorValue } from '../../../types';
 
@@ -42,22 +41,11 @@ class ImageShape extends RectangleShape {
 
     this.imageSrc = imageSrc;
     this.shadow = false;
+    this.preserveImageAspect = true;
   }
 
   // TODO: Document me!!
   shadow: boolean;
-
-  imageSrc: string;
-
-  // Used in mxCellRenderer
-  overlay: CellOverlay | null = null;
-
-  /**
-   * Switch to preserve image aspect. Default is true.
-   * @default true
-   */
-  // preserveImageAspect: boolean;
-  preserveImageAspect = true;
 
   /**
    * Disables offset in IE9 for crisper image output.
