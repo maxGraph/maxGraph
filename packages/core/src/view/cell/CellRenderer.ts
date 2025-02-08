@@ -486,7 +486,7 @@ class CellRenderer {
     }
 
     // Removes unused
-    state.overlays.visit((id: any, shape: { destroy: () => void }) => {
+    state.overlays.forEach((shape: Shape) => {
       shape.destroy();
     });
 
@@ -1086,33 +1086,30 @@ class CellRenderer {
   redrawCellOverlays(state: CellState, forced = false): void {
     this.createCellOverlays(state);
 
-    if (state.overlays != null) {
+    if (state.overlays) {
       const rot = mod(state.style.rotation ?? 0, 90);
       const rad = toRadians(rot);
       const cos = Math.cos(rad);
       const sin = Math.sin(rad);
 
-      state.overlays.visit((id: string, shape: Shape) => {
-        // @ts-ignore
-        const bounds = shape.overlay.getBounds(state);
+      state.overlays.forEach((shape: Shape) => {
+        const bounds = shape.overlay?.getBounds(state) ?? null;
 
-        if (!state.cell.isEdge()) {
-          if (state.shape != null && rot !== 0) {
-            let cx = bounds.getCenterX();
-            let cy = bounds.getCenterY();
+        if (bounds && !state.cell.isEdge() && state.shape && rot !== 0) {
+          let cx = bounds.getCenterX();
+          let cy = bounds.getCenterY();
 
-            const point = getRotatedPoint(
-              new Point(cx, cy),
-              cos,
-              sin,
-              new Point(state.getCenterX(), state.getCenterY())
-            );
+          const point = getRotatedPoint(
+            new Point(cx, cy),
+            cos,
+            sin,
+            new Point(state.getCenterX(), state.getCenterY())
+          );
 
-            cx = point.x;
-            cy = point.y;
-            bounds.x = Math.round(cx - bounds.width / 2);
-            bounds.y = Math.round(cy - bounds.height / 2);
-          }
+          cx = point.x;
+          cy = point.y;
+          bounds.x = Math.round(cx - bounds.width / 2);
+          bounds.y = Math.round(cy - bounds.height / 2);
         }
 
         if (
