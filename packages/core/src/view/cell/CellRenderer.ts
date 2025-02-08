@@ -178,9 +178,8 @@ class CellRenderer {
   createShape(state: CellState) {
     let shape = null;
 
-    // Checks if there is a stencil for the name and creates
-    // a shape instance for the stencil if one exists
-    const stencil = StencilShapeRegistry.getStencil(<string>state.style.shape);
+    // Checks if there is a stencil for the name and creates a shape instance for the stencil if one exists
+    const stencil = StencilShapeRegistry.getStencil(state.style.shape);
 
     if (stencil) {
       shape = new Shape(stencil);

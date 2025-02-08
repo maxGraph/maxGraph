@@ -23,48 +23,38 @@ type Stencils = {
 };
 
 /**
- * A singleton class that provides a registry for stencils and the methods
- * for painting those stencils onto a canvas or into a DOM.
+ * A singleton class that provides a registry for stencils and the methods for painting those stencils onto a canvas or into a DOM.
  *
  * Code to add stencils:
  * ```javascript
- * let req = mxUtils.load('test/stencils.xml');
- * let root = req.getDocumentElement();
- * let shape = root.firstChild;
+ * const req = load('test/stencils.xml');
+ * const root = req.getDocumentElement();
+ * const shape = root.firstChild;
  *
- * while (shape != null)
- * {
- *   if (shape.nodeType === mxConstants.NODETYPE_ELEMENT)
- *  {
- *    mxStencilRegistry.addStencil(shape.getAttribute('name'), new mxStencil(shape));
+ * while (shape) {
+ *   if (shape.nodeType === mxConstants.NODETYPE_ELEMENT) {
+ *    StencilRegistry.addStencil(shape.getAttribute('name'), new mxStencil(shape));
  *  }
  *
  *  shape = shape.nextSibling;
  * }
  * ```
- * @class StencilShapeRegistry
  */
 class StencilShapeRegistry {
   static stencils: Stencils = {};
 
   /**
-   * Adds the given {@link Stencil}.
-   * @static
-   * @param {string} name
-   * @param {StencilShape} stencil
+   * Adds the given {@link StencilShape}.
    */
-  static addStencil(name: string, stencil: StencilShape) {
+  static addStencil(name: string, stencil: StencilShape): void {
     StencilShapeRegistry.stencils[name] = stencil;
   }
 
   /**
-   * Returns the {@link Stencil} for the given name.
-   * @static
-   * @param {string} name
-   * @returns {StencilShape}
+   * Returns the {@link StencilShape} for the given name.
    */
-  static getStencil(name: string) {
-    return StencilShapeRegistry.stencils[name];
+  static getStencil(name?: string | null): StencilShape | undefined {
+    return StencilShapeRegistry.stencils[name!];
   }
 }
 
