@@ -37,7 +37,6 @@ import StencilShapeRegistry from '../geometry/node/StencilShapeRegistry';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import Dictionary from '../../util/Dictionary';
 import EventObject from '../event/EventObject';
 import Point from '../geometry/Point';
 import Shape from '../geometry/Shape';
@@ -462,10 +461,11 @@ class CellRenderer {
   createCellOverlays(state: CellState): void {
     const graph = state.view.graph;
     const cellOverlays = graph.getCellOverlays(state.cell);
-    const createdOverlays = new Dictionary<CellOverlay, Shape>();
+    const createdOverlays = new Map<CellOverlay, Shape>(); // TODO what is the purpose of this var which is no used after storing data in it?
 
     for (const cellOverlay of cellOverlays) {
-      const shape = state.overlays.remove(cellOverlay);
+      const shape = state.overlays.get(overlays[i]);
+      state.overlays.delete(cellOverlay);
 
       if (!shape) {
         const overlayShape = new ImageShape(new Rectangle(), cellOverlay.image.src);
