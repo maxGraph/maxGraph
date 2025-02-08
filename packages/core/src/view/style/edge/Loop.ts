@@ -20,7 +20,6 @@ import CellState from '../../cell/CellState';
 import Point from '../../geometry/Point';
 import { DIRECTION } from '../../../util/Constants';
 import { contains } from '../../../util/mathUtils';
-import { getValue } from '../../../util/Utils';
 
 import type { EdgeStyleFunction } from '../../../types';
 
@@ -65,8 +64,8 @@ export const Loop: EdgeStyleFunction = (
     let y = 0;
     let dy = 0;
 
-    const seg = getValue(state.style, 'segment', graph.gridSize) * view.scale;
-    const dir = getValue(state.style, 'direction', DIRECTION.WEST);
+    const seg = (state.style.segment ?? graph.gridSize) * view.scale;
+    const dir = state.style?.direction ?? DIRECTION.WEST;
 
     if (dir === DIRECTION.NORTH || dir === DIRECTION.SOUTH) {
       x = view.getRoutingCenterX(source);

@@ -178,8 +178,8 @@ export class Cell implements IdentityObject {
   edges: Cell[] = [];
 
   /**
-   * List of members that should not be cloned inside <clone>. This field is
-   * passed to {@link Utils#clone} and is not made persistent in <CellCodec>.
+   * List of members that should not be cloned inside {@link clone}. This field is
+   * passed to {@link utils.clone} and is not made persistent in {@link CellCodec}.
    * This is not a convention for all classes, it is only used in this class
    * to mark transient fields since transient modifiers are not supported by
    * the language.

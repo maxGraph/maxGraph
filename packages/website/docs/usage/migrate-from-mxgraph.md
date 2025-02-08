@@ -192,6 +192,11 @@ The following methods of `mxUtils` have been removed without replacements in `ma
 - `mxUtils.button`
 - `mxUtils.error`
 - `mxUtils.prompt`: use `window.prompt` instead. The mxGraph method was just a wrapper around `window.prompt` to manage `nullish` values. See the [mxUtils.prompt](https://github.com/jgraph/mxgraph/blob/ff141aab158417bd866e2dfebd06c61d40773cd2/javascript/src/js/util/mxUtils.js#L4304) for more details. 
+- methods used to compute style values (with fallback to default values) have been removed in 0.16.0. Use the [nullish coalescing operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
+and the [Optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) instead:
+  - `mxUtils.getColor`
+  - `mxUtils.getNumber`
+  - `mxUtils.getValue`
 
 
 ### `mxAbstractCanvas2D`

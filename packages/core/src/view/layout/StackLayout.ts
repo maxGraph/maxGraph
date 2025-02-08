@@ -17,9 +17,6 @@ limitations under the License.
 */
 
 import GraphLayout from './GraphLayout';
-import Rectangle from '../geometry/Rectangle';
-import { getValue } from '../../util/Utils';
-import { getNumber } from '../../util/StringUtils';
 import { DEFAULT_STARTSIZE } from '../../util/Constants';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
@@ -299,8 +296,8 @@ class StackLayout extends GraphLayout {
       if (this.graph.isSwimlane(parent)) {
         // Uses computed style to get latest
         const style = this.graph.getCellStyle(parent);
-        let start = getNumber(style, 'startSize', DEFAULT_STARTSIZE);
-        const horz = getValue(style, 'horizontal', true) == 1;
+        let start = style.startSize ?? DEFAULT_STARTSIZE;
+        const horz = style.horizontal ?? true;
 
         if (pgeo != null) {
           if (horz) {
@@ -360,7 +357,7 @@ class StackLayout extends GraphLayout {
 
             if (!this.borderCollapse) {
               const childStyle = this.graph.getCellStyle(child);
-              sw = getNumber(childStyle, 'strokeWidth', 1);
+              sw = childStyle.strokeWidth ?? 1;
             }
 
             if (last != null) {

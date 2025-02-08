@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getValue } from '../../util/Utils';
 import { getAlignmentAsPoint, setPrefixedStyle } from '../../util/styleUtils';
 import Rectangle from '../geometry/Rectangle';
 import InternalEvent from '../event/InternalEvent';
@@ -39,11 +38,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/domUtils';
-import {
-  getStringValue,
-  htmlEntities,
-  replaceTrailingNewlines,
-} from '../../util/StringUtils';
+import { htmlEntities, replaceTrailingNewlines } from '../../util/StringUtils';
 import {
   getSource,
   isConsumed,
@@ -535,13 +530,13 @@ class CellEditorHandler implements GraphPlugin {
           }
         }
       } else {
-        const lw = getValue(state.style, 'labelWidth', null);
+        const lw = state.style.labelWidth ?? null;
         m = state.text != null && this.align == null ? state.text.margin : null;
 
         if (m == null) {
           m = getAlignmentAsPoint(
-            this.align || getValue(state.style, 'align', ALIGN.CENTER),
-            getValue(state.style, 'verticalAlign', ALIGN.MIDDLE)
+            this.align ?? state.style.align ?? ALIGN.CENTER,
+            state.style.verticalAlign ?? ALIGN.MIDDLE
           );
         }
 
@@ -554,14 +549,14 @@ class CellEditorHandler implements GraphPlugin {
           );
 
           if (lw != null) {
-            const tmp = (parseFloat(lw) + 2) * scale;
+            const tmp = (lw + 2) * scale;
             this.bounds.width = tmp;
             this.bounds.x += m.x * tmp;
           }
         } else {
           let bounds = Rectangle.fromRectangle(state);
-          let hpos = getValue(state.style, 'labelPosition', ALIGN.CENTER);
-          let vpos = getValue(state.style, 'verticalLabelPosition', ALIGN.MIDDLE);
+          let hpos = state.style.labelPosition ?? ALIGN.CENTER;
+          let vpos = state.style.verticalLabelPosition ?? ALIGN.MIDDLE;
 
           bounds =
             state.shape != null && hpos === 'center' && vpos === 'middle'
@@ -569,7 +564,7 @@ class CellEditorHandler implements GraphPlugin {
               : bounds;
 
           if (lw != null) {
-            bounds.width = parseFloat(lw) * scale;
+            bounds.width = lw * scale;
           }
 
           if (
@@ -1007,9 +1002,7 @@ class CellEditorHandler implements GraphPlugin {
 
       // Applies the horizontal and vertical label positions
       if (state.cell.isVertex()) {
-        const horizontal: string = <string>(
-          getStringValue(state.style, 'labelPosition', ALIGN.CENTER)
-        );
+        const horizontal = state.style.labelPosition ?? ALIGN.CENTER;
 
         if (horizontal === 'left') {
           result.x -= state.width;

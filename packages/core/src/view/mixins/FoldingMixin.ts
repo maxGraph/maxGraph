@@ -20,7 +20,6 @@ import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Geometry from '../geometry/Geometry';
-import { getValue } from '../../util/Utils';
 import { toRadians } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
 import type { Graph } from '../Graph';
@@ -79,9 +78,8 @@ export const FoldingMixin: PartialType = {
     });
   },
 
-  isCellFoldable(cell, collapse?: boolean): boolean {
-    const style = this.getCurrentCellStyle(cell);
-    return cell.getChildCount() > 0 && (style.foldable ?? true);
+  isCellFoldable(cell, _collapse?: boolean): boolean {
+    return cell.getChildCount() > 0 && (this.getCurrentCellStyle(cell).foldable ?? true);
   },
 
   getFoldingImage(state) {
@@ -168,7 +166,7 @@ export const FoldingMixin: PartialType = {
     }
   },
 
-  updateAlternateBounds(cell = null, geo = null, willCollapse = false) {
+  updateAlternateBounds(cell = null, geo = null, _willCollapse = false) {
     if (cell != null && geo != null) {
       const style = this.getCurrentCellStyle(cell);
 
@@ -181,8 +179,7 @@ export const FoldingMixin: PartialType = {
           if (tmp != null) {
             bounds = <Geometry>tmp;
 
-            const startSize = getValue(style, 'startSize');
-
+            const startSize = style.startSize ?? 0;
             if (startSize > 0) {
               bounds.height = Math.max(bounds.height, startSize);
             }
