@@ -54,6 +54,7 @@ class StencilShapeRegistry {
    * Returns the {@link StencilShape} for the given name.
    */
   static getStencil(name?: string | null): StencilShape | undefined {
+    // Tests are validating that using the non-null assertion (!) is safe
     return StencilShapeRegistry.stencils[name!];
   }
 }
