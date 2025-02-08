@@ -54,8 +54,15 @@ export const utils = {
   errorImage: `${Client.imageBasePath}/error.gif`,
 };
 
+/**
+ * @private not part of the public API, can be removed or changed without prior notice
+ */
 export const isNullish = (v: string | object | null | undefined | number) =>
   v === null || v === undefined;
+
+/**
+ * @private not part of the public API, can be removed or changed without prior notice
+ */
 export const isNotNullish = (v: string | object | null | undefined | number) =>
   !isNullish(v);
 
