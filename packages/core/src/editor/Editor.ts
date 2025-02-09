@@ -20,7 +20,7 @@ import EditorPopupMenu from './EditorPopupMenu';
 import UndoManager from '../view/undoable_changes/UndoManager';
 import EditorKeyHandler from './EditorKeyHandler';
 import EventSource from '../view/event/EventSource';
-import Translations from '../util/Translations';
+import Translations from '../i18n/Translations';
 import Client from '../Client';
 import CompactTreeLayout from '../view/layout/CompactTreeLayout';
 import { EditorToolbar } from './EditorToolbar';

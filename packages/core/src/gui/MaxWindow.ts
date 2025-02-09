@@ -24,7 +24,7 @@ import InternalEvent from '../view/event/InternalEvent';
 import Client from '../Client';
 import { NODETYPE } from '../util/Constants';
 import { br, write } from '../util/domUtils';
-import Translations from '../util/Translations';
+import Translations from '../i18n/Translations';
 import { getClientX, getClientY } from '../util/EventUtils';
 import { htmlEntities } from '../util/StringUtils';
 import { utils } from '../util/Utils';

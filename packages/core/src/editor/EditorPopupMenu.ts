@@ -19,7 +19,7 @@ limitations under the License.
 import Cell from '../view/cell/Cell';
 import MaxPopupMenu from '../gui/MaxPopupMenu';
 import { getTextContent } from '../util/domUtils';
-import Translations from '../util/Translations';
+import Translations from '../i18n/Translations';
 import Editor from './Editor';
 
 import { PopupMenuItem } from '../types';

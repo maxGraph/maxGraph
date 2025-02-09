@@ -17,9 +17,9 @@ limitations under the License.
 */
 
 import Client from '../Client';
-import { NONE } from './Constants';
-import { get, load } from './MaxXmlRequest';
-import type MaxXmlRequest from './MaxXmlRequest';
+import { NONE } from '../util/Constants';
+import { get, load } from '../util/MaxXmlRequest';
+import type MaxXmlRequest from '../util/MaxXmlRequest';
 
 /**
  * Implements internationalization. You can provide any number of

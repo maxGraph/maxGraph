@@ -20,7 +20,7 @@ import EdgeHandler from './EdgeHandler';
 import { CURSOR, EDGESTYLE, ELBOW } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
-import Translations from '../../util/Translations';
+import Translations from '../../i18n/Translations';
 import Rectangle from '../geometry/Rectangle';
 import { intersects } from '../../util/mathUtils';
 import Client from '../../Client';

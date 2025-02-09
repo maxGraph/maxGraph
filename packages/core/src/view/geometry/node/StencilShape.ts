@@ -19,7 +19,7 @@ limitations under the License.
 import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
-import Translations from '../../../util/Translations';
+import Translations from '../../../i18n/Translations';
 import { isNotNullish } from '../../../util/Utils';
 import {
   ALIGN,

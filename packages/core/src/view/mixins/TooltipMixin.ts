@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { htmlEntities } from '../../util/StringUtils';
-import Translations from '../../util/Translations';
+import Translations from '../../i18n/Translations';
 import type Shape from '../geometry/Shape';
 import type Cell from '../cell/Cell';
 import type { Graph } from '../Graph';
