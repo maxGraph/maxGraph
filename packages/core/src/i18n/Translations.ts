@@ -66,13 +66,9 @@ import type MaxXmlRequest from '../util/MaxXmlRequest';
  * See {@link resourcesEncoded} to disable this. If you disable this, make sure that
  * your files are UTF-8 encoded.
  *
- * ## Asynchronous loading
+ * ## Loading default resources
  *
- * TODO the following is taken from mxGraph and is probably no longer accurate
- *
- * By default, the core adds two resource files synchronously at load time.
- * To load these files asynchronously, set {@link LoadResources} to false
- * before loading {@link Client} and use {@link loadResources} instead.
+ * Call {@link loadResources} to load the default resources file for both {@link Graph} and {@link Editor}.
  */
 class Translations {
   /*
