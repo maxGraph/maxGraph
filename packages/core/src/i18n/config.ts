@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 // Implementation extracted from Client
+// TODO find a better name or make anonymous
 export class TranslationsConfigBase {
   /**
    * Defines the optional array of all supported language extensions. The default
@@ -30,6 +31,22 @@ export class TranslationsConfigBase {
   setLanguages(value: string[] | null | undefined): void {
     if (typeof value !== 'undefined' && value != null) {
       this.languages = value;
+    }
+  }
+
+  /**
+   * Defines the default language which is used in the common resource files. Any
+   * resources for this language will only load the common resource file, but not
+   * the language-specific resource file.
+   * @default 'en'
+   */
+  defaultLanguage = 'en';
+
+  setDefaultLanguage(value: string | undefined | null): void {
+    if (typeof value !== 'undefined' && value != null) {
+      this.defaultLanguage = value;
+    } else {
+      this.defaultLanguage = 'en';
     }
   }
 }
@@ -50,6 +67,6 @@ export class TranslationsConfigBase {
 
 /**
  * Global configuration for {@link Translations}.
- * */
+ */
 // TODO export in root index.ts
 export const TranslationsConfig = new TranslationsConfigBase();

@@ -89,21 +89,21 @@ class Client {
     }
   };
 
-  /**
-   * Defines the default language which is used in the common resource files. Any
-   * resources for this language will only load the common resource file, but not
-   * the language-specific resource file.
-   * @default 'en'
-   */
-  static defaultLanguage = 'en';
-
-  static setDefaultLanguage = (value: string | undefined | null) => {
-    if (typeof value !== 'undefined' && value != null) {
-      Client.defaultLanguage = value;
-    } else {
-      Client.defaultLanguage = 'en';
-    }
-  };
+  // /**
+  //  * Defines the default language which is used in the common resource files. Any
+  //  * resources for this language will only load the common resource file, but not
+  //  * the language-specific resource file.
+  //  * @default 'en'
+  //  */
+  // static defaultLanguage = 'en';
+  //
+  // static setDefaultLanguage = (value: string | undefined | null) => {
+  //   if (typeof value !== 'undefined' && value != null) {
+  //     Client.defaultLanguage = value;
+  //   } else {
+  //     Client.defaultLanguage = 'en';
+  //   }
+  // };
 
   // /**
   //  * Defines the optional array of all supported language extensions. The default
