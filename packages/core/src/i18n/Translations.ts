@@ -135,14 +135,14 @@ class Translations {
   /**
    * Hook for subclassers to return the URL for the special bundle. This
    * implementation returns `basename + '_' + lan + <extension>` or `null` if
-   * {@link Translations.loadSpecialBundle} is `false` or `lan` equals {@link Client.defaultLanguage}.
+   * {@link loadSpecialBundle} is `false` or `lan` equals {@link Client.defaultLanguage}.
    *
-   * If {@link Translations#languages} is not null and {@link Client.language} contains
-   * a dash, then this method checks if {@link Translations.isLanguageSupported} returns `true`
+   * If {@link languages} is not `null` and {@link Client.language} contains
+   * a dash, then this method checks if {@link isLanguageSupported} returns `true`
    * for the full language (including the dash). If that returns false the
    * first part of the language (up to the dash) will be tried as an extension.
    *
-   * If {@link Translations#language} is null then the first part of the language is
+   * If {@link language} is `null` then the first part of the language is
    * used to maintain backwards compatibility.
    *
    * @param basename The basename for which the file should be loaded.
