@@ -51,20 +51,6 @@ export class TranslationsConfigBase {
   }
 }
 
-// export type TranslationsConfigType = {
-//   /**
-//    * Defines the optional array of all supported language extensions. The default
-//    * language does not have to be part of this list. See
-//    * {@link Translations#isLanguageSupported}.
-//    *
-//    * This is used to avoid unnecessary requests to language files, ie. if a 404
-//    * will be returned.
-//    * @default null
-//    */
-//   languages: string[] | null;
-//   setLanguages: (value: string[] | null | undefined) => void;
-// };
-
 /**
  * Global configuration for {@link Translations}.
  */
