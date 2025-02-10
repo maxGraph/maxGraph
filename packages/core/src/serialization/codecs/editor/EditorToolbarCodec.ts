@@ -24,7 +24,6 @@ import { convertPoint } from '../../../util/styleUtils';
 import { getClientX, getClientY } from '../../../util/EventUtils';
 import InternalEvent from '../../../view/event/InternalEvent';
 import { getChildNodes, getTextContent } from '../../../util/domUtils';
-import Translations from '../../../util/Translations';
 
 /**
  * Custom codec for configuring {@link EditorToolbar}s.
@@ -144,7 +143,7 @@ export class EditorToolbarCodec extends ObjectCodec {
               into.toolbar.addLine();
             } else if (node.nodeName === 'add') {
               let as = <string>node.getAttribute('as');
-              as = Translations.get(as) || as;
+              as = GlobalConfig.i18n.get(as) || as;
               const icon = node.getAttribute('icon');
               const pressedIcon = node.getAttribute('pressedIcon');
               const action = node.getAttribute('action');

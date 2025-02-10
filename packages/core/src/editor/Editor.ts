@@ -20,7 +20,6 @@ import EditorPopupMenu from './EditorPopupMenu';
 import UndoManager from '../view/undoable_changes/UndoManager';
 import EditorKeyHandler from './EditorKeyHandler';
 import EventSource from '../view/event/EventSource';
-import Translations from '../util/Translations';
 import Client from '../Client';
 import CompactTreeLayout from '../view/layout/CompactTreeLayout';
 import { EditorToolbar } from './EditorToolbar';
@@ -56,9 +55,13 @@ import ConnectionHandler from '../view/handler/ConnectionHandler';
 import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
+import { GlobalConfig } from '../util/config';
 
 // TODO disabled side effects, so editor resources are not loaded by default
 // This should be done in a different way
+
+// This can be done on demand by calling Translations.loadResources
+// Taken from https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/editor/mxEditor.js#L394-L405
 /**
  * Installs the required language resources at class
  * loading time.
@@ -461,8 +464,7 @@ export class Editor extends EventSource {
    * key does not exist then the value is used as the error message. Default is 'askZoom'.
    * @default 'askZoom'
    */
-  // askZoomResource: 'askZoom' | '';
-  askZoomResource = Client.language !== 'none' ? 'askZoom' : '';
+  askZoomResource = GlobalConfig.i18n.isEnabled() ? 'askZoom' : '';
 
   /**
    * Group: Controls and Handlers
@@ -472,14 +474,14 @@ export class Editor extends EventSource {
    * this key does not exist then the value is used as the error message. Default is 'lastSaved'.
    * @default 'lastSaved'.
    */
-  lastSavedResource = Client.language !== 'none' ? 'lastSaved' : '';
+  lastSavedResource = GlobalConfig.i18n.isEnabled() ? 'lastSaved' : '';
 
   /**
    * Specifies the resource key for the current file info. If the resource for
    * this key does not exist then the value is used as the error message. Default is 'currentFile'.
    * @default 'currentFile'
    */
-  currentFileResource = Client.language !== 'none' ? 'currentFile' : '';
+  currentFileResource = GlobalConfig.i18n.isEnabled() ? 'currentFile' : '';
 
   /**
    * Specifies the resource key for the properties window title. If the
@@ -487,7 +489,7 @@ export class Editor extends EventSource {
    * error message. Default is 'properties'.
    * @default 'properties'
    */
-  propertiesResource = Client.language !== 'none' ? 'properties' : '';
+  propertiesResource = GlobalConfig.i18n.isEnabled() ? 'properties' : '';
 
   /**
    * Specifies the resource key for the tasks window title. If the
@@ -495,7 +497,7 @@ export class Editor extends EventSource {
    * error message. Default is 'tasks'.
    * @default 'tasks'
    */
-  tasksResource = Client.language !== 'none' ? 'tasks' : '';
+  tasksResource = GlobalConfig.i18n.isEnabled() ? 'tasks' : '';
 
   /**
    * Specifies the resource key for the help window title. If the
@@ -503,7 +505,7 @@ export class Editor extends EventSource {
    * error message. Default is 'help'.
    * @default 'help'
    */
-  helpResource = Client.language !== 'none' ? 'help' : '';
+  helpResource = GlobalConfig.i18n.isEnabled() ? 'help' : '';
 
   /**
    * Specifies the resource key for the outline window title. If the
@@ -511,7 +513,7 @@ export class Editor extends EventSource {
    * error message. Default is 'outline'.
    * @default 'outline'
    */
-  outlineResource = Client.language !== 'none' ? 'outline' : '';
+  outlineResource = GlobalConfig.i18n.isEnabled() ? 'outline' : '';
 
   /**
    * Reference to the {@link MaxWindow} that contains the outline. The {@link outline}
@@ -1249,7 +1251,7 @@ export class Editor extends EventSource {
     this.addAction('zoom', (editor: Editor) => {
       const current = editor.graph.getView().scale * 100;
       const preInput = prompt(
-        Translations.get(editor.askZoomResource) || editor.askZoomResource,
+        GlobalConfig.i18n.get(editor.askZoomResource) || editor.askZoomResource,
         String(current)
       );
 
@@ -1745,7 +1747,7 @@ export class Editor extends EventSource {
         const tstamp = new Date().toLocaleString();
         this.setStatus(
           `${
-            Translations.get(this.lastSavedResource) || this.lastSavedResource
+            GlobalConfig.i18n.get(this.lastSavedResource) || this.lastSavedResource
           }: ${tstamp}`
         );
       });
@@ -1754,7 +1756,7 @@ export class Editor extends EventSource {
       // when new files are opened
       this.addListener(InternalEvent.OPEN, () => {
         this.setStatus(
-          `${Translations.get(this.currentFileResource) || this.currentFileResource}: ${
+          `${GlobalConfig.i18n.get(this.currentFileResource) || this.currentFileResource}: ${
             this.filename
           }`
         );
@@ -2078,7 +2080,7 @@ export class Editor extends EventSource {
         // Displays the contents in a window and stores a reference to the
         // window for later hiding of the window
         this.properties = new MaxWindow(
-          Translations.get(this.propertiesResource) || this.propertiesResource,
+          GlobalConfig.i18n.get(this.propertiesResource) || this.propertiesResource,
           node,
           x,
           y,
@@ -2265,7 +2267,7 @@ export class Editor extends EventSource {
       div.style.paddingLeft = '20px';
       const w = document.body.clientWidth;
       const wnd = new MaxWindow(
-        Translations.get(this.tasksResource) || this.tasksResource,
+        GlobalConfig.i18n.get(this.tasksResource) || this.tasksResource,
         div,
         w - 220,
         this.tasksTop,
@@ -2334,7 +2336,10 @@ export class Editor extends EventSource {
   showHelp(tasks: any | null = null): void {
     if (this.help == null) {
       const frame = document.createElement('iframe');
-      frame.setAttribute('src', <string>(Translations.get('urlHelp') || this.urlHelp));
+      frame.setAttribute(
+        'src',
+        <string>(GlobalConfig.i18n.get('urlHelp') || this.urlHelp)
+      );
       frame.setAttribute('height', '100%');
       frame.setAttribute('width', '100%');
       frame.setAttribute('frameBorder', '0');
@@ -2344,7 +2349,7 @@ export class Editor extends EventSource {
       const h = document.body.clientHeight || document.documentElement.clientHeight;
 
       const wnd = new MaxWindow(
-        Translations.get(this.helpResource) || this.helpResource,
+        GlobalConfig.i18n.get(this.helpResource) || this.helpResource,
         frame,
         (w - this.helpWidth) / 2,
         (h - this.helpHeight) / 3,
@@ -2398,7 +2403,7 @@ export class Editor extends EventSource {
       div.style.cursor = 'move';
 
       const wnd = new MaxWindow(
-        Translations.get(this.outlineResource) || this.outlineResource,
+        GlobalConfig.i18n.get(this.outlineResource) || this.outlineResource,
         div,
         600,
         480,

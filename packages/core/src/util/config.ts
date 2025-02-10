@@ -23,6 +23,8 @@ import {
   SHADOWCOLOR,
 } from './Constants';
 import { shallowCopy } from './cloneUtils';
+import type { I18nProvider } from '../i18n/api';
+import { NoOpI18n } from '../i18n/api';
 
 /**
  * Global configuration for maxGraph.
@@ -51,6 +53,10 @@ export const GlobalConfig = {
    * @default {@link NoOpLogger}
    */
   logger: new NoOpLogger() as Logger,
+
+  // TODO find a better name for the property
+  // TODO add JSDoc
+  i18n: new NoOpI18n() as I18nProvider,
 };
 
 /**

@@ -68,68 +68,6 @@ class Client {
   };
 
   /**
-   * Defines the language of the client, eg. `en` for english, `de` for german etc.
-   * The special value `none` will disable all built-in internationalization and
-   * resource loading. See {@link Translations.getSpecialBundle} for handling identifiers
-   * with and without a dash.
-   *
-   * If internationalization is disabled, then the following variables should be
-   * overridden to reflect the current language of the system. These variables are
-   * cleared when i18n is disabled.
-   * {@link Editor.askZoomResource}, {@link Editor.lastSavedResource},
-   * {@link Editor.currentFileResource}, {@link Editor.propertiesResource},
-   * {@link Editor.tasksResource}, {@link Editor.helpResource}, {@link Editor.outlineResource},
-   * {@link ElbowEdgeHandler#doubleClickOrientationResource}, {@link utils.errorResource},
-   * {@link utils.closeResource}, {@link GraphSelectionModel#doneResource},
-   * {@link GraphSelectionModel#updatingSelectionResource}, {@link GraphView#doneResource},
-   * {@link GraphView#updatingDocumentResource}, {@link CellRenderer#collapseExpandResource},
-   * {@link Graph#containsValidationErrorsResource} and
-   * {@link Graph#alreadyConnectedResource}.
-   */
-  static language = typeof window !== 'undefined' ? navigator.language : 'en';
-
-  static setLanguage = (value: string | undefined | null) => {
-    if (typeof value !== 'undefined' && value != null) {
-      Client.language = value;
-    } else {
-      Client.language = navigator.language;
-    }
-  };
-
-  /**
-   * Defines the default language which is used in the common resource files. Any
-   * resources for this language will only load the common resource file, but not
-   * the language-specific resource file.
-   * @default 'en'
-   */
-  static defaultLanguage = 'en';
-
-  static setDefaultLanguage = (value: string | undefined | null) => {
-    if (typeof value !== 'undefined' && value != null) {
-      Client.defaultLanguage = value;
-    } else {
-      Client.defaultLanguage = 'en';
-    }
-  };
-
-  /**
-   * Defines the optional array of all supported language extensions. The default
-   * language does not have to be part of this list. See
-   * {@link Translations#isLanguageSupported}.
-   *
-   * This is used to avoid unnecessary requests to language files, ie. if a 404
-   * will be returned.
-   * @default null
-   */
-  static languages: string[] | null = null;
-
-  static setLanguages = (value: string[] | null | undefined) => {
-    if (typeof value !== 'undefined' && value != null) {
-      Client.languages = value;
-    }
-  };
-
-  /**
    * True if the current browser is Microsoft Edge.
    */
   static IS_EDGE =

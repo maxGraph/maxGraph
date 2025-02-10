@@ -18,7 +18,8 @@ import ObjectCodec from '../../ObjectCodec';
 import Editor from '../../../editor/Editor';
 import type Codec from '../../Codec';
 import MaxWindow from '../../../gui/MaxWindow';
-import Translations from '../../../util/Translations';
+import Translations from '../../../i18n/Translations';
+import { GlobalConfig } from '../../../util/config';
 import { addLinkToHead, getChildNodes } from '../../../util/domUtils';
 
 /**
@@ -170,7 +171,7 @@ export class EditorCodec extends ObjectCodec {
           }
 
           const wnd = new MaxWindow(
-            Translations.get(as) || as,
+            GlobalConfig.i18n.get(as) || as,
             element,
             x,
             y,
@@ -196,6 +197,8 @@ export class EditorCodec extends ObjectCodec {
           //editor.setMapContainer(element);
         }
       } else if (tmp.nodeName === 'resource') {
+        // The "resource" content is specific to the Translations implementation, so use it here
+        // TODO see if we can find an alternative
         Translations.add(<string>tmp.getAttribute('basename'));
       } else if (tmp.nodeName === 'stylesheet') {
         addLinkToHead('stylesheet', <string>tmp.getAttribute('name'));

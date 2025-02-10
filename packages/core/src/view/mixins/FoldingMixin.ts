@@ -24,6 +24,7 @@ import { getValue } from '../../util/Utils';
 import { toRadians } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
 import type { Graph } from '../Graph';
+import { GlobalConfig } from '../../util/config';
 
 type PartialGraph = Pick<
   Graph,
@@ -63,7 +64,7 @@ export const FoldingMixin: PartialType = {
     collapseToPreferredSize: true,
   },
 
-  collapseExpandResource: Client.language != 'none' ? 'collapse-expand' : '',
+  collapseExpandResource: GlobalConfig.i18n.isEnabled() ? 'collapse-expand' : '',
 
   getCollapseExpandResource() {
     return this.collapseExpandResource;

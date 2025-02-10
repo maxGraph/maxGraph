@@ -119,14 +119,14 @@ export class GraphView extends EventSource {
    * If the resource for this key does not exist then the value is used as
    * the status message. Default is 'done'.
    */
-  doneResource = Client.language !== 'none' ? 'done' : '';
+  doneResource = GlobalConfig.i18n.isEnabled() ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the document is
    * being updated. If the resource for this key does not exist then the
    * value is used as the status message. Default is 'updatingDocument'.
    */
-  updatingDocumentResource = Client.language !== 'none' ? 'updatingDocument' : '';
+  updatingDocumentResource = GlobalConfig.i18n.isEnabled() ? 'updatingDocument' : '';
 
   /**
    * Specifies if string values in cell styles should be evaluated using

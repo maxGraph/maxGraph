@@ -17,9 +17,24 @@ limitations under the License.
 */
 
 import Client from '../Client';
-import { NONE } from './Constants';
-import { get, load } from './MaxXmlRequest';
-import type MaxXmlRequest from './MaxXmlRequest';
+import { NONE } from '../util/Constants';
+import { get, load } from '../util/MaxXmlRequest';
+import type MaxXmlRequest from '../util/MaxXmlRequest';
+import type { I18nProvider } from './api';
+import { TranslationsConfig } from './config';
+
+// TODO make available in the root index.ts
+// TODO find a better name
+export class TranslationsAsI18n implements I18nProvider {
+  isEnabled(): boolean {
+    return TranslationsConfig.isI18nEnabled();
+  }
+  get(key: string) {
+    return Translations.get(key);
+  }
+}
+
+// mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js
 
 /**
  * Implements internationalization. You can provide any number of
@@ -52,7 +67,7 @@ import type MaxXmlRequest from './MaxXmlRequest';
  * argument passed to {@link get}. The placeholder {1} maps to the first
  * element in the array (at index 0).
  *
- * See {@link Client.language} for more information on specifying the default
+ * See {@link I18nConfig.getLanguage} for more information on specifying the default
  * language or disabling all loading of resources.
  *
  * Lines that start with a # sign will be ignored.
@@ -66,13 +81,9 @@ import type MaxXmlRequest from './MaxXmlRequest';
  * See {@link resourcesEncoded} to disable this. If you disable this, make sure that
  * your files are UTF-8 encoded.
  *
- * ## Asynchronous loading
+ * ## Loading default resources
  *
- * TODO the following is taken from mxGraph and is probably no longer accurate
- *
- * By default, the core adds two resource files synchronously at load time.
- * To load these files asynchronously, set {@link LoadResources} to false
- * before loading Client and use {@link loadResources} instead.
+ * Call {@link loadResources} to load the default resources file for both {@link Graph} and {@link Editor}.
  */
 class Translations {
   /*
@@ -87,32 +98,32 @@ class Translations {
   static extension = '.txt';
 
   /**
-   * Specifies whether values in resource files are encoded with \u or
-   * percentage. Default is false.
+   * Specifies whether values in resource files are encoded with `\u` or percentage.
+   * @default false
    */
   static resourcesEncoded = false;
 
   /**
    * Specifies if the default file for a given basename should be loaded.
-   * Default is true.
+   * @default true
    */
   static loadDefaultBundle = true;
 
   /**
-   * Specifies if the specific language file file for a given basename should
-   * be loaded. Default is true.
+   * Specifies if the specific language file for a given basename should be loaded.
+   * @default true
    */
   static loadSpecialBundle = true;
 
   /**
    * Hook for subclassers to disable support for a given language. This
-   * implementation returns true if lan is in <Client.languages>.
+   * implementation returns true if `lan` is in {@link I18nConfig.getLanguage()s}.
    *
    * @param lan The current language.
    */
   static isLanguageSupported = (lan: string): boolean => {
-    if (Client.languages != null) {
-      return Client.languages.indexOf(lan) >= 0;
+    if (TranslationsConfig.languages != null) {
+      return TranslationsConfig.languages.indexOf(lan) >= 0;
     }
     return true;
   };
@@ -135,21 +146,21 @@ class Translations {
   /**
    * Hook for subclassers to return the URL for the special bundle. This
    * implementation returns `basename + '_' + lan + <extension>` or `null` if
-   * {@link Translations.loadSpecialBundle} is `false` or `lan` equals {@link Client.defaultLanguage}.
+   * {@link loadSpecialBundle} is `false` or `lan` equals {@link TranslationsConfig.defaultLanguage}.
    *
-   * If {@link Translations#languages} is not null and {@link Client.language} contains
-   * a dash, then this method checks if {@link Translations.isLanguageSupported} returns `true`
+   * If {@link languages} is not `null` and {@link I18nConfig.getLanguage} contains
+   * a dash, then this method checks if {@link isLanguageSupported} returns `true`
    * for the full language (including the dash). If that returns false the
    * first part of the language (up to the dash) will be tried as an extension.
    *
-   * If {@link Translations#language} is null then the first part of the language is
+   * If {@link languages} is `null` then the first part of the language is
    * used to maintain backwards compatibility.
    *
    * @param basename The basename for which the file should be loaded.
    * @param lan The language for which the file should be loaded.
    */
   static getSpecialBundle = (basename: string, lan: string): string | null => {
-    if (Client.languages == null || !Translations.isLanguageSupported(lan)) {
+    if (TranslationsConfig.languages == null || !Translations.isLanguageSupported(lan)) {
       const dash = lan.indexOf('-');
 
       if (dash > 0) {
@@ -160,7 +171,7 @@ class Translations {
     if (
       Translations.loadSpecialBundle &&
       Translations.isLanguageSupported(lan) &&
-      lan != Client.defaultLanguage
+      lan != TranslationsConfig.defaultLanguage
     ) {
       return `${basename}_${lan}${Translations.extension}`;
     }
@@ -191,7 +202,11 @@ class Translations {
     callback: Function | null = null
   ): void => {
     lan =
-      lan != null ? lan : Client.language != null ? Client.language.toLowerCase() : NONE;
+      lan != null
+        ? lan
+        : TranslationsConfig.getLanguage() != null
+          ? TranslationsConfig.getLanguage().toLowerCase()
+          : NONE;
 
     if (lan !== NONE) {
       const defaultBundle = Translations.getDefaultBundle(basename, lan);

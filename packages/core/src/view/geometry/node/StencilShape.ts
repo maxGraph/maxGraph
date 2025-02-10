@@ -19,7 +19,7 @@ limitations under the License.
 import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
-import Translations from '../../../util/Translations';
+import { GlobalConfig } from '../../../util/config';
 import { getValue, isNotNullish } from '../../../util/Utils';
 import {
   ALIGN,
@@ -174,7 +174,7 @@ class StencilShape extends Shape {
     const loc = node.getAttribute('localized');
 
     if ((StencilShapeConfig.defaultLocalized && !loc) || loc === '1') {
-      result = Translations.get(<string>result);
+      result = GlobalConfig.i18n.get(<string>result);
     }
     return result;
   }

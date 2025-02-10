@@ -19,10 +19,9 @@ limitations under the License.
 import Cell from '../view/cell/Cell';
 import MaxPopupMenu from '../gui/MaxPopupMenu';
 import { getTextContent } from '../util/domUtils';
-import Translations from '../util/Translations';
 import Editor from './Editor';
-
 import { PopupMenuItem } from '../types';
+import { GlobalConfig } from '../util/config';
 
 /**
  * Creates popupmenus for mouse events.  This object holds an XML node which is a description of the popup menu to be created.  In {@link createMenu}, the configuration is applied to the context and the resulting menu items are added to the menu dynamically.  See {@link createMenu} for a description of the configuration format.
@@ -185,7 +184,7 @@ export class EditorPopupMenu {
 
         if (condition == null || conditions[condition]) {
           let as = <string>item.getAttribute('as');
-          as = Translations.get(as) || as;
+          as = GlobalConfig.i18n.get(as) || as;
           const funct = eval(getTextContent(<Text>(<unknown>item)));
           const action = item.getAttribute('action');
           let icon = item.getAttribute('icon');

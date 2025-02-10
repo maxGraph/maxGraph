@@ -20,10 +20,9 @@ import EdgeHandler from './EdgeHandler';
 import { CURSOR, EDGESTYLE, ELBOW } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
-import Translations from '../../util/Translations';
+import { GlobalConfig } from '../../util/config';
 import Rectangle from '../geometry/Rectangle';
 import { intersects } from '../../util/mathUtils';
-import Client from '../../Client';
 import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import { HandleConfig } from './config';
@@ -57,8 +56,9 @@ class ElbowEdgeHandler extends EdgeHandler {
    * exist then the value is used as the error message.
    * @default 'doubleClickOrientation'.
    */
-  doubleClickOrientationResource =
-    Client.language !== 'none' ? 'doubleClickOrientation' : '';
+  doubleClickOrientationResource = GlobalConfig.i18n.isEnabled()
+    ? 'doubleClickOrientation'
+    : '';
 
   /**
    * Overrides {@link EdgeHandler.createBends} to create custom bends.
@@ -132,7 +132,7 @@ class ElbowEdgeHandler extends EdgeHandler {
       (node === this.bends[1].node || node.parentNode === this.bends[1].node)
     ) {
       tip = this.doubleClickOrientationResource;
-      tip = Translations.get(tip) || tip; // translate
+      tip = GlobalConfig.i18n.get(tip) || tip; // translate
     }
 
     return tip;

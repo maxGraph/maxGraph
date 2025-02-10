@@ -60,6 +60,7 @@ import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
 import { registerDefaultStyleElements } from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
+import { GlobalConfig } from '../util/config';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
@@ -382,7 +383,9 @@ class Graph extends EventSource {
    * for this key does not exist then the value is used as the error message.
    * @default 'alreadyConnected'
    */
-  alreadyConnectedResource: string = Client.language != 'none' ? 'alreadyConnected' : '';
+  alreadyConnectedResource: string = GlobalConfig.i18n.isEnabled()
+    ? 'alreadyConnected'
+    : '';
 
   /**
    * Specifies the resource key for the warning message to be displayed when
@@ -390,8 +393,9 @@ class Graph extends EventSource {
    * key does not exist then the value is used as the warning message.
    * @default 'containsValidationErrors'
    */
-  containsValidationErrorsResource: string =
-    Client.language != 'none' ? 'containsValidationErrors' : '';
+  containsValidationErrorsResource: string = GlobalConfig.i18n.isEnabled()
+    ? 'containsValidationErrors'
+    : '';
 
   // ===================================================================================================================
   // Group: "Create Class Instance" factory functions.

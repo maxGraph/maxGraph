@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import type Cell from '../cell/Cell';
-import Translations from '../../util/Translations';
+import { GlobalConfig } from '../../util/config';
 import { isNode } from '../../util/domUtils';
 import type { Graph } from '../Graph';
 
@@ -89,7 +89,7 @@ export const ValidationMixin: PartialType = {
         // Checks if the source and target are not connected by another edge
         if (tmp.length > 1 || (tmp.length === 1 && tmp[0] !== edge)) {
           error += `${
-            Translations.get(this.getAlreadyConnectedResource()) ||
+            GlobalConfig.i18n.get(this.getAlreadyConnectedResource()) ||
             this.getAlreadyConnectedResource()
           }\n`;
         }
@@ -172,7 +172,7 @@ export const ValidationMixin: PartialType = {
     // Adds error for invalid children if collapsed (children invisible)
     if (cell && cell.isCollapsed() && !isValid) {
       warning += `${
-        Translations.get(this.getContainsValidationErrorsResource()) ||
+        GlobalConfig.i18n.get(this.getContainsValidationErrorsResource()) ||
         this.getContainsValidationErrorsResource()
       }\n`;
     }

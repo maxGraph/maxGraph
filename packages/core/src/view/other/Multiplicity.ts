@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Translations from '../../util/Translations';
+import { GlobalConfig } from '../../util/config';
 import { isNode } from '../../util/domUtils';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
@@ -60,8 +60,8 @@ class Multiplicity {
     this.min = min ?? 0;
     this.max = max ?? Number.MAX_VALUE;
     this.validNeighbors = validNeighbors;
-    this.countError = Translations.get(countError) || countError;
-    this.typeError = Translations.get(typeError) || typeError;
+    this.countError = GlobalConfig.i18n.get(countError) || countError;
+    this.typeError = GlobalConfig.i18n.get(typeError) || typeError;
     this.validNeighborsAllowed = validNeighborsAllowed;
   }
 

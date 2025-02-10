@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../Client';
 import EventSource from '../view/event/EventSource';
 import { Graph } from './Graph';
 import Cell from './cell/Cell';
@@ -24,6 +23,7 @@ import SelectionChange from './undoable_changes/SelectionChange';
 import UndoableEdit from './undoable_changes/UndoableEdit';
 import EventObject from './event/EventObject';
 import InternalEvent from './event/InternalEvent';
+import { GlobalConfig } from '../util/config';
 
 /**
  * Class: mxGraphSelectionModel
@@ -79,14 +79,14 @@ class GraphSelectionModel extends EventSource {
    * If the resource for this key does not exist then the value is used as
    * the status message. Default is 'done'.
    */
-  doneResource = Client.language !== 'none' ? 'done' : '';
+  doneResource = GlobalConfig.i18n.isEnabled() ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the selection is
    * being updated. If the resource for this key does not exist then the
    * value is used as the status message. Default is 'updatingSelection'.
    */
-  updatingSelectionResource = Client.language !== 'none' ? 'updatingSelection' : '';
+  updatingSelectionResource = GlobalConfig.i18n.isEnabled() ? 'updatingSelection' : '';
 
   /**
    * Specifies if only one selected item at a time is allowed.
