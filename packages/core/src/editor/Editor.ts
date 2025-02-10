@@ -60,6 +60,7 @@ import { cloneCell } from '../util/cellArrayUtils';
 // TODO disabled side effects, so editor resources are not loaded by default
 // This should be done in a different way
 
+// This can be done on demand by calling Translations.loadResources
 // Taken from https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/editor/mxEditor.js#L394-L405
 /**
  * Installs the required language resources at class
