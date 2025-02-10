@@ -72,7 +72,7 @@ import type MaxXmlRequest from '../util/MaxXmlRequest';
  *
  * By default, the core adds two resource files synchronously at load time.
  * To load these files asynchronously, set {@link LoadResources} to false
- * before loading Client and use {@link loadResources} instead.
+ * before loading {@link Client} and use {@link loadResources} instead.
  */
 class Translations {
   /*
@@ -87,26 +87,26 @@ class Translations {
   static extension = '.txt';
 
   /**
-   * Specifies whether values in resource files are encoded with \u or
-   * percentage. Default is false.
+   * Specifies whether values in resource files are encoded with `\u` or percentage.
+   * @default false
    */
   static resourcesEncoded = false;
 
   /**
    * Specifies if the default file for a given basename should be loaded.
-   * Default is true.
+   * @default true
    */
   static loadDefaultBundle = true;
 
   /**
-   * Specifies if the specific language file file for a given basename should
-   * be loaded. Default is true.
+   * Specifies if the specific language file for a given basename should be loaded.
+   * @default true
    */
   static loadSpecialBundle = true;
 
   /**
    * Hook for subclassers to disable support for a given language. This
-   * implementation returns true if lan is in <Client.languages>.
+   * implementation returns true if `lan` is in {@link Client.languages}.
    *
    * @param lan The current language.
    */
