@@ -51,4 +51,5 @@ export class TranslationsConfigBase {
 /**
  * Global configuration for {@link Translations}.
  * */
-const TranslationsConfig = new TranslationsConfigBase();
+// TODO export in root index.ts
+export const TranslationsConfig = new TranslationsConfigBase();

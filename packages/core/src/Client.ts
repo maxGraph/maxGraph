@@ -105,22 +105,22 @@ class Client {
     }
   };
 
-  /**
-   * Defines the optional array of all supported language extensions. The default
-   * language does not have to be part of this list. See
-   * {@link Translations#isLanguageSupported}.
-   *
-   * This is used to avoid unnecessary requests to language files, ie. if a 404
-   * will be returned.
-   * @default null
-   */
-  static languages: string[] | null = null;
-
-  static setLanguages = (value: string[] | null | undefined) => {
-    if (typeof value !== 'undefined' && value != null) {
-      Client.languages = value;
-    }
-  };
+  // /**
+  //  * Defines the optional array of all supported language extensions. The default
+  //  * language does not have to be part of this list. See
+  //  * {@link Translations#isLanguageSupported}.
+  //  *
+  //  * This is used to avoid unnecessary requests to language files, ie. if a 404
+  //  * will be returned.
+  //  * @default null
+  //  */
+  // static languages: string[] | null = null;
+  //
+  // static setLanguages = (value: string[] | null | undefined) => {
+  //   if (typeof value !== 'undefined' && value != null) {
+  //     Client.languages = value;
+  //   }
+  // };
 
   /**
    * True if the current browser is Microsoft Edge.

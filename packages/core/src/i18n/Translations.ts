@@ -20,6 +20,9 @@ import Client from '../Client';
 import { NONE } from '../util/Constants';
 import { get, load } from '../util/MaxXmlRequest';
 import type MaxXmlRequest from '../util/MaxXmlRequest';
+import { TranslationsConfig } from './config';
+
+// mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js
 
 /**
  * Implements internationalization. You can provide any number of
@@ -107,8 +110,8 @@ class Translations {
    * @param lan The current language.
    */
   static isLanguageSupported = (lan: string): boolean => {
-    if (Client.languages != null) {
-      return Client.languages.indexOf(lan) >= 0;
+    if (TranslationsConfig.languages != null) {
+      return TranslationsConfig.languages.indexOf(lan) >= 0;
     }
     return true;
   };
@@ -145,7 +148,7 @@ class Translations {
    * @param lan The language for which the file should be loaded.
    */
   static getSpecialBundle = (basename: string, lan: string): string | null => {
-    if (Client.languages == null || !Translations.isLanguageSupported(lan)) {
+    if (TranslationsConfig.languages == null || !Translations.isLanguageSupported(lan)) {
       const dash = lan.indexOf('-');
 
       if (dash > 0) {
