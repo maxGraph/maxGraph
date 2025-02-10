@@ -1,5 +1,5 @@
 /*
-Copyright 2023-present The maxGraph project Contributors
+Copyright 2025-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './editor';
-export * from './ChildChangeCodec';
-export * from './GenericChangeCodec';
-export * from './GraphCodec';
-export * from './GraphViewCodec';
-export * from './RootChangeCodec';
-export * from './StylesheetCodec';
-export * from './TerminalChangeCodec';
+// This function are private and are not intended to be exported by the npm package
+
+import CodecRegistry from './CodecRegistry';
+import ObjectCodec from './ObjectCodec';
+
+let isBaseCodecsRegistered = false;
+export const registerBaseCodecs = (force = false) => {
+  if (!isBaseCodecsRegistered || force) {
+    CodecRegistry.register(new ObjectCodec({})); // Object
+    CodecRegistry.register(new ObjectCodec([])); // Array
+
+    isBaseCodecsRegistered = true;
+  }
+};

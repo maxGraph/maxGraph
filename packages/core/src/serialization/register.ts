@@ -16,7 +16,6 @@ limitations under the License.
 
 import CodecRegistry from './CodecRegistry';
 import {
-  CellCodec,
   ChildChangeCodec,
   EditorCodec,
   EditorKeyHandlerCodec,
@@ -25,32 +24,19 @@ import {
   GenericChangeCodec,
   GraphCodec,
   GraphViewCodec,
-  ModelCodec,
-  mxCellCodec,
-  mxGeometryCodec,
   RootChangeCodec,
   StylesheetCodec,
   TerminalChangeCodec,
 } from './codecs';
 import ObjectCodec from './ObjectCodec';
-import Geometry from '../view/geometry/Geometry';
-import Point from '../view/geometry/Point';
 import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
 import CollapseChange from '../view/undoable_changes/CollapseChange';
 import GeometryChange from '../view/undoable_changes/GeometryChange';
 import StyleChange from '../view/undoable_changes/StyleChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
 import VisibleChange from '../view/undoable_changes/VisibleChange';
-
-let isBaseCodecsRegistered = false;
-const registerBaseCodecs = (force = false) => {
-  if (!isBaseCodecsRegistered || force) {
-    CodecRegistry.register(new ObjectCodec({})); // Object
-    CodecRegistry.register(new ObjectCodec([])); // Array
-
-    isBaseCodecsRegistered = true;
-  }
-};
+import { registerBaseCodecs } from './register-shared';
+import { registerModelCodecs } from './register-model-codecs';
 
 const registerGenericChangeCodecs = () => {
   const __dummy: any = undefined;
@@ -72,42 +58,6 @@ const registerGenericChangeCodecs = () => {
   CodecRegistry.register(
     new GenericChangeCodec(new VisibleChange(__dummy, __dummy, __dummy), 'visible')
   );
-};
-
-const createObjectCodec = (template: any, name: string): ObjectCodec => {
-  const objectCodec = new ObjectCodec(template);
-  objectCodec.setName(name);
-  return objectCodec;
-};
-
-let isModelCodecsRegistered = false;
-/**
- * Register model codecs i.e. codecs used to import/export the Graph Model, see {@link GraphDataModel}.
- *
- * @param force if `true` register the codecs even if they were already registered. If false, only register them
- *              if they have never been registered before.
- * @since 0.10.0
- * @category Configuration
- */
-export const registerModelCodecs = (force = false) => {
-  if (!isModelCodecsRegistered || force) {
-    CodecRegistry.register(new CellCodec());
-    CodecRegistry.register(new ModelCodec());
-
-    // To support decode/import executed before encode/export (see https://github.com/maxGraph/maxGraph/issues/178)
-    // Codecs are currently only registered automatically during encode/export
-    CodecRegistry.register(createObjectCodec(new Geometry(), 'Geometry'));
-    CodecRegistry.register(createObjectCodec(new Point(), 'Point'));
-    registerBaseCodecs(force);
-
-    // mxGraph support
-    CodecRegistry.addAlias('mxGraphModel', 'GraphDataModel');
-    CodecRegistry.addAlias('mxPoint', 'Point');
-    CodecRegistry.register(new mxCellCodec(), false);
-    CodecRegistry.register(new mxGeometryCodec(), false);
-
-    isModelCodecsRegistered = true;
-  }
 };
 
 let isCoreCodecsRegistered = false;
