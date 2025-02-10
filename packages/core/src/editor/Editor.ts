@@ -59,6 +59,8 @@ import { cloneCell } from '../util/cellArrayUtils';
 
 // TODO disabled side effects, so editor resources are not loaded by default
 // This should be done in a different way
+
+// Taken from https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/editor/mxEditor.js#L394-L405
 /**
  * Installs the required language resources at class
  * loading time.
@@ -461,7 +463,6 @@ export class Editor extends EventSource {
    * key does not exist then the value is used as the error message. Default is 'askZoom'.
    * @default 'askZoom'
    */
-  // askZoomResource: 'askZoom' | '';
   askZoomResource = Client.language !== 'none' ? 'askZoom' : '';
 
   /**
