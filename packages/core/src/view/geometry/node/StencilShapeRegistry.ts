@@ -27,13 +27,13 @@ type Stencils = {
  *
  * Code to add stencils:
  * ```javascript
- * const req = load('test/stencils.xml');
- * const root = req.getDocumentElement();
- * const shape = root.firstChild;
+ * const response = load('test/stencils.xml');
+ * const root = response.getDocumentElement();
+ * let shape = root.firstChild;
  *
  * while (shape) {
  *   if (shape.nodeType === mxConstants.NODETYPE_ELEMENT) {
- *    StencilRegistry.addStencil(shape.getAttribute('name'), new mxStencil(shape));
+ *    StencilShapeRegistry.addStencil(shape.getAttribute('name'), new mxStencil(shape));
  *  }
  *
  *  shape = shape.nextSibling;
