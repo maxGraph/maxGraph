@@ -27,8 +27,7 @@ import {
   RootChangeCodec,
   StylesheetCodec,
   TerminalChangeCodec,
-} from './codecs';
-import ObjectCodec from './ObjectCodec';
+} from './codecs/_other-codecs';
 import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
 import CollapseChange from '../view/undoable_changes/CollapseChange';
 import GeometryChange from '../view/undoable_changes/GeometryChange';
