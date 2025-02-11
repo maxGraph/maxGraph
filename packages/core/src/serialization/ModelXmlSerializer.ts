@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { registerModelCodecs } from './register';
+import { registerModelCodecs } from './register-model-codecs';
 import { getPrettyXml, getXml, parseXml } from '../util/xmlUtils';
 import Codec from './Codec';
 import type GraphDataModel from '../view/GraphDataModel';

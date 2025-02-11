@@ -165,9 +165,8 @@ class CellRenderer {
    * @param state {@link CellState} for which the shape should be created.
    */
   createShape(state: CellState): Shape {
-    // Checks if there is a stencil for the name and creates
-    // a shape instance for the stencil if one exists
-    const stencil = StencilShapeRegistry.getStencil(<string>state.style.shape);
+    // Checks if there is a stencil for the name and creates a shape instance for the stencil if one exists
+    const stencil = StencilShapeRegistry.getStencil(state.style.shape);
     if (stencil) {
       return new Shape(stencil);
     }

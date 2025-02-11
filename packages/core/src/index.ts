@@ -95,8 +95,10 @@ export { default as Codec } from './serialization/Codec';
 export { default as CodecRegistry } from './serialization/CodecRegistry';
 export { default as ObjectCodec } from './serialization/ObjectCodec';
 export * from './serialization/ModelXmlSerializer';
-export * from './serialization/codecs';
-export * from './serialization/register';
+export * from './serialization/codecs/_model-codecs';
+export * from './serialization/codecs/_other-codecs';
+export * from './serialization/register-model-codecs';
+export * from './serialization/register-other-codecs';
 
 export { default as ActorShape } from './view/geometry/ActorShape';
 export { default as LabelShape } from './view/geometry/node/LabelShape';
