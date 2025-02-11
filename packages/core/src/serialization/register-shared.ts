@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// This function are private and are not intended to be exported by the npm package
+// These functions are private and are not intended to be exported by the npm package
 
 import CodecRegistry from './CodecRegistry';
 import ObjectCodec from './ObjectCodec';
