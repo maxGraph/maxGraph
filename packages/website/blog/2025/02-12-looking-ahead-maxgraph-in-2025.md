@@ -44,9 +44,9 @@ In the initial release, Internet Explorer support was removed, and custom code w
 
 Subsequent notable releases brought further tree-shaking improvements, reducing the size of applications that don't use related features:
 
-- [v0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0): Codecs are no longer registered by default.
-- [v0.11.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.11.0): `MaxLog` and `MaxWindow` are no longer called directly, avoiding transitive inclusion.
-- [v0.12.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.12.0): The npm package is declared without side effects.
+- Release [v0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0): Codecs are no longer registered by default.
+- In [v0.11.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.11.0): `MaxLog` and `MaxWindow` are no longer called directly, avoiding transitive inclusion.
+- With [v0.12.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.12.0): The npm package is declared without side effects.
 
 ### What’s Next?
 
@@ -78,5 +78,5 @@ These plans are **not set in stone** but reflect goals and aspirations for **202
 
 👋 **See you next year** to review the progress made together! 🎉🚀
 
-*P.S. We're looking for contributors and maintainers to keep the project alive and kicking. Check out ****[Issue #354](https://github.com/maxGraph/maxGraph/issues/354)**** if you’re interested! 😄*
+*P.S. We're looking for contributors and maintainers to keep the project alive and kicking. Check out **[Issue #354](https://github.com/maxGraph/maxGraph/issues/354)** if you’re interested! 😄*
 
