@@ -59,7 +59,7 @@ const resetMaxGraphConfigs = (): void => {
   CellRenderer.defaultShapes = {};
   registerDefaultShapes(true);
   MarkerShape.markers = {};
-  registerDefaultEdgeMarkers(); // TODO for testing, should be true
+  registerDefaultEdgeMarkers(true);
   StyleRegistry.values = {};
   registerDefaultStyleElements(true);
 
