@@ -254,9 +254,11 @@ function diamond(
 let isDefaultMarkersRegistered = false;
 /**
  * @category Configuration
+ *
+ * @param [force=false] - Whether to force register the default markers.
  */
-export const registerDefaultEdgeMarkers = (): void => {
-  if (!isDefaultMarkersRegistered) {
+export const registerDefaultEdgeMarkers = (force = false): void => {
+  if (force || !isDefaultMarkersRegistered) {
     MarkerShape.addMarker('classic', createArrow(2));
     MarkerShape.addMarker('classicThin', createArrow(3));
     MarkerShape.addMarker('block', createArrow(2));

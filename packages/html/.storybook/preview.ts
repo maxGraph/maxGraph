@@ -16,6 +16,9 @@ import {
   StyleRegistry,
   StylesheetCodec,
 } from '@maxgraph/core';
+import { registerDefaultShapes } from '@maxgraph/core/lib/view/cell/register-shapes';
+import { registerDefaultStyleElements } from '@maxgraph/core/lib/view/style/register';
+import { registerDefaultEdgeMarkers } from '@maxgraph/core/lib/view/geometry/edge/MarkerShape';
 
 const defaultLogger = new NoOpLogger();
 // if you want to debug using the browser console, use the following configuration
@@ -52,9 +55,13 @@ const resetMaxGraphConfigs = (): void => {
   StylesheetCodec.allowEval = originalStylesheetCodecAllowEval;
 
   // The following registries are filled at Graph initialization with the builtins/defaults provided by maxGraph
+  // Here we are forced to registered them again, because Graph doesn't force the registration
   CellRenderer.defaultShapes = {};
+  registerDefaultShapes(true);
   MarkerShape.markers = {};
+  registerDefaultEdgeMarkers();
   StyleRegistry.values = {};
+  registerDefaultStyleElements(true);
 
   StencilShapeRegistry.stencils = {};
 

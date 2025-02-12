@@ -40,9 +40,11 @@ let isDefaultElementsRegistered = false;
  * Add default shapes into `CellRenderer` shapes.
  *
  * @category Configuration
+ *
+ * @param [force=false] - Whether to force register the default shapes.
  */
-export function registerDefaultShapes() {
-  if (!isDefaultElementsRegistered) {
+export function registerDefaultShapes(force = false) {
+  if (force || !isDefaultElementsRegistered) {
     const shapesToRegister: [string, new (...arguments_: any) => Shape][] = [
       [SHAPE.ACTOR, ActorShape],
       [SHAPE.ARROW, ArrowShape],
