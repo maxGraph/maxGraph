@@ -24,6 +24,9 @@ const defaultLogger = new NoOpLogger();
 // defaultLogger.debugEnabled = true;
 // defaultLogger.traceEnabled = true;
 
+const originalObjectCodecAllowEval = ObjectCodec.allowEval;
+const originalStylesheetCodecAllowEval = StylesheetCodec.allowEval;
+
 const originalI18nConfig = {
   defaultLanguage: Client.defaultLanguage,
   language: Client.language,
@@ -45,8 +48,8 @@ const resetMaxGraphConfigs = (): void => {
   // Codec resets
   CodecRegistry.aliases = {};
   CodecRegistry.codecs = {};
-  ObjectCodec.allowEval = false;
-  StylesheetCodec.allowEval = true;
+  ObjectCodec.allowEval = originalObjectCodecAllowEval;
+  StylesheetCodec.allowEval = originalStylesheetCodecAllowEval;
 
   // The following registries are filled at Graph initialization with the builtins/defaults provided by maxGraph
   CellRenderer.defaultShapes = {};
