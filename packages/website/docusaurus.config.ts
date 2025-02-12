@@ -3,6 +3,7 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const baseUrl = '/maxGraph/';
+const editUrl = 'https://github.com/maxGraph/maxGraph/edit/main/packages/website/';
 
 const config: Config = {
   title: 'maxGraph',
@@ -44,10 +45,12 @@ const config: Config = {
     [
       'classic',
       {
+        blog: {
+          editUrl: editUrl,
+        },
         docs: {
           sidebarPath: './sidebars.ts',
-          // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/maxGraph/maxGraph/tree/main/packages/website/',
+          editUrl,
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
         },
@@ -80,20 +83,25 @@ const config: Config = {
       },
       items: [
         {
-          label: 'Documentation',
+          label: 'Docs',
           position: 'left',
           sidebarId: 'docsSidebar',
           type: 'docSidebar',
         },
         {
-          href: `${baseUrl}demo/`,
-          label: 'Demo',
+          href: `${baseUrl}api-docs/`,
+          label: 'API',
           position: 'left',
           target: '_blank',
         },
         {
-          href: `${baseUrl}api-docs/`,
-          label: 'API',
+          to: 'blog',
+          label: 'Blog',
+          position: 'left',
+        },
+        {
+          href: `${baseUrl}demo/`,
+          label: 'Demo',
           position: 'left',
           target: '_blank',
         },
@@ -115,13 +123,13 @@ const config: Config = {
               to: '/docs/intro',
             },
             {
-              href: `${baseUrl}demo/`,
-              label: 'Demo',
+              href: `${baseUrl}api-docs/`,
+              label: 'API Reference',
               target: '_blank',
             },
             {
-              href: `${baseUrl}api-docs/`,
-              label: 'API',
+              href: `${baseUrl}demo/`,
+              label: 'Demo',
               target: '_blank',
             },
           ],
