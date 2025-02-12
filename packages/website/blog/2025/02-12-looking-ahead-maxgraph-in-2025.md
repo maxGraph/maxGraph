@@ -40,7 +40,7 @@ maxGraph, as a fork of mxGraph, inherited some limitations—one being inefficie
 
 From the start, one of maxGraph’s goals has been to provide better tree-shaking support. Here’s how improvements have been made so far:
 
-In the initial release, Internet Explorer support was removed and custom code was replaced with modern ECMAScript APIs. This reduced the size of the library and prepared the ground for new improvements. 🔧
+In the initial release, Internet Explorer support was removed, and custom code was replaced with modern ECMAScript APIs. This reduced the size of the library and prepared the ground for new improvements. 🔧
 
 Subsequent notable releases brought further tree-shaking improvements, reducing the size of applications that don't use related features:
 
@@ -61,11 +61,11 @@ While there may be breaking changes, efforts will be made to minimize their impa
 
 ## Other Topics for 2025
 
-With documentation and tree-shaking optimizations underway, other important areas are also being addressed in 2025.
+With documentation and tree-shaking optimizations underway, several other key areas are also being addressed in 2025. 🔍 This list is not exhaustive, and additional improvements are likely to be implemented throughout the year.
 
 ### Stabilization and Bug Fixes
 
-Maintaining library stability is always a top priority. Issues will continue to be addressed and performance improvements will be made. 🛠️
+Maintaining library stability is always a top priority. Issues will continue to be addressed, and performance improvements will be made if required. 🛠️
 
 ### Defining the Public API
 
