@@ -110,6 +110,7 @@ export { default as ArrowConnectorShape } from './view/geometry/edge/ArrowConnec
 export { default as ConnectorShape } from './view/geometry/edge/ConnectorShape';
 export { default as LineShape } from './view/geometry/edge/LineShape';
 export { default as MarkerShape } from './view/geometry/edge/MarkerShape';
+export { registerDefaultEdgeMarkers } from './view/geometry/edge/MarkerShape';
 export { default as PolylineShape } from './view/geometry/edge/PolylineShape';
 
 export { default as CloudShape } from './view/geometry/node/CloudShape';
@@ -160,6 +161,7 @@ export { default as Point } from './view/geometry/Point';
 export { default as Rectangle } from './view/geometry/Rectangle';
 
 export * from './view/style/config';
+export * from './view/style/register';
 export { default as EdgeStyle } from './view/style/EdgeStyle';
 export { default as Perimeter } from './view/style/Perimeter';
 export { default as StyleRegistry } from './view/style/StyleRegistry';
@@ -197,6 +199,7 @@ export { default as Clipboard } from './util/Clipboard';
 export { default as UndoableEdit } from './view/undoable_changes/UndoableEdit';
 export { default as UndoManager } from './view/undoable_changes/UndoManager';
 
+export * from './view/cell/register-shapes';
 export { Cell } from './view/cell/Cell';
 export { default as CellEditorHandler } from './view/handler/CellEditorHandler';
 export { default as CellOverlay } from './view/cell/CellOverlay';
