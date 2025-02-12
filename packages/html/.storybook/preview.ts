@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/html';
 import {
   CellRenderer,
+  Client,
   CodecRegistry,
   GlobalConfig,
   MarkerShape,
@@ -23,6 +24,12 @@ const defaultLogger = new NoOpLogger();
 // defaultLogger.debugEnabled = true;
 // defaultLogger.traceEnabled = true;
 
+const originalI18nConfig = {
+  defaultLanguage: Client.defaultLanguage,
+  language: Client.language,
+  languages: Client.languages ? [...Client.languages] : null,
+};
+
 const resetMaxGraphConfigs = (): void => {
   GlobalConfig.logger = defaultLogger;
 
@@ -32,24 +39,26 @@ const resetMaxGraphConfigs = (): void => {
   resetStyleDefaultsConfig();
   resetVertexHandlerConfig();
 
-  // TODO also reset languages config
-
-  // The purpose of reseting the registries contents is to remove extra/speicif implem registered in a story
-  // TODO decide if we introduce clear methods in registry classes and mark the properties as private (not in public api so subject to change)
+  // Reset registries to remove additional elements registered in a story
+  // The objects storing the registered elements are currently public, but they should not be part of the public API.
+  // They will be marked as private in the future and clear functions will probably provide instead.
   // Codec resets
   CodecRegistry.aliases = {};
   CodecRegistry.codecs = {};
   ObjectCodec.allowEval = false;
   StylesheetCodec.allowEval = true;
 
-  // Custom code to unregister various registries used for styling
-  // TODO this is duplicated with ts-example-without-defaults
-  // The following is filled at Graph initialization. The default elements are then registered. 
+  // The following registries are filled at Graph initialization with the builtins/defaults provided by maxGraph
   CellRenderer.defaultShapes = {};
   MarkerShape.markers = {};
   StyleRegistry.values = {};
 
   StencilShapeRegistry.stencils = {};
+
+  // I18n support by maxGraph
+  Client.defaultLanguage = originalI18nConfig.defaultLanguage;
+  Client.language = originalI18nConfig.language;
+  Client.languages = originalI18nConfig.languages;
 };
 
 // This function is a workaround to destroy mxGraph elements that are not released by the previous story.
