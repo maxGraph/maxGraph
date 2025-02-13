@@ -9,6 +9,14 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+## 0.15.1
+
+Release date: `2025-02-13`
+
+For more details, see the [0.15.1 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.15.1) on the GitHub release page.
+
+This new version includes bug fixes and documentation improvements.
+
 ## 0.15.0
 
 Release date: `2025-01-29`
