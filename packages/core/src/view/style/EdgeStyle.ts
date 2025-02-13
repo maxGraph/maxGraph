@@ -16,8 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getValue } from '../../util/Utils';
-import { getNumber } from '../../util/StringUtils';
 import {
   getBoundingBox,
   getPortConstraints,
@@ -251,22 +249,18 @@ class EdgeStyle {
   // mxEdgeStyle.SOURCE_MASK | mxEdgeStyle.TARGET_MASK,
 
   static getJettySize(state: CellState, isSource: boolean) {
-    let value = getValue(
-      state.style,
-      isSource ? 'sourceJettySize' : 'targetJettySize',
-      getValue(state.style, 'jettySize', EdgeStyle.orthBuffer)
-    );
+    let value =
+      (isSource ? state.style.sourceJettySize : state.style.targetJettySize) ??
+      state.style.jettySize ??
+      EdgeStyle.orthBuffer;
 
     if (value === 'auto') {
       // Computes the automatic jetty size
-      const type = getValue(state.style, isSource ? 'startArrow' : 'endArrow', NONE);
+      const type = (isSource ? state.style.startArrow : state.style.endArrow) ?? NONE;
 
       if (type !== NONE) {
-        const size = getNumber(
-          state.style,
-          isSource ? 'startSize' : 'endSize',
-          DEFAULT_MARKERSIZE
-        );
+        const size =
+          (isSource ? state.style.startSize : state.style.endSize) ?? DEFAULT_MARKERSIZE;
         value =
           Math.max(2, Math.ceil((size + EdgeStyle.orthBuffer) / EdgeStyle.orthBuffer)) *
           EdgeStyle.orthBuffer;

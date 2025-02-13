@@ -9,6 +9,16 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- Some utility functions formerly used to retrieve default value of `CellStateStyle` and `CellStyle` properties, mainly intended to only be used internally, have been removed.
+    - Use the [nullish coalescing operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
+      and the [Optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) instead.
+    - Removed functions:
+        - `utils.getValue`
+        - `stringUtils.getColor`
+        - `stringUtils.getNumber`
+        - `stringUtils.getStringValue`
+
 ## 0.15.0
 
 Release date: `2025-01-29`

@@ -21,7 +21,7 @@ import Point from '../view/geometry/Point';
 import Rectangle from '../view/geometry/Rectangle';
 import CellState from '../view/cell/CellState';
 import type { CellStateStyle } from '../types';
-import { getValue, isNullish } from './Utils';
+import { isNullish } from './Utils';
 
 /**
  * Converts the given degree to radians.
@@ -219,11 +219,10 @@ export const getPortConstraints = (
   source: boolean,
   defaultValue: number
 ): number => {
-  const value = getValue(
-    terminal.style,
-    'portConstraint',
-    getValue(edge.style, source ? 'sourcePortConstraint' : 'targetPortConstraint', null)
-  );
+  const value =
+    terminal.style.portConstraint ??
+    (source ? edge.style.sourcePortConstraint : edge.style.targetPortConstraint) ??
+    null;
 
   if (isNullish(value)) {
     return defaultValue;
@@ -378,9 +377,9 @@ export const getDirectedBounds = (
   flipH: boolean,
   flipV: boolean
 ) => {
-  const d = getValue(style, 'direction', DIRECTION.EAST);
-  flipH = flipH != null ? flipH : getValue(style, 'flipH', false);
-  flipV = flipV != null ? flipV : getValue(style, 'flipV', false);
+  const d = style?.direction ?? 'east';
+  flipH ??= style?.flipH ?? false;
+  flipV ??= style?.flipV ?? false;
 
   m.x = Math.round(Math.max(0, Math.min(rect.width, m.x)));
   m.y = Math.round(Math.max(0, Math.min(rect.height, m.y)));
@@ -614,10 +613,11 @@ export const intersectsHotspot = (
     let w = state.width;
     let h = state.height;
 
-    const start = getValue(state.style, 'startSize') * state.view.scale;
+    const style = state.style;
+    const start = (style?.startSize ?? 0) * state.view.scale;
 
     if (start > 0) {
-      if (getValue(state.style, 'horizontal', true)) {
+      if (style?.horizontal ?? true) {
         cy = state.y + start / 2;
         h = start;
       } else {
@@ -635,7 +635,7 @@ export const intersectsHotspot = (
     }
 
     const rect = new Rectangle(cx - w / 2, cy - h / 2, w, h);
-    const alpha = toRadians(getValue(state.style, 'rotation') || 0);
+    const alpha = toRadians(style?.rotation ?? 0);
 
     if (alpha != 0) {
       const cos = Math.cos(-alpha);

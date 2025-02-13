@@ -20,7 +20,7 @@ import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
 import Translations from '../../../util/Translations';
-import { getValue, isNotNullish } from '../../../util/Utils';
+import { isNotNullish } from '../../../util/Utils';
 import {
   ALIGN,
   DIRECTION,
@@ -34,7 +34,6 @@ import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
-import { getNumber } from '../../../util/StringUtils';
 
 /**
  * Configure global settings for stencil shapes.
@@ -221,12 +220,12 @@ class StencilShape extends Shape {
     // (start, segment, end blocks), pluggable markers, how to implement
     // swimlanes (title area) with this API, add icon, horizontal/vertical
     // label, indicator for all shapes, rotation
-    const direction = getValue(shape.style, 'direction', null);
+    const direction = shape.style?.direction;
     const aspect = this.computeAspect(shape, x, y, w, h, direction);
     const minScale = Math.min(aspect.width, aspect.height);
     const sw =
       this.strokeWidthValue === 'inherit'
-        ? Number(getNumber(shape.style, 'strokeWidth', 1))
+        ? (shape.style?.strokeWidth ?? 1)
         : Number(this.strokeWidthValue) * minScale;
     canvas.setStrokeWidth(sw);
 
@@ -527,8 +526,8 @@ class StencilShape extends Shape {
             const dr = shape.rotation;
 
             // Depends on flipping
-            const flipH = getValue(shape.style, 'flipH', 0) == 1;
-            const flipV = getValue(shape.style, 'flipV', 0) == 1;
+            const flipH = shape.style?.flipH ?? false;
+            const flipV = shape.style?.flipV ?? false;
 
             if (flipH && flipV) {
               rotation -= dr;
