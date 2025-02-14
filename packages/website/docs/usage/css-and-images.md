@@ -8,7 +8,8 @@ description: Integrate CSS and Images assets required by maxGraph.
 ## CSS
 
 Some features of `maxGraph` create elements in the DOM to let interact with the `Graph`.
-For instance, it happens when using _Rubberband_, _Tooltip_, _MaxWindow_, _Editor_ and _Toolbar_.
+
+For example, it happens when using , _Editor_, _MaxPopupMenu_, _MaxWindow_, _Rubberband_, _Toolbar_ or _Tooltip_.
 
 These elements require the application to provide CSS rules for correct display.
 
@@ -16,6 +17,8 @@ These elements require the application to provide CSS rules for correct display.
 ```js
 import '@maxgraph/core/css/common.css';
 ```
+
+### Customizing CSS
 
 It is possible to customize the defaults by providing new CSS rules.
 
@@ -46,17 +49,23 @@ For example, with Webpack, you can use the `style-loader` and `css-loader` plugi
 - [Webpack: Loading CSS](https://webpack.js.org/guides/asset-management/#loading-css)
 - [Webpack: style-loader](https://webpack.js.org/loaders/style-loader/)
 - [Webpack: css-loader](https://webpack.js.org/loaders/css-loader/)
+- [Webpack: MiniCssExtractPlugin](https://webpack.js.org/plugins/mini-css-extract-plugin/): extracts CSS into separate files (for production). 
 
 You can also check the [JavaScript Webpack example](https://github.com/maxGraph/maxGraph/blob/main/packages/js-example/webpack.config.js) provided in the `maxGraph` repository.
 
+
 ## Images
 
-The `@maxgraph/core` npm package includes images that are required by some features.
+The `@maxgraph/core` npm package includes images that are required by some features. \
+For example, the _Folding_ feature requires (if not configured elsewhere), images named , _collapsed.gif_ and _expanded.gif_.
 
-When using these features, the images must be available in the application. `maxGraph` currently requires to configure the path to the images,
-using `Client.setImageBasePath`.
+When using these features, the images must be available to the application.
 
+Currently, you must copy the images provided by `maxGraph` or provide your own images. \
+This is what is done in the [Storybook demo](https://github.com/maxGraph/maxGraph/tree/main/packages/html/public/images).
+
+The path to the images must be configured using `Client.setImageBasePath` if the default settings do not work with your application.
+
+:::note
 This configuration is inherited from `mxGraph` and may be simplified in the future. 
-
-
-**TODO: list some features requiring images**
+:::
