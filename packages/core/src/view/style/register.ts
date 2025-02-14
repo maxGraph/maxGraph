@@ -25,9 +25,11 @@ let isDefaultsRegistered = false;
  * Register style elements for "EdgeStyle" and "Perimeters".
  *
  * @category Configuration
+ *
+ * @param [force=false] - Whether to force the registration of default style elements.
  */
-export const registerDefaultStyleElements = (): void => {
-  if (!isDefaultsRegistered) {
+export const registerDefaultStyleElements = (force = false): void => {
+  if (force || !isDefaultsRegistered) {
     // Edge styles
     StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
     StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
