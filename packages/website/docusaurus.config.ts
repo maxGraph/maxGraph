@@ -81,7 +81,9 @@ const config: Config = {
         alt: 'maxGraph Logo',
         src: 'img/logo.svg',
       },
+      hideOnScroll: true,
       items: [
+        // left items
         {
           label: 'Docs',
           position: 'left',
@@ -105,10 +107,12 @@ const config: Config = {
           position: 'left',
           target: '_blank',
         },
+        // right items
         {
           href: 'https://github.com/maxGraph/maxGraph',
-          label: 'GitHub',
+          'aria-label': 'GitHub repository',
           position: 'right',
+          className: 'header-github-link',
         },
       ],
     },
@@ -161,7 +165,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © 2021-${new Date().getFullYear()} - The maxGraph project Contributors. Built with Docusaurus.`,
+      copyright: `Copyright © 2021-${new Date().getFullYear()} - The maxGraph project Contributors.<br/> Built with <a class="footer__link-item" href="https://docusaurus.io" target="_blank" rel="noopener noreferrer">Docusaurus</a>.`,
     },
     prism: {
       theme: prismThemes.github,
