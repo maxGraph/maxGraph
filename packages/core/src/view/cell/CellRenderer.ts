@@ -1472,11 +1472,11 @@ class CellRenderer {
         state.text = null;
       }
 
-      state.overlays.visit((id: string, shape: Shape) => {
+      state.overlays.forEach((shape: Shape) => {
         shape.destroy();
       });
 
-      state.overlays = new Dictionary();
+      state.overlays = new Map();
 
       if (state.control) {
         state.control.destroy();
