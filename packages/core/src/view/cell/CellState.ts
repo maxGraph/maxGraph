@@ -22,7 +22,6 @@ import type Cell from './Cell';
 import type GraphView from '../../view/GraphView';
 import type Shape from '../shape/Shape';
 import TextShape from '../shape/node/TextShape';
-import Dictionary from '../../util/Dictionary';
 import { NONE } from '../../util/Constants';
 import { CellStateStyle } from '../../types';
 import RectangleShape from '../shape/node/RectangleShape';
@@ -54,7 +53,7 @@ class CellState extends Rectangle {
   control: Shape | null = null;
 
   // Used by CellRenderer.createCellOverlays
-  overlays: Dictionary<CellOverlay, Shape> = new Dictionary();
+  overlays: Map<CellOverlay, Shape> = new Map();
 
   /**
    * Reference to the enclosing {@link GraphView}.
