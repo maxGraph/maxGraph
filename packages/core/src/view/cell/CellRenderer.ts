@@ -434,7 +434,7 @@ class CellRenderer {
     const createdOverlays = new Map<CellOverlay, Shape>();
 
     for (const cellOverlay of cellOverlays) {
-      const shape = state.overlays.get(overlays[i]);
+      const shape = state.overlays.get(cellOverlay);
       state.overlays.delete(cellOverlay);
       if (shape) {
         createdOverlays.put(cellOverlay, shape);
