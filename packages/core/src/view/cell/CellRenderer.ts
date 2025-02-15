@@ -461,7 +461,6 @@ class CellRenderer {
   createCellOverlays(state: CellState): void {
     const graph = state.view.graph;
     const cellOverlays = graph.getCellOverlays(state.cell);
-    // TODO rename into updatedOverlays or something similar
     const createdOverlays = new Map<CellOverlay, Shape>();
 
     for (const cellOverlay of cellOverlays) {
