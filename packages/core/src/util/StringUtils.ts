@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODETYPE, NONE } from './Constants';
+import { NODETYPE } from './Constants';
 import { getTextContent } from './domUtils';
 
 import type { Properties } from '../types';
