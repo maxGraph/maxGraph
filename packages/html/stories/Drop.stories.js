@@ -53,55 +53,46 @@ const Template = ({ label, ...args }) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  // Checks if the browser is supported
-  const fileSupport =
-    window.File != null && window.FileReader != null && window.FileList != null;
+  // Disables the built-in context menu
+  if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
-  if (!fileSupport || !Client.isBrowserSupported()) {
-    // Displays an error message if the browser is not supported.
-    utils.error('Browser is not supported!', 200, false);
-  } else {
-    // Disables the built-in context menu
-    if (!args.contextMenu) InternalEvent.disableContextMenu(container);
+  // Creates the graph inside the given this.el
+  const graph = new Graph(container);
 
-    // Creates the graph inside the given this.el
-    const graph = new Graph(container);
+  // Enables rubberband selection
+  if (args.rubberBand) new RubberBandHandler(graph);
 
-    // Enables rubberband selection
-    if (args.rubberBand) new RubberBandHandler(graph);
+  InternalEvent.addListener(container, 'dragover', function (evt) {
+    if (graph.isEnabled()) {
+      evt.stopPropagation();
+      evt.preventDefault();
+    }
+  });
 
-    InternalEvent.addListener(container, 'dragover', function (evt) {
-      if (graph.isEnabled()) {
-        evt.stopPropagation();
-        evt.preventDefault();
+  InternalEvent.addListener(container, 'drop', (evt) => {
+    if (graph.isEnabled()) {
+      evt.stopPropagation();
+      evt.preventDefault();
+
+      // Gets drop location point for vertex
+      const pt = styleUtils.convertPoint(
+        graph.container,
+        eventUtils.getClientX(evt),
+        eventUtils.getClientY(evt)
+      );
+      const tr = graph.view.translate;
+      const { scale } = graph.view;
+      const x = pt.x / scale - tr.x;
+      const y = pt.y / scale - tr.y;
+
+      // Converts local images to data urls
+      const filesArray = evt.dataTransfer.files;
+
+      for (let i = 0; i < filesArray.length; i++) {
+        handleDrop(graph, filesArray[i], x + i * 10, y + i * 10);
       }
-    });
-
-    InternalEvent.addListener(container, 'drop', (evt) => {
-      if (graph.isEnabled()) {
-        evt.stopPropagation();
-        evt.preventDefault();
-
-        // Gets drop location point for vertex
-        const pt = styleUtils.convertPoint(
-          graph.container,
-          eventUtils.getClientX(evt),
-          eventUtils.getClientY(evt)
-        );
-        const tr = graph.view.translate;
-        const { scale } = graph.view;
-        const x = pt.x / scale - tr.x;
-        const y = pt.y / scale - tr.y;
-
-        // Converts local images to data urls
-        const filesArray = evt.dataTransfer.files;
-
-        for (let i = 0; i < filesArray.length; i++) {
-          handleDrop(graph, filesArray[i], x + i * 10, y + i * 10);
-        }
-      }
-    });
-  }
+    }
+  });
 
   return div;
 };

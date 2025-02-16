@@ -263,23 +263,6 @@ class Client {
     typeof window !== 'undefined' &&
     document.location.href.indexOf('http://') < 0 &&
     document.location.href.indexOf('https://') < 0;
-
-  /**
-   * Returns true if the current browser is supported, that is, if
-   * <Client.IS_SVG> is true.
-   *
-   * Example:
-   *
-   * ```javascript
-   * if (!Client.isBrowserSupported())
-   * {
-   *   mxUtils.error('Browser is not supported!', 200, false);
-   * }
-   * ```
-   */
-  static isBrowserSupported = () => {
-    return Client.IS_SVG;
-  };
 }
 
 export default Client;
