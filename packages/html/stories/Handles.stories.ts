@@ -68,7 +68,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   class MyShape extends CylinderShape {
     getLabelBounds(rect: Rectangle) {
-      const style = this.style as CustomCellStateStyle;
+      const style: CustomCellStateStyle = this.style!;
       const pos1 = (style.pos1 ?? defaultPos1) * this.scale;
       const pos2 = (style.pos2 ?? defaultPos2) * this.scale;
       return new Rectangle(
@@ -87,7 +87,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       h: number,
       isForeground = false
     ) {
-      const style = this.style as CustomCellStateStyle;
+      const style: CustomCellStateStyle = this.style!;
       const pos1 = style.pos1 ?? defaultPos1;
       const pos2 = style.pos2 ?? defaultPos2;
 
@@ -128,7 +128,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         firstHandle.getPosition = function (bounds) {
           if (!bounds) return new Point(0, 0);
 
-          const style = this.state.style as CustomCellStateStyle;
+          const style: CustomCellStateStyle = this.state.style!;
           const pos2 = Math.max(0, Math.min(bounds.height, style.pos2 ?? defaultPos2));
           const pos1 = Math.max(0, Math.min(pos2, style.pos1 ?? defaultPos1));
 
@@ -138,7 +138,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         firstHandle.setPosition = function (bounds, pt) {
           if (!bounds) return;
 
-          const style = this.state.style as CustomCellStateStyle;
+          const style: CustomCellStateStyle = this.state.style!;
           const pos2 = Math.max(0, Math.min(bounds.height, style.pos2 ?? defaultPos2));
 
           style.pos1 = Math.round(Math.max(0, Math.min(pos2, pt.y - bounds.y)));
@@ -157,7 +157,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         secondHandle.getPosition = function (bounds) {
           if (!bounds) return new Point(0, 0);
 
-          const style = this.state.style as CustomCellStateStyle;
+          const style: CustomCellStateStyle = this.state.style!;
           const pos1 = Math.max(0, Math.min(bounds.height, style.pos1 ?? defaultPos1));
           const pos2 = Math.max(pos1, Math.min(bounds.height, style.pos2 ?? defaultPos2));
 
@@ -167,7 +167,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         secondHandle.setPosition = function (bounds, pt) {
           if (!bounds) return;
 
-          const style = this.state.style as CustomCellStateStyle;
+          const style: CustomCellStateStyle = this.state.style!;
           const pos1 = Math.max(0, Math.min(bounds.height, style.pos1 ?? defaultPos1));
 
           style.pos2 = Math.round(
