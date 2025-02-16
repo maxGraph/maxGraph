@@ -9,6 +9,10 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- The `utils.isNullish` and `utils.isNotNullish` functions are now marked as private.
+They had been made public by mistake, and had been considered internal since their introduction.
+
 ## 0.15.1
 
 Release date: `2025-02-13`
