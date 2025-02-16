@@ -63,15 +63,14 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  class MyShape extends CylinderShape {
-    defaultPos1 = 20;
-
+  const defaultPos1 = 20,
     defaultPos2 = 60;
 
+  class MyShape extends CylinderShape {
     getLabelBounds(rect: Rectangle) {
       const style = this.style as CustomCellStateStyle;
-      const pos1 = (style.pos1 ?? MyShape.prototype.defaultPos1) * this.scale;
-      const pos2 = (style.pos2 ?? MyShape.prototype.defaultPos2) * this.scale;
+      const pos1 = (style.pos1 ?? defaultPos1) * this.scale;
+      const pos2 = (style.pos2 ?? defaultPos2) * this.scale;
       return new Rectangle(
         rect.x,
         rect.y + pos1,
@@ -89,8 +88,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       isForeground = false
     ) {
       const style = this.style as CustomCellStateStyle;
-      const pos1 = style.pos1 ?? MyShape.prototype.defaultPos1;
-      const pos2 = style.pos2 ?? MyShape.prototype.defaultPos2;
+      const pos1 = style.pos1 ?? defaultPos1;
+      const pos2 = style.pos2 ?? defaultPos2;
 
       if (isForeground) {
         if (pos1 < h) {
@@ -130,14 +129,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           if (!bounds) return new Point(0, 0);
 
           const style = this.state.style as CustomCellStateStyle;
-          const pos2 = Math.max(
-            0,
-            Math.min(bounds.height, style.pos2 ?? MyShape.prototype.defaultPos2)
-          );
-          const pos1 = Math.max(
-            0,
-            Math.min(pos2, style.pos1 ?? MyShape.prototype.defaultPos1)
-          );
+          const pos2 = Math.max(0, Math.min(bounds.height, style.pos2 ?? defaultPos2));
+          const pos1 = Math.max(0, Math.min(pos2, style.pos1 ?? defaultPos1));
 
           return new Point(bounds.getCenterX(), bounds.y + pos1);
         };
@@ -146,10 +139,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           if (!bounds) return;
 
           const style = this.state.style as CustomCellStateStyle;
-          const pos2 = Math.max(
-            0,
-            Math.min(bounds.height, style.pos2 ?? MyShape.prototype.defaultPos2)
-          );
+          const pos2 = Math.max(0, Math.min(bounds.height, style.pos2 ?? defaultPos2));
 
           style.pos1 = Math.round(Math.max(0, Math.min(pos2, pt.y - bounds.y)));
         };
@@ -168,14 +158,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           if (!bounds) return new Point(0, 0);
 
           const style = this.state.style as CustomCellStateStyle;
-          const pos1 = Math.max(
-            0,
-            Math.min(bounds.height, style.pos1 ?? MyShape.prototype.defaultPos1)
-          );
-          const pos2 = Math.max(
-            pos1,
-            Math.min(bounds.height, style.pos2 ?? MyShape.prototype.defaultPos2)
-          );
+          const pos1 = Math.max(0, Math.min(bounds.height, style.pos1 ?? defaultPos1));
+          const pos2 = Math.max(pos1, Math.min(bounds.height, style.pos2 ?? defaultPos2));
 
           return new Point(bounds.getCenterX(), bounds.y + pos2);
         };
@@ -184,10 +168,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           if (!bounds) return;
 
           const style = this.state.style as CustomCellStateStyle;
-          const pos1 = Math.max(
-            0,
-            Math.min(bounds.height, style.pos1 ?? MyShape.prototype.defaultPos1)
-          );
+          const pos1 = Math.max(0, Math.min(bounds.height, style.pos1 ?? defaultPos1));
 
           style.pos2 = Math.round(
             Math.max(pos1, Math.min(bounds.height, pt.y - bounds.y))
