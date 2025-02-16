@@ -25,7 +25,6 @@ import {
   VertexHandler,
   InternalEvent,
   RubberBandHandler,
-  utils,
   VertexHandle,
   type AbstractCanvas2D,
   type CellState,
@@ -64,14 +63,14 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
   div.appendChild(container);
 
-  class MyShape extends CylinderShape {
-    defaultPos1 = 20;
-
+  const defaultPos1 = 20,
     defaultPos2 = 60;
 
+  class MyShape extends CylinderShape {
     getLabelBounds(rect: Rectangle) {
-      const pos1 = utils.getValue(this.style, 'pos1', this.defaultPos1) * this.scale;
-      const pos2 = utils.getValue(this.style, 'pos2', this.defaultPos2) * this.scale;
+      const style: CustomCellStateStyle = this.style!;
+      const pos1 = (style.pos1 ?? defaultPos1) * this.scale;
+      const pos2 = (style.pos2 ?? defaultPos2) * this.scale;
       return new Rectangle(
         rect.x,
         rect.y + pos1,
@@ -88,8 +87,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       h: number,
       isForeground = false
     ) {
-      const pos1 = utils.getValue(this.style, 'pos1', this.defaultPos1);
-      const pos2 = utils.getValue(this.style, 'pos2', this.defaultPos2);
+      const style: CustomCellStateStyle = this.style!;
+      const pos1 = style.pos1 ?? defaultPos1;
+      const pos2 = style.pos2 ?? defaultPos2;
 
       if (isForeground) {
         if (pos1 < h) {
@@ -128,24 +128,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         firstHandle.getPosition = function (bounds) {
           if (!bounds) return new Point(0, 0);
 
-          const pos2 = Math.max(
-            0,
-            Math.min(
-              bounds.height,
-              parseFloat(
-                utils.getValue(this.state.style, 'pos2', MyShape.prototype.defaultPos2)
-              )
-            )
-          );
-          const pos1 = Math.max(
-            0,
-            Math.min(
-              pos2,
-              parseFloat(
-                utils.getValue(this.state.style, 'pos1', MyShape.prototype.defaultPos1)
-              )
-            )
-          );
+          const style: CustomCellStateStyle = this.state.style!;
+          const pos2 = Math.max(0, Math.min(bounds.height, style.pos2 ?? defaultPos2));
+          const pos1 = Math.max(0, Math.min(pos2, style.pos1 ?? defaultPos1));
 
           return new Point(bounds.getCenterX(), bounds.y + pos1);
         };
@@ -153,19 +138,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         firstHandle.setPosition = function (bounds, pt) {
           if (!bounds) return;
 
-          const pos2 = Math.max(
-            0,
-            Math.min(
-              bounds.height,
-              parseFloat(
-                utils.getValue(this.state.style, 'pos2', MyShape.prototype.defaultPos2)
-              )
-            )
-          );
+          const style: CustomCellStateStyle = this.state.style!;
+          const pos2 = Math.max(0, Math.min(bounds.height, style.pos2 ?? defaultPos2));
 
-          (this.state.style as CustomCellStateStyle).pos1 = Math.round(
-            Math.max(0, Math.min(pos2, pt.y - bounds.y))
-          );
+          style.pos1 = Math.round(Math.max(0, Math.min(pos2, pt.y - bounds.y)));
         };
 
         firstHandle.execute = function () {
@@ -181,24 +157,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         secondHandle.getPosition = function (bounds) {
           if (!bounds) return new Point(0, 0);
 
-          const pos1 = Math.max(
-            0,
-            Math.min(
-              bounds.height,
-              parseFloat(
-                utils.getValue(this.state.style, 'pos1', MyShape.prototype.defaultPos1)
-              )
-            )
-          );
-          const pos2 = Math.max(
-            pos1,
-            Math.min(
-              bounds.height,
-              parseFloat(
-                utils.getValue(this.state.style, 'pos2', MyShape.prototype.defaultPos2)
-              )
-            )
-          );
+          const style: CustomCellStateStyle = this.state.style!;
+          const pos1 = Math.max(0, Math.min(bounds.height, style.pos1 ?? defaultPos1));
+          const pos2 = Math.max(pos1, Math.min(bounds.height, style.pos2 ?? defaultPos2));
 
           return new Point(bounds.getCenterX(), bounds.y + pos2);
         };
@@ -206,17 +167,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         secondHandle.setPosition = function (bounds, pt) {
           if (!bounds) return;
 
-          const pos1 = Math.max(
-            0,
-            Math.min(
-              bounds.height,
-              parseFloat(
-                utils.getValue(this.state.style, 'pos1', MyShape.prototype.defaultPos1)
-              )
-            )
-          );
+          const style: CustomCellStateStyle = this.state.style!;
+          const pos1 = Math.max(0, Math.min(bounds.height, style.pos1 ?? defaultPos1));
 
-          (this.state.style as CustomCellStateStyle).pos2 = Math.round(
+          style.pos2 = Math.round(
             Math.max(pos1, Math.min(bounds.height, pt.y - bounds.y))
           );
         };

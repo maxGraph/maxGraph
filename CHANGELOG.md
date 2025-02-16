@@ -12,6 +12,14 @@ _**Note:** Yet to be released breaking changes appear here._
 **Breaking Changes**:
 - The `utils.isNullish` and `utils.isNotNullish` functions are now marked as private.
 They had been made public by mistake, and had been considered internal since their introduction.
+- Some utility functions formerly used to retrieve default values for `CellStateStyle` and `CellStyle` properties, which were intended only for internal use, have been removed.
+  - Use the [nullish coalescing operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
+    and the [Optional chaining (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) instead.
+  - Removed functions:
+    - `utils.getValue`
+    - `stringUtils.getColor`
+    - `stringUtils.getNumber`
+    - `stringUtils.getStringValue`
 
 ## 0.15.1
 

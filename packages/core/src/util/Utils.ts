@@ -57,13 +57,13 @@ export const utils = {
 /**
  * @private not part of the public API, can be removed or changed without prior notice
  */
-export const isNullish = (v: string | object | null | undefined | number) =>
+export const isNullish = (v: string | object | null | undefined | number | boolean) =>
   v === null || v === undefined;
 
 /**
  * @private not part of the public API, can be removed or changed without prior notice
  */
-export const isNotNullish = (v: string | object | null | undefined | number) =>
+export const isNotNullish = (v: string | object | null | undefined | number | boolean) =>
   !isNullish(v);
 
 /**
@@ -84,23 +84,6 @@ export const mixInto = (dest: any) => (mixin: any) => {
   } catch (e) {
     GlobalConfig.logger.error('Error while mixing', e);
   }
-};
-
-/**
- * Returns the value for the given key in the given associative array or
- * the given default value if the value is null.
- *
- * @param array Associative array that contains the value for the key.
- * @param key Key whose value should be returned.
- * @param defaultValue Value to be returned if the value for the given
- * key is null.
- */
-export const getValue = (array: any, key: string, defaultValue?: any) => {
-  let value = array != null ? array[key] : null;
-  if (value == null) {
-    value = defaultValue;
-  }
-  return value;
 };
 
 export const copyTextToClipboard = (text: string): void => {

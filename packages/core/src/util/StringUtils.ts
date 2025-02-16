@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODETYPE, NONE } from './Constants';
+import { NODETYPE } from './Constants';
 import { getTextContent } from './domUtils';
 
 import type { Properties } from '../types';
@@ -148,56 +148,6 @@ export const htmlEntities = (s: string, newline = true): string => {
     s = s.replace(/\n/g, '&#xa;');
   }
   return s;
-};
-
-export const getStringValue = (array: any, key: string, defaultValue: string) => {
-  let value = array != null ? array[key] : null;
-  if (value == null) {
-    value = defaultValue;
-  }
-  return value == null ? null : String(value);
-};
-
-/**
- * Returns the numeric value for the given key in the given associative
- * array or the given default value (or 0) if the value is null. The value
- * is converted to a numeric value using the Number function.
- *
- * @param array Associative array that contains the value for the key.
- * @param key Key whose value should be returned.
- * @param defaultValue Value to be returned if the value for the given
- * key is null. Default is 0.
- */
-export const getNumber = (array: any, key: string, defaultValue: number) => {
-  let value = array != null ? array[key] : null;
-
-  if (value == null) {
-    value = defaultValue || 0;
-  }
-
-  return Number(value);
-};
-
-/**
- * Returns the color value for the given key in the given associative
- * array or the given default value if the value is null. If the value
- * is {@link Constants#NONE} then null is returned.
- *
- * @param array Associative array that contains the value for the key.
- * @param key Key whose value should be returned.
- * @param defaultValue Value to be returned if the value for the given
- * key is null. Default is null.
- */
-export const getColor = (array: any, key: string, defaultValue: any) => {
-  let value = array != null ? array[key] : null;
-
-  if (value == null) {
-    value = defaultValue;
-  } else if (value === NONE) {
-    value = null;
-  }
-
-  return value;
 };
 
 /**

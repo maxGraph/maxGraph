@@ -169,8 +169,8 @@ export type CellStateStyle = {
    */
   deletable?: boolean;
   /**
-   * The direction style is used to specify the direction of certain shapes (eg. Swimlane).
-   * @default 'east'
+   * The direction style is used to specify the direction of certain shapes (e.g. Swimlane) or EdgeStyle (e.g. Loop).
+   * @default 'east' for shapes and 'west' for the Loop EdgeStyle
    */
   direction?: DirectionValue;
   /**
