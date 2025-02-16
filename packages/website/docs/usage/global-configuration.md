@@ -14,20 +14,24 @@ The following objects can be used to configure `maxGraph` globally:
 
   - `Client`: this is the historical entry point for global configuration, coming from the `mxGraph` library.
   - `EdgeHandlerConfig` (since 0.14.0): for `EdgeHandler` (including subclasses).
-  - `EntityRelationConnectorConfig` (since 0.15.0): for the `EntityRelation` Connector/EdgeStyle.
   - `GlobalConfig` (since 0.11.0): for shared resources (logger).
   - `HandleConfig` (since 0.14.0): for shared handle configurations.
   - `StencilShapeConfig` (since 0.11.0): for stencil shapes.
   - `StyleDefaultsConfig` (since 0.14.0): for the default values of the Cell styles.
   - `VertexHandlerConfig` (since 0.12.0): for `VertexHandler`.
+  - For Connectors/EdgeStyles:
+    - `EntityRelationConnectorConfig` (since 0.15.0): for `EntityRelation`.
+    - `OrthConnectorConfig` (since 0.16.0): for `OrthConnector`.
 
 Some functions are provided to reset the global configuration to the default values. For example:
 
   - `resetEdgeHandlerConfig` (since 0.14.0)
-  - `resetEntityRelationConnectorConfig` (since 0.15.0)
   - `resetHandleConfig` (since 0.14.0)
   - `resetStyleDefaultsConfig` (since 0.14.0)
   - `resetVertexHandlerConfig` (since 0.14.0)
+  - For Connectors/EdgeStyles:
+    - `resetEntityRelationConnectorConfig` (since 0.15.0)
+    - `resetOrthConnectorConfig` (since 0.16.0)
 
 :::note
 Notice that the new global configuration elements introduced as version _0.11.0_ are experimental and are subject to change in future versions.

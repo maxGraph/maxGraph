@@ -20,6 +20,11 @@ They had been made public by mistake, and had been considered internal since the
     - `stringUtils.getColor`
     - `stringUtils.getNumber`
     - `stringUtils.getStringValue`
+- `OrthConnector` is now configured with the global `OrthConnectorConfig` object.
+The following properties that were previously on `EdgeStyle` have moved to `OrthConnectorConfig`:
+  - `orthBuffer` to `buffer`
+  - `orthPointsFallback` to `pointsFallback`
+
 
 ## 0.15.1
 
