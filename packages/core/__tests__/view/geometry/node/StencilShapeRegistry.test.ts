@@ -1,5 +1,5 @@
 /*
-Copyright 2023-present The maxGraph project Contributors
+Copyright 2025-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './editor';
-export * from './CellCodec';
-export * from './ChildChangeCodec';
-export * from './GenericChangeCodec';
-export * from './GraphCodec';
-export * from './GraphViewCodec';
-export * from './ModelCodec';
-export * from './RootChangeCodec';
-export * from './StylesheetCodec';
-export * from './TerminalChangeCodec';
-export * from './mxGraph/mxCellCodec';
-export * from './mxGraph/mxGeometryCodec';
+import { describe, expect, test } from '@jest/globals';
+import { StencilShapeRegistry } from '../../../../src';
+
+describe('getStencil', () => {
+  test.each([null, undefined, 'unknown'])('pass %s, return undefined', (name) => {
+    expect(StencilShapeRegistry.getStencil(name)).toBeUndefined();
+  });
+});

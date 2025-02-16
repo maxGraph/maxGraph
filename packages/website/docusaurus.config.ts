@@ -3,6 +3,7 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const baseUrl = '/maxGraph/';
+const editUrl = 'https://github.com/maxGraph/maxGraph/edit/main/packages/website/';
 
 const config: Config = {
   title: 'maxGraph',
@@ -44,10 +45,12 @@ const config: Config = {
     [
       'classic',
       {
+        blog: {
+          editUrl: editUrl,
+        },
         docs: {
           sidebarPath: './sidebars.ts',
-          // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/maxGraph/maxGraph/tree/main/packages/website/',
+          editUrl,
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
         },
@@ -78,18 +81,14 @@ const config: Config = {
         alt: 'maxGraph Logo',
         src: 'img/logo.svg',
       },
+      hideOnScroll: true,
       items: [
+        // left items
         {
-          label: 'Documentation',
+          label: 'Docs',
           position: 'left',
           sidebarId: 'docsSidebar',
           type: 'docSidebar',
-        },
-        {
-          href: `${baseUrl}demo/`,
-          label: 'Demo',
-          position: 'left',
-          target: '_blank',
         },
         {
           href: `${baseUrl}api-docs/`,
@@ -98,9 +97,22 @@ const config: Config = {
           target: '_blank',
         },
         {
+          to: 'blog',
+          label: 'Blog',
+          position: 'left',
+        },
+        {
+          href: `${baseUrl}demo/`,
+          label: 'Demo',
+          position: 'left',
+          target: '_blank',
+        },
+        // right items
+        {
           href: 'https://github.com/maxGraph/maxGraph',
-          label: 'GitHub',
+          'aria-label': 'GitHub repository',
           position: 'right',
+          className: 'header-github-link',
         },
       ],
     },
@@ -115,13 +127,13 @@ const config: Config = {
               to: '/docs/intro',
             },
             {
-              href: `${baseUrl}demo/`,
-              label: 'Demo',
+              href: `${baseUrl}api-docs/`,
+              label: 'API Reference',
               target: '_blank',
             },
             {
-              href: `${baseUrl}api-docs/`,
-              label: 'API',
+              href: `${baseUrl}demo/`,
+              label: 'Demo',
               target: '_blank',
             },
           ],
@@ -153,7 +165,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © 2021-${new Date().getFullYear()} - The maxGraph project Contributors. Built with Docusaurus.`,
+      copyright: `Copyright © 2021-${new Date().getFullYear()} - The maxGraph project Contributors.<br/> Built with <a class="footer__link-item" href="https://docusaurus.io" target="_blank" rel="noopener noreferrer">Docusaurus</a>.`,
     },
     prism: {
       theme: prismThemes.github,
