@@ -689,12 +689,9 @@ class VertexHandler {
         this.preview = this.createSelectionShape(this.bounds);
 
         if (
-          !(
-            Client.IS_SVG &&
-            (this.state.style.rotation ?? 0) != 0 &&
-            this.state.text != null &&
-            this.state.text.node.parentNode === this.graph.container
-          )
+          !(Client.IS_SVG && (this.state.style.rotation ?? 0) != 0) &&
+          this.state.text != null &&
+          this.state.text.node.parentNode === this.graph.container
         ) {
           this.preview.dialect = DIALECT.STRICTHTML;
           this.preview.init(this.graph.container);

@@ -22,7 +22,8 @@ import { getInnerHtml, write } from '../util/domUtils';
 import { toString } from '../util/StringUtils';
 import MaxWindow, { popup } from './MaxWindow';
 import { KeyboardEventListener, MouseEventListener } from '../types';
-import { copyTextToClipboard, getElapseMillisecondsMessage } from '../util/Utils';
+import { copyTextToClipboard } from '../util/Utils';
+import { getElapseMillisecondsMessage } from '../util/logger';
 
 /**
  * A singleton class that implements a simple console.

@@ -95,7 +95,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     // Uses the shape for resize previews
     createSelectionShape(bounds: Rectangle) {
-      const stencil = StencilShapeRegistry.getStencil(this.state.style.shape ?? '');
+      const stencil = StencilShapeRegistry.getStencil(this.state.style.shape);
       let shape: Shape;
 
       if (stencil) {

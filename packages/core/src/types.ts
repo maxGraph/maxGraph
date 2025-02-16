@@ -1230,6 +1230,7 @@ export type MarkerFactoryFunction = (
 /**
  * @experimental subject to change or removal. The logging system may be modified in the future without prior notice.
  * @since 0.11.0
+ * @category Logging
  */
 export interface Logger {
   /**

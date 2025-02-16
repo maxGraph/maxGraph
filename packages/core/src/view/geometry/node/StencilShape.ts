@@ -557,9 +557,7 @@ class StencilShape extends Shape {
           );
         }
       } else if (name === 'include-shape') {
-        const stencil = StencilShapeRegistry.getStencil(
-          node.getAttribute('name') as string
-        );
+        const stencil = StencilShapeRegistry.getStencil(node.getAttribute('name'));
 
         if (stencil) {
           const x = x0 + Number(node.getAttribute('x')) * sx;

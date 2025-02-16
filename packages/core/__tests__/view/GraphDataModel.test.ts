@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { Cell, GraphDataModel } from '../src';
+import { Cell, GraphDataModel } from '../../src';
 
 describe('isLayer', () => {
   const dm: GraphDataModel = new GraphDataModel();

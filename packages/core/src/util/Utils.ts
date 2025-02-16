@@ -54,8 +54,15 @@ export const utils = {
   errorImage: `${Client.imageBasePath}/error.gif`,
 };
 
+/**
+ * @private not part of the public API, can be removed or changed without prior notice
+ */
 export const isNullish = (v: string | object | null | undefined | number | boolean) =>
   v === null || v === undefined;
+
+/**
+ * @private not part of the public API, can be removed or changed without prior notice
+ */
 export const isNotNullish = (v: string | object | null | undefined | number | boolean) =>
   !isNullish(v);
 
@@ -89,13 +96,3 @@ export const copyTextToClipboard = (text: string): void => {
     }
   );
 };
-
-/**
- * If `baseTimestamp` is provided and not zero, returns a message describing the elapsed milliseconds since this value.
- * Otherwise, returns an empty string.
- * @param baseTimestamp the base timestamp to compute the elapsed milliseconds from
- *
- * @private not part of the public API, can be removed or changed without prior notice
- */
-export const getElapseMillisecondsMessage = (baseTimestamp?: number): string =>
-  baseTimestamp ? ` (${new Date().getTime() - baseTimestamp} ms)` : '';
