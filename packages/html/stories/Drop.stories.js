@@ -21,7 +21,6 @@ import {
   styleUtils,
   eventUtils,
   InternalEvent,
-  Client,
   xmlUtils,
 } from '@maxgraph/core';
 
