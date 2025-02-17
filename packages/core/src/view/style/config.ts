@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ENTITY_SEGMENT } from '../../util/Constants';
+import { DIRECTION, ENTITY_SEGMENT } from '../../util/Constants';
 import { shallowCopy } from '../../util/cloneUtils';
+import type { DirectionValue } from '../../types';
 
 /**
  * Configure the `Entity Relation connector` defaults for maxGraph.
@@ -80,4 +81,62 @@ const originalOrthConnectorConfig = { ...OrthConnectorConfig };
  */
 export const resetOrthConnectorConfig = (): void => {
   shallowCopy(originalOrthConnectorConfig, OrthConnectorConfig);
+};
+
+export type ManhattanConnectorConfigType = {
+  /**
+   * Limit for directions change when searching route.
+   * @default 90
+   */
+  maxAllowedDirectionChange: number;
+  /**
+   * If number of route finding loops exceed the maximum, stops searching and returns fallback route
+   */
+  maxLoops: number;
+  /**
+   * Possible ending directions from an element.
+   *
+   * @default all directions
+   */
+  endDirections: DirectionValue[];
+  /**
+   * Possible starting directions from an element.
+   *
+   * @default all directions
+   */
+  startDirections: DirectionValue[];
+  /**
+   * Size of the step to find a route.
+   *
+   * @default 12
+   */
+  step: number;
+};
+
+/**
+ * Configure the {@link ManhattanConnector}.
+ *
+ * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.16.0
+ * @category Configuration
+ */
+export const ManhattanConnectorConfig: ManhattanConnectorConfigType = {
+  maxAllowedDirectionChange: 90,
+  maxLoops: 2000,
+  endDirections: Object.values(DIRECTION),
+  startDirections: Object.values(DIRECTION),
+  step: 12,
+};
+
+const originalManhattanConnectorConfig = {} as typeof ManhattanConnectorConfig;
+shallowCopy(ManhattanConnectorConfig, originalManhattanConnectorConfig);
+/**
+ * Resets {@link ManhattanConnectorConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.16.0
+ * @category Configuration
+ */
+export const resetManhattanConnectorConfig = (): void => {
+  shallowCopy(originalManhattanConnectorConfig, ManhattanConnectorConfig);
 };

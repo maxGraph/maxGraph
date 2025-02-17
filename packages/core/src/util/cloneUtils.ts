@@ -60,7 +60,7 @@ export const clone = function _clone(
 /**
  * Shallow copies properties from the source object to the target object.
  *
- * **WARNING**: This function performs only a **shallow** copy i.e. there is no deep copy of the properties that are objects.
+ * **WARNING**: This function performs only a **shallow** copy i.e. there is no deep copy of the properties that are objects, expect for arrays.
  *
  * @template T The type of the objects.
  *
@@ -74,7 +74,13 @@ export const shallowCopy = <T extends object>(source: T, target: T): void => {
   for (const key in source) {
     // attempt to prevent prototype pollution
     if (Object.prototype.hasOwnProperty.call(source, key)) {
-      target[key] = source[key];
+      const sourceValue = source[key];
+      if (sourceValue instanceof Array) {
+        // @ts-ignore source and target are of the same type
+        target[key] = [...sourceValue];
+      } else {
+        target[key] = sourceValue;
+      }
     }
   }
 };

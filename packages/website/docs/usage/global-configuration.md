@@ -21,6 +21,7 @@ The following objects can be used to configure `maxGraph` globally:
   - `VertexHandlerConfig` (since 0.12.0): for `VertexHandler`.
   - For Connectors/EdgeStyles:
     - `EntityRelationConnectorConfig` (since 0.15.0): for `EntityRelation`.
+    - `ManhattanConnectorConfig` (since 0.16.0): for `ManhattanConnector`.
     - `OrthConnectorConfig` (since 0.16.0): for `OrthConnector`.
 
 Some functions are provided to reset the global configuration to the default values. For example:
@@ -31,6 +32,7 @@ Some functions are provided to reset the global configuration to the default val
   - `resetVertexHandlerConfig` (since 0.14.0)
   - For Connectors/EdgeStyles:
     - `resetEntityRelationConnectorConfig` (since 0.15.0)
+    - `resetManhattanConnectorConfig` (since 0.16.0)
     - `resetOrthConnectorConfig` (since 0.16.0)
 
 :::note

@@ -40,7 +40,7 @@ import { Loop as LoopFunction } from './edge/Loop';
 import { SegmentConnector as SegmentConnectorFunction } from './edge/Segment';
 import { SideToSide as SideToSideFunction } from './edge/SideToSide';
 import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
-import { OrthConnectorConfig } from './config';
+import { ManhattanConnectorConfig, OrthConnectorConfig } from './config';
 
 /**
  * Provides various edge styles to be used as the values for `edgeStyle` in a cell style.
@@ -788,39 +788,6 @@ class EdgeStyle {
     }
   };
 
-  // Size of the step to find a route
-  static MANHATTAN_STEP = 12;
-
-  // If number of route finding loops exceed the maximum, stops searching and returns
-  // fallback route
-  static MANHATTAN_MAXIMUM_LOOPS = 2000;
-
-  // Possible starting directions from an element
-  static MANHATTAN_START_DIRECTIONS: DIRECTION[] = [
-    DIRECTION.NORTH,
-    DIRECTION.EAST,
-    DIRECTION.SOUTH,
-    DIRECTION.WEST,
-  ];
-
-  // Possible ending directions to an element
-  static MANHATTAN_END_DIRECTIONS: DIRECTION[] = [
-    DIRECTION.NORTH,
-    DIRECTION.EAST,
-    DIRECTION.SOUTH,
-    DIRECTION.WEST,
-  ];
-
-  // Limit for directions change when searching route
-  static MANHATTAN_MAX_ALLOWED_DIRECTION_CHANGE = 90;
-
-  static MANHATTAN_PADDING_BOX = new Geometry(
-    -this.MANHATTAN_STEP,
-    -this.MANHATTAN_STEP,
-    this.MANHATTAN_STEP * 2,
-    this.MANHATTAN_STEP * 2
-  );
-
   /**
    * ManhattanConnector code is based on code from https://github.com/mwangm/mxgraph-manhattan-connector
    *
@@ -929,11 +896,11 @@ class EdgeStyle {
       return res;
     }
 
-    const mStep = EdgeStyle.MANHATTAN_STEP;
+    const mStep = ManhattanConnectorConfig.step;
 
     const config = {
       // Padding applied on the element bounding boxes
-      paddingBox: EdgeStyle.MANHATTAN_PADDING_BOX,
+      paddingBox: new Geometry(-mStep, -mStep, mStep * 2, mStep * 2),
 
       // An array of directions to find next points on the route
       directions: [
@@ -972,8 +939,7 @@ class EdgeStyle {
 
       // A penalty received for direction change
       penaltiesGenerator: (angle: number) => {
-        if (angle == 45 || angle == 90 || angle == 180)
-          return EdgeStyle.MANHATTAN_STEP / 2;
+        if (angle == 45 || angle == 90 || angle == 180) return mStep / 2;
         return 0;
       },
       // If a function is provided, it's used to route the link while dragging an end
@@ -1134,7 +1100,7 @@ class EdgeStyle {
       directionList: DIRECTION[],
       opt: typeof config
     ): Point[] {
-      const step = EdgeStyle.MANHATTAN_STEP;
+      const step = ManhattanConnectorConfig.step;
       const center = getRectangleCenter(bbox);
       const res: Point[] = [];
       for (const direction of directionList) {
@@ -1189,10 +1155,10 @@ class EdgeStyle {
 
       const y = isSourceCell ? edgeState.style.exitY : edgeState.style.entryY;
       const onlyHorizontalDirections = isSourceCell
-        ? EdgeStyle.MANHATTAN_START_DIRECTIONS.every(
+        ? ManhattanConnectorConfig.startDirections.every(
             (d) => d != DIRECTION.NORTH && d != DIRECTION.SOUTH
           )
-        : EdgeStyle.MANHATTAN_END_DIRECTIONS.every(
+        : ManhattanConnectorConfig.endDirections.every(
             (d) => d != DIRECTION.NORTH && d != DIRECTION.SOUTH
           );
 
@@ -1206,10 +1172,10 @@ class EdgeStyle {
 
       const x = isSourceCell ? edgeState.style.exitX : edgeState.style.entryX;
       const onlyVerticalDirections = isSourceCell
-        ? EdgeStyle.MANHATTAN_START_DIRECTIONS.every(
+        ? ManhattanConnectorConfig.startDirections.every(
             (d) => d != DIRECTION.WEST && d != DIRECTION.EAST
           )
-        : EdgeStyle.MANHATTAN_END_DIRECTIONS.every(
+        : ManhattanConnectorConfig.endDirections.every(
             (d) => d != DIRECTION.WEST && d != DIRECTION.EAST
           );
       if (x != undefined && onlyVerticalDirections) {
@@ -1227,18 +1193,18 @@ class EdgeStyle {
       obstacleMap: ObstacleMap,
       opt: typeof config
     ) {
-      // Caculate start points and end points
-      const step = EdgeStyle.MANHATTAN_STEP;
+      // Calculate start points and end points
+      const step = ManhattanConnectorConfig.step;
       const startPoints = getRectPoints(
         start,
-        EdgeStyle.MANHATTAN_START_DIRECTIONS,
+        ManhattanConnectorConfig.startDirections,
         opt
       ).filter((p) => obstacleMap.isPointAccessible(p));
 
       const startCenter = snapPointToGrid(getRectangleCenter(start), step);
       const endPoints = getRectPoints(
         end,
-        EdgeStyle.MANHATTAN_END_DIRECTIONS,
+        ManhattanConnectorConfig.endDirections,
         opt
       ).filter((p) => obstacleMap.isPointAccessible(p));
       const endCenter = snapPointToGrid(getRectangleCenter(end), step);
@@ -1255,7 +1221,7 @@ class EdgeStyle {
           openSet.add(key, estimateCost(p, endPoints));
           costs[key] = 0;
         });
-        let loopsRemain = EdgeStyle.MANHATTAN_MAXIMUM_LOOPS;
+        let loopsRemain = ManhattanConnectorConfig.maxLoops;
         const endPointsKeys = endPoints.map((p) => pointToString(p));
         let currentDirectionAngle: number | undefined;
         let previousDirectionAngle: number | undefined;
@@ -1297,7 +1263,7 @@ class EdgeStyle {
             );
             if (
               previousDirectionAngle &&
-              directionChangedAngle > EdgeStyle.MANHATTAN_MAX_ALLOWED_DIRECTION_CHANGE
+              directionChangedAngle > ManhattanConnectorConfig.maxAllowedDirectionChange
             ) {
               continue;
             }
