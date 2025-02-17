@@ -24,6 +24,7 @@ import MaxWindow, { popup } from './MaxWindow';
 import { KeyboardEventListener, MouseEventListener } from '../types';
 import { copyTextToClipboard } from '../util/Utils';
 import { getElapseMillisecondsMessage } from '../util/logger';
+import { VERSION } from '../util/Constants';
 
 /**
  * A singleton class that implements a simple console.
@@ -40,7 +41,7 @@ class MaxLog {
    */
   static init(): void {
     if (MaxLog.window == null && document.body != null) {
-      const title = `${MaxLog.consoleName} - mxGraph ${Client.VERSION}`;
+      const title = `${MaxLog.consoleName} - mxGraph ${VERSION}`;
 
       // Creates a table that maintains the layout
       const table = document.createElement('table');

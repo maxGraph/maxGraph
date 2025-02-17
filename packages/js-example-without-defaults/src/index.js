@@ -17,7 +17,6 @@ limitations under the License.
 import './style.css';
 import {
   CellRenderer,
-  Client,
   constants,
   Graph,
   InternalEvent,
@@ -105,7 +104,7 @@ const initializeGraph = (container) => {
 
 // display the maxGraph version in the footer
 const footer = document.querySelector('footer');
-footer.innerText = `Built with maxGraph ${Client.VERSION}`;
+footer.innerText = `Built with maxGraph ${constants.VERSION}`;
 
 // Creates the graph inside the given container
 initializeGraph(document.querySelector('#graph-container'));

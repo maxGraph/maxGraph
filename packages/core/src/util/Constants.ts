@@ -17,6 +17,13 @@ limitations under the License.
 */
 
 /**
+ * The version of the `maxGraph` library.
+ */
+// WARN: this constant is updated at release time by the script located at 'scripts/update-versions.mjs'.
+// So, if you modify the name of this file or this constant, please update the script accordingly.
+export const VERSION = '0.15.1';
+
+/**
  * Defines the portion of the cell which is to be used as a connectable
  * region. Default is 0.3. Possible values are 0 < x <= 1.
  */

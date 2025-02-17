@@ -17,7 +17,6 @@ limitations under the License.
 import '@maxgraph/core/css/common.css'; // required by RubberBandHandler
 import './style.css';
 import {
-  Client,
   constants,
   getDefaultPlugins,
   Graph,
@@ -116,7 +115,7 @@ const initializeGraph = (container: HTMLElement) => {
 
 // display the maxGraph version in the footer
 const footer = <HTMLElement>document.querySelector('footer');
-footer.innerText = `Built with maxGraph ${Client.VERSION}`;
+footer.innerText = `Built with maxGraph ${constants.VERSION}`;
 
 // Creates the graph inside the given container
 initializeGraph(<HTMLElement>document.querySelector('#graph-container'));
