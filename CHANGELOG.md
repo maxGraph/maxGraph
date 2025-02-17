@@ -24,6 +24,11 @@ They had been made public by mistake, and had been considered internal since the
 So, remove it without replacement.
 - `Client.VERSION` moved to `constants.VERSION`. VERSION is supposed to be immutable as it represents the actual version of maxGraph.
 When it was stored in Client, it was a static property that could be modified. Moving it to the constants module ensures that it cannot be modified.
+- `OrthConnector` is now configured with the global `OrthConnectorConfig` object.
+The following properties that were previously on `EdgeStyle` have moved to `OrthConnectorConfig`:
+  - `orthBuffer` to `buffer`
+  - `orthPointsFallback` to `pointsFallback`
+
 
 ## 0.15.1
 

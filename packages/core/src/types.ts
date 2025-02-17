@@ -446,8 +446,8 @@ export type CellStateStyle = {
    */
   indicatorWidth?: number;
   /**
-   * The jetty size in {@link EdgeStyle.OrthConnector}.
-   * @default 10
+   * The jetty size in {@link EdgeStyle.OrthConnector} when {@link sourceJettySize} or {@link targetJettySize}.
+   * @default {@link OrthConnectorConfig.buffer}
    */
   jettySize?: number | 'auto';
   /**
@@ -482,6 +482,7 @@ export type CellStateStyle = {
    * The possible values are the functions defined in {@link EdgeStyle}.
    *
    * See {@link edgeStyle}.
+   * See {@link Graph.defaultLoopStyle}.
    */
   loopStyle?: EdgeStyleFunction;
   /**

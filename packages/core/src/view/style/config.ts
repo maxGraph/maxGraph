@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { ENTITY_SEGMENT } from '../../util/Constants';
+import { shallowCopy } from '../../util/cloneUtils';
 
 /**
  * Configure the `Entity Relation connector` defaults for maxGraph.
@@ -42,4 +43,41 @@ export const EntityRelationConnectorConfig = {
 export const resetEntityRelationConnectorConfig = (): void => {
   // implement the reset manually as there are a few properties for now
   EntityRelationConnectorConfig.segment = ENTITY_SEGMENT;
+};
+
+/**
+ * Configure the {@link OrthConnector}.
+ *
+ * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.16.0
+ * @category Configuration
+ */
+export const OrthConnectorConfig = {
+  /**
+   * If the value is not set in {@link CellStateStyle.jettySize}, defines the jetty size of the connector.
+   *
+   * If the computed value of the jetty size coming from {@link CellStateStyle} is 'auto', it is used in the computation of the automatic jetty size.
+   * See the implementation of {@link OrthConnector} for more details.
+   *
+   * @default 10
+   */
+  buffer: 10,
+
+  /**
+   * See the implementation of {@link OrthConnector} for more details.
+   * @default true
+   */
+  pointsFallback: true,
+};
+
+const originalOrthConnectorConfig = { ...OrthConnectorConfig };
+/**
+ * Resets {@link OrthConnectorConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.16.0
+ * @category Configuration
+ */
+export const resetOrthConnectorConfig = (): void => {
+  shallowCopy(originalOrthConnectorConfig, OrthConnectorConfig);
 };

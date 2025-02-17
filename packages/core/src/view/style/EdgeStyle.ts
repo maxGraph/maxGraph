@@ -40,6 +40,7 @@ import { Loop as LoopFunction } from './edge/Loop';
 import { SegmentConnector as SegmentConnectorFunction } from './edge/Segment';
 import { SideToSide as SideToSideFunction } from './edge/SideToSide';
 import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
+import { OrthConnectorConfig } from './config';
 
 /**
  * Provides various edge styles to be used as the values for `edgeStyle` in a cell style.
@@ -51,13 +52,13 @@ import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
  * style.edgeStyle = EdgeStyle.ElbowConnector;
  * ```
  *
- * To write a custom edge style, a function can be added to the `EdgeStyle` object as follows.
+ * To write a custom edge style, create a function as follows.
  * In the example below, a right angle is created using a point on the horizontal center of the target vertex and the vertical center of the source vertex.
  * The code checks if that point intersects the source vertex and makes the edge straight if it does.
  * The point is then added into the result array, which acts as the return value of the function.
  *
  * ```javascript
- * EdgeStyle.MyStyle = (state, source, target, points, result) => {
+ * const MyStyle = (state, source, target, points, result) => {
  *   if (source && target) {
  *     const pt = new Point(target.getCenterX(), source.getCenterY());
  *
@@ -72,7 +73,7 @@ import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
  *
  * The new edge style can then be registered in the {@link StyleRegistry} as follows:
  * ```javascript
- * StyleRegistry.putValue('myEdgeStyle', EdgeStyle.MyStyle);
+ * StyleRegistry.putValue('myEdgeStyle', MyStyle);
  * ```
  *
  * The custom edge style above can now be used in a specific edge as follows:
@@ -86,7 +87,7 @@ import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
  * The custom EdgeStyle can be used for all edges in the graph as follows:
  *
  * ```javascript
- * let style = graph.getStylesheet().getDefaultEdgeStyle();
+ * const style = graph.getStylesheet().getDefaultEdgeStyle();
  * style.edgeStyle = EdgeStyle.MyStyle;
  * ```
  *
@@ -147,10 +148,6 @@ class EdgeStyle {
    * @param result Array of {@link Point} that represent the actual points of the edge.
    */
   static SegmentConnector = SegmentConnectorFunction;
-
-  static orthBuffer = 10;
-
-  static orthPointsFallback = true;
 
   static dirVectors = [
     [-1, 0],
@@ -249,10 +246,11 @@ class EdgeStyle {
   // mxEdgeStyle.SOURCE_MASK | mxEdgeStyle.TARGET_MASK,
 
   static getJettySize(state: CellState, isSource: boolean) {
+    const buffer = OrthConnectorConfig.buffer;
     let value =
       (isSource ? state.style.sourceJettySize : state.style.targetJettySize) ??
       state.style.jettySize ??
-      EdgeStyle.orthBuffer;
+      buffer;
 
     if (value === 'auto') {
       // Computes the automatic jetty size
@@ -261,11 +259,9 @@ class EdgeStyle {
       if (type !== NONE) {
         const size =
           (isSource ? state.style.startSize : state.style.endSize) ?? DEFAULT_MARKERSIZE;
-        value =
-          Math.max(2, Math.ceil((size + EdgeStyle.orthBuffer) / EdgeStyle.orthBuffer)) *
-          EdgeStyle.orthBuffer;
+        value = Math.max(2, Math.ceil((size + buffer) / buffer)) * buffer;
       } else {
-        value = 2 * EdgeStyle.orthBuffer;
+        value = 2 * buffer;
       }
     }
 
@@ -335,7 +331,9 @@ class EdgeStyle {
 
     if (
       tooShort ||
-      (EdgeStyle.orthPointsFallback && controlHints != null && controlHints.length > 0) ||
+      (OrthConnectorConfig.pointsFallback &&
+        controlHints != null &&
+        controlHints.length > 0) ||
       sourceEdge ||
       targetEdge
     ) {
