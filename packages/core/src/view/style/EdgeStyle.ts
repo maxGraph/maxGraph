@@ -32,7 +32,7 @@ import {
 import Rectangle from '../geometry/Rectangle';
 import Geometry from '../geometry/Geometry';
 import { scaleCellState, scalePointArray } from './edge/shared';
-import type { EdgeStyleFunction } from '../../types';
+import type { DirectionValue, EdgeStyleFunction } from '../../types';
 
 import { ElbowConnector as ElbowConnectorFunction } from './edge/Elbow';
 import { EntityRelation as EntityRelationFunction } from './edge/EntityRelation';
@@ -1097,13 +1097,13 @@ class EdgeStyle {
 
     function getRectPoints(
       bbox: Rectangle,
-      directionList: DIRECTION[],
+      directions: DirectionValue[],
       opt: typeof config
     ): Point[] {
       const step = ManhattanConnectorConfig.step;
       const center = getRectangleCenter(bbox);
       const res: Point[] = [];
-      for (const direction of directionList) {
+      for (const direction of directions) {
         const directionPoint = opt.directionMap[direction];
 
         const x = (directionPoint.x * bbox.width) / 2;
