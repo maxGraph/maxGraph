@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Client, Graph, InternalEvent } from '@maxgraph/core';
+import { constants, Graph, InternalEvent } from '@maxgraph/core';
 
-const version = Client.VERSION;
+const version = constants.VERSION;
 
 // Creates the graph inside the given container
 const container = <HTMLElement>document.getElementById('graph-container');
