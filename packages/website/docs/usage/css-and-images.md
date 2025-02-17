@@ -9,7 +9,7 @@ description: Integrate CSS and Images assets required by maxGraph.
 
 Some features of `maxGraph` create elements in the DOM to let interact with the `Graph`.
 
-For example, it happens when using , _Editor_, _MaxPopupMenu_, _MaxWindow_, _Rubberband_, _Toolbar_ or _Tooltip_.
+For example, it happens when using _Editor_, _MaxPopupMenu_, _MaxWindow_, _Rubberband_, _Toolbar_ or _Tooltip_.
 
 These elements require the application to provide CSS rules for correct display.
 
@@ -57,7 +57,7 @@ You can also check the [JavaScript Webpack example](https://github.com/maxGraph/
 ## Images
 
 The `@maxgraph/core` npm package includes images that are required by some features. \
-For example, the _Folding_ feature requires (if not configured elsewhere), images named , _collapsed.gif_ and _expanded.gif_.
+For example, the _Folding_ feature requires (if not configured elsewhere) images named _collapsed.gif_ and _expanded.gif_.
 
 When using these features, the images must be available to the application.
 
