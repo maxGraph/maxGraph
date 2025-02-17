@@ -46,13 +46,13 @@ function updateVersionInCorePackageJsonFile(newVersion) {
 }
 
 function updateVersionInSourceFile(newVersion) {
-  const path = 'packages/core/src/Client.ts';
+  const path = 'packages/core/src/util/Constants.ts';
   console.info('Updating', path);
   const content = readFileContent(path);
   // replace the 1st occurrence, this is OK as the constant appears only once in the file
   const updatedContent = content.replace(
-    /static VERSION =.*/,
-    `static VERSION = '${newVersion}';`
+    /const VERSION =.*/,
+    `const VERSION = '${newVersion}';`
   );
   writeFileSync(path, updatedContent);
 }
