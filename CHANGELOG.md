@@ -20,6 +20,8 @@ They had been made public by mistake, and had been considered internal since the
     - `stringUtils.getColor`
     - `stringUtils.getNumber`
     - `stringUtils.getStringValue`
+- `Client.isBrowserSupported` has been removed. It didn't correctly validate all prerequisites required to know if the browser supports maxGraph.
+So, remove it without replacement.
 
 ## 0.15.1
 
