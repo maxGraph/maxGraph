@@ -17,7 +17,7 @@ limitations under the License.
 import '@maxgraph/core/css/common.css';
 import './style.css';
 import {
-  Client,
+  constants,
   DomHelpers,
   getDefaultPlugins,
   Graph,
@@ -74,7 +74,7 @@ const initializeGraph = (container) => {
 
 // display the maxGraph version in the footer
 const footer = document.querySelector('footer');
-footer.innerText = `Built with maxGraph ${Client.VERSION}`;
+footer.innerText = `Built with maxGraph ${constants.VERSION}`;
 
 // Creates the graph inside the given container
 const container = document.querySelector('#graph-container');

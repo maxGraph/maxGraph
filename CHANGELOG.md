@@ -20,6 +20,8 @@ They had been made public by mistake, and had been considered internal since the
     - `stringUtils.getColor`
     - `stringUtils.getNumber`
     - `stringUtils.getStringValue`
+- `Client.VERSION` moved to `constants.VERSION`. VERSION is supposed to be immutable as it represents the actual version of maxGraph.
+When it was stored in Client, it was a static property that could be modified. Moving it to "constants" ensure that it cannot be modified.
 
 ## 0.15.1
 
