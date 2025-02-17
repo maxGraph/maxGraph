@@ -19,7 +19,7 @@ limitations under the License.
 /**
  * The version of the `maxGraph` library.
  */
-// WARN: this constant is updated at release time by the script located at `scripts/update-versions.mjs`.
+// WARN: this constant is updated at release time by the script located at 'scripts/update-versions.mjs'.
 // So, if you modify the name of this file or this constant, please update the script accordingly.
 export const VERSION = '0.15.1';
 
