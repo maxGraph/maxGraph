@@ -60,6 +60,8 @@ class Client {
     }
   };
 
+  // TODO extract to TranslationsConfig, use get/set
+
   /**
    * Defines the language of the client, eg. `en` for english, `de` for german etc.
    * The special value `none` will disable all built-in internationalization and
