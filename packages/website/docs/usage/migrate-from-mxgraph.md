@@ -365,10 +365,14 @@ managing development mode in that way anymore.
 - `mxResourceExtension`: it was only used in `Translations`, so only keep the property in `Translations`
 
 Removed methods
+- `isBrowserSupported` (0.16.0): no longer necessary
 - `setForceIncludes`: the `mxForceIncludes` property has been removed
 - `setLoadResources`: the `mxLoadResources` property has been removed
 - `setLoadStylesheets`: the `mxLoadStylesheets` property has been removed
 - `setResourceExtension`: the `mxResourceExtension` property has been removed
+
+Moved properties
+- `VERSION` moved to `constants.VERSION` (0.16.0)
 
 Moved methods
 - `link` method moved and renamed `domUtils.addLinkToHead`
@@ -392,6 +396,14 @@ There are global configuration objects that allow to set the default values prev
 But it is possible to configure their values globally. See the [Global Configuration](./global-configuration.md#general) documentation for more details.
 
 :::
+
+
+### `mxEdgeStyle`
+
+The `mxEdgeStyle` value object has been replaced by the `EdgeStyle` class in `maxGraph`.
+
+As of version `0.16.0`, `EdgeStyle` only includes the properties referencing connectors. The other properties and methods are no longer available. \
+The connectors can be configured using dedicated global configuration objects. For more details, see the [Global Configuration](./global-configuration.md) documentation.
 
 
 ### Cell manipulation
