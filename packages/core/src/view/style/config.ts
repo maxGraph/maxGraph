@@ -19,7 +19,7 @@ import { shallowCopy } from '../../util/cloneUtils';
 import type { DirectionValue } from '../../types';
 
 /**
- * Configure the `Entity Relation connector` defaults for maxGraph.
+ * Configure the {@link EdgeStyle.EntityRelation} connector.
  *
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.15.0
@@ -47,7 +47,7 @@ export const resetEntityRelationConnectorConfig = (): void => {
 };
 
 /**
- * Configure the {@link OrthConnector}.
+ * Configure the {@link EdgeStyle.OrthConnector}.
  *
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.16.0
@@ -114,7 +114,7 @@ export type ManhattanConnectorConfigType = {
 };
 
 /**
- * Configure the {@link ManhattanConnector}.
+ * Configure the {@link EdgeStyle.ManhattanConnector}.
  *
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.16.0
