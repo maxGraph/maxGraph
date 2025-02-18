@@ -5,6 +5,7 @@ import {
   resetEdgeHandlerConfig,
   resetEntityRelationConnectorConfig,
   resetHandleConfig,
+  resetManhattanConnectorConfig,
   resetOrthConnectorConfig,
   resetStyleDefaultsConfig,
   resetVertexHandlerConfig,
@@ -23,6 +24,7 @@ const resetMaxGraphConfigs = (): void => {
   resetEdgeHandlerConfig();
   resetEntityRelationConnectorConfig();
   resetHandleConfig();
+  resetManhattanConnectorConfig();
   resetOrthConnectorConfig();
   resetStyleDefaultsConfig();
   resetVertexHandlerConfig();

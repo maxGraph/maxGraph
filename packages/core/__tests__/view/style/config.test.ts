@@ -14,8 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { expect, test } from '@jest/globals';
-import { OrthConnectorConfig, resetOrthConnectorConfig } from '../../../src';
+import { describe, expect, test } from '@jest/globals';
+import {
+  ManhattanConnectorConfig,
+  OrthConnectorConfig,
+  resetManhattanConnectorConfig,
+  resetOrthConnectorConfig,
+} from '../../../src';
+import { DIRECTION } from '../../../src/util/Constants';
 
 test('resetOrthConnectorConfig', () => {
   // Keep track of original default values
@@ -31,4 +37,35 @@ test('resetOrthConnectorConfig', () => {
   expect(OrthConnectorConfig.buffer).toBe(10);
   expect(OrthConnectorConfig.pointsFallback).toBeTruthy();
   expect(OrthConnectorConfig).toStrictEqual(originalConfig);
+});
+
+describe('resetManhattanConnectorConfig', () => {
+  test('simple values', () => {
+    // Keep track of original default values
+    const originalConfig = { ...ManhattanConnectorConfig };
+
+    // Change some values
+    ManhattanConnectorConfig.maxLoops = 100;
+    ManhattanConnectorConfig.step = 60;
+
+    resetManhattanConnectorConfig();
+
+    // Ensure that the values have correctly been reset
+    expect(ManhattanConnectorConfig.maxLoops).toBe(2000);
+    expect(ManhattanConnectorConfig.step).toBe(12);
+    expect(ManhattanConnectorConfig).toStrictEqual(originalConfig);
+  });
+  test('original direction arrays are kept untouched', () => {
+    const originalEndDirections = [...ManhattanConnectorConfig.endDirections];
+    const originalStartDirections = [...ManhattanConnectorConfig.startDirections];
+
+    // Change some values
+    ManhattanConnectorConfig.endDirections = [DIRECTION.NORTH, DIRECTION.SOUTH];
+    ManhattanConnectorConfig.startDirections.push(DIRECTION.NORTH, DIRECTION.SOUTH);
+
+    resetManhattanConnectorConfig();
+
+    expect(ManhattanConnectorConfig.endDirections).toEqual(originalEndDirections);
+    expect(ManhattanConnectorConfig.startDirections).toEqual(originalStartDirections);
+  });
 });
