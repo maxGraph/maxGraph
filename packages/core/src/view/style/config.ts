@@ -53,7 +53,7 @@ export const resetEntityRelationConnectorConfig = (): void => {
  * @since 0.16.0
  * @category Configuration
  */
-export const OrthConnectorConfig = {
+export const OrthogonalConnectorConfig = {
   /**
    * If the value is not set in {@link CellStateStyle.jettySize}, defines the jetty size of the connector.
    *
@@ -71,16 +71,16 @@ export const OrthConnectorConfig = {
   pointsFallback: true,
 };
 
-const originalOrthConnectorConfig = { ...OrthConnectorConfig };
+const originalOrthogonalConnectorConfig = { ...OrthogonalConnectorConfig };
 /**
- * Resets {@link OrthConnectorConfig} to default values.
+ * Resets {@link OrthogonalConnectorConfig} to default values.
  *
  * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.16.0
  * @category Configuration
  */
-export const resetOrthConnectorConfig = (): void => {
-  shallowCopy(originalOrthConnectorConfig, OrthConnectorConfig);
+export const resetOrthogonalConnectorConfig = (): void => {
+  shallowCopy(originalOrthogonalConnectorConfig, OrthogonalConnectorConfig);
 };
 
 export type ManhattanConnectorConfigType = {

@@ -31,8 +31,8 @@ The following properties that were previously on `EdgeStyle` have moved to `Manh
   - `MANHATTAN_MAXIMUM_LOOPS` to `maxLoops`
   - `MANHATTAN_START_DIRECTIONS` to `startDirections`
   - `MANHATTAN_STEP` to `step`
-- `OrthConnector` is now configured with the global `OrthConnectorConfig` object.
-The following properties that were previously on `EdgeStyle` have moved to `OrthConnectorConfig`:
+- `OrthConnector` is now configured with the global `OrthogonalConnectorConfig` object.
+The following properties that were previously on `EdgeStyle` have moved to `OrthogonalConnectorConfig`:
   - `orthBuffer` to `buffer`
   - `orthPointsFallback` to `pointsFallback`
 

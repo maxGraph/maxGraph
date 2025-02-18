@@ -24,7 +24,7 @@ import {
   reversePortConstraints,
 } from '../../../util/mathUtils';
 import type CellState from '../../cell/CellState';
-import { OrthConnectorConfig } from '../config';
+import { OrthogonalConnectorConfig } from '../config';
 import type { EdgeStyleFunction } from '../../../types';
 import Point from '../../geometry/Point';
 import Rectangle from '../../geometry/Rectangle';
@@ -119,7 +119,7 @@ const VERTEX_MASK = 3072;
 // SOURCE_MASK | TARGET_MASK,
 
 function getJettySize(state: CellState, isSource: boolean): number {
-  const buffer = OrthConnectorConfig.buffer;
+  const buffer = OrthogonalConnectorConfig.buffer;
   let value =
     (isSource ? state.style.sourceJettySize : state.style.targetJettySize) ??
     state.style.jettySize ??
@@ -204,7 +204,7 @@ export const OrthogonalConnector: EdgeStyleFunction = (
 
   if (
     tooShort ||
-    (OrthConnectorConfig.pointsFallback &&
+    (OrthogonalConnectorConfig.pointsFallback &&
       controlHints != null &&
       controlHints.length > 0) ||
     sourceEdge ||

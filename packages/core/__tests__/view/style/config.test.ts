@@ -17,26 +17,26 @@ limitations under the License.
 import { describe, expect, test } from '@jest/globals';
 import {
   ManhattanConnectorConfig,
-  OrthConnectorConfig,
+  OrthogonalConnectorConfig,
   resetManhattanConnectorConfig,
-  resetOrthConnectorConfig,
+  resetOrthogonalConnectorConfig,
 } from '../../../src';
 import { DIRECTION } from '../../../src/util/Constants';
 
-test('resetOrthConnectorConfig', () => {
+test('resetOrthogonalConnectorConfig', () => {
   // Keep track of original default values
-  const originalConfig = { ...OrthConnectorConfig };
+  const originalConfig = { ...OrthogonalConnectorConfig };
 
   // Change some values
-  OrthConnectorConfig.buffer = 18;
-  OrthConnectorConfig.pointsFallback = false;
+  OrthogonalConnectorConfig.buffer = 18;
+  OrthogonalConnectorConfig.pointsFallback = false;
 
-  resetOrthConnectorConfig();
+  resetOrthogonalConnectorConfig();
 
   // Ensure that the values have correctly been reset
-  expect(OrthConnectorConfig.buffer).toBe(10);
-  expect(OrthConnectorConfig.pointsFallback).toBeTruthy();
-  expect(OrthConnectorConfig).toStrictEqual(originalConfig);
+  expect(OrthogonalConnectorConfig.buffer).toBe(10);
+  expect(OrthogonalConnectorConfig.pointsFallback).toBeTruthy();
+  expect(OrthogonalConnectorConfig).toStrictEqual(originalConfig);
 });
 
 describe('resetManhattanConnectorConfig', () => {
