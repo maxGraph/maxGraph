@@ -50,6 +50,8 @@ export class TranslationsConfigBase {
     }
   }
 
+  // TODO move Client.language here
+
   // TODO add convenient method
   //   /**
   //    * Returns whether internationalization is enabled.
