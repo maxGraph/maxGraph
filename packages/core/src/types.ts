@@ -447,7 +447,7 @@ export type CellStateStyle = {
   indicatorWidth?: number;
   /**
    * The jetty size in {@link EdgeStyle.OrthConnector} when {@link sourceJettySize} or {@link targetJettySize}.
-   * @default {@link OrthConnectorConfig.buffer}
+   * @default {@link OrthogonalConnectorConfig.buffer}
    */
   jettySize?: number | 'auto';
   /**
