@@ -49,6 +49,15 @@ export class TranslationsConfigBase {
       this.defaultLanguage = 'en';
     }
   }
+
+  // TODO add convenient method
+  //   /**
+  //    * Returns whether internationalization is enabled.
+  //    */
+  //   // TODO move to I18nProvider
+  //   isEnabled(): boolean {
+  //     return this.getLanguage() !== 'none';
+  //   }
 }
 
 /**
