@@ -75,7 +75,7 @@ export const shallowCopy = <T extends object>(source: T, target: T): void => {
     // attempt to prevent prototype pollution
     if (Object.prototype.hasOwnProperty.call(source, key)) {
       const sourceValue = source[key];
-      if (sourceValue instanceof Array) {
+      if (Array.isArray(sourceValue)) {
         // @ts-ignore source and target are of the same type
         target[key] = [...sourceValue];
       } else {
