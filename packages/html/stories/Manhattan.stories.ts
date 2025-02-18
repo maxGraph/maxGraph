@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import {
+  EventObject,
   Graph,
   InternalEvent,
   ManhattanConnectorConfig,
@@ -23,7 +24,6 @@ import {
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-import EventObject from '@maxgraph/core/lib/view/event/EventObject.ts';
 
 export default {
   title: 'Connections/Manhattan',
@@ -48,7 +48,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.getPlugin<SelectionHandler>('SelectionHandler').guidesEnabled = true;
 
   // Hack to rerender edge on any node move
-  graph.model.addListener(InternalEvent.CHANGE, (_sender: any, evt: EventObject) => {
+  graph.model.addListener(InternalEvent.CHANGE, (_sender: unknown, evt: EventObject) => {
     const changes = evt.getProperty('changes');
     const hasMoveEdits = changes?.some(
       // checks for the existence of the geometry and previous properties which are characteristic of GeometryChange in the model
