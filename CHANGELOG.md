@@ -18,6 +18,9 @@ They are replaced by global configuration in `EdgeHandlerConfig`:
   - virtualBendsEnabled
 
 
+2 methods of Graph moved to plugin
+
+
 ## 0.14.0
 
 Release date: `2024-11-27`
