@@ -41,7 +41,7 @@ import { TranslationsConfig } from './config';
  * {@link add} or via a resource tag in the UI section of the
  * editor configuration file, eg:
  *
- * ```javascript
+ * ```xml
  * <Editor>
  *   <ui>
  *     <resource basename="examples/resources/mxWorkflow"/>
