@@ -224,13 +224,6 @@ class Translations {
     lan: string | null = null,
     callback: Function | null = null
   ): void => {
-    // TODO validate this simplification
-    // lan =
-    //   lan != null
-    //     ? lan
-    //     : TranslationsConfig.getLanguage() != null
-    //       ? TranslationsConfig.getLanguage().toLowerCase()
-    //       : NONE;
     lan ??= TranslationsConfig.getLanguage()?.toLowerCase() ?? NONE;
 
     if (lan !== NONE) {
