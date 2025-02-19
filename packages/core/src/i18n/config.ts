@@ -38,7 +38,6 @@ const values: TranslationsConfigValuesType = {
 /**
  * Global configuration for {@link Translations}.
  */
-// TODO export in root index.ts
 // TODO add reference in documentation about global configuration
 export const TranslationsConfig = {
   // TODO add this method in Translations?
