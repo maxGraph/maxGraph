@@ -110,8 +110,8 @@ class Translations {
    * @param lan The current language.
    */
   static isLanguageSupported = (lan: string): boolean => {
-    if (TranslationsConfig.languages != null) {
-      return TranslationsConfig.languages.indexOf(lan) >= 0;
+    if (TranslationsConfig.getLanguages()) {
+      return TranslationsConfig.getLanguages().indexOf(lan) >= 0;
     }
     return true;
   };
@@ -148,7 +148,7 @@ class Translations {
    * @param lan The language for which the file should be loaded.
    */
   static getSpecialBundle = (basename: string, lan: string): string | null => {
-    if (TranslationsConfig.languages == null || !Translations.isLanguageSupported(lan)) {
+    if (!TranslationsConfig.getLanguages() || !Translations.isLanguageSupported(lan)) {
       const dash = lan.indexOf('-');
 
       if (dash > 0) {

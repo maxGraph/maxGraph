@@ -51,6 +51,9 @@ export const TranslationsConfig = {
     return this.getLanguage() !== 'none';
   },
 
+  /**
+   * @see setLanguage
+   */
   getLanguage(): string {
     return values.language;
   },
@@ -87,7 +90,13 @@ export const TranslationsConfig = {
     values.language = !isNullish(value) ? value : getNavigatorLanguage();
   },
 
-  // TODO use get/set + use empty array as default
+  /**
+   * @see setLanguages
+   */
+  getLanguages(): string[] {
+    return values.languages;
+  },
+
   /**
    * Defines the optional array of all supported language extensions.
    * The default language does not have to be part of this list. See {@link Translations.isLanguageSupported}.
