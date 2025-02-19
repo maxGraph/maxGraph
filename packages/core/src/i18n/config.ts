@@ -20,11 +20,22 @@ function getNavigatorLanguage() {
   return typeof window !== 'undefined' ? navigator.language : 'en';
 }
 
-// Implementation extracted from Client
-// TODO find a better name or make anonymous
+type TranslationsConfigValuesType = {
+  defaultLanguage: string;
+  language: string;
+  languages: string[];
+};
+
+const values: TranslationsConfigValuesType = {
+  defaultLanguage: 'en',
+  language: getNavigatorLanguage(),
+  languages: [],
+};
+
 // TODO find a way to reset values
 // TODO rework JSDoc
 // TODO decide if we move this in the Translations module
+
 class TranslationsConfigBase {
   private language = getNavigatorLanguage();
 
@@ -101,4 +112,76 @@ class TranslationsConfigBase {
  */
 // TODO export in root index.ts
 // TODO add reference in documentation about global configuration
-export const TranslationsConfig = new TranslationsConfigBase();
+export const TranslationsConfig = {
+  // TODO add this method in Translations?
+  // TODO rename into isEnabled?
+  /**
+   * Returns whether internationalization is enabled.
+   */
+  isI18nEnabled(): boolean {
+    return this.getLanguage() !== 'none';
+  },
+
+  getLanguage(): string {
+    return values.language;
+  },
+
+  /**
+   * Defines the language of the client, e.g. `en` for english, `de` for german etc.
+   *
+   * The special value `none` will disable all built-in internationalization and resource loading.
+   * See {@link Translations.getSpecialBundle} for handling identifiers with and without a dash.
+   *
+   * If internationalization is disabled, then the following variables should be overridden to reflect the current language of the system.
+   * These variables are cleared when i18n is disabled:
+   * - {@link CellRenderer.collapseExpandResource}
+   * - {@link Editor.askZoomResource}
+   * - {@link Editor.currentFileResource}
+   * - {@link Editor.helpResource}
+   * - {@link Editor.lastSavedResource}
+   * - {@link Editor.outlineResource}
+   * - {@link Editor.propertiesResource}
+   * - {@link Editor.tasksResource}
+   * - {@link ElbowEdgeHandler.doubleClickOrientationResource}
+   * - {@link GraphSelectionModel.doneResource}
+   * - {@link GraphSelectionModel.updatingSelectionResource}
+   * - {@link Graph.alreadyConnectedResource}.
+   * - {@link Graph.containsValidationErrorsResource} and
+   * - {@link utils.closeResource}
+   * - {@link utils.errorResource}
+   * - {@link GraphView.doneResource}
+   * - {@link GraphView.updatingDocumentResource}
+   *
+   * @param value The language to set. If `null` or `undefined`, use the preferred language of the navigator or 'en' as default.
+   */
+  setLanguage(value: string | undefined | null): void {
+    values.language = !isNullish(value) ? value : getNavigatorLanguage();
+  },
+
+  // TODO use get/set + use empty array as default
+  /**
+   * Defines the optional array of all supported language extensions. The default
+   * language does not have to be part of this list. See
+   * {@link Translations#isLanguageSupported}.
+   *
+   * This is used to avoid unnecessary requests to language files, ie. if a 404
+   * will be returned.
+   * @default null
+   */
+  setLanguages(value: string[] | null | undefined): void {
+    if (!isNullish(value)) {
+      values.languages = value;
+    }
+  },
+
+  // TODO use get/set
+  /**
+   * Defines the default language which is used in the common resource files. Any
+   * resources for this language will only load the common resource file, but not
+   * the language-specific resource file.
+   * @default 'en'
+   */
+  setDefaultLanguage(value: string | undefined | null): void {
+    values.defaultLanguage = !isNullish(value) ? value : 'en';
+  },
+};
