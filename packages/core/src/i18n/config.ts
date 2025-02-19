@@ -40,12 +40,10 @@ const values: TranslationsConfigValuesType = {
  */
 // TODO add reference in documentation about global configuration
 export const TranslationsConfig = {
-  // TODO add this method in Translations?
-  // TODO rename into isEnabled?
   /**
    * Returns whether internationalization is enabled.
    */
-  isI18nEnabled(): boolean {
+  isEnabled(): boolean {
     return this.getLanguage() !== 'none';
   },
 

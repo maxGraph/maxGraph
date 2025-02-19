@@ -383,7 +383,7 @@ class Graph extends EventSource {
    * for this key does not exist then the value is used as the error message.
    * @default 'alreadyConnected'
    */
-  alreadyConnectedResource: string = TranslationsConfig.isI18nEnabled()
+  alreadyConnectedResource: string = TranslationsConfig.isEnabled()
     ? 'alreadyConnected'
     : '';
 
@@ -393,7 +393,7 @@ class Graph extends EventSource {
    * key does not exist then the value is used as the warning message.
    * @default 'containsValidationErrors'
    */
-  containsValidationErrorsResource: string = TranslationsConfig.isI18nEnabled()
+  containsValidationErrorsResource: string = TranslationsConfig.isEnabled()
     ? 'containsValidationErrors'
     : '';
 

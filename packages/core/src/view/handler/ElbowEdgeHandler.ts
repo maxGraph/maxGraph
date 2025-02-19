@@ -57,7 +57,7 @@ class ElbowEdgeHandler extends EdgeHandler {
    * exist then the value is used as the error message.
    * @default 'doubleClickOrientation'.
    */
-  doubleClickOrientationResource = TranslationsConfig.isI18nEnabled()
+  doubleClickOrientationResource = TranslationsConfig.isEnabled()
     ? 'doubleClickOrientation'
     : '';
 

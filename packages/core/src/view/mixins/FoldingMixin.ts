@@ -63,7 +63,7 @@ export const FoldingMixin: PartialType = {
     collapseToPreferredSize: true,
   },
 
-  collapseExpandResource: TranslationsConfig.isI18nEnabled() ? 'collapse-expand' : '',
+  collapseExpandResource: TranslationsConfig.isEnabled() ? 'collapse-expand' : '',
 
   getCollapseExpandResource() {
     return this.collapseExpandResource;

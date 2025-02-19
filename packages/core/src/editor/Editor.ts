@@ -456,7 +456,7 @@ export class Editor extends EventSource {
    * key does not exist then the value is used as the error message. Default is 'askZoom'.
    * @default 'askZoom'
    */
-  askZoomResource = TranslationsConfig.isI18nEnabled() ? 'askZoom' : '';
+  askZoomResource = TranslationsConfig.isEnabled() ? 'askZoom' : '';
 
   /**
    * Group: Controls and Handlers
@@ -466,14 +466,14 @@ export class Editor extends EventSource {
    * this key does not exist then the value is used as the error message. Default is 'lastSaved'.
    * @default 'lastSaved'.
    */
-  lastSavedResource = TranslationsConfig.isI18nEnabled() ? 'lastSaved' : '';
+  lastSavedResource = TranslationsConfig.isEnabled() ? 'lastSaved' : '';
 
   /**
    * Specifies the resource key for the current file info. If the resource for
    * this key does not exist then the value is used as the error message. Default is 'currentFile'.
    * @default 'currentFile'
    */
-  currentFileResource = TranslationsConfig.isI18nEnabled() ? 'currentFile' : '';
+  currentFileResource = TranslationsConfig.isEnabled() ? 'currentFile' : '';
 
   /**
    * Specifies the resource key for the properties window title. If the
@@ -481,7 +481,7 @@ export class Editor extends EventSource {
    * error message. Default is 'properties'.
    * @default 'properties'
    */
-  propertiesResource = TranslationsConfig.isI18nEnabled() ? 'properties' : '';
+  propertiesResource = TranslationsConfig.isEnabled() ? 'properties' : '';
 
   /**
    * Specifies the resource key for the tasks window title. If the
@@ -489,7 +489,7 @@ export class Editor extends EventSource {
    * error message. Default is 'tasks'.
    * @default 'tasks'
    */
-  tasksResource = TranslationsConfig.isI18nEnabled() ? 'tasks' : '';
+  tasksResource = TranslationsConfig.isEnabled() ? 'tasks' : '';
 
   /**
    * Specifies the resource key for the help window title. If the
@@ -497,7 +497,7 @@ export class Editor extends EventSource {
    * error message. Default is 'help'.
    * @default 'help'
    */
-  helpResource = TranslationsConfig.isI18nEnabled() ? 'help' : '';
+  helpResource = TranslationsConfig.isEnabled() ? 'help' : '';
 
   /**
    * Specifies the resource key for the outline window title. If the
@@ -505,7 +505,7 @@ export class Editor extends EventSource {
    * error message. Default is 'outline'.
    * @default 'outline'
    */
-  outlineResource = TranslationsConfig.isI18nEnabled() ? 'outline' : '';
+  outlineResource = TranslationsConfig.isEnabled() ? 'outline' : '';
 
   /**
    * Reference to the {@link MaxWindow} that contains the outline. The {@link outline}

@@ -77,16 +77,14 @@ class GraphSelectionModel extends EventSource {
    * If the resource for this key does not exist then the value is used as
    * the status message. Default is 'done'.
    */
-  doneResource = TranslationsConfig.isI18nEnabled() ? 'done' : '';
+  doneResource = TranslationsConfig.isEnabled() ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the selection is
    * being updated. If the resource for this key does not exist then the
    * value is used as the status message. Default is 'updatingSelection'.
    */
-  updatingSelectionResource = TranslationsConfig.isI18nEnabled()
-    ? 'updatingSelection'
-    : '';
+  updatingSelectionResource = TranslationsConfig.isEnabled() ? 'updatingSelection' : '';
 
   /**
    * Specifies if only one selected item at a time is allowed.
