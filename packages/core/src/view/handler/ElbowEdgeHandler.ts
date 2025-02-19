@@ -21,13 +21,12 @@ import { CURSOR, EDGESTYLE, ELBOW } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import Translations from '../../i18n/Translations';
+import { TranslationsConfig } from '../../i18n/config';
 import Rectangle from '../geometry/Rectangle';
 import { intersects } from '../../util/mathUtils';
-import Client from '../../Client';
 import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import { HandleConfig } from './config';
-import { TranslationsConfig } from '../../i18n/config';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and
