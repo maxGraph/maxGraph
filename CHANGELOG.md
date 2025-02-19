@@ -37,7 +37,6 @@ The following properties that were previously on `EdgeStyle` have moved to `Orth
   - `orthPointsFallback` to `pointsFallback`
 
 Client: all removed methods moved to TranslationsConfig + ref in mxGraph migration docs
-Translations.replacePlaceholders no longer available was intended to be private
 
 TODO add reference to TranslationsConfig in documentation about global configuration
 
