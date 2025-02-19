@@ -36,77 +36,6 @@ const values: TranslationsConfigValuesType = {
 // TODO rework JSDoc
 // TODO decide if we move this in the Translations module
 
-class TranslationsConfigBase {
-  private language = getNavigatorLanguage();
-
-  // TODO add this method in Translations?
-  // TODO rename into isEnabled?
-  /**
-   * Returns whether internationalization is enabled.
-   */
-  isI18nEnabled(): boolean {
-    return this.getLanguage() !== 'none';
-  }
-
-  /**
-   * Defines the language of the client, eg. `en` for english, `de` for german etc.
-   * The special value `none` will disable all built-in internationalization and
-   * resource loading. See {@link Translations.getSpecialBundle} for handling identifiers
-   * with and without a dash.
-   *
-   * If internationalization is disabled, then the following variables should be
-   * overridden to reflect the current language of the system. These variables are
-   * cleared when i18n is disabled.
-   * {@link Editor.askZoomResource}, {@link Editor.lastSavedResource},
-   * {@link Editor.currentFileResource}, {@link Editor.propertiesResource},
-   * {@link Editor.tasksResource}, {@link Editor.helpResource}, {@link Editor.outlineResource},
-   * {@link ElbowEdgeHandler#doubleClickOrientationResource}, {@link utils.errorResource},
-   * {@link utils.closeResource}, {@link GraphSelectionModel#doneResource},
-   * {@link GraphSelectionModel#updatingSelectionResource}, {@link GraphView#doneResource},
-   * {@link GraphView#updatingDocumentResource}, {@link CellRenderer#collapseExpandResource},
-   * {@link Graph#containsValidationErrorsResource} and
-   * {@link Graph#alreadyConnectedResource}.
-   */
-  getLanguage(): string {
-    return this.language;
-  }
-
-  setLanguage(value: string | undefined | null): void {
-    this.language = !isNullish(value) ? value : getNavigatorLanguage();
-  }
-
-  // TODO use get/set + use empty array as default
-  /**
-   * Defines the optional array of all supported language extensions. The default
-   * language does not have to be part of this list. See
-   * {@link Translations#isLanguageSupported}.
-   *
-   * This is used to avoid unnecessary requests to language files, ie. if a 404
-   * will be returned.
-   * @default null
-   */
-  languages: string[] | null = null;
-
-  setLanguages(value: string[] | null | undefined): void {
-    if (!isNullish(value)) {
-      this.languages = value;
-    }
-  }
-
-  // TODO use get/set
-  /**
-   * Defines the default language which is used in the common resource files. Any
-   * resources for this language will only load the common resource file, but not
-   * the language-specific resource file.
-   * @default 'en'
-   */
-  defaultLanguage = 'en';
-
-  setDefaultLanguage(value: string | undefined | null): void {
-    this.defaultLanguage = !isNullish(value) ? value : 'en';
-  }
-}
-
 /**
  * Global configuration for {@link Translations}.
  */
@@ -160,13 +89,11 @@ export const TranslationsConfig = {
 
   // TODO use get/set + use empty array as default
   /**
-   * Defines the optional array of all supported language extensions. The default
-   * language does not have to be part of this list. See
-   * {@link Translations#isLanguageSupported}.
+   * Defines the optional array of all supported language extensions.
+   * The default language does not have to be part of this list. See {@link Translations.isLanguageSupported}.
    *
-   * This is used to avoid unnecessary requests to language files, ie. if a 404
-   * will be returned.
-   * @default null
+   * This is used to avoid unnecessary requests to language files, i.e. if a 404 will be returned.
+   * @default empty array
    */
   setLanguages(value: string[] | null | undefined): void {
     if (!isNullish(value)) {
@@ -176,9 +103,8 @@ export const TranslationsConfig = {
 
   // TODO use get/set
   /**
-   * Defines the default language which is used in the common resource files. Any
-   * resources for this language will only load the common resource file, but not
-   * the language-specific resource file.
+   * Defines the default language which is used in the common resource files.
+   * Any resources for this language will only load the common resource file, but not the language-specific resource file.
    * @default 'en'
    */
   setDefaultLanguage(value: string | undefined | null): void {
