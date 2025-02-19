@@ -144,8 +144,9 @@ class Translations {
    * @param lan The current language.
    */
   static isLanguageSupported = (lan: string): boolean => {
-    if (TranslationsConfig.getLanguages()) {
-      return TranslationsConfig.getLanguages().indexOf(lan) >= 0;
+    const languages = TranslationsConfig.getLanguages();
+    if (languages) {
+      return languages.indexOf(lan) >= 0;
     }
     return true;
   };
