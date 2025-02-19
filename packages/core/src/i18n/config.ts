@@ -22,6 +22,7 @@ function getNavigatorLanguage() {
 // TODO find a better name or make anonymous
 // TODO find a way to reset values
 // TODO rework JSDoc
+// TODO decide if we move this in the Translations module
 class TranslationsConfigBase {
   private language = getNavigatorLanguage();
 

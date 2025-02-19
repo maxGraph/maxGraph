@@ -62,34 +62,34 @@ class Client {
 
   // TODO extract to TranslationsConfig, use get/set
 
-  /**
-   * Defines the language of the client, eg. `en` for english, `de` for german etc.
-   * The special value `none` will disable all built-in internationalization and
-   * resource loading. See {@link Translations.getSpecialBundle} for handling identifiers
-   * with and without a dash.
-   *
-   * If internationalization is disabled, then the following variables should be
-   * overridden to reflect the current language of the system. These variables are
-   * cleared when i18n is disabled.
-   * {@link Editor.askZoomResource}, {@link Editor.lastSavedResource},
-   * {@link Editor.currentFileResource}, {@link Editor.propertiesResource},
-   * {@link Editor.tasksResource}, {@link Editor.helpResource}, {@link Editor.outlineResource},
-   * {@link ElbowEdgeHandler#doubleClickOrientationResource}, {@link utils.errorResource},
-   * {@link utils.closeResource}, {@link GraphSelectionModel#doneResource},
-   * {@link GraphSelectionModel#updatingSelectionResource}, {@link GraphView#doneResource},
-   * {@link GraphView#updatingDocumentResource}, {@link CellRenderer#collapseExpandResource},
-   * {@link Graph#containsValidationErrorsResource} and
-   * {@link Graph#alreadyConnectedResource}.
-   */
-  static language = typeof window !== 'undefined' ? navigator.language : 'en';
-
-  static setLanguage = (value: string | undefined | null) => {
-    if (typeof value !== 'undefined' && value != null) {
-      Client.language = value;
-    } else {
-      Client.language = navigator.language;
-    }
-  };
+  // /**
+  //  * Defines the language of the client, eg. `en` for english, `de` for german etc.
+  //  * The special value `none` will disable all built-in internationalization and
+  //  * resource loading. See {@link Translations.getSpecialBundle} for handling identifiers
+  //  * with and without a dash.
+  //  *
+  //  * If internationalization is disabled, then the following variables should be
+  //  * overridden to reflect the current language of the system. These variables are
+  //  * cleared when i18n is disabled.
+  //  * {@link Editor.askZoomResource}, {@link Editor.lastSavedResource},
+  //  * {@link Editor.currentFileResource}, {@link Editor.propertiesResource},
+  //  * {@link Editor.tasksResource}, {@link Editor.helpResource}, {@link Editor.outlineResource},
+  //  * {@link ElbowEdgeHandler#doubleClickOrientationResource}, {@link utils.errorResource},
+  //  * {@link utils.closeResource}, {@link GraphSelectionModel#doneResource},
+  //  * {@link GraphSelectionModel#updatingSelectionResource}, {@link GraphView#doneResource},
+  //  * {@link GraphView#updatingDocumentResource}, {@link CellRenderer#collapseExpandResource},
+  //  * {@link Graph#containsValidationErrorsResource} and
+  //  * {@link Graph#alreadyConnectedResource}.
+  //  */
+  // static language = typeof window !== 'undefined' ? navigator.language : 'en';
+  //
+  // static setLanguage = (value: string | undefined | null) => {
+  //   if (typeof value !== 'undefined' && value != null) {
+  //     Client.language = value;
+  //   } else {
+  //     Client.language = navigator.language;
+  //   }
+  // };
 
   // /**
   //  * Defines the default language which is used in the common resource files. Any
