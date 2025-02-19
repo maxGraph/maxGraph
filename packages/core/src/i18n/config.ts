@@ -33,7 +33,6 @@ const values: TranslationsConfigValuesType = {
 };
 
 // TODO find a way to reset values
-// TODO rework JSDoc
 // TODO decide if we move this in the Translations module
 
 /**
@@ -110,7 +109,13 @@ export const TranslationsConfig = {
     }
   },
 
-  // TODO use get/set
+  /**
+   * @see setDefaultLanguage
+   */
+  getDefaultLanguage(): string {
+    return values.defaultLanguage;
+  },
+
   /**
    * Defines the default language which is used in the common resource files.
    * Any resources for this language will only load the common resource file, but not the language-specific resource file.

@@ -134,9 +134,9 @@ class Translations {
   /**
    * Hook for subclassers to return the URL for the special bundle. This
    * implementation returns `basename + '_' + lan + <extension>` or `null` if
-   * {@link loadSpecialBundle} is `false` or `lan` equals {@link TranslationsConfig.defaultLanguage}.
+   * {@link loadSpecialBundle} is `false` or `lan` equals {@link TranslationsConfig.getDefaultLanguage}.
    *
-   * If {@link languages} is not `null` and {@link Client.language} contains
+   * If {@link TranslationsConfig.getLanguages} is not `null` and {@link TranslationsConfig.getLanguage} contains
    * a dash, then this method checks if {@link isLanguageSupported} returns `true`
    * for the full language (including the dash). If that returns false the
    * first part of the language (up to the dash) will be tried as an extension.
@@ -159,7 +159,7 @@ class Translations {
     if (
       Translations.loadSpecialBundle &&
       Translations.isLanguageSupported(lan) &&
-      lan != TranslationsConfig.defaultLanguage
+      lan != TranslationsConfig.getDefaultLanguage()
     ) {
       return `${basename}_${lan}${Translations.extension}`;
     }
