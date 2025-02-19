@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { isNullish } from '../util/Utils';
+import { shallowCopy } from '../util/cloneUtils';
 
 function getNavigatorLanguage() {
   return typeof window !== 'undefined' ? navigator.language : 'en';
@@ -32,13 +33,17 @@ const values: TranslationsConfigValuesType = {
   languages: [],
 };
 
-// TODO find a way to reset values
-// TODO decide if we move this in the Translations module
+// @ts-ignore the properties will be added dynamically when calling shallowCopy
+const originalValues: TranslationsConfigValuesType = {};
+shallowCopy(values, originalValues);
+
+export const resetTranslationsConfig = (): void => {
+  shallowCopy(originalValues, values);
+};
 
 /**
  * Global configuration for {@link Translations}.
  */
-// TODO add reference in documentation about global configuration
 export const TranslationsConfig = {
   /**
    * Returns whether internationalization is enabled.
