@@ -58,23 +58,6 @@ import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
 import { TranslationsConfig } from '../i18n/config';
 
-// TODO disabled side effects, so editor resources are not loaded by default
-// This should be done in a different way
-
-// This can be done on demand by calling Translations.loadResources
-// Taken from https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/editor/mxEditor.js#L394-L405
-/**
- * Installs the required language resources at class
- * loading time.
- */
-/*
-if (mxLoadResources) {
-  mxResources.add(`${Client.basePath}/resources/editor`);
-} else {
-  Client.defaultBundles.push(`${Client.basePath}/resources/editor`);
-}
- */
-
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
  * adds {@link actions}, I/O using {@link Codec}, auto-layout using {@link LayoutManager},
@@ -327,6 +310,16 @@ if (mxLoadResources) {
  * #### Translations:
  *
  * resources/editor - Language resources for Editor
+ *
+ * To load the resources for the Editor, the following code should be used:
+ * ```javascript
+ * // Load maxGraph builtin resources
+ * Translations.loadResources();
+ * // Load resources for the Editor
+ * Translations.add(`${Client.basePath}/resources/editor`);
+ * //
+ * // Client.defaultBundles.push(`${Client.basePath}/resources/editor`);
+ * ```
  *
  * #### Callback: onInit
  *
