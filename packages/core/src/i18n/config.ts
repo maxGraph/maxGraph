@@ -66,6 +66,7 @@ class TranslationsConfigBase {
     }
   }
 
+  // TODO use get/set + use empty array as default
   /**
    * Defines the optional array of all supported language extensions. The default
    * language does not have to be part of this list. See
@@ -83,6 +84,7 @@ class TranslationsConfigBase {
     }
   }
 
+  // TODO use get/set
   /**
    * Defines the default language which is used in the common resource files. Any
    * resources for this language will only load the common resource file, but not

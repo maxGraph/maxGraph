@@ -56,6 +56,7 @@ import ConnectionHandler from '../view/handler/ConnectionHandler';
 import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
+import { TranslationsConfig } from '../i18n/config';
 
 // TODO disabled side effects, so editor resources are not loaded by default
 // This should be done in a different way
@@ -464,7 +465,7 @@ export class Editor extends EventSource {
    * key does not exist then the value is used as the error message. Default is 'askZoom'.
    * @default 'askZoom'
    */
-  askZoomResource = Client.language !== 'none' ? 'askZoom' : '';
+  askZoomResource = TranslationsConfig.isI18nEnabled() ? 'askZoom' : '';
 
   /**
    * Group: Controls and Handlers
@@ -474,14 +475,14 @@ export class Editor extends EventSource {
    * this key does not exist then the value is used as the error message. Default is 'lastSaved'.
    * @default 'lastSaved'.
    */
-  lastSavedResource = Client.language !== 'none' ? 'lastSaved' : '';
+  lastSavedResource = TranslationsConfig.isI18nEnabled() ? 'lastSaved' : '';
 
   /**
    * Specifies the resource key for the current file info. If the resource for
    * this key does not exist then the value is used as the error message. Default is 'currentFile'.
    * @default 'currentFile'
    */
-  currentFileResource = Client.language !== 'none' ? 'currentFile' : '';
+  currentFileResource = TranslationsConfig.isI18nEnabled() ? 'currentFile' : '';
 
   /**
    * Specifies the resource key for the properties window title. If the
@@ -489,7 +490,7 @@ export class Editor extends EventSource {
    * error message. Default is 'properties'.
    * @default 'properties'
    */
-  propertiesResource = Client.language !== 'none' ? 'properties' : '';
+  propertiesResource = TranslationsConfig.isI18nEnabled() ? 'properties' : '';
 
   /**
    * Specifies the resource key for the tasks window title. If the
@@ -497,7 +498,7 @@ export class Editor extends EventSource {
    * error message. Default is 'tasks'.
    * @default 'tasks'
    */
-  tasksResource = Client.language !== 'none' ? 'tasks' : '';
+  tasksResource = TranslationsConfig.isI18nEnabled() ? 'tasks' : '';
 
   /**
    * Specifies the resource key for the help window title. If the
@@ -505,7 +506,7 @@ export class Editor extends EventSource {
    * error message. Default is 'help'.
    * @default 'help'
    */
-  helpResource = Client.language !== 'none' ? 'help' : '';
+  helpResource = TranslationsConfig.isI18nEnabled() ? 'help' : '';
 
   /**
    * Specifies the resource key for the outline window title. If the
@@ -513,7 +514,7 @@ export class Editor extends EventSource {
    * error message. Default is 'outline'.
    * @default 'outline'
    */
-  outlineResource = Client.language !== 'none' ? 'outline' : '';
+  outlineResource = TranslationsConfig.isI18nEnabled() ? 'outline' : '';
 
   /**
    * Reference to the {@link MaxWindow} that contains the outline. The {@link outline}

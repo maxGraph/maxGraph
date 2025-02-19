@@ -45,6 +45,7 @@ import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
 import type TooltipHandler from './handler/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
+import { TranslationsConfig } from '../i18n/config';
 
 /**
  * @class GraphView
@@ -119,14 +120,14 @@ export class GraphView extends EventSource {
    * If the resource for this key does not exist then the value is used as
    * the status message. Default is 'done'.
    */
-  doneResource = Client.language !== 'none' ? 'done' : '';
+  doneResource = TranslationsConfig.isI18nEnabled() ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the document is
    * being updated. If the resource for this key does not exist then the
    * value is used as the status message. Default is 'updatingDocument'.
    */
-  updatingDocumentResource = Client.language !== 'none' ? 'updatingDocument' : '';
+  updatingDocumentResource = TranslationsConfig.isI18nEnabled() ? 'updatingDocument' : '';
 
   /**
    * Specifies if string values in cell styles should be evaluated using

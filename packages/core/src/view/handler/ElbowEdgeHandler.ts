@@ -27,6 +27,7 @@ import Client from '../../Client';
 import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import { HandleConfig } from './config';
+import { TranslationsConfig } from '../../i18n/config';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and
@@ -57,8 +58,9 @@ class ElbowEdgeHandler extends EdgeHandler {
    * exist then the value is used as the error message.
    * @default 'doubleClickOrientation'.
    */
-  doubleClickOrientationResource =
-    Client.language !== 'none' ? 'doubleClickOrientation' : '';
+  doubleClickOrientationResource = TranslationsConfig.isI18nEnabled()
+    ? 'doubleClickOrientation'
+    : '';
 
   /**
    * Overrides {@link EdgeHandler.createBends} to create custom bends.

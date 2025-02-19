@@ -104,8 +104,8 @@ class Translations {
   static loadSpecialBundle = true;
 
   /**
-   * Hook for subclassers to disable support for a given language. This
-   * implementation returns true if `lan` is in {@link Client.languages}.
+   * Hook for subclassers to disable support for a given language.
+   * This implementation returns `true` if `lan` is in {@link TranslationsConfig.languages}.
    *
    * @param lan The current language.
    */
@@ -189,8 +189,14 @@ class Translations {
     lan: string | null = null,
     callback: Function | null = null
   ): void => {
-    lan =
-      lan != null ? lan : Client.language != null ? Client.language.toLowerCase() : NONE;
+    // TODO validate this simplification
+    // lan =
+    //   lan != null
+    //     ? lan
+    //     : TranslationsConfig.getLanguage() != null
+    //       ? TranslationsConfig.getLanguage().toLowerCase()
+    //       : NONE;
+    lan ??= TranslationsConfig.getLanguage()?.toLowerCase() ?? NONE;
 
     if (lan !== NONE) {
       const defaultBundle = Translations.getDefaultBundle(basename, lan);
