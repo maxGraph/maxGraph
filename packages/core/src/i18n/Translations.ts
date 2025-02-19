@@ -22,8 +22,6 @@ import { get, load } from '../util/MaxXmlRequest';
 import type MaxXmlRequest from '../util/MaxXmlRequest';
 import { TranslationsConfig } from './config';
 
-// mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js
-
 /**
  * Replaces the given placeholders with the given parameters.
  *
@@ -57,6 +55,8 @@ const replacePlaceholders = (value: string, params: string[]): string => {
 
   return result.join('');
 };
+
+// mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js
 
 /**
  * Implements internationalization. You can provide any number of
