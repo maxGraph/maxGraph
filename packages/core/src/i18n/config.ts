@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { isNullish } from '../util/Utils';
+
 function getNavigatorLanguage() {
   return typeof window !== 'undefined' ? navigator.language : 'en';
 }
@@ -59,11 +61,7 @@ class TranslationsConfigBase {
   }
 
   setLanguage(value: string | undefined | null): void {
-    if (typeof value !== 'undefined' && value != null) {
-      this.language = value;
-    } else {
-      this.language = getNavigatorLanguage();
-    }
+    this.language = !isNullish(value) ? value : getNavigatorLanguage();
   }
 
   // TODO use get/set + use empty array as default
@@ -79,7 +77,7 @@ class TranslationsConfigBase {
   languages: string[] | null = null;
 
   setLanguages(value: string[] | null | undefined): void {
-    if (typeof value !== 'undefined' && value != null) {
+    if (!isNullish(value)) {
       this.languages = value;
     }
   }
@@ -94,11 +92,7 @@ class TranslationsConfigBase {
   defaultLanguage = 'en';
 
   setDefaultLanguage(value: string | undefined | null): void {
-    if (typeof value !== 'undefined' && value != null) {
-      this.defaultLanguage = value;
-    } else {
-      this.defaultLanguage = 'en';
-    }
+    this.defaultLanguage = !isNullish(value) ? value : 'en';
   }
 }
 
