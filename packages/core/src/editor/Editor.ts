@@ -317,8 +317,6 @@ import { TranslationsConfig } from '../i18n/config';
  * Translations.loadResources();
  * // Load resources for the Editor
  * Translations.add(`${Client.basePath}/resources/editor`);
- * //
- * // Client.defaultBundles.push(`${Client.basePath}/resources/editor`);
  * ```
  *
  * #### Callback: onInit
