@@ -22,40 +22,6 @@ import { get, load } from '../util/MaxXmlRequest';
 import type MaxXmlRequest from '../util/MaxXmlRequest';
 import { TranslationsConfig } from './config';
 
-/**
- * Replaces the given placeholders with the given parameters.
- *
- * @param value String that contains the placeholders.
- * @param params Array of the values for the placeholders of the form {1}...{n}
- * to be replaced with in the resulting string.
- */
-const replacePlaceholders = (value: string, params: string[]): string => {
-  const result = [];
-  let index = null;
-
-  for (let i = 0; i < value.length; i += 1) {
-    const c = value.charAt(i);
-
-    if (c === '{') {
-      index = '';
-    } else if (index != null && c === '}') {
-      index = parseInt(index) - 1;
-
-      if (index >= 0 && index < params.length) {
-        result.push(params[index]);
-      }
-
-      index = null;
-    } else if (index != null) {
-      index += c;
-    } else {
-      result.push(c);
-    }
-  }
-
-  return result.join('');
-};
-
 // mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js
 
 /**
@@ -362,9 +328,43 @@ class Translations {
 
     // Replaces the placeholders with the values in the array
     if (value != null && params != null) {
-      value = replacePlaceholders(value, params);
+      value = Translations.replacePlaceholders(value, params);
     }
     return value;
+  };
+
+  /**
+   * Replaces the given placeholders with the given parameters.
+   *
+   * @param value String that contains the placeholders.
+   * @param params Array of the values for the placeholders of the form {1}...{n}
+   * to be replaced with in the resulting string.
+   */
+  static replacePlaceholders = (value: string, params: string[]): string => {
+    const result = [];
+    let index = null;
+
+    for (let i = 0; i < value.length; i += 1) {
+      const c = value.charAt(i);
+
+      if (c === '{') {
+        index = '';
+      } else if (index != null && c === '}') {
+        index = parseInt(index) - 1;
+
+        if (index >= 0 && index < params.length) {
+          result.push(params[index]);
+        }
+
+        index = null;
+      } else if (index != null) {
+        index += c;
+      } else {
+        result.push(c);
+      }
+    }
+
+    return result.join('');
   };
 
   /**
