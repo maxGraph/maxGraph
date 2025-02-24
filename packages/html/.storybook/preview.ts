@@ -20,13 +20,10 @@ const defaultLogger = new NoOpLogger();
 // defaultLogger.debugEnabled = true;
 // defaultLogger.traceEnabled = true;
 
-console.warn('@@@@preview.ts - loading i18n resources for Graph...');
+defaultLogger.info('[sb-config] Loading i18n resources for Graph...');
 Translations.add(`${Client.basePath}/i18n/graph`, null, (): void => {
-  console.warn('@@@@preview.ts - i18n resources loaded for Graph');
+  defaultLogger.info('[sb-config] i18n resources loaded for Graph');
 });
-// Translations.loadResources((): void => {
-//   console.warn('@@@@preview.ts - i18n resources loaded');
-// });
 
 const resetMaxGraphConfigs = (): void => {
   GlobalConfig.logger = defaultLogger;
