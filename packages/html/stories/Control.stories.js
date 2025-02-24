@@ -53,7 +53,7 @@ const Template = ({ label, ...args }) => {
   div.appendChild(container);
 
   // Specifies the URL and size of the new control
-  const deleteImage = new ImageBox('images/forbidden.png', 16, 16);
+  const deleteImage = new ImageBox('images/overlays/forbidden.png', 16, 16);
 
   class MyCustomCellRenderer extends CellRenderer {
     createControl(state) {
