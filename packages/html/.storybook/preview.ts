@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/html';
 import {
+  Client,
   GlobalConfig,
   NoOpLogger,
   resetEdgeHandlerConfig,
@@ -9,6 +10,7 @@ import {
   resetOrthogonalConnectorConfig,
   resetStyleDefaultsConfig,
   resetVertexHandlerConfig,
+  Translations,
 } from '@maxgraph/core';
 
 const defaultLogger = new NoOpLogger();
@@ -17,6 +19,11 @@ const defaultLogger = new NoOpLogger();
 // defaultLogger.infoEnabled = true;
 // defaultLogger.debugEnabled = true;
 // defaultLogger.traceEnabled = true;
+
+defaultLogger.info('[sb-config] Loading i18n resources for Graph...');
+Translations.add(`${Client.basePath}/i18n/graph`, null, (): void => {
+  defaultLogger.info('[sb-config] i18n resources loaded for Graph');
+});
 
 const resetMaxGraphConfigs = (): void => {
   GlobalConfig.logger = defaultLogger;

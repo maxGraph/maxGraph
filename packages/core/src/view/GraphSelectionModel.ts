@@ -77,20 +77,22 @@ class GraphSelectionModel extends EventSource {
   /**
    * Specifies the resource key for the status message after a long operation.
    * If the resource for this key does not exist then the value is used as
-   * the status message. Default is 'done'.
+   * the status message.
+   * @default 'done'
    */
   doneResource = Client.language !== 'none' ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the selection is
    * being updated. If the resource for this key does not exist then the
-   * value is used as the status message. Default is 'updatingSelection'.
+   * value is used as the status message.
+   * @default 'updatingSelection'
    */
   updatingSelectionResource = Client.language !== 'none' ? 'updatingSelection' : '';
 
   /**
    * Specifies if only one selected item at a time is allowed.
-   * Default is false.
+   * @default false.
    */
   singleSelection = false;
 

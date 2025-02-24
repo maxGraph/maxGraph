@@ -26,6 +26,7 @@
     },
     "./css/*": "./css/*",
     "./images/*": "./images/*",
+    "./i18n/*": "./i18n/*",
     "./package.json": "./package.json",
     "./xsd/*": "./xsd/*"
   },
@@ -33,6 +34,7 @@
     "css",
     "lib",
     "images",
+    "i18n",
     "xsd"
   ],
   "homepage": "https://github.com/maxGraph/maxGraph",

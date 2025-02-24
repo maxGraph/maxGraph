@@ -4,10 +4,9 @@ description: High-level API description of maxGraph, including its structure, co
 
 # High-level API description
 
-:::note
+:::warning
 
-The following is adapted from the [mxGraph API Specification](https://github.com/jgraph/graph/blob/v4.2.2/javascript/src/js/index.txt).
-
+The following is adapted from the [mxGraph API Specification](https://github.com/jgraph/graph/blob/v4.2.2/javascript/src/js/index.txt) and needs to be reworked.
 :::
 
 ## Overview
@@ -119,28 +118,18 @@ The basename of the warning image (images/warning without extension) used in `Gr
 
 ### Translations
 
-:::warning
-
-The following comes from `mxGraph` and needs to be reworked.
-:::
-
-They are managed by the `Translations` class. \
-By default, the following conventions are used:
-- Resource files use .txt extension
-- Translation files are loaded from `${Client.basePath}/resources/`
-
-Language support is configurable via `Client.languages`. The library ships with English and German resource files.
-
-The `Editor` and `Graph` classes add the following resources to `Translations` at class loading time:
-- resources/editor*.txt
-- resources/graph*.txt
+See the [i18n](../usage/i18n.md) documentation for more details.
 
 
 ## Images
 
-The following comes from `Graph` and needs to be updated to reflect the current state of `maxGraph`.
-
 ### Recommendations for using images
+
+:::note
+
+The following comes from `mxGraph` and needs to be updated to reflect the current state of `maxGraph`.
+
+:::
 
 Use GIF images (256 color palette) in HTML elements (such as the toolbar and context menu),
 and PNG images (24 bit) for all images which appear inside the graph component.

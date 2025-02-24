@@ -117,14 +117,16 @@ export class GraphView extends EventSource {
   /**
    * Specifies the resource key for the status message after a long operation.
    * If the resource for this key does not exist then the value is used as
-   * the status message. Default is 'done'.
+   * the status message.
+   * @default 'done'
    */
   doneResource = Client.language !== 'none' ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the document is
    * being updated. If the resource for this key does not exist then the
-   * value is used as the status message. Default is 'updatingDocument'.
+   * value is used as the status message.
+   * @default 'updatingSelection'
    */
   updatingDocumentResource = Client.language !== 'none' ? 'updatingDocument' : '';
 
