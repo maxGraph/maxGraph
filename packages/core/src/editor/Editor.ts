@@ -20,7 +20,7 @@ import EditorPopupMenu from './EditorPopupMenu';
 import UndoManager from '../view/undoable_changes/UndoManager';
 import EditorKeyHandler from './EditorKeyHandler';
 import EventSource from '../view/event/EventSource';
-import Translations from '../util/Translations';
+import Translations from '../i18n/Translations';
 import Client from '../Client';
 import CompactTreeLayout from '../view/layout/CompactTreeLayout';
 import { EditorToolbar } from './EditorToolbar';
@@ -56,20 +56,7 @@ import ConnectionHandler from '../view/handler/ConnectionHandler';
 import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
-
-// TODO disabled side effects, so editor resources are not loaded by default
-// This should be done in a different way
-/**
- * Installs the required language resources at class
- * loading time.
- */
-/*
-if (mxLoadResources) {
-  mxResources.add(`${Client.basePath}/resources/editor`);
-} else {
-  Client.defaultBundles.push(`${Client.basePath}/resources/editor`);
-}
- */
+import { TranslationsConfig } from '../i18n/config';
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
@@ -324,6 +311,14 @@ if (mxLoadResources) {
  *
  * resources/editor - Language resources for Editor
  *
+ * To load the resources for the Editor, the following code should be used:
+ * ```javascript
+ * // Load maxGraph builtin resources
+ * Translations.loadResources();
+ * // Load resources for the Editor
+ * Translations.add(`${Client.basePath}/resources/editor`);
+ * ```
+ *
  * #### Callback: onInit
  *
  * Called from within the constructor. In the callback,
@@ -461,8 +456,7 @@ export class Editor extends EventSource {
    * key does not exist then the value is used as the error message. Default is 'askZoom'.
    * @default 'askZoom'
    */
-  // askZoomResource: 'askZoom' | '';
-  askZoomResource = Client.language !== 'none' ? 'askZoom' : '';
+  askZoomResource = TranslationsConfig.isEnabled() ? 'askZoom' : '';
 
   /**
    * Group: Controls and Handlers
@@ -472,14 +466,14 @@ export class Editor extends EventSource {
    * this key does not exist then the value is used as the error message. Default is 'lastSaved'.
    * @default 'lastSaved'.
    */
-  lastSavedResource = Client.language !== 'none' ? 'lastSaved' : '';
+  lastSavedResource = TranslationsConfig.isEnabled() ? 'lastSaved' : '';
 
   /**
    * Specifies the resource key for the current file info. If the resource for
    * this key does not exist then the value is used as the error message. Default is 'currentFile'.
    * @default 'currentFile'
    */
-  currentFileResource = Client.language !== 'none' ? 'currentFile' : '';
+  currentFileResource = TranslationsConfig.isEnabled() ? 'currentFile' : '';
 
   /**
    * Specifies the resource key for the properties window title. If the
@@ -487,7 +481,7 @@ export class Editor extends EventSource {
    * error message. Default is 'properties'.
    * @default 'properties'
    */
-  propertiesResource = Client.language !== 'none' ? 'properties' : '';
+  propertiesResource = TranslationsConfig.isEnabled() ? 'properties' : '';
 
   /**
    * Specifies the resource key for the tasks window title. If the
@@ -495,7 +489,7 @@ export class Editor extends EventSource {
    * error message. Default is 'tasks'.
    * @default 'tasks'
    */
-  tasksResource = Client.language !== 'none' ? 'tasks' : '';
+  tasksResource = TranslationsConfig.isEnabled() ? 'tasks' : '';
 
   /**
    * Specifies the resource key for the help window title. If the
@@ -503,7 +497,7 @@ export class Editor extends EventSource {
    * error message. Default is 'help'.
    * @default 'help'
    */
-  helpResource = Client.language !== 'none' ? 'help' : '';
+  helpResource = TranslationsConfig.isEnabled() ? 'help' : '';
 
   /**
    * Specifies the resource key for the outline window title. If the
@@ -511,7 +505,7 @@ export class Editor extends EventSource {
    * error message. Default is 'outline'.
    * @default 'outline'
    */
-  outlineResource = Client.language !== 'none' ? 'outline' : '';
+  outlineResource = TranslationsConfig.isEnabled() ? 'outline' : '';
 
   /**
    * Reference to the {@link MaxWindow} that contains the outline. The {@link outline}

@@ -9,6 +9,7 @@ import {
   resetManhattanConnectorConfig,
   resetOrthogonalConnectorConfig,
   resetStyleDefaultsConfig,
+  resetTranslationsConfig,
   resetVertexHandlerConfig,
   Translations,
 } from '@maxgraph/core';
@@ -34,6 +35,7 @@ const resetMaxGraphConfigs = (): void => {
   resetManhattanConnectorConfig();
   resetOrthogonalConnectorConfig();
   resetStyleDefaultsConfig();
+  resetTranslationsConfig();
   resetVertexHandlerConfig();
 };
 

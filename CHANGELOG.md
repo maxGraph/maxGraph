@@ -24,6 +24,13 @@ They had been made public by mistake, and had been considered internal since the
 So, remove it without replacement.
 - `Client.VERSION` moved to `constants.VERSION`. VERSION is supposed to be immutable as it represents the actual version of maxGraph.
 When it was stored in Client, it was a static property that could be modified. Moving it to the constants module ensures that it cannot be modified.
+- All elements that were in `Client` to manage the configuration of `Translations` have moved to `TranslationsConfig`:
+  - `Client.defaultLanguage` to `TranslationsConfig.getDefaultLanguage`
+  - `Client.setDefaultLanguage` to `TranslationsConfig.setDefaultLanguage`
+  - `Client.language` to `TranslationsConfig.getLanguage`
+  - `Client.setLanguage` to `TranslationsConfig.setLanguage`
+  - `Client.languages` to `TranslationsConfig.getLanguages`
+  - `Client.setLanguages` to `TranslationsConfig.setLanguages`
 - `ManhattanConnector` is now configured with the global `ManhattanConnectorConfig` object.
 The following properties that were previously on `EdgeStyle` have moved to `ManhattanConnectorConfig`:
   - `MANHATTAN_END_DIRECTIONS` to `endDirections`

@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../Client';
 import EventSource from '../view/event/EventSource';
 import { Graph } from './Graph';
 import Cell from './cell/Cell';
@@ -24,10 +23,9 @@ import SelectionChange from './undoable_changes/SelectionChange';
 import UndoableEdit from './undoable_changes/UndoableEdit';
 import EventObject from './event/EventObject';
 import InternalEvent from './event/InternalEvent';
+import { TranslationsConfig } from '../i18n/config';
 
 /**
- * Class: mxGraphSelectionModel
- *
  * Implements the selection model for a graph. Here is a listener that handles
  * all removed selection cells.
  *
@@ -80,7 +78,7 @@ class GraphSelectionModel extends EventSource {
    * the status message.
    * @default 'done'
    */
-  doneResource = Client.language !== 'none' ? 'done' : '';
+  doneResource = TranslationsConfig.isEnabled() ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the selection is
@@ -88,7 +86,7 @@ class GraphSelectionModel extends EventSource {
    * value is used as the status message.
    * @default 'updatingSelection'
    */
-  updatingSelectionResource = Client.language !== 'none' ? 'updatingSelection' : '';
+  updatingSelectionResource = TranslationsConfig.isEnabled() ? 'updatingSelection' : '';
 
   /**
    * Specifies if only one selected item at a time is allowed.

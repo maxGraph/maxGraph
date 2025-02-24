@@ -363,9 +363,11 @@ managing development mode in that way anymore.
 - `mxLoadResources`: not used anymore
 - `mxLoadStylesheets`: not used anymore
 - `mxResourceExtension`: it was only used in `Translations`, so only keep the property in `Translations`
+- languages properties are replaced by getters in `TranslationsConfig` (0.16.0)
 
 Removed methods
 - `isBrowserSupported` (0.16.0): no longer necessary
+- `loadResources`: used `Translations.loadResources`
 - `setForceIncludes`: the `mxForceIncludes` property has been removed
 - `setLoadResources`: the `mxLoadResources` property has been removed
 - `setLoadStylesheets`: the `mxLoadStylesheets` property has been removed
@@ -375,6 +377,7 @@ Moved properties
 - `VERSION` moved to `constants.VERSION` (0.16.0)
 
 Moved methods
+- languages setters moved to `TranslationsConfig` (0.16.0)
 - `link` method moved and renamed `domUtils.addLinkToHead`
 
 
