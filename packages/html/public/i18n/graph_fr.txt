@@ -1,0 +1,11 @@
+alreadyConnected=Les noeuds sont déjà connectés
+containsValidationErrors=Contient des erreurs de validation
+updatingDocument=Mise à jour du Document. Merci de patienter...
+updatingSelection=Mise à jour de la Sélection. Merci de patienter...
+collapse-expand=Réduire/Développer
+doubleClickOrientation=Doubleclick pour changer l'orientation
+close=Fermer
+error=Erreur
+done=Terminé
+cancel=Annuler
+ok=OK

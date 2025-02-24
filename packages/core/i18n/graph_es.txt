@@ -1,0 +1,11 @@
+alreadyConnected=Nodos ya conectados
+containsValidationErrors=Contiene errores de validación
+updatingDocument=Actualizando Documento. Por favor espere...
+updatingSelection=Actualizando Selección. Por favor espere...
+collapse-expand=Colapsar/Expandir
+doubleClickOrientation=Doble click para cambiar orientación
+close=Cerrar
+error=Error
+done=Hecho
+cancel=Cancelar
+ok=OK
