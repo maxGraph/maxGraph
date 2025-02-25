@@ -431,6 +431,9 @@ Some methods were removed:
 - `mxGraph.isCellVisible(cell)` see [discussion #179](https://github.com/maxGraph/maxGraph/discussions/179#discussioncomment-5389942) for rationale
 
 
+2 methods of Graph moved to tooltip plugin
+
+
 #### `mxGraphModel`
 
 Several methods from the `mxGraphModel` class have been moved to the `Cell` class. These methods no longer need the `cell` parameter:
