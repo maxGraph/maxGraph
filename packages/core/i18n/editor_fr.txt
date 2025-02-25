@@ -1,0 +1,5 @@
+askZoom=Entrer zoom (%)
+properties=Propriétés
+outline=Aperçu
+tasks=Tâches
+help=Aide
