@@ -45,6 +45,7 @@ import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
 import type TooltipHandler from './handler/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
+import { TranslationsConfig } from '../i18n/config';
 
 /**
  * @class GraphView
@@ -120,7 +121,7 @@ export class GraphView extends EventSource {
    * the status message.
    * @default 'done'
    */
-  doneResource = Client.language !== 'none' ? 'done' : '';
+  doneResource = TranslationsConfig.isEnabled() ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the document is
@@ -128,7 +129,7 @@ export class GraphView extends EventSource {
    * value is used as the status message.
    * @default 'updatingSelection'
    */
-  updatingDocumentResource = Client.language !== 'none' ? 'updatingDocument' : '';
+  updatingDocumentResource = TranslationsConfig.isEnabled() ? 'updatingDocument' : '';
 
   /**
    * Specifies if string values in cell styles should be evaluated using

@@ -18,6 +18,7 @@ The following objects can be used to configure `maxGraph` globally:
   - `HandleConfig` (since 0.14.0): for shared handle configurations.
   - `StencilShapeConfig` (since 0.11.0): for stencil shapes.
   - `StyleDefaultsConfig` (since 0.14.0): for the default values of the Cell styles.
+  - `TranslationsConfig` (since 0.16.0): for the configuration of `Translations`.
   - `VertexHandlerConfig` (since 0.12.0): for `VertexHandler`.
   - For Connectors/EdgeStyles:
     - `EntityRelationConnectorConfig` (since 0.15.0): for `EntityRelation`.
@@ -29,6 +30,7 @@ Some functions are provided to reset the global configuration to the default val
   - `resetEdgeHandlerConfig` (since 0.14.0)
   - `resetHandleConfig` (since 0.14.0)
   - `resetStyleDefaultsConfig` (since 0.14.0)
+  - `resetTranslationsConfig` (since 0.16.0)
   - `resetVertexHandlerConfig` (since 0.14.0)
   - For Connectors/EdgeStyles:
     - `resetEntityRelationConnectorConfig` (since 0.15.0)

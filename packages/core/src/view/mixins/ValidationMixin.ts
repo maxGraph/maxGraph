@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import type Cell from '../cell/Cell';
-import Translations from '../../util/Translations';
+import Translations from '../../i18n/Translations';
 import { isNode } from '../../util/domUtils';
 import type { Graph } from '../Graph';
 
