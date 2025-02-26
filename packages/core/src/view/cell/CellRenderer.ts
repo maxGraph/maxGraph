@@ -466,23 +466,19 @@ class CellRenderer {
 
     for (const cellOverlay of cellOverlays) {
       const shape = state.overlays.remove(cellOverlay);
-
-      if (!shape) {
-        const overlayShape = new ImageShape(new Rectangle(), cellOverlay.image.src);
-        overlayShape.dialect = graph.dialect;
-        overlayShape.preserveImageAspect = false;
-        overlayShape.overlay = cellOverlay;
-        this.initializeOverlay(state, overlayShape);
-        this.installCellOverlayListeners(state, cellOverlay, overlayShape);
-
-        if (cellOverlay.cursor) {
-          overlayShape.node.style.cursor = cellOverlay.cursor;
-        }
-
-        createdOverlays.put(cellOverlay, overlayShape);
-      } else {
+      if (shape) {
         createdOverlays.put(cellOverlay, shape);
+        continue;
       }
+
+      const overlayShape = this.createOverlayShape(state, cellOverlay);
+      overlayShape.dialect = graph.dialect;
+      overlayShape.overlay = cellOverlay;
+      this.initializeOverlay(state, overlayShape);
+      this.installCellOverlayListeners(state, cellOverlay, overlayShape);
+      this.configureOverlayShape(state, cellOverlay, overlayShape);
+
+      createdOverlays.put(cellOverlay, overlayShape);
     }
 
     // Removes unused
@@ -491,6 +487,19 @@ class CellRenderer {
     });
 
     state.overlays = createdOverlays;
+  }
+
+  /**
+   * Create the Shape of the overlay.
+   *
+   * @param _state {@link CellState} for which the overlay shape should be created.
+   * @param cellOverlay {@link CellOverlay} used to create the Shape of the overlay.
+   * @since 0.16.0
+   */
+  protected createOverlayShape(_state: CellState, cellOverlay: CellOverlay): Shape {
+    const overlayShape = new ImageShape(new Rectangle(), cellOverlay.image.src);
+    overlayShape.preserveImageAspect = false;
+    return overlayShape;
   }
 
   /**
@@ -542,6 +551,26 @@ class CellRenderer {
           new EventObject(InternalEvent.CLICK, { event: evt, cell: state.cell })
         );
       });
+    }
+  }
+
+  /**
+   * Configure the Shape of the overlay. Generally, it is used to configure the DOM node of the Shape
+   *
+   * The default implementation set the cursor in the DOM node of the Shape based on the {@link CellOverlay.cursor}.
+   *
+   * @param _state {@link CellState} for which the overlay shape should be created.
+   * @param cellOverlay {@link CellOverlay} used to create the Shape of the overlay.
+   * @param overlayShape the {@link Shape} of the overlay.
+   * @since 0.16.0
+   */
+  protected configureOverlayShape(
+    _state: CellState,
+    cellOverlay: CellOverlay,
+    overlayShape: Shape
+  ): void {
+    if (cellOverlay.cursor) {
+      overlayShape.node.style.cursor = cellOverlay.cursor;
     }
   }
 
