@@ -1,8 +1,10 @@
 import type { Preview } from '@storybook/html';
 import {
   Client,
+  CodecRegistry,
   GlobalConfig,
   NoOpLogger,
+  ObjectCodec,
   resetEdgeHandlerConfig,
   resetEntityRelationConnectorConfig,
   resetHandleConfig,
@@ -11,6 +13,8 @@ import {
   resetStyleDefaultsConfig,
   resetTranslationsConfig,
   resetVertexHandlerConfig,
+  StencilShapeRegistry,
+  StylesheetCodec,
   Translations,
 } from '@maxgraph/core';
 
@@ -26,6 +30,11 @@ Translations.add(`${Client.basePath}/i18n/graph`, null, (): void => {
   defaultLogger.info('[sb-config] i18n resources loaded for Graph');
 });
 
+const originalAllowEvalConfig = {
+  objectCodec: ObjectCodec.allowEval,
+  stylesheetCodec: StylesheetCodec.allowEval,
+};
+
 const resetMaxGraphConfigs = (): void => {
   GlobalConfig.logger = defaultLogger;
 
@@ -37,6 +46,18 @@ const resetMaxGraphConfigs = (): void => {
   resetStyleDefaultsConfig();
   resetTranslationsConfig();
   resetVertexHandlerConfig();
+
+  // Reset registries to remove additional elements registered in a story
+  // The objects storing the registered elements are currently public, but they should not be part of the public API.
+  // They will be marked as private in the future and clear functions will probably provide instead.
+  // Codec resets
+  CodecRegistry.aliases = {};
+  CodecRegistry.codecs = {};
+  ObjectCodec.allowEval = originalAllowEvalConfig.objectCodec;
+  StylesheetCodec.allowEval = originalAllowEvalConfig.stylesheetCodec;
+
+  // The following registries are filled by stories only
+  StencilShapeRegistry.stencils = {};
 };
 
 // This function is a workaround to destroy mxGraph elements that are not released by the previous story.
