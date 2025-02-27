@@ -33,7 +33,7 @@ import {
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
-// required by the custom code (see the end of the Story)
+// required by the custom code (see CustomCellRenderer)
 import './css/overlays.css';
 
 export default {
