@@ -44,45 +44,8 @@ import {
 import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand and MaxPopupMenu
 import '@maxgraph/core/css/common.css';
-
-const CSS_TEMPLATE = `
-body div.mxPopupMenu {
-  -webkit-box-shadow: 3px 3px 6px #C0C0C0;
-  -moz-box-shadow: 3px 3px 6px #C0C0C0;
-  box-shadow: 3px 3px 6px #C0C0C0;
-  background: white;
-  position: absolute;
-  border: 3px solid #e7e7e7;
-  padding: 3px;
-}
-body table.mxPopupMenu {
-  border-collapse: collapse;
-  margin: 0px;
-}
-body tr.mxPopupMenuItem {
-  color: black;
-  cursor: default;
-}
-body td.mxPopupMenuItem {
-  padding: 6px 60px 6px 30px;
-  font-family: Arial;
-  font-size: 10pt;
-}
-body td.mxPopupMenuIcon {
-  background-color: white;
-  padding: 0px;
-}
-body tr.mxPopupMenuItemHover {
-  background-color: #eeeeee;
-  color: black;
-}
-table.mxPopupMenu hr {
-  border-top: solid 1px #cccccc;
-}
-table.mxPopupMenu tr {
-  font-size: 4pt;
-}
-`;
+// custom style for Popup Menu
+import './css/show-region.css';
 
 export default {
   title: 'Misc/ShowRegion',
@@ -97,10 +60,6 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  const styleElm = document.createElement('style');
-  styleElm.innerText = CSS_TEMPLATE;
-  document.head.appendChild(styleElm);
-
   const mainDiv = document.createElement('div');
   const divMessage = document.createElement('div');
   divMessage.innerHTML =
