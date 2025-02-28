@@ -47,46 +47,8 @@ import { globalTypes, globalValues } from './shared/args.js';
 import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 // style required by RubberBand and MaxPopupMenu
 import '@maxgraph/core/css/common.css';
-
-// Use custom CSS for the popup menu
-const CSS_TEMPLATE = `
-body div.mxPopupMenu {
-  -webkit-box-shadow: 3px 3px 6px #C0C0C0;
-  -moz-box-shadow: 3px 3px 6px #C0C0C0;
-  box-shadow: 3px 3px 6px #C0C0C0;
-  background: white;
-  position: absolute;
-  border: 3px solid #e7e7e7;
-  padding: 3px;
-}
-body table.mxPopupMenu {
-  border-collapse: collapse;
-  margin: 0px;
-}
-body tr.mxPopupMenuItem {
-  color: black;
-  cursor: default;
-}
-body td.mxPopupMenuItem {
-  padding: 6px 60px 6px 30px;
-  font-family: Arial;
-  font-size: 10pt;
-}
-body td.mxPopupMenuIcon {
-  background-color: white;
-  padding: 0px;
-}
-body tr.mxPopupMenuItemHover {
-  background-color: #eeeeee;
-  color: black;
-}
-table.mxPopupMenu hr {
-  border-top: solid 1px #cccccc;
-}
-table.mxPopupMenu tr {
-  font-size: 4pt;
-}
-`;
+// custom style for Popup Menu
+import './css/menu-style.css';
 
 export default {
   title: 'Misc/MenuStyle',
@@ -100,10 +62,6 @@ export default {
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
-
-  const styleElm = document.createElement('style');
-  styleElm.innerText = CSS_TEMPLATE;
-  document.head.appendChild(styleElm);
 
   const container = createGraphContainer(args);
 
