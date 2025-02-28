@@ -341,10 +341,10 @@ export const EdgeMixin: PartialType = {
         (source !== target &&
           ((incoming &&
             target === cell &&
-            (!parent || this.isValidAncestor(<Cell>source, parent, recurse))) ||
+            (!parent || this.isValidAncestor(source, parent, recurse))) ||
             (outgoing &&
               source === cell &&
-              (!parent || this.isValidAncestor(<Cell>target, parent, recurse)))))
+              (!parent || this.isValidAncestor(target, parent, recurse)))))
       ) {
         result.push(edges[i]);
       }

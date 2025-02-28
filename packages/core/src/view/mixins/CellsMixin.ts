@@ -1750,7 +1750,7 @@ export const CellsMixin: PartialType = {
   },
 
   isValidAncestor(cell, parent, recurse = false) {
-    return recurse ? parent.isAncestor(cell) : cell.getParent() === parent;
+    return recurse ? parent.isAncestor(cell) : cell?.getParent() === parent;
   },
 
   /*****************************************************************************

@@ -256,3 +256,14 @@ describe('isCellRotatable', () => {
     ).toBeFalsy();
   });
 });
+
+describe('isValidAncestor', () => {
+  test('Cell does not match parent', () => {
+    expect(
+      createGraphWithoutPlugins().isValidAncestor(new Cell(), new Cell())
+    ).toBeFalsy();
+  });
+  test('null Cell', () => {
+    expect(createGraphWithoutPlugins().isValidAncestor(null, new Cell())).toBeFalsy();
+  });
+});
