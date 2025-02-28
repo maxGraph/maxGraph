@@ -28,10 +28,10 @@ import type { ColorValue } from '../../types';
  * Event handler that highlights cells
  *
  * ```javascript
- * new mxCellTracker(graph, '#00FF00');
+ * new CellTracker(graph, '#00FF00');
  * ```
  *
- * For detecting dragEnter, dragOver and dragLeave on cells, the following code can be used:
+ * For detecting `dragEnter`, `dragOver` and `dragLeave` on cells, the following code can be used:
  * ```javascript
  * graph.addMouseListener(
  * {
@@ -102,8 +102,7 @@ class CellTracker extends CellMarker {
   }
 
   /**
-   * Handles the event by highlighting the cell under the mousepointer if it
-   * is over the hotspot region of the cell.
+   * Handles the event by highlighting the cell under the mouse pointer if it is over the hotspot region of the cell.
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
     if (this.isEnabled()) {
@@ -119,9 +118,8 @@ class CellTracker extends CellMarker {
   }
 
   /**
-   * Destroys the object and all its resources and DOM nodes. This doesn't
-   * normally need to be called. It is called automatically when the window
-   * unloads.
+   * Destroys the object and all its resources and DOM nodes. This doesn't normally need to be called.
+   * It is called automatically when the window unloads.
    */
   destroy() {
     if (!this.destroyed) {

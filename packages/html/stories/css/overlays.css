@@ -1,0 +1,22 @@
+:root {
+    --color-ellipse: #5151c1; /* rgb: 81, 81, 193 */
+}
+
+.overlay-custom > ellipse {
+    fill: var(--color-ellipse);
+    stroke: var(--color-ellipse);
+    animation: pulse-animation 0.8s infinite alternate;
+}
+
+@keyframes pulse-animation {
+    0% {
+        fill-opacity: 100%;
+        /* 80% opacity */
+        filter: drop-shadow(0 0 0 rgba(0, 0, 0, .8));
+    }
+    100% {
+        fill-opacity: 90%;
+        /* 100% opacity */
+        filter: drop-shadow(0 0 .5rem rgba(0, 0, 0, 1));
+    }
+}
