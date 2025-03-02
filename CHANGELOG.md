@@ -9,6 +9,14 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+## 0.16.0
+
+Release date: `2025-03-02`
+
+For more details, see the [0.16.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.16.0) on the GitHub release page.
+
+This new version enhances internationalization (i18n), improves connector configurations, and prepares for future updates with tree shaking optimizations.
+
 **Breaking Changes**:
 - The `utils.isNullish` and `utils.isNotNullish` functions are now marked as private.
 They had been made public by mistake, and had been considered internal since their introduction.
@@ -22,8 +30,10 @@ They had been made public by mistake, and had been considered internal since the
     - `stringUtils.getStringValue`
 - `Client.isBrowserSupported` has been removed. It didn't correctly validate all prerequisites required to know if the browser supports maxGraph.
 So, remove it without replacement.
-- `Client.VERSION` moved to `constants.VERSION`. VERSION is supposed to be immutable as it represents the actual version of maxGraph.
-When it was stored in Client, it was a static property that could be modified. Moving it to the constants module ensures that it cannot be modified.
+- `Client.VERSION` moved to `constants.VERSION`.
+  - `VERSION` is supposed to be immutable as it represents the actual version of maxGraph.
+  - When it was stored in `Client`, it was a static property that could be modified.
+  - Moving it to the constants module ensures that it cannot be modified.
 - All elements that were in `Client` to manage the configuration of `Translations` have moved to `TranslationsConfig`:
   - `Client.defaultLanguage` to `TranslationsConfig.getDefaultLanguage`
   - `Client.setDefaultLanguage` to `TranslationsConfig.setDefaultLanguage`
@@ -42,7 +52,9 @@ The following properties that were previously on `EdgeStyle` have moved to `Manh
 The following properties that were previously on `EdgeStyle` have moved to `OrthogonalConnectorConfig`:
   - `orthBuffer` to `buffer`
   - `orthPointsFallback` to `pointsFallback`
-
+- properties and utility methods previously exposed by `EdgeStyle` are now only internal.
+  - The `getRoutePattern` method has been completely removed as it was not being used.
+  - Nor was it used in the entire mxGraph and draw.io codebase.
 
 ## 0.15.1
 
