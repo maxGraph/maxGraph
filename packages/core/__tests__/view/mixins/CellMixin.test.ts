@@ -258,12 +258,46 @@ describe('isCellRotatable', () => {
 });
 
 describe('isValidAncestor', () => {
-  test('Cell does not match parent', () => {
-    expect(
-      createGraphWithoutPlugins().isValidAncestor(new Cell(), new Cell())
-    ).toBeFalsy();
+  function configureParentChild(parent: Cell, child: Cell) {
+    child.setParent(parent);
+    parent.children.push(child);
+  }
+
+  test('Parent is the direct parent of the Cell, recurse: false', () => {
+    const parent = new Cell();
+    const cell = new Cell();
+    cell.setParent(parent);
+    expect(createGraphWithoutPlugins().isValidAncestor(cell, parent)).toBeTruthy();
   });
-  test('null Cell', () => {
-    expect(createGraphWithoutPlugins().isValidAncestor(null, new Cell())).toBeFalsy();
+
+  test('Cell is direct child of parent but does not declare it as parent, and recurse: false', () => {
+    const cell = new Cell();
+    const parent = new Cell();
+    parent.children.push(cell);
+    expect(createGraphWithoutPlugins().isValidAncestor(cell, parent)).toBeFalsy();
+  });
+
+  test('Cell is direct child of parent, recurse: true', () => {
+    const cell = new Cell();
+    const intermediateParent = new Cell();
+    configureParentChild(intermediateParent, cell);
+    const parent = new Cell();
+    configureParentChild(parent, intermediateParent);
+    expect(createGraphWithoutPlugins().isValidAncestor(cell, parent, true)).toBeTruthy();
+  });
+
+  test.each([true, false])(
+    'Cell does not match parent, recurse: %s',
+    (recurse: boolean) => {
+      expect(
+        createGraphWithoutPlugins().isValidAncestor(new Cell(), new Cell(), recurse)
+      ).toBeFalsy();
+    }
+  );
+
+  test.each([true, false])('null Cell, recurse: %s', (recurse: boolean) => {
+    expect(
+      createGraphWithoutPlugins().isValidAncestor(null, new Cell(), recurse)
+    ).toBeFalsy();
   });
 });
