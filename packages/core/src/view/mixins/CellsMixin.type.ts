@@ -720,7 +720,7 @@ declare module '../Graph' {
      * @param parent {@link Cell} the possible parent cell
      * @param recurse boolean whether to recurse the child ancestors. Default is `false`.
      */
-    isValidAncestor: (cell: Cell, parent: Cell, recurse: boolean) => boolean;
+    isValidAncestor: (cell: Cell | null, parent: Cell, recurse?: boolean) => boolean;
 
     /**
      * Returns `true` if the given cell may not be moved, sized, bended, disconnected, edited or selected.
