@@ -116,7 +116,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const layout = new ParallelEdgeLayout(graph);
   const layoutMgr = new LayoutManager(graph);
   layoutMgr.getLayout = function (cell, _eventName: string): GraphLayout | null {
-    if (cell?.getChildCount() ?? 0 > 0) {
+    if ((cell?.getChildCount() ?? 0) > 0) {
       return layout;
     }
     return null;
