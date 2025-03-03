@@ -198,7 +198,7 @@ export type CellStateStyle = {
    * The possible values are 'horizontal' and 'vertical'.
    * @default 'horizontal'
    */
-  elbow?: string;
+  elbow?: 'horizontal' | 'vertical';
   /**
    * This defines the style of the end arrow marker.
    *
