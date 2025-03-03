@@ -40,7 +40,11 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import {
+  configureImagesBasePath,
+  createGraphContainer,
+  createMainDiv,
+} from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -61,19 +65,13 @@ export default {
 const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
 
-  const div = document.createElement('div');
-
-  const divMessage = document.createElement('div');
-  divMessage.innerHTML = `
+  const div = createMainDiv(`
   Creating a graph container and using interaction on the graph, including marquee selection, custom tooltips, context menu.
   <p>
   It also demonstrates how to use an edge style in the default stylesheet, and handle the double click on the adjustment point.
   <br>
    See also the <code>Overlays</code> Story for click event handling.
-  `;
-  divMessage.style.fontFamily = 'Arial,Helvetica,sans-serif';
-  divMessage.style.marginBottom = '1rem';
-  div.appendChild(divMessage);
+  `);
 
   const container = createGraphContainer(args);
   div.appendChild(container);

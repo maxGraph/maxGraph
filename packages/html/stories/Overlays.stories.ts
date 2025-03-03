@@ -32,7 +32,11 @@ import {
   type VAlignValue,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import {
+  configureImagesBasePath,
+  createGraphContainer,
+  createMainDiv,
+} from './shared/configure.js';
 // required by the custom code (see CustomCellRenderer)
 import './css/overlays.css';
 
@@ -49,20 +53,14 @@ export default {
 const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
 
-  const div = document.createElement('div');
-
-  const divMessage = document.createElement('div');
-  divMessage.innerHTML = `<h3>Overlays</h3>
+  const div = createMainDiv(`<h3>Overlays</h3>
   Demonstrate usage of standard overlays (using an image) and custom overlays (using custom shapes and DOM content).
   <p>
   Add an overlay when clicking on a vertex or an edge. The shape and the position of the overlay are random.
   The circle overlay has a pulsating effect.
   <br>
   Click again to remove the overlay.
-  `;
-  divMessage.style.fontFamily = 'Arial,Helvetica';
-  divMessage.style.marginBottom = '1rem';
-  div.appendChild(divMessage);
+  `);
 
   const container = createGraphContainer(args);
   div.appendChild(container);
