@@ -59,7 +59,7 @@ declare module '../Graph' {
      *
      * @param cell {@link Cell} whose tooltip should be returned.
      */
-    getTooltipForCell: (cell: Cell) => HTMLElement | string;
+    getTooltipForCell(cell: Cell): HTMLElement | string;
 
     /**
      * Specifies if tooltips should be enabled.
