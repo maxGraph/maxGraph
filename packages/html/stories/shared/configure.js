@@ -43,3 +43,21 @@ export function configureExpandedAndCollapsedImages(graph) {
   graph.options.collapsedImage = new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9);
   graph.options.expandedImage = new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9);
 }
+
+/**
+ * Create a main div including a div with the description.
+ *
+ * @param htmlDescription {string} the description to be displayed in the main div
+ * @returns {HTMLDivElement} the main div including a div with the description
+ */
+export function createMainDiv(htmlDescription) {
+  const mainDiv = document.createElement('div');
+  const divMessage = document.createElement('div');
+  mainDiv.appendChild(divMessage);
+
+  divMessage.innerHTML = htmlDescription;
+  divMessage.style.fontFamily = 'Arial,Helvetica,sans-serif';
+  divMessage.style.marginBottom = '1rem';
+
+  return mainDiv;
+}

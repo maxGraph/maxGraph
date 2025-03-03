@@ -33,7 +33,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -56,16 +56,11 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  const div = document.createElement('div');
-
-  const divMessage = document.createElement('div');
-  divMessage.innerHTML = `To add a new edge bend, shift-click on the edge where you wish to add it.
+  const div =
+    createMainDiv(`To add a new edge bend, shift-click on the edge where you wish to add it.
   <br>
     To remove an existing edge bend, shift-click on it.
-  `;
-  divMessage.style.fontFamily = 'Arial,Helvetica';
-  divMessage.style.marginBottom = '1rem';
-  div.appendChild(divMessage);
+  `);
 
   const container = createGraphContainer(args);
   div.appendChild(container);

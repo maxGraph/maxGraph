@@ -41,7 +41,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 // style required by RubberBand and MaxPopupMenu
 import '@maxgraph/core/css/common.css';
 // custom style for Popup Menu
@@ -60,12 +60,9 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  const mainDiv = document.createElement('div');
-  const divMessage = document.createElement('div');
-  divMessage.innerHTML =
-    'Use the right mouse button to select a region of the diagram and select <i>Show this</i>.';
-  divMessage.style.marginBottom = '1rem';
-  mainDiv.appendChild(divMessage);
+  const mainDiv = createMainDiv(
+    'Use the right mouse button to select a region of the diagram and select <i>Show this</i>.'
+  );
 
   const container = createGraphContainer(args);
   mainDiv.appendChild(container);
