@@ -92,7 +92,7 @@ describe('createEdgeHandler', () => {
   test.each([
     ['EntityRelation', EdgeStyle.EntityRelation],
     ['null', null],
-  ])('Expect EdgeSegmentHandler for edgeStyle: %s', (_name, edgeStyle) => {
+  ])('Expect EdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
     const graph = createGraphWithoutPlugins();
     const cellState = new CellState(graph.view, new Cell(), {});
     cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
