@@ -61,6 +61,7 @@ import { registerDefaultStyleElements } from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
 import { TranslationsConfig } from '../i18n/config';
+import { isNullish } from '../util/Utils';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
@@ -1024,15 +1025,16 @@ class Graph extends EventSource {
   createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
     let result = null;
     if (
-      edgeStyle == EdgeStyle.Loop ||
       edgeStyle == EdgeStyle.ElbowConnector ||
+      edgeStyle == EdgeStyle.Loop ||
       edgeStyle == EdgeStyle.SideToSide ||
       edgeStyle == EdgeStyle.TopToBottom
     ) {
       result = this.createElbowEdgeHandler(state);
     } else if (
-      edgeStyle == EdgeStyle.SegmentConnector ||
-      edgeStyle == EdgeStyle.OrthConnector
+      edgeStyle == EdgeStyle.ManhattanConnector ||
+      edgeStyle == EdgeStyle.OrthConnector ||
+      edgeStyle == EdgeStyle.SegmentConnector
     ) {
       result = this.createEdgeSegmentHandler(state);
     } else {
@@ -1226,20 +1228,22 @@ class Graph extends EventSource {
    */
   isOrthogonal(edge: CellState): boolean {
     const orthogonal = edge.style.orthogonal;
-    if (orthogonal != null) {
+    if (!isNullish(orthogonal)) {
       return orthogonal;
     }
 
     // fallback when the orthogonal style is not defined
-    const tmp = this.view.getEdgeStyle(edge);
-    return (
-      tmp === EdgeStyle.SegmentConnector ||
-      tmp === EdgeStyle.ElbowConnector ||
-      tmp === EdgeStyle.SideToSide ||
-      tmp === EdgeStyle.TopToBottom ||
-      tmp === EdgeStyle.EntityRelation ||
-      tmp === EdgeStyle.OrthConnector
-    );
+    const edgeStyle = this.view.getEdgeStyle(edge);
+
+    return [
+      EdgeStyle.EntityRelation,
+      EdgeStyle.ElbowConnector,
+      EdgeStyle.ManhattanConnector,
+      EdgeStyle.OrthConnector,
+      EdgeStyle.SegmentConnector,
+      EdgeStyle.SideToSide,
+      EdgeStyle.TopToBottom,
+    ].includes(edgeStyle!);
   }
 
   /*****************************************************************************
