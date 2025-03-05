@@ -229,7 +229,7 @@ class MaxXmlRequest {
   /**
    * Creates and returns the inner {@link request} object.
    */
-  create(): XMLHttpRequest {
+  create(): any {
     const req = new XMLHttpRequest();
 
     // TODO: Check for overrideMimeType required here?
