@@ -40,6 +40,12 @@ describe('isOrthogonal', () => {
     expect(graph.isOrthogonal(new CellState())).toBeFalsy();
   });
 
+  test.each([undefined, null])('Style of the CellState, orthogonal: %s', (orthogonal) => {
+    const graph = createGraphWithoutPlugins();
+    const cellState = new CellState(graph.view, null, { orthogonal });
+    expect(graph.isOrthogonal(cellState)).toBeFalsy();
+  });
+
   test.each([
     ['ElbowConnector', EdgeStyle.ElbowConnector],
     ['ManhattanConnector', EdgeStyle.ManhattanConnector],
