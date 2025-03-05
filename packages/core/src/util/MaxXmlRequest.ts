@@ -220,16 +220,16 @@ class MaxXmlRequest {
 
   /**
    * Returns the status as a number, eg. 404 for "Not found" or 200 for "OK".
-   * Note: The NS_ERROR_NOT_AVAILABLE for invalid responses cannot be cought.
+   * Note: The NS_ERROR_NOT_AVAILABLE for invalid responses cannot be caught.
    */
   getStatus(): number {
-    return this.request != null ? this.request.status : null;
+    return this.request?.status;
   }
 
   /**
    * Creates and returns the inner {@link request} object.
    */
-  create(): any {
+  create(): XMLHttpRequest {
     const req = new XMLHttpRequest();
 
     // TODO: Check for overrideMimeType required here?
