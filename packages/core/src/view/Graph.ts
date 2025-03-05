@@ -1235,18 +1235,15 @@ class Graph extends EventSource {
     // fallback when the orthogonal style is not defined
     const edgeStyle = this.view.getEdgeStyle(edge);
 
-    return (
-      !isNullish(edgeStyle) &&
-      [
-        EdgeStyle.EntityRelation,
-        EdgeStyle.ElbowConnector,
-        EdgeStyle.ManhattanConnector,
-        EdgeStyle.OrthConnector,
-        EdgeStyle.SegmentConnector,
-        EdgeStyle.SideToSide,
-        EdgeStyle.TopToBottom,
-      ].includes(edgeStyle)
-    );
+    return [
+      EdgeStyle.EntityRelation,
+      EdgeStyle.ElbowConnector,
+      EdgeStyle.ManhattanConnector,
+      EdgeStyle.OrthConnector,
+      EdgeStyle.SegmentConnector,
+      EdgeStyle.SideToSide,
+      EdgeStyle.TopToBottom,
+    ].includes(edgeStyle!);
   }
 
   /*****************************************************************************
