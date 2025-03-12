@@ -19,7 +19,7 @@ limitations under the License.
 /**
  * Singleton class that acts as a global converter from string to object values in a style.
  *
- * This is currently only used to perimeters and edge styles.
+ * This is currently only used for handling perimeters and edge styles.
  *
  * @category Style
  */
