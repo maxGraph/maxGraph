@@ -15,22 +15,28 @@
   "typedocOptions": {
     "out": "build/api",
     "readme": "none",
+    "excludeInternal": true,
     "excludeExternals": true,
     "excludePrivate": true,
     "categoryOrder": [
       "Configuration",
-      "Logging",
       "Edge Shapes",
       "Vertex Shapes",
+      "EdgeStyle",
+      "Editor",
+      "GUI",
+      "I18n",
       "Layout",
+      "Logging",
       "Perimeter",
       "Plugin",
       "Serialization with Codecs",
+      "Style",
       "*"
     ],
     "categorizeByGroup": false,
     "navigation": {
-      "includeCategories": false, // not enough categories to warrant this
+      "includeCategories": true, // not enough categories to warrant this
     },
   }
 }

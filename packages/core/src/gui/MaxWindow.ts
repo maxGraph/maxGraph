@@ -176,8 +176,7 @@ let activeWindow: MaxWindow | null = null;
  *
  * Fires before the window is destroyed. This event has no properties.
  *
- * @class MaxWindow
- * @extends EventSource
+ * @category GUI
  */
 class MaxWindow extends EventSource {
   constructor(

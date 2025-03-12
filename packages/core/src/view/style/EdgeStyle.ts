@@ -78,6 +78,8 @@ import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
  * ```javascript
  * style.edgeStyle = EdgeStyle.MyStyle;
  * ```
+ *
+ * @category EdgeStyle
  */
 class EdgeStyle {
   /**

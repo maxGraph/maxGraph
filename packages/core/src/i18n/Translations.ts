@@ -72,6 +72,8 @@ import { TranslationsConfig } from './config';
  * ## Loading default resources
  *
  * Call {@link loadResources} to load the default resources file for both {@link Graph} and {@link Editor}.
+ *
+ * @category I18n
  */
 class Translations {
   /*

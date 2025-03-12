@@ -39,7 +39,9 @@ let isDefaultElementsRegistered = false;
 /**
  * Add default shapes into `CellRenderer` shapes.
  *
+ * @private
  * @category Configuration
+ * @category Style
  */
 export function registerDefaultShapes() {
   if (!isDefaultElementsRegistered) {

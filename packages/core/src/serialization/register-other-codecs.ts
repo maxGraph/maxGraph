@@ -67,6 +67,7 @@ let isCoreCodecsRegistered = false;
  *              if they have never been registered before.
  * @since 0.6.0
  * @category Configuration
+ * @category Serialization with Codecs
  */
 export const registerCoreCodecs = (force = false) => {
   if (!isCoreCodecsRegistered || force) {
@@ -91,6 +92,7 @@ let isEditorCodecsRegistered = false;
  *              if they have never been registered before.
  * @since 0.6.0
  * @category Configuration
+ * @category Serialization with Codecs
  */
 export const registerEditorCodecs = (force = false) => {
   if (!isEditorCodecsRegistered || force) {
@@ -112,6 +114,7 @@ export const registerEditorCodecs = (force = false) => {
  *              if they have never been registered before.
  * @since 0.6.0
  * @category Configuration
+ * @category Serialization with Codecs
  */
 export const registerAllCodecs = (force = false) => {
   registerCoreCodecs(force);

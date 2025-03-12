@@ -24,6 +24,7 @@ import type { DirectionValue } from '../../types';
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.15.0
  * @category Configuration
+ * @category EdgeStyle
  */
 export const EntityRelationConnectorConfig = {
   /**
@@ -40,6 +41,7 @@ export const EntityRelationConnectorConfig = {
  * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.15.0
  * @category Configuration
+ * @category EdgeStyle
  */
 export const resetEntityRelationConnectorConfig = (): void => {
   // implement the reset manually as there are a few properties for now
@@ -52,6 +54,7 @@ export const resetEntityRelationConnectorConfig = (): void => {
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.16.0
  * @category Configuration
+ * @category EdgeStyle
  */
 export const OrthogonalConnectorConfig = {
   /**
@@ -78,6 +81,7 @@ const originalOrthogonalConnectorConfig = { ...OrthogonalConnectorConfig };
  * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.16.0
  * @category Configuration
+ * @category EdgeStyle
  */
 export const resetOrthogonalConnectorConfig = (): void => {
   shallowCopy(originalOrthogonalConnectorConfig, OrthogonalConnectorConfig);
@@ -119,6 +123,7 @@ export type ManhattanConnectorConfigType = {
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.16.0
  * @category Configuration
+ * @category EdgeStyle
  */
 export const ManhattanConnectorConfig: ManhattanConnectorConfigType = {
   maxAllowedDirectionChange: 90,
@@ -136,6 +141,7 @@ shallowCopy(ManhattanConnectorConfig, originalManhattanConnectorConfig);
  * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.16.0
  * @category Configuration
+ * @category EdgeStyle
  */
 export const resetManhattanConnectorConfig = (): void => {
   shallowCopy(originalManhattanConnectorConfig, ManhattanConnectorConfig);

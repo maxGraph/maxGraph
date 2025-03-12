@@ -47,6 +47,8 @@ import type { PopupMenuItem } from '../types';
  * ### `InternalEvent.SHOW`
  *
  * Fires after the menu has been shown in {@link popup}.
+ *
+ * @category GUI
  */
 class MaxPopupMenu extends EventSource {
   constructor(

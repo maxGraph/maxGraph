@@ -43,6 +43,8 @@ import type { CellStateStyle, CellStyle } from '../../types';
  * const defaultEdgeStyle = stylesheet.getDefaultEdgeStyle();
  * defaultEdgeStyle.edgeStyle = EdgeStyle.EntityRelation;
  * ```
+ *
+ * @category Style
  */
 export class Stylesheet {
   constructor() {

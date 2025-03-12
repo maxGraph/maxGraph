@@ -37,12 +37,25 @@ const values: TranslationsConfigValuesType = {
 const originalValues: TranslationsConfigValuesType = {};
 shallowCopy(values, originalValues);
 
+/**
+ * Resets {@link TranslationsConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.16.0
+ * @category Configuration
+ * @category I18n
+ */
 export const resetTranslationsConfig = (): void => {
   shallowCopy(originalValues, values);
 };
 
 /**
  * Global configuration for {@link Translations}.
+ *
+ * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.16.0
+ * @category Configuration
+ * @category I18n
  */
 export const TranslationsConfig = {
   /**

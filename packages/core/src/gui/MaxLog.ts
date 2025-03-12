@@ -28,6 +28,9 @@ import { VERSION } from '../util/Constants';
 
 /**
  * A singleton class that implements a simple console.
+ *
+ * @category GUI
+ * @category Logging
  */
 class MaxLog {
   static textarea: HTMLTextAreaElement | null = null;
