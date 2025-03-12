@@ -24,7 +24,7 @@ let isDefaultsRegistered = false;
 /**
  * Register style elements for "EdgeStyle" and "Perimeters".
  *
- * @since 0.8.0
+ * @private
  * @category Configuration
  * @category Style
  */

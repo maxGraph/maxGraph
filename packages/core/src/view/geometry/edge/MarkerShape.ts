@@ -253,7 +253,7 @@ function diamond(
 
 let isDefaultMarkersRegistered = false;
 /**
- * @since 0.11.0
+ * @private
  * @category Configuration
  * @category Style
  */

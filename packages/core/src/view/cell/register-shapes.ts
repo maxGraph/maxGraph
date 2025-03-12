@@ -39,7 +39,7 @@ let isDefaultElementsRegistered = false;
 /**
  * Add default shapes into `CellRenderer` shapes.
  *
- * @since 0.8.0
+ * @private
  * @category Configuration
  * @category Style
  */
