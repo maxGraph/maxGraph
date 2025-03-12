@@ -22,21 +22,28 @@ import KeyHandler from '../view/handler/KeyHandler';
 import Editor from './Editor';
 
 /**
- * Binds keycodes to action names in an editor.  This aggregates an internal {@link handler} and extends the implementation of {@link KeyHandler.escape} to not only cancel the editing, but also hide the properties dialog and fire an <Editor.escape> event via {@link editor}.  An instance of this class is created by {@link Editor} and stored in {@link Editor.keyHandler}.
+ * Binds keycodes to action names in an editor.
  *
- * @Example
+ * This aggregates an internal {@link handler} and extends the implementation of {@link KeyHandler.escape} to not only cancel the editing,
+ * but also hide the properties dialog and fire an {@link InternalEvent.ESCAPE} event via {@link editor}.
+ *
+ * An instance of this class is created by {@link Editor} and stored in {@link Editor.keyHandler}.
+ *
+ * ### Example
  * Bind the delete key to the delete action in an existing editor.
  * ```javascript
- * var keyHandler = new EditorKeyHandler(editor);
+ * const keyHandler = new EditorKeyHandler(editor);
  * keyHandler.bindAction(46, 'delete');
  * ```
  *
- * @Codec
- * This class uses the {@link DefaultKeyHandlerCodec} to read configuration data into an existing instance.  See {@link DefaultKeyHandlerCodec} for a description of the configuration format.
+ * ### Codec
+ * This class uses the {@link EditorKeyHandlerCodec} to read configuration data into an existing instance.  See {@link EditorKeyHandlerCodec} for a description of the configuration format.
  *
- * @Keycodes
+ * ### Keycodes
  * See {@link KeyHandler}.
  * An {@link InternalEvent.ESCAPE} event is fired via the editor if the escape key is pressed.
+ *
+ * @category Editor
  */
 export class EditorKeyHandler {
   constructor(editor: Editor | null = null) {

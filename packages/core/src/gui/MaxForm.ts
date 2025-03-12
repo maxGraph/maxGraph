@@ -24,7 +24,7 @@ import Translations from '../i18n/Translations';
 /**
  * A simple class for creating HTML forms.
  *
- * @class MaxForm
+ * @category GUI
  */
 class MaxForm {
   constructor(className: string) {

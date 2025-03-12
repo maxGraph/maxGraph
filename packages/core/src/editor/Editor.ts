@@ -391,20 +391,19 @@ import { TranslationsConfig } from '../i18n/config';
  * Fires when the escape key is pressed. The <code>event</code> property
  * contains the key event.
  *
- * ### Constructor: Editor
- *
- * Constructs a new editor. This function invokes the {@link onInit} callback
- * upon completion.
- *
- * ```javascript
- * var config = mxUtils.load('config/diagrameditor.xml').getDocumentElement();
- * var editor = new Editor(config);
- * ```
- *
- * @class Editor
- * @extends EventSource
+ * @category Editor
  */
 export class Editor extends EventSource {
+  /**
+   * Constructs a new editor. This function invokes the {@link onInit} callback upon completion.
+   *
+   * ```javascript
+   * const config = load('config/diagram-editor.xml').getDocumentElement();
+   * const editor = new Editor(config);
+   * ```
+   *
+   * @param config The configuration element that contains the editor configuration.
+   */
   constructor(config: Element) {
     super();
 

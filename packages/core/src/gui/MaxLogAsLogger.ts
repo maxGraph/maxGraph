@@ -24,6 +24,7 @@ import MaxLog from './MaxLog';
  *
  * @experimental subject to change or removal. The logging system may be modified in the future without prior notice.
  * @since 0.11.0
+ * @category GUI
  * @category Logging
  */
 export class MaxLogAsLogger implements Logger {

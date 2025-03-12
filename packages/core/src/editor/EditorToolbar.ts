@@ -30,28 +30,31 @@ import EventObject from '../view/event/EventObject';
 import type { DropHandler } from '../view/other/DragSource';
 
 /**
- * Toolbar for the editor. This modifies the state of the graph
- * or inserts new cells upon mouse clicks.
+ * Toolbar for the editor.
  *
- * @Example:
+ * This modifies the state of the graph or inserts new cells upon mouse clicks.
+ *
+ * ### Example
  *
  * Create a toolbar with a button to copy the selection into the clipboard,
  * and a combo box with one action to paste the selection from the clipboard
  * into the graph.
  *
  * ```
- * var toolbar = new EditorToolbar(container, editor);
+ * const toolbar = new EditorToolbar(container, editor);
  * toolbar.addItem('Copy', null, 'copy');
  *
- * var combo = toolbar.addActionCombo('More actions...');
+ * const combo = toolbar.addActionCombo('More actions...');
  * toolbar.addActionOption(combo, 'Paste', 'paste');
  * ```
  *
- * @Codec:
+ * ### Codec
  *
  * This class uses the {@link DefaultToolbarCodec} to read configuration
  * data into an existing instance. See {@link DefaultToolbarCodec} for a
  * description of the configuration format.
+ *
+ * @category Editor
  */
 export class EditorToolbar {
   constructor(container: HTMLElement | null = null, editor: Editor | null = null) {
@@ -116,7 +119,7 @@ export class EditorToolbar {
         }
       );
 
-      // Resets the selected tool after a doubleclick or escape keystroke
+      // Resets the selected tool after a double click or escape keystroke
       this.resetHandler = () => {
         if (this.toolbar != null) {
           this.toolbar.resetMode(true);

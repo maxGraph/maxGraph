@@ -43,6 +43,7 @@ export interface HTMLImageElementWithProps extends HTMLImageElement {
  * Fires when an item was selected in the toolbar. The EventObject {@link InternalEvent.function}
  * property contains the function that was selected in {@link selectMode}.
  *
+ * @category GUI
  */
 class MaxToolbar extends EventSource {
   constructor(container: HTMLElement) {

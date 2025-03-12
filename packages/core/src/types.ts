@@ -35,10 +35,12 @@ export type UndoableChange = {
   redo?: () => void;
 };
 
+/** @category Style */
 export type StyleValue = string | number;
 
 export type Properties = Record<string, any>;
 
+/** @category Style */
 export type CellStyle = CellStateStyle & {
   /**
    * Names of styles used to fill properties before applying the specific properties defined in {@link CellStateStyle}.
@@ -66,6 +68,7 @@ export type CellStyle = CellStateStyle & {
   ignoreDefaultStyle?: boolean;
 };
 
+/** @category Style */
 export type CellStateStyle = {
   /**
    * This specifies if {@link arcSize} for rectangles is absolute or relative.
@@ -871,14 +874,19 @@ export type CellStateStyle = {
   whiteSpace?: WhiteSpaceValue;
 };
 
+/** @category Style */
 export type NumericCellStateStyleKeys = NonNullable<
   {
     [k in keyof CellStateStyle]: CellStateStyle[k] extends number | undefined ? k : never;
   }[keyof CellStateStyle]
 >;
 
+/** @category Style */
 export type ColorValue = string;
-/** Color values and special placeholders used to resolve colors (see {@link CellRenderer.resolveColor}) for style properties. */
+/**
+ * Color values and special placeholders used to resolve colors (see {@link CellRenderer.resolveColor}) for style properties.
+ * @category Style
+ */
 export type SpecialStyleColorValue =
   | 'indicated'
   | 'inherit'
@@ -886,14 +894,21 @@ export type SpecialStyleColorValue =
   | 'swimlane'
   | (string & {});
 
+/** @category Style */
 export type DirectionValue = 'north' | 'south' | 'east' | 'west';
+/** @category Style */
 export type TextDirectionValue = '' | 'ltr' | 'rtl' | 'auto';
+/** @category Style */
 export type AlignValue = 'left' | 'center' | 'right';
+/** @category Style */
 export type VAlignValue = 'top' | 'middle' | 'bottom';
+/** @category Style */
 export type OverflowValue = 'fill' | 'width' | 'auto' | 'hidden' | 'scroll' | 'visible';
+/** @category Style */
 export type WhiteSpaceValue = 'normal' | 'wrap' | 'nowrap' | 'pre';
 /**
  * Names used to register the edge markers provided out-of-the-box by maxGraph with {@link MarkerShape.addMarker}.
+ * @category Style
  */
 export type ArrowValue =
   | 'none'
@@ -909,11 +924,13 @@ export type ArrowValue =
 
 /**
  * {@link ArrowValue} with support for extensions.
+ * @category Style
  */
 export type StyleArrowValue = ArrowValue | (string & {});
 
 /**
  * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
+ * @category Style
  */
 export type ShapeValue =
   | 'rectangle'
@@ -935,6 +952,7 @@ export type ShapeValue =
 
 /**
  * {@link ShapeValue} with support for extensions.
+ * @category Style
  */
 export type StyleShapeValue = ShapeValue | (string & {});
 
@@ -1067,11 +1085,13 @@ export type VertexParameters = {
   y?: number;
 };
 
+/** @category Plugin */
 export interface GraphPluginConstructor {
-  new (graph: Graph): GraphPlugin;
   pluginId: string;
+  new (graph: Graph): GraphPlugin;
 }
 
+/** @category Plugin */
 export interface GraphPlugin {
   onDestroy: () => void;
 }
@@ -1179,6 +1199,9 @@ export type PerimeterValue =
  * @param target {@link CellState} that represents the target terminal.
  * @param points List of relative control points.
  * @param result Array of {@link Point} that represent the actual points of the edge.
+ *
+ * @since 0.8.0
+ * @category EdgeStyle
  */
 export type EdgeStyleFunction = (
   state: CellState,
@@ -1191,6 +1214,7 @@ export type EdgeStyleFunction = (
 /**
  * Names used to register the edge styles (a.k.a. connectors) provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
  * @since 0.14.0
+ * @category EdgeStyle
  */
 export type EdgeStyleValue =
   | 'elbowEdgeStyle'
@@ -1205,6 +1229,7 @@ export type EdgeStyleValue =
 /**
  * {@link EdgeStyleValue} with support for extensions and {@link EdgeStyleFunction}.
  * @since 0.14.0
+ * @category EdgeStyle
  */
 export type StyleEdgeStyleValue =
   | EdgeStyleFunction
@@ -1214,6 +1239,7 @@ export type StyleEdgeStyleValue =
 
 /**
  * @since 0.11.0
+ * @category Style
  */
 export type MarkerFactoryFunction = (
   canvas: AbstractCanvas2D,

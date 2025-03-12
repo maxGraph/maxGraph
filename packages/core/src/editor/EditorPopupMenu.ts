@@ -25,11 +25,18 @@ import Editor from './Editor';
 import { PopupMenuItem } from '../types';
 
 /**
- * Creates popupmenus for mouse events.  This object holds an XML node which is a description of the popup menu to be created.  In {@link createMenu}, the configuration is applied to the context and the resulting menu items are added to the menu dynamically.  See {@link createMenu} for a description of the configuration format.
- * This class does not create the DOM nodes required for the popup menu, it only parses an XML description to invoke the respective methods on an {@link mxPopupMenu} each time the menu is displayed.
+ * Creates popupmenus for mouse events.
  *
- * @Codec
- * This class uses the {@link DefaultPopupMenuCodec} to read configuration data into an existing instance, however, the actual parsing is done by this class during program execution, so the format is described below.
+ * This object holds an XML node which is a description of the popup menu to be created.
+ * In {@link createMenu}, the configuration is applied to the context and the resulting menu items are added to the menu dynamically.
+ * See {@link createMenu} for a description of the configuration format.
+ *
+ * This class does not create the DOM nodes required for the popup menu, it only parses an XML description to invoke the respective methods on an {@link MaxPopupMenu} each time the menu is displayed.
+ *
+ * ### Codec
+ * This class uses the {@link EditorPopupMenuCodec} to read configuration data into an existing instance, however, the actual parsing is done by this class during program execution, so the format is described below.
+ *
+ * @category Editor
  */
 export class EditorPopupMenu {
   constructor(config: Element | null = null) {

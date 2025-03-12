@@ -40,6 +40,7 @@ let isModelCodecsRegistered = false;
  *              if they have never been registered before.
  * @since 0.10.0
  * @category Configuration
+ * @category Serialization with Codecs
  */
 export const registerModelCodecs = (force = false) => {
   if (!isModelCodecsRegistered || force) {

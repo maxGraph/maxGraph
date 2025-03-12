@@ -253,7 +253,9 @@ function diamond(
 
 let isDefaultMarkersRegistered = false;
 /**
+ * @since 0.11.0
  * @category Configuration
+ * @category Style
  */
 export const registerDefaultEdgeMarkers = (): void => {
   if (!isDefaultMarkersRegistered) {

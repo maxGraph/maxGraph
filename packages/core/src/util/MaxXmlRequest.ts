@@ -219,7 +219,7 @@ class MaxXmlRequest {
   }
 
   /**
-   * Returns the status as a number, eg. 404 for "Not found" or 200 for "OK".
+   * Returns the status as a number, e.g. 404 for "Not found" or 200 for "OK".
    * Note: The NS_ERROR_NOT_AVAILABLE for invalid responses cannot be caught.
    */
   getStatus(): number {
@@ -240,13 +240,12 @@ class MaxXmlRequest {
   }
 
   /**
-   * Send the <request> to the target URL using the specified functions to
-   * process the response asychronously.
+   * Send the {@link request} to the target URL using the specified functions to process the response asynchronously.
    *
-   * Note: Due to technical limitations, onerror is currently ignored.
+   * Note: Due to technical limitations, `onerror` is currently ignored.
    *
    * @param onload Function to be invoked if a successful response was received.
-   * @param onerror Function to be called on any error. Unused in this implementation, intended for overriden function.
+   * @param onerror Function to be called on any error. Unused in this implementation, intended for overridden function.
    * @param timeout Optional timeout in ms before calling ontimeout.
    * @param ontimeout Optional function to execute on timeout.
    */
@@ -518,18 +517,16 @@ export const getAll = (
 };
 
 /**
- * Posts the specified params to the given URL *asynchronously* and invokes
- * the given functions depending on the request status. Returns the
- * <MaxXmlRequest> in use. Both functions take the <MaxXmlRequest> as the
- * only parameter. Make sure to use encodeURIComponent for the parameter
- * values.
+ * Posts the specified params to the given URL *asynchronously* and invokes the given functions depending on the request status.
+ * Returns the {@link MaxXmlRequest} in use.
+ * Both functions take the {@link MaxXmlRequest} as the only parameter.
+ * Make sure to use encodeURIComponent for the parameter values.
  *
  * Example:
  *
  * ```javascript
- * mxUtils.post(url, 'key=value', (req)=>
- * {
- *   mxUtils.alert('Ready: '+req.isReady()+' Status: '+req.getStatus());
+ * post(url, 'key=value', (req) => {
+ *   alert('Ready: ' + req.isReady() + ' Status: ' + req.getStatus());
  *  // Process req.getDocumentElement() using DOM API if OK...
  * });
  * ```
