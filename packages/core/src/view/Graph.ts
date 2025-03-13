@@ -358,13 +358,13 @@ class Graph extends EventSource {
    * Specifies the minimum scale to be applied in {@link fit}. Set this to `null` to allow any value.
    * @default 0.1
    */
-  minFitScale = 0.1;
+  minFitScale: number | null = 0.1;
 
   /**
    * Specifies the maximum scale to be applied in {@link fit}. Set this to `null` to allow any value.
    * @default 8
    */
-  maxFitScale = 8;
+  maxFitScale: number | null = 8;
 
   /**
    * Specifies the {@link Image} for the image to be used to display a warning
@@ -832,12 +832,13 @@ class Graph extends EventSource {
   }
 
   /**
-   * Scales the graph such that the complete diagram fits into <container> and
-   * returns the current scale in the view. To fit an initial graph prior to
-   * rendering, set {@link GraphView#rendering} to false prior to changing the model
+   * Scales the graph such that the complete diagram fits into {@link Graph.container} and returns the current scale in the view.
+   * To fit an initial graph prior to rendering, set {@link GraphView.rendering} to `false` prior to changing the model
    * and execute the following after changing the model.
    *
    * ```javascript
+   * graph.view.rendering = false;
+   * // here, change the model
    * graph.fit();
    * graph.view.rendering = true;
    * graph.refresh();
@@ -861,16 +862,12 @@ class Graph extends EventSource {
    *   (margin + ch - h * s) / (2 * s) - bounds.y / graph.view.scale);
    * ```
    *
-   * @param border Optional number that specifies the border. Default is <border>.
-   * @param keepOrigin Optional boolean that specifies if the translate should be
-   * changed. Default is false.
-   * @param margin Optional margin in pixels. Default is 0.
-   * @param enabled Optional boolean that specifies if the scale should be set or
-   * just returned. Default is true.
-   * @param ignoreWidth Optional boolean that specifies if the width should be
-   * ignored. Default is false.
-   * @param ignoreHeight Optional boolean that specifies if the height should be
-   * ignored. Default is false.
+   * @param border Optional number that specifies the border. Default is {@link border}.
+   * @param keepOrigin Optional boolean that specifies if the translate should be changed. Default is `false`.
+   * @param margin Optional margin in pixels. Default is `0`.
+   * @param enabled Optional boolean that specifies if the scale should be set or just returned. Default is `true`.
+   * @param ignoreWidth Optional boolean that specifies if the width should be ignored. Default is `false`.
+   * @param ignoreHeight Optional boolean that specifies if the height should be ignored. Default is `false`.
    * @param maxHeight Optional maximum height.
    */
   fit(
@@ -882,15 +879,16 @@ class Graph extends EventSource {
     ignoreHeight = false,
     maxHeight: number | null = null
   ): number {
-    if (this.container != null) {
+    const { container, view } = this;
+    if (container) {
       // Adds spacing and border from css
       const cssBorder = this.getBorderSizes();
-      let w1: number = this.container.offsetWidth - cssBorder.x - cssBorder.width - 1;
+      let w1: number = container.offsetWidth - cssBorder.x - cssBorder.width - 1;
       let h1: number =
         maxHeight != null
           ? maxHeight
-          : this.container.offsetHeight - cssBorder.y - cssBorder.height - 1;
-      let bounds = this.view.getGraphBounds();
+          : container.offsetHeight - cssBorder.y - cssBorder.height - 1;
+      let bounds = view.getGraphBounds();
 
       if (bounds.width > 0 && bounds.height > 0) {
         if (keepOrigin && bounds.x != null && bounds.y != null) {
@@ -902,14 +900,14 @@ class Graph extends EventSource {
         }
 
         // LATER: Use unscaled bounding boxes to fix rounding errors
-        const s = this.view.scale;
-        let w2 = bounds.width / s;
-        let h2 = bounds.height / s;
+        const originalScale = view.scale;
+        let w2 = bounds.width / originalScale;
+        let h2 = bounds.height / originalScale;
 
         // Fits to the size of the background image if required
-        if (this.backgroundImage != null) {
-          w2 = Math.max(w2, this.backgroundImage.width - bounds.x / s);
-          h2 = Math.max(h2, this.backgroundImage.height - bounds.y / s);
+        if (this.backgroundImage) {
+          w2 = Math.max(w2, this.backgroundImage.width - bounds.x / originalScale);
+          h2 = Math.max(h2, this.backgroundImage.height - bounds.y / originalScale);
         }
 
         const b: number = (keepOrigin ? border : 2 * border) + margin + 1;
@@ -917,58 +915,64 @@ class Graph extends EventSource {
         w1 -= b;
         h1 -= b;
 
-        let s2 = ignoreWidth
+        let newScale = ignoreWidth
           ? h1 / h2
           : ignoreHeight
             ? w1 / w2
             : Math.min(w1 / w2, h1 / h2);
 
         if (this.minFitScale != null) {
-          s2 = Math.max(s2, this.minFitScale);
+          newScale = Math.max(newScale, this.minFitScale);
         }
 
         if (this.maxFitScale != null) {
-          s2 = Math.min(s2, this.maxFitScale);
+          newScale = Math.min(newScale, this.maxFitScale);
         }
 
         if (enabled) {
           if (!keepOrigin) {
-            if (!hasScrollbars(this.container)) {
+            if (!hasScrollbars(container)) {
               const x0 =
                 bounds.x != null
                   ? Math.floor(
-                      this.view.translate.x - bounds.x / s + border / s2 + margin / 2
+                      view.translate.x -
+                        bounds.x / originalScale +
+                        border / newScale +
+                        margin / 2
                     )
                   : border;
               const y0 =
                 bounds.y != null
                   ? Math.floor(
-                      this.view.translate.y - bounds.y / s + border / s2 + margin / 2
+                      view.translate.y -
+                        bounds.y / originalScale +
+                        border / newScale +
+                        margin / 2
                     )
                   : border;
 
-              this.view.scaleAndTranslate(s2, x0, y0);
+              view.scaleAndTranslate(newScale, x0, y0);
             } else {
-              this.view.setScale(s2);
-              const b2 = this.getGraphBounds();
+              view.setScale(newScale);
+              const newBounds = this.getGraphBounds();
 
-              if (b2.x != null) {
-                this.container.scrollLeft = b2.x;
+              if (newBounds.x != null) {
+                container.scrollLeft = newBounds.x;
               }
 
-              if (b2.y != null) {
-                this.container.scrollTop = b2.y;
+              if (newBounds.y != null) {
+                container.scrollTop = newBounds.y;
               }
             }
-          } else if (this.view.scale != s2) {
-            this.view.setScale(s2);
+          } else if (view.scale != newScale) {
+            view.setScale(newScale);
           }
         } else {
-          return s2;
+          return newScale;
         }
       }
     }
-    return this.view.scale;
+    return view.scale;
   }
 
   /**
