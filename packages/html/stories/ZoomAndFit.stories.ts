@@ -74,7 +74,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   });
   addControlButton('Fit Horizontal', function () {
     // This is a pain to use so many parameters when lot of them are the same as default values
-    // Consider having a method with a single object
+    // Consider having a method with a single object. See https://github.com/maxGraph/maxGraph/pull/715#discussion_r1993871475
     graph.fit(border, false, 0, true, false, true);
   });
   addControlButton('Fit Vertical', function () {
