@@ -401,7 +401,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       const marker = super.createMarker();
 
       // Uses complete area of cell for new connections (no hotspot)
-      marker.intersects = function (state, evt) {
+      marker.intersects = function (_state, _evt) {
         return true;
       };
 
@@ -414,27 +414,28 @@ const Template = ({ label, ...args }: Record<string, string>) => {
             this.state.style = this.lastStyle;
 
             // Workaround for shape using current stroke width if no strokewidth defined
-            this.state.style.strokeWidth = this.state.style.strokeWidth || '1';
-            this.state.style.strokeColor = this.state.style.strokeColor || 'none';
+            // TODO use ?= (may require eslint config change to support es2020)
+            this.state.style.strokeWidth = this.state.style.strokeWidth ?? 1;
+            this.state.style.strokeColor = this.state.style.strokeColor ?? 'none';
 
-            if (this.state.shape != null) {
+            if (this.state.shape) {
               this.state.view.graph.cellRenderer.configureShape(this.state);
               this.state.shape.redraw();
             }
           }
 
-          if (state != null) {
+          if (state) {
             this.lastStyle = state.style;
             state.style = cloneUtils.clone(state.style);
             state.style.strokeColor = '#00ff00';
-            state.style.strokeWidth = '3';
+            state.style.strokeWidth = 3;
 
-            if (state.shape != null) {
+            if (state.shape) {
               state.view.graph.cellRenderer.configureShape(state);
               state.shape.redraw();
             }
           }
-          this.state = state;
+          this.state = state ?? null;
         }
       };
 
