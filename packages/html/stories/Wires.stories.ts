@@ -377,31 +377,28 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     // Updates target terminal point for edge-to-edge connections.
-    updateCurrentState(me, point) {
-      super.updateCurrentState.apply(this, arguments);
+    override updateCurrentState(me: InternalMouseEvent, point: Point) {
+      super.updateCurrentState(me, point);
 
-      if (this.edgeState != null) {
-        this.edgeState.cell.geometry.setTerminalPoint(null, false);
+      if (this.edgeState) {
+        // TODO review method signature to accept null
+        this.edgeState.cell.geometry?.setTerminalPoint(null, false);
 
-        if (
-          this.shape != null &&
-          this.currentState != null &&
-          this.currentState.cell.isEdge()
-        ) {
+        if (this.shape && this.currentState && this.currentState.cell.isEdge()) {
           const scale = this.graph.view.scale;
           const tr = this.graph.view.translate;
           const pt = new Point(
             this.graph.snap(me.getGraphX() / scale) - tr.x,
             this.graph.snap(me.getGraphY() / scale) - tr.y
           );
-          this.edgeState.cell.geometry.setTerminalPoint(pt, false);
+          this.edgeState.cell.geometry?.setTerminalPoint(pt, false);
         }
       }
     }
 
     // Adds in-place highlighting for complete cell area (no hotspot).
-    createMarker() {
-      const marker = super.createMarker.apply(this, arguments);
+    override createMarker() {
+      const marker = super.createMarker();
 
       // Uses complete area of cell for new connections (no hotspot)
       marker.intersects = function (state, evt) {
