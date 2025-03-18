@@ -212,8 +212,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // Enables snapping waypoints to terminals
     snapToTerminals = true;
 
-    isConnectableCell(cell) {
-      return graph.getPlugin('ConnectionHandler').isConnectableCell(cell);
+    override isConnectableCell(cell: Cell) {
+      return this.graph
+        .getPlugin<ConnectionHandler>('ConnectionHandler')
+        .isConnectableCell(cell);
     }
 
     override connect(
@@ -264,11 +266,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return result;
     }
 
-    createMarker() {
-      const marker = super.createMarker.apply(this, arguments);
+    override createMarker() {
+      const marker = super.createMarker();
       // Adds in-place highlighting when reconnecting existing edges
       marker.highlight.highlight =
-        this.graph.getPlugin('ConnectionHandler').marker.highlight.highlight;
+        this.graph.getPlugin<ConnectionHandler>(
+          'ConnectionHandler'
+        ).marker.highlight.highlight;
       return marker;
     }
   }
