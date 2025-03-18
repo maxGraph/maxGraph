@@ -46,6 +46,7 @@ import {
   PopupMenuHandler,
   cellArrayUtils,
   StyleDefaultsConfig,
+  type CellState,
   ShapeRegistry,
 } from '@maxgraph/core';
 
@@ -58,7 +59,8 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-import '@maxgraph/core/css/common.css'; // style required by RubberBand
+import '@maxgraph/core/css/common.css';
+import type Cell from '@maxgraph/core/lib/view/cell/Cell.ts'; // style required by RubberBand
 
 export default {
   title: 'Connections/Wires',
@@ -75,16 +77,18 @@ export default {
 };
 
 // TODO apply this settings to the container used by the Graph
-const HTML_TEMPLATE = `
-<body onload="main(document.getElementById('graphContainer'))">
-  <div id="graphContainer"
-    style="overflow:auto;position:relative;width:800px;height:600px;border:1px solid gray;background:url('images/wires-grid.gif');background-position:-1px 0px;cursor:crosshair;">
-  </div>
-</body>
-</html>
-`;
+// const HTML_TEMPLATE = `
+// <body onload="main(document.getElementById('graphContainer'))">
+//   <div id="graphContainer"
+//     style="overflow:auto;position:relative;width:800px;height:600px;border:1px solid gray;background:url('images/wires-grid.gif');background-position:-1px 0px;cursor:crosshair;">
+//   </div>
+// </body>
+// </html>
+// `;
 
-const Template = ({ label, ...args }) => {
+// TODO background images wire-grid
+
+const Template = ({ label, ...args }: Record<string, string>) => {
   const parentContainer = document.createElement('div');
   const container = createGraphContainer(args);
   parentContainer.appendChild(container);
@@ -92,30 +96,28 @@ const Template = ({ label, ...args }) => {
   // Changes some default colors
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
 
-  let joinNodeSize = 7;
-  let strokeWidth = 2;
+  const joinNodeSize = 7;
+  const strokeWidth = 2;
 
   class MyCustomGraph extends Graph {
     resetEdgesOnConnect = false;
 
-    createEdgeSegmentHandler(state) {
+    override createEdgeSegmentHandler(state: CellState) {
       return new MyCustomEdgeSegmentHandler(state);
     }
 
-    createGraphView() {
+    override createGraphView() {
       return new MyCustomGraphView(this);
     }
 
-    createEdgeHandler(state) {
+    override createEdgeHandler(state: CellState) {
       return new MyCustomEdgeHandler(state);
     }
 
-    createHandler(state) {
-      let result = null;
-
-      if (state != null) {
+    override createHandler(state: CellState) {
+      if (state) {
         if (state.cell.isEdge()) {
-          let style = this.view.getEdgeStyle(state);
+          const style = this.view.getEdgeStyle(state);
 
           if (style == WireConnector) {
             return new EdgeSegmentHandler(state);
@@ -123,14 +125,14 @@ const Template = ({ label, ...args }) => {
         }
       }
 
-      return super.createHandler.apply(this, arguments);
+      return super.createHandler(state);
     }
 
     // Adds oval markers for edge-to-edge connections.
-    getCellStyle(cell) {
-      let style = super.getCellStyle.apply(this, arguments);
+    override getCellStyle(cell: Cell) {
+      let style = super.getCellStyle(cell);
 
-      if (style != null && cell?.isEdge()) {
+      if (style && cell?.isEdge()) {
         style = cloneUtils.clone(style);
 
         if (cell.getTerminal(true)?.isEdge()) {
@@ -144,23 +146,23 @@ const Template = ({ label, ...args }) => {
       return style;
     }
 
-    getTooltipForCell(cell) {
+    getTooltipForCell(cell: Cell) {
       let tip = '';
 
-      if (cell != null) {
-        let src = cell.getTerminal(true);
-        if (src != null) {
+      if (cell) {
+        const src = cell.getTerminal(true);
+        if (src) {
           tip += this.getTooltipForCell(src) + ' ';
         }
 
-        let parent = cell.getParent();
-        if (parent.isVertex()) {
+        const parent = cell.getParent();
+        if (parent?.isVertex()) {
           tip += this.getTooltipForCell(parent) + '.';
         }
 
-        tip += super.getTooltipForCell.apply(this, arguments);
+        tip += super.getTooltipForCell(cell);
 
-        let trg = cell.getTerminal(false);
+        const trg = cell.getTerminal(false);
         if (trg != null) {
           tip += ' ' + this.getTooltipForCell(trg);
         }
@@ -172,7 +174,7 @@ const Template = ({ label, ...args }) => {
     // This can be extended as shown in portrefs.html example to allow for per-port
     // incoming/outgoing direction.
     getAllConnectionConstraints(terminal) {
-      let geo = terminal != null ? terminal.cell.getGeometry() : null;
+      const geo = terminal != null ? terminal.cell.getGeometry() : null;
 
       if (
         (geo != null ? !geo.relative : false) &&
@@ -211,8 +213,8 @@ const Template = ({ label, ...args }) => {
 
     connect(edge, terminal, isSource, isClone, me) {
       let result = null;
-      let model = this.graph.getDataModel();
-      let parent = model.getParent(edge);
+      const model = this.graph.getDataModel();
+      const parent = model.getParent(edge);
 
       model.beginUpdate();
       try {
@@ -228,7 +230,7 @@ const Template = ({ label, ...args }) => {
             pt.x = pt.x / this.graph.view.scale - this.graph.view.translate.x;
             pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
 
-            let pstate = this.graph.getView().getState(edge.getParent());
+            const pstate = this.graph.getView().getState(edge.getParent());
 
             if (pstate != null) {
               pt.x -= pstate.origin.x;
@@ -250,7 +252,7 @@ const Template = ({ label, ...args }) => {
     }
 
     createMarker() {
-      let marker = super.createMarker.apply(this, arguments);
+      const marker = super.createMarker.apply(this, arguments);
       // Adds in-place highlighting when reconnecting existing edges
       marker.highlight.highlight =
         this.graph.getPlugin('ConnectionHandler').marker.highlight.highlight;
@@ -259,7 +261,7 @@ const Template = ({ label, ...args }) => {
   }
 
   // Switch for black background and bright styles
-  let invert = false;
+  const invert = false;
   let MyCustomCellEditorHandler;
 
   if (invert) {
@@ -313,9 +315,9 @@ const Template = ({ label, ...args }) => {
     // or when over a port
     mouseUp(sender, me) {
       if (this.first != null && this.previous != null) {
-        let point = styleUtils.convertPoint(this.graph.container, me.getX(), me.getY());
-        let dx = Math.abs(point.x - this.first.x);
-        let dy = Math.abs(point.y - this.first.y);
+        const point = styleUtils.convertPoint(this.graph.container, me.getX(), me.getY());
+        const dx = Math.abs(point.x - this.first.x);
+        const dy = Math.abs(point.y - this.first.y);
 
         if (dx < this.graph.tolerance && dy < this.graph.tolerance) {
           // Selects edges in non-wire mode for single clicks, but starts
@@ -333,7 +335,7 @@ const Template = ({ label, ...args }) => {
 
     // Sets source terminal point for edge-to-edge connections.
     createEdgeState(me) {
-      let edge = this.graph.createEdge();
+      const edge = this.graph.createEdge();
 
       if (this.sourceConstraint != null && this.previous != null) {
         edge.style =
@@ -346,9 +348,9 @@ const Template = ({ label, ...args }) => {
           this.sourceConstraint.point.y +
           ';';
       } else if (me.getCell().isEdge()) {
-        let scale = this.graph.view.scale;
-        let tr = this.graph.view.translate;
-        let pt = new Point(
+        const scale = this.graph.view.scale;
+        const tr = this.graph.view.translate;
+        const pt = new Point(
           this.graph.snap(me.getGraphX() / scale) - tr.x,
           this.graph.snap(me.getGraphY() / scale) - tr.y
         );
@@ -375,9 +377,9 @@ const Template = ({ label, ...args }) => {
           this.currentState != null &&
           this.currentState.cell.isEdge()
         ) {
-          let scale = this.graph.view.scale;
-          let tr = this.graph.view.translate;
-          let pt = new Point(
+          const scale = this.graph.view.scale;
+          const tr = this.graph.view.translate;
+          const pt = new Point(
             this.graph.snap(me.getGraphX() / scale) - tr.x,
             this.graph.snap(me.getGraphY() / scale) - tr.y
           );
@@ -388,7 +390,7 @@ const Template = ({ label, ...args }) => {
 
     // Adds in-place highlighting for complete cell area (no hotspot).
     createMarker() {
-      let marker = super.createMarker.apply(this, arguments);
+      const marker = super.createMarker.apply(this, arguments);
 
       // Uses complete area of cell for new connections (no hotspot)
       marker.intersects = function (state, evt) {
@@ -436,7 +438,7 @@ const Template = ({ label, ...args }) => {
       if (cell.isEdge()) {
         return true;
       } else {
-        let geo = cell != null ? cell.getGeometry() : null;
+        const geo = cell != null ? cell.getGeometry() : null;
         return geo != null ? geo.relative : false;
       }
     }
@@ -460,10 +462,10 @@ const Template = ({ label, ...args }) => {
       }
 
       if (pt == null) {
-        let s = this.scale;
-        let tr = this.translate;
-        let orig = edge.origin;
-        let geo = edge.cell.getGeometry();
+        const s = this.scale;
+        const tr = this.translate;
+        const orig = edge.origin;
+        const geo = edge.cell.getGeometry();
         pt = geo.getTerminalPoint(source);
 
         // Computes edge-to-edge connection point
@@ -472,16 +474,16 @@ const Template = ({ label, ...args }) => {
 
           // Finds nearest segment on edge and computes intersection
           if (terminal != null && terminal.absolutePoints != null) {
-            let seg = mathUtils.findNearestSegment(terminal, pt.x, pt.y);
+            const seg = mathUtils.findNearestSegment(terminal, pt.x, pt.y);
 
             // Finds orientation of the segment
-            let p0 = terminal.absolutePoints[seg];
-            let pe = terminal.absolutePoints[seg + 1];
-            let horizontal = p0.x - pe.x === 0;
+            const p0 = terminal.absolutePoints[seg];
+            const pe = terminal.absolutePoints[seg + 1];
+            const horizontal = p0.x - pe.x === 0;
 
             // Stores the segment in the edge state
-            let key = source ? 'sourceConstraint' : 'targetConstraint';
-            let value = horizontal ? 'horizontal' : 'vertical';
+            const key = source ? 'sourceConstraint' : 'targetConstraint';
+            const value = horizontal ? 'horizontal' : 'vertical';
             edge.style[key] = value;
 
             // Keeps the coordinate within the segment bounds
@@ -522,7 +524,7 @@ const Template = ({ label, ...args }) => {
   // Updates the terminal and control points in the cloned preview.
   class MyCustomEdgeSegmentHandler extends EdgeSegmentHandler {
     clonePreviewState(point, terminal) {
-      let clone = super.clonePreviewState.apply(this, arguments);
+      const clone = super.clonePreviewState.apply(this, arguments);
       clone.cell = clone.cell.clone();
 
       if (this.isSource || this.isTarget) {
@@ -550,7 +552,7 @@ const Template = ({ label, ...args }) => {
     }
 
     redrawPath(path, x, y, w, h, isForeground) {
-      let dx = w / 16;
+      const dx = w / 16;
 
       if (isForeground) {
         path.moveTo(0, h / 2);
@@ -572,7 +574,7 @@ const Template = ({ label, ...args }) => {
 
   const WireConnector = function (state, source, target, hints, result) {
     // Creates array of all way- and terminal points
-    let pts = state.absolutePoints;
+    const pts = state.absolutePoints;
     let horizontal = true;
     let hint = null;
 
@@ -583,7 +585,7 @@ const Template = ({ label, ...args }) => {
       horizontal = source.style.portConstraint != 'vertical';
 
       // Checks the direction of the shape and rotates
-      let direction = source.style.direction;
+      const direction = source.style.direction;
 
       if (direction == 'north' || direction == 'south') {
         horizontal = !horizontal;
@@ -603,7 +605,7 @@ const Template = ({ label, ...args }) => {
       pt = pt.clone();
     }
 
-    let first = pt;
+    const first = pt;
 
     // Adds the waypoints
     if (hints != null && hints.length > 0) {
@@ -663,7 +665,7 @@ const Template = ({ label, ...args }) => {
 
   EdgeStyleRegistry.add('wireEdgeStyle', WireConnector);
 
-  let graph = new MyCustomGraph(container, null, [
+  const graph = new MyCustomGraph(container, null, [
     MyCustomCellEditorHandler,
     TooltipHandler,
     SelectionCellsHandler,
@@ -673,10 +675,10 @@ const Template = ({ label, ...args }) => {
     MyCustomPanningHandler,
   ]);
 
-  let labelBackground = invert ? '#000000' : '#FFFFFF';
-  let fontColor = invert ? '#FFFFFF' : '#000000';
-  let strokeColor = invert ? '#C0C0C0' : '#000000';
-  let fillColor = invert ? 'none' : '#FFFFFF';
+  const labelBackground = invert ? '#000000' : '#FFFFFF';
+  const fontColor = invert ? '#FFFFFF' : '#000000';
+  const strokeColor = invert ? '#C0C0C0' : '#000000';
+  const fillColor = invert ? 'none' : '#FFFFFF';
 
   graph.view.scale = 1;
   graph.setPanning(true);
@@ -726,10 +728,10 @@ const Template = ({ label, ...args }) => {
   style.rounded = '1';
   style.strokeWidth = strokeWidth;
 
-  let parent = graph.getDefaultParent();
+  const parent = graph.getDefaultParent();
 
   graph.batchUpdate(() => {
-    let v1 = graph.insertVertex(parent, null, 'J1', 80, 40, 40, 80, {
+    const v1 = graph.insertVertex(parent, null, 'J1', 80, 40, 40, 80, {
       verticalLabelPosition: 'top',
       verticalAlign: 'bottom',
       shadow: true,
@@ -737,7 +739,7 @@ const Template = ({ label, ...args }) => {
     });
     v1.setConnectable(false);
 
-    let v11 = graph.insertVertex(v1, null, '1', 0, 0, 10, 16, {
+    const v11 = graph.insertVertex(v1, null, '1', 0, 0, 10, 16, {
       shape: 'line',
       align: 'left',
       verticalAlign: 'middle',
@@ -749,20 +751,20 @@ const Template = ({ label, ...args }) => {
     });
     v11.geometry.relative = true;
     v11.geometry.offset = new Point(-v11.geometry.width, 2);
-    let v12 = v11.clone();
+    const v12 = v11.clone();
     v12.value = '2';
     v12.geometry.offset = new Point(-v11.geometry.width, 22);
     v1.insert(v12);
-    let v13 = v11.clone();
+    const v13 = v11.clone();
     v13.value = '3';
     v13.geometry.offset = new Point(-v11.geometry.width, 42);
     v1.insert(v13);
-    let v14 = v11.clone();
+    const v14 = v11.clone();
     v14.value = '4';
     v14.geometry.offset = new Point(-v11.geometry.width, 62);
     v1.insert(v14);
 
-    let v15 = v11.clone();
+    const v15 = v11.clone();
     v15.value = '5';
     v15.geometry.x = 1;
     v15.style = {
@@ -777,20 +779,20 @@ const Template = ({ label, ...args }) => {
     };
     v15.geometry.offset = new Point(0, 2);
     v1.insert(v15);
-    let v16 = v15.clone();
+    const v16 = v15.clone();
     v16.value = '6';
     v16.geometry.offset = new Point(0, 22);
     v1.insert(v16);
-    let v17 = v15.clone();
+    const v17 = v15.clone();
     v17.value = '7';
     v17.geometry.offset = new Point(0, 42);
     v1.insert(v17);
-    let v18 = v15.clone();
+    const v18 = v15.clone();
     v18.value = '8';
     v18.geometry.offset = new Point(0, 62);
     v1.insert(v18);
 
-    let v19 = v15.clone();
+    const v19 = v15.clone();
     v19.value = 'clk';
     v19.geometry.x = 0.5;
     v19.geometry.y = 1;
@@ -810,7 +812,7 @@ const Template = ({ label, ...args }) => {
     v19.geometry.offset = new Point(-4, -4);
     v1.insert(v19);
 
-    let v2 = graph.insertVertex(parent, null, 'R1', 220, 220, 80, 20, {
+    const v2 = graph.insertVertex(parent, null, 'R1', 220, 220, 80, 20, {
       shape: 'resistor',
       verticalLabelPosition: 'top',
       verticalAlign: 'bottom',
@@ -831,28 +833,28 @@ const Template = ({ label, ...args }) => {
       v22.geometry.relative = true;
       v22.geometry.offset = new Point(-10, -1);*/
 
-    let v3 = graph.addCell(cellArrayUtils.cloneCell(v1));
+    const v3 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v3.value = 'J3';
     v3.geometry.x = 420;
     v3.geometry.y = 340;
 
     // Connection constraints implemented in edges, alternatively this
     // can be implemented using references, see: portrefs.html
-    let e1 = graph.insertEdge(parent, null, 'e1', v1.getChildAt(7), v2, {
+    const e1 = graph.insertEdge(parent, null, 'e1', v1.getChildAt(7), v2, {
       entryX: 0,
       entryY: 0.5,
       entryPerimeter: 0,
     });
     e1.geometry.points = [new Point(180, 110)];
 
-    let e2 = graph.insertEdge(parent, null, 'e2', v1.getChildAt(4), v2, {
+    const e2 = graph.insertEdge(parent, null, 'e2', v1.getChildAt(4), v2, {
       entryX: 1,
       entryY: 0.5,
       entryPerimeter: 0,
     });
     e2.geometry.points = [new Point(320, 50), new Point(320, 230)];
 
-    let e3 = graph.insertEdge(parent, null, 'crossover', e1, e2);
+    const e3 = graph.insertEdge(parent, null, 'crossover', e1, e2);
     e3.geometry.setTerminalPoint(new Point(180, 140), true);
     e3.geometry.setTerminalPoint(new Point(320, 140), false);
 
@@ -866,21 +868,21 @@ const Template = ({ label, ...args }) => {
     //  e3.geometry.setTerminalPoint(new Point(180, 160), true);
     //  e3.geometry.setTerminalPoint(new Point(320, 160), false);
 
-    let e4 = graph.insertEdge(parent, null, 'e4', v2, v3.getChildAt(0), {
+    const e4 = graph.insertEdge(parent, null, 'e4', v2, v3.getChildAt(0), {
       exitX: 1,
       exitY: 0.5,
       entryPerimeter: 0,
     });
     e4.geometry.points = [new Point(380, 230)];
 
-    let e5 = graph.insertEdge(parent, null, 'e5', v3.getChildAt(5), v1.getChildAt(0));
+    const e5 = graph.insertEdge(parent, null, 'e5', v3.getChildAt(5), v1.getChildAt(0));
     e5.geometry.points = [new Point(500, 310), new Point(500, 20), new Point(50, 20)];
 
-    let e6 = graph.insertEdge(parent, null, '');
+    const e6 = graph.insertEdge(parent, null, '');
     e6.geometry.setTerminalPoint(new Point(100, 500), true);
     e6.geometry.setTerminalPoint(new Point(600, 500), false);
 
-    let e7 = graph.insertEdge(parent, null, 'e7', v3.getChildAt(7), e6);
+    const e7 = graph.insertEdge(parent, null, 'e7', v3.getChildAt(7), e6);
     e7.geometry.setTerminalPoint(new Point(500, 500), false);
     e7.geometry.points = [new Point(500, 350)];
   });
@@ -898,8 +900,8 @@ const Template = ({ label, ...args }) => {
   );
 
   // Undo/redo
-  let undoManager = new UndoManager();
-  let listener = function (sender, evt) {
+  const undoManager = new UndoManager();
+  const listener = function (sender, evt) {
     undoManager.undoableEditHappened(evt.getProperty('edit'));
   };
   graph.getDataModel().addListener(InternalEvent.UNDO, listener);
@@ -925,14 +927,14 @@ const Template = ({ label, ...args }) => {
   );
 
   // Wire-mode
-  let checkbox = document.createElement('input');
+  const checkbox = document.createElement('input');
   checkbox.setAttribute('type', 'checkbox');
 
   parentContainer.appendChild(checkbox);
   domUtils.write(parentContainer, 'Wire Mode');
 
   // Grid
-  let checkbox2 = document.createElement('input');
+  const checkbox2 = document.createElement('input');
   checkbox2.setAttribute('type', 'checkbox');
   checkbox2.setAttribute('checked', 'true');
 
