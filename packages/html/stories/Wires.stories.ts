@@ -443,12 +443,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     // Makes sure non-relative cells can only be connected via constraints
-    isConnectableCell(cell) {
+    override isConnectableCell(cell: Cell) {
       if (cell.isEdge()) {
         return true;
       } else {
-        const geo = cell != null ? cell.getGeometry() : null;
-        return geo != null ? geo.relative : false;
+        const geo = cell.getGeometry();
+        return geo?.relative ?? false;
       }
     }
   }
@@ -552,10 +552,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
-  // Imlements a custom resistor shape. Direction currently ignored here.
-
+  /**
+   * Implements a custom resistor shape. Direction currently ignored here.
+   */
   class ResistorShape extends CylinderShape {
     constructor() {
+      // TODO check mxGraph example
       // TODO: The original didn't seem to call the super
       super(null, null, null, null);
     }
@@ -674,7 +676,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   EdgeStyleRegistry.add('wireEdgeStyle', WireConnector);
 
-  const graph = new MyCustomGraph(container, null, [
+  const graph = new MyCustomGraph(container, undefined, [
     MyCustomCellEditorHandler,
     TooltipHandler,
     SelectionCellsHandler,
@@ -703,6 +705,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Enables return key to stop editing (use shift-enter for newlines)
   graph.setEnterStopsCellEditing(true);
 
+  // TODO declare as plugin
   // Adds rubberband selection
   new RubberBandHandler(graph);
 
@@ -715,8 +718,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.labelBackgroundColor = labelBackground;
   style.edgeStyle = 'wireEdgeStyle';
   style.fontColor = fontColor;
-  style.fontSize = '9';
-  style.movable = '0';
+  style.fontSize = 9;
+  style.movable = false;
   style.strokeWidth = strokeWidth;
   //style.rounded = '1';
 
@@ -731,10 +734,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   //style.fillColor = '#e0e0e0';
   style.fillColor = 'none';
   style.fontColor = fontColor;
-  style.fontStyle = '1';
-  style.fontSize = '12';
-  style.resizable = '0';
-  style.rounded = '1';
+  style.fontStyle = 1;
+  style.fontSize = 12;
+  style.resizable = false;
+  style.rounded = true;
   style.strokeWidth = strokeWidth;
 
   const parent = graph.getDefaultParent();
@@ -842,6 +845,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       v22.geometry.relative = true;
       v22.geometry.offset = new Point(-10, -1);*/
 
+    // TODO method signature: allow optional 2nd parameter
     const v3 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v3.value = 'J3';
     v3.geometry.x = 420;
