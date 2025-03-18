@@ -60,7 +60,8 @@ import {
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
 import '@maxgraph/core/css/common.css';
-import type Cell from '@maxgraph/core/lib/view/cell/Cell.ts'; // style required by RubberBand
+import type Cell from '@maxgraph/core/lib/view/cell/Cell.ts';
+import InternalMouseEvent from '@maxgraph/core/lib/view/event/InternalMouseEvent.ts'; // style required by RubberBand
 
 export default {
   title: 'Connections/Wires',
@@ -215,26 +216,32 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return graph.getPlugin('ConnectionHandler').isConnectableCell(cell);
     }
 
-    connect(edge, terminal, isSource, isClone, me) {
-      let result = null;
+    override connect(
+      edge: Cell,
+      terminal: Cell,
+      isSource: boolean,
+      isClone: boolean,
+      me: InternalMouseEvent
+    ): Cell {
+      let result: Cell | null = null;
       const model = this.graph.getDataModel();
-      const parent = model.getParent(edge);
+      const parent = edge.getParent();
 
       model.beginUpdate();
       try {
-        result = super.connect.apply(this, arguments);
-        let geo = model.getGeometry(result);
+        result = super.connect(edge, terminal, isSource, isClone, me);
+        let geo = result.getGeometry();
 
-        if (geo != null) {
+        if (geo) {
           geo = geo.clone();
           let pt = null;
 
           if (terminal.isEdge()) {
-            pt = this.abspoints[this.isSource ? 0 : this.abspoints.length - 1];
+            pt = this.abspoints[this.isSource ? 0 : this.abspoints.length - 1]!; // here, we know that the point exists in the array
             pt.x = pt.x / this.graph.view.scale - this.graph.view.translate.x;
             pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
 
-            const pstate = this.graph.getView().getState(edge.getParent());
+            const pstate = this.graph.getView().getState(edge.getParent()!); // here, we know that the edge has a parent
 
             if (pstate != null) {
               pt.x -= pstate.origin.x;
