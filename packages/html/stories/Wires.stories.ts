@@ -225,7 +225,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     ): Cell {
       let result: Cell | null = null;
       const model = this.graph.getDataModel();
-      const parent = edge.getParent();
 
       model.beginUpdate();
       try {
@@ -234,13 +233,14 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
         if (geo) {
           geo = geo.clone();
-          let pt = null;
+          let pt: Point | null = null;
 
           if (terminal.isEdge()) {
             pt = this.abspoints[this.isSource ? 0 : this.abspoints.length - 1]!; // here, we know that the point exists in the array
             pt.x = pt.x / this.graph.view.scale - this.graph.view.translate.x;
             pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
 
+            // TODO check the code in mxGraph
             const pstate = this.graph.getView().getState(edge.getParent()!); // here, we know that the edge has a parent
 
             if (pstate != null) {
@@ -250,9 +250,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
             pt.x -= this.graph.panDx / this.graph.view.scale;
             pt.y -= this.graph.panDy / this.graph.view.scale;
+
+            // TODO check mxGraph, may be done outside the if in mxGraph
+            geo.setTerminalPoint(pt, isSource);
           }
 
-          geo.setTerminalPoint(pt, isSource);
           model.setGeometry(edge, geo);
         }
       } finally {
