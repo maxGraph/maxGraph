@@ -1276,12 +1276,12 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
     if (!this.edgeState) return;
 
     // TODO: Use generic method for writing constraint to style
-    if (this.sourceConstraint && this.sourceConstraint.point) {
+    if (this.sourceConstraint?.point) {
       this.edgeState.style.exitX = this.sourceConstraint.point.x;
       this.edgeState.style.exitY = this.sourceConstraint.point.y;
     }
 
-    if (constraint && constraint.point) {
+    if (constraint?.point) {
       this.edgeState.style.entryX = constraint.point.x;
       this.edgeState.style.entryY = constraint.point.y;
     } else {
