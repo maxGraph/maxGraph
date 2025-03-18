@@ -146,7 +146,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return style;
     }
 
-    getTooltipForCell(cell: Cell) {
+    override getTooltipForCell(cell: Cell) {
       let tip = '';
 
       if (cell) {
@@ -173,13 +173,17 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // Alternative solution for implementing connection points without child cells.
     // This can be extended as shown in portrefs.html example to allow for per-port
     // incoming/outgoing direction.
-    getAllConnectionConstraints(terminal) {
+    override getAllConnectionConstraints(
+      terminal: CellState | null,
+      _source: boolean
+    ): ConnectionConstraint[] | null {
       const geo = terminal != null ? terminal.cell.getGeometry() : null;
 
       if (
-        (geo != null ? !geo.relative : false) &&
-        terminal.cell.isVertex() &&
-        terminal.cell.getChildCount() === 0
+        (geo?.relative ?? false) &&
+        // (geo != null ? !geo.relative : false) &&
+        terminal?.cell.isVertex() &&
+        terminal?.cell.getChildCount() === 0
       ) {
         return [
           new ConnectionConstraint(new Point(0, 0.5), false),
@@ -198,7 +202,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   class MyCustomGuide extends Guide {
     // Alt disables guides
-    isEnabledForEvent(evt) {
+    override isEnabledForEvent(evt: any) {
       return !eventUtils.isAltDown(evt);
     }
   }
