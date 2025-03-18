@@ -874,8 +874,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Updates the current state for a given mouse move event by using
-   * the {@link arker}.
+   * Updates the current state for a given mouse move event by using the {@link marker}.
    */
   updateCurrentState(me: InternalMouseEvent, point: Point): void {
     this.constraintHandler.update(
