@@ -97,7 +97,8 @@ import {
 import { createGraphContainer } from './shared/configure.js';
 import '@maxgraph/core/css/common.css';
 import type Cell from '@maxgraph/core/lib/view/cell/Cell.ts';
-import InternalMouseEvent from '@maxgraph/core/lib/view/event/InternalMouseEvent.ts'; // style required by RubberBand
+import InternalMouseEvent from '@maxgraph/core/lib/view/event/InternalMouseEvent.ts';
+import EventSource from '@maxgraph/core/lib/view/event/EventSource.ts'; // style required by RubberBand
 
 export default {
   title: 'Connections/Wires',
@@ -322,8 +323,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     // White in-place editor text color
     MyCustomCellEditorHandler = class extends CellEditorHandler {
-      startEditing(cell, trigger) {
-        super.startEditing.apply(this, arguments);
+      override startEditing(cell: Cell, trigger: MouseEvent | null) {
+        super.startEditing(cell, trigger);
 
         if (this.textarea != null) {
           this.textarea.style.color = '#FFFFFF';
@@ -360,13 +361,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     waypointsEnabled = true;
 
     // Starts connections on the background in wire-mode
-    isStartEvent(me) {
-      return checkbox.checked || super.isStartEvent.apply(this, arguments);
+    override isStartEvent(me: InternalMouseEvent): boolean {
+      return checkbox.checked || super.isStartEvent(me);
     }
 
-    // Avoids any connections for gestures within tolerance except when in wire-mode
-    // or when over a port
-    mouseUp(sender, me) {
+    // Avoids any connections for gestures within tolerance except when in wire-mode or when over a port
+    override mouseUp(_sender: EventSource, me: InternalMouseEvent) {
       if (this.first != null && this.previous != null) {
         const point = styleUtils.convertPoint(this.graph.container, me.getX(), me.getY());
         const dx = Math.abs(point.x - this.first.x);
@@ -385,36 +385,30 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     // Overrides methods to preview and create new edges.
-
     // Sets source terminal point for edge-to-edge connections.
-    createEdgeState(me) {
+    override createEdgeState(me?: InternalMouseEvent): CellState | null {
+      // FIXME the signature of this method should accept no value and define defaults
       const edge = this.graph.createEdge();
 
-      if (this.sourceConstraint != null && this.previous != null) {
-        edge.style =
-          'exitX' +
-          '=' +
-          this.sourceConstraint.point.x +
-          ';' +
-          'exitY' +
-          '=' +
-          this.sourceConstraint.point.y +
-          ';';
-      } else if (me.getCell().isEdge()) {
+      // TODO why checking previous
+      if (this.sourceConstraint?.point && this.previous) {
+        edge.style.exitX = this.sourceConstraint.point.x;
+        edge.style.exitY = this.sourceConstraint.point.y;
+      } else if (me?.getCell()?.isEdge()) {
         const scale = this.graph.view.scale;
         const tr = this.graph.view.translate;
         const pt = new Point(
           this.graph.snap(me.getGraphX() / scale) - tr.x,
           this.graph.snap(me.getGraphY() / scale) - tr.y
         );
-        edge.geometry.setTerminalPoint(pt, true);
+        edge.geometry?.setTerminalPoint(pt, true);
       }
 
       return this.graph.view.createState(edge);
     }
 
     // Uses right mouse button to create edges on background (see also: lines 67 ff)
-    isStopEvent(me) {
+    override isStopEvent(me: InternalMouseEvent) {
       return me.getState() != null || eventUtils.isRightMouseButton(me.getEvent());
     }
 
