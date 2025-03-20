@@ -73,8 +73,8 @@ describe('import mxGraph model', () => {
   <root>
     <mxCell id="0"/>
     <mxCell id="1" parent="0"/>
-    <mxCell id="2" vertex="1" parent="1" value="Vertex with style" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E6E6E6;dashed=1;">
-    </mxCell>
+    <mxCell id="2" vertex="1" parent="1" value="Vertex with style" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E6E6E6;dashed=1;portConstraint=northsouth"/>
+    <mxCell id="3" edge="1" parent="1" value="Edge with style" style="sourcePortConstraint=northsouth;targetPortConstraint=eastwest;strokeColor=#FF0000;strokeWidth=2"/>
   </root>
 </mxGraphModel>`;
 
@@ -84,16 +84,28 @@ describe('import mxGraph model', () => {
     const modelChecker = new ModelChecker(model);
 
     modelChecker.checkRootCells();
-    modelChecker.checkCellsCount(3);
+    modelChecker.checkCellsCount(4);
     modelChecker.expectIsVertex(model.getCell('2'), 'Vertex with style', {
       style: {
         // @ts-ignore FIX should be true
         dashed: 1,
         fillColor: '#E6E6E6',
         html: 1,
+        // @ts-ignore mxGraph compatibility, getPortConstraints is able to support such a string even if it doesn't match the function signature
+        portConstraint: 'northsouth',
         // @ts-ignore FIX should be false
         rounded: 0,
         whiteSpace: 'wrap',
+      },
+    });
+    modelChecker.expectIsEdge(model.getCell('3'), 'Edge with style', {
+      style: {
+        // @ts-ignore mxGraph compatibility, getPortConstraints is able to support such a string even if it doesn't match the function signature
+        sourcePortConstraint: 'northsouth',
+        strokeColor: '#FF0000',
+        strokeWidth: 2,
+        // @ts-ignore mxGraph compatibility, getPortConstraints is able to support such a string even if it doesn't match the function signature
+        targetPortConstraint: 'eastwest',
       },
     });
   });
