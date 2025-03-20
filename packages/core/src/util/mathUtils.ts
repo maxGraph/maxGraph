@@ -205,10 +205,10 @@ export const getRotatedPoint = (pt: Point, cos: number, sin: number, c = new Poi
 };
 
 /**
- * Returns an integer mask of the port constraints of the given map
+ * Returns an integer mask of the port constraints for the given terminal and edge.
  *
- * @param terminal {@link CelState} that represents the terminal.
- * @param edge {@link CelState} that represents the edge.
+ * @param terminal {@link CellState} that represents the terminal.
+ * @param edge {@link CellState} that represents the edge.
  * @param source Boolean that specifies if the terminal is the source terminal.
  * @param defaultValue Default value to be returned if no port constraint is defined in the terminal.
  * @return the mask of port constraint directions
@@ -221,21 +221,22 @@ export const getPortConstraints = (
 ): number => {
   const value =
     terminal.style.portConstraint ??
-    (source ? edge.style.sourcePortConstraint : edge.style.targetPortConstraint) ??
-    null;
+    (source ? edge.style.sourcePortConstraint : edge.style.targetPortConstraint);
 
   if (isNullish(value)) {
     return defaultValue;
   }
 
+  // The implementation here is derived from the mxGraph implementation
+  // In mxGraph, the configuration of several directions was done by concatenating them in a string without separator like in "portConstraint=northsouth"
+  // See https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/examples/orthogonal.html#L101-L102
+  // Other examples exist in draw.io: https://github.com/jgraph/drawio/blob/acd938b1/src/main/webapp/js/diagramly/Dialogs.js#L2302-L2305
+  // The implementation here still supports the string concatenation of several directions to allow import of mxGraph XML models without additional transformations.
+
   const directions = value.toString();
   let returnValue = DIRECTION_MASK.NONE;
   const constraintRotationEnabled = terminal.style.portConstraintRotation ?? false;
-  let rotation = 0;
-
-  if (constraintRotationEnabled) {
-    rotation = terminal.style.rotation ?? 0;
-  }
+  const rotation = constraintRotationEnabled ? (terminal.style.rotation ?? 0) : 0;
 
   let quad = 0;
 
