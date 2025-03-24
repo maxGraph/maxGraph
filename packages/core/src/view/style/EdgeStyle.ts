@@ -64,19 +64,19 @@ import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
  * style.edgeStyle = 'myEdgeStyle';
  * ```
  *
- * The key of the {@link StyleRegistry} entry for the function should be used in the {@link CellState.edgeStyle} values, unless {@link GraphView#allowEval} is `true.
- * In this case, you can also use the `'EdgeStyle.MyStyle'` string for the value in the cell style above.
+ * The key of the {@link StyleRegistry} entry for the function should be used in the {@link CellState.edgeStyle} values, unless {@link GraphView.allowEval} is `true.
+ * In this case, you can also use the `'MyStyle'` string for the value in the cell style above.
  *
  * The custom EdgeStyle can be used for all edges in the graph as follows:
  *
  * ```javascript
  * const style = graph.getStylesheet().getDefaultEdgeStyle();
- * style.edgeStyle = EdgeStyle.MyStyle;
+ * style.edgeStyle = MyStyle;
  * ```
  *
  * It can also be used directly when setting the value of the `edgeStyle` key in a style of a specific edge as follows:
  * ```javascript
- * style.edgeStyle = EdgeStyle.MyStyle;
+ * style.edgeStyle = MyStyle;
  * ```
  *
  * @category EdgeStyle
