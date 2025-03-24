@@ -21,8 +21,7 @@ import StyleRegistry from '../../view/style/StyleRegistry';
 import { clone } from '../../util/cloneUtils';
 import { GlobalConfig } from '../../util/config';
 import { isNumeric } from '../../util/mathUtils';
-import { getTextContent } from '../../util/domUtils';
-import { isElement } from '../../util/xmlUtils';
+import { getTextContent, isElement } from '../../util/domUtils';
 
 /**
  * Codec for {@link Stylesheet}s.

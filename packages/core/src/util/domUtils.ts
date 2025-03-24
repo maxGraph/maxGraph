@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { NODETYPE } from './Constants';
+import { UserObject } from '../internal-types';
 
 /**
  * Returns the text content of the specified node.
@@ -359,3 +360,10 @@ export const addLinkToHead = (
   const head = doc.getElementsByTagName('head')[0];
   head.appendChild(link);
 };
+/**
+ * Returns true if the parameter is not `nullish` and its nodeType relates to an {@link Element}.
+ * @internal
+ * @private
+ */
+export const isElement = (node?: Node | UserObject | null): node is Element =>
+  node?.nodeType === NODETYPE.ELEMENT;

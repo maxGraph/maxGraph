@@ -18,7 +18,7 @@ import ObjectCodec from '../ObjectCodec';
 import RootChange from '../../view/undoable_changes/RootChange';
 import type Codec from '../Codec';
 
-import { isElement } from '../../util/xmlUtils';
+import { isElement } from '../../util/domUtils';
 
 /**
  * Codec for {@link RootChange}s.

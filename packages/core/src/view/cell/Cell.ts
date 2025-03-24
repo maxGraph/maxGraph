@@ -25,8 +25,8 @@ import CellPath from './CellPath';
 import { isNotNullish } from '../../util/Utils';
 
 import type { CellStyle, FilterFunction, IdentityObject } from '../../types';
-import { isElement } from '../../util/xmlUtils';
 import type { UserObject } from '../../internal-types';
+import { isElement } from '../../util/domUtils';
 
 /**
  * Cells are the elements of the graph model. They represent the state
