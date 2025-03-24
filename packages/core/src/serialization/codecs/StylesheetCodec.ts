@@ -93,35 +93,32 @@ export class StylesheetCodec extends ObjectCodec {
    * Reads a sequence of the following child nodes and attributes:
    *
    * Child Nodes:
-   *
-   * add - Adds a new style.
+   * - `add` - Adds a new style.
    *
    * Attributes:
-   *
-   * as - Name of the style.
-   * extend - Name of the style to inherit from.
+   * - `as` - Name of the style.
+   * - `extend` - Name of the style to inherit from.
    *
    * Each node contains another sequence of add and remove nodes with the following attributes:
-   *
-   * as - Name of the style (see {@link Constants}).
-   * value - Value for the style.
+   * - `as` - Name of the style (see properties of {@link CellStateStyle}).
+   * - `value` - Value for the style.
    *
    * Instead of the value-attribute, one can put Javascript expressions into the node as follows if {@link allowEval} is `true`:
-   * <add as="perimeter">mxPerimeter.RectanglePerimeter</add>
+   * <add as="perimeter">Perimeter.RectanglePerimeter</add>
    *
    * A remove node will remove the entry with the name given in the as-attribute from the style.
    *
    * Example:
    *
    * ```javascript
-   * <mxStylesheet as="stylesheet">
+   * <Stylesheet as="stylesheet">
    *   <add as="text">
    *     <add as="fontSize" value="12"/>
    *   </add>
    *   <add as="defaultVertex" extend="text">
    *     <add as="shape" value="rectangle"/>
    *   </add>
-   * </mxStylesheet>
+   * </Stylesheet>
    * ```
    */
   decode(dec: Codec, _node: Element, into: any): any {
