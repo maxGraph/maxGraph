@@ -20,9 +20,8 @@ import type Codec from '../Codec';
 import StyleRegistry from '../../view/style/StyleRegistry';
 import { clone } from '../../util/cloneUtils';
 import { GlobalConfig } from '../../util/config';
-import { NODETYPE } from '../../util/Constants';
 import { isNumeric } from '../../util/mathUtils';
-import { getTextContent } from '../../util/domUtils';
+import { getTextContent, isElement } from '../../util/domUtils';
 
 /**
  * Codec for {@link Stylesheet}s.
@@ -94,57 +93,54 @@ export class StylesheetCodec extends ObjectCodec {
    * Reads a sequence of the following child nodes and attributes:
    *
    * Child Nodes:
-   *
-   * add - Adds a new style.
+   * - `add` - Adds a new style.
    *
    * Attributes:
-   *
-   * as - Name of the style.
-   * extend - Name of the style to inherit from.
+   * - `as` - Name of the style.
+   * - `extend` - Name of the style to inherit from.
    *
    * Each node contains another sequence of add and remove nodes with the following attributes:
-   *
-   * as - Name of the style (see {@link Constants}).
-   * value - Value for the style.
+   * - `as` - Name of the style (see properties of {@link CellStateStyle}).
+   * - `value` - Value for the style.
    *
    * Instead of the value-attribute, one can put Javascript expressions into the node as follows if {@link allowEval} is `true`:
-   * <add as="perimeter">mxPerimeter.RectanglePerimeter</add>
+   * <add as="perimeter">Perimeter.RectanglePerimeter</add>
    *
    * A remove node will remove the entry with the name given in the as-attribute from the style.
    *
    * Example:
    *
    * ```javascript
-   * <mxStylesheet as="stylesheet">
+   * <Stylesheet as="stylesheet">
    *   <add as="text">
    *     <add as="fontSize" value="12"/>
    *   </add>
    *   <add as="defaultVertex" extend="text">
    *     <add as="shape" value="rectangle"/>
    *   </add>
-   * </mxStylesheet>
+   * </Stylesheet>
    * ```
    */
   decode(dec: Codec, _node: Element, into: any): any {
     const obj = into || new this.template.constructor();
     const id = _node.getAttribute('id');
 
-    if (id != null) {
+    if (id) {
       dec.objects[id] = obj;
     }
 
     let node: Element | ChildNode | null = _node.firstChild;
 
-    while (node != null) {
+    while (node) {
       if (!this.processInclude(dec, <Element>node, obj) && node.nodeName === 'add') {
         const as = (<Element>node).getAttribute('as');
 
-        if (as != null) {
+        if (as) {
           const extend = (<Element>node).getAttribute('extend');
-          let style = extend != null ? clone(obj.styles[extend]) : null;
+          let style = extend ? clone(obj.styles[extend]) : null;
 
-          if (style == null) {
-            if (extend != null) {
+          if (!style) {
+            if (extend) {
               GlobalConfig.logger.warn(
                 `StylesheetCodec.decode: stylesheet ${extend} not found to extend`
               );
@@ -154,26 +150,25 @@ export class StylesheetCodec extends ObjectCodec {
           }
 
           let entry = node.firstChild;
-
-          while (entry != null) {
-            if (entry.nodeType === NODETYPE.ELEMENT) {
-              const key = <string>(<Element>entry).getAttribute('as');
+          while (entry) {
+            if (isElement(entry)) {
+              const key = entry.getAttribute('as')!;
 
               if (entry.nodeName === 'add') {
                 const text = getTextContent(<Text>(<unknown>entry));
                 let value = null;
 
-                if (text != null && text.length > 0 && StylesheetCodec.allowEval) {
+                if (text && StylesheetCodec.allowEval) {
                   value = eval(text);
                 } else {
-                  value = (<Element>entry).getAttribute('value');
+                  value = entry.getAttribute('value');
 
                   if (isNumeric(value)) {
-                    value = parseFloat(<string>value);
+                    value = parseFloat(value);
                   }
                 }
 
-                if (value != null) {
+                if (value) {
                   style[key] = value;
                 }
               } else if (entry.nodeName === 'remove') {

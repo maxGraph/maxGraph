@@ -186,12 +186,12 @@ export class EditorPopupMenu {
   ) {
     let addSeparator = false;
 
-    while (item != null) {
+    while (item) {
       if (item.nodeName === 'add') {
         const condition = item.getAttribute('if');
 
         if (condition == null || conditions[condition]) {
-          let as = <string>item.getAttribute('as');
+          let as = item.getAttribute('as')!;
           as = Translations.get(as) || as;
           const funct = eval(getTextContent(<Text>(<unknown>item)));
           const action = item.getAttribute('action');

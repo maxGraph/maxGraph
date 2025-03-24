@@ -24,13 +24,12 @@ import { isNotNullish } from '../../../util/Utils';
 import {
   ALIGN,
   DIRECTION,
-  NODETYPE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
   TEXT_DIRECTION,
 } from '../../../util/Constants';
 import StencilShapeRegistry from './StencilShapeRegistry';
-import { getChildNodes, getTextContent } from '../../../util/domUtils';
+import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
@@ -276,7 +275,7 @@ class StencilShape extends Shape {
       let tmp = node.firstChild as Element;
 
       while (tmp) {
-        if (tmp.nodeType === NODETYPE.ELEMENT) {
+        if (isElement(tmp)) {
           this.drawNode(canvas, shape, tmp, aspect, disableShadow, paint);
         }
 
@@ -375,7 +374,7 @@ class StencilShape extends Shape {
           let childNode = node.firstChild as Element;
 
           while (childNode != null) {
-            if (childNode.nodeType === NODETYPE.ELEMENT) {
+            if (isElement(childNode)) {
               const childName = childNode.nodeName;
 
               if (childName === 'move' || childName === 'line') {
@@ -423,7 +422,7 @@ class StencilShape extends Shape {
           let childNode = node.firstChild as Element;
 
           while (childNode) {
-            if (childNode.nodeType === NODETYPE.ELEMENT) {
+            if (isElement(childNode)) {
               this.drawNode(canvas, shape, childNode, aspect, disableShadow, paint);
             }
 
