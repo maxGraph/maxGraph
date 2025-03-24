@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODETYPE } from '../../util/Constants';
 import Geometry from '../geometry/Geometry';
 import CellOverlay from './CellOverlay';
 import { clone } from '../../util/cloneUtils';
