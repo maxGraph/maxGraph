@@ -20,11 +20,11 @@ import ObjectIdentity from '../util/ObjectIdentity';
 import { GlobalConfig } from '../util/config';
 import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
-import { NODETYPE } from '../util/Constants';
 import { isInteger, isNumeric } from '../util/mathUtils';
 import { getTextContent } from '../util/domUtils';
 import { load } from '../util/MaxXmlRequest';
 import type Codec from './Codec';
+import { isElement } from '../util/xmlUtils';
 
 /**
  * Generic codec for JavaScript objects that implements a mapping between
@@ -791,10 +791,10 @@ class ObjectCodec {
   decodeChildren(dec: Codec, node: Element, obj?: any): void {
     let child = <Element>node.firstChild;
 
-    while (child != null) {
+    while (child) {
       const tmp = <Element>child.nextSibling;
 
-      if (child.nodeType === NODETYPE.ELEMENT && !this.processInclude(dec, child, obj)) {
+      if (isElement(child) && !this.processInclude(dec, child, obj)) {
         this.decodeChild(dec, child, obj);
       }
 

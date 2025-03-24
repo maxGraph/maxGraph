@@ -17,7 +17,8 @@ limitations under the License.
 import ObjectCodec from '../ObjectCodec';
 import ChildChange from '../../view/undoable_changes/ChildChange';
 import type Codec from '../Codec';
-import { NODETYPE } from '../../util/Constants';
+
+import { isElement } from '../../util/xmlUtils';
 
 /**
  * Codec for {@link ChildChange}s.
@@ -93,7 +94,7 @@ export class ChildChangeCodec extends ObjectCodec {
    * Decodes any child nodes as using the respective codec from the registry.
    */
   beforeDecode(dec: Codec, _node: Element, obj: any): any {
-    if (_node.firstChild != null && _node.firstChild.nodeType === NODETYPE.ELEMENT) {
+    if (isElement(_node.firstChild)) {
       // Makes sure the original node isn't modified
       const node = _node.cloneNode(true);
 
@@ -104,23 +105,23 @@ export class ChildChangeCodec extends ObjectCodec {
       (<Element>tmp.parentNode).removeChild(tmp);
       tmp = tmp2;
 
-      while (tmp != null) {
+      while (tmp) {
         tmp2 = <Element>tmp.nextSibling;
 
-        if (tmp.nodeType === NODETYPE.ELEMENT) {
+        if (isElement(tmp)) {
           // Ignores all existing cells because those do not need to
           // be re-inserted into the model. Since the encoded version
           // of these cells contains the new parent, this would leave
           // to an inconsistent state on the model (i.e. a parent
           // change without a call to parentForCellChanged).
-          const id = <string>tmp.getAttribute('id');
+          const id = tmp.getAttribute('id')!;
 
           if (dec.lookup(id) == null) {
             dec.decodeCell(tmp);
           }
         }
 
-        (<Element>tmp.parentNode).removeChild(tmp);
+        tmp.parentNode?.removeChild(tmp);
         tmp = tmp2;
       }
 

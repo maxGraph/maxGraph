@@ -193,12 +193,11 @@ export class EditorCodec extends ObjectCodec {
           editor.setStatusContainer(element);
         } else if (as === 'map') {
           throw new Error('Unimplemented');
-          //editor.setMapContainer(element);
         }
       } else if (tmp.nodeName === 'resource') {
-        Translations.add(<string>tmp.getAttribute('basename'));
+        Translations.add(tmp.getAttribute('basename')!);
       } else if (tmp.nodeName === 'stylesheet') {
-        addLinkToHead('stylesheet', <string>tmp.getAttribute('name'));
+        addLinkToHead('stylesheet', tmp.getAttribute('name')!);
       }
 
       tmp = <Element>tmp.nextSibling;

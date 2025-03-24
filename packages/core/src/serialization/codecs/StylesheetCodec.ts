@@ -20,9 +20,9 @@ import type Codec from '../Codec';
 import StyleRegistry from '../../view/style/StyleRegistry';
 import { clone } from '../../util/cloneUtils';
 import { GlobalConfig } from '../../util/config';
-import { NODETYPE } from '../../util/Constants';
 import { isNumeric } from '../../util/mathUtils';
 import { getTextContent } from '../../util/domUtils';
+import { isElement } from '../../util/xmlUtils';
 
 /**
  * Codec for {@link Stylesheet}s.
@@ -154,22 +154,21 @@ export class StylesheetCodec extends ObjectCodec {
           }
 
           let entry = node.firstChild;
-
-          while (entry != null) {
-            if (entry.nodeType === NODETYPE.ELEMENT) {
-              const key = <string>(<Element>entry).getAttribute('as');
+          while (entry) {
+            if (isElement(entry)) {
+              const key = entry.getAttribute('as')!;
 
               if (entry.nodeName === 'add') {
                 const text = getTextContent(<Text>(<unknown>entry));
                 let value = null;
 
-                if (text != null && text.length > 0 && StylesheetCodec.allowEval) {
+                if (text && StylesheetCodec.allowEval) {
                   value = eval(text);
                 } else {
-                  value = (<Element>entry).getAttribute('value');
+                  value = entry.getAttribute('value');
 
                   if (isNumeric(value)) {
-                    value = parseFloat(<string>value);
+                    value = parseFloat(value!); // value is not null here (see isNumeric)
                   }
                 }
 

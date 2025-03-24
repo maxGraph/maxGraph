@@ -17,7 +17,8 @@ limitations under the License.
 import ObjectCodec from '../ObjectCodec';
 import RootChange from '../../view/undoable_changes/RootChange';
 import type Codec from '../Codec';
-import { NODETYPE } from '../../util/Constants';
+
+import { isElement } from '../../util/xmlUtils';
 
 /**
  * Codec for {@link RootChange}s.
@@ -50,7 +51,7 @@ export class RootChangeCodec extends ObjectCodec {
    * Decodes the optional children as cells using the respective decoder.
    */
   beforeDecode(dec: Codec, node: Element, obj: any): any {
-    if (node.firstChild != null && node.firstChild.nodeType === NODETYPE.ELEMENT) {
+    if (isElement(node.firstChild)) {
       // Makes sure the original node isn't modified
       node = <Element>node.cloneNode(true);
 
@@ -58,13 +59,13 @@ export class RootChangeCodec extends ObjectCodec {
       obj.root = dec.decodeCell(tmp, false);
 
       let tmp2 = <Element>tmp.nextSibling;
-      (<Element>tmp.parentNode).removeChild(tmp);
+      tmp.parentNode?.removeChild(tmp);
       tmp = tmp2;
 
       while (tmp != null) {
         tmp2 = <Element>tmp.nextSibling;
         dec.decodeCell(tmp);
-        (<Element>tmp.parentNode).removeChild(tmp);
+        tmp.parentNode?.removeChild(tmp);
         tmp = tmp2;
       }
     }

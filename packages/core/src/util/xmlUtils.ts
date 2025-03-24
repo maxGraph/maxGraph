@@ -26,6 +26,7 @@ import TemporaryCellStates from '../view/cell/TemporaryCellStates';
 import type { StyleValue } from '../types';
 import { getTextContent } from './domUtils';
 import Codec from '../serialization/Codec';
+import { UserObject } from '../internal-types';
 
 /**
  * Returns a new, empty XML document.
@@ -228,7 +229,7 @@ export const findNode = (
   attr: string,
   value: StyleValue
 ): Element | null => {
-  if (node.nodeType === NODETYPE.ELEMENT) {
+  if (isElement(node)) {
     const tmp = node.getAttribute(attr);
     if (tmp && tmp === value) {
       return node;
@@ -247,3 +248,11 @@ export const findNode = (
 
   return null;
 };
+
+/**
+ * Returns true if the parameter is not `nullish` and its nodeType relates to an {@link Element}.
+ * @internal
+ * @private
+ */
+export const isElement = (node?: Node | UserObject | null): node is Element =>
+  node?.nodeType === NODETYPE.ELEMENT;

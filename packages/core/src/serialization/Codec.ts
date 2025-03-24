@@ -18,11 +18,11 @@ limitations under the License.
 
 import CellPath from '../view/cell/CellPath';
 import CodecRegistry from './CodecRegistry';
-import { NODETYPE } from '../util/Constants';
 import Cell from '../view/cell/Cell';
 import { GlobalConfig } from '../util/config';
 import { getFunctionName } from '../util/StringUtils';
 import { importNode, isNode } from '../util/domUtils';
+import { isElement } from '../util/xmlUtils';
 
 const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);
@@ -248,7 +248,7 @@ class Codec {
    * Adds the given element to {@link elements} if it has an ID.
    */
   addElement(node: Element): void {
-    if (node.nodeType === NODETYPE.ELEMENT) {
+    if (isElement(node)) {
       const id = node.getAttribute('id');
 
       if (id != null) {
@@ -359,7 +359,7 @@ class Codec {
     this.updateElements();
     let obj = null;
 
-    if (node != null && node.nodeType === NODETYPE.ELEMENT) {
+    if (isElement(node)) {
       const dec = CodecRegistry.getCodecByName(node.nodeName);
 
       if (dec != null) {
@@ -429,7 +429,7 @@ class Codec {
    * Default is `true`.
    */
   decodeCell(node: Element, restoreStructures = true): Cell | null {
-    if (node?.nodeType !== NODETYPE.ELEMENT) {
+    if (!isElement(node)) {
       return null;
     }
 

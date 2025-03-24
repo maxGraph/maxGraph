@@ -25,15 +25,8 @@ import CellPath from './CellPath';
 import { isNotNullish } from '../../util/Utils';
 
 import type { CellStyle, FilterFunction, IdentityObject } from '../../types';
-
-type UserObject = {
-  nodeType?: number;
-  getAttribute?: (name: string) => string | null;
-  hasAttribute?: (name: string) => boolean;
-  setAttribute?: (name: string, value: string) => void;
-  clone?: () => UserObject;
-  cloneNode?: (deep: boolean) => UserObject;
-};
+import { isElement } from '../../util/xmlUtils';
+import type { UserObject } from '../../internal-types';
 
 /**
  * Cells are the elements of the graph model. They represent the state
@@ -573,12 +566,9 @@ export class Cell implements IdentityObject {
   hasAttribute(name: string): boolean {
     const userObject: UserObject = this.getValue();
 
-    return (
-      isNotNullish(userObject) &&
-      (userObject.nodeType === NODETYPE.ELEMENT && userObject.hasAttribute
-        ? userObject.hasAttribute(name)
-        : isNotNullish(userObject.getAttribute?.(name)))
-    );
+    return isElement(userObject) && userObject.hasAttribute
+      ? userObject.hasAttribute(name)
+      : isNotNullish(userObject.getAttribute?.(name));
   }
 
   /**
@@ -590,10 +580,7 @@ export class Cell implements IdentityObject {
    */
   getAttribute(name: string, defaultValue?: any): any {
     const userObject: UserObject = this.getValue();
-    const val =
-      isNotNullish(userObject) && userObject.nodeType === NODETYPE.ELEMENT
-        ? userObject.getAttribute?.(name)
-        : null;
+    const val = isElement(userObject) ? userObject.getAttribute?.(name) : null;
 
     return val ?? defaultValue;
   }
@@ -607,7 +594,7 @@ export class Cell implements IdentityObject {
   setAttribute(name: string, value: any): void {
     const userObject: UserObject = this.getValue();
 
-    if (isNotNullish(userObject) && userObject.nodeType === NODETYPE.ELEMENT) {
+    if (isElement(userObject)) {
       userObject.setAttribute?.(name, value);
     }
   }
