@@ -125,22 +125,22 @@ export class StylesheetCodec extends ObjectCodec {
     const obj = into || new this.template.constructor();
     const id = _node.getAttribute('id');
 
-    if (id != null) {
+    if (id) {
       dec.objects[id] = obj;
     }
 
     let node: Element | ChildNode | null = _node.firstChild;
 
-    while (node != null) {
+    while (node) {
       if (!this.processInclude(dec, <Element>node, obj) && node.nodeName === 'add') {
         const as = (<Element>node).getAttribute('as');
 
-        if (as != null) {
+        if (as) {
           const extend = (<Element>node).getAttribute('extend');
-          let style = extend != null ? clone(obj.styles[extend]) : null;
+          let style = extend ? clone(obj.styles[extend]) : null;
 
-          if (style == null) {
-            if (extend != null) {
+          if (!style) {
+            if (extend) {
               GlobalConfig.logger.warn(
                 `StylesheetCodec.decode: stylesheet ${extend} not found to extend`
               );
@@ -168,7 +168,7 @@ export class StylesheetCodec extends ObjectCodec {
                   }
                 }
 
-                if (value != null) {
+                if (value) {
                   style[key] = value;
                 }
               } else if (entry.nodeName === 'remove') {
