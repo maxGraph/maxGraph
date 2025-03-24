@@ -658,7 +658,7 @@ export const intersectsHotspot = (
  *
  * @param n String representing the possibly numeric value.
  */
-export const isNumeric = (n: any) => {
+export const isNumeric = (n: any): n is {} => {
   return (
     !Number.isNaN(parseFloat(n)) &&
     isFinite(+n) &&

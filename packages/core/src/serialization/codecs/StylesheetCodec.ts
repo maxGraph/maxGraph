@@ -167,7 +167,7 @@ export class StylesheetCodec extends ObjectCodec {
                   value = entry.getAttribute('value');
 
                   if (isNumeric(value)) {
-                    value = parseFloat(value!); // value is not null here (see isNumeric)
+                    value = parseFloat(value);
                   }
                 }
 
