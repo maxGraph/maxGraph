@@ -23,11 +23,7 @@ import {
   setCellStyles,
 } from '../../src/util/styleUtils';
 import { FONT } from '../../src/util/Constants';
-import {
-  CellStateStyle,
-  type CellStyle,
-  type NumericCellStateStyleKeys,
-} from '../../src/types';
+import { type CellStyle } from '../../src/types';
 import { createGraphWithoutPlugins } from '../utils';
 
 describe('matchBinaryMask', () => {
