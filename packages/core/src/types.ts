@@ -653,7 +653,7 @@ export type CellStateStyle = {
   /**
    * The type of this value is float and the value represents the size of the horizontal
    * segment of the entity relation style.
-   * @default {@link ENTITY_SEGMENT}
+   * @default {@link EntityRelationConnectorConfig.segment}
    */
   segment?: number;
   /**

@@ -57,33 +57,35 @@ import { show } from '../util/printUtils';
 import PanningHandler from '../view/handler/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
 import { TranslationsConfig } from '../i18n/config';
+import type MaxPopupMenu from '../gui/MaxPopupMenu';
+import { isNullish } from '../util/Utils';
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
  * adds {@link actions}, I/O using {@link Codec}, auto-layout using {@link LayoutManager},
- * command history using {@link undoManager}, and standard dialogs and widgets, eg.
+ * command history using {@link undoManager}, and standard dialogs and widgets, e.g.
  * properties, help, outline, toolbar, and popupmenu. It also adds {@link templates}
- * to be used as cells in toolbars, auto-validation using the {@link validation}
+ * to be used as cells in toolbars, auto-validation using the {@link installChangeHandler}
  * flag, attribute cycling using {@link cycleAttributeValues}, higher-level events
  * such as {@link root}, and backend integration using <urlPost> and {@link urlImage}.
  *
- * ### Actions:
+ * ### Actions
  *
  * Actions are functions stored in the <actions> array under their names. The
- * functions take the <Editor> as the first, and an optional <Cell> as the
+ * functions take the {@link Editor} as the first, and an optional {@link Cell} as the
  * second argument and are invoked using <execute>. Any additional arguments
  * passed to execute are passed on to the action as-is.
  *
  * A list of built-in actions is available in the <addActions> description.
  *
- * ### Read/write Diagrams:
+ * ### Read/write Diagrams
  *
- * To read a diagram from an XML string, for example from a textfield within the
+ * To read a diagram from an XML string, for example from a text field within the
  * page, the following code is used:
  *
  * ```javascript
- * var doc = mxUtils.parseXML(xmlString);
- * var node = doc.documentElement;
+ * const doc = xmlUtils.parseXML(xmlString);
+ * const node = doc.documentElement;
  * editor.readGraphModel(node);
  * ```
  *
@@ -103,14 +105,14 @@ import { TranslationsConfig } from '../i18n/config';
  * - Java: URLDecoder.decode(request.getParameter("xml"), "UTF-8").replace("
 ", "&#xa;")
  *
- * Note that the linefeeds should only be replaced if the XML is
+ * Note that the linefeed should only be replaced if the XML is
  * processed in Java, for example when creating an image, but not
  * if the XML is passed back to the client-side.
  *
  * - .NET: HttpUtility.UrlDecode(context.Request.Params["xml"])
  * - PHP: urldecode($_POST["xml"])
  *
- * ### Creating images:
+ * ### Creating images
  *
  * A backend (Java, PHP or C#) is required for creating images. The
  * distribution contains an example for each backend (ImageHandler.java,
@@ -119,7 +121,7 @@ import { TranslationsConfig } from '../i18n/config';
  * preview is implemented using VML/SVG in the browser and does not require
  * a backend. The backend is only required to creates images (bitmaps).
  *
- * ### Special characters:
+ * ### Special characters
  *
  * Note There are five characters that should always appear in XML content as
  * escapes, so that they do not interact with the syntax of the markup. These
@@ -133,23 +135,20 @@ import { TranslationsConfig } from '../i18n/config';
  *
  * Although it is part of the XML language, &apos; is not defined in HTML.
  * For this reason the XHTML specification recommends instead the use of
- * &#39; if text may be passed to a HTML user agent.
+ * &#39; if text may be passed to an HTML user agent.
  *
  * If you are having problems with special characters on the server-side then
  * you may want to try the {@link escapePostData} flag.
  *
- * For converting decimal escape sequences inside strings, a user has provided
- * us with the following function:
+ * For converting decimal escape sequences inside strings, a user has provided us with the following function:
  *
  * ```javascript
- * function html2js(text)
- * {
- *   var entitySearch = /&#[0-9]+;/;
- *   var entity;
+ * function html2js(text) {
+ *   const entitySearch = /&#[0-9]+;/;
+ *   let entity;
  *
- *   while (entity = entitySearch.exec(text))
- *   {
- *     var charCode = entity[0].substring(2, entity[0].length -1);
+ *   while (entity = entitySearch.exec(text)) {
+ *     const charCode = entity[0].substring(2, entity[0].length -1);
  *     text = text.substring(0, entity.index)
  *            + String.fromCharCode(charCode)
  *            + text.substring(entity.index + entity[0].length);
@@ -159,10 +158,9 @@ import { TranslationsConfig } from '../i18n/config';
  * }
  * ```
  *
- * Otherwise try using hex escape sequences and the built-in unescape function
- * for converting such strings.
+ * Otherwise, try using hex escape sequences and the built-in unescape function for converting such strings.
  *
- * ### Local Files:
+ * ### Local Files
  *
  * For saving and opening local files, no standardized method exists that
  * works across all browsers. The recommended way of dealing with local files
@@ -181,7 +179,7 @@ import { TranslationsConfig } from '../i18n/config';
  * To open a local file, the file should be uploaded via a form in the browser
  * and then opened from the server in the editor.
  *
- * ### Cell Properties:
+ * ### Cell Properties
  *
  * The properties displayed in the properties dialog are the attributes and
  * values of the cell's user object, which is an XML node. The XML node is
@@ -232,7 +230,7 @@ import { TranslationsConfig } from '../i18n/config';
  * editor.dblClickAction = 'showProperties';
  * ```
  *
- * ### Popupmenu and Toolbar:
+ * ### Popupmenu and Toolbar
  *
  * The toolbar and popupmenu are typically configured using the respective
  * sections in the config file, that is, the popupmenu is defined as follows:
@@ -278,22 +276,19 @@ import { TranslationsConfig } from '../i18n/config';
  * See {@link EditorCodec}, {@link EditorToolbarCodec} and {@link EditorPopupMenuCodec}
  * for information about configuring the editor and user interface.
  *
- * Programmatically inserting cells:
+ * ### Programmatically inserting cells
  *
  * For inserting a new cell, say, by clicking a button in the document,
  * the following code can be used. This requires an reference to the editor.
  *
  * ```javascript
- * var userObject = new Object();
- * var parent = editor.graph.getDefaultParent();
- * var model = editor.graph.model;
+ * const userObject = new Object();
+ * const parent = editor.graph.getDefaultParent();
+ * const model = editor.graph.model;
  * model.beginUpdate();
- * try
- * {
+ * try {
  *   editor.graph.insertVertex(parent, null, userObject, 20, 20, 80, 30);
- * }
- * finally
- * {
+ * } finally
  *   model.endUpdate();
  * }
  * ```
@@ -303,11 +298,11 @@ import { TranslationsConfig } from '../i18n/config';
  * the add function instead of addVertex.
  *
  * ```javascript
- * var template = editor.templates['task'];
- * var clone = cloneCell(template);
+ * const template = editor.templates['task'];
+ * cont clone = cloneCell(template);
  * ```
  *
- * #### Translations:
+ * ### Translations
  *
  * resources/editor - Language resources for Editor
  *
@@ -319,16 +314,17 @@ import { TranslationsConfig } from '../i18n/config';
  * Translations.add(`${Client.basePath}/resources/editor`);
  * ```
  *
- * #### Callback: onInit
+ * ### Callback: onInit
  *
- * Called from within the constructor. In the callback,
- * "this" refers to the editor instance.
+ * Called from within the constructor. In the callback, "this" refers to the editor instance.
  *
- * #### Cookie: mxgraph=seen
+ * ### Cookie: mxgraph=seen
  *
  * Set when the editor is started. Never expires. Use
  * {@link resetFirstTime} to reset this cookie. This cookie
  * only exists if {@link onInit} is implemented.
+ *
+ * ### Events
  *
  * #### Event: mxEvent.OPEN
  *
@@ -369,24 +365,21 @@ import { TranslationsConfig } from '../i18n/config';
  * Fires after a vertex was inserted and selected in <addVertex>. The
  * <code>vertex</code> property contains the new vertex.
  *
- * ### Example:
+ * **Example**
  *
  * For starting an in-place edit after a new vertex has been added to the
  * graph, the following code can be used.
  *
  * ```javascript
- * editor.addListener(mxEvent.AFTER_ADD_VERTEX, function(sender, evt)
- * {
- *   var vertex = evt.getProperty('vertex');
- *
- *   if (editor.graph.isCellEditable(vertex))
- *   {
+ * editor.addListener(mxEvent.AFTER_ADD_VERTEX, function(sender, evt) {
+ *   const vertex = evt.getProperty('vertex');
+ *   if (editor.graph.isCellEditable(vertex)) {
  *   	editor.graph.startEditingAtCell(vertex);
  *   }
  * });
  * ```
  *
- * ### Event: mxEvent.ESCAPE
+ * #### Event: mxEvent.ESCAPE
  *
  * Fires when the escape key is pressed. The <code>event</code> property
  * contains the key event.
@@ -410,9 +403,9 @@ export class Editor extends EventSource {
     this.actions = {};
     this.addActions();
 
-    // Executes the following only if a document has been instanciated.
-    // That is, don't execute when the editorcodec is setup.
-    if (document.body != null) {
+    // Executes the following only if a document has been instantiated.
+    // That is, don't execute when the {@link EditorCodec} is set up.
+    if (document.body) {
       // Defines instance fields
       this.cycleAttributeValues = [];
       this.popupHandler = new EditorPopupMenu();
@@ -422,7 +415,7 @@ export class Editor extends EventSource {
       this.graph = this.createGraph();
       this.toolbar = this.createToolbar();
 
-      // Creates the global keyhandler (requires graph instance)
+      // Creates the global key handler (requires graph instance)
       this.keyHandler = new EditorKeyHandler(this);
 
       // Configures the editor using the URI
@@ -432,11 +425,8 @@ export class Editor extends EventSource {
       // Assigns the swimlaneIndicatorColorAttribute on the graph
       this.graph.swimlaneIndicatorColorAttribute = this.cycleAttributeName;
 
-      // Checks if the <onInit> hook has been set
-      if (this.onInit != null) {
-        // Invokes the <onInit> hook
-        this.onInit();
-      }
+      // Invokes the 'onInit' hook
+      this.onInit?.();
     }
   }
 
@@ -457,9 +447,10 @@ export class Editor extends EventSource {
    */
   askZoomResource = TranslationsConfig.isEnabled() ? 'askZoom' : '';
 
-  /**
-   * Group: Controls and Handlers
-   */
+  // =====================================================================================
+  // Group: Controls and Handlers
+  // =====================================================================================
+
   /**
    * Specifies the resource key for the last saved info. If the resource for
    * this key does not exist then the value is used as the error message. Default is 'lastSaved'.
@@ -563,24 +554,23 @@ export class Editor extends EventSource {
    */
   actions: { [key: string]: Function } = {};
 
-  /**
-   * Group: Actions and Options
-   */
+  // =====================================================================================
+  // Group: Actions and Options
+  // =====================================================================================
+
   /**
    * Specifies the name of the action to be executed
-   * when a cell is double clicked. Default is 'edit'.
+   * when a cell is double-clicked. Default is 'edit'.
    *
-   * To handle a singleclick, use the following code.
+   * To handle a single-click, use the following code.
    *
    * @example
    * ```javascript
-   * editor.graph.addListener(mxEvent.CLICK, function(sender, evt)
-   * {
-   *   var e = evt.getProperty('event');
-   *   var cell = evt.getProperty('cell');
+   * editor.graph.addListener(mxEvent.CLICK, function(sender, evt) {
+   *   const e = evt.getProperty('event');
+   *   const cell = evt.getProperty('cell');
    *
-   *   if (cell != null && !e.isConsumed())
-   *   {
+   *   if (cell && !e.isConsumed()) {
    *     // Do something useful with cell...
    *     e.consume();
    *   }
@@ -594,14 +584,13 @@ export class Editor extends EventSource {
    * Specifies if new cells must be inserted
    * into an existing swimlane. Otherwise, cells
    * that are not swimlanes can be inserted as
-   * top-level cells. Default is false.
+   * top-level cells.
    * @default false
    */
   swimlaneRequired = false;
 
   /**
    * Specifies if the context menu should be disabled in the graph container.
-   * Default is true.
    * @default true
    */
   disableContextMenu = true;
@@ -613,20 +602,21 @@ export class Editor extends EventSource {
    */
   insertFunction: Function | null = null;
 
-  /**
-   * Group: Templates
-   */
+  // =====================================================================================
+  // Group: Templates
+  // =====================================================================================
+
   /**
    * Specifies if a new cell should be inserted on a single
    * click even using {@link insertFunction} if there is a cell
-   * under the mousepointer, otherwise the cell under the
-   * mousepointer is selected. Default is false.
+   * under the mouse pointer, otherwise the cell under the
+   * mouse pointer is selected. Default is false.
    * @default false
    */
   forcedInserting = false;
 
   /**
-   * Maps from names to protoype cells to be used
+   * Maps from names to prototype cells to be used
    * in the toolbar for inserting new cells into
    * the diagram.
    */
@@ -638,7 +628,7 @@ export class Editor extends EventSource {
   defaultEdge: any = null;
 
   /**
-   * Specifies the edge style to be returned in {@link getEdgeStyle}. Default is null.
+   * Specifies the edge style to be returned in {@link getEdgeStyle}.
    * @default null
    */
   defaultEdgeStyle: any = null;
@@ -649,67 +639,62 @@ export class Editor extends EventSource {
   defaultGroup: any = null;
 
   /**
-   * Default size for the border of new groups. If null,
-   * then then {@link Graph#gridSize} is used. Default is null.
+   * Default size for the border of new groups. If `null`, then {@link Graph#gridSize} is used.
    * @default null
    */
   groupBorderSize: any = null;
 
   /**
-   * Contains the URL of the last opened file as a string. Default is null.
+   * Contains the URL of the last opened file as a string.
    * @default null
    */
   filename: string | null = null;
 
+  // =====================================================================================
+  // Group: Backend Integration
+  // =====================================================================================
+
   /**
-   * Group: Backend Integration
-   */
-  /**
-   * Character to be used for encoding linefeeds in {@link save}. Default is '&#xa;'.
+   * Character to be used for encoding linefeed in {@link save}.
    * @default '&#xa;'
    */
   linefeed = '&#xa;';
 
   /**
-   * Specifies if the name of the post parameter that contains the diagram
-   * data in a post request to the server. Default is 'xml'.
+   * Specifies if the name of the post parameter that contains the diagram data in a post request to the server.
    * @default 'xml'
    */
   postParameterName = 'xml';
 
   /**
-   * Specifies if the data in the post request for saving a diagram
-   * should be converted using encodeURIComponent. Default is true.
+   * Specifies if the data in the post request for saving a diagram should be converted using encodeURIComponent.
    * @default true
    */
   escapePostData = true;
 
   /**
-   * Specifies the URL to be used for posting the diagram
-   * to a backend in {@link save}.
+   * Specifies the URL to be used for posting the diagram to a backend in {@link save}.
    * @default null
    */
   urlPost: string | null = null;
 
   /**
-   * Specifies the URL to be used for creating a bitmap of
-   * the graph in the image action.
+   * Specifies the URL to be used for creating a bitmap of the graph in the image action.
    * @default null
    */
   urlImage: string | null = null;
 
   /**
-   * Specifies the direction of the flow
-   * in the diagram. This is used in the
-   * layout algorithms. Default is false,
-   * ie. vertical flow.
+   * Specifies the direction of the flow in the diagram.
+   * This is used in the layout algorithms. Default is vertical flow.
    * @default false
    */
   horizontalFlow = false;
 
-  /**
-   * Group: Autolayout
-   */
+  // =====================================================================================
+  // Group: Autolayout
+  // =====================================================================================
+
   /**
    * Specifies if the top-level elements in the
    * diagram should be layed out using a vertical
@@ -761,9 +746,10 @@ export class Editor extends EventSource {
    */
   cycleAttributeValues: any[] = [];
 
-  /**
-   * Group: Attribute Cycling
-   */
+  // =====================================================================================
+  // Group: Attribute Cycling
+  // =====================================================================================
+
   /**
    * Index of the last consumed attribute index. If a new
    * swimlane is inserted, then the {@link cycleAttributeValues}
@@ -786,9 +772,10 @@ export class Editor extends EventSource {
    */
   tasks: any = null;
 
-  /**
-   * Group: Windows
-   */
+  // =====================================================================================
+  // Group: Windows
+  // =====================================================================================
+
   /**
    * Icon for the tasks window.
    */
@@ -1256,7 +1243,7 @@ export class Editor extends EventSource {
     });
 
     this.addAction('toggleTasks', (editor: Editor) => {
-      if (editor.tasks != null) {
+      if (!isNullish(editor.tasks)) {
         editor.tasks.setVisible(!editor.tasks.isVisible());
       } else {
         editor.showTasks();
@@ -1264,7 +1251,7 @@ export class Editor extends EventSource {
     });
 
     this.addAction('toggleHelp', (editor: Editor) => {
-      if (editor.help != null) {
+      if (!isNullish(editor.help)) {
         editor.help.setVisible(!editor.help.isVisible());
       } else {
         editor.showHelp();
@@ -1272,7 +1259,7 @@ export class Editor extends EventSource {
     });
 
     this.addAction('toggleOutline', (editor: Editor) => {
-      if (editor.outline == null) {
+      if (isNullish(editor.outline)) {
         editor.showOutline();
       } else {
         editor.outline.setVisible(!editor.outline.isVisible());
@@ -1296,7 +1283,7 @@ export class Editor extends EventSource {
    * @param node XML node that contains the configuration.
    */
   configure(node: Element): void {
-    if (node != null) {
+    if (node) {
       // Creates a decoder for the XML data
       // and uses it to configure the editor
       const dec = new Codec(node.ownerDocument);
@@ -1363,7 +1350,7 @@ export class Editor extends EventSource {
   execute(actionname: string, cell: Cell | null = null, evt: Event | null = null): void {
     const action = this.actions[actionname];
 
-    if (action != null) {
+    if (action) {
       try {
         // Creates the array of arguments by replacing the actionname
         // with the editor instance in the args of this function
@@ -1449,7 +1436,7 @@ export class Editor extends EventSource {
       };
     }
 
-    // Maintains swimlanes and installs autolayout
+    // Maintains swimlanes and installs auto-layout
     this.createSwimlaneManager(graph);
     this.createLayoutManager(graph);
 
@@ -1488,7 +1475,7 @@ export class Editor extends EventSource {
       let layout = null;
       const model = this.graph.getDataModel();
 
-      if (cell.getParent() != null) {
+      if (cell.getParent()) {
         // Executes the swimlane layout if a child of
         // a swimlane has been changed. The layout is
         // lazy created in createSwimlaneLayout.
@@ -1505,7 +1492,7 @@ export class Editor extends EventSource {
         // lazy created in createDiagramLayout.
         else if (
           this.layoutDiagram &&
-          (graph.isValidRoot(cell) || (<Cell>cell.getParent()).getParent() == null)
+          (graph.isValidRoot(cell) || !cell?.getParent()?.getParent())
         ) {
           if (this.diagramLayout == null) {
             this.diagramLayout = this.createDiagramLayout();
@@ -1525,8 +1512,8 @@ export class Editor extends EventSource {
    * Sets the graph's container using {@link graph.init}.
    * @param container
    */
-  setGraphContainer(container: any): void {
-    if (this.graph.container == null) {
+  setGraphContainer(container: HTMLElement): void {
+    if (!this.graph.container) {
       // Creates the graph instance inside the given container and render hint
       // this.graph = new mxGraph(container, null, this.graphRenderHint);
 
@@ -1610,7 +1597,7 @@ export class Editor extends EventSource {
 
       // Automatically validates the graph
       // after each change
-      if (this.validating == true) {
+      if (this.validating) {
         graph.validateGraph();
       }
 
@@ -2448,8 +2435,8 @@ export class Editor extends EventSource {
    * @param cell
    * @param evt
    */
-  createPopupMenu(menu: any, cell: Cell | null, evt: any): void {
-    (<EditorPopupMenu>this.popupHandler).createMenu(this, menu, cell, evt);
+  createPopupMenu(menu: MaxPopupMenu, cell: Cell | null, evt: any): void {
+    this.popupHandler!.createMenu(this, menu, cell, evt);
   }
 
   /**
@@ -2498,7 +2485,7 @@ export class Editor extends EventSource {
    * @param cell
    */
   consumeCycleAttribute(cell: Cell): any {
-    return this.cycleAttributeValues != null &&
+    return this.cycleAttributeValues &&
       this.cycleAttributeValues.length > 0 &&
       this.graph.isSwimlane(cell)
       ? this.cycleAttributeValues[
@@ -2513,10 +2500,10 @@ export class Editor extends EventSource {
    * @param cell
    */
   cycleAttribute(cell: Cell): void {
-    if (this.cycleAttributeName != null) {
+    if (!isNullish(this.cycleAttributeName)) {
       const value = this.consumeCycleAttribute(cell);
 
-      if (value != null) {
+      if (!isNullish(value)) {
         // @ts-expect-error TODO - style is no longer a string
         cell.setStyle(`${cell.getStyle()};${this.cycleAttributeName}=${value}`);
       }
@@ -2534,25 +2521,25 @@ export class Editor extends EventSource {
   addVertex(parent: Cell | null, vertex: Cell, x: number, y: number): any {
     const model = this.graph.getDataModel();
 
-    while (parent != null && !this.graph.isValidDropTarget(parent)) {
+    while (parent && !this.graph.isValidDropTarget(parent)) {
       parent = parent.getParent();
     }
 
-    parent = parent != null ? parent : this.graph.getSwimlaneAt(x, y);
+    parent ??= this.graph.getSwimlaneAt(x, y);
     const { scale } = this.graph.getView();
 
-    let geo = <Geometry>vertex.getGeometry();
-    const pgeo = <Geometry>(<Cell>parent).getGeometry();
+    let geo = vertex.getGeometry()!;
+    const pgeo = parent?.getGeometry();
 
     if (this.graph.isSwimlane(vertex) && !this.graph.swimlaneNesting) {
       parent = null;
-    } else if (parent == null && this.swimlaneRequired) {
+    } else if (!parent && this.swimlaneRequired) {
       return null;
-    } else if (parent != null && pgeo != null) {
+    } else if (parent && pgeo) {
       // Keeps vertex inside parent
       const state = this.graph.getView().getState(parent);
 
-      if (state != null) {
+      if (state) {
         x -= state.origin.x * scale;
         y -= state.origin.y * scale;
 
@@ -2571,7 +2558,7 @@ export class Editor extends EventSource {
             y -= y + height - tmp;
           }
         }
-      } else if (pgeo != null) {
+      } else if (pgeo) {
         x -= pgeo.x * scale;
         y -= pgeo.y * scale;
       }
@@ -2586,7 +2573,7 @@ export class Editor extends EventSource {
     );
     vertex.setGeometry(geo);
 
-    if (parent == null) {
+    if (parent) {
       parent = this.graph.getDefaultParent();
     }
 
@@ -2599,7 +2586,7 @@ export class Editor extends EventSource {
     try {
       vertex = this.graph.addCell(vertex, parent);
 
-      if (vertex != null) {
+      if (vertex) {
         this.graph.constrainChild(vertex);
 
         this.fireEvent(new EventObject(InternalEvent.ADD_VERTEX, { vertex: vertex }));
