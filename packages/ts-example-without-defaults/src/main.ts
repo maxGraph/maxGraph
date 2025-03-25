@@ -103,8 +103,8 @@ const initializeGraph = (container: HTMLElement) => {
 };
 
 // display the maxGraph version in the footer
-const footer = <HTMLElement>document.querySelector('footer');
+const footer = document.querySelector('footer')!;
 footer.innerText = `Built with maxGraph ${constants.VERSION}`;
 
 // Creates the graph inside the given container
-initializeGraph(<HTMLElement>document.querySelector('#graph-container'));
+initializeGraph(document.querySelector('#graph-container')!);

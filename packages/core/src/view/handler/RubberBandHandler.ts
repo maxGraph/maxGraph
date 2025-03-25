@@ -113,12 +113,15 @@ class RubberBandHandler implements GraphPlugin {
   height = 0;
 
   /**
-   * Specifies the default opacity to be used for the rubberband div.  Default is 20.
+   * Specifies the default opacity to be used for the rubberband div.
+   * Valid values are between `0` and `100`.
+   * @default 20
    */
   defaultOpacity = 20;
 
   /**
-   * Specifies if events are handled. Default is true.
+   * Specifies if events are handled.
+   * @default true
    */
   enabled = true;
 
@@ -133,17 +136,18 @@ class RubberBandHandler implements GraphPlugin {
   sharedDiv: HTMLElement | null = null;
 
   /**
-   * Holds the value of the x argument in the last call to <update>.
+   * Holds the value of the x argument in the last call to {@link update}.
    */
   currentX = 0;
 
   /**
-   * Holds the value of the y argument in the last call to <update>.
+   * Holds the value of the y argument in the last call to {@link update}.
    */
   currentY = 0;
 
   /**
-   * Optional fade out effect.  Default is false.
+   * Optional fade out effect.
+   * @default false
    */
   fadeOut = false;
 
@@ -155,8 +159,7 @@ class RubberBandHandler implements GraphPlugin {
   }
 
   /**
-   * Enables or disables event handling. This implementation updates
-   * <enabled>.
+   * Enables or disables event handling. This implementation updates{@link enabled}.
    */
   setEnabled(enabled: boolean) {
     this.enabled = enabled;
@@ -171,9 +174,8 @@ class RubberBandHandler implements GraphPlugin {
   }
 
   /**
-   * Handles the event by initiating a rubberband selection. By consuming the
-   * event all subsequent events of the gesture are redirected to this
-   * handler.
+   * Handles the event by initiating a rubberband selection.
+   * By consuming the event all subsequent events of the gesture are redirected to this handler.
    */
   mouseDown(sender: EventSource, me: InternalMouseEvent) {
     if (
@@ -236,7 +238,7 @@ class RubberBandHandler implements GraphPlugin {
   }
 
   /**
-   * Handles the event by updating therubberband selection.
+   * Handles the event by updating the rubberband selection.
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
     if (!me.isConsumed() && this.first) {
@@ -293,8 +295,7 @@ class RubberBandHandler implements GraphPlugin {
   }
 
   /**
-   * Handles the event by selecting the region of the rubberband using
-   * {@link Graph#selectRegion}.
+   * Handles the event by selecting the region of the rubberband using {@link Graph#selectRegion}.
    */
   mouseUp(sender: EventSource, me: InternalMouseEvent) {
     const active = this.isActive();
@@ -307,8 +308,7 @@ class RubberBandHandler implements GraphPlugin {
   }
 
   /**
-   * Resets the state of this handler and selects the current region
-   * for the given event.
+   * Resets the state of this handler and selects the current region for the given event.
    */
   execute(evt: MouseEvent) {
     const rect = new Rectangle(this.x, this.y, this.width, this.height);
@@ -350,7 +350,7 @@ class RubberBandHandler implements GraphPlugin {
   }
 
   /**
-   * Sets <currentX> and <currentY> and calls <repaint>.
+   * Sets <currentX> and <currentY> and calls {@link repaint}.
    */
   update(x: number, y: number) {
     this.currentX = x;
@@ -360,7 +360,7 @@ class RubberBandHandler implements GraphPlugin {
   }
 
   /**
-   * Computes the bounding box and updates the style of the <div>.
+   * Computes the bounding box and updates the style of the `div`.
    */
   repaint() {
     if (this.div && this.first) {
@@ -383,9 +383,8 @@ class RubberBandHandler implements GraphPlugin {
   }
 
   /**
-   * Destroys the handler and all its resources and DOM nodes. This does
-   * normally not need to be called, it is called automatically when the
-   * window unloads.
+   * Destroys the handler and all its resources and DOM nodes.
+   * This does normally not need to be called, it is called automatically when the window unloads.
    */
   onDestroy() {
     if (!this.destroyed) {
