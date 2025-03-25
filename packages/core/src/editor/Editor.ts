@@ -2535,7 +2535,7 @@ export class Editor extends EventSource {
             y -= y + height - tmp;
           }
         }
-      } else if (pgeo) {
+      } else {
         x -= pgeo.x * scale;
         y -= pgeo.y * scale;
       }
