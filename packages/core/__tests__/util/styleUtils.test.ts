@@ -17,6 +17,7 @@ limitations under the License.
 import { describe, expect, test } from '@jest/globals';
 import {
   matchBinaryMask,
+  parseCssNumber,
   setStyleFlag,
   setCellStyleFlags,
   setCellStyles,
@@ -40,7 +41,43 @@ describe('matchBinaryMask', () => {
   });
 });
 
+describe('parseCssNumber', () => {
+  test.each([
+    ['thin', 2],
+    ['medium', 4],
+    ['thick', 6],
+    ['10', 10],
+    ['3.14', 3.14],
+    ['-5', -5],
+    ['0', 0],
+    ['', 0],
+    ['invalid', 0],
+    ['10px', 10],
+    ['1.5em', 1.5],
+  ])('parses %s correctly to %d', (input, expected) => {
+    expect(parseCssNumber(input)).toBe(expected);
+  });
+});
+
 describe('setStyleFlag', () => {
+  test('preserves other style properties', () => {
+    const style = { fontStyle: FONT.BOLD, fillColor: 'red', strokeColor: 'blue' };
+    setStyleFlag(style, 'fontStyle', FONT.ITALIC, true);
+    expect(style).toEqual({
+      fontStyle: FONT.BOLD | FONT.ITALIC,
+      fillColor: 'red',
+      strokeColor: 'blue',
+    });
+  });
+
+  test('multiple flags can be combined', () => {
+    const style: CellStyle = {};
+    setStyleFlag(style, 'fontStyle', FONT.BOLD, true);
+    setStyleFlag(style, 'fontStyle', FONT.ITALIC, true);
+    setStyleFlag(style, 'fontStyle', FONT.UNDERLINE, true);
+    expect(style.fontStyle).toBe(FONT.BOLD | FONT.ITALIC | FONT.UNDERLINE);
+  });
+
   test('fontStyle undefined, set bold, no value', () => {
     const style: CellStyle = {};
     setStyleFlag(style, 'fontStyle', FONT.BOLD);
