@@ -1819,9 +1819,7 @@ export class Editor extends EventSource {
    * in the group's content area.
    */
   groupCells(): any {
-    const border = !isNullish(this.groupBorderSize)
-      ? this.groupBorderSize
-      : this.graph.gridSize;
+    const border = this.groupBorderSize ?? this.graph.gridSize;
     return this.graph.groupCells(this.createGroup(), border);
   }
 
