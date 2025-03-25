@@ -108,7 +108,7 @@ import type Codec from './Codec';
  * value-attribute.
  *
  * For example, the following array contains one atomic value and one object
- * with a field called bar. Furthermore it contains two associative entries
+ * with a field called bar. Furthermore, it contains two associative entries
  * called bar with an atomic value, and foo with an object value.
  *
  * ```javascript
@@ -135,7 +135,7 @@ import type Codec from './Codec';
  * ### References
  *
  * Objects may be represented as child nodes or attributes with ID values,
- * which are used to lookup the object in a table within {@link Codec}. The
+ * which are used to look up the object in a table within {@link Codec}. The
  * {@link isReference} function is in charge of deciding if a specific field should
  * be encoded as a reference or not. Its default implementation returns true if
  * the field name is in {@link idrefs}, an array of strings that is used to configure
@@ -159,7 +159,7 @@ import type Codec from './Codec';
  * In the case of a tree structure we must further avoid infinite recursion by
  * ignoring the parent reference of each child. This is done by returning true
  * in {@link isExcluded}, whose default implementation uses the array of excluded
- * fieldnames passed to the ObjectCodec constructor.
+ * field names passed to the ObjectCodec constructor.
  *
  * References are only used for cells in mxGraph. For defining other
  * referencable object types, the codec must be able to work out the ID of an
@@ -173,11 +173,11 @@ import type Codec from './Codec';
  * For decoding JavaScript expressions, the add-node may be used with a text
  * content that contains the JavaScript expression. For example, the following
  * creates a field called foo in the enclosing object and assigns it the value
- * of {@link Constants.ALIGN.LEFT}.
+ * of {@link ALIGN.LEFT}.
  *
  * ```javascript
  * <Object>
- *   <add as="foo">Constants.ALIGN.LEFT</add>
+ *   <add as="foo">constants.ALIGN.LEFT</add>
  * </Object>
  * ```
  *
@@ -221,7 +221,8 @@ class ObjectCodec {
   /**
    * Static global switch that specifies if expressions in arrays are allowed.
    *
-   * **NOTE**: Enabling this carries a possible security risk.
+   * **WARNING**: Enabling this switch carries a possible security risk.
+   *
    * @default false
    */
   static allowEval = false;

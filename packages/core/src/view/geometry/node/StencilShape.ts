@@ -44,6 +44,9 @@ export const StencilShapeConfig = {
   /**
    * Specifies if the use of eval is allowed for evaluating text content and images.
    * Set this to `true` if stencils can not contain user input.
+   *
+   * **WARNING**: Enabling this switch carries a possible security risk.
+   *
    * @default false
    */
   allowEval: false,
