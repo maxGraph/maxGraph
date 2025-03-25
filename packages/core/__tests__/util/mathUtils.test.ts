@@ -15,7 +15,267 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { isNumeric } from '../../src/util/mathUtils';
+import { getPortConstraints, isNumeric } from '../../src/util/mathUtils';
+import { DIRECTION, DIRECTION_MASK } from '../../src/util/Constants';
+import CellState from '../../src/view/cell/CellState';
+import { DirectionValue } from '../../src';
+
+describe('getPortConstraints', () => {
+  const defaultMask = DIRECTION_MASK.NONE;
+
+  test('returns defaultValue when portConstraint is null', () => {
+    const terminal = new CellState();
+    terminal.style = {};
+    const edge = new CellState();
+    edge.style = {};
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.NONE
+    );
+    expect(getPortConstraints(terminal, edge, true, DIRECTION_MASK.ALL)).toBe(
+      DIRECTION_MASK.ALL
+    );
+  });
+
+  test('uses terminal.style.portConstraint over edge style constraints', () => {
+    const terminal = new CellState();
+    terminal.style = { portConstraint: DIRECTION.NORTH };
+    const edge = new CellState();
+    edge.style = {
+      sourcePortConstraint: DIRECTION.SOUTH,
+      targetPortConstraint: DIRECTION.EAST,
+    };
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.NORTH
+    );
+  });
+
+  test('falls back to edge.style.sourcePortConstraint when terminal has no constraint and source is true', () => {
+    const terminal = new CellState();
+    terminal.style = {};
+    const edge = new CellState();
+    edge.style = { sourcePortConstraint: 'north' };
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.NORTH
+    );
+  });
+
+  test('falls back to edge.style.targetPortConstraint when terminal has no constraint and source is false', () => {
+    const terminal = new CellState();
+    terminal.style = {};
+    const edge = new CellState();
+    edge.style = { targetPortConstraint: DIRECTION.SOUTH };
+
+    expect(getPortConstraints(terminal, edge, false, defaultMask)).toBe(
+      DIRECTION_MASK.SOUTH
+    );
+  });
+
+  test.each([
+    [DIRECTION.NORTH, DIRECTION_MASK.NORTH],
+    [DIRECTION.SOUTH, DIRECTION_MASK.SOUTH],
+    [DIRECTION.EAST, DIRECTION_MASK.EAST],
+    [DIRECTION.WEST, DIRECTION_MASK.WEST],
+  ])('handles single direction %s', (direction: DirectionValue, expectedMask: number) => {
+    const terminal = new CellState();
+    terminal.style = { portConstraint: direction };
+    const edge = new CellState();
+    edge.style = {};
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(expectedMask);
+  });
+
+  test('handles array of port constraints (north and south)', () => {
+    const terminal = new CellState();
+    terminal.style = { portConstraint: [DIRECTION.NORTH, 'south'] };
+    const edge = new CellState();
+    edge.style = {};
+
+    // This should return a mask with both NORTH and SOUTH bits set
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.NORTH | DIRECTION_MASK.SOUTH
+    );
+  });
+
+  test('handles array of port constraints in edge.style.sourcePortConstraint', () => {
+    const terminal = new CellState();
+    terminal.style = {}; // No port constraint on terminal
+    const edge = new CellState();
+    edge.style = {
+      sourcePortConstraint: ['north', DIRECTION.SOUTH],
+    };
+
+    // When terminal has no constraint, should use the edge's sourcePortConstraint array
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.NORTH | DIRECTION_MASK.SOUTH
+    );
+  });
+
+  test('handles array of port constraints in edge.style.targetPortConstraint', () => {
+    const terminal = new CellState();
+    terminal.style = {}; // No port constraint on terminal
+    const edge = new CellState();
+    edge.style = {
+      targetPortConstraint: [DIRECTION.EAST, 'west'],
+    };
+
+    // When terminal has no constraint, should use the edge's targetPortConstraint array
+    expect(getPortConstraints(terminal, edge, false, defaultMask)).toBe(
+      DIRECTION_MASK.EAST | DIRECTION_MASK.WEST
+    );
+  });
+
+  test('terminal portConstraint array takes precedence over edge port constraints', () => {
+    const terminal = new CellState();
+    terminal.style = {
+      portConstraint: [DIRECTION.NORTH, DIRECTION.WEST],
+    };
+    const edge = new CellState();
+    edge.style = {
+      sourcePortConstraint: DIRECTION.SOUTH,
+      targetPortConstraint: DIRECTION.EAST,
+    };
+
+    // Terminal's portConstraint should take precedence over edge's sourcePortConstraint
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.NORTH | DIRECTION_MASK.WEST
+    );
+  });
+
+  test('handles rotated constraints when portConstraintRotation is true', () => {
+    const terminal = new CellState();
+    terminal.style = {
+      portConstraint: DIRECTION.NORTH,
+      portConstraintRotation: true,
+      rotation: 90,
+    };
+    const edge = new CellState();
+    edge.style = {};
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.EAST
+    );
+  });
+
+  test('handles constraints with rotation defaulting to 0', () => {
+    const terminal = new CellState();
+    terminal.style = {
+      portConstraint: DIRECTION.NORTH,
+      portConstraintRotation: true,
+      // rotation not set, should default to 0
+    };
+    const edge = new CellState();
+    edge.style = {};
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.NORTH
+    );
+  });
+
+  test('ignores rotation when portConstraintRotation is false', () => {
+    const terminal = new CellState();
+    terminal.style = {
+      portConstraint: DIRECTION.NORTH,
+      portConstraintRotation: false,
+      rotation: 90,
+    };
+    const edge = new CellState();
+    edge.style = {};
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.NORTH
+    );
+  });
+
+  test('handles 180 degree rotation', () => {
+    const terminal = new CellState();
+    terminal.style = {
+      portConstraint: DIRECTION.NORTH,
+      portConstraintRotation: true,
+      rotation: 180,
+    };
+    const edge = new CellState();
+    edge.style = {};
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.SOUTH
+    );
+  });
+
+  test('handles negative rotation (-90 degrees)', () => {
+    const terminal = new CellState();
+    terminal.style = {
+      portConstraint: 'north',
+      portConstraintRotation: true,
+      rotation: -90,
+    };
+    const edge = new CellState();
+    edge.style = {};
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.WEST
+    );
+  });
+
+  test('handles extreme negative rotation (-135 degrees)', () => {
+    const terminal = new CellState();
+    terminal.style = {
+      portConstraint: 'north',
+      portConstraintRotation: true,
+      rotation: -135,
+    };
+    const edge = new CellState();
+    edge.style = {};
+
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.SOUTH
+    );
+  });
+
+  test('handles very extreme negative rotation (-180 degrees)', () => {
+    const terminal = new CellState();
+    terminal.style = {
+      portConstraint: 'north',
+      portConstraintRotation: true,
+      rotation: -180,
+    };
+    const edge = new CellState();
+    edge.style = {};
+
+    // With rotation <= -135, quad = 2, so a NORTH constraint becomes SOUTH
+    expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+      DIRECTION_MASK.SOUTH
+    );
+  });
+
+  describe('legacy mxGraph, to support backward compatibility when loading mxGraph XML models', () => {
+    test('handles combined directions NORTH and SOUTH', () => {
+      const terminal = new CellState();
+      // @ts-ignore mxGraph set 'northsouth' as a string
+      terminal.style = { portConstraint: DIRECTION.NORTH + DIRECTION.SOUTH };
+      const edge = new CellState();
+      edge.style = {};
+
+      expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+        DIRECTION_MASK.NORTH | DIRECTION_MASK.SOUTH
+      );
+    });
+
+    test('handles combined directions EAST and WEST', () => {
+      const terminal = new CellState();
+      // @ts-ignore mxGraph set 'eastwest' as a string
+      terminal.style = { portConstraint: DIRECTION.EAST + DIRECTION.WEST };
+      const edge = new CellState();
+      edge.style = {};
+
+      expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
+        DIRECTION_MASK.EAST | DIRECTION_MASK.WEST
+      );
+    });
+  });
+});
 
 describe('isNumeric', () => {
   test.each([null, undefined])('nullish value: %s', (value: null | undefined) => {

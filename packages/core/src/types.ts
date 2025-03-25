@@ -583,13 +583,17 @@ export type CellStateStyle = {
    */
   pointerEvents?: boolean;
   /**
-   * Defines the direction(s) in which edges are allowed to connect to cells.
+   * For vertices only. Defines the direction(s) in which edges are allowed to connect to cells.
+   *
+   * If not set, use the {@link sourcePortConstraint} or the {@link targetPortConstraint} property of the related edges.
    */
-  portConstraint?: DIRECTION;
+  portConstraint?: StylePortConstraint;
   /**
-   * Define if the directions of the port constraints are rotated with the vertex rotation.
+   * For vertices only. Defines if the directions of the port constraints are rotated with the vertex rotation.
    * - `false` makes the port constraints remain absolute, relative to the graph.
    * - `true` makes the constraints rotate with the vertex.
+   *
+   * @see portConstraint
    * @default false
    */
   portConstraintRotation?: boolean;
@@ -695,9 +699,11 @@ export type CellStateStyle = {
    */
   sourcePort?: string;
   /**
-   * Defines the direction(s) in which edges are allowed to connect to sources.
+   * For edges only. Defines the direction(s) in which edges are allowed to connect to sources.
+   *
+   * Used as fallback if no {@link portConstraint} is defined on the source vertex of the edge.
    */
-  sourcePortConstraint?: DIRECTION;
+  sourcePortConstraint?: StylePortConstraint;
   /**
    * The value represents the spacing, in pixels, added to each side of a label in a vertex.
    *
@@ -825,9 +831,11 @@ export type CellStateStyle = {
    */
   targetPort?: string;
   /**
-   * Defines the direction(s) in which edges are allowed to connect to sources.
+   * For edges only. Defines the direction(s) in which edges are allowed to connect to sources.
+   *
+   * Used as fallback if no {@link portConstraint} is defined on the target vertex of the edge.
    */
-  targetPortConstraint?: DIRECTION;
+  targetPortConstraint?: StylePortConstraint;
   /**
    * @default {@link DEFAULT_TEXT_DIRECTION}
    */
@@ -927,6 +935,12 @@ export type ArrowValue =
  * @category Style
  */
 export type StyleArrowValue = ArrowValue | (string & {});
+
+/**
+ * @category Style
+ * @since 0.17.0
+ */
+export type StylePortConstraint = DirectionValue | DirectionValue[];
 
 /**
  * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
