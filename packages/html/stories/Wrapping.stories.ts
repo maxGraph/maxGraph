@@ -17,26 +17,40 @@ limitations under the License.
 
 import { Graph } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 
 export default {
   title: 'Labels/Wrapping',
   argTypes: {
     ...globalTypes,
+    useHtmlLabels: {
+      type: 'boolean',
+      defaultValue: true,
+    },
   },
   args: {
     ...globalValues,
+    useHtmlLabels: true,
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
+  const div = createMainDiv(`
+  This example demonstrates using HTML markup and word-wrapping in vertex and edge labels.
+  <br>
+  This requires to enable the support of <code>htmlLabels</code> on the <code>Graph</code>.
+  <br>
+  Use the storybook argument to enable or disable the support of <code>htmlLabels</code>. 
+  `);
+
   const container = createGraphContainer(args);
+  div.appendChild(container);
 
   // Creates the graph inside the given container
   const graph = new Graph(container);
 
   // Enables HTML labels as wrapping is only available for those
-  graph.setHtmlLabels(true);
+  graph.setHtmlLabels(Boolean(args.useHtmlLabels));
 
   // Disables in-place editing for edges
   graph.isCellEditable = function (cell) {
@@ -65,15 +79,19 @@ const Template = ({ label, ...args }) => {
     });
     const e1 = graph.insertEdge({
       parent,
-      value: 'Cum Caesar vidisset, portum plenum esse, iuxta navigavit.',
+      value:
+        'Cum Caesar vidisset, portum plenum esse, iuxta navigavit and <b>bold text</b>.',
       source: v1,
       target: v2,
-      style: { whiteSpace: 'wrap' },
+      style: {
+        fontColor: 'black',
+        whiteSpace: 'wrap',
+      },
     });
-    e1.geometry.width = 100;
+    e1.geometry!.width = 100;
   });
 
-  return container;
+  return div;
 };
 
 export const Default = Template.bind({});

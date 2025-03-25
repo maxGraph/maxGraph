@@ -24,7 +24,7 @@ import { htmlEntities, trim } from './StringUtils';
 import TemporaryCellStates from '../view/cell/TemporaryCellStates';
 
 import type { StyleValue } from '../types';
-import { getTextContent } from './domUtils';
+import { getTextContent, isElement } from './domUtils';
 import Codec from '../serialization/Codec';
 
 /**
@@ -228,7 +228,7 @@ export const findNode = (
   attr: string,
   value: StyleValue
 ): Element | null => {
-  if (node.nodeType === NODETYPE.ELEMENT) {
+  if (isElement(node)) {
     const tmp = node.getAttribute(attr);
     if (tmp && tmp === value) {
       return node;

@@ -23,6 +23,7 @@ import Translations from '../i18n/Translations';
 import Editor from './Editor';
 
 import { PopupMenuItem } from '../types';
+import { isNullish } from '../util/Utils';
 
 /**
  * Creates popupmenus for mouse events.
@@ -121,7 +122,7 @@ export class EditorPopupMenu {
    * function defined in the text content is executed, otherwise first the
    * function and then the action defined in the action-attribute is
    * executed. The function in the text content has 3 arguments, namely the
-   * {@link Editor} instance, the {@link mxCell} instance under the mouse, and the
+   * {@link Editor} instance, the {@link Cell} instance under the mouse, and the
    * native mouse event.
    *
    * Custom Conditions:
@@ -147,8 +148,8 @@ export class EditorPopupMenu {
    * all conditions are evaluated before any items are created.
    *
    * @param editor - Enclosing {@link Editor} instance.
-   * @param menu - {@link mxPopupMenu} that is used for adding items and separators.
-   * @param cell - Optional {@link mxCell} which is under the mousepointer.
+   * @param menu - {@link MaxPopupMenu} that is used for adding items and separators.
+   * @param cell - Optional {@link Cell} which is under the mouse pointer.
    * @param evt - Optional mouse event which triggered the menu.
    */
   createMenu(
@@ -157,7 +158,7 @@ export class EditorPopupMenu {
     cell: Cell | null = null,
     evt: MouseEvent | null = null
   ) {
-    if (this.config != null) {
+    if (!isNullish(this.config)) {
       const conditions = this.createConditions(editor, cell, evt);
       const item = <Element>this.config.firstChild;
       this.addItems(editor, menu, cell, evt, conditions, item, null);
@@ -167,9 +168,9 @@ export class EditorPopupMenu {
   /**
    * Recursively adds the given items and all of its children into the given menu.
    *
-   * @param editor Enclosing <Editor> instance.
-   * @param menu {@link PopupMenu} that is used for adding items and separators.
-   * @param cell Optional <Cell> which is under the mousepointer.
+   * @param editor Enclosing  {@link Editor} instance.
+   * @param menu {@link MaxPopupMenu} that is used for adding items and separators.
+   * @param cell Optional {@link Cell} which is under the mouse pointer.
    * @param evt Optional mouse event which triggered the menu.
    * @param conditions Array of names boolean conditions.
    * @param item XML node that represents the current menu item.
@@ -180,32 +181,32 @@ export class EditorPopupMenu {
     menu: MaxPopupMenu,
     cell: Cell | null = null,
     evt: MouseEvent | null = null,
-    conditions: any,
+    conditions: Record<string, boolean>,
     item: Element,
     parent: PopupMenuItem | null = null
   ) {
     let addSeparator = false;
 
-    while (item != null) {
+    while (item) {
       if (item.nodeName === 'add') {
         const condition = item.getAttribute('if');
 
-        if (condition == null || conditions[condition]) {
-          let as = <string>item.getAttribute('as');
+        if (isNullish(condition) || conditions[condition]) {
+          let as = item.getAttribute('as')!;
           as = Translations.get(as) || as;
           const funct = eval(getTextContent(<Text>(<unknown>item)));
           const action = item.getAttribute('action');
           let icon = item.getAttribute('icon');
           const iconCls = item.getAttribute('iconCls');
           const enabledCond = item.getAttribute('enabled-if');
-          const enabled = enabledCond == null || conditions[enabledCond];
+          const enabled = isNullish(enabledCond) || conditions[enabledCond];
 
           if (addSeparator) {
             menu.addSeparator(parent);
             addSeparator = false;
           }
 
-          if (icon != null && this.imageBasePath) {
+          if (!isNullish(icon) && this.imageBasePath) {
             icon = this.imageBasePath + icon;
           }
 
@@ -244,8 +245,8 @@ export class EditorPopupMenu {
   /**
    * Helper method to bind an action to a new menu item.
    *
-   * @param menu {@link PopupMenu} that is used for adding items and separators.
-   * @param editor Enclosing <Editor> instance.
+   * @param menu {@link MaxPopupMenu} that is used for adding items and separators.
+   * @param editor Enclosing {@link Editor} instance.
    * @param lab String that represents the label of the menu item.
    * @param icon Optional URL that represents the icon of the menu item.
    * @param action Optional name of the action to execute in the given editor.
@@ -274,7 +275,7 @@ export class EditorPopupMenu {
       if (typeof funct === 'function') {
         funct.call(editor, editor, cell, evt);
       }
-      if (action != null) {
+      if (!isNullish(action)) {
         editor.execute(action, cell, evt);
       }
     };
@@ -292,7 +293,7 @@ export class EditorPopupMenu {
     editor: Editor,
     cell: Cell | null = null,
     evt: MouseEvent | null = null
-  ): void {
+  ): Record<string, boolean> {
     // Creates array with conditions
     const model = editor.graph.getDataModel();
     const childCount = cell ? cell.getChildCount() : 0;
@@ -313,13 +314,13 @@ export class EditorPopupMenu {
     conditions.swimlane = isCell && editor.graph.isSwimlane(cell);
 
     // Evaluates dynamic conditions from config file
-    const condNodes = (<Element>this.config).getElementsByTagName('condition');
+    const condNodes = this.config!.getElementsByTagName('condition');
 
-    for (let i = 0; i < condNodes.length; i += 1) {
-      const funct = eval(getTextContent(<Text>(<unknown>condNodes[i])));
-      const name = condNodes[i].getAttribute('name');
+    for (const condNode of Array.from(condNodes)) {
+      const funct = eval(getTextContent(<Text>(<unknown>condNode)));
+      const name = condNode.getAttribute('name');
 
-      if (name != null && typeof funct === 'function') {
+      if (!isNullish(name) && typeof funct === 'function') {
         conditions[name] = funct(editor, cell, evt);
       }
     }

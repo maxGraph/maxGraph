@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { getPortConstraints } from '../../src/util/mathUtils';
+import { getPortConstraints, isNumeric } from '../../src/util/mathUtils';
 import { DIRECTION, DIRECTION_MASK } from '../../src/util/Constants';
 import CellState from '../../src/view/cell/CellState';
 import { DirectionValue } from '../../src';
@@ -274,5 +274,39 @@ describe('getPortConstraints', () => {
         DIRECTION_MASK.EAST | DIRECTION_MASK.WEST
       );
     });
+  });
+});
+
+describe('isNumeric', () => {
+  test.each([null, undefined])('nullish value: %s', (value: null | undefined) => {
+    expect(isNumeric(value)).toBeFalsy();
+  });
+
+  test('number', () => {
+    expect(isNumeric(9465.45654)).toBeTruthy();
+  });
+
+  test('Infinity', () => {
+    expect(isNumeric(Infinity)).toBeFalsy();
+  });
+
+  test('empty string', () => {
+    expect(isNumeric('')).toBeFalsy();
+  });
+
+  test('hexadecimal in string', () => {
+    expect(isNumeric('0x354354')).toBeFalsy();
+  });
+
+  test('string which is not a number', () => {
+    expect(isNumeric('354354b')).toBeFalsy();
+  });
+
+  test('too large number in a string', () => {
+    expect(isNumeric('9465456546987616587651356846')).toBeTruthy();
+  });
+
+  test('Object', () => {
+    expect(isNumeric({ attribute: 'value' })).toBeFalsy();
   });
 });

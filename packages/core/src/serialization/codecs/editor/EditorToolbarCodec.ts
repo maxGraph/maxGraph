@@ -18,12 +18,11 @@ import ObjectCodec from '../../ObjectCodec';
 import { EditorToolbar } from '../../../editor/EditorToolbar';
 import type Codec from '../../Codec';
 import type Editor from '../../../editor/Editor';
-import { NODETYPE } from '../../../util/Constants';
 import { GlobalConfig } from '../../../util/config';
 import { convertPoint } from '../../../util/styleUtils';
 import { getClientX, getClientY } from '../../../util/EventUtils';
 import InternalEvent from '../../../view/event/InternalEvent';
-import { getChildNodes, getTextContent } from '../../../util/domUtils';
+import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils';
 import Translations from '../../../i18n/Translations';
 
 /**
@@ -134,7 +133,7 @@ export class EditorToolbarCodec extends ObjectCodec {
       let node: Element | null = <Element | null>_node.firstChild;
 
       while (node != null) {
-        if (node.nodeType === NODETYPE.ELEMENT) {
+        if (isElement(node)) {
           if (!this.processInclude(dec, node, into)) {
             if (node.nodeName === 'separator') {
               into.addSeparator();

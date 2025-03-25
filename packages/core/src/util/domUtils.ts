@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { NODETYPE } from './Constants';
+import { UserObject } from '../internal-types';
 
 /**
  * Returns the text content of the specified node.
@@ -85,7 +86,7 @@ export const extractTextWithWhitespace = (elems: Element[]): string => {
  * @param node DOM node to return the text content for.
  */
 export const getTextContent = (node: Text | null): string => {
-  return node != null && node.textContent ? node.textContent : '';
+  return node?.textContent ?? '';
 };
 
 /**
@@ -262,8 +263,7 @@ export const isAncestorNode = (ancestor: Element, child: Element | null) => {
  * Returns an array of child nodes that are of the given node type.
  *
  * @param node Parent DOM node to return the children from.
- * @param nodeType Optional node type to return. Default is
- * {@link Constants#NODETYPE_ELEMENT}.
+ * @param nodeType Optional node type to return. Default is {@link NODETYPE.ELEMENT}.
  */
 export const getChildNodes = (
   node: Element,
@@ -285,7 +285,7 @@ export const getChildNodes = (
 };
 
 /**
- * Cross browser implementation for document.importNode. Uses document.importNode
+ * Cross browser implementation for document.importNode. Uses {@link Document.importNode}
  * in all browsers but IE, where the node is cloned by creating a new node and
  * copying all attributes and children into it using importNode, recursively.
  *
@@ -360,3 +360,10 @@ export const addLinkToHead = (
   const head = doc.getElementsByTagName('head')[0];
   head.appendChild(link);
 };
+/**
+ * Returns true if the parameter is not `nullish` and its nodeType relates to an {@link Element}.
+ * @internal
+ * @private
+ */
+export const isElement = (node?: Node | UserObject | null): node is Element =>
+  node?.nodeType === NODETYPE.ELEMENT;

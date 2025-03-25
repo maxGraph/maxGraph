@@ -18,8 +18,7 @@ import CodecRegistry from '../CodecRegistry';
 import ObjectCodec from '../ObjectCodec';
 import Cell from '../../view/cell/Cell';
 import type Codec from '../Codec';
-import { NODETYPE } from '../../util/Constants';
-import { importNode } from '../../util/domUtils';
+import { importNode, isElement } from '../../util/domUtils';
 import { removeWhitespace } from '../../util/StringUtils';
 
 /**
@@ -82,7 +81,7 @@ export class CellCodec extends ObjectCodec {
   isExcluded(obj: any, attr: string, value: Element, isWrite: boolean) {
     return (
       super.isExcluded(obj, attr, value, isWrite) ||
-      (isWrite && attr === 'value' && value.nodeType === NODETYPE.ELEMENT)
+      (isWrite && attr === 'value' && isElement(value))
     );
   }
 
@@ -90,7 +89,7 @@ export class CellCodec extends ObjectCodec {
    * Encodes a {@link Cell} and wraps the XML up inside the XML of the user object (inversion).
    */
   afterEncode(enc: Codec, obj: Cell, node: Element) {
-    if (obj.value != null && obj.value.nodeType === NODETYPE.ELEMENT) {
+    if (isElement(obj.value)) {
       // Wraps the graphical annotation up in the user object (inversion)
       // by putting the result of the default encoding into a clone of the
       // user object (node type 1) and returning this cloned user object.
