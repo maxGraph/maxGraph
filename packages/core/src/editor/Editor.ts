@@ -498,9 +498,10 @@ export class Editor extends EventSource {
   outlineResource = TranslationsConfig.isEnabled() ? 'outline' : '';
 
   /**
-   * Reference to the {@link MaxWindow} that contains the outline. The {@link outline}
-   * is stored in outline.outline.
+   * Reference to the {@link MaxWindow} that contains the outline.
+   * The {@link outline} is stored in outline.outline.
    */
+  // TODO should be CustomMaxWindow | null, CustomMaxWindow having a outline property
   outline: any = null;
 
   /**
@@ -518,16 +519,16 @@ export class Editor extends EventSource {
   graphRenderHint: any = null;
 
   /**
-   * Holds a {@link EditorToolbar} for displaying the toolbar. The
-   * toolbar is created in {@link setToolbarContainer}.
+   * Holds a {@link EditorToolbar} for displaying the toolbar.
+   * The toolbar is created in {@link setToolbarContainer}.
    */
-  toolbar: any = null;
+  toolbar: EditorToolbar | null = null;
 
   /**
    * DOM container that holds the statusbar.
    * Use {@link setStatusContainer} to set this value.
    */
-  status: any = null;
+  status: HTMLElement | null = null;
 
   /**
    * Holds a {@link EditorPopupMenu} for displaying popupmenus.
@@ -639,10 +640,10 @@ export class Editor extends EventSource {
   defaultGroup: any = null;
 
   /**
-   * Default size for the border of new groups. If `null`, then {@link Graph#gridSize} is used.
+   * Default size for the border of new groups. If `null`, then {@link Graph.gridSize} is used.
    * @default null
    */
-  groupBorderSize: any = null;
+  groupBorderSize: number | null = null;
 
   /**
    * Contains the URL of the last opened file as a string.
@@ -1391,8 +1392,7 @@ export class Editor extends EventSource {
    * @returns graph instance
    */
   createGraph(): Graph {
-    const __dummy: any = undefined;
-    const graph = new Graph(__dummy);
+    const graph = new Graph(undefined!);
 
     // Enables rubberband, tooltips, panning
     graph.setTooltips(true);
@@ -1512,8 +1512,8 @@ export class Editor extends EventSource {
    * Sets the graph's container using {@link graph.init}.
    * @param container
    */
-  setGraphContainer(container: HTMLElement): void {
-    if (!this.graph.container) {
+  setGraphContainer(container?: HTMLElement | null): void {
+    if (!this.graph.container && container) {
       // Creates the graph instance inside the given container and render hint
       // this.graph = new mxGraph(container, null, this.graphRenderHint);
 
@@ -1604,9 +1604,7 @@ export class Editor extends EventSource {
       // Checks if the root has been changed
       const { changes } = evt.getProperty('edit');
 
-      for (let i = 0; i < changes.length; i += 1) {
-        const change = changes[i];
-
+      for (const change of changes) {
         if (
           change instanceof RootChange ||
           (change instanceof ValueChange && change.cell === this.graph.model.root) ||
@@ -1627,29 +1625,28 @@ export class Editor extends EventSource {
    */
   installInsertHandler(graph: Graph): void {
     const insertHandler: MouseListenerSet = {
-      mouseDown: (sender: any, me: InternalMouseEvent) => {
+      mouseDown: (_sender: any, me: InternalMouseEvent) => {
         if (
-          this.insertFunction != null &&
+          this.insertFunction &&
           !me.isPopupTrigger() &&
           (this.forcedInserting || me.getState() == null)
         ) {
           this.graph.clearSelection();
           this.insertFunction(me.getEvent(), me.getCell());
 
-          // Consumes the rest of the events
-          // for this gesture (down, move, up)
+          // Consumes the rest of the events for this gesture (down, move, up)
           this.isActive = true;
           me.consume();
         }
       },
 
-      mouseMove: (sender: any, me: InternalMouseEvent) => {
+      mouseMove: (_sender: any, me: InternalMouseEvent) => {
         if (this.isActive) {
           me.consume();
         }
       },
 
-      mouseUp: (sender: any, me: InternalMouseEvent) => {
+      mouseUp: (_sender: any, me: InternalMouseEvent) => {
         if (this.isActive) {
           this.isActive = false;
           me.consume();
@@ -1661,8 +1658,7 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Creates the layout instance used to layout the
-   * swimlanes in the diagram.
+   * Creates the layout instance used to layout the swimlanes in the diagram.
    * @returns StackLayout instance
    */
   createDiagramLayout(): StackLayout {
@@ -1684,8 +1680,7 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Creates the layout instance used to layout the
-   * children of each swimlane.
+   * Creates the layout instance used to layout the children of each swimlane.
    * @returns CompactTreeLayout instance
    */
   createSwimlaneLayout(): CompactTreeLayout {
@@ -1705,33 +1700,29 @@ export class Editor extends EventSource {
    * @param container
    */
   setToolbarContainer(container: any): void {
-    this.toolbar.init(container);
+    this.toolbar?.init(container);
   }
 
   /**
    * Creates the {@link status} using the specified container.
-   * This implementation adds listeners in the editor to
-   * display the last saved time and the current filename
-   * in the status bar.
+   * This implementation adds listeners in the editor to display the last saved time and the current filename in the status bar.
    * @param container DOM node that will contain the statusbar.
    */
-  setStatusContainer(container: any): void {
-    if (this.status == null) {
+  setStatusContainer(container: HTMLElement | null): void {
+    if (!this.status && container) {
       this.status = container;
 
-      // Prints the last saved time in the status bar
-      // when files are saved
+      // Prints the last saved time in the status bar when files are saved
       this.addListener(InternalEvent.SAVE, () => {
-        const tstamp = new Date().toLocaleString();
+        const timestamp = new Date().toLocaleString();
         this.setStatus(
           `${
             Translations.get(this.lastSavedResource) || this.lastSavedResource
-          }: ${tstamp}`
+          }: ${timestamp}`
         );
       });
 
-      // Updates the statusbar to display the filename
-      // when new files are opened
+      // Updates the statusbar to display the filename when new files are opened
       this.addListener(InternalEvent.OPEN, () => {
         this.setStatus(
           `${Translations.get(this.currentFileResource) || this.currentFileResource}: ${
@@ -1747,7 +1738,7 @@ export class Editor extends EventSource {
    * @param message String the specified the message to be displayed.
    */
   setStatus(message: string): void {
-    if (this.status != null && message != null) {
+    if (this.status && !isNullish(message)) {
       this.status.innerHTML = message;
     }
   }
@@ -1764,15 +1755,15 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Executes a vertical or horizontal compact tree layout
-   * using the specified cell as an argument. The cell may
-   * either be a group or the root of a tree.
-   * @param cell {@link mxCell} to use in the compact tree layout.
+   * Executes a vertical or horizontal compact tree layout using the specified cell as an argument.
+   * The cell may either be a group or the root of a tree.
+   *
+   * @param cell {@link Cell} to use in the compact tree layout.
    * @param horizontal Optional boolean to specify the tree's
    * orientation. Default is true.
    */
   treeLayout(cell: Cell, horizontal: boolean): void {
-    if (cell != null) {
+    if (cell) {
       const layout = new CompactTreeLayout(this.graph, horizontal);
       layout.execute(cell);
     }
@@ -1786,7 +1777,7 @@ export class Editor extends EventSource {
     const { graph } = this;
     let cell = graph.getCurrentRoot();
 
-    while (cell != null && (<Cell>cell.getParent()).getParent() != null) {
+    while (cell?.getParent()?.getParent()) {
       // Append each label of a valid root
       if (graph.isValidRoot(cell)) {
         title = ` > ${graph.convertValueToString(cell)}${title}`;
@@ -1804,7 +1795,7 @@ export class Editor extends EventSource {
    * Returns the string value of the root cell in {@link graph.model}.
    */
   getRootTitle(): string {
-    const root = <Cell>this.graph.getDataModel().getRoot();
+    const root = this.graph.getDataModel().getRoot()!;
     return this.graph.convertValueToString(root);
   }
 
@@ -1828,14 +1819,14 @@ export class Editor extends EventSource {
    * in the group's content area.
    */
   groupCells(): any {
-    const border =
-      this.groupBorderSize != null ? this.groupBorderSize : this.graph.gridSize;
+    const border = !isNullish(this.groupBorderSize)
+      ? this.groupBorderSize
+      : this.graph.gridSize;
     return this.graph.groupCells(this.createGroup(), border);
   }
 
   /**
-   * Creates and returns a clone of {@link defaultGroup} to be used
-   * as a new group cell in {@link group}.
+   * Creates and returns a clone of {@link defaultGroup} to be used as a new group cell in {@link group}.
    * @returns Cell
    */
   createGroup(): Cell {
@@ -1843,27 +1834,23 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Opens the specified file synchronously and parses it using
-   * {@link readGraphModel}. It updates {@link filename} and fires an <open>-event after
-   * the file has been opened. Exceptions should be handled as follows:
+   * Opens the specified file synchronously and parses it using {@link readGraphModel}.
+   * It updates {@link filename} and fires an <open>-event after the file has been opened.
    *
-   * @example
+   * Exceptions should be handled as follows:
+   *
    * ```javascript
-   * try
-   * {
+   * try {
    *   editor.open(filename);
-   * }
-   * catch (e)
-   * {
-   *   mxUtils.error('Cannot open ' + filename +
-   *     ': ' + e.message, 280, true);
+   * } catch (e) {
+   *   GlobalConfig.logger.error(`Cannot open ${filename}: ${e.message}`);
    * }
    * ```
    *
    * @param filename URL of the file to be opened.
    */
   open(filename: string): void {
-    if (filename != null) {
+    if (!isNullish(filename)) {
       const xml = load(filename).getXml();
       this.readGraphModel(xml.documentElement);
       this.filename = filename;
@@ -1882,21 +1869,18 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Posts the string returned by {@link writeGraphModel} to the given URL or the
-   * URL returned by {@link getUrlPost}. The actual posting is carried out by
-   * {@link postDiagram}. If the URL is null then the resulting XML will be
-   * displayed using {@link popup}. Exceptions should be handled as
-   * follows:
+   * Posts the string returned by {@link writeGraphModel} to the given URL or the URL returned by {@link getUrlPost}.
    *
-   * @example
+   * The actual posting is carried out by {@link postDiagram}.
+   * If the URL is null then the resulting XML will be displayed using {@link popup}.
+   *
+   * Exceptions should be handled as follows:
+   *
    * ```javascript
-   * try
-   * {
-   *   editor.save();
-   * }
-   * catch (e)
-   * {
-   *   mxUtils.error('Cannot save : ' + e.message, 280, true);
+   * try {
+   *   editor.open(filename);
+   * } catch (e) {
+   *   GlobalConfig.logger.error(`Cannot save: ${e.message}`);
    * }
    * ```
    *
@@ -1908,7 +1892,7 @@ export class Editor extends EventSource {
     url = url || this.getUrlPost();
 
     // Posts the data if the URL is not empty
-    if (url != null && url.length > 0) {
+    if (url) {
       const data = this.writeGraphModel(linefeed);
       this.postDiagram(url, data);
 
@@ -1974,7 +1958,7 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Returns the URL to create the image with. This is typically
+   * Returns the URL to create the image width. This is typically
    * the URL of a backend which accepts an XML representation
    * of a graph view to create an image. The function is used
    * in the image action to create an image. This implementation
@@ -2015,15 +1999,15 @@ export class Editor extends EventSource {
     // Uses the root node for the properties dialog
     // if not cell was passed in and no cell is
     // selected
-    if (cell == null) {
+    if (!cell) {
       cell = this.graph.getCurrentRoot();
 
-      if (cell == null) {
+      if (!cell) {
         cell = this.graph.getDataModel().getRoot();
       }
     }
 
-    if (cell != null) {
+    if (cell) {
       // Makes sure there is no in-place editor in the
       // graph and computes the location of the dialog
       this.graph.stopEditing(true);
@@ -2032,8 +2016,8 @@ export class Editor extends EventSource {
       let x = offset.x + 10;
       let { y } = offset;
 
-      // Avoids moving the dialog if it is alredy open
-      if (this.properties != null && !this.movePropertiesDialog) {
+      // Avoids moving the dialog if it is already open
+      if (this.properties && !this.movePropertiesDialog) {
         x = this.properties.getX();
         y = this.properties.getY();
       }
@@ -2043,7 +2027,7 @@ export class Editor extends EventSource {
       else {
         const bounds = this.graph.getCellBounds(cell);
 
-        if (bounds != null) {
+        if (bounds) {
           x += bounds.x + Math.min(200, bounds.width);
           y += bounds.y;
         }
@@ -2054,7 +2038,7 @@ export class Editor extends EventSource {
       this.hideProperties();
       const node = this.createProperties(cell);
 
-      if (node != null) {
+      if (node) {
         // Displays the contents in a window and stores a reference to the
         // window for later hiding of the window
         this.properties = new MaxWindow(
@@ -2119,8 +2103,7 @@ export class Editor extends EventSource {
       const tmp = cell.getStyle();
       const style = form.addText('Style', tmp || '');
 
-      // Creates textareas for each attribute of the
-      // user object within the cell
+      // Creates text areas for each attribute of the user object within the cell
       const attrs = value.attributes;
       const texts: HTMLTextAreaElement[] = [];
 
@@ -2147,13 +2130,7 @@ export class Editor extends EventSource {
         // XML structure / XML node attribute changes.
         model.beginUpdate();
         try {
-          if (
-            geo != null &&
-            xField != null &&
-            yField != null &&
-            widthField != null &&
-            heightField != null
-          ) {
+          if (geo && xField && yField && widthField && heightField) {
             geo = geo.clone();
 
             geo.x = parseFloat(xField.value);
@@ -2166,7 +2143,7 @@ export class Editor extends EventSource {
 
           // Applies the style
           if (style.value.length > 0) {
-            // @ts-expect-error TODO - style is no longer a string
+            // @ts-expect-error FIXME - style is no longer a string
             model.setStyle(cell, style.value);
           } else {
             model.setStyle(cell, {});
@@ -2220,7 +2197,7 @@ export class Editor extends EventSource {
   /**
    * Shows the tasks window. The tasks window is created using {@link createTasks}. The
    * default width of the window is 200 pixels, the y-coordinate of the location
-   * can be specifies in {@link tasksTop} and the x-coordinate is right aligned with a
+   * can be specified in {@link tasksTop} and the x-coordinate is right aligned with a
    * 20 pixel offset from the right border. To change the location of the tasks
    * window, the following code can be used:
    *
@@ -2612,33 +2589,14 @@ export class Editor extends EventSource {
     if (!this.destroyed) {
       this.destroyed = true;
 
-      if (this.tasks != null) {
-        this.tasks.destroy();
-      }
+      this.tasks?.destroy();
+      this.outline?.destroy();
+      this.properties?.destroy();
+      this.keyHandler?.destroy();
+      this.rubberband?.onDestroy();
 
-      if (this.outline != null) {
-        this.outline.destroy();
-      }
-
-      if (this.properties != null) {
-        this.properties.destroy();
-      }
-
-      if (this.keyHandler != null) {
-        this.keyHandler.destroy();
-      }
-
-      if (this.rubberband != null) {
-        this.rubberband.onDestroy();
-      }
-
-      if (this.toolbar != null) {
-        this.toolbar.destroy();
-      }
-
-      if (this.graph != null) {
-        this.graph.destroy();
-      }
+      this.toolbar?.destroy();
+      this.graph?.destroy();
 
       this.status = null;
       this.templates = null;
