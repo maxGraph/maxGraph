@@ -65,7 +65,6 @@ export const getCurrentStyle = (element: HTMLElement) => {
     : window.getComputedStyle(element, '');
 };
 
-// TODO add tests
 /**
  * Parses the given CSS numeric value adding handling for the values thin, medium and thick (2, 4 and 6).
  */
@@ -374,8 +373,6 @@ export const setCellStyleFlags = (
     });
   }
 };
-
-// TODO add tests
 
 /**
  * Sets or toggles the flag bit for the given key in the cell's style.
