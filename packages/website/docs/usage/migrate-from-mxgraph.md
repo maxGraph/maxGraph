@@ -555,6 +555,10 @@ Property type changed from `number` (0 or 1) to `boolean` (if not specified, fro
 - `startFill`
 - `swimlaneLine`
 
+"Port constraint" property are no longer defined as a string, pass an array to specify multiple constraints (since 0.17.0):
+- `portConstraint`
+- `sourcePortConstraint`
+- `targetPortConstraint` 
 
 
 ### Migration of default styles defined with StyleSheet
