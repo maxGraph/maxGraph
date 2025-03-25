@@ -34,8 +34,7 @@ import GraphDataModel from '../view/GraphDataModel';
 import type { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from '../types';
 
 /**
- * Removes the cursors from the style of the given DOM node and its
- * descendants.
+ * Removes the cursors from the style of the given DOM node and its descendants.
  *
  * @param element DOM node to remove the cursor style from.
  */
@@ -66,11 +65,9 @@ export const getCurrentStyle = (element: HTMLElement) => {
     : window.getComputedStyle(element, '');
 };
 
+// TODO add tests
 /**
- * Function: parseCssNumber
- *
- * Parses the given CSS numeric value adding handling for the values thin,
- * medium and thick (2, 4 and 6).
+ * Parses the given CSS numeric value adding handling for the values thin, medium and thick (2, 4 and 6).
  */
 export const parseCssNumber = (value: string) => {
   if (value === 'thin') {
@@ -91,13 +88,10 @@ export const parseCssNumber = (value: string) => {
 };
 
 /**
- * Function: setPrefixedStyle
- *
- * Adds the given style with the standard name and an optional vendor prefix for the current
- * browser.
+ * Adds the given style with the standard name and an optional vendor prefix for the current browser.
  *
  * ```javascript
- * mxUtils.setPrefixedStyle(node.style, 'transformOrigin', '0% 0%');
+ * styleUtils.setPrefixedStyle(node.style, 'transformOrigin', '0% 0%');
  * ```
  */
 export const setPrefixedStyle = (
@@ -155,8 +149,8 @@ export const getDocumentSize = () => {
 };
 
 /**
- * Makes sure the given node is inside the visible area of the window. This
- * is done by setting the left and top in the style.
+ * Makes sure the given node is inside the visible area of the window.
+ * This is done by setting the left and top in the style.
  */
 export const fit = (node: HTMLElement) => {
   const ds = getDocumentSize();
@@ -182,13 +176,11 @@ export const fit = (node: HTMLElement) => {
 };
 
 /**
- * Returns the offset for the specified container as an {@link Point}. The
- * offset is the distance from the top left corner of the container to the
- * top left corner of the document.
+ * Returns the offset for the specified container as an {@link Point}.
+ * The offset is the distance from the top left corner of the container to the top left corner of the document.
  *
  * @param container DOM node to return the offset for.
- * @param scollOffset Optional boolean to add the scroll offset of the document.
- * Default is false.
+ * @param scrollOffset Optional boolean to add the scroll offset of the document. Default is `false`.
  */
 export const getOffset = (container: HTMLElement, scrollOffset = false) => {
   let offsetLeft = 0;
@@ -227,8 +219,7 @@ export const getOffset = (container: HTMLElement, scrollOffset = false) => {
 };
 
 /**
- * Returns the scroll origin of the given document or the current document
- * if no document is given.
+ * Returns the scroll origin of the given document or the current document if no document is given.
  */
 export const getDocumentScrollOrigin = (doc: Document) => {
   // @ts-ignore 'parentWindow' is an unknown property.
@@ -248,13 +239,11 @@ export const getDocumentScrollOrigin = (doc: Document) => {
 };
 
 /**
- * Returns the top, left corner of the viewrect as an {@link Point}.
+ * Returns the top, left corner of the view rectangle as an {@link Point}.
  *
  * @param node DOM node whose scroll origin should be returned.
- * @param includeAncestors Whether the scroll origin of the ancestors should be
- * included. Default is false.
- * @param includeDocument Whether the scroll origin of the document should be
- * included. Default is true.
+ * @param includeAncestors Whether the scroll origin of the ancestors should be included. Default is `false`.
+ * @param includeDocument Whether the scroll origin of the document should be included. Default is `true`.
  */
 export const getScrollOrigin = (
   node: HTMLElement | null = null,
@@ -293,12 +282,10 @@ export const getScrollOrigin = (
 };
 
 /**
- * Converts the specified point (x, y) using the offset of the specified
- * container and returns a new {@link Point} with the result.
+ * Converts the specified point (x, y) using the offset of the specified container and returns a new {@link Point} with the result.
  *
  * ```javascript
- * let pt = mxUtils.convertPoint(graph.container,
- *   mxEvent.getClientX(evt), mxEvent.getClientY(evt));
+ * const pt = styleUtils.convertPoint(graph.container, eventUtils.getClientX(evt), eventUtils.getClientY(evt));
  * ```
  *
  * @param container DOM node to use for the offset.
@@ -316,8 +303,7 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
 };
 
 /**
- * Assigns the value for the given key in the styles of the given cells, or
- * removes the key from the styles if the value is null.
+ * Assigns the value for the given key in the styles of the given cells, or removes the key from the styles if the value is `null`.
  *
  * @param model {@link GraphDataModel} to execute the transaction in.
  * @param cells Array of {@link Cell}s to be updated.
@@ -389,6 +375,8 @@ export const setCellStyleFlags = (
   }
 };
 
+// TODO add tests
+
 /**
  * Sets or toggles the flag bit for the given key in the cell's style.
  * If the `value` parameter is not set, then the flag is toggled.
@@ -442,23 +430,21 @@ export const matchBinaryMask = (value: number, mask: number) => {
 };
 
 /**
- * Returns an {@link Rectangle} with the size (width and height in pixels) of
- * the given string. The string may contain HTML markup. Newlines should be
- * converted to <br> before calling this method. The caller is responsible
- * for sanitizing the HTML markup.
+ * Returns an {@link Rectangle} with the size (width and height in pixels) of the given string.
+ * The string may contain HTML markup.
+ * Newlines should be converted to `<br>` before calling this method.
+ * The caller is responsible for sanitizing the HTML markup.
  *
  * Example:
  *
  * ```javascript
- * let label = graph.getLabel(cell).replace(/\n/g, "<br>");
- * let size = graph.getSizeForString(label);
+ * const label = graph.getLabel(cell).replace(/\n/g, "<br>");
+ * const size = graph.getSizeForString(label);
  * ```
  *
  * @param text String whose size should be returned.
- * @param fontSize Integer that specifies the font size in pixels. Default is
- * {@link Constants#DEFAULT_FONTSIZE}.
- * @param fontFamily String that specifies the name of the font family. Default
- * is {@link Constants#DEFAULT_FONTFAMILY}.
+ * @param fontSize Integer that specifies the font size in pixels. Default is {@link DEFAULT_FONTSIZE}.
+ * @param fontFamily String that specifies the name of the font family. Default is {@link DEFAULT_FONTFAMILY}.
  * @param textWidth Optional width for text wrapping.
  * @param fontStyle Optional font style.
  */
@@ -512,7 +498,7 @@ export const getSizeForString = (
 
 /**
  * Sorts the given cells according to the order in the cell hierarchy.
- * Ascending is optional and defaults to true.
+ * Ascending is optional and defaults to `true`.
  */
 export const sortCells = (cells: Cell[], ascending = true): Cell[] => {
   const lookup = new Dictionary<Cell, string[]>();
@@ -541,10 +527,12 @@ export const sortCells = (cells: Cell[], ascending = true): Cell[] => {
 };
 
 /**
- * Returns an {@link Point} that represents the horizontal and vertical alignment
- * for numeric computations. X is -0.5 for center, -1 for right and 0 for
- * left alignment. Y is -0.5 for middle, -1 for bottom and 0 for top
- * alignment. Default values for missing arguments is top, left.
+ * Returns an {@link Point} that represents the horizontal and vertical alignment for numeric computations.
+ *
+ * X is -0.5 for center, -1 for right and 0 for left alignment.
+ * Y is -0.5 for middle, -1 for bottom and 0 for top alignment.
+ *
+ * Default values for missing arguments is top, left.
  */
 export const getAlignmentAsPoint = (align: string, valign: string) => {
   let dx = -0.5;
