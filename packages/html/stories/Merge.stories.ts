@@ -65,7 +65,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   // No size handles, please...
   graph.setCellsResizable(false);
 
-  // Makes all cells round with a white, bold label
+  // Makes all vertices ellipse with a white, bold label
   let style = graph.stylesheet.getDefaultVertexStyle();
   style.shape = 'ellipse';
   style.perimeter = Perimeter.EllipsePerimeter;
@@ -75,7 +75,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   style.fontSize = 14;
   style.shadow = true;
 
-  // Makes all edge labels gray with a white background
+  // Makes all edges with a black, bold label
   style = graph.stylesheet.getDefaultEdgeStyle();
   style.fontStyle = constants.FONT.BOLD;
   style.fontColor = 'black';
