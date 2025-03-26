@@ -16,7 +16,6 @@ limitations under the License.
 
 import type { GraphPlugin } from '../../types';
 import { Graph } from '../Graph';
-import { isNullish } from '../../util/Utils';
 
 function keep2digits(value: number): number {
   return Number(value.toFixed(2));
@@ -81,7 +80,7 @@ export class FitPlugin implements GraphPlugin {
     // Translate using integer values as this is done in Graph.fit
 
     let newScale = Math.min(
-      isNullish(this.maxFitScale) ? Infinity : this.maxFitScale,
+      this.maxFitScale ?? Infinity,
       clientWidth / width,
       clientHeight / height
     );
