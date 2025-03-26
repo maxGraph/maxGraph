@@ -172,6 +172,9 @@ declare module '../Graph' {
      * Adds a new edge into the given parent {@link Cell} using value as the user object and the given source and target as the terminals of the new edge.
      * The id and style are used for the respective properties of the new {@link Cell}, which is returned.
      *
+     * **IMPORTANT**:
+     * - This is a legacy method to ease the migration from `mxGraph`. Use the {@link insertEdge} method with a single object parameter instead.
+     *
      * @param parent {@link Cell} that specifies the parent of the new edge. If not set, use the default parent.
      * @param id Optional string that defines the Id of the new edge. If not set, the id is auto-generated when creating the vertex.
      * @param value Object to be used as the user object which is generally used to display the label of the edge. The default implementation handles `string` object.

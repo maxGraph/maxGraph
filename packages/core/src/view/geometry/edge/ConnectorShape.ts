@@ -40,11 +40,11 @@ class ConnectorShape extends PolylineShape {
   }
 
   /**
-   * Updates the <boundingBox> for this shape using <createBoundingBox>
-   * and augmentBoundingBox and stores the result in <boundingBox>.
+   * Updates the {@link boundingBox} for this shape using {@link createBoundingBox}
+   * and {@link augmentBoundingBox} and stores the result in {@link boundingBox}.
    */
   updateBoundingBox() {
-    this.useSvgBoundingBox = !!this.style?.curved;
+    this.useSvgBoundingBox = this.style?.curved ?? false;
     super.updateBoundingBox();
   }
 

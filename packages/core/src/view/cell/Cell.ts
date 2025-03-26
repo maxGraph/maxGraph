@@ -90,7 +90,7 @@ export class Cell implements IdentityObject {
   }
 
   // TODO: Document me!
-  // used by invalidate() of mxGraphView
+  // used by invalidate() of GraphView
   invalidating = false;
 
   onInit: (() => void) | null = null;
@@ -99,73 +99,86 @@ export class Cell implements IdentityObject {
   overlays: CellOverlay[] = [];
 
   /**
-   * Holds the Id. Default is null.
+   * Holds the identifier of the Cell.
+   * @default null
    */
   id: string | null = null;
 
   /**
-   * Holds the user object. Default is null.
+   * Holds the user object.
+   * @default null
    */
   value: any = null;
 
   /**
-   * Holds the {@link Geometry}. Default is null.
+   * Holds the {@link Geometry}.
+   * @default null
    */
   geometry: Geometry | null = null;
 
   /**
-   * Holds the style as a string of the form [(stylename|key=value);]. Default is
-   * null.
+   * Holds the style of the Cell.
+   * @default {}
    */
   style: CellStyle = {};
 
   /**
-   * Specifies whether the cell is a vertex. Default is false.
+   * Specifies whether the cell is a vertex.
+   * @default false
    */
   vertex = false;
 
   /**
-   * Specifies whether the cell is an edge. Default is false.
+   * Specifies whether the cell is an edge.
+   * @default false
    */
   edge = false;
 
   /**
-   * Specifies whether the cell is connectable. Default is true.
+   * Specifies whether the cell is connectable.
+   * @default true
    */
   connectable = true;
 
   /**
-   * Specifies whether the cell is visible. Default is true.
+   * Specifies whether the cell is visible.
+   * @default true
    */
   visible = true;
 
   /**
-   * Specifies whether the cell is collapsed. Default is false.
+   * Specifies whether the cell is collapsed.
+   * @default false
    */
   collapsed = false;
 
   /**
    * Reference to the parent cell.
+   * @default null
    */
   parent: Cell | null = null;
 
   /**
    * Reference to the source terminal.
+   * @default null
    */
   source: Cell | null = null;
 
   /**
    * Reference to the target terminal.
+   * @default null
    */
   target: Cell | null = null;
 
   /**
    * Holds the child cells.
+   * @default []
    */
   children: Cell[] = [];
 
   /**
    * Holds the edges.
+   * @default []
    */
   edges: Cell[] = [];
 
