@@ -132,10 +132,13 @@ export class GraphView extends EventSource {
   updatingDocumentResource = TranslationsConfig.isEnabled() ? 'updatingDocument' : '';
 
   /**
-   * Specifies if string values in cell styles should be evaluated using
-   * {@link eval}. This will only be used if the string values can't be mapped
-   * to objects using {@link StyleRegistry}. Default is false. NOTE: Enabling this
-   * switch carries a possible security risk.
+   * Specifies if string values in cell styles should be evaluated using {@link eval}.
+   *
+   * This will only be used if the string values can't be mapped to objects using {@link StyleRegistry} when resolving {@link CellStateStyle.edgeStyle} and {@link CellStateStyle.perimeter}.
+   *
+   * **WARNING**: Enabling this switch carries a possible security risk.
+   *
+   * @default false
    */
   allowEval = false;
 
@@ -281,10 +284,16 @@ export class GraphView extends EventSource {
     );
   }
 
+  /**
+   * Returns {@link allowEval}.
+   */
   isAllowEval() {
     return this.allowEval;
   }
 
+  /**
+   * Sets {@link allowEval}.
+   */
   setAllowEval(value: boolean) {
     this.allowEval = value;
   }

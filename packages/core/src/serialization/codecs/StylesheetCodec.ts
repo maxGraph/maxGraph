@@ -38,6 +38,9 @@ export class StylesheetCodec extends ObjectCodec {
   /**
    * Static global switch that specifies if the use of eval is allowed for evaluating text content.
    * Set this to `false` if stylesheets may contain user input.
+   *
+   * **WARNING**: Enabling this switch carries a possible security risk.
+   *
    * @default true
    */
   static allowEval = true;
