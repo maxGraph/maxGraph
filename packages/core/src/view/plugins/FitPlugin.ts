@@ -42,7 +42,7 @@ export type FitCenterOptions = {
  * @category Plugin
  */
 export class FitPlugin implements GraphPlugin {
-  static pluginId = 'fit';
+  static readonly pluginId = 'fit';
 
   /**
    * Specifies the maximum scale to be applied during fit operations. Set this to `null` to allow any value.
@@ -55,7 +55,7 @@ export class FitPlugin implements GraphPlugin {
    *
    * @param graph Reference to the enclosing {@link Graph}.
    */
-  constructor(private graph: Graph) {}
+  constructor(private readonly graph: Graph) {}
 
   /**
    * Fit and center the graph within its container.
