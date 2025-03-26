@@ -46,13 +46,18 @@ export default {
     ...rubberBandTypes,
     style: {
       type: 'text',
-      description: 'Choose the type of source from which to load the model',
       options: ['curved', 'rounded', 'default'],
+      control: { type: 'select' },
+    },
+    arcSize: {
+      type: 'text',
+      options: ['default', '10', '30', '50'],
       control: { type: 'select' },
     },
   },
   args: {
     style: 'curved',
+    arcSize: 'default',
     ...globalValues,
     ...contextMenuValues,
     ...rubberBandValues,
@@ -97,6 +102,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.strokeWidth = 2;
   if (args.style === 'curved') style.curved = true;
   if (args.style === 'rounded') style.rounded = true;
+  if (args.arcSize !== 'default') style.arcSize = Number(args.arcSize);
 
   // Adds cells to the target model in a single step using custom ids for the vertices and edges
   const width = 40;
