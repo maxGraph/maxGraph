@@ -28,7 +28,7 @@ describe('getDefaultPlugins', () => {
   test('returns an array with the correct length', () => {
     const plugins = getDefaultPlugins();
     // detect any changes in default plugins, order does not matter
-    expect(plugins).toHaveLength(7);
+    expect(plugins).toHaveLength(8);
   });
 
   test('returns an array containing only functions', () => {
