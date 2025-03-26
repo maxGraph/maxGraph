@@ -204,6 +204,19 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     });
     edge_da.geometry!.points = [new Point(180, 100)];
 
+    const edge_dc = graph.insertEdge({
+      id: 'dc',
+      value: 'dc',
+      source: d,
+      target: c,
+      style: {
+        strokeColor: 'red',
+        align: 'left',
+        verticalAlign: 'bottom',
+      },
+    });
+    edge_dc.geometry!.points = [new Point(250, 140)];
+
     const edge_bd = graph.insertEdge({
       id: 'bd',
       value: 'bd',
