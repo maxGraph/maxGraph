@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import {
+  constants,
   getDefaultPlugins,
   Graph,
   Perimeter,
@@ -28,7 +29,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -45,7 +46,12 @@ export default {
 };
 
 const Template = ({ label, ...args }: Record<string, any>) => {
+  const div = createMainDiv(
+    `This example illustrates the use of the <code>GraphDataModel.mergeChildren</code> function to merge two graphs.`
+  );
+
   const container = createGraphContainer(args);
+  div.appendChild(container);
 
   StyleDefaultsConfig.shadowColor = '#c0c0c0';
 
@@ -59,29 +65,26 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   // No size handles, please...
   graph.setCellsResizable(false);
 
-  // Makes all cells round with a white, bold label
+  // Makes all vertices ellipse with a white, bold label
   let style = graph.stylesheet.getDefaultVertexStyle();
   style.shape = 'ellipse';
   style.perimeter = Perimeter.EllipsePerimeter;
   style.fontColor = 'white';
   style.gradientColor = 'white';
-  style.fontStyle = 1; // bold
+  style.fontStyle = constants.FONT.BOLD;
   style.fontSize = 14;
   style.shadow = true;
 
-  // Makes all edge labels gray with a white background
+  // Makes all edges with a black, bold label
   style = graph.stylesheet.getDefaultEdgeStyle();
-  style.fontColor = 'gray';
-  style.fontStyle = 1; // bold
+  style.fontStyle = constants.FONT.BOLD;
   style.fontColor = 'black';
   style.strokeWidth = 2;
 
-  // Gets the default parent for inserting new cells. This
-  // is normally the first child of the root (ie. layer 0).
+  // Gets the default parent for inserting new cells. This is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
-  // Adds cells to the target model in a single step
-  // using custom ids for the vertices and edges
+  // Adds cells to the target model in a single step using custom ids for the vertices and edges
   const w = 40;
   const h = 40;
 
@@ -136,7 +139,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       align: 'right',
       verticalAlign: 'bottom',
     });
-    graph2.insertEdge(parent2, 'bd', 'fd', f, d, {
+    graph2.insertEdge(parent2, 'fd', 'fd', f, d, {
       strokeColor: 'green',
       verticalAlign: 'bottom',
     });
@@ -150,7 +153,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   // the edge for the same id in the second graph.
   graph.getDataModel().mergeChildren(parent2, parent /* , false */);
 
-  return container;
+  return div;
 };
 
 export const Default = Template.bind({});

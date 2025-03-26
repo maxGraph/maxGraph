@@ -74,7 +74,7 @@ class PolylineShape extends Shape {
     const prev = c.pointerEventsValue;
     c.pointerEventsValue = 'stroke';
 
-    if (!this.style || !this.style.curved) {
+    if (!this.style?.curved) {
       this.paintLine(c, pts, this.isRounded);
     } else {
       this.paintCurvedLine(c, pts);
