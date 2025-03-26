@@ -844,23 +844,7 @@ class Graph extends EventSource {
    * graph.refresh();
    * ```
    *
-   * To fit and center the graph, the following code can be used.
-   *
-   * ```javascript
-   * let margin = 2;
-   * let max = 3;
-   *
-   * let bounds = graph.getGraphBounds();
-   * let cw = graph.container.clientWidth - margin;
-   * let ch = graph.container.clientHeight - margin;
-   * let w = bounds.width / graph.view.scale;
-   * let h = bounds.height / graph.view.scale;
-   * let s = Math.min(max, Math.min(cw / w, ch / h));
-   *
-   * graph.view.scaleAndTranslate(s,
-   *   (margin + cw - w * s) / (2 * s) - bounds.x / graph.view.scale,
-   *   (margin + ch - h * s) / (2 * s) - bounds.y / graph.view.scale);
-   * ```
+   * To fit and center the graph, use {@link FitPlugin.fitCenter}.
    *
    * @param border Optional number that specifies the border. Default is {@link border}.
    * @param keepOrigin Optional boolean that specifies if the translate should be changed. Default is `false`.

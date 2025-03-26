@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DomHelpers, Graph, InternalEvent } from '@maxgraph/core';
+import { DomHelpers, type FitPlugin, Graph, InternalEvent } from '@maxgraph/core';
 import {
   contextMenuTypes,
   contextMenuValues,
@@ -32,17 +32,31 @@ export default {
     ...contextMenuTypes,
     ...globalTypes,
     ...rubberBandTypes,
+    graphWithLargeHeight: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+    containerWithScrollbar: {
+      type: 'boolean',
+      defaultValue: false,
+    },
   },
   args: {
     ...contextMenuValues,
     ...globalValues,
     ...rubberBandValues,
+    graphWithLargeHeight: false,
+    containerWithScrollbar: false,
   },
 };
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   const mainContainer = document.createElement('div');
   const container = createGraphContainer(args);
+  if (args.containerWithScrollbar) {
+    container.style.overflow = 'auto';
+  }
+
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
   const graph = new Graph(container);
   graph.setPanning(true);
@@ -68,17 +82,20 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   addControlButton('Zoom Out', function () {
     graph.zoomOut();
   });
-  const border = 10;
+  const margin = 20;
   addControlButton('Fit', function () {
-    graph.fit(border);
+    graph.fit(undefined, false, margin);
+  });
+  addControlButton('Fit Center', function () {
+    graph.getPlugin<FitPlugin>('fit')?.fitCenter({ margin });
   });
   addControlButton('Fit Horizontal', function () {
     // This is a pain to use so many parameters when lot of them are the same as default values
     // Consider having a method with a single object. See https://github.com/maxGraph/maxGraph/pull/715#discussion_r1993871475
-    graph.fit(border, false, 0, true, false, true);
+    graph.fit(undefined, false, margin, true, false, true);
   });
   addControlButton('Fit Vertical', function () {
-    graph.fit(border, false, 0, true, true, false);
+    graph.fit(undefined, false, margin, true, true, false);
   });
 
   mainContainer.appendChild(container);
@@ -103,7 +120,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       value: 'hexagon',
     });
     const v4 = graph.insertVertex({
-      position: [60, 210],
+      position: [60, args.graphWithLargeHeight ? 410 : 210],
       size: [100, 30],
       value: 'rectangle 2',
     });
