@@ -21,7 +21,7 @@ import CellOverlay from './CellOverlay';
 import { clone } from '../../util/cloneUtils';
 import Point from '../geometry/Point';
 import CellPath from './CellPath';
-import { isNotNullish } from '../../util/Utils';
+import { isNullish } from '../../util/Utils';
 
 import type { CellStyle, FilterFunction, IdentityObject } from '../../types';
 import type { UserObject } from '../../internal-types';
@@ -35,8 +35,8 @@ import { isElement } from '../../util/domUtils';
  * For custom attributes we recommend using an XML node as the value of a cell.
  * The following code can be used to create a cell with an XML node as the value:
  * ```javascript
- * var doc = mxUtils.createXmlDocument();
- * var node = doc.createElement('MyNode')
+ * const doc = xmlUtils.createXmlDocument();
+ * const node = doc.createElement('MyNode')
  * node.setAttribute('label', 'MyLabel');
  * node.setAttribute('attribute1', 'value1');
  * graph.insertVertex(graph.getDefaultParent(), null, node, 40, 40, 80, 30);
@@ -46,21 +46,17 @@ import { isElement } from '../../util/domUtils';
  * {@link graph.cellLabelChanged} should be overridden as follows:
  *
  * ```javascript
- * graph.convertValueToString(cell)
- * {
- *   if (mxUtils.isNode(cell.value))
- *   {
+ * graph.convertValueToString(cell) {
+ *   if (domUtils.isNode(cell.value)) {
  *     return cell.getAttribute('label', '')
  *   }
  * };
  *
- * var cellLabelChanged = graph.cellLabelChanged;
- * graph.cellLabelChanged(cell, newValue, autoSize)
- * {
- *   if (mxUtils.isNode(cell.value))
- *   {
+ * const cellLabelChanged = graph.cellLabelChanged;
+ * graph.cellLabelChanged(cell, newValue, autoSize) {
+ *   if (domUtils.isNode(cell.value)) {
  *     // Clones the value for correct undo/redo
- *     var elt = cell.value.cloneNode(true);
+ *     const elt = cell.value.cloneNode(true);
  *     elt.setAttribute('label', newValue);
  *     newValue = elt;
  *   }
@@ -68,7 +64,6 @@ import { isElement } from '../../util/domUtils';
  *   cellLabelChanged.apply(this, arguments);
  * };
  * ```
- * @class Cell
  */
 export class Cell implements IdentityObject {
   constructor(
@@ -567,7 +562,7 @@ export class Cell implements IdentityObject {
 
     return isElement(userObject) && userObject.hasAttribute
       ? userObject.hasAttribute(name)
-      : isNotNullish(userObject.getAttribute?.(name));
+      : !isNullish(userObject.getAttribute?.(name));
   }
 
   /**
@@ -616,10 +611,10 @@ export class Cell implements IdentityObject {
    */
   cloneValue(): any {
     let value: UserObject = this.getValue();
-    if (isNotNullish(value)) {
+    if (!isNullish(value)) {
       if (typeof value.clone === 'function') {
         value = value.clone();
-      } else if (isNotNullish(value.nodeType) && value.cloneNode) {
+      } else if (!isNullish(value.nodeType) && value.cloneNode) {
         value = value.cloneNode(true);
       }
     }

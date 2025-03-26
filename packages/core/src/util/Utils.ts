@@ -61,12 +61,6 @@ export const isNullish = (v: string | object | null | undefined | number | boole
   v === null || v === undefined;
 
 /**
- * @private not part of the public API, can be removed or changed without prior notice
- */
-export const isNotNullish = (v: string | object | null | undefined | number | boolean) =>
-  !isNullish(v);
-
-/**
  * Merge a mixin into the destination
  * @param dest the destination class
  *
