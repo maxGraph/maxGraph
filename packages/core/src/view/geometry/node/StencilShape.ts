@@ -20,7 +20,7 @@ import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
 import Translations from '../../../i18n/Translations';
-import { isNotNullish } from '../../../util/Utils';
+import { isNullish } from '../../../util/Utils';
 import {
   ALIGN,
   DIRECTION,
@@ -131,7 +131,7 @@ class StencilShape extends Shape {
     // user-defined stroke-width). Note that the strokewidth is scaled
     // by the minimum scaling that is used to draw the shape (sx, sy).
     const sw = this.desc.getAttribute('strokewidth');
-    this.strokeWidthValue = isNotNullish(sw) ? sw : '1';
+    this.strokeWidthValue = !isNullish(sw) ? sw : '1';
   }
 
   /**

@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import Rectangle from './Rectangle';
-import { isNotNullish } from '../../util/Utils';
+import { isNullish } from '../../util/Utils';
 import { getBoundingBox, getDirectedBounds, mod } from '../../util/mathUtils';
 import {
   DIRECTION,
@@ -649,7 +649,7 @@ class Shape {
         }
       }
 
-      if (bg && c.state && isNotNullish(c.state.transform)) {
+      if (bg && c.state && !isNullish(c.state.transform)) {
         bg.setAttribute('transform', <string>c.state.transform);
       }
 

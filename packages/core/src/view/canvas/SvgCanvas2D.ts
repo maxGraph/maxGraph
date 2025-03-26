@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isNotNullish } from '../../util/Utils';
+import { isNullish } from '../../util/Utils';
 import { mod } from '../../util/mathUtils';
 import { getAlignmentAsPoint, matchBinaryMask } from '../../util/styleUtils';
 import Client from '../../Client';
@@ -48,7 +48,6 @@ import {
   TextDirectionValue,
   VAlignValue,
 } from '../../types';
-import { StyleDefaultsConfig } from '../../util/config';
 
 // Activates workaround for gradient ID resolution if base tag is used.
 const useAbsoluteIds =
@@ -58,22 +57,19 @@ const useAbsoluteIds =
   document.getElementsByTagName('base').length > 0;
 
 /**
- * Extends {@link mxAbstractCanvas2D} to implement a canvas for SVG. This canvas writes all calls as SVG output to the
- * given SVG root node.
+ * Extends {@link AbstractCanvas2D} to implement a canvas for SVG.
+ * This canvas writes all calls as SVG output to the given SVG root node.
  *
  * ```javascript
- * var svgDoc = mxUtils.createXmlDocument();
- * var root = (svgDoc.createElementNS != null) ?
+ * const svgDoc = mxUtils.createXmlDocument();
+ * const root = (svgDoc.createElementNS != null) ?
  * 		svgDoc.createElementNS(mxConstants.NS_SVG, 'svg') : svgDoc.createElement('svg');
  *
- * if (svgDoc.createElementNS == null)
- * {
- *   root.setAttribute('xmlns', mxConstants.NS_SVG);
- *   root.setAttribute('xmlns:xlink', mxConstants.NS_XLINK);
- * }
- * else
- * {
- *   root.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', mxConstants.NS_XLINK);
+ * if (svgDoc.createElementNS == null) {
+ *   root.setAttribute('xmlns', constants.NS_SVG);
+ *   root.setAttribute('xmlns:xlink', constants.NS_XLINK);
+ * } else {
+ *   root.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', constants.NS_XLINK);
  * }
  *
  * var bounds = graph.getGraphBounds();
@@ -426,7 +422,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     clip: boolean,
     rotation: number
   ) {
-    return isNotNullish(str) ? this.foAltText : null;
+    return !isNullish(str) ? this.foAltText : null;
   }
 
   /**
@@ -464,7 +460,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     );
     const s = this.state;
 
-    if (isNotNullish(text) && s.fontSize > 0) {
+    if (!isNullish(text) && s.fontSize > 0) {
       const dy = valign === ALIGN.TOP ? 1 : valign === ALIGN.BOTTOM ? 0 : 0.3;
       const anchor =
         align === ALIGN.RIGHT ? 'end' : align === ALIGN.LEFT ? 'start' : 'middle';
