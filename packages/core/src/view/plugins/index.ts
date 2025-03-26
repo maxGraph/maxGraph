@@ -22,6 +22,10 @@ import PopupMenuHandler from '../handler/PopupMenuHandler';
 import ConnectionHandler from '../handler/ConnectionHandler';
 import SelectionHandler from '../handler/SelectionHandler';
 import PanningHandler from '../handler/PanningHandler';
+import { FitPlugin } from './FitPlugin';
+
+// Export all plugins to have them in the root barrel file
+export * from './FitPlugin';
 
 /**
  * Returns the list of plugins used by default in `maxGraph`.
@@ -39,4 +43,5 @@ export const getDefaultPlugins = (): GraphPluginConstructor[] => [
   ConnectionHandler,
   SelectionHandler,
   PanningHandler,
+  FitPlugin,
 ];

@@ -18,6 +18,7 @@ import '@maxgraph/core/css/common.css'; // required by RubberBandHandler
 import './style.css';
 import {
   constants,
+  type FitPlugin,
   getDefaultPlugins,
   Graph,
   InternalEvent,
@@ -111,6 +112,8 @@ const initializeGraph = (container: HTMLElement) => {
       style: { endArrow: 'block' },
     });
   });
+
+  return graph;
 };
 
 // display the maxGraph version in the footer
@@ -118,4 +121,12 @@ const footer = document.querySelector('footer')!;
 footer.innerText = `Built with maxGraph ${constants.VERSION}`;
 
 // Creates the graph inside the given container
-initializeGraph(document.querySelector('#graph-container')!);
+const graph = initializeGraph(document.querySelector('#graph-container')!);
+
+// Control buttons
+document.getElementById('reset-zoom')!.addEventListener('click', () => {
+  graph.zoomActual();
+});
+document.getElementById('fit-center')!.addEventListener('click', () => {
+  graph.getPlugin<FitPlugin>('fit')?.fitCenter({ margin: 20 });
+});

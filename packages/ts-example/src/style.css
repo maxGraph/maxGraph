@@ -40,6 +40,10 @@ footer {
   overflow: hidden;
 }
 
+.controls {
+  margin-top: .75rem;
+}
+
 /* For rubber band selection, override maxGraph defaults */
 div.mxRubberband {
   border-color: #b18426;

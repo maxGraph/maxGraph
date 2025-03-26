@@ -28,6 +28,7 @@
       "I18n",
       "Layout",
       "Logging",
+      "Navigation",
       "Perimeter",
       "Plugin",
       "Serialization with Codecs",
