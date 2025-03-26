@@ -77,7 +77,6 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   // Makes all edge labels gray with a white background
   style = graph.stylesheet.getDefaultEdgeStyle();
-  style.fontColor = 'gray';
   style.fontStyle = constants.FONT.BOLD;
   style.fontColor = 'black';
   style.strokeWidth = 2;
