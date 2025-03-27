@@ -50,7 +50,7 @@ import EventSource from '../event/EventSource';
 
 import type { Graph } from '../Graph';
 import type { GraphPlugin } from '../../types';
-import TooltipHandler from './TooltipHandler';
+import type TooltipHandler from './TooltipHandler';
 
 /**
  * In-place editor for the graph. To control this editor, use

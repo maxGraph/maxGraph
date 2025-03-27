@@ -15,17 +15,25 @@ limitations under the License.
 */
 
 import type { GraphPluginConstructor } from '../../types';
-import CellEditorHandler from '../handler/CellEditorHandler';
-import TooltipHandler from '../handler/TooltipHandler';
-import SelectionCellsHandler from '../handler/SelectionCellsHandler';
-import PopupMenuHandler from '../handler/PopupMenuHandler';
-import ConnectionHandler from '../handler/ConnectionHandler';
-import SelectionHandler from '../handler/SelectionHandler';
-import PanningHandler from '../handler/PanningHandler';
+import CellEditorHandler from './CellEditorHandler';
+import TooltipHandler from './TooltipHandler';
+import SelectionCellsHandler from './SelectionCellsHandler';
+import PopupMenuHandler from './PopupMenuHandler';
+import ConnectionHandler from './ConnectionHandler';
+import SelectionHandler from './SelectionHandler';
+import PanningHandler from './PanningHandler';
 import { FitPlugin } from './FitPlugin';
 
-// Export all plugins to have them in the root barrel file
+// Export all plugins and types to have them in the root barrel file
+export { default as CellEditorHandler } from './CellEditorHandler';
+export { default as ConnectionHandler } from './ConnectionHandler';
 export * from './FitPlugin';
+export { default as PanningHandler } from './PanningHandler';
+export { default as PopupMenuHandler } from './PopupMenuHandler';
+export { default as RubberBandHandler } from './RubberBandHandler';
+export { default as SelectionCellsHandler } from './SelectionCellsHandler';
+export { default as SelectionHandler } from './SelectionHandler';
+export { default as TooltipHandler } from './TooltipHandler';
 
 /**
  * Returns the list of plugins used by default in `maxGraph`.

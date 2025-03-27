@@ -19,8 +19,8 @@ import Translations from '../../i18n/Translations';
 import type Shape from '../geometry/Shape';
 import type Cell from '../cell/Cell';
 import type { Graph } from '../Graph';
-import type SelectionCellsHandler from '../handler/SelectionCellsHandler';
-import type TooltipHandler from '../handler/TooltipHandler';
+import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
+import type TooltipHandler from '../plugins/TooltipHandler';
 
 type PartialGraph = Pick<
   Graph,

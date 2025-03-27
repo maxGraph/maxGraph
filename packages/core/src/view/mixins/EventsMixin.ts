@@ -34,15 +34,15 @@ import {
 } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import Cell from '../cell/Cell';
-import type PanningHandler from '../handler/PanningHandler';
-import type ConnectionHandler from '../handler/ConnectionHandler';
+import type PanningHandler from '../plugins/PanningHandler';
+import type ConnectionHandler from '../plugins/ConnectionHandler';
 import Point from '../geometry/Point';
 import { convertPoint } from '../../util/styleUtils';
 import { NONE } from '../../util/Constants';
 import Client from '../../Client';
-import type CellEditorHandler from '../handler/CellEditorHandler';
+import type CellEditorHandler from '../plugins/CellEditorHandler';
 import type { Graph } from '../Graph';
-import type TooltipHandler from '../handler/TooltipHandler';
+import type TooltipHandler from '../plugins/TooltipHandler';
 
 type PartialGraph = Pick<
   Graph,

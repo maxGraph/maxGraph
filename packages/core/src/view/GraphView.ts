@@ -38,12 +38,12 @@ import CurrentRootChange from './undoable_changes/CurrentRootChange';
 import Shape from './geometry/Shape';
 import Geometry from './geometry/Geometry';
 import ConnectionConstraint from './other/ConnectionConstraint';
-import PopupMenuHandler from './handler/PopupMenuHandler';
+import type PopupMenuHandler from './plugins/PopupMenuHandler';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
 import { clone } from '../util/cloneUtils';
 import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
-import type TooltipHandler from './handler/TooltipHandler';
+import type TooltipHandler from './plugins/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
 import { TranslationsConfig } from '../i18n/config';
 

@@ -23,7 +23,7 @@ import { getMainEvent, isMultiTouchEvent } from '../../util/EventUtils';
 import { Graph } from '../Graph';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import { GraphPlugin } from '../../types';
-import TooltipHandler from './TooltipHandler';
+import type TooltipHandler from './TooltipHandler';
 import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';
 

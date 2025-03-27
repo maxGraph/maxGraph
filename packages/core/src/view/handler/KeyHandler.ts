@@ -26,7 +26,7 @@ import {
   isControlDown as _isControlDown,
   isShiftDown,
 } from '../../util/EventUtils';
-import CellEditorHandler from './CellEditorHandler';
+import type CellEditorHandler from '../plugins/CellEditorHandler';
 
 /**
  * Event handler that listens to keystroke events. This is not a singleton,

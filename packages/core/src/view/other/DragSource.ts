@@ -42,7 +42,7 @@ import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';
 import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
-import SelectionHandler from '../handler/SelectionHandler';
+import type SelectionHandler from '../plugins/SelectionHandler';
 
 export type DropHandler = (
   graph: Graph,

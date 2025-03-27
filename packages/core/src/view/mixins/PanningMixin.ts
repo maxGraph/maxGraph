@@ -17,11 +17,11 @@ limitations under the License.
 import { hasScrollbars } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import type PanningHandler from '../handler/PanningHandler';
+import type PanningHandler from '../plugins/PanningHandler';
 import { Graph } from '../Graph';
 import Rectangle from '../geometry/Rectangle';
 import Point from '../geometry/Point';
-import type SelectionCellsHandler from '../handler/SelectionCellsHandler';
+import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 
 type PartialGraph = Pick<Graph, 'getContainer' | 'getView' | 'getPlugin' | 'fireEvent'>;
 type PartialPanning = Pick<

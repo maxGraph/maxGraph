@@ -18,7 +18,7 @@ import { isMultiTouchEvent } from '../../util/EventUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import type { Graph } from '../Graph';
-import type CellEditorHandler from '../handler/CellEditorHandler';
+import type CellEditorHandler from '../plugins/CellEditorHandler';
 
 type PartialGraph = Pick<
   Graph,

@@ -40,7 +40,7 @@ import { convertPoint, getOffset } from '../../util/styleUtils';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import ImageShape from '../geometry/node/ImageShape';
 import CellMarker from '../cell/CellMarker';
-import ConstraintHandler from './ConstraintHandler';
+import ConstraintHandler from '../handler/ConstraintHandler';
 import PolylineShape from '../geometry/edge/PolylineShape';
 import EventSource from '../event/EventSource';
 import Rectangle from '../geometry/Rectangle';
