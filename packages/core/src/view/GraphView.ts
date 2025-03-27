@@ -46,6 +46,7 @@ import StyleRegistry from './style/StyleRegistry';
 import type TooltipHandler from './plugins/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
 import { TranslationsConfig } from '../i18n/config';
+import { doEval } from '../internal/utils';
 
 /**
  * @class GraphView
@@ -1327,7 +1328,7 @@ export class GraphView extends EventSource {
       let tmp = StyleRegistry.getValue(edgeStyle);
 
       if (!tmp && this.isAllowEval()) {
-        tmp = eval(edgeStyle);
+        tmp = doEval(edgeStyle);
       }
 
       edgeStyle = tmp;
@@ -1594,7 +1595,7 @@ export class GraphView extends EventSource {
     if (typeof perimeter === 'string') {
       let tmp = StyleRegistry.getValue(perimeter);
       if (tmp == null && this.isAllowEval()) {
-        tmp = eval(perimeter);
+        tmp = doEval(perimeter);
       }
       perimeter = tmp;
     }

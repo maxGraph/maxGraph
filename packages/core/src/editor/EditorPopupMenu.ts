@@ -24,6 +24,7 @@ import Editor from './Editor';
 
 import { PopupMenuItem } from '../types';
 import { isNullish } from '../util/Utils';
+import { doEval } from '../internal/utils';
 
 /**
  * Creates popupmenus for mouse events.
@@ -194,7 +195,7 @@ export class EditorPopupMenu {
         if (isNullish(condition) || conditions[condition]) {
           let as = item.getAttribute('as')!;
           as = Translations.get(as) || as;
-          const funct = eval(getTextContent(<Text>(<unknown>item)));
+          const funct = doEval(getTextContent(<Text>(<unknown>item)));
           const action = item.getAttribute('action');
           let icon = item.getAttribute('icon');
           const iconCls = item.getAttribute('iconCls');
@@ -317,7 +318,7 @@ export class EditorPopupMenu {
     const condNodes = this.config!.getElementsByTagName('condition');
 
     for (const condNode of Array.from(condNodes)) {
-      const funct = eval(getTextContent(<Text>(<unknown>condNode)));
+      const funct = doEval(getTextContent(<Text>(<unknown>condNode)));
       const name = condNode.getAttribute('name');
 
       if (!isNullish(name) && typeof funct === 'function') {

@@ -33,6 +33,7 @@ import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
+import { doEval } from '../../../internal/utils';
 
 /**
  * Configure global settings for stencil shapes.
@@ -193,7 +194,7 @@ class StencilShape extends Shape {
       const text = getTextContent(<Text>(<unknown>node));
 
       if (text && StencilShapeConfig.allowEval) {
-        const funct = eval(text);
+        const funct = doEval(text);
 
         if (typeof funct === 'function') {
           result = funct(shape);

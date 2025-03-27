@@ -24,6 +24,7 @@ import { isInteger, isNumeric } from '../util/mathUtils';
 import { getTextContent, isElement } from '../util/domUtils';
 import { load } from '../util/MaxXmlRequest';
 import type Codec from './Codec';
+import { doEval } from '../internal/utils';
 
 /**
  * Generic codec for JavaScript objects that implements a mapping between
@@ -820,7 +821,7 @@ class ObjectCodec {
         value = child.getAttribute('value');
 
         if (value == null && ObjectCodec.allowEval) {
-          value = eval(getTextContent(<Text>(<unknown>child)));
+          value = doEval(getTextContent(<Text>(<unknown>child)));
         }
       } else {
         value = dec.decode(child, template);

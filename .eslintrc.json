@@ -33,6 +33,7 @@
                 "message": "Const enums are forbidden to increase interoperability. Use regular enums instead."
             }
         ],
-        "no-console": "error"
+        "no-console": "error",
+        "no-eval": "error"
     }
 }
