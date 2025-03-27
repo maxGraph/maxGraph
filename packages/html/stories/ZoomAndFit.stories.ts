@@ -73,6 +73,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     controlsContainer.appendChild(button);
   }
 
+  const fitPlugin = graph.getPlugin<FitPlugin>('fit');
+
   addControlButton('Zoom Actual', function () {
     graph.zoomActual();
   });
@@ -84,18 +86,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   });
   const margin = 20;
   addControlButton('Fit', function () {
-    graph.fit(undefined, false, margin);
+    fitPlugin?.fit({ margin });
   });
   addControlButton('Fit Center', function () {
-    graph.getPlugin<FitPlugin>('fit')?.fitCenter({ margin });
+    fitPlugin?.fitCenter({ margin });
   });
   addControlButton('Fit Horizontal', function () {
-    // This is a pain to use so many parameters when lot of them are the same as default values
-    // Consider having a method with a single object. See https://github.com/maxGraph/maxGraph/pull/715#discussion_r1993871475
-    graph.fit(undefined, false, margin, true, false, true);
+    fitPlugin?.fit({ margin, ignoreHeight: true });
   });
   addControlButton('Fit Vertical', function () {
-    graph.fit(undefined, false, margin, true, true, false);
+    fitPlugin?.fit({ margin, ignoreWidth: true });
   });
 
   mainContainer.appendChild(container);

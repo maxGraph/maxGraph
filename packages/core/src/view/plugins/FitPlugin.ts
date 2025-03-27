@@ -16,6 +16,7 @@ limitations under the License.
 
 import type { GraphPlugin } from '../../types';
 import type { AbstractGraph } from '../AbstractGraph';
+import { hasScrollbars } from '../../util/styleUtils';
 
 function keep2digits(value: number): number {
   return Number(value.toFixed(2));
@@ -35,6 +36,49 @@ export type FitCenterOptions = {
 };
 
 /**
+ * Options of the {@link FitPlugin.fit} method.
+ * @since 0.21.0
+ * @category Navigation
+ */
+export type FitOptions = {
+  /**
+   * Optional number that specifies the border.
+   * @default{@link Graph.getBorder}
+   */
+  border?: number;
+  /**
+   * Optional boolean that specifies if the "translate" should be changed.
+   * @default false
+   */
+  keepOrigin?: boolean;
+  /**
+   * Optional margin in pixels.
+   * @default 0
+   */
+  margin?: number;
+  /**
+   * Optional boolean that specifies if the scale should be set (when `true`) or just returned.
+   * @default true
+   */
+  enabled?: boolean;
+  /**
+   * Optional boolean that specifies if the width should be ignored.
+   * @default false
+   */
+  ignoreWidth?: boolean;
+  /**
+   * Optional boolean that specifies if the height should be ignored.
+   * @default false
+   */
+  ignoreHeight?: boolean;
+  /**
+   * Optional maximum height. When set to `null`, the height is ignored i.e. use the maximum available height within the container.
+   * @default null
+   */
+  maxHeight?: number | null;
+};
+
+/**
  * A plugin providing methods to fit the graph within its container.
  * @since 0.17.0
  * @category Navigation
@@ -44,7 +88,14 @@ export class FitPlugin implements GraphPlugin {
   static readonly pluginId = 'fit';
 
   /**
-   * Specifies the maximum scale to be applied during fit operations. Set this to `null` to allow any value.
+   * Specifies the minimum scale to be applied in {@link fit}. Set this to `null` to allow any value.
+   * @default 0.1
+   * @since 0.21.0
+   */
+  minFitScale: number | null = 0.1;
+
+  /**
+   * Specifies the maximum scale to be applied in {@link fit} and  {@link fitCenter}. Set this to `null` to allow any value.
    * @default 8
    */
   maxFitScale: number | null = 8;
@@ -55,6 +106,124 @@ export class FitPlugin implements GraphPlugin {
    * @param graph Reference to the enclosing {@link AbstractGraph}.
    */
   constructor(private readonly graph: AbstractGraph) {}
+
+  /**
+   * Scales the graph such that the complete diagram fits into {@link Graph.container} and returns the current scale in the view.
+   * To fit an initial graph prior to rendering, set {@link GraphView.rendering} to `false` prior to changing the model
+   * and execute the following after changing the model.
+   *
+   * ```javascript
+   * graph.view.rendering = false;
+   * // here, change the model
+   * graph.getPlugin<FitPlugin>('fit')?.fit();
+   * graph.view.rendering = true;
+   * graph.refresh();
+   * ```
+   *
+   * To fit and center the graph, use {@link fitCenter}.
+   *
+   * @param options Optional number that specifies the border.
+   * @since 0.21.0
+   */
+  fit(options: FitOptions = {}): number {
+    const {
+      border = this.graph.getBorder(),
+      keepOrigin = false,
+      margin = 0,
+      enabled = true,
+      ignoreWidth = false,
+      ignoreHeight = false,
+      maxHeight = null,
+    } = options;
+    const { backgroundImage, container, view } = this.graph;
+    if (container) {
+      // Adds spacing and border from css
+      const cssBorder = this.graph.getBorderSizes();
+      let w1: number = container.offsetWidth - cssBorder.x - cssBorder.width - 1;
+      let h1: number =
+        maxHeight ?? container.offsetHeight - cssBorder.y - cssBorder.height - 1;
+      let bounds = view.getGraphBounds();
+
+      if (bounds.width > 0 && bounds.height > 0) {
+        if (keepOrigin && bounds.x != null && bounds.y != null) {
+          bounds = bounds.clone();
+          bounds.width += bounds.x;
+          bounds.height += bounds.y;
+          bounds.x = 0;
+          bounds.y = 0;
+        }
+
+        // LATER: Use unscaled bounding boxes to fix rounding errors
+        const originalScale = view.scale;
+        let w2 = bounds.width / originalScale;
+        let h2 = bounds.height / originalScale;
+
+        // Fits to the size of the background image if required
+        if (backgroundImage) {
+          w2 = Math.max(w2, backgroundImage.width - bounds.x / originalScale);
+          h2 = Math.max(h2, backgroundImage.height - bounds.y / originalScale);
+        }
+
+        const b: number = (keepOrigin ? border : 2 * border) + margin + 1;
+
+        w1 -= b;
+        h1 -= b;
+
+        let newScale = ignoreWidth
+          ? h1 / h2
+          : ignoreHeight
+            ? w1 / w2
+            : Math.min(w1 / w2, h1 / h2);
+
+        const minScale = this.minFitScale ?? 0;
+        const maxScale = this.maxFitScale ?? Infinity;
+        newScale = Math.max(Math.min(newScale, maxScale), minScale);
+
+        if (enabled) {
+          if (!keepOrigin) {
+            if (!hasScrollbars(container)) {
+              const x0 =
+                bounds.x != null
+                  ? Math.floor(
+                      view.translate.x -
+                        bounds.x / originalScale +
+                        border / newScale +
+                        margin / 2
+                    )
+                  : border;
+              const y0 =
+                bounds.y != null
+                  ? Math.floor(
+                      view.translate.y -
+                        bounds.y / originalScale +
+                        border / newScale +
+                        margin / 2
+                    )
+                  : border;
+
+              view.scaleAndTranslate(newScale, x0, y0);
+            } else {
+              view.setScale(newScale);
+              const newBounds = this.graph.getGraphBounds();
+
+              if (newBounds.x != null) {
+                container.scrollLeft = newBounds.x;
+              }
+
+              if (newBounds.y != null) {
+                container.scrollTop = newBounds.y;
+              }
+            }
+          } else if (view.scale != newScale) {
+            view.setScale(newScale);
+          }
+        } else {
+          return newScale;
+        }
+      }
+    }
+    return view.scale;
+  }
 
   /**
    * Fit and center the graph within its container.
