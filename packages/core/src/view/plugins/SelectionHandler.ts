@@ -125,14 +125,9 @@ class SelectionHandler implements GraphPlugin {
             this.updateHint();
 
             if (this.livePreviewUsed) {
-              // TODO introduce a private method
-              const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
-                'SelectionCellsHandler'
-              );
-
               // Forces update to ignore last visible state
               this.setHandlesVisibleForCells(
-                selectionCellsHandler?.getHandledSelectionCells() ?? [],
+                this.getSelectionCellsHandler()?.getHandledSelectionCells() ?? [],
                 false,
                 true
               );
@@ -473,9 +468,7 @@ class SelectionHandler implements GraphPlugin {
   isDelayedSelection(cell: Cell, me: InternalMouseEvent) {
     let c: Cell | null = cell;
 
-    const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
-      'SelectionCellsHandler'
-    );
+    const selectionCellsHandler = this.getSelectionCellsHandler();
 
     if (!this.graph.isToggleEvent(me.getEvent()) || !isAltDown(me.getEvent())) {
       while (c) {
@@ -1058,12 +1051,8 @@ class SelectionHandler implements GraphPlugin {
   updatePreview(remote = false) {
     if (this.livePreviewUsed && !remote) {
       if (this.cells) {
-        const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
-          'SelectionCellsHandler'
-        );
-
         this.setHandlesVisibleForCells(
-          selectionCellsHandler?.getHandledSelectionCells() ?? [],
+          this.getSelectionCellsHandler()?.getHandledSelectionCells() ?? [],
           false
         );
         this.updateLivePreview(this.currentDx, this.currentDy);
@@ -1259,9 +1248,7 @@ class SelectionHandler implements GraphPlugin {
    * Redraws the preview shape for the given states array.
    */
   redrawHandles(states: CellState[][]) {
-    const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
-      'SelectionCellsHandler'
-    );
+    const selectionCellsHandler = this.getSelectionCellsHandler();
 
     for (let i = 0; i < states.length; i += 1) {
       const handler = selectionCellsHandler?.getHandler(states[i][0].cell);
@@ -1364,9 +1351,9 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Sets wether the handles attached to the given cells are visible.
+   * Sets whether the handles attached to the given cells are visible.
    *
-   * @param cells Array of {@link Cells}.
+   * @param cells Array of {@link Cell}s.
    * @param visible Boolean that specifies if the handles should be visible.
    * @param force Forces an update of the handler regardless of the last used value.
    */
@@ -1374,9 +1361,7 @@ class SelectionHandler implements GraphPlugin {
     if (force || this.handlesVisible !== visible) {
       this.handlesVisible = visible;
 
-      const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
-        'SelectionCellsHandler'
-      );
+      const selectionCellsHandler = this.getSelectionCellsHandler();
 
       for (let i = 0; i < cells.length; i += 1) {
         const handler = selectionCellsHandler?.getHandler(cells[i]);
@@ -1481,12 +1466,8 @@ class SelectionHandler implements GraphPlugin {
     if (this.livePreviewUsed) {
       this.resetLivePreview();
 
-      const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
-        'SelectionCellsHandler'
-      );
-
       this.setHandlesVisibleForCells(
-        selectionCellsHandler?.getHandledSelectionCells() ?? [],
+        this.getSelectionCellsHandler()?.getHandledSelectionCells() ?? [],
         true
       );
     }
@@ -1672,6 +1653,10 @@ class SelectionHandler implements GraphPlugin {
 
     this.destroyShapes();
     this.removeHint();
+  }
+
+  private getSelectionCellsHandler(): SelectionCellsHandler | undefined {
+    return this.graph.getPlugin<SelectionCellsHandler>('SelectionCellsHandler');
   }
 }
 
