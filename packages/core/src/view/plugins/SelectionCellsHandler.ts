@@ -25,25 +25,26 @@ import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 import CellState from '../cell/CellState';
 import { GraphPlugin } from '../../types';
-import EdgeHandler from '../handler/EdgeHandler';
-import VertexHandler from '../handler/VertexHandler';
+import type EdgeHandler from '../handler/EdgeHandler';
+import type VertexHandler from '../handler/VertexHandler';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 
+type Handler = EdgeHandler | VertexHandler;
+
 /**
- * An event handler that manages cell handlers and invokes their mouse event
- * processing functions.
+ * An event handler that manages cell handlers and invokes their mouse event processing functions.
  *
- * Group: Events
+ * ### Events
  *
- * Event: mxEvent.ADD
+ * #### InternalEvent.ADD
  *
- * Fires if a cell has been added to the selection. The <code>state</code>
- * property contains the <CellState> that has been added.
+ * Fires if a cell has been added to the selection.
+ * The `state` property contains the {@link CellState} that has been added.
  *
- * Event: mxEvent.REMOVE
+ * #### InternalEvent.REMOVE
  *
- * Fires if a cell has been remove from the selection. The <code>state</code>
- * property contains the <CellState> that has been removed.
+ * Fires if a cell has been remove from the selection.
+ * The `state` property contains the {@link CellState} that has been removed.
  *
  * @category Plugin
  */
@@ -97,7 +98,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   /**
    * {@link Dictionary} that maps from cells to handlers.
    */
-  handlers: Dictionary<Cell, EdgeHandler | VertexHandler>;
+  handlers: Dictionary<Cell, Handler>;
 
   /**
    * Returns <enabled>.
@@ -206,7 +207,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   /**
    * Returns true if the given handler is active and should not be redrawn.
    */
-  isHandlerActive(handler: EdgeHandler | VertexHandler) {
+  isHandlerActive(handler: Handler) {
     return handler.index !== null;
   }
 
