@@ -24,7 +24,7 @@ import { isNode } from '../../util/domUtils';
 import { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import PopupMenuHandler from './PopupMenuHandler';
+import type PopupMenuHandler from './PopupMenuHandler';
 
 import type { GraphPlugin } from '../../types';
 import EventSource from '../event/EventSource';

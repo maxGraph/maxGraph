@@ -44,14 +44,14 @@ import { Graph } from '../Graph';
 import Guide from '../other/Guide';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import SelectionCellsHandler from './SelectionCellsHandler';
+import type SelectionCellsHandler from './SelectionCellsHandler';
 import Cell from '../cell/Cell';
-import PopupMenuHandler from './PopupMenuHandler';
+import type PopupMenuHandler from './PopupMenuHandler';
 import EventSource from '../event/EventSource';
 import CellState from '../cell/CellState';
 import EventObject from '../event/EventObject';
-import ConnectionHandler from './ConnectionHandler';
-import CellEditorHandler from './CellEditorHandler';
+import type ConnectionHandler from './ConnectionHandler';
+import type CellEditorHandler from './CellEditorHandler';
 
 import type { ColorValue, GraphPlugin } from '../../types';
 
@@ -125,6 +125,7 @@ class SelectionHandler implements GraphPlugin {
             this.updateHint();
 
             if (this.livePreviewUsed) {
+              // TODO introduce a private method
               const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
                 'SelectionCellsHandler'
               );

@@ -48,19 +48,12 @@ export { Editor } from './editor/Editor';
 export { default as CellHighlight } from './view/cell/CellHighlight';
 export { default as CellMarker } from './view/cell/CellMarker';
 export { default as CellTracker } from './view/cell/CellTracker';
-export { default as ConnectionHandler } from './view/handler/ConnectionHandler';
 export { default as ConstraintHandler } from './view/handler/ConstraintHandler';
 export { default as EdgeHandler } from './view/handler/EdgeHandler';
 export { default as EdgeSegmentHandler } from './view/handler/EdgeSegmentHandler';
 export { default as ElbowEdgeHandler } from './view/handler/ElbowEdgeHandler';
-export { default as SelectionHandler } from './view/handler/SelectionHandler';
 export { default as VertexHandle } from './view/cell/VertexHandle';
 export { default as KeyHandler } from './view/handler/KeyHandler';
-export { default as PanningHandler } from './view/handler/PanningHandler';
-export { default as PopupMenuHandler } from './view/handler/PopupMenuHandler';
-export { default as RubberBandHandler } from './view/handler/RubberBandHandler';
-export { default as SelectionCellsHandler } from './view/handler/SelectionCellsHandler';
-export { default as TooltipHandler } from './view/handler/TooltipHandler';
 export { default as VertexHandler } from './view/handler/VertexHandler';
 export * from './view/handler/config';
 
@@ -201,7 +194,6 @@ export { default as UndoableEdit } from './view/undoable_changes/UndoableEdit';
 export { default as UndoManager } from './view/undoable_changes/UndoManager';
 
 export { Cell } from './view/cell/Cell';
-export { default as CellEditorHandler } from './view/handler/CellEditorHandler';
 export { default as CellOverlay } from './view/cell/CellOverlay';
 export { default as CellPath } from './view/cell/CellPath';
 export { default as CellRenderer } from './view/cell/CellRenderer';

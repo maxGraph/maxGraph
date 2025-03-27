@@ -25,8 +25,8 @@ import { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 import CellState from '../cell/CellState';
 import { GraphPlugin } from '../../types';
-import EdgeHandler from './EdgeHandler';
-import VertexHandler from './VertexHandler';
+import EdgeHandler from '../handler/EdgeHandler';
+import VertexHandler from '../handler/VertexHandler';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 
 /**

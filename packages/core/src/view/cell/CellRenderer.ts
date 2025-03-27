@@ -47,7 +47,7 @@ import CellOverlay from './CellOverlay';
 import { getClientX, getClientY, getSource } from '../../util/EventUtils';
 import { isNode } from '../../util/domUtils';
 import { CellStateStyle } from '../../types';
-import SelectionCellsHandler from '../handler/SelectionCellsHandler';
+import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 
 const placeholderStyleValues = ['inherit', 'swimlane', 'indicated'];
 const placeholderStyleProperties: (keyof CellStateStyle)[] = [
@@ -1380,6 +1380,9 @@ class CellRenderer {
       state.shape = null;
     }
 
+    const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
+      'SelectionCellsHandler'
+    );
     if (
       state.shape == null &&
       graph.container != null &&
@@ -1398,9 +1401,6 @@ class CellRenderer {
         this.installListeners(state);
 
         // Forces a refresh of the handler if one exists
-        const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
-          'SelectionCellsHandler'
-        );
         selectionCellsHandler?.updateHandler(state);
       }
     } else if (
@@ -1412,9 +1412,6 @@ class CellRenderer {
       state.shape.resetStyles();
       this.configureShape(state);
       // LATER: Ignore update for realtime to fix reset of current gesture
-      const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
-        'SelectionCellsHandler'
-      );
       selectionCellsHandler?.updateHandler(state);
       force = true;
     }

@@ -22,7 +22,7 @@ import EventSource from './event/EventSource';
 import InternalEvent from './event/InternalEvent';
 import Rectangle from './geometry/Rectangle';
 import Client from '../Client';
-import type PanningHandler from './handler/PanningHandler';
+import type PanningHandler from './plugins/PanningHandler';
 import GraphView from './GraphView';
 import CellRenderer from './cell/CellRenderer';
 import Point from './geometry/Point';

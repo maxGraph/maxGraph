@@ -35,8 +35,8 @@ import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import EdgeHandler from './EdgeHandler';
 import EventSource from '../event/EventSource';
-import SelectionHandler from './SelectionHandler';
-import SelectionCellsHandler from './SelectionCellsHandler';
+import type SelectionHandler from '../plugins/SelectionHandler';
+import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 import { HandleConfig, VertexHandlerConfig } from './config';
 
 /**
@@ -235,8 +235,7 @@ class VertexHandler {
       this.selectionBorder.setCursor(CURSOR.MOVABLE_VERTEX);
     }
 
-    const selectionHandler = this.graph.getPlugin<SelectionHandler>('SelectionHandler');
-
+    const selectionHandler = this.getSelectionHandler();
     // Adds the sizer handles
     if (
       selectionHandler &&
@@ -337,11 +336,15 @@ class VertexHandler {
     (<Graph>this.state.view.graph).addListener(InternalEvent.ESCAPE, this.escapeHandler);
   }
 
+  private getSelectionHandler(): SelectionHandler | undefined {
+    return this.graph.getPlugin<SelectionHandler>('SelectionHandler');
+  }
+
   /**
    * Returns `true` if the rotation handle should be showing.
    */
   isRotationHandleVisible() {
-    const selectionHandler = this.graph.getPlugin<SelectionHandler>('SelectionHandler');
+    const selectionHandler = this.getSelectionHandler();
     const selectionHandlerCheck = selectionHandler
       ? selectionHandler.maxCells <= 0 ||
         this.graph.getSelectionCount() < selectionHandler.maxCells
