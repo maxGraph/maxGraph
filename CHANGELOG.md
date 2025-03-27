@@ -9,6 +9,9 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- `StylesheetCodec.allowEval` is now set to `false` by default to prevent unwanted use of the eval function, as it carries a possible security risk.
+
 ## 0.16.0
 
 Release date: `2025-03-02`

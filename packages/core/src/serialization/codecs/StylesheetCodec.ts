@@ -22,6 +22,7 @@ import { clone } from '../../util/cloneUtils';
 import { GlobalConfig } from '../../util/config';
 import { isNumeric } from '../../util/mathUtils';
 import { getTextContent, isElement } from '../../util/domUtils';
+import { doEval } from '../../internal/utils';
 
 /**
  * Codec for {@link Stylesheet}s.
@@ -41,9 +42,9 @@ export class StylesheetCodec extends ObjectCodec {
    *
    * **WARNING**: Enabling this switch carries a possible security risk.
    *
-   * @default true
+   * @default false
    */
-  static allowEval = true;
+  static allowEval = false;
 
   /**
    * Encodes a stylesheet. See {@link decode} for a description of the format.
@@ -162,7 +163,7 @@ export class StylesheetCodec extends ObjectCodec {
                 let value = null;
 
                 if (text && StylesheetCodec.allowEval) {
-                  value = eval(text);
+                  value = doEval(text);
                 } else {
                   value = entry.getAttribute('value');
 
