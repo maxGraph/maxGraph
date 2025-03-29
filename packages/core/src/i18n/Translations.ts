@@ -21,6 +21,7 @@ import { NONE } from '../util/Constants';
 import { get, load } from '../util/MaxXmlRequest';
 import type MaxXmlRequest from '../util/MaxXmlRequest';
 import { TranslationsConfig } from './config';
+import { isNullish } from '../util/Utils';
 
 // mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js
 
@@ -75,7 +76,7 @@ import { TranslationsConfig } from './config';
  *
  * @category I18n
  */
-class Translations {
+export default class Translations {
   /*
    * Object that maps from keys to values.
    */
@@ -314,19 +315,19 @@ class Translations {
    * @param defaultValue Optional string that specifies the default return value.
    */
   static get = (
-    key: string,
+    key: string | null = null,
     params: any[] | null = null,
     defaultValue: string | null = null
   ): string | null => {
-    let value: string | null = Translations.resources[key];
+    let value: string | null = key ? Translations.resources[key] : null;
 
     // Applies the default value if no resource was found
-    if (value == null) {
+    if (isNullish(value)) {
       value = defaultValue;
     }
 
     // Replaces the placeholders with the values in the array
-    if (value != null && params != null) {
+    if (!isNullish(value) && params) {
       value = Translations.replacePlaceholders(value, params);
     }
     return value;
@@ -377,5 +378,3 @@ class Translations {
     });
   };
 }
-
-export default Translations;

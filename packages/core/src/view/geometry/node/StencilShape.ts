@@ -19,7 +19,6 @@ limitations under the License.
 import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
-import Translations from '../../../i18n/Translations';
 import { isNullish } from '../../../util/Utils';
 import {
   ALIGN,
@@ -33,7 +32,7 @@ import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
-import { doEval } from '../../../internal/utils';
+import { doEval, translate } from '../../../internal/utils';
 
 /**
  * Configure global settings for stencil shapes.
@@ -176,7 +175,7 @@ class StencilShape extends Shape {
     const loc = node.getAttribute('localized');
 
     if ((StencilShapeConfig.defaultLocalized && !loc) || loc === '1') {
-      result = Translations.get(<string>result);
+      result = translate(result);
     }
     return result;
   }

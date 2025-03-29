@@ -20,6 +20,8 @@ import type Codec from '../../Codec';
 import MaxWindow from '../../../gui/MaxWindow';
 import Translations from '../../../i18n/Translations';
 import { addLinkToHead, getChildNodes } from '../../../util/domUtils';
+import { translate } from '../../../internal/utils';
+import { GlobalConfig } from '../../../util/config';
 
 /**
  * Codec for {@link Editor}s.
@@ -170,7 +172,7 @@ export class EditorCodec extends ObjectCodec {
           }
 
           const wnd = new MaxWindow(
-            Translations.get(as) || as,
+            translate(as) || as,
             element,
             x,
             y,
@@ -195,7 +197,7 @@ export class EditorCodec extends ObjectCodec {
           throw new Error('Unimplemented');
         }
       } else if (tmp.nodeName === 'resource') {
-        Translations.add(tmp.getAttribute('basename')!);
+        GlobalConfig.i18n.addResource(tmp.getAttribute('basename')!);
       } else if (tmp.nodeName === 'stylesheet') {
         addLinkToHead('stylesheet', tmp.getAttribute('name')!);
       }

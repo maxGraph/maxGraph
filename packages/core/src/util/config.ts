@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Logger } from '../types';
+import type { I18nProvider, Logger } from '../types';
 import { NoOpLogger } from './logger';
 import {
   SHADOW_OFFSET_X,
@@ -23,6 +23,7 @@ import {
   SHADOWCOLOR,
 } from './Constants';
 import { shallowCopy } from './cloneUtils';
+import { NoOpI18n } from '../i18n/provider';
 
 /**
  * Global configuration for maxGraph.
@@ -32,6 +33,24 @@ import { shallowCopy } from './cloneUtils';
  * @category Configuration
  */
 export const GlobalConfig = {
+  /**
+   * Configure the logger to use for all log messages.
+   *
+   * Available implementations provided by maxGraph are:
+   * * {@link NoOpI18n} - Default implementation that does nothing.
+   * * {@link TranslationsAsI18n} - Uses {@link Translations} to manage translations.
+   *
+   * To change the i18n provider, set this property to an instance of the desired provider:
+   * ```js
+   * // To use the i18n system provided by maxGraph
+   * GlobalConfig.i18n = new TranslationsAsI18n();
+   * ```
+   *
+   * @default {@link NoOpI18n}
+   * @since 0.17.0
+   */
+  i18n: new NoOpI18n() as I18nProvider,
+
   /**
    * Configure the logger to use for all log messages.
    *

@@ -19,12 +19,11 @@ limitations under the License.
 import Cell from '../view/cell/Cell';
 import MaxPopupMenu from '../gui/MaxPopupMenu';
 import { getTextContent } from '../util/domUtils';
-import Translations from '../i18n/Translations';
 import Editor from './Editor';
 
 import { PopupMenuItem } from '../types';
 import { isNullish } from '../util/Utils';
-import { doEval } from '../internal/utils';
+import { doEval, translate } from '../internal/utils';
 
 /**
  * Creates popupmenus for mouse events.
@@ -194,7 +193,7 @@ export class EditorPopupMenu {
 
         if (isNullish(condition) || conditions[condition]) {
           let as = item.getAttribute('as')!;
-          as = Translations.get(as) || as;
+          as = translate(as) || as;
           const funct = doEval(getTextContent(<Text>(<unknown>item)));
           const action = item.getAttribute('action');
           let icon = item.getAttribute('icon');

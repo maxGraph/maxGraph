@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { TranslationsConfig } from '../i18n/config';
+import Translations from '../i18n/Translations';
+import { GlobalConfig } from '../util/config';
+
 /**
  * @internal
  */
@@ -21,3 +25,21 @@ export const doEval = (expression: string): any => {
   // eslint-disable-next-line no-eval -- valid here as we want this function to be the only place in the codebase that uses eval
   return eval(expression);
 };
+
+/**
+ * @internal
+ */
+export function isI18nEnabled(): boolean {
+  return GlobalConfig.i18n.isEnabled();
+}
+
+/**
+ * @internal
+ */
+export function translate(
+  key?: string | null,
+  params?: any[] | null,
+  defaultValue?: string
+): string | null {
+  return GlobalConfig.i18n.get(key, params, defaultValue);
+}

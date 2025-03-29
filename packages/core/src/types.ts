@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DIRECTION, IDENTITY_FIELD_NAME } from './util/Constants';
+import { IDENTITY_FIELD_NAME } from './util/Constants';
 import type { Graph } from './view/Graph';
 import type AbstractCanvas2D from './view/canvas/AbstractCanvas2D';
 import type Cell from './view/cell/Cell';
@@ -1303,4 +1303,45 @@ export interface Logger {
   warn(message: string): void;
 
   error(message: string, ...optionalParams: any[]): void;
+}
+
+/**
+ * The abstract interface for the I18n system. The actual implementation is configured in {@link GlobalConfig.i18n}.
+ *
+ * @experimental subject to change or removal. The I18n system may be modified in the future without prior notice.
+ * @since 0.17.0
+ * @category I18n
+ */
+export interface I18nProvider {
+  /**
+   * Returns whether internationalization is enabled.
+   */
+  isEnabled(): boolean;
+
+  /**
+   * Returns the value for the specified resource key.
+   *
+   * @param key String that represents the key of the resource to be returned.
+   * @param params Array of the values for the placeholders to be replaced with in the resulting string. The form of the placeholder is specific to each implementation.
+   * @param defaultValue Optional string that specifies the default return value.   */
+  get(
+    key?: string | null,
+    params?: any[] | null,
+    defaultValue?: string | null
+  ): string | null;
+
+  /**
+   * Load the translation file for the given basename and language.
+   *
+   * This is mainly used by the maxGraph built-in provider to bind to {@link Translations.add}.
+   *
+   * @param basename The basename for which the file should be loaded.
+   * @param language The language for which the file should be loaded. Default is `null`.
+   * @param callback Optional callback for asynchronous loading. Default is `null`.
+   */
+  addResource(
+    basename: string,
+    language?: string | null,
+    callback?: Function | null
+  ): void;
 }

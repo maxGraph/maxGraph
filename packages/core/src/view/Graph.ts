@@ -62,6 +62,7 @@ import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
 import { TranslationsConfig } from '../i18n/config';
 import { isNullish } from '../util/Utils';
+import { isI18nEnabled } from '../internal/utils';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
@@ -384,9 +385,7 @@ class Graph extends EventSource {
    * for this key does not exist then the value is used as the error message.
    * @default 'alreadyConnected'
    */
-  alreadyConnectedResource: string = TranslationsConfig.isEnabled()
-    ? 'alreadyConnected'
-    : '';
+  alreadyConnectedResource: string = isI18nEnabled() ? 'alreadyConnected' : '';
 
   /**
    * Specifies the resource key for the warning message to be displayed when
@@ -394,7 +393,7 @@ class Graph extends EventSource {
    * key does not exist then the value is used as the warning message.
    * @default 'containsValidationErrors'
    */
-  containsValidationErrorsResource: string = TranslationsConfig.isEnabled()
+  containsValidationErrorsResource: string = isI18nEnabled()
     ? 'containsValidationErrors'
     : '';
 

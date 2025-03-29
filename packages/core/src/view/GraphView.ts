@@ -46,7 +46,7 @@ import StyleRegistry from './style/StyleRegistry';
 import type TooltipHandler from './plugins/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
 import { TranslationsConfig } from '../i18n/config';
-import { doEval } from '../internal/utils';
+import { doEval, isI18nEnabled } from '../internal/utils';
 
 /**
  * @class GraphView
@@ -122,7 +122,7 @@ export class GraphView extends EventSource {
    * the status message.
    * @default 'done'
    */
-  doneResource = TranslationsConfig.isEnabled() ? 'done' : '';
+  doneResource = isI18nEnabled() ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the document is
@@ -130,7 +130,7 @@ export class GraphView extends EventSource {
    * value is used as the status message.
    * @default 'updatingSelection'
    */
-  updatingDocumentResource = TranslationsConfig.isEnabled() ? 'updatingDocument' : '';
+  updatingDocumentResource = isI18nEnabled() ? 'updatingDocument' : '';
 
   /**
    * Specifies if string values in cell styles should be evaluated using {@link eval}.
