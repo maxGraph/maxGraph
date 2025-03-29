@@ -33,8 +33,8 @@ export const shallowCopy = <T extends object>(source: T, target: T): void => {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
       const sourceValue = source[key];
       if (Array.isArray(sourceValue)) {
-        // @ts-ignore source and target are of the same type
-        target[key] = [...sourceValue];
+        // TypeScript cannot infer that the key in target will also be an array when source and target are of the same type
+        (target[key] as unknown[]) = [...sourceValue];
       } else {
         target[key] = sourceValue;
       }
