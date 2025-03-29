@@ -55,7 +55,6 @@ import type ConnectionHandler from '../view/plugins/ConnectionHandler';
 import { show } from '../util/printUtils';
 import type PanningHandler from '../view/plugins/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
-import { TranslationsConfig } from '../i18n/config';
 import type MaxPopupMenu from '../gui/MaxPopupMenu';
 import { isNullish } from '../internal/utils';
 import { isI18nEnabled, translate } from '../internal/i18n-utils';
