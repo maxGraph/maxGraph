@@ -14,10 +14,57 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { NODETYPE } from '../util/Constants';
+import { UserObject } from './types';
+import { GlobalConfig } from '../util/config';
+
 /**
- * @internal
+ * @private
  */
 export const doEval = (expression: string): any => {
   // eslint-disable-next-line no-eval -- valid here as we want this function to be the only place in the codebase that uses eval
   return eval(expression);
+};
+
+/**
+ * Returns true if the parameter is not `nullish` and its nodeType relates to an {@link Element}.
+ * @private
+ */
+export const isElement = (node?: Node | UserObject | null): node is Element =>
+  node?.nodeType === NODETYPE.ELEMENT;
+
+/**
+ * @private not part of the public API, can be removed or changed without prior notice
+ */
+export const isNullish = (v: string | object | null | undefined | number | boolean) =>
+  v === null || v === undefined;
+
+/**
+ * Merge a mixin into the destination
+ * @param dest the destination class
+ *
+ * @private not part of the public API, can be removed or changed without prior notice
+ */
+export const mixInto = (dest: any) => (mixin: any) => {
+  const keys = Reflect.ownKeys(mixin);
+  try {
+    for (const key of keys) {
+      Object.defineProperty(dest.prototype, key, {
+        value: mixin[key],
+        writable: true,
+      });
+    }
+  } catch (e) {
+    GlobalConfig.logger.error('Error while mixing', e);
+  }
+};
+
+/**
+ * @param value the value to check.
+ * @param mask the binary mask to apply.
+ * @returns `true` if the value matches the binary mask.
+ * @private Subject to change prior being part of the public API.
+ */
+export const matchBinaryMask = (value: number, mask: number) => {
+  return (value & mask) === mask;
 };

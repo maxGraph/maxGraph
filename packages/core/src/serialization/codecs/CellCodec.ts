@@ -18,8 +18,9 @@ import CodecRegistry from '../CodecRegistry';
 import ObjectCodec from '../ObjectCodec';
 import Cell from '../../view/cell/Cell';
 import type Codec from '../Codec';
-import { importNode, isElement } from '../../util/domUtils';
+import { importNode } from '../../util/domUtils';
 import { removeWhitespace } from '../../util/StringUtils';
+import { isElement } from '../../internal/utils';
 
 /**
  * Codec for {@link Cell}s.

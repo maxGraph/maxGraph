@@ -21,10 +21,8 @@ import MaxPopupMenu from '../gui/MaxPopupMenu';
 import { getTextContent } from '../util/domUtils';
 import Translations from '../i18n/Translations';
 import Editor from './Editor';
-
 import { PopupMenuItem } from '../types';
-import { isNullish } from '../util/Utils';
-import { doEval } from '../internal/utils';
+import { doEval, isNullish } from '../internal/utils';
 
 /**
  * Creates popupmenus for mouse events.

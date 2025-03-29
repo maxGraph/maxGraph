@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mixInto } from '../../util/Utils';
+import { mixInto } from '../../internal/utils';
 import type { Graph } from '../Graph';
 import { CellsMixin } from './CellsMixin';
 import { ConnectionsMixin } from './ConnectionsMixin';

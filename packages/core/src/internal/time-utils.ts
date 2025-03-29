@@ -15,14 +15,11 @@ limitations under the License.
 */
 
 /**
- * @internal
- * @private
+ * If `baseTimestamp` is provided and not zero, returns a message describing the elapsed milliseconds since this value.
+ * Otherwise, returns an empty string.
+ * @param baseTimestamp the base timestamp to compute the elapsed milliseconds from
+ *
+ * @private not part of the public API, can be removed or changed without prior notice
  */
-export type UserObject = {
-  nodeType?: number;
-  getAttribute?: (name: string) => string | null;
-  hasAttribute?: (name: string) => boolean;
-  setAttribute?: (name: string, value: string) => void;
-  clone?: () => UserObject;
-  cloneNode?: (deep: boolean) => UserObject;
-};
+export const getElapseMillisecondsMessage = (baseTimestamp?: number): string =>
+  baseTimestamp ? ` (${new Date().getTime() - baseTimestamp} ms)` : '';
