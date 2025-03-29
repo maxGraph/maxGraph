@@ -18,7 +18,6 @@ import ObjectCodec from '../../ObjectCodec';
 import Editor from '../../../editor/Editor';
 import type Codec from '../../Codec';
 import MaxWindow from '../../../gui/MaxWindow';
-import Translations from '../../../i18n/Translations';
 import { addLinkToHead, getChildNodes } from '../../../util/domUtils';
 import { GlobalConfig } from '../../../util/config';
 import { translate } from '../../../internal/i18n-utils';
