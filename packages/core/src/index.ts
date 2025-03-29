@@ -206,3 +206,4 @@ export { default as Multiplicity } from './view/other/Multiplicity';
 // Ensure types are exported in the type definitions
 export type { HTMLImageElementWithProps } from './gui/MaxToolbar';
 export * from './types';
+export { getElapseMillisecondsMessage } from './internal/time-utils';

@@ -11,6 +11,7 @@ _**Note:** Yet to be released breaking changes appear here._
 
 **Breaking Changes**:
 - `StylesheetCodec.allowEval` is now set to `false` by default to prevent unwanted use of the eval function, as it carries a possible security risk.
+- `Utils.copyTextToClipboard` is no longer available. It was intended to be internal and had been made public by mistake.
 
 ## 0.16.0
 

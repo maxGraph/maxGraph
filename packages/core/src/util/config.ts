@@ -22,7 +22,7 @@ import {
   SHADOW_OPACITY,
   SHADOWCOLOR,
 } from './Constants';
-import { shallowCopy } from './cloneUtils';
+import { shallowCopy } from '../internal/clone-utils';
 
 /**
  * Global configuration for maxGraph.

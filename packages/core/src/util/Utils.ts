@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import Client from '../Client';
-import { GlobalConfig } from './config';
 
 /**
  * A singleton class that provides cross-browser helper methods.
@@ -52,41 +51,4 @@ export const utils = {
    * Defines the image used for error dialogs.
    */
   errorImage: `${Client.imageBasePath}/error.gif`,
-};
-
-/**
- * @private not part of the public API, can be removed or changed without prior notice
- */
-export const isNullish = (v: string | object | null | undefined | number | boolean) =>
-  v === null || v === undefined;
-
-/**
- * Merge a mixin into the destination
- * @param dest the destination class
- *
- * @private not part of the public API, can be removed or changed without prior notice
- */
-export const mixInto = (dest: any) => (mixin: any) => {
-  const keys = Reflect.ownKeys(mixin);
-  try {
-    for (const key of keys) {
-      Object.defineProperty(dest.prototype, key, {
-        value: mixin[key],
-        writable: true,
-      });
-    }
-  } catch (e) {
-    GlobalConfig.logger.error('Error while mixing', e);
-  }
-};
-
-export const copyTextToClipboard = (text: string): void => {
-  navigator.clipboard.writeText(text).then(
-    function () {
-      GlobalConfig.logger.info('Async: Copying to clipboard was successful!');
-    },
-    function (err) {
-      GlobalConfig.logger.error('Async: Could not copy text: ', err);
-    }
-  );
 };

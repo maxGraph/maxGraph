@@ -22,9 +22,9 @@ import { GlobalConfig } from '../../../util/config';
 import { convertPoint } from '../../../util/styleUtils';
 import { getClientX, getClientY } from '../../../util/EventUtils';
 import InternalEvent from '../../../view/event/InternalEvent';
-import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils';
+import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Translations from '../../../i18n/Translations';
-import { doEval } from '../../../internal/utils';
+import { doEval, isElement } from '../../../internal/utils';
 
 /**
  * Custom codec for configuring {@link EditorToolbar}s.

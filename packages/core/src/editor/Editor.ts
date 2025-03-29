@@ -58,7 +58,7 @@ import type PanningHandler from '../view/plugins/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
 import { TranslationsConfig } from '../i18n/config';
 import type MaxPopupMenu from '../gui/MaxPopupMenu';
-import { isNullish } from '../util/Utils';
+import { isNullish } from '../internal/utils';
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that

@@ -20,7 +20,6 @@ import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
 import Translations from '../../../i18n/Translations';
-import { isNullish } from '../../../util/Utils';
 import {
   ALIGN,
   DIRECTION,
@@ -29,11 +28,11 @@ import {
   TEXT_DIRECTION,
 } from '../../../util/Constants';
 import StencilShapeRegistry from './StencilShapeRegistry';
-import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils';
+import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
-import { doEval } from '../../../internal/utils';
+import { doEval, isElement, isNullish } from '../../../internal/utils';
 
 /**
  * Configure global settings for stencil shapes.

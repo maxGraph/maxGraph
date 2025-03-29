@@ -17,8 +17,7 @@ limitations under the License.
 import ObjectCodec from '../ObjectCodec';
 import ChildChange from '../../view/undoable_changes/ChildChange';
 import type Codec from '../Codec';
-
-import { isElement } from '../../util/domUtils';
+import { isElement } from '../../internal/utils';
 
 /**
  * Codec for {@link ChildChange}s.
