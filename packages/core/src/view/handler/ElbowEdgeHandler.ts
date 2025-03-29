@@ -130,7 +130,7 @@ class ElbowEdgeHandler extends EdgeHandler {
       (node === this.bends[1].node || node.parentNode === this.bends[1].node)
     ) {
       tip = this.doubleClickOrientationResource;
-      tip = translate(tip) || tip; // translate
+      tip = translate(tip) || tip;
     }
 
     return tip;
