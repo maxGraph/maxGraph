@@ -23,8 +23,6 @@ import SelectionChange from './undoable_changes/SelectionChange';
 import UndoableEdit from './undoable_changes/UndoableEdit';
 import EventObject from './event/EventObject';
 import InternalEvent from './event/InternalEvent';
-import { TranslationsConfig } from '../i18n/config';
-
 import { isI18nEnabled } from '../internal/i18n-utils';
 
 /**

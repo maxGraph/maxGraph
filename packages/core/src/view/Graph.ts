@@ -45,7 +45,6 @@ import EdgeHandler from './handler/EdgeHandler';
 import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
-
 import type {
   EdgeStyleFunction,
   GraphPlugin,
@@ -60,9 +59,7 @@ import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
 import { registerDefaultStyleElements } from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
-import { TranslationsConfig } from '../i18n/config';
 import { isNullish } from '../internal/utils';
-
 import { isI18nEnabled } from '../internal/i18n-utils';
 
 /**
