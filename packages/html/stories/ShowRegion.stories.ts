@@ -79,7 +79,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const graph = new Graph(container);
 
   class MyCustomRubberBandHandler extends RubberBandHandler {
-    isForceRubberbandEvent(me: InternalMouseEvent) {
+    override isForceRubberbandEvent(me: InternalMouseEvent) {
       return super.isForceRubberbandEvent(me) || me.isPopupTrigger();
     }
 
@@ -99,12 +99,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       });
     });
 
-    mouseDown(sender: EventSource, me: InternalMouseEvent) {
+    override mouseDown(sender: EventSource, me: InternalMouseEvent) {
       this.popupMenu.hideMenu();
       super.mouseDown(sender, me);
     }
 
-    mouseUp(sender: EventSource, me: InternalMouseEvent) {
+    override mouseUp(sender: EventSource, me: InternalMouseEvent) {
       if (eventUtils.isPopupTrigger(me.getEvent())) {
         if (!graph.getPlugin<PopupMenuHandler>('PopupMenuHandler').isMenuShowing()) {
           const origin = styleUtils.getScrollOrigin();

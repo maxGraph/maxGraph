@@ -75,7 +75,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Defines custom message shape
   class MessageShape extends CylinderShape {
-    redrawPath(
+    override redrawPath(
       c: AbstractCanvas2D,
       _x: number,
       _y: number,
@@ -101,7 +101,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Defines custom edge shape
   class LinkShape extends ArrowShape {
-    paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {
+    override paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {
       const width = 10;
 
       // Base vector (between end points)
