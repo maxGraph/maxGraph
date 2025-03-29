@@ -22,10 +22,10 @@ import Cell from '../view/cell/Cell';
 import { Graph } from '../view/Graph';
 import { htmlEntities, trim } from './StringUtils';
 import TemporaryCellStates from '../view/cell/TemporaryCellStates';
-
 import type { StyleValue } from '../types';
-import { getTextContent, isElement } from './domUtils';
+import { getTextContent } from './domUtils';
 import Codec from '../serialization/Codec';
+import { isElement } from '../internal/utils';
 
 /**
  * Returns a new, empty XML document.

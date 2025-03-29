@@ -61,7 +61,7 @@ import { registerDefaultStyleElements } from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
 import { TranslationsConfig } from '../i18n/config';
-import { isNullish } from '../util/Utils';
+import { isNullish } from '../internal/utils';
 
 import { isI18nEnabled } from '../internal/i18n-utils';
 

@@ -22,9 +22,20 @@ import { getInnerHtml, write } from '../util/domUtils';
 import { toString } from '../util/StringUtils';
 import MaxWindow, { popup } from './MaxWindow';
 import { KeyboardEventListener, MouseEventListener } from '../types';
-import { copyTextToClipboard } from '../util/Utils';
-import { getElapseMillisecondsMessage } from '../util/logger';
+import { getElapseMillisecondsMessage } from '../internal/time-utils';
 import { VERSION } from '../util/Constants';
+import { GlobalConfig } from '../util/config';
+
+const copyTextToClipboard = (text: string): void => {
+  navigator.clipboard.writeText(text).then(
+    function () {
+      GlobalConfig.logger.info('Async: Copying to clipboard was successful!');
+    },
+    function (err) {
+      GlobalConfig.logger.error('Async: Could not copy text: ', err);
+    }
+  );
+};
 
 /**
  * A singleton class that implements a simple console.

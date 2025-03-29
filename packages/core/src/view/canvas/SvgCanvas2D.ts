@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isNullish } from '../../util/Utils';
+import { isNullish, matchBinaryMask } from '../../internal/utils';
 import { mod } from '../../util/mathUtils';
-import { getAlignmentAsPoint, matchBinaryMask } from '../../util/styleUtils';
+import { getAlignmentAsPoint } from '../../util/styleUtils';
 import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,

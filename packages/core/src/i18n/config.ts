@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isNullish } from '../util/Utils';
-import { shallowCopy } from '../util/cloneUtils';
+import { isNullish } from '../internal/utils';
+import { shallowCopy } from '../internal/clone-utils';
 
 function getNavigatorLanguage() {
   return typeof window !== 'undefined' ? navigator.language : 'en';

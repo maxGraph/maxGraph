@@ -22,8 +22,8 @@ import { GlobalConfig } from '../../../util/config';
 import { convertPoint } from '../../../util/styleUtils';
 import { getClientX, getClientY } from '../../../util/EventUtils';
 import InternalEvent from '../../../view/event/InternalEvent';
-import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils';
-import { doEval } from '../../../internal/utils';
+import { getChildNodes, getTextContent } from '../../../util/domUtils';
+import { doEval, isElement } from '../../../internal/utils';
 import { translate } from '../../../internal/i18n-utils';
 
 /**

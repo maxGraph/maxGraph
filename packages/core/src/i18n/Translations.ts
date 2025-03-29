@@ -21,7 +21,7 @@ import { NONE } from '../util/Constants';
 import type MaxXmlRequest from '../util/MaxXmlRequest';
 import { get, load } from '../util/MaxXmlRequest';
 import { TranslationsConfig } from './config';
-import { isNullish } from '../util/Utils';
+import { isNullish } from '../internal/utils';
 import { I18nProvider } from '../types';
 
 // mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js

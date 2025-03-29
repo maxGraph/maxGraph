@@ -21,7 +21,8 @@ import CodecRegistry from './CodecRegistry';
 import Cell from '../view/cell/Cell';
 import { GlobalConfig } from '../util/config';
 import { getFunctionName } from '../util/StringUtils';
-import { importNode, isElement, isNode } from '../util/domUtils';
+import { importNode, isNode } from '../util/domUtils';
+import { isElement } from '../internal/utils';
 
 const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);

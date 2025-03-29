@@ -20,10 +20,8 @@ import Cell from '../view/cell/Cell';
 import MaxPopupMenu from '../gui/MaxPopupMenu';
 import { getTextContent } from '../util/domUtils';
 import Editor from './Editor';
-
 import { PopupMenuItem } from '../types';
-import { isNullish } from '../util/Utils';
-import { doEval } from '../internal/utils';
+import { doEval, isNullish } from '../internal/utils';
 import { translate } from '../internal/i18n-utils';
 
 /**

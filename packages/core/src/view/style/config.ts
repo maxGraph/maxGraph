@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { DIRECTION, ENTITY_SEGMENT } from '../../util/Constants';
-import { shallowCopy } from '../../util/cloneUtils';
+import { shallowCopy } from '../../internal/clone-utils';
 import type { DirectionValue } from '../../types';
 
 /**
