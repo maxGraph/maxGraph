@@ -46,7 +46,8 @@ import StyleRegistry from './style/StyleRegistry';
 import type TooltipHandler from './plugins/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
 import { TranslationsConfig } from '../i18n/config';
-import { doEval, isI18nEnabled } from '../internal/utils';
+import { doEval } from '../internal/utils';
+import { isI18nEnabled } from '../internal/i18n-utils';
 
 /**
  * @class GraphView

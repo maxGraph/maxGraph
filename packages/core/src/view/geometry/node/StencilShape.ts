@@ -32,7 +32,8 @@ import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
-import { doEval, translate } from '../../../internal/utils';
+import { doEval } from '../../../internal/utils';
+import { translate } from '../../../internal/i18n-utils';
 
 /**
  * Configure global settings for stencil shapes.

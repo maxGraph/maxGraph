@@ -58,7 +58,7 @@ import { cloneCell } from '../util/cellArrayUtils';
 import { TranslationsConfig } from '../i18n/config';
 import type MaxPopupMenu from '../gui/MaxPopupMenu';
 import { isNullish } from '../util/Utils';
-import { isI18nEnabled, translate } from '../internal/utils';
+import { isI18nEnabled, translate } from '../internal/i18n-utils';
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that

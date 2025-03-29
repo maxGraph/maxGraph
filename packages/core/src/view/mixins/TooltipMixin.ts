@@ -20,7 +20,8 @@ import type Cell from '../cell/Cell';
 import type { Graph } from '../Graph';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 import type TooltipHandler from '../plugins/TooltipHandler';
-import { translate } from '../../internal/utils';
+
+import { translate } from '../../internal/i18n-utils';
 
 type PartialGraph = Pick<
   Graph,

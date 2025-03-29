@@ -23,7 +23,8 @@ import { convertPoint } from '../../../util/styleUtils';
 import { getClientX, getClientY } from '../../../util/EventUtils';
 import InternalEvent from '../../../view/event/InternalEvent';
 import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils';
-import { doEval, translate } from '../../../internal/utils';
+import { doEval } from '../../../internal/utils';
+import { translate } from '../../../internal/i18n-utils';
 
 /**
  * Custom codec for configuring {@link EditorToolbar}s.

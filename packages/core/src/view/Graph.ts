@@ -62,7 +62,8 @@ import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
 import { TranslationsConfig } from '../i18n/config';
 import { isNullish } from '../util/Utils';
-import { isI18nEnabled } from '../internal/utils';
+
+import { isI18nEnabled } from '../internal/i18n-utils';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.

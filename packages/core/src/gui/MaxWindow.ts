@@ -27,7 +27,8 @@ import { br, write } from '../util/domUtils';
 import { getClientX, getClientY } from '../util/EventUtils';
 import { htmlEntities } from '../util/StringUtils';
 import { utils } from '../util/Utils';
-import { translate } from '../internal/utils';
+
+import { translate } from '../internal/i18n-utils';
 
 let activeWindow: MaxWindow | null = null;
 

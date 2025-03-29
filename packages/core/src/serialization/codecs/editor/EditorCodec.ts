@@ -20,8 +20,8 @@ import type Codec from '../../Codec';
 import MaxWindow from '../../../gui/MaxWindow';
 import Translations from '../../../i18n/Translations';
 import { addLinkToHead, getChildNodes } from '../../../util/domUtils';
-import { translate } from '../../../internal/utils';
 import { GlobalConfig } from '../../../util/config';
+import { translate } from '../../../internal/i18n-utils';
 
 /**
  * Codec for {@link Editor}s.

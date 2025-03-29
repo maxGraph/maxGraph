@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { translate } from '../../internal/utils';
 import { isNode } from '../../util/domUtils';
 import Cell from '../cell/Cell';
 import { Graph } from '../Graph';
+import { translate } from '../../internal/i18n-utils';
 
 /**
  * @class Multiplicity

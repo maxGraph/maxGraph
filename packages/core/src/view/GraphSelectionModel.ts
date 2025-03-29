@@ -24,7 +24,8 @@ import UndoableEdit from './undoable_changes/UndoableEdit';
 import EventObject from './event/EventObject';
 import InternalEvent from './event/InternalEvent';
 import { TranslationsConfig } from '../i18n/config';
-import { isI18nEnabled } from '../internal/utils';
+
+import { isI18nEnabled } from '../internal/i18n-utils';
 
 /**
  * Implements the selection model for a graph. Here is a listener that handles

@@ -19,7 +19,8 @@ limitations under the License.
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
 import { write, writeln } from '../util/domUtils';
-import { translate } from '../internal/utils';
+
+import { translate } from '../internal/i18n-utils';
 
 /**
  * A simple class for creating HTML forms.

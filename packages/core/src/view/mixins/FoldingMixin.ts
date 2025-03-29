@@ -24,7 +24,8 @@ import { toRadians } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
 import type { Graph } from '../Graph';
 import { TranslationsConfig } from '../../i18n/config';
-import { isI18nEnabled } from '../../internal/utils';
+
+import { isI18nEnabled } from '../../internal/i18n-utils';
 
 type PartialGraph = Pick<
   Graph,

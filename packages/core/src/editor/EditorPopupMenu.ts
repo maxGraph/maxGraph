@@ -23,7 +23,8 @@ import Editor from './Editor';
 
 import { PopupMenuItem } from '../types';
 import { isNullish } from '../util/Utils';
-import { doEval, translate } from '../internal/utils';
+import { doEval } from '../internal/utils';
+import { translate } from '../internal/i18n-utils';
 
 /**
  * Creates popupmenus for mouse events.

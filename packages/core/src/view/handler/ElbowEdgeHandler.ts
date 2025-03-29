@@ -25,7 +25,7 @@ import { intersects } from '../../util/mathUtils';
 import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import { HandleConfig } from './config';
-import { isI18nEnabled, translate } from '../../internal/utils';
+import { isI18nEnabled, translate } from '../../internal/i18n-utils';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and

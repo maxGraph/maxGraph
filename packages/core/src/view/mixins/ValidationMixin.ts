@@ -17,7 +17,8 @@ limitations under the License.
 import type Cell from '../cell/Cell';
 import { isNode } from '../../util/domUtils';
 import type { Graph } from '../Graph';
-import { translate } from '../../internal/utils';
+
+import { translate } from '../../internal/i18n-utils';
 
 type PartialGraph = Pick<
   Graph,
