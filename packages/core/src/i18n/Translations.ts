@@ -18,9 +18,11 @@ limitations under the License.
 
 import Client from '../Client';
 import { NONE } from '../util/Constants';
-import { get, load } from '../util/MaxXmlRequest';
 import type MaxXmlRequest from '../util/MaxXmlRequest';
+import { get, load } from '../util/MaxXmlRequest';
 import { TranslationsConfig } from './config';
+import { isNullish } from '../internal/utils';
+import { I18nProvider } from '../types';
 
 // mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js
 
@@ -75,7 +77,7 @@ import { TranslationsConfig } from './config';
  *
  * @category I18n
  */
-class Translations {
+export default class Translations {
   /*
    * Object that maps from keys to values.
    */
@@ -185,13 +187,13 @@ class Translations {
    * @param callback Optional callback for asynchronous loading.
    */
   static add = (
-    basename: string,
+    basename: string | null = null,
     lan: string | null = null,
     callback: Function | null = null
   ): void => {
     lan ??= TranslationsConfig.getLanguage()?.toLowerCase() ?? NONE;
 
-    if (lan !== NONE) {
+    if (!isNullish(basename) && lan !== NONE) {
       const defaultBundle = Translations.getDefaultBundle(basename, lan);
       const specialBundle = Translations.getSpecialBundle(basename, lan);
 
@@ -314,19 +316,19 @@ class Translations {
    * @param defaultValue Optional string that specifies the default return value.
    */
   static get = (
-    key: string,
+    key: string | null = null,
     params: any[] | null = null,
     defaultValue: string | null = null
   ): string | null => {
-    let value: string | null = Translations.resources[key];
+    let value: string | null = key ? Translations.resources[key] : null;
 
     // Applies the default value if no resource was found
-    if (value == null) {
+    if (isNullish(value)) {
       value = defaultValue;
     }
 
     // Replaces the placeholders with the values in the array
-    if (value != null && params != null) {
+    if (!isNullish(value) && params) {
       value = Translations.replacePlaceholders(value, params);
     }
     return value;
@@ -378,4 +380,33 @@ class Translations {
   };
 }
 
-export default Translations;
+/**
+ * A {@link I18nProvider} that uses {@link Translations} to manage translations.
+ *
+ * The configuration is done using {@link TranslationsConfig}.
+ *
+ * @experimental subject to change or removal. The I18n system may be modified in the future without prior notice.
+ * @category I18n
+ * @since 0.17.0
+ */
+export class TranslationsAsI18n implements I18nProvider {
+  isEnabled(): boolean {
+    return TranslationsConfig.isEnabled();
+  }
+
+  get(
+    key?: string | null,
+    params?: any[] | null,
+    defaultValue?: string | null
+  ): string | null {
+    return Translations.get(key, params, defaultValue);
+  }
+
+  addResource(
+    basename?: string | null,
+    language?: string | null,
+    callback?: Function | null
+  ): void {
+    Translations.add(basename, language, callback);
+  }
+}

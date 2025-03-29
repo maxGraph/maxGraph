@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import { htmlEntities } from '../../util/StringUtils';
-import Translations from '../../i18n/Translations';
 import type Shape from '../geometry/Shape';
 import type Cell from '../cell/Cell';
 import type { Graph } from '../Graph';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 import type TooltipHandler from '../plugins/TooltipHandler';
+import { translate } from '../../internal/i18n-utils';
 
 type PartialGraph = Pick<
   Graph,
@@ -40,7 +40,7 @@ export const TooltipMixin: PartialType = {
       (node === state.control.node || node.parentNode === state.control.node)
     ) {
       tip = this.getCollapseExpandResource();
-      tip = htmlEntities(Translations.get(tip) || tip, true).replace(/\\n/g, '<br>');
+      tip = htmlEntities(translate(tip) || tip, true).replace(/\\n/g, '<br>');
     }
 
     if (!tip && state.overlays) {

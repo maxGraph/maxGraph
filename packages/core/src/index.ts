@@ -123,8 +123,10 @@ export { default as StencilShapeRegistry } from './view/geometry/node/StencilSha
 
 export * as constants from './util/Constants';
 export { default as Guide } from './view/other/Guide';
-export { default as Translations } from './i18n/Translations';
+
+export { default as Translations, TranslationsAsI18n } from './i18n/Translations';
 export * from './i18n/config';
+export * from './i18n/provider';
 
 export * as cellArrayUtils from './util/cellArrayUtils';
 export * as cloneUtils from './util/cloneUtils';

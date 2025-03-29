@@ -20,13 +20,12 @@ import EdgeHandler from './EdgeHandler';
 import { CURSOR, EDGESTYLE, ELBOW } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
-import Translations from '../../i18n/Translations';
-import { TranslationsConfig } from '../../i18n/config';
 import Rectangle from '../geometry/Rectangle';
 import { intersects } from '../../util/mathUtils';
 import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import { HandleConfig } from './config';
+import { isI18nEnabled, translate } from '../../internal/i18n-utils';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and
@@ -57,9 +56,7 @@ class ElbowEdgeHandler extends EdgeHandler {
    * exist then the value is used as the error message.
    * @default 'doubleClickOrientation'.
    */
-  doubleClickOrientationResource = TranslationsConfig.isEnabled()
-    ? 'doubleClickOrientation'
-    : '';
+  doubleClickOrientationResource = isI18nEnabled() ? 'doubleClickOrientation' : '';
 
   /**
    * Overrides {@link EdgeHandler.createBends} to create custom bends.
@@ -133,7 +130,7 @@ class ElbowEdgeHandler extends EdgeHandler {
       (node === this.bends[1].node || node.parentNode === this.bends[1].node)
     ) {
       tip = this.doubleClickOrientationResource;
-      tip = Translations.get(tip) || tip; // translate
+      tip = translate(tip) || tip;
     }
 
     return tip;

@@ -24,10 +24,11 @@ import InternalEvent from '../view/event/InternalEvent';
 import Client from '../Client';
 import { NODETYPE } from '../util/Constants';
 import { br, write } from '../util/domUtils';
-import Translations from '../i18n/Translations';
 import { getClientX, getClientY } from '../util/EventUtils';
 import { htmlEntities } from '../util/StringUtils';
 import { utils } from '../util/Utils';
+
+import { translate } from '../internal/i18n-utils';
 
 let activeWindow: MaxWindow | null = null;
 
@@ -1057,7 +1058,7 @@ export const error = (
   const w = document.body.clientWidth;
   const h = document.body.clientHeight || document.documentElement.clientHeight;
   const warn = new MaxWindow(
-    Translations.get(utils.errorResource) || utils.errorResource,
+    translate(utils.errorResource) || utils.errorResource,
     div,
     (w - width) / 2,
     h / 4,
@@ -1079,7 +1080,7 @@ export const error = (
       warn.destroy();
     });
 
-    write(button, Translations.get(utils.closeResource) || utils.closeResource);
+    write(button, translate(utils.closeResource) || utils.closeResource);
 
     tmp.appendChild(button);
     div.appendChild(tmp);

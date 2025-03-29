@@ -16,6 +16,7 @@ import {
   StencilShapeRegistry,
   StylesheetCodec,
   Translations,
+  TranslationsAsI18n,
 } from '@maxgraph/core';
 
 const defaultLogger = new NoOpLogger();
@@ -26,6 +27,8 @@ const defaultLogger = new NoOpLogger();
 // defaultLogger.traceEnabled = true;
 
 defaultLogger.info('[sb-config] Loading i18n resources for Graph...');
+
+const i18nProvider = new TranslationsAsI18n();
 Translations.add(`${Client.basePath}/i18n/graph`, null, (): void => {
   defaultLogger.info('[sb-config] i18n resources loaded for Graph');
 });
@@ -36,6 +39,7 @@ const originalAllowEvalConfig = {
 };
 
 const resetMaxGraphConfigs = (): void => {
+  GlobalConfig.i18n = i18nProvider;
   GlobalConfig.logger = defaultLogger;
 
   resetEdgeHandlerConfig();

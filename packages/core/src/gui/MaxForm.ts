@@ -19,7 +19,8 @@ limitations under the License.
 import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
 import { write, writeln } from '../util/domUtils';
-import Translations from '../i18n/Translations';
+
+import { translate } from '../internal/i18n-utils';
 
 /**
  * A simple class for creating HTML forms.
@@ -65,7 +66,7 @@ class MaxForm {
 
     // Adds the ok button
     let button = document.createElement('button');
-    write(button, Translations.get('ok') || 'OK');
+    write(button, translate('ok') || 'OK');
     td.appendChild(button);
 
     InternalEvent.addListener(button, 'click', () => {
@@ -74,7 +75,7 @@ class MaxForm {
 
     // Adds the cancel button
     button = document.createElement('button');
-    write(button, Translations.get('cancel') || 'Cancel');
+    write(button, translate('cancel') || 'Cancel');
     td.appendChild(button);
 
     InternalEvent.addListener(button, 'click', () => {
