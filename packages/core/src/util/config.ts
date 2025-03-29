@@ -34,7 +34,7 @@ import { NoOpI18n } from '../i18n/provider';
  */
 export const GlobalConfig = {
   /**
-   * Configure the logger to use for all log messages.
+   * Configure the {@link I18nProvider} to use for all translated messages.
    *
    * Available implementations provided by maxGraph are:
    * * {@link NoOpI18n} - Default implementation that does nothing.
