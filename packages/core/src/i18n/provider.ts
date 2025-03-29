@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 import { I18nProvider } from '../types';
-import { TranslationsConfig } from './config';
-import Translations from './Translations';
 
 /**
  * A {@link I18nProvider} that does nothing.
@@ -40,36 +38,5 @@ export class NoOpI18n implements I18nProvider {
     _callback: Function | null
   ): void {
     // do nothing
-  }
-}
-
-/**
- * A {@link I18nProvider} that uses {@link Translations} to manage translations.
- *
- * The configuration is done using {@link TranslationsConfig}.
- *
- * @experimental subject to change or removal. The I18n system may be modified in the future without prior notice.
- * @category I18n
- * @since 0.17.0
- */
-export class TranslationsAsI18n implements I18nProvider {
-  isEnabled(): boolean {
-    return TranslationsConfig.isEnabled();
-  }
-
-  get(
-    key?: string | null,
-    params?: any[] | null,
-    defaultValue?: string | null
-  ): string | null {
-    return Translations.get(key, params, defaultValue);
-  }
-
-  addResource(
-    basename: string,
-    language: string | null,
-    callback: Function | null
-  ): void {
-    Translations.add(basename, language, callback);
   }
 }

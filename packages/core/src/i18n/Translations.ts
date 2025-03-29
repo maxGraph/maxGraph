@@ -18,10 +18,11 @@ limitations under the License.
 
 import Client from '../Client';
 import { NONE } from '../util/Constants';
-import { get, load } from '../util/MaxXmlRequest';
 import type MaxXmlRequest from '../util/MaxXmlRequest';
+import { get, load } from '../util/MaxXmlRequest';
 import { TranslationsConfig } from './config';
 import { isNullish } from '../util/Utils';
+import { I18nProvider } from '../types';
 
 // mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js
 
@@ -377,4 +378,35 @@ export default class Translations {
       Translations.add(`${Client.basePath}/resources/graph`, null, callback);
     });
   };
+}
+
+/**
+ * A {@link I18nProvider} that uses {@link Translations} to manage translations.
+ *
+ * The configuration is done using {@link TranslationsConfig}.
+ *
+ * @experimental subject to change or removal. The I18n system may be modified in the future without prior notice.
+ * @category I18n
+ * @since 0.17.0
+ */
+export class TranslationsAsI18n implements I18nProvider {
+  isEnabled(): boolean {
+    return TranslationsConfig.isEnabled();
+  }
+
+  get(
+    key?: string | null,
+    params?: any[] | null,
+    defaultValue?: string | null
+  ): string | null {
+    return Translations.get(key, params, defaultValue);
+  }
+
+  addResource(
+    basename: string,
+    language: string | null,
+    callback: Function | null
+  ): void {
+    Translations.add(basename, language, callback);
+  }
 }
