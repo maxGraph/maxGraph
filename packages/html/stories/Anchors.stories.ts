@@ -58,7 +58,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   class MyCustomConnectionHandler extends ConnectionHandler {
     // Enables connect preview for the default edge style
-    createEdgeState(_me: InternalMouseEvent) {
+    override createEdgeState(_me: InternalMouseEvent) {
       const edge = this.graph.createEdge(null, null!, null, null, null);
       return new CellState(this.graph.view, edge, this.graph.getCellStyle(edge));
     }
@@ -78,7 +78,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     constructor(container: HTMLElement) {
       super(container, undefined, plugins);
     }
-    getAllConnectionConstraints = (terminal: CellState | null, _source: boolean) => {
+
+    override getAllConnectionConstraints = (
+      terminal: CellState | null,
+      _source: boolean
+    ) => {
       // Overridden to define per-geometry connection points
       return (terminal?.cell?.geometry as MyCustomGeometryClass)?.constraints ?? null;
     };
