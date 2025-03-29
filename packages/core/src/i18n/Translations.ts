@@ -187,13 +187,13 @@ export default class Translations {
    * @param callback Optional callback for asynchronous loading.
    */
   static add = (
-    basename: string,
+    basename: string | null = null,
     lan: string | null = null,
     callback: Function | null = null
   ): void => {
     lan ??= TranslationsConfig.getLanguage()?.toLowerCase() ?? NONE;
 
-    if (lan !== NONE) {
+    if (!isNullish(basename) && lan !== NONE) {
       const defaultBundle = Translations.getDefaultBundle(basename, lan);
       const specialBundle = Translations.getSpecialBundle(basename, lan);
 
@@ -403,9 +403,9 @@ export class TranslationsAsI18n implements I18nProvider {
   }
 
   addResource(
-    basename: string,
-    language: string | null,
-    callback: Function | null
+    basename?: string | null,
+    language?: string | null,
+    callback?: Function | null
   ): void {
     Translations.add(basename, language, callback);
   }

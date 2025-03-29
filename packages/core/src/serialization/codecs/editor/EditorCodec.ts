@@ -197,7 +197,7 @@ export class EditorCodec extends ObjectCodec {
           throw new Error('Unimplemented');
         }
       } else if (tmp.nodeName === 'resource') {
-        GlobalConfig.i18n.addResource(tmp.getAttribute('basename')!);
+        GlobalConfig.i18n.addResource(tmp.getAttribute('basename'));
       } else if (tmp.nodeName === 'stylesheet') {
         addLinkToHead('stylesheet', tmp.getAttribute('name')!);
       }

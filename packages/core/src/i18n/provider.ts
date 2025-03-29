@@ -32,11 +32,7 @@ export class NoOpI18n implements I18nProvider {
     return null;
   }
 
-  addResource(
-    _basename: string,
-    _language: string | null,
-    _callback: Function | null
-  ): void {
+  addResource(): void {
     // do nothing
   }
 }

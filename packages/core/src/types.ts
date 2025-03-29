@@ -1340,7 +1340,7 @@ export interface I18nProvider {
    * @param callback Optional callback for asynchronous loading. Default is `null`.
    */
   addResource(
-    basename: string,
+    basename?: string | null,
     language?: string | null,
     callback?: Function | null
   ): void;
