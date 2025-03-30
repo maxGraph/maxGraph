@@ -74,7 +74,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   VertexHandlerConfig.selectionColor = '#00a8ff';
 
   class MyCustomCellRenderer extends CellRenderer {
-    installCellOverlayListeners(state: CellState, overlay: CellOverlay, shape: Shape) {
+    override installCellOverlayListeners(
+      state: CellState,
+      overlay: CellOverlay,
+      shape: Shape
+    ) {
       super.installCellOverlayListeners(state, overlay, shape);
       const graph = state.view.graph;
 
@@ -143,7 +147,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   class MyCustomGraph extends Graph {
-    createCellRenderer() {
+    override createCellRenderer() {
       return new MyCustomCellRenderer();
     }
   }

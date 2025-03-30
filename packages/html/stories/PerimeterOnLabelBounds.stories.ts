@@ -58,7 +58,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     }
 
     // Redirects the perimeter to the label bounds if intersection between edge and label is found
-    getPerimeterPoint(
+    override getPerimeterPoint(
       terminal: CellState,
       next: Point,
       orthogonal: boolean,
@@ -92,7 +92,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       super(container, undefined, plugins);
     }
 
-    createGraphView(): GraphView {
+    override createGraphView(): GraphView {
       return new MyCustomGraphView(this);
     }
   }
@@ -110,7 +110,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   // Adds cells to the model in a single step
 
-  /* 
+  /*
    WARNING:
    setTimeout should be removed in production. It was added because of incompatibility with Storybook.
    In regular environment batchUpdate call should not be inside timeout and should be called regularly.

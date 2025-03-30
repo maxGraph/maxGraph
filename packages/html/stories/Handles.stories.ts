@@ -67,7 +67,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     defaultPos2 = 60;
 
   class MyShape extends CylinderShape {
-    getLabelBounds(rect: Rectangle) {
+    override getLabelBounds(rect: Rectangle) {
       const style: CustomCellStateStyle = this.style!;
       const pos1 = (style.pos1 ?? defaultPos1) * this.scale;
       const pos2 = (style.pos2 ?? defaultPos2) * this.scale;
@@ -79,7 +79,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       );
     }
 
-    redrawPath(
+    override redrawPath(
       path: AbstractCanvas2D,
       _x: number,
       _y: number,
@@ -118,9 +118,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   };
 
   class MyCustomVertexHandler extends VertexHandler {
-    livePreview = true;
+    override livePreview = true;
 
-    createCustomHandles() {
+    override createCustomHandles() {
       if (this.state.style.shape === 'myShape') {
         // Implements the handle for the first divider
         const firstHandle = new VertexHandle(this.state);
@@ -194,7 +194,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       super(container, undefined, plugins);
     }
 
-    createVertexHandler(state: CellState) {
+    override createVertexHandler(state: CellState) {
       return new MyCustomVertexHandler(state);
     }
   }

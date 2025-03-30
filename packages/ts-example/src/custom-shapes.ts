@@ -30,12 +30,24 @@ class CustomRectangleShape extends RectangleShape {
     this.isRounded = true; // force rounded shape
   }
 
-  paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number): void {
+  override paintBackground(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ): void {
     c.setFillColor('Chartreuse');
     super.paintBackground(c, x, y, w, h);
   }
 
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintVertexShape(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     c.setStrokeColor('Black');
     super.paintVertexShape(c, x, y, w, h);
   }
@@ -46,7 +58,13 @@ class CustomEllipseShape extends EllipseShape {
     super(bounds, fill, stroke, 5);
   }
 
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintVertexShape(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     c.setFillColor('Yellow');
     c.setStrokeColor('Red');
     super.paintVertexShape(c, x, y, w, h);
