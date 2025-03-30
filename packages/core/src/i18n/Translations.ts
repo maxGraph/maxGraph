@@ -19,7 +19,7 @@ limitations under the License.
 import Client from '../Client';
 import { NONE } from '../util/Constants';
 import type MaxXmlRequest from '../util/MaxXmlRequest';
-import { get, load } from '../util/MaxXmlRequest';
+import { get, load } from '../util/requestUtils';
 import { TranslationsConfig } from './config';
 import { isNullish } from '../internal/utils';
 import { I18nProvider } from '../types';

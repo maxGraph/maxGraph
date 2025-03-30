@@ -28,7 +28,7 @@ import EventObject from '../view/event/EventObject';
 import { getOffset } from '../util/styleUtils';
 import Codec from '../serialization/Codec';
 import { ModelXmlSerializer } from '../serialization/ModelXmlSerializer';
-import MaxWindow, { error } from '../gui/MaxWindow';
+import MaxWindow from '../gui/MaxWindow';
 import MaxForm from '../gui/MaxForm';
 import Outline from '../view/other/Outline';
 import Cell from '../view/cell/Cell';
@@ -45,7 +45,7 @@ import Clipboard from '../util/Clipboard';
 import MaxLog from '../gui/MaxLog';
 import { isNode } from '../util/domUtils';
 import { getViewXml, getXml } from '../util/xmlUtils';
-import { load, post, submit } from '../util/MaxXmlRequest';
+import { load, post, submit } from '../util/requestUtils';
 import type PopupMenuHandler from '../view/plugins/PopupMenuHandler';
 import RubberBandHandler from '../view/plugins/RubberBandHandler';
 import InternalEvent from '../view/event/InternalEvent';
@@ -58,6 +58,7 @@ import { cloneCell } from '../util/cellArrayUtils';
 import type MaxPopupMenu from '../gui/MaxPopupMenu';
 import { isNullish } from '../internal/utils';
 import { isI18nEnabled, translate } from '../internal/i18n-utils';
+import { error } from '../gui/guiUtils';
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that

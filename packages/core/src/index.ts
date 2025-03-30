@@ -179,7 +179,7 @@ export { MaxLogAsLogger } from './gui/MaxLogAsLogger';
 export { default as MaxPopupMenu } from './gui/MaxPopupMenu';
 export { default as MaxToolbar } from './gui/MaxToolbar';
 export { default as MaxWindow } from './gui/MaxWindow';
-export { popup, error } from './gui/MaxWindow';
+export * as guiUtils from './gui/guiUtils';
 
 export { default as ImageBox } from './view/image/ImageBox';
 export { default as ImageBundle } from './view/image/ImageBundle';
@@ -187,7 +187,7 @@ export { default as ImageExport } from './view/image/ImageExport';
 
 export { default as UrlConverter } from './util/UrlConverter';
 export { default as MaxXmlRequest } from './util/MaxXmlRequest';
-export { load, get, getAll, post, submit } from './util/MaxXmlRequest';
+export * as requestUtils from './util/requestUtils';
 
 export { default as AutoSaveManager } from './view/other/AutoSaveManager';
 export { default as Clipboard } from './util/Clipboard';

@@ -22,7 +22,7 @@ import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
 import { isInteger, isNumeric } from '../util/mathUtils';
 import { getTextContent } from '../util/domUtils';
-import { load } from '../util/MaxXmlRequest';
+import { load } from '../util/requestUtils';
 import type Codec from './Codec';
 import { doEval, isElement } from '../internal/utils';
 

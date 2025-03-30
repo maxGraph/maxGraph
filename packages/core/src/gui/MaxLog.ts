@@ -20,11 +20,12 @@ import Client from '../Client';
 import InternalEvent from '../view/event/InternalEvent';
 import { getInnerHtml, write } from '../util/domUtils';
 import { toString } from '../util/StringUtils';
-import MaxWindow, { popup } from './MaxWindow';
+import MaxWindow from './MaxWindow';
 import { KeyboardEventListener, MouseEventListener } from '../types';
 import { getElapseMillisecondsMessage } from '../internal/time-utils';
 import { VERSION } from '../util/Constants';
 import { GlobalConfig } from '../util/config';
+import { popup } from './guiUtils';
 
 const copyTextToClipboard = (text: string): void => {
   navigator.clipboard.writeText(text).then(

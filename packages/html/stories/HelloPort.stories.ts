@@ -22,7 +22,7 @@ import {
   Graph,
   ModelXmlSerializer,
   Point,
-  popup,
+  guiUtils,
   RubberBandHandler,
 } from '@maxgraph/core';
 
@@ -122,7 +122,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const button = DomHelpers.button('View XML', function () {
     const xml = new ModelXmlSerializer(graph.getDataModel()).export();
     // TODO missing CSS for the popup
-    popup(xml, true);
+    guiUtils.popup(xml, true);
   });
 
   controller.appendChild(button);

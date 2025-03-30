@@ -25,7 +25,7 @@ import {
   FastOrganicLayout,
   Graph,
   InternalEvent,
-  load,
+  requestUtils,
   ModelXmlSerializer,
   type PanningHandler,
   Perimeter,
@@ -146,7 +146,7 @@ function loadModelFromCustomTextFile(graph: Graph, filename: string) {
   // Gets the default parent for inserting new cells. This is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
-  const req = load(filename);
+  const req = requestUtils.load(filename);
   const text = req.getText();
 
   const lines = text.split('\n');
@@ -192,7 +192,7 @@ function loadModelFromCustomTextFile(graph: Graph, filename: string) {
 // Loads the Graph file format (standard maxGraph XML file)
 // Parses the Graph XML file format
 function loadModelFromXmlFile(graph: Graph, filename: string) {
-  const req = load(filename);
+  const req = requestUtils.load(filename);
   const xml = req.getText();
   new ModelXmlSerializer(graph.getDataModel()).import(xml);
 }

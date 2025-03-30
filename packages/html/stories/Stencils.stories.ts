@@ -28,7 +28,7 @@ import {
   Graph,
   HandleConfig,
   InternalEvent,
-  load,
+  requestUtils,
   Point,
   type Rectangle,
   RubberBandHandler,
@@ -169,7 +169,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   CellRenderer.registerShape('customShape', CustomShape);
 
   // Loads the stencils into the registry
-  const req = load('stencils.xml');
+  const req = requestUtils.load('stencils.xml');
   const root = req.getDocumentElement();
   let shape = root!.firstChild;
 

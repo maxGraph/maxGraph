@@ -22,7 +22,7 @@ import {
   CodecRegistry,
   InternalEvent,
   domUtils,
-  popup,
+  guiUtils,
   RubberBandHandler,
   ModelXmlSerializer,
   type Cell,
@@ -106,7 +106,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   buttons.appendChild(
     DomHelpers.button('Show JSON', function () {
       const xml = new ModelXmlSerializer(graph.getDataModel()).export();
-      popup(xml, true);
+      guiUtils.popup(xml, true);
     })
   );
 
