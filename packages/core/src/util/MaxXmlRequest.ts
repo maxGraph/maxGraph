@@ -77,8 +77,7 @@ import { write } from './domUtils';
  * Or in Java as follows:
  *
  * ```java
- * String xml = URLDecoder.decode(request.getParameter("xml"), "UTF-8").replace("
-", "&#xa;");
+ * String xml = URLDecoder.decode(request.getParameter("xml"), "UTF-8").replace("\n", "&#xa;");
  * ```
  *
  * Note that the linefeed should only be replaced if the XML is processed in Java, for example when creating an image.
