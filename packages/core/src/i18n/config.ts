@@ -89,14 +89,14 @@ export const TranslationsConfig = {
    * - {@link Editor.propertiesResource}
    * - {@link Editor.tasksResource}
    * - {@link ElbowEdgeHandler.doubleClickOrientationResource}
-   * - {@link GraphSelectionModel.doneResource}
-   * - {@link GraphSelectionModel.updatingSelectionResource}
    * - {@link Graph.alreadyConnectedResource}.
    * - {@link Graph.containsValidationErrorsResource} and
-   * - {@link utils.closeResource}
-   * - {@link utils.errorResource}
+   * - {@link GraphSelectionModel.doneResource}
+   * - {@link GraphSelectionModel.updatingSelectionResource}
    * - {@link GraphView.doneResource}
    * - {@link GraphView.updatingDocumentResource}
+   * - {@link GuiConfig.closeResource}
+   * - {@link GuiConfig.errorResource}
    *
    * @param value The language to set. If `null` or `undefined`, use the preferred language of the navigator or 'en' as default.
    */

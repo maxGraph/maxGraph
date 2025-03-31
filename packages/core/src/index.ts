@@ -137,7 +137,6 @@ export * as mathUtils from './util/mathUtils';
 export * as printUtils from './util/printUtils';
 export * as stringUtils from './util/StringUtils';
 export * as styleUtils from './util/styleUtils';
-export * as utils from './util/Utils';
 export * as xmlUtils from './util/xmlUtils';
 
 export * from './util/config';
