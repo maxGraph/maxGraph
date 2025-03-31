@@ -16,20 +16,28 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  constants,
-  InternalEvent,
-  Client,
-  Point,
-  Outline,
-  EdgeStyle,
-  KeyHandler,
-  CompactTreeLayout,
-  LayoutManager,
+  Cell,
   CellOverlay,
+  Client,
+  CompactTreeLayout,
+  constants,
+  EdgeStyle,
+  Graph,
   ImageBox,
-  utils,
+  InternalEvent,
+  type KeyboardEventListener,
+  KeyHandler,
+  LayoutManager,
+  type MaxPopupMenu,
   MaxToolbar,
+  // MaxWindow,
+  Outline,
+  type PanningHandler,
+  Point,
+  PopupMenuHandler,
+  PrintPreview,
+  printUtils,
+  treeTraversalUtils,
   StyleDefaultsConfig,
 } from '@maxgraph/core';
 import {
@@ -52,19 +60,66 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+// TODO should returns null if the user cancels the prompt
+const promptForPageCount = (): number => {
+  const pageCount = window.prompt('Enter maximum page count', '1');
+  return pageCount ? parseInt(pageCount) : 1;
+};
+
+const Template = ({ label, ...args }: Record<string, string>) => {
   const div = document.createElement('div');
+  div.style.display = 'flex';
+
+  // Creates the div for the toolbar
+  const tbContainer = document.createElement('div');
+  // tbContainer.style.display = 'flex';
+  // tbContainer.style.flexDirection = 'column';
+  // tbContainer.style.marginRight = '.5rem';
+  div.appendChild(tbContainer);
+
+  // const mainDiv = document.createElement('div');
+  //
+  // const div = document.createElement('div');
+  // mainDiv.appendChild(div);
+  // div.style.display = 'flex';
+  // div.style.gap = '2rem';
+
   const container = createGraphContainer(args);
+  container.style.cursor = 'unset'; // TODO not enough to make the editing work
+  // TODO use a main flex container
+  container.style.position = 'absolute';
+  container.style.left = '0px';
+  container.style.top = '0px';
+  container.style.right = '0px';
+  container.style.bottom = '0px';
+
   div.appendChild(container);
 
   // Makes the shadow brighter
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
 
-  const outline = document.getElementById('outlineContainer');
+  const outlineContainer = document.createElement('div');
+  const outlineContainerStyle = outlineContainer.style;
+  outlineContainerStyle.position = 'absolute';
+  outlineContainerStyle.overflow = 'hidden';
+  outlineContainerStyle.top = '0px';
+  outlineContainerStyle.right = '0px';
+  outlineContainerStyle.width = '160px';
+  outlineContainerStyle.height = '120px';
+  outlineContainerStyle.background = 'transparent';
+  outlineContainerStyle.borderStyle = 'solid';
+  outlineContainerStyle.borderColor = 'lightgray';
+  div.appendChild(outlineContainer);
 
-  if (!args.contextMenu) InternalEvent.disableContextMenu(container);
+  // TODO manage image path when not served in the root context
+  // Client.imageBasePath = '/images'
+
+  if (!args.contextMenu) InternalEvent.disableContextMenu(div);
+  // if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Sets a gradient background
+  // TODO this should be set in the flex main container
+  // TODO use new props for gradient https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
   if (Client.IS_GC || Client.IS_SF) {
     container.style.background =
       '-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#E7E7E7))';
@@ -82,19 +137,19 @@ const Template = ({ label, ...args }) => {
   graph.setPanning(true);
   graph.centerZoom = false;
 
-  const panningHandler = graph.getPlugin('PanningHandler');
-
+  const panningHandler = graph.getPlugin<PanningHandler>('PanningHandler');
   panningHandler.useLeftButtonForPanning = true;
-
   // Displays a popupmenu when the user clicks
   // on a cell (using the left mouse button) but
   // do not select the cell when the popup menu
   // is displayed
-  panningHandler.popupMenuHandler = false;
+  // TODO doesn't work, check the mxGraph code
+  // panningHandler.popupMenuHandler = false;
 
-  // Creates the outline (navigator, overview) for moving
-  // around the graph in the top, right corner of the window.
-  const outln = new Outline(graph, outline);
+  // Creates the outline (navigator, overview) for moving around the graph in the top, right corner of the window.
+  // TODO do we need to keep the constant?
+  // const outln = new Outline(graph, outline);
+  new Outline(graph, outlineContainer);
 
   // Disables tooltips on touch devices
   graph.setTooltips(!Client.IS_TOUCH);
@@ -113,37 +168,40 @@ const Template = ({ label, ...args }) => {
 
   style.fontColor = '#1d258f';
   style.fontFamily = 'Verdana';
-  style.fontSize = '12';
-  style.fontStyle = '1';
+  style.fontSize = 12;
+  style.fontStyle = 1;
 
-  style.shadow = '1';
-  style.rounded = '1';
-  style.glass = '1';
+  style.shadow = true;
+  style.rounded = true;
+  style.glass = true;
 
   style.image = 'images/dude3.png';
-  style.imageWidth = '48';
-  style.imageHeight = '48';
+  style.imageWidth = 48;
+  style.imageHeight = 48;
   style.spacing = 8;
 
   // Sets the default style for edges
   style = graph.getStylesheet().getDefaultEdgeStyle();
   style.rounded = true;
+  style.editable = true; // FIXME in Graph.isCellEditable the default value is not correctly managed
   style.strokeWidth = 3;
   style.exitX = 0.5; // center
   style.exitY = 1.0; // bottom
-  style.exitPerimeter = 0; // disabled
+  style.exitPerimeter = false; // disabled
   style.entryX = 0.5; // center
   style.entryY = 0; // top
-  style.entryPerimeter = 0; // disabled
+  style.entryPerimeter = false; // disabled
 
   // Disable the following for straight lines
-  style.edge = EdgeStyle.TopToBottom;
+  style.edgeStyle = EdgeStyle.TopToBottom;
 
   // Stops editing on enter or escape keypress
-  const keyHandler = new KeyHandler(graph);
+  // TODO do we need to keep the constant?
+  // const keyHandler = new KeyHandler(graph);
+  new KeyHandler(graph);
 
   // Enables automatic layout on the graph and installs
-  // a tree layout for all groups who's children are
+  // a tree layout for all groups whose children are
   // being changed, added or removed.
   const layout = new CompactTreeLayout(graph, false);
   layout.useBoundingBox = false;
@@ -151,31 +209,30 @@ const Template = ({ label, ...args }) => {
   layout.levelDistance = 60;
   layout.nodeDistance = 16;
 
-  // Allows the layout to move cells even though cells
-  // aren't movable in the graph
-  layout.isVertexMovable = function (cell) {
+  // Allows the layout to move cells even though cells aren't movable in the graph
+  layout.isVertexMovable = function (_cell: Cell) {
     return true;
   };
 
   const layoutMgr = new LayoutManager(graph);
-
-  layoutMgr.getLayout = function (cell) {
-    if (cell.getChildCount() > 0) {
-      return layout;
-    }
+  layoutMgr.getLayout = function (cell: Cell | null, _eventName: string) {
+    return cell && cell.getChildCount() > 0 ? layout : null;
   };
 
-  const popupMenuHandler = graph.getPlugin('PopupMenuHandler');
-
+  const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
   // Installs a popupmenu handler using local function (see below).
-  popupMenuHandler.factoryMethod = function (menu, cell, evt) {
+  popupMenuHandler.factoryMethod = function (
+    menu: MaxPopupMenu,
+    cell: Cell | null,
+    evt: MouseEvent
+  ) {
     return createPopupMenu(graph, menu, cell, evt);
   };
 
   // Fix for wrong preferred size
   const oldGetPreferredSizeForCell = graph.getPreferredSizeForCell;
-  graph.getPreferredSizeForCell = function (cell) {
-    const result = oldGetPreferredSizeForCell.apply(this, arguments);
+  graph.getPreferredSizeForCell = function (cell: Cell, textWidth?: number | null) {
+    const result = oldGetPreferredSizeForCell.apply(this, [cell, textWidth]);
 
     if (result != null) {
       result.width = Math.max(120, result.width - 40);
@@ -228,42 +285,48 @@ const Template = ({ label, ...args }) => {
     addOverlays(graph, v1, false);
   });
 
-  const content = document.createElement('div');
-  content.style.padding = '4px';
-  div.appendChild(content);
-  const tb = new MaxToolbar(content);
+  // const content = document.createElement('div');
+  tbContainer.id = 'toolbar'; // TODO temp to debug, not in the mxGraph example
+  tbContainer.style.padding = '4px';
+  // TODO remove this commented code when we are sure this works
+  // div.appendChild(content);
+  const tb = new MaxToolbar(tbContainer);
 
-  tb.addItem('Zoom In', 'images/zoom_in32.png', function (evt) {
+  // TODO should accept a function without event
+  tb.addItem('Zoom In', 'images/zoom_in32.png', function (_evt) {
     graph.zoomIn();
-  });
+  } as KeyboardEventListener);
 
-  tb.addItem('Zoom Out', 'images/zoom_out32.png', function (evt) {
+  tb.addItem('Zoom Out', 'images/zoom_out32.png', function (_evt) {
     graph.zoomOut();
-  });
+  } as KeyboardEventListener);
 
-  tb.addItem('Actual Size', 'images/view_1_132.png', function (evt) {
+  tb.addItem('Actual Size', 'images/view_1_132.png', function (_evt) {
     graph.zoomActual();
-  });
+  } as KeyboardEventListener);
 
-  tb.addItem('Print', 'images/print32.png', function (evt) {
+  tb.addItem('Print', 'images/print32.png', function (_evt) {
     const preview = new PrintPreview(graph, 1);
     preview.open();
-  });
+  } as KeyboardEventListener);
 
-  tb.addItem('Poster Print', 'images/press32.png', function (evt) {
-    const pageCount = utils.prompt('Enter maximum page count', '1');
+  tb.addItem('Poster Print', 'images/press32.png', function (_evt) {
+    const pageCount = promptForPageCount();
 
     if (pageCount != null) {
-      const scale = utils.getScaleForPageCount(pageCount, graph);
+      const scale = printUtils.getScaleForPageCount(pageCount, graph);
       const preview = new PrintPreview(graph, scale);
       preview.open();
     }
-  });
+  } as KeyboardEventListener);
 
   // Function to create the entries in the popupmenu
-  function createPopupMenu(graph, menu, cell, evt) {
-    const model = graph.getDataModel();
-
+  function createPopupMenu(
+    graph: Graph,
+    menu: MaxPopupMenu,
+    cell: Cell | null,
+    _evt: MouseEvent
+  ) {
     if (cell != null) {
       if (cell.isVertex()) {
         menu.addItem('Add child', 'images/overlays/check.png', function () {
@@ -300,21 +363,27 @@ const Template = ({ label, ...args }) => {
     });
 
     menu.addItem('Poster Print', 'images/print.gif', function () {
-      const pageCount = utils.prompt('Enter maximum page count', '1');
+      const pageCount = promptForPageCount();
 
       if (pageCount != null) {
-        const scale = utils.getScaleForPageCount(pageCount, graph);
+        const scale = printUtils.getScaleForPageCount(pageCount, graph);
         const preview = new PrintPreview(graph, scale);
         preview.open();
       }
     });
+
+    // const wnd = new MaxWindow('Tools', content, 0, 0, 200, 66, false);
+    // wnd.setMaximizable(false);
+    // wnd.setScrollable(false);
+    // wnd.setResizable(false);
+    // wnd.setVisible(true);
   }
 
-  function addOverlays(graph, cell, addDeleteIcon) {
+  function addOverlays(graph: Graph, cell: Cell, addDeleteIcon: boolean) {
     let overlay = new CellOverlay(new ImageBox('images/add.png', 24, 24), 'Add child');
     overlay.cursor = 'hand';
     overlay.align = constants.ALIGN.CENTER;
-    overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
+    overlay.addListener(InternalEvent.CLICK, () => {
       addChild(graph, cell);
     });
 
@@ -326,7 +395,7 @@ const Template = ({ label, ...args }) => {
       overlay.offset = new Point(-4, 8);
       overlay.align = constants.ALIGN.RIGHT;
       overlay.verticalAlign = constants.ALIGN.TOP;
-      overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
+      overlay.addListener(InternalEvent.CLICK, () => {
         deleteSubtree(graph, cell);
       });
 
@@ -334,19 +403,19 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  function addChild(graph, cell) {
+  function addChild(graph: Graph, cell: Cell) {
     const model = graph.getDataModel();
     const parent = graph.getDefaultParent();
     let vertex;
 
     model.beginUpdate();
     try {
-      vertex = graph.insertVertex(parent, null, 'Double click to set name');
-      const geometry = vertex.getGeometry();
+      vertex = graph.insertVertex({ parent, value: 'Double click to set name' });
+      const geometry = vertex.getGeometry()!;
 
       // Updates the geometry of the vertex with the
       // preferred size computed in the graph
-      const size = graph.getPreferredSizeForCell(vertex);
+      const size = graph.getPreferredSizeForCell(vertex)!;
       geometry.width = size.width;
       geometry.height = size.height;
 
@@ -358,9 +427,10 @@ const Template = ({ label, ...args }) => {
       // Configures the edge label "in-place" to reside
       // at the end of the edge (x = 1) and with an offset
       // of 20 pixels in negative, vertical direction.
-      edge.geometry.x = 1;
-      edge.geometry.y = 0;
-      edge.geometry.offset = new Point(0, -20);
+      const edgeGeometry = edge.geometry!;
+      edgeGeometry.x = 1;
+      edgeGeometry.y = 0;
+      edgeGeometry.offset = new Point(0, -20);
 
       addOverlays(graph, vertex, true);
     } finally {
@@ -370,14 +440,32 @@ const Template = ({ label, ...args }) => {
     return vertex;
   }
 
-  function deleteSubtree(graph, cell) {
+  function deleteSubtree(graph: Graph, cell: Cell) {
     // Gets the subtree from cell downwards
-    const cells = [];
-    graph.traverse(cell, true, function (vertex) {
-      cells.push(vertex);
+    const cells: Cell[] = [];
 
+    // TODO Graph.traverse is not implemented in maxGraph, check when and why it has been removed
+    // TODO the signature of the Layout method also changed, from multiple parameters to a single object --> to document in the migration guide
+    // in mxGraph, the implementation in Graph is almost the same as in GraphLayout. It has a "inverse" parameter at the end
+    // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/view/mxGraph.js#L12046
+    // https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/layout/mxGraphLayout.js#L160
+    // graph.traverse(cell, true, function (vertex: Cell) {
+    treeTraversalUtils.traverse(cell, true, function (vertex: Cell) {
+      cells.push(vertex);
       return true;
     });
+
+    // layout.traverse({
+    //   vertex: cell,
+    //   directed: true,
+    //   func: function (vertex: Cell) {
+    //     cells.push(vertex);
+    //
+    //     return true;
+    //   },
+    //   edge: null,
+    //   visited: null,
+    // });
 
     graph.removeCells(cells);
   }

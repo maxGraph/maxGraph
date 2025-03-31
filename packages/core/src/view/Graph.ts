@@ -639,6 +639,12 @@ class Graph extends EventSource {
       const newParent = change.child.getParent();
       this.view.invalidate(change.child, true, true);
 
+      // TODO verify if change is needed
+      // from PR 88 fix, 1st element in if was "newParent &&"
+      //      if (newParent == null || !this.getDataModel().contains(newParent) || newParent.isCollapsed())
+      // original mxGraph
+      // 		if (!this.model.contains(newParent) || this.isCellCollapsed(newParent))
+      // condition changed in #115
       if (
         !newParent ||
         !this.getDataModel().contains(newParent) ||
