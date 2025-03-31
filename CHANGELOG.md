@@ -13,6 +13,9 @@ _**Note:** Yet to be released breaking changes appear here._
 - `StylesheetCodec.allowEval` is now set to `false` by default to prevent unwanted use of the eval function, as it carries a possible security risk.
 - `Utils.copyTextToClipboard` is no longer available. It was intended to be internal and had been made public by mistake.
 - The built-in `Translations` class is no longer used by default. To use it, call `GlobalConfig.i18n = new TranslationsAsI18n()`
+- Some functions are now accessible via a namespace:
+  - `get`, `getAll`, `load`, `post`, `submit` via `requestUtils`
+  - `error`, `popup` via `guiUtils`
 
 ## 0.16.0
 
