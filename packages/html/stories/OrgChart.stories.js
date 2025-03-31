@@ -28,9 +28,9 @@ import {
   LayoutManager,
   CellOverlay,
   ImageBox,
-  utils,
   MaxToolbar,
   StyleDefaultsConfig,
+  printUtils,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
@@ -251,10 +251,10 @@ const Template = ({ label, ...args }) => {
   });
 
   tb.addItem('Poster Print', 'images/press32.png', function (evt) {
-    const pageCount = utils.prompt('Enter maximum page count', '1');
+    const pageCount = prompt('Enter maximum page count', '1');
 
     if (pageCount != null) {
-      const scale = utils.getScaleForPageCount(pageCount, graph);
+      const scale = printUtils.getScaleForPageCount(pageCount, graph);
       const preview = new PrintPreview(graph, scale);
       preview.open();
     }
@@ -300,10 +300,10 @@ const Template = ({ label, ...args }) => {
     });
 
     menu.addItem('Poster Print', 'images/print.gif', function () {
-      const pageCount = utils.prompt('Enter maximum page count', '1');
+      const pageCount = prompt('Enter maximum page count', '1');
 
       if (pageCount != null) {
-        const scale = utils.getScaleForPageCount(pageCount, graph);
+        const scale = printUtils.getScaleForPageCount(pageCount, graph);
         const preview = new PrintPreview(graph, scale);
         preview.open();
       }
