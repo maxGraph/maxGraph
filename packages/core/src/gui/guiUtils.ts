@@ -70,7 +70,7 @@ export const popup = (content: string, isInternalWindow = false) => {
       if (!wnd) {
         throw new Error('Permission not granted to open popup window');
       }
-      wnd.document.writeln(`<pre>${htmlEntities(content)}</pre`);
+      wnd.document.writeln(`<pre>${htmlEntities(content)}</pre>`);
       wnd.document.close();
     } else {
       const wnd = window.open();
