@@ -39,8 +39,6 @@ import { Listenable } from '../../types';
 import { getDefaultPlugins } from '../plugins';
 
 /**
- * @class Outline
- *
  * Implements an outline (aka overview) for a graph. Set {@link updateOnPan} to true
  * to enable updates while the source graph is panning.
  *
