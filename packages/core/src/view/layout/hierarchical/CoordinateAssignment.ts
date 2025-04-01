@@ -28,7 +28,7 @@ import GraphHierarchyModel from './GraphHierarchyModel';
 import Cell from '../../../view/cell/Cell';
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
-import { Graph } from '../../../view/Graph';
+import type { Graph } from '../../../view/Graph';
 import Geometry from '../../../view/geometry/Geometry';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
 import SwimlaneLayout from '../SwimlaneLayout';

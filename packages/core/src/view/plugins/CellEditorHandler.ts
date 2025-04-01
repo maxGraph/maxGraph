@@ -568,7 +568,7 @@ class CellEditorHandler implements GraphPlugin {
           }
 
           if (
-            !(<Graph>state.view.graph).cellRenderer.legacySpacing ||
+            !state.view.graph.cellRenderer.legacySpacing ||
             state.style.overflow !== 'width'
           ) {
             // @ts-ignore
@@ -932,7 +932,7 @@ class CellEditorHandler implements GraphPlugin {
 
     if (
       !isEdge &&
-      (<Graph>state.view.graph).cellRenderer.legacySpacing &&
+      state.view.graph.cellRenderer.legacySpacing &&
       state.style.overflow === 'fill'
     ) {
       result = (<Shape>state.shape).getLabelBounds(Rectangle.fromRectangle(state));

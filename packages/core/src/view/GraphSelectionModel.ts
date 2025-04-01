@@ -17,8 +17,8 @@ limitations under the License.
 */
 
 import EventSource from '../view/event/EventSource';
-import { Graph } from './Graph';
-import Cell from './cell/Cell';
+import type { Graph } from './Graph';
+import type Cell from './cell/Cell';
 import SelectionChange from './undoable_changes/SelectionChange';
 import UndoableEdit from './undoable_changes/UndoableEdit';
 import EventObject from './event/EventObject';

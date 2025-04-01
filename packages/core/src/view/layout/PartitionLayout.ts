@@ -18,8 +18,8 @@ limitations under the License.
 
 import Rectangle from '../geometry/Rectangle';
 import GraphLayout from './GraphLayout';
-import { Graph } from '../Graph';
-import Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
 
 /**
  * Extends {@link GraphLayout} for partitioning the parent cell vertically or

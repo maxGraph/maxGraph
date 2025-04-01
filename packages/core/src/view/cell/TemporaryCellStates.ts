@@ -18,11 +18,10 @@ limitations under the License.
 
 import Rectangle from '../geometry/Rectangle';
 import Dictionary from '../../util/Dictionary';
-import GraphView from '../GraphView';
-import Cell from './Cell';
-import CellState from './CellState';
-import Shape from '../geometry/Shape';
-import { Graph } from '../Graph';
+import type GraphView from '../GraphView';
+import type Cell from './Cell';
+import type CellState from './CellState';
+import type Shape from '../geometry/Shape';
 
 /**
  * Creates a temporary set of cell states.

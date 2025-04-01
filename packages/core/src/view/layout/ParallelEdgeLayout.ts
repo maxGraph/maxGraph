@@ -19,8 +19,8 @@ limitations under the License.
 import Point from '../geometry/Point';
 import GraphLayout from './GraphLayout';
 import ObjectIdentity from '../../util/ObjectIdentity';
-import { Graph } from '../Graph';
-import Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
 import Geometry from '../geometry/Geometry';
 
 /**

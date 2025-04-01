@@ -54,10 +54,10 @@ import {
 } from '../../util/EventUtils';
 import Image from '../image/ImageBox';
 import CellState from '../cell/CellState';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import Shape from '../geometry/Shape';
-import { CellStyle, ColorValue, GraphPlugin, Listenable } from '../../types';
+import type { CellStyle, ColorValue, GraphPlugin, Listenable } from '../../types';
 
 type FactoryMethod = (
   source: Cell | null,

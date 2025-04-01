@@ -18,8 +18,8 @@ limitations under the License.
 
 import { DIALECT, NODETYPE, NS_SVG } from './Constants';
 import Point from '../view/geometry/Point';
-import Cell from '../view/cell/Cell';
-import { Graph } from '../view/Graph';
+import type Cell from '../view/cell/Cell';
+import type { Graph } from '../view/Graph';
 import { htmlEntities, trim } from './StringUtils';
 import TemporaryCellStates from '../view/cell/TemporaryCellStates';
 import type { StyleValue } from '../types';

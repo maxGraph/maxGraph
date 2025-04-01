@@ -26,10 +26,10 @@ import Point from '../geometry/Point';
 import { getRotatedPoint, intersects, mod, toRadians } from '../../util/mathUtils';
 import Client from '../../Client';
 import { isMouseEvent, isShiftDown } from '../../util/EventUtils';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Image from '../image/ImageBox';
-import Cell from '../cell/Cell';
+import type Cell from '../cell/Cell';
 import type { CellHandle, Listenable } from '../../types';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -322,7 +322,7 @@ class VertexHandler {
     this.escapeHandler = (_sender: Listenable, _evt: Event) => {
       if (this.livePreview && this.index != null) {
         // Redraws the live preview
-        (<Graph>this.state.view.graph).cellRenderer.redraw(this.state, true);
+        this.state.view.graph.cellRenderer.redraw(this.state, true);
 
         // Redraws connected edges
         this.state.view.invalidate(this.state.cell);
@@ -333,7 +333,7 @@ class VertexHandler {
       this.reset();
     };
 
-    (<Graph>this.state.view.graph).addListener(InternalEvent.ESCAPE, this.escapeHandler);
+    this.state.view.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
   }
 
   private getSelectionHandler(): SelectionHandler | undefined {
@@ -672,7 +672,6 @@ class VertexHandler {
       this.ghostPreview = this.createGhostPreview();
     } else {
       // Saves reference to parent state
-      const { model } = <Graph>this.state.view.graph;
       const parent = this.state.cell.getParent();
 
       if (
@@ -680,7 +679,7 @@ class VertexHandler {
         parent &&
         (parent.isVertex() || parent.isEdge())
       ) {
-        this.parentState = (<Graph>this.state.view.graph).view.getState(parent);
+        this.parentState = this.state.view.graph.view.getState(parent);
       }
 
       // Creates a preview that can be on top of any HTML label
@@ -1162,7 +1161,7 @@ class VertexHandler {
     }
 
     // Draws the live preview
-    (<Graph>this.state.view.graph).cellRenderer.redraw(this.state, true);
+    this.state.view.graph.cellRenderer.redraw(this.state, true);
 
     // Redraws connected edges TODO: Include child edges
     this.state.view.invalidate(this.state.cell);
@@ -1918,9 +1917,7 @@ class VertexHandler {
    * Returns true if the given custom handle is visible.
    */
   isCustomHandleVisible(handle: CellHandle) {
-    return (
-      !this.graph.isEditing() && (<Graph>this.state.view.graph).getSelectionCount() === 1
-    );
+    return !this.graph.isEditing() && this.state.view.graph.getSelectionCount() === 1;
   }
 
   /**
@@ -2036,7 +2033,7 @@ class VertexHandler {
    * Destroys the handler and all its resources and DOM nodes.
    */
   onDestroy() {
-    (<Graph>this.state.view.graph).removeListener(this.escapeHandler);
+    this.state.view.graph.removeListener(this.escapeHandler);
     this.escapeHandler = () => {
       return;
     };

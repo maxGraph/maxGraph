@@ -17,8 +17,8 @@ limitations under the License.
 */
 
 import { isNode } from '../../util/domUtils';
-import Cell from '../cell/Cell';
-import { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
 import { translate } from '../../internal/i18n-utils';
 
 /**

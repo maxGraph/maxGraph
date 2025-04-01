@@ -22,16 +22,14 @@ import TerminalChange from '../undoable_changes/TerminalChange';
 import ValueChange from '../undoable_changes/ValueChange';
 import ChildChange from '../undoable_changes/ChildChange';
 import StyleChange from '../undoable_changes/StyleChange';
-import { Graph } from '../../view/Graph';
-import Cell from '../../view/cell/Cell';
+import type { Graph } from '../../view/Graph';
+import type Cell from '../../view/cell/Cell';
 import { UndoableChange } from '../../types';
 import Geometry from '../geometry/Geometry';
 import Shape from '../geometry/Shape';
 
 /**
  * Provides animation effects.
- *
- * @class Effects
  */
 class Effects {
   /**

@@ -30,7 +30,7 @@ import Client from '../../Client';
 import Rectangle from '../geometry/Rectangle';
 import { isAltDown, isMultiTouchEvent } from '../../util/EventUtils';
 import { clearSelection } from '../../util/domUtils';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import { GraphPlugin } from '../../types';
 import EventObject from '../event/EventObject';
 import EventSource from '../event/EventSource';
