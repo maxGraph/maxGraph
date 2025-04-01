@@ -18,7 +18,7 @@ limitations under the License.
 
 import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 
 /**
  * Manager for automatically saving diagrams. The <save> hook must be
@@ -162,7 +162,7 @@ class AutoSaveManager extends EventSource {
   }
 
   /**
-   * Removes all handlers from the <graph> and deletes the reference to it.
+   * Removes all handlers from the {@link graph} and deletes the reference to it.
    */
   destroy(): void {
     this.setGraph(null);

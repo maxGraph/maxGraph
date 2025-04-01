@@ -18,8 +18,8 @@ limitations under the License.
 
 import GraphLayout from './GraphLayout';
 import { DEFAULT_STARTSIZE } from '../../util/Constants';
-import { Graph } from '../Graph';
-import Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
 import Geometry from '../geometry/Geometry';
 
 /**

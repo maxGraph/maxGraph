@@ -21,7 +21,7 @@ import { fit, getScrollOrigin } from '../../util/styleUtils';
 import { TOOLTIP_VERTICAL_OFFSET } from '../../util/Constants';
 import { getSource, isMouseEvent } from '../../util/EventUtils';
 import { isNode } from '../../util/domUtils';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import type PopupMenuHandler from './PopupMenuHandler';

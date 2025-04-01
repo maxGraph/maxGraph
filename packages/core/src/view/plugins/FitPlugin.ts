@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import type { GraphPlugin } from '../../types';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 
 function keep2digits(value: number): number {
   return Number(value.toFixed(2));

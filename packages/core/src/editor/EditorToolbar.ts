@@ -24,8 +24,8 @@ import InternalEvent from '../view/event/InternalEvent';
 import { getClientX, getClientY } from '../util/EventUtils';
 import { makeDraggable } from '../util/gestureUtils';
 import Editor from './Editor';
-import Cell from '../view/cell/Cell';
-import { Graph } from '../view/Graph';
+import type Cell from '../view/cell/Cell';
+import type { Graph } from '../view/Graph';
 import EventObject from '../view/event/EventObject';
 import type { DropHandler } from '../view/other/DragSource';
 

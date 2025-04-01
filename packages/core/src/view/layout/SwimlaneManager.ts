@@ -19,9 +19,9 @@ limitations under the License.
 import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import EventObject from '../event/EventObject';
-import Cell from '../cell/Cell';
+import type Cell from '../cell/Cell';
 
 /**
  * Manager for swimlanes and nested swimlanes that sets the size of newly added

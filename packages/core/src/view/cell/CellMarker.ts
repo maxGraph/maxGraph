@@ -29,11 +29,11 @@ import CellHighlight from './CellHighlight';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import { intersectsHotspot } from '../../util/mathUtils';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import { ColorValue } from '../../types';
-import CellState from './CellState';
+import type CellState from './CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import Cell from './Cell';
+import type Cell from './Cell';
 
 /**
  * A helper class to process mouse locations and highlight cells.

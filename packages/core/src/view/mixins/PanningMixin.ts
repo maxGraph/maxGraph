@@ -18,7 +18,7 @@ import { hasScrollbars } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import type PanningHandler from '../plugins/PanningHandler';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import Rectangle from '../geometry/Rectangle';
 import Point from '../geometry/Point';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';

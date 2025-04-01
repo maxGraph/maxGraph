@@ -18,14 +18,12 @@ limitations under the License.
 
 import Point from '../geometry/Point';
 import Dictionary from '../../util/Dictionary';
-import CellState from './CellState';
-import Cell from './Cell';
-import { Graph } from '../Graph';
-import GraphView from '../GraphView';
+import type CellState from './CellState';
+import type Cell from './Cell';
+import type { Graph } from '../Graph';
+import type GraphView from '../GraphView';
 
 /**
- * @class CellStatePreview
- *
  * Implements a live preview for moving cells.
  */
 class CellStatePreview {

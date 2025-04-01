@@ -19,9 +19,9 @@ limitations under the License.
 import Point from '../geometry/Point';
 import CellStatePreview from '../cell/CellStatePreview';
 import Animation from './Animation';
-import CellState from '../cell/CellState';
-import Cell from '../cell/Cell';
-import { Graph } from '../Graph';
+import type CellState from '../cell/CellState';
+import type Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
 
 /**
  * Implements animation for morphing cells. Here is an example of

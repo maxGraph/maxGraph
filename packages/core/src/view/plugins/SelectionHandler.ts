@@ -40,7 +40,7 @@ import {
   isAltDown,
   isMultiTouchEvent,
 } from '../../util/EventUtils';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import Guide from '../other/Guide';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -1130,7 +1130,7 @@ class SelectionHandler implements GraphPlugin {
 
               // Draws the live preview
               if (!this.cloning) {
-                (<Graph>state.view.graph).cellRenderer.redraw(state, true);
+                state.view.graph.cellRenderer.redraw(state, true);
 
                 // Forces redraw of connected edges after all states
                 // have been updated but avoids update of state
@@ -1232,7 +1232,7 @@ class SelectionHandler implements GraphPlugin {
 
             // Draws the live preview but avoids update of state
             if (!this.cloning) {
-              (<Graph>state.view.graph).cellRenderer.redraw(state, true);
+              state.view.graph.cellRenderer.redraw(state, true);
             }
           }
         }

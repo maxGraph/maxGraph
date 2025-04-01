@@ -40,8 +40,8 @@ import {
 } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';
-import { Graph } from '../Graph';
-import Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
 import type SelectionHandler from '../plugins/SelectionHandler';
 
 export type DropHandler = (

@@ -21,8 +21,8 @@ import {
   _mxCompactTreeLayoutLine,
   _mxCompactTreeLayoutNode,
 } from './CompactTreeLayout';
-import Cell from '../cell/Cell';
-import { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
 
 /**
  * Extends {@link CompactTreeLayout} to implement a radial tree algorithm. This

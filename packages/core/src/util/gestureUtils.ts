@@ -17,8 +17,8 @@ limitations under the License.
 import DragSource, { DropHandler } from '../view/other/DragSource';
 import Point from '../view/geometry/Point';
 import { TOOLTIP_VERTICAL_OFFSET } from './Constants';
-import { Graph } from '../view/Graph';
-import Cell from '../view/cell/Cell';
+import type { Graph } from '../view/Graph';
+import type Cell from '../view/cell/Cell';
 
 /**
  * Configures the given DOM element to act as a drag source for the
@@ -75,14 +75,14 @@ import Cell from '../view/cell/Cell';
  * @param dy Optional vertical offset between the cursor and the drag
  * preview.
  * @param autoscroll Optional boolean that specifies if autoscroll should be
- * used. Default is mxGraph.autoscroll.
+ * used. Default is {@link Graph.autoscroll}.
  * @param scalePreview Optional boolean that specifies if the preview element
  * should be scaled according to the graph scale. If this is true, then
  * the offsets will also be scaled. Default is false.
  * @param highlightDropTargets Optional boolean that specifies if dropTargets
  * should be highlighted. Default is true.
  * @param getDropTarget Optional function to return the drop target for a given
- * location (x, y). Default is mxGraph.getCellAt.
+ * location (x, y). Default is {@link Graph.getCellAt}.
  */
 export const makeDraggable = (
   element: Element,

@@ -19,8 +19,8 @@ limitations under the License.
 import Point from '../geometry/Point';
 import GraphLayout from './GraphLayout';
 import { intersects } from '../../util/mathUtils';
-import Cell from '../cell/Cell';
-import { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import TextShape from '../geometry/node/TextShape';
 import Rectangle from '../geometry/Rectangle';
