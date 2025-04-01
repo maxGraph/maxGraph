@@ -16,6 +16,7 @@ _**Note:** Yet to be released breaking changes appear here._
 - Some functions are now accessible via a namespace:
   - `get`, `getAll`, `load`, `post`, `submit` via `requestUtils`
   - `error`, `popup` via `guiUtils`
+- The `utils` namespace has been removed. The remaining properties associated to this namespace have been moved to the `guiUtils` namespace.
 
 ## 0.16.0
 

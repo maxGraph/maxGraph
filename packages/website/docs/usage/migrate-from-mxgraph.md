@@ -150,12 +150,18 @@ In maxGraph@0.11.0, the `allowEval` and `defaultLocalized` properties have been 
 
 
 ### `mxUtils` split
-Several functions in `mxUtils` have been moved to their own namespaces in `maxGraph`. Some remain in `utils`.
+Functions and properties in `mxUtils` have been moved to their own namespaces in `maxGraph`.
 
-Here are a few examples of the methods that have been moved.
+Here are a few examples of the methods and properties that have been moved.
 
 #### `domUtils`
 - `extractTextWithWhitespace()`: Update your code to use `domUtils.extractTextWithWhitespace()` instead of `mxUtils.extractTextWithWhitespace()`.
+
+#### `guiUtils` (as of version 0.17.0)
+
+- `closeResource`: Update your code to use `guiUtils.closeResource` instead of `mxUtils.closeResource`.
+- `errorImage`: Update your code to use `guiUtils.errorImage` instead of `mxUtils.errorImage`.
+- `errorResource`: Update your code to use `guiUtils.errorResource` instead of `mxUtils.errorResource`.
 
 #### `mathUtils`
 - `getBoundingBox()`: Update your code to use `mathUtils.getBoundingBox()` instead of `mxUtils.getBoundingBox()`.
@@ -259,7 +265,7 @@ format:(value: number) => number
 The `mxGraph` class has been renamed to `Graph` in `maxGraph`.
 There have also been some changes related to properties and methods.
 
-Some properties have been removed in favor of the usage of plugins. Plugins are registered at the `Graph` initialization by passing
+Some properties have been removed in favor of the usage of [Plugins](./plugins.md). Plugins are registered at the `Graph` initialization by passing
 an array of plugins to the constructor.
 
 | property removed        | method removed                | new plugin              |
@@ -284,8 +290,8 @@ const panningHandler = graph.panningHandler;
 
 **Now**
 ```typescript
-// Updated way using getPlugin()
-const panningHandler = this.graph.getPlugin('PanningHandler') as PanningHandler;
+// Updated way using getPlugin() in TypeScript
+const panningHandler = this.graph.getPlugin<PanningHandler>('PanningHandler');
 ```
 
 #### `getModel()`

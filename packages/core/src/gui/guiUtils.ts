@@ -18,7 +18,6 @@ limitations under the License.
 
 import { htmlEntities } from '../util/StringUtils';
 import Client from '../Client';
-import { utils } from '../util/Utils';
 import { br, write } from '../util/domUtils';
 import { translate } from '../internal/i18n-utils';
 import InternalEvent from '../view/event/InternalEvent';
@@ -89,7 +88,7 @@ export const popup = (content: string, isInternalWindow = false) => {
 /**
  * Displays the given error message in a new <MaxWindow> of the given width.
  * If close is true then an additional close button is added to the window.
- * The optional icon specifies the icon to be used for the window. Default is {@link utils.errorImage}.
+ * The optional icon specifies the icon to be used for the window. Default is {@link GuiConfig.errorImage}.
  *
  * @param message String specifying the message to be displayed.
  * @param width Integer specifying the width of the window.
@@ -106,7 +105,7 @@ export const error = (
   div.style.padding = '20px';
 
   const img = document.createElement('img');
-  img.setAttribute('src', icon || utils.errorImage);
+  img.setAttribute('src', icon || GuiConfig.errorImage);
   img.setAttribute('valign', 'bottom');
   img.style.verticalAlign = 'middle';
   div.appendChild(img);
@@ -119,7 +118,7 @@ export const error = (
   const w = document.body.clientWidth;
   const h = document.body.clientHeight || document.documentElement.clientHeight;
   const warn = new MaxWindow(
-    translate(utils.errorResource) || utils.errorResource,
+    translate(GuiConfig.errorResource) || GuiConfig.errorResource,
     div,
     (w - width) / 2,
     h / 4,
@@ -141,7 +140,7 @@ export const error = (
       warn.destroy();
     });
 
-    write(button, translate(utils.closeResource) || utils.closeResource);
+    write(button, translate(GuiConfig.closeResource) || GuiConfig.closeResource);
 
     tmp.appendChild(button);
     div.appendChild(tmp);
@@ -154,4 +153,28 @@ export const error = (
   warn.setVisible(true);
 
   return warn;
+};
+
+/**
+ * A global configuration for maxGraph GUI.
+ */
+export const GuiConfig = {
+  /*
+   * Specifies the resource key for the title of the error window. If the
+   * resource for this key does not exist then the value is used as
+   * the title. Default is 'error'.
+   */
+  errorResource: 'error',
+
+  /**
+   * Specifies the resource key for the label of the close button. If the
+   * resource for this key does not exist then the value is used as
+   * the label. Default is 'close'.
+   */
+  closeResource: 'close',
+
+  /**
+   * Defines the image used for error dialogs.
+   */
+  errorImage: `${Client.imageBasePath}/error.gif`,
 };
