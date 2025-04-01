@@ -126,7 +126,7 @@ class Effects {
    * Sets the opacity on the given cell and its descendants.
    *
    * @param graph - {@link Graph} that contains the cells.
-   * @param cell - <Cell> to set the opacity for.
+   * @param cell - {@link Cell} to set the opacity for.
    * @param opacity - New value for the opacity in %.
    */
   static cascadeOpacity(graph: Graph, cell: Cell, opacity: number): void {
