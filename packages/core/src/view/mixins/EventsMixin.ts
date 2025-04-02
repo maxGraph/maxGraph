@@ -463,24 +463,24 @@ export const EventsMixin: PartialType = {
     ) {
       this.setEventSource(me.getSource());
 
-      (this.mouseMoveRedirect = (evt: MouseEvent) => {
+      this.mouseMoveRedirect = (evt: MouseEvent) => {
         this.fireMouseEvent(
           InternalEvent.MOUSE_MOVE,
           new InternalMouseEvent(evt, this.getStateForTouchEvent(evt))
         );
-      }),
-        (this.mouseUpRedirect = (evt: MouseEvent) => {
-          this.fireMouseEvent(
-            InternalEvent.MOUSE_UP,
-            new InternalMouseEvent(evt, this.getStateForTouchEvent(evt))
-          );
-        }),
-        InternalEvent.addGestureListeners(
-          eventSource,
-          null,
-          this.mouseMoveRedirect,
-          this.mouseUpRedirect
+      };
+      this.mouseUpRedirect = (evt: MouseEvent) => {
+        this.fireMouseEvent(
+          InternalEvent.MOUSE_UP,
+          new InternalMouseEvent(evt, this.getStateForTouchEvent(evt))
         );
+      };
+      InternalEvent.addGestureListeners(
+        eventSource,
+        null,
+        this.mouseMoveRedirect,
+        this.mouseUpRedirect
+      );
     }
 
     // Factored out the workarounds for FF to make it easier to override/remove
