@@ -172,6 +172,13 @@ Here are a few examples of the methods and properties that have been moved.
 - `printScreen()`: Update your code to use `printUtils.printScreen()` instead of `mxUtils.printScreen()`.
 - `show()`: Update your code to use `printUtils.show()` instead of `mxUtils.show()`.
 
+#### `requestUtils`
+- `get()`: Update your code to use `requestUtils.get()` instead of `mxUtils.get()`.
+- `getAll()`: Update your code to use `requestUtils.getAll()` instead of `mxUtils.getAll()`.
+- `load()`: Update your code to use `requestUtils.load()` instead of `mxUtils.load()`.
+- `post()`: Update your code to use `requestUtils.post()` instead of `mxUtils.post()`.
+- `submit()`: Update your code to use `requestUtils.submit()` instead of `mxUtils.submit()`.
+
 #### `stringUtils`
 - `trim()`: Update your code to use `stringUtils.trim()` instead of `mxUtils.trim()`.
 
@@ -181,10 +188,6 @@ Here are a few examples of the methods and properties that have been moved.
 #### `xmlUtils`
 - `getXml()`: Update your code to use `xmlUtils.getXml()` instead of `mxUtils.getXml()`.
 - `createXmlDocument()`: Update your code to use `xmlUtils.createXmlDocument()` instead of `mxUtils.createXmlDocument()`.
-
-#### In the default namespace
-- `get()`: Update your code to use `get()` instead of `mxUtils.get()`.
-- `load()`: Update your code to use `load()` instead of `mxUtils.load()`.
 
 ### Removed methods from `mxUtils`
 
