@@ -26,6 +26,7 @@ import type Point from './view/geometry/Point';
 import type Rectangle from './view/geometry/Rectangle';
 import type Shape from './view/geometry/Shape';
 import type ImageBox from './view/image/ImageBox';
+import type Image from './view/image/ImageBox';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -1345,3 +1346,26 @@ export interface I18nProvider {
     callback?: Function | null
   ): void;
 }
+
+export type GraphFoldingOptions = {
+  /**
+   * Specifies if folding (collapse and expand via an image icon in the graph should be enabled).
+   * @default true
+   */
+  foldingEnabled: boolean;
+  /**
+   * Specifies the {@link Image} to indicate a collapsed state.
+   * @default `Client.imageBasePath + '/collapsed.gif'`
+   */
+  collapsedImage: Image;
+  /**
+   * Specifies the {@link Image} to indicate a expanded state.
+   * @default `Client.imageBasePath + '/expanded.gif'`
+   */
+  expandedImage: Image;
+  /**
+   * Specifies if the cell size should be changed to the preferred size when a cell is first collapsed.
+   * @default true
+   */
+  collapseToPreferredSize: boolean;
+};

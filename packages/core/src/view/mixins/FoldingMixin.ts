@@ -37,10 +37,10 @@ type PartialGraph = Pick<
   | 'getSelectionCells'
   | 'stopEditing'
   | 'batchUpdate'
+  | 'options'
 >;
 type PartialFolding = Pick<
   Graph,
-  | 'options'
   | 'collapseExpandResource'
   | 'getCollapseExpandResource'
   | 'isFoldingEnabled'
@@ -56,13 +56,6 @@ type PartialType = PartialGraph & PartialFolding;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const FoldingMixin: PartialType = {
-  options: {
-    foldingEnabled: true,
-    collapsedImage: new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9),
-    expandedImage: new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9),
-    collapseToPreferredSize: true,
-  },
-
   collapseExpandResource: isI18nEnabled() ? 'collapse-expand' : '',
 
   getCollapseExpandResource() {
