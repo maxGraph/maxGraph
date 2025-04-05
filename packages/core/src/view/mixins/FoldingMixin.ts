@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Image from '../image/ImageBox';
-import Client from '../../Client';
 import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
