@@ -337,7 +337,7 @@ export class GraphDataModel extends EventSource {
   }
 
   filterCells(cells: Cell[], filter: FilterFunction) {
-    return filterCells(filter)(cells);
+    return cells.filter(filter);
   }
 
   getRoot(cell: Cell | null = null) {
