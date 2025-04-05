@@ -16,13 +16,17 @@ limitations under the License.
 */
 
 import {
+  type Cell,
+  type CellStateStyle,
+  getDefaultPlugins,
   Graph,
   InternalEvent,
-  SelectionHandler,
+  InternalMouseEvent,
   RubberBandHandler,
+  SelectionHandler,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 
 export default {
   title: 'Layouts/Constituent',
@@ -34,8 +38,15 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const isNullish = (v: any): v is null | undefined => v === null || v === undefined;
+
+const Template = ({ label, ...args }: Record<string, string>) => {
+  const div = createMainDiv(
+    `This example demonstrates using cells as parts of other cells.`
+  );
+
   const container = createGraphContainer(args);
+  div.appendChild(container);
 
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
@@ -44,34 +55,42 @@ const Template = ({ label, ...args }) => {
     /**
      * Redirects start drag to parent.
      */
-    getInitialCellForEvent(me) {
+    override getInitialCellForEvent(me: InternalMouseEvent) {
       let cell = super.getInitialCellForEvent(me);
-      if (this.graph.isPart(cell)) {
-        cell = cell.getParent();
+      if ((this.graph as MyCustomGraph).isPart(cell)) {
+        cell = cell?.getParent() ?? null;
       }
       return cell;
     }
   }
 
+  type CustomCellStateStyle = CellStateStyle & {
+    constituent: boolean;
+  };
+
   class MyCustomGraph extends Graph {
-    constructor(container) {
-      super(container);
+    constructor(container: HTMLElement) {
+      super(container, undefined, [...getDefaultPlugins(), RubberBandHandler]);
       this.options.foldingEnabled = false;
       this.recursiveResize = true;
     }
 
-    isPart(cell) {
-      // Helper method to mark parts with constituent=1 in the style
-      return this.getCurrentCellStyle(cell).constituent == '1';
+    // Helper method to mark parts with constituent in the Cell style
+    isPart(cell: Cell | null): boolean {
+      return (
+        !isNullish(cell) &&
+        (this.getCurrentCellStyle(cell) as CustomCellStateStyle).constituent
+      );
     }
 
-    selectCellForEvent(cell, evt) {
-      // Redirects selection to parent
+    // Redirects selection to parent
+    override selectCellForEvent = (cell: Cell, evt: MouseEvent) => {
       if (this.isPart(cell)) {
-        cell = cell.getParent();
+        const parent = cell.getParent();
+        !isNullish(parent) && (cell = parent);
       }
       super.selectCellForEvent(cell, evt);
-    }
+    };
 
     createGraphHandler() {
       return new MyCustomGraphHandler(this);
@@ -81,32 +100,25 @@ const Template = ({ label, ...args }) => {
   // Creates the graph inside the given container
   const graph = new MyCustomGraph(container);
 
-  // Enables rubberband selection
-  new RubberBandHandler(graph);
-
-  // Gets the default parent for inserting new cells. This
-  // is normally the first child of the root (ie. layer 0).
-  const parent = graph.getDefaultParent();
-
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex({
-      parent,
+      parent: graph.getDefaultParent(),
       position: [20, 20],
       size: [120, 70],
     });
-    const v2 = graph.insertVertex({
+    graph.insertVertex({
       parent: v1,
       value: 'Constituent',
       position: [20, 20],
       size: [80, 30],
       style: {
-        constituent: 1,
-      },
+        constituent: true,
+      } as CustomCellStateStyle,
     });
   });
 
-  return container;
+  return div;
 };
 
 export const Default = Template.bind({});

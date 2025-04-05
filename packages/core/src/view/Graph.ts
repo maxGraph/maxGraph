@@ -47,6 +47,7 @@ import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 import type {
   EdgeStyleFunction,
+  GraphFoldingOptions,
   GraphPlugin,
   GraphPluginConstructor,
   MouseListenerSet,
@@ -394,6 +395,14 @@ class Graph extends EventSource {
   containsValidationErrorsResource: string = isI18nEnabled()
     ? 'containsValidationErrors'
     : '';
+
+  /** Folding options. */
+  options: GraphFoldingOptions = {
+    foldingEnabled: true,
+    collapsedImage: new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9),
+    expandedImage: new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9),
+    collapseToPreferredSize: true,
+  };
 
   // ===================================================================================================================
   // Group: "Create Class Instance" factory functions.
