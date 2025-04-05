@@ -26,7 +26,6 @@ import type Point from './view/geometry/Point';
 import type Rectangle from './view/geometry/Rectangle';
 import type Shape from './view/geometry/Shape';
 import type ImageBox from './view/image/ImageBox';
-import type Image from './view/image/ImageBox';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -1354,15 +1353,15 @@ export type GraphFoldingOptions = {
    */
   foldingEnabled: boolean;
   /**
-   * Specifies the {@link Image} to indicate a collapsed state.
+   * Specifies the {@link ImageBox} to indicate a collapsed state.
    * @default `Client.imageBasePath + '/collapsed.gif'`
    */
-  collapsedImage: Image;
+  collapsedImage: ImageBox;
   /**
-   * Specifies the {@link Image} to indicate a expanded state.
+   * Specifies the {@link ImageBox} to indicate a expanded state.
    * @default `Client.imageBasePath + '/expanded.gif'`
    */
-  expandedImage: Image;
+  expandedImage: ImageBox;
   /**
    * Specifies if the cell size should be changed to the preferred size when a cell is first collapsed.
    * @default true
