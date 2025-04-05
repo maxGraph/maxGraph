@@ -3,22 +3,6 @@ import Dictionary from './Dictionary';
 import ObjectIdentity from './ObjectIdentity';
 
 /**
- * Returns the cells from the given array where the given filter function
- * returns true.
- */
-export const filterCells = (filter: Function) => (cells: Cell[]) => {
-  const result = [] as Cell[];
-
-  for (let i = 0; i < cells.length; i += 1) {
-    if (filter(cells[i])) {
-      result.push(cells[i]);
-    }
-  }
-
-  return result;
-};
-
-/**
  * Returns all opposite vertices terminal for the given edges, only returning sources and/or targets as specified.
  * The result is returned as an array of {@link Cell}.
  *
