@@ -21,7 +21,7 @@ limitations under the License.
  */
 // WARN: this constant is updated at release time by the script located at 'scripts/update-versions.mjs'.
 // So, if you modify the name of this file or this constant, please update the script accordingly.
-export const VERSION = '0.16.0';
+export const VERSION = '0.17.0';
 
 /**
  * Defines the portion of the cell which is to be used as a connectable

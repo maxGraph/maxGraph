@@ -9,6 +9,14 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+## 0.17.0
+
+Release date: `2025-04-06`
+
+For more details, see the [0.17.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.17.0) on the GitHub release page.
+
+This new version improves graph fitting, makes i18n fully configurable, and reduces bundle size significantly.
+
 **Breaking Changes**:
 - `StylesheetCodec.allowEval` is now set to `false` by default to prevent unwanted use of the eval function, as it carries a possible security risk.
 - `Utils.copyTextToClipboard` is no longer available. It was intended to be internal and had been made public by mistake.
