@@ -79,8 +79,7 @@ export const TranslationsConfig = {
    * See {@link Translations.getSpecialBundle} for handling identifiers with and without a dash.
    *
    * If internationalization is disabled, then the following variables should be overridden to reflect the current language of the system.
-   * These variables are cleared when i18n is disabled:
-   * - {@link CellRenderer.collapseExpandResource}
+   * These variables are cleared when i18n is disabled (the list may not be exhaustive):
    * - {@link Editor.askZoomResource}
    * - {@link Editor.currentFileResource}
    * - {@link Editor.helpResource}
@@ -90,6 +89,7 @@ export const TranslationsConfig = {
    * - {@link Editor.tasksResource}
    * - {@link ElbowEdgeHandler.doubleClickOrientationResource}
    * - {@link Graph.alreadyConnectedResource}.
+   * - {@link Graph.collapseExpandResource}
    * - {@link Graph.containsValidationErrorsResource} and
    * - {@link GraphSelectionModel.doneResource}
    * - {@link GraphSelectionModel.updatingSelectionResource}

@@ -1345,3 +1345,26 @@ export interface I18nProvider {
     callback?: Function | null
   ): void;
 }
+
+export type GraphFoldingOptions = {
+  /**
+   * Specifies if folding (collapse and expand via an image icon in the graph should be enabled).
+   * @default true
+   */
+  foldingEnabled: boolean;
+  /**
+   * Specifies the {@link ImageBox} to indicate a collapsed state.
+   * @default `Client.imageBasePath + '/collapsed.gif'`
+   */
+  collapsedImage: ImageBox;
+  /**
+   * Specifies the {@link ImageBox} to indicate a expanded state.
+   * @default `Client.imageBasePath + '/expanded.gif'`
+   */
+  expandedImage: ImageBox;
+  /**
+   * Specifies if the cell size should be changed to the preferred size when a cell is first collapsed.
+   * @default true
+   */
+  collapseToPreferredSize: boolean;
+};
