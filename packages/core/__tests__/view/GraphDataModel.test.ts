@@ -17,23 +17,49 @@ limitations under the License.
 import { describe, expect, test } from '@jest/globals';
 import { Cell, GraphDataModel } from '../../src';
 
+describe('filterCells', () => {
+  const model: GraphDataModel = new GraphDataModel();
+
+  test('Filter cells with a valid filter function', () => {
+    const cell1 = new Cell();
+    const cells = [cell1, new Cell()];
+    const filter = (cell: Cell) => cell === cell1;
+    const result = model.filterCells(cells, filter);
+    expect(result).toEqual([cell1]);
+  });
+
+  test('Filter cells with an empty array', () => {
+    const cells: Cell[] = [];
+    const filter = (_cell: Cell) => true;
+    const result = model.filterCells(cells, filter);
+    expect(result).toEqual([]);
+  });
+
+  test('Filter cells with a filter function that returns false for all cells', () => {
+    const cells = [new Cell(), new Cell()];
+    const filter = (_cell: Cell) => false;
+    const result = model.filterCells(cells, filter);
+    expect(result).toEqual([]);
+  });
+});
+
 describe('isLayer', () => {
-  const dm: GraphDataModel = new GraphDataModel();
+  const model: GraphDataModel = new GraphDataModel();
   const root: Cell = new Cell();
-  dm.setRoot(root);
+  model.setRoot(root);
 
   test('Child is null', () => {
-    expect(dm.isLayer(null)).toBe(false);
+    expect(model.isLayer(null)).toBe(false);
   });
 
   test('Child is not null and is not layer', () => {
-    expect(dm.isLayer(new Cell())).toBe(false);
+    expect(model.isLayer(new Cell())).toBe(false);
   });
 
   test('Child is not null and is layer', () => {
     const child = new Cell();
     root.children.push(child);
     child.setParent(root);
-    expect(dm.isLayer(child)).toBeTruthy();
+    expect(model.isLayer(child)).toBeTruthy();
   });
 });

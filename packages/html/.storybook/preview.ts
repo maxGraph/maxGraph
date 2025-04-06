@@ -5,6 +5,7 @@ import {
   GlobalConfig,
   NoOpLogger,
   ObjectCodec,
+  registerModelCodecs,
   resetEdgeHandlerConfig,
   resetEntityRelationConnectorConfig,
   resetHandleConfig,
@@ -54,9 +55,13 @@ const resetMaxGraphConfigs = (): void => {
   // Reset registries to remove additional elements registered in a story
   // The objects storing the registered elements are currently public, but they should not be part of the public API.
   // They will be marked as private in the future and clear functions will probably provide instead.
+
   // Codec resets
   CodecRegistry.aliases = {};
   CodecRegistry.codecs = {};
+  // This is done automatically by ModelSerializer but only once, even if the codec registry is cleaned. So force reload manually here.
+  // This is a workaround. If we had a unregisteredCodecs function, we could reset the global codecs loading status and the codecs would be automatically registered again.
+  registerModelCodecs(true);
   ObjectCodec.allowEval = originalAllowEvalConfig.objectCodec;
   StylesheetCodec.allowEval = originalAllowEvalConfig.stylesheetCodec;
 
