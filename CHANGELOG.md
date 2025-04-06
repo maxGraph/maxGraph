@@ -17,6 +17,7 @@ _**Note:** Yet to be released breaking changes appear here._
   - `get`, `getAll`, `load`, `post`, `submit` via `requestUtils`
   - `error`, `popup` via `guiUtils`
 - The `utils` namespace has been removed. The remaining properties associated to this namespace have been moved to the `guiUtils` namespace.
+- The `cellArrayUtils.filterCells` function has been removed. Use the `Array.filter` function instead.
 
 ## 0.16.0
 
