@@ -30,7 +30,7 @@ import Client from '../../Client';
 import Rectangle from '../geometry/Rectangle';
 import { isAltDown, isMultiTouchEvent } from '../../util/EventUtils';
 import { clearSelection } from '../../util/domUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import { GraphPlugin } from '../../types';
 import EventObject from '../event/EventObject';
 import EventSource from '../event/EventSource';
@@ -60,7 +60,7 @@ import EventSource from '../event/EventSource';
 class RubberBandHandler implements GraphPlugin {
   static pluginId = 'RubberBandHandler';
 
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.graph = graph;
     this.graph.addMouseListener(this);
 
@@ -101,7 +101,7 @@ class RubberBandHandler implements GraphPlugin {
   forceRubberbandHandler: Function;
   panHandler: Function;
   gestureHandler: Function;
-  graph: Graph;
+  graph: AbstractGraph;
   first: Point | null = null;
   destroyed = false;
   dragHandler: ((evt: MouseEvent) => void) | null = null;

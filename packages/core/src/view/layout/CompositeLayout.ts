@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import type Cell from '../cell/Cell';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import GraphLayout from './GraphLayout';
 
 /**
@@ -42,11 +42,11 @@ class CompositeLayout extends GraphLayout {
    * Constructs a new layout using the given layouts. The graph instance is
    * required for creating the transaction that contains all layouts.
    *
-   * @param graph Reference to the enclosing {@link Graph}.
+   * @param graph Reference to the enclosing {@link AbstractGraph}.
    * @param layouts Array of {@link GraphLayout}s.
    * @param master Optional layout that handles moves. If no layout is given, then the first layout of the above array is used to handle moves.
    */
-  constructor(graph: Graph, layouts: GraphLayout[], master?: GraphLayout) {
+  constructor(graph: AbstractGraph, layouts: GraphLayout[], master?: GraphLayout) {
     super(graph);
     this.layouts = layouts;
     this.master = master;

@@ -17,7 +17,7 @@ limitations under the License.
 import DragSource, { DropHandler } from '../view/other/DragSource';
 import Point from '../view/geometry/Point';
 import { TOOLTIP_VERTICAL_OFFSET } from './Constants';
-import type { Graph } from '../view/Graph';
+import type { AbstractGraph } from '../view/AbstractGraph';
 import type Cell from '../view/cell/Cell';
 
 /**
@@ -86,7 +86,7 @@ import type Cell from '../view/cell/Cell';
  */
 export const makeDraggable = (
   element: Element,
-  graphF: Graph | Function,
+  graphF: AbstractGraph | Function,
   funct: DropHandler,
   dragElement: Element | null = null,
   dx: number | null = null,
@@ -95,7 +95,7 @@ export const makeDraggable = (
   scalePreview = false,
   highlightDropTargets = true,
   getDropTarget:
-    | ((graph: Graph, x: number, y: number, evt: MouseEvent) => Cell)
+    | ((graph: AbstractGraph, x: number, y: number, evt: MouseEvent) => Cell)
     | null = null
 ) => {
   const dragSource = new DragSource(element, funct);

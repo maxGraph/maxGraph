@@ -57,12 +57,16 @@ jobs:
         run: npm test -w packages/ts-support
       - name: Build ts-example (custom shapes)
         run: npm run build -w packages/ts-example
+      - name: Build ts-example (selected features)
+        run: npm run build -w packages/ts-example-selected-features
       - name: Build ts-example (without defaults)
         run: npm run build -w packages/ts-example-without-defaults
       - name: Build Storybook mini-site
         run: npm run build -w packages/html
       - name: Build js-example
         run: npm run build -w packages/js-example
+      - name: Build js-example (selected features)
+        run: npm run build -w packages/js-example-selected-features
       - name: Build js-example (without defaults)
         run: npm run build -w packages/js-example-without-defaults
       - name: Upload all examples as artifact
@@ -71,10 +75,8 @@ jobs:
           name: examples-${{runner.os}}-${{github.sha}}
           path: |
             packages/html/dist/
-            packages/js-example/dist/
-            packages/js-example-without-defaults/dist/
-            packages/ts-example/dist/
-            packages/ts-example-without-defaults/dist/
+            packages/js-example*/dist/
+            packages/ts-example*/dist/
       - name: Ensure no circular dependencies in the @maxgraph/core produced JS files
         run: npm run check:circular-dependencies -w packages/core
       - name: Ensure no lint errors

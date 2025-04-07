@@ -21,7 +21,7 @@ import InternalEvent from '../event/InternalEvent';
 import { contains, getRotatedPoint, isNumeric, toRadians } from '../../util/mathUtils';
 import { convertPoint } from '../../util/styleUtils';
 import RectangleShape from '../geometry/node/RectangleShape';
-import mxGuide from '../other/Guide';
+import Guide from '../other/Guide';
 import Point from '../geometry/Point';
 import {
   CURSOR,
@@ -40,8 +40,7 @@ import {
   isAltDown,
   isMultiTouchEvent,
 } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
-import Guide from '../other/Guide';
+import type { AbstractGraph } from '../AbstractGraph';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import type SelectionCellsHandler from './SelectionCellsHandler';
@@ -56,10 +55,10 @@ import type CellEditorHandler from './CellEditorHandler';
 import type { ColorValue, GraphPlugin } from '../../types';
 
 /**
- * Graph event handler that handles selection. Individual cells are handled
- * separately using {@link VertexHandler} or one of the edge handlers. These
- * handlers are created using {@link Graph#createHandler} in
- * {@link GraphSelectionModel#cellAdded}.
+ * Graph event handler that handles selection.
+ *
+ * Individual cells are handled separately by {@link SelectionCellsHandler} using {@link VertexHandler} or one of the {@link EdgeHandler}s.
+ * When the {@link SelectionCellsHandler} plugin is registered in the {@link Graph}, {@link SelectionHandler} interacts with this plugin to propagate global selection events to individual cells.
  *
  * To avoid the container to scroll a moved cell into view, set {@link scrollOnMove} to `false`.
  *
@@ -73,7 +72,7 @@ class SelectionHandler implements GraphPlugin {
    *
    * @param graph Reference to the enclosing {@link Graph}.
    */
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.graph = graph;
     this.graph.addMouseListener(this);
 
@@ -170,7 +169,7 @@ class SelectionHandler implements GraphPlugin {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   panHandler: () => void;
   escapeHandler: (sender: EventSource, evt: EventObject) => void;
@@ -729,7 +728,7 @@ class SelectionHandler implements GraphPlugin {
   }
 
   createGuide() {
-    return new mxGuide(this.graph, this.getGuideStates());
+    return new Guide(this.graph, this.getGuideStates());
   }
 
   /**

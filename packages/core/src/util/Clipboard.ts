@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import type Cell from '../view/cell/Cell';
-import type { Graph } from '../view/Graph';
+import type { AbstractGraph } from '../view/AbstractGraph';
 import { getTopmostCells } from './cellArrayUtils';
 
 /**
@@ -123,7 +123,7 @@ class Clipboard {
    * @param cells - Optional array of {@link Cell} to be cut.
    * @returns Returns the cells that have been cut from the graph.
    */
-  static cut(graph: Graph, cells: Cell[] = []): Cell[] {
+  static cut(graph: AbstractGraph, cells: Cell[] = []): Cell[] {
     cells = Clipboard.copy(graph, cells);
     Clipboard.insertCount = 0;
     Clipboard.removeCells(graph, cells);
@@ -137,7 +137,7 @@ class Clipboard {
    * @param graph - {@link graph} that contains the cells to be cut.
    * @param cells - Array of {@link Cell} to be cut.
    */
-  static removeCells(graph: Graph, cells: Cell[]): void {
+  static removeCells(graph: AbstractGraph, cells: Cell[]): void {
     graph.removeCells(cells);
   }
 
@@ -149,7 +149,7 @@ class Clipboard {
    * @param graph - {@link graph} that contains the cells to be copied.
    * @param cells - Optional array of {@link Cell} to be copied.
    */
-  static copy(graph: Graph, cells?: Cell[]): Cell[] {
+  static copy(graph: AbstractGraph, cells?: Cell[]): Cell[] {
     cells = cells || graph.getSelectionCells();
     const result = getTopmostCells(graph.getExportableCells(cells));
     Clipboard.insertCount = 1;
@@ -164,7 +164,7 @@ class Clipboard {
    *
    * @param graph - {@link Graph} to paste the {@link Cell}s into.
    */
-  static paste(graph: Graph): Cell[] | null {
+  static paste(graph: AbstractGraph): Cell[] | null {
     let cells = null;
 
     if (!Clipboard.isEmpty() && Clipboard.getCells()) {

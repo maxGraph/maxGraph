@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
-type PartialGraph = Pick<Graph, 'getView'>;
+type PartialGraph = Pick<AbstractGraph, 'getView'>;
 type PartialSnap = Pick<
-  Graph,
+  AbstractGraph,
   | 'snapTolerance'
   | 'gridSize'
   | 'gridEnabled'

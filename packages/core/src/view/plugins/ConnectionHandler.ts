@@ -54,7 +54,7 @@ import {
 } from '../../util/EventUtils';
 import Image from '../image/ImageBox';
 import CellState from '../cell/CellState';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import Shape from '../geometry/Shape';
 import type { CellStyle, ColorValue, GraphPlugin, Listenable } from '../../types';
@@ -217,7 +217,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Function that is used for creating new edges. The function takes the
@@ -385,7 +385,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * optional cell style from the preview as the third argument. It returns
    * the {@link Cell} that represents the new edge.
    */
-  constructor(graph: Graph, factoryMethod: FactoryMethod | null = null) {
+  constructor(graph: AbstractGraph, factoryMethod: FactoryMethod | null = null) {
     super();
 
     this.graph = graph;
@@ -1988,7 +1988,7 @@ class ConnectionHandlerCellMarker extends CellMarker {
   hotspotEnabled = true;
 
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     connectionHandler: ConnectionHandler,
     validColor: ColorValue = DEFAULT_VALID_COLOR,
     invalidColor: ColorValue = DEFAULT_INVALID_COLOR,

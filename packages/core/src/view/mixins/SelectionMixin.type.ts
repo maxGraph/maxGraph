@@ -18,8 +18,8 @@ import type Cell from '../cell/Cell';
 import type GraphSelectionModel from '../GraphSelectionModel';
 import type Rectangle from '../geometry/Rectangle';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     cells: Cell[];
     doneResource: string;
     updatingSelectionResource: string;

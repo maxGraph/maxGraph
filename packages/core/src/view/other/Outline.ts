@@ -27,7 +27,8 @@ import {
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
 import RectangleShape from '../geometry/node/RectangleShape';
-import { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
+import { BaseGraph } from '../BaseGraph';
 import ImageShape from '../geometry/node/ImageShape';
 import InternalEvent from '../event/InternalEvent';
 import Image from '../image/ImageBox';
@@ -36,7 +37,6 @@ import { getSource, isMouseEvent } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 import { hasScrollbars } from '../../util/styleUtils';
 import { Listenable } from '../../types';
-import { getDefaultPlugins } from '../plugins';
 
 /**
  * Implements an outline (aka overview) for a graph. Set {@link updateOnPan} to true
@@ -79,7 +79,7 @@ import { getDefaultPlugins } from '../plugins';
  * ```
  */
 class Outline {
-  constructor(source: Graph, container: HTMLElement | null = null) {
+  constructor(source: AbstractGraph, container: HTMLElement | null = null) {
     this.source = source;
 
     if (container != null) {
@@ -231,14 +231,14 @@ class Outline {
   index: number | null = null;
 
   /**
-   * Reference to the source {@link graph}.
+   * Reference to the source {@link AbstractGraph}.
    */
-  source: Graph;
+  source: AbstractGraph;
 
   /**
-   * Reference to the {@link graph} that renders the outline.
+   * Reference to the {@link AbstractGraph} that renders the outline.
    */
-  outline: Graph | null = null;
+  outline: AbstractGraph | null = null;
 
   /**
    * Renderhint to be used for the outline graph.
@@ -315,21 +315,26 @@ class Outline {
   suspended = false;
 
   /**
-   * Creates the {@link graph} used in the outline.
+   * Creates the {@link AbstractGraph} used in the outline.
    */
-  createGraph(container: HTMLElement): Graph {
-    const graph = new Graph(
-      container,
-      this.source.getDataModel(),
-      // TODO review the list of plugins for the Graph of an Outline
-      // we could pass an empty array or a selection of plugins
-      // it may be necessary to make the plugins array configurable to allow custom plugins and improve tree-shaking
-      getDefaultPlugins(),
-      this.source.getStylesheet()
-    );
+  createGraph(container: HTMLElement): AbstractGraph {
+    const graph = this.createGraphInstance(container);
     graph.options.foldingEnabled = false;
     graph.autoScroll = false;
     return graph;
+  }
+
+  // TODO decide if we keept this method or if only keep createGraph
+  protected createGraphInstance(container: HTMLElement): AbstractGraph {
+    // We don't need plugins here, and the Graph used here use the same globally registered style elements as the source Graph
+    // TODO review the list of plugins for the Graph of an Outline
+    // we could pass a selection of plugins if we see that Outline relies on some optional features (to validate with the OrgChart stories when it works)
+    // users that want to change the plugins list can override this method
+    return new BaseGraph({
+      container,
+      model: this.source.getDataModel(),
+      stylesheet: this.source.getStylesheet(),
+    });
   }
 
   /**

@@ -1387,11 +1387,14 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Creates the {@link graph} for the editor. The graph is created with no
-   * container and is initialized from {@link setGraphContainer}.
-   * @returns graph instance
+   * Creates the {@link graph} for the editor.
+   *
+   * The Graph is created with no container and is initialized from {@link setGraphContainer}.
+   *
+   * @returns the Graph instance used by the Editor
    */
   createGraph(): Graph {
+    // TODO we may probably introduce a createGraphInstance method to let user choose which plugins they want to use
     const graph = new Graph(undefined!);
 
     // Enables rubberband, tooltips, panning

@@ -18,7 +18,7 @@ limitations under the License.
 
 import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 /**
  * Manager for automatically saving diagrams. The <save> hook must be
@@ -33,7 +33,7 @@ import type { Graph } from '../Graph';
  * ```
  */
 class AutoSaveManager extends EventSource {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super();
 
     // Notifies the manager of a change
@@ -47,9 +47,9 @@ class AutoSaveManager extends EventSource {
   }
 
   /**
-   * Reference to the enclosing {@link Graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph | null = null;
+  graph: AbstractGraph | null = null;
 
   /**
    * Minimum amount of seconds between two consecutive autosaves. Eg. a
@@ -115,7 +115,7 @@ class AutoSaveManager extends EventSource {
   /**
    * Sets the graph that the layouts operate on.
    */
-  setGraph(graph: Graph | null): void {
+  setGraph(graph: AbstractGraph | null): void {
     if (this.graph != null) {
       this.graph.getDataModel().removeListener(this.changeHandler);
     }

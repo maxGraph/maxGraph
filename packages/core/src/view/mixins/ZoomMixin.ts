@@ -16,14 +16,14 @@ limitations under the License.
 
 import Rectangle from '../geometry/Rectangle';
 import { hasScrollbars } from '../../util/styleUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   'getView' | 'getSelectionCell' | 'getContainer' | 'scrollRectToVisible'
 >;
 type PartialZoom = Pick<
-  Graph,
+  AbstractGraph,
   | 'zoomFactor'
   | 'keepSelectionVisibleOnZoom'
   | 'centerZoom'

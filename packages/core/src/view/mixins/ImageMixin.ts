@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type ImageBundle from '../image/ImageBundle';
 
 type PartialImage = Pick<
-  Graph,
+  AbstractGraph,
   'imageBundles' | 'addImageBundle' | 'removeImageBundle' | 'getImageFromBundles'
 >;
 type PartialType = PartialImage;

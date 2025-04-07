@@ -142,6 +142,7 @@ Note that they are based on `maxGraph` features, which require the use of [CSS a
   - The stories are currently written in `JavaScript` and will be progressively migrated to `TypeScript`.
   - A live instance is available on the [maxGraph website](https://maxgraph.github.io/maxGraph/demo).
 - the [ts-example](packages/ts-example) project/application that demonstrates how to define and use custom `Shapes` with `maxGraph`. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
+- the [ts-example-selected-features](packages/js-example-without-defaults) project/application that demonstrates how to use select some features (use related plugins only) and how to only register specific style defaults. It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
 - the [ts-example-without-defaults](packages/ts-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [js-example](packages/js-example) project/application that demonstrates how to import and export the `maxGraph` model with XML data. It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
 - the [js-example-without-defaults](packages/js-example-without-defaults) project/application that demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).

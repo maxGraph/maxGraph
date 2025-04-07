@@ -15,24 +15,13 @@ limitations under the License.
 */
 
 import './style.css';
-import {
-  CellRenderer,
-  constants,
-  Graph,
-  InternalEvent,
-  MarkerShape,
-  StyleRegistry,
-} from '@maxgraph/core';
+import { BaseGraph, constants, InternalEvent } from '@maxgraph/core';
 
 const initializeGraph = (container: HTMLElement) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  const graph = new Graph(
-    container,
-    undefined,
-    [] // override default plugins, use none
-  );
+  const graph = new BaseGraph({ container });
 
   // create a dedicated style for "ellipse" to share properties
   graph.getStylesheet().putCellStyle('myEllipse', {
@@ -42,14 +31,8 @@ const initializeGraph = (container: HTMLElement) => {
     verticalLabelPosition: 'bottom',
   });
 
-  // Custom code to unregister maxGraph style defaults
-  CellRenderer.defaultShapes = {};
-  MarkerShape.markers = {};
-  StyleRegistry.values = {};
-
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    // use the legacy insertVertex method
     const vertex01 = graph.insertVertex({
       value: 'a regular rectangle',
       position: [10, 10],
@@ -68,7 +51,7 @@ const initializeGraph = (container: HTMLElement) => {
       source: vertex01,
       target: vertex02,
       style: {
-        edgeStyle: constants.EDGESTYLE.ORTHOGONAL,
+        edgeStyle: 'orthogonalEdgeStyle',
         rounded: true,
       },
     });

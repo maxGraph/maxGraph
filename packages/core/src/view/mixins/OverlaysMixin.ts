@@ -18,10 +18,10 @@ import CellOverlay from '../cell/CellOverlay';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import type InternalMouseEvent from '../event/InternalMouseEvent';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'getView'
   | 'fireEvent'
   | 'getDataModel'
@@ -31,7 +31,7 @@ type PartialGraph = Pick<
   | 'setSelectionCell'
 >;
 type PartialOverlays = Pick<
-  Graph,
+  AbstractGraph,
   | 'addCellOverlay'
   | 'getCellOverlays'
   | 'removeCellOverlay'

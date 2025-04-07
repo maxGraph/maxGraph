@@ -43,11 +43,11 @@ import Dictionary from '../../util/Dictionary';
 import Point from '../geometry/Point';
 import { htmlEntities } from '../../util/StringUtils';
 import CellState from '../cell/CellState';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import { cloneCells, getTopmostCells } from '../../util/cellArrayUtils';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'getView'
   | 'getStylesheet'
   | 'batchUpdate'
@@ -90,7 +90,7 @@ type PartialGraph = Pick<
 >;
 
 type PartialCells = Pick<
-  Graph,
+  AbstractGraph,
   | 'cellsResizable'
   | 'cellsBendable'
   | 'cellsSelectable'

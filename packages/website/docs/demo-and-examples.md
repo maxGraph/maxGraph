@@ -26,6 +26,7 @@ Note that they are based on `maxGraph` features, which require the use of [CSS a
 
 ## TypeScript Examples
 - the [ts-example](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example) project/application demonstrates how to define and use custom `Shapes` with `maxGraph`. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
+- TODO ts-example-selected-features (see README)
 - the [ts-example-without-defaults](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example-without-defaults) project/application demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 
 ## JavaScript Examples

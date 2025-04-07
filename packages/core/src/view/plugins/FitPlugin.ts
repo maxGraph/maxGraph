@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import type { GraphPlugin } from '../../types';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 function keep2digits(value: number): number {
   return Number(value.toFixed(2));
@@ -54,7 +54,7 @@ export class FitPlugin implements GraphPlugin {
    *
    * @param graph Reference to the enclosing {@link Graph}.
    */
-  constructor(private readonly graph: Graph) {}
+  constructor(private readonly graph: AbstractGraph) {}
 
   /**
    * Fit and center the graph within its container.

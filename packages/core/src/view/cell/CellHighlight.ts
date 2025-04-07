@@ -25,7 +25,7 @@ import {
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
 import type CellState from './CellState';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import Shape from '../geometry/Shape';
 
 import type { ColorValue } from '../../types';
@@ -62,7 +62,7 @@ class CellHighlight {
    * Reference to the enclosing {@link graph}.
    * @default true
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Reference to the {@link CellState}.
@@ -83,7 +83,7 @@ class CellHighlight {
   resetHandler: Function;
 
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     highlightColor?: ColorValue,
     strokeWidth?: number,
     dashed?: boolean

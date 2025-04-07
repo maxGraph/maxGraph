@@ -32,7 +32,7 @@ import PanningManager from '../other/PanningManager';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 
 import type { GraphPlugin, MouseEventListener } from '../../types';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 /**
  * Event handler that pans and creates popupmenus. To use the left
@@ -62,7 +62,7 @@ import type { Graph } from '../Graph';
 class PanningHandler extends EventSource implements GraphPlugin {
   static pluginId = 'PanningHandler';
 
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super();
 
     this.graph = graph;
@@ -123,7 +123,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   panningManager: PanningManager;
 

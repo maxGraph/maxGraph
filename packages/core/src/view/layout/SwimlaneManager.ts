@@ -19,7 +19,7 @@ limitations under the License.
 import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import EventObject from '../event/EventObject';
 import type Cell from '../cell/Cell';
 
@@ -32,7 +32,12 @@ import type Cell from '../cell/Cell';
  * @category Layout
  */
 class SwimlaneManager extends EventSource {
-  constructor(graph: Graph, horizontal = true, addEnabled = true, resizeEnabled = true) {
+  constructor(
+    graph: AbstractGraph,
+    horizontal = true,
+    addEnabled = true,
+    resizeEnabled = true
+  ) {
     super();
 
     this.horizontal = horizontal;
@@ -55,9 +60,9 @@ class SwimlaneManager extends EventSource {
   }
 
   /**
-   * Reference to the enclosing {@link graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph!: Graph;
+  graph!: AbstractGraph;
 
   /**
    * Specifies if event handling is enabled.
@@ -164,7 +169,7 @@ class SwimlaneManager extends EventSource {
   /**
    * Sets the graph that the manager operates on.
    */
-  setGraph(graph: Graph | null) {
+  setGraph(graph: AbstractGraph | null) {
     if (this.graph) {
       this.graph.removeListener(this.addHandler);
       this.graph.removeListener(this.resizeHandler);

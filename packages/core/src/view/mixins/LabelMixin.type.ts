@@ -16,8 +16,8 @@ limitations under the License.
 
 import type Cell from '../cell/Cell';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies if labels should be visible. This is used in {@link getLabel}.
      * @default true
