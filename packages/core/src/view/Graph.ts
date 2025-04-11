@@ -58,7 +58,7 @@ import GraphSelectionModel from './GraphSelectionModel';
 import { registerDefaultShapes } from './cell/register-shapes';
 import {
   registerDefaultEdgeMarkers,
-  registerDefaultEdgStyles,
+  registerDefaultEdgeStyles,
   registerDefaultPerimeters,
 } from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
@@ -493,7 +493,7 @@ class Graph extends EventSource {
   protected registerDefaults(): void {
     registerDefaultShapes();
     registerDefaultEdgeMarkers();
-    registerDefaultEdgStyles();
+    registerDefaultEdgeStyles();
     registerDefaultPerimeters();
   }
 

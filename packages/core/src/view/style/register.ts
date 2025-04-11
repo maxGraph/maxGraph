@@ -30,7 +30,7 @@ let isDefaultEdgeStylesRegistered = false;
  * @category Style
  * @since 0.18.0
  */
-export const registerDefaultEdgStyles = (): void => {
+export const registerDefaultEdgeStyles = (): void => {
   registerDefaultPerimeters();
 
   if (!isDefaultEdgeStylesRegistered) {
