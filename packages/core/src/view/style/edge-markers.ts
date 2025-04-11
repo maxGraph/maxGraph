@@ -23,7 +23,14 @@ import type Point from '../geometry/Point';
 import { ARROW } from '../../util/Constants';
 
 /**
- * Generally used to create the classic and block marker factory methods.
+ * Generally used to create the "classic" and "block" marker factory methods.
+ *
+ * Here is an example the registration of a factory edge marker function with `createArrow`:
+ * ```js
+ * MarkerShape.addMarker('classic', createArrow(2));
+ * MarkerShape.addMarker('blockThin', createArrow(3));
+ * ```
+ *
  * @since 0.18.0
  */
 export const createArrow =
@@ -84,7 +91,13 @@ export const createArrow =
   };
 
 /**
- * Generally used to create the open and open thin marker factory methods.
+ * Generally used to create the "open" and "open thin" marker factory methods.
+ *
+ * Here is an example the registration of a factory edge marker function with `createOpenArrow`:
+ * ```js
+ * MarkerShape.addMarker('open', createOpenArrow(2));
+ * ```
+ *
  * @since 0.18.0
  */
 export const createOpenArrow =
@@ -165,6 +178,13 @@ export const oval = (
 };
 
 /**
+ * Generally used to create the "diamond" and "diamond thin" marker factory methods.
+ *
+ * ```js
+ * MarkerShape.addMarker('diamond', diamond);
+ * MarkerShape.addMarker('diamondThin', diamond);
+ * ```
+ *
  * @since 0.18.0
  */
 export const diamond = (
