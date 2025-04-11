@@ -51,13 +51,16 @@ for storing references to ports.)
 */
 
 import {
+  type Cell,
   domUtils,
   styleUtils,
   mathUtils,
   cloneUtils,
+  EventSource,
   eventUtils,
   Graph,
   InternalEvent,
+  InternalMouseEvent,
   RubberBandHandler,
   ConnectionHandler,
   ConnectionConstraint,
@@ -95,10 +98,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-import '@maxgraph/core/css/common.css';
-import type Cell from '@maxgraph/core/lib/view/cell/Cell.ts';
-import InternalMouseEvent from '@maxgraph/core/lib/view/event/InternalMouseEvent.ts';
-import EventSource from '@maxgraph/core/lib/view/event/EventSource.ts'; // style required by RubberBand
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Connections/Wires',
