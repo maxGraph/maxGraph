@@ -31,8 +31,6 @@ let isDefaultEdgeStylesRegistered = false;
  * @since 0.18.0
  */
 export const registerDefaultEdgeStyles = (): void => {
-  registerDefaultPerimeters();
-
   if (!isDefaultEdgeStylesRegistered) {
     StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
     StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
