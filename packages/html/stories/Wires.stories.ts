@@ -116,6 +116,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return new MyCustomEdgeHandler(state);
     }
 
+    // TODO define this in createEdgeHandlerInstance instead to simplify
+    // TODO WireConnector is managed by a segment handler, so it should be considered as orthogonal in GraphView.isOrthogonal
     override createHandler(state: CellState) {
       if (state) {
         if (state.cell.isEdge()) {
