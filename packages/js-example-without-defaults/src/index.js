@@ -44,6 +44,7 @@ const initializeGraph = (container) => {
 
   // Unregister maxGraph builtin style defaults
   // This is because Graph registers them. In the future, we expect to have an implementation of Graph that does not do it.
+  // See https://github.com/maxGraph/maxGraph/issues/760
   unregisterAllEdgeMarkers();
   unregisterAllEdgeStylesAndPerimeters();
   unregisterAllShapes();
