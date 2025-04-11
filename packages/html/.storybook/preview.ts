@@ -1,11 +1,25 @@
+/*
+Copyright 2023-present The maxGraph project Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import type { Preview } from '@storybook/html';
 import {
   Client,
-  CodecRegistry,
   GlobalConfig,
   NoOpLogger,
   ObjectCodec,
-  registerModelCodecs,
   resetEdgeHandlerConfig,
   resetEntityRelationConnectorConfig,
   resetHandleConfig,
@@ -18,6 +32,10 @@ import {
   StylesheetCodec,
   Translations,
   TranslationsAsI18n,
+  unregisterAllCodecs,
+  unregisterAllEdgeMarkers,
+  unregisterAllEdgeStylesAndPerimeters,
+  unregisterAllShapes,
 } from '@maxgraph/core';
 
 const defaultLogger = new NoOpLogger();
@@ -40,6 +58,7 @@ const originalAllowEvalConfig = {
 };
 
 const resetMaxGraphConfigs = (): void => {
+  // Global configuration
   GlobalConfig.i18n = i18nProvider;
   GlobalConfig.logger = defaultLogger;
 
@@ -52,18 +71,15 @@ const resetMaxGraphConfigs = (): void => {
   resetTranslationsConfig();
   resetVertexHandlerConfig();
 
-  // Reset registries to remove additional elements registered in a story
-  // The objects storing the registered elements are currently public, but they should not be part of the public API.
-  // They will be marked as private in the future and clear functions will probably provide instead.
-
-  // Codec resets
-  CodecRegistry.aliases = {};
-  CodecRegistry.codecs = {};
-  // This is done automatically by ModelSerializer but only once, even if the codec registry is cleaned. So force reload manually here.
-  // This is a workaround. If we had a unregisteredCodecs function, we could reset the global codecs loading status and the codecs would be automatically registered again.
-  registerModelCodecs(true);
+  // Codecs
+  unregisterAllCodecs();
   ObjectCodec.allowEval = originalAllowEvalConfig.objectCodec;
   StylesheetCodec.allowEval = originalAllowEvalConfig.stylesheetCodec;
+
+  // Style configuration
+  unregisterAllEdgeMarkers();
+  unregisterAllEdgeStylesAndPerimeters();
+  unregisterAllShapes();
 
   // The following registries are filled by stories only
   StencilShapeRegistry.stencils = {};

@@ -16,12 +16,12 @@ limitations under the License.
 
 import './style.css';
 import {
-  CellRenderer,
   constants,
   Graph,
   InternalEvent,
-  MarkerShape,
-  StyleRegistry,
+  unregisterAllEdgeMarkers,
+  unregisterAllEdgeStylesAndPerimeters,
+  unregisterAllShapes,
 } from '@maxgraph/core';
 
 const initializeGraph = (container) => {
@@ -42,14 +42,14 @@ const initializeGraph = (container) => {
     verticalLabelPosition: 'bottom',
   });
 
-  // Custom code to unregister maxGraph style defaults
-  CellRenderer.defaultShapes = {};
-  MarkerShape.markers = {};
-  StyleRegistry.values = {};
+  // Unregister maxGraph builtin style defaults
+  // This is because Graph registers them. In the future, we expect to have an implementation of Graph that does not do it.
+  unregisterAllEdgeMarkers();
+  unregisterAllEdgeStylesAndPerimeters();
+  unregisterAllShapes();
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    // use the legacy insertVertex method
     const vertex01 = graph.insertVertex({
       value: 'a regular rectangle',
       position: [10, 10],

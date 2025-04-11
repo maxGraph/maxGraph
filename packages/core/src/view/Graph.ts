@@ -56,8 +56,11 @@ import Multiplicity from './other/Multiplicity';
 import ImageBundle from './image/ImageBundle';
 import GraphSelectionModel from './GraphSelectionModel';
 import { registerDefaultShapes } from './cell/register-shapes';
-import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
-import { registerDefaultStyleElements } from './style/register';
+import {
+  registerDefaultEdgeMarkers,
+  registerDefaultEdgStyles,
+  registerDefaultPerimeters,
+} from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
 import { isNullish } from '../internal/utils';
@@ -489,8 +492,9 @@ class Graph extends EventSource {
 
   protected registerDefaults(): void {
     registerDefaultShapes();
-    registerDefaultStyleElements();
     registerDefaultEdgeMarkers();
+    registerDefaultEdgStyles();
+    registerDefaultPerimeters();
   }
 
   constructor(

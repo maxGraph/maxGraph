@@ -24,7 +24,7 @@ import {
 import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
 import ObjectCodec from './ObjectCodec';
-import { registerBaseCodecs } from './register-shared';
+import { CodecRegistrationStates, registerBaseCodecs } from './register-shared';
 
 const createObjectCodec = (template: any, name: string): ObjectCodec => {
   const objectCodec = new ObjectCodec(template);
@@ -32,7 +32,6 @@ const createObjectCodec = (template: any, name: string): ObjectCodec => {
   return objectCodec;
 };
 
-let isModelCodecsRegistered = false;
 /**
  * Register model codecs i.e. codecs used to import/export the Graph Model, see {@link GraphDataModel}.
  *
@@ -43,7 +42,7 @@ let isModelCodecsRegistered = false;
  * @category Serialization with Codecs
  */
 export const registerModelCodecs = (force = false) => {
-  if (!isModelCodecsRegistered || force) {
+  if (!CodecRegistrationStates.model || force) {
     CodecRegistry.register(new CellCodec());
     CodecRegistry.register(new ModelCodec());
 
@@ -59,6 +58,6 @@ export const registerModelCodecs = (force = false) => {
     CodecRegistry.register(new mxCellCodec(), false);
     CodecRegistry.register(new mxGeometryCodec(), false);
 
-    isModelCodecsRegistered = true;
+    CodecRegistrationStates.model = true;
   }
 };

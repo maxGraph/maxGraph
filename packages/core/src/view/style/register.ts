@@ -18,19 +18,22 @@ import { EDGESTYLE, PERIMETER } from '../../util/Constants';
 import EdgeStyle from './EdgeStyle';
 import Perimeter from './Perimeter';
 import StyleRegistry from './StyleRegistry';
+import MarkerShape from './EdgeMarkerRegistry';
+import { createArrow, createOpenArrow, diamond, oval } from './edge-markers';
 
-let isDefaultsRegistered = false;
+let isDefaultEdgeStylesRegistered = false;
 
 /**
- * Register style elements for "EdgeStyle" and "Perimeters".
+ * Register default builtin {@link EdgeStyle}s in {@link StyleRegistry}.
  *
- * @private
  * @category Configuration
  * @category Style
+ * @since 0.18.0
  */
-export const registerDefaultStyleElements = (): void => {
-  if (!isDefaultsRegistered) {
-    // Edge styles
+export const registerDefaultEdgStyles = (): void => {
+  registerDefaultPerimeters();
+
+  if (!isDefaultEdgeStylesRegistered) {
     StyleRegistry.putValue(EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector);
     StyleRegistry.putValue(EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation);
     StyleRegistry.putValue(EDGESTYLE.LOOP, EdgeStyle.Loop);
@@ -40,13 +43,79 @@ export const registerDefaultStyleElements = (): void => {
     StyleRegistry.putValue(EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide);
     StyleRegistry.putValue(EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom);
 
-    // Perimeters
+    isDefaultEdgeStylesRegistered = true;
+  }
+};
+
+let isDefaultPerimetersRegistered = false;
+
+/**
+ * Register default builtin {@link Perimeter}s in {@link StyleRegistry}.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.18.0
+ */
+export const registerDefaultPerimeters = (): void => {
+  if (!isDefaultPerimetersRegistered) {
     StyleRegistry.putValue(PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter);
     StyleRegistry.putValue(PERIMETER.HEXAGON, Perimeter.HexagonPerimeter);
     StyleRegistry.putValue(PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter);
     StyleRegistry.putValue(PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter);
     StyleRegistry.putValue(PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter);
 
-    isDefaultsRegistered = true;
+    isDefaultPerimetersRegistered = true;
   }
+};
+
+/**
+ * Unregister all {@link EdgeStyle}s and {@link Perimeter}s from {@link StyleRegistry}.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.18.0
+ */
+export const unregisterAllEdgeStylesAndPerimeters = (): void => {
+  StyleRegistry.values = {};
+  isDefaultEdgeStylesRegistered = false;
+  isDefaultPerimetersRegistered = false;
+};
+
+let isDefaultMarkersRegistered = false;
+/**
+ *
+ * Register default builtin {@link MarkerFactoryFunction}s in {@link MarkerShape}.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.18.0
+ */
+export const registerDefaultEdgeMarkers = (): void => {
+  if (!isDefaultMarkersRegistered) {
+    MarkerShape.addMarker('classic', createArrow(2));
+    MarkerShape.addMarker('classicThin', createArrow(3));
+    MarkerShape.addMarker('block', createArrow(2));
+    MarkerShape.addMarker('blockThin', createArrow(3));
+
+    MarkerShape.addMarker('open', createOpenArrow(2));
+    MarkerShape.addMarker('openThin', createOpenArrow(3));
+
+    MarkerShape.addMarker('oval', oval);
+
+    MarkerShape.addMarker('diamond', diamond);
+    MarkerShape.addMarker('diamondThin', diamond);
+
+    isDefaultMarkersRegistered = true;
+  }
+};
+/**
+ * Unregister all {@link MarkerFactoryFunction}s from {@link MarkerShape}.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.18.0
+ */
+export const unregisterAllEdgeMarkers = (): void => {
+  MarkerShape.markers = {};
+  isDefaultMarkersRegistered = false;
 };

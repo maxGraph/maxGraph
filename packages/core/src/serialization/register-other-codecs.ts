@@ -34,7 +34,7 @@ import GeometryChange from '../view/undoable_changes/GeometryChange';
 import StyleChange from '../view/undoable_changes/StyleChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
 import VisibleChange from '../view/undoable_changes/VisibleChange';
-import { registerBaseCodecs } from './register-shared';
+import { CodecRegistrationStates, registerBaseCodecs } from './register-shared';
 import { registerModelCodecs } from './register-model-codecs';
 
 const registerGenericChangeCodecs = () => {
@@ -59,7 +59,6 @@ const registerGenericChangeCodecs = () => {
   );
 };
 
-let isCoreCodecsRegistered = false;
 /**
  * Register core codecs i.e. codecs that don't relate to editor. This includes model codecs that can be registered individually with {@link registerModelCodecs}.
  *
@@ -70,7 +69,7 @@ let isCoreCodecsRegistered = false;
  * @category Serialization with Codecs
  */
 export const registerCoreCodecs = (force = false) => {
-  if (!isCoreCodecsRegistered || force) {
+  if (!CodecRegistrationStates.core || force) {
     CodecRegistry.register(new ChildChangeCodec());
     CodecRegistry.register(new GraphCodec());
     CodecRegistry.register(new GraphViewCodec());
@@ -81,11 +80,10 @@ export const registerCoreCodecs = (force = false) => {
 
     registerModelCodecs(force);
 
-    isCoreCodecsRegistered = true;
+    CodecRegistrationStates.core = true;
   }
 };
 
-let isEditorCodecsRegistered = false;
 /**
  * Register only editor codecs.
  * @param force if `true` register the codecs even if they were already registered. If false, only register them
@@ -95,7 +93,7 @@ let isEditorCodecsRegistered = false;
  * @category Serialization with Codecs
  */
 export const registerEditorCodecs = (force = false) => {
-  if (!isEditorCodecsRegistered || force) {
+  if (!CodecRegistrationStates.editor || force) {
     registerBaseCodecs(force);
 
     CodecRegistry.register(new EditorCodec());
@@ -103,7 +101,7 @@ export const registerEditorCodecs = (force = false) => {
     CodecRegistry.register(new EditorPopupMenuCodec());
     CodecRegistry.register(new EditorToolbarCodec());
 
-    isEditorCodecsRegistered = true;
+    CodecRegistrationStates.editor = true;
   }
 };
 
@@ -119,4 +117,21 @@ export const registerEditorCodecs = (force = false) => {
 export const registerAllCodecs = (force = false) => {
   registerCoreCodecs(force);
   registerEditorCodecs(force);
+};
+
+/**
+ * Unregister all codecs from {@link CodecRegistry}.
+ *
+ * @since 0.18.0
+ * @category Configuration
+ * @category Serialization with Codecs
+ */
+export const unregisterAllCodecs = () => {
+  CodecRegistry.codecs = {};
+  CodecRegistry.aliases = {};
+
+  // reset the state to ensure that the codecs are registered again when the "register" functions are called
+  for (const key of Object.keys(CodecRegistrationStates)) {
+    CodecRegistrationStates[key] = false;
+  }
 };
