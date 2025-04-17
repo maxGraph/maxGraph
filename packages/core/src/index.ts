@@ -118,8 +118,8 @@ export { default as RhombusShape } from './view/geometry/node/RhombusShape';
 export {
   default as StencilShape,
   StencilShapeConfig,
-} from './view/geometry/node/StencilShape';
-export { default as StencilShapeRegistry } from './view/geometry/node/StencilShapeRegistry';
+} from './view/geometry/stencil/StencilShape';
+export { default as StencilShapeRegistry } from './view/geometry/stencil/StencilShapeRegistry';
 
 export * as constants from './util/Constants';
 export { default as Guide } from './view/other/Guide';
