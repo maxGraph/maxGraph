@@ -115,6 +115,8 @@ export { default as HexagonShape } from './view/geometry/node/HexagonShape';
 export { default as ImageShape } from './view/geometry/node/ImageShape';
 export { default as RectangleShape } from './view/geometry/node/RectangleShape';
 export { default as RhombusShape } from './view/geometry/node/RhombusShape';
+
+export { unregisterAllStencilShapes } from './view/geometry/stencil/register';
 export {
   default as StencilShape,
   StencilShapeConfig,
