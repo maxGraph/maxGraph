@@ -59,6 +59,13 @@ See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues
 
 When instantiating a `Graph` object, the registries are filled with `maxGraph` default style configurations. There is no default stencil shapes registered by default.
 
+It is possible to unregister all elements from a style registry using the related `unregister` function. For example:
+
+```javascript
+unregisterAllEdgeMarkers
+unregisterAllShapes();
+```
+
 
 ## Codecs and Serialization
 
@@ -66,3 +73,9 @@ When instantiating a `Graph` object, the registries are filled with `maxGraph` d
 By default, no codec is registered. Some functions are provided to register codecs for specific objects.
 
 For more details about the codecs, see the Codec [documentation page](./codecs.md).
+
+It is possible to unregister all elements from `CodecRegistry` using the related `unregister` function. For example:
+
+```javascript
+unregisterAllCodecs();
+```
