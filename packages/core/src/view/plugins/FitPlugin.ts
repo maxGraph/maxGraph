@@ -37,7 +37,7 @@ export type FitCenterOptions = {
 
 /**
  * Options of the {@link FitPlugin.fit} method.
- * @since 0.17.0
+ * @since 0.18.0
  * @category Navigation
  */
 export type FitOptions = {
@@ -120,6 +120,7 @@ export class FitPlugin implements GraphPlugin {
    * To fit and center the graph, use {@link fitCenter}.
    *
    * @param options Optional number that specifies the border.
+   * @since 0.18.0
    */
   fit(options: FitOptions = {}): number {
     const {
