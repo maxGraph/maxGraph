@@ -18,7 +18,7 @@ limitations under the License.
 
 import GraphLayout from './GraphLayout';
 import { DEFAULT_STARTSIZE } from '../../util/Constants';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 import Geometry from '../geometry/Geometry';
 
@@ -37,7 +37,7 @@ import Geometry from '../geometry/Geometry';
  */
 class StackLayout extends GraphLayout {
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     horizontal: boolean | null = null,
     spacing: number | null = null,
     x0: number | null = null,

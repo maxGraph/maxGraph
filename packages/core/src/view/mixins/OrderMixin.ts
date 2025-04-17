@@ -17,14 +17,14 @@ limitations under the License.
 import { sortCells } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   'fireEvent' | 'batchUpdate' | 'getDataModel' | 'getSelectionCells'
 >;
-type PartialOrder = Pick<Graph, 'orderCells' | 'cellsOrdered'>;
+type PartialOrder = Pick<AbstractGraph, 'orderCells' | 'cellsOrdered'>;
 type PartialType = PartialGraph & PartialOrder;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.

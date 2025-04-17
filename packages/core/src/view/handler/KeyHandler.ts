@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import InternalEvent from '../event/InternalEvent';
 import { isAncestorNode } from '../../util/domUtils';
 import {
@@ -74,11 +74,11 @@ class KeyHandler {
   /**
    * Constructs an event handler that executes functions bound to specific keystrokes.
    *
-   * @param graph Reference to the associated {@link Graph}.
+   * @param graph Reference to the associated {@link AbstractGraph}.
    * @param target  Optional reference to the event target.
    *                If `null`, the document element is used as the event target, that is, the object where the key event listener is installed.
    */
-  constructor(graph: Graph, target: Element | null = null) {
+  constructor(graph: AbstractGraph, target: Element | null = null) {
     if (graph != null) {
       this.graph = graph;
       this.target = target || document.documentElement;
@@ -95,9 +95,9 @@ class KeyHandler {
   keydownHandler: ((event: KeyboardEvent) => void) | null = null;
 
   /**
-   * Reference to the {@link Graph} associated with this handler.
+   * Reference to the {@link AbstractGraph} associated with this handler.
    */
-  graph: Graph | null = null;
+  graph: AbstractGraph | null = null;
 
   /**
    * Reference to the target DOM, that is, the DOM node where the key event

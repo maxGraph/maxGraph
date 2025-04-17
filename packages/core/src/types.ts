@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { IDENTITY_FIELD_NAME } from './util/Constants';
-import type { Graph } from './view/Graph';
 import type AbstractCanvas2D from './view/canvas/AbstractCanvas2D';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
@@ -26,6 +25,7 @@ import type Point from './view/geometry/Point';
 import type Rectangle from './view/geometry/Rectangle';
 import type Shape from './view/geometry/Shape';
 import type ImageBox from './view/image/ImageBox';
+import { AbstractGraph } from './view/AbstractGraph';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -1102,7 +1102,7 @@ export type VertexParameters = {
 /** @category Plugin */
 export interface GraphPluginConstructor {
   pluginId: string;
-  new (graph: Graph): GraphPlugin;
+  new (graph: AbstractGraph): GraphPlugin;
 }
 
 /** @category Plugin */

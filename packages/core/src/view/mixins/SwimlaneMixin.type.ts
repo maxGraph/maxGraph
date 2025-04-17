@@ -18,8 +18,8 @@ import type Cell from '../cell/Cell';
 import type Rectangle from '../geometry/Rectangle';
 import type { CellStateStyle, DirectionValue } from '../../types';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies if swimlanes should be selectable via the content if the mouse is released.
      * @default true

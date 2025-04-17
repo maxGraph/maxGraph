@@ -18,7 +18,7 @@ limitations under the License.
 
 import { isNode } from '../../util/domUtils';
 import type Cell from '../cell/Cell';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import { translate } from '../../internal/i18n-utils';
 
 /**
@@ -132,15 +132,15 @@ class Multiplicity {
    * Checks the multiplicity for the given arguments and returns the error
    * for the given connection or null if the multiplicity does not apply.
    *
-   * @param graph Reference to the enclosing {@link graph} instance.
-   * @param edge {@link mxCell} that represents the edge to validate.
-   * @param source {@link mxCell} that represents the source terminal.
-   * @param target {@link mxCell} that represents the target terminal.
+   * @param graph Reference to the enclosing {@link AbstractGraph} instance.
+   * @param edge {@link Cell} that represents the edge to validate.
+   * @param source {@link Cell} that represents the source terminal.
+   * @param target {@link Cell} that represents the target terminal.
    * @param sourceOut Number of outgoing edges from the source terminal.
    * @param targetIn Number of incoming edges for the target terminal.
    */
   check(
-    graph: Graph,
+    graph: AbstractGraph,
     edge: Cell,
     source: Cell,
     target: Cell,
@@ -181,7 +181,7 @@ class Multiplicity {
    * Checks if there are any valid neighbours in {@link validNeighbors}. This is only
    * called if {@link validNeighbors} is a non-empty array.
    */
-  checkNeighbors(graph: Graph, edge: Cell, source: Cell, target: Cell): boolean {
+  checkNeighbors(graph: AbstractGraph, edge: Cell, source: Cell, target: Cell): boolean {
     const sourceValue = source.getValue();
     const targetValue = target.getValue();
     let isValid = !this.validNeighborsAllowed;
@@ -205,7 +205,7 @@ class Multiplicity {
    * given cell is the source or target of the given edge, depending on
    * {@link source}. This implementation uses {@link checkType} on the terminal's value.
    */
-  checkTerminal(graph: Graph, edge: Cell, terminal: Cell): boolean {
+  checkTerminal(graph: AbstractGraph, edge: Cell, terminal: Cell): boolean {
     const value = terminal?.getValue() ?? null;
 
     return this.checkType(graph, value, this.type, this.attr, this.value);
@@ -215,7 +215,7 @@ class Multiplicity {
    * Checks the type of the given value.
    */
   checkType(
-    graph: Graph,
+    graph: AbstractGraph,
     value: string | Element | Cell,
     type: string,
     attr?: string,

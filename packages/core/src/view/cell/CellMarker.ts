@@ -29,7 +29,7 @@ import CellHighlight from './CellHighlight';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import { intersectsHotspot } from '../../util/mathUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import { ColorValue } from '../../types';
 import type CellState from './CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -61,7 +61,7 @@ class CellMarker extends EventSource {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Specifies if the marker is enabled.
@@ -119,7 +119,7 @@ class CellMarker extends EventSource {
    * @param hotspot Portion of the width and height where a state intersects a given coordinate pair. A value of 0 means always highlight. Default is {@link DEFAULT_HOTSPOT}.
    */
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     validColor: ColorValue = DEFAULT_VALID_COLOR,
     invalidColor: ColorValue = DEFAULT_INVALID_COLOR,
     hotspot: number = DEFAULT_HOTSPOT

@@ -24,7 +24,7 @@ import Client from '../../Client';
 import { intersects } from '../../util/mathUtils';
 import { DIALECT } from '../../util/Constants';
 import { addLinkToHead, write } from '../../util/domUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type CellState from '../cell/CellState';
 import type Cell from '../cell/Cell';
 import { GlobalConfig } from '../../util/config';
@@ -147,7 +147,7 @@ import { GlobalConfig } from '../../util/config';
  */
 class PrintPreview {
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     scale: number | null = null,
     pageFormat: Rectangle | null = null,
     border: number | null = null,
@@ -171,9 +171,9 @@ class PrintPreview {
   }
 
   /**
-   * Reference to the {@link graph} that should be previewed.
+   * Reference to the {@link AbstractGraph} that should be previewed.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Holds the {@link Rectangle} that defines the page format.
@@ -311,7 +311,7 @@ class PrintPreview {
    * this is specified then no HEAD tag, CSS and BODY tag will be written.
    */
   appendGraph(
-    graph: Graph,
+    graph: AbstractGraph,
     scale: number,
     x0: number,
     y0: number,

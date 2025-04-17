@@ -21,7 +21,7 @@ import Dictionary from '../../util/Dictionary';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import { sortCells } from '../../util/styleUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import Cell from '../cell/Cell';
 import CellState from '../cell/CellState';
 import type { GraphPlugin } from '../../types';
@@ -51,7 +51,7 @@ type Handler = EdgeHandler | VertexHandler;
 class SelectionCellsHandler extends EventSource implements GraphPlugin {
   static pluginId = 'SelectionCellsHandler';
 
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super();
 
     this.graph = graph;
@@ -78,7 +78,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Specifies if events are handled. Default is true.

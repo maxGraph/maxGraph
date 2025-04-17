@@ -22,13 +22,13 @@ import EventObject from '../event/EventObject';
 import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 /**
  * Implements a handler for panning.
  */
 class PanningManager {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.thread = null;
     this.active = false;
     this.tdx = 0;

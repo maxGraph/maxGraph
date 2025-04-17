@@ -20,7 +20,7 @@ import MaxPopupMenu from '../../gui/MaxPopupMenu';
 import InternalEvent from '../event/InternalEvent';
 import { getScrollOrigin } from '../../util/styleUtils';
 import { getMainEvent, isMultiTouchEvent } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import type { GraphPlugin } from '../../types';
 import type TooltipHandler from './TooltipHandler';
@@ -37,7 +37,7 @@ import EventObject from '../event/EventObject';
 class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   static pluginId = 'PopupMenuHandler';
 
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super();
 
     this.graph = graph;
@@ -61,7 +61,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Specifies if cells should be selected if a popupmenu is displayed for

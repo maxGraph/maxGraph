@@ -17,8 +17,8 @@ limitations under the License.
 import type Cell from '../cell/Cell';
 import type Rectangle from '../geometry/Rectangle';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Adds the cells into the given group.
      * The change is carried out using {@link cellsAdded}, {@link cellsMoved} and {@link cellsResized}.

@@ -16,12 +16,12 @@ limitations under the License.
 
 import Cell from '../cell/Cell';
 import Geometry from '../geometry/Geometry';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type { CellStyle } from '../../types';
 
-type PartialGraph = Pick<Graph, 'addCell' | 'getChildCells'>;
+type PartialGraph = Pick<AbstractGraph, 'addCell' | 'getChildCells'>;
 type PartialVertex = Pick<
-  Graph,
+  AbstractGraph,
   | 'vertexLabelsMovable'
   | 'allowNegativeCoordinates'
   | 'isAllowNegativeCoordinates'

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { mixInto } from '../../internal/utils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import { CellsMixin } from './CellsMixin';
 import { ConnectionsMixin } from './ConnectionsMixin';
 import { DragDropMixin } from './DragDropMixin';
@@ -40,7 +40,7 @@ import { ValidationMixin } from './ValidationMixin';
 import { VertexMixin } from './VertexMixin';
 import { ZoomMixin } from './ZoomMixin';
 
-export const applyGraphMixins = (target: typeof Graph) => {
+export const applyGraphMixins = (target: typeof AbstractGraph) => {
   const mixIntoGraph = mixInto(target);
 
   // Apply the mixins in alphabetic order to ease maintenance.

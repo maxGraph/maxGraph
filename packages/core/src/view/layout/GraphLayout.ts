@@ -20,7 +20,7 @@ import Dictionary from '../../util/Dictionary';
 import Rectangle from '../geometry/Rectangle';
 import Geometry from '../geometry/Geometry';
 import Point from '../geometry/Point';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 import { GraphLayoutTraverseArgs } from './types';
 
@@ -33,14 +33,14 @@ import { GraphLayoutTraverseArgs } from './types';
  * @category Layout
  */
 class GraphLayout {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.graph = graph;
   }
 
   /**
-   * Reference to the enclosing {@link Graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Boolean indicating if the bounding box of the label should be used if it iss available.
@@ -96,7 +96,7 @@ class GraphLayout {
   /**
    * Returns the graph that this layout operates on.
    */
-  getGraph(): Graph {
+  getGraph(): AbstractGraph {
     return this.graph;
   }
 

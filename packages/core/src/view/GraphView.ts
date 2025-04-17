@@ -41,7 +41,7 @@ import ConnectionConstraint from './other/ConnectionConstraint';
 import type PopupMenuHandler from './plugins/PopupMenuHandler';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
 import { clone } from '../util/cloneUtils';
-import type { Graph } from './Graph';
+import type { AbstractGraph } from './AbstractGraph';
 import StyleRegistry from './style/StyleRegistry';
 import type TooltipHandler from './plugins/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
@@ -92,7 +92,7 @@ import { isI18nEnabled } from '../internal/i18n-utils';
  * respectively.
  */
 export class GraphView extends EventSource {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super();
 
     this.graph = graph;
@@ -158,7 +158,7 @@ export class GraphView extends EventSource {
   /**
    * Reference to the enclosing {@link graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * {@link Cell} that acts as the root of the displayed cell hierarchy.

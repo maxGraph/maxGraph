@@ -17,6 +17,8 @@ limitations under the License.
 // Contribution of Mixins to the Graph type (no side effects, types only)
 import './view/mixins/_graph-mixins-types';
 
+export { AbstractGraph } from './view/AbstractGraph';
+export { BaseGraph } from './view/BaseGraph';
 export { Graph } from './view/Graph';
 export * from './view/plugins';
 

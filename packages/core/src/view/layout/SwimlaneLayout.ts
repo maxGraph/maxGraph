@@ -26,7 +26,7 @@ import ObjectIdentity from '../../util/ObjectIdentity';
 import SwimlaneOrdering from './hierarchical/SwimlaneOrdering';
 import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction';
 import CoordinateAssignment from './hierarchical/CoordinateAssignment';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 import Geometry from '../../view/geometry/Geometry';
 import { SwimlaneGraphLayoutTraverseArgs } from './types';
@@ -40,11 +40,11 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * Constructs a new hierarchical layout algorithm.
    *
-   * @param graph Reference to the enclosing {@link Graph}.
-   * @param orientation Optional constant that defines the orientation of this layout. Default is {@link DIRECTION_NORTH}.
+   * @param graph Reference to the enclosing {@link AbstractGraph}.
+   * @param orientation Optional constant that defines the orientation of this layout. Default is {@link DIRECTION.NORTH}.
    * @param deterministic Optional boolean that specifies if this layout should be deterministic. Default is true.
    */
-  constructor(graph: Graph, orientation: DIRECTION | null, deterministic = true) {
+  constructor(graph: AbstractGraph, orientation: DIRECTION | null, deterministic = true) {
     super(graph);
     this.orientation = orientation != null ? orientation : DIRECTION.NORTH;
     this.deterministic = deterministic != null ? deterministic : true;

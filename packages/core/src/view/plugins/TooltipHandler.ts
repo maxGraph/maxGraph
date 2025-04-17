@@ -21,7 +21,7 @@ import { fit, getScrollOrigin } from '../../util/styleUtils';
 import { TOOLTIP_VERTICAL_OFFSET } from '../../util/Constants';
 import { getSource, isMouseEvent } from '../../util/EventUtils';
 import { isNode } from '../../util/domUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import type PopupMenuHandler from './PopupMenuHandler';
@@ -78,7 +78,7 @@ class TooltipHandler implements GraphPlugin {
    *
    * @param graph Reference to the enclosing {@link Graph}.
    */
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.graph = graph;
     this.graph.addMouseListener(this);
   }
@@ -94,7 +94,7 @@ class TooltipHandler implements GraphPlugin {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Delay to show the tooltip in milliseconds.

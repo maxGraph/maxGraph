@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import EventSource from '../view/event/EventSource';
-import type { Graph } from './Graph';
+import type { AbstractGraph } from './AbstractGraph';
 import type Cell from './cell/Cell';
 import SelectionChange from './undoable_changes/SelectionChange';
 import UndoableEdit from './undoable_changes/UndoableEdit';
@@ -63,13 +63,13 @@ import { isI18nEnabled } from '../internal/i18n-utils';
  * graph - Reference to the enclosing {@link Graph}.
  */
 class GraphSelectionModel extends EventSource {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super();
     this.graph = graph;
     this.cells = [];
   }
 
-  graph: Graph;
+  graph: AbstractGraph;
   cells: Cell[];
 
   /**

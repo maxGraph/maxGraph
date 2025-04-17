@@ -29,7 +29,7 @@ import EventObject from '../event/EventObject';
 import type Cell from '../cell/Cell';
 import Rectangle from '../geometry/Rectangle';
 import { getClientX, getClientY } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import GraphLayout from './GraphLayout';
 import UndoableEdit from '../undoable_changes/UndoableEdit';
 
@@ -57,9 +57,9 @@ import UndoableEdit from '../undoable_changes/UndoableEdit';
  */
 class LayoutManager extends EventSource {
   /**
-   * Reference to the enclosing {@link graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph!: Graph;
+  graph!: AbstractGraph;
 
   /**
    * Specifies if the layout should bubble along
@@ -89,7 +89,7 @@ class LayoutManager extends EventSource {
    */
   resizeHandler: (...args: any[]) => any;
 
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super();
 
     // Executes the layout before the changes are dispatched
@@ -164,7 +164,7 @@ class LayoutManager extends EventSource {
   /**
    * Sets the graph that the layouts operate on.
    */
-  setGraph(graph: Graph | null) {
+  setGraph(graph: AbstractGraph | null) {
     if (this.graph) {
       const model = this.graph.getDataModel();
       model.removeListener(this.undoHandler);

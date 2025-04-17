@@ -26,7 +26,7 @@ import Point from '../geometry/Point';
 import { getRotatedPoint, intersects, mod, toRadians } from '../../util/mathUtils';
 import Client from '../../Client';
 import { isMouseEvent, isShiftDown } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import Image from '../image/ImageBox';
 import type Cell from '../cell/Cell';
@@ -55,7 +55,7 @@ class VertexHandler {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Reference to the {@link CellState} being modified.

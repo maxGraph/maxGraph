@@ -53,7 +53,7 @@ import {
   isMouseEvent,
   isShiftDown,
 } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 import { CellHandle, ColorValue, Listenable } from '../../types';
@@ -78,7 +78,7 @@ class EdgeHandler {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Reference to the {@link CellState} being modified.
@@ -2248,7 +2248,7 @@ class EdgeHandlerCellMarker extends CellMarker {
   edgeHandler: EdgeHandler;
 
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     edgeHandler: EdgeHandler,
     validColor: ColorValue = DEFAULT_VALID_COLOR,
     invalidColor: ColorValue = DEFAULT_INVALID_COLOR,

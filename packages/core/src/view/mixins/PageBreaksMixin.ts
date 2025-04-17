@@ -17,10 +17,10 @@ limitations under the License.
 import Rectangle from '../geometry/Rectangle';
 import Point from '../geometry/Point';
 import PolylineShape from '../geometry/edge/PolylineShape';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'getView'
   | 'getGraphBounds'
   | 'getPageFormat'
@@ -31,7 +31,7 @@ type PartialGraph = Pick<
   | 'isPageBreakDashed'
 >;
 type PartialPageBreaks = Pick<
-  Graph,
+  AbstractGraph,
   'horizontalPageBreaks' | 'verticalPageBreaks' | 'updatePageBreaks'
 >;
 type PartialType = PartialGraph & PartialPageBreaks;

@@ -22,7 +22,7 @@ import {
   _mxCompactTreeLayoutNode,
 } from './CompactTreeLayout';
 import type Cell from '../cell/Cell';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 /**
  * Extends {@link CompactTreeLayout} to implement a radial tree algorithm. This
@@ -37,7 +37,7 @@ import type { Graph } from '../Graph';
  * @category Layout
  */
 class RadialTreeLayout extends CompactTreeLayout {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super(graph, false);
   }
 

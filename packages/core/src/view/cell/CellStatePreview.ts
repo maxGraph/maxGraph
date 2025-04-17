@@ -20,26 +20,23 @@ import Point from '../geometry/Point';
 import Dictionary from '../../util/Dictionary';
 import type CellState from './CellState';
 import type Cell from './Cell';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type GraphView from '../GraphView';
 
 /**
  * Implements a live preview for moving cells.
  */
 class CellStatePreview {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.deltas = new Dictionary();
     this.graph = graph;
   }
 
   /**
-   * Reference to the enclosing {@link Graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
-  /**
-   * Reference to the enclosing {@link Graph}.
-   */
   deltas: Dictionary<Cell, { point: Point; state: CellState }>;
 
   /**

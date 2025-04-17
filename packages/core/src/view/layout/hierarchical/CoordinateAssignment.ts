@@ -28,7 +28,7 @@ import GraphHierarchyModel from './GraphHierarchyModel';
 import Cell from '../../../view/cell/Cell';
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
-import type { Graph } from '../../../view/Graph';
+import type { AbstractGraph } from '../../AbstractGraph';
 import Geometry from '../../../view/geometry/Geometry';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
 import SwimlaneLayout from '../SwimlaneLayout';
@@ -664,7 +664,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param facade the facade describing the input graph
    * @param model an internal model of the hierarchical layout
    */
-  initialCoords(facade: Graph, model: GraphHierarchyModel) {
+  initialCoords(facade: AbstractGraph, model: GraphHierarchyModel) {
     this.calculateWidestRank(facade, model);
 
     // Sweep up and down from the widest rank
@@ -691,7 +691,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param graph the facade describing the input graph
    * @param model an internal model of the hierarchical layout
    */
-  rankCoordinates(rankValue: number, graph: Graph, model: GraphHierarchyModel) {
+  rankCoordinates(rankValue: number, graph: AbstractGraph, model: GraphHierarchyModel) {
     const ranks = <GraphAbstractHierarchyCell[][]>model.ranks;
     const rank = ranks[rankValue];
     let maxY = 0.0;
@@ -759,7 +759,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param graph the facade describing the input graph
    * @param model an internal model of the hierarchical layout
    */
-  calculateWidestRank(graph: Graph, model: GraphHierarchyModel) {
+  calculateWidestRank(graph: AbstractGraph, model: GraphHierarchyModel) {
     // Starting y co-ordinate
     let y = -this.interRankCellSpacing;
 
@@ -860,7 +860,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param graph the facade describing the input graph
    * @param model an internal model of the hierarchical layout
    */
-  minPath(graph: Graph, model: GraphHierarchyModel) {
+  minPath(graph: AbstractGraph, model: GraphHierarchyModel) {
     // Work down and up each edge with at least 2 control points
     // trying to straighten each one out. If the same number of
     // straight segments are formed in both directions, the
@@ -1030,7 +1030,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
    * @param graph the input graph
    * @param model the layout model
    */
-  setCellLocations(graph: Graph, model: GraphHierarchyModel) {
+  setCellLocations(graph: AbstractGraph, model: GraphHierarchyModel) {
     this.rankTopY = [];
     this.rankBottomY = [];
     const ranks = <GraphAbstractHierarchyCell[][]>model.ranks;

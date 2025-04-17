@@ -73,7 +73,7 @@ import { I18nProvider } from '../types';
  *
  * ## Loading default resources
  *
- * Call {@link loadResources} to load the default resources file for both {@link Graph} and {@link Editor}.
+ * Call {@link loadResources} to load the default resources file for both {@link AbstractGraph} and {@link Editor}.
  *
  * @category I18n
  */

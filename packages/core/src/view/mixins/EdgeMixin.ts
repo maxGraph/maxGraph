@@ -18,7 +18,7 @@ import type { CellStyle } from '../../types';
 import Dictionary from '../../util/Dictionary';
 import { removeDuplicates } from '../../util/arrayUtils';
 import { findNearestSegment } from '../../util/mathUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
@@ -26,7 +26,7 @@ import Geometry from '../geometry/Geometry';
 import type Point from '../geometry/Point';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'batchUpdate'
   | 'fireEvent'
   | 'getDataModel'
@@ -40,7 +40,7 @@ type PartialGraph = Pick<
   | 'cellConnected'
 >;
 type PartialEdge = Pick<
-  Graph,
+  AbstractGraph,
   | 'resetEdgesOnResize'
   | 'resetEdgesOnMove'
   | 'resetEdgesOnConnect'

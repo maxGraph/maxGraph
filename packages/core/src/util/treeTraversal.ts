@@ -16,7 +16,7 @@ limitations under the License.
 
 import type Cell from '../view/cell/Cell';
 import Dictionary from './Dictionary';
-import type { Graph } from '../view/Graph';
+import type { AbstractGraph } from '../view/AbstractGraph';
 
 /*****************************************************************************
  * Group: Tree and traversal-related
@@ -27,6 +27,7 @@ import type { Graph } from '../view/Graph';
  * edges. If the result is empty then the with the greatest difference
  * between incoming and outgoing edges is returned.
  *
+ * @param graph the Graph to use for the traversal.
  * @param parent {@link Cell} whose children should be checked.
  * @param isolate Optional boolean that specifies if edges should be ignored if
  * the opposite end is not a child of the given parent cell. Default is
@@ -36,7 +37,7 @@ import type { Graph } from '../view/Graph';
  * counted. Default is `false`.
  */
 export function findTreeRoots(
-  graph: Graph,
+  graph: AbstractGraph,
   parent: Cell,
   isolate = false,
   invert = false

@@ -20,8 +20,8 @@ import type { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from '../..
 import type Geometry from '../geometry/Geometry';
 import type CellState from '../cell/CellState';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies the return value for {@link isCellsResizable}.
      * @default true

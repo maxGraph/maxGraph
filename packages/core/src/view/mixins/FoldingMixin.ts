@@ -20,11 +20,11 @@ import InternalEvent from '../event/InternalEvent';
 import Geometry from '../geometry/Geometry';
 import { toRadians } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import { isI18nEnabled } from '../../internal/i18n-utils';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'getDataModel'
   | 'fireEvent'
   | 'getCurrentCellStyle'
@@ -38,7 +38,7 @@ type PartialGraph = Pick<
   | 'options'
 >;
 type PartialFolding = Pick<
-  Graph,
+  AbstractGraph,
   | 'collapseExpandResource'
   | 'getCollapseExpandResource'
   | 'isFoldingEnabled'

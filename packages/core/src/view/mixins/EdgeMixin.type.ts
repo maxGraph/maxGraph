@@ -17,8 +17,8 @@ limitations under the License.
 import type { CellStyle, EdgeParameters, EdgeParametersValue } from '../../types';
 import type Cell from '../cell/Cell';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies if edge control points should be reset after the resize of a connected cell.
      * @default false

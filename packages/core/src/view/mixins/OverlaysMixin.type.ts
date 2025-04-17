@@ -18,8 +18,8 @@ import type Cell from '../cell/Cell';
 import type CellOverlay from '../cell/CellOverlay';
 import type Image from '../image/ImageBox';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Adds an {@link CellOverlay} for the specified cell.
      *

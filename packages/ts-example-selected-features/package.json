@@ -1,0 +1,14 @@
+{
+  "name": "@maxgraph/ts-example-vite-with-selected-features",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --version && tsc && vite build --base ./",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "~6.2.0"
+  }
+}

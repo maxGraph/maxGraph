@@ -16,8 +16,8 @@ limitations under the License.
 
 import type Cell from '../cell/Cell';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Moves the given cells to the front or back. The change is carried out using {@link cellsOrdered}.
      *

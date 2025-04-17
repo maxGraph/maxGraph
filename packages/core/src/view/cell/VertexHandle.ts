@@ -28,7 +28,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import ImageBox from '../image/ImageBox';
 import CellState from './CellState';
 
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type { CellHandle, CellStateStyle } from '../../types';
 import { HandleConfig } from '../handler/config';
 
@@ -40,7 +40,7 @@ import { HandleConfig } from '../handler/config';
 class VertexHandle implements CellHandle {
   dependencies = ['snap', 'cells'];
 
-  graph: Graph;
+  graph: AbstractGraph;
   state: CellState;
   shape: Shape | ImageShape | null;
 

@@ -24,7 +24,7 @@ import Rectangle from '../geometry/Rectangle';
 import { sortCells } from '../../util/styleUtils';
 import WeightedCellSorter from './util/WeightedCellSorter';
 import type Cell from '../cell/Cell';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import { findTreeRoots } from '../../util/treeTraversal';
 
 /**
@@ -75,7 +75,7 @@ export interface _mxCompactTreeLayoutLine {
  * @category Layout
  */
 export class CompactTreeLayout extends GraphLayout {
-  constructor(graph: Graph, horizontal = true, invert = false) {
+  constructor(graph: AbstractGraph, horizontal = true, invert = false) {
     super(graph);
     this.horizontal = horizontal;
     this.invert = invert;

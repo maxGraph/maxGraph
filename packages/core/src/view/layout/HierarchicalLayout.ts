@@ -25,7 +25,7 @@ import ObjectIdentity from '../../util/ObjectIdentity';
 import MinimumCycleRemover from './hierarchical/MinimumCycleRemover';
 import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction';
 import CoordinateAssignment from './hierarchical/CoordinateAssignment';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 import { HierarchicalGraphLayoutTraverseArgs } from './types';
 
@@ -38,12 +38,12 @@ class HierarchicalLayout extends GraphLayout {
   /**
    * Constructs a new hierarchical layout algorithm.
    *
-   * @param graph Reference to the enclosing {@link Graph}.
+   * @param graph Reference to the enclosing {@link AbstractGraph}.
    * @param orientation Optional constant that defines the orientation of this layout. Default is {@link DIRECTION.NORTH}.
    * @param deterministic Optional boolean that specifies if this layout should be deterministic. Default is true.
    */
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     orientation: DIRECTION = DIRECTION.NORTH,
     deterministic = true
   ) {

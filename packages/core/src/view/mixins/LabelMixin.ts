@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'convertValueToString'
   | 'getCurrentCellStyle'
   | 'isCellLocked'
@@ -25,7 +25,7 @@ type PartialGraph = Pick<
   | 'isVertexLabelsMovable'
 >;
 type PartialLabel = Pick<
-  Graph,
+  AbstractGraph,
   | 'labelsVisible'
   | 'htmlLabels'
   | 'getLabel'

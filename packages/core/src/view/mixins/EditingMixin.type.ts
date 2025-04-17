@@ -18,8 +18,8 @@ import type Cell from '../cell/Cell';
 import type InternalMouseEvent from '../event/InternalMouseEvent';
 import type EventObject from '../event/EventObject';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * @default true
      */

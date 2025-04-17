@@ -16,8 +16,8 @@ limitations under the License.
 
 import type Rectangle from '../geometry/Rectangle';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies the factor used for {@link zoomIn} and {@link zoomOut}.
      * @default 1.2 (120%)

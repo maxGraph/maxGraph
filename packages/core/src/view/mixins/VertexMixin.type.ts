@@ -18,8 +18,8 @@ import type Cell from '../cell/Cell';
 import type { CellStyle, VertexParameters } from '../../types';
 import type Geometry from '../geometry/Geometry';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies the return value for vertices in {@link isLabelMovable}.
      * @default false

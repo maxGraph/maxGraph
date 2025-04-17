@@ -31,7 +31,7 @@ import Rectangle from '../geometry/Rectangle';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import { isShiftDown } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
+import { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import ConnectionConstraint from '../other/ConnectionConstraint';
@@ -43,7 +43,6 @@ import type Cell from '../cell/Cell';
  * showing fixed points when the mouse is over a vertex and handles constraints
  * to establish new connections.
  *
- * @class ConstraintHandler
  */
 class ConstraintHandler {
   /**
@@ -52,9 +51,9 @@ class ConstraintHandler {
   pointImage = new Image(`${Client.imageBasePath}/point.gif`, 5, 5);
 
   /**
-   * Reference to the enclosing {@link mxGraph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   resetHandler: () => void;
 
@@ -86,7 +85,7 @@ class ConstraintHandler {
 
   mouseleaveHandler: (() => void) | null = null;
 
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.graph = graph;
 
     // Adds a graph model listener to update the current focus on changes

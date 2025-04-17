@@ -18,14 +18,17 @@ import { hasScrollbars } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import type PanningHandler from '../plugins/PanningHandler';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import Rectangle from '../geometry/Rectangle';
 import Point from '../geometry/Point';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 
-type PartialGraph = Pick<Graph, 'getContainer' | 'getView' | 'getPlugin' | 'fireEvent'>;
+type PartialGraph = Pick<
+  AbstractGraph,
+  'getContainer' | 'getView' | 'getPlugin' | 'fireEvent'
+>;
 type PartialPanning = Pick<
-  Graph,
+  AbstractGraph,
   | 'shiftPreview1'
   | 'shiftPreview2'
   | 'useScrollbarsForPanning'

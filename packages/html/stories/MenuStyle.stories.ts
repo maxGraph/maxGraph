@@ -22,6 +22,7 @@ This example demonstrates using CSS to style the mxPopupMenu.
 */
 
 import {
+  type AbstractGraph,
   Client,
   CellOverlay,
   CellRenderer,
@@ -110,7 +111,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   class MyCustomPopupMenuHandler extends PopupMenuHandler {
-    constructor(graph: Graph) {
+    constructor(graph: AbstractGraph) {
       super(graph);
       // Configures automatic expand on mouseover
       this.autoExpand = true; // TODO autoExpand is not working

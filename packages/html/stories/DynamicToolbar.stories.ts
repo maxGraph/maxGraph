@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import {
+  type AbstractGraph,
   Cell,
   cellArrayUtils,
   type CellStyle,
@@ -146,7 +147,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // Function that is executed when the image is dropped on the graph.
     // The cell argument points to the cell under the mouse pointer if there is one.
     const dropHandler = (
-      graph: Graph,
+      graph: AbstractGraph,
       _evt: MouseEvent,
       _cell: Cell | null,
       x?: number,

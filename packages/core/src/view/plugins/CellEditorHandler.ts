@@ -48,7 +48,7 @@ import {
 } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type { GraphPlugin } from '../../types';
 import type TooltipHandler from './TooltipHandler';
 
@@ -153,7 +153,7 @@ import type TooltipHandler from './TooltipHandler';
 class CellEditorHandler implements GraphPlugin {
   static pluginId = 'CellEditorHandler';
 
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.graph = graph;
 
     // Stops editing after zoom changes
@@ -191,7 +191,7 @@ class CellEditorHandler implements GraphPlugin {
   /**
    * Reference to the enclosing {@link Graph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Holds the DIV that is used for text editing. Note that this may be null before the first
