@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ActorShape from '../ActorShape';
+import ActorShape from './ActorShape';
 import Point from '../Point';
 import { LINE_ARCSIZE } from '../../../util/Constants';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';

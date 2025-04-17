@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from './Rectangle';
-import Shape from './Shape';
-import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
-import { ColorValue } from '../../types';
-import { NONE } from '../../util/Constants';
+import type Rectangle from '../Rectangle';
+import Shape from '../Shape';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import { ColorValue } from '../../../types';
+import { NONE } from '../../../util/Constants';
 
 /**
  * Extends {@link Shape} to implement an actor shape.
