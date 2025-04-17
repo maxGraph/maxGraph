@@ -138,9 +138,7 @@ export class FitPlugin implements GraphPlugin {
       const cssBorder = this.graph.getBorderSizes();
       let w1: number = container.offsetWidth - cssBorder.x - cssBorder.width - 1;
       let h1: number =
-        maxHeight != null
-          ? maxHeight
-          : container.offsetHeight - cssBorder.y - cssBorder.height - 1;
+        maxHeight ?? container.offsetHeight - cssBorder.y - cssBorder.height - 1;
       let bounds = view.getGraphBounds();
 
       if (bounds.width > 0 && bounds.height > 0) {
