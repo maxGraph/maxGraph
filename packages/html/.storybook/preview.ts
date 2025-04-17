@@ -28,7 +28,6 @@ import {
   resetStyleDefaultsConfig,
   resetTranslationsConfig,
   resetVertexHandlerConfig,
-  StencilShapeRegistry,
   StylesheetCodec,
   Translations,
   TranslationsAsI18n,
@@ -36,6 +35,7 @@ import {
   unregisterAllEdgeMarkers,
   unregisterAllEdgeStylesAndPerimeters,
   unregisterAllShapes,
+  unregisterAllStencilShapes,
 } from '@maxgraph/core';
 
 const defaultLogger = new NoOpLogger();
@@ -82,7 +82,7 @@ const resetMaxGraphConfigs = (): void => {
   unregisterAllShapes();
 
   // The following registries are filled by stories only
-  StencilShapeRegistry.stencils = {};
+  unregisterAllStencilShapes();
 };
 
 // This function is a workaround to destroy mxGraph elements that are not released by the previous story.
