@@ -1368,3 +1368,8 @@ export type GraphFoldingOptions = {
    */
   collapseToPreferredSize: boolean;
 };
+
+/**
+ * @since 0.18.0
+ */
+export type ShapeConstructor = new (...arguments_: any) => Shape;

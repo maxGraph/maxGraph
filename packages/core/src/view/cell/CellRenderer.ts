@@ -46,7 +46,7 @@ import Cell from './Cell';
 import CellOverlay from './CellOverlay';
 import { getClientX, getClientY, getSource } from '../../util/EventUtils';
 import { isNode } from '../../util/domUtils';
-import { CellStateStyle } from '../../types';
+import type { CellStateStyle, ShapeConstructor } from '../../types';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 
 const placeholderStyleValues = ['inherit', 'swimlane', 'indicated'];
@@ -73,12 +73,27 @@ const placeholderStyleProperties: (keyof CellStateStyle)[] = [
  */
 class CellRenderer {
   /**
-   * Static array that contains the globally registered shapes which are
-   * known to all instances of this class. For adding new shapes you should
-   * use the static {@link CellRenderer#registerShape} function.
+   * Static array that contains the globally registered shapes which are known to all instances of this class.
    *
-   * Built-in shapes: arrow, rectangle, ellipse, rhombus, image, line, label, cylinder,
-   * swimlane, connector, actor and cloud.
+   * For adding new shapes you should use {@link CellRenderer.registerShape}.
+   *
+   * Built-in shapes:
+   * - actor
+   * - arrow
+   * - arrow connector (for edges)
+   * - cloud
+   * - connector (for edges)
+   * - cylinder
+   * - double ellipse
+   * - ellipse
+   * - hexagon
+   * - image
+   * - label
+   * - line (for edges)
+   * - rectangle
+   * - rhombus
+   * - swimlane
+   * - triangle
    */
   static defaultShapes: { [key: string]: typeof Shape } = {};
 
@@ -86,14 +101,13 @@ class CellRenderer {
    * Defines the default shape for edges.
    * @default {@link ConnectorShape}
    */
-  // @ts-expect-error The constructors for Shape and Connector are different.
-  defaultEdgeShape: typeof Shape = ConnectorShape;
+  defaultEdgeShape: ShapeConstructor = ConnectorShape;
 
   /**
    * Defines the default shape for vertices.
    * @default {@link RectangleShape}.
    */
-  defaultVertexShape: typeof RectangleShape = RectangleShape;
+  defaultVertexShape: ShapeConstructor = RectangleShape;
 
   /**
    * Defines the default shape for labels.
@@ -133,15 +147,16 @@ class CellRenderer {
 
   /**
    * Registers the given constructor under the specified key in this instance of the renderer.
-   * @example
-   * ```
-   * CellRenderer.registerShape(Constants.SHAPE_RECTANGLE, RectangleShape);
+   *
+   * For example:
+   * ```javascript
+   * CellRenderer.registerShape('rectangle', RectangleShape);
    * ```
    *
    * @param key the shape name.
    * @param shape constructor of the {@link Shape} subclass.
    */
-  static registerShape(key: string, shape: typeof Shape): void {
+  static registerShape(key: string, shape: ShapeConstructor): void {
     CellRenderer.defaultShapes[key] = shape;
   }
 
@@ -188,22 +203,21 @@ class CellRenderer {
   /**
    * Returns the shape for the given name from {@link defaultShapes}.
    */
-  getShape(name: string | null): typeof Shape | null {
+  getShape(name?: string | null): ShapeConstructor | null {
     return name ? CellRenderer.defaultShapes[name] : null;
   }
 
   /**
    * Returns the constructor to be used for creating the shape.
    */
-  getShapeConstructor(state: CellState): typeof Shape {
-    let ctor = this.getShape(state.style.shape || null);
+  getShapeConstructor(state: CellState): ShapeConstructor {
+    let ctor = this.getShape(state.style.shape);
 
     if (!ctor) {
-      // @ts-expect-error The various Shape constructors are not compatible.
       ctor = state.cell.isEdge() ? this.defaultEdgeShape : this.defaultVertexShape;
     }
 
-    return ctor as typeof Shape;
+    return ctor;
   }
 
   /**
