@@ -62,8 +62,10 @@ When instantiating a `Graph` object, the registries are filled with `maxGraph` d
 It is possible to unregister all elements from a style registry using the related `unregister` function. For example:
 
 ```javascript
-unregisterAllEdgeMarkers
+unregisterAllEdgeMarkers();
+unregisterAllEdgeStylesAndPerimeters();
 unregisterAllShapes();
+unregisterAllStencilShapes();
 ```
 
 
