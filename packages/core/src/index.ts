@@ -48,19 +48,12 @@ export { Editor } from './editor/Editor';
 export { default as CellHighlight } from './view/cell/CellHighlight';
 export { default as CellMarker } from './view/cell/CellMarker';
 export { default as CellTracker } from './view/cell/CellTracker';
-export { default as ConnectionHandler } from './view/handler/ConnectionHandler';
 export { default as ConstraintHandler } from './view/handler/ConstraintHandler';
 export { default as EdgeHandler } from './view/handler/EdgeHandler';
 export { default as EdgeSegmentHandler } from './view/handler/EdgeSegmentHandler';
 export { default as ElbowEdgeHandler } from './view/handler/ElbowEdgeHandler';
-export { default as SelectionHandler } from './view/handler/SelectionHandler';
 export { default as VertexHandle } from './view/cell/VertexHandle';
 export { default as KeyHandler } from './view/handler/KeyHandler';
-export { default as PanningHandler } from './view/handler/PanningHandler';
-export { default as PopupMenuHandler } from './view/handler/PopupMenuHandler';
-export { default as RubberBandHandler } from './view/handler/RubberBandHandler';
-export { default as SelectionCellsHandler } from './view/handler/SelectionCellsHandler';
-export { default as TooltipHandler } from './view/handler/TooltipHandler';
 export { default as VertexHandler } from './view/handler/VertexHandler';
 export * from './view/handler/config';
 
@@ -100,7 +93,7 @@ export * from './serialization/codecs/_other-codecs';
 export * from './serialization/register-model-codecs';
 export * from './serialization/register-other-codecs';
 
-export { default as ActorShape } from './view/geometry/ActorShape';
+export { default as ActorShape } from './view/geometry/node/ActorShape';
 export { default as LabelShape } from './view/geometry/node/LabelShape';
 export { default as Shape } from './view/geometry/Shape';
 export { default as SwimlaneShape } from './view/geometry/node/SwimlaneShape';
@@ -130,8 +123,10 @@ export { default as StencilShapeRegistry } from './view/geometry/node/StencilSha
 
 export * as constants from './util/Constants';
 export { default as Guide } from './view/other/Guide';
-export { default as Translations } from './i18n/Translations';
+
+export { default as Translations, TranslationsAsI18n } from './i18n/Translations';
 export * from './i18n/config';
+export * from './i18n/provider';
 
 export * as cellArrayUtils from './util/cellArrayUtils';
 export * as cloneUtils from './util/cloneUtils';
@@ -142,7 +137,6 @@ export * as mathUtils from './util/mathUtils';
 export * as printUtils from './util/printUtils';
 export * as stringUtils from './util/StringUtils';
 export * as styleUtils from './util/styleUtils';
-export * as utils from './util/Utils';
 export * as xmlUtils from './util/xmlUtils';
 
 export * from './util/config';
@@ -184,7 +178,7 @@ export { MaxLogAsLogger } from './gui/MaxLogAsLogger';
 export { default as MaxPopupMenu } from './gui/MaxPopupMenu';
 export { default as MaxToolbar } from './gui/MaxToolbar';
 export { default as MaxWindow } from './gui/MaxWindow';
-export { popup, error } from './gui/MaxWindow';
+export * as guiUtils from './gui/guiUtils';
 
 export { default as ImageBox } from './view/image/ImageBox';
 export { default as ImageBundle } from './view/image/ImageBundle';
@@ -192,7 +186,7 @@ export { default as ImageExport } from './view/image/ImageExport';
 
 export { default as UrlConverter } from './util/UrlConverter';
 export { default as MaxXmlRequest } from './util/MaxXmlRequest';
-export { load, get, getAll, post, submit } from './util/MaxXmlRequest';
+export * as requestUtils from './util/requestUtils';
 
 export { default as AutoSaveManager } from './view/other/AutoSaveManager';
 export { default as Clipboard } from './util/Clipboard';
@@ -201,7 +195,6 @@ export { default as UndoableEdit } from './view/undoable_changes/UndoableEdit';
 export { default as UndoManager } from './view/undoable_changes/UndoManager';
 
 export { Cell } from './view/cell/Cell';
-export { default as CellEditorHandler } from './view/handler/CellEditorHandler';
 export { default as CellOverlay } from './view/cell/CellOverlay';
 export { default as CellPath } from './view/cell/CellPath';
 export { default as CellRenderer } from './view/cell/CellRenderer';

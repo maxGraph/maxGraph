@@ -34,15 +34,15 @@ import {
 } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
 import Cell from '../cell/Cell';
-import type PanningHandler from '../handler/PanningHandler';
-import type ConnectionHandler from '../handler/ConnectionHandler';
+import type PanningHandler from '../plugins/PanningHandler';
+import type ConnectionHandler from '../plugins/ConnectionHandler';
 import Point from '../geometry/Point';
 import { convertPoint } from '../../util/styleUtils';
 import { NONE } from '../../util/Constants';
 import Client from '../../Client';
-import type CellEditorHandler from '../handler/CellEditorHandler';
+import type CellEditorHandler from '../plugins/CellEditorHandler';
 import type { Graph } from '../Graph';
-import type TooltipHandler from '../handler/TooltipHandler';
+import type TooltipHandler from '../plugins/TooltipHandler';
 
 type PartialGraph = Pick<
   Graph,
@@ -463,24 +463,24 @@ export const EventsMixin: PartialType = {
     ) {
       this.setEventSource(me.getSource());
 
-      (this.mouseMoveRedirect = (evt: MouseEvent) => {
+      this.mouseMoveRedirect = (evt: MouseEvent) => {
         this.fireMouseEvent(
           InternalEvent.MOUSE_MOVE,
           new InternalMouseEvent(evt, this.getStateForTouchEvent(evt))
         );
-      }),
-        (this.mouseUpRedirect = (evt: MouseEvent) => {
-          this.fireMouseEvent(
-            InternalEvent.MOUSE_UP,
-            new InternalMouseEvent(evt, this.getStateForTouchEvent(evt))
-          );
-        }),
-        InternalEvent.addGestureListeners(
-          eventSource,
-          null,
-          this.mouseMoveRedirect,
-          this.mouseUpRedirect
+      };
+      this.mouseUpRedirect = (evt: MouseEvent) => {
+        this.fireMouseEvent(
+          InternalEvent.MOUSE_UP,
+          new InternalMouseEvent(evt, this.getStateForTouchEvent(evt))
         );
+      };
+      InternalEvent.addGestureListeners(
+        eventSource,
+        null,
+        this.mouseMoveRedirect,
+        this.mouseUpRedirect
+      );
     }
 
     // Factored out the workarounds for FF to make it easier to override/remove

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../view/cell/Cell';
+import type Cell from '../view/cell/Cell';
 import Dictionary from './Dictionary';
-import { Graph } from '../view/Graph';
+import type { Graph } from '../view/Graph';
 
 /*****************************************************************************
  * Group: Tree and traversal-related
@@ -27,7 +27,7 @@ import { Graph } from '../view/Graph';
  * edges. If the result is empty then the with the greatest difference
  * between incoming and outgoing edges is returned.
  *
- * @param parent {@link mxCell} whose children should be checked.
+ * @param parent {@link Cell} whose children should be checked.
  * @param isolate Optional boolean that specifies if edges should be ignored if
  * the opposite end is not a child of the given parent cell. Default is
  * false.

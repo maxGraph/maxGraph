@@ -61,7 +61,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import Cell from '../cell/Cell';
 import ImageBox from '../image/ImageBox';
 import EventSource from '../event/EventSource';
-import SelectionHandler from './SelectionHandler';
+import type SelectionHandler from '../plugins/SelectionHandler';
 import { equalPoints } from '../../util/arrayUtils';
 import { EdgeHandlerConfig, HandleConfig } from './config';
 

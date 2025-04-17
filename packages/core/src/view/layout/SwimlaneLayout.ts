@@ -26,8 +26,8 @@ import ObjectIdentity from '../../util/ObjectIdentity';
 import SwimlaneOrdering from './hierarchical/SwimlaneOrdering';
 import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction';
 import CoordinateAssignment from './hierarchical/CoordinateAssignment';
-import { Graph } from '../Graph';
-import Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
 import Geometry from '../../view/geometry/Geometry';
 import { SwimlaneGraphLayoutTraverseArgs } from './types';
 

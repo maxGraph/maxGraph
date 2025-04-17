@@ -158,7 +158,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       this.redrawTools();
     }
 
-    redraw() {
+    override redraw() {
       super.redraw();
       this.redrawTools();
     }
@@ -171,7 +171,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       }
     }
 
-    onDestroy() {
+    override onDestroy() {
       super.onDestroy();
 
       if (this.domNode) {
@@ -186,7 +186,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       super(container, undefined, plugins);
     }
 
-    createHandler(state: CellState) {
+    override createHandler(state: CellState) {
       if (state != null && state.cell.isVertex()) {
         return new CustomVertexToolHandler(state);
       }

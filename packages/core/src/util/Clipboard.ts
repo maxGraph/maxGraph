@@ -16,8 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../view/cell/Cell';
-import { Graph } from '../view/Graph';
+import type Cell from '../view/cell/Cell';
+import type { Graph } from '../view/Graph';
 import { getTopmostCells } from './cellArrayUtils';
 
 /**

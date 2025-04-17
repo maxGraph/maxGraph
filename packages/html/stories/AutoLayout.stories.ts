@@ -74,7 +74,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   class MyCustomCellRenderer extends CellRenderer {
-    installCellOverlayListeners(state: CellState, overlay: CellOverlay, shape: Shape) {
+    override installCellOverlayListeners(
+      state: CellState,
+      overlay: CellOverlay,
+      shape: Shape
+    ) {
       super.installCellOverlayListeners(state, overlay, shape);
 
       InternalEvent.addListener(
@@ -98,7 +102,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   class MyCustomEdgeHandler extends EdgeHandler {
-    connect(
+    override connect(
       edge: Cell,
       terminal: Cell,
       isSource: boolean,
@@ -116,18 +120,18 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       super(container, undefined, plugins);
     }
 
-    createEdgeHandler(
+    override createEdgeHandler(
       state: CellState,
       _edgeStyle: EdgeStyleFunction | null
     ): EdgeHandler {
       return new MyCustomEdgeHandler(state);
     }
 
-    createCellRenderer() {
+    override createCellRenderer() {
       return new MyCustomCellRenderer();
     }
 
-    resizeCell = (cell: Cell, bounds: Rectangle, recurse?: boolean): Cell => {
+    override resizeCell = (cell: Cell, bounds: Rectangle, recurse?: boolean): Cell => {
       const resizedCell = super.resizeCell(cell, bounds, recurse);
       executeLayout();
       return resizedCell;

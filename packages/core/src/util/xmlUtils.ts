@@ -18,14 +18,14 @@ limitations under the License.
 
 import { DIALECT, NODETYPE, NS_SVG } from './Constants';
 import Point from '../view/geometry/Point';
-import Cell from '../view/cell/Cell';
-import { Graph } from '../view/Graph';
+import type Cell from '../view/cell/Cell';
+import type { Graph } from '../view/Graph';
 import { htmlEntities, trim } from './StringUtils';
 import TemporaryCellStates from '../view/cell/TemporaryCellStates';
-
 import type { StyleValue } from '../types';
-import { getTextContent, isElement } from './domUtils';
+import { getTextContent } from './domUtils';
 import Codec from '../serialization/Codec';
+import { isElement } from '../internal/utils';
 
 /**
  * Returns a new, empty XML document.

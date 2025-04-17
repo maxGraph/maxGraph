@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import ObjectCodec from '../ObjectCodec';
-import GraphView from '../../view/GraphView';
 import { Graph } from '../../view/Graph';
 
 /**

@@ -21,9 +21,10 @@ import { GlobalConfig } from '../util/config';
 import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
 import { isInteger, isNumeric } from '../util/mathUtils';
-import { getTextContent, isElement } from '../util/domUtils';
-import { load } from '../util/MaxXmlRequest';
+import { getTextContent } from '../util/domUtils';
+import { load } from '../util/requestUtils';
 import type Codec from './Codec';
+import { doEval, isElement } from '../internal/utils';
 
 /**
  * Generic codec for JavaScript objects that implements a mapping between
@@ -820,7 +821,7 @@ class ObjectCodec {
         value = child.getAttribute('value');
 
         if (value == null && ObjectCodec.allowEval) {
-          value = eval(getTextContent(<Text>(<unknown>child)));
+          value = doEval(getTextContent(<Text>(<unknown>child)));
         }
       } else {
         value = dec.decode(child, template);

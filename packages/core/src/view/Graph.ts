@@ -22,7 +22,7 @@ import EventSource from './event/EventSource';
 import InternalEvent from './event/InternalEvent';
 import Rectangle from './geometry/Rectangle';
 import Client from '../Client';
-import type PanningHandler from './handler/PanningHandler';
+import type PanningHandler from './plugins/PanningHandler';
 import GraphView from './GraphView';
 import CellRenderer from './cell/CellRenderer';
 import Point from './geometry/Point';
@@ -45,9 +45,9 @@ import EdgeHandler from './handler/EdgeHandler';
 import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
-
 import type {
   EdgeStyleFunction,
+  GraphFoldingOptions,
   GraphPlugin,
   GraphPluginConstructor,
   MouseListenerSet,
@@ -60,8 +60,8 @@ import { registerDefaultEdgeMarkers } from './geometry/edge/MarkerShape';
 import { registerDefaultStyleElements } from './style/register';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { getDefaultPlugins } from './plugins';
-import { TranslationsConfig } from '../i18n/config';
-import { isNullish } from '../util/Utils';
+import { isNullish } from '../internal/utils';
+import { isI18nEnabled } from '../internal/i18n-utils';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the main class of the package.
@@ -372,9 +372,7 @@ class Graph extends EventSource {
    * for this key does not exist then the value is used as the error message.
    * @default 'alreadyConnected'
    */
-  alreadyConnectedResource: string = TranslationsConfig.isEnabled()
-    ? 'alreadyConnected'
-    : '';
+  alreadyConnectedResource: string = isI18nEnabled() ? 'alreadyConnected' : '';
 
   /**
    * Specifies the resource key for the warning message to be displayed when
@@ -382,9 +380,17 @@ class Graph extends EventSource {
    * key does not exist then the value is used as the warning message.
    * @default 'containsValidationErrors'
    */
-  containsValidationErrorsResource: string = TranslationsConfig.isEnabled()
+  containsValidationErrorsResource: string = isI18nEnabled()
     ? 'containsValidationErrors'
     : '';
+
+  /** Folding options. */
+  options: GraphFoldingOptions = {
+    foldingEnabled: true,
+    collapsedImage: new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9),
+    expandedImage: new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9),
+    collapseToPreferredSize: true,
+  };
 
   // ===================================================================================================================
   // Group: "Create Class Instance" factory functions.

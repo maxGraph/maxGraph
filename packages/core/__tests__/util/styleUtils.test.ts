@@ -16,7 +16,6 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import {
-  matchBinaryMask,
   parseCssNumber,
   setStyleFlag,
   setCellStyleFlags,
@@ -25,21 +24,6 @@ import {
 import { FONT } from '../../src/util/Constants';
 import { type CellStyle } from '../../src/types';
 import { createGraphWithoutPlugins } from '../utils';
-
-describe('matchBinaryMask', () => {
-  test('match self', () => {
-    expect(matchBinaryMask(FONT.STRIKETHROUGH, FONT.STRIKETHROUGH)).toBeTruthy();
-  });
-  test('match', () => {
-    expect(matchBinaryMask(9465, FONT.BOLD)).toBeTruthy();
-  });
-  test('match another', () => {
-    expect(matchBinaryMask(19484, FONT.UNDERLINE)).toBeTruthy();
-  });
-  test('no match', () => {
-    expect(matchBinaryMask(46413, FONT.ITALIC)).toBeFalsy();
-  });
-});
 
 describe('parseCssNumber', () => {
   test.each([

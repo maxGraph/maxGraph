@@ -26,10 +26,10 @@ import GeometryChange from '../undoable_changes/GeometryChange';
 import VisibleChange from '../undoable_changes/VisibleChange';
 import StyleChange from '../undoable_changes/StyleChange';
 import EventObject from '../event/EventObject';
-import Cell from '../cell/Cell';
+import type Cell from '../cell/Cell';
 import Rectangle from '../geometry/Rectangle';
 import { getClientX, getClientY } from '../../util/EventUtils';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import GraphLayout from './GraphLayout';
 import UndoableEdit from '../undoable_changes/UndoableEdit';
 

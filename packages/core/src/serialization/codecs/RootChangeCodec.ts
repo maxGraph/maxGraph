@@ -17,8 +17,7 @@ limitations under the License.
 import ObjectCodec from '../ObjectCodec';
 import RootChange from '../../view/undoable_changes/RootChange';
 import type Codec from '../Codec';
-
-import { isElement } from '../../util/domUtils';
+import { isElement } from '../../internal/utils';
 
 /**
  * Codec for {@link RootChange}s.

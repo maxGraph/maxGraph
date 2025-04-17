@@ -68,7 +68,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   let overlayCount = 0;
 
   class CustomCellRenderer extends CellRenderer {
-    protected createOverlayShape(_state: CellState, _cellOverlay: CellOverlay): Shape {
+    protected override createOverlayShape(
+      _state: CellState,
+      _cellOverlay: CellOverlay
+    ): Shape {
       overlayCount++;
       switch (overlayCount % 3) {
         case 0:
@@ -81,7 +84,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
     }
 
-    protected configureOverlayShape(
+    protected override configureOverlayShape(
       state: CellState,
       cellOverlay: CellOverlay,
       overlayShape: Shape
@@ -94,7 +97,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   class CustomGraph extends Graph {
-    createCellRenderer() {
+    override createCellRenderer() {
       return new CustomCellRenderer();
     }
   }

@@ -50,7 +50,7 @@ import EventSource from '../event/EventSource';
 
 import type { Graph } from '../Graph';
 import type { GraphPlugin } from '../../types';
-import TooltipHandler from './TooltipHandler';
+import type TooltipHandler from './TooltipHandler';
 
 /**
  * In-place editor for the graph. To control this editor, use
@@ -568,7 +568,7 @@ class CellEditorHandler implements GraphPlugin {
           }
 
           if (
-            !(<Graph>state.view.graph).cellRenderer.legacySpacing ||
+            !state.view.graph.cellRenderer.legacySpacing ||
             state.style.overflow !== 'width'
           ) {
             // @ts-ignore
@@ -932,7 +932,7 @@ class CellEditorHandler implements GraphPlugin {
 
     if (
       !isEdge &&
-      (<Graph>state.view.graph).cellRenderer.legacySpacing &&
+      state.view.graph.cellRenderer.legacySpacing &&
       state.style.overflow === 'fill'
     ) {
       result = (<Shape>state.shape).getLabelBounds(Rectangle.fromRectangle(state));

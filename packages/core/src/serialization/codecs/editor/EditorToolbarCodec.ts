@@ -22,8 +22,9 @@ import { GlobalConfig } from '../../../util/config';
 import { convertPoint } from '../../../util/styleUtils';
 import { getClientX, getClientY } from '../../../util/EventUtils';
 import InternalEvent from '../../../view/event/InternalEvent';
-import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils';
-import Translations from '../../../i18n/Translations';
+import { getChildNodes, getTextContent } from '../../../util/domUtils';
+import { doEval, isElement } from '../../../internal/utils';
+import { translate } from '../../../internal/i18n-utils';
 
 /**
  * Custom codec for configuring {@link EditorToolbar}s.
@@ -143,7 +144,7 @@ export class EditorToolbarCodec extends ObjectCodec {
               into.toolbar.addLine();
             } else if (node.nodeName === 'add') {
               let as = <string>node.getAttribute('as');
-              as = Translations.get(as) || as;
+              as = translate(as) || as;
               const icon = node.getAttribute('icon');
               const pressedIcon = node.getAttribute('pressedIcon');
               const action = node.getAttribute('action');
@@ -157,7 +158,7 @@ export class EditorToolbarCodec extends ObjectCodec {
               if (action != null) {
                 elt = into.addItem(as, icon, action, pressedIcon);
               } else if (mode != null) {
-                funct = EditorToolbarCodec.allowEval ? eval(text) : null;
+                funct = EditorToolbarCodec.allowEval ? doEval(text) : null;
                 elt = into.addMode(as, icon, mode, pressedIcon, funct);
               } else if (template != null || (text != null && text.length > 0)) {
                 let cell = template ? editor.templates[template] : null;
@@ -171,7 +172,7 @@ export class EditorToolbarCodec extends ObjectCodec {
                 let insertFunction = null;
 
                 if (text != null && text.length > 0 && EditorToolbarCodec.allowEval) {
-                  insertFunction = eval(text);
+                  insertFunction = doEval(text);
                 }
 
                 elt = into.addPrototype(

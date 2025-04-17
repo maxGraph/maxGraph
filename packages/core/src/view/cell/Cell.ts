@@ -21,11 +21,9 @@ import CellOverlay from './CellOverlay';
 import { clone } from '../../util/cloneUtils';
 import Point from '../geometry/Point';
 import CellPath from './CellPath';
-import { isNullish } from '../../util/Utils';
-
 import type { CellStyle, FilterFunction, IdentityObject } from '../../types';
-import type { UserObject } from '../../internal-types';
-import { isElement } from '../../util/domUtils';
+import type { UserObject } from '../../internal/types';
+import { isElement, isNullish } from '../../internal/utils';
 
 /**
  * Cells are the elements of the graph model. They represent the state

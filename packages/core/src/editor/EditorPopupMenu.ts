@@ -19,11 +19,10 @@ limitations under the License.
 import Cell from '../view/cell/Cell';
 import MaxPopupMenu from '../gui/MaxPopupMenu';
 import { getTextContent } from '../util/domUtils';
-import Translations from '../i18n/Translations';
 import Editor from './Editor';
-
 import { PopupMenuItem } from '../types';
-import { isNullish } from '../util/Utils';
+import { doEval, isNullish } from '../internal/utils';
+import { translate } from '../internal/i18n-utils';
 
 /**
  * Creates popupmenus for mouse events.
@@ -193,8 +192,8 @@ export class EditorPopupMenu {
 
         if (isNullish(condition) || conditions[condition]) {
           let as = item.getAttribute('as')!;
-          as = Translations.get(as) || as;
-          const funct = eval(getTextContent(<Text>(<unknown>item)));
+          as = translate(as) || as;
+          const funct = doEval(getTextContent(<Text>(<unknown>item)));
           const action = item.getAttribute('action');
           let icon = item.getAttribute('icon');
           const iconCls = item.getAttribute('iconCls');
@@ -317,7 +316,7 @@ export class EditorPopupMenu {
     const condNodes = this.config!.getElementsByTagName('condition');
 
     for (const condNode of Array.from(condNodes)) {
-      const funct = eval(getTextContent(<Text>(<unknown>condNode)));
+      const funct = doEval(getTextContent(<Text>(<unknown>condNode)));
       const name = condNode.getAttribute('name');
 
       if (!isNullish(name) && typeof funct === 'function') {

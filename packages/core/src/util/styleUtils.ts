@@ -30,8 +30,8 @@ import CellPath from '../view/cell/CellPath';
 import Rectangle from '../view/geometry/Rectangle';
 import Cell from '../view/cell/Cell';
 import GraphDataModel from '../view/GraphDataModel';
-
 import type { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from '../types';
+import { matchBinaryMask } from '../internal/utils';
 
 /**
  * Removes the cursors from the style of the given DOM node and its descendants.
@@ -414,16 +414,6 @@ export const setStyleFlag = (
  */
 export const setOpacity = (node: HTMLElement | SVGElement, value: number) => {
   node.style.opacity = String(value / 100);
-};
-
-/**
- * @param value the value to check.
- * @param mask the binary mask to apply.
- * @returns `true` if the value matches the binary mask.
- * @private Subject to change prior being part of the public API.
- */
-export const matchBinaryMask = (value: number, mask: number) => {
-  return (value & mask) === mask;
 };
 
 /**

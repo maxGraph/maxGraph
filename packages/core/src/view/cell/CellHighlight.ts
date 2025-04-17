@@ -24,8 +24,8 @@ import {
 } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
-import CellState from './CellState';
-import { Graph } from '../Graph';
+import type CellState from './CellState';
+import type { Graph } from '../Graph';
 import Shape from '../geometry/Shape';
 
 import type { ColorValue } from '../../types';

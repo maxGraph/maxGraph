@@ -19,8 +19,6 @@ limitations under the License.
 import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
-import Translations from '../../../i18n/Translations';
-import { isNullish } from '../../../util/Utils';
 import {
   ALIGN,
   DIRECTION,
@@ -29,10 +27,12 @@ import {
   TEXT_DIRECTION,
 } from '../../../util/Constants';
 import StencilShapeRegistry from './StencilShapeRegistry';
-import { getChildNodes, getTextContent, isElement } from '../../../util/domUtils';
+import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
+import { doEval, isElement, isNullish } from '../../../internal/utils';
+import { translate } from '../../../internal/i18n-utils';
 
 /**
  * Configure global settings for stencil shapes.
@@ -175,7 +175,7 @@ class StencilShape extends Shape {
     const loc = node.getAttribute('localized');
 
     if ((StencilShapeConfig.defaultLocalized && !loc) || loc === '1') {
-      result = Translations.get(<string>result);
+      result = translate(result);
     }
     return result;
   }
@@ -193,7 +193,7 @@ class StencilShape extends Shape {
       const text = getTextContent(<Text>(<unknown>node));
 
       if (text && StencilShapeConfig.allowEval) {
-        const funct = eval(text);
+        const funct = doEval(text);
 
         if (typeof funct === 'function') {
           result = funct(shape);

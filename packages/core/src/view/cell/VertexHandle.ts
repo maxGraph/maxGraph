@@ -67,7 +67,7 @@ class VertexHandle implements CellHandle {
     image: ImageBox | null = null,
     shape: Shape | null = null
   ) {
-    this.graph = <Graph>state.view.graph;
+    this.graph = state.view.graph;
     this.state = state;
     this.cursor = cursor;
     this.image = image;

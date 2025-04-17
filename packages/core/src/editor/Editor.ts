@@ -20,7 +20,6 @@ import EditorPopupMenu from './EditorPopupMenu';
 import UndoManager from '../view/undoable_changes/UndoManager';
 import EditorKeyHandler from './EditorKeyHandler';
 import EventSource from '../view/event/EventSource';
-import Translations from '../i18n/Translations';
 import Client from '../Client';
 import CompactTreeLayout from '../view/layout/CompactTreeLayout';
 import { EditorToolbar } from './EditorToolbar';
@@ -29,7 +28,7 @@ import EventObject from '../view/event/EventObject';
 import { getOffset } from '../util/styleUtils';
 import Codec from '../serialization/Codec';
 import { ModelXmlSerializer } from '../serialization/ModelXmlSerializer';
-import MaxWindow, { error } from '../gui/MaxWindow';
+import MaxWindow from '../gui/MaxWindow';
 import MaxForm from '../gui/MaxForm';
 import Outline from '../view/other/Outline';
 import Cell from '../view/cell/Cell';
@@ -46,19 +45,20 @@ import Clipboard from '../util/Clipboard';
 import MaxLog from '../gui/MaxLog';
 import { isNode } from '../util/domUtils';
 import { getViewXml, getXml } from '../util/xmlUtils';
-import { load, post, submit } from '../util/MaxXmlRequest';
-import PopupMenuHandler from '../view/handler/PopupMenuHandler';
-import RubberBandHandler from '../view/handler/RubberBandHandler';
+import { load, post, submit } from '../util/requestUtils';
+import type PopupMenuHandler from '../view/plugins/PopupMenuHandler';
+import RubberBandHandler from '../view/plugins/RubberBandHandler';
 import InternalEvent from '../view/event/InternalEvent';
 import InternalMouseEvent from '../view/event/InternalMouseEvent';
 import { CellStateStyle, MouseListenerSet } from '../types';
-import ConnectionHandler from '../view/handler/ConnectionHandler';
+import type ConnectionHandler from '../view/plugins/ConnectionHandler';
 import { show } from '../util/printUtils';
-import PanningHandler from '../view/handler/PanningHandler';
+import type PanningHandler from '../view/plugins/PanningHandler';
 import { cloneCell } from '../util/cellArrayUtils';
-import { TranslationsConfig } from '../i18n/config';
 import type MaxPopupMenu from '../gui/MaxPopupMenu';
-import { isNullish } from '../util/Utils';
+import { isNullish } from '../internal/utils';
+import { isI18nEnabled, translate } from '../internal/i18n-utils';
+import { error } from '../gui/guiUtils';
 import type { FitPlugin } from '../view/plugins';
 
 /**
@@ -446,7 +446,7 @@ export class Editor extends EventSource {
    * key does not exist then the value is used as the error message. Default is 'askZoom'.
    * @default 'askZoom'
    */
-  askZoomResource = TranslationsConfig.isEnabled() ? 'askZoom' : '';
+  askZoomResource = isI18nEnabled() ? 'askZoom' : '';
 
   // =====================================================================================
   // Group: Controls and Handlers
@@ -457,14 +457,14 @@ export class Editor extends EventSource {
    * this key does not exist then the value is used as the error message. Default is 'lastSaved'.
    * @default 'lastSaved'.
    */
-  lastSavedResource = TranslationsConfig.isEnabled() ? 'lastSaved' : '';
+  lastSavedResource = isI18nEnabled() ? 'lastSaved' : '';
 
   /**
    * Specifies the resource key for the current file info. If the resource for
    * this key does not exist then the value is used as the error message. Default is 'currentFile'.
    * @default 'currentFile'
    */
-  currentFileResource = TranslationsConfig.isEnabled() ? 'currentFile' : '';
+  currentFileResource = isI18nEnabled() ? 'currentFile' : '';
 
   /**
    * Specifies the resource key for the properties window title. If the
@@ -472,7 +472,7 @@ export class Editor extends EventSource {
    * error message. Default is 'properties'.
    * @default 'properties'
    */
-  propertiesResource = TranslationsConfig.isEnabled() ? 'properties' : '';
+  propertiesResource = isI18nEnabled() ? 'properties' : '';
 
   /**
    * Specifies the resource key for the tasks window title. If the
@@ -480,7 +480,7 @@ export class Editor extends EventSource {
    * error message. Default is 'tasks'.
    * @default 'tasks'
    */
-  tasksResource = TranslationsConfig.isEnabled() ? 'tasks' : '';
+  tasksResource = isI18nEnabled() ? 'tasks' : '';
 
   /**
    * Specifies the resource key for the help window title. If the
@@ -488,7 +488,7 @@ export class Editor extends EventSource {
    * error message. Default is 'help'.
    * @default 'help'
    */
-  helpResource = TranslationsConfig.isEnabled() ? 'help' : '';
+  helpResource = isI18nEnabled() ? 'help' : '';
 
   /**
    * Specifies the resource key for the outline window title. If the
@@ -496,7 +496,7 @@ export class Editor extends EventSource {
    * error message. Default is 'outline'.
    * @default 'outline'
    */
-  outlineResource = TranslationsConfig.isEnabled() ? 'outline' : '';
+  outlineResource = isI18nEnabled() ? 'outline' : '';
 
   /**
    * Reference to the {@link MaxWindow} that contains the outline.
@@ -1231,7 +1231,7 @@ export class Editor extends EventSource {
     this.addAction('zoom', (editor: Editor) => {
       const current = editor.graph.getView().scale * 100;
       const preInput = prompt(
-        Translations.get(editor.askZoomResource) || editor.askZoomResource,
+        translate(editor.askZoomResource) || editor.askZoomResource,
         String(current)
       );
 
@@ -1717,16 +1717,14 @@ export class Editor extends EventSource {
       this.addListener(InternalEvent.SAVE, () => {
         const timestamp = new Date().toLocaleString();
         this.setStatus(
-          `${
-            Translations.get(this.lastSavedResource) || this.lastSavedResource
-          }: ${timestamp}`
+          `${translate(this.lastSavedResource) || this.lastSavedResource}: ${timestamp}`
         );
       });
 
       // Updates the statusbar to display the filename when new files are opened
       this.addListener(InternalEvent.OPEN, () => {
         this.setStatus(
-          `${Translations.get(this.currentFileResource) || this.currentFileResource}: ${
+          `${translate(this.currentFileResource) || this.currentFileResource}: ${
             this.filename
           }`
         );
@@ -2041,7 +2039,7 @@ export class Editor extends EventSource {
         // Displays the contents in a window and stores a reference to the
         // window for later hiding of the window
         this.properties = new MaxWindow(
-          Translations.get(this.propertiesResource) || this.propertiesResource,
+          translate(this.propertiesResource) || this.propertiesResource,
           node,
           x,
           y,
@@ -2221,7 +2219,7 @@ export class Editor extends EventSource {
       div.style.paddingLeft = '20px';
       const w = document.body.clientWidth;
       const wnd = new MaxWindow(
-        Translations.get(this.tasksResource) || this.tasksResource,
+        translate(this.tasksResource) || this.tasksResource,
         div,
         w - 220,
         this.tasksTop,
@@ -2283,14 +2281,14 @@ export class Editor extends EventSource {
   /**
    * Shows the help window. If the help window does not exist
    * then it is created using an iframe pointing to the resource
-   * for the <code>urlHelp</code> key or {@link urlHelp} if the resource
+   * for the `urlHelp` key or {@link urlHelp} if the resource
    * is undefined.
    * @param tasks
    */
   showHelp(tasks: any | null = null): void {
     if (this.help == null) {
       const frame = document.createElement('iframe');
-      frame.setAttribute('src', <string>(Translations.get('urlHelp') || this.urlHelp));
+      frame.setAttribute('src', (translate('urlHelp') || this.urlHelp)!);
       frame.setAttribute('height', '100%');
       frame.setAttribute('width', '100%');
       frame.setAttribute('frameBorder', '0');
@@ -2300,7 +2298,7 @@ export class Editor extends EventSource {
       const h = document.body.clientHeight || document.documentElement.clientHeight;
 
       const wnd = new MaxWindow(
-        Translations.get(this.helpResource) || this.helpResource,
+        translate(this.helpResource) || this.helpResource,
         frame,
         (w - this.helpWidth) / 2,
         (h - this.helpHeight) / 3,
@@ -2354,7 +2352,7 @@ export class Editor extends EventSource {
       div.style.cursor = 'move';
 
       const wnd = new MaxWindow(
-        Translations.get(this.outlineResource) || this.outlineResource,
+        translate(this.outlineResource) || this.outlineResource,
         div,
         600,
         480,

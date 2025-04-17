@@ -429,7 +429,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Pans <graph> by the given amount.
+   * Pans {@link graph} by the given amount.
    */
   panGraph(dx: number, dy: number) {
     this.graph.getView().setTranslate(dx, dy);

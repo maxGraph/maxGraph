@@ -21,7 +21,7 @@ import Point from '../view/geometry/Point';
 import Rectangle from '../view/geometry/Rectangle';
 import CellState from '../view/cell/CellState';
 import type { CellStateStyle } from '../types';
-import { isNullish } from './Utils';
+import { isNullish } from '../internal/utils';
 
 /**
  * Converts the given degree to radians.

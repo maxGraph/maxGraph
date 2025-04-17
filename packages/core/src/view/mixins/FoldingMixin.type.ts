@@ -16,37 +16,11 @@ limitations under the License.
 
 import type Cell from '../cell/Cell';
 import type CellState from '../cell/CellState';
-import type Image from '../image/ImageBox';
+import type ImageBox from '../image/ImageBox';
 import type Geometry from '../geometry/Geometry';
-
-export type GraphFoldingOptions = {
-  /**
-   * Specifies if folding (collapse and expand via an image icon in the graph should be enabled).
-   * @default true
-   */
-  foldingEnabled: boolean;
-  /**
-   * Specifies the {@link Image} to indicate a collapsed state.
-   * @default `Client.imageBasePath + '/collapsed.gif'`
-   */
-  collapsedImage: Image;
-  /**
-   * Specifies the {@link Image} to indicate a expanded state.
-   * @default `Client.imageBasePath + '/expanded.gif'`
-   */
-  expandedImage: Image;
-  /**
-   * Specifies if the cell size should be changed to the preferred size when a cell is first collapsed.
-   * @default true
-   */
-  collapseToPreferredSize: boolean;
-};
 
 declare module '../Graph' {
   interface Graph {
-    /** Folding options. */
-    options: GraphFoldingOptions;
-
     /**
      * Specifies the resource key for the tooltip on the collapse/expand icon.
      * If the resource for this key does not exist then the value is used as
@@ -75,11 +49,11 @@ declare module '../Graph' {
     isCellFoldable: (cell: Cell, collapse: boolean) => boolean;
 
     /**
-     * Returns the {@link Image} used to display the collapsed state of the specified cell state.
+     * Returns the {@link ImageBox} used to display the collapsed state of the specified cell state.
      *
      * This returns `null` for all edges.
      */
-    getFoldingImage: (state: CellState) => Image | null;
+    getFoldingImage: (state: CellState) => ImageBox | null;
 
     /**
      * Sets the collapsed state of the specified cells and all descendants if recurse is `true`.

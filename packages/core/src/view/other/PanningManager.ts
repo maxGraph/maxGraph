@@ -22,7 +22,7 @@ import EventObject from '../event/EventObject';
 import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 
 /**
  * Implements a handler for panning.

@@ -19,10 +19,10 @@ limitations under the License.
 import { DIALECT, GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/Constants';
 import Point from '../geometry/Point';
 import PolylineShape from '../geometry/edge/PolylineShape';
-import CellState from '../cell/CellState';
+import type CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 import Rectangle from '../geometry/Rectangle';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 
 /**
  * Implements the alignment of selection cells to other cells in the graph.

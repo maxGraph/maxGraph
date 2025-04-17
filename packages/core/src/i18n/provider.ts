@@ -14,15 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { I18nProvider } from '../types';
+
 /**
- * @internal
- * @private
+ * A {@link I18nProvider} that does nothing.
+ *
+ * @experimental subject to change or removal. The I18n system may be modified in the future without prior notice.
+ * @since 0.17.0
+ * @category I18n
  */
-export type UserObject = {
-  nodeType?: number;
-  getAttribute?: (name: string) => string | null;
-  hasAttribute?: (name: string) => boolean;
-  setAttribute?: (name: string, value: string) => void;
-  clone?: () => UserObject;
-  cloneNode?: (deep: boolean) => UserObject;
-};
+export class NoOpI18n implements I18nProvider {
+  isEnabled() {
+    return false;
+  }
+
+  get() {
+    return null;
+  }
+
+  addResource(): void {
+    // do nothing
+  }
+}

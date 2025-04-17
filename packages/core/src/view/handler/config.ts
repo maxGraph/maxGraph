@@ -28,7 +28,7 @@ import {
   VERTEX_SELECTION_DASHED,
   VERTEX_SELECTION_STROKEWIDTH,
 } from '../../util/Constants';
-import { shallowCopy } from '../../util/cloneUtils';
+import { shallowCopy } from '../../internal/clone-utils';
 
 /**
  * Describes {@link EdgeHandlerConfig}.

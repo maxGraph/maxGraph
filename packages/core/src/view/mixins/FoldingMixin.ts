@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Image from '../image/ImageBox';
-import Client from '../../Client';
 import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
@@ -23,7 +21,7 @@ import Geometry from '../geometry/Geometry';
 import { toRadians } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
 import type { Graph } from '../Graph';
-import { TranslationsConfig } from '../../i18n/config';
+import { isI18nEnabled } from '../../internal/i18n-utils';
 
 type PartialGraph = Pick<
   Graph,
@@ -37,10 +35,10 @@ type PartialGraph = Pick<
   | 'getSelectionCells'
   | 'stopEditing'
   | 'batchUpdate'
+  | 'options'
 >;
 type PartialFolding = Pick<
   Graph,
-  | 'options'
   | 'collapseExpandResource'
   | 'getCollapseExpandResource'
   | 'isFoldingEnabled'
@@ -56,14 +54,7 @@ type PartialType = PartialGraph & PartialFolding;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const FoldingMixin: PartialType = {
-  options: {
-    foldingEnabled: true,
-    collapsedImage: new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9),
-    expandedImage: new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9),
-    collapseToPreferredSize: true,
-  },
-
-  collapseExpandResource: TranslationsConfig.isEnabled() ? 'collapse-expand' : '',
+  collapseExpandResource: isI18nEnabled() ? 'collapse-expand' : '',
 
   getCollapseExpandResource() {
     return this.collapseExpandResource;

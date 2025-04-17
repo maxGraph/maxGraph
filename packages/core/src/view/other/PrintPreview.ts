@@ -24,9 +24,9 @@ import Client from '../../Client';
 import { intersects } from '../../util/mathUtils';
 import { DIALECT } from '../../util/Constants';
 import { addLinkToHead, write } from '../../util/domUtils';
-import { Graph } from '../Graph';
-import CellState from '../cell/CellState';
-import Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
+import type CellState from '../cell/CellState';
+import type Cell from '../cell/Cell';
 import { GlobalConfig } from '../../util/config';
 
 /**

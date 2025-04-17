@@ -19,70 +19,70 @@ limitations under the License.
 import { write } from './domUtils';
 
 /**
- * XML HTTP request wrapper. See also: {@link mxUtils.get}, {@link mxUtils.post} and
- * {@link mxUtils.load}. This class provides a cross-browser abstraction for Ajax
- * requests.
+ * This class provides a cross-browser abstraction for Ajax requests. It is an XML HTTP request wrapper.
  *
- * ### Encoding:
+ * See also {@link get}, {@link getAll}, {@link post} and {@link load}.
+ *
+ * ### Encoding
  *
  * For encoding parameter values, the built-in encodeURIComponent JavaScript
  * method must be used. For automatic encoding of post data in {@link Editor} the
  * {@link Editor.escapePostData} switch can be set to true (default). The encoding
  * will be carried out using the conte type of the page. That is, the page
- * containting the editor should contain a meta tag in the header, eg.
+ * containing the editor should contain a meta tag in the header, e.g.
+ * ```html
  * <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ * ```
  *
  * @example
- * ```JavaScript
- * var onload = function(req)
- * {
- *   mxUtils.alert(req.getDocumentElement());
+ * ```js
+ * const onload = function(req) {
+ *   window.alert(req.getDocumentElement());
  * }
  *
- * var onerror = function(req)
- * {
- *   mxUtils.alert('Error');
+ * const onerror = function(req) {
+ *   window.alert('Error');
  * }
  * new MaxXmlRequest(url, 'key=value').send(onload, onerror);
  * ```
  *
+ * ### Sending requests
+ *
  * Sends an asynchronous POST request to the specified URL.
  *
  * @example
- * ```JavaScript
- * var req = new MaxXmlRequest(url, 'key=value', 'POST', false);
+ * ```js
+ * const req = new MaxXmlRequest(url, 'key=value', 'POST', false);
  * req.send();
- * mxUtils.alert(req.getDocumentElement());
+ * window.alert(req.getDocumentElement());
  * ```
  *
  * Sends a synchronous POST request to the specified URL.
  *
  * @example
- * ```JavaScript
- * var encoder = new Codec();
- * var result = encoder.encode(graph.getDataModel());
- * var xml = encodeURIComponent(mxUtils.getXml(result));
- * new MaxXmlRequest(url, 'xml='+xml).send();
+ * ```js
+ * const encoder = new Codec();
+ * const result = encoder.encode(graph.getDataModel());
+ * const xml = encodeURIComponent(xmlUtils.getXml(result));
+ * new MaxXmlRequest(url, `xml=${xml}`).send();
  * ```
  *
  * Sends an encoded graph model to the specified URL using xml as the
  * parameter name. The parameter can then be retrieved in C# as follows:
  *
- * ```javascript
+ * ```csharp
  * string xml = HttpUtility.UrlDecode(context.Request.Params["xml"]);
  * ```
  *
  * Or in Java as follows:
  *
- * ```javascript
- * String xml = URLDecoder.decode(request.getParameter("xml"), "UTF-8").replace("
-", "&#xa;");
+ * ```java
+ * String xml = URLDecoder.decode(request.getParameter("xml"), "UTF-8").replace("\n", "&#xa;");
  * ```
  *
- * Note that the linefeeds should only be replaced if the XML is
- * processed in Java, for example when creating an image.
+ * Note that the linefeed should only be replaced if the XML is processed in Java, for example when creating an image.
  */
-class MaxXmlRequest {
+export default class MaxXmlRequest {
   constructor(
     url: string,
     params: string | null = null,
@@ -375,189 +375,3 @@ class MaxXmlRequest {
     }
   }
 }
-
-/**
- * Loads the specified URL *synchronously* and returns the {@link MaxXmlRequest}.
- * Throws an exception if the file cannot be loaded.
- * See {@link get} for  an asynchronous implementation.
- *
- * Example:
- *
- * ```javascript
- * try {
- *   const req = load(filename);
- *   cont root = req.getDocumentElement();
- *   // Process XML DOM...
- * } catch (e) {
- *   console.error(`Cannot load $filename`, e);
- * }
- * ```
- *
- * @param url URL to get the data from.
- */
-export const load = (url: string): MaxXmlRequest => {
-  const req = new MaxXmlRequest(url, null, 'GET', false);
-  req.send();
-  return req;
-};
-
-/**
- * Loads the specified URL *asynchronously* and invokes the given functions depending on the request status.
- * Returns the {@link MaxXmlRequest} in use.
- * Both functions take the {@link MaxXmlRequest} as the only parameter.
- * See {@link load} for a synchronous implementation.
- *
- * Example:
- *
- * ```javascript
- * get(url, (req) => {
- *    const node = req.getDocumentElement();
- *    // Process XML DOM...
- * });
- * ```
- *
- * So for example, to load a diagram into an existing graph model, the following code is used.
- *
- * ```javascript
- * get(url, (req) => {
- *   const node = req.getDocumentElement();
- *   const dec = new Codec(node.ownerDocument);
- *   dec.decode(node, graph.getDataModel());
- * });
- * ```
- *
- * @param url URL to get the data from.
- * @param onload Optional function to execute for a successful response.
- * @param onerror Optional function to execute on error.
- * @param binary Optional boolean parameter that specifies if the request is
- * binary.
- * @param timeout Optional timeout in ms before calling ontimeout.
- * @param ontimeout Optional function to execute on timeout.
- * @param headers Optional with headers, eg. {'Authorization': 'token xyz'}
- */
-export const get = (
-  url: string,
-  onload: Function | null = null,
-  onerror: Function | null = null,
-  binary = false,
-  timeout: number | null = null,
-  ontimeout: Function | null = null,
-  headers: { [key: string]: string } | null = null
-) => {
-  const req = new MaxXmlRequest(url, null, 'GET');
-  const { setRequestHeaders } = req;
-
-  if (headers) {
-    req.setRequestHeaders = (request, params) => {
-      setRequestHeaders.apply(this, [request, params]);
-      for (const key in headers) {
-        request.setRequestHeader(key, headers[key]);
-      }
-    };
-  }
-
-  if (binary != null) {
-    req.setBinary(binary);
-  }
-
-  req.send(onload, onerror, timeout, ontimeout);
-  return req;
-};
-
-/**
- * Loads the URLs in the given array *asynchronously* and invokes the given function
- * if all requests returned with a valid 2xx status. The error handler is invoked
- * once on the first error or invalid response.
- *
- * @param urls Array of URLs to be loaded.
- * @param onload Callback with array of {@link XmlRequests}.
- * @param onerror Optional function to execute on error.
- */
-export const getAll = (
-  urls: string[],
-  onload: (arg0: any) => void,
-  onerror: () => void
-) => {
-  let remain = urls.length;
-  const result: MaxXmlRequest[] = [];
-  let errors = 0;
-  const err = () => {
-    if (errors == 0 && onerror != null) {
-      onerror();
-    }
-    errors++;
-  };
-
-  for (let i = 0; i < urls.length; i += 1) {
-    ((url, index) => {
-      get(
-        url,
-        (req: MaxXmlRequest) => {
-          const status = req.getStatus();
-
-          if (status < 200 || status > 299) {
-            err();
-          } else {
-            result[index] = req;
-            remain--;
-
-            if (remain == 0) {
-              onload(result);
-            }
-          }
-        },
-        err
-      );
-    })(urls[i], i);
-  }
-
-  if (remain == 0) {
-    onload(result);
-  }
-};
-
-/**
- * Posts the specified params to the given URL *asynchronously* and invokes the given functions depending on the request status.
- * Returns the {@link MaxXmlRequest} in use.
- * Both functions take the {@link MaxXmlRequest} as the only parameter.
- * Make sure to use encodeURIComponent for the parameter values.
- *
- * Example:
- *
- * ```javascript
- * post(url, 'key=value', (req) => {
- *   alert('Ready: ' + req.isReady() + ' Status: ' + req.getStatus());
- *  // Process req.getDocumentElement() using DOM API if OK...
- * });
- * ```
- *
- * @param url URL to get the data from.
- * @param params Parameters for the post request.
- * @param onload Optional function to execute for a successful response.
- * @param onerror Optional function to execute on error.
- */
-export const post = (
-  url: string,
-  params: string | null = null,
-  onload: Function,
-  onerror: Function | null = null
-) => {
-  return new MaxXmlRequest(url, params).send(onload, onerror);
-};
-
-/**
- * Submits the given parameters to the specified URL using
- * <MaxXmlRequest.simulate> and returns the <MaxXmlRequest>.
- * Make sure to use encodeURIComponent for the parameter
- * values.
- *
- * @param url URL to get the data from.
- * @param params Parameters for the form.
- * @param doc Document to create the form in.
- * @param target Target to send the form result to.
- */
-export const submit = (url: string, params: string, doc: XMLDocument, target: string) => {
-  return new MaxXmlRequest(url, params).simulate(doc, target);
-};
-
-export default MaxXmlRequest;

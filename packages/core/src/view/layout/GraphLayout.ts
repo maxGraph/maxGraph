@@ -20,8 +20,8 @@ import Dictionary from '../../util/Dictionary';
 import Rectangle from '../geometry/Rectangle';
 import Geometry from '../geometry/Geometry';
 import Point from '../geometry/Point';
-import { Graph } from '../Graph';
-import Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
 import { GraphLayoutTraverseArgs } from './types';
 
 /**

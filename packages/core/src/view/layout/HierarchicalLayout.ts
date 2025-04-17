@@ -25,8 +25,8 @@ import ObjectIdentity from '../../util/ObjectIdentity';
 import MinimumCycleRemover from './hierarchical/MinimumCycleRemover';
 import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction';
 import CoordinateAssignment from './hierarchical/CoordinateAssignment';
-import { Graph } from '../../view/Graph';
-import Cell from '../../view/cell/Cell';
+import type { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
 import { HierarchicalGraphLayoutTraverseArgs } from './types';
 
 /**

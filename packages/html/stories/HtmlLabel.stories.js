@@ -15,12 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/*
-HTML label
-
-This example demonstrates using HTML labels that are connected to the state of the user object.
-*/
-
 import {
   xmlUtils,
   domUtils,
@@ -42,7 +36,7 @@ import {
 } from '@maxgraph/core';
 
 import { globalTypes, globalValues } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -57,7 +51,12 @@ export default {
 };
 
 const Template = ({ label, ...args }) => {
+  const div = createMainDiv(
+    `This example demonstrates using HTML labels that are connected to the state of the user object.<br>
+It also shows the usage of the undo/redo manager (<code>UndoManager</code>).`
+  );
   const container = createGraphContainer(args);
+  div.appendChild(container);
 
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
@@ -187,19 +186,21 @@ const Template = ({ label, ...args }) => {
   graph.getDataModel().addListener(InternalEvent.UNDO, listener);
   graph.getView().addListener(InternalEvent.UNDO, listener);
 
-  document.body.appendChild(
-    DomHelpers.button('Undo', function () {
-      undoManager.undo();
-    })
-  );
-
-  document.body.appendChild(
+  const buttons = document.createElement('div');
+  buttons.style.marginTop = '.75rem';
+  div.appendChild(buttons);
+  const buttonUndo = DomHelpers.button('Undo', function () {
+    undoManager.undo();
+  });
+  buttonUndo.style.marginRight = '0.5rem';
+  buttons.appendChild(buttonUndo);
+  buttons.appendChild(
     DomHelpers.button('Redo', function () {
       undoManager.redo();
     })
   );
 
-  return container;
+  return div;
 };
 
 export const Default = Template.bind({});

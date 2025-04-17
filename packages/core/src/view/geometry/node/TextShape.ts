@@ -32,7 +32,7 @@ import {
   LINE_HEIGHT,
 } from '../../../util/Constants';
 import { getBoundingBox } from '../../../util/mathUtils';
-import { getAlignmentAsPoint, matchBinaryMask } from '../../../util/styleUtils';
+import { getAlignmentAsPoint } from '../../../util/styleUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Shape from '../Shape';
@@ -48,6 +48,7 @@ import {
   VAlignValue,
 } from '../../../types';
 import SvgCanvas2D from '../../canvas/SvgCanvas2D';
+import { matchBinaryMask } from '../../../internal/utils';
 
 /**
  * Extends {@link Shape} to implement a text shape.

@@ -15,11 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/*
-Scrollbars
-This example demonstrates using a scrollable table with different sections in a cell label.
-*/
-
 import {
   Cell,
   CellRenderer,
@@ -49,7 +44,7 @@ import {
   globalValues,
   globalTypes,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -83,9 +78,6 @@ table.erd td {
   text-align: left;
   color: black;
 }
-button {
-  position:absolute;
-}
 `;
 
 // TODO apply this settings to the container used by the Graph
@@ -117,7 +109,11 @@ const Template = ({ label, ...args }) => {
   styleElm.innerText = CSS_TEMPLATE;
   document.head.appendChild(styleElm);
 
+  const div = createMainDiv(
+    `This example demonstrates using a scrollable table with different sections in a cell label.`
+  );
   const container = createGraphContainer(args);
+  div.appendChild(container);
 
   // Disables foreignObjects
   Client.NO_FO = true;
@@ -563,19 +559,21 @@ const Template = ({ label, ...args }) => {
     graph.insertEdge(parent, null, relation, v1, v2);
   });
 
-  let btn1 = DomHelpers.button('+', function () {
+  const buttons = document.createElement('div');
+  buttons.style.marginTop = '.75rem';
+  div.appendChild(buttons);
+  const buttonZoomIn = DomHelpers.button('+', function () {
     graph.zoomIn();
   });
-  btn1.style.marginLeft = '20px';
-
-  document.body.appendChild(btn1);
-  document.body.appendChild(
+  buttonZoomIn.style.marginRight = '.5rem';
+  buttons.appendChild(buttonZoomIn);
+  buttons.appendChild(
     DomHelpers.button('-', function () {
       graph.zoomOut();
     })
   );
 
-  return container;
+  return div;
 };
 
 export const Default = Template.bind({});

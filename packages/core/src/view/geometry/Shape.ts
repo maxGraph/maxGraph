@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import Rectangle from './Rectangle';
-import { isNullish } from '../../util/Utils';
+import { isNullish } from '../../internal/utils';
 import { getBoundingBox, getDirectedBounds, mod } from '../../util/mathUtils';
 import {
   DIRECTION,
@@ -35,7 +35,6 @@ import type CellState from '../cell/CellState';
 import type StencilShape from './node/StencilShape';
 import type CellOverlay from '../cell/CellOverlay';
 import type ImageBox from '../image/ImageBox';
-
 import type {
   ArrowValue,
   CellStateStyle,

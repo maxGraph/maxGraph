@@ -23,8 +23,8 @@ import CellPath from '../cell/CellPath';
 import Rectangle from '../geometry/Rectangle';
 import { sortCells } from '../../util/styleUtils';
 import WeightedCellSorter from './util/WeightedCellSorter';
-import Cell from '../cell/Cell';
-import { Graph } from '../Graph';
+import type Cell from '../cell/Cell';
+import type { Graph } from '../Graph';
 import { findTreeRoots } from '../../util/treeTraversal';
 
 /**

@@ -14,14 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphView from '../GraphView';
+import type GraphView from '../GraphView';
 import EventObject from '../event/EventObject';
 import Point from '../geometry/Point';
-import Cell from '../cell/Cell';
+import type Cell from '../cell/Cell';
 import InternalEvent from '../event/InternalEvent';
-
 import type { UndoableChange } from '../../types';
-import { Graph } from '../Graph';
 
 /**
  * Action to change the current root in a view.
@@ -59,7 +57,7 @@ class CurrentRootChange implements UndoableChange {
     this.view.currentRoot = this.previous;
     this.previous = tmp;
 
-    const translate = (<Graph>this.view.graph).getTranslateForRoot(this.view.currentRoot);
+    const translate = this.view.graph.getTranslateForRoot(this.view.currentRoot);
 
     if (translate) {
       this.view.translate = new Point(-translate.x, -translate.y);

@@ -40,7 +40,7 @@ import { convertPoint, getOffset } from '../../util/styleUtils';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import ImageShape from '../geometry/node/ImageShape';
 import CellMarker from '../cell/CellMarker';
-import ConstraintHandler from './ConstraintHandler';
+import ConstraintHandler from '../handler/ConstraintHandler';
 import PolylineShape from '../geometry/edge/PolylineShape';
 import EventSource from '../event/EventSource';
 import Rectangle from '../geometry/Rectangle';
@@ -54,10 +54,10 @@ import {
 } from '../../util/EventUtils';
 import Image from '../image/ImageBox';
 import CellState from '../cell/CellState';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import Shape from '../geometry/Shape';
-import { CellStyle, ColorValue, GraphPlugin, Listenable } from '../../types';
+import type { CellStyle, ColorValue, GraphPlugin, Listenable } from '../../types';
 
 type FactoryMethod = (
   source: Cell | null,

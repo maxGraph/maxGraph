@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import CellRenderer from './CellRenderer';
-import type Shape from '../geometry/Shape';
+import type { ShapeConstructor } from '../../types';
 import RectangleShape from '../geometry/node/RectangleShape';
 import EllipseShape from '../geometry/node/EllipseShape';
 import RhombusShape from '../geometry/node/RhombusShape';
 import CylinderShape from '../geometry/node/CylinderShape';
 import ConnectorShape from '../geometry/edge/ConnectorShape';
-import ActorShape from '../geometry/ActorShape';
+import ActorShape from '../geometry/node/ActorShape';
 import TriangleShape from '../geometry/node/TriangleShape';
 import HexagonShape from '../geometry/node/HexagonShape';
 import CloudShape from '../geometry/node/CloudShape';
@@ -45,12 +45,12 @@ let isDefaultElementsRegistered = false;
  */
 export function registerDefaultShapes() {
   if (!isDefaultElementsRegistered) {
-    const shapesToRegister: [string, new (...arguments_: any) => Shape][] = [
+    const shapesToRegister: [string, ShapeConstructor][] = [
       [SHAPE.ACTOR, ActorShape],
       [SHAPE.ARROW, ArrowShape],
       [SHAPE.ARROW_CONNECTOR, ArrowConnectorShape],
-      [SHAPE.CONNECTOR, ConnectorShape],
       [SHAPE.CLOUD, CloudShape],
+      [SHAPE.CONNECTOR, ConnectorShape],
       [SHAPE.CYLINDER, CylinderShape],
       [SHAPE.DOUBLE_ELLIPSE, DoubleEllipseShape],
       [SHAPE.ELLIPSE, EllipseShape],

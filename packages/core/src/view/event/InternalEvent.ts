@@ -19,15 +19,15 @@ limitations under the License.
 import InternalMouseEvent from './InternalMouseEvent';
 import Client from '../../Client';
 import { isConsumed, isMouseEvent } from '../../util/EventUtils';
-import CellState from '../cell/CellState';
-import {
+import type CellState from '../cell/CellState';
+import type {
   EventCache,
   GestureEvent,
   KeyboardEventListener,
   Listenable,
   MouseEventListener,
 } from '../../types';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 
 // Checks if passive event listeners are supported
 // see https://github.com/Modernizr/Modernizr/issues/1894

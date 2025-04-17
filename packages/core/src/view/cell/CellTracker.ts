@@ -18,8 +18,8 @@ limitations under the License.
 
 import CellMarker from './CellMarker';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import { Graph } from '../Graph';
-import Cell from './Cell';
+import type { Graph } from '../Graph';
+import type Cell from './Cell';
 import EventSource from '../event/EventSource';
 
 import type { ColorValue } from '../../types';

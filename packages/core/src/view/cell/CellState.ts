@@ -18,8 +18,8 @@ limitations under the License.
 
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
-import Cell from './Cell';
-import GraphView from '../../view/GraphView';
+import type Cell from './Cell';
+import type GraphView from '../../view/GraphView';
 import Shape from '../geometry/Shape';
 import TextShape from '../geometry/node/TextShape';
 import Dictionary from '../../util/Dictionary';
@@ -27,7 +27,6 @@ import { ALIGN, NONE } from '../../util/Constants';
 import { CellStateStyle } from '../../types';
 import RectangleShape from '../geometry/node/RectangleShape';
 import CellOverlay from './CellOverlay';
-import { Graph } from '../Graph';
 
 /**
  * Represents the current state of a cell in a given {@link GraphView}.
@@ -378,7 +377,7 @@ class CellState extends Rectangle {
    * Destroys the state and all associated resources.
    */
   destroy() {
-    (<Graph>this.view.graph).cellRenderer.destroy(this);
+    this.view.graph.cellRenderer.destroy(this);
   }
 
   /**

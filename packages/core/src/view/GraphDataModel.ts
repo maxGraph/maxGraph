@@ -32,16 +32,14 @@ import TerminalChange from './undoable_changes/TerminalChange';
 import ValueChange from './undoable_changes/ValueChange';
 import VisibleChange from './undoable_changes/VisibleChange';
 import Geometry from './geometry/Geometry';
-import { cloneCells, filterCells } from '../util/cellArrayUtils';
-
 import type { CellStyle, FilterFunction } from '../types';
 
 /**
  * Extends {@link EventSource} to implement a graph model. The graph model acts as
  * a wrapper around the cells which are in charge of storing the actual graph
- * datastructure. The model acts as a transactional wrapper with event
+ * data structure. The model acts as a transactional wrapper with event
  * notification for all changes, whereas the cells contain the atomic
- * operations for updating the actual datastructure.
+ * operations for updating the actual data structure.
  *
  * ### Layers
  *
@@ -337,7 +335,7 @@ export class GraphDataModel extends EventSource {
   }
 
   filterCells(cells: Cell[], filter: FilterFunction) {
-    return filterCells(filter)(cells);
+    return cells.filter(filter);
   }
 
   getRoot(cell: Cell | null = null) {

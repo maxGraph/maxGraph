@@ -38,14 +38,15 @@ import CurrentRootChange from './undoable_changes/CurrentRootChange';
 import Shape from './geometry/Shape';
 import Geometry from './geometry/Geometry';
 import ConnectionConstraint from './other/ConnectionConstraint';
-import PopupMenuHandler from './handler/PopupMenuHandler';
+import type PopupMenuHandler from './plugins/PopupMenuHandler';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
 import { clone } from '../util/cloneUtils';
 import type { Graph } from './Graph';
 import StyleRegistry from './style/StyleRegistry';
-import type TooltipHandler from './handler/TooltipHandler';
+import type TooltipHandler from './plugins/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
-import { TranslationsConfig } from '../i18n/config';
+import { doEval } from '../internal/utils';
+import { isI18nEnabled } from '../internal/i18n-utils';
 
 /**
  * @class GraphView
@@ -121,7 +122,7 @@ export class GraphView extends EventSource {
    * the status message.
    * @default 'done'
    */
-  doneResource = TranslationsConfig.isEnabled() ? 'done' : '';
+  doneResource = isI18nEnabled() ? 'done' : '';
 
   /**
    * Specifies the resource key for the status message while the document is
@@ -129,7 +130,7 @@ export class GraphView extends EventSource {
    * value is used as the status message.
    * @default 'updatingSelection'
    */
-  updatingDocumentResource = TranslationsConfig.isEnabled() ? 'updatingDocument' : '';
+  updatingDocumentResource = isI18nEnabled() ? 'updatingDocument' : '';
 
   /**
    * Specifies if string values in cell styles should be evaluated using {@link eval}.
@@ -1327,7 +1328,7 @@ export class GraphView extends EventSource {
       let tmp = StyleRegistry.getValue(edgeStyle);
 
       if (!tmp && this.isAllowEval()) {
-        tmp = eval(edgeStyle);
+        tmp = doEval(edgeStyle);
       }
 
       edgeStyle = tmp;
@@ -1594,7 +1595,7 @@ export class GraphView extends EventSource {
     if (typeof perimeter === 'string') {
       let tmp = StyleRegistry.getValue(perimeter);
       if (tmp == null && this.isAllowEval()) {
-        tmp = eval(perimeter);
+        tmp = doEval(perimeter);
       }
       perimeter = tmp;
     }

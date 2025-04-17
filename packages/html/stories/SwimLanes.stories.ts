@@ -62,7 +62,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // The usage of the editor is currently disable for the following reasons
   // TODO get the keyhandler-commons.xml resource from mxGraph
   // TODO make possible to set the container of the graph, see https://github.com/maxGraph/maxGraph/issues/367
-  // const config = utils
+  // const config = requestUtils
   //   .load('editors/config/keyhandler-commons.xml')
   //   .getDocumentElement();
   // const editor = new Editor(config);

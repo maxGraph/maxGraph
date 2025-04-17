@@ -29,7 +29,7 @@ import {
   CellAttributeChange,
   RubberBandHandler,
   ModelXmlSerializer,
-  popup,
+  guiUtils,
   type Cell,
   getDefaultPlugins,
 } from '@maxgraph/core';
@@ -183,7 +183,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Adds an option to view the XML of the graph
   const button = DomHelpers.button('View XML', function () {
     const xml = new ModelXmlSerializer(graph.getDataModel()).export();
-    popup(xml, true);
+    guiUtils.popup(xml, true);
   });
   button.style.marginTop = '1rem';
   buttons.appendChild(button);

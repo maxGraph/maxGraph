@@ -28,7 +28,7 @@ import {
   Graph,
   HandleConfig,
   InternalEvent,
-  load,
+  requestUtils,
   Point,
   type Rectangle,
   RubberBandHandler,
@@ -89,12 +89,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // Enable rotation handle
     // use an alternate way to enable rotation handle as we already override the VertexHandler for other purposes
     // another way to enable rotation handle is to set `VertexHandlerConfig.rotationEnabled = true`;
-    isRotationEnabled(): boolean {
+    override isRotationEnabled(): boolean {
       return true;
     }
 
     // Uses the shape for resize previews
-    createSelectionShape(bounds: Rectangle) {
+    override createSelectionShape(bounds: Rectangle) {
       const stencil = StencilShapeRegistry.getStencil(this.state.style.shape);
       let shape: Shape;
 
@@ -124,14 +124,20 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       super(container, undefined, plugins);
     }
 
-    createVertexHandler(state: CellState) {
+    override createVertexHandler(state: CellState) {
       return new CustomVertexHandler(state);
     }
   }
 
   // Defines a custom Shape via the canvas API
   class CustomShape extends Shape {
-    paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+    override paintBackground(
+      c: AbstractCanvas2D,
+      x: number,
+      y: number,
+      w: number,
+      h: number
+    ) {
       c.translate(x, y);
 
       // Head
@@ -163,7 +169,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   CellRenderer.registerShape('customShape', CustomShape);
 
   // Loads the stencils into the registry
-  const req = load('stencils.xml');
+  const req = requestUtils.load('stencils.xml');
   const root = req.getDocumentElement();
   let shape = root!.firstChild;
 

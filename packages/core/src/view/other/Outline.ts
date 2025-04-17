@@ -39,8 +39,6 @@ import { Listenable } from '../../types';
 import { getDefaultPlugins } from '../plugins';
 
 /**
- * @class Outline
- *
  * Implements an outline (aka overview) for a graph. Set {@link updateOnPan} to true
  * to enable updates while the source graph is panning.
  *
@@ -143,9 +141,9 @@ class Outline {
 
     // Refreshes the graph in the outline after a refresh of the main graph
     this.refreshHandler = (sender: any) => {
-      const outline = <Graph>this.outline;
-      outline.setStylesheet(this.source.getStylesheet());
-      outline.refresh();
+      const outline = this.outline;
+      outline?.setStylesheet(this.source.getStylesheet());
+      outline?.refresh();
     };
     this.source.addListener(InternalEvent.REFRESH, this.refreshHandler);
 
@@ -169,19 +167,19 @@ class Outline {
       const t = getSource(evt);
 
       const redirect = (evt: MouseEvent) => {
-        const outline = <Graph>this.outline;
-        outline.fireMouseEvent(InternalEvent.MOUSE_MOVE, new InternalMouseEvent(evt));
+        const outline = this.outline;
+        outline?.fireMouseEvent(InternalEvent.MOUSE_MOVE, new InternalMouseEvent(evt));
       };
 
       const redirect2 = (evt: MouseEvent) => {
-        const outline = <Graph>this.outline;
+        const outline = this.outline;
         InternalEvent.removeGestureListeners(<Listenable>t, null, redirect, redirect2);
-        outline.fireMouseEvent(InternalEvent.MOUSE_UP, new InternalMouseEvent(evt));
+        outline?.fireMouseEvent(InternalEvent.MOUSE_UP, new InternalMouseEvent(evt));
       };
 
-      const outline = <Graph>this.outline;
+      const outline = this.outline;
       InternalEvent.addGestureListeners(<Listenable>t, null, redirect, redirect2);
-      outline.fireMouseEvent(InternalEvent.MOUSE_DOWN, new InternalMouseEvent(evt));
+      outline?.fireMouseEvent(InternalEvent.MOUSE_DOWN, new InternalMouseEvent(evt));
     };
 
     InternalEvent.addGestureListeners(this.selectionBorder.node, handler);
@@ -375,13 +373,13 @@ class Outline {
    */
   // createSizer(): mxShape;
   createSizer(): RectangleShape {
-    const outline = <Graph>this.outline;
+    const outline = this.outline;
     if (this.sizerImage != null) {
       const sizer = new ImageShape(
         new Rectangle(0, 0, this.sizerImage.width, this.sizerImage.height),
         this.sizerImage.src
       );
-      sizer.dialect = outline.dialect;
+      outline && (sizer.dialect = outline.dialect);
       return sizer;
     }
 
@@ -390,7 +388,7 @@ class Outline {
       OUTLINE_HANDLE_FILLCOLOR,
       OUTLINE_HANDLE_STROKECOLOR
     );
-    sizer.dialect = outline.dialect;
+    outline && (sizer.dialect = outline.dialect);
     return sizer;
   }
 
@@ -613,8 +611,8 @@ class Outline {
       const sizerNode = <SVGGElement>sizer.node;
       const selectionBorder = <RectangleShape>this.selectionBorder;
       const selectionBorderNode = <SVGGElement>selectionBorder.node;
-      const source = <Graph>this.source;
-      const outline = <Graph>this.outline;
+      const source = this.source;
+      const outline = this.outline;
 
       selectionBorderNode.style.display = this.showViewport ? '' : 'none';
       sizerNode.style.display = selectionBorderNode.style.display;
@@ -624,7 +622,7 @@ class Outline {
       let dy = delta.y;
       let bounds = null;
 
-      if (!this.zoom) {
+      if (outline && !this.zoom) {
         // Previews the panning on the source graph
         const { scale } = outline.getView();
         bounds = new Rectangle(
@@ -642,7 +640,7 @@ class Outline {
         source.panGraph(-dx - <number>this.dx0, -dy - <number>this.dy0);
       } else {
         // Does *not* preview zooming on the source graph
-        const { container } = <Graph>this.source;
+        const { container } = this.source;
         // @ts-ignore
         const viewRatio = container.clientWidth / container.clientHeight;
         dy = dx / viewRatio;
@@ -706,15 +704,18 @@ class Outline {
       const delta = this.getTranslateForEvent(me);
       let dx = delta.x;
       let dy = delta.y;
-      const source = <Graph>this.source;
-      const outline = <Graph>this.outline;
+      const source = this.source;
+      const outline = this.outline;
       const selectionBorder = <RectangleShape>this.selectionBorder;
 
       if (Math.abs(dx) > 0 || Math.abs(dy) > 0) {
         if (!this.zoom) {
           // Applies the new translation if the source
           // has no scrollbars
-          if (!source.useScrollbarsForPanning || !hasScrollbars(source.container)) {
+          if (
+            outline &&
+            (!source.useScrollbarsForPanning || !hasScrollbars(source.container))
+          ) {
             source.panGraph(0, 0);
             dx /= outline.getView().scale;
             dy /= outline.getView().scale;

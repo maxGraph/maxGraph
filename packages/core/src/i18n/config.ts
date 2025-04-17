@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isNullish } from '../util/Utils';
-import { shallowCopy } from '../util/cloneUtils';
+import { isNullish } from '../internal/utils';
+import { shallowCopy } from '../internal/clone-utils';
 
 function getNavigatorLanguage() {
   return typeof window !== 'undefined' ? navigator.language : 'en';
@@ -79,8 +79,7 @@ export const TranslationsConfig = {
    * See {@link Translations.getSpecialBundle} for handling identifiers with and without a dash.
    *
    * If internationalization is disabled, then the following variables should be overridden to reflect the current language of the system.
-   * These variables are cleared when i18n is disabled:
-   * - {@link CellRenderer.collapseExpandResource}
+   * These variables are cleared when i18n is disabled (the list may not be exhaustive):
    * - {@link Editor.askZoomResource}
    * - {@link Editor.currentFileResource}
    * - {@link Editor.helpResource}
@@ -89,14 +88,15 @@ export const TranslationsConfig = {
    * - {@link Editor.propertiesResource}
    * - {@link Editor.tasksResource}
    * - {@link ElbowEdgeHandler.doubleClickOrientationResource}
+   * - {@link Graph.alreadyConnectedResource}.
+   * - {@link Graph.collapseExpandResource}
+   * - {@link Graph.containsValidationErrorsResource} and
    * - {@link GraphSelectionModel.doneResource}
    * - {@link GraphSelectionModel.updatingSelectionResource}
-   * - {@link Graph.alreadyConnectedResource}.
-   * - {@link Graph.containsValidationErrorsResource} and
-   * - {@link utils.closeResource}
-   * - {@link utils.errorResource}
    * - {@link GraphView.doneResource}
    * - {@link GraphView.updatingDocumentResource}
+   * - {@link GuiConfig.closeResource}
+   * - {@link GuiConfig.errorResource}
    *
    * @param value The language to set. If `null` or `undefined`, use the preferred language of the navigator or 'en' as default.
    */

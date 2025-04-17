@@ -31,12 +31,12 @@ import Rectangle from '../geometry/Rectangle';
 import ImageShape from '../geometry/node/ImageShape';
 import RectangleShape from '../geometry/node/RectangleShape';
 import { isShiftDown } from '../../util/EventUtils';
-import { Graph } from '../Graph';
+import type { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import Point from '../geometry/Point';
-import Cell from '../cell/Cell';
+import type Cell from '../cell/Cell';
 
 /**
  * Handles constraints on connection targets. This class is in charge of
