@@ -69,6 +69,9 @@ export const registerDefaultPerimeters = (): void => {
 /**
  * Unregister all {@link EdgeStyle}s and {@link Perimeter}s from {@link StyleRegistry}.
  *
+ * **NOTE**: in the future, this function will be replaced by dedicated functions to remove `Perimeter` and `EdgeStyle` individually.
+ * For more details, see [Issue #767](https://github.com/maxGraph/maxGraph/issues/767).
+ *
  * @category Configuration
  * @category Style
  * @since 0.18.0
