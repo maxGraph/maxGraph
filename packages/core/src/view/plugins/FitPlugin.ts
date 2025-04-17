@@ -70,7 +70,7 @@ export type FitOptions = {
    */
   ignoreHeight?: boolean;
   /**
-   * Optional maximum height. When set to `null`, the height is ignored.
+   * Optional maximum height. When set to `null`, the height is ignored i.e. use the maximum available height within the container.
    * @default null.
    */
   maxHeight?: number | null;
