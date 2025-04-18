@@ -501,7 +501,7 @@ class Graph extends EventSource {
     container?: HTMLElement,
     model?: GraphDataModel,
     plugins: GraphPluginConstructor[] = getDefaultPlugins(),
-    stylesheet: Stylesheet | null = null
+    stylesheet?: Stylesheet | null
   ) {
     super();
     this.registerDefaults();
