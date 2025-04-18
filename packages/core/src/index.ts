@@ -104,7 +104,6 @@ export { default as ArrowShape } from './view/geometry/edge/ArrowShape';
 export { default as ArrowConnectorShape } from './view/geometry/edge/ArrowConnectorShape';
 export { default as ConnectorShape } from './view/geometry/edge/ConnectorShape';
 export { default as LineShape } from './view/geometry/edge/LineShape';
-export { default as MarkerShape } from './view/geometry/edge/MarkerShape';
 export { default as PolylineShape } from './view/geometry/edge/PolylineShape';
 
 export { default as CloudShape } from './view/geometry/node/CloudShape';
@@ -115,11 +114,13 @@ export { default as HexagonShape } from './view/geometry/node/HexagonShape';
 export { default as ImageShape } from './view/geometry/node/ImageShape';
 export { default as RectangleShape } from './view/geometry/node/RectangleShape';
 export { default as RhombusShape } from './view/geometry/node/RhombusShape';
+
+export { unregisterAllStencilShapes } from './view/geometry/stencil/register';
 export {
   default as StencilShape,
   StencilShapeConfig,
-} from './view/geometry/node/StencilShape';
-export { default as StencilShapeRegistry } from './view/geometry/node/StencilShapeRegistry';
+} from './view/geometry/stencil/StencilShape';
+export { default as StencilShapeRegistry } from './view/geometry/stencil/StencilShapeRegistry';
 
 export * as constants from './util/Constants';
 export { default as Guide } from './view/other/Guide';
@@ -157,6 +158,17 @@ export { default as Point } from './view/geometry/Point';
 export { default as Rectangle } from './view/geometry/Rectangle';
 
 export * from './view/style/config';
+export * from './view/style/register';
+export { default as MarkerShape } from './view/style/EdgeMarkerRegistry';
+/**
+ * Includes all builtins edge markers which can be registered in {@link MarkerShape}.
+ *
+ * They are registered by default when instantiating {@link Graph} or they can all be registered by calling {@link registerDefaultEdgeMarkers}.
+ *
+ * @since 0.18.0
+ * @category Style
+ */
+export * as EdgeMarker from './view/style/edge-markers';
 export { default as EdgeStyle } from './view/style/EdgeStyle';
 export { default as Perimeter } from './view/style/Perimeter';
 export { default as StyleRegistry } from './view/style/StyleRegistry';
@@ -194,6 +206,7 @@ export { default as Clipboard } from './util/Clipboard';
 export { default as UndoableEdit } from './view/undoable_changes/UndoableEdit';
 export { default as UndoManager } from './view/undoable_changes/UndoManager';
 
+export * from './view/cell/register-shapes';
 export { Cell } from './view/cell/Cell';
 export { default as CellOverlay } from './view/cell/CellOverlay';
 export { default as CellPath } from './view/cell/CellPath';

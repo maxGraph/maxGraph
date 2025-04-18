@@ -14,17 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// These functions are private and are not intended to be exported by the npm package
+// The elements in this file are private and are not intended to be exported by the npm package
 
 import CodecRegistry from './CodecRegistry';
 import ObjectCodec from './ObjectCodec';
 
-let isBaseCodecsRegistered = false;
+/**
+ * @private
+ */
+export const CodecRegistrationStates: Record<string, boolean> = {
+  base: false,
+  core: false,
+  editor: false,
+  model: false,
+};
+
+/**
+ * @private
+ */
 export const registerBaseCodecs = (force = false) => {
-  if (!isBaseCodecsRegistered || force) {
+  if (!CodecRegistrationStates.base || force) {
     CodecRegistry.register(new ObjectCodec({})); // Object
     CodecRegistry.register(new ObjectCodec([])); // Array
 
-    isBaseCodecsRegistered = true;
+    CodecRegistrationStates.base = true;
   }
 };

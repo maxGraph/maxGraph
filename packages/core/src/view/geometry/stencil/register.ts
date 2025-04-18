@@ -1,5 +1,5 @@
 /*
-Copyright 2024-present The maxGraph project Contributors
+Copyright 2025-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,28 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-body {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
+import StencilShapeRegistry from './StencilShapeRegistry';
 
-h1 {
-  text-align: center;
-  margin-top: 3rem;
-}
-
-footer {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 1;
-  font-weight: 800;
-}
-
-#graph-container {
-  border: #B0B0B0 1px solid;
-  height: 75vh;
-  overflow: hidden;
+/**
+ * Unregister all {@link StencilShape}s from {@link StencilShapeRegistry}.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.18.0
+ */
+export function unregisterAllStencilShapes() {
+  StencilShapeRegistry.stencils = {};
 }

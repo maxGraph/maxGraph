@@ -33,7 +33,7 @@ import { getRotatedPoint, mod, toRadians } from '../../util/mathUtils';
 import { convertPoint } from '../../util/styleUtils';
 import { equalEntries, equalPoints } from '../../util/arrayUtils';
 import Rectangle from '../geometry/Rectangle';
-import StencilShapeRegistry from '../geometry/node/StencilShapeRegistry';
+import StencilShapeRegistry from '../geometry/stencil/StencilShapeRegistry';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import InternalMouseEvent from '../event/InternalMouseEvent';

@@ -37,11 +37,11 @@ import { SHAPE } from '../../util/Constants';
 let isDefaultElementsRegistered = false;
 
 /**
- * Add default shapes into `CellRenderer` shapes.
+ * Register default builtin shapes into {@link CellRenderer}.
  *
- * @private
  * @category Configuration
  * @category Style
+ * @since 0.18.0
  */
 export function registerDefaultShapes() {
   if (!isDefaultElementsRegistered) {
@@ -69,4 +69,16 @@ export function registerDefaultShapes() {
 
     isDefaultElementsRegistered = true;
   }
+}
+
+/**
+ * Unregister all shapes from {@link CellRenderer}.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.18.0
+ */
+export function unregisterAllShapes() {
+  CellRenderer.defaultShapes = {};
+  isDefaultElementsRegistered = false;
 }
