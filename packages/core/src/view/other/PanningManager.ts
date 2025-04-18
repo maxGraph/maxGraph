@@ -19,9 +19,7 @@ limitations under the License.
 import { MouseEventListener, MouseListenerSet } from '../../types';
 import { hasScrollbars } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
-import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
-import InternalMouseEvent from '../event/InternalMouseEvent';
 import type { Graph } from '../Graph';
 
 /**
