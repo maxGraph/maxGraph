@@ -36,11 +36,6 @@ footer {
 
 #graph-container {
   border: #B0B0B0 1px solid;
-  height: 70vh;
+  height: 75vh;
   overflow: hidden;
-}
-
-button {
-  margin-top: 1.5rem;
-  margin-left: .5rem;
 }

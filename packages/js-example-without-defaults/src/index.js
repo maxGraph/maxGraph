@@ -15,20 +15,28 @@ limitations under the License.
 */
 
 import './style.css';
-import {
-  constants,
-  Graph,
-  InternalEvent,
-  unregisterAllEdgeMarkers,
-  unregisterAllEdgeStylesAndPerimeters,
-  unregisterAllShapes,
-} from '@maxgraph/core';
+import { constants, Graph, InternalEvent } from '@maxgraph/core';
+
+/**
+ * Create a custom implementation to not load all default built-in styles. This is because Graph registers them.
+ *
+ * In the future, we expect to have an implementation of Graph that does not do it.
+ * See https://github.com/maxGraph/maxGraph/issues/760
+ */
+class CustomGraph extends Graph {
+  /**
+   * Only registers the elements required for this example. Do not let Graph load all default built-in styles.
+   */
+  registerDefaults() {
+    // do nothing
+  }
+}
 
 const initializeGraph = (container) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  const graph = new Graph(
+  const graph = new CustomGraph(
     container,
     undefined,
     [] // override default plugins, use none
@@ -41,13 +49,6 @@ const initializeGraph = (container) => {
     verticalAlign: 'top',
     verticalLabelPosition: 'bottom',
   });
-
-  // Unregister maxGraph builtin style defaults
-  // This is because Graph registers them. In the future, we expect to have an implementation of Graph that does not do it.
-  // See https://github.com/maxGraph/maxGraph/issues/760
-  unregisterAllEdgeMarkers();
-  unregisterAllEdgeStylesAndPerimeters();
-  unregisterAllShapes();
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
