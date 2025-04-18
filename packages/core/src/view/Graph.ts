@@ -494,7 +494,7 @@ class Graph extends EventSource {
   }
 
   constructor(
-    container: HTMLElement,
+    container?: HTMLElement,
     model?: GraphDataModel,
     plugins: GraphPluginConstructor[] = getDefaultPlugins(),
     stylesheet: Stylesheet | null = null
