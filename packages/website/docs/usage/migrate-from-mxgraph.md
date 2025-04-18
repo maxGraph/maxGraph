@@ -356,6 +356,16 @@ For example, to set the `foldingEnabled` property, instead of doing `Graph.foldi
 
 - the `tolerance` property has been renamed (and the get/set method as well). It is now named `snapTolerance`.
 
+#### Moved methods
+
+The following methods have been moved from the `Graph` class to a new location:
+- `fit()` has been moved to `FitPlugin.fit()` (since 0.18.0). The new `fit` method also takes a single parameter.
+
+#### Moved properties
+
+The following properties have been moved from the `Graph` class to a new location:
+- `minFitScale` and `maxFitScale` has been moved to `FitPlugin` (since 0.18.0).
+
 ### `mxResources`
 
 The `mxResources` class has been renamed to `Translations` in `maxGraph`.
