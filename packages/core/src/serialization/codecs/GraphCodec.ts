@@ -37,9 +37,8 @@ import { Graph } from '../../view/Graph';
  */
 export class GraphCodec extends ObjectCodec {
   constructor() {
-    const __dummy: any = undefined;
-    // TODO: Register every possible plugin (i.e. all not being excluded via tree-shaking(?))
-    super(new Graph(__dummy), [
+    // TODO review the Graph initialization. Currently it registers all default plugins (check impact on tree-shaking)
+    super(new Graph(), [
       'graphListeners',
       'eventListeners',
       'view',
