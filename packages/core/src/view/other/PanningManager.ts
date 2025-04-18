@@ -42,13 +42,13 @@ class PanningManager {
     this.scrollTop = 0;
 
     this.mouseListener = {
-      mouseDown: (sender: EventSource, me: InternalMouseEvent) => {
+      mouseDown: () => {
         return;
       },
-      mouseMove: (sender: EventSource, me: InternalMouseEvent) => {
+      mouseMove: () => {
         return;
       },
-      mouseUp: (sender: EventSource, me: InternalMouseEvent) => {
+      mouseUp: () => {
         if (this.active) {
           this.stop();
         }

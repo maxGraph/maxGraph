@@ -31,7 +31,7 @@ import Rectangle from '../geometry/Rectangle';
 import { isAltDown, isMultiTouchEvent } from '../../util/EventUtils';
 import { clearSelection } from '../../util/domUtils';
 import type { Graph } from '../Graph';
-import { GraphPlugin } from '../../types';
+import type { GraphPlugin, MouseListenerSet } from '../../types';
 import EventObject from '../event/EventObject';
 import EventSource from '../event/EventSource';
 
@@ -57,7 +57,7 @@ import EventSource from '../event/EventSource';
  *
  * @category Plugin
  */
-class RubberBandHandler implements GraphPlugin {
+class RubberBandHandler implements GraphPlugin, MouseListenerSet {
   static pluginId = 'RubberBandHandler';
 
   constructor(graph: Graph) {
@@ -177,7 +177,7 @@ class RubberBandHandler implements GraphPlugin {
    * Handles the event by initiating a rubberband selection.
    * By consuming the event all subsequent events of the gesture are redirected to this handler.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+  mouseDown(_sender: EventSource, me: InternalMouseEvent) {
     if (
       !me.isConsumed() &&
       this.isEnabled() &&
@@ -240,7 +240,7 @@ class RubberBandHandler implements GraphPlugin {
   /**
    * Handles the event by updating the rubberband selection.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent) {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent) {
     if (!me.isConsumed() && this.first) {
       const origin = getScrollOrigin(this.graph.container);
       const offset = getOffset(this.graph.container);
@@ -297,7 +297,7 @@ class RubberBandHandler implements GraphPlugin {
   /**
    * Handles the event by selecting the region of the rubberband using {@link Graph#selectRegion}.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+  mouseUp(_sender: EventSource, me: InternalMouseEvent) {
     const active = this.isActive();
     this.reset();
 

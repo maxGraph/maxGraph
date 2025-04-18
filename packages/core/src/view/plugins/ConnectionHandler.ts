@@ -57,7 +57,13 @@ import CellState from '../cell/CellState';
 import type { Graph } from '../Graph';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import Shape from '../geometry/Shape';
-import type { CellStyle, ColorValue, GraphPlugin, Listenable } from '../../types';
+import type {
+  CellStyle,
+  ColorValue,
+  GraphPlugin,
+  Listenable,
+  MouseListenerSet,
+} from '../../types';
 
 type FactoryMethod = (
   source: Cell | null,
@@ -198,7 +204,7 @@ type FactoryMethod = (
  *
  * @category Plugin
  */
-class ConnectionHandler extends EventSource implements GraphPlugin {
+class ConnectionHandler extends EventSource implements GraphPlugin, MouseListenerSet {
   static pluginId = 'ConnectionHandler';
 
   previous: CellState | null = null;
@@ -745,7 +751,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Handles the event by initiating a new connection.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+  mouseDown(_sender: EventSource, me: InternalMouseEvent) {
     this.mouseDownCounter += 1;
 
     if (
@@ -1017,7 +1023,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
    * Handles the event by updating the preview edge or by highlighting
    * a possible source or target terminal.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent) {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent) {
     if (
       !me.isConsumed() &&
       (this.ignoreMouseDown || this.first || !this.graph.isMouseDown)
@@ -1482,7 +1488,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin {
   /**
    * Handles the event by inserting the new connection.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+  mouseUp(_sender: EventSource, me: InternalMouseEvent) {
     if (!me.isConsumed() && this.isConnecting()) {
       if (this.waypointsEnabled && !this.isStopEvent(me)) {
         this.addWaypointForEvent(me);

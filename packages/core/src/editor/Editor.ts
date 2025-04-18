@@ -1625,7 +1625,7 @@ export class Editor extends EventSource {
    */
   installInsertHandler(graph: Graph): void {
     const insertHandler: MouseListenerSet = {
-      mouseDown: (_sender: any, me: InternalMouseEvent) => {
+      mouseDown: (_sender: EventSource, me: InternalMouseEvent) => {
         if (
           this.insertFunction &&
           !me.isPopupTrigger() &&
@@ -1640,13 +1640,13 @@ export class Editor extends EventSource {
         }
       },
 
-      mouseMove: (_sender: any, me: InternalMouseEvent) => {
+      mouseMove: (_sender: EventSource, me: InternalMouseEvent) => {
         if (this.isActive) {
           me.consume();
         }
       },
 
-      mouseUp: (_sender: any, me: InternalMouseEvent) => {
+      mouseUp: (_sender: EventSource, me: InternalMouseEvent) => {
         if (this.isActive) {
           this.isActive = false;
           me.consume();
