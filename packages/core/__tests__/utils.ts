@@ -18,9 +18,9 @@ import { Cell, type CellStateStyle, Graph } from '../src';
 import { jest } from '@jest/globals';
 
 // no need for a container, we don't check the view here
-export const createGraphWithoutContainer = (): Graph => new Graph(null!);
+export const createGraphWithoutContainer = (): Graph => new Graph();
 
-export const createGraphWithoutPlugins = (): Graph => new Graph(null!, null!, []);
+export const createGraphWithoutPlugins = (): Graph => new Graph(undefined, undefined, []);
 
 export const createCellWithStyle = (style: CellStateStyle): Cell => {
   const cell = new Cell();

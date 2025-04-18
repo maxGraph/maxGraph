@@ -106,7 +106,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
     }
   }
-  // @ts-ignore
   CellRenderer.registerShape('myShape', MyShape);
 
   // Enable rotation handle

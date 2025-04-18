@@ -93,7 +93,7 @@ export * from './serialization/codecs/_other-codecs';
 export * from './serialization/register-model-codecs';
 export * from './serialization/register-other-codecs';
 
-export { default as ActorShape } from './view/geometry/ActorShape';
+export { default as ActorShape } from './view/geometry/node/ActorShape';
 export { default as LabelShape } from './view/geometry/node/LabelShape';
 export { default as Shape } from './view/geometry/Shape';
 export { default as SwimlaneShape } from './view/geometry/node/SwimlaneShape';

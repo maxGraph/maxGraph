@@ -1387,12 +1387,13 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Creates the {@link graph} for the editor. The graph is created with no
-   * container and is initialized from {@link setGraphContainer}.
+   * Creates the {@link graph} for the editor.
+   *
+   * The graph is created with no container and is initialized from {@link setGraphContainer}.
    * @returns graph instance
    */
   createGraph(): Graph {
-    const graph = new Graph(undefined!);
+    const graph = new Graph();
 
     // Enables rubberband, tooltips, panning
     graph.setTooltips(true);

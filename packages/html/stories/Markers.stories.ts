@@ -96,7 +96,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
     }
   }
-  // @ts-ignore -- as for core shapes
   CellRenderer.registerShape('message', MessageShape);
 
   // Defines custom edge shape
@@ -142,7 +141,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       c.stroke();
     }
   }
-  // @ts-ignore -- as for core shapes
   CellRenderer.registerShape('link', LinkShape);
 
   // Creates the graph
