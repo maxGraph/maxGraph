@@ -30,7 +30,7 @@ import type { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Image from '../image/ImageBox';
 import type Cell from '../cell/Cell';
-import type { CellHandle, Listenable } from '../../types';
+import type { CellHandle, Listenable, MouseListenerSet } from '../../types';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import EdgeHandler from './EdgeHandler';
@@ -42,11 +42,11 @@ import { HandleConfig, VertexHandlerConfig } from './config';
 /**
  * Event handler for resizing cells.
  *
- * This handler is automatically created in {@link Graph#createHandler}.
+ * This handler is automatically created in {@link Graph.createHandler}.
  *
  * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
-class VertexHandler {
+class VertexHandler implements MouseListenerSet {
   escapeHandler: (sender: Listenable, evt: Event) => void;
   selectionBounds: Rectangle;
   bounds: Rectangle;
@@ -632,7 +632,7 @@ class VertexHandler {
    * event all subsequent events of the gesture are redirected to this
    * handler.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+  mouseDown(_sender: EventSource, me: InternalMouseEvent) {
     if (!me.isConsumed() && this.graph.isEnabled()) {
       const handle = this.getHandleForEvent(me);
 
@@ -831,7 +831,7 @@ class VertexHandler {
   /**
    * Handles the event by updating the preview.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent) {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent) {
     if (!me.isConsumed() && this.index != null) {
       // Checks tolerance for ignoring single clicks
       this.checkTolerance(me);
@@ -1207,7 +1207,7 @@ class VertexHandler {
   /**
    * Handles the event by applying the changes to the geometry.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+  mouseUp(_sender: EventSource, me: InternalMouseEvent) {
     if (this.index != null && this.state != null) {
       const point = new Point(me.getGraphX(), me.getGraphY());
       const { index } = this;

@@ -25,8 +25,7 @@ import type { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import type PopupMenuHandler from './PopupMenuHandler';
-
-import type { GraphPlugin } from '../../types';
+import type { GraphPlugin, MouseListenerSet } from '../../types';
 import EventSource from '../event/EventSource';
 
 /**
@@ -38,7 +37,7 @@ import EventSource from '../event/EventSource';
  *
  * @category Plugin
  */
-class TooltipHandler implements GraphPlugin {
+class TooltipHandler implements GraphPlugin, MouseListenerSet {
   static pluginId = 'TooltipHandler';
 
   /**
@@ -172,11 +171,10 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Handles the event by initiating a rubberband selection. By consuming the
-   * event all subsequent events of the gesture are redirected to this
-   * handler.
+   * Handles the event by initiating a rubberband selection.
+   * By consuming the event all subsequent events of the gesture are redirected to this handler.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+  mouseDown(_sender: EventSource, me: InternalMouseEvent) {
     this.reset(me, false);
     this.hideTooltip();
   }
@@ -184,7 +182,7 @@ class TooltipHandler implements GraphPlugin {
   /**
    * Handles the event by updating the rubberband selection.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent) {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent) {
     if (me.getX() !== this.lastX || me.getY() !== this.lastY) {
       this.reset(me, true);
       const state = this.getStateForEvent(me);
@@ -207,10 +205,9 @@ class TooltipHandler implements GraphPlugin {
   }
 
   /**
-   * Handles the event by resetting the tooltip timer or hiding the existing
-   * tooltip.
+   * Handles the event by resetting the tooltip timer or hiding the existing tooltip.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+  mouseUp(_sender: EventSource, me: InternalMouseEvent) {
     this.reset(me, true);
     this.hideTooltip();
   }

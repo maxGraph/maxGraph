@@ -53,14 +53,9 @@ export type DropHandler = (
 ) => void;
 
 /**
- * @class DragSource
+ * Wrapper to create a drag source from a DOM element so that the element can be dragged over a graph and dropped into the graph as a new cell.
  *
- * Wrapper to create a drag source from a DOM element so that the element can
- * be dragged over a graph and dropped into the graph as a new cell.
- *
- * Problem is that in the dropHandler the current preview location is not
- * available, so the preview and the dropHandler must match.
- *
+ * Problem is that in the dropHandler the current preview location is not available, so the preview and the dropHandler must match.
  */
 class DragSource {
   constructor(element: EventTarget, dropHandler: DropHandler) {
@@ -128,7 +123,7 @@ class DragSource {
   enabled = true;
 
   /**
-   * Reference to the {@link mxGraph} that is the current drop target.
+   * Reference to the {@link Graph} that is the current drop target.
    */
   currentGraph: Graph | null = null;
 
@@ -143,12 +138,12 @@ class DragSource {
   currentPoint: Point | null = null;
 
   /**
-   * Holds an {@link mxGuide} for the {@link currentGraph} if {@link dragPreview} is not null.
+   * Holds an {@link Guide} for the {@link currentGraph} if {@link dragPreview} is not null.
    */
   currentGuide: Guide | null = null;
 
   /**
-   * Holds an {@link mxGuide} for the {@link currentGraph} if {@link dragPreview} is not null.
+   * Holds an {@link Guide} for the {@link currentGraph} if {@link dragPreview} is not null.
    * @note wrong doc
    */
   currentHighlight: CellHighlight | null = null;
@@ -159,7 +154,7 @@ class DragSource {
   autoscroll = true;
 
   /**
-   * Specifies if {@link mxGuide} should be enabled. Default is true.
+   * Specifies if {@link Guide} should be enabled. Default is true.
    */
   guidesEnabled = true;
 
@@ -245,8 +240,8 @@ class DragSource {
   }
 
   /**
-   * Returns the drop target for the given graph and coordinates. This
-   * implementation uses {@link mxGraph.getCellAt}.
+   * Returns the drop target for the given graph and coordinates.
+   * This implementation uses {@link Graph.getCellAt}.
    */
   getDropTarget(graph: Graph, x: number, y: number, evt: MouseEvent) {
     return graph.getCellAt(x, y);
@@ -290,21 +285,17 @@ class DragSource {
   }
 
   /**
-   * Returns the drop target for the given graph and coordinates. This
-   * implementation uses {@link mxGraph.getCellAt}.
+   * Returns the drop target for the given graph and coordinates.
+   * This implementation uses {@link Graph.getCellAt}.
    *
-   * To ignore popup menu events for a drag source, this function can be
-   * overridden as follows.
+   * To ignore popup menu events for a drag source, this function can be overridden as follows.
    *
-   * @example
    * ```javascript
-   * var mouseDown = dragSource.mouseDown;
+   * const mouseDown = dragSource.mouseDown;
    *
-   * dragSource.mouseDown(evt)
-   * {
-   *   if (!mxEvent.isPopupTrigger(evt))
-   *   {
-   *     mouseDown.apply(this, arguments);
+   * dragSource.mouseDown(evt) {
+   *   if (!EventUtils.isPopupTrigger(evt)) {
+   *     mouseDown.apply(this, [evt]);
    *   }
    * };
    * ```
@@ -650,7 +641,7 @@ class DragSource {
 
   /**
    * Returns the drop target for the given graph and coordinates. This
-   * implementation uses {@link mxGraph.getCellAt}.
+   * implementation uses {@link Graph.getCellAt}.
    */
   drop(
     graph: Graph,

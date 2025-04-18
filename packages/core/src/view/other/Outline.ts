@@ -35,7 +35,7 @@ import EventObject from '../event/EventObject';
 import { getSource, isMouseEvent } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 import { hasScrollbars } from '../../util/styleUtils';
-import { Listenable } from '../../types';
+import type { Listenable, MouseListenerSet } from '../../types';
 import { getDefaultPlugins } from '../plugins';
 
 /**
@@ -78,11 +78,11 @@ import { getDefaultPlugins } from '../plugins';
  * }
  * ```
  */
-class Outline {
-  constructor(source: Graph, container: HTMLElement | null = null) {
+class Outline implements MouseListenerSet {
+  constructor(source: Graph, container?: HTMLElement | null) {
     this.source = source;
 
-    if (container != null) {
+    if (container) {
       this.init(container);
     }
   }
@@ -572,7 +572,7 @@ class Outline {
   /**
    * Handles the event by starting a translation or zoom.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent): void {
+  mouseDown(_sender: EventSource, me: InternalMouseEvent): void {
     if (this.enabled && this.showViewport) {
       const tol = !isMouseEvent(me.getEvent()) ? this.source.tolerance : 0;
       const hit =
@@ -604,7 +604,7 @@ class Outline {
    * Handles the event by previewing the viewrect in {@link graph} and updating the
    * rectangle that represents the viewrect in the outline.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent): void {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent): void {
     if (this.active) {
       const myBounds = <Rectangle>this.bounds;
       const sizer = <RectangleShape>this.sizer;
@@ -699,7 +699,7 @@ class Outline {
   /**
    * Handles the event by applying the translation or zoom to {@link graph}.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent): void {
+  mouseUp(_sender: EventSource, me: InternalMouseEvent): void {
     if (this.active) {
       const delta = this.getTranslateForEvent(me);
       let dx = delta.x;
