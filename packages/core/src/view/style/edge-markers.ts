@@ -27,8 +27,8 @@ import { ARROW } from '../../util/Constants';
  *
  * Here is an example the registration of a factory edge marker function with `createArrow`:
  * ```js
- * MarkerShape.addMarker('classic', createArrow(2));
- * MarkerShape.addMarker('blockThin', createArrow(3));
+ * MarkerShape.addMarker('classic', EdgeMarker.createArrow(2));
+ * MarkerShape.addMarker('blockThin', EdgeMarker.createArrow(3));
  * ```
  *
  * @since 0.18.0
