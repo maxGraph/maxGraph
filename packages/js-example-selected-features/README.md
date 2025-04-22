@@ -21,7 +21,7 @@ From the repository root, run:
 npm install
 cd packages/core/
 npm run build
-cd ../../packages/js-example-without-defaults/
+cd ../../packages/js-example-selected-features/
 # For more details see 'Run' below
 npm run dev
 ```
