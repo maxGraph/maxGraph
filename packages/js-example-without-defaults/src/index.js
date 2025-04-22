@@ -15,20 +15,28 @@ limitations under the License.
 */
 
 import './style.css';
-import {
-  CellRenderer,
-  constants,
-  Graph,
-  InternalEvent,
-  MarkerShape,
-  StyleRegistry,
-} from '@maxgraph/core';
+import { constants, Graph, InternalEvent } from '@maxgraph/core';
+
+/**
+ * Create a custom implementation to not load all default built-in styles. This is because Graph registers them.
+ *
+ * In the future, we expect to have an implementation of Graph that does not do it.
+ * See https://github.com/maxGraph/maxGraph/issues/760
+ */
+class CustomGraph extends Graph {
+  /**
+   * Only registers the elements required for this example. Do not let Graph load all default built-in styles.
+   */
+  registerDefaults() {
+    // do nothing
+  }
+}
 
 const initializeGraph = (container) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  const graph = new Graph(
+  const graph = new CustomGraph(
     container,
     undefined,
     [] // override default plugins, use none
@@ -42,14 +50,8 @@ const initializeGraph = (container) => {
     verticalLabelPosition: 'bottom',
   });
 
-  // Custom code to unregister maxGraph style defaults
-  CellRenderer.defaultShapes = {};
-  MarkerShape.markers = {};
-  StyleRegistry.values = {};
-
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    // use the legacy insertVertex method
     const vertex01 = graph.insertVertex({
       value: 'a regular rectangle',
       position: [10, 10],

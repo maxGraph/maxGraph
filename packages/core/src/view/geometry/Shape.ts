@@ -32,7 +32,7 @@ import SvgCanvas2D from '../canvas/SvgCanvas2D';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import type CellState from '../cell/CellState';
-import type StencilShape from './node/StencilShape';
+import type StencilShape from './stencil/StencilShape';
 import type CellOverlay from '../cell/CellOverlay';
 import type ImageBox from '../image/ImageBox';
 import type {

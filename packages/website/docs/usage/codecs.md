@@ -39,6 +39,12 @@ From [version 0.6.0](https://github.com/maxGraph/maxGraph/releases/tag/v0.6.0) o
 Registering codecs has an impact on the tree-shaking, so, only register the codecs you need to reduce the size of the final bundle.
 :::
 
+It is possible to unregister all elements from `CodecRegistry` using the related `unregister` function:
+
+```javascript
+unregisterAllCodecs();
+```
+
 
 ## Encode/Export and Decode/Import
 

@@ -16,62 +16,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { MarkerFactoryFunction, StyleArrowValue } from '../../../types';
-import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import { ARROW } from '../../../util/Constants';
-import type Point from '../Point';
-import type Shape from '../Shape';
+import type { StyleArrowValue } from '../../types';
+import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
+import type Shape from '../geometry/Shape';
+import type Point from '../geometry/Point';
+import { ARROW } from '../../util/Constants';
 
 /**
- * A registry that stores all edge markers using .
+ * Generally used to create the "classic" and "block" marker factory methods.
  *
- * NOTE: The signatures in this class will change.
+ * Here is an example the registration of a factory edge marker function with `createArrow`:
+ * ```js
+ * MarkerShape.addMarker('classic', EdgeMarker.createArrow(2));
+ * MarkerShape.addMarker('blockThin', EdgeMarker.createArrow(3));
+ * ```
+ *
+ * @since 0.18.0
  */
-class MarkerShape {
-  /**
-   * Maps from markers names to functions to paint the markers.
-   *
-   * Mapping: the attribute name on the object is the marker type, the associated value is the function to paint the marker
-   */
-  static markers: Record<string, MarkerFactoryFunction> = {};
-
-  /**
-   * Adds a factory method that updates a given endpoint and returns a
-   * function to paint the marker onto the given canvas.
-   */
-  static addMarker(type: string, funct: MarkerFactoryFunction) {
-    MarkerShape.markers[type] = funct;
-  }
-
-  /**
-   * Returns a function to paint the given marker.
-   */
-  static createMarker(
-    canvas: AbstractCanvas2D,
-    shape: Shape,
-    type: StyleArrowValue,
-    pe: Point,
-    unitX: number,
-    unitY: number,
-    size: number,
-    source: boolean,
-    sw: number,
-    filled: boolean
-  ) {
-    const markerFunction = MarkerShape.markers[type];
-    return markerFunction
-      ? markerFunction(canvas, shape, type, pe, unitX, unitY, size, source, sw, filled)
-      : null;
-  }
-}
-
-export default MarkerShape;
-
-/**
- * For the classic and block marker factory methods.
- */
-function createArrow(widthFactor: number) {
-  return (
+export const createArrow =
+  (widthFactor: number) =>
+  (
     canvas: AbstractCanvas2D,
     _shape: Shape,
     type: StyleArrowValue,
@@ -125,10 +89,20 @@ function createArrow(widthFactor: number) {
       }
     };
   };
-}
 
-function createOpenArrow(widthFactor: number) {
-  return (
+/**
+ * Generally used to create the "open" and "open thin" marker factory methods.
+ *
+ * Here is an example the registration of a factory edge marker function with `createOpenArrow`:
+ * ```js
+ * MarkerShape.addMarker('open', createOpenArrow(2));
+ * ```
+ *
+ * @since 0.18.0
+ */
+export const createOpenArrow =
+  (widthFactor: number) =>
+  (
     canvas: AbstractCanvas2D,
     _shape: Shape,
     _type: StyleArrowValue,
@@ -170,9 +144,11 @@ function createOpenArrow(widthFactor: number) {
       canvas.stroke();
     };
   };
-}
 
-const oval = (
+/**
+ * @since 0.18.0
+ */
+export const oval = (
   canvas: AbstractCanvas2D,
   _shape: Shape,
   _type: StyleArrowValue,
@@ -201,7 +177,17 @@ const oval = (
   };
 };
 
-function diamond(
+/**
+ * Generally used to create the "diamond" and "diamond thin" marker factory methods.
+ *
+ * ```js
+ * MarkerShape.addMarker('diamond', diamond);
+ * MarkerShape.addMarker('diamondThin', diamond);
+ * ```
+ *
+ * @since 0.18.0
+ */
+export const diamond = (
   canvas: AbstractCanvas2D,
   _shape: Shape,
   type: StyleArrowValue,
@@ -212,7 +198,7 @@ function diamond(
   _source: boolean,
   sw: number,
   filled: boolean
-) {
+) => {
   // The angle of the forward facing arrow sides against the x axis is
   // 45 degrees, 1/sin(45) = 1.4142 / 2 = 0.7071 ( / 2 allows for
   // only half the strokewidth is processed ). Or 0.9862 for thin diamond.
@@ -249,29 +235,4 @@ function diamond(
       canvas.stroke();
     }
   };
-}
-
-let isDefaultMarkersRegistered = false;
-/**
- * @private
- * @category Configuration
- * @category Style
- */
-export const registerDefaultEdgeMarkers = (): void => {
-  if (!isDefaultMarkersRegistered) {
-    MarkerShape.addMarker('classic', createArrow(2));
-    MarkerShape.addMarker('classicThin', createArrow(3));
-    MarkerShape.addMarker('block', createArrow(2));
-    MarkerShape.addMarker('blockThin', createArrow(3));
-
-    MarkerShape.addMarker('open', createOpenArrow(2));
-    MarkerShape.addMarker('openThin', createOpenArrow(3));
-
-    MarkerShape.addMarker('oval', oval);
-
-    MarkerShape.addMarker('diamond', diamond);
-    MarkerShape.addMarker('diamondThin', diamond);
-
-    isDefaultMarkersRegistered = true;
-  }
 };
