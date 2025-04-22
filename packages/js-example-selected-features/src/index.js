@@ -1,5 +1,5 @@
 /*
-Copyright 2024-present The maxGraph project Contributors
+Copyright 2025-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,12 +19,35 @@ import './style.css';
 import {
   constants,
   DomHelpers,
-  getDefaultPlugins,
+  EdgeMarker,
   Graph,
   InternalEvent,
+  MarkerShape,
   ModelXmlSerializer,
+  PanningHandler,
+  Perimeter,
   RubberBandHandler,
+  SelectionCellsHandler,
+  SelectionHandler,
+  StyleRegistry,
 } from '@maxgraph/core';
+
+/**
+ * Create a custom implementation to not load all default built-in styles. This is because Graph registers them.
+ *
+ * In the future, we expect to have an implementation of Graph that does not do it.
+ * See https://github.com/maxGraph/maxGraph/issues/760
+ */
+class CustomGraph extends Graph {
+  /**
+   * Only registers the elements required for this example. Do not let Graph load all default built-in styles.
+   */
+  registerDefaults() {
+    // Register styles
+    StyleRegistry.putValue('rectanglePerimeter', Perimeter.RectanglePerimeter); // declared in the default vertex style, so must be registered to be used
+    MarkerShape.addMarker('classic', EdgeMarker.createArrow(2));
+  }
+}
 
 const xmlWithVerticesAndEdges = `<GraphDataModel>
     <root>
@@ -60,9 +83,11 @@ const initializeGraph = (container) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  const graph = new Graph(container, undefined, [
-    ...getDefaultPlugins(),
+  const graph = new CustomGraph(container, undefined, [
+    PanningHandler, // Enables panning with the mouse
     RubberBandHandler, // Enables rubber band selection
+    SelectionCellsHandler, // Enables management of selected cells
+    SelectionHandler, // Enables selection with the mouse
   ]);
   graph.setPanning(true); // Use mouse right button for panning
 

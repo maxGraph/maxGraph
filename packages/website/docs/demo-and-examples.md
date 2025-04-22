@@ -26,10 +26,12 @@ Note that they are based on `maxGraph` features, which require the use of [CSS a
 
 ## TypeScript Examples
 - the [ts-example](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example) project/application demonstrates how to define and use custom `Shapes` with `maxGraph`. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
+- the [ts-example-selected-features](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example-selected-features) project/application that demonstrates the same use case as in `ts-example` but which only loads the features and configuration required by the application for an efficient tree-shaking. It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 - the [ts-example-without-defaults](https://github.com/maxGraph/maxGraph/tree/main/packages/ts-example-without-defaults) project/application demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla TypeScript application built by [Vite](https://vitejs.dev/).
 
 ## JavaScript Examples
 - the [js-example](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example) project/application demonstrates how to import and export the `maxGraph` model with XML data. It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
+- the [js-example-selected-features](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example-selected-features) project/application that demonstrates the same use case as in `ts-example` but which only loads the features and configuration required by the application for an efficient tree-shaking. It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
 - the [js-example-without-defaults](https://github.com/maxGraph/maxGraph/tree/main/packages/js-example-without-defaults) project/application demonstrates how to not use defaults plugins and style defaults (shapes, perimeters, ...). It is a vanilla JavaScript application built by [Webpack](https://webpack.js.org/).
 
 ## Framework Integration and Bundlers

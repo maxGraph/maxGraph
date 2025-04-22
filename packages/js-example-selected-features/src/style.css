@@ -1,0 +1,52 @@
+/*
+Copyright 2025-present The maxGraph project Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+footer {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1;
+  font-weight: 800;
+}
+
+#graph-container {
+  border: #B0B0B0 1px solid;
+  height: 70vh;
+  overflow: hidden;
+}
+
+button {
+  margin-top: 1.5rem;
+  margin-left: .5rem;
+}
+
+/* For rubber band selection, override maxGraph defaults */
+div.mxRubberband {
+  border-color: #b18426;
+  background: #db9b0b;
+}
