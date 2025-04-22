@@ -59,6 +59,15 @@ See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues
 
 When instantiating a `Graph` object, the registries are filled with `maxGraph` default style configurations. There is no default stencil shapes registered by default.
 
+To manually register default style configurations, you can use the following functions:
+
+```javascript
+registerDefaultEdgeMarkers();
+registerDefaultEdgeStyles();
+registerDefaultPerimeters();
+registerDefaultShapes();
+```
+
 It is possible to unregister all elements from a style registry using the related `unregister` function. For example:
 
 ```javascript
