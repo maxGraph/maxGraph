@@ -491,10 +491,10 @@ class Graph extends EventSource {
   // ===================================================================================================================
 
   protected registerDefaults(): void {
-    registerDefaultShapes();
     registerDefaultEdgeMarkers();
     registerDefaultEdgeStyles();
     registerDefaultPerimeters();
+    registerDefaultShapes();
   }
 
   constructor(
