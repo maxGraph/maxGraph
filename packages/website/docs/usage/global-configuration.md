@@ -75,9 +75,3 @@ unregisterAllStencilShapes();
 By default, no codec is registered. Some functions are provided to register codecs for specific objects.
 
 For more details about the codecs, see the Codec [documentation page](./codecs.md).
-
-It is possible to unregister all elements from `CodecRegistry` using the related `unregister` function. For example:
-
-```javascript
-unregisterAllCodecs();
-```
