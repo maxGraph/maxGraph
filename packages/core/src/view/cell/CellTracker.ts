@@ -21,8 +21,7 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import type { Graph } from '../Graph';
 import type Cell from './Cell';
 import EventSource from '../event/EventSource';
-
-import type { ColorValue } from '../../types';
+import type { ColorValue, MouseListenerSet } from '../../types';
 
 /**
  * Event handler that highlights cells
@@ -77,7 +76,7 @@ import type { ColorValue } from '../../types';
  * });
  * ```
  */
-class CellTracker extends CellMarker {
+class CellTracker extends CellMarker implements MouseListenerSet {
   constructor(
     graph: Graph,
     color: ColorValue,
@@ -97,14 +96,14 @@ class CellTracker extends CellMarker {
   /**
    * Ignores the event. The event is not consumed.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+  mouseDown() {
     return;
   }
 
   /**
    * Handles the event by highlighting the cell under the mouse pointer if it is over the hotspot region of the cell.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent) {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent) {
     if (this.isEnabled()) {
       this.process(me);
     }
@@ -113,7 +112,7 @@ class CellTracker extends CellMarker {
   /**
    * Handles the event by resetting the highlight.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+  mouseUp() {
     return;
   }
 

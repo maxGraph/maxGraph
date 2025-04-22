@@ -24,7 +24,7 @@ import { sortCells } from '../../util/styleUtils';
 import type { Graph } from '../Graph';
 import Cell from '../cell/Cell';
 import CellState from '../cell/CellState';
-import type { GraphPlugin } from '../../types';
+import type { GraphPlugin, MouseListenerSet } from '../../types';
 import type EdgeHandler from '../handler/EdgeHandler';
 import type VertexHandler from '../handler/VertexHandler';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -48,7 +48,7 @@ type Handler = EdgeHandler | VertexHandler;
  *
  * @category Plugin
  */
-class SelectionCellsHandler extends EventSource implements GraphPlugin {
+class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseListenerSet {
   static pluginId = 'SelectionCellsHandler';
 
   constructor(graph: Graph) {

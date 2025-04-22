@@ -56,7 +56,7 @@ import {
 import type { Graph } from '../Graph';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
-import { CellHandle, ColorValue, Listenable } from '../../types';
+import type { CellHandle, ColorValue, Listenable, MouseListenerSet } from '../../types';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import Cell from '../cell/Cell';
 import ImageBox from '../image/ImageBox';
@@ -74,7 +74,7 @@ import { EdgeHandlerConfig, HandleConfig } from './config';
  *
  * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
-class EdgeHandler {
+class EdgeHandler implements MouseListenerSet {
   /**
    * Reference to the enclosing {@link Graph}.
    */
@@ -784,7 +784,7 @@ class EdgeHandler {
    * control point. The source and target points are used for reconnecting
    * the edge.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+  mouseDown(_sender: EventSource, me: InternalMouseEvent) {
     const handle = this.getHandleForEvent(me);
 
     if (handle !== null && this.bends[handle]) {
@@ -1308,7 +1308,7 @@ class EdgeHandler {
   /**
    * Handles the event by updating the preview.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent) {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent) {
     if (this.index != null && this.marker != null) {
       this.currentPoint = this.getPointForEvent(me);
       this.error = null;
@@ -1416,7 +1416,7 @@ class EdgeHandler {
    * Handles the event to applying the previewed changes on the edge by
    * using {@link moveLabel}, {@link connect} or {@link changePoints}.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+  mouseUp(_sender: EventSource, me: InternalMouseEvent) {
     // Workaround for wrong event source in Webkit
     if (this.index != null && this.marker != null) {
       if (this.shape != null && this.shape.node != null) {
