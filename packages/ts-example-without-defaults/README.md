@@ -1,6 +1,6 @@
 # Integrate `maxGraph` without defaults in a vanilla TypeScript project built with Vite
 
-Demonstrate how to integrate `maxGraph` without using defaults:
+Demonstrate how to integrate `maxGraph` without loading defaults:
   - plugins
   - styles
   - shapes
