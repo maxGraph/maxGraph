@@ -16,14 +16,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ElbowConnector as ElbowConnectorFunction } from './edge/Elbow';
-import { EntityRelation as EntityRelationFunction } from './edge/EntityRelation';
-import { Loop as LoopFunction } from './edge/Loop';
-import { ManhattanConnector as ManhattanConnectorFunction } from './edge/Manhattan';
-import { OrthogonalConnector as OrthogonalConnectorFunction } from './edge/Orthogonal';
-import { SegmentConnector as SegmentConnectorFunction } from './edge/Segment';
-import { SideToSide as SideToSideFunction } from './edge/SideToSide';
-import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
+import { ElbowConnector as ElbowConnectorFunction } from './Elbow';
+import { EntityRelation as EntityRelationFunction } from './EntityRelation';
+import { Loop as LoopFunction } from './Loop';
+import { ManhattanConnector as ManhattanConnectorFunction } from './Manhattan';
+import { OrthogonalConnector as OrthogonalConnectorFunction } from './Orthogonal';
+import { SegmentConnector as SegmentConnectorFunction } from './Segment';
+import { SideToSide as SideToSideFunction } from './SideToSide';
+import { TopToBottom as TopToBottomFunction } from './TopToBottom';
 
 /**
  * Provides various edge styles to be used as the values for `edgeStyle` in a cell style.
@@ -81,7 +81,7 @@ import { TopToBottom as TopToBottomFunction } from './edge/TopToBottom';
  *
  * @category EdgeStyle
  */
-class EdgeStyle {
+export class EdgeStyle {
   /**
    * Implements an entity relation style for edges (as used in database
    * schema diagrams). At the time the function is called, the result
@@ -153,5 +153,3 @@ class EdgeStyle {
    */
   static ManhattanConnector = ManhattanConnectorFunction;
 }
-
-export default EdgeStyle;

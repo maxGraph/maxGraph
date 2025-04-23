@@ -16,18 +16,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EllipsePerimeter as EllipsePerimeterFunction } from './perimeter/EllipsePerimeter';
-import { HexagonPerimeter as HexagonPerimeterFunction } from './perimeter/HexagonPerimeter';
-import { RectanglePerimeter as RectanglePerimeterFunction } from './perimeter/RectanglePerimeter';
-import { RhombusPerimeter as RhombusPerimeterFunction } from './perimeter/RhombusPerimeter';
-import { TrianglePerimeter as TrianglePerimeterFunction } from './perimeter/TrianglePerimeter';
+import { EllipsePerimeter as EllipsePerimeterFunction } from './EllipsePerimeter';
+import { HexagonPerimeter as HexagonPerimeterFunction } from './HexagonPerimeter';
+import { RectanglePerimeter as RectanglePerimeterFunction } from './RectanglePerimeter';
+import { RhombusPerimeter as RhombusPerimeterFunction } from './RhombusPerimeter';
+import { TrianglePerimeter as TrianglePerimeterFunction } from './TrianglePerimeter';
 
 /**
  * Provides various perimeter functions to be used in a style as the value of {@link CellStateStyle.perimeter}.
  *
  * @category Perimeter
  */
-const Perimeter = {
+export const Perimeter = {
   /**
    * Describes a rectangular perimeter.
    */
@@ -53,5 +53,3 @@ const Perimeter = {
    */
   HexagonPerimeter: HexagonPerimeterFunction,
 };
-
-export default Perimeter;
