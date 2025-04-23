@@ -73,8 +73,8 @@ export const registerDefaultPerimeters = (): void => {
       [PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter],
       [PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter],
     ];
-    for (const [name, edgeStyle] of perimetersToRegister) {
-      StyleRegistry.putValue(name, edgeStyle);
+    for (const [name, perimeter] of perimetersToRegister) {
+      StyleRegistry.putValue(name, perimeter);
     }
 
     isDefaultPerimetersRegistered = true;
