@@ -1,5 +1,5 @@
 /*
-Copyright 2022-present The maxGraph project Contributors
+Copyright 2025-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,20 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { defineConfig } from 'vite';
+export { EdgeStyle } from './edge';
+export { Perimeter } from './perimeter';
 
-export default defineConfig(({ mode }) => {
-  return {
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            // put the maxgraph code in a dedicated file. It lets know the size the produced bundle in an external application and if tree shaking works
-            maxgraph: ['@maxgraph/core'],
-          },
-        },
-      },
-      chunkSizeWarningLimit: 439, // @maxgraph/core
-    },
-  };
-});
+/**
+ * Includes all builtins edge markers which can be registered in {@link MarkerShape}.
+ *
+ * They are registered by default when instantiating {@link Graph} or they can all be registered by calling {@link registerDefaultEdgeMarkers}.
+ *
+ * @since 0.18.0
+ * @category Style
+ */
+export * as EdgeMarker from './marker/edge-markers';

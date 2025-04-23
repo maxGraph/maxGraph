@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { MarkerFactoryFunction, StyleArrowValue } from '../../types';
-import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
-import type Point from '../geometry/Point';
-import type Shape from '../geometry/Shape';
+import type { MarkerFactoryFunction, StyleArrowValue } from '../../../types';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import type Point from '../../geometry/Point';
+import type Shape from '../../geometry/Shape';
 
 /**
  * A registry that stores the factory functions that create edge markers.

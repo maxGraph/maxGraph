@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { StyleArrowValue } from '../../types';
-import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
-import type Shape from '../geometry/Shape';
-import type Point from '../geometry/Point';
-import { ARROW } from '../../util/Constants';
+import type { StyleArrowValue } from '../../../types';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import type Shape from '../../geometry/Shape';
+import type Point from '../../geometry/Point';
+import { ARROW } from '../../../util/Constants';
 
 /**
  * Generally used to create the "classic" and "block" marker factory methods.

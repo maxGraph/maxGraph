@@ -18,7 +18,7 @@ limitations under the License.
 
 import { DEFAULT_MARKERSIZE, NONE } from '../../../util/Constants';
 import PolylineShape from './PolylineShape';
-import MarkerShape from '../../style/EdgeMarkerRegistry';
+import MarkerShape from '../../style/marker/EdgeMarkerRegistry';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Rectangle from '../Rectangle';
