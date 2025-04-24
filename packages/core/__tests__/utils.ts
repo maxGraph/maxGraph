@@ -17,11 +17,16 @@ limitations under the License.
 import { Cell, type CellStateStyle, Graph } from '../src';
 import { jest } from '@jest/globals';
 
-// TODO add tests that use BaseGraph to ensure everything works fine
-
-// no need for a container, we don't check the view here
+/**
+ * Creates a new {@link Graph} without `container` (use the default value of the parameters).
+ *
+ * This is useful when tests don't check the view.
+ */
 export const createGraphWithoutContainer = (): Graph => new Graph();
 
+/**
+ * Creates a new {@link Graph} without any plugins (pass an empty array of plugins).
+ */
 export const createGraphWithoutPlugins = (): Graph => new Graph(undefined, undefined, []);
 
 export const createCellWithStyle = (style: CellStateStyle): Cell => {
