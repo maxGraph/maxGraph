@@ -18,8 +18,8 @@ import type Cell from '../cell/Cell';
 import type { CellStyle, VertexParameters } from '../../types';
 import type Geometry from '../geometry/Geometry';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies the return value for vertices in {@link isLabelMovable}.
      * @default false
@@ -53,7 +53,7 @@ declare module '../Graph' {
      * When adding new vertices from a mouse event, one should take into
      * account the offset of the graph container and the scale and translation
      * of the view in order to find the correct unscaled, untranslated
-     * coordinates using {@link Graph#getPointForEvent} as follows:
+     * coordinates using {@link AbstractGraph.getPointForEvent} as follows:
      *
      * ```javascript
      * const pt = graph.getPointForEvent(evt);
@@ -69,7 +69,7 @@ declare module '../Graph' {
      * }
      * ```
      *
-     * See {@link Graph} for more information on using images.
+     * See {@link AbstractGraph} for more information on using images.
      *
      * @param parent the parent of the new vertex. If not set, use the default parent.
      * @param id Optional string that defines the id of the new vertex. If not set, the id is auto-generated when creating the vertex.
@@ -104,7 +104,7 @@ declare module '../Graph' {
      * When adding new vertices from a mouse event, one should take into
      * account the offset of the graph container and the scale and translation
      * of the view in order to find the correct unscaled, untranslated
-     * coordinates using {@link Graph#getPointForEvent} as follows:
+     * coordinates using {@link AbstractGraph.getPointForEvent} as follows:
      *
      * ```javascript
      * const pt = graph.getPointForEvent(evt);
@@ -125,7 +125,7 @@ declare module '../Graph' {
      * }
      * ```
      *
-     * See {@link Graph} for more information on using images.
+     * See {@link AbstractGraph} for more information on using images.
      *
      * @param params the parameters used to create the new vertex.
      */

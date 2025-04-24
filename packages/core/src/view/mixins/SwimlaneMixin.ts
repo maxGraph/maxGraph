@@ -19,11 +19,11 @@ import { convertPoint } from '../../util/styleUtils';
 import { mod } from '../../util/mathUtils';
 import { DEFAULT_STARTSIZE, DIRECTION, SHAPE } from '../../util/Constants';
 import { getClientX, getClientY } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type { DirectionValue } from '../../types';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'getDefaultParent'
   | 'getCurrentRoot'
   | 'getDataModel'
@@ -37,7 +37,7 @@ type PartialGraph = Pick<
   | 'getPanDy'
 >;
 type PartialSwimlane = Pick<
-  Graph,
+  AbstractGraph,
   | 'swimlaneSelectionEnabled'
   | 'swimlaneNesting'
   | 'swimlaneIndicatorColorAttribute'

@@ -24,20 +24,20 @@ type EventListenerObject = {
 };
 
 /**
- * Base class for objects that dispatch named events. To create a subclass that
- * inherits from mxEventSource, the following code is used.
+ * Base class for objects that dispatch named events.
+ *
+ * To create a subclass that inherits from `EventSource`, the following code is used:
  *
  * ```javascript
- * function MyClass() { };
- *
- * MyClass.prototype = new mxEventSource();
- * constructor = MyClass;
+ * class MyClass extends EventSource {
+ *   // implement the logic here
+ * };
  * ```
  *
  * Known Subclasses:
  * - {@link CellOverlay}
  * - {@link Editor}
- * - {@link Graph}
+ * - {@link AbstractGraph}
  * - {@link GraphDataModel}
  * - {@link GraphView}
  * - {@link MaxToolbar}

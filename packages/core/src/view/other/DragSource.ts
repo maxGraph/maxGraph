@@ -40,12 +40,12 @@ import {
 } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 import type SelectionHandler from '../plugins/SelectionHandler';
 
 export type DropHandler = (
-  graph: Graph,
+  graph: AbstractGraph,
   evt: MouseEvent,
   cell: Cell | null,
   x?: number,
@@ -123,9 +123,9 @@ class DragSource {
   enabled = true;
 
   /**
-   * Reference to the {@link Graph} that is the current drop target.
+   * Reference to the {@link AbstractGraph} that is the current drop target.
    */
-  currentGraph: Graph | null = null;
+  currentGraph: AbstractGraph | null = null;
 
   /**
    * Holds the current drop target under the mouse.
@@ -241,9 +241,9 @@ class DragSource {
 
   /**
    * Returns the drop target for the given graph and coordinates.
-   * This implementation uses {@link Graph.getCellAt}.
+   * This implementation uses {@link AbstractGraph.getCellAt}.
    */
-  getDropTarget(graph: Graph, x: number, y: number, evt: MouseEvent) {
+  getDropTarget(graph: AbstractGraph, x: number, y: number, evt: MouseEvent) {
     return graph.getCellAt(x, y);
   }
 
@@ -259,7 +259,7 @@ class DragSource {
    * Creates and returns an element which can be used as a preview in the given
    * graph.
    */
-  createPreviewElement(graph: Graph): HTMLElement | null {
+  createPreviewElement(graph: AbstractGraph): HTMLElement | null {
     return null;
   }
 
@@ -286,7 +286,7 @@ class DragSource {
 
   /**
    * Returns the drop target for the given graph and coordinates.
-   * This implementation uses {@link Graph.getCellAt}.
+   * This implementation uses {@link AbstractGraph.getCellAt}.
    *
    * To ignore popup menu events for a drag source, this function can be overridden as follows.
    *
@@ -376,7 +376,7 @@ class DragSource {
   /**
    * Returns true if the given graph contains the given event.
    */
-  graphContainsEvent(graph: Graph, evt: MouseEvent) {
+  graphContainsEvent(graph: AbstractGraph, evt: MouseEvent) {
     const x = getClientX(evt);
     const y = getClientY(evt);
     const offset = getOffset(graph.container);
@@ -514,7 +514,7 @@ class DragSource {
   /**
    * Actives the given graph as a drop target.
    */
-  dragEnter(graph: Graph, evt: MouseEvent) {
+  dragEnter(graph: AbstractGraph, evt: MouseEvent) {
     graph.isMouseDown = true;
     graph.isMouseTrigger = isMouseEvent(evt);
     this.previewElement = this.createPreviewElement(graph);
@@ -540,7 +540,7 @@ class DragSource {
   /**
    * Deactivates the given graph as a drop target.
    */
-  dragExit(graph: Graph, evt?: MouseEvent) {
+  dragExit(graph: AbstractGraph, evt?: MouseEvent) {
     this.currentDropTarget = null;
     this.currentPoint = null;
     graph.isMouseDown = false;
@@ -571,7 +571,7 @@ class DragSource {
    * Implements autoscroll, updates the {@link currentPoint}, highlights any drop
    * targets and updates the preview.
    */
-  dragOver(graph: Graph, evt: MouseEvent) {
+  dragOver(graph: AbstractGraph, evt: MouseEvent) {
     const offset = getOffset(graph.container);
     const origin = getScrollOrigin(graph.container);
     let x = getClientX(evt) - offset.x + origin.x - graph.getPanDx();
@@ -641,10 +641,10 @@ class DragSource {
 
   /**
    * Returns the drop target for the given graph and coordinates. This
-   * implementation uses {@link Graph.getCellAt}.
+   * implementation uses {@link AbstractGraph.getCellAt}.
    */
   drop(
-    graph: Graph,
+    graph: AbstractGraph,
     evt: MouseEvent,
     dropTarget: Cell | null = null,
     x: number,

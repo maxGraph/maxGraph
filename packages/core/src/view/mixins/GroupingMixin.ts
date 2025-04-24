@@ -21,10 +21,10 @@ import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
 import type Point from '../geometry/Point';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'getDataModel'
   | 'fireEvent'
   | 'getView'
@@ -49,7 +49,7 @@ type PartialGraph = Pick<
   | 'getActualStartSize'
 >;
 type PartialGrouping = Pick<
-  Graph,
+  AbstractGraph,
   | 'groupCells'
   | 'getCellsForGroup'
   | 'getBoundsForGroup'

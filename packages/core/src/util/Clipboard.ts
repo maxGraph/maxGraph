@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import type Cell from '../view/cell/Cell';
-import type { Graph } from '../view/Graph';
+import type { AbstractGraph } from '../view/AbstractGraph';
 import { getTopmostCells } from './cellArrayUtils';
 
 /**
@@ -31,7 +31,7 @@ import { getTopmostCells } from './cellArrayUtils';
  * Clipboard.paste(graph2);
  * ```
  *
- * For fine-grained control of the clipboard data the {@link Graph.canExportCell} and {@link Graph.canImportCell} functions can be overridden.
+ * For fine-grained control of the clipboard data the {@link AbstractGraph.canExportCell} and {@link AbstractGraph.canImportCell} functions can be overridden.
  *
  * To restore previous parents for pasted cells, the implementation for {@link copy} and {@link paste} can be changed as follows.
  *
@@ -119,11 +119,11 @@ class Clipboard {
    * Cuts the given array of {@link Cell} from the specified graph.
    * If {@link cells} is `null` then the selection cells of the graph will be used.
    *
-   * @param graph - {@link graph} that contains the cells to be cut.
+   * @param graph - {@link AbstractGraph} that contains the cells to be cut.
    * @param cells - Optional array of {@link Cell} to be cut.
    * @returns Returns the cells that have been cut from the graph.
    */
-  static cut(graph: Graph, cells: Cell[] = []): Cell[] {
+  static cut(graph: AbstractGraph, cells: Cell[] = []): Cell[] {
     cells = Clipboard.copy(graph, cells);
     Clipboard.insertCount = 0;
     Clipboard.removeCells(graph, cells);
@@ -134,10 +134,10 @@ class Clipboard {
   /**
    * Hook to remove the given cells from the given graph after a cut operation.
    *
-   * @param graph - {@link graph} that contains the cells to be cut.
+   * @param graph - {@link AbstractGraph} that contains the cells to be cut.
    * @param cells - Array of {@link Cell} to be cut.
    */
-  static removeCells(graph: Graph, cells: Cell[]): void {
+  static removeCells(graph: AbstractGraph, cells: Cell[]): void {
     graph.removeCells(cells);
   }
 
@@ -146,10 +146,10 @@ class Clipboard {
    * Returns the original array of cells that has been cloned.
    * Descendants of cells in the array are ignored.
    *
-   * @param graph - {@link graph} that contains the cells to be copied.
+   * @param graph - {@link AbstractGraph} that contains the cells to be copied.
    * @param cells - Optional array of {@link Cell} to be copied.
    */
-  static copy(graph: Graph, cells?: Cell[]): Cell[] {
+  static copy(graph: AbstractGraph, cells?: Cell[]): Cell[] {
     cells = cells || graph.getSelectionCells();
     const result = getTopmostCells(graph.getExportableCells(cells));
     Clipboard.insertCount = 1;
@@ -160,11 +160,11 @@ class Clipboard {
 
   /**
    * Pastes the {@link Cell}s into the specified graph associating them to the default parent.
-   * The cells are added to the graph using {@link graph.importCells} and returned.
+   * The cells are added to the graph using {@link AbstractGraph.importCells} and returned.
    *
-   * @param graph - {@link Graph} to paste the {@link Cell}s into.
+   * @param graph - {@link AbstractGraph} to paste the {@link Cell}s into.
    */
-  static paste(graph: Graph): Cell[] | null {
+  static paste(graph: AbstractGraph): Cell[] | null {
     let cells = null;
 
     if (!Clipboard.isEmpty() && Clipboard.getCells()) {

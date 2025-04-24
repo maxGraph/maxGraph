@@ -20,7 +20,7 @@ import Point from '../geometry/Point';
 import GraphLayout from './GraphLayout';
 import { intersects } from '../../util/mathUtils';
 import type Cell from '../cell/Cell';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import TextShape from '../geometry/node/TextShape';
 import Rectangle from '../geometry/Rectangle';
@@ -39,7 +39,7 @@ import Rectangle from '../geometry/Rectangle';
  * @category Layout
  */
 class EdgeLabelLayout extends GraphLayout {
-  constructor(graph: Graph, radius: number) {
+  constructor(graph: AbstractGraph, radius: number) {
     super(graph);
   }
 

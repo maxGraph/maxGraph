@@ -51,7 +51,7 @@ export class GraphViewCodec extends ObjectCodec {
    * If {@link Cell.isEdge} returns `true` for the cell, then edge is used for the node name, else if {@link Cell.isVertex} returns `true` for the cell,
    * then vertex is used for the node name.
    *
-   * {@link Graph.getLabel} is used to create the label attribute for the cell.
+   * {@link AbstractGraph.getLabel} is used to create the label attribute for the cell.
    * For graph nodes and vertices the bounds are encoded into x, y, width and height.
    * For edges the points are encoded into a points attribute as a space-separated list of comma-separated coordinate pairs (e.g. x0,y0 x1,y1 ... xn,yn).
    * All values from the cell style are added as attribute values to the node.

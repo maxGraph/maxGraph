@@ -89,7 +89,7 @@ export class EditorToolbarCodec extends ObjectCodec {
    * ```
    *
    * In the above function, editor is the enclosing {@link Editor} instance, cell is the clone of the template, evt is the mouse event that represents the
-   * drop and targetCell is the cell under the mouse pointer where the drop occurred. The targetCell is retrieved using {@link Graph#getCellAt}.
+   * drop and targetCell is the cell under the mouse pointer where the drop occurred. The targetCell is retrieved using {@link AbstractGraph.getCellAt}.
    *
    * Furthermore, nodes with the mode attribute may define a function to be executed upon selection of the respective toolbar icon. In the
    * example below, the default edge style is set when this specific

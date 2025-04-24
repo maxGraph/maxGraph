@@ -16,8 +16,8 @@ limitations under the License.
 
 import type ImageBundle from '../image/ImageBundle';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     imageBundles: ImageBundle[];
 
     /**

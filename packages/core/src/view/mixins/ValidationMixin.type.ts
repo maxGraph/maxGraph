@@ -18,8 +18,8 @@ import type Multiplicity from '../other/Multiplicity';
 import type Cell from '../cell/Cell';
 import type CellState from '../cell/CellState';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     multiplicities: Multiplicity[];
 
     /**

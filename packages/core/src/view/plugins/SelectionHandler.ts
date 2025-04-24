@@ -21,7 +21,7 @@ import InternalEvent from '../event/InternalEvent';
 import { contains, getRotatedPoint, isNumeric, toRadians } from '../../util/mathUtils';
 import { convertPoint } from '../../util/styleUtils';
 import RectangleShape from '../geometry/node/RectangleShape';
-import mxGuide from '../other/Guide';
+import Guide from '../other/Guide';
 import Point from '../geometry/Point';
 import {
   CURSOR,
@@ -40,8 +40,7 @@ import {
   isAltDown,
   isMultiTouchEvent,
 } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
-import Guide from '../other/Guide';
+import type { AbstractGraph } from '../AbstractGraph';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import type SelectionCellsHandler from './SelectionCellsHandler';
@@ -56,10 +55,10 @@ import type CellEditorHandler from './CellEditorHandler';
 import type { ColorValue, GraphPlugin } from '../../types';
 
 /**
- * Graph event handler that handles selection. Individual cells are handled
- * separately using {@link VertexHandler} or one of the edge handlers. These
- * handlers are created using {@link Graph#createHandler} in
- * {@link GraphSelectionModel#cellAdded}.
+ * Graph event handler that handles selection.
+ *
+ * Individual cells are handled separately by {@link SelectionCellsHandler} using {@link VertexHandler} or one of the {@link EdgeHandler}s.
+ * When the {@link SelectionCellsHandler} plugin is registered in the {@link AbstractGraph}, {@link SelectionHandler} interacts with this plugin to propagate global selection events to individual cells.
  *
  * To avoid the container to scroll a moved cell into view, set {@link scrollOnMove} to `false`.
  *
@@ -71,9 +70,9 @@ class SelectionHandler implements GraphPlugin {
   /**
    * Constructs an event handler that creates handles for the selection cells.
    *
-   * @param graph Reference to the enclosing {@link Graph}.
+   * @param graph Reference to the enclosing {@link AbstractGraph}.
    */
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.graph = graph;
     this.graph.addMouseListener(this);
 
@@ -168,9 +167,9 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Reference to the enclosing {@link Graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   panHandler: () => void;
   escapeHandler: (sender: EventSource, evt: EventObject) => void;
@@ -282,7 +281,7 @@ class SelectionHandler implements GraphPlugin {
 
   /**
    * Specifies if the graph container should be used for preview. If this is used
-   * then drop target detection relies entirely on {@link Graph#getCellAt} because
+   * then drop target detection relies entirely on {@link AbstractGraph.getCellAt} because
    * the HTML preview does not "let events through". Default is false.
    */
   htmlPreview = false;
@@ -667,7 +666,7 @@ class SelectionHandler implements GraphPlugin {
    * For vertices, this method uses the bounding box of the corresponding shape
    * if one exists. The bounding box of the corresponding text label and all
    * controls and overlays are ignored. See also: {@link GraphView#getBounds} and
-   * {@link Graph#getBoundingBox}.
+   * {@link AbstractGraph.getBoundingBox}.
    *
    * @param cells Array of {@link Cells} whose bounding box should be returned.
    */
@@ -729,7 +728,7 @@ class SelectionHandler implements GraphPlugin {
   }
 
   createGuide() {
-    return new mxGuide(this.graph, this.getGuideStates());
+    return new Guide(this.graph, this.getGuideStates());
   }
 
   /**

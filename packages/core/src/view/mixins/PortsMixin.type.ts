@@ -16,8 +16,8 @@ limitations under the License.
 
 import type Cell from '../cell/Cell';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies if ports are enabled. This is used in {@link cellConnected} to update the respective style.
      * @default true

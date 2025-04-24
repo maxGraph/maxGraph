@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import EventSource from '../view/event/EventSource';
-import type { Graph } from './Graph';
+import type { AbstractGraph } from './AbstractGraph';
 import type Cell from './cell/Cell';
 import SelectionChange from './undoable_changes/SelectionChange';
 import UndoableEdit from './undoable_changes/UndoableEdit';
@@ -26,20 +26,19 @@ import InternalEvent from './event/InternalEvent';
 import { isI18nEnabled } from '../internal/i18n-utils';
 
 /**
- * Implements the selection model for a graph. Here is a listener that handles
- * all removed selection cells.
+ * Implements the selection model for a graph.
  *
- * (code)
- * graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender, evt)
- * {
- *   var cells = evt.getProperty('added');
+ * Here is a listener that handles all removed selection cells.
  *
- *   for (var i = 0; i < cells.length; i++)
- *   {
- *     // Handle cells[i]...
+ * ```javascript
+ * graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender, evt) {
+ *   const cells = evt.getProperty('added');
+ *   for (const cell of cells) {
+ *     // Handle cell...
  *   }
  * });
- * (end)
+ * ```
+ *
  *
  * Event: mxEvent.UNDO
  *
@@ -54,22 +53,19 @@ import { isI18nEnabled } from '../internal/i18n-utils';
  * cells that have been added to or removed from the selection, respectively.
  * The names are inverted due to historic reasons. This cannot be changed.
  *
- * Constructor: mxGraphSelectionModel
- *
- * Constructs a new graph selection model for the given {@link Graph}.
- *
- * Parameters:
- *
- * graph - Reference to the enclosing {@link Graph}.
  */
 class GraphSelectionModel extends EventSource {
-  constructor(graph: Graph) {
+  /**
+   * Constructs a new graph selection model for the given {@link AbstractGraph}.
+   * @param graph Reference to the enclosing {@link AbstractGraph}.
+   */
+  constructor(graph: AbstractGraph) {
     super();
     this.graph = graph;
     this.cells = [];
   }
 
-  graph: Graph;
+  graph: AbstractGraph;
   cells: Cell[];
 
   /**

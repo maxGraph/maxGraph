@@ -27,7 +27,8 @@ import {
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
 import RectangleShape from '../geometry/node/RectangleShape';
-import { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
+import { BaseGraph } from '../BaseGraph';
 import ImageShape from '../geometry/node/ImageShape';
 import InternalEvent from '../event/InternalEvent';
 import Image from '../image/ImageBox';
@@ -79,7 +80,7 @@ import { getDefaultPlugins } from '../plugins';
  * ```
  */
 class Outline implements MouseListenerSet {
-  constructor(source: Graph, container?: HTMLElement | null) {
+  constructor(source: AbstractGraph, container?: HTMLElement | null) {
     this.source = source;
 
     if (container) {
@@ -231,14 +232,14 @@ class Outline implements MouseListenerSet {
   index: number | null = null;
 
   /**
-   * Reference to the source {@link graph}.
+   * Reference to the source {@link AbstractGraph}.
    */
-  source: Graph;
+  source: AbstractGraph;
 
   /**
-   * Reference to the {@link graph} that renders the outline.
+   * Reference to the {@link AbstractGraph} that renders the outline.
    */
-  outline: Graph | null = null;
+  outline: AbstractGraph | null = null;
 
   /**
    * Renderhint to be used for the outline graph.
@@ -315,18 +316,22 @@ class Outline implements MouseListenerSet {
   suspended = false;
 
   /**
-   * Creates the {@link graph} used in the outline.
+   * Creates the {@link AbstractGraph} used in the outline.
    */
-  createGraph(container: HTMLElement): Graph {
-    const graph = new Graph(
+  createGraph(container: HTMLElement): AbstractGraph {
+    // The Graph here uses the same globally registered style elements as the source Graph.
+    // So we can use BaseGraph here (it doesn't register style elements).
+    const graph = new BaseGraph({
       container,
-      this.source.getDataModel(),
+      model: this.source.getDataModel(),
       // TODO review the list of plugins for the Graph of an Outline
-      // we could pass an empty array or a selection of plugins
-      // it may be necessary to make the plugins array configurable to allow custom plugins and improve tree-shaking
-      getDefaultPlugins(),
-      this.source.getStylesheet()
-    );
+      // We may not need plugins here as the actions are done on the source Graph, not this one.
+      // If we need to keep using some plugins, it may be necessary to make the plugins array configurable to allow custom plugins
+      // and improve tree-shaking.
+      plugins: getDefaultPlugins(),
+      stylesheet: this.source.getStylesheet(),
+    });
+
     graph.options.foldingEnabled = false;
     graph.autoScroll = false;
     return graph;

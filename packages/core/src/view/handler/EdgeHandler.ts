@@ -53,7 +53,7 @@ import {
   isMouseEvent,
   isShiftDown,
 } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 import type { CellHandle, ColorValue, Listenable, MouseListenerSet } from '../../types';
@@ -70,15 +70,15 @@ import { EdgeHandlerConfig, HandleConfig } from './config';
  *
  * Uses {@link CellMarker} for finding and highlighting new source and target vertices.
  *
- * This handler is automatically created in {@link Graph.createHandler} for each selected edge.
+ * This handler is automatically created in {@link AbstractGraph.createHandler} for each selected edge.
  *
  * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
 class EdgeHandler implements MouseListenerSet {
   /**
-   * Reference to the enclosing {@link Graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Reference to the {@link CellState} being modified.
@@ -507,7 +507,7 @@ class EdgeHandler implements MouseListenerSet {
   /**
    * Returns the error message or an empty string if the connection for the
    * given source, target pair is not valid. Otherwise, it returns null. This
-   * implementation uses {@link Graph#getEdgeValidationError}.
+   * implementation uses {@link AbstractGraph.getEdgeValidationError}.
    *
    * @param source {@link Cell} that represents the source terminal.
    * @param target {@link Cell} that represents the target terminal.
@@ -2248,7 +2248,7 @@ class EdgeHandlerCellMarker extends CellMarker {
   edgeHandler: EdgeHandler;
 
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     edgeHandler: EdgeHandler,
     validColor: ColorValue = DEFAULT_VALID_COLOR,
     invalidColor: ColorValue = DEFAULT_INVALID_COLOR,

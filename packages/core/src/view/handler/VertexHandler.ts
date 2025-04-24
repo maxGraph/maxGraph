@@ -26,7 +26,7 @@ import Point from '../geometry/Point';
 import { getRotatedPoint, intersects, mod, toRadians } from '../../util/mathUtils';
 import Client from '../../Client';
 import { isMouseEvent, isShiftDown } from '../../util/EventUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import Image from '../image/ImageBox';
 import type Cell from '../cell/Cell';
@@ -42,7 +42,7 @@ import { HandleConfig, VertexHandlerConfig } from './config';
 /**
  * Event handler for resizing cells.
  *
- * This handler is automatically created in {@link Graph.createHandler}.
+ * This handler is automatically created in {@link AbstractGraph.createHandler}.
  *
  * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
@@ -53,9 +53,9 @@ class VertexHandler implements MouseListenerSet {
   selectionBorder: RectangleShape;
 
   /**
-   * Reference to the enclosing {@link Graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Reference to the {@link CellState} being modified.
@@ -785,7 +785,7 @@ class VertexHandler implements MouseListenerSet {
 
   /**
    * Checks if the coordinates for the given event are within the
-   * {@link Graph#tolerance}. If the event is a mouse event then the tolerance is
+   * {@link AbstractGraph.tolerance}. If the event is a mouse event then the tolerance is
    * ignored.
    */
   checkTolerance(me: InternalMouseEvent) {
@@ -1408,7 +1408,7 @@ class VertexHandler implements MouseListenerSet {
 
   /**
    * Uses the given vector to change the bounds of the given cell
-   * in the graph using {@link Graph#resizeCell}.
+   * in the graph using {@link AbstractGraph.resizeCell}.
    */
   resizeCell(
     cell: Cell,

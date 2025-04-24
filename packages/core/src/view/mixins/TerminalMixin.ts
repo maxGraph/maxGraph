@@ -16,10 +16,10 @@ limitations under the License.
 
 import type Cell from '../cell/Cell';
 import Dictionary from '../../util/Dictionary';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
-type PartialGraph = Pick<Graph, 'getView'>;
-type PartialTerminal = Pick<Graph, 'isTerminalPointMovable' | 'getOpposites'>;
+type PartialGraph = Pick<AbstractGraph, 'getView'>;
+type PartialTerminal = Pick<AbstractGraph, 'isTerminalPointMovable' | 'getOpposites'>;
 type PartialType = PartialGraph & PartialTerminal;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.

@@ -17,16 +17,19 @@ limitations under the License.
 import { htmlEntities } from '../../util/StringUtils';
 import type Shape from '../geometry/Shape';
 import type Cell from '../cell/Cell';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 import type TooltipHandler from '../plugins/TooltipHandler';
 import { translate } from '../../internal/i18n-utils';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   'convertValueToString' | 'getPlugin' | 'getCollapseExpandResource'
 >;
-type PartialTooltip = Pick<Graph, 'getTooltip' | 'getTooltipForCell' | 'setTooltips'>;
+type PartialTooltip = Pick<
+  AbstractGraph,
+  'getTooltip' | 'getTooltipForCell' | 'setTooltips'
+>;
 type PartialType = PartialGraph & PartialTooltip;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.

@@ -40,8 +40,8 @@ import { isElement, isNullish } from '../../internal/utils';
  * graph.insertVertex(graph.getDefaultParent(), null, node, 40, 40, 80, 30);
  * ```
  *
- * For the label to work, {@link graph.convertValueToString} and
- * {@link graph.cellLabelChanged} should be overridden as follows:
+ * For the label to work, {@link AbstractGraph.convertValueToString} and
+ * {@link AbstractGraph.cellLabelChanged} should be overridden as follows:
  *
  * ```javascript
  * graph.convertValueToString(cell) {

@@ -20,7 +20,7 @@ import Client from '../Client';
 import { PAGE_FORMAT_A4_PORTRAIT } from './Constants';
 import Rectangle from '../view/geometry/Rectangle';
 import { getOuterHtml } from './domUtils';
-import type { Graph } from '../view/Graph';
+import type { AbstractGraph } from '../view/AbstractGraph';
 import { removeCursors } from './styleUtils';
 
 /**
@@ -30,14 +30,14 @@ import { removeCursors } from './styleUtils';
  * pages in the print output. See {@link PrintPreview} for an example.
  *
  * @param pageCount Specifies the number of pages in the print output.
- * @param graph {@link Graph} that should be printed.
+ * @param graph {@link AbstractGraph} that should be printed.
  * @param pageFormat Optional {@link Rectangle} that specifies the page format.
  * Default is <mxConstants.PAGE_FORMAT_A4_PORTRAIT>.
  * @param border The border along each side of every page.
  */
 export const getScaleForPageCount = (
   pageCount: number,
-  graph: Graph,
+  graph: AbstractGraph,
   pageFormat?: Rectangle,
   border = 0
 ) => {
@@ -162,7 +162,7 @@ export const getScaleForPageCount = (
  * If you experience problems with missing stylesheets in IE then try adding
  * the domain to the trusted sites.
  *
- * @param graph {@link Graph} to be copied.
+ * @param graph {@link AbstractGraph} to be copied.
  * @param doc Document where the new graph is created.
  * @param x0 X-coordinate of the graph view origin. Default is 0.
  * @param y0 Y-coordinate of the graph view origin. Default is 0.
@@ -170,7 +170,7 @@ export const getScaleForPageCount = (
  * @param h Optional height of the graph view.
  */
 export const show = (
-  graph: Graph,
+  graph: AbstractGraph,
   doc: Document | null = null,
   x0 = 0,
   y0 = 0,
@@ -279,9 +279,9 @@ export const show = (
  *
  * This function should be called from within the document with the graph.
  *
- * @param graph {@link Graph} to be printed.
+ * @param graph {@link AbstractGraph} to be printed.
  */
-export const printScreen = (graph: Graph) => {
+export const printScreen = (graph: AbstractGraph) => {
   const wnd = window.open();
 
   if (!wnd) return;

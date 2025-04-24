@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import InternalEvent from '../event/InternalEvent';
 import { isAncestorNode } from '../../util/domUtils';
 import {
@@ -34,7 +34,7 @@ import type CellEditorHandler from '../plugins/CellEditorHandler';
  * element (default).
  *
  * This handler installs a key event listener in the topmost DOM node and
- * processes all events that originate from descendants of {@link Graph.container}
+ * processes all events that originate from descendants of {@link AbstractGraph.container}
  * or from the topmost DOM node. The latter means that all unhandled keystrokes
  * are handled by this object regardless of the focused state of the {@link graph}.
  *
@@ -74,11 +74,11 @@ class KeyHandler {
   /**
    * Constructs an event handler that executes functions bound to specific keystrokes.
    *
-   * @param graph Reference to the associated {@link Graph}.
+   * @param graph Reference to the associated {@link AbstractGraph}.
    * @param target  Optional reference to the event target.
    *                If `null`, the document element is used as the event target, that is, the object where the key event listener is installed.
    */
-  constructor(graph: Graph, target: Element | null = null) {
+  constructor(graph: AbstractGraph, target: Element | null = null) {
     if (graph != null) {
       this.graph = graph;
       this.target = target || document.documentElement;
@@ -95,9 +95,9 @@ class KeyHandler {
   keydownHandler: ((event: KeyboardEvent) => void) | null = null;
 
   /**
-   * Reference to the {@link Graph} associated with this handler.
+   * Reference to the {@link AbstractGraph} associated with this handler.
    */
-  graph: Graph | null = null;
+  graph: AbstractGraph | null = null;
 
   /**
    * Reference to the target DOM, that is, the DOM node where the key event
@@ -225,7 +225,7 @@ class KeyHandler {
 
   /**
    * Returns `true` if the event should be processed by this handler.
-   * That is, if the event source is either the target, one of its direct children a descendant of the {@link Graph.container},
+   * That is, if the event source is either the target, one of its direct children a descendant of the {@link AbstractGraph.container},
    * or the {@link CellEditorHandler} plugin of the {@link graph}.
    *
    * @param evt Key event that represents the keystroke.
@@ -280,7 +280,7 @@ class KeyHandler {
    * called later if the event is not an escape keystroke, in which case
    * {@link escape} is called.
    *
-   * This implementation returns `true` if  {@link Graph.isEnabled}
+   * This implementation returns `true` if  {@link AbstractGraph.isEnabled}
    * returns `true` for both, this handler and {@link graph}, if the event is not
    * consumed and if  {@link isGraphEvent} returns `true`.
    *
@@ -296,7 +296,7 @@ class KeyHandler {
   }
 
   /**
-   * Returns true if the given keystroke should be ignored. This returns {@link Graph.isEditing}.
+   * Returns true if the given keystroke should be ignored. This returns {@link AbstractGraph.isEditing}.
    *
    * @param evt Key event that represents the keystroke.
    */
@@ -306,7 +306,7 @@ class KeyHandler {
 
   /**
    * Hook to process ESCAPE keystrokes. This implementation invokes
-   * {@link Graph.stopEditing} to cancel the current editing, connecting
+   * {@link AbstractGraph.stopEditing} to cancel the current editing, connecting
    * and/or other ongoing modifications.
    *
    * @param evt Key event that represents the keystroke. Possible keycode in this case is 27 (ESCAPE).

@@ -22,7 +22,7 @@ import TerminalChange from '../undoable_changes/TerminalChange';
 import ValueChange from '../undoable_changes/ValueChange';
 import ChildChange from '../undoable_changes/ChildChange';
 import StyleChange from '../undoable_changes/StyleChange';
-import type { Graph } from '../../view/Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../../view/cell/Cell';
 import { UndoableChange } from '../../types';
 import Geometry from '../geometry/Geometry';
@@ -48,12 +48,16 @@ class Effects {
    * });
    * ```
    *
-   * @param graph - {@link Graph} that received the changes.
+   * @param graph - {@link AbstractGraph} that received the changes.
    * @param changes - Array of changes to be animated.
    * @param done - Optional function argument that is invoked after the
    * last step of the animation.
    */
-  static animateChanges(graph: Graph, changes: UndoableChange[], done?: Function): void {
+  static animateChanges(
+    graph: AbstractGraph,
+    changes: UndoableChange[],
+    done?: Function
+  ): void {
     const maxStep = 10;
     let step = 0;
 
@@ -125,11 +129,11 @@ class Effects {
   /**
    * Sets the opacity on the given cell and its descendants.
    *
-   * @param graph - {@link Graph} that contains the cells.
+   * @param graph - {@link AbstractGraph} that contains the cells.
    * @param cell - {@link Cell} to set the opacity for.
    * @param opacity - New value for the opacity in %.
    */
-  static cascadeOpacity(graph: Graph, cell: Cell, opacity: number): void {
+  static cascadeOpacity(graph: AbstractGraph, cell: Cell, opacity: number): void {
     // Fades all children
     const childCount = cell.getChildCount();
 

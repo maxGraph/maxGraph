@@ -17,8 +17,8 @@ limitations under the License.
 import type CellState from '../cell/CellState';
 import type Cell from '../cell/Cell';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Returns the string or DOM node that represents the tooltip for the given
      * state, node and coordinate pair. This implementation checks if the given

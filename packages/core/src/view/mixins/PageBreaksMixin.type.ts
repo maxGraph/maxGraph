@@ -18,8 +18,8 @@ limitations under the License.
 // TS2436: Ambient module declaration cannot specify relative module name.
 export {};
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /** @default null */
     horizontalPageBreaks: any[] | null;
 

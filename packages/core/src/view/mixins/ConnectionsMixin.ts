@@ -22,12 +22,12 @@ import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Dictionary from '../../util/Dictionary';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type ConnectionHandler from '../plugins/ConnectionHandler';
 
-type PartialGraph = Pick<Graph, 'getView' | 'getDataModel' | 'isPortsEnabled'>;
+type PartialGraph = Pick<AbstractGraph, 'getView' | 'getDataModel' | 'isPortsEnabled'>;
 type PartialConnections = Pick<
-  Graph,
+  AbstractGraph,
   | 'constrainChildren'
   | 'constrainRelativeChildren'
   | 'disconnectOnMove'

@@ -17,13 +17,13 @@ limitations under the License.
 import '@maxgraph/core/css/common.css'; // required by RubberBandHandler
 import './style.css';
 import {
+  BaseGraph,
   CellRenderer,
   constants,
   EdgeMarker,
   EdgeStyle,
   EllipseShape,
   FitPlugin,
-  Graph,
   InternalEvent,
   MarkerShape,
   PanningHandler,
@@ -35,15 +35,9 @@ import {
 } from '@maxgraph/core';
 
 /**
- * Create a custom implementation to not load all default built-in styles. This is because Graph registers them.
- *
- * In the future, we expect to have an implementation of Graph that does not do it.
- * See https://github.com/maxGraph/maxGraph/issues/760
+ * Custom implementation of {@link BaseGraph} that only register the built-in styles required by the example.
  */
-class CustomGraph extends Graph {
-  /**
-   * Only registers the elements required for this example. Do not let Graph load all default built-in styles.
-   */
+class CustomGraph extends BaseGraph {
   protected override registerDefaults() {
     // Register shapes
     // RectangleShape is not registered here because it is always available. It is the fallback shape for vertices when no shape is returned by the registry
@@ -64,13 +58,16 @@ const initializeGraph = (container: HTMLElement) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  const graph = new CustomGraph(container, undefined, [
-    FitPlugin, // Enables the fitCenter method
-    PanningHandler, // Enables panning with the mouse
-    RubberBandHandler, // Enables rubber band selection
-    SelectionCellsHandler, // Enables management of selected cells
-    SelectionHandler, // Enables selection with the mouse
-  ]);
+  const graph = new CustomGraph({
+    container,
+    plugins: [
+      FitPlugin, // Enables the fitCenter method
+      PanningHandler, // Enables panning with the mouse
+      RubberBandHandler, // Enables rubber band selection
+      SelectionCellsHandler, // Enables management of selected cells
+      SelectionHandler, // Enables selection with the mouse
+    ],
+  });
   graph.setPanning(true); // Use mouse right button for panning
 
   // create a dedicated style for "ellipse" to share properties
