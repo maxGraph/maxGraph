@@ -14,9 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { describe, test } from '@jest/globals';
+import { afterEach, beforeAll, describe, test } from '@jest/globals';
 import { ModelChecker } from './utils';
-import { Geometry, GraphDataModel, ModelXmlSerializer, Point } from '../../src';
+import {
+  Geometry,
+  GraphDataModel,
+  ModelXmlSerializer,
+  Point,
+  unregisterAllCodecs,
+} from '../../src';
+
+// Prevents side effects between tests
+beforeAll(() => {
+  unregisterAllCodecs();
+});
+afterEach(() => {
+  unregisterAllCodecs();
+});
 
 describe('import mxGraph model', () => {
   test('Model with geometry', () => {

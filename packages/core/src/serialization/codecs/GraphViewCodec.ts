@@ -32,8 +32,8 @@ import Point from '../../view/geometry/Point';
  */
 export class GraphViewCodec extends ObjectCodec {
   constructor() {
-    const __dummy: any = undefined;
-    super(new GraphView(__dummy));
+    super(new GraphView(undefined!));
+    this.setName('GraphView');
   }
 
   /**
@@ -41,7 +41,7 @@ export class GraphViewCodec extends ObjectCodec {
    * top-level graph node of the recursive encoding.
    */
   encode(enc: any, view: GraphView) {
-    return this.encodeCell(enc, view, <Cell>view.graph.getDataModel().getRoot());
+    return this.encodeCell(enc, view, view.graph.getDataModel().getRoot()!);
   }
 
   /**

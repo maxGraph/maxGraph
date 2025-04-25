@@ -23,14 +23,11 @@ import {
 } from './codecs/_model-codecs';
 import Geometry from '../view/geometry/Geometry';
 import Point from '../view/geometry/Point';
-import ObjectCodec from './ObjectCodec';
-import { CodecRegistrationStates, registerBaseCodecs } from './register-shared';
-
-const createObjectCodec = (template: any, name: string): ObjectCodec => {
-  const objectCodec = new ObjectCodec(template);
-  objectCodec.setName(name);
-  return objectCodec;
-};
+import {
+  CodecRegistrationStates,
+  createObjectCodec,
+  registerBaseCodecs,
+} from './register-shared';
 
 /**
  * Register model codecs i.e. codecs used to import/export the Graph Model, see {@link GraphDataModel}.

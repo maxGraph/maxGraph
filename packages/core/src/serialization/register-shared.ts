@@ -40,3 +40,9 @@ export const registerBaseCodecs = (force = false) => {
     CodecRegistrationStates.base = true;
   }
 };
+
+export const createObjectCodec = (template: any, name: string): ObjectCodec => {
+  const objectCodec = new ObjectCodec(template);
+  objectCodec.setName(name);
+  return objectCodec;
+};
