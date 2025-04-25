@@ -28,13 +28,19 @@ import {
   StylesheetCodec,
   TerminalChangeCodec,
 } from './codecs/_other-codecs';
+import Rectangle from '../view/geometry/Rectangle';
+import ImageBox from '../view/image/ImageBox';
 import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
 import CollapseChange from '../view/undoable_changes/CollapseChange';
 import GeometryChange from '../view/undoable_changes/GeometryChange';
 import StyleChange from '../view/undoable_changes/StyleChange';
 import ValueChange from '../view/undoable_changes/ValueChange';
 import VisibleChange from '../view/undoable_changes/VisibleChange';
-import { CodecRegistrationStates, registerBaseCodecs } from './register-shared';
+import {
+  CodecRegistrationStates,
+  createObjectCodec,
+  registerBaseCodecs,
+} from './register-shared';
 import { registerModelCodecs } from './register-model-codecs';
 
 const registerGenericChangeCodecs = () => {
@@ -77,6 +83,10 @@ export const registerCoreCodecs = (force = false) => {
     CodecRegistry.register(new StylesheetCodec());
     CodecRegistry.register(new TerminalChangeCodec());
     registerGenericChangeCodecs();
+
+    // Needed at least by Graph
+    CodecRegistry.register(createObjectCodec(new Rectangle(), 'Rectangle'));
+    CodecRegistry.register(createObjectCodec(new ImageBox(undefined!, 0, 0), 'ImageBox'));
 
     registerModelCodecs(force);
 

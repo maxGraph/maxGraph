@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { describe, expect, test } from '@jest/globals';
+import { afterEach, beforeAll, describe, expect, test } from '@jest/globals';
 import { ModelChecker } from './utils';
 import { createGraphWithoutContainer } from '../utils';
 import {
@@ -24,6 +24,7 @@ import {
   GraphDataModel,
   ModelXmlSerializer,
   Point,
+  unregisterAllCodecs,
 } from '../../src';
 
 // inspired by VertexMixin.createVertex
@@ -96,6 +97,14 @@ const xmlWithVerticesAndEdges = `<GraphDataModel>
   </root>
 </GraphDataModel>
 `;
+
+// Prevents side effects between tests
+beforeAll(() => {
+  unregisterAllCodecs();
+});
+afterEach(() => {
+  unregisterAllCodecs();
+});
 
 test('Check the content of an empty GraphDataModel', () => {
   const modelChecker = new ModelChecker(new GraphDataModel());

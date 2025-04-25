@@ -31,21 +31,24 @@ import { Graph } from '../../view/Graph';
  * - container
  * - cellRenderer
  * - editor
- * - selection
+ * - selectionModel
+ * - plugins
  *
  * @category Serialization with Codecs
  */
 export class GraphCodec extends ObjectCodec {
   constructor() {
-    // TODO review the Graph initialization. Currently it registers all default plugins (check impact on tree-shaking)
-    super(new Graph(), [
+    // Do not  load default plugins, plugins are not serialized
+    super(new Graph(undefined, undefined, []), [
       'graphListeners',
       'eventListeners',
       'view',
       'container',
       'cellRenderer',
       'editor',
-      'selection',
+      'selectionModel',
+      'plugins',
     ]);
+    this.setName('Graph');
   }
 }
