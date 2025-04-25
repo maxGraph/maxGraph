@@ -19,7 +19,7 @@ limitations under the License.
 import Point from '../geometry/Point';
 import GraphLayout from './GraphLayout';
 import ObjectIdentity from '../../util/ObjectIdentity';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 import Geometry from '../geometry/Geometry';
 
@@ -63,7 +63,7 @@ import Geometry from '../geometry/Geometry';
  * @category Layout
  */
 class ParallelEdgeLayout extends GraphLayout {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super(graph);
   }
 

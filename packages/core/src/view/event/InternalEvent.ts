@@ -27,7 +27,7 @@ import type {
   Listenable,
   MouseEventListener,
 } from '../../types';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 // Checks if passive event listeners are supported
 // see https://github.com/Modernizr/Modernizr/issues/1894
@@ -54,7 +54,7 @@ try {
  * @class InternalEvent
  *
  * Cross-browser DOM event support. For internal event handling,
- * {@link mxEventSource} and the graph event dispatch loop in {@link graph} are used.
+ * {@link EventSource} and the graph event dispatch loop in {@link AbstractGraph} are used.
  *
  * ### Memory Leaks:
  *
@@ -238,7 +238,7 @@ class InternalEvent {
    */
   static redirectMouseEvents(
     node: Listenable,
-    graph: Graph,
+    graph: AbstractGraph,
     state: CellState | ((evt: Event) => CellState | null) | null = null,
     down: MouseEventListener | null = null,
     move: MouseEventListener | null = null,

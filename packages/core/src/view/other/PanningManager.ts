@@ -20,13 +20,13 @@ import { MouseEventListener, MouseListenerSet } from '../../types';
 import { hasScrollbars } from '../../util/styleUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 /**
  * Implements a handler for panning.
  */
 class PanningManager {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.thread = null;
     this.active = false;
     this.tdx = 0;

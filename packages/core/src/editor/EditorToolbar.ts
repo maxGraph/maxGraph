@@ -25,7 +25,7 @@ import { getClientX, getClientY } from '../util/EventUtils';
 import { makeDraggable } from '../util/gestureUtils';
 import Editor from './Editor';
 import type Cell from '../view/cell/Cell';
-import type { Graph } from '../view/Graph';
+import type { AbstractGraph } from '../view/AbstractGraph';
 import EventObject from '../view/event/EventObject';
 import type { DropHandler } from '../view/other/DragSource';
 
@@ -300,10 +300,9 @@ export class EditorToolbar {
       toggle
     );
 
-    // Creates a wrapper function that calls the click handler without
-    // the graph argument
+    // Creates a wrapper function that calls the click handler without the graph argument
     const dropHandler: DropHandler = (
-      graph: Graph,
+      _graph: AbstractGraph,
       evt: MouseEvent,
       cell: Cell | null
     ) => {

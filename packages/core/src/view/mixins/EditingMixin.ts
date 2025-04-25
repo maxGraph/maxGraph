@@ -17,11 +17,11 @@ limitations under the License.
 import { isMultiTouchEvent } from '../../util/EventUtils';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type CellEditorHandler from '../plugins/CellEditorHandler';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'convertValueToString'
   | 'batchUpdate'
   | 'getDataModel'
@@ -34,7 +34,7 @@ type PartialGraph = Pick<
   | 'getPlugin'
 >;
 type PartialEditing = Pick<
-  Graph,
+  AbstractGraph,
   | 'cellsEditable'
   | 'startEditing'
   | 'startEditingAtCell'

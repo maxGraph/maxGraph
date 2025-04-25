@@ -19,7 +19,7 @@ limitations under the License.
 import { DIALECT, NODETYPE, NS_SVG } from './Constants';
 import Point from '../view/geometry/Point';
 import type Cell from '../view/cell/Cell';
-import type { Graph } from '../view/Graph';
+import type { AbstractGraph } from '../view/AbstractGraph';
 import { htmlEntities, trim } from './StringUtils';
 import TemporaryCellStates from '../view/cell/TemporaryCellStates';
 import type { StyleValue } from '../types';
@@ -39,7 +39,7 @@ export const parseXml = (xmlString: string): Document => {
 };
 
 export const getViewXml = (
-  graph: Graph,
+  graph: AbstractGraph,
   scale = 1,
   cells: Cell[] | null = null,
   x0 = 0,

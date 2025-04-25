@@ -16,8 +16,8 @@ limitations under the License.
 
 import type Cell from '../cell/Cell';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies the return value for {@link isDropEnabled}.
      * @default false

@@ -16,11 +16,11 @@ limitations under the License.
 
 import type Cell from '../cell/Cell';
 import { isNode } from '../../util/domUtils';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import { translate } from '../../internal/i18n-utils';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'getDataModel'
   | 'isAllowLoops'
   | 'isMultigraph'
@@ -33,7 +33,7 @@ type PartialGraph = Pick<
   | 'setCellWarning'
 >;
 type PartialValidation = Pick<
-  Graph,
+  AbstractGraph,
   | 'multiplicities'
   | 'validationAlert'
   | 'isEdgeValid'
@@ -104,7 +104,7 @@ export const ValidationMixin: PartialType = {
       // Checks the change against each multiplicity rule
       for (const multiplicity of this.multiplicities) {
         const err = multiplicity.check(
-          <Graph>(<unknown>this), // needs to cast to Graph
+          <AbstractGraph>(<unknown>this), // needs to cast to Graph
           <Cell>edge,
           source,
           target,

@@ -88,9 +88,9 @@ export const TranslationsConfig = {
    * - {@link Editor.propertiesResource}
    * - {@link Editor.tasksResource}
    * - {@link ElbowEdgeHandler.doubleClickOrientationResource}
-   * - {@link Graph.alreadyConnectedResource}.
-   * - {@link Graph.collapseExpandResource}
-   * - {@link Graph.containsValidationErrorsResource} and
+   * - {@link AbstractGraph.alreadyConnectedResource}.
+   * - {@link AbstractGraph.collapseExpandResource}
+   * - {@link AbstractGraph.containsValidationErrorsResource} and
    * - {@link GraphSelectionModel.doneResource}
    * - {@link GraphSelectionModel.updatingSelectionResource}
    * - {@link GraphView.doneResource}

@@ -16,17 +16,19 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import {
+  AbstractGraph,
   Cell,
   CellState,
+  EdgeHandler,
   EdgeSegmentHandler,
   EdgeStyle,
   ElbowEdgeHandler,
   Point,
   Rectangle,
   RectangleShape,
+  VertexHandler,
 } from '../../src';
 import { createGraphWithoutPlugins } from '../utils';
-import EdgeHandler from '../../src/view/handler/EdgeHandler';
 
 describe('isOrthogonal', () => {
   test('Style of the CellState, orthogonal: true', () => {
@@ -66,6 +68,16 @@ describe('isOrthogonal', () => {
   });
 });
 
+function createCellState(graph: AbstractGraph, isEdge: boolean): CellState {
+  const cell = new Cell();
+  cell.setEdge(isEdge);
+  cell.setVertex(!isEdge);
+  const cellState = new CellState(graph.view, cell, {});
+  cellState.absolutePoints = [new Point(0, 0)];
+  cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
+  return cellState;
+}
+
 describe('createEdgeHandler', () => {
   test.each([
     ['ElbowConnector', EdgeStyle.ElbowConnector],
@@ -74,8 +86,7 @@ describe('createEdgeHandler', () => {
     ['TopToBottom', EdgeStyle.TopToBottom],
   ])('Expect ElbowEdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
     const graph = createGraphWithoutPlugins();
-    const cellState = new CellState(graph.view, new Cell(), {});
-    cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
+    const cellState = createCellState(graph, true);
     expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
       ElbowEdgeHandler
     );
@@ -87,9 +98,7 @@ describe('createEdgeHandler', () => {
     ['SegmentConnector', EdgeStyle.SegmentConnector],
   ])('Expect EdgeSegmentHandler for edgeStyle: %s', (_name, edgeStyle) => {
     const graph = createGraphWithoutPlugins();
-    const cellState = new CellState(graph.view, new Cell(), {});
-    cellState.absolutePoints = [new Point(0, 0)];
-    cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
+    const cellState = createCellState(graph, true);
     expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
       EdgeSegmentHandler
     );
@@ -100,8 +109,21 @@ describe('createEdgeHandler', () => {
     ['null', null],
   ])('Expect EdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
     const graph = createGraphWithoutPlugins();
-    const cellState = new CellState(graph.view, new Cell(), {});
-    cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
+    const cellState = createCellState(graph, true);
     expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(EdgeHandler);
+  });
+});
+
+describe('createHandler', () => {
+  test('Expect VertexHandler', () => {
+    const graph = createGraphWithoutPlugins();
+    const cellState = createCellState(graph, false);
+    expect(graph.createHandler(cellState)).toBeInstanceOf(VertexHandler);
+  });
+
+  test('Expect EdgeHandler', () => {
+    const graph = createGraphWithoutPlugins();
+    const cellState = createCellState(graph, true);
+    expect(graph.createHandler(cellState)).toBeInstanceOf(EdgeHandler);
   });
 });

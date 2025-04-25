@@ -54,7 +54,7 @@ import {
 } from '../../util/EventUtils';
 import Image from '../image/ImageBox';
 import CellState from '../cell/CellState';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import Shape from '../geometry/Shape';
 import type {
@@ -75,7 +75,7 @@ type FactoryMethod = (
  * Graph event handler that creates new connections.
  * Uses {@link CellMarker} for finding and highlighting the source and target vertices and {@link factoryMethod} to create the edge instance.
  *
- * This handler is enabled using {@link Graph.setConnectable}.
+ * This handler is enabled using {@link AbstractGraph.setConnectable}.
  *
  * Example:
  *
@@ -180,7 +180,7 @@ type FactoryMethod = (
  * Depending on the logic in the handler, this doesn't necessarily have to be the target
  * of the inserted edge. To print the source, target or any optional ports IDs that the
  * edge is connected to, the following code can be used. To get more details about the
- * actual connection point, {@link Graph.getConnectionConstraint} can be used. To resolve
+ * actual connection point, {@link AbstractGraph.getConnectionConstraint} can be used. To resolve
  * the port IDs, use {@link GraphDataModel.getCell}.
  *
  * ```javascript
@@ -221,9 +221,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   waypoints: Point[] = [];
 
   /**
-   * Reference to the enclosing {@link Graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Function that is used for creating new edges. The function takes the
@@ -385,13 +385,13 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
    * Constructs an event handler that connects vertices using the specified
    * factory method to create the new edges.
    *
-   * @param graph Reference to the enclosing {@link Graph}.
+   * @param graph Reference to the enclosing {@link AbstractGraph}.
    * @param factoryMethod Optional function to create the edge. The function takes
    * the source and target {@link Cell} as the first and second argument and an
    * optional cell style from the preview as the third argument. It returns
    * the {@link Cell} that represents the new edge.
    */
-  constructor(graph: Graph, factoryMethod: FactoryMethod | null = null) {
+  constructor(graph: AbstractGraph, factoryMethod: FactoryMethod | null = null) {
     super();
 
     this.graph = graph;
@@ -555,7 +555,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Returns {@link Graph#isValidSource} for the given source terminal.
+   * Returns {@link AbstractGraph.isValidSource} for the given source terminal.
    *
    * @param cell <Cell> that represents the source terminal.
    * @param me {@link MouseEvent} that is associated with this call.
@@ -565,8 +565,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Returns true. The call to {@link Graph#isValidTarget} is implicit by calling
-   * {@link Graph#getEdgeValidationError} in <validateConnection>. This is an
+   * Returns true. The call to {@link AbstractGraph.isValidTarget} is implicit by calling
+   * {@link AbstractGraph.getEdgeValidationError} in <validateConnection>. This is an
    * additional hook for disabling certain targets in this specific handler.
    *
    * @param cell <Cell> that represents the target terminal.
@@ -578,7 +578,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   /**
    * Returns the error message or an empty string if the connection for the
    * given source target pair is not valid. Otherwise it returns null. This
-   * implementation uses {@link Graph#getEdgeValidationError}.
+   * implementation uses {@link AbstractGraph.getEdgeValidationError}.
    *
    * @param source <Cell> that represents the source terminal.
    * @param target <Cell> that represents the target terminal.
@@ -1830,7 +1830,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   /**
    * Creates, inserts and returns the new edge for the given parameters. This
    * implementation does only use <createEdge> if <factoryMethod> is defined,
-   * otherwise {@link Graph#insertEdge} will be used.
+   * otherwise {@link AbstractGraph.insertEdge} will be used.
    */
   insertEdge(
     parent: Cell,
@@ -1952,7 +1952,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   /**
    * Destroys the handler and all its resources and DOM nodes. This should be
    * called on all instances. It is called automatically for the built-in
-   * instance created for each {@link Graph}.
+   * instance created for each {@link AbstractGraph}.
    */
   onDestroy() {
     this.graph.removeMouseListener(this);
@@ -1994,7 +1994,7 @@ class ConnectionHandlerCellMarker extends CellMarker {
   hotspotEnabled = true;
 
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     connectionHandler: ConnectionHandler,
     validColor: ColorValue = DEFAULT_VALID_COLOR,
     invalidColor: ColorValue = DEFAULT_INVALID_COLOR,

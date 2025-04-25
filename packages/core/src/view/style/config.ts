@@ -87,6 +87,12 @@ export const resetOrthogonalConnectorConfig = (): void => {
   shallowCopy(originalOrthogonalConnectorConfig, OrthogonalConnectorConfig);
 };
 
+/**
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.16.0
+ * @category Configuration
+ * @category EdgeStyle
+ */
 export type ManhattanConnectorConfigType = {
   /**
    * Limit for directions change when searching route.

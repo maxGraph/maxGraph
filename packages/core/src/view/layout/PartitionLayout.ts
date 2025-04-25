@@ -18,7 +18,7 @@ limitations under the License.
 
 import Rectangle from '../geometry/Rectangle';
 import GraphLayout from './GraphLayout';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 
 /**
@@ -39,7 +39,7 @@ import type Cell from '../cell/Cell';
  * @category Layout
  */
 class PartitionLayout extends GraphLayout {
-  constructor(graph: Graph, horizontal = true, spacing = 0, border = 0) {
+  constructor(graph: AbstractGraph, horizontal = true, spacing = 0, border = 0) {
     super(graph);
     this.horizontal = horizontal != null ? horizontal : true;
     this.spacing = spacing || 0;

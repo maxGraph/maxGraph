@@ -45,7 +45,7 @@ import { clone } from '../../util/cloneUtils';
  * be ignored or interpreted differently depending on the edge's {@link edgeStyle}.
  *
  * To disable automatic reset of control points after a cell has been moved or
- * resized, {@link graph.resetEdgesOnMove} and {@link graph.resetEdgesOnResize} may be used.
+ * resized, {@link AbstractGraph.resetEdgesOnMove} and {@link AbstractGraph.resetEdgesOnResize} may be used.
  *
  * ### Edge Labels
  *

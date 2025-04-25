@@ -18,7 +18,7 @@ limitations under the License.
 
 import CellMarker from './CellMarker';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from './Cell';
 import EventSource from '../event/EventSource';
 import type { ColorValue, MouseListenerSet } from '../../types';
@@ -78,7 +78,7 @@ import type { ColorValue, MouseListenerSet } from '../../types';
  */
 class CellTracker extends CellMarker implements MouseListenerSet {
   constructor(
-    graph: Graph,
+    graph: AbstractGraph,
     color: ColorValue,
     funct: ((me: InternalMouseEvent) => Cell) | null = null
   ) {

@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import GraphLayout from './GraphLayout';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 
 /**
@@ -38,10 +38,10 @@ class CircleLayout extends GraphLayout {
   /**
    * Constructs a new circular layout for the specified radius.
    *
-   * @param graph {@link Graph} that contains the cells.
+   * @param graph {@link AbstractGraph} that contains the cells.
    * @param radius Optional radius as an int. Default is 100.
    */
-  constructor(graph: Graph, radius = 100) {
+  constructor(graph: AbstractGraph, radius = 100) {
     super(graph);
     this.radius = radius;
   }

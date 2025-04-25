@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import {
+  type AbstractGraph,
   Cell,
   type CellStyle,
   Client,
@@ -177,7 +178,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
       // Function that is executed when the image is dropped on
       // the graph. The cell argument points to the cell under
       // the mousepointer if there is one.
-      const funct = (graph: Graph, _evt: MouseEvent, cell: Cell | null) => {
+      const funct = (graph: AbstractGraph, _evt: MouseEvent, cell: Cell | null) => {
         graph.stopEditing(false);
 
         const pt = graph.getPointForEvent(evt);
@@ -207,7 +208,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
     // Function that is executed when the image is dropped on
     // the graph. The cell argument points to the cell under
     // the mousepointer if there is one.
-    const funct = (graph: Graph, evt: MouseEvent, cell: Cell | null) => {
+    const funct = (graph: AbstractGraph, evt: MouseEvent, cell: Cell | null) => {
       graph.stopEditing(false);
 
       const pt = graph.getPointForEvent(evt);

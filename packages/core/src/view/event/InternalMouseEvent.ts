@@ -80,13 +80,13 @@ class InternalMouseEvent {
 
   /**
    * Holds the x-coordinate of the event in the graph. This value is set in
-   * {@link Graph#fireMouseEvent}.
+   * {@link AbstractGraph.fireMouseEvent}.
    */
   graphX: number;
 
   /**
    * Holds the y-coordinate of the event in the graph. This value is set in
-   * {@link Graph#fireMouseEvent}.
+   * {@link AbstractGraph.fireMouseEvent}.
    */
   graphY: number;
 
@@ -97,7 +97,7 @@ class InternalMouseEvent {
 
   /**
    * Holds the <CellState> that was passed to the constructor. This can be
-   * different from <state> depending on the result of {@link Graph#getEventState}.
+   * different from <state> depending on the result of {@link AbstractGraph.getEventState}.
    */
   sourceState: CellState | null;
 

@@ -48,14 +48,14 @@ import {
 } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type { GraphPlugin } from '../../types';
 import type TooltipHandler from './TooltipHandler';
 
 /**
  * In-place editor for the graph. To control this editor, use
- * {@link Graph#invokesStopCellEditing}, {@link Graph#enterStopsCellEditing} and
- * {@link Graph#escapeEnabled}. If {@link Graph#enterStopsCellEditing} is true then
+ * {@link AbstractGraph.invokesStopCellEditing}, {@link AbstractGraph.enterStopsCellEditing} and
+ * {@link AbstractGraph.escapeEnabled}. If {@link AbstractGraph.enterStopsCellEditing} is true then
  * ctrl-enter or shift-enter can be used to create a linefeed. The F2 and
  * escape keys can always be used to stop editing.
  *
@@ -153,7 +153,7 @@ import type TooltipHandler from './TooltipHandler';
 class CellEditorHandler implements GraphPlugin {
   static pluginId = 'CellEditorHandler';
 
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     this.graph = graph;
 
     // Stops editing after zoom changes
@@ -189,9 +189,9 @@ class CellEditorHandler implements GraphPlugin {
   textDirection: '' | 'auto' | 'ltr' | 'rtl' | null = null;
 
   /**
-   * Reference to the enclosing {@link Graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * Holds the DIV that is used for text editing. Note that this may be null before the first
@@ -312,10 +312,9 @@ class CellEditorHandler implements GraphPlugin {
   }
 
   /**
-   * Called in <stopEditing> if cancel is false to invoke {@link Graph#labelChanged}.
+   * Called in <stopEditing> if cancel is false to invoke {@link AbstractGraph.labelChanged}.
    */
-  // applyValue(state: CellState, value: string): void;
-  applyValue(state: CellState, value: any) {
+  applyValue(state: CellState, value: any): void {
     this.graph.labelChanged(state.cell, value, <InternalMouseEvent>this.trigger);
   }
 
@@ -463,7 +462,7 @@ class CellEditorHandler implements GraphPlugin {
 
   /**
    * Returns true if the given keydown event should stop cell editing. This
-   * returns true if F2 is pressed of if {@link Graph#enterStopsCellEditing} is true
+   * returns true if F2 is pressed of if {@link AbstractGraph.enterStopsCellEditing} is true
    * and enter is pressed without control or shift.
    */
   isStopEditingEvent(evt: KeyboardEvent) {

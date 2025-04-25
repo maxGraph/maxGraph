@@ -18,10 +18,10 @@ import Cell from '../cell/Cell';
 import Dictionary from '../../util/Dictionary';
 import RootChange from '../undoable_changes/RootChange';
 import ChildChange from '../undoable_changes/ChildChange';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'getDataModel'
   | 'getView'
   | 'isCellSelectable'
@@ -32,7 +32,7 @@ type PartialGraph = Pick<
   | 'isToggleEvent'
 >;
 type PartialCells = Pick<
-  Graph,
+  AbstractGraph,
   | 'singleSelection'
   | 'selectionModel'
   | 'getSelectionModel'

@@ -31,7 +31,7 @@ import { isI18nEnabled, translate } from '../../internal/i18n-utils';
  * Graph event handler that reconnects edges and modifies control points and
  * the edge label location. Uses {@link CellMarker} for finding and
  * highlighting new source and target vertices. This handler is automatically
- * created in {@link Graph.createHandler}. It extends {@link EdgeHandler}.
+ * created in {@link AbstractGraph.createHandler}. It extends {@link EdgeHandler}.
  *
  * Constructor: mxEdgeHandler
  *
@@ -45,7 +45,7 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-   * Specifies if a double click on the middle handle should call {@link Graph#flipEdge}.
+   * Specifies if a double click on the middle handle should call {@link AbstractGraph.flipEdge}.
    * @default true
    */
   flipEnabled = true;
@@ -92,7 +92,7 @@ class ElbowEdgeHandler extends EdgeHandler {
   }
 
   /**
-   * Creates a virtual bend that supports double-clicking and calls {@link Graph#flipEdge}.
+   * Creates a virtual bend that supports double-clicking and calls {@link AbstractGraph.flipEdge}.
    */
   createVirtualBend(dblClickHandler?: (evt: MouseEvent) => void) {
     const bend = this.createHandleShape();

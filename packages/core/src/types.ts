@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IDENTITY_FIELD_NAME } from './util/Constants';
-import type { Graph } from './view/Graph';
+import type { IDENTITY_FIELD_NAME } from './util/Constants';
+import type { AbstractGraph } from './view/AbstractGraph';
 import type AbstractCanvas2D from './view/canvas/AbstractCanvas2D';
 import type Cell from './view/cell/Cell';
 import type CellState from './view/cell/CellState';
@@ -26,6 +26,11 @@ import type Point from './view/geometry/Point';
 import type Rectangle from './view/geometry/Rectangle';
 import type Shape from './view/geometry/Shape';
 import type ImageBox from './view/image/ImageBox';
+import type CellRenderer from './view/cell/CellRenderer';
+import type GraphDataModel from './view/GraphDataModel';
+import type { Stylesheet } from './view/style/Stylesheet';
+import type GraphSelectionModel from './view/GraphSelectionModel';
+import type GraphView from './view/GraphView';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -121,7 +126,7 @@ export type CellStateStyle = {
    * This specifies if a cell should be resized automatically if its value changed.
    * This is normally combined with {@link resizable} to disable manual resizing.
    *
-   * Note that a cell is in fact auto-resizable according to the value returned by {@link Graph.isAutoSizeCell}.
+   * Note that a cell is in fact auto-resizable according to the value returned by {@link AbstractGraph.isAutoSizeCell}.
    * @default false
    */
   autoSize?: boolean;
@@ -133,14 +138,14 @@ export type CellStateStyle = {
   /**
    * This specifies if the control points of an edge can be moved.
    *
-   * Note that a cell is in fact bendable according to the value returned by {@link Graph.isCellBendable}.
+   * Note that a cell is in fact bendable according to the value returned by {@link AbstractGraph.isCellBendable}.
    * @default true
    */
   bendable?: boolean;
   /**
    * This specifies if a cell can be cloned.
    *
-   * Note that a cell is in fact cloneable according to the value returned by {@link Graph.isCellCloneable}.
+   * Note that a cell is in fact cloneable according to the value returned by {@link AbstractGraph.isCellCloneable}.
    * @default true
    */
   cloneable?: boolean;
@@ -167,7 +172,7 @@ export type CellStateStyle = {
   /**
    * This specifies if a cell can be deleted.
    *
-   * Note that a cell is in fact deletable according to the value returned by {@link Graph.isCellDeletable}.
+   * Note that a cell is in fact deletable according to the value returned by {@link AbstractGraph.isCellDeletable}.
    * @default true
    */
   deletable?: boolean;
@@ -190,7 +195,7 @@ export type CellStateStyle = {
   /**
    * This specifies if the value of a cell can be edited using the in-place editor.
    *
-   * Note that a cell is in fact editable according to the value returned by {@link Graph.isCellEditable}.
+   * Note that a cell is in fact editable according to the value returned by {@link AbstractGraph.isCellEditable}.
    * @default true
    */
   editable?: boolean;
@@ -309,7 +314,7 @@ export type CellStateStyle = {
   flipV?: boolean;
   /**
    * This specifies if a cell is foldable using a folding icon.
-   * See {@link Graph.isCellFoldable}.
+   * See {@link AbstractGraph.isCellFoldable}.
    * @default true
    */
   foldable?: boolean;
@@ -485,7 +490,7 @@ export type CellStateStyle = {
    * The possible values are the functions defined in {@link EdgeStyle}.
    *
    * See {@link edgeStyle}.
-   * See {@link Graph.defaultLoopStyle}.
+   * See {@link AbstractGraph.defaultLoopStyle}.
    */
   loopStyle?: EdgeStyleFunction;
   /**
@@ -497,7 +502,7 @@ export type CellStateStyle = {
   /**
    * This specifies if a cell can be moved.
    *
-   * Note that a cell is in fact movable according to the value returned by {@link Graph.isCellMovable}.
+   * Note that a cell is in fact movable according to the value returned by {@link AbstractGraph.isCellMovable}.
    * @default true
    */
   movable?: boolean;
@@ -521,10 +526,10 @@ export type CellStateStyle = {
    * the edge is vertical or horizontal if possible and if the point is not at a fixed location.
    * The computation of the connection points involves the {@link perimeter}.
    *
-   * This is used in {@link Graph.isOrthogonal}, which is in charge of determining if the edge terminals should be orthogonal.
+   * This is used in {@link AbstractGraph.isOrthogonal}, which is in charge of determining if the edge terminals should be orthogonal.
    *
    * If the {@link orthogonal} property is not explicitly set but the {@link edgeStyle} belongs to one of the "orthogonal" `EdgeStyle` connectors,
-   * for example when using {@link EdgeStyle.SegmentConnector} or {@link EdgeStyle.EntityRelation}, the {@link Graph.isOrthogonal} method which also returns `true`.
+   * for example when using {@link EdgeStyle.SegmentConnector} or {@link EdgeStyle.EntityRelation}, the {@link AbstractGraph.isOrthogonal} method which also returns `true`.
    * @default undefined
    */
   orthogonal?: boolean | null;
@@ -542,7 +547,7 @@ export type CellStateStyle = {
    * - A value of 'fill' will use the vertex bounds.
    * - A value of 'width' will use the vertex width for the label.
    *
-   * See {@link Graph.isLabelClipped}.
+   * See {@link AbstractGraph.isLabelClipped}.
    *
    * Note that the vertical alignment is ignored for overflow filling and for horizontal
    * alignment.
@@ -600,7 +605,7 @@ export type CellStateStyle = {
   /**
    * This specifies if a cell can be resized.
    *
-   * Note that a cell is in fact resizable according to the value returned by {@link Graph.isCellResizable}.
+   * Note that a cell is in fact resizable according to the value returned by {@link AbstractGraph.isCellResizable}.
    * @default true
    */
   resizable?: boolean;
@@ -621,7 +626,7 @@ export type CellStateStyle = {
   /**
    * This specifies if a cell can be rotated.
    *
-   * Note that a cell is in fact rotatable according to the value returned by {@link Graph.isCellRotatable}.
+   * Note that a cell is in fact rotatable according to the value returned by {@link AbstractGraph.isCellRotatable}.
    * @default true
    */
   rotatable?: boolean;
@@ -1102,7 +1107,7 @@ export type VertexParameters = {
 /** @category Plugin */
 export interface GraphPluginConstructor {
   pluginId: string;
-  new (graph: Graph): GraphPlugin;
+  new (graph: AbstractGraph): GraphPlugin;
 }
 
 /** @category Plugin */
@@ -1346,6 +1351,9 @@ export interface I18nProvider {
   ): void;
 }
 
+/**
+ * @category Graph
+ */
 export type GraphFoldingOptions = {
   /**
    * Specifies if folding (collapse and expand via an image icon in the graph should be enabled).
@@ -1373,3 +1381,28 @@ export type GraphFoldingOptions = {
  * @since 0.18.0
  */
 export type ShapeConstructor = new (...arguments_: any) => Shape;
+
+/**
+ * Options passed to the {@link AbstractGraph} constructor.
+ *
+ * @since 0.18.0
+ * @category Graph
+ */
+export type GraphOptions = {
+  container?: HTMLElement;
+  plugins?: GraphPluginConstructor[];
+} & GraphCollaboratorsOptions;
+
+/**
+ * Collaborators injected in the {@link AbstractGraph} when it is instantiated.
+ *
+ * @since 0.18.0
+ * @category Graph
+ */
+export type GraphCollaboratorsOptions = {
+  cellRenderer?: CellRenderer;
+  model?: GraphDataModel;
+  selectionModel?: (graph: AbstractGraph) => GraphSelectionModel;
+  stylesheet?: Stylesheet;
+  view?: (graph: AbstractGraph) => GraphView;
+};

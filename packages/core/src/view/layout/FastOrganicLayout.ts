@@ -17,7 +17,7 @@ limitations under the License.
 */
 import ObjectIdentity from '../../util/ObjectIdentity';
 import GraphLayout from './GraphLayout';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 
 /**
@@ -35,7 +35,7 @@ import type Cell from '../cell/Cell';
  * @category Layout
  */
 class MxFastOrganicLayout extends GraphLayout {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super(graph);
   }
 

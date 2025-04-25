@@ -17,8 +17,8 @@ limitations under the License.
 import type Point from '../geometry/Point';
 import type Rectangle from '../geometry/Rectangle';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * @default 0
      */

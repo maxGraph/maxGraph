@@ -27,9 +27,9 @@ import { AlignValue, VAlignValue } from '../../types';
 /**
  * Extends {@link EventSource} to implement a graph overlay, represented by an icon
  * and a tooltip. Overlays can handle and fire <click> events and are added to
- * the graph using {@link Graph#addCellOverlay}, and removed using
- * {@link Graph#removeCellOverlay}, or {@link Graph#removeCellOverlays} to remove all overlays.
- * The {@link Graph#getCellOverlays} function returns the array of overlays for a given
+ * the graph using {@link AbstractGraph.addCellOverlay}, and removed using
+ * {@link AbstractGraph.removeCellOverlay}, or {@link AbstractGraph.removeCellOverlays} to remove all overlays.
+ * The {@link AbstractGraph.getCellOverlays} function returns the array of overlays for a given
  * cell in a graph. If multiple overlays exist for the same cell, then
  * <getBounds> should be overridden in at least one of the overlays.
  *

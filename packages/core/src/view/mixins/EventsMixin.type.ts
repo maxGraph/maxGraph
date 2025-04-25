@@ -21,8 +21,8 @@ import type CellState from '../cell/CellState';
 import type EventSource from '../event/EventSource';
 import type Point from '../geometry/Point';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     mouseListeners: MouseListenerSet[];
     lastTouchEvent: MouseEvent | null;
     doubleClickCounter: number;

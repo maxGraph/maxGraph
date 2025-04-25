@@ -41,7 +41,7 @@ import ConnectionConstraint from './other/ConnectionConstraint';
 import type PopupMenuHandler from './plugins/PopupMenuHandler';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
 import { clone } from '../util/cloneUtils';
-import type { Graph } from './Graph';
+import type { AbstractGraph } from './AbstractGraph';
 import StyleRegistry from './style/StyleRegistry';
 import type TooltipHandler from './plugins/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
@@ -92,7 +92,7 @@ import { isI18nEnabled } from '../internal/i18n-utils';
  * respectively.
  */
 export class GraphView extends EventSource {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super();
 
     this.graph = graph;
@@ -156,9 +156,9 @@ export class GraphView extends EventSource {
   rendering = true;
 
   /**
-   * Reference to the enclosing {@link graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
    * {@link Cell} that acts as the root of the displayed cell hierarchy.
@@ -227,7 +227,7 @@ export class GraphView extends EventSource {
 
   /**
    * Sets the scale and fires a {@link scale} event before calling {@link revalidate} followed
-   * by {@link Graph.sizeDidChange}.
+   * by {@link AbstractGraph.sizeDidChange}.
    *
    * @param value Decimal value that specifies the new scale (1 is 100%).
    */
@@ -259,7 +259,7 @@ export class GraphView extends EventSource {
 
   /**
    * Sets the translation and fires a {@link translate} event before calling
-   * {@link revalidate} followed by {@link Graph.sizeDidChange}. The translation is the
+   * {@link revalidate} followed by {@link AbstractGraph.sizeDidChange}. The translation is the
    * negative of the origin.
    *
    * @param dx X-coordinate of the translation.
@@ -378,7 +378,7 @@ export class GraphView extends EventSource {
 
   /**
    * Sets and returns the current root and fires an {@link undo} event before
-   * calling {@link graph.sizeDidChange}.
+   * calling {@link AbstractGraph.sizeDidChange}.
    *
    * @param root {@link mxCell} that specifies the root of the displayed cell hierarchy.
    */
@@ -400,7 +400,7 @@ export class GraphView extends EventSource {
 
   /**
    * Sets the scale and translation and fires a {@link scale} and {@link translate} event
-   * before calling {@link revalidate} followed by {@link graph.sizeDidChange}.
+   * before calling {@link revalidate} followed by {@link AbstractGraph.sizeDidChange}.
    *
    * @param scale Decimal value that specifies the new scale (1 is 100%).
    * @param dx X-coordinate of the translation.
@@ -1283,7 +1283,7 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Returns `true` if the given edge should be routed with {@link graph.defaultLoopStyle}
+   * Returns `true` if the given edge should be routed with {@link AbstractGraph.defaultLoopStyle}
    * or the {@link CellStateStyle.orthogonalLoop} defined for the given edge.
    * This implementation returns `true` if the given edge is a loop and does not
    */

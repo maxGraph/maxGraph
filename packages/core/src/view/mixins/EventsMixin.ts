@@ -41,11 +41,11 @@ import { convertPoint } from '../../util/styleUtils';
 import { NONE } from '../../util/Constants';
 import Client from '../../Client';
 import type CellEditorHandler from '../plugins/CellEditorHandler';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 import type TooltipHandler from '../plugins/TooltipHandler';
 
 type PartialGraph = Pick<
-  Graph,
+  AbstractGraph,
   | 'fireEvent'
   | 'isEnabled'
   | 'getCellAt'
@@ -88,7 +88,7 @@ type PartialGraph = Pick<
   | 'isSwimlane'
 >;
 type PartialEvents = Pick<
-  Graph,
+  AbstractGraph,
   | 'mouseListeners'
   | 'lastTouchEvent'
   | 'doubleClickCounter'
@@ -573,7 +573,7 @@ export const EventsMixin: PartialType = {
   },
 
   fireMouseEvent(evtName, me, sender) {
-    sender = sender ?? (this as Graph);
+    sender = sender ?? (this as AbstractGraph);
 
     if (this.isEventSourceIgnored(evtName, me)) {
       const tooltipHandler = this.getPlugin<TooltipHandler>('TooltipHandler');

@@ -19,8 +19,8 @@ import type CellState from '../cell/CellState';
 import type ImageBox from '../image/ImageBox';
 import type Geometry from '../geometry/Geometry';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Specifies the resource key for the tooltip on the collapse/expand icon.
      * If the resource for this key does not exist then the value is used as

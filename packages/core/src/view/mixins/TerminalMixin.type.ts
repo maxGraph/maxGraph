@@ -16,8 +16,8 @@ limitations under the License.
 
 import type Cell from '../cell/Cell';
 
-declare module '../Graph' {
-  interface Graph {
+declare module '../AbstractGraph' {
+  interface AbstractGraph {
     /**
      * Returns true if the given terminal point is movable. This is independent
      * from {@link isCellConnectable} and {@link isCellDisconnectable} and controls if terminal

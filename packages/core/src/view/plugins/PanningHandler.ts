@@ -32,7 +32,7 @@ import PanningManager from '../other/PanningManager';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 
 import type { GraphPlugin, MouseEventListener } from '../../types';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 /**
  * Event handler that pans and creates popupmenus. To use the left
@@ -40,7 +40,7 @@ import type { Graph } from '../Graph';
  * resizing, use <isUseLeftButton> and <isIgnoreCell>. For grid size
  * steps while panning, use <useGrid>.
  *
- * When registered in the {@link Graph.constructor} plugins list, it can be enabled using {@link Graph.setPanning}.
+ * When registered in the {@link AbstractGraph.constructor} plugins list, it can be enabled using {@link AbstractGraph.setPanning}.
  *
  * Event: mxEvent.PAN_START
  *
@@ -62,7 +62,7 @@ import type { Graph } from '../Graph';
 class PanningHandler extends EventSource implements GraphPlugin {
   static pluginId = 'PanningHandler';
 
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super();
 
     this.graph = graph;
@@ -121,9 +121,9 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Reference to the enclosing {@link Graph}.
+   * Reference to the enclosing {@link AbstractGraph}.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   panningManager: PanningManager;
 
@@ -131,7 +131,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
 
   /**
    * Specifies if panning should be active for the left mouse button.
-   * Setting this to true may conflict with {@link Rubberband}. Default is false.
+   * Setting this to true may conflict with {@link RubberBandHandler}. Default is false.
    */
   useLeftButtonForPanning = false;
 

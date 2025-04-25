@@ -22,7 +22,7 @@ import PolylineShape from '../geometry/edge/PolylineShape';
 import type CellState from '../cell/CellState';
 import Shape from '../geometry/Shape';
 import Rectangle from '../geometry/Rectangle';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 /**
  * Implements the alignment of selection cells to other cells in the graph.
@@ -32,18 +32,18 @@ import type { Graph } from '../Graph';
  * Constructs a new guide object.
  */
 class Guide {
-  constructor(graph: Graph, states: CellState[]) {
+  constructor(graph: AbstractGraph, states: CellState[]) {
     this.graph = graph;
     this.setStates(states);
   }
 
   /**
-   * Reference to the enclosing {@link Graph} instance.
+   * Reference to the enclosing {@link AbstractGraph} instance.
    */
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
-   * Contains the {@link CellStates} that are used for alignment.
+   * Contains the {@link CellState}s that are used for alignment.
    */
   states: CellState[] = [];
 

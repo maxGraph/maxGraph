@@ -22,9 +22,6 @@ import InternalEvent from '../event/InternalEvent';
 
 /**
  * Implements a basic animation in JavaScript.
- *
- * @class Animation
- * @extends {EventSource}
  */
 class Animation extends EventSource {
   constructor(delay = 20) {
@@ -33,7 +30,8 @@ class Animation extends EventSource {
   }
 
   /**
-   * Specifies the delay between the animation steps. Defaul is 30ms.
+   * Specifies the delay between the animation steps.
+   * @default 20ms
    */
   delay: number;
 

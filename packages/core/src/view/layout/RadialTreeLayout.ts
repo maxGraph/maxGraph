@@ -22,7 +22,7 @@ import {
   _mxCompactTreeLayoutNode,
 } from './CompactTreeLayout';
 import type Cell from '../cell/Cell';
-import type { Graph } from '../Graph';
+import type { AbstractGraph } from '../AbstractGraph';
 
 /**
  * Extends {@link CompactTreeLayout} to implement a radial tree algorithm. This
@@ -37,7 +37,7 @@ import type { Graph } from '../Graph';
  * @category Layout
  */
 class RadialTreeLayout extends CompactTreeLayout {
-  constructor(graph: Graph) {
+  constructor(graph: AbstractGraph) {
     super(graph, false);
   }
 
@@ -133,7 +133,7 @@ class RadialTreeLayout extends CompactTreeLayout {
    * Implements {@link GraphLayout#execute}.
    *
    * If the parent has any connected edges, then it is used as the root of
-   * the tree. Else, {@link Graph#findTreeRoots} will be used to find a suitable
+   * the tree. Else, {@link AbstractGraph.findTreeRoots} will be used to find a suitable
    * root node within the set of children of the given parent.
    *
    * @param parent    {@link mxCell} whose children should be laid out.

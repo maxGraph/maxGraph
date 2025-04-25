@@ -34,6 +34,7 @@ import Outline from '../view/other/Outline';
 import Cell from '../view/cell/Cell';
 import Geometry from '../view/geometry/Geometry';
 import { ALIGN, FONT } from '../util/Constants';
+import type { AbstractGraph } from '../view/AbstractGraph';
 import { Graph } from '../view/Graph';
 import SwimlaneManager from '../view/layout/SwimlaneManager';
 import LayoutManager from '../view/layout/LayoutManager';
@@ -505,15 +506,13 @@ export class Editor extends EventSource {
   outline: any = null;
 
   /**
-   * Holds a {@link graph} for displaying the diagram. The graph
-   * is created in {@link setGraphContainer}.
+   * Holds a {@link AbstractGraph} for displaying the diagram. The graph is created in {@link setGraphContainer}.
    */
   // @ts-ignore
-  graph: Graph;
+  graph: AbstractGraph;
 
   /**
-   * Holds the render hint used for creating the
-   * graph in {@link setGraphContainer}. See {@link graph}. Default is null.
+   * Holds the render hint used for creating the {@link graph} in {@link setGraphContainer}.
    * @default null
    */
   graphRenderHint: any = null;
@@ -640,7 +639,7 @@ export class Editor extends EventSource {
   defaultGroup: any = null;
 
   /**
-   * Default size for the border of new groups. If `null`, then {@link Graph.gridSize} is used.
+   * Default size for the border of new groups. If `null`, then {@link AbstractGraph.gridSize} is used.
    * @default null
    */
   groupBorderSize: number | null = null;
@@ -843,7 +842,7 @@ export class Editor extends EventSource {
   movePropertiesDialog = false;
 
   /**
-   * Specifies if {@link Graph.validateGraph} should automatically be invoked after
+   * Specifies if {@link AbstractGraph.validateGraph} should automatically be invoked after
    * each change. Default is false.
    * @default false
    */
@@ -1387,12 +1386,13 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Creates the {@link graph} for the editor.
+   * Creates the {@link AbstractGraph} for the editor.
    *
-   * The graph is created with no container and is initialized from {@link setGraphContainer}.
-   * @returns graph instance
+   * The AbstractGraph is created with no container and is initialized from {@link setGraphContainer}.
+   *
+   * @returns the AbstractGraph instance used by the Editor
    */
-  createGraph(): Graph {
+  createGraph(): AbstractGraph {
     const graph = new Graph();
 
     // Enables rubberband, tooltips, panning
@@ -1445,11 +1445,11 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Sets the graph's container using [@link mxGraph.init}.
+   * Sets the graph's container using {@link AbstractGraph.init}.
    * @param graph
    * @returns SwimlaneManager instance
    */
-  createSwimlaneManager(graph: Graph): SwimlaneManager {
+  createSwimlaneManager(graph: AbstractGraph): SwimlaneManager {
     const swimlaneMgr = new SwimlaneManager(graph, false);
 
     swimlaneMgr.isHorizontal = () => {
@@ -1465,11 +1465,11 @@ export class Editor extends EventSource {
 
   /**
    * Creates a layout manager for the swimlane and diagram layouts, that
-   * is, the locally defined inter and intraswimlane layouts.
+   * is, the locally defined inter and intra swimlane layouts.
    * @param graph
    * @returns LayoutManager instance
    */
-  createLayoutManager(graph: Graph): LayoutManager {
+  createLayoutManager(graph: AbstractGraph): LayoutManager {
     const layoutMgr = new LayoutManager(graph);
 
     layoutMgr.getLayout = (cell: Cell) => {
@@ -1510,13 +1510,13 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Sets the graph's container using {@link graph.init}.
+   * Sets the graph's container using {@link AbstractGraph.init}.
    * @param container
    */
   setGraphContainer(container?: HTMLElement | null): void {
     if (!this.graph.container && container) {
       // Creates the graph instance inside the given container and render hint
-      // this.graph = new mxGraph(container, null, this.graphRenderHint);
+      // this.graph = new Graph(container, null, this.graphRenderHint);
 
       // @ts-ignore  TODO: FIXME!! ==============================================================================================
       this.graph.init(container);
@@ -1533,11 +1533,11 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Overrides {@link graph.dblClick} to invoke {@link dblClickAction}
+   * Overrides {@link AbstractGraph.dblClick} to invoke {@link dblClickAction}
    * on a cell and reset the selection tool in the toolbar.
    * @param graph
    */
-  installDblClickHandler(graph: Graph): void {
+  installDblClickHandler(graph: AbstractGraph): void {
     // Installs a listener for double click events
     graph.addListener(InternalEvent.DOUBLE_CLICK, (sender: any, evt: EventObject) => {
       const cell = evt.getProperty('cell');
@@ -1553,7 +1553,7 @@ export class Editor extends EventSource {
    * Adds the {@link undoManager} to the graph model and the view.
    * @param graph
    */
-  installUndoHandler(graph: Graph): void {
+  installUndoHandler(graph: AbstractGraph): void {
     const listener = (sender: any, evt: EventObject) => {
       const edit = evt.getProperty('edit');
       (<UndoManager>this.undoManager).undoableEditHappened(edit);
@@ -1576,7 +1576,7 @@ export class Editor extends EventSource {
    * Installs listeners for dispatching the {@link root} event.
    * @param graph
    */
-  installDrillHandler(graph: Graph): void {
+  installDrillHandler(graph: AbstractGraph): void {
     const listener = (sender: any) => {
       this.fireEvent(new EventObject(InternalEvent.ROOT));
     };
@@ -1591,7 +1591,7 @@ export class Editor extends EventSource {
    * fires a {@link root} event.
    * @param graph
    */
-  installChangeHandler(graph: Graph): void {
+  installChangeHandler(graph: AbstractGraph): void {
     const listener = (sender: any, evt: EventObject) => {
       // Updates the modified state
       this.setModified(true);
@@ -1624,7 +1624,7 @@ export class Editor extends EventSource {
    * Installs the handler for invoking {@link insertFunction} if one is defined.
    * @param graph
    */
-  installInsertHandler(graph: Graph): void {
+  installInsertHandler(graph: AbstractGraph): void {
     const insertHandler: MouseListenerSet = {
       mouseDown: (_sender: EventSource, me: InternalMouseEvent) => {
         if (
@@ -1791,7 +1791,7 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Returns the string value of the root cell in {@link graph.model}.
+   * Returns the string value of the root cell in {@link AbstractGraph.model}.
    */
   getRootTitle(): string {
     const root = this.graph.getDataModel().getRoot()!;
@@ -1814,7 +1814,7 @@ export class Editor extends EventSource {
 
   /**
    * Invokes {@link createGroup} to create a new group cell and the invokes
-   * {@link graph.groupCells}, using the grid size of the graph as the spacing
+   * {@link AbstractGraph.groupCells}, using the grid size of the graph as the spacing
    * in the group's content area.
    */
   groupCells(): any {

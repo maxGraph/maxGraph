@@ -18,20 +18,20 @@ import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 
 import type { UndoableChange } from '../../types';
-import type { Graph } from '../Graph';
+import { AbstractGraph } from '../AbstractGraph';
 import Cell from '../cell/Cell';
 
 /**
  * Action to change the current root in a view.
  */
 class SelectionChange implements UndoableChange {
-  constructor(graph: Graph, added: Cell[] = [], removed: Cell[] = []) {
+  constructor(graph: AbstractGraph, added: Cell[] = [], removed: Cell[] = []) {
     this.graph = graph;
     this.added = added.slice();
     this.removed = removed.slice();
   }
 
-  graph: Graph;
+  graph: AbstractGraph;
 
   added: Cell[];
 
