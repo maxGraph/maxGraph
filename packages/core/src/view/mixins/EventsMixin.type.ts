@@ -53,9 +53,10 @@ declare module '../AbstractGraph' {
     invokesStopCellEditing: boolean;
 
     /**
-     * If `true`, pressing the enter key without pressing control or shift will stop
-     * editing and accept the new value. This is used in {@link CellEditorHandler} to stop
-     * cell editing. Note: You can always use F2 and escape to stop editing.
+     * If `true`, pressing the enter key without pressing control or shift will stop editing and accept the new value.
+     * This is used in {@link CellEditorHandler} to stop cell editing.
+     *
+     * Note: The F2 (accept change) and escape keys (undo change) can always be used to stop editing.
      * @default false
      */
     enterStopsCellEditing: boolean;
