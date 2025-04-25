@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
-import { createGraphWithoutContainer, createGraphWithoutPlugins } from '../../utils';
+import { afterEach, beforeAll, beforeEach, expect, test } from '@jest/globals';
+import { createGraphWithoutContainer } from '../../utils';
 import Codec from '../../../src/serialization/Codec';
 import { getPrettyXml, parseXml } from '../../../src/util/xmlUtils';
 import {
