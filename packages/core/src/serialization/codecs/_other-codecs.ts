@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 export * from './editor';
+export * from './BaseGraphCodec';
 export * from './ChildChangeCodec';
 export * from './GenericChangeCodec';
-export * from './GraphCodec';
+export { GraphCodec } from './GraphCodec';
 export * from './GraphViewCodec';
 export * from './RootChangeCodec';
 export * from './StylesheetCodec';
