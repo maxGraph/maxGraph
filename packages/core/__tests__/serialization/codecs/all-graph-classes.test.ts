@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { afterEach, beforeAll, beforeEach, expect, test } from '@jest/globals';
+import { afterEach, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
 import { createGraphWithoutContainer } from '../../utils';
 import Codec from '../../../src/serialization/Codec';
 import { getPrettyXml, parseXml } from '../../../src/util/xmlUtils';
 import {
   type AbstractGraph,
+  BaseGraph,
+  getDefaultPlugins,
   ImageBox,
   Rectangle,
   registerCoreCodecs,
@@ -47,7 +49,8 @@ afterEach(() => {
   unregisterAllCodecs();
 });
 
-const graphAsXml = `<Graph>
+function buildXml(name: string): string {
+  const xmlTemplate = `<@NAME@>
   <Array as="cells" />
   <Array as="imageBundles" />
   <Array as="mouseListeners">
@@ -72,31 +75,40 @@ const graphAsXml = `<Graph>
     <ImageBox src="./collapsed-new.gif" width="10" height="10" as="collapsedImage" />
     <ImageBox src="./expanded.gif" width="9" height="9" as="expandedImage" />
   </Object>
-</Graph>
+</@NAME@>
 `;
 
-test('Export Graph with default plugins', () => {
-  // This graph uses default plugins
-  const graph = createGraphWithoutContainer();
-  // override defaults to ensure it is taken into account
-  graph.pageFormat = new Rectangle(123, 453, 60, 60);
-  graph.options.collapsedImage = new ImageBox('./collapsed-new.gif', 10, 10);
+  return xmlTemplate.replace(/@NAME@/g, name);
+}
 
-  expect(exportGraph(graph)).toBe(graphAsXml);
-});
+describe.each([
+  [
+    'Graph',
+    () => createGraphWithoutContainer(), // This graph uses default plugins
+  ],
+  ['BaseGraph', () => new BaseGraph({ plugins: getDefaultPlugins() })],
+])('%s', (name, graphFactory: () => AbstractGraph) => {
+  test('Export', () => {
+    const graph = graphFactory();
+    // override defaults to ensure it is taken into account
+    graph.pageFormat = new Rectangle(123, 453, 60, 60);
+    graph.options.collapsedImage = new ImageBox('./collapsed-new.gif', 10, 10);
 
-test('Import Graph', () => {
-  // This graph uses default plugins
-  const graph = createGraphWithoutContainer();
-  // check default values that will be overridden by the import
-  expect(graph.pageFormat).toEqual(new Rectangle(0, 0, 827, 1169));
-  expect(graph.options.collapsedImage).toEqual(new ImageBox('./collapsed.gif', 9, 9));
+    expect(exportGraph(graph)).toBe(buildXml(name));
+  });
 
-  importGraph(graph, graphAsXml);
+  test('Import', () => {
+    const graph = graphFactory();
+    // check default values that will be overridden by the import
+    expect(graph.pageFormat).toEqual(new Rectangle(0, 0, 827, 1169));
+    expect(graph.options.collapsedImage).toEqual(new ImageBox('./collapsed.gif', 9, 9));
 
-  // new values due to import
-  expect(graph.pageFormat).toEqual(new Rectangle(123, 453, 60, 60));
-  expect(graph.options.collapsedImage).toEqual(
-    new ImageBox('./collapsed-new.gif', 10, 10)
-  );
+    importGraph(graph, buildXml(name));
+
+    // new values due to import
+    expect(graph.pageFormat).toEqual(new Rectangle(123, 453, 60, 60));
+    expect(graph.options.collapsedImage).toEqual(
+      new ImageBox('./collapsed-new.gif', 10, 10)
+    );
+  });
 });

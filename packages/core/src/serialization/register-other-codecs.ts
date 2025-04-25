@@ -16,6 +16,7 @@ limitations under the License.
 
 import CodecRegistry from './CodecRegistry';
 import {
+  BaseGraphCodec,
   ChildChangeCodec,
   EditorCodec,
   EditorKeyHandlerCodec,
@@ -77,6 +78,7 @@ const registerGenericChangeCodecs = () => {
 export const registerCoreCodecs = (force = false) => {
   if (!CodecRegistrationStates.core || force) {
     CodecRegistry.register(new ChildChangeCodec());
+    CodecRegistry.register(new BaseGraphCodec());
     CodecRegistry.register(new GraphCodec());
     CodecRegistry.register(new GraphViewCodec());
     CodecRegistry.register(new RootChangeCodec());

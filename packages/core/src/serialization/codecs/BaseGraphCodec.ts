@@ -1,7 +1,5 @@
 /*
-Copyright 2024-present The maxGraph project Contributors
-Copyright (c) 2006-2015, JGraph Ltd
-Copyright (c) 2006-2015, Gaudenz Alder
+Copyright 2025-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,23 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { BaseGraph } from '../../view/BaseGraph';
 import ObjectCodec from '../ObjectCodec';
-import { Graph } from '../../view/Graph';
-
-export const excludedFields = [
-  'graphListeners',
-  'eventListeners',
-  'view',
-  'container',
-  'cellRenderer',
-  'editor',
-  'selectionModel',
-  'plugins',
-];
+import { excludedFields } from './GraphCodec';
 
 /**
- * Codec for {@link Graph}s.
- * This class is created and registered dynamically at load time and used implicitly via {@link Codec} and the {@link CodecRegistry}.
+ * Codec for {@link BaseGraph}s.
  *
  * Transient Fields:
  *
@@ -47,10 +34,9 @@ export const excludedFields = [
  *
  * @category Serialization with Codecs
  */
-export class GraphCodec extends ObjectCodec {
+export class BaseGraphCodec extends ObjectCodec {
   constructor() {
-    // Do not  load default plugins, plugins are not serialized
-    super(new Graph(undefined, undefined, []), excludedFields);
-    this.setName('Graph');
+    super(new BaseGraph(), excludedFields);
+    this.setName('BaseGraph');
   }
 }
