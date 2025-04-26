@@ -2,7 +2,7 @@
   "name": "@maxgraph/core",
   "license": "Apache-2.0",
   "private": false,
-  "version": "0.17.0",
+  "version": "0.18.0",
   "type": "module",
   "sideEffects": [
     "**/*.css"
