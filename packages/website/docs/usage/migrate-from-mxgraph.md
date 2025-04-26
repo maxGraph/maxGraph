@@ -8,22 +8,25 @@ description: How-to easily migrate from mxGraph to maxGraph
 This documentation provides instructions for migrating from `mxGraph` to `maxGraph`.
 It includes information about application setup changes, code changes, styles, event handling and other relevant information.
 
+:::danger
+
+As of version `0.18.0`, this migration guide isn't updated with the latest `maxGraph` API changes, particularly breaking ones.
+
+When migrating from `mxGraph` to a `maxGraph` version newer than 0.18.0:
+1. Use this guide as your foundation
+2. Review the [CHANGELOG](https://github.com/maxGraph/maxGraph/blob/main/CHANGELOG.md) to identify breaking changes since 0.18.0
+3. Consider incremental migration if possible (first to 0.18.0, then to latest)
+
+Need assistance? The maxGraph community is here to help! Post your questions in the [GitHub discussions](https://github.com/maxGraph/maxGraph/discussions/categories/q-a) where maintainers and experienced users can provide guidance for your specific migration challenges.
+
+:::
+
+
 Here's a breakdown of the proposed changes:
 
 1. [Application setup](#application-setup)
 2. [General guidelines](#general-guidelines)
 3. [Specific code changes](#specific-code-changes)
-
-:::warning
-
-**This page is under construction.**
-
-Comments are welcome by creating an [issue](https://github.com/maxGraph/maxGraph/issues)
-or starting a [discussion](https://github.com/maxGraph/maxGraph/discussions/categories/q-a)!.
-
-Feel free to create a [Pull Request](https://github.com/maxGraph/maxGraph/pulls) to enrich the content or fix errors.
-
-:::
 
 The `maxGraph` APIs are not fully compatible with the `mxGraph` APIs, but the `maxGraph` APIs are close to the former `mxGraph` APIs.
 The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without problems.
