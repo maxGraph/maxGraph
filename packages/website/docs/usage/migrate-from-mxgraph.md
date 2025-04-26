@@ -8,7 +8,7 @@ description: How-to easily migrate from mxGraph to maxGraph
 This documentation provides instructions for migrating from `mxGraph` to `maxGraph`.
 It includes information about application setup changes, code changes, styles, event handling and other relevant information.
 
-:::danger
+:::danger[Important Notice]
 
 As of version `0.18.0`, this migration guide isn't updated with the latest `maxGraph` API changes, particularly breaking ones.
 
