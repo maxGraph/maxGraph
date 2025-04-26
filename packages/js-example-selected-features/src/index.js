@@ -18,6 +18,7 @@ import '@maxgraph/core/css/common.css'; // required by RubberBandHandler
 import './style.css';
 import {
   BaseGraph,
+  CellEditorHandler,
   constants,
   DomHelpers,
   EdgeMarker,
@@ -80,6 +81,7 @@ const initializeGraph = (container) => {
   const graph = new CustomGraph({
     container,
     plugins: [
+      CellEditorHandler, // Enables in-place editing of cell labels
       PanningHandler, // Enables panning with the mouse
       RubberBandHandler, // Enables rubber band selection
       SelectionCellsHandler, // Enables management of selected cells

@@ -53,22 +53,24 @@ import type { GraphPlugin } from '../../types';
 import type TooltipHandler from './TooltipHandler';
 
 /**
- * In-place editor for the graph. To control this editor, use
- * {@link AbstractGraph.invokesStopCellEditing}, {@link AbstractGraph.enterStopsCellEditing} and
- * {@link AbstractGraph.escapeEnabled}. If {@link AbstractGraph.enterStopsCellEditing} is true then
- * ctrl-enter or shift-enter can be used to create a linefeed. The F2 and
- * escape keys can always be used to stop editing.
+ * In-place editor for the graph.
  *
- * To customize the location of the textbox in the graph, override
- * <getEditorBounds> as follows:
+ * To control this editor, use:
+ * - {@link AbstractGraph.invokesStopCellEditing}
+ * - {@link AbstractGraph.enterStopsCellEditing}
+ * - {@link AbstractGraph.escapeEnabled}
+ *
+ * If {@link AbstractGraph.enterStopsCellEditing} is `true` then ctrl-enter or shift-enter can be used to create a linefeed.
+ *
+ * The F2 (accept change) and escape keys (undo change) can always be used to stop editing.
+ *
+ * To customize the location of the textbox in the graph, override {@link getEditorBounds} as follows:
  *
  * ```javascript
- * graph.cellEditor.getEditorBounds = (state)=>
- * {
- *   let result = getEditorBounds.apply(this, arguments);
+ * graph.cellEditor.getEditorBounds = (state) => {
+ *   const result = super.getEditorBounds(state);
  *
- *   if (this.graph.getDataModel().isEdge(state.cell))
- *   {
+ *   if (this.graph.getDataModel().isEdge(state.cell)) {
  *     result.x = state.getCenterX() - result.width / 2;
  *     result.y = state.getCenterY() - result.height / 2;
  *   }
@@ -77,74 +79,69 @@ import type TooltipHandler from './TooltipHandler';
  * };
  * ```
  *
- * Note that this hook is only called if <autoSize> is false. If <autoSize> is true,
- * then {@link Shape#getLabelBounds} is used to compute the current bounds of the textbox.
+ * Note that this hook is only called if {@link autoSize} is `false`.
+ * If {@link autoSize} is `true`, then {@link Shape.getLabelBounds} is used to compute the current bounds of the textbox.
  *
- * The textarea uses the mxCellEditor CSS class. You can modify this class in
- * your custom CSS. Note: You should modify the CSS after loading the client
- * in the page.
- *
+ * The textarea uses the `mxCellEditor` CSS class. You can modify this class in your custom CSS.
+
  * Example:
  *
  * To only allow numeric input in the in-place editor, use the following code.
  *
  * ```javascript
- * let text = graph.cellEditor.textarea;
+ * const text = graph.cellEditor.textarea;
  *
- * mxEvent.addListener(text, 'keydown', function (evt)
- * {
+ * InternalEvent.addListener(text, 'keydown', function (evt) {
  *   if (!(evt.keyCode >= 48 && evt.keyCode <= 57) &&
- *       !(evt.keyCode >= 96 && evt.keyCode <= 105))
- *   {
- *     mxEvent.consume(evt);
+ *       !(evt.keyCode >= 96 && evt.keyCode <= 105)) {
+ *     InternalEvent.consume(evt);
  *   }
  * });
  * ```
  *
- * Placeholder:
+ * ### Placeholder
  *
- * To implement a placeholder for cells without a label, use the
- * <emptyLabelText> variable.
+ * To implement a placeholder for cells without a label, use the {@link emptyLabelText} variable.
  *
- * Resize in Chrome:
  *
- * Resize of the textarea is disabled by default. If you want to enable
- * this feature extend <init> and set this.textarea.style.resize = ''.
+ * ### Resize the textarea
+ *
+ * Resize of the textarea is disabled by default.
+ * If you want to enable this feature extend {@link init} and set `this.textarea.style.resize = ''`.
+ *
+ *
+ * ### Editing on key press
  *
  * To start editing on a key press event, the container of the graph
  * should have focus or a focusable parent should be used to add the
  * key press handler as follows.
  *
  * ```javascript
- * mxEvent.addListener(graph.container, 'keypress', mxUtils.bind(this, (evt)=>
- * {
- *   if (!graph.isEditing() && !graph.isSelectionEmpty() && evt.which !== 0 &&
- *       !mxEvent.isAltDown(evt) && !mxEvent.isControlDown(evt) && !mxEvent.isMetaDown(evt))
- *   {
+ * InternalEvent.addListener(graph.container, 'keypress', (evt) => {
+ *   if (!graph.isEditing() && !graph.isSelectionEmpty() && evt.which !== 0
+ *       && !eventUtils.isAltDown(evt)
+ *       && !eventUtils.isControlDown(evt)
+ *       && !eventUtils.isMetaDown(evt)) {
  *     graph.startEditing();
  *
- *     if (Client.IS_FF)
- *     {
+ *     if (Client.IS_FF) {
  *       graph.cellEditor.textarea.value = String.fromCharCode(evt.which);
  *     }
  *   }
- * }));
+ * });
  * ```
  *
- * To allow focus for a DIV, and hence to receive key press events, some browsers
- * require it to have a valid tabindex attribute. In this case the following
- * code may be used to keep the container focused.
+ * To allow focus for a DIV, and hence to receive key press events, some browsers require it to have a valid tabindex attribute.
+ * In this case the following code may be used to keep the container focused.
  *
  * ```javascript
- * let graphFireMouseEvent = graph.fireMouseEvent;
- * graph.fireMouseEvent = (evtName, me, sender)=>
- * {
- *   if (evtName == mxEvent.MOUSE_DOWN)
- *   {
+ * const graphFireMouseEvent = graph.fireMouseEvent;
+ * graph.fireMouseEvent = (evtName, me, sender) => {
+ *   if (evtName == mxEvent.MOUSE_DOWN) {
  *     this.container.focus();
  *   }
  *
- *   graphFireMouseEvent.apply(this, arguments);
+ *   graphFireMouseEvent.apply(this, [evtName, me, sender]);
  * };
  * ```
  *
