@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ALIGN, ARROW, NONE, SHAPE } from '../../util/Constants';
+import { ALIGN, NONE, SHAPE } from '../../util/Constants';
 import { clone } from '../../util/cloneUtils';
 import type { CellStateStyle, CellStyle } from '../../types';
 
@@ -82,7 +82,7 @@ export class Stylesheet {
   createDefaultEdgeStyle() {
     const style = {} as CellStateStyle;
     style.shape = SHAPE.CONNECTOR;
-    style.endArrow = ARROW.CLASSIC;
+    style.endArrow = 'classic';
     style.verticalAlign = ALIGN.MIDDLE;
     style.align = ALIGN.CENTER;
     style.strokeColor = '#6482B9';

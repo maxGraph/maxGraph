@@ -20,7 +20,11 @@ import type { StyleArrowValue } from '../../../types';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import type Shape from '../../geometry/Shape';
 import type Point from '../../geometry/Point';
-import { ARROW } from '../../../util/Constants';
+
+const isClassicOrClassicThin = (type: StyleArrowValue): boolean =>
+  type === 'classic' || type === 'classicThin';
+
+const isDiamond = (type: StyleArrowValue): boolean => type === 'diamond';
 
 /**
  * Generally used to create the "classic" and "block" marker factory methods.
@@ -60,7 +64,7 @@ export const createArrow =
     pt.x -= endOffsetX;
     pt.y -= endOffsetY;
 
-    const f = type !== ARROW.CLASSIC && type !== ARROW.CLASSIC_THIN ? 1 : 3 / 4;
+    const f = !isClassicOrClassicThin(type) ? 1 : 3 / 4;
     pe.x += -unitX * f - endOffsetX;
     pe.y += -unitY * f - endOffsetY;
 
@@ -72,7 +76,7 @@ export const createArrow =
         pt.y - unitY + unitX / widthFactor
       );
 
-      if (type === ARROW.CLASSIC || type === ARROW.CLASSIC_THIN) {
+      if (isClassicOrClassicThin(type)) {
         canvas.lineTo(pt.x - (unitX * 3) / 4, pt.y - (unitY * 3) / 4);
       }
 
@@ -204,7 +208,7 @@ export const diamond = (
   // only half the strokewidth is processed ). Or 0.9862 for thin diamond.
   // Note these values and the tk variable below are dependent, update
   // both together (saves trig hard coding it).
-  const swFactor = type === ARROW.DIAMOND ? 0.7071 : 0.9862;
+  const swFactor = isDiamond(type) ? 0.7071 : 0.9862;
   const endOffsetX = unitX * sw * swFactor;
   const endOffsetY = unitY * sw * swFactor;
 
@@ -219,7 +223,7 @@ export const diamond = (
   pe.y += -unitY - endOffsetY;
 
   // thickness factor for diamond
-  const tk = type === ARROW.DIAMOND ? 2 : 3.4;
+  const tk = isDiamond(type) ? 2 : 3.4;
 
   return () => {
     canvas.begin();

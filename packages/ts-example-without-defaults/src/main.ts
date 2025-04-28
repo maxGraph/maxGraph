@@ -51,7 +51,7 @@ const initializeGraph = (container: HTMLElement) => {
       source: vertex01,
       target: vertex02,
       style: {
-        edgeStyle: constants.EDGESTYLE.ORTHOGONAL,
+        edgeStyle: 'orthogonalEdgeStyle',
         rounded: true,
       },
     });

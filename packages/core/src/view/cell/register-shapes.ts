@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import CellRenderer from './CellRenderer';
-import type { ShapeConstructor } from '../../types';
+import type { ShapeConstructor, ShapeValue } from '../../types';
 import RectangleShape from '../geometry/node/RectangleShape';
 import EllipseShape from '../geometry/node/EllipseShape';
 import RhombusShape from '../geometry/node/RhombusShape';
@@ -45,7 +45,7 @@ let isDefaultElementsRegistered = false;
  */
 export function registerDefaultShapes() {
   if (!isDefaultElementsRegistered) {
-    const shapesToRegister: [string, ShapeConstructor][] = [
+    const shapesToRegister: [ShapeValue, ShapeConstructor][] = [
       [SHAPE.ACTOR, ActorShape],
       [SHAPE.ARROW, ArrowShape],
       [SHAPE.ARROW_CONNECTOR, ArrowConnectorShape],

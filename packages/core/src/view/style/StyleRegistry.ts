@@ -16,6 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import type { EdgeStyleValue, PerimeterValue } from '../../types';
+
 /**
  * Singleton class that acts as a global converter from string to object values in a style.
  *
@@ -32,7 +34,7 @@ class StyleRegistry {
   /**
    * Puts the given object into the registry under the given name.
    */
-  static putValue(name: string, obj: any): void {
+  static putValue(name: PerimeterValue | EdgeStyleValue | string, obj: any): void {
     StyleRegistry.values[name] = obj;
   }
 
