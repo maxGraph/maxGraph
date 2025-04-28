@@ -16,7 +16,7 @@ limitations under the License.
 
 import { EDGESTYLE, PERIMETER } from '../../util/Constants';
 import { EdgeStyle } from './edge';
-import { Perimeter } from './perimeter';
+import { Perimeter } from './builtin-style-elements';
 import StyleRegistry from './StyleRegistry';
 import MarkerShape from './marker/EdgeMarkerRegistry';
 import { createArrow, createOpenArrow, diamond, oval } from './marker/edge-markers';

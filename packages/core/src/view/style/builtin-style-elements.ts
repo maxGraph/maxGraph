@@ -15,7 +15,13 @@ limitations under the License.
 */
 
 export { EdgeStyle } from './edge';
-export { Perimeter } from './perimeter';
+
+/**
+ * Provides various perimeter functions to be used in a style as the value of {@link CellStateStyle.perimeter}.
+ *
+ * @category Perimeter
+ */
+export * as Perimeter from './perimeter';
 
 /**
  * Includes all builtins edge markers which can be registered in {@link MarkerShape}.
