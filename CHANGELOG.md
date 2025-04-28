@@ -9,6 +9,10 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- `Perimeter` has been changed from a value object to a namespace. This has minimal impact for most applications that only read perimeter values.
+  The only breaking change affects applications that modify Perimeter properties (add/update/remove values): this is no longer possible. Instead, create your own perimeter implementation and register it.
+
 ## 0.18.0
 
 Release date: `2025-04-26`

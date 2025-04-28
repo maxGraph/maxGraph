@@ -16,40 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EllipsePerimeter as EllipsePerimeterFunction } from './EllipsePerimeter';
-import { HexagonPerimeter as HexagonPerimeterFunction } from './HexagonPerimeter';
-import { RectanglePerimeter as RectanglePerimeterFunction } from './RectanglePerimeter';
-import { RhombusPerimeter as RhombusPerimeterFunction } from './RhombusPerimeter';
-import { TrianglePerimeter as TrianglePerimeterFunction } from './TrianglePerimeter';
-
-/**
- * Provides various perimeter functions to be used in a style as the value of {@link CellStateStyle.perimeter}.
- *
- * @category Perimeter
- */
-export const Perimeter = {
-  /**
-   * Describes a rectangular perimeter.
-   */
-  RectanglePerimeter: RectanglePerimeterFunction,
-
-  /**
-   * Describes an elliptic perimeter.
-   */
-  EllipsePerimeter: EllipsePerimeterFunction,
-
-  /**
-   * Describes a rhombus (aka diamond) perimeter.
-   */
-  RhombusPerimeter: RhombusPerimeterFunction,
-
-  /**
-   * Describes a triangle perimeter.
-   */
-  TrianglePerimeter: TrianglePerimeterFunction,
-
-  /**
-   * Describes a hexagon perimeter.
-   */
-  HexagonPerimeter: HexagonPerimeterFunction,
-};
+export { EllipsePerimeter } from './EllipsePerimeter';
+export { HexagonPerimeter } from './HexagonPerimeter';
+export { RectanglePerimeter } from './RectanglePerimeter';
+export { RhombusPerimeter } from './RhombusPerimeter';
+export { TrianglePerimeter } from './TrianglePerimeter';
