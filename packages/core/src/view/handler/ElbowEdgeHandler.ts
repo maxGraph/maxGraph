@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import EdgeHandler from './EdgeHandler';
-import { CURSOR, EDGESTYLE, ELBOW } from '../../util/Constants';
+import { CURSOR, ELBOW } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
@@ -111,8 +111,8 @@ class ElbowEdgeHandler extends EdgeHandler {
    * Returns the cursor to be used for the bend.
    */
   getCursorForBend() {
-    return this.state.style.edgeStyle === EDGESTYLE.TOPTOBOTTOM ||
-      (this.state.style.edgeStyle === EDGESTYLE.ELBOW &&
+    return this.state.style.edgeStyle === 'topToBottomEdgeStyle' ||
+      (this.state.style.edgeStyle === 'elbowEdgeStyle' &&
         this.state.style.elbow === ELBOW.VERTICAL)
       ? 'row-resize'
       : 'col-resize';

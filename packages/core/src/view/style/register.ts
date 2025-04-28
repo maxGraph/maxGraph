@@ -14,16 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EDGESTYLE, PERIMETER } from '../../util/Constants';
 import { EdgeStyle } from './edge';
-import { Perimeter } from './builtin-style-elements';
+import { EdgeMarker, Perimeter } from './builtin-style-elements';
 import StyleRegistry from './StyleRegistry';
 import MarkerShape from './marker/EdgeMarkerRegistry';
-import { createArrow, createOpenArrow, diamond, oval } from './marker/edge-markers';
 import type {
+  ArrowValue,
   EdgeStyleFunction,
+  EdgeStyleValue,
   MarkerFactoryFunction,
   PerimeterFunction,
+  PerimeterValue,
 } from '../../types';
 
 let isDefaultEdgeStylesRegistered = false;
@@ -37,15 +38,15 @@ let isDefaultEdgeStylesRegistered = false;
  */
 export const registerDefaultEdgeStyles = (): void => {
   if (!isDefaultEdgeStylesRegistered) {
-    const edgeStylesToRegister: [string, EdgeStyleFunction][] = [
-      [EDGESTYLE.ELBOW, EdgeStyle.ElbowConnector],
-      [EDGESTYLE.ENTITY_RELATION, EdgeStyle.EntityRelation],
-      [EDGESTYLE.LOOP, EdgeStyle.Loop],
-      [EDGESTYLE.MANHATTAN, EdgeStyle.ManhattanConnector],
-      [EDGESTYLE.ORTHOGONAL, EdgeStyle.OrthConnector],
-      [EDGESTYLE.SEGMENT, EdgeStyle.SegmentConnector],
-      [EDGESTYLE.SIDETOSIDE, EdgeStyle.SideToSide],
-      [EDGESTYLE.TOPTOBOTTOM, EdgeStyle.TopToBottom],
+    const edgeStylesToRegister: [EdgeStyleValue, EdgeStyleFunction][] = [
+      ['elbowEdgeStyle', EdgeStyle.ElbowConnector],
+      ['entityRelationEdgeStyle', EdgeStyle.EntityRelation],
+      ['loopEdgeStyle', EdgeStyle.Loop],
+      ['manhattanEdgeStyle', EdgeStyle.ManhattanConnector],
+      ['orthogonalEdgeStyle', EdgeStyle.OrthConnector],
+      ['segmentEdgeStyle', EdgeStyle.SegmentConnector],
+      ['sideToSideEdgeStyle', EdgeStyle.SideToSide],
+      ['topToBottomEdgeStyle', EdgeStyle.TopToBottom],
     ];
     for (const [name, edgeStyle] of edgeStylesToRegister) {
       StyleRegistry.putValue(name, edgeStyle);
@@ -66,12 +67,12 @@ let isDefaultPerimetersRegistered = false;
  */
 export const registerDefaultPerimeters = (): void => {
   if (!isDefaultPerimetersRegistered) {
-    const perimetersToRegister: [string, PerimeterFunction][] = [
-      [PERIMETER.ELLIPSE, Perimeter.EllipsePerimeter],
-      [PERIMETER.HEXAGON, Perimeter.HexagonPerimeter],
-      [PERIMETER.RECTANGLE, Perimeter.RectanglePerimeter],
-      [PERIMETER.RHOMBUS, Perimeter.RhombusPerimeter],
-      [PERIMETER.TRIANGLE, Perimeter.TrianglePerimeter],
+    const perimetersToRegister: [PerimeterValue, PerimeterFunction][] = [
+      ['ellipsePerimeter', Perimeter.EllipsePerimeter],
+      ['hexagonPerimeter', Perimeter.HexagonPerimeter],
+      ['rectanglePerimeter', Perimeter.RectanglePerimeter],
+      ['rhombusPerimeter', Perimeter.RhombusPerimeter],
+      ['trianglePerimeter', Perimeter.TrianglePerimeter],
     ];
     for (const [name, perimeter] of perimetersToRegister) {
       StyleRegistry.putValue(name, perimeter);
@@ -108,16 +109,16 @@ let isDefaultMarkersRegistered = false;
  */
 export const registerDefaultEdgeMarkers = (): void => {
   if (!isDefaultMarkersRegistered) {
-    const markersToRegister: [string, MarkerFactoryFunction][] = [
-      ['classic', createArrow(2)],
-      ['classicThin', createArrow(3)],
-      ['block', createArrow(2)],
-      ['blockThin', createArrow(3)],
-      ['open', createOpenArrow(2)],
-      ['openThin', createOpenArrow(3)],
-      ['oval', oval],
-      ['diamond', diamond],
-      ['diamondThin', diamond],
+    const markersToRegister: [ArrowValue, MarkerFactoryFunction][] = [
+      ['classic', EdgeMarker.createArrow(2)],
+      ['classicThin', EdgeMarker.createArrow(3)],
+      ['block', EdgeMarker.createArrow(2)],
+      ['blockThin', EdgeMarker.createArrow(3)],
+      ['open', EdgeMarker.createOpenArrow(2)],
+      ['openThin', EdgeMarker.createOpenArrow(3)],
+      ['oval', EdgeMarker.oval],
+      ['diamond', EdgeMarker.diamond],
+      ['diamondThin', EdgeMarker.diamond],
     ];
     for (const [type, factory] of markersToRegister) {
       MarkerShape.addMarker(type, factory);

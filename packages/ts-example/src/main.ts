@@ -78,7 +78,7 @@ const initializeGraph = (container: HTMLElement) => {
     );
     // use the legacy insertEdge method
     graph.insertEdge(parent, null, 'an orthogonal style edge', vertex01, vertex02, {
-      edgeStyle: constants.EDGESTYLE.ORTHOGONAL,
+      edgeStyle: 'orthogonalEdgeStyle',
       rounded: true,
     });
 

@@ -558,10 +558,9 @@ export type CellStateStyle = {
   /**
    * This defines the perimeter around a particular shape.
    *
-   * For {@link PerimeterFunction} types, some possible values are the functions defined in {@link Perimeter}.
+   * For {@link PerimeterFunction} types, some possible values are the builtin functions defined in the `Perimeter` namespace.
    *
-   * Alternatively, use a string or a value from {@link PERIMETER} to access perimeter styles
-   * registered in {@link StyleRegistry}.
+   * Alternatively, use a string or a value from {@link PerimeterValue} to access perimeter styles registered in {@link StyleRegistry}.
    * If {@link GraphView.allowEval} is set to `true`, you can pass the {@link PerimeterFunction} implementation directly as a string.
    * Remember that enabling this switch carries a possible security risk
    *
@@ -1271,7 +1270,13 @@ export type MarkerFactoryFunction = (
   source: boolean,
   sw: number,
   filled: boolean
-) => () => void;
+) => MarkerFunction;
+
+/**
+ * @since 0.19.0
+ * @category Style
+ */
+export type MarkerFunction = () => void;
 
 /**
  * @experimental subject to change or removal. The logging system may be modified in the future without prior notice.

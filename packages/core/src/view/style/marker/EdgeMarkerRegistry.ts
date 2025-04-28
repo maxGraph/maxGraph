@@ -16,7 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { MarkerFactoryFunction, StyleArrowValue } from '../../../types';
+import type {
+  MarkerFactoryFunction,
+  MarkerFunction,
+  StyleArrowValue,
+} from '../../../types';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import type Point from '../../geometry/Point';
 import type Shape from '../../geometry/Shape';
@@ -38,8 +42,8 @@ class MarkerShape {
    * Adds a factory method that updates a given endpoint and returns a
    * function to paint the marker onto the given canvas.
    */
-  static addMarker(type: string, funct: MarkerFactoryFunction) {
-    MarkerShape.markers[type] = funct;
+  static addMarker(type: StyleArrowValue, factory: MarkerFactoryFunction) {
+    MarkerShape.markers[type] = factory;
   }
 
   /**
@@ -56,7 +60,7 @@ class MarkerShape {
     source: boolean,
     sw: number,
     filled: boolean
-  ) {
+  ): MarkerFunction | null {
     const markerFunction = MarkerShape.markers[type];
     return markerFunction
       ? markerFunction(canvas, shape, type, pe, unitX, unitY, size, source, sw, filled)

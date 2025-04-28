@@ -46,7 +46,7 @@ import Cell from './Cell';
 import CellOverlay from './CellOverlay';
 import { getClientX, getClientY, getSource } from '../../util/EventUtils';
 import { isNode } from '../../util/domUtils';
-import type { CellStateStyle, ShapeConstructor } from '../../types';
+import type { CellStateStyle, ShapeConstructor, StyleShapeValue } from '../../types';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 
 const placeholderStyleValues = ['inherit', 'swimlane', 'indicated'];
@@ -156,7 +156,7 @@ class CellRenderer {
    * @param key the shape name.
    * @param shape constructor of the {@link Shape} subclass.
    */
-  static registerShape(key: string, shape: ShapeConstructor): void {
+  static registerShape(key: StyleShapeValue, shape: ShapeConstructor): void {
     CellRenderer.defaultShapes[key] = shape;
   }
 
