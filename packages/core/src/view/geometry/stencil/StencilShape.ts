@@ -58,6 +58,8 @@ export const StencilShapeConfig = {
   defaultLocalized: false,
 };
 
+const toBoolean = (value: string | null) => value !== '0' && value !== 'false';
+
 /**
  * Implements a generic shape which is based on an XML node as a description.
  */
@@ -465,8 +467,8 @@ class StencilShape extends Shape {
           Number(node.getAttribute('rx')) * sx,
           Number(node.getAttribute('ry')) * sy,
           Number(node.getAttribute('x-axis-rotation')),
-          Boolean(node.getAttribute('large-arc-flag')),
-          Boolean(node.getAttribute('sweep-flag')),
+          toBoolean(node.getAttribute('large-arc-flag')),
+          toBoolean(node.getAttribute('sweep-flag')),
           x0 + Number(node.getAttribute('x')) * sx,
           y0 + Number(node.getAttribute('y')) * sy
         );

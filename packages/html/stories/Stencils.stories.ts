@@ -21,7 +21,6 @@ import {
   CellRenderer,
   type CellState,
   ConnectionHandler,
-  constants,
   DomHelpers,
   EdgeHandler,
   getDefaultPlugins,
@@ -48,6 +47,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
+import { isElement } from './shared/utils.ts';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -172,10 +172,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const req = requestUtils.load('stencils.xml');
   const root = req.getDocumentElement();
   let shape = root!.firstChild;
-
-  function isElement(node: ChildNode): node is Element {
-    return node.nodeType === constants.NODETYPE.ELEMENT;
-  }
 
   while (shape != null) {
     if (isElement(shape)) {
