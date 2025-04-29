@@ -65,7 +65,6 @@ import {
   CylinderShape,
   CellRenderer,
   DomHelpers,
-  EdgeStyle,
   Rectangle,
   EdgeHandler,
   StyleRegistry,
