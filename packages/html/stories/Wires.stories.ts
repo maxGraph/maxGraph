@@ -50,6 +50,7 @@ import {
   cellArrayUtils,
   StyleDefaultsConfig,
   type CellState,
+  EdgeStyleFunction,
   ShapeRegistry,
 } from '@maxgraph/core';
 
@@ -202,7 +203,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // FIXME: Provide means to make EdgeHandler and ConnectionHandler instantiate this subclass!
   class MyCustomConstraintHandler extends ConstraintHandler {
     // Replaces the port image
-    pointImage = new ImageBox('images/dot.gif', 10, 10);
+    override pointImage = new ImageBox('images/dot.gif', 10, 10);
   }
 
   class MyCustomGuide extends Guide {
@@ -214,7 +215,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   class MyCustomEdgeHandler extends EdgeHandler {
     // Enables snapping waypoints to terminals
-    snapToTerminals = true;
+    override snapToTerminals = true;
 
     override isConnectableCell(cell: Cell) {
       return this.graph
@@ -303,11 +304,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   class MyCustomSelectionHandler extends SelectionHandler {
-    previewColor = invert ? 'white' : 'black';
+    override previewColor = invert ? 'white' : 'black';
     // Enables guides
-    guidesEnabled = true;
+    override guidesEnabled = true;
 
-    createGuide() {
+    override createGuide() {
       return new MyCustomGuide(this.graph, this.getGuideStates());
     }
   }
@@ -324,8 +325,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // If connect preview is not moved away then getCellAt is used to detect the cell under
     // the mouse if the mouse is over the preview shape in IE (no event transparency), ie.
     // the built-in hit-detection of the HTML document will not be used in this case.
-    movePreviewAway = false;
-    waypointsEnabled = true;
+    override movePreviewAway = false;
+    override waypointsEnabled = true;
 
     // Starts connections on the background in wire-mode
     override isStartEvent(me: InternalMouseEvent): boolean {
@@ -333,7 +334,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     // Avoids any connections for gestures within tolerance except when in wire-mode or when over a port
-    override mouseUp(_sender: EventSource, me: InternalMouseEvent) {
+    override mouseUp(sender: EventSource, me: InternalMouseEvent) {
       if (this.first != null && this.previous != null) {
         const point = styleUtils.convertPoint(this.graph.container, me.getX(), me.getY());
         const dx = Math.abs(point.x - this.first.x);
@@ -348,7 +349,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           return;
         }
       }
-      super.mouseUp.apply(this, arguments);
+      super.mouseUp(sender, me);
     }
 
     // Overrides methods to preview and create new edges.
@@ -552,7 +553,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           // TODO: Only set this if the target or source terminal is an edge
           clone.cell.geometry?.setTerminalPoint(point, this.isSource);
         } else {
-          clone.cell.geometry?.setTerminalPoint(null!, this.isSource); // setTerminalPoint signature should be updated to accept null, its implementation is supposed to work with null
+          clone.cell.geometry?.setTerminalPoint(null, this.isSource); // TODO setTerminalPoint signature should be updated to accept null, its implementation is supposed to work with null
         }
       }
 
@@ -598,11 +599,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   ShapeRegistry.add('resistor', ResistorShape);
 
-  const WireConnector = function (state, source, target, hints, result) {
+  const WireConnector: EdgeStyleFunction = function (
+    state,
+    source,
+    target,
+    hints,
+    result
+  ) {
     // Creates array of all way- and terminal points
     const pts = state.absolutePoints;
     let horizontal = true;
-    let hint = null;
 
     // Gets the initial connection from the source terminal or edge
     if (source != null && source.cell.isEdge()) {
@@ -635,6 +641,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     // Adds the waypoints
     if (hints != null && hints.length > 0) {
+      let hint: Point | null = null;
+
       // FIXME: First segment not movable
       /*hint = state.view.transformControlPoint(state, hints[0]);
       MaxLog.show();
