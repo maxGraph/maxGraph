@@ -109,7 +109,7 @@ declare module '../AbstractGraph' {
     /**
      * Specifies if panning should be enabled. This implementation updates {@link PanningHandler.panningEnabled}.
      *
-     **IMPORTANT**: only has an effect if the {@link PanningHandler} plugin is available.
+     * **IMPORTANT**: only has an effect if the {@link PanningHandler} plugin is available.
      *
      * @param enabled Boolean indicating if panning should be enabled.
      */

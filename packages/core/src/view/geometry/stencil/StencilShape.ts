@@ -58,8 +58,15 @@ export const StencilShapeConfig = {
   defaultLocalized: false,
 };
 
+// To manage the following attribute described in stencils.xsd
+// <xs:attribute name="large-arc-flag" use="required" type="xs:decimal"/>
+// <xs:attribute name="sweep-flag" use="required" type="xs:decimal"/>
+const toBoolean = (value: string | null) => value !== '0';
+
 /**
  * Implements a generic shape which is based on an XML node as a description.
+ *
+ * The XSD for the stencil description is available in the `stencils.xsd` file.
  */
 class StencilShape extends Shape {
   constructor(desc: Element) {
@@ -465,8 +472,8 @@ class StencilShape extends Shape {
           Number(node.getAttribute('rx')) * sx,
           Number(node.getAttribute('ry')) * sy,
           Number(node.getAttribute('x-axis-rotation')),
-          Boolean(node.getAttribute('large-arc-flag')),
-          Boolean(node.getAttribute('sweep-flag')),
+          toBoolean(node.getAttribute('large-arc-flag')),
+          toBoolean(node.getAttribute('sweep-flag')),
           x0 + Number(node.getAttribute('x')) * sx,
           y0 + Number(node.getAttribute('y')) * sy
         );
