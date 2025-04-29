@@ -98,9 +98,9 @@ export const VertexMixin: PartialType = {
   },
 
   createVertex(
-    _parent: Cell | null,
-    id: string,
-    value: any,
+    _parent?: Cell | null,
+    id?: string,
+    value?: any,
     x?: number,
     y?: number,
     width?: number,
@@ -115,7 +115,7 @@ export const VertexMixin: PartialType = {
 
     // Creates the vertex
     const vertex = new Cell(value, geometry, style);
-    vertex.setId(id);
+    vertex.setId(id!); // the auto-generated id is done when adding the cell to the model
     vertex.setVertex(true);
     vertex.setConnectable(true);
 

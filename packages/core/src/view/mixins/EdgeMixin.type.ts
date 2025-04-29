@@ -183,9 +183,9 @@ declare module '../AbstractGraph' {
      * @param style Optional object that defines the cell style.
      */
     insertEdge(
-      parent: Cell | null,
-      id: string | null | undefined,
-      value: EdgeParametersValue,
+      parent?: Cell | null,
+      id?: string | null,
+      value?: EdgeParametersValue,
       source?: Cell | null,
       target?: Cell | null,
       style?: CellStyle
@@ -213,11 +213,11 @@ declare module '../AbstractGraph' {
      * @param style Optional object that defines the cell style.
      */
     createEdge: (
-      parent: Cell | null,
-      id: string,
-      value: any,
-      source: Cell | null,
-      target: Cell | null,
+      parent?: Cell | null,
+      id?: string,
+      value?: any,
+      source?: Cell | null,
+      target?: Cell | null,
       style?: CellStyle
     ) => Cell;
 

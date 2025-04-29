@@ -247,16 +247,16 @@ export const EdgeMixin: PartialType = {
   },
 
   createEdge(
-    parent = null,
+    _parent = null,
     id,
     value,
-    source = null,
-    target = null,
+    _source = null,
+    _target = null,
     style: CellStyle = {}
   ) {
     // Creates the edge
     const edge = new Cell(value, new Geometry(), style);
-    edge.setId(id);
+    edge.setId(id!); // the auto-generated id is done when adding the cell to the model
     edge.setEdge(true);
     edge.geometry!.relative = true; // geometry is set when creating the cell above
     return edge;
