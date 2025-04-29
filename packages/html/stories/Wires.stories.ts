@@ -17,8 +17,10 @@ limitations under the License.
 
 import {
   type AbstractCanvas2D,
+  type AbstractGraph,
   type Cell,
   CellHighlight,
+  ConnectionHandlerCellMarker,
   domUtils,
   type EventObject,
   styleUtils,
@@ -53,7 +55,8 @@ import {
   cellArrayUtils,
   StyleDefaultsConfig,
   type CellState,
-  EdgeStyleFunction,
+  type CellStateStyle,
+  type EdgeStyleFunction,
   ShapeRegistry,
 } from '@maxgraph/core';
 
@@ -340,6 +343,52 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
+  class MyCustomCellHighlight extends CellHighlight {
+    lastStyle: CellStateStyle = {};
+
+    override highlight(state: CellState | null = null) {
+      if (this.state != state) {
+        if (this.state != null) {
+          this.state.style = this.lastStyle;
+
+          // Workaround for shape using current stroke width if no strokewidth defined
+          // TODO use ?= (may require eslint config change to support es2020)
+          this.state.style.strokeWidth = this.state.style.strokeWidth ?? 1;
+          this.state.style.strokeColor = this.state.style.strokeColor ?? 'none';
+
+          if (this.state.shape) {
+            this.state.view.graph.cellRenderer.configureShape(this.state);
+            this.state.shape.redraw();
+          }
+        }
+
+        if (state) {
+          this.lastStyle = state.style;
+          state.style = cloneUtils.clone(state.style);
+          state.style.strokeColor = '#00ff00';
+          state.style.strokeWidth = 3;
+
+          if (state.shape) {
+            state.view.graph.cellRenderer.configureShape(state);
+            state.shape.redraw();
+          }
+        }
+        this.state = state ?? null;
+      }
+    }
+  }
+
+  class MyCustomConnectionHandlerCellMarker extends ConnectionHandlerCellMarker {
+    protected override createCellHighlight(graph: AbstractGraph): CellHighlight {
+      return new MyCustomCellHighlight(graph);
+    }
+
+    // Uses complete area of cell for new connections (no hotspot)
+    override intersects(_state: CellState, _evt: InternalMouseEvent): boolean {
+      return true;
+    }
+  }
+
   class MyCustomConnectionHandler extends ConnectionHandler {
     // If connect preview is not moved away then getCellAt is used to detect the cell under
     // the mouse if the mouse is over the preview shape in IE (no event transparency), ie.
@@ -374,7 +423,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // Overrides methods to preview and create new edges.
     // Sets source terminal point for edge-to-edge connections.
     override createEdgeState(me?: InternalMouseEvent): CellState | null {
-      // FIXME the signature of this method should accept no value and define defaults
       const edge = this.graph.createEdge();
 
       // TODO why checking previous
@@ -421,48 +469,49 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     // Adds in-place highlighting for complete cell area (no hotspot).
     override createMarker() {
-      const marker = super.createMarker();
+      return new MyCustomConnectionHandlerCellMarker(this.graph, this);
 
-      // Uses complete area of cell for new connections (no hotspot)
-      marker.intersects = function (_state, _evt) {
-        return true;
-      };
+      // const marker = super.createMarker();
+
+      // // Uses complete area of cell for new connections (no hotspot)
+      // marker.intersects = function (_state, _evt) {
+      //   return true;
+      // };
 
       // Adds in-place highlighting
-      //const mxCellHighlightHighlight = mxCellHighlight.prototype.highlight;
-      marker.highlight.highlight = function (state) {
-        // TODO: Should this be a subclass of marker rather than assigning directly?
-        if (this.state != state) {
-          if (this.state != null) {
-            this.state.style = this.lastStyle;
+      // marker.highlight.highlight = function (state) {
+      //   // TODO: Should this be a subclass of marker rather than assigning directly?
+      //   if (this.state != state) {
+      //     if (this.state != null) {
+      //       this.state.style = this.lastStyle;
+      //
+      //       // Workaround for shape using current stroke width if no strokewidth defined
+      //       // TODO use ?= (may require eslint config change to support es2020)
+      //       this.state.style.strokeWidth = this.state.style.strokeWidth ?? 1;
+      //       this.state.style.strokeColor = this.state.style.strokeColor ?? 'none';
+      //
+      //       if (this.state.shape) {
+      //         this.state.view.graph.cellRenderer.configureShape(this.state);
+      //         this.state.shape.redraw();
+      //       }
+      //     }
+      //
+      //     if (state) {
+      //       this.lastStyle = state.style;
+      //       state.style = cloneUtils.clone(state.style);
+      //       state.style.strokeColor = '#00ff00';
+      //       state.style.strokeWidth = 3;
+      //
+      //       if (state.shape) {
+      //         state.view.graph.cellRenderer.configureShape(state);
+      //         state.shape.redraw();
+      //       }
+      //     }
+      //     this.state = state ?? null;
+      //   }
+      // };
 
-            // Workaround for shape using current stroke width if no strokewidth defined
-            // TODO use ?= (may require eslint config change to support es2020)
-            this.state.style.strokeWidth = this.state.style.strokeWidth ?? 1;
-            this.state.style.strokeColor = this.state.style.strokeColor ?? 'none';
-
-            if (this.state.shape) {
-              this.state.view.graph.cellRenderer.configureShape(this.state);
-              this.state.shape.redraw();
-            }
-          }
-
-          if (state) {
-            this.lastStyle = state.style;
-            state.style = cloneUtils.clone(state.style);
-            state.style.strokeColor = '#00ff00';
-            state.style.strokeWidth = 3;
-
-            if (state.shape) {
-              state.view.graph.cellRenderer.configureShape(state);
-              state.shape.redraw();
-            }
-          }
-          this.state = state ?? null;
-        }
-      };
-
-      return marker;
+      // return marker;
     }
 
     // Makes sure non-relative cells can only be connected via constraints
