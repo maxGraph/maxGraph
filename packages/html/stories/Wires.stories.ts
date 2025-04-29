@@ -64,7 +64,8 @@ import {
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
 import '@maxgraph/core/css/common.css';
-import AbstractCanvas2D from '@maxgraph/core/lib/view/canvas/AbstractCanvas2D.ts'; // style required by RubberBand
+import AbstractCanvas2D from '@maxgraph/core/lib/view/canvas/AbstractCanvas2D.ts';
+import EventObject from '@maxgraph/core/lib/view/event/EventObject.ts'; // style required by RubberBand
 
 export default {
   title: 'Connections/Wires',
@@ -179,10 +180,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // Alternative solution for implementing connection points without child cells.
     // This can be extended as shown in portrefs.html example to allow for per-port
     // incoming/outgoing direction.
-    override getAllConnectionConstraints(
+    override getAllConnectionConstraints = (
       terminal: CellState | null,
       _source: boolean
-    ): ConnectionConstraint[] | null {
+    ): ConnectionConstraint[] | null => {
       const geo = terminal != null ? terminal.cell.getGeometry() : null;
 
       if (
@@ -197,7 +198,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         ];
       }
       return null;
-    }
+    };
   }
 
   // FIXME: Provide means to make EdgeHandler and ConnectionHandler instantiate this subclass!
@@ -470,7 +471,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       let pt = null;
 
       if (constraint != null) {
-        pt = this.graph.getConnectionPoint(terminal, constraint);
+        pt = this.graph.getConnectionPoint(terminal!, constraint);
       }
 
       if (source) {
@@ -517,7 +518,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           }
         }
         // Computes constraint connection points on vertices and ports
-        else if (terminal != null && terminal.cell.geometry.relative) {
+        else if (terminal != null && terminal.cell.geometry?.relative) {
           pt = new Point(
             this.getRoutingCenterX(terminal),
             this.getRoutingCenterY(terminal)
@@ -572,9 +573,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     override redrawPath(
-      c: AbstractCanvas2D,
-      x: number,
-      y: number,
+      _c: AbstractCanvas2D,
+      _x: number,
+      _y: number,
       w: number,
       h: number,
       isForeground = false
@@ -937,7 +938,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Undo/redo
   const undoManager = new UndoManager();
-  const listener = function (sender, evt) {
+  const listener = function (_sender: any, evt: EventObject) {
     undoManager.undoableEditHappened(evt.getProperty('edit'));
   };
   graph.getDataModel().addListener(InternalEvent.UNDO, listener);
