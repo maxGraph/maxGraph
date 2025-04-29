@@ -22,6 +22,9 @@ import { contains } from '../../../util/mathUtils';
 
 import type { EdgeStyleFunction } from '../../../types';
 
+/**
+ * Implements a horizontal elbow edge.
+ */
 export const SideToSide: EdgeStyleFunction = (
   state: CellState,
   source: CellState,

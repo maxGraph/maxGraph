@@ -153,7 +153,7 @@ const Template = ({ label, ...args }) => {
         if (state.cell.isEdge()) {
           let style = this.view.getEdgeStyle(state);
 
-          if (style == EdgeStyle.WireConnector) {
+          if (style == WireConnector) {
             return new EdgeSegmentHandler(state);
           }
         }
@@ -606,9 +606,9 @@ const Template = ({ label, ...args }) => {
 
   CellRenderer.registerShape('resistor', ResistorShape);
 
-  // Imlements a custom resistor shape. Direction currently ignored here.
+  // Implements a custom resistor shape. Direction currently ignored here.
 
-  EdgeStyle.WireConnector = function (state, source, target, hints, result) {
+  WireConnector = function (state, source, target, hints, result) {
     // Creates array of all way- and terminalpoints
     let pts = state.absolutePoints;
     let horizontal = true;
@@ -699,7 +699,7 @@ const Template = ({ label, ...args }) => {
     }
   };
 
-  StyleRegistry.putValue('wireEdgeStyle', EdgeStyle.WireConnector);
+  StyleRegistry.putValue('wireEdgeStyle', WireConnector);
 
   let graph = new MyCustomGraph(container, null, [
     MyCustomCellEditorHandler,

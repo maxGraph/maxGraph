@@ -24,6 +24,10 @@ import { ELBOW } from '../../../util/Constants';
 
 import type { EdgeStyleFunction } from '../../../types';
 
+/**
+ * Uses either {@link SideToSide} or {@link TopToBottom} depending on the horizontal flag in the cell style.
+ * {@link SideToSide} is used if horizontal is `true` or unspecified.
+ */
 export const ElbowConnector: EdgeStyleFunction = (
   state: CellState,
   source: CellState,

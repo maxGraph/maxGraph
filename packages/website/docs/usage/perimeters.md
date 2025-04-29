@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-description: How-to use use and create new perimeters.
+description: How-to use builtin perimeters and create new perimeters.
 ---
 
 # Perimeters
@@ -14,11 +14,16 @@ Don't forget to adapt them if you use `JavaScript`.
 
 A `Perimeter` is a function that determines the start or end point of an edge, ensuring it is placed correctly on the source or target vertex.
 
-A perimeter is generally configured within the vertex style. When setting it up, ensure it aligns with the shape of the vertex. Otherwise, the terminal point of the edge may not appear on the visual perimeter of the vertex.  
+A `Perimeter` is configured within the style properties of the Cell that relates to the Vertex.
+
+When setting it up, ensure it aligns with the shape of the vertex. Otherwise, the terminal point of the edge may not appear on the visual perimeter of the vertex.  
+
 By default, a vertex perimeter is a _rectangle_.
 
-**Note**: All perimeters provided by `maxGraph` are automatically registered in the `StyleRegistry` when a `Graph` instance is created. For more details, see the [Global Configuration](global-configuration.md#styles) documentation.  
+:::note
+All perimeters provided by `maxGraph` are automatically registered in the `StyleRegistry` when a `Graph` instance is created. For more details, see the [Global Configuration](global-configuration.md#styles) documentation.  
 To check the list of registered perimeters, refer to the `registerDefaultStyleElements` function.
+:::
 
 ### Disabling the Perimeter
 
@@ -107,7 +112,6 @@ style.perimeter = 'rhombusPerimeter';
 :::tip
 
 The `CellStateStyle.perimeter` type guides you on how to set the perimeter value when configuring the value with a string.
-It is also possible to use the `Constants.PERIMETER` enum to set the perimeter value with a perimeter provided by default.
 
 :::
 
@@ -118,7 +122,7 @@ const style = graph.getStylesheet().getDefaultVertexStyle();
 style.perimeter = Perimeter.HexagonPerimeter;
 ```
 
-
+## Custom Perimeter
 
 ### Creating a Custom Perimeter
 

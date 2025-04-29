@@ -23,6 +23,9 @@ import { contains } from '../../../util/mathUtils';
 
 import type { EdgeStyleFunction } from '../../../types';
 
+/**
+ * Implements a self-reference, aka. loop.
+ */
 export const Loop: EdgeStyleFunction = (
   state: CellState,
   source: CellState,

@@ -148,8 +148,7 @@ function getJettySize(state: CellState, isSource: boolean): number {
  * @param sourceScaled {@link CellState} that represents the source terminal.
  * @param targetScaled {@link CellState} that represents the target terminal.
  * @param controlHints List of relative control {@link Point}s.
- * @param result Array of {@link Point}s that represent the actual points of the
- * edge.
+ * @param result Array of {@link Point}s that represent the actual points of the edge.
  */
 export const OrthogonalConnector: EdgeStyleFunction = (
   state: CellState,

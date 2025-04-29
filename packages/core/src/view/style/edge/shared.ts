@@ -24,6 +24,8 @@ import type CellState from '../../cell/CellState';
  *
  * @param points array of {@link Point} to scale
  * @param scale the scaling to divide by
+ * @private
+ * @internal
  */
 export function scalePointArray(points: Point[], scale: number): (Point | null)[] | null {
   let result: (Point | null)[] | null = [];

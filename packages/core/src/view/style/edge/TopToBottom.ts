@@ -22,6 +22,9 @@ import { contains } from '../../../util/mathUtils';
 
 import type { EdgeStyleFunction } from '../../../types';
 
+/**
+ * Implements a vertical elbow edge.
+ */
 export const TopToBottom: EdgeStyleFunction = (
   state: CellState,
   source: CellState,

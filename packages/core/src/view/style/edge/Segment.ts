@@ -23,6 +23,16 @@ import { scaleCellState, scalePointArray } from './shared';
 
 import type { EdgeStyleFunction } from '../../../types';
 
+/**
+ * Implements an orthogonal edge style.
+ * Use {@link EdgeSegmentHandler} as an interactive handler for this style.
+ *
+ * @param state {@link CellState} that represents the edge to be updated.
+ * @param sourceScaled {@link CellState} that represents the source terminal.
+ * @param targetScaled {@link CellState} that represents the target terminal.
+ * @param controlHints List of relative control points.
+ * @param result Array of {@link Point} that represent the actual points of the edge.
+ */
 export const SegmentConnector: EdgeStyleFunction = (
   state: CellState,
   sourceScaled: CellState,
