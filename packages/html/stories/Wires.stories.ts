@@ -785,24 +785,24 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       fontColor,
       strokeColor,
     });
-    v11.geometry.relative = true;
-    v11.geometry.offset = new Point(-v11.geometry.width, 2);
+    v11.geometry!.relative = true;
+    v11.geometry!.offset = new Point(-v11.geometry!.width, 2);
     const v12 = v11.clone();
     v12.value = '2';
-    v12.geometry.offset = new Point(-v11.geometry.width, 22);
+    v12.geometry!.offset = new Point(-v11.geometry!.width, 22);
     v1.insert(v12);
     const v13 = v11.clone();
     v13.value = '3';
-    v13.geometry.offset = new Point(-v11.geometry.width, 42);
+    v13.geometry!.offset = new Point(-v11.geometry!.width, 42);
     v1.insert(v13);
     const v14 = v11.clone();
     v14.value = '4';
-    v14.geometry.offset = new Point(-v11.geometry.width, 62);
+    v14.geometry!.offset = new Point(-v11.geometry!.width, 62);
     v1.insert(v14);
 
     const v15 = v11.clone();
     v15.value = '5';
-    v15.geometry.x = 1;
+    v15.geometry!.x = 1;
     v15.style = {
       shape: 'line',
       align: 'right',
@@ -813,27 +813,29 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       fontColor,
       strokeColor,
     };
-    v15.geometry.offset = new Point(0, 2);
+    v15.geometry!.offset = new Point(0, 2);
     v1.insert(v15);
     const v16 = v15.clone();
     v16.value = '6';
-    v16.geometry.offset = new Point(0, 22);
+    v16.geometry!.offset = new Point(0, 22);
     v1.insert(v16);
     const v17 = v15.clone();
     v17.value = '7';
-    v17.geometry.offset = new Point(0, 42);
+    v17.geometry!.offset = new Point(0, 42);
     v1.insert(v17);
     const v18 = v15.clone();
     v18.value = '8';
-    v18.geometry.offset = new Point(0, 62);
+    v18.geometry!.offset = new Point(0, 62);
     v1.insert(v18);
 
     const v19 = v15.clone();
     v19.value = 'clk';
-    v19.geometry.x = 0.5;
-    v19.geometry.y = 1;
-    v19.geometry.width = 10;
-    v19.geometry.height = 4;
+    if (v19.geometry) {
+      v19.geometry.x = 0.5;
+      v19.geometry.y = 1;
+      v19.geometry.width = 10;
+      v19.geometry.height = 4;
+    }
     // NOTE: portConstraint is defined for east direction, so must be inverted here
     v19.style = {
       shape: 'triangle',
@@ -845,7 +847,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       strokeColor,
       routingCenterY: 0.5,
     };
-    v19.geometry.offset = new Point(-4, -4);
+    v19.geometry!.offset = new Point(-4, -4);
     v1.insert(v19);
 
     const v2 = graph.insertVertex(parent, null, 'R1', 220, 220, 80, 20, {
@@ -872,28 +874,28 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // TODO method signature: allow optional 2nd parameter
     const v3 = graph.addCell(cellArrayUtils.cloneCell(v1));
     v3.value = 'J3';
-    v3.geometry.x = 420;
-    v3.geometry.y = 340;
+    v3.geometry!.x = 420;
+    v3.geometry!.y = 340;
 
     // Connection constraints implemented in edges, alternatively this
     // can be implemented using references, see: portrefs.html
     const e1 = graph.insertEdge(parent, null, 'e1', v1.getChildAt(7), v2, {
       entryX: 0,
       entryY: 0.5,
-      entryPerimeter: 0,
+      entryPerimeter: false,
     });
-    e1.geometry.points = [new Point(180, 110)];
+    e1.geometry!.points = [new Point(180, 110)];
 
     const e2 = graph.insertEdge(parent, null, 'e2', v1.getChildAt(4), v2, {
       entryX: 1,
       entryY: 0.5,
-      entryPerimeter: 0,
+      entryPerimeter: false,
     });
-    e2.geometry.points = [new Point(320, 50), new Point(320, 230)];
+    e2.geometry!.points = [new Point(320, 50), new Point(320, 230)];
 
     const e3 = graph.insertEdge(parent, null, 'crossover', e1, e2);
-    e3.geometry.setTerminalPoint(new Point(180, 140), true);
-    e3.geometry.setTerminalPoint(new Point(320, 140), false);
+    e3.geometry!.setTerminalPoint(new Point(180, 140), true);
+    e3.geometry!.setTerminalPoint(new Point(320, 140), false);
 
     //  let e1 = graph.insertEdge(parent, null, 'e1', v1.getChildAt(7), v2.getChildAt(0));
     //  e1.geometry.points = [new Point(180, 140)];
@@ -908,20 +910,20 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     const e4 = graph.insertEdge(parent, null, 'e4', v2, v3.getChildAt(0), {
       exitX: 1,
       exitY: 0.5,
-      entryPerimeter: 0,
+      entryPerimeter: false,
     });
-    e4.geometry.points = [new Point(380, 230)];
+    e4.geometry!.points = [new Point(380, 230)];
 
     const e5 = graph.insertEdge(parent, null, 'e5', v3.getChildAt(5), v1.getChildAt(0));
-    e5.geometry.points = [new Point(500, 310), new Point(500, 20), new Point(50, 20)];
+    e5.geometry!.points = [new Point(500, 310), new Point(500, 20), new Point(50, 20)];
 
     const e6 = graph.insertEdge(parent, null, '');
-    e6.geometry.setTerminalPoint(new Point(100, 500), true);
-    e6.geometry.setTerminalPoint(new Point(600, 500), false);
+    e6.geometry!.setTerminalPoint(new Point(100, 500), true);
+    e6.geometry!.setTerminalPoint(new Point(600, 500), false);
 
     const e7 = graph.insertEdge(parent, null, 'e7', v3.getChildAt(7), e6);
-    e7.geometry.setTerminalPoint(new Point(500, 500), false);
-    e7.geometry.points = [new Point(500, 350)];
+    e7.geometry!.setTerminalPoint(new Point(500, 500), false);
+    e7.geometry!.points = [new Point(500, 350)];
   });
 
   parentContainer.appendChild(
@@ -978,7 +980,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   parentContainer.appendChild(checkbox2);
   domUtils.write(parentContainer, 'Grid');
 
-  InternalEvent.addListener(checkbox2, 'click', function (evt) {
+  InternalEvent.addListener(checkbox2, 'click', function () {
     if (checkbox2.checked) {
       container.style.background = 'url(./images/grid.gif)';
     } else {
