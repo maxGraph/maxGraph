@@ -44,7 +44,7 @@ The `CellStateStyle.edgeStyle` type guides you on how to set the EdgeStyle value
 
 :::
 
-It is possible to configure the default EdgeStyle for all edges in the `Graph`, for example to use `SegmentConnector` (registered by default under the `elbowEdgeStyle` key in the `StyleRegistry`), as follows:
+It is possible to configure the default EdgeStyle for all edges in the `Graph`, for example to use `SegmentConnector` (registered by default under the `segmentEdgeStyle` key in the `StyleRegistry`), as follows:
 
 ```javascript
 const style = stylesheet.getDefaultEdgeStyle();
