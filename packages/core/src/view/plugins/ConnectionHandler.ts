@@ -204,7 +204,10 @@ type FactoryMethod = (
  *
  * @category Plugin
  */
-class ConnectionHandler extends EventSource implements GraphPlugin, MouseListenerSet {
+export default class ConnectionHandler
+  extends EventSource
+  implements GraphPlugin, MouseListenerSet
+{
   static pluginId = 'ConnectionHandler';
 
   previous: CellState | null = null;
@@ -1987,7 +1990,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 }
 
-class ConnectionHandlerCellMarker extends CellMarker {
+export class ConnectionHandlerCellMarker extends CellMarker {
   connectionHandler: ConnectionHandler;
 
   hotspotEnabled = true;
@@ -2100,5 +2103,3 @@ class ConnectionHandlerCellMarker extends CellMarker {
     return super.intersects(state, evt);
   }
 }
-
-export default ConnectionHandler;
