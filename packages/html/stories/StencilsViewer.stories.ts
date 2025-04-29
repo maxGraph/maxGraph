@@ -20,6 +20,7 @@ import {
   DomHelpers,
   FitPlugin,
   InternalEvent,
+  PanningHandler,
   StencilShape,
   StencilShapeRegistry,
   xmlUtils,
@@ -51,7 +52,11 @@ export default {
 };
 
 // In the future, it will be possible to edit the stencil in a textarea provided by the story.
-const stencil = `<shape aspect="fixed" h="100" name="WebServerUrlInfo" strokewidth="inherit" w="100">
+// The design could be similar to the screenshot provided in https://github.com/maxGraph/maxGraph/issues/786
+// The XML content could be validated against the XSD schema (stencils.xsd), and the user could be notified if there are any errors.
+
+const stencil = `<!-- Taken from https://github.com/maxGraph/maxGraph/issues/786 to demonstrate usage of "arc" -->
+  <shape aspect="fixed" h="100" name="WebServerUrlInfo" strokewidth="inherit" w="100">
     <connections />
     <foreground>
       <ellipse h="100" w="100" x="0" y="0" />
@@ -97,7 +102,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Creates the graph inside the given container
-  const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+  const graph = new BaseGraph({ container, plugins: [FitPlugin, PanningHandler] });
+  graph.setPanning(true);
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {

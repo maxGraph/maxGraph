@@ -58,10 +58,15 @@ export const StencilShapeConfig = {
   defaultLocalized: false,
 };
 
-const toBoolean = (value: string | null) => value !== '0' && value !== 'false';
+// To manage the following attribute described in stencils.xsd
+// <xs:attribute name="large-arc-flag" use="required" type="xs:decimal"/>
+// <xs:attribute name="sweep-flag" use="required" type="xs:decimal"/>
+const toBoolean = (value: string | null) => value !== '0';
 
 /**
  * Implements a generic shape which is based on an XML node as a description.
+ *
+ * The XSD for the stencil description is available in the `stencils.xsd` file.
  */
 class StencilShape extends Shape {
   constructor(desc: Element) {

@@ -171,7 +171,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Loads the stencils into the registry
   const req = requestUtils.load('stencils.xml');
   const root = req.getDocumentElement();
-  let shape = root!.firstChild;
+  let shape = root!.firstChild; // <shapes> node
 
   while (shape != null) {
     if (isElement(shape)) {

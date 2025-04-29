@@ -675,7 +675,17 @@ export type CellStateStyle = {
    */
   shadow?: boolean;
   /**
-   * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape}.
+   * The name of the shape to be used for the cell.
+   *
+   * The actual implementation of the shape is determined by the {@link CellRenderer.createShape} method:
+   * - first, it looks for a shape in {@link StencilShapeRegistry},
+   * - if not found, it looks for a shape in the {@link CellRenderer} registry.
+   *
+   * If no shape is specified, the default shape is used:
+   * - for edges, this is {@link CellRenderer.defaultEdgeShape}
+   * - for vertices, this is {@link CellRenderer.defaultVertexShape}
+   *
+   * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape} and {@link StencilShapeRegistry.addStencil}.
    * This includes {@link ShapeValue} values and custom names that have been registered.
    */
   shape?: StyleShapeValue;
