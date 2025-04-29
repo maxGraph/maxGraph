@@ -314,6 +314,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
+  // TODO isPopupTrigger seems have been removed from PanningHandler during migration
+  // check mxGraph code
   class MyCustomPanningHandler extends PanningHandler {
     // Panning handler consumed right click so this must be
     // disabled if right click should stop connection handler.
@@ -484,7 +486,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         const s = this.scale;
         const tr = this.translate;
         const orig = edge.origin;
-        const geo = edge.cell.getGeometry();
+        const geo = edge.cell.getGeometry()!;
         pt = geo.getTerminalPoint(source);
 
         // Computes edge-to-edge connection point
@@ -498,7 +500,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
             // Finds orientation of the segment
             const p0 = terminal.absolutePoints[seg];
             const pe = terminal.absolutePoints[seg + 1];
-            const horizontal = p0.x - pe.x === 0;
+            const horizontal = p0!.x - pe!.x === 0;
 
             // Stores the segment in the edge state
             const key = source ? 'sourceConstraint' : 'targetConstraint';
@@ -507,13 +509,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
             // Keeps the coordinate within the segment bounds
             if (horizontal) {
-              pt.x = p0.x;
-              pt.y = Math.min(pt.y, Math.max(p0.y, pe.y));
-              pt.y = Math.max(pt.y, Math.min(p0.y, pe.y));
+              pt.x = p0!.x;
+              pt.y = Math.min(pt.y, Math.max(p0!.y, pe!.y));
+              pt.y = Math.max(pt.y, Math.min(p0!.y, pe!.y));
             } else {
-              pt.y = p0.y;
-              pt.x = Math.min(pt.x, Math.max(p0.x, pe.x));
-              pt.x = Math.max(pt.x, Math.min(p0.x, pe.x));
+              pt.y = p0!.y;
+              pt.x = Math.min(pt.x, Math.max(p0!.x, pe!.x));
+              pt.x = Math.max(pt.x, Math.min(p0!.x, pe!.x));
             }
           }
         }
