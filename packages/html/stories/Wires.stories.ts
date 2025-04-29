@@ -65,7 +65,8 @@ import {
 import { createGraphContainer } from './shared/configure.js';
 import '@maxgraph/core/css/common.css';
 import AbstractCanvas2D from '@maxgraph/core/lib/view/canvas/AbstractCanvas2D.ts';
-import EventObject from '@maxgraph/core/lib/view/event/EventObject.ts'; // style required by RubberBand
+import EventObject from '@maxgraph/core/lib/view/event/EventObject.ts';
+import { isNullish } from '@maxgraph/core/lib/internal/utils.ts'; // style required by RubberBand
 
 export default {
   title: 'Connections/Wires',
@@ -119,8 +120,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return new MyCustomEdgeHandler(state);
     }
 
-    // TODO define this in createEdgeHandlerInstance instead to simplify
-    // TODO WireConnector is managed by a segment handler, so it should be considered as orthogonal in GraphView.isOrthogonal
     override createHandler(state: CellState) {
       if (state) {
         if (state.cell.isEdge()) {
@@ -133,6 +132,24 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
 
       return super.createHandler(state);
+    }
+
+    // override as WireConnector is managed by EdgeSegmentHandler, so it has to be considered as orthogonal for consistency
+    // This won't be required anymore once https://github.com/maxGraph/maxGraph/issues/767 has been implemented
+    override isOrthogonal(edge: CellState) {
+      // replicate the logic from the super method
+      const orthogonal = edge.style.orthogonal;
+      if (!isNullish(orthogonal)) {
+        return orthogonal;
+      }
+
+      // fallback when the orthogonal style is not defined
+      const edgeStyle = this.view.getEdgeStyle(edge);
+      if (edgeStyle == WireConnector) {
+        return true;
+      }
+
+      return super.isOrthogonal(edge);
     }
 
     // Adds oval markers for edge-to-edge connections.
@@ -248,7 +265,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
             pt.x = pt.x / this.graph.view.scale - this.graph.view.translate.x;
             pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
 
-            // TODO check the code in mxGraph
             const pstate = this.graph.getView().getState(edge.getParent()!); // here, we know that the edge has a parent
 
             if (pstate != null) {
