@@ -56,7 +56,7 @@ style.edgeStyle = 'segmentEdgeStyle';
 
 ### Creating a Custom EdgeStyle
 
-A perimeter is a function matching the `EdgeStyleFunction` type. To write a custom edge style, create a function as follows.
+An `EdgeStyle` is a function matching the `EdgeStyleFunction` type. To write a custom edge style, create a function as follows.
 
 In the example below, a right angle is created using a point on the horizontal center of the target vertex and the vertical center of the source vertex.
 The code checks if that point intersects the source vertex and makes the edge straight if it does.
