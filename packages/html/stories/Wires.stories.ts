@@ -678,9 +678,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     const first = pt;
 
     // Adds the waypoints
+    let hint: Point | null = null;
     if (hints != null && hints.length > 0) {
-      let hint: Point | null = null;
-
       // FIXME: First segment not movable
       /*hint = state.view.transformControlPoint(state, hints[0]);
       MaxLog.show();
@@ -702,13 +701,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         hint = state.view.transformControlPoint(state, hints[i]);
 
         if (horizontal) {
-          if (pt.y !== hint.y) {
-            pt.y = hint.y;
-            result.push(pt.clone());
+          if (pt!.y !== hint!.y) {
+            pt!.y = hint!.y;
+            result.push(pt!.clone());
           }
-        } else if (pt.x !== hint.x) {
-          pt.x = hint.x;
-          result.push(pt.clone());
+        } else if (pt!.x !== hint!.x) {
+          pt!.x = hint!.x;
+          result.push(pt!.clone());
         }
       }
     } else {
@@ -727,11 +726,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     if (horizontal) {
-      if (pt.y !== hint.y && first.x !== pt.x) {
-        result.push(new Point(pt.x, hint.y));
+      if (pt!.y !== hint!.y && first!.x !== pt!.x) {
+        result.push(new Point(pt!.x, hint!.y));
       }
-    } else if (pt.x !== hint.x && first.y !== pt.y) {
-      result.push(new Point(hint.x, pt.y));
+    } else if (pt!.x !== hint!.x && first!.y !== pt!.y) {
+      result.push(new Point(hint!.x, pt!.y));
     }
   };
 
