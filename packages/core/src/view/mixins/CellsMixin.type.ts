@@ -290,8 +290,8 @@ declare module '../AbstractGraph' {
      *
      * This is a shortcut method.
      *
-     * @param cell {@link mxCell} to be inserted into the given parent.
-     * @param parent {@link mxCell} that represents the new parent. If no parent is given then the default parent is used.
+     * @param cell {@link Cell} to be inserted into the given parent.
+     * @param parent {@link Cell} that represents the new parent. If no parent is given then the default parent is used.
      * @param index Optional index to insert the cells at. Default is 'to append'.
      * @param source Optional {@link Cell} that represents the source terminal.
      * @param target Optional {@link Cell} that represents the target terminal.
@@ -299,7 +299,7 @@ declare module '../AbstractGraph' {
      */
     addCell: (
       cell: Cell,
-      parent: Cell | null,
+      parent?: Cell | null,
       index?: number | null,
       source?: Cell | null,
       target?: Cell | null
