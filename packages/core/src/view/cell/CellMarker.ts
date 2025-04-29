@@ -129,7 +129,14 @@ class CellMarker extends EventSource {
     this.validColor = validColor;
     this.invalidColor = invalidColor;
     this.hotspot = hotspot;
-    this.highlight = new CellHighlight(graph);
+    this.highlight = this.createCellHighlight(graph);
+  }
+
+  /**
+   * Hook method to override the implementation of {@link highlight}.
+   */
+  protected createCellHighlight(graph: AbstractGraph): CellHighlight {
+    return new CellHighlight(graph);
   }
 
   /**
