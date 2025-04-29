@@ -460,7 +460,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   class MyCustomGraphView extends GraphView {
     // Computes the position of edge to edge connection points.
-    updateFixedTerminalPoint(edge, terminal, source, constraint) {
+    override updateFixedTerminalPoint(
+      edge: CellState,
+      terminal: CellState | null,
+      source: boolean,
+      constraint: ConnectionConstraint
+    ) {
       let pt = null;
 
       if (constraint != null) {
