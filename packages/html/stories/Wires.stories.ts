@@ -907,8 +907,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       v22.geometry.relative = true;
       v22.geometry.offset = new Point(-10, -1);*/
 
-    // TODO method signature: allow optional 2nd parameter
-    const v3 = graph.addCell(cellArrayUtils.cloneCell(v1));
+    const v3 = graph.addCell(cellArrayUtils.cloneCell(v1)!); // cloneCell returns null only if the cell is null, which is not the case here
     v3.value = 'J3';
     v3.geometry!.x = 420;
     v3.geometry!.y = 340;
