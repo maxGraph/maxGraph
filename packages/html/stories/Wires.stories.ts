@@ -51,8 +51,11 @@ for storing references to ports.)
 */
 
 import {
+  type AbstractCanvas2D,
   type Cell,
+  CellHighlight,
   domUtils,
+  type EventObject,
   styleUtils,
   mathUtils,
   cloneUtils,
@@ -98,10 +101,7 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-import '@maxgraph/core/css/common.css';
-import AbstractCanvas2D from '@maxgraph/core/lib/view/canvas/AbstractCanvas2D.ts';
-import EventObject from '@maxgraph/core/lib/view/event/EventObject.ts';
-import { isNullish } from '@maxgraph/core/lib/internal/utils.ts'; // style required by RubberBand
+import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
   title: 'Connections/Wires',
@@ -174,7 +174,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     override isOrthogonal(edge: CellState) {
       // replicate the logic from the super method
       const orthogonal = edge.style.orthogonal;
-      if (!isNullish(orthogonal)) {
+      if (orthogonal != null && orthogonal != undefined) {
         return orthogonal;
       }
 
