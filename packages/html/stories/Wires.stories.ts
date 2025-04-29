@@ -154,7 +154,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return new MyCustomGraphView(this);
     }
 
+    // FIXME customize EdgeSegmentHandler instead
+    // see mxGraph example which was overriding the prototype of EdgeHandler, this is why this was working
     override createEdgeHandler(state: CellState) {
+      console.info('@@MyCustomGraph.createEdgeHandler called!');
       return new MyCustomEdgeHandler(state);
     }
 
@@ -257,9 +260,21 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   // FIXME: Provide means to make EdgeHandler and ConnectionHandler instantiate this subclass!
-  class MyCustomConstraintHandler extends ConstraintHandler {
-    // Replaces the port image
-    override pointImage = new ImageBox('images/dot.gif', 10, 10);
+  // class MyCustomConstraintHandler extends ConstraintHandler {
+  //   // Replaces the port image
+  //   override pointImage = new ImageBox('images/dot.gif', 10, 10);
+  // }
+
+  // TODO also apply it to ConnectionHandler
+  // we currently have no entry point to choose the implementation of ConstraintHandler in various places,
+  // so update the property directly on the constraintHandler property of the related instances
+  function updateConstraintHandlerPointImage(obj: {
+    constraintHandler: ConstraintHandler;
+  }) {
+    const constraintHandler = obj.constraintHandler;
+    if (constraintHandler) {
+      constraintHandler.pointImage = new ImageBox('images/dot.gif', 10, 10);
+    }
   }
 
   class MyCustomGuide extends Guide {
@@ -270,8 +285,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   class MyCustomEdgeHandler extends EdgeHandler {
-    // Enables snapping waypoints to terminals
-    override snapToTerminals = true;
+    constructor(state: CellState) {
+      super(state);
+      updateConstraintHandlerPointImage(this);
+      // Enables snapping waypoints to terminals
+      this.snapToTerminals = true;
+    }
 
     override isConnectableCell(cell: Cell) {
       return this.graph
@@ -337,6 +356,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
+  // TODO use storybook args to control this value
   // Switch for black background and bright styles
   const invert = false;
   let MyCustomCellEditorHandler;
@@ -605,7 +625,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
             // Stores the segment in the edge state
             const key = source ? 'sourceConstraint' : 'targetConstraint';
             const value = horizontal ? 'horizontal' : 'vertical';
-            edge.style[key] = value;
+            edge.style[key] = value; // TODO use custom CellStateStyle type
 
             // Keeps the coordinate within the segment bounds
             if (horizontal) {
@@ -644,6 +664,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Updates the terminal and control points in the cloned preview.
   class MyCustomEdgeSegmentHandler extends EdgeSegmentHandler {
+    constructor(state: CellState) {
+      super(state);
+      updateConstraintHandlerPointImage(this);
+    }
+
     override clonePreviewState(point: Point, terminal: Cell | null) {
       const clone = super.clonePreviewState(point, terminal);
       clone.cell = clone.cell.clone();
@@ -709,13 +734,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     hints,
     result
   ) {
-    // Creates array of all way- and terminalpoints
+    // Creates array of all way- and terminal points
     const pts = state.absolutePoints;
     let horizontal = true;
 
     // Gets the initial connection from the source terminal or edge
     if (source != null && source.cell.isEdge()) {
-      horizontal = state.style.sourceConstraint == 'horizontal';
+      horizontal = state.style.sourceConstraint == 'horizontal'; // TODO use custom CellStateStyle type
     } else if (source != null) {
       horizontal = source.style.portConstraint != 'vertical';
 
