@@ -32,15 +32,15 @@ To visualize the documentation for a specific version (and the corresponding dem
 :::
 
 
+# Documentation Structure
+
+This documentation is organized into several sections:
+- **[Manual](./manual/index.md)**: Describes the core concepts and architecture of `maxGraph`
+- **Tutorials**: Provides step-by-step guides to help you learn the basics of `maxGraph`
+- **Usage**: Contains detailed documentation and examples for implementing specific features
+- **Development**: Explains how to build and contribute to `maxGraph` (for contributors and maintainers)
+
+
 ## Quick Start
 
 To know how to install maxGraph and how to implement a first example, take a look at the [Getting Started](./getting-started.mdx) guide.
-
-
-## Next Steps
-
-Let's continue with the [Manual](./manual/index.md) to understand the `maxGraph` concepts.
-
-For more information on how to use specific features, please refer to the [Usage](/docs/category/usage) documentation.
-
-
