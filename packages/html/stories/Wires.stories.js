@@ -608,8 +608,8 @@ const Template = ({ label, ...args }) => {
 
   // Implements a custom resistor shape. Direction currently ignored here.
 
-  WireConnector = function (state, source, target, hints, result) {
-    // Creates array of all way- and terminalpoints
+  const WireConnector = function (state, source, target, hints, result) {
+    // Creates array of all way- and terminal points
     let pts = state.absolutePoints;
     let horizontal = true;
     let hint = null;
