@@ -25,19 +25,21 @@ type Stencils = {
 /**
  * A singleton class that provides a registry for stencils and the methods for painting those stencils onto a canvas or into a DOM.
  *
- * Code to add stencils:
+ * Here is an example showing how to add stencils:
  * ```javascript
- * const response = load('test/stencils.xml');
- * const root = response.getDocumentElement();
+ * const response = requestUtils.load('test/stencils.xml');
+ * const root = response.getDocumentElement(); // <shapes> node
  * let shape = root.firstChild;
  *
  * while (shape) {
- *   if (shape.nodeType === mxConstants.NODETYPE_ELEMENT) {
- *    StencilShapeRegistry.addStencil(shape.getAttribute('name'), new mxStencil(shape));
+ *   if (shape.nodeType === constants.NODETYPE.ELEMENT) {
+ *    StencilShapeRegistry.addStencil(shape.getAttribute('name'), new StencilShape(shape));
  *  }
  *
  *  shape = shape.nextSibling;
  * }
+ *
+ * The XSD for the stencil description is available in the `stencils.xsd` file.
  * ```
  */
 class StencilShapeRegistry {
