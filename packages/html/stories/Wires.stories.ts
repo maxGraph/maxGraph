@@ -62,7 +62,8 @@ import {
   rubberBandValues,
 } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
-import '@maxgraph/core/css/common.css'; // style required by RubberBand
+import '@maxgraph/core/css/common.css';
+import AbstractCanvas2D from '@maxgraph/core/lib/view/canvas/AbstractCanvas2D.ts'; // style required by RubberBand
 
 export default {
   title: 'Connections/Wires',
@@ -102,7 +103,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const strokeWidth = 2;
 
   class MyCustomGraph extends Graph {
-    resetEdgesOnConnect = false;
+    override resetEdgesOnConnect = false;
 
     override createEdgeSegmentHandler(state: CellState) {
       return new MyCustomEdgeSegmentHandler(state);
@@ -133,7 +134,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     // Adds oval markers for edge-to-edge connections.
-    override getCellStyle(cell: Cell) {
+    override getCellStyle = (cell: Cell) => {
       let style = super.getCellStyle(cell);
 
       if (style && cell?.isEdge()) {
@@ -148,7 +149,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         }
       }
       return style;
-    }
+    };
 
     override getTooltipForCell(cell: Cell) {
       let tip = '';
@@ -534,19 +535,19 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Updates the terminal and control points in the cloned preview.
   class MyCustomEdgeSegmentHandler extends EdgeSegmentHandler {
-    clonePreviewState(point, terminal) {
-      const clone = super.clonePreviewState.apply(this, arguments);
+    override clonePreviewState(point: Point, terminal: Cell | null) {
+      const clone = super.clonePreviewState(point, terminal);
       clone.cell = clone.cell.clone();
 
       if (this.isSource || this.isTarget) {
-        clone.cell.geometry = clone.cell.geometry.clone();
+        clone.cell.geometry = clone.cell.geometry?.clone() ?? null;
 
         // Sets the terminal point of an edge if we're moving one of the endpoints
         if (clone.cell.isEdge()) {
           // TODO: Only set this if the target or source terminal is an edge
-          clone.cell.geometry.setTerminalPoint(point, this.isSource);
+          clone.cell.geometry?.setTerminalPoint(point, this.isSource);
         } else {
-          clone.cell.geometry.setTerminalPoint(null, this.isSource);
+          clone.cell.geometry?.setTerminalPoint(null!, this.isSource); // setTerminalPoint signature should be updated to accept null, its implementation is supposed to work with null
         }
       }
 
@@ -564,7 +565,14 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       super(null, null, null, null);
     }
 
-    redrawPath(path, x, y, w, h, isForeground) {
+    override redrawPath(
+      c: AbstractCanvas2D,
+      x: number,
+      y: number,
+      w: number,
+      h: number,
+      isForeground = false
+    ) {
       const dx = w / 16;
 
       if (isForeground) {
