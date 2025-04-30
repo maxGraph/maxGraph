@@ -36,9 +36,9 @@ To visualize the documentation for a specific version (and the corresponding dem
 
 This documentation is organized into several sections:
 - **[Manual](./manual/index.md)**: Describes the core concepts and architecture of `maxGraph`
-- **Tutorials**: Provides step-by-step guides to help you learn the basics of `maxGraph`
-- **Usage**: Contains detailed documentation and examples for implementing specific features
-- **Development**: Explains how to build and contribute to `maxGraph` (for contributors and maintainers)
+- **[Tutorials](./category/tutorials)**: Provides step-by-step guides to help you learn the basics of `maxGraph`
+- **[Usage](./category/usage)**: Contains detailed documentation and examples for implementing specific features
+- **[Development](./category/development)**: Explains how to build and contribute to `maxGraph` (for contributors and maintainers)
 
 
 ## Quick Start
