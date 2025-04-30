@@ -158,7 +158,7 @@ Or it can be used for all vertices in the `Graph` as follows:
 
 ```javascript
 const style = graph.getStylesheet().getDefaultVertexStyle();
-style.perimeter = CustomPerimeter;
+style.perimeter = 'customPerimeter';
 ```
 
 ## Example of custom behavior

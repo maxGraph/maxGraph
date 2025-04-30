@@ -31,7 +31,7 @@ For more details about the usage of EdgeStyles, see the documentation of `CellSt
 
 `maxGraph` provides various edgeStyle functions under the `EdgeStyle` namespace to be used in the `style` property of an Edge as the value of `CellStateStyle.edgeStyle`.
 
-The following example sets the edge style to `ElbowConnector` which is registered by default under the `elbowEdgeStyle` key in the `StyleRegistry`:
+The following example uses the built-in `ElbowConnector` (registered under the `elbowEdgeStyle` key in `StyleRegistry`):
 
 ```javascript
 style.edgeStyle = 'elbowEdgeStyle';
@@ -88,17 +88,9 @@ The custom edge style above can now be used in a specific edge as follows:
 style.edgeStyle = 'myEdgeStyle';
 ```
 
-The key of the `StyleRegistry` entry for the function should be used in the `CellState.edgeStyle` values, unless `GraphView.allowEval` is `true`.
-In this case, you can also use the `'MyStyle'` string for the value in the cell style above.
-
-The custom EdgeStyle can be used for all edges in the graph as follows:
+Or it can be used for all edges in the `Graph` as follows:
 
 ```javascript
 const style = graph.getStylesheet().getDefaultEdgeStyle();
-style.edgeStyle = 'myEdgeStyle';
-```
-
-It can also be used directly when setting the value of the `edgeStyle` key in a style of a specific edge as follows:
-```javascript
 style.edgeStyle = 'myEdgeStyle';
 ```
