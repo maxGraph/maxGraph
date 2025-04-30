@@ -58,6 +58,13 @@ yarn
 ```
 yarn add @maxgraph/core
 ```
+
+`maxGraph` is written in TypeScript and provides type definitions for seamless integration into TypeScript applications.
+
+Compatibility of the npm package:
+- The JavaScript code conforms to `ES2020` and is provided as ES Modules only
+- TypeScript integration requires **TypeScript 3.8** or higher
+
 <!-- END OF 'copied into packages/website/docs/getting-started.mdx' -->
 
 ## Getting Started
@@ -157,13 +164,6 @@ Note that they are based on `maxGraph` features, which require the use of [CSS a
 `maxGraph` APIs are not fully compatible with `mxGraph` APIs. The concepts are the same, so experienced `mxGraph` users should be able to switch from `mxGraph` to `maxGraph` without issues.
 
 For a complete guide, see the [dedicated migration page](packages/website/docs/usage/migrate-from-mxgraph.md).
-
-
-## TypeScript support
-
-`maxGraph` is written in TypeScript and provides type definitions so `maxGraph` can be easily integrated into TypeScript applications.
-
-`maxGraph` requires **TypeScript 3.8** or greater.
 
 
 ## Support
