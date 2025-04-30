@@ -6,8 +6,7 @@ description: How-to use built-in EdgeStyles and create new EdgeStyles.
 # EdgeStyles
 
 :::info
-The code examples provided on this page are written in `TypeScript`.
-Don't forget to adapt them if you use `JavaScript`.
+The examples in this page use `TypeScript`; adapt them if you write `JavaScript`.
 :::
 
 ## What is an EdgeStyle?
