@@ -12,6 +12,8 @@ _**Note:** Yet to be released breaking changes appear here._
 **Breaking Changes**:
 - `Perimeter` has been changed from a value object to a namespace. This has minimal impact for most applications that only read perimeter values.
   The only breaking change affects applications that modify Perimeter properties (add/update/remove values): this is no longer possible. Instead, create your own perimeter implementation and register it.
+-`EdgeStyle` has been changed from a class with static properties to a namespace. This has minimal impact for most applications that only read edge style values.
+  The breaking change only affects applications that modify EdgeStyle properties (add/update/remove values), which is no longer possible. Instead, create your own EdgeStyle implementation and register it.
 
 ## 0.18.0
 

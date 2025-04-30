@@ -24,6 +24,23 @@ import { getPortConstraints } from '../../../util/mathUtils';
 import type { EdgeStyleFunction } from '../../../types';
 import { EntityRelationConnectorConfig } from '../config';
 
+/**
+ * Implements an entity relation style for edges (as used in database
+ * schema diagrams). At the time the function is called, the result
+ * array contains a placeholder (null) for the first absolute point,
+ * that is, the point where the edge and source terminal are connected.
+ * The implementation of the style then adds all intermediate waypoints
+ * except for the last point, that is, the connection point between the
+ * edge and the target terminal. The first ant the last point in the
+ * result array are then replaced with Point that take into account
+ * the terminal's perimeter and next point on the edge.
+ *
+ * @param state {@link CellState} that represents the edge to be updated.
+ * @param source {@link CellState} that represents the source terminal.
+ * @param target {@link CellState} that represents the target terminal.
+ * @param _points
+ * @param result Array of {@link Point} that represent the actual points of the edge.
+ */
 export const EntityRelation: EdgeStyleFunction = (
   state: CellState,
   source: CellState,

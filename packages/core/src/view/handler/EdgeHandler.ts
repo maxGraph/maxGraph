@@ -45,7 +45,7 @@ import InternalEvent from '../event/InternalEvent';
 import ConstraintHandler from './ConstraintHandler';
 import Rectangle from '../geometry/Rectangle';
 import Client from '../../Client';
-import { EdgeStyle } from '../style/edge';
+import { EdgeStyle } from '../style/builtin-style-elements';
 import {
   getClientX,
   getClientY,

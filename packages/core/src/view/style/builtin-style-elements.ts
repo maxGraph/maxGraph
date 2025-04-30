@@ -14,7 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export { EdgeStyle } from './edge';
+/**
+ * Provides various EdgeStyle functions to be used in a style as the value of {@link CellStateStyle.edgeStyle}.
+ *
+ * @category EdgeStyle
+ */
+export * as EdgeStyle from './edge';
 
 /**
  * Provides various perimeter functions to be used in a style as the value of {@link CellStateStyle.perimeter}.

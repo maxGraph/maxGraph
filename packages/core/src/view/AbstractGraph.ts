@@ -39,7 +39,7 @@ import TerminalChange from './undoable_changes/TerminalChange';
 import ValueChange from './undoable_changes/ValueChange';
 import CellState from './cell/CellState';
 import { isNode } from '../util/domUtils';
-import { EdgeStyle } from './style/edge';
+import { EdgeStyle } from './style/builtin-style-elements';
 import EdgeHandler from './handler/EdgeHandler';
 import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
