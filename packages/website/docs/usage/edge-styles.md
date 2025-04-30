@@ -94,3 +94,9 @@ Or it can be used for all edges in the `Graph` as follows:
 const style = graph.getStylesheet().getDefaultEdgeStyle();
 style.edgeStyle = 'myEdgeStyle';
 ```
+
+### Example of custom EdgeStyle
+
+See the **Wires** story in the Storybook demo:
+- live demo: [Wires](https://maxgraph.github.io/maxGraph/demo/?path=/story/connections-wires--default)
+- source code: [Wires.stories.js](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/Wires.stories.js)
