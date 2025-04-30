@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-description: How-to use use builtin EdgeStyles and create new EdgeStyles.
+description: How-to use built-in EdgeStyles and create new EdgeStyles.
 ---
 
 # EdgeStyles

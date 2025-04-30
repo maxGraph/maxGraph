@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-description: How-to use builtin perimeters and create new perimeters.
+description: How-to use built-in perimeters and create new perimeters.
 ---
 
 # Perimeters
