@@ -32,7 +32,7 @@ To visualize the documentation for a specific version (and the corresponding dem
 :::
 
 
-# Documentation Structure
+## Documentation Structure
 
 This documentation is organized into several sections:
 - **[Manual](./manual/index.md)**: Describes the core concepts and architecture of `maxGraph`
