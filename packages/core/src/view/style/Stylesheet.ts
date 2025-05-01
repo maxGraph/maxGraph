@@ -132,7 +132,7 @@ export class Stylesheet {
    *
    * ```javascript
    * const style = {} as CellStateStyle;
-   * style.shape = SHAPE.RECTANGLE;
+   * style.shape = 'rectangle';
    * style.perimeter = PERIMETER.RECTANGLE;
    * style.rounded = true;
    * graph.getStylesheet().putCellStyle('rounded', style);
