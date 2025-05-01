@@ -20,7 +20,6 @@ import {
   ImageBox,
   Perimeter,
   Point,
-  constants,
   cloneUtils,
   InternalEvent,
   SwimlaneManager,
