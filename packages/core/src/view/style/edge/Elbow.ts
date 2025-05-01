@@ -27,6 +27,8 @@ import type { EdgeStyleFunction } from '../../../types';
 /**
  * Uses either {@link SideToSide} or {@link TopToBottom} depending on the horizontal flag in the cell style.
  * {@link SideToSide} is used if horizontal is `true` or unspecified.
+ *
+ * This EdgeStyle is registered under `elbowEdgeStyle` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
  */
 export const ElbowConnector: EdgeStyleFunction = (
   state: CellState,
@@ -48,7 +50,7 @@ export const ElbowConnector: EdgeStyleFunction = (
       const top = Math.min(source.y, target.y);
       const bottom = Math.max(source.y + source.height, target.y + target.height);
 
-      pt = <Point>state.view.transformControlPoint(state, pt);
+      pt = state.view.transformControlPoint(state, pt)!;
       vertical = pt.y < top || pt.y > bottom;
       horizontal = pt.x < left || pt.x > right;
     } else {

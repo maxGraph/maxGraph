@@ -22,6 +22,8 @@ import Point from '../../geometry/Point';
 import type { PerimeterFunction } from '../../../types';
 
 /**
+ * This perimeter is registered under `ellipsePerimeter` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.
+ *
  * @category Perimeter
  */
 export const EllipsePerimeter: PerimeterFunction = (

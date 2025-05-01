@@ -23,6 +23,8 @@ import type { PerimeterFunction } from '../../../types';
 import { intersection } from '../../../util/mathUtils';
 
 /**
+ * This perimeter is registered under `rhombusPerimeter` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.
+ *
  * @category Perimeter
  */
 export const RhombusPerimeter: PerimeterFunction = (

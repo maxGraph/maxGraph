@@ -27,6 +27,8 @@ import type { EdgeStyleFunction } from '../../../types';
  * Implements an orthogonal edge style.
  * Use {@link EdgeSegmentHandler} as an interactive handler for this style.
  *
+ * This EdgeStyle is registered under `segmentEdgeStyle` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
+ *
  * @param state {@link CellState} that represents the edge to be updated.
  * @param sourceScaled {@link CellState} that represents the source terminal.
  * @param targetScaled {@link CellState} that represents the target terminal.
