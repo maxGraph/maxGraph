@@ -958,25 +958,43 @@ export type StylePortConstraint = DirectionValue | DirectionValue[];
 
 /**
  * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
+ * They can be used as a value for {@link CellStateStyle.shape}.
+ *
  * @category Style
  */
 export type ShapeValue =
-  | 'rectangle'
-  | 'ellipse'
-  | 'doubleEllipse'
-  | 'rhombus'
-  | 'line'
-  | 'image'
-  | 'arrow'
-  | 'arrowConnector'
-  | 'label'
-  | 'cylinder'
-  | 'swimlane'
-  | 'connector'
+  /** Name under which {@link ActorShape} is registered by default. */
   | 'actor'
+  /** Name under which {@link ArrowShape} is registered by default. */
+  | 'arrow'
+  /** Name under which {@link ArrowConnectorShape} is registered by default. */
+  | 'arrowConnector'
+  /** Name under which {@link CloudShape} is registered by default. */
   | 'cloud'
-  | 'triangle'
-  | 'hexagon';
+  /** Name under which {@link ConnectorShape} is registered by default. */
+  | 'connector'
+  /** Name under which {@link CylinderShape} is registered by default. */
+  | 'cylinder'
+  /** Name under which {@link DoubleEllipseShape} is registered by default. */
+  | 'doubleEllipse'
+  /** Name under which {@link EllipseShape} is registered by default. */
+  | 'ellipse'
+  /** Name under which {@link HexagonShape} is registered by default. */
+  | 'hexagon'
+  /** Name under which {@link ImageShape} is registered by default. */
+  | 'image'
+  /** Name under which {@link LabelShape} is registered by default. */
+  | 'label'
+  /** Name under which {@link LineShape} is registered by default. */
+  | 'line'
+  /** Name under which {@link RectangleShape} is registered by default. */
+  | 'rectangle'
+  /** Name under which {@link RhombusShape} is registered by default. */
+  | 'rhombus'
+  /** Name under which {@link SwimlaneShape} is registered by default. */
+  | 'swimlane'
+  /** Name under which {@link TriangleShape} is registered by default. */
+  | 'triangle';
 
 /**
  * {@link ShapeValue} with support for extensions.

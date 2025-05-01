@@ -24,6 +24,8 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 /**
  * Implementation of the triangle shape.
  *
+ * This shape is registered under `triangle` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ *
  * @category Vertex Shapes
  */
 class TriangleShape extends ActorShape {

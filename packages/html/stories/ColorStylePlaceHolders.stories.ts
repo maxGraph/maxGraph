@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { constants, Graph } from '@maxgraph/core';
+import { Graph } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 
@@ -44,7 +44,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   defaultVertexStyle.foldable = false;
 
   graph.getStylesheet().putCellStyle('swimlane', {
-    shape: constants.SHAPE.SWIMLANE,
+    shape: 'swimlane',
     startSize: 30,
     fillColor: '#ffffff',
     strokeColor: 'red',

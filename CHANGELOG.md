@@ -9,6 +9,9 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- the `SHAPE` enum has been removed. Use values of the `ShapeValue` type instead.
+
 ## 0.19.0
 
 Release date: `2025-04-30`

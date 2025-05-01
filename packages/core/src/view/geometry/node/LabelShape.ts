@@ -24,7 +24,8 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link RectangleShape} to implement an image shape with a label.
- * This shape is registered by default under {@link SHAPE.LABEL} in {@link CellRenderer}.
+ *
+ * This shape is registered under `label` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */

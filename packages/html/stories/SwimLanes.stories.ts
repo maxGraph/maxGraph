@@ -96,7 +96,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Changes the default vertex style in-place
   let style = graph.getStylesheet().getDefaultVertexStyle();
-  style.shape = constants.SHAPE.SWIMLANE;
+  style.shape = 'swimlane';
   style.verticalAlign = 'middle';
   style.labelBackgroundColor = 'white';
   style.fontSize = 11;
@@ -108,7 +108,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.foldable = true;
 
   style = cloneUtils.clone(style);
-  style.shape = constants.SHAPE.RECTANGLE;
+  style.shape = 'rectangle';
   style.fontSize = 10;
   style.rounded = true;
   style.horizontal = true;
@@ -118,13 +118,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.getStylesheet().putCellStyle('process', style);
 
   style = cloneUtils.clone(style);
-  style.shape = constants.SHAPE.ELLIPSE;
+  style.shape = 'ellipse';
   style.perimeter = Perimeter.EllipsePerimeter;
   delete style.rounded;
   graph.getStylesheet().putCellStyle('state', style);
 
   style = cloneUtils.clone(style);
-  style.shape = constants.SHAPE.RHOMBUS;
+  style.shape = 'rhombus';
   style.perimeter = Perimeter.RhombusPerimeter;
   style.verticalAlign = 'top';
   style.spacingTop = 40;
@@ -132,7 +132,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.getStylesheet().putCellStyle('condition', style);
 
   style = cloneUtils.clone(style);
-  style.shape = constants.SHAPE.DOUBLE_ELLIPSE;
+  style.shape = 'doubleEllipse';
   style.perimeter = Perimeter.EllipsePerimeter;
   style.spacingTop = 28;
   style.fontSize = 14;

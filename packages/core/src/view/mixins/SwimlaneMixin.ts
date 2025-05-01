@@ -17,7 +17,7 @@ limitations under the License.
 import Rectangle from '../geometry/Rectangle';
 import { convertPoint } from '../../util/styleUtils';
 import { mod } from '../../util/mathUtils';
-import { DEFAULT_STARTSIZE, DIRECTION, SHAPE } from '../../util/Constants';
+import { DEFAULT_STARTSIZE, DIRECTION } from '../../util/Constants';
 import { getClientX, getClientY } from '../../util/EventUtils';
 import type { AbstractGraph } from '../AbstractGraph';
 import type { DirectionValue } from '../../types';
@@ -191,7 +191,7 @@ export const SwimlaneMixin: PartialType = {
 
   isSwimlane(cell, ignoreState = false) {
     if (cell && cell.getParent() !== this.getDataModel().getRoot() && !cell.isEdge()) {
-      return this.getCurrentCellStyle(cell, ignoreState).shape === SHAPE.SWIMLANE;
+      return this.getCurrentCellStyle(cell, ignoreState).shape === 'swimlane';
     }
     return false;
   },
