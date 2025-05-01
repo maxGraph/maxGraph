@@ -11,11 +11,10 @@ _**Note:** Yet to be released breaking changes appear here._
 
 **Breaking Changes**:
 - Some enums have been removed. Use the string counterparts from related types:
-  - `ArrowValue` instead of `constants.ARROW`
-  - `EdgeStyleValue` instead of `constants.EDGESTYLE`
-  - `PerimeterValue` instead of `constants.PERIMETER`
-  - `ShapeValue` instead of `constants.SHAPE`
-
+  - `constants.ARROW` --> `ArrowValue` 
+  - `constants.EDGESTYLE` --> `EdgeStyleValue` 
+  - `constants.PERIMETER` --> `PerimeterValue`
+  - `constants.SHAPE` --> `ShapeValue`
 
 ## 0.19.0
 
