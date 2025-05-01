@@ -22,7 +22,8 @@ import Rectangle from '../Rectangle';
 
 /**
  * Extends {@link Shape} to implement an ellipse shape.
- * This shape is registered by default under {@link SHAPE.ELLIPSE} in {@link CellRenderer}.
+ *
+ * This shape is registered under `ellipse` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */

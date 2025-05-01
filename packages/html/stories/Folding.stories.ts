@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import {
-  constants,
   EdgeStyle,
   EntityRelationConnectorConfig,
   Graph,
@@ -72,7 +71,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.startSize = 30;
 
   style = {};
-  style.shape = constants.SHAPE.RECTANGLE;
+  style.shape = 'rectangle';
   style.strokeColor = 'none';
   style.fillColor = 'none';
   style.foldable = false;

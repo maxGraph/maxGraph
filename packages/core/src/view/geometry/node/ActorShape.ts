@@ -24,7 +24,8 @@ import { NONE } from '../../../util/Constants';
 
 /**
  * Extends {@link Shape} to implement an actor shape.
- * This shape is registered by default under {@link SHAPE.ACTOR} in {@link CellRenderer}.
+ *
+ * This shape is registered under `actor` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * If a custom shape with one filled area is needed, then this shape's {@link redrawPath} method should be overridden
  * like in the following example:

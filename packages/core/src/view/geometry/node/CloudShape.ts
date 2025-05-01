@@ -22,7 +22,8 @@ import Rectangle from '../Rectangle';
 
 /**
  * Extends {@link ActorShape} to implement a cloud shape.
- * This shape is registered by default under {@link SHAPE.CLOUD} in {@link CellRenderer}.
+ *
+ * This shape is registered under `cloud` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */

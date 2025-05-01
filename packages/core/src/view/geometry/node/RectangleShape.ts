@@ -24,7 +24,8 @@ import { ColorValue } from '../../../types';
 
 /**
  * Extends {@link Shape} to implement a rectangle shape.
- * This shape is registered by default under {@link SHAPE.RECTANGLE} in {@link CellRenderer}.
+ *
+ * This shape is registered under `rectangle` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */

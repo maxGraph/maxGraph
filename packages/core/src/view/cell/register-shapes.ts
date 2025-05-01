@@ -32,7 +32,6 @@ import DoubleEllipseShape from '../geometry/node/DoubleEllipseShape';
 import SwimlaneShape from '../geometry/node/SwimlaneShape';
 import ImageShape from '../geometry/node/ImageShape';
 import LabelShape from '../geometry/node/LabelShape';
-import { SHAPE } from '../../util/Constants';
 
 let isDefaultElementsRegistered = false;
 
@@ -46,22 +45,22 @@ let isDefaultElementsRegistered = false;
 export function registerDefaultShapes() {
   if (!isDefaultElementsRegistered) {
     const shapesToRegister: [ShapeValue, ShapeConstructor][] = [
-      [SHAPE.ACTOR, ActorShape],
-      [SHAPE.ARROW, ArrowShape],
-      [SHAPE.ARROW_CONNECTOR, ArrowConnectorShape],
-      [SHAPE.CLOUD, CloudShape],
-      [SHAPE.CONNECTOR, ConnectorShape],
-      [SHAPE.CYLINDER, CylinderShape],
-      [SHAPE.DOUBLE_ELLIPSE, DoubleEllipseShape],
-      [SHAPE.ELLIPSE, EllipseShape],
-      [SHAPE.HEXAGON, HexagonShape],
-      [SHAPE.IMAGE, ImageShape],
-      [SHAPE.LABEL, LabelShape],
-      [SHAPE.LINE, LineShape],
-      [SHAPE.RECTANGLE, RectangleShape],
-      [SHAPE.RHOMBUS, RhombusShape],
-      [SHAPE.SWIMLANE, SwimlaneShape],
-      [SHAPE.TRIANGLE, TriangleShape],
+      ['actor', ActorShape],
+      ['arrow', ArrowShape],
+      ['arrowConnector', ArrowConnectorShape],
+      ['cloud', CloudShape],
+      ['connector', ConnectorShape],
+      ['cylinder', CylinderShape],
+      ['doubleEllipse', DoubleEllipseShape],
+      ['ellipse', EllipseShape],
+      ['hexagon', HexagonShape],
+      ['image', ImageShape],
+      ['label', LabelShape],
+      ['line', LineShape],
+      ['rectangle', RectangleShape],
+      ['rhombus', RhombusShape],
+      ['swimlane', SwimlaneShape],
+      ['triangle', TriangleShape],
     ];
     for (const [shapeName, shapeClass] of shapesToRegister) {
       CellRenderer.registerShape(shapeName, shapeClass);

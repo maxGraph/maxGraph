@@ -30,7 +30,7 @@ import { ColorValue } from '../../../types';
  *
  * The shape is used to represent edges, not vertices.
  *
- * By default, this shape is registered under {@link SHAPE.ARROW_CONNECTOR} in {@link CellRenderer}.
+ * This shape is registered under `arrowConnector` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Edge Shapes
  */

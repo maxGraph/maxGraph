@@ -25,7 +25,8 @@ import { ColorValue } from '../../../types';
 
 /**
  * Extends {@link RectangleShape} to implement an image shape.
- * This shape is registered by default under {@link SHAPE.IMAGE} in {@link CellRenderer}.
+ *
+ * This shape is registered under `image` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */

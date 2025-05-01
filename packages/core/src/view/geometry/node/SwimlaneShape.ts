@@ -29,7 +29,8 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link Shape} to implement a swimlane shape.
- * This shape is registered by default under {@link SHAPE.SWIMLANE} in {@link CellRenderer}.
+ *
+ * This shape is registered under `swimlane` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * Use:
  * - {@link CellStateStyle.startSize} to define the size of the title region,

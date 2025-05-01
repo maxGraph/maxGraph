@@ -33,7 +33,6 @@ import {
   DEFAULT_FONTSIZE,
   DEFAULT_IMAGESIZE,
   DIRECTION,
-  SHAPE,
 } from '../../util/Constants';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
@@ -958,7 +957,7 @@ export const CellsMixin: PartialType = {
 
       // Adds dimension of image if shape is a label
       if (state.getImageSrc() || style.image) {
-        if (style.shape === SHAPE.LABEL) {
+        if (style.shape === 'label') {
           if (style.verticalAlign === ALIGN.MIDDLE) {
             dx += style.imageWidth || DEFAULT_IMAGESIZE;
           }

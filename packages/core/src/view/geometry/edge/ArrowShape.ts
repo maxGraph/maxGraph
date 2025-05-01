@@ -24,9 +24,11 @@ import Point from '../Point';
 import { ColorValue } from '../../../types';
 
 /**
- * Extends {@link Shape} to implement an arrow shape. The shape is used to represent edges, not vertices.
+ * Extends {@link Shape} to implement an arrow shape.
  *
- * By default, this shape is registered under {@link SHAPE.ARROW} in {@link CellRenderer}.
+ * The shape is used to represent edges, not vertices.
+ *
+ * This shape is registered under `arrow` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Edge Shapes
  */
