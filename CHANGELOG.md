@@ -15,13 +15,13 @@ Release date: `2025-04-30`
 
 For more details, see the [0.19.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.19.0) on the GitHub release page.
 
+This new version improves tree-shaking for `EdgeStyle` and `Perimeter`, updates the documentation, and fixes bugs.
+
 **Breaking Changes**:
 - `Perimeter` has been changed from a value object to a namespace. This has minimal impact for most applications that only read perimeter values.
   The only breaking change affects applications that modify Perimeter properties (add/update/remove values): this is no longer possible. Instead, create your own perimeter implementation and register it.
--`EdgeStyle` has been changed from a class with static properties to a namespace. This has minimal impact for most applications that only read edge style values.
+- `EdgeStyle` has been changed from a class with static properties to a namespace. This has minimal impact for most applications that only read edge style values.
   The breaking change only affects applications that modify EdgeStyle properties (add/update/remove values), which is no longer possible. Instead, create your own EdgeStyle implementation and register it.
-
-This new version improves tree-shaking for `EdgeStyle` and `Perimeter`, updates the documentation, and fixes bugs.
 
 ## 0.18.0
 
