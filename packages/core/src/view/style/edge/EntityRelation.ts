@@ -33,7 +33,7 @@ import { EntityRelationConnectorConfig } from '../config';
  * The implementation of the style then adds all intermediate waypoints except for the last point,
  * that is, the connection point between the edge and the target terminal.
  *
- * The first ant the last point in the result array are then replaced with Point that take into account the terminal's perimeter and next point on the edge.
+ * The first and the last point in the result array are then replaced with Point that take into account the terminal's perimeter and next point on the edge.
  *
  * This EdgeStyle is registered under `entityRelationEdgeStyle` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
  *
