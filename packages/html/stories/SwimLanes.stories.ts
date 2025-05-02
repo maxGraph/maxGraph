@@ -20,7 +20,6 @@ import {
   ImageBox,
   Perimeter,
   Point,
-  constants,
   cloneUtils,
   InternalEvent,
   SwimlaneManager,
@@ -141,16 +140,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.getStylesheet().putCellStyle('end', style);
 
   style = graph.getStylesheet().getDefaultEdgeStyle();
-  style.edgeStyle = constants.EDGESTYLE.ELBOW;
-  style.endArrow = constants.ARROW.BLOCK;
+  style.edgeStyle = 'elbowEdgeStyle';
+  style.endArrow = 'block';
   style.rounded = true;
   style.fontColor = 'black';
   style.strokeColor = 'black';
 
   style = cloneUtils.clone(style);
   style.dashed = true;
-  style.endArrow = constants.ARROW.OPEN;
-  style.startArrow = constants.ARROW.OVAL;
+  style.endArrow = 'open';
+  style.startArrow = 'oval';
   graph.getStylesheet().putCellStyle('crossover', style);
 
   // Installs double click on middle control point and

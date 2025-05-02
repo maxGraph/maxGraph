@@ -10,7 +10,11 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 _**Note:** Yet to be released breaking changes appear here._
 
 **Breaking Changes**:
-- the `SHAPE` enum has been removed. Use values of the `ShapeValue` type instead.
+- Some enums have been removed. Use the string counterparts from related types:
+  - `constants.ARROW` --> `ArrowValue` 
+  - `constants.EDGESTYLE` --> `EdgeStyleValue` 
+  - `constants.PERIMETER` --> `PerimeterValue`
+  - `constants.SHAPE` --> `ShapeValue`
 
 ## 0.19.0
 

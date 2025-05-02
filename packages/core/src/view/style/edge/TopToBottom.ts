@@ -24,6 +24,8 @@ import type { EdgeStyleFunction } from '../../../types';
 
 /**
  * Implements a vertical elbow edge.
+ *
+ * This EdgeStyle is registered under `topToBottomEdgeStyle` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
  */
 export const TopToBottom: EdgeStyleFunction = (
   state: CellState,

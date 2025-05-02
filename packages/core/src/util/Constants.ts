@@ -442,27 +442,6 @@ export enum FONT {
   STRIKETHROUGH = 8,
 }
 
-export enum ARROW {
-  /** for classic arrow markers. */
-  CLASSIC = 'classic',
-  /** for thin classic arrow markers. */
-  CLASSIC_THIN = 'classicThin',
-  /** for block arrow markers. */
-  BLOCK = 'block',
-  /** for thin block arrow markers. */
-  BLOCK_THIN = 'blockThin',
-  /** for open arrow markers. */
-  OPEN = 'open',
-  /** for thin open arrow markers. */
-  OPEN_THIN = 'openThin',
-  /** for oval arrow markers. */
-  OVAL = 'oval',
-  /** for diamond arrow markers. */
-  DIAMOND = 'diamond',
-  /** for thin diamond arrow markers. */
-  DIAMOND_THIN = 'diamondThin',
-}
-
 export enum ALIGN {
   /** left horizontal alignment. */
   LEFT = 'left',
@@ -517,31 +496,4 @@ export const DIRECTION_MASK = {
 export enum ELBOW {
   VERTICAL = 'vertical',
   HORIZONTAL = 'horizontal',
-}
-
-/**
- * Names used to register the edge styles (a.k.a. connectors) provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
- * Can be used as a value for {@link CellStateStyle.edgeStyle}.
- */
-export enum EDGESTYLE {
-  ELBOW = 'elbowEdgeStyle',
-  ENTITY_RELATION = 'entityRelationEdgeStyle',
-  LOOP = 'loopEdgeStyle',
-  SIDETOSIDE = 'sideToSideEdgeStyle',
-  TOPTOBOTTOM = 'topToBottomEdgeStyle',
-  ORTHOGONAL = 'orthogonalEdgeStyle',
-  SEGMENT = 'segmentEdgeStyle',
-  MANHATTAN = 'manhattanEdgeStyle',
-}
-
-/**
- * Names used to register the perimeters provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
- * Can be used as a value for {@link CellStateStyle.perimeter}.
- */
-export enum PERIMETER {
-  ELLIPSE = 'ellipsePerimeter',
-  RECTANGLE = 'rectanglePerimeter',
-  RHOMBUS = 'rhombusPerimeter',
-  HEXAGON = 'hexagonPerimeter',
-  TRIANGLE = 'trianglePerimeter',
 }

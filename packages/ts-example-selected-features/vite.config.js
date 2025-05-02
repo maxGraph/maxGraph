@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
-      chunkSizeWarningLimit: 381, // @maxgraph/core
+      chunkSizeWarningLimit: 380, // @maxgraph/core
     },
   };
 });

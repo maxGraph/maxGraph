@@ -24,6 +24,8 @@ import { DIRECTION } from '../../../util/Constants';
 import { intersection } from '../../../util/mathUtils';
 
 /**
+ * This perimeter is registered under `hexagonPerimeter` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.
+ *
  * @category Perimeter
  */
 export const HexagonPerimeter: PerimeterFunction = (

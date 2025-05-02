@@ -930,6 +930,9 @@ export type OverflowValue = 'fill' | 'width' | 'auto' | 'hidden' | 'scroll' | 'v
 export type WhiteSpaceValue = 'normal' | 'wrap' | 'nowrap' | 'pre';
 /**
  * Names used to register the edge markers provided out-of-the-box by maxGraph with {@link MarkerShape.addMarker}.
+ *
+ * Can be used as a value for {@link CellStateStyle.startArrow} and {@link CellStateStyle.endArrow}.
+ *
  * @category Style
  */
 export type ArrowValue =
@@ -1228,6 +1231,8 @@ export type PerimeterFunction = (
 /**
  * Names used to register the perimeter provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
  *
+ * Can be used as a value for {@link CellStateStyle.perimeter}.
+ *
  * @category Perimeter
  */
 export type PerimeterValue =
@@ -1259,6 +1264,9 @@ export type EdgeStyleFunction = (
 
 /**
  * Names used to register the edge styles (a.k.a. connectors) provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
+ *
+ * Can be used as a value for {@link CellStateStyle.edgeStyle}.
+ *
  * @since 0.14.0
  * @category EdgeStyle
  */

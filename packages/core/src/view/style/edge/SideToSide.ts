@@ -24,6 +24,8 @@ import type { EdgeStyleFunction } from '../../../types';
 
 /**
  * Implements a horizontal elbow edge.
+ *
+ * This EdgeStyle is registered under `sideToSideEdgeStyle` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
  */
 export const SideToSide: EdgeStyleFunction = (
   state: CellState,
