@@ -16,7 +16,13 @@ limitations under the License.
 
 import type Cell from '../cell/Cell';
 import type Rectangle from '../geometry/Rectangle';
-import type { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from '../../types';
+import type {
+  AlignValue,
+  CellStateStyle,
+  CellStyle,
+  NumericCellStateStyleKeys,
+  VAlignValue,
+} from '../../types';
 import type Geometry from '../geometry/Geometry';
 import type CellState from '../cell/CellState';
 
@@ -237,11 +243,15 @@ declare module '../AbstractGraph' {
     /**
      * Aligns the given cells vertically or horizontally according to the given alignment using the optional parameter as the coordinate.
      *
-     * @param align Specifies the alignment. Possible values are all entries of the {@link ALIGN} enum.
+     * @param align Specifies the alignment.
      * @param cells Array of {@link Cell} to be aligned.
      * @param param Optional coordinate for the alignment.
      */
-    alignCells: (align: string, cells?: Cell[], param?: number | null) => void;
+    alignCells: (
+      align: AlignValue | VAlignValue,
+      cells?: Cell[],
+      param?: number | null
+    ) => void;
 
     /**
      * Returns the clone for the given cell. Uses {@link cloneCells}.

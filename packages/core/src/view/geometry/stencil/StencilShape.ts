@@ -20,7 +20,6 @@ import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
 import {
-  ALIGN,
   DIRECTION,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
@@ -555,8 +554,8 @@ class StencilShape extends Shape {
             0,
             0,
             str,
-            (node.getAttribute('align') as AlignValue) || ALIGN.LEFT,
-            (node.getAttribute('valign') as VAlignValue) || ALIGN.TOP,
+            (node.getAttribute('align') as AlignValue) ?? 'left',
+            (node.getAttribute('valign') as VAlignValue) ?? 'top',
             false,
             '',
             'auto',

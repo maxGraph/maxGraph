@@ -121,12 +121,7 @@ const Template = ({ label, ...args }) => {
       const secondLabel = graph.getSecondLabel(state.cell);
 
       if (secondLabel != null && state.shape != null && state.secondLabel == null) {
-        state.secondLabel = new TextShape(
-          secondLabel,
-          new Rectangle(),
-          constants.ALIGN.LEFT,
-          constants.ALIGN.BOTTOM
-        );
+        state.secondLabel = new TextShape(secondLabel, new Rectangle(), 'left', 'bottom');
 
         // Styles the label
         state.secondLabel.color = 'black';

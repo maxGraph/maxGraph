@@ -17,20 +17,20 @@ limitations under the License.
 */
 
 import Client from '../Client';
-import {
-  ALIGN,
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
-  FONT,
-  LINE_HEIGHT,
-} from './Constants';
+import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, FONT, LINE_HEIGHT } from './Constants';
 import Point from '../view/geometry/Point';
 import Dictionary from './Dictionary';
 import CellPath from '../view/cell/CellPath';
 import Rectangle from '../view/geometry/Rectangle';
 import Cell from '../view/cell/Cell';
 import GraphDataModel from '../view/GraphDataModel';
-import type { CellStateStyle, CellStyle, NumericCellStateStyleKeys } from '../types';
+import type {
+  AlignValue,
+  CellStateStyle,
+  CellStyle,
+  NumericCellStateStyleKeys,
+  VAlignValue,
+} from '../types';
 import { matchBinaryMask } from '../internal/utils';
 
 /**
@@ -519,23 +519,23 @@ export const sortCells = (cells: Cell[], ascending = true): Cell[] => {
  * X is -0.5 for center, -1 for right and 0 for left alignment.
  * Y is -0.5 for middle, -1 for bottom and 0 for top alignment.
  *
- * Default values for missing arguments is top, left.
+ * Default values for missing arguments is center and middle.
  */
-export const getAlignmentAsPoint = (align: string, valign: string) => {
+export const getAlignmentAsPoint = (align: AlignValue, valign: VAlignValue) => {
   let dx = -0.5;
   let dy = -0.5;
 
   // Horizontal alignment
-  if (align === ALIGN.LEFT) {
+  if (align === 'left') {
     dx = 0;
-  } else if (align === ALIGN.RIGHT) {
+  } else if (align === 'right') {
     dx = -1;
   }
 
   // Vertical alignment
-  if (valign === ALIGN.TOP) {
+  if (valign === 'top') {
     dy = 0;
-  } else if (valign === ALIGN.BOTTOM) {
+  } else if (valign === 'bottom') {
     dy = -1;
   }
 

@@ -22,7 +22,6 @@ import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  ALIGN,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_TEXT_DIRECTION,
@@ -49,7 +48,7 @@ import {
 import EventSource from '../event/EventSource';
 
 import type { AbstractGraph } from '../AbstractGraph';
-import type { GraphPlugin } from '../../types';
+import type { AlignValue, GraphPlugin } from '../../types';
 import type TooltipHandler from './TooltipHandler';
 
 /**
@@ -161,7 +160,7 @@ class CellEditorHandler implements GraphPlugin {
     };
 
     // Handling of deleted cells while editing
-    this.changeHandler = (sender: EventSource) => {
+    this.changeHandler = (_sender: EventSource) => {
       if (this.editingCell && !this.graph.getView().getState(this.editingCell, false)) {
         this.stopEditing(true);
       }
@@ -199,33 +198,28 @@ class CellEditorHandler implements GraphPlugin {
   /**
    * Reference to the <Cell> that is currently being edited.
    */
-  // editingCell: mxCell;
   editingCell: Cell | null = null;
 
   /**
    * Reference to the event that was used to start editing.
    */
-  // trigger: MouseEvent;
   trigger: InternalMouseEvent | MouseEvent | null = null;
 
   /**
    * Specifies if the label has been modified.
    */
-  // modified: boolean;
   modified = false;
 
   /**
    * Specifies if the textarea should be resized while the text is being edited.
    * Default is true.
    */
-  // autoSize: boolean;
   autoSize = true;
 
   /**
    * Specifies if the text should be selected when editing starts. Default is
    * true.
    */
-  // selectText: boolean;
   selectText = true;
 
   /**
@@ -235,7 +229,6 @@ class CellEditorHandler implements GraphPlugin {
    * value is only displayed before the first keystroke and is never used as the
    * actual editing value.
    */
-  // emptyLabelText: '<br>' | '';
   emptyLabelText: string = Client.IS_FF ? '<br>' : '';
 
   /**
@@ -243,25 +236,21 @@ class CellEditorHandler implements GraphPlugin {
    * value. Change this to false to accept the new value on escape, and cancel
    * editing on Shift+Escape instead. Default is true.
    */
-  // escapeCancelsEditing: boolean;
   escapeCancelsEditing = true;
 
   /**
    * Reference to the label DOM node that has been hidden.
    */
-  // textNode: string;
   textNode: SVGGElement | null = null;
 
   /**
    * Specifies the zIndex for the textarea. Default is 5.
    */
-  // zIndex: number;
   zIndex = 5;
 
   /**
    * Defines the minimum width and height to be used in <resize>. Default is 0x20px.
    */
-  // minResize: mxRectangle;
   minResize: Rectangle = new Rectangle(0, 20);
 
   /**
@@ -274,13 +263,11 @@ class CellEditorHandler implements GraphPlugin {
   /**
    * If <focusLost> should be called if <textarea> loses the focus. Default is false.
    */
-  // blurEnabled: boolean;
   blurEnabled = false;
 
   /**
    * Holds the initial editing value to check if the current value was modified.
    */
-  // initialValue: string;
   initialValue: string | null = null;
 
   /**
@@ -288,18 +275,18 @@ class CellEditorHandler implements GraphPlugin {
    * is modified then the current text alignment is changed and the cell style is
    * updated when the value is applied.
    */
-  align: string | null = null;
+  align: AlignValue | null = null;
 
   /**
-   * Creates the <textarea> and installs the event listeners. The key handler
-   * updates the {@link odified} state.
+   * Creates the {@link textarea} and installs the event listeners. The key handler
+   * updates the {@link modified} state.
    */
   init() {
     this.textarea = document.createElement('div');
     this.textarea.className = 'mxCellEditor mxPlainTextEditor';
     this.textarea.contentEditable = String(true);
 
-    // Workaround for selection outside of DIV if height is 0
+    // Workaround for selection outside DIV if height is 0
     if (Client.IS_GC) {
       this.textarea.style.minHeight = '1em';
     }
@@ -318,7 +305,7 @@ class CellEditorHandler implements GraphPlugin {
   /**
    * Sets the temporary horizontal alignment for the current editing session.
    */
-  setAlign(align: string) {
+  setAlign(align: AlignValue) {
     if (this.textarea) {
       this.textarea.style.textAlign = align;
     }
@@ -531,8 +518,8 @@ class CellEditorHandler implements GraphPlugin {
 
         if (m == null) {
           m = getAlignmentAsPoint(
-            this.align ?? state.style.align ?? ALIGN.CENTER,
-            state.style.verticalAlign ?? ALIGN.MIDDLE
+            this.align ?? state.style.align ?? 'center',
+            state.style.verticalAlign ?? 'middle'
           );
         }
 
@@ -551,8 +538,8 @@ class CellEditorHandler implements GraphPlugin {
           }
         } else {
           let bounds = Rectangle.fromRectangle(state);
-          let hpos = state.style.labelPosition ?? ALIGN.CENTER;
-          let vpos = state.style.verticalLabelPosition ?? ALIGN.MIDDLE;
+          let hpos = state.style.labelPosition ?? 'center';
+          let vpos = state.style.verticalLabelPosition ?? 'middle';
 
           bounds =
             state.shape != null && hpos === 'center' && vpos === 'middle'
@@ -592,8 +579,8 @@ class CellEditorHandler implements GraphPlugin {
               bounds.x + spacingLeft,
               bounds.y + spacingTop,
               bounds.width -
-                (hpos === ALIGN.CENTER && lw == null ? spacingLeft + spacingRight : 0),
-              bounds.height - (vpos === ALIGN.MIDDLE ? spacingTop + spacingBottom : 0)
+                (hpos === 'center' && lw == null ? spacingLeft + spacingRight : 0),
+              bounds.height - (vpos === 'middle' ? spacingTop + spacingBottom : 0)
             );
           }
 
@@ -709,7 +696,7 @@ class CellEditorHandler implements GraphPlugin {
       const size = state.style.fontSize ?? DEFAULT_FONTSIZE;
       const family = state.style.fontFamily ?? DEFAULT_FONTFAMILY;
       const color = state.style.fontColor ?? 'black';
-      const align = state.style.align ?? ALIGN.LEFT;
+      const align = state.style.align ?? 'left';
       const bold = (state.style.fontStyle || 0) & FONT.BOLD;
       const italic = (state.style.fontStyle || 0) & FONT.ITALIC;
 
@@ -998,7 +985,7 @@ class CellEditorHandler implements GraphPlugin {
 
       // Applies the horizontal and vertical label positions
       if (state.cell.isVertex()) {
-        const horizontal = state.style.labelPosition ?? ALIGN.CENTER;
+        const horizontal = state.style.labelPosition ?? 'center';
 
         if (horizontal === 'left') {
           result.x -= state.width;

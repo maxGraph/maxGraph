@@ -19,7 +19,6 @@ limitations under the License.
 import Client from '../../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  ALIGN,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
@@ -66,8 +65,8 @@ class TextShape extends Shape {
   constructor(
     value: string | HTMLElement | SVGGElement,
     bounds: Rectangle,
-    align: AlignValue = ALIGN.CENTER,
-    valign: VAlignValue = ALIGN.MIDDLE,
+    align: AlignValue = 'center',
+    valign: VAlignValue = 'middle',
     color = 'black',
     family = DEFAULT_FONTFAMILY,
     size = DEFAULT_FONTSIZE,
@@ -91,8 +90,8 @@ class TextShape extends Shape {
     this.value = value;
     this.bounds = bounds;
     this.color = color ?? 'black';
-    this.align = align ?? ALIGN.CENTER;
-    this.valign = valign ?? ALIGN.MIDDLE;
+    this.align = align ?? 'center';
+    this.valign = valign ?? 'middle';
     this.family = family ?? DEFAULT_FONTFAMILY;
     this.size = size ?? DEFAULT_FONTSIZE;
     this.fontStyle = fontStyle ?? DEFAULT_FONTSTYLE;
@@ -344,8 +343,8 @@ class TextShape extends Shape {
     super.resetStyles();
 
     this.color = 'black';
-    this.align = ALIGN.CENTER;
-    this.valign = ALIGN.MIDDLE;
+    this.align = 'center';
+    this.valign = 'middle';
     this.family = DEFAULT_FONTFAMILY;
     this.size = DEFAULT_FONTSIZE;
     this.fontStyle = DEFAULT_FONTSTYLE;
@@ -446,17 +445,14 @@ class TextShape extends Shape {
     this.boundingBox = this.bounds.clone();
     const rot = this.getTextRotation();
 
-    const h = this.style?.labelPosition ?? ALIGN.CENTER;
-    const v = this.style?.verticalLabelPosition ?? ALIGN.MIDDLE;
+    const h = this.style?.labelPosition ?? 'center';
+    const v = this.style?.verticalLabelPosition ?? 'middle';
 
     if (
       !this.ignoreStringSize &&
       node &&
       this.overflow !== 'fill' &&
-      (!this.clipped ||
-        !this.ignoreClippedStringSize ||
-        h !== ALIGN.CENTER ||
-        v !== ALIGN.MIDDLE)
+      (!this.clipped || !this.ignoreClippedStringSize || h !== 'center' || v !== 'middle')
     ) {
       let ow = null;
       let oh = null;
@@ -816,9 +812,9 @@ class TextShape extends Shape {
     matchBinaryMask(this.fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
     txtDecor.length > 0 && (style.textDecoration = txtDecor.join(' '));
 
-    if (this.align === ALIGN.CENTER) {
+    if (this.align === 'center') {
       style.textAlign = 'center';
-    } else if (this.align === ALIGN.RIGHT) {
+    } else if (this.align === 'right') {
       style.textAlign = 'right';
     } else {
       style.textAlign = 'left';
@@ -906,17 +902,17 @@ class TextShape extends Shape {
     let dx = 0;
     let dy = 0;
 
-    if (this.align === ALIGN.CENTER) {
+    if (this.align === 'center') {
       dx = (this.spacingLeft - this.spacingRight) / 2;
-    } else if (this.align === ALIGN.RIGHT) {
+    } else if (this.align === 'right') {
       dx = -this.spacingRight - this.baseSpacingRight;
     } else {
       dx = this.spacingLeft + this.baseSpacingLeft;
     }
 
-    if (this.valign === ALIGN.MIDDLE) {
+    if (this.valign === 'middle') {
       dy = (this.spacingTop - this.spacingBottom) / 2;
-    } else if (this.valign === ALIGN.BOTTOM) {
+    } else if (this.valign === 'bottom') {
       dy = -this.spacingBottom - this.baseSpacingBottom;
     } else {
       dy = this.spacingTop + this.baseSpacingTop;

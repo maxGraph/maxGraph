@@ -41,12 +41,6 @@ export const MIN_HOTSPOT_SIZE = 8;
  */
 export const MAX_HOTSPOT_SIZE = 0;
 
-export enum RENDERING_HINT {
-  EXACT = 'exact',
-  FASTER = 'faster',
-  FASTEST = 'fastest',
-}
-
 export enum DIALECT {
   /** the SVG display dialect name. */
   SVG = 'svg',
@@ -440,21 +434,6 @@ export enum FONT {
   UNDERLINE = 4,
   /** for strikethrough fonts. */
   STRIKETHROUGH = 8,
-}
-
-export enum ALIGN {
-  /** left horizontal alignment. */
-  LEFT = 'left',
-  /** center horizontal alignment. */
-  CENTER = 'center',
-  /** right horizontal alignment. */
-  RIGHT = 'right',
-  /** top vertical alignment. */
-  TOP = 'top',
-  /** middle vertical alignment. */
-  MIDDLE = 'middle',
-  /** bottom vertical alignment. */
-  BOTTOM = 'bottom',
 }
 
 export enum DIRECTION {

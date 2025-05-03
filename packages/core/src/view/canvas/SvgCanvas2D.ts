@@ -22,7 +22,6 @@ import { getAlignmentAsPoint } from '../../util/styleUtils';
 import Client from '../../Client';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  ALIGN,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DIRECTION,
@@ -228,7 +227,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   refCount = 0;
 
   /**
-   * Correction factor for {@link mxConstants.LINE_HEIGHT} in HTML output.
+   * Correction factor for {@link LINE_HEIGHT} in HTML output.
    * @default 1
    */
   lineHeightCorrection = 1;
@@ -260,7 +259,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     w: number,
     h: number,
     align: AlignValue,
-    valign: string,
+    valign: VAlignValue,
     wrap: boolean,
     overflow: string,
     clip: boolean,
@@ -279,7 +278,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     ) => void
   ) => {
     let item = `box-sizing: border-box; font-size: 0; text-align: ${
-      align === ALIGN.LEFT ? 'left' : align === ALIGN.RIGHT ? 'right' : 'center'
+      align === 'left' ? 'left' : align === 'right' ? 'right' : 'center'
     }; `;
     const pt = getAlignmentAsPoint(align, valign);
     let ofl = 'overflow: hidden; ';
@@ -461,9 +460,8 @@ class SvgCanvas2D extends AbstractCanvas2D {
     const s = this.state;
 
     if (!isNullish(text) && s.fontSize > 0) {
-      const dy = valign === ALIGN.TOP ? 1 : valign === ALIGN.BOTTOM ? 0 : 0.3;
-      const anchor =
-        align === ALIGN.RIGHT ? 'end' : align === ALIGN.LEFT ? 'start' : 'middle';
+      const dy = valign === 'top' ? 1 : valign === 'bottom' ? 0 : 0.3;
+      const anchor = align === 'right' ? 'end' : align === 'left' ? 'start' : 'middle';
 
       const alt = this.createElement('text');
       alt.setAttribute('x', String(Math.round(x + s.dx)));
@@ -1277,18 +1275,10 @@ class SvgCanvas2D extends AbstractCanvas2D {
       this.state.fontBackgroundColor != null ? this.state.fontBackgroundColor : null,
       this.state.fontBorderColor != null ? this.state.fontBorderColor : null,
       `display: flex; align-items: unsafe ${
-        valign === ALIGN.TOP
-          ? 'flex-start'
-          : valign === ALIGN.BOTTOM
-            ? 'flex-end'
-            : 'center'
+        valign === 'top' ? 'flex-start' : valign === 'bottom' ? 'flex-end' : 'center'
       }; ` +
         `justify-content: unsafe ${
-          align === ALIGN.LEFT
-            ? 'flex-start'
-            : align === ALIGN.RIGHT
-              ? 'flex-end'
-              : 'center'
+          align === 'left' ? 'flex-start' : align === 'right' ? 'flex-end' : 'center'
         }; `,
       this.getTextCss(),
       s,
@@ -1522,16 +1512,16 @@ class SvgCanvas2D extends AbstractCanvas2D {
       let cx = x;
       let cy = y;
 
-      if (align === ALIGN.CENTER) {
+      if (align === 'center') {
         cx -= w / 2;
-      } else if (align === ALIGN.RIGHT) {
+      } else if (align === 'right') {
         cx -= w;
       }
 
       if (overflow !== 'fill') {
-        if (valign === ALIGN.MIDDLE) {
+        if (valign === 'middle') {
           cy -= h / 2;
-        } else if (valign === ALIGN.BOTTOM) {
+        } else if (valign === 'bottom') {
           cy -= h;
         }
       }
@@ -1565,8 +1555,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     }
 
     // Default is left
-    const anchor =
-      align === ALIGN.RIGHT ? 'end' : align === ALIGN.CENTER ? 'middle' : 'start';
+    const anchor = align === 'right' ? 'end' : align === 'center' ? 'middle' : 'start';
 
     // Text-anchor start is default in SVG
     if (anchor !== 'start') {
@@ -1591,7 +1580,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
 
     let cy = y + size - 1;
 
-    if (valign === ALIGN.MIDDLE) {
+    if (valign === 'middle') {
       if (overflow === 'fill') {
         cy -= h / 2;
       } else {
@@ -1601,7 +1590,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
             : textHeight) / 2;
         cy -= dy;
       }
-    } else if (valign === ALIGN.BOTTOM) {
+    } else if (valign === 'bottom') {
       if (overflow === 'fill') {
         cy -= h;
       } else {
@@ -1687,15 +1676,15 @@ class SvgCanvas2D extends AbstractCanvas2D {
       let bbox = null;
 
       if (overflow === 'fill' || overflow === 'width') {
-        if (align === ALIGN.CENTER) {
+        if (align === 'center') {
           x -= w / 2;
-        } else if (align === ALIGN.RIGHT) {
+        } else if (align === 'right') {
           x -= w;
         }
 
-        if (valign === ALIGN.MIDDLE) {
+        if (valign === 'middle') {
           y -= h / 2;
-        } else if (valign === ALIGN.BOTTOM) {
+        } else if (valign === 'bottom') {
           y -= h;
         }
 
@@ -1743,15 +1732,15 @@ class SvgCanvas2D extends AbstractCanvas2D {
         const h = div.offsetHeight;
         document.body.removeChild(div);
 
-        if (align === ALIGN.CENTER) {
+        if (align === 'center') {
           x -= w / 2;
-        } else if (align === ALIGN.RIGHT) {
+        } else if (align === 'right') {
           x -= w;
         }
 
-        if (valign === ALIGN.MIDDLE) {
+        if (valign === 'middle') {
           y -= h / 2;
-        } else if (valign === ALIGN.BOTTOM) {
+        } else if (valign === 'bottom') {
           y -= h;
         }
 

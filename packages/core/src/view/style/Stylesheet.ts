@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ALIGN, NONE } from '../../util/Constants';
+import { NONE } from '../../util/Constants';
 import { clone } from '../../util/cloneUtils';
 import type { CellStateStyle, CellStyle } from '../../types';
 
@@ -67,8 +67,8 @@ export class Stylesheet {
     const style = {} as CellStateStyle;
     style.shape = 'rectangle';
     style.perimeter = 'rectanglePerimeter';
-    style.verticalAlign = ALIGN.MIDDLE;
-    style.align = ALIGN.CENTER;
+    style.verticalAlign = 'middle';
+    style.align = 'center';
     style.fillColor = '#C3D9FF';
     style.strokeColor = '#6482B9';
     style.fontColor = '#774400';
@@ -83,8 +83,8 @@ export class Stylesheet {
     const style = {} as CellStateStyle;
     style.shape = 'connector';
     style.endArrow = 'classic';
-    style.verticalAlign = ALIGN.MIDDLE;
-    style.align = ALIGN.CENTER;
+    style.verticalAlign = 'middle';
+    style.align = 'center';
     style.strokeColor = '#6482B9';
     style.fontColor = '#446299';
 

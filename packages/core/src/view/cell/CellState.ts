@@ -23,7 +23,7 @@ import type GraphView from '../../view/GraphView';
 import Shape from '../geometry/Shape';
 import TextShape from '../geometry/node/TextShape';
 import Dictionary from '../../util/Dictionary';
-import { ALIGN, NONE } from '../../util/Constants';
+import { NONE } from '../../util/Constants';
 import { CellStateStyle } from '../../types';
 import RectangleShape from '../geometry/node/RectangleShape';
 import CellOverlay from './CellOverlay';
@@ -400,7 +400,7 @@ class CellState extends Rectangle {
    * property of {@link style}.
    */
   getVerticalAlign() {
-    return this.style.verticalAlign ?? ALIGN.MIDDLE;
+    return this.style.verticalAlign ?? 'middle';
   }
 
   /**
