@@ -23,7 +23,6 @@ import {
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
   DEFAULT_VALID_COLOR,
-  DIALECT,
   HIGHLIGHT_STROKEWIDTH,
   LOCKED_HANDLE_FILLCOLOR,
   NONE,
@@ -243,8 +242,7 @@ class EdgeHandler implements MouseListenerSet {
     // for the initial configuration and preview
     this.abspoints = this.getSelectionPoints(this.state);
     this.shape = this.createSelectionShape(this.abspoints);
-    this.shape.dialect =
-      this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
+    this.shape.dialect = this.graph.dialect !== 'svg' ? 'mixedHtml' : 'svg';
     this.shape.init(this.graph.getView().getOverlayPane());
     this.shape.pointerEvents = false;
     this.shape.setCursor(CURSOR.MOVABLE_EDGE);
@@ -361,7 +359,7 @@ class EdgeHandler implements MouseListenerSet {
         if (parent && parent.isVertex() && pstate && !pstate.parentHighlight) {
           this.parentHighlight = this.createParentHighlightShape(pstate);
           // VML dialect required here for event transparency in IE
-          this.parentHighlight.dialect = DIALECT.SVG;
+          this.parentHighlight.dialect = 'svg';
           this.parentHighlight.pointerEvents = false;
           if (pstate.style.rotation) {
             this.parentHighlight.rotation = pstate.style.rotation;
@@ -670,10 +668,10 @@ class EdgeHandler implements MouseListenerSet {
    */
   initBend(bend: Shape, dblClick?: (evt: MouseEvent) => void) {
     if (this.preferHtml) {
-      bend.dialect = DIALECT.STRICTHTML;
+      bend.dialect = 'strictHtml';
       bend.init(this.graph.container);
     } else {
-      bend.dialect = this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
+      bend.dialect = this.graph.dialect !== 'svg' ? 'mixedHtml' : 'svg';
       bend.init(this.graph.getView().getOverlayPane());
     }
 

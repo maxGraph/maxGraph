@@ -18,7 +18,6 @@ limitations under the License.
 
 import {
   DEFAULT_VALID_COLOR,
-  DIALECT,
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_STROKEWIDTH,
 } from '../../util/Constants';
@@ -169,11 +168,11 @@ class CellHighlight {
     shape.isDashed = this.dashed;
     shape.isShadow = false;
 
-    shape.dialect = DIALECT.SVG;
+    shape.dialect = 'svg';
     shape.init(this.graph.getView().getOverlayPane());
     InternalEvent.redirectMouseEvents(shape.node, this.graph, this.state);
 
-    if (this.graph.dialect !== DIALECT.SVG) {
+    if (this.graph.dialect !== 'svg') {
       shape.pointerEvents = false;
     } else {
       shape.svgPointerEvents = 'stroke';

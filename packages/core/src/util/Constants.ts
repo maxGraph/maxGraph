@@ -41,17 +41,6 @@ export const MIN_HOTSPOT_SIZE = 8;
  */
 export const MAX_HOTSPOT_SIZE = 0;
 
-export enum DIALECT {
-  /** the SVG display dialect name. */
-  SVG = 'svg',
-  /** the mixed HTML display dialect name. */
-  MIXEDHTML = 'mixedHtml',
-  /** the preferred HTML display dialect name. */
-  PREFERHTML = 'preferHtml',
-  /** the strict HTML display dialect name. */
-  STRICTHTML = 'strictHtml',
-}
-
 /**
  * Name of the field to be used to store the object ID.
  */

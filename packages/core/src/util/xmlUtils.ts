@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DIALECT, NODETYPE, NS_SVG } from './Constants';
+import { NODETYPE, NS_SVG } from './Constants';
 import Point from '../view/geometry/Point';
 import type Cell from '../view/cell/Cell';
 import type { AbstractGraph } from '../view/AbstractGraph';
@@ -63,7 +63,7 @@ export const getViewXml = (
   const { drawPane } = view;
   const { overlayPane } = view;
 
-  if (graph.dialect === DIALECT.SVG) {
+  if (graph.dialect === 'svg') {
     view.drawPane = document.createElementNS(NS_SVG, 'g');
     view.canvas.appendChild(view.drawPane);
 

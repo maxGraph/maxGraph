@@ -25,7 +25,6 @@ import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_TEXT_DIRECTION,
-  DIALECT,
   FONT,
   LINE_HEIGHT,
   NONE,
@@ -729,7 +728,7 @@ class CellEditorHandler implements GraphPlugin {
       if (dir === 'auto') {
         if (
           state.text !== null &&
-          state.text.dialect !== DIALECT.STRICTHTML &&
+          state.text.dialect !== 'strictHtml' &&
           !isNode(state.text.value)
         ) {
           dir = state.text.getAutoDirection();

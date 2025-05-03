@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DIALECT, GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/Constants';
+import { GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/Constants';
 import Point from '../geometry/Point';
 import PolylineShape from '../geometry/edge/PolylineShape';
 import type CellState from '../cell/CellState';
@@ -183,7 +183,7 @@ class Guide {
             // Makes sure to use SVG shapes in order to implement
             // event-transparency on the background area of the rectangle since
             // HTML shapes do not let mouseevents through even when transparent
-            this.guideX.dialect = DIALECT.SVG;
+            this.guideX.dialect = 'svg';
             this.guideX.pointerEvents = false;
             this.guideX.init(this.graph.getView().getOverlayPane());
           }
@@ -222,7 +222,7 @@ class Guide {
             // Makes sure to use SVG shapes in order to implement
             // event-transparency on the background area of the rectangle since
             // HTML shapes do not let mouseevents through even when transparent
-            this.guideY.dialect = DIALECT.SVG;
+            this.guideY.dialect = 'svg';
             this.guideY.pointerEvents = false;
             this.guideY.init(this.graph.getView().getOverlayPane());
           }
