@@ -268,8 +268,6 @@ export const getChildNodes = (
   node: Element,
   nodeType: number = NODE_TYPE.ELEMENT
 ): ChildNode[] => {
-  nodeType = nodeType || NODE_TYPE.ELEMENT;
-
   const children = [];
   let tmp = node.firstChild;
 
