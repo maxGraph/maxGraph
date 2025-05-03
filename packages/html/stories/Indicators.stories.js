@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, EdgeStyle, constants, KeyHandler } from '@maxgraph/core';
+import { Graph, EdgeStyle, KeyHandler } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
 
@@ -58,7 +58,7 @@ const Template = ({ label, ...args }) => {
   style = graph.getStylesheet().getDefaultEdgeStyle();
 
   style.edge = EdgeStyle.ElbowConnector;
-  style.elbow = constants.ELBOW.VERTICAL;
+  style.elbow = 'vertical';
   style.rounded = true;
 
   // Gets the default parent for inserting new cells. This

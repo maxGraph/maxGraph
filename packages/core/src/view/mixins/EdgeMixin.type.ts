@@ -130,7 +130,7 @@ declare module '../AbstractGraph' {
      *   if (edge) {
      *     const style = this.getCurrentCellStyle(edge);
      *     const elbow = style.elbow ?? Constants.ELBOW.HORIZONTAL;
-     *     const value = (elbow == Constants.ELBOW.HORIZONTAL) ? Constants.ELBOW.VERTICAL : Constants.ELBOW.HORIZONTAL;
+     *     const value = (elbow == Constants.ELBOW.HORIZONTAL) ? Constants.'vertical' : Constants.ELBOW.HORIZONTAL;
      *     this.setCellStyles('elbow', value, [edge]);
      *   }
      * };

@@ -16,6 +16,7 @@ _**Note:** Yet to be released breaking changes appear here._
   - `constants.ARROW` --> `ArrowValue`
   - `constants.DIRECTION` --> `DirectionValue`
   - `constants.EDGESTYLE` --> `EdgeStyleValue`
+  - `constants.ELBOW` --> `ElbowValue`
   - `constants.PERIMETER` --> `PerimeterValue`
   - `constants.RENDERING_HINT`: no replacement as it wasn't used
   - `constants.SHAPE` --> `ShapeValue`

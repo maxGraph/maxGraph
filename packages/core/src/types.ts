@@ -203,10 +203,9 @@ export type CellStateStyle = {
    * This defines how the three-segment orthogonal edge style leaves its terminal vertices.
    * The 'vertical' style leaves the terminal vertices at the top and bottom sides.
    *
-   * The possible values are 'horizontal' and 'vertical'.
    * @default 'horizontal'
    */
-  elbow?: 'horizontal' | 'vertical';
+  elbow?: ElbowValue;
   /**
    * This defines the style of the end arrow marker.
    *
@@ -1468,3 +1467,8 @@ export type DialectValue =
   | 'strictHtml'
   /** The SVG display dialect name. */
   | 'svg';
+
+/**
+ * @since 0.20.0
+ */
+export type ElbowValue = 'horizontal' | 'vertical';
