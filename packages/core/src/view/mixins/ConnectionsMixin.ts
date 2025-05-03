@@ -16,7 +16,6 @@ limitations under the License.
 
 import Point from '../geometry/Point';
 import ConnectionConstraint from '../other/ConnectionConstraint';
-import { DIRECTION } from '../../util/Constants';
 import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
@@ -90,7 +89,7 @@ export const ConnectionsMixin: PartialType = {
       const bounds = this.getView().getPerimeterBounds(terminalState);
       const direction = terminalState.style.direction;
 
-      if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
+      if (direction === 'north' || direction === 'south') {
         bounds.x += bounds.width / 2 - bounds.height / 2;
         bounds.y += bounds.height / 2 - bounds.width / 2;
         const tmp = bounds.width;
@@ -117,7 +116,7 @@ export const ConnectionsMixin: PartialType = {
         let flipH = terminalState.style.flipH;
         let flipV = terminalState.style.flipV;
 
-        if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
+        if (direction === 'north' || direction === 'south') {
           const tmp = flipH;
           flipH = flipV;
           flipV = tmp;
@@ -223,16 +222,16 @@ export const ConnectionsMixin: PartialType = {
 
       // Bounds need to be rotated by 90 degrees for further computation
       if (vertex.style.anchorPointDirection) {
-        if (direction === DIRECTION.NORTH) {
+        if (direction === 'north') {
           r1 += 270;
-        } else if (direction === DIRECTION.WEST) {
+        } else if (direction === 'west') {
           r1 += 180;
-        } else if (direction === DIRECTION.SOUTH) {
+        } else if (direction === 'south') {
           r1 += 90;
         }
 
         // Bounds need to be rotated by 90 degrees for further computation
-        if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
+        if (direction === 'north' || direction === 'south') {
           bounds.rotate90();
         }
       }
@@ -271,7 +270,7 @@ export const ConnectionsMixin: PartialType = {
           let flipH = vertex.style.flipH;
           let flipV = vertex.style.flipV;
 
-          if (direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH) {
+          if (direction === 'north' || direction === 'south') {
             const temp = flipH;
             flipH = flipV;
             flipV = temp;

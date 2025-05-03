@@ -20,7 +20,6 @@ import Point from '../../geometry/Point';
 import Rectangle from '../../geometry/Rectangle';
 import { ManhattanConnectorConfig } from '../config';
 import Geometry from '../../geometry/Geometry';
-import { DIRECTION } from '../../../util/Constants';
 import { OrthogonalConnector } from './Orthogonal';
 import { SegmentConnector } from './Segment';
 
@@ -394,11 +393,9 @@ export const ManhattanConnector: EdgeStyleFunction = (
     const y = isSourceCell ? edgeState.style.exitY : edgeState.style.entryY;
     const onlyHorizontalDirections = isSourceCell
       ? ManhattanConnectorConfig.startDirections.every(
-          (d) => d != DIRECTION.NORTH && d != DIRECTION.SOUTH
+          (d) => d != 'north' && d != 'south'
         )
-      : ManhattanConnectorConfig.endDirections.every(
-          (d) => d != DIRECTION.NORTH && d != DIRECTION.SOUTH
-        );
+      : ManhattanConnectorConfig.endDirections.every((d) => d != 'north' && d != 'south');
 
     if (y != undefined && onlyHorizontalDirections) {
       const cellHeight = cellBounds?.height || 0;
@@ -410,12 +407,8 @@ export const ManhattanConnector: EdgeStyleFunction = (
 
     const x = isSourceCell ? edgeState.style.exitX : edgeState.style.entryX;
     const onlyVerticalDirections = isSourceCell
-      ? ManhattanConnectorConfig.startDirections.every(
-          (d) => d != DIRECTION.WEST && d != DIRECTION.EAST
-        )
-      : ManhattanConnectorConfig.endDirections.every(
-          (d) => d != DIRECTION.WEST && d != DIRECTION.EAST
-        );
+      ? ManhattanConnectorConfig.startDirections.every((d) => d != 'west' && d != 'east')
+      : ManhattanConnectorConfig.endDirections.every((d) => d != 'west' && d != 'east');
     if (x != undefined && onlyVerticalDirections) {
       const cellWidth = cellBounds?.width || 0;
       point.x =

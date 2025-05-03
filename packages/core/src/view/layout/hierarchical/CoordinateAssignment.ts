@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import { DIRECTION } from '../../../util/Constants';
+import type { DirectionValue } from '../../../types';
 import { GlobalConfig } from '../../../util/config';
 import WeightedCellSorter from '../util/WeightedCellSorter';
 import Dictionary from '../../../util/Dictionary';
@@ -55,7 +55,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     layout: HierarchicalLayout | SwimlaneLayout,
     intraCellSpacing = 30,
     interRankCellSpacing = 100,
-    orientation: DIRECTION,
+    orientation: DirectionValue,
     initialX: number,
     parallelEdgeSpacing = 10
   ) {
@@ -128,10 +128,10 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
   jettyPositions: { [key: string]: number[] } | null = null;
 
   /**
-   * The position of the root ( start ) node(s) relative to the rest of the
-   * laid out graph. Default is <mxConstants.DIRECTION.NORTH>.
+   * The position of the root ( start ) node(s) relative to the rest of the laid out graph.
+   * @default 'north'
    */
-  orientation: DIRECTION = DIRECTION.NORTH;
+  orientation: DirectionValue = 'north';
 
   /**
    * The minimum x position node placement starts at
@@ -710,10 +710,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         const bounds = this.layout.getVertexBounds((<GraphHierarchyNode>node).cell);
 
         if (bounds != null) {
-          if (
-            this.orientation === DIRECTION.NORTH ||
-            this.orientation === DIRECTION.SOUTH
-          ) {
+          if (this.orientation === 'north' || this.orientation === 'south') {
             node.width = bounds.width;
             node.height = bounds.height;
           } else {
@@ -787,10 +784,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
           const bounds = this.layout.getVertexBounds((<GraphHierarchyNode>node).cell);
 
           if (bounds != null) {
-            if (
-              this.orientation === DIRECTION.NORTH ||
-              this.orientation === DIRECTION.SOUTH
-            ) {
+            if (this.orientation === 'north' || this.orientation === 'south') {
               node.width = bounds.width;
               node.height = bounds.height;
             } else {
@@ -840,7 +834,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         maxCellHeight / 2.0 + lastRankMaxCellHeight / 2.0 + this.interRankCellSpacing;
       lastRankMaxCellHeight = maxCellHeight;
 
-      if (this.orientation === DIRECTION.NORTH || this.orientation === DIRECTION.WEST) {
+      if (this.orientation === 'north' || this.orientation === 'west') {
         y += distanceToNextRank;
       } else {
         y -= distanceToNextRank;
@@ -1227,8 +1221,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         ? (<GraphHierarchyNode>cell.target).cell
         : (<GraphHierarchyNode>cell.source).cell;
       const { graph } = this.layout;
-      const layoutReversed =
-        this.orientation === DIRECTION.EAST || this.orientation === DIRECTION.SOUTH;
+      const layoutReversed = this.orientation === 'east' || this.orientation === 'south';
 
       for (let i = 0; i < cell.edges.length; i += 1) {
         const realEdge = cell.edges[i];
@@ -1287,10 +1280,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
             }
           }
 
-          if (
-            this.orientation === DIRECTION.NORTH ||
-            this.orientation === DIRECTION.SOUTH
-          ) {
+          if (this.orientation === 'north' || this.orientation === 'south') {
             newPoints.push(new Point(x, y));
             if (this.layout.edgeStyle === HierarchicalEdgeStyle.CURVE) {
               newPoints.push(new Point(x, y + jetty));
@@ -1342,10 +1332,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
             bottomChannelY = tmp;
           }
 
-          if (
-            this.orientation === DIRECTION.NORTH ||
-            this.orientation === DIRECTION.SOUTH
-          ) {
+          if (this.orientation === 'north' || this.orientation === 'south') {
             newPoints.push(new Point(positionX, topChannelY));
             newPoints.push(new Point(positionX, bottomChannelY));
           } else {
@@ -1393,10 +1380,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
             }
           }
 
-          if (
-            this.orientation === DIRECTION.NORTH ||
-            this.orientation === DIRECTION.SOUTH
-          ) {
+          if (this.orientation === 'north' || this.orientation === 'south') {
             if (this.layout.edgeStyle === HierarchicalEdgeStyle.CURVE) {
               newPoints.push(new Point(x, y - jetty));
             }
@@ -1449,7 +1433,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       positionY + cell.height
     );
 
-    if (this.orientation === DIRECTION.NORTH || this.orientation === DIRECTION.SOUTH) {
+    if (this.orientation === 'north' || this.orientation === 'south') {
       this.layout.setVertexLocation(realCell, positionX, positionY);
     } else {
       this.layout.setVertexLocation(realCell, positionY, positionX);

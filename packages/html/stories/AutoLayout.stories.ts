@@ -22,7 +22,6 @@ import {
   CellRenderer,
   EdgeHandler,
   HierarchicalLayout,
-  constants,
   CellOverlay,
   getDefaultPlugins,
   ImageBox,
@@ -157,7 +156,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
 
-  const layout = new HierarchicalLayout(graph, constants.DIRECTION.WEST);
+  const layout = new HierarchicalLayout(graph, 'west');
 
   let vertex1: Cell;
   const executeLayout = (change?: () => void, post?: () => void) => {

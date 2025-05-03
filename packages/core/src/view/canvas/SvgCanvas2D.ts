@@ -24,7 +24,6 @@ import {
   ABSOLUTE_LINE_HEIGHT,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
-  DIRECTION,
   FONT,
   LINE_HEIGHT,
   NONE,
@@ -514,18 +513,18 @@ class SvgCanvas2D extends AbstractCanvas2D {
     // Wrong gradient directions possible?
     let dir = null;
 
-    if (direction == null || direction === DIRECTION.SOUTH) {
+    if (direction == null || direction === 'south') {
       dir = 's';
-    } else if (direction === DIRECTION.EAST) {
+    } else if (direction === 'east') {
       dir = 'e';
     } else {
       const tmp = start;
       start = end;
       end = tmp;
 
-      if (direction === DIRECTION.NORTH) {
+      if (direction === 'north') {
         dir = 's';
-      } else if (direction === DIRECTION.WEST) {
+      } else if (direction === 'west') {
         dir = 'e';
       }
     }
@@ -597,13 +596,13 @@ class SvgCanvas2D extends AbstractCanvas2D {
     gradient.setAttribute('x2', '0%');
     gradient.setAttribute('y2', '0%');
 
-    if (direction == null || direction === DIRECTION.SOUTH) {
+    if (direction == null || direction === 'south') {
       gradient.setAttribute('y2', '100%');
-    } else if (direction === DIRECTION.EAST) {
+    } else if (direction === 'east') {
       gradient.setAttribute('x2', '100%');
-    } else if (direction === DIRECTION.NORTH) {
+    } else if (direction === 'north') {
       gradient.setAttribute('y1', '100%');
-    } else if (direction === DIRECTION.WEST) {
+    } else if (direction === 'west') {
       gradient.setAttribute('x1', '100%');
     }
 

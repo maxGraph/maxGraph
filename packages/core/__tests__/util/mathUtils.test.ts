@@ -16,9 +16,9 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { getPortConstraints, isNumeric } from '../../src/util/mathUtils';
-import { DIRECTION, DIRECTION_MASK } from '../../src/util/Constants';
+import { DIRECTION_MASK } from '../../src/util/Constants';
 import CellState from '../../src/view/cell/CellState';
-import { DirectionValue } from '../../src';
+import type { DirectionValue } from '../../src';
 
 describe('getPortConstraints', () => {
   const defaultMask = DIRECTION_MASK.NONE;
@@ -39,11 +39,11 @@ describe('getPortConstraints', () => {
 
   test('uses terminal.style.portConstraint over edge style constraints', () => {
     const terminal = new CellState();
-    terminal.style = { portConstraint: DIRECTION.NORTH };
+    terminal.style = { portConstraint: 'north' };
     const edge = new CellState();
     edge.style = {
-      sourcePortConstraint: DIRECTION.SOUTH,
-      targetPortConstraint: DIRECTION.EAST,
+      sourcePortConstraint: 'south',
+      targetPortConstraint: 'east',
     };
 
     expect(getPortConstraints(terminal, edge, true, defaultMask)).toBe(
@@ -66,19 +66,19 @@ describe('getPortConstraints', () => {
     const terminal = new CellState();
     terminal.style = {};
     const edge = new CellState();
-    edge.style = { targetPortConstraint: DIRECTION.SOUTH };
+    edge.style = { targetPortConstraint: 'south' };
 
     expect(getPortConstraints(terminal, edge, false, defaultMask)).toBe(
       DIRECTION_MASK.SOUTH
     );
   });
 
-  test.each([
-    [DIRECTION.NORTH, DIRECTION_MASK.NORTH],
-    [DIRECTION.SOUTH, DIRECTION_MASK.SOUTH],
-    [DIRECTION.EAST, DIRECTION_MASK.EAST],
-    [DIRECTION.WEST, DIRECTION_MASK.WEST],
-  ])('handles single direction %s', (direction: DirectionValue, expectedMask: number) => {
+  test.each<[DirectionValue, (typeof DIRECTION_MASK)[keyof typeof DIRECTION_MASK]]>([
+    ['north', DIRECTION_MASK.NORTH],
+    ['south', DIRECTION_MASK.SOUTH],
+    ['east', DIRECTION_MASK.EAST],
+    ['west', DIRECTION_MASK.WEST],
+  ])('handles single direction %s', (direction, expectedMask) => {
     const terminal = new CellState();
     terminal.style = { portConstraint: direction };
     const edge = new CellState();
@@ -89,7 +89,7 @@ describe('getPortConstraints', () => {
 
   test('handles array of port constraints (north and south)', () => {
     const terminal = new CellState();
-    terminal.style = { portConstraint: [DIRECTION.NORTH, 'south'] };
+    terminal.style = { portConstraint: ['north', 'south'] };
     const edge = new CellState();
     edge.style = {};
 
@@ -104,7 +104,7 @@ describe('getPortConstraints', () => {
     terminal.style = {}; // No port constraint on terminal
     const edge = new CellState();
     edge.style = {
-      sourcePortConstraint: ['north', DIRECTION.SOUTH],
+      sourcePortConstraint: ['north', 'south'],
     };
 
     // When terminal has no constraint, should use the edge's sourcePortConstraint array
@@ -118,7 +118,7 @@ describe('getPortConstraints', () => {
     terminal.style = {}; // No port constraint on terminal
     const edge = new CellState();
     edge.style = {
-      targetPortConstraint: [DIRECTION.EAST, 'west'],
+      targetPortConstraint: ['east', 'west'],
     };
 
     // When terminal has no constraint, should use the edge's targetPortConstraint array
@@ -130,12 +130,12 @@ describe('getPortConstraints', () => {
   test('terminal portConstraint array takes precedence over edge port constraints', () => {
     const terminal = new CellState();
     terminal.style = {
-      portConstraint: [DIRECTION.NORTH, DIRECTION.WEST],
+      portConstraint: ['north', 'west'],
     };
     const edge = new CellState();
     edge.style = {
-      sourcePortConstraint: DIRECTION.SOUTH,
-      targetPortConstraint: DIRECTION.EAST,
+      sourcePortConstraint: 'south',
+      targetPortConstraint: 'east',
     };
 
     // Terminal's portConstraint should take precedence over edge's sourcePortConstraint
@@ -147,7 +147,7 @@ describe('getPortConstraints', () => {
   test('handles rotated constraints when portConstraintRotation is true', () => {
     const terminal = new CellState();
     terminal.style = {
-      portConstraint: DIRECTION.NORTH,
+      portConstraint: 'north',
       portConstraintRotation: true,
       rotation: 90,
     };
@@ -162,7 +162,7 @@ describe('getPortConstraints', () => {
   test('handles constraints with rotation defaulting to 0', () => {
     const terminal = new CellState();
     terminal.style = {
-      portConstraint: DIRECTION.NORTH,
+      portConstraint: 'north',
       portConstraintRotation: true,
       // rotation not set, should default to 0
     };
@@ -177,7 +177,7 @@ describe('getPortConstraints', () => {
   test('ignores rotation when portConstraintRotation is false', () => {
     const terminal = new CellState();
     terminal.style = {
-      portConstraint: DIRECTION.NORTH,
+      portConstraint: 'north',
       portConstraintRotation: false,
       rotation: 90,
     };
@@ -192,7 +192,7 @@ describe('getPortConstraints', () => {
   test('handles 180 degree rotation', () => {
     const terminal = new CellState();
     terminal.style = {
-      portConstraint: DIRECTION.NORTH,
+      portConstraint: 'north',
       portConstraintRotation: true,
       rotation: 180,
     };
@@ -254,7 +254,7 @@ describe('getPortConstraints', () => {
     test('handles combined directions NORTH and SOUTH', () => {
       const terminal = new CellState();
       // @ts-ignore mxGraph set 'northsouth' as a string
-      terminal.style = { portConstraint: DIRECTION.NORTH + DIRECTION.SOUTH };
+      terminal.style = { portConstraint: 'north' + 'south' };
       const edge = new CellState();
       edge.style = {};
 
@@ -266,7 +266,7 @@ describe('getPortConstraints', () => {
     test('handles combined directions EAST and WEST', () => {
       const terminal = new CellState();
       // @ts-ignore mxGraph set 'eastwest' as a string
-      terminal.style = { portConstraint: DIRECTION.EAST + DIRECTION.WEST };
+      terminal.style = { portConstraint: 'east' + 'west' };
       const edge = new CellState();
       edge.style = {};
 

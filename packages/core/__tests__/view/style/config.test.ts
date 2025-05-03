@@ -21,7 +21,6 @@ import {
   resetManhattanConnectorConfig,
   resetOrthogonalConnectorConfig,
 } from '../../../src';
-import { DIRECTION } from '../../../src/util/Constants';
 
 test('resetOrthogonalConnectorConfig', () => {
   // Keep track of original default values
@@ -60,8 +59,8 @@ describe('resetManhattanConnectorConfig', () => {
     const originalStartDirections = [...ManhattanConnectorConfig.startDirections];
 
     // Change some values
-    ManhattanConnectorConfig.endDirections = [DIRECTION.NORTH, DIRECTION.SOUTH];
-    ManhattanConnectorConfig.startDirections.push(DIRECTION.NORTH, DIRECTION.SOUTH);
+    ManhattanConnectorConfig.endDirections = ['north', 'south'];
+    ManhattanConnectorConfig.startDirections.push('north', 'south');
 
     resetManhattanConnectorConfig();
 

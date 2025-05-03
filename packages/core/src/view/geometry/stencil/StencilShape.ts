@@ -19,12 +19,7 @@ limitations under the License.
 import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
-import {
-  DIRECTION,
-  NONE,
-  RECTANGLE_ROUNDING_FACTOR,
-  TEXT_DIRECTION,
-} from '../../../util/Constants';
+import { NONE, RECTANGLE_ROUNDING_FACTOR } from '../../../util/Constants';
 import StencilShapeRegistry from './StencilShapeRegistry';
 import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
@@ -315,7 +310,7 @@ class StencilShape extends Shape {
     let sx = w / this.w0;
     let sy = h / this.h0;
 
-    const inverse = direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH;
+    const inverse = direction === 'north' || direction === 'south';
 
     if (inverse) {
       sy = w / this.h0;
@@ -561,7 +556,7 @@ class StencilShape extends Shape {
             'auto',
             false,
             rotation,
-            TEXT_DIRECTION.AUTO
+            'auto'
           );
         }
       } else if (name === 'include-shape') {

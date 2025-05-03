@@ -919,7 +919,15 @@ export type SpecialStyleColorValue =
 /** @category Style */
 export type DirectionValue = 'north' | 'south' | 'east' | 'west';
 /** @category Style */
-export type TextDirectionValue = '' | 'ltr' | 'rtl' | 'auto';
+export type TextDirectionValue =
+  /** Use this value to use the default text direction of the operating system. */
+  | ''
+  /** Use this value to find the direction for a given text with {@link Text.getAutoDirection}. */
+  | 'auto'
+  /** Use this value for left to right text direction. */
+  | 'ltr'
+  /** Use this value for right to left text direction. */
+  | 'rtl';
 /** @category Style */
 export type AlignValue = 'left' | 'center' | 'right';
 /** @category Style */

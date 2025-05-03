@@ -14,10 +14,12 @@ _**Note:** Yet to be released breaking changes appear here._
   - `constants.ALIGN` --> `AlignValue` and `VAlignValue`
   - `constants.DIALECT` --> `DialectValue`
   - `constants.ARROW` --> `ArrowValue`
+  - `constants.DIRECTION` --> `DirectionValue`
   - `constants.EDGESTYLE` --> `EdgeStyleValue`
   - `constants.PERIMETER` --> `PerimeterValue`
   - `constants.RENDERING_HINT`: no replacement as it wasn't used
   - `constants.SHAPE` --> `ShapeValue`
+  - `constants.TEXT_DIRECTION` --> `TextDirectionValue`
 
 ## 0.19.0
 
