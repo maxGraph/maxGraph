@@ -348,7 +348,7 @@ export const setCellStyles = (
  * setCellStyleFlags(graph.model,
  *       cells,
  *       'fontStyle',
- *       constants.FONT.BOLD);
+ *       constants.FONT_STYLE_FLAG.BOLD);
  * ```
  *
  * @param model {@link GraphDataModel} that contains the cells.
