@@ -55,20 +55,10 @@ jobs:
           path: packages/core/coverage/lcov-report
       - name: Test TypeScript support
         run: npm test -w packages/ts-support
-      - name: Build ts-example (custom shapes)
-        run: npm run build -w packages/ts-example
-      - name: Build ts-example (selected features)
-        run: npm run build -w packages/ts-example-selected-features
-      - name: Build ts-example (without defaults)
-        run: npm run build -w packages/ts-example-without-defaults
+      - name: Build all examples
+        run: ./build-all-examples.bash
       - name: Build Storybook mini-site
         run: npm run build -w packages/html
-      - name: Build js-example
-        run: npm run build -w packages/js-example
-      - name: Build js-example (selected features)
-        run: npm run build -w packages/js-example-selected-features
-      - name: Build js-example (without defaults)
-        run: npm run build -w packages/js-example-without-defaults
       - name: Upload all examples as artifact
         uses: actions/upload-artifact@v4
         with:
