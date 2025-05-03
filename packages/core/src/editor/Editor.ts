@@ -33,7 +33,7 @@ import MaxForm from '../gui/MaxForm';
 import Outline from '../view/other/Outline';
 import Cell from '../view/cell/Cell';
 import Geometry from '../view/geometry/Geometry';
-import { FONT } from '../util/Constants';
+import { FONT_STYLE_FLAG } from '../util/Constants';
 import type { AbstractGraph } from '../view/AbstractGraph';
 import { Graph } from '../view/Graph';
 import SwimlaneManager from '../view/layout/SwimlaneManager';
@@ -1140,19 +1140,19 @@ export class Editor extends EventSource {
 
     this.addAction('bold', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.toggleCellStyleFlags('fontStyle', FONT.BOLD);
+        editor.graph.toggleCellStyleFlags('fontStyle', FONT_STYLE_FLAG.BOLD);
       }
     });
 
     this.addAction('italic', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.toggleCellStyleFlags('fontStyle', FONT.ITALIC);
+        editor.graph.toggleCellStyleFlags('fontStyle', FONT_STYLE_FLAG.ITALIC);
       }
     });
 
     this.addAction('underline', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.toggleCellStyleFlags('fontStyle', FONT.UNDERLINE);
+        editor.graph.toggleCellStyleFlags('fontStyle', FONT_STYLE_FLAG.UNDERLINE);
       }
     });
 

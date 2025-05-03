@@ -25,7 +25,7 @@ import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_TEXT_DIRECTION,
-  FONT,
+  FONT_STYLE_FLAG,
   LINE_HEIGHT,
   NONE,
   WORD_WRAP,
@@ -696,14 +696,14 @@ class CellEditorHandler implements GraphPlugin {
       const family = state.style.fontFamily ?? DEFAULT_FONTFAMILY;
       const color = state.style.fontColor ?? 'black';
       const align = state.style.align ?? 'left';
-      const bold = (state.style.fontStyle || 0) & FONT.BOLD;
-      const italic = (state.style.fontStyle || 0) & FONT.ITALIC;
+      const bold = (state.style.fontStyle || 0) & FONT_STYLE_FLAG.BOLD;
+      const italic = (state.style.fontStyle || 0) & FONT_STYLE_FLAG.ITALIC;
 
       const txtDecor = [];
-      if ((state.style.fontStyle || 0) & FONT.UNDERLINE) {
+      if ((state.style.fontStyle || 0) & FONT_STYLE_FLAG.UNDERLINE) {
         txtDecor.push('underline');
       }
-      if ((state.style.fontStyle || 0) & FONT.STRIKETHROUGH) {
+      if ((state.style.fontStyle || 0) & FONT_STYLE_FLAG.STRIKETHROUGH) {
         txtDecor.push('line-through');
       }
 

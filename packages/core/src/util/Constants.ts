@@ -399,16 +399,16 @@ export const PAGE_FORMAT_LETTER_LANDSCAPE = [0, 0, 1100, 850];
  */
 export const NONE = 'none';
 
-export enum FONT {
+export const FONT_STYLE_FLAG = {
   /** for bold fonts. */
-  BOLD = 1,
+  BOLD: 1,
   /** for italic fonts. */
-  ITALIC = 2,
+  ITALIC: 2,
   /** for underlined fonts. */
-  UNDERLINE = 4,
+  UNDERLINE: 4,
   /** for strikethrough fonts. */
-  STRIKETHROUGH = 8,
-}
+  STRIKETHROUGH: 8,
+} as const;
 
 /**
  * Bitwise mask for all directions.
