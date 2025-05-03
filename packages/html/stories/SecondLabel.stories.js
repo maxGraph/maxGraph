@@ -127,7 +127,7 @@ const Template = ({ label, ...args }) => {
         state.secondLabel.color = 'black';
         state.secondLabel.family = 'Verdana';
         state.secondLabel.size = 8;
-        state.secondLabel.fontStyle = constants.FONT.ITALIC;
+        state.secondLabel.fontStyle = constants.FONT_STYLE_FLAG.ITALIC;
         state.secondLabel.background = 'yellow';
         state.secondLabel.border = 'black';
         state.secondLabel.valign = 'bottom';

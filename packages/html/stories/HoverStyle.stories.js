@@ -45,7 +45,7 @@ const Template = ({ label, ...args }) => {
     // once it is set, whereas the above overrides the default value
     state.style.rounded = hover ? '1' : '0';
     state.style.strokeWidth = hover ? '4' : '1';
-    state.style.fontStyle = hover ? constants.FONT.BOLD : '0';
+    state.style.fontStyle = hover ? constants.FONT_STYLE_FLAG.BOLD : '0';
   }
 
   // Changes fill color to red on mouseover
