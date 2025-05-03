@@ -26,7 +26,6 @@ import {
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
   DEFAULT_VALID_COLOR,
-  DIALECT,
   HIGHLIGHT_STROKEWIDTH,
   INVALID_COLOR,
   NONE,
@@ -504,7 +503,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
         : new PolylineShape([], INVALID_COLOR);
 
     if (shape && shape.node) {
-      shape.dialect = DIALECT.SVG;
+      shape.dialect = 'svg';
       shape.scale = this.graph.view.scale;
       shape.pointerEvents = false;
       shape.isDashed = true;
@@ -635,10 +634,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
       icon.preserveImageAspect = false;
 
       if (this.isMoveIconToFrontForState(state)) {
-        icon.dialect = DIALECT.STRICTHTML;
+        icon.dialect = 'strictHtml';
         icon.init(this.graph.container);
       } else {
-        icon.dialect = DIALECT.SVG;
+        icon.dialect = 'svg';
         icon.init(this.graph.getView().getOverlayPane());
 
         // Move the icon back in the overlay pane

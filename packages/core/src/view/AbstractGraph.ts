@@ -45,6 +45,7 @@ import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 import type {
+  DialectValue,
   EdgeStyleFunction,
   GraphCollaboratorsOptions,
   GraphFoldingOptions,
@@ -140,9 +141,9 @@ export abstract class AbstractGraph extends EventSource {
   renderHint: string | null = null;
 
   /**
-   * Dialect to be used for drawing the graph. Possible values are all constants in {@link DIALECT}.
+   * Dialect to be used for drawing the graph.
    */
-  dialect: 'svg' | 'mixedHtml' | 'preferHtml' | 'strictHtml' = 'svg';
+  dialect: DialectValue = 'svg';
 
   /**
    * Value returned by {@link getOverlap} if {@link isAllowOverlapParent} returns

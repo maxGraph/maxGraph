@@ -23,7 +23,6 @@ import {
   DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
   DEFAULT_TEXT_DIRECTION,
-  DIALECT,
   FONT,
   NONE,
   TEXT_DIRECTION,
@@ -250,7 +249,7 @@ class TextShape extends Shape {
       );
     } else {
       // Checks if text contains HTML markup
-      const realHtml = isNode(this.value) || this.dialect === DIALECT.STRICTHTML;
+      const realHtml = isNode(this.value) || this.dialect === 'strictHtml';
 
       // Always renders labels as HTML in VML
       const fmt = realHtml ? 'html' : '';
@@ -308,7 +307,7 @@ class TextShape extends Shape {
       this.checkBounds() &&
       this.cacheEnabled &&
       this.lastValue === this.value &&
-      (isNode(this.value) || this.dialect === DIALECT.STRICTHTML)
+      (isNode(this.value) || this.dialect === 'strictHtml')
     ) {
       if (this.node.nodeName === 'DIV') {
         this.redrawHtmlShape();
@@ -328,7 +327,7 @@ class TextShape extends Shape {
     } else {
       super.redraw();
 
-      if (isNode(this.value) || this.dialect === DIALECT.STRICTHTML) {
+      if (isNode(this.value) || this.dialect === 'strictHtml') {
         this.lastValue = this.value;
       } else {
         this.lastValue = null;
@@ -574,8 +573,7 @@ class TextShape extends Shape {
   getHtmlValue() {
     let val = this.value as string;
 
-    if (this.dialect !== DIALECT.STRICTHTML) {
-      // @ts-ignore
+    if (this.dialect !== 'strictHtml') {
       val = htmlEntities(val, false);
     }
 
@@ -699,7 +697,7 @@ class TextShape extends Shape {
     } else {
       let val = this.value as string;
 
-      if (this.dialect !== DIALECT.STRICTHTML) {
+      if (this.dialect !== 'strictHtml') {
         // LATER: Can be cached in updateValue
         val = htmlEntities(val, false);
       }
@@ -725,7 +723,7 @@ class TextShape extends Shape {
     } else {
       let val = this.value as string;
 
-      if (this.dialect !== DIALECT.STRICTHTML) {
+      if (this.dialect !== 'strictHtml') {
         val = htmlEntities(val, false);
       }
 
@@ -771,7 +769,7 @@ class TextShape extends Shape {
       if (divs.length > 0) {
         let dir = this.textDirection;
 
-        if (dir === TEXT_DIRECTION.AUTO && this.dialect !== DIALECT.STRICTHTML) {
+        if (dir === TEXT_DIRECTION.AUTO && this.dialect !== 'strictHtml') {
           dir = this.getAutoDirection();
         }
 

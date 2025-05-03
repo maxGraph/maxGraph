@@ -22,7 +22,6 @@ import TemporaryCellStates from '../cell/TemporaryCellStates';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import { intersects } from '../../util/mathUtils';
-import { DIALECT } from '../../util/Constants';
 import { addLinkToHead, write } from '../../util/domUtils';
 import type { AbstractGraph } from '../AbstractGraph';
 import type CellState from '../cell/CellState';
@@ -803,7 +802,7 @@ class PrintPreview {
     const overlayPane = view.getOverlayPane();
     const realScale = scale;
 
-    if (this.graph.dialect === DIALECT.SVG) {
+    if (this.graph.dialect === 'svg') {
       view.createSvg();
 
       // Uses CSS transform for scaling

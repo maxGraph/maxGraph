@@ -132,7 +132,7 @@ const Template = ({ label, ...args }) => {
         state.secondLabel.border = 'black';
         state.secondLabel.valign = 'bottom';
         state.secondLabel.dialect = state.shape.dialect;
-        state.secondLabel.dialect = constants.DIALECT.STRICTHTML;
+        state.secondLabel.dialect = 'strictHtml';
         state.secondLabel.wrap = true;
         graph.cellRenderer.initializeLabel(state, state.secondLabel);
       }

@@ -25,7 +25,6 @@ import {
   DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
   DEFAULT_TEXT_DIRECTION,
-  DIALECT,
   NONE,
 } from '../../util/Constants';
 import { getRotatedPoint, mod, toRadians } from '../../util/mathUtils';
@@ -377,7 +376,7 @@ class CellRenderer {
         state.style.textDirection ?? DEFAULT_TEXT_DIRECTION
       );
       state.text.opacity = state.style.textOpacity ?? 100;
-      state.text.dialect = isForceHtml ? DIALECT.STRICTHTML : graph.dialect;
+      state.text.dialect = isForceHtml ? 'strictHtml' : graph.dialect;
       state.text.style = state.style;
       state.text.state = state;
       this.initializeLabel(state, state.text);
@@ -418,7 +417,7 @@ class CellRenderer {
 
             forceGetCell =
               // @ts-ignore nodeName should exist.
-              graph.dialect !== DIALECT.SVG && source.nodeName === 'IMG';
+              graph.dialect !== 'svg' && source.nodeName === 'IMG';
           }
         },
         (evt: MouseEvent) => {
@@ -459,7 +458,7 @@ class CellRenderer {
    * @param shape {@link Shape} that represents the label.
    */
   initializeLabel(state: CellState, shape: Shape): void {
-    if (Client.IS_SVG && Client.NO_FO && shape.dialect !== DIALECT.SVG) {
+    if (Client.IS_SVG && Client.NO_FO && shape.dialect !== 'svg') {
       const graph = state.view.graph;
       shape.init(graph.container);
     } else {
@@ -653,10 +652,10 @@ class CellRenderer {
     // should go into the graph container directly in order to be clickable. Otherwise
     // it is obscured by the HTML label that overlaps the cell.
     const isForceHtml =
-      graph.isHtmlLabel(state.cell) && Client.NO_FO && graph.dialect === DIALECT.SVG;
+      graph.isHtmlLabel(state.cell) && Client.NO_FO && graph.dialect === 'svg';
 
     if (isForceHtml) {
-      control.dialect = DIALECT.PREFERHTML;
+      control.dialect = 'preferHtml';
       control.init(graph.container);
       control.node.style.zIndex = String(1);
     } else {
@@ -768,7 +767,7 @@ class CellRenderer {
 
       if (
         (source &&
-          graph.dialect !== DIALECT.SVG &&
+          graph.dialect !== 'svg' &&
           // @ts-ignore nodeName should exist
           source.nodeName === 'IMG') ||
         Client.IS_TOUCH
@@ -839,7 +838,7 @@ class CellRenderer {
     const wrapping = graph.isWrapping(state.cell);
     const clipping = graph.isLabelClipped(state.cell);
     const isForceHtml = graph.isHtmlLabel(state.cell) || (value && isNode(value));
-    const dialect = isForceHtml ? DIALECT.STRICTHTML : graph.dialect;
+    const dialect = isForceHtml ? 'strictHtml' : graph.dialect;
     const overflow = state.style.overflow ?? 'visible';
 
     if (

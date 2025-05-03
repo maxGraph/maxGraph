@@ -39,6 +39,7 @@ import type {
   ArrowValue,
   CellStateStyle,
   ColorValue,
+  DialectValue,
   DirectionValue,
   GradientMap,
 } from '../../types';
@@ -144,9 +145,8 @@ class Shape {
 
   /**
    * Holds the dialect in which the shape is to be painted.
-   * This can be one of the DIALECT constants in {@link Constants}.
    */
-  dialect: string | null = null;
+  dialect: DialectValue | null = null;
 
   /**
    * Holds the scale in which the shape is being painted.

@@ -20,7 +20,6 @@ import Image from '../image/ImageBox';
 import Client from '../../Client';
 import {
   DEFAULT_VALID_COLOR,
-  DIALECT,
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_SIZE,
   HIGHLIGHT_STROKEWIDTH,
@@ -321,7 +320,7 @@ class ConstraintHandler {
 
             if (!this.focusHighlight) {
               const hl = this.createHighlightShape();
-              hl.dialect = DIALECT.SVG;
+              hl.dialect = 'svg';
               hl.pointerEvents = false;
 
               hl.init(this.graph.getView().getOverlayPane());
@@ -416,8 +415,7 @@ class ConstraintHandler {
           img.height
         );
         const icon = new ImageShape(bounds, src);
-        icon.dialect =
-          this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
+        icon.dialect = this.graph.dialect !== 'svg' ? 'mixedHtml' : 'svg';
         icon.preserveImageAspect = false;
         icon.init(this.graph.getView().getDecoratorPane());
 
