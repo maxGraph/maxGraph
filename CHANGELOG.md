@@ -23,6 +23,7 @@ _**Note:** Yet to be released breaking changes appear here._
   - `constants.TEXT_DIRECTION` --> `TextDirectionValue`
 - The `constants.NODETYPE` enum has been removed and replaced by the `constants.NODE_TYPE` value object.
   The former `DOCUMENTTYPE` enum member has been renamed to `DOCUMENT_TYPE`.
+- `constants.DIRECTION_MASK` is now read-only (types only).
 
 ## 0.19.0
 
