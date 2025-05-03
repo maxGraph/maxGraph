@@ -17,4 +17,4 @@ limitations under the License.
 import { constants } from '@maxgraph/core';
 
 export const isElement = (node: ChildNode): node is Element =>
-  node.nodeType === constants.NODETYPE.ELEMENT;
+  node.nodeType === constants.NODE_TYPE.ELEMENT;
