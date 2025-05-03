@@ -218,7 +218,7 @@ export const OrthogonalConnector: EdgeStyleFunction = (
   // Determine the side(s) of the source and target vertices
   // that the edge may connect to
   // portConstraint [source, target]
-  const portConstraint = [DIRECTION_MASK.ALL, DIRECTION_MASK.ALL];
+  const portConstraint: number[] = [DIRECTION_MASK.ALL, DIRECTION_MASK.ALL];
   let rotation = 0;
 
   if (source != null) {
