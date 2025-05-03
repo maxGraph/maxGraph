@@ -23,12 +23,17 @@ import {
   EdgeHandler,
   EdgeSegmentHandler,
   EdgeStyle,
+  type EdgeStyleFunction,
   ElbowEdgeHandler,
   Point,
   Rectangle,
   RectangleShape,
   VertexHandler,
 } from '../../src';
+
+const customEdgeStyle: EdgeStyleFunction = () => {
+  // do nothing, we just need a custom implementation that is not registered by default
+};
 
 describe('isOrthogonal', () => {
   test('Style of the CellState, orthogonal: true', () => {
@@ -62,10 +67,13 @@ describe('isOrthogonal', () => {
     expect(graph.isOrthogonal(cellState)).toBeTruthy();
   });
 
-  test('Style of the CellState, edgeStyle: Loop', () => {
+  test.each([
+    ['custom', customEdgeStyle],
+    ['Loop', EdgeStyle.Loop],
+  ])('Style of the CellState, edgeStyle: %s', (_name, edgeStyle) => {
     const graph = new BaseGraph();
     const cellState = new CellState(graph.view, null, {
-      edgeStyle: EdgeStyle.Loop,
+      edgeStyle: edgeStyle,
     });
     expect(graph.isOrthogonal(cellState)).toBeFalsy();
   });
@@ -108,6 +116,7 @@ describe('createEdgeHandler', () => {
   });
 
   test.each([
+    ['custom', customEdgeStyle],
     ['EntityRelation', EdgeStyle.EntityRelation],
     ['null', null],
   ])('Expect EdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
