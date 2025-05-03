@@ -18,7 +18,7 @@ import { describe, expect, test } from '@jest/globals';
 import { getPortConstraints, isNumeric } from '../../src/util/mathUtils';
 import { DIRECTION_MASK } from '../../src/util/Constants';
 import CellState from '../../src/view/cell/CellState';
-import { DirectionValue } from '../../src';
+import type { DirectionValue } from '../../src';
 
 describe('getPortConstraints', () => {
   const defaultMask = DIRECTION_MASK.NONE;
@@ -73,12 +73,12 @@ describe('getPortConstraints', () => {
     );
   });
 
-  test.each([
+  test.each<[DirectionValue, (typeof DIRECTION_MASK)[keyof typeof DIRECTION_MASK]]>([
     ['north', DIRECTION_MASK.NORTH],
     ['south', DIRECTION_MASK.SOUTH],
     ['east', DIRECTION_MASK.EAST],
     ['west', DIRECTION_MASK.WEST],
-  ])('handles single direction %s', (direction: DirectionValue, expectedMask: number) => {
+  ])('handles single direction %s', (direction, expectedMask) => {
     const terminal = new CellState();
     terminal.style = { portConstraint: direction };
     const edge = new CellState();
