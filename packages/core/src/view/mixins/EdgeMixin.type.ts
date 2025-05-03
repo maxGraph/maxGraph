@@ -129,8 +129,8 @@ declare module '../AbstractGraph' {
      * graph.flipEdge = function(edge) {
      *   if (edge) {
      *     const style = this.getCurrentCellStyle(edge);
-     *     const elbow = style.elbow ?? Constants.ELBOW.HORIZONTAL;
-     *     const value = (elbow == Constants.ELBOW.HORIZONTAL) ? Constants.'vertical' : Constants.ELBOW.HORIZONTAL;
+     *     const elbow = style.elbow ?? 'horizontal';
+     *     const value = (elbow == 'horizontal') ? 'vertical' : 'horizontal';
      *     this.setCellStyles('elbow', value, [edge]);
      *   }
      * };
