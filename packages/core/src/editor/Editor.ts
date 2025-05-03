@@ -33,7 +33,7 @@ import MaxForm from '../gui/MaxForm';
 import Outline from '../view/other/Outline';
 import Cell from '../view/cell/Cell';
 import Geometry from '../view/geometry/Geometry';
-import { ALIGN, FONT } from '../util/Constants';
+import { FONT } from '../util/Constants';
 import type { AbstractGraph } from '../view/AbstractGraph';
 import { Graph } from '../view/Graph';
 import SwimlaneManager from '../view/layout/SwimlaneManager';
@@ -1158,71 +1158,71 @@ export class Editor extends EventSource {
 
     this.addAction('alignCellsLeft', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN.LEFT);
+        editor.graph.alignCells('left');
       }
     });
 
     this.addAction('alignCellsCenter', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN.CENTER);
+        editor.graph.alignCells('center');
       }
     });
 
     this.addAction('alignCellsRight', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN.RIGHT);
+        editor.graph.alignCells('right');
       }
     });
 
     this.addAction('alignCellsTop', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN.TOP);
+        editor.graph.alignCells('top');
       }
     });
 
     this.addAction('alignCellsMiddle', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN.MIDDLE);
+        editor.graph.alignCells('middle');
       }
     });
 
     this.addAction('alignCellsBottom', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.alignCells(ALIGN.BOTTOM);
+        editor.graph.alignCells('bottom');
       }
     });
 
     this.addAction('alignFontLeft', (editor: Editor) => {
-      editor.graph.setCellStyles('align', ALIGN.LEFT);
+      editor.graph.setCellStyles('align', 'left');
     });
 
     this.addAction('alignFontCenter', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('align', ALIGN.CENTER);
+        editor.graph.setCellStyles('align', 'center');
       }
     });
 
     this.addAction('alignFontRight', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('align', ALIGN.RIGHT);
+        editor.graph.setCellStyles('align', 'right');
       }
     });
 
     this.addAction('alignFontTop', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('verticalAlign', ALIGN.TOP);
+        editor.graph.setCellStyles('verticalAlign', 'top');
       }
     });
 
     this.addAction('alignFontMiddle', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('verticalAlign', ALIGN.MIDDLE);
+        editor.graph.setCellStyles('verticalAlign', 'middle');
       }
     });
 
     this.addAction('alignFontBottom', (editor: Editor) => {
       if (editor.graph.isEnabled()) {
-        editor.graph.setCellStyles('verticalAlign', ALIGN.BOTTOM);
+        editor.graph.setCellStyles('verticalAlign', 'bottom');
       }
     });
 

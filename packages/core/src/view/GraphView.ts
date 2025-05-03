@@ -22,7 +22,7 @@ import Dictionary from '../util/Dictionary';
 import EventSource from './event/EventSource';
 import EventObject from './event/EventObject';
 import RectangleShape from './geometry/node/RectangleShape';
-import { ALIGN, NS_SVG } from '../util/Constants';
+import { NS_SVG } from '../util/Constants';
 import Client from '../Client';
 import InternalEvent from './event/InternalEvent';
 import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils';
@@ -1013,9 +1013,9 @@ export class GraphView extends EventSource {
    * @param state {@link CellState} whose absolute offset should be updated.
    */
   updateVertexLabelOffset(state: CellState): void {
-    const h = state.style.labelPosition ?? ALIGN.CENTER;
+    const h = state.style.labelPosition ?? 'center';
 
-    if (h === ALIGN.LEFT) {
+    if (h === 'left') {
       let lw = state.style.labelWidth ?? null;
 
       if (lw != null) {
@@ -1026,20 +1026,20 @@ export class GraphView extends EventSource {
 
       // @ts-ignore
       state.absoluteOffset.x -= lw;
-    } else if (h === ALIGN.RIGHT) {
+    } else if (h === 'right') {
       // @ts-ignore
       state.absoluteOffset.x += state.width;
-    } else if (h === ALIGN.CENTER) {
+    } else if (h === 'center') {
       const lw = state.style.labelWidth ?? null;
 
       if (lw != null) {
         // Aligns text block with given width inside the vertex width
-        const align = state.style.align ?? ALIGN.CENTER;
+        const align = state.style.align ?? 'center';
         let dx = 0;
 
-        if (align === ALIGN.CENTER) {
+        if (align === 'center') {
           dx = 0.5;
-        } else if (align === ALIGN.RIGHT) {
+        } else if (align === 'right') {
           dx = 1;
         }
 
@@ -1050,12 +1050,12 @@ export class GraphView extends EventSource {
       }
     }
 
-    const v = state.style.verticalLabelPosition ?? ALIGN.MIDDLE;
+    const v = state.style.verticalLabelPosition ?? 'middle';
 
-    if (v === ALIGN.TOP) {
+    if (v === 'top') {
       // @ts-ignore
       state.absoluteOffset.y -= state.height;
-    } else if (v === ALIGN.BOTTOM) {
+    } else if (v === 'bottom') {
       // @ts-ignore
       state.absoluteOffset.y += state.height;
     }

@@ -28,12 +28,7 @@ import {
   setCellStyleFlags,
   setCellStyles,
 } from '../../util/styleUtils';
-import {
-  ALIGN,
-  DEFAULT_FONTSIZE,
-  DEFAULT_IMAGESIZE,
-  DIRECTION,
-} from '../../util/Constants';
+import { DEFAULT_FONTSIZE, DEFAULT_IMAGESIZE, DIRECTION } from '../../util/Constants';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
@@ -380,26 +375,26 @@ export const CellsMixin: PartialType = {
 
           if (state && !cell.isEdge()) {
             if (param === null) {
-              if (align === ALIGN.CENTER) {
+              if (align === 'center') {
                 param = state.x + state.width / 2;
                 break;
-              } else if (align === ALIGN.RIGHT) {
+              } else if (align === 'right') {
                 param = state.x + state.width;
-              } else if (align === ALIGN.TOP) {
+              } else if (align === 'top') {
                 param = state.y;
-              } else if (align === ALIGN.MIDDLE) {
+              } else if (align === 'middle') {
                 param = state.y + state.height / 2;
                 break;
-              } else if (align === ALIGN.BOTTOM) {
+              } else if (align === 'bottom') {
                 param = state.y + state.height;
               } else {
                 param = state.x;
               }
-            } else if (align === ALIGN.RIGHT) {
+            } else if (align === 'right') {
               param = Math.max(param, state.x + state.width);
-            } else if (align === ALIGN.TOP) {
+            } else if (align === 'top') {
               param = Math.min(param, state.y);
-            } else if (align === ALIGN.BOTTOM) {
+            } else if (align === 'bottom') {
               param = Math.max(param, state.y + state.height);
             } else {
               param = Math.min(param, state.x);
@@ -424,15 +419,15 @@ export const CellsMixin: PartialType = {
               if (geo != null && !cell.isEdge()) {
                 geo = geo.clone();
 
-                if (align === ALIGN.CENTER) {
+                if (align === 'center') {
                   geo.x += (p - state.x - state.width / 2) / s;
-                } else if (align === ALIGN.RIGHT) {
+                } else if (align === 'right') {
                   geo.x += (p - state.x - state.width) / s;
-                } else if (align === ALIGN.TOP) {
+                } else if (align === 'top') {
                   geo.y += (p - state.y) / s;
-                } else if (align === ALIGN.MIDDLE) {
+                } else if (align === 'middle') {
                   geo.y += (p - state.y - state.height / 2) / s;
-                } else if (align === ALIGN.BOTTOM) {
+                } else if (align === 'bottom') {
                   geo.y += (p - state.y - state.height) / s;
                 } else {
                   geo.x += (p - state.x) / s;
@@ -904,19 +899,19 @@ export const CellsMixin: PartialType = {
           this.getDataModel().setStyle(cell, cellStyle);
         } else {
           const state = this.getView().createState(cell);
-          const align = state.style.align ?? ALIGN.CENTER;
+          const align = state.style.align ?? 'center';
 
-          if (align === ALIGN.RIGHT) {
+          if (align === 'right') {
             geo.x += geo.width - size.width;
-          } else if (align === ALIGN.CENTER) {
+          } else if (align === 'center') {
             geo.x += Math.round((geo.width - size.width) / 2);
           }
 
           const valign = state.getVerticalAlign();
 
-          if (valign === ALIGN.BOTTOM) {
+          if (valign === 'bottom') {
             geo.y += geo.height - size.height;
-          } else if (valign === ALIGN.MIDDLE) {
+          } else if (valign === 'middle') {
             geo.y += Math.round((geo.height - size.height) / 2);
           }
 
@@ -958,11 +953,11 @@ export const CellsMixin: PartialType = {
       // Adds dimension of image if shape is a label
       if (state.getImageSrc() || style.image) {
         if (style.shape === 'label') {
-          if (style.verticalAlign === ALIGN.MIDDLE) {
+          if (style.verticalAlign === 'middle') {
             dx += style.imageWidth || DEFAULT_IMAGESIZE;
           }
 
-          if (style.align !== ALIGN.CENTER) {
+          if (style.align !== 'center') {
             dy += style.imageHeight || DEFAULT_IMAGESIZE;
           }
         }

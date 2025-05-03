@@ -21,7 +21,6 @@ import {
   CellEditorHandler,
   Client,
   ConnectionHandler,
-  constants,
   DomHelpers,
   domUtils,
   EdgeStyle,
@@ -501,7 +500,7 @@ const Template = ({ label, ...args }) => {
   );
 
   // Uses the entity perimeter (below) as default
-  graph.stylesheet.getDefaultVertexStyle().verticalAlign = constants.ALIGN.TOP;
+  graph.stylesheet.getDefaultVertexStyle().verticalAlign = 'top';
   graph.stylesheet.getDefaultVertexStyle().shadow = true;
   graph.stylesheet.getDefaultVertexStyle().fillColor = '#DDEAFF';
   graph.stylesheet.getDefaultVertexStyle().gradientColor = '#A9C4EB';

@@ -174,16 +174,16 @@ import { doEval, isElement } from '../internal/utils';
  * For decoding JavaScript expressions, the add-node may be used with a text
  * content that contains the JavaScript expression. For example, the following
  * creates a field called foo in the enclosing object and assigns it the value
- * of {@link ALIGN.LEFT}.
+ * of `MyConstant.PROP`.
  *
  * ```javascript
  * <Object>
- *   <add as="foo">constants.ALIGN.LEFT</add>
+ *   <add as="foo">MyConstant.PROP</add>
  * </Object>
  * ```
  *
- * The resulting object has a field called foo with the value "left". Its XML
- * representation looks as follows.
+ * The resulting object has a field called foo with the value "myValue" (assuming that `MyConstant.PROP=myValue`).
+ * Its XML representation looks as follows.
  *
  * ```javascript
  * <Object foo="left"/>

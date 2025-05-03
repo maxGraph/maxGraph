@@ -21,7 +21,6 @@ import ConnectorShape from '../geometry/edge/ConnectorShape';
 import ImageShape from '../geometry/node/ImageShape';
 import TextShape from '../geometry/node/TextShape';
 import {
-  ALIGN,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
@@ -357,7 +356,7 @@ class CellRenderer {
       state.text = new this.defaultTextShape(
         value,
         new Rectangle(),
-        state.style.align ?? ALIGN.CENTER,
+        state.style.align ?? 'center',
         state.getVerticalAlign(),
         state.style.fontColor,
         state.style.fontFamily,
@@ -1030,10 +1029,10 @@ class CellRenderer {
 
     // Shape can modify its label bounds
     if (state.shape != null) {
-      const hpos = state.style.labelPosition ?? ALIGN.CENTER;
-      const vpos = state.style.verticalLabelPosition ?? ALIGN.MIDDLE;
+      const hpos = state.style.labelPosition ?? 'center';
+      const vpos = state.style.verticalLabelPosition ?? 'middle';
 
-      if (hpos === ALIGN.CENTER && vpos === ALIGN.MIDDLE) {
+      if (hpos === 'center' && vpos === 'middle') {
         bounds = state.shape.getLabelBounds(bounds);
       }
     }
@@ -1059,42 +1058,39 @@ class CellRenderer {
    * @param bounds {@link Rectangle} the rectangle to be rotated.
    */
   rotateLabelBounds(state: CellState, bounds: Rectangle): void {
-    bounds.y -= state.text!.margin!.y * bounds.height;
-    bounds.x -= state.text!.margin!.x * bounds.width;
+    const textShape = state.text!;
+    bounds.y -= textShape.margin!.y * bounds.height;
+    bounds.x -= textShape.margin!.x * bounds.width;
 
     if (
       !this.legacySpacing ||
       (state.style.overflow !== 'fill' && state.style.overflow !== 'width')
     ) {
       const s = state.view.scale;
-      const spacing = state.text!.getSpacing();
+      const spacing = textShape.getSpacing();
       bounds.x += spacing.x * s;
       bounds.y += spacing.y * s;
 
-      const hpos = state.style.labelPosition ?? ALIGN.CENTER;
-      const vpos = state.style.verticalLabelPosition ?? ALIGN.MIDDLE;
+      const hpos = state.style.labelPosition ?? 'center';
+      const vpos = state.style.verticalLabelPosition ?? 'middle';
       const lw = state.style.labelWidth ?? null;
 
       bounds.width = Math.max(
         0,
         bounds.width -
-          (hpos === ALIGN.CENTER && lw == null
-            ? // @ts-ignore
-              state.text.spacingLeft * s + state.text.spacingRight * s
+          (hpos === 'center' && lw == null
+            ? textShape.spacingLeft * s + textShape.spacingRight * s
             : 0)
       );
       bounds.height = Math.max(
         0,
         bounds.height -
-          (vpos === ALIGN.MIDDLE
-            ? // @ts-ignore
-              state.text.spacingTop * s + state.text.spacingBottom * s
-            : 0)
+          (vpos === 'middle' ? textShape.spacingTop * s + textShape.spacingBottom * s : 0)
       );
     }
 
     // @ts-ignore
-    const theta = state.text.getTextRotation();
+    const theta = textShape.getTextRotation();
 
     // Only needed if rotated around another center
     if (
