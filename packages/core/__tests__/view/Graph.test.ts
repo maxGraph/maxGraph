@@ -122,7 +122,10 @@ describe('createEdgeHandler', () => {
   ])('Expect EdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
     const graph = new BaseGraph();
     const cellState = createCellState(graph, true);
-    expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(EdgeHandler);
+    const edgeHandler = graph.createEdgeHandler(cellState, edgeStyle);
+    expect(edgeHandler).toBeInstanceOf(EdgeHandler);
+    expect(edgeHandler).not.toBeInstanceOf(EdgeSegmentHandler);
+    expect(edgeHandler).not.toBeInstanceOf(ElbowEdgeHandler);
   });
 });
 
