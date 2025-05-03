@@ -20,7 +20,6 @@ import type Rectangle from '../../geometry/Rectangle';
 import type CellState from '../../cell/CellState';
 import Point from '../../geometry/Point';
 import type { PerimeterFunction } from '../../../types';
-import { DIRECTION } from '../../../util/Constants';
 import { intersection } from '../../../util/mathUtils';
 
 /**
@@ -35,7 +34,7 @@ export const TrianglePerimeter: PerimeterFunction = (
   orthogonal = false
 ): Point | null => {
   const direction = vertex != null ? vertex.style.direction : null;
-  const vertical = direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH;
+  const vertical = direction === 'north' || direction === 'south';
 
   const { x } = bounds;
   const { y } = bounds;
@@ -49,14 +48,14 @@ export const TrianglePerimeter: PerimeterFunction = (
   let corner = new Point(x + w, cy);
   let end = new Point(x, y + h);
 
-  if (direction === DIRECTION.NORTH) {
+  if (direction === 'north') {
     start = end;
     corner = new Point(cx, y);
     end = new Point(x + w, y + h);
-  } else if (direction === DIRECTION.SOUTH) {
+  } else if (direction === 'south') {
     corner = new Point(cx, y + h);
     end = new Point(x + w, y);
-  } else if (direction === DIRECTION.WEST) {
+  } else if (direction === 'west') {
     start = new Point(x + w, y);
     corner = new Point(x, cy);
     end = new Point(x + w, y + h);
@@ -70,7 +69,7 @@ export const TrianglePerimeter: PerimeterFunction = (
 
   let base = false;
 
-  if (direction === DIRECTION.NORTH || direction === DIRECTION.WEST) {
+  if (direction === 'north' || direction === 'west') {
     base = alpha > -t && alpha < t;
   } else {
     base = alpha < -Math.PI + t || alpha > Math.PI - t;
@@ -89,11 +88,11 @@ export const TrianglePerimeter: PerimeterFunction = (
       } else {
         result = new Point(start.x, next.y);
       }
-    } else if (direction === DIRECTION.NORTH) {
+    } else if (direction === 'north') {
       result = new Point(x + w / 2 + (h * Math.tan(alpha)) / 2, y + h);
-    } else if (direction === DIRECTION.SOUTH) {
+    } else if (direction === 'south') {
       result = new Point(x + w / 2 - (h * Math.tan(alpha)) / 2, y);
-    } else if (direction === DIRECTION.WEST) {
+    } else if (direction === 'west') {
       result = new Point(x + w, y + h / 2 + (w * Math.tan(alpha)) / 2);
     } else {
       result = new Point(x, y + h / 2 - (w * Math.tan(alpha)) / 2);
@@ -103,11 +102,11 @@ export const TrianglePerimeter: PerimeterFunction = (
       const pt = new Point(cx, cy);
 
       if (next.y >= y && next.y <= y + h) {
-        pt.x = vertical ? cx : direction === DIRECTION.WEST ? x + w : x;
+        pt.x = vertical ? cx : direction === 'west' ? x + w : x;
         pt.y = next.y;
       } else if (next.x >= x && next.x <= x + w) {
         pt.x = next.x;
-        pt.y = !vertical ? cy : direction === DIRECTION.NORTH ? y + h : y;
+        pt.y = !vertical ? cy : direction === 'north' ? y + h : y;
       }
 
       // Compute angle

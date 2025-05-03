@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DIRECTION, ENTITY_SEGMENT } from '../../util/Constants';
+import { ENTITY_SEGMENT } from '../../util/Constants';
 import { shallowCopy } from '../../internal/clone-utils';
 import type { DirectionValue } from '../../types';
 
 /**
- * Configure the {@link EdgeStyle.EntityRelation} connector.
+ * Configure the {@link EntityRelation} connector.
  *
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.15.0
@@ -49,7 +49,7 @@ export const resetEntityRelationConnectorConfig = (): void => {
 };
 
 /**
- * Configure the {@link EdgeStyle.OrthConnector}.
+ * Configure the {@link OrthConnector}.
  *
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.16.0
@@ -123,8 +123,12 @@ export type ManhattanConnectorConfigType = {
   step: number;
 };
 
+const allDirections = (): DirectionValue[] => {
+  return ['north', 'south', 'east', 'west'];
+};
+
 /**
- * Configure the {@link EdgeStyle.ManhattanConnector}.
+ * Configure the {@link ManhattanConnector}.
  *
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.16.0
@@ -134,8 +138,8 @@ export type ManhattanConnectorConfigType = {
 export const ManhattanConnectorConfig: ManhattanConnectorConfigType = {
   maxAllowedDirectionChange: 90,
   maxLoops: 2000,
-  endDirections: Object.values(DIRECTION),
-  startDirections: Object.values(DIRECTION),
+  endDirections: allDirections(),
+  startDirections: allDirections(),
   step: 12,
 };
 

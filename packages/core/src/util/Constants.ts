@@ -436,25 +436,6 @@ export enum FONT {
   STRIKETHROUGH = 8,
 }
 
-export enum DIRECTION {
-  NORTH = 'north',
-  SOUTH = 'south',
-  EAST = 'east',
-  WEST = 'west',
-}
-
-export enum TEXT_DIRECTION {
-  /**
-   * Use this value to use the default text direction of the operating system. */
-  DEFAULT = '',
-  /** Use this value to find the direction for a given text with {@link Text#getAutoDirection}. */
-  AUTO = 'auto',
-  /** Use this value for left to right text direction. */
-  LTR = 'ltr',
-  /** Use this value for right to left text direction. */
-  RTL = 'rtl',
-}
-
 /**
  * Bitwise mask for all directions.
  */

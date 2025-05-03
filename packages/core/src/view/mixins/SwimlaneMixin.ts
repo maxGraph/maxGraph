@@ -17,7 +17,7 @@ limitations under the License.
 import Rectangle from '../geometry/Rectangle';
 import { convertPoint } from '../../util/styleUtils';
 import { mod } from '../../util/mathUtils';
-import { DEFAULT_STARTSIZE, DIRECTION } from '../../util/Constants';
+import { DEFAULT_STARTSIZE } from '../../util/Constants';
 import { getClientX, getClientY } from '../../util/EventUtils';
 import type { AbstractGraph } from '../AbstractGraph';
 import type { DirectionValue } from '../../types';
@@ -139,17 +139,17 @@ export const SwimlaneMixin: PartialType = {
   },
 
   getSwimlaneDirection(style) {
-    const dir = style.direction ?? DIRECTION.EAST;
+    const dir = style.direction ?? 'east';
     const flipH = style.flipH;
     const flipV = style.flipV;
     const h = style.horizontal ?? true;
     let n = h ? 0 : 3;
 
-    if (dir === DIRECTION.NORTH) {
+    if (dir === 'north') {
       n--;
-    } else if (dir === DIRECTION.WEST) {
+    } else if (dir === 'west') {
       n += 2;
-    } else if (dir === DIRECTION.SOUTH) {
+    } else if (dir === 'south') {
       n += 1;
     }
 
@@ -163,9 +163,7 @@ export const SwimlaneMixin: PartialType = {
       n += 2;
     }
 
-    return [DIRECTION.NORTH, DIRECTION.EAST, DIRECTION.SOUTH, DIRECTION.WEST][
-      mod(n, 4)
-    ] as DirectionValue;
+    return ['north', 'east', 'south', 'west'][mod(n, 4)] as DirectionValue;
   },
 
   getActualStartSize(swimlane, ignoreState = false) {
@@ -176,11 +174,11 @@ export const SwimlaneMixin: PartialType = {
       const size = style.startSize ?? DEFAULT_STARTSIZE;
       const dir = this.getSwimlaneDirection(style);
 
-      if (dir === DIRECTION.NORTH) {
+      if (dir === 'north') {
         result.y = size;
-      } else if (dir === DIRECTION.WEST) {
+      } else if (dir === 'west') {
         result.x = size;
-      } else if (dir === DIRECTION.SOUTH) {
+      } else if (dir === 'south') {
         result.height = size;
       } else {
         result.width = size;

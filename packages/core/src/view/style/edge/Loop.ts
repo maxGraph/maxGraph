@@ -18,7 +18,6 @@ limitations under the License.
 
 import CellState from '../../cell/CellState';
 import Point from '../../geometry/Point';
-import { DIRECTION } from '../../../util/Constants';
 import { contains } from '../../../util/mathUtils';
 
 import type { EdgeStyleFunction } from '../../../types';
@@ -70,9 +69,9 @@ export const Loop: EdgeStyleFunction = (
     let dy = 0;
 
     const seg = (state.style.segment ?? graph.gridSize) * view.scale;
-    const dir = state.style?.direction ?? DIRECTION.WEST;
+    const dir = state.style?.direction ?? 'west';
 
-    if (dir === DIRECTION.NORTH || dir === DIRECTION.SOUTH) {
+    if (dir === 'north' || dir === 'south') {
       x = view.getRoutingCenterX(source);
       dx = seg;
     } else {
@@ -84,11 +83,11 @@ export const Loop: EdgeStyleFunction = (
       if (pt != null) {
         x = pt.x;
         dy = Math.max(Math.abs(y - pt.y), dy);
-      } else if (dir === DIRECTION.NORTH) {
+      } else if (dir === 'north') {
         y = source.y - 2 * dx;
-      } else if (dir === DIRECTION.SOUTH) {
+      } else if (dir === 'south') {
         y = source.y + source.height + 2 * dx;
-      } else if (dir === DIRECTION.EAST) {
+      } else if (dir === 'east') {
         x = source.x - 2 * dy;
       } else {
         x = source.x + source.width + 2 * dy;

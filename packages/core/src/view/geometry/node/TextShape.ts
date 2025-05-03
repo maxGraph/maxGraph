@@ -26,7 +26,6 @@ import {
   DIALECT,
   FONT,
   NONE,
-  TEXT_DIRECTION,
   WORD_WRAP,
   LINE_HEIGHT,
 } from '../../../util/Constants';
@@ -273,12 +272,12 @@ class TextShape extends Shape {
 
       let dir: TextDirectionValue = this.textDirection;
 
-      if (dir === TEXT_DIRECTION.AUTO && !realHtml) {
+      if (dir === 'auto' && !realHtml) {
         dir = this.getAutoDirection();
       }
 
-      if (dir !== TEXT_DIRECTION.LTR && dir !== TEXT_DIRECTION.RTL) {
-        dir = TEXT_DIRECTION.DEFAULT;
+      if (dir !== 'ltr' && dir !== 'rtl') {
+        dir = '';
       }
 
       c.text(
@@ -398,12 +397,13 @@ class TextShape extends Shape {
   }
 
   /**
-   * Used to determine the automatic text direction. Returns
-   * {@link Constants#TEXT_DIRECTION_LTR} or {@link Constants#TEXT_DIRECTION_RTL}
-   * depending on the contents of <value>. This is not invoked for HTML, wrapped
-   * content or if <value> is a DOM node.
+   * Used to determine the automatic text direction.
+   *
+   * Returns 'ltr' or 'rtl' depending on the contents of {@link value}.
+   *
+   * This is not invoked for HTML, wrapped content or if {@link value} is a DOM node.
    */
-  getAutoDirection() {
+  getAutoDirection(): TextDirectionValue {
     // Looks for strong (directional) characters
     const tmp =
       /[A-Za-z\u05d0-\u065f\u066a-\u06ef\u06fa-\u07ff\ufb1d-\ufdff\ufe70-\ufefc]/.exec(
@@ -411,9 +411,7 @@ class TextShape extends Shape {
       );
 
     // Returns the direction defined by the character
-    return tmp && tmp.length > 0 && tmp[0] > 'z'
-      ? TEXT_DIRECTION.RTL
-      : TEXT_DIRECTION.LTR;
+    return tmp && tmp.length > 0 && tmp[0] > 'z' ? 'rtl' : 'ltr';
   }
 
   /**
@@ -771,11 +769,11 @@ class TextShape extends Shape {
       if (divs.length > 0) {
         let dir = this.textDirection;
 
-        if (dir === TEXT_DIRECTION.AUTO && this.dialect !== DIALECT.STRICTHTML) {
+        if (dir === 'auto' && this.dialect !== DIALECT.STRICTHTML) {
           dir = this.getAutoDirection();
         }
 
-        if (dir === TEXT_DIRECTION.LTR || dir === TEXT_DIRECTION.RTL) {
+        if (dir === 'ltr' || dir === 'rtl') {
           divs[divs.length - 1].setAttribute('dir', dir);
         } else {
           divs[divs.length - 1].removeAttribute('dir');

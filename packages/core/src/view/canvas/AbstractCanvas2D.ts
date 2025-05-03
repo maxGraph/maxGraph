@@ -17,12 +17,7 @@ limitations under the License.
 */
 
 import { arcToCurves, getRotatedPoint } from '../../util/mathUtils';
-import {
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
-  DIRECTION,
-  NONE,
-} from '../../util/Constants';
+import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, NONE } from '../../util/Constants';
 import UrlConverter from '../../util/UrlConverter';
 import Point from '../geometry/Point';
 import { clone } from '../../util/cloneUtils';
@@ -165,7 +160,7 @@ abstract class AbstractCanvas2D {
       gradientFillAlpha: 1,
       gradientColor: NONE,
       gradientAlpha: 1,
-      gradientDirection: DIRECTION.EAST,
+      gradientDirection: 'east',
       strokeColor: NONE,
       strokeWidth: 1,
       dashed: false,

@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import GraphLayout from './GraphLayout';
-import { DIRECTION } from '../../util/Constants';
+import type { DirectionValue } from '../../types';
 import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
 import Dictionary from '../../util/Dictionary';
 import Rectangle from '../geometry/Rectangle';
@@ -41,12 +41,16 @@ class SwimlaneLayout extends GraphLayout {
    * Constructs a new hierarchical layout algorithm.
    *
    * @param graph Reference to the enclosing {@link AbstractGraph}.
-   * @param orientation Optional constant that defines the orientation of this layout. Default is {@link DIRECTION.NORTH}.
-   * @param deterministic Optional boolean that specifies if this layout should be deterministic. Default is true.
+   * @param orientation Optional constant that defines the orientation of this layout. Default is 'north'.
+   * @param deterministic Optional boolean that specifies if this layout should be deterministic. Default is `true`.
    */
-  constructor(graph: AbstractGraph, orientation: DIRECTION | null, deterministic = true) {
+  constructor(
+    graph: AbstractGraph,
+    orientation: DirectionValue | null,
+    deterministic = true
+  ) {
     super(graph);
-    this.orientation = orientation != null ? orientation : DIRECTION.NORTH;
+    this.orientation = orientation != null ? orientation : 'north';
     this.deterministic = deterministic != null ? deterministic : true;
   }
 
@@ -117,9 +121,9 @@ class SwimlaneLayout extends GraphLayout {
 
   /**
    * The position of the root node(s) relative to the laid out graph in.
-   * Default is {@link Constants#DIRECTION_NORTH}.
+   * @default 'north'.
    */
-  orientation: DIRECTION = DIRECTION.NORTH;
+  orientation: DirectionValue = 'north';
 
   /**
    * Whether or not to perform local optimisations and iterate multiple times

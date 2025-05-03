@@ -12,11 +12,13 @@ _**Note:** Yet to be released breaking changes appear here._
 **Breaking Changes**:
 - Some enums have been removed. Use the string counterparts from related types:
   - `constants.ALIGN` --> `AlignValue` and `VAlignValue` 
-  - `constants.ARROW` --> `ArrowValue` 
+  - `constants.ARROW` --> `ArrowValue`
+  - `constants.DIRECTION` --> `DirectionValue`
   - `constants.EDGESTYLE` --> `EdgeStyleValue` 
   - `constants.PERIMETER` --> `PerimeterValue`
   - `constants.RENDERING_HINT`: no replacement as it wasn't used
   - `constants.SHAPE` --> `ShapeValue`
+  - `constants.TEXT_DIRECTION` --> `TextDirectionValue`
 
 ## 0.19.0
 

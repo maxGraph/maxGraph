@@ -19,7 +19,6 @@ import Shape from '../Shape';
 import Rectangle from '../Rectangle';
 import {
   DEFAULT_STARTSIZE,
-  DIRECTION,
   LINE_ARCSIZE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
@@ -93,16 +92,15 @@ class SwimlaneShape extends Shape {
     const flipV = this.style?.flipV ?? false;
 
     // East is default
-    const shapeVertical =
-      this.direction === DIRECTION.NORTH || this.direction === DIRECTION.SOUTH;
+    const shapeVertical = this.direction === 'north' || this.direction === 'south';
     const realHorizontal = horizontal == !shapeVertical;
 
     const realFlipH =
       !realHorizontal &&
-      flipH !== (this.direction === DIRECTION.SOUTH || this.direction === DIRECTION.WEST);
+      flipH !== (this.direction === 'south' || this.direction === 'west');
     const realFlipV =
       realHorizontal &&
-      flipV !== (this.direction === DIRECTION.SOUTH || this.direction === DIRECTION.WEST);
+      flipV !== (this.direction === 'south' || this.direction === 'west');
 
     // Shape is horizontal
     if (!shapeVertical) {

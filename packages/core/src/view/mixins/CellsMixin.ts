@@ -28,7 +28,7 @@ import {
   setCellStyleFlags,
   setCellStyles,
 } from '../../util/styleUtils';
-import { DEFAULT_FONTSIZE, DEFAULT_IMAGESIZE, DIRECTION } from '../../util/Constants';
+import { DEFAULT_FONTSIZE, DEFAULT_IMAGESIZE } from '../../util/Constants';
 import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
@@ -1411,21 +1411,21 @@ export const CellsMixin: PartialType = {
           if (this.isSwimlane(parent)) {
             const size = this.getStartSize(parent);
             const style = this.getCurrentCellStyle(parent);
-            const dir = style.direction ?? DIRECTION.EAST;
+            const dir = style.direction ?? 'east';
             const flipH = style.flipH ?? false;
             const flipV = style.flipV ?? false;
 
-            if (dir === DIRECTION.SOUTH || dir === DIRECTION.NORTH) {
+            if (dir === 'south' || dir === 'north') {
               const tmp = size.width;
               size.width = size.height;
               size.height = tmp;
             }
 
             if (
-              (dir === DIRECTION.EAST && !flipV) ||
-              (dir === DIRECTION.NORTH && !flipH) ||
-              (dir === DIRECTION.WEST && flipV) ||
-              (dir === DIRECTION.SOUTH && flipH)
+              (dir === 'east' && !flipV) ||
+              (dir === 'north' && !flipH) ||
+              (dir === 'west' && flipV) ||
+              (dir === 'south' && flipH)
             ) {
               x = size.width;
               y = size.height;

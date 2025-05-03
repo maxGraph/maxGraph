@@ -20,7 +20,6 @@ import type Rectangle from '../../geometry/Rectangle';
 import type CellState from '../../cell/CellState';
 import Point from '../../geometry/Point';
 import type { PerimeterFunction } from '../../../types';
-import { DIRECTION } from '../../../util/Constants';
 import { intersection } from '../../../util/mathUtils';
 
 /**
@@ -51,8 +50,8 @@ export const HexagonPerimeter: PerimeterFunction = (
 
   let result: Point | null = new Point(cx, cy);
 
-  const direction = vertex?.style?.direction ?? DIRECTION.EAST;
-  const vertical = direction === DIRECTION.NORTH || direction === DIRECTION.SOUTH;
+  const direction = vertex?.style?.direction ?? 'east';
+  const vertical = direction === 'north' || direction === 'south';
   let a = new Point();
   let b = new Point();
 

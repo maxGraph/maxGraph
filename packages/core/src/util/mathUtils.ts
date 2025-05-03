@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DIRECTION, DIRECTION_MASK } from './Constants';
+import { DIRECTION_MASK } from './Constants';
 import Point from '../view/geometry/Point';
 import Rectangle from '../view/geometry/Rectangle';
 import CellState from '../view/cell/CellState';
@@ -254,7 +254,7 @@ export const getPortConstraints = (
     }
   }
 
-  if (directions.indexOf(DIRECTION.NORTH) >= 0) {
+  if (directions.indexOf('north') >= 0) {
     switch (quad) {
       case 0:
         returnValue |= DIRECTION_MASK.NORTH;
@@ -270,7 +270,7 @@ export const getPortConstraints = (
         break;
     }
   }
-  if (directions.indexOf(DIRECTION.WEST) >= 0) {
+  if (directions.indexOf('west') >= 0) {
     switch (quad) {
       case 0:
         returnValue |= DIRECTION_MASK.WEST;
@@ -286,7 +286,7 @@ export const getPortConstraints = (
         break;
     }
   }
-  if (directions.indexOf(DIRECTION.SOUTH) >= 0) {
+  if (directions.indexOf('south') >= 0) {
     switch (quad) {
       case 0:
         returnValue |= DIRECTION_MASK.SOUTH;
@@ -302,7 +302,7 @@ export const getPortConstraints = (
         break;
     }
   }
-  if (directions.indexOf(DIRECTION.EAST) >= 0) {
+  if (directions.indexOf('east') >= 0) {
     switch (quad) {
       case 0:
         returnValue |= DIRECTION_MASK.EAST;
@@ -388,8 +388,8 @@ export const getDirectedBounds = (
   m.height = Math.round(Math.max(0, Math.min(rect.height, m.height)));
 
   if (
-    (flipV && (d === DIRECTION.SOUTH || d === DIRECTION.NORTH)) ||
-    (flipH && (d === DIRECTION.EAST || d === DIRECTION.WEST))
+    (flipV && (d === 'south' || d === 'north')) ||
+    (flipH && (d === 'east' || d === 'west'))
   ) {
     const tmp = m.x;
     m.x = m.width;
@@ -397,8 +397,8 @@ export const getDirectedBounds = (
   }
 
   if (
-    (flipH && (d === DIRECTION.SOUTH || d === DIRECTION.NORTH)) ||
-    (flipV && (d === DIRECTION.EAST || d === DIRECTION.WEST))
+    (flipH && (d === 'south' || d === 'north')) ||
+    (flipV && (d === 'east' || d === 'west'))
   ) {
     const tmp = m.y;
     m.y = m.height;
@@ -407,17 +407,17 @@ export const getDirectedBounds = (
 
   const m2 = Rectangle.fromRectangle(m);
 
-  if (d === DIRECTION.SOUTH) {
+  if (d === 'south') {
     m2.y = m.x;
     m2.x = m.height;
     m2.width = m.y;
     m2.height = m.width;
-  } else if (d === DIRECTION.WEST) {
+  } else if (d === 'west') {
     m2.y = m.height;
     m2.x = m.width;
     m2.width = m.x;
     m2.height = m.y;
-  } else if (d === DIRECTION.NORTH) {
+  } else if (d === 'north') {
     m2.y = m.width;
     m2.x = m.y;
     m2.width = m.height;

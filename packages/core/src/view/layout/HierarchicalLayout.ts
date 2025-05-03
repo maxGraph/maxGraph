@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import GraphLayout from './GraphLayout';
-import { DIRECTION } from '../../util/Constants';
+import type { DirectionValue } from '../../types';
 import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
 import Dictionary from '../../util/Dictionary';
 import GraphHierarchyModel from './hierarchical/GraphHierarchyModel';
@@ -39,12 +39,12 @@ class HierarchicalLayout extends GraphLayout {
    * Constructs a new hierarchical layout algorithm.
    *
    * @param graph Reference to the enclosing {@link AbstractGraph}.
-   * @param orientation Optional constant that defines the orientation of this layout. Default is {@link DIRECTION.NORTH}.
+   * @param orientation Optional constant that defines the orientation of this layout. Default is 'north'.
    * @param deterministic Optional boolean that specifies if this layout should be deterministic. Default is true.
    */
   constructor(
     graph: AbstractGraph,
-    orientation: DIRECTION = DIRECTION.NORTH,
+    orientation: DirectionValue = 'north',
     deterministic = true
   ) {
     super(graph);
@@ -109,9 +109,9 @@ class HierarchicalLayout extends GraphLayout {
 
   /**
    * The position of the root node(s) relative to the laid out graph in.
-   * Default is <mxConstants.DIRECTION.NORTH>.
+   * @default north
    */
-  orientation: DIRECTION = DIRECTION.NORTH;
+  orientation: DirectionValue = 'north';
 
   /**
    * Whether or not to perform local optimisations and iterate multiple times
