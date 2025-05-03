@@ -22,7 +22,7 @@ import EventSource from '../view/event/EventSource';
 import { fit, getCurrentStyle } from '../util/styleUtils';
 import InternalEvent from '../view/event/InternalEvent';
 import Client from '../Client';
-import { NODETYPE } from '../util/Constants';
+import { NODE_TYPE } from '../util/Constants';
 import { write } from '../util/domUtils';
 import { getClientX, getClientY } from '../util/EventUtils';
 
@@ -371,7 +371,7 @@ export default class MaxWindow extends EventSource {
     while (child != null) {
       const next = child.nextSibling;
 
-      if (child.nodeType === NODETYPE.TEXT) {
+      if (child.nodeType === NODE_TYPE.TEXT) {
         (<Element>child.parentNode).removeChild(child);
       }
 

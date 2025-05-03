@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODETYPE, NS_SVG } from './Constants';
+import { NODE_TYPE, NS_SVG } from './Constants';
 import Point from '../view/geometry/Point';
 import type Cell from '../view/cell/Cell';
 import type { AbstractGraph } from '../view/AbstractGraph';
@@ -147,7 +147,7 @@ export const getPrettyXml = (
       }
     }
 
-    if (node.nodeType === NODETYPE.DOCUMENT) {
+    if (node.nodeType === NODE_TYPE.DOCUMENT) {
       result.push(
         getPrettyXml(
           (<Document>(<unknown>node)).documentElement,
@@ -157,7 +157,7 @@ export const getPrettyXml = (
           ns
         )
       );
-    } else if (node.nodeType === NODETYPE.DOCUMENT_FRAGMENT) {
+    } else if (node.nodeType === NODE_TYPE.DOCUMENT_FRAGMENT) {
       let tmp = node.firstChild;
 
       if (tmp != null) {
@@ -166,19 +166,19 @@ export const getPrettyXml = (
           tmp = tmp.nextSibling;
         }
       }
-    } else if (node.nodeType === NODETYPE.COMMENT) {
+    } else if (node.nodeType === NODE_TYPE.COMMENT) {
       const value = getTextContent(<Text>(<unknown>node));
 
       if (value.length > 0) {
         result.push(`${indent}<!--${value}-->${newline}`);
       }
-    } else if (node.nodeType === NODETYPE.TEXT) {
+    } else if (node.nodeType === NODE_TYPE.TEXT) {
       const value = trim(getTextContent(<Text>(<unknown>node)));
 
       if (value && value.length > 0) {
         result.push(indent + htmlEntities(value, false) + newline);
       }
-    } else if (node.nodeType === NODETYPE.CDATA) {
+    } else if (node.nodeType === NODE_TYPE.CDATA) {
       const value = getTextContent(<Text>(<unknown>node));
 
       if (value.length > 0) {

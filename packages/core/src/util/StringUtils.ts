@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODETYPE } from './Constants';
+import { NODE_TYPE } from './Constants';
 import { getTextContent } from './domUtils';
 
 import type { Properties } from '../types';
@@ -116,7 +116,7 @@ export const replaceTrailingNewlines = (str: string, pattern: string): string =>
 export const removeWhitespace = (node: HTMLElement, before: boolean) => {
   let tmp = before ? node.previousSibling : node.nextSibling;
 
-  while (tmp != null && tmp.nodeType === NODETYPE.TEXT) {
+  while (tmp != null && tmp.nodeType === NODE_TYPE.TEXT) {
     const next = before ? tmp.previousSibling : tmp.nextSibling;
     const text = getTextContent(<Text>tmp);
 

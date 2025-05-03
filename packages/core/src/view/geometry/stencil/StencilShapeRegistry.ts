@@ -32,7 +32,7 @@ type Stencils = {
  * let shape = root.firstChild;
  *
  * while (shape) {
- *   if (shape.nodeType === constants.NODETYPE.ELEMENT) {
+ *   if (shape.nodeType === constants.NODE_TYPE.ELEMENT) {
  *    StencilShapeRegistry.addStencil(shape.getAttribute('name'), new StencilShape(shape));
  *  }
  *

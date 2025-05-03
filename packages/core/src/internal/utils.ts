@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODETYPE } from '../util/Constants';
+import { NODE_TYPE } from '../util/Constants';
 import { UserObject } from './types';
 import { GlobalConfig } from '../util/config';
 
@@ -31,7 +31,7 @@ export const doEval = (expression: string): any => {
  * @private
  */
 export const isElement = (node?: Node | UserObject | null): node is Element =>
-  node?.nodeType === NODETYPE.ELEMENT;
+  node?.nodeType === NODE_TYPE.ELEMENT;
 
 /**
  * @private not part of the public API, can be removed or changed without prior notice

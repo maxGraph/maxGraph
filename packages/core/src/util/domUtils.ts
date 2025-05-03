@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODETYPE } from './Constants';
+import { NODE_TYPE } from './Constants';
 
 /**
  * Returns the text content of the specified node.
@@ -262,14 +262,12 @@ export const isAncestorNode = (ancestor: Element, child: Element | null) => {
  * Returns an array of child nodes that are of the given node type.
  *
  * @param node Parent DOM node to return the children from.
- * @param nodeType Optional node type to return. Default is {@link NODETYPE.ELEMENT}.
+ * @param nodeType Optional node type to return. Default is {@link NODE_TYPE.ELEMENT}.
  */
 export const getChildNodes = (
   node: Element,
-  nodeType: number = NODETYPE.ELEMENT
+  nodeType: number = NODE_TYPE.ELEMENT
 ): ChildNode[] => {
-  nodeType = nodeType || NODETYPE.ELEMENT;
-
   const children = [];
   let tmp = node.firstChild;
 
