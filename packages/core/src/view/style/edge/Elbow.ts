@@ -20,7 +20,6 @@ import { SideToSide } from './SideToSide';
 import { TopToBottom } from './TopToBottom';
 import CellState from '../../cell/CellState';
 import Point from '../../geometry/Point';
-import { ELBOW } from '../../../util/Constants';
 
 import type { EdgeStyleFunction } from '../../../types';
 
@@ -67,7 +66,7 @@ export const ElbowConnector: EdgeStyleFunction = (
     }
   }
 
-  if (!horizontal && (vertical || state.style.elbow === ELBOW.VERTICAL)) {
+  if (!horizontal && (vertical || state.style.elbow === 'vertical')) {
     TopToBottom(state, source, target, points, result);
   } else {
     SideToSide(state, source, target, points, result);

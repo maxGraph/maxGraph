@@ -438,11 +438,3 @@ export const DIRECTION_MASK = {
   /** All directions. */
   ALL: 15,
 };
-
-/**
- * Default is horizontal.
- */
-export enum ELBOW {
-  VERTICAL = 'vertical',
-  HORIZONTAL = 'horizontal',
-}
