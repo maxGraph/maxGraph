@@ -422,7 +422,7 @@ export const DIRECTION_MASK = {
   EAST: 8,
   /** All directions. */
   ALL: 15,
-};
+} as const;
 
 /**
  * The values of {@link Node.nodeType}
