@@ -21,7 +21,6 @@ import {
   CellEditorHandler,
   Client,
   ConnectionHandler,
-  constants,
   DomHelpers,
   domUtils,
   EdgeStyle,
