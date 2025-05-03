@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import Rectangle from '../geometry/Rectangle';
-import { CURSOR, DIALECT, NONE } from '../../util/Constants';
+import { CURSOR, NONE } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ImageShape from '../geometry/node/ImageShape';
@@ -225,7 +225,7 @@ class VertexHandler implements MouseListenerSet {
     );
     this.selectionBorder = this.createSelectionShape(this.bounds);
     // VML dialect required here for event transparency in IE
-    this.selectionBorder.dialect = DIALECT.SVG;
+    this.selectionBorder.dialect = 'svg';
     this.selectionBorder.pointerEvents = false;
     this.selectionBorder.rotation = this.state.style.rotation ?? 0;
     this.selectionBorder.init(this.graph.getView().getOverlayPane());
@@ -482,11 +482,10 @@ class VertexHandler implements MouseListenerSet {
     ) {
       sizer.bounds.height -= 1;
       sizer.bounds.width -= 1;
-      sizer.dialect = DIALECT.STRICTHTML;
+      sizer.dialect = 'strictHtml';
       sizer.init(this.graph.container);
     } else {
-      sizer.dialect =
-        this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
+      sizer.dialect = this.graph.dialect !== 'svg' ? 'mixedHtml' : 'svg';
       sizer.init(this.graph.getView().getOverlayPane());
     }
 
@@ -695,10 +694,10 @@ class VertexHandler implements MouseListenerSet {
           this.state.text != null &&
           this.state.text.node.parentNode === this.graph.container
         ) {
-          this.preview.dialect = DIALECT.STRICTHTML;
+          this.preview.dialect = 'strictHtml';
           this.preview.init(this.graph.container);
         } else {
-          this.preview.dialect = DIALECT.SVG;
+          this.preview.dialect = 'svg';
           this.preview.init(this.graph.view.getOverlayPane());
         }
       }
@@ -1981,7 +1980,7 @@ class VertexHandler implements MouseListenerSet {
         ) {
           this.parentHighlight = this.createParentHighlightShape(pstate);
           // VML dialect required here for event transparency in IE
-          this.parentHighlight.dialect = DIALECT.SVG;
+          this.parentHighlight.dialect = 'svg';
           this.parentHighlight.pointerEvents = false;
           this.parentHighlight.rotation = pstate.style.rotation ?? 0;
           this.parentHighlight.init(this.graph.getView().getOverlayPane());

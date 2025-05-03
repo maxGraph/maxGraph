@@ -1455,3 +1455,16 @@ export type GraphCollaboratorsOptions = {
   stylesheet?: Stylesheet;
   view?: (graph: AbstractGraph) => GraphView;
 };
+
+/**
+ * @since 0.20.0
+ */
+export type DialectValue =
+  /** The mixed HTML display dialect name. */
+  | 'mixedHtml'
+  /** The preferred HTML display dialect name. */
+  | 'preferHtml'
+  /** The strict HTML display dialect name. */
+  | 'strictHtml'
+  /** The SVG display dialect name. */
+  | 'svg';

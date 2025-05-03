@@ -25,7 +25,6 @@ import Guide from '../other/Guide';
 import Point from '../geometry/Point';
 import {
   CURSOR,
-  DIALECT,
   DROP_TARGET_COLOR,
   INVALID_CONNECT_TARGET_COLOR,
   NONE,
@@ -707,13 +706,13 @@ class SelectionHandler implements GraphPlugin {
     shape.isDashed = true;
 
     if (this.htmlPreview) {
-      shape.dialect = DIALECT.STRICTHTML;
+      shape.dialect = 'strictHtml';
       shape.init(this.graph.container);
     } else {
       // Makes sure to use either VML or SVG shapes in order to implement
       // event-transparency on the background area of the rectangle since
       // HTML shapes do not let mouseevents through even when transparent
-      shape.dialect = DIALECT.SVG;
+      shape.dialect = 'svg';
       shape.init(this.graph.getView().getOverlayPane());
       shape.pointerEvents = false;
 

@@ -21,7 +21,6 @@ import Point from '../geometry/Point';
 import ImageShape from '../geometry/node/ImageShape';
 import Rectangle from '../geometry/Rectangle';
 import RectangleShape from '../geometry/node/RectangleShape';
-import { DIALECT } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Shape from '../geometry/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -205,11 +204,10 @@ class VertexHandle implements CellHandle {
     const shape = this.shape as Shape; // `this.shape` cannot be null.
 
     if (html && shape.isHtmlAllowed()) {
-      shape.dialect = DIALECT.STRICTHTML;
+      shape.dialect = 'strictHtml';
       shape.init(this.graph.container);
     } else {
-      shape.dialect =
-        this.graph.dialect !== DIALECT.SVG ? DIALECT.MIXEDHTML : DIALECT.SVG;
+      shape.dialect = this.graph.dialect !== 'svg' ? 'mixedHtml' : 'svg';
 
       if (this.cursor) {
         shape.init(this.graph.getView().getOverlayPane());
