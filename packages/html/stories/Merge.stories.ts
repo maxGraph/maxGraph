@@ -71,13 +71,13 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   style.perimeter = Perimeter.EllipsePerimeter;
   style.fontColor = 'white';
   style.gradientColor = 'white';
-  style.fontStyle = constants.FONT_STYLE_FLAG.BOLD;
+  style.fontStyle = constants.FONT_STYLE_MASK.BOLD;
   style.fontSize = 14;
   style.shadow = true;
 
   // Makes all edges with a black, bold label
   style = graph.stylesheet.getDefaultEdgeStyle();
-  style.fontStyle = constants.FONT_STYLE_FLAG.BOLD;
+  style.fontStyle = constants.FONT_STYLE_MASK.BOLD;
   style.fontColor = 'black';
   style.strokeWidth = 2;
 

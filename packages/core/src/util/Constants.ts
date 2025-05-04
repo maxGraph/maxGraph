@@ -399,7 +399,7 @@ export const PAGE_FORMAT_LETTER_LANDSCAPE = [0, 0, 1100, 850];
  */
 export const NONE = 'none';
 
-export const FONT_STYLE_FLAG = {
+export const FONT_STYLE_MASK = {
   /** for bold fonts. */
   BOLD: 1,
   /** for italic fonts. */

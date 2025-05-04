@@ -15,22 +15,22 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { FONT_STYLE_FLAG } from '../../src/util/Constants';
+import { FONT_STYLE_MASK } from '../../src/util/Constants';
 import { matchBinaryMask } from '../../src/internal/utils';
 
 describe('matchBinaryMask', () => {
   test('match self', () => {
     expect(
-      matchBinaryMask(FONT_STYLE_FLAG.STRIKETHROUGH, FONT_STYLE_FLAG.STRIKETHROUGH)
+      matchBinaryMask(FONT_STYLE_MASK.STRIKETHROUGH, FONT_STYLE_MASK.STRIKETHROUGH)
     ).toBeTruthy();
   });
   test('match', () => {
-    expect(matchBinaryMask(9465, FONT_STYLE_FLAG.BOLD)).toBeTruthy();
+    expect(matchBinaryMask(9465, FONT_STYLE_MASK.BOLD)).toBeTruthy();
   });
   test('match another', () => {
-    expect(matchBinaryMask(19484, FONT_STYLE_FLAG.UNDERLINE)).toBeTruthy();
+    expect(matchBinaryMask(19484, FONT_STYLE_MASK.UNDERLINE)).toBeTruthy();
   });
   test('no match', () => {
-    expect(matchBinaryMask(46413, FONT_STYLE_FLAG.ITALIC)).toBeFalsy();
+    expect(matchBinaryMask(46413, FONT_STYLE_MASK.ITALIC)).toBeFalsy();
   });
 });

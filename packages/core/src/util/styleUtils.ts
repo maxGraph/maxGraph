@@ -20,7 +20,7 @@ import Client from '../Client';
 import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
-  FONT_STYLE_FLAG,
+  FONT_STYLE_MASK,
   LINE_HEIGHT,
 } from './Constants';
 import Point from '../view/geometry/Point';
@@ -456,13 +456,13 @@ export const getSizeForString = (
 
   // Sets the font style
   if (fontStyle !== null) {
-    matchBinaryMask(fontStyle, FONT_STYLE_FLAG.BOLD) && (div.style.fontWeight = 'bold');
-    matchBinaryMask(fontStyle, FONT_STYLE_FLAG.ITALIC) &&
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.BOLD) && (div.style.fontWeight = 'bold');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.ITALIC) &&
       (div.style.fontStyle = 'italic');
 
     const txtDecor = [];
-    matchBinaryMask(fontStyle, FONT_STYLE_FLAG.UNDERLINE) && txtDecor.push('underline');
-    matchBinaryMask(fontStyle, FONT_STYLE_FLAG.STRIKETHROUGH) &&
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.STRIKETHROUGH) &&
       txtDecor.push('line-through');
     txtDecor.length > 0 && (div.style.textDecoration = txtDecor.join(' '));
   }

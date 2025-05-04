@@ -23,7 +23,7 @@ import {
   DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
   DEFAULT_TEXT_DIRECTION,
-  FONT_STYLE_FLAG,
+  FONT_STYLE_MASK,
   NONE,
   WORD_WRAP,
   LINE_HEIGHT,
@@ -594,15 +594,15 @@ class TextShape extends Shape {
         this.color
       }; line-height: ${lh}; pointer-events: ${this.pointerEvents ? 'all' : 'none'}; `;
 
-    matchBinaryMask(this.fontStyle, FONT_STYLE_FLAG.BOLD) &&
+    matchBinaryMask(this.fontStyle, FONT_STYLE_MASK.BOLD) &&
       (css += 'font-weight: bold; ');
-    matchBinaryMask(this.fontStyle, FONT_STYLE_FLAG.ITALIC) &&
+    matchBinaryMask(this.fontStyle, FONT_STYLE_MASK.ITALIC) &&
       (css += 'font-style: italic; ');
 
     const txtDecor = [];
-    matchBinaryMask(this.fontStyle, FONT_STYLE_FLAG.UNDERLINE) &&
+    matchBinaryMask(this.fontStyle, FONT_STYLE_MASK.UNDERLINE) &&
       txtDecor.push('underline');
-    matchBinaryMask(this.fontStyle, FONT_STYLE_FLAG.STRIKETHROUGH) &&
+    matchBinaryMask(this.fontStyle, FONT_STYLE_MASK.STRIKETHROUGH) &&
       txtDecor.push('line-through');
     txtDecor.length > 0 && (css += `text-decoration: ${txtDecor.join(' ')}; `);
 
@@ -799,18 +799,18 @@ class TextShape extends Shape {
     style.verticalAlign = 'top';
     style.color = this.color;
 
-    matchBinaryMask(this.fontStyle, FONT_STYLE_FLAG.BOLD)
+    matchBinaryMask(this.fontStyle, FONT_STYLE_MASK.BOLD)
       ? (style.fontWeight = 'bold')
       : (style.fontWeight = '');
 
-    matchBinaryMask(this.fontStyle, FONT_STYLE_FLAG.ITALIC)
+    matchBinaryMask(this.fontStyle, FONT_STYLE_MASK.ITALIC)
       ? (style.fontStyle = 'italic')
       : (style.fontStyle = '');
 
     const txtDecor = [];
-    matchBinaryMask(this.fontStyle, FONT_STYLE_FLAG.UNDERLINE) &&
+    matchBinaryMask(this.fontStyle, FONT_STYLE_MASK.UNDERLINE) &&
       txtDecor.push('underline');
-    matchBinaryMask(this.fontStyle, FONT_STYLE_FLAG.STRIKETHROUGH) &&
+    matchBinaryMask(this.fontStyle, FONT_STYLE_MASK.STRIKETHROUGH) &&
       txtDecor.push('line-through');
     txtDecor.length > 0 && (style.textDecoration = txtDecor.join(' '));
 
