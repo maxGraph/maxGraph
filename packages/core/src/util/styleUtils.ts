@@ -438,7 +438,7 @@ export const setOpacity = (node: HTMLElement | SVGElement, value: number) => {
  * @param fontSize Integer that specifies the font size in pixels. Default is {@link DEFAULT_FONTSIZE}.
  * @param fontFamily String that specifies the name of the font family. Default is {@link DEFAULT_FONTFAMILY}.
  * @param textWidth Optional width for text wrapping.
- * @param fontStyle Optional font style.
+ * @param fontStyle Optional font style, value generally taken from {@link CellStateStyle.fontStyle}.
  */
 export const getSizeForString = (
   text: string,
@@ -458,7 +458,7 @@ export const getSizeForString = (
   if (fontStyle !== null) {
     matchBinaryMask(fontStyle, FONT_STYLE_FLAG.BOLD) && (div.style.fontWeight = 'bold');
     matchBinaryMask(fontStyle, FONT_STYLE_FLAG.ITALIC) &&
-      (div.style.fontWeight = 'italic');
+      (div.style.fontStyle = 'italic');
 
     const txtDecor = [];
     matchBinaryMask(fontStyle, FONT_STYLE_FLAG.UNDERLINE) && txtDecor.push('underline');
