@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import Point from '../geometry/Point';
-import { CURSOR } from '../../util/Constants';
 import Rectangle from '../geometry/Rectangle';
 import { contains } from '../../util/mathUtils';
 import { setOpacity } from '../../util/styleUtils';
@@ -308,7 +307,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
     // Source
     let bend = this.createHandleShape(0);
     this.initBend(bend);
-    bend.setCursor(CURSOR.TERMINAL_HANDLE);
+    bend.setCursor(EdgeHandlerConfig.cursorTerminal);
     bends.push(bend);
 
     const pts = this.getCurrentPoints();
@@ -337,7 +336,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
     // Target
     bend = this.createHandleShape(pts.length);
     this.initBend(bend);
-    bend.setCursor(CURSOR.TERMINAL_HANDLE);
+    bend.setCursor(EdgeHandlerConfig.cursorTerminal);
     bends.push(bend);
 
     return bends;

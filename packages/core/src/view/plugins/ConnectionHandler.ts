@@ -22,7 +22,6 @@ import Point from '../geometry/Point';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import {
-  CURSOR,
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
   DEFAULT_VALID_COLOR,
@@ -368,9 +367,16 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   livePreview = false;
 
   /**
-   * Specifies the cursor to be used while the handler is active. Default is null.
+   * Specifies the cursor to be used while the handler is active.
+   * @default null
    */
   cursor: string | null = null;
+  /**
+   * Defines the cursor for a connectable state.
+   * @default 'pointer'
+   * @since 0.20.0
+   */
+  cursorConnect: string = 'pointer';
 
   /**
    * Specifies if new edges should be inserted before the source vertex in the
@@ -646,7 +652,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
         }
       }
 
-      icon.node.style.cursor = CURSOR.CONNECT;
+      icon.node.style.cursor = this.cursorConnect;
 
       // Events transparency
       const getState = () => {
@@ -1232,7 +1238,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
           this.icons = this.createIcons(this.currentState);
 
           if (this.icons.length === 0) {
-            this.currentState.setCursor(CURSOR.CONNECT);
+            this.currentState.setCursor(this.cursorConnect);
             me.consume();
           }
         }

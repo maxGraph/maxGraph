@@ -25,6 +25,11 @@ _**Note:** Yet to be released breaking changes appear here._
   The former `DOCUMENTTYPE` enum member has been renamed to `DOCUMENT_TYPE`.
 - `constants.DIRECTION_MASK` is now read-only (types only).
 - The `constants.FONT` enum has been removed and replaced by the `constants.FONT_STYLE_FLAG` value object.
+- The `constants.CURSOR` enum has been removed. The values are now configurable and have been moved to:
+  - `ConnectionHandler`
+  - `EdgeHandlerConfig`
+  - `HandleConfig`
+  - `VertexHandlerConfig`
 
 ## 0.19.0
 

@@ -19,7 +19,6 @@ limitations under the License.
 import CellMarker from '../cell/CellMarker';
 import Point from '../geometry/Point';
 import {
-  CURSOR,
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
   DEFAULT_VALID_COLOR,
@@ -245,7 +244,7 @@ class EdgeHandler implements MouseListenerSet {
     this.shape.dialect = this.graph.dialect !== 'svg' ? 'mixedHtml' : 'svg';
     this.shape.init(this.graph.getView().getOverlayPane());
     this.shape.pointerEvents = false;
-    this.shape.setCursor(CURSOR.MOVABLE_EDGE);
+    this.shape.setCursor(EdgeHandlerConfig.cursorMovable);
     InternalEvent.redirectMouseEvents(this.shape.node, this.graph, this.state);
 
     // Updates preferHtml
@@ -294,7 +293,7 @@ class EdgeHandler implements MouseListenerSet {
     this.label = new Point(this.state.absoluteOffset.x, this.state.absoluteOffset.y);
     this.labelShape = this.createLabelHandleShape();
     this.initBend(this.labelShape);
-    this.labelShape.setCursor(CURSOR.LABEL_HANDLE);
+    this.labelShape.setCursor(HandleConfig.labelCursor);
 
     this.customHandles = this.createCustomHandles();
 
@@ -538,7 +537,9 @@ class EdgeHandler implements MouseListenerSet {
             });
 
             if (this.isHandleEnabled(i)) {
-              bend.setCursor(terminal ? CURSOR.TERMINAL_HANDLE : CURSOR.BEND_HANDLE);
+              bend.setCursor(
+                terminal ? EdgeHandlerConfig.cursorTerminal : EdgeHandlerConfig.cursorBend
+              );
             }
 
             bends.push(bend);
@@ -568,7 +569,7 @@ class EdgeHandler implements MouseListenerSet {
       for (let i = 1; i < this.abspoints.length; i += 1) {
         ((bend) => {
           this.initBend(bend);
-          bend.setCursor(CURSOR.VIRTUAL_BEND_HANDLE);
+          bend.setCursor(EdgeHandlerConfig.cursorVirtualBend);
           bends.push(bend);
         })(this.createHandleShape());
       }

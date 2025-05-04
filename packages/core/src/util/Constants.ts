@@ -113,23 +113,6 @@ export const HIGHLIGHT_SIZE = 2;
  */
 export const HIGHLIGHT_OPACITY = 100;
 
-export enum CURSOR {
-  /** Defines the cursor for a movable vertex. */
-  MOVABLE_VERTEX = 'move',
-  /** Defines the cursor for a movable edge. */
-  MOVABLE_EDGE = 'move',
-  /** Defines the cursor for a movable label. */
-  LABEL_HANDLE = 'default',
-  /** Defines the cursor for a terminal handle. */
-  TERMINAL_HANDLE = 'pointer',
-  /** Defines the cursor for a movable bend. */
-  BEND_HANDLE = 'crosshair',
-  /** Defines the cursor for a movable bend. */
-  VIRTUAL_BEND_HANDLE = 'crosshair',
-  /** Defines the cursor for a connectable state. */
-  CONNECT = 'pointer',
-}
-
 /**
  * Defines the color to be used for the cell highlighting.
  * Use 'none' for no color. Default is #00FF00.
