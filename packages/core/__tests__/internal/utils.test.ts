@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { FONT_STYLE_MASK } from '../../src/util/Constants';
+import { DIRECTION_MASK, FONT_STYLE_MASK } from '../../src/util/Constants';
 import { matchBinaryMask } from '../../src/internal/utils';
 
 describe('matchBinaryMask', () => {
@@ -26,11 +26,20 @@ describe('matchBinaryMask', () => {
   });
   test('match', () => {
     expect(matchBinaryMask(9465, FONT_STYLE_MASK.BOLD)).toBeTruthy();
+    expect(9465 & FONT_STYLE_MASK.BOLD).toBeTruthy(); // equivalent implementation returning a number (matchBinaryMask returns a boolean)
   });
   test('match another', () => {
     expect(matchBinaryMask(19484, FONT_STYLE_MASK.UNDERLINE)).toBeTruthy();
   });
   test('no match', () => {
     expect(matchBinaryMask(46413, FONT_STYLE_MASK.ITALIC)).toBeFalsy();
+    expect(46413 & FONT_STYLE_MASK.ITALIC).toBeFalsy(); // equivalent implementation returning a number (matchBinaryMask returns a boolean)
+  });
+
+  test.each([null, undefined])('no match when value is nullish: %s', (value) => {
+    expect(matchBinaryMask(value, DIRECTION_MASK.EAST)).toBeFalsy();
+  });
+  test.each([null, undefined])('match for zero when value is nullish: %s', (value) => {
+    expect(matchBinaryMask(value, 0)).toBeTruthy();
   });
 });
