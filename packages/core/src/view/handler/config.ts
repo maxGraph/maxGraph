@@ -52,6 +52,30 @@ export type EdgeHandlerConfigType = {
    */
   connectFillColor: string;
   /**
+   * Defines the cursor for a movable bend.
+   * @default 'crosshair'
+   * @since 0.20.0
+   */
+  cursorBend: string;
+  /**
+   * Defines the cursor for a movable edge.
+   * @default 'move'
+   * @since 0.20.0
+   */
+  cursorMovable: string;
+  /**
+   * Defines the cursor for a terminal handle.
+   * @default 'pointer'
+   * @since 0.20.0
+   */
+  cursorTerminal: string;
+  /**
+   * Defines the cursor for a movable virtural bend.
+   * @default 'crosshair'
+   * @since 0.20.0
+   */
+  cursorVirtualBend: string;
+  /**
    * Kind of shape to be used for edge handles.
    * @default 'square'
    */
@@ -106,6 +130,14 @@ export const EdgeHandlerConfig: EdgeHandlerConfigType = {
 
   connectFillColor: CONNECT_HANDLE_FILLCOLOR,
 
+  cursorBend: 'crosshair',
+
+  cursorMovable: 'move',
+
+  cursorTerminal: 'pointer',
+
+  cursorVirtualBend: 'crosshair',
+
   handleShape: 'square',
 
   removeBendOnShiftClickEnabled: false,
@@ -146,6 +178,13 @@ export const HandleConfig = {
    * @default {@link HANDLE_FILLCOLOR}
    */
   fillColor: HANDLE_FILLCOLOR,
+
+  /**
+   * Defines the cursor to be used for the label handle.
+   * @default 'default'
+   * @since 0.20.0
+   */
+  labelCursor: 'default',
 
   /**
    * Defines the color to be used for the label handle fill color. Use `none` for no color.
@@ -191,6 +230,12 @@ export const resetHandleConfig = (): void => {
  * @category Configuration
  */
 export const VertexHandlerConfig = {
+  /**
+   * Defines the cursor for a movable vertex.
+   * @since 0.20.0
+   */
+  cursorMovable: 'move',
+
   /**
    * Enable rotation handle
    * @default false

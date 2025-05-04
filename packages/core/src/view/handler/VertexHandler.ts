@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import Rectangle from '../geometry/Rectangle';
-import { CURSOR, NONE } from '../../util/Constants';
+import { NONE } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import RectangleShape from '../geometry/node/RectangleShape';
 import ImageShape from '../geometry/node/ImageShape';
@@ -232,7 +232,7 @@ class VertexHandler implements MouseListenerSet {
     InternalEvent.redirectMouseEvents(this.selectionBorder.node, this.graph, this.state);
 
     if (this.graph.isCellMovable(this.state.cell)) {
-      this.selectionBorder.setCursor(CURSOR.MOVABLE_VERTEX);
+      this.selectionBorder.setCursor(VertexHandlerConfig.cursorMovable);
     }
 
     const selectionHandler = this.getSelectionHandler();
@@ -277,7 +277,7 @@ class VertexHandler implements MouseListenerSet {
         ) {
           // Marks this as the label handle for getHandleForEvent
           this.labelShape = this.createSizer(
-            CURSOR.LABEL_HANDLE,
+            HandleConfig.labelCursor,
             InternalEvent.LABEL_HANDLE,
             HandleConfig.labelSize,
             HandleConfig.labelFillColor
@@ -291,7 +291,7 @@ class VertexHandler implements MouseListenerSet {
         this.state.height < 2
       ) {
         this.labelShape = this.createSizer(
-          CURSOR.MOVABLE_VERTEX,
+          VertexHandlerConfig.cursorMovable,
           InternalEvent.LABEL_HANDLE,
           undefined,
           HandleConfig.labelFillColor

@@ -17,14 +17,13 @@ limitations under the License.
 */
 
 import EdgeHandler from './EdgeHandler';
-import { CURSOR } from '../../util/Constants';
 import InternalEvent from '../event/InternalEvent';
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
 import { intersects } from '../../util/mathUtils';
 import { isConsumed } from '../../util/EventUtils';
 import CellState from '../cell/CellState';
-import { HandleConfig } from './config';
+import { EdgeHandlerConfig, HandleConfig } from './config';
 import { isI18nEnabled, translate } from '../../internal/i18n-utils';
 
 /**
@@ -67,7 +66,7 @@ class ElbowEdgeHandler extends EdgeHandler {
     // Source
     let bend = this.createHandleShape(0);
     this.initBend(bend);
-    bend.setCursor(CURSOR.TERMINAL_HANDLE);
+    bend.setCursor(EdgeHandlerConfig.cursorTerminal);
     bends.push(bend);
 
     // Virtual
@@ -85,7 +84,7 @@ class ElbowEdgeHandler extends EdgeHandler {
     // Target
     bend = this.createHandleShape(2);
     this.initBend(bend);
-    bend.setCursor(CURSOR.TERMINAL_HANDLE);
+    bend.setCursor(EdgeHandlerConfig.cursorTerminal);
     bends.push(bend);
 
     return bends;

@@ -24,7 +24,6 @@ import RectangleShape from '../geometry/node/RectangleShape';
 import Guide from '../other/Guide';
 import Point from '../geometry/Point';
 import {
-  CURSOR,
   DROP_TARGET_COLOR,
   INVALID_CONNECT_TARGET_COLOR,
   NONE,
@@ -49,8 +48,8 @@ import EventSource from '../event/EventSource';
 import CellState from '../cell/CellState';
 import EventObject from '../event/EventObject';
 import type ConnectionHandler from './ConnectionHandler';
+import { EdgeHandlerConfig, VertexHandlerConfig } from '../handler/config';
 import type CellEditorHandler from './CellEditorHandler';
-
 import type { ColorValue, GraphPlugin } from '../../types';
 
 /**
@@ -1029,9 +1028,9 @@ class SelectionHandler implements GraphPlugin {
 
       if (!cursor && cell && graph.isEnabled() && graph.isCellMovable(cell)) {
         if (cell.isEdge()) {
-          cursor = CURSOR.MOVABLE_EDGE;
+          cursor = EdgeHandlerConfig.cursorMovable;
         } else {
-          cursor = CURSOR.MOVABLE_VERTEX;
+          cursor = VertexHandlerConfig.cursorMovable;
         }
       }
 
