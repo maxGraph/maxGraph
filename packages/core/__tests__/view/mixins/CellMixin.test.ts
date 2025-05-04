@@ -17,7 +17,7 @@ limitations under the License.
 import { describe, expect, test } from '@jest/globals';
 import { createCellWithStyle, createGraphWithoutPlugins } from '../../utils';
 import { Cell, type CellStyle } from '../../../src';
-import { FONT } from '../../../src/util/Constants';
+import { FONT_STYLE_MASK } from '../../../src/util/Constants';
 
 test('setCellStyles on vertex', () => {
   const graph = createGraphWithoutPlugins();
@@ -50,7 +50,7 @@ test('setCellStyleFlags on vertex', () => {
   });
   expect(cell.style).toStrictEqual(style);
 
-  graph.setCellStyleFlags('fontStyle', FONT.UNDERLINE, null, [cell]);
+  graph.setCellStyleFlags('fontStyle', FONT_STYLE_MASK.UNDERLINE, null, [cell]);
   expect(cell.style.fontStyle).toBe(7);
   expect(graph.getView().getState(cell)?.style?.fontStyle).toBe(7);
 });

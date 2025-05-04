@@ -24,7 +24,7 @@ import {
   ABSOLUTE_LINE_HEIGHT,
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
-  FONT,
+  FONT_STYLE_MASK,
   LINE_HEIGHT,
   NONE,
   NS_SVG,
@@ -472,12 +472,15 @@ class SvgCanvas2D extends AbstractCanvas2D {
       // Text-anchor start is default in SVG
       anchor !== 'start' && alt.setAttribute('text-anchor', anchor);
       const fontStyle = s.fontStyle;
-      matchBinaryMask(fontStyle, FONT.BOLD) && alt.setAttribute('font-weight', 'bold');
-      matchBinaryMask(fontStyle, FONT.ITALIC) && alt.setAttribute('font-style', 'italic');
+      matchBinaryMask(fontStyle, FONT_STYLE_MASK.BOLD) &&
+        alt.setAttribute('font-weight', 'bold');
+      matchBinaryMask(fontStyle, FONT_STYLE_MASK.ITALIC) &&
+        alt.setAttribute('font-style', 'italic');
 
       const txtDecor = [];
-      matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
-      matchBinaryMask(fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+      matchBinaryMask(fontStyle, FONT_STYLE_MASK.UNDERLINE) && txtDecor.push('underline');
+      matchBinaryMask(fontStyle, FONT_STYLE_MASK.STRIKETHROUGH) &&
+        txtDecor.push('line-through');
       txtDecor.length > 0 && alt.setAttribute('text-decoration', txtDecor.join(' '));
 
       write(alt, <string>text);
@@ -1355,12 +1358,13 @@ class SvgCanvas2D extends AbstractCanvas2D {
       }; `;
 
     const fontStyle = s.fontStyle;
-    matchBinaryMask(fontStyle, FONT.BOLD) && (css += 'font-weight: bold; ');
-    matchBinaryMask(fontStyle, FONT.ITALIC) && (css += 'font-style: italic; ');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.BOLD) && (css += 'font-weight: bold; ');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.ITALIC) && (css += 'font-style: italic; ');
 
     const txtDecor = [];
-    matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
-    matchBinaryMask(fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.STRIKETHROUGH) &&
+      txtDecor.push('line-through');
     txtDecor.length > 0 && (css += `text-decoration: ${txtDecor.join(' ')}; `);
 
     return css;
@@ -1646,12 +1650,15 @@ class SvgCanvas2D extends AbstractCanvas2D {
     }
 
     const fontStyle = s.fontStyle;
-    matchBinaryMask(fontStyle, FONT.BOLD) && node.setAttribute('font-weight', 'bold');
-    matchBinaryMask(fontStyle, FONT.ITALIC) && node.setAttribute('font-style', 'italic');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.BOLD) &&
+      node.setAttribute('font-weight', 'bold');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.ITALIC) &&
+      node.setAttribute('font-style', 'italic');
 
     const txtDecor = [];
-    matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
-    matchBinaryMask(fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.STRIKETHROUGH) &&
+      txtDecor.push('line-through');
     txtDecor.length > 0 && node.setAttribute('text-decoration', txtDecor.join(' '));
   }
 
@@ -1720,8 +1727,10 @@ class SvgCanvas2D extends AbstractCanvas2D {
         div.style.visibility = 'hidden';
         div.style.display = 'inline-block';
 
-        matchBinaryMask(s.fontStyle, FONT.BOLD) && (div.style.fontWeight = 'bold');
-        matchBinaryMask(s.fontStyle, FONT.ITALIC) && (div.style.fontStyle = 'italic');
+        matchBinaryMask(s.fontStyle, FONT_STYLE_MASK.BOLD) &&
+          (div.style.fontWeight = 'bold');
+        matchBinaryMask(s.fontStyle, FONT_STYLE_MASK.ITALIC) &&
+          (div.style.fontStyle = 'italic');
 
         str = htmlEntities(str, false);
         div.innerHTML = str.replace(/\n/g, '<br/>');

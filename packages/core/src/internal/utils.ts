@@ -65,6 +65,6 @@ export const mixInto = (dest: any) => (mixin: any) => {
  * @returns `true` if the value matches the binary mask.
  * @private Subject to change prior being part of the public API.
  */
-export const matchBinaryMask = (value: number, mask: number) => {
-  return (value & mask) === mask;
+export const matchBinaryMask = (value: number | undefined | null, mask: number) => {
+  return (value! & mask) === mask;
 };

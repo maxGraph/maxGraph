@@ -334,8 +334,7 @@ export type CellStateStyle = {
    */
   fontSize?: number;
   /**
-   * Values may be any logical AND (sum) of the {@link FONT}. For instance, FONT.BOLD,
-   * FONT.ITALIC, ...
+   * Values may be any logical AND (sum) of the {@link FONT_STYLE_FLAG}. For instance, FONT_STYLE_FLAG.BOLD, FONT_STYLE_FLAG.ITALIC, ...
    */
   fontStyle?: number;
   /**

@@ -17,7 +17,12 @@ limitations under the License.
 */
 
 import Client from '../Client';
-import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, FONT, LINE_HEIGHT } from './Constants';
+import {
+  DEFAULT_FONTFAMILY,
+  DEFAULT_FONTSIZE,
+  FONT_STYLE_MASK,
+  LINE_HEIGHT,
+} from './Constants';
 import Point from '../view/geometry/Point';
 import Dictionary from './Dictionary';
 import CellPath from '../view/cell/CellPath';
@@ -343,7 +348,7 @@ export const setCellStyles = (
  * setCellStyleFlags(graph.model,
  *       cells,
  *       'fontStyle',
- *       constants.FONT.BOLD);
+ *       constants.FONT_STYLE_FLAG.BOLD);
  * ```
  *
  * @param model {@link GraphDataModel} that contains the cells.
@@ -451,12 +456,14 @@ export const getSizeForString = (
 
   // Sets the font style
   if (fontStyle !== null) {
-    matchBinaryMask(fontStyle, FONT.BOLD) && (div.style.fontWeight = 'bold');
-    matchBinaryMask(fontStyle, FONT.ITALIC) && (div.style.fontStyle = 'italic');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.BOLD) && (div.style.fontWeight = 'bold');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.ITALIC) &&
+      (div.style.fontStyle = 'italic');
 
     const txtDecor = [];
-    matchBinaryMask(fontStyle, FONT.UNDERLINE) && txtDecor.push('underline');
-    matchBinaryMask(fontStyle, FONT.STRIKETHROUGH) && txtDecor.push('line-through');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.UNDERLINE) && txtDecor.push('underline');
+    matchBinaryMask(fontStyle, FONT_STYLE_MASK.STRIKETHROUGH) &&
+      txtDecor.push('line-through');
     txtDecor.length > 0 && (div.style.textDecoration = txtDecor.join(' '));
   }
 

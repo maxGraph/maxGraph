@@ -25,7 +25,7 @@ import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_TEXT_DIRECTION,
-  FONT,
+  FONT_STYLE_MASK,
   LINE_HEIGHT,
   NONE,
   WORD_WRAP,
@@ -45,7 +45,7 @@ import {
   isShiftDown,
 } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
-
+import { matchBinaryMask } from '../../internal/utils';
 import type { AbstractGraph } from '../AbstractGraph';
 import type { AlignValue, GraphPlugin } from '../../types';
 import type TooltipHandler from './TooltipHandler';
@@ -691,47 +691,47 @@ class CellEditorHandler implements GraphPlugin {
 
     if (state) {
       // Configures the style of the in-place editor
-      const { scale } = this.graph.getView();
-      const size = state.style.fontSize ?? DEFAULT_FONTSIZE;
-      const family = state.style.fontFamily ?? DEFAULT_FONTFAMILY;
-      const color = state.style.fontColor ?? 'black';
-      const align = state.style.align ?? 'left';
-      const bold = (state.style.fontStyle || 0) & FONT.BOLD;
-      const italic = (state.style.fontStyle || 0) & FONT.ITALIC;
+      // Notice that the logic here is duplicated with styleUtils.getSizeForString
+      const stateStyle = state.style;
+      const size = stateStyle.fontSize ?? DEFAULT_FONTSIZE;
+      const family = stateStyle.fontFamily ?? DEFAULT_FONTFAMILY;
+      const color = stateStyle.fontColor ?? 'black';
+      const align = stateStyle.align ?? 'left';
+      const fontStyle = stateStyle.fontStyle ?? 0;
+      const bold = matchBinaryMask(fontStyle, FONT_STYLE_MASK.BOLD);
+      const italic = matchBinaryMask(fontStyle, FONT_STYLE_MASK.ITALIC);
 
       const txtDecor = [];
-      if ((state.style.fontStyle || 0) & FONT.UNDERLINE) {
-        txtDecor.push('underline');
-      }
-      if ((state.style.fontStyle || 0) & FONT.STRIKETHROUGH) {
+      matchBinaryMask(fontStyle, FONT_STYLE_MASK.UNDERLINE) && txtDecor.push('underline');
+      matchBinaryMask(fontStyle, FONT_STYLE_MASK.STRIKETHROUGH) &&
         txtDecor.push('line-through');
-      }
 
-      const textarea = <HTMLElement>this.textarea;
-      textarea.style.lineHeight = ABSOLUTE_LINE_HEIGHT
+      const textarea = this.textarea!; // code above ensure it is always set
+      const textareaStyle = textarea.style;
+      textareaStyle.lineHeight = ABSOLUTE_LINE_HEIGHT
         ? `${Math.round(size * LINE_HEIGHT)}px`
         : String(LINE_HEIGHT);
-      textarea.style.backgroundColor = this.getBackgroundColor(state) || 'transparent';
-      textarea.style.textDecoration = txtDecor.join(' ');
-      textarea.style.fontWeight = bold ? 'bold' : 'normal';
-      textarea.style.fontStyle = italic ? 'italic' : '';
-      textarea.style.fontSize = `${Math.round(size)}px`;
-      textarea.style.zIndex = String(this.zIndex);
-      textarea.style.fontFamily = family;
-      textarea.style.textAlign = align;
-      textarea.style.outline = 'none';
-      textarea.style.color = color;
+      textareaStyle.backgroundColor = this.getBackgroundColor(state) || 'transparent';
+      textareaStyle.textDecoration = txtDecor.join(' ');
+      textareaStyle.fontWeight = bold ? 'bold' : 'normal';
+      textareaStyle.fontStyle = italic ? 'italic' : '';
+      textareaStyle.fontSize = `${Math.round(size)}px`;
+      textareaStyle.zIndex = String(this.zIndex);
+      textareaStyle.fontFamily = family;
+      textareaStyle.textAlign = align;
+      textareaStyle.outline = 'none';
+      textareaStyle.color = color;
 
-      let dir = (this.textDirection =
-        state.style.textDirection ?? DEFAULT_TEXT_DIRECTION);
+      let dir = (this.textDirection = stateStyle.textDirection ?? DEFAULT_TEXT_DIRECTION);
 
+      const stateText = state.text;
       if (dir === 'auto') {
         if (
-          state.text !== null &&
-          state.text.dialect !== 'strictHtml' &&
-          !isNode(state.text.value)
+          stateText !== null &&
+          stateText.dialect !== 'strictHtml' &&
+          !isNode(stateText.value)
         ) {
-          dir = state.text.getAutoDirection();
+          dir = stateText.getAutoDirection();
         }
       }
 
@@ -763,13 +763,13 @@ class CellEditorHandler implements GraphPlugin {
       this.trigger = trigger;
       this.textNode = null;
 
-      if (state.text !== null && this.isHideLabel(state)) {
-        this.textNode = <SVGGElement>state.text.node;
+      if (stateText !== null && this.isHideLabel(state)) {
+        this.textNode = stateText.node;
         this.textNode.style.visibility = 'hidden';
       }
 
       // Workaround for initial offsetHeight not ready for heading in markup
-      if (this.autoSize && (state.cell.isEdge() || state.style.overflow !== 'fill')) {
+      if (this.autoSize && (state.cell.isEdge() || stateStyle.overflow !== 'fill')) {
         window.setTimeout(() => {
           this.resize();
         }, 0);

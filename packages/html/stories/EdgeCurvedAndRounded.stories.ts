@@ -91,12 +91,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.perimeter = Perimeter.EllipsePerimeter;
   style.fontColor = 'white';
   style.gradientColor = 'white';
-  style.fontStyle = constants.FONT.BOLD;
+  style.fontStyle = constants.FONT_STYLE_MASK.BOLD;
   style.fontSize = 14;
 
   // Makes all edges with a black, bold label
   style = graph.stylesheet.getDefaultEdgeStyle();
-  style.fontStyle = constants.FONT.BOLD;
+  style.fontStyle = constants.FONT_STYLE_MASK.BOLD;
   style.fontColor = 'black';
   style.strokeWidth = 2;
   if (args.style === 'curved') style.curved = true;
