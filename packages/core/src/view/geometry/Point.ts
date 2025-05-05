@@ -24,6 +24,9 @@ limitations under the License.
 class Point {
   /**
    * Constructs a new point for the optional x and y coordinates.
+   *
+   * @param x - The x-coordinate (default is 0).
+   * @param y - The y-coordinate (default is 0).
    */
   constructor(x = 0, y = 0) {
     this.x = x;
