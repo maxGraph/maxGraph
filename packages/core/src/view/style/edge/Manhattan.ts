@@ -28,7 +28,11 @@ import { SegmentConnector } from './Segment';
  *
  * Implements router to find the shortest route that avoids cells using manhattan distance as metric.
  *
- * This EdgeStyle is registered under `manhattanEdgeStyle` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
+ * This EdgeStyle is registered under `manhattanEdgeStyle` in {@link EdgeStyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
+ *
+ * **IMPORTANT**: When registering it manually  in {@link EdgeStyleRegistry}, the following metadata must be used:
+ * - handlerKind: 'segment'
+ * - isOrthogonal: true
  */
 export const ManhattanConnector: EdgeStyleFunction = (
   state: CellState,

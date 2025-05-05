@@ -50,7 +50,11 @@ class MarkerShape {
   }
 
   /**
-   * Returns a function to paint the given marker.
+   * Returns a {@link MarkerFunction} to paint the given marker.
+   *
+   * The type parameter is used to retrieve the correct {@link MarkerFactoryFunction} from the registry which is then used to create the {@link MarkerFunction}.
+   *
+   * If none is found, `null` is returned.
    */
   static createMarker(
     canvas: AbstractCanvas2D,

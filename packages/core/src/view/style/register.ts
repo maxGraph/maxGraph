@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 import { EdgeStyle, EdgeMarker, Perimeter } from './builtin-style-elements';
-import StyleRegistry from './StyleRegistry';
+import { EdgeStyleRegistry } from './edge/EdgeStyleRegistry';
 import MarkerShape from './marker/EdgeMarkerRegistry';
+import { PerimeterRegistry } from './perimeter/PerimeterRegistry';
 import type {
   ArrowValue,
   EdgeStyleFunction,
+  EdgeStyleMetaData,
   EdgeStyleValue,
   MarkerFactoryFunction,
   PerimeterFunction,
@@ -29,7 +31,7 @@ import type {
 let isDefaultEdgeStylesRegistered = false;
 
 /**
- * Register default builtin {@link EdgeStyle}s in {@link StyleRegistry}.
+ * Register default builtin {@link EdgeStyle}s in {@link EdgeStyleRegistry}.
  *
  * @category Configuration
  * @category Style
@@ -37,18 +39,23 @@ let isDefaultEdgeStylesRegistered = false;
  */
 export const registerDefaultEdgeStyles = (): void => {
   if (!isDefaultEdgeStylesRegistered) {
-    const edgeStylesToRegister: [EdgeStyleValue, EdgeStyleFunction][] = [
-      ['elbowEdgeStyle', EdgeStyle.ElbowConnector],
-      ['entityRelationEdgeStyle', EdgeStyle.EntityRelation],
-      ['loopEdgeStyle', EdgeStyle.Loop],
-      ['manhattanEdgeStyle', EdgeStyle.ManhattanConnector],
-      ['orthogonalEdgeStyle', EdgeStyle.OrthConnector],
-      ['segmentEdgeStyle', EdgeStyle.SegmentConnector],
-      ['sideToSideEdgeStyle', EdgeStyle.SideToSide],
-      ['topToBottomEdgeStyle', EdgeStyle.TopToBottom],
-    ];
-    for (const [name, edgeStyle] of edgeStylesToRegister) {
-      StyleRegistry.putValue(name, edgeStyle);
+    const edgeStylesToRegister: [EdgeStyleValue, EdgeStyleFunction, EdgeStyleMetaData][] =
+      [
+        ['elbowEdgeStyle', EdgeStyle.ElbowConnector, { handlerKind: 'elbow' }],
+        ['entityRelationEdgeStyle', EdgeStyle.EntityRelation, {}],
+        ['loopEdgeStyle', EdgeStyle.Loop, { handlerKind: 'elbow', isOrthogonal: false }],
+        ['manhattanEdgeStyle', EdgeStyle.ManhattanConnector, { handlerKind: 'segment' }],
+        ['orthogonalEdgeStyle', EdgeStyle.OrthConnector, { handlerKind: 'segment' }],
+        ['segmentEdgeStyle', EdgeStyle.SegmentConnector, { handlerKind: 'segment' }],
+        ['sideToSideEdgeStyle', EdgeStyle.SideToSide, { handlerKind: 'elbow' }],
+        ['topToBottomEdgeStyle', EdgeStyle.TopToBottom, { handlerKind: 'elbow' }],
+      ];
+    for (const [name, edgeStyle, metadata] of edgeStylesToRegister) {
+      EdgeStyleRegistry.add(name, edgeStyle, {
+        ...metadata,
+        // most edge styles registered here are orthogonal, so set to true by default to avoid to duplicate the configuration code
+        isOrthogonal: metadata.isOrthogonal ?? true,
+      });
     }
 
     isDefaultEdgeStylesRegistered = true;
@@ -58,7 +65,7 @@ export const registerDefaultEdgeStyles = (): void => {
 let isDefaultPerimetersRegistered = false;
 
 /**
- * Register default builtin {@link Perimeter}s in {@link StyleRegistry}.
+ * Register default builtin {@link Perimeter}s in {@link PerimeterRegistry}.
  *
  * @category Configuration
  * @category Style
@@ -74,7 +81,7 @@ export const registerDefaultPerimeters = (): void => {
       ['trianglePerimeter', Perimeter.TrianglePerimeter],
     ];
     for (const [name, perimeter] of perimetersToRegister) {
-      StyleRegistry.putValue(name, perimeter);
+      PerimeterRegistry.add(name, perimeter);
     }
 
     isDefaultPerimetersRegistered = true;
@@ -82,18 +89,41 @@ export const registerDefaultPerimeters = (): void => {
 };
 
 /**
- * Unregister all {@link EdgeStyle}s and {@link Perimeter}s from {@link StyleRegistry}.
+ * Unregister all {@link EdgeStyle}s and {@link Perimeter}s from their registries.
  *
- * **NOTE**: in the future, this function will be replaced by dedicated functions to remove `Perimeter` and `EdgeStyle` individually.
- * For more details, see [Issue #767](https://github.com/maxGraph/maxGraph/issues/767).
+ * @see unregisterAllEdgeStyles
+ * @see unregisterAllPerimeters
  *
  * @category Configuration
  * @category Style
  * @since 0.18.0
  */
 export const unregisterAllEdgeStylesAndPerimeters = (): void => {
-  StyleRegistry.values = {};
+  unregisterAllEdgeStyles();
+  unregisterAllPerimeters();
+};
+
+/**
+ * Unregister all {@link EdgeStyle}s from {@link EdgeStyleRegistry}.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.20.0
+ */
+export const unregisterAllEdgeStyles = (): void => {
+  EdgeStyleRegistry.clear();
   isDefaultEdgeStylesRegistered = false;
+};
+
+/**
+ * Unregister all {@link Perimeter}s from {@link PerimeterRegistry}.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.20.0
+ */
+export const unregisterAllPerimeters = (): void => {
+  PerimeterRegistry.clear();
   isDefaultPerimetersRegistered = false;
 };
 

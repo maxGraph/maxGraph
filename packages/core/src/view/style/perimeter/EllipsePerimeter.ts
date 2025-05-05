@@ -22,7 +22,7 @@ import Point from '../../geometry/Point';
 import type { PerimeterFunction } from '../../../types';
 
 /**
- * This perimeter is registered under `ellipsePerimeter` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.
+ * This perimeter is registered under `ellipsePerimeter` in {@link PerimeterRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.
  *
  * @category Perimeter
  */

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { describe, expect, test } from '@jest/globals';
+import { afterAll, beforeEach, describe, expect, test } from '@jest/globals';
 import {
   AbstractGraph,
   BaseGraph,
@@ -28,6 +28,8 @@ import {
   Point,
   Rectangle,
   RectangleShape,
+  registerDefaultEdgeStyles,
+  unregisterAllEdgeStyles,
   VertexHandler,
 } from '../../src';
 
@@ -53,33 +55,64 @@ describe('isOrthogonal', () => {
     expect(graph.isOrthogonal(cellState)).toBeFalsy();
   });
 
+  describe('Default builtin styles registered', () => {
+    beforeEach(() => {
+      unregisterAllEdgeStyles();
+      registerDefaultEdgeStyles();
+    });
+    afterAll(() => {
+      unregisterAllEdgeStyles();
+    });
+
+    test.each([
+      ['EntityRelation', EdgeStyle.EntityRelation],
+      ['ElbowConnector', EdgeStyle.ElbowConnector],
+      ['ManhattanConnector', EdgeStyle.ManhattanConnector],
+      ['OrthogonalConnector', EdgeStyle.OrthConnector],
+      ['SegmentConnector', EdgeStyle.SegmentConnector],
+      ['SideToSide', EdgeStyle.SideToSide],
+      ['TopToBottom', EdgeStyle.TopToBottom],
+    ])('Style of the CellState, edgeStyle: %s', (_name, edgeStyle) => {
+      const graph = new BaseGraph();
+      const cellState = new CellState(graph.view, null, { edgeStyle });
+      expect(graph.isOrthogonal(cellState)).toBeTruthy();
+    });
+
+    test.each([
+      ['custom', customEdgeStyle],
+      ['Loop', EdgeStyle.Loop],
+      ['null', null],
+      ['undefined', undefined], // TODO probably already tested above
+    ])('Style of the CellState, edgeStyle: %s', (_name, edgeStyle) => {
+      const graph = new BaseGraph();
+      const cellState = new CellState(graph.view, null, { edgeStyle });
+      expect(graph.isOrthogonal(cellState)).toBeFalsy();
+    });
+  });
+
   test.each([
+    ['custom', customEdgeStyle],
     ['EntityRelation', EdgeStyle.EntityRelation],
     ['ElbowConnector', EdgeStyle.ElbowConnector],
+    ['Loop', EdgeStyle.Loop],
     ['ManhattanConnector', EdgeStyle.ManhattanConnector],
     ['OrthogonalConnector', EdgeStyle.OrthConnector],
     ['SegmentConnector', EdgeStyle.SegmentConnector],
     ['SideToSide', EdgeStyle.SideToSide],
     ['TopToBottom', EdgeStyle.TopToBottom],
-  ])('Style of the CellState, edgeStyle: %s', (_name, edgeStyle) => {
-    const graph = new BaseGraph();
-    const cellState = new CellState(graph.view, null, { edgeStyle });
-    expect(graph.isOrthogonal(cellState)).toBeTruthy();
-  });
-
-  test.each([
-    ['custom', customEdgeStyle],
-    ['Loop', EdgeStyle.Loop],
-  ])('Style of the CellState, edgeStyle: %s', (_name, edgeStyle) => {
-    const graph = new BaseGraph();
-    const cellState = new CellState(graph.view, null, {
-      edgeStyle: edgeStyle,
-    });
-    expect(graph.isOrthogonal(cellState)).toBeFalsy();
-  });
+    ['null', null],
+    ['undefined', undefined], // TODO probably already tested above
+  ])(
+    'Default builtin styles NOT registered - Style of the CellState, edgeStyle: %s',
+    (_name, edgeStyle) => {
+      const graph = new BaseGraph();
+      const cellState = new CellState(graph.view, null, { edgeStyle });
+      expect(graph.isOrthogonal(cellState)).toBeFalsy();
+    }
+  );
 });
 
-function createCellState(graph: AbstractGraph, isEdge: boolean): CellState {
+const createCellState = (graph: AbstractGraph, isEdge: boolean): CellState => {
   const cell = new Cell();
   cell.setEdge(isEdge);
   cell.setVertex(!isEdge);
@@ -87,46 +120,76 @@ function createCellState(graph: AbstractGraph, isEdge: boolean): CellState {
   cellState.absolutePoints = [new Point(0, 0)];
   cellState.shape = new RectangleShape(new Rectangle(), 'green', 'blue');
   return cellState;
-}
+};
+
+const createCellStateOfEdge = (graph: AbstractGraph): CellState =>
+  createCellState(graph, true);
 
 describe('createEdgeHandler', () => {
-  test.each([
-    ['ElbowConnector', EdgeStyle.ElbowConnector],
-    ['Loop', EdgeStyle.Loop],
-    ['SideToSide', EdgeStyle.SideToSide],
-    ['TopToBottom', EdgeStyle.TopToBottom],
-  ])('Expect ElbowEdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
-    const graph = new BaseGraph();
-    const cellState = createCellState(graph, true);
-    expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-      ElbowEdgeHandler
-    );
-  });
+  describe('Default builtin styles registered', () => {
+    beforeEach(() => {
+      unregisterAllEdgeStyles();
+      registerDefaultEdgeStyles();
+    });
+    afterAll(() => {
+      unregisterAllEdgeStyles();
+    });
 
-  test.each([
-    ['ManhattanConnector', EdgeStyle.ManhattanConnector],
-    ['OrthogonalConnector', EdgeStyle.OrthConnector],
-    ['SegmentConnector', EdgeStyle.SegmentConnector],
-  ])('Expect EdgeSegmentHandler for edgeStyle: %s', (_name, edgeStyle) => {
-    const graph = new BaseGraph();
-    const cellState = createCellState(graph, true);
-    expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-      EdgeSegmentHandler
-    );
+    test.each([
+      ['ElbowConnector', EdgeStyle.ElbowConnector],
+      ['Loop', EdgeStyle.Loop],
+      ['SideToSide', EdgeStyle.SideToSide],
+      ['TopToBottom', EdgeStyle.TopToBottom],
+    ])('Expect ElbowEdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
+      const graph = new BaseGraph();
+      const cellState = createCellStateOfEdge(graph);
+      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+        ElbowEdgeHandler
+      );
+    });
+
+    test.each([
+      ['ManhattanConnector', EdgeStyle.ManhattanConnector],
+      ['OrthogonalConnector', EdgeStyle.OrthConnector],
+      ['SegmentConnector', EdgeStyle.SegmentConnector],
+    ])('Expect EdgeSegmentHandler for edgeStyle: %s', (_name, edgeStyle) => {
+      const graph = new BaseGraph();
+      const cellState = createCellStateOfEdge(graph);
+      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+        EdgeSegmentHandler
+      );
+    });
+
+    test.each([
+      ['custom', customEdgeStyle],
+      ['EntityRelation', EdgeStyle.EntityRelation],
+      ['null', null],
+    ])('Expect EdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
+      const graph = new BaseGraph();
+      const cellState = createCellStateOfEdge(graph);
+      expectExactInstanceOfEdgeHandler(graph.createEdgeHandler(cellState, edgeStyle));
+    });
   });
 
   test.each([
     ['custom', customEdgeStyle],
     ['EntityRelation', EdgeStyle.EntityRelation],
+    ['ElbowConnector', EdgeStyle.ElbowConnector],
+    ['Loop', EdgeStyle.Loop],
+    ['ManhattanConnector', EdgeStyle.ManhattanConnector],
+    ['OrthogonalConnector', EdgeStyle.OrthConnector],
+    ['SegmentConnector', EdgeStyle.SegmentConnector],
+    ['SideToSide', EdgeStyle.SideToSide],
+    ['TopToBottom', EdgeStyle.TopToBottom],
     ['null', null],
-  ])('Expect EdgeHandler for edgeStyle: %s', (_name, edgeStyle) => {
-    const graph = new BaseGraph();
-    const cellState = createCellState(graph, true);
-    const edgeHandler = graph.createEdgeHandler(cellState, edgeStyle);
-    expect(edgeHandler).toBeInstanceOf(EdgeHandler);
-    expect(edgeHandler).not.toBeInstanceOf(EdgeSegmentHandler);
-    expect(edgeHandler).not.toBeInstanceOf(ElbowEdgeHandler);
-  });
+  ])(
+    'Default builtin styles NOT registered - Expect EdgeHandler for edgeStyle: %s',
+    (_name, edgeStyle) => {
+      const graph = new BaseGraph();
+      const cellState = createCellStateOfEdge(graph);
+      expectExactInstanceOfEdgeHandler(graph.createEdgeHandler(cellState, edgeStyle));
+    }
+  );
 });
 
 describe('createHandler', () => {
@@ -138,7 +201,13 @@ describe('createHandler', () => {
 
   test('Expect EdgeHandler', () => {
     const graph = new BaseGraph();
-    const cellState = createCellState(graph, true);
-    expect(graph.createHandler(cellState)).toBeInstanceOf(EdgeHandler);
+    const cellState = createCellStateOfEdge(graph);
+    expectExactInstanceOfEdgeHandler(<EdgeHandler>graph.createHandler(cellState));
   });
 });
+
+function expectExactInstanceOfEdgeHandler(handler: EdgeHandler): void {
+  expect(handler).toBeInstanceOf(EdgeHandler);
+  expect(handler).not.toBeInstanceOf(EdgeSegmentHandler);
+  expect(handler).not.toBeInstanceOf(ElbowEdgeHandler);
+}

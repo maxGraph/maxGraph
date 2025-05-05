@@ -27,10 +27,10 @@ import {
   ModelXmlSerializer,
   PanningHandler,
   Perimeter,
+  PerimeterRegistry,
   RubberBandHandler,
   SelectionCellsHandler,
   SelectionHandler,
-  StyleRegistry,
 } from '@maxgraph/core';
 
 /**
@@ -39,7 +39,7 @@ import {
 class CustomGraph extends BaseGraph {
   registerDefaults() {
     // Register styles
-    StyleRegistry.putValue('rectanglePerimeter', Perimeter.RectanglePerimeter); // declared in the default vertex style, so must be registered to be used
+    PerimeterRegistry.add('rectanglePerimeter', Perimeter.RectanglePerimeter); // declared in the default vertex style, so must be registered to be used
     MarkerShape.addMarker('classic', EdgeMarker.createArrow(2));
   }
 }

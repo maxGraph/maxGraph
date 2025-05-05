@@ -185,10 +185,12 @@ export type CellStateStyle = {
   /**
    * This defines the style of the edge if the current cell is an Edge.
    *
-   * The possible values are all names of the shapes registered with {@link StyleRegistry.putValue}.
+   * The possible values are all names of the shapes registered with {@link EdgeStyleRegistry.add}.
    * This includes {@link EdgeStyleValue} values and custom names that have been registered.
    *
    * It is also possible to pass a {@link EdgeStyleFunction}.
+   * **IMPORTANT**: when using a {@link EdgeStyleFunction}, be sure that is correctly registered in the {@link EdgeStyleRegistry}.
+   * Otherwise, the function may not be correctly configured. See {@link EdgeStyleMetaData}.
    *
    * See {@link noEdgeStyle}.
    */
@@ -559,7 +561,7 @@ export type CellStateStyle = {
    *
    * For {@link PerimeterFunction} types, some possible values are the builtin functions defined in the `Perimeter` namespace.
    *
-   * Alternatively, use a string or a value from {@link PerimeterValue} to access perimeter styles registered in {@link StyleRegistry}.
+   * Alternatively, use a string or a value from {@link PerimeterValue} to access perimeter styles registered in {@link PerimeterRegistry}.
    * If {@link GraphView.allowEval} is set to `true`, you can pass the {@link PerimeterFunction} implementation directly as a string.
    * Remember that enabling this switch carries a possible security risk
    *
@@ -1246,7 +1248,7 @@ export type PerimeterFunction = (
 ) => Point | null;
 
 /**
- * Names used to register the perimeter provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
+ * Names used to register the perimeter provided out-of-the-box by maxGraph with {@link PerimeterRegistry.add}.
  *
  * Can be used as a value for {@link CellStateStyle.perimeter}.
  *
@@ -1280,7 +1282,7 @@ export type EdgeStyleFunction = (
 ) => void;
 
 /**
- * Names used to register the edge styles (a.k.a. connectors) provided out-of-the-box by maxGraph with {@link StyleRegistry.putValue}.
+ * Names used to register the edge styles (a.k.a. connectors) provided out-of-the-box by maxGraph with {@link EdgeStyleRegistry.add}.
  *
  * Can be used as a value for {@link CellStateStyle.edgeStyle}.
  *
@@ -1484,3 +1486,36 @@ export type DialectValue =
  * @category Style
  */
 export type ElbowValue = 'horizontal' | 'vertical';
+
+/**
+ * Allowed values for {@link EdgeStyleMetaData.handlerKind}.
+ *
+ * @since 0.20.0
+ * @category Style
+ * @category Configuration
+ */
+export type EdgeStyleHandlerKind =
+  | 'default'
+  | 'elbow'
+  | 'segment'
+  | (string & Record<never, never>); // any other string value
+
+/**
+ * Metadata used to configure the edge style when adding it to {@link EdgeStyleRegistry}.
+ *
+ * @since 0.20.0
+ * @category Style
+ * @category Configuration
+ */
+export type EdgeStyleMetaData = {
+  /**
+   * The kind of {@link EdgeHandler} to use for this edge style.
+   * This value is used to select the implementation of the edge handler to use to manage the underlying edge.
+   * @default 'default'
+   */
+  handlerKind?: EdgeStyleHandlerKind;
+  /**
+   * Defines if the edge style is considered as orthogonal or not.
+   * @default false */
+  isOrthogonal?: boolean;
+};

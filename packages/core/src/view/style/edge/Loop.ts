@@ -25,7 +25,11 @@ import type { EdgeStyleFunction } from '../../../types';
 /**
  * Implements a self-reference, aka. loop.
  *
- * This EdgeStyle is registered under `loopEdgeStyle` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
+ * This EdgeStyle is registered under `loopEdgeStyle` in {@link EdgeStyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
+ *
+ * **IMPORTANT**: When registering it manually  in {@link EdgeStyleRegistry}, the following metadata must be used:
+ * - handlerKind: 'elbow'
+ * - isOrthogonal: false
  */
 export const Loop: EdgeStyleFunction = (
   state: CellState,

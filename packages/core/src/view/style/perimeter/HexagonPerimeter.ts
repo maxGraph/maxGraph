@@ -23,7 +23,7 @@ import type { PerimeterFunction } from '../../../types';
 import { intersection } from '../../../util/mathUtils';
 
 /**
- * This perimeter is registered under `hexagonPerimeter` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.
+ * This perimeter is registered under `hexagonPerimeter` in {@link PerimeterRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.
  *
  * @category Perimeter
  */

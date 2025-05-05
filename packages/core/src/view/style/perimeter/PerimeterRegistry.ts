@@ -1,5 +1,5 @@
 /*
-Copyright 2022-present The maxGraph project Contributors
+Copyright 2025-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,20 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { defineConfig } from 'vite';
+import { BaseRegistry } from '../../../util/BaseRegistry';
+import { PerimeterFunction } from '../../../types';
 
-export default defineConfig(({ mode }) => {
-  return {
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            // put the maxgraph code in a dedicated file. It lets know the size the produced bundle in an external application and if tree shaking works
-            maxgraph: ['@maxgraph/core'],
-          },
-        },
-      },
-      chunkSizeWarningLimit: 370, // @maxgraph/core
-    },
-  };
-});
+/**
+ * A registry that stores the {@link Perimeter}s.
+ *
+ * @since 0.20.0
+ * @category Style
+ * @category Configuration
+ */
+export const PerimeterRegistry = new BaseRegistry<PerimeterFunction>();

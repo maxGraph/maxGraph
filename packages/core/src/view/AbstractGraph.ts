@@ -40,6 +40,7 @@ import ValueChange from './undoable_changes/ValueChange';
 import CellState from './cell/CellState';
 import { isNode } from '../util/domUtils';
 import { EdgeStyle } from './style/builtin-style-elements';
+import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry';
 import EdgeHandler from './handler/EdgeHandler';
 import VertexHandler from './handler/VertexHandler';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
@@ -338,8 +339,9 @@ export abstract class AbstractGraph extends EventSource {
   allowLoops = false;
 
   /**
-   * {@link EdgeStyle} to be used for loops. This is a fallback for loops if the
-   * {@link CellStateStyle.loopStyle} is `undefined`.
+   * {@link EdgeStyle} to be used for loops.
+   *
+   * This is a fallback for loops if the {@link CellStateStyle.loopStyle} is `undefined`.
    * @default {@link EdgeStyle.Loop}
    */
   defaultLoopStyle = EdgeStyle.Loop;
@@ -423,7 +425,7 @@ export abstract class AbstractGraph extends EventSource {
    *
    * @param state {@link CellState} to create the handler for.
    */
-  createEdgeSegmentHandler(state: CellState) {
+  createEdgeSegmentHandler(state: CellState): EdgeSegmentHandler {
     return new EdgeSegmentHandler(state);
   }
 
@@ -432,7 +434,7 @@ export abstract class AbstractGraph extends EventSource {
    *
    * @param state {@link CellState} to create the handler for.
    */
-  createElbowEdgeHandler(state: CellState) {
+  createElbowEdgeHandler(state: CellState): ElbowEdgeHandler {
     return new ElbowEdgeHandler(state);
   }
 
@@ -974,33 +976,25 @@ export abstract class AbstractGraph extends EventSource {
   /**
    * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
    *
+   * This method relies on the registered elements in {@link EdgeStyleRegistry} to know which {@link EdgeHandler} to create.
+   * If the {@link EdgeStyle} is not registered, it will return a default {@link EdgeHandler}.
+   *
    * @param state {@link CellState} to create the handler for.
    * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
    */
   createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
-    let result = null;
-    if (
-      edgeStyle == EdgeStyle.ElbowConnector ||
-      edgeStyle == EdgeStyle.Loop ||
-      edgeStyle == EdgeStyle.SideToSide ||
-      edgeStyle == EdgeStyle.TopToBottom
-    ) {
-      result = this.createElbowEdgeHandler(state);
-    } else if (
-      edgeStyle == EdgeStyle.ManhattanConnector ||
-      edgeStyle == EdgeStyle.OrthConnector ||
-      edgeStyle == EdgeStyle.SegmentConnector
-    ) {
-      result = this.createEdgeSegmentHandler(state);
-    } else {
-      result = this.createEdgeHandlerInstance(state);
+    const handlerKind = EdgeStyleRegistry.getHandlerKind(edgeStyle!); // TODO accept nullish?
+    switch (handlerKind) {
+      case 'elbow':
+        return this.createElbowEdgeHandler(state);
+      case 'segment':
+        return this.createEdgeSegmentHandler(state);
     }
-
-    return result;
+    return this.createEdgeHandlerInstance(state);
   }
 
   /*****************************************************************************
-   * Group: Drilldown
+   * Group: Drill down
    *****************************************************************************/
 
   /**
@@ -1179,6 +1173,9 @@ export abstract class AbstractGraph extends EventSource {
   /**
    * Returns `true` if perimeter points should be computed such that the resulting edge has only horizontal or vertical segments.
    *
+   * This method relies on the registered elements in {@link EdgeStyleRegistry} to know if the {@link CellStateStyle.edgeStyle} of the {@link CellState} is orthogonal.
+   * If the {@link EdgeStyle} is not registered, it is considered as NOT orthogonal.
+   *
    * @param edge {@link CellState} that represents the edge.
    */
   isOrthogonal(edge: CellState): boolean {
@@ -1189,16 +1186,7 @@ export abstract class AbstractGraph extends EventSource {
 
     // fallback when the orthogonal style is not defined
     const edgeStyle = this.view.getEdgeStyle(edge);
-
-    return [
-      EdgeStyle.EntityRelation,
-      EdgeStyle.ElbowConnector,
-      EdgeStyle.ManhattanConnector,
-      EdgeStyle.OrthConnector,
-      EdgeStyle.SegmentConnector,
-      EdgeStyle.SideToSide,
-      EdgeStyle.TopToBottom,
-    ].includes(edgeStyle!);
+    return EdgeStyleRegistry.isOrthogonal(edgeStyle!);
   }
 
   /*****************************************************************************

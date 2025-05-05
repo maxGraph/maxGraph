@@ -181,6 +181,7 @@ export * as styleUtils from './util/styleUtils';
  */
 export * as xmlUtils from './util/xmlUtils';
 
+export * from './util/BaseRegistry';
 export * from './util/config';
 export * from './util/logger';
 
@@ -201,8 +202,9 @@ export { default as Rectangle } from './view/geometry/Rectangle';
 export * from './view/style/builtin-style-elements';
 export * from './view/style/config';
 export * from './view/style/register';
+export * from './view/style/edge/EdgeStyleRegistry';
 export { default as MarkerShape } from './view/style/marker/EdgeMarkerRegistry';
-export { default as StyleRegistry } from './view/style/StyleRegistry';
+export { PerimeterRegistry } from './view/style/perimeter/PerimeterRegistry';
 export { Stylesheet } from './view/style/Stylesheet';
 
 export { default as DragSource } from './view/other/DragSource';

@@ -67,7 +67,7 @@ import {
   DomHelpers,
   Rectangle,
   EdgeHandler,
-  StyleRegistry,
+  EdgeStyleRegistry,
   EdgeSegmentHandler,
   UndoManager,
   CellEditorHandler,
@@ -698,7 +698,7 @@ const Template = ({ label, ...args }) => {
     }
   };
 
-  StyleRegistry.putValue('wireEdgeStyle', WireConnector);
+  EdgeStyleRegistry.add('wireEdgeStyle', WireConnector);
 
   let graph = new MyCustomGraph(container, null, [
     MyCustomCellEditorHandler,

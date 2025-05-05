@@ -20,9 +20,16 @@ When setting it up, ensure it aligns with the shape of the vertex. Otherwise, th
 By default, a vertex perimeter is a _rectangle_.
 
 :::note
-All perimeters provided by `maxGraph` are automatically registered in the `StyleRegistry` when a `Graph` instance is created. For more details, see the [Global Configuration](global-configuration.md#styles) documentation.  
+All perimeters provided by `maxGraph` are automatically registered in the `PerimeterRegistry` when a `Graph` instance is created. For more details, see the [Global Configuration](global-configuration.md#styles) documentation.  
 To check the list of registered perimeters, refer to the `registerDefaultStyleElements` function.
 :::
+
+:::info
+The `PerimeterRegistry` is a new registry introduced in version 0.20.0 to manage edge styles.
+
+Edge styles were previously managed by the `StyleRegistry`, which has then been removed.
+:::
+
 
 ### Disabling the Perimeter
 
@@ -101,8 +108,8 @@ For more details about the usage of perimeters, see the documentation of `CellSt
 style.perimeter = Perimeter.EllipsePerimeter;
 ```
 
-It is also possible to set the perimeter using a string under which the perimeter has been registered in `StyleRegistry`.
-By default, `maxGraph` registers all perimeters functions under the `Perimeter` namespace in the `StyleRegistry`:
+It is also possible to set the perimeter using a string under which the perimeter has been registered in `PerimeterRegistry`.
+By default, `maxGraph` registers all perimeters functions under the `Perimeter` namespace in the `PerimeterRegistry`:
 
 ```javascript
 style.perimeter = 'rhombusPerimeter';
@@ -141,9 +148,9 @@ const CustomPerimeter: PerimeterFunction = (
 }
 ```
 
-The new perimeter can then be registered in the `StyleRegistry` as follows if you are intended to use it as a string in `CellStateStyle.perimeter`:
+The new perimeter can then be registered in the `PerimeterRegistry` as follows if you are intended to use it as a string in `CellStateStyle.perimeter`:
 ```javascript
-StyleRegistry.putValue('customPerimeter', CustomPerimeter);
+PerimeterRegistry.add('customPerimeter', CustomPerimeter);
 ```
 
 ### Using a Custom Perimeter

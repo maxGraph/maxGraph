@@ -42,7 +42,8 @@ import type PopupMenuHandler from './plugins/PopupMenuHandler';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
 import { clone } from '../util/cloneUtils';
 import type { AbstractGraph } from './AbstractGraph';
-import StyleRegistry from './style/StyleRegistry';
+import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry';
+import { PerimeterRegistry } from './style/perimeter/PerimeterRegistry';
 import type TooltipHandler from './plugins/TooltipHandler';
 import type { EdgeStyleFunction, MouseEventListener } from '../types';
 import { doEval } from '../internal/utils';
@@ -135,7 +136,7 @@ export class GraphView extends EventSource {
   /**
    * Specifies if string values in cell styles should be evaluated using {@link eval}.
    *
-   * This will only be used if the string values can't be mapped to objects using {@link StyleRegistry} when resolving {@link CellStateStyle.edgeStyle} and {@link CellStateStyle.perimeter}.
+   * This will only be used if the string values can't be mapped to objects using {@link EdgeStyleRegistry} or  {@link PerimeterRegistry} when resolving {@link CellStateStyle.edgeStyle} and {@link CellStateStyle.perimeter} respectively.
    *
    * **WARNING**: Enabling this switch carries a possible security risk.
    *
@@ -1325,7 +1326,7 @@ export class GraphView extends EventSource {
 
     // Converts string values to objects
     if (typeof edgeStyle === 'string') {
-      let tmp = StyleRegistry.getValue(edgeStyle);
+      let tmp = EdgeStyleRegistry.get(edgeStyle);
 
       if (!tmp && this.isAllowEval()) {
         tmp = doEval(edgeStyle);
@@ -1593,7 +1594,7 @@ export class GraphView extends EventSource {
 
     // Converts string values to objects
     if (typeof perimeter === 'string') {
-      let tmp = StyleRegistry.getValue(perimeter);
+      let tmp = PerimeterRegistry.get(perimeter);
       if (tmp == null && this.isAllowEval()) {
         tmp = doEval(perimeter);
       }
