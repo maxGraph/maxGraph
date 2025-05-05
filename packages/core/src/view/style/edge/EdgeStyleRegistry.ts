@@ -45,8 +45,8 @@ export class EdgeStyleRegistryImpl extends BaseRegistry<EdgeStyleFunction> {
    *
    * If the `edgeStyle` is not registered or the orthogonal state was not set during registration, this method returns `false`.
    */
-  isOrthogonal(edgeStyle: EdgeStyleFunction): boolean {
-    return this.orthogonalStates.get(edgeStyle) ?? false;
+  isOrthogonal(edgeStyle?: EdgeStyleFunction | null): boolean {
+    return this.orthogonalStates.get(edgeStyle!) ?? false;
   }
 
   /**
@@ -54,8 +54,8 @@ export class EdgeStyleRegistryImpl extends BaseRegistry<EdgeStyleFunction> {
    *
    * If the `edgeStyle` is not registered or the `handlerKind` was not set during registration, this method returns  `'default'`.
    */
-  getHandlerKind(edgeStyle: EdgeStyleFunction): EdgeStyleHandlerKind {
-    return this.handlerMapping.get(edgeStyle) ?? 'default';
+  getHandlerKind(edgeStyle?: EdgeStyleFunction | null): EdgeStyleHandlerKind {
+    return this.handlerMapping.get(edgeStyle!) ?? 'default';
   }
 
   /**

@@ -983,7 +983,7 @@ export abstract class AbstractGraph extends EventSource {
    * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
    */
   createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
-    const handlerKind = EdgeStyleRegistry.getHandlerKind(edgeStyle!); // TODO accept nullish?
+    const handlerKind = EdgeStyleRegistry.getHandlerKind(edgeStyle);
     switch (handlerKind) {
       case 'elbow':
         return this.createElbowEdgeHandler(state);
@@ -1186,7 +1186,7 @@ export abstract class AbstractGraph extends EventSource {
 
     // fallback when the orthogonal style is not defined
     const edgeStyle = this.view.getEdgeStyle(edge);
-    return EdgeStyleRegistry.isOrthogonal(edgeStyle!);
+    return EdgeStyleRegistry.isOrthogonal(edgeStyle);
   }
 
   /*****************************************************************************

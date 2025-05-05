@@ -47,6 +47,12 @@ describe('registry', () => {
     expect(EdgeStyleRegistry.isOrthogonal(customEdgeStyle)).toBeTruthy();
   });
 
+  test.each([null, undefined])('retrieve with nullish: %s', (value) => {
+    expect(EdgeStyleRegistry.get(value)).toBeNull();
+    expect(EdgeStyleRegistry.getHandlerKind(value)).toEqual('default');
+    expect(EdgeStyleRegistry.isOrthogonal(value)).toBeFalsy();
+  });
+
   test('verify registration - no meta data', () => {
     EdgeStyleRegistry.add('custom', customEdgeStyle);
 
