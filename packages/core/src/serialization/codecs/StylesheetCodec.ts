@@ -84,6 +84,7 @@ export class StylesheetCodec extends ObjectCodec {
   getStringValue(key: string, value: any): string | null {
     const type = typeof value;
 
+    // Tries to turn functions into strings
     if (type === 'function') {
       value = getNameFromRegistries(value);
     } else if (type === 'object') {

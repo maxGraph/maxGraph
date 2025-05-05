@@ -108,8 +108,8 @@ export class GraphViewCodec extends ObjectCodec {
             // @ts-ignore
             let value = state.style[i];
 
-            // Tries to turn objects and functions into strings
-            if (typeof value === 'function' && typeof value === 'object') {
+            // Tries to turn functions into strings
+            if (typeof value === 'function') {
               value = getNameFromRegistries(value);
             }
 
