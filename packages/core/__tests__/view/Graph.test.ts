@@ -82,7 +82,7 @@ describe('isOrthogonal', () => {
       ['custom', customEdgeStyle],
       ['Loop', EdgeStyle.Loop],
       ['null', null],
-      ['undefined', undefined], // TODO probably already tested above
+      ['undefined', undefined],
     ])('Style of the CellState, edgeStyle: %s', (_name, edgeStyle) => {
       const graph = new BaseGraph();
       const cellState = new CellState(graph.view, null, { edgeStyle });
@@ -101,7 +101,7 @@ describe('isOrthogonal', () => {
     ['SideToSide', EdgeStyle.SideToSide],
     ['TopToBottom', EdgeStyle.TopToBottom],
     ['null', null],
-    ['undefined', undefined], // TODO probably already tested above
+    ['undefined', undefined],
   ])(
     'Default builtin styles NOT registered - Style of the CellState, edgeStyle: %s',
     (_name, edgeStyle) => {
