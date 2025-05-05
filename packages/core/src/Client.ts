@@ -18,6 +18,9 @@ limitations under the License.
 
 import { NS_SVG } from './util/Constants';
 
+/**
+ * @category Configuration
+ */
 class Client {
   /**
    * Base path for all URLs in the core without trailing slash.

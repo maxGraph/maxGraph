@@ -22,10 +22,7 @@ import type { UndoableChange } from '../../types';
 /**
  * Action to change a user object in a model.
  *
- * Constructs a change of a user object in the
- * specified model.
- *
- * @class ValueChange
+ * @category Change
  */
 class ValueChange implements UndoableChange {
   model: GraphDataModel;

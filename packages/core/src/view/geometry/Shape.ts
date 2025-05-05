@@ -83,6 +83,8 @@ import { StyleDefaultsConfig } from '../../util/config';
  * var style = graph.getStylesheet().getDefaultVertexStyle();
  * style.shape = 'customShape';
  * ```
+ *
+ * @category Shape
  */
 class Shape {
   /**

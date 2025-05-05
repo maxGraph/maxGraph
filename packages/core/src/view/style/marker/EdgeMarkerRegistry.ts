@@ -29,6 +29,9 @@ import type Shape from '../../geometry/Shape';
  * A registry that stores the factory functions that create edge markers.
  *
  * NOTE: The signature and the name of in this class will change.
+ *
+ * @category Configuration
+ * @category Style
  */
 class MarkerShape {
   /**

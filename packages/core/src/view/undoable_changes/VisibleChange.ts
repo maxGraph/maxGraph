@@ -22,10 +22,7 @@ import type { UndoableChange } from '../../types';
 /**
  * Action to change a cell's visible state in a model.
  *
- * Constructor: mxVisibleChange
- *
- * Constructs a change of a visible state in the
- * specified model.
+ * @category Change
  */
 class VisibleChange implements UndoableChange {
   model: GraphDataModel;

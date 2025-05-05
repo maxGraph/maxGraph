@@ -21,6 +21,8 @@ import type { UndoableChange } from '../../types';
 
 /**
  * Action to change a terminal in a model.
+ *
+ * @category Change
  */
 export class TerminalChange implements UndoableChange {
   model: GraphDataModel;

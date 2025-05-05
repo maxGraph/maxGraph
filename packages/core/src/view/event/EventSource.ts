@@ -43,6 +43,7 @@ type EventListenerObject = {
  * - {@link MaxToolbar}
  * - {@link MaxWindow}
  *
+ * @category Event
  */
 class EventSource {
   constructor(eventSource: EventTarget | null = null) {

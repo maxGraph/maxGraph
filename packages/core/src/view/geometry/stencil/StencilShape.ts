@@ -33,6 +33,7 @@ import { translate } from '../../../internal/i18n-utils';
  * @experimental subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
  * @since 0.11.0
  * @category Configuration
+ * @category Shape
  */
 export const StencilShapeConfig = {
   /**
@@ -61,6 +62,8 @@ const toBoolean = (value: string | null) => value !== '0';
  * Implements a generic shape which is based on an XML node as a description.
  *
  * The XSD for the stencil description is available in the `stencils.xsd` file.
+ *
+ * @category Shape
  */
 class StencilShape extends Shape {
   constructor(desc: Element) {

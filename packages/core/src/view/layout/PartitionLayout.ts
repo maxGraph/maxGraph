@@ -65,25 +65,18 @@ class PartitionLayout extends GraphLayout {
   border: number;
 
   /**
-   * Boolean that specifies if vertices should be resized. Default is true.
+   * Boolean that specifies if vertices should be resized.
+   * @default true
    */
   resizeVertices = true;
 
   /**
-   * Returns <horizontal>.
+   * Returns {@link horizontal}.
    */
   isHorizontal(): boolean {
     return this.horizontal;
   }
 
-  /**
-   * Implements {@link GraphLayout.moveCell}.
-   *
-   * @param {mxCell} cell
-   * @param {number} x
-   * @param {number} y
-   * @memberof mxPartitionLayout
-   */
   moveCell(cell: Cell, x: number, y: number): void {
     const model = this.graph.getDataModel();
     const parent = cell.getParent();

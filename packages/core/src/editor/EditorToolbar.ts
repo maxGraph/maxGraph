@@ -81,16 +81,16 @@ export class EditorToolbar {
   resetHandler: Function | null = null;
 
   /**
-   * Defines the spacing between existing and new vertices in gridSize units when a new vertex is dropped on an existing cell.  Default is 4 (40 pixels).
+   * Defines the spacing between existing and new vertices in gridSize units when a new vertex is dropped on an existing cell.
    *
-   * @Default is 4
+   * @default 4 (40 pixels)
    */
   spacing = 4;
 
   /**
    * Specifies if elements should be connected if new cells are dropped onto connectable elements.
    *
-   * @Default is false.
+   * @default false
    */
   connectOnDrop = false;
 

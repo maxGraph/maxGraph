@@ -19,15 +19,14 @@ limitations under the License.
 import Point from './Point';
 
 /**
- * Extends {@link Point} to implement a 2-dimensional rectangle with double
- * precision coordinates.
+ * Extends {@link Point} to implement a 2-dimensional rectangle with double precision coordinates.
  *
- * Constructor: mxRectangle
- *
- * Constructs a new rectangle for the optional parameters. If no parameters
- * are given then the respective default values are used.
+ * @category Geometry
  */
 class Rectangle extends Point {
+  /**
+   * Constructs a new rectangle for the optional parameters.
+   */
   constructor(x = 0, y = 0, width = 0, height = 0) {
     super(x, y);
 

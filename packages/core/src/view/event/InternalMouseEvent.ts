@@ -49,14 +49,15 @@ import Shape from '../geometry/Shape';
  * });
  * ```
  *
- * Constructor: mxMouseEvent
- *
- * Constructs a new event object for the given arguments.
- *
- * @param evt Native mouse event.
- * @param state Optional <CellState> under the mouse.
+ * @category Event
  */
 class InternalMouseEvent {
+  /**
+   * Constructs a new event object for the given arguments.
+   *
+   * @param evt Native mouse event.
+   * @param state Optional {@link CellState} under the mouse.
+   */
   constructor(evt: MouseEvent, state: CellState | null = null) {
     this.evt = evt;
     this.state = state;
