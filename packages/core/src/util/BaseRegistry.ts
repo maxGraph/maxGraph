@@ -21,7 +21,7 @@ limitations under the License.
  * @since 0.20.0
  */
 export class BaseRegistry<V> {
-  protected values = new Map<string, V>();
+  protected readonly values = new Map<string, V>();
 
   add(name: string, value: V): void {
     this.values.set(name, value);

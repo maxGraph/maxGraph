@@ -30,8 +30,8 @@ import { BaseRegistry } from '../../../util/BaseRegistry';
  * @category Configuration
  */
 export class EdgeStyleRegistryImpl extends BaseRegistry<EdgeStyleFunction> {
-  private handlerMapping = new Map<EdgeStyleFunction, EdgeStyleHandlerKind>();
-  private orthogonalStates = new Map<EdgeStyleFunction, boolean>();
+  private readonly handlerMapping = new Map<EdgeStyleFunction, EdgeStyleHandlerKind>();
+  private readonly orthogonalStates = new Map<EdgeStyleFunction, boolean>();
 
   add(name: string, edgeStyle: EdgeStyleFunction, metaData?: EdgeStyleMetaData): void {
     super.add(name, edgeStyle);
