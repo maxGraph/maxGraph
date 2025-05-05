@@ -57,7 +57,7 @@ import type { UndoableChange } from '../../types';
  *
  * Event: mxEvent.END_EDIT
  *
- * Fires after a set of changeswas executed in <undo> or <redo>.
+ * Fires after a set of changes was executed in <undo> or <redo>.
  * This event contains no properties.
  *
  * Constructor: mxUndoableEdit

@@ -24,6 +24,8 @@ import type { AbstractGraph } from '../AbstractGraph';
 
 /**
  * Implements a handler for panning.
+ *
+ * @category Navigation
  */
 class PanningManager {
   constructor(graph: AbstractGraph) {

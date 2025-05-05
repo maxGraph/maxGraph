@@ -24,21 +24,18 @@ import type Cell from '../cell/Cell';
 import type { AbstractGraph } from '../AbstractGraph';
 
 /**
- * Implements animation for morphing cells. Here is an example of
- * using this class for animating the result of a layout algorithm:
+ * Implements animation for morphing cells.
+ *
+ * Here is an example of using this class for animating the result of a layout algorithm:
  *
  * ```javascript
  * graph.getDataModel().beginUpdate();
- * try
- * {
- *   let circleLayout = new mxCircleLayout(graph);
+ * try {
+ *   const circleLayout = new CircleLayout(graph);
  *   circleLayout.execute(graph.getDefaultParent());
- * }
- * finally
- * {
- *   let morph = new Morphing(graph);
- *   morph.addListener(mxEvent.DONE, ()=>
- *   {
+ * } finally {
+ *   const morph = new Morphing(graph);
+ *   morph.addListener(mxEvent.DONE, () => {
  *     graph.getDataModel().endUpdate();
  *   });
  *
@@ -46,16 +43,17 @@ import type { AbstractGraph } from '../AbstractGraph';
  * }
  * ```
  *
- * Constructor: Morphing
- *
- * Constructs an animation.
- *
- * @param graph Reference to the enclosing {@link AbstractGraph}.
- * @param steps Optional number of steps in the morphing animation. Default is 6.
- * @param ease Optional easing constant for the animation. Default is 1.5.
- * @param delay Optional delay between the animation steps. Passed to {@link Animation}.
+ * @category Animation
  */
 class Morphing extends Animation {
+  /**
+   * Constructs an animation.
+   *
+   * @param graph Reference to the enclosing {@link AbstractGraph}.
+   * @param steps Optional number of steps in the morphing animation. Default is 6.
+   * @param ease Optional easing constant for the animation. Default is 1.5.
+   * @param delay Optional delay between the animation steps. Passed to {@link Animation}.
+   */
   constructor(graph: AbstractGraph, steps = 6, ease = 1.5, delay?: number) {
     super(delay);
     this.graph = graph;

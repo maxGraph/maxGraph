@@ -34,6 +34,7 @@ import type GraphView from './view/GraphView';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
+/** @category Change */
 export type UndoableChange = {
   execute: () => void;
   undo?: () => void;
@@ -970,6 +971,7 @@ export type StylePortConstraint = DirectionValue | DirectionValue[];
  * They can be used as a value for {@link CellStateStyle.shape}.
  *
  * @category Style
+ * @category Shape
  */
 export type ShapeValue =
   /** Name under which {@link ActorShape} is registered by default. */
@@ -1008,6 +1010,7 @@ export type ShapeValue =
 /**
  * {@link ShapeValue} with support for extensions.
  * @category Style
+ * @category Shape
  */
 export type StyleShapeValue = ShapeValue | (string & {});
 
@@ -1152,33 +1155,40 @@ export interface GraphPlugin {
 }
 
 // Events
-
+/** @category Event */
 export type Listener = {
   name: string;
   f: MouseEventListener | KeyboardEventListener;
 };
 
+/** @category Event */
 export type ListenerTarget = {
   mxListenerList?: Listener[];
 };
 
+/** @category Event */
 export type Listenable = (EventTarget | (Window & typeof globalThis)) & ListenerTarget;
 
+/** @category Event */
 export type MouseEventListener = (me: MouseEvent) => void;
+/** @category Event */
 export type KeyboardEventListener = (ke: KeyboardEvent) => void;
 
+/** @category Event */
 export type GestureEvent = Event &
   MouseEvent & {
     scale?: number;
     pointerId?: number;
   };
 
+/** @category Event */
 export type MouseListenerSet = {
   mouseDown: (sender: EventSource, me: InternalMouseEvent) => void;
   mouseMove: (sender: EventSource, me: InternalMouseEvent) => void;
   mouseUp: (sender: EventSource, me: InternalMouseEvent) => void;
 };
 
+/** @category Event */
 export type EventCache = GestureEvent[];
 
 export interface CellHandle {
@@ -1196,6 +1206,7 @@ export interface CellHandle {
   destroy: () => void;
 }
 
+/** @category GUI */
 export interface PopupMenuItem extends HTMLElement {
   table: HTMLElement;
   tbody: HTMLElement;
@@ -1426,6 +1437,7 @@ export type GraphFoldingOptions = {
 
 /**
  * @since 0.18.0
+ * @category Shape
  */
 export type ShapeConstructor = new (...arguments_: any) => Shape;
 
@@ -1469,5 +1481,6 @@ export type DialectValue =
 
 /**
  * @since 0.20.0
+ * @category Style
  */
 export type ElbowValue = 'horizontal' | 'vertical';

@@ -19,27 +19,31 @@ limitations under the License.
 type EventProperties = Record<string, any>;
 
 /**
- * The mxEventObject is a wrapper for all properties of a single event.
- * Additionally, it also offers functions to consume the event and check if it
- * was consumed as follows:
+ * `EventObject` is a wrapper for all properties of a single event.
+ *
+ * Additionally, it also offers functions to consume the event and check if it was consumed as follows:
  *
  * ```javascript
  * evt.consume();
  * INV: evt.isConsumed() == true
  * ```
  *
- * Constructor: mxEventObject
- *
- * Constructs a new event object with the specified name. An optional
- * sequence of key, value pairs can be appended to define properties.
- *
- * Example:
- *
- * ```javascript
- * new mxEventObject("eventName", key1, val1, .., keyN, valN)
- * ```
+ * @category Event
  */
 class EventObject {
+  /**
+   * Constructs a new event object with the specified name. An optional
+   * sequence of key, value pairs can be appended to define properties.
+   *
+   * Example:
+   *
+   * ```javascript
+   * new EventObject("eventName", key1, val1, .., keyN, valN)
+   * ```
+   *
+   * @param name
+   * @param args
+   */
   constructor(name = '', ...args: any[]) {
     this.name = name;
     this.properties = {};

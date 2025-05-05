@@ -79,6 +79,8 @@ import { clone } from '../../util/cloneUtils';
  * edge label. For relative geometries, the offset defines the absolute offset
  * for the origin (top, left corner) of the vertex, otherwise the offset
  * defines the absolute offset for the label inside the vertex or group.
+ *
+ * @category Geometry
  */
 class Geometry extends Rectangle {
   constructor(x = 0, y = 0, width = 0, height = 0) {

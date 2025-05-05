@@ -23,6 +23,8 @@ import type { UndoableChange } from '../../types';
 
 /**
  * Action to change the current root in a view.
+ *
+ * @category Change
  */
 class CurrentRootChange implements UndoableChange {
   view: GraphView;

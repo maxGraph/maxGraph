@@ -63,6 +63,8 @@ try {
  * have been added using {@link addListener}. The function should be invoked when
  * the last reference is removed in the JavaScript code, typically when the
  * referenced DOM node is removed from the DOM.
+ *
+ * @category Event
  */
 class InternalEvent {
   /**

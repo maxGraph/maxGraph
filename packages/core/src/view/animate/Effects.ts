@@ -30,6 +30,8 @@ import Shape from '../geometry/Shape';
 
 /**
  * Provides animation effects.
+ *
+ * @category Animation
  */
 class Effects {
   /**

@@ -41,6 +41,9 @@ type Stencils = {
  *
  * The XSD for the stencil description is available in the `stencils.xsd` file.
  * ```
+ *
+ * @category Configuration
+ * @category Shape
  */
 class StencilShapeRegistry {
   static stencils: Stencils = {};

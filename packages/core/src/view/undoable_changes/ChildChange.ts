@@ -22,12 +22,7 @@ import type { UndoableChange } from '../../types';
 /**
  * Action to add or remove a child in a model.
  *
- * Constructor: mxChildChange
- *
- * Constructs a change of a child in the
- * specified model.
- *
- * @class ChildChange
+ * @category Change
  */
 export class ChildChange implements UndoableChange {
   model: GraphDataModel;

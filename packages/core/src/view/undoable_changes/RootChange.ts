@@ -22,12 +22,7 @@ import type { UndoableChange } from '../../types';
 /**
  * Action to change the root in a model.
  *
- * Constructor: mxRootChange
- *
- * Constructs a change of the root in the
- * specified model.
- *
- * @class RootChange
+ * @category Change
  */
 export class RootChange implements UndoableChange {
   model: GraphDataModel;

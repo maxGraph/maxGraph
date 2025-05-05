@@ -22,6 +22,9 @@ import { getOuterHtml, isNode } from '../../util/domUtils';
 import { DirectionValue, TextDirectionValue } from '../../types';
 import { StyleDefaultsConfig } from '../../util/config';
 
+/**
+ * @category Serialization
+ */
 class XmlCanvas2D extends AbstractCanvas2D {
   constructor(root: Element) {
     super();

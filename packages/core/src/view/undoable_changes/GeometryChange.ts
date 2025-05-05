@@ -23,10 +23,7 @@ import type { UndoableChange } from '../../types';
 /**
  * Action to change a cell's geometry in a model.
  *
- * Constructor: mxGeometryChange
- *
- * Constructs a change of a geometry in the
- * specified model.
+ * @category Change
  */
 class GeometryChange implements UndoableChange {
   model: GraphDataModel;

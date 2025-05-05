@@ -23,6 +23,8 @@ import Cell from '../cell/Cell';
 
 /**
  * Action to change the current root in a view.
+ *
+ * @category Change
  */
 class SelectionChange implements UndoableChange {
   constructor(graph: AbstractGraph, added: Cell[] = [], removed: Cell[] = []) {

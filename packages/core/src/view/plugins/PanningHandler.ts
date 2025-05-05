@@ -58,6 +58,7 @@ import type { AbstractGraph } from '../AbstractGraph';
  * <code>event</code> property contains the corresponding {@link MouseEvent}.
  *
  * @category Plugin
+ * @category Navigation
  */
 class PanningHandler extends EventSource implements GraphPlugin {
   static pluginId = 'PanningHandler';

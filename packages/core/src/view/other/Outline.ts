@@ -40,44 +40,34 @@ import type { Listenable, MouseListenerSet } from '../../types';
 import { getDefaultPlugins } from '../plugins';
 
 /**
- * Implements an outline (aka overview) for a graph. Set {@link updateOnPan} to true
- * to enable updates while the source graph is panning.
+ * Implements an outline (aka overview or minimap) for a `Graph`.
+ *
+ * Set {@link updateOnPan} to true to enable updates while the source graph is panning.
  *
  * ### Example
  *
  * ```javascript
- * var outline = new mxOutline(graph, div);
- * ```
- *
- * If an outline is used in an {@link MaxWindow} in IE8 standards mode, the following
- * code makes sure that the shadow filter is not inherited and that any
- * transparent elements in the graph do not show the page background, but the
- * background of the graph container.
- *
- * ```javascript
- * if (document.documentMode == 8)
- * {
- *   container.style.filter = 'progid:DXImageTransform.Microsoft.alpha(opacity=100)';
- * }
+ * const outline = new Outline(graph, div);
  * ```
  *
  * To move the graph to the top, left corner the following code can be used.
  *
  * ```javascript
- * var scale = graph.view.scale;
- * var bounds = graph.getGraphBounds();
+ * const scale = graph.view.scale;
+ * const bounds = graph.getGraphBounds();
  * graph.view.setTranslate(-bounds.x / scale, -bounds.y / scale);
  * ```
  *
  * To toggle the suspended mode, the following can be used.
  *
  * ```javascript
- * outline.suspended = !outln.suspended;
- * if (!outline.suspended)
- * {
+ * outline.suspended = !outline.suspended;
+ * if (!outline.suspended) {
  *   outline.update(true);
  * }
  * ```
+ *
+ * @category Navigation
  */
 class Outline implements MouseListenerSet {
   constructor(source: AbstractGraph, container?: HTMLElement | null) {

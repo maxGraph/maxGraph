@@ -44,6 +44,8 @@ import Shape from '../geometry/Shape';
  * 		'&h=' + h + '&bg=#F9F7ED&xml=' + encodeURIComponent(xml))
  * 		.simulate(document, '_blank');
  * ```
+ *
+ * @category Serialization
  */
 class ImageExport {
   /**

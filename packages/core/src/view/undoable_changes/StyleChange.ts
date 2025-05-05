@@ -22,7 +22,7 @@ import type { CellStyle, UndoableChange } from '../../types';
 /**
  * Action to change a cell's style in a model.
  *
- * @class StyleChange
+ * @category Change
  */
 class StyleChange implements UndoableChange {
   model: GraphDataModel;

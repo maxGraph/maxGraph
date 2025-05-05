@@ -124,22 +124,61 @@ export {
 } from './view/geometry/stencil/StencilShape';
 export { default as StencilShapeRegistry } from './view/geometry/stencil/StencilShapeRegistry';
 
-export * as constants from './util/Constants';
 export { default as Guide } from './view/other/Guide';
 
 export { default as Translations, TranslationsAsI18n } from './i18n/Translations';
 export * from './i18n/config';
 export * from './i18n/provider';
 
+/**
+ * @category Utils
+ */
 export * as cellArrayUtils from './util/cellArrayUtils';
+/**
+ * @category Utils
+ */
 export * as cloneUtils from './util/cloneUtils';
+/**
+ * @category Utils
+ */
+export * as constants from './util/Constants';
+/**
+ * @category GUI
+ * @category Utils
+ */
+export * as DomHelpers from './util/domHelpers';
+/**
+ * @category Utils
+ */
 export * as domUtils from './util/domUtils';
+/**
+ * @category Event
+ * @category Utils
+ */
 export * as eventUtils from './util/EventUtils';
+/**
+ * @category Utils
+ */
 export * as gestureUtils from './util/gestureUtils';
+/**
+ * @category Utils
+ */
 export * as mathUtils from './util/mathUtils';
+/**
+ * @category Utils
+ */
 export * as printUtils from './util/printUtils';
+/**
+ * @category Utils
+ */
 export * as stringUtils from './util/StringUtils';
+/**
+ * @category Utils
+ */
 export * as styleUtils from './util/styleUtils';
+/**
+ * @category Utils
+ */
 export * as xmlUtils from './util/xmlUtils';
 
 export * from './util/config';
@@ -166,8 +205,6 @@ export { default as MarkerShape } from './view/style/marker/EdgeMarkerRegistry';
 export { default as StyleRegistry } from './view/style/StyleRegistry';
 export { Stylesheet } from './view/style/Stylesheet';
 
-export * as DomHelpers from './util/domHelpers';
-
 export { default as DragSource } from './view/other/DragSource';
 export { default as PanningManager } from './view/other/PanningManager';
 
@@ -182,6 +219,10 @@ export { MaxLogAsLogger } from './gui/MaxLogAsLogger';
 export { default as MaxPopupMenu } from './gui/MaxPopupMenu';
 export { default as MaxToolbar } from './gui/MaxToolbar';
 export { default as MaxWindow } from './gui/MaxWindow';
+/**
+ * @category GUI
+ * @category Utils
+ */
 export * as guiUtils from './gui/guiUtils';
 
 export { default as ImageBox } from './view/image/ImageBox';
@@ -190,6 +231,9 @@ export { default as ImageExport } from './view/image/ImageExport';
 
 export { default as UrlConverter } from './util/UrlConverter';
 export { default as MaxXmlRequest } from './util/MaxXmlRequest';
+/**
+ * @category Utils
+ */
 export * as requestUtils from './util/requestUtils';
 
 export { default as AutoSaveManager } from './view/other/AutoSaveManager';
