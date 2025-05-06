@@ -52,11 +52,11 @@ See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues
 
 `maxGraph` provides several global registries used to register style configurations.
 
-  - `EdgeMarkerRegistry`: edge markers (since 0.20.0, previously managed by `MarkerShape`)
-  - `EdgeStyleRegistry`: edge styles (since 0.20.0, previously managed by `StyleRegistry`)
-  - `PerimeterRegistry`: perimeters (since 0.20.0, previously managed by `StyleRegistry`)
-  - `ShapeRegistry`: shapes (since 0.20.0, previously managed by `CellRenderer`)
-  - `StencilShapeRegistry`: stencil shapes
+- `EdgeMarkerRegistry`: edge markers (since 0.20.0, previously managed by `MarkerShape`)
+- `EdgeStyleRegistry`: edge styles (since 0.20.0, previously managed by `StyleRegistry`)
+- `PerimeterRegistry`: perimeters (since 0.20.0, previously managed by `StyleRegistry`)
+- `ShapeRegistry`: shapes (since 0.20.0, previously managed by `CellRenderer`)
+- `StencilShapeRegistry`: stencil shapes
 
 When instantiating a `Graph` object, the registries are filled with `maxGraph` default style configurations. There is no default stencil shapes registered by default.
 
