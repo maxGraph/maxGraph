@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import type { AbstractCanvas2D, ColorValue, Rectangle } from '@maxgraph/core';
-import { CellRenderer, EllipseShape, RectangleShape } from '@maxgraph/core';
+import { EllipseShape, RectangleShape, ShapeRegistry } from '@maxgraph/core';
 
 export const registerCustomShapes = (): void => {
-  CellRenderer.registerShape('customRectangle', CustomRectangleShape);
-  CellRenderer.registerShape('customEllipse', CustomEllipseShape);
+  ShapeRegistry.add('customRectangle', CustomRectangleShape);
+  ShapeRegistry.add('customEllipse', CustomEllipseShape);
 };
 
 class CustomRectangleShape extends RectangleShape {
