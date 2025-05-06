@@ -21,12 +21,12 @@
   },
   "devDependencies": {
     "@types/node": "^18.19.50",
-    "@typescript-eslint/eslint-plugin": "~8.31.1",
-    "@typescript-eslint/parser": "~8.31.1",
+    "@typescript-eslint/eslint-plugin": "~8.32.0",
+    "@typescript-eslint/parser": "~8.32.0",
     "eslint": "~8.57.1",
     "eslint-config-prettier": "~10.1.2",
     "eslint-plugin-import": "~2.31.0",
-    "eslint-plugin-prettier": "~5.2.6",
+    "eslint-plugin-prettier": "~5.4.0",
     "prettier": "~3.5.3",
     "typescript": "~5.8.2"
   }
