@@ -31,8 +31,8 @@ const isDiamond = (type: StyleArrowValue): boolean => type === 'diamond';
  *
  * Here is an example the registration of a factory edge marker function with `createArrow`:
  * ```js
- * MarkerShape.addMarker('classic', EdgeMarker.createArrow(2));
- * MarkerShape.addMarker('blockThin', EdgeMarker.createArrow(3));
+ * EdgeMarkerRegistry.add('classic', EdgeMarker.createArrow(2));
+ * EdgeMarkerRegistry.add('blockThin', EdgeMarker.createArrow(3));
  * ```
  *
  * @since 0.18.0
@@ -99,7 +99,7 @@ export const createArrow =
  *
  * Here is an example the registration of a factory edge marker function with `createOpenArrow`:
  * ```js
- * MarkerShape.addMarker('open', createOpenArrow(2));
+ * EdgeMarkerRegistry.add('open', createOpenArrow(2));
  * ```
  *
  * @since 0.18.0
@@ -185,8 +185,8 @@ export const oval = (
  * Generally used to create the "diamond" and "diamond thin" marker factory methods.
  *
  * ```js
- * MarkerShape.addMarker('diamond', diamond);
- * MarkerShape.addMarker('diamondThin', diamond);
+ * EdgeMarkerRegistry.add('diamond', diamond);
+ * EdgeMarkerRegistry.add('diamondThin', diamond);
  * ```
  *
  * @since 0.18.0

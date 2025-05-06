@@ -212,7 +212,7 @@ export type CellStateStyle = {
   /**
    * This defines the style of the end arrow marker.
    *
-   * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
+   * Possible values are all names of registered arrow markers with {@link EdgeMarkerRegistry.add}.
    * This includes {@link ArrowValue} values and custom names that have been registered.
    *
    * See {@link startArrow}.
@@ -761,7 +761,7 @@ export type CellStateStyle = {
   /**
    * This defines the style of the start arrow marker.
    *
-   * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
+   * Possible values are all names of registered arrow markers with {@link EdgeMarkerRegistry.add}.
    * This includes {@link ArrowValue} values and the names of any new shapes.
    *
    * See {@link endArrow}.
@@ -938,7 +938,7 @@ export type OverflowValue = 'fill' | 'width' | 'auto' | 'hidden' | 'scroll' | 'v
 /** @category Style */
 export type WhiteSpaceValue = 'normal' | 'wrap' | 'nowrap' | 'pre';
 /**
- * Names used to register the edge markers provided out-of-the-box by maxGraph with {@link MarkerShape.addMarker}.
+ * Names used to register the edge markers provided out-of-the-box by maxGraph with {@link EdgeMarkerRegistry.add}.
  *
  * Can be used as a value for {@link CellStateStyle.startArrow} and {@link CellStateStyle.endArrow}.
  *

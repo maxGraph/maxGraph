@@ -130,7 +130,7 @@ export const unregisterAllPerimeters = (): void => {
 let isDefaultMarkersRegistered = false;
 /**
  *
- * Register default builtin {@link MarkerFactoryFunction}s in {@link MarkerShape}.
+ * Register default builtin {@link MarkerFactoryFunction}s in {@link EdgeMarkerRegistry}.
  *
  * @category Configuration
  * @category Style
@@ -157,7 +157,7 @@ export const registerDefaultEdgeMarkers = (): void => {
   }
 };
 /**
- * Unregister all {@link MarkerFactoryFunction}s from {@link MarkerShape}.
+ * Unregister all {@link MarkerFactoryFunction}s from {@link EdgeMarkerRegistry}.
  *
  * @category Configuration
  * @category Style
