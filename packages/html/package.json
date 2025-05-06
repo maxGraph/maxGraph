@@ -18,6 +18,6 @@
     "@storybook/html": "~7.6.20",
     "@storybook/html-vite": "~7.6.20",
     "storybook": "~7.6.20",
-    "vite": "~5.4.17"
+    "vite": "~5.4.19"
   }
 }
