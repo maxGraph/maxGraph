@@ -92,11 +92,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const shape = doc.documentElement;
 
   if (isElement(shape)) {
-    const name = shape.getAttribute('name')!;
-    StencilShapeRegistry.addStencil(
-      name, // the "name" attribute is always set
-      new StencilShape(shape)
-    );
+    const name = shape.getAttribute('name')!; // the "name" attribute is always set
+    StencilShapeRegistry.add(name, new StencilShape(shape));
   }
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);

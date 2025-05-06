@@ -28,6 +28,7 @@ import {
   LayoutManager,
   Rectangle,
   Point,
+  ShapeRegistry,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
@@ -84,7 +85,7 @@ const Template = ({ label, ...args }) => {
       }
     }
   }
-  CellRenderer.registerShape('treenode', TreeNodeShape);
+  ShapeRegistry.add('treenode', TreeNodeShape);
 
   class MyCustomGraphView extends GraphView {
     updateFloatingTerminalPoint(edge, start, end, source) {

@@ -18,7 +18,7 @@ limitations under the License.
 
 import { DEFAULT_MARKERSIZE, NONE } from '../../../util/Constants';
 import PolylineShape from './PolylineShape';
-import MarkerShape from '../../style/marker/EdgeMarkerRegistry';
+import { EdgeMarkerRegistry } from '../../style/marker/EdgeMarkerRegistry';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import Rectangle from '../Rectangle';
@@ -121,7 +121,7 @@ class ConnectorShape extends PolylineShape {
       // orthogonal vectors describing the direction of the marker
       const filled = (source ? this.style.startFill : this.style.endFill) ?? true;
 
-      result = MarkerShape.createMarker(
+      result = EdgeMarkerRegistry.createMarker(
         c,
         this,
         type,

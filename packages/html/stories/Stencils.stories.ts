@@ -18,7 +18,6 @@ limitations under the License.
 import {
   type AbstractCanvas2D,
   CellHighlight,
-  CellRenderer,
   type CellState,
   ConnectionHandler,
   DomHelpers,
@@ -32,6 +31,7 @@ import {
   type Rectangle,
   RubberBandHandler,
   Shape,
+  ShapeRegistry,
   StencilShape,
   StencilShapeRegistry,
   StyleDefaultsConfig,
@@ -95,7 +95,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     // Uses the shape for resize previews
     override createSelectionShape(bounds: Rectangle) {
-      const stencil = StencilShapeRegistry.getStencil(this.state.style.shape);
+      const stencil = StencilShapeRegistry.get(this.state.style.shape);
       let shape: Shape;
 
       if (stencil) {
@@ -166,7 +166,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   // Replaces existing actor shape
-  CellRenderer.registerShape('customShape', CustomShape);
+  ShapeRegistry.add('customShape', CustomShape);
 
   // Loads the stencils into the registry
   const req = requestUtils.load('stencils.xml');
@@ -175,7 +175,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   while (shape != null) {
     if (isElement(shape)) {
-      StencilShapeRegistry.addStencil(
+      StencilShapeRegistry.add(
         shape.getAttribute('name')!, // the "name" attribute is always set
         new StencilShape(shape)
       );

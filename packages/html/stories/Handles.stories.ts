@@ -19,7 +19,6 @@ import {
   Graph,
   CylinderShape,
   DomHelpers,
-  CellRenderer,
   Point,
   Rectangle,
   VertexHandler,
@@ -32,6 +31,7 @@ import {
   VertexHandlerConfig,
   getDefaultPlugins,
   type GraphPluginConstructor,
+  ShapeRegistry,
 } from '@maxgraph/core';
 
 import {
@@ -106,7 +106,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
     }
   }
-  CellRenderer.registerShape('myShape', MyShape);
+  ShapeRegistry.add('myShape', MyShape);
 
   // Enable rotation handle
   VertexHandlerConfig.rotationEnabled = true;

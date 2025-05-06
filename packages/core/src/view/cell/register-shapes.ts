@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CellRenderer from './CellRenderer';
+import { ShapeRegistry } from '../geometry/ShapeRegistry';
 import type { ShapeConstructor, ShapeValue } from '../../types';
 import RectangleShape from '../geometry/node/RectangleShape';
 import EllipseShape from '../geometry/node/EllipseShape';
@@ -63,7 +63,7 @@ export function registerDefaultShapes() {
       ['triangle', TriangleShape],
     ];
     for (const [shapeName, shapeClass] of shapesToRegister) {
-      CellRenderer.registerShape(shapeName, shapeClass);
+      ShapeRegistry.add(shapeName, shapeClass);
     }
 
     isDefaultElementsRegistered = true;
@@ -71,13 +71,13 @@ export function registerDefaultShapes() {
 }
 
 /**
- * Unregister all shapes from {@link CellRenderer}.
+ * Unregister all shapes from {@link ShapeRegistry}.
  *
  * @category Configuration
  * @category Style
  * @since 0.18.0
  */
 export function unregisterAllShapes() {
-  CellRenderer.defaultShapes = {};
+  ShapeRegistry.clear();
   isDefaultElementsRegistered = false;
 }

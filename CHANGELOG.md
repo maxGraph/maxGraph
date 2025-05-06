@@ -30,8 +30,11 @@ _**Note:** Yet to be released breaking changes appear here._
   - `EdgeHandlerConfig`
   - `HandleConfig`
   - `VertexHandlerConfig`
+- All registries used to manage "styles" elements now derived from the `Registry` interface for consistency.
+  So, they all share the same methods (add, get and clear) and their internal storage is no longer accessible.
+- The `MarkerShape` registry has been renamed to `MarkerShapeRegistry`.
+- The Shapes are now registered in `ShapeRegistry` instead in `CellRenderer`.
 - `StyleRegistry` has been removed. Use `EdgeStyleRegistry` and `PerimeterRegistry` instead.
-  The methods of the new registries are also named differently.
 
 ## 0.19.0
 

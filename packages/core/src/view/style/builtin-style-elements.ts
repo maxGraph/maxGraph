@@ -29,7 +29,7 @@ export * as EdgeStyle from './edge';
 export * as Perimeter from './perimeter';
 
 /**
- * Includes all builtins edge markers which can be registered in {@link MarkerShape}.
+ * Includes all builtins edge markers which can be registered in {@link EdgeMarkerRegistry}.
  *
  * They are registered by default when instantiating {@link Graph} or they can all be registered by calling {@link registerDefaultEdgeMarkers}.
  *

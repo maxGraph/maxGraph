@@ -17,8 +17,8 @@ limitations under the License.
 import { describe, expect, test } from '@jest/globals';
 import { StencilShapeRegistry } from '../../../../src';
 
-describe('getStencil', () => {
+describe('get', () => {
   test.each([null, undefined, 'unknown'])('pass %s, return undefined', (name) => {
-    expect(StencilShapeRegistry.getStencil(name)).toBeUndefined();
+    expect(StencilShapeRegistry.get(name)).toBeNull();
   });
 });

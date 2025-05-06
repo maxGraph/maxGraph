@@ -212,7 +212,7 @@ export type CellStateStyle = {
   /**
    * This defines the style of the end arrow marker.
    *
-   * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
+   * Possible values are all names of registered arrow markers with {@link EdgeMarkerRegistry.add}.
    * This includes {@link ArrowValue} values and custom names that have been registered.
    *
    * See {@link startArrow}.
@@ -761,7 +761,7 @@ export type CellStateStyle = {
   /**
    * This defines the style of the start arrow marker.
    *
-   * Possible values are all names of registered arrow markers with {@link MarkerShape.addMarker}.
+   * Possible values are all names of registered arrow markers with {@link EdgeMarkerRegistry.add}.
    * This includes {@link ArrowValue} values and the names of any new shapes.
    *
    * See {@link endArrow}.
@@ -938,7 +938,7 @@ export type OverflowValue = 'fill' | 'width' | 'auto' | 'hidden' | 'scroll' | 'v
 /** @category Style */
 export type WhiteSpaceValue = 'normal' | 'wrap' | 'nowrap' | 'pre';
 /**
- * Names used to register the edge markers provided out-of-the-box by maxGraph with {@link MarkerShape.addMarker}.
+ * Names used to register the edge markers provided out-of-the-box by maxGraph with {@link EdgeMarkerRegistry.add}.
  *
  * Can be used as a value for {@link CellStateStyle.startArrow} and {@link CellStateStyle.endArrow}.
  *
@@ -1563,4 +1563,33 @@ export interface EdgeStyleRegistryInterface extends Registry<EdgeStyleFunction> 
    * If the `edgeStyle` is not registered or the `handlerKind` was not set during registration, this method returns  `'default'`.
    */
   getHandlerKind(edgeStyle?: EdgeStyleFunction | null): EdgeStyleHandlerKind;
+}
+
+/**
+ * The definition of a registry that stores the {@link MarkerFactoryFunction}s and their configuration.
+ *
+ * @since 0.20.0
+ * @category Style
+ * @category Configuration
+ */
+export interface EdgeMarkerRegistryInterface extends Registry<MarkerFactoryFunction> {
+  /**
+   * Returns a {@link MarkerFunction} to paint the given marker.
+   *
+   * The type parameter is used to retrieve the correct {@link MarkerFactoryFunction} from the registry which is then used to create the {@link MarkerFunction}.
+   *
+   * If none is found, `null` is returned.
+   */
+  createMarker(
+    canvas: AbstractCanvas2D,
+    shape: Shape,
+    type: StyleArrowValue,
+    pe: Point,
+    unitX: number,
+    unitY: number,
+    size: number,
+    source: boolean,
+    sw: number,
+    filled: boolean
+  ): MarkerFunction | null;
 }

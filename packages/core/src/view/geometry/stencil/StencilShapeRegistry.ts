@@ -16,14 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import StencilShape from './StencilShape';
-
-type Stencils = {
-  [k: string]: StencilShape;
-};
+import type StencilShape from './StencilShape';
+import { BaseRegistry } from '../../../internal/BaseRegistry';
+import type { Registry } from '../../../types';
 
 /**
- * A singleton class that provides a registry for stencils and the methods for painting those stencils onto a canvas or into a DOM.
+ * A registry that stores the {@link StencilShape}s and their configuration.
  *
  * Here is an example showing how to add stencils:
  * ```javascript
@@ -33,7 +31,7 @@ type Stencils = {
  *
  * while (shape) {
  *   if (shape.nodeType === constants.NODE_TYPE.ELEMENT) {
- *    StencilShapeRegistry.addStencil(shape.getAttribute('name'), new StencilShape(shape));
+ *    StencilShapeRegistry.add(shape.getAttribute('name'), new StencilShape(shape));
  *  }
  *
  *  shape = shape.nextSibling;
@@ -45,23 +43,4 @@ type Stencils = {
  * @category Configuration
  * @category Shape
  */
-class StencilShapeRegistry {
-  static stencils: Stencils = {};
-
-  /**
-   * Adds the given {@link StencilShape}.
-   */
-  static addStencil(name: string, stencil: StencilShape): void {
-    StencilShapeRegistry.stencils[name] = stencil;
-  }
-
-  /**
-   * Returns the {@link StencilShape} for the given name.
-   */
-  static getStencil(name?: string | null): StencilShape | undefined {
-    // Tests are validating that using the non-null assertion (!) is safe
-    return StencilShapeRegistry.stencils[name!];
-  }
-}
-
-export default StencilShapeRegistry;
+export const StencilShapeRegistry: Registry<StencilShape> = new BaseRegistry();
