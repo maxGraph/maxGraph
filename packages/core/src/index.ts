@@ -122,7 +122,7 @@ export {
   default as StencilShape,
   StencilShapeConfig,
 } from './view/geometry/stencil/StencilShape';
-export { default as StencilShapeRegistry } from './view/geometry/stencil/StencilShapeRegistry';
+export * from './view/geometry/stencil/StencilShapeRegistry';
 
 export { default as Guide } from './view/other/Guide';
 
@@ -197,12 +197,13 @@ export { default as Geometry } from './view/geometry/Geometry';
 export { default as ObjectIdentity } from './util/ObjectIdentity';
 export { default as Point } from './view/geometry/Point';
 export { default as Rectangle } from './view/geometry/Rectangle';
+export * from './view/geometry/ShapeRegistry';
 
 export * from './view/style/builtin-style-elements';
 export * from './view/style/config';
 export * from './view/style/register';
 export * from './view/style/edge/EdgeStyleRegistry';
-export { default as MarkerShape } from './view/style/marker/EdgeMarkerRegistry';
+export { EdgeMarkerRegistry } from './view/style/marker/EdgeMarkerRegistry';
 export { PerimeterRegistry } from './view/style/perimeter/PerimeterRegistry';
 export { Stylesheet } from './view/style/Stylesheet';
 

@@ -20,7 +20,7 @@ import ConnectionConstraint from '../../other/ConnectionConstraint';
 import Rectangle from '../Rectangle';
 import Shape from '../Shape';
 import { NONE, RECTANGLE_ROUNDING_FACTOR } from '../../../util/Constants';
-import StencilShapeRegistry from './StencilShapeRegistry';
+import { StencilShapeRegistry } from './StencilShapeRegistry';
 import { getChildNodes, getTextContent } from '../../../util/domUtils';
 import Point from '../Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
@@ -563,7 +563,7 @@ class StencilShape extends Shape {
           );
         }
       } else if (name === 'include-shape') {
-        const stencil = StencilShapeRegistry.getStencil(node.getAttribute('name'));
+        const stencil = StencilShapeRegistry.get(node.getAttribute('name'));
 
         if (stencil) {
           const x = x0 + Number(node.getAttribute('x')) * sx;

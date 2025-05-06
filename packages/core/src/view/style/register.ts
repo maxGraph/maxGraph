@@ -16,7 +16,7 @@ limitations under the License.
 
 import { EdgeStyle, EdgeMarker, Perimeter } from './builtin-style-elements';
 import { EdgeStyleRegistry } from './edge/EdgeStyleRegistry';
-import MarkerShape from './marker/EdgeMarkerRegistry';
+import { EdgeMarkerRegistry } from './marker/EdgeMarkerRegistry';
 import { PerimeterRegistry } from './perimeter/PerimeterRegistry';
 import type {
   ArrowValue,
@@ -150,7 +150,7 @@ export const registerDefaultEdgeMarkers = (): void => {
       ['diamondThin', EdgeMarker.diamond],
     ];
     for (const [type, factory] of markersToRegister) {
-      MarkerShape.addMarker(type, factory);
+      EdgeMarkerRegistry.add(type, factory);
     }
 
     isDefaultMarkersRegistered = true;
@@ -164,6 +164,6 @@ export const registerDefaultEdgeMarkers = (): void => {
  * @since 0.18.0
  */
 export const unregisterAllEdgeMarkers = (): void => {
-  MarkerShape.markers = {};
+  EdgeMarkerRegistry.clear();
   isDefaultMarkersRegistered = false;
 };

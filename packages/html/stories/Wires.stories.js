@@ -82,6 +82,7 @@ import {
   PopupMenuHandler,
   cellArrayUtils,
   StyleDefaultsConfig,
+  ShapeRegistry,
 } from '@maxgraph/core';
 
 import {
@@ -603,9 +604,7 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  CellRenderer.registerShape('resistor', ResistorShape);
-
-  // Implements a custom resistor shape. Direction currently ignored here.
+  ShapeRegistry.add('resistor', ResistorShape);
 
   const WireConnector = function (state, source, target, hints, result) {
     // Creates array of all way- and terminal points

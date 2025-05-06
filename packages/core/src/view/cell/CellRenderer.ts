@@ -31,7 +31,8 @@ import { getRotatedPoint, mod, toRadians } from '../../util/mathUtils';
 import { convertPoint } from '../../util/styleUtils';
 import { equalEntries, equalPoints } from '../../util/arrayUtils';
 import Rectangle from '../geometry/Rectangle';
-import StencilShapeRegistry from '../geometry/stencil/StencilShapeRegistry';
+import { ShapeRegistry } from '../geometry/ShapeRegistry';
+import { StencilShapeRegistry } from '../geometry/stencil/StencilShapeRegistry';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -56,45 +57,16 @@ const placeholderStyleProperties: (keyof CellStateStyle)[] = [
 ];
 
 /**
- * Renders cells into a document object model. The <defaultShapes> is a global
- * map of shape names, constructor pairs that is used in all instances. You can
- * get a list of all available shape names using the following code.
+ * Renders {@link Cell}s into a document object model.
  *
- * In general the cell renderer is in charge of creating, redrawing and
- * destroying the shape and label associated with a cell state, as well as
- * some other graphical objects, namely controls and overlays. The shape
- * hierarchy in the display (i.e. the hierarchy in which the DOM nodes
- * appear in the document) does not reflect the cell hierarchy. The shapes
- * are a (flat) sequence of shapes and labels inside the draw pane of the
- * graph view, with some exceptions, namely the HTML labels being placed
- * directly inside the graph container for certain browsers.
+ * In general, the `CellRenderer` is in charge of creating, redrawing and destroying the shape and label associated with a cell state,
+ * as well as some other graphical objects, namely controls and overlays.
+ *
+ * The shape hierarchy in the display (i.e. the hierarchy in which the DOM nodes appear in the document) does not reflect the cell hierarchy.
+ * The shapes are a (flat) sequence of shapes and labels inside the draw pane of the {@link GraphView}, with some exceptions,
+ * namely the HTML labels being placed directly inside the graph container for certain browsers.
  */
 class CellRenderer {
-  /**
-   * Static array that contains the globally registered shapes which are known to all instances of this class.
-   *
-   * For adding new shapes you should use {@link CellRenderer.registerShape}.
-   *
-   * Built-in shapes:
-   * - actor
-   * - arrow
-   * - arrow connector (for edges)
-   * - cloud
-   * - connector (for edges)
-   * - cylinder
-   * - double ellipse
-   * - ellipse
-   * - hexagon
-   * - image
-   * - label
-   * - line (for edges)
-   * - rectangle
-   * - rhombus
-   * - swimlane
-   * - triangle
-   */
-  static defaultShapes: { [key: string]: typeof Shape } = {};
-
   /**
    * Defines the default shape for edges.
    * @default {@link ConnectorShape}
@@ -144,21 +116,6 @@ class CellRenderer {
   forceControlClickHandler = false;
 
   /**
-   * Registers the given constructor under the specified key in this instance of the renderer.
-   *
-   * For example:
-   * ```javascript
-   * CellRenderer.registerShape('rectangle', RectangleShape);
-   * ```
-   *
-   * @param key the shape name.
-   * @param shape constructor of the {@link Shape} subclass.
-   */
-  static registerShape(key: StyleShapeValue, shape: ShapeConstructor): void {
-    CellRenderer.defaultShapes[key] = shape;
-  }
-
-  /**
    * Initializes the shape in the given state by calling its init method with
    * the correct container after configuring it using {@link configureShape}.
    *
@@ -179,7 +136,7 @@ class CellRenderer {
    */
   createShape(state: CellState): Shape {
     // Checks if there is a stencil for the name and creates a shape instance for the stencil if one exists
-    const stencil = StencilShapeRegistry.getStencil(state.style.shape);
+    const stencil = StencilShapeRegistry.get(state.style.shape);
     if (stencil) {
       return new Shape(stencil);
     }
@@ -199,10 +156,10 @@ class CellRenderer {
   }
 
   /**
-   * Returns the shape for the given name from {@link defaultShapes}.
+   * Returns the shape for the given name from {@link ShapeRegistry}.
    */
   getShape(name?: string | null): ShapeConstructor | null {
-    return name ? CellRenderer.defaultShapes[name] : null;
+    return ShapeRegistry.get(name);
   }
 
   /**

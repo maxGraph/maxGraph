@@ -22,8 +22,8 @@ import {
   constants,
   DomHelpers,
   EdgeMarker,
+  EdgeMarkerRegistry,
   InternalEvent,
-  MarkerShape,
   ModelXmlSerializer,
   PanningHandler,
   Perimeter,
@@ -40,7 +40,7 @@ class CustomGraph extends BaseGraph {
   registerDefaults() {
     // Register styles
     PerimeterRegistry.add('rectanglePerimeter', Perimeter.RectanglePerimeter); // declared in the default vertex style, so must be registered to be used
-    MarkerShape.addMarker('classic', EdgeMarker.createArrow(2));
+    EdgeMarkerRegistry.add('classic', EdgeMarker.createArrow(2));
   }
 }
 

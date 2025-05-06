@@ -1564,3 +1564,32 @@ export interface EdgeStyleRegistryInterface extends Registry<EdgeStyleFunction> 
    */
   getHandlerKind(edgeStyle?: EdgeStyleFunction | null): EdgeStyleHandlerKind;
 }
+
+/**
+ * The definition of a registry that stores the {@link MarkerFactoryFunction}s and their configuration.
+ *
+ * @since 0.20.0
+ * @category Style
+ * @category Configuration
+ */
+export interface EdgeMarkerRegistryInterface extends Registry<MarkerFactoryFunction> {
+  /**
+   * Returns a {@link MarkerFunction} to paint the given marker.
+   *
+   * The type parameter is used to retrieve the correct {@link MarkerFactoryFunction} from the registry which is then used to create the {@link MarkerFunction}.
+   *
+   * If none is found, `null` is returned.
+   */
+  createMarker(
+    canvas: AbstractCanvas2D,
+    shape: Shape,
+    type: StyleArrowValue,
+    pe: Point,
+    unitX: number,
+    unitY: number,
+    size: number,
+    source: boolean,
+    sw: number,
+    filled: boolean
+  ): MarkerFunction | null;
+}

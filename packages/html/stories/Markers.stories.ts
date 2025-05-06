@@ -19,11 +19,11 @@ import {
   Graph,
   EdgeHandler,
   SelectionHandler,
-  CellRenderer,
-  MarkerShape,
   CylinderShape,
   ArrowShape,
   Point,
+  ShapeRegistry,
+  EdgeMarkerRegistry,
 } from '@maxgraph/core';
 import type { AbstractCanvas2D, Shape, StyleArrowValue } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
@@ -47,7 +47,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   EdgeHandler.prototype.snapToTerminals = true;
 
   // Registers and defines the custom marker
-  MarkerShape.addMarker(
+  EdgeMarkerRegistry.add(
     'dash',
     function (
       canvas: AbstractCanvas2D,
@@ -96,7 +96,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
     }
   }
-  CellRenderer.registerShape('message', MessageShape);
+  ShapeRegistry.add('message', MessageShape);
 
   // Defines custom edge shape
   class LinkShape extends ArrowShape {
@@ -141,7 +141,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       c.stroke();
     }
   }
-  CellRenderer.registerShape('link', LinkShape);
+  ShapeRegistry.add('link', LinkShape);
 
   // Creates the graph
   const graph = new Graph(container);

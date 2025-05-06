@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import type {
+  EdgeMarkerRegistryInterface,
   MarkerFactoryFunction,
   MarkerFunction,
   StyleArrowValue,
@@ -24,39 +25,13 @@ import type {
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import type Point from '../../geometry/Point';
 import type Shape from '../../geometry/Shape';
+import { BaseRegistry } from '../../../internal/BaseRegistry';
 
-/**
- * A registry that stores the factory functions that create edge markers.
- *
- * NOTE: The signature and the name of in this class will change.
- *
- * @category Configuration
- * @category Style
- */
-class MarkerShape {
-  /**
-   * Maps from markers names to functions to paint the markers.
-   *
-   * Mapping: the attribute name on the object is the marker type, the associated value is the function to paint the marker
-   */
-  static markers: Record<string, MarkerFactoryFunction> = {};
-
-  /**
-   * Adds a factory method that updates a given endpoint and returns a
-   * function to paint the marker onto the given canvas.
-   */
-  static addMarker(type: StyleArrowValue, factory: MarkerFactoryFunction) {
-    MarkerShape.markers[type] = factory;
-  }
-
-  /**
-   * Returns a {@link MarkerFunction} to paint the given marker.
-   *
-   * The type parameter is used to retrieve the correct {@link MarkerFactoryFunction} from the registry which is then used to create the {@link MarkerFunction}.
-   *
-   * If none is found, `null` is returned.
-   */
-  static createMarker(
+class EdgeMarkerRegistryImpl
+  extends BaseRegistry<MarkerFactoryFunction>
+  implements EdgeMarkerRegistryInterface
+{
+  createMarker(
     canvas: AbstractCanvas2D,
     shape: Shape,
     type: StyleArrowValue,
@@ -68,11 +43,21 @@ class MarkerShape {
     sw: number,
     filled: boolean
   ): MarkerFunction | null {
-    const markerFunction = MarkerShape.markers[type];
+    const markerFunction = this.get(type);
     return markerFunction
       ? markerFunction(canvas, shape, type, pe, unitX, unitY, size, source, sw, filled)
       : null;
   }
 }
 
-export default MarkerShape;
+/**
+ * A registry that stores the {@link MarkerFactoryFunction}s and their configuration to let generate {@link MarkerFunction}.
+ *
+ * The name used to register the marker is the marker type. It is then used to create the marker with {@link createMarker}.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.20.0
+ */
+export const EdgeMarkerRegistry: EdgeMarkerRegistryInterface =
+  new EdgeMarkerRegistryImpl();

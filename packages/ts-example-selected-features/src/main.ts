@@ -19,21 +19,21 @@ import './style.css';
 import {
   BaseGraph,
   CellEditorHandler,
-  CellRenderer,
   constants,
   EdgeMarker,
+  EdgeMarkerRegistry,
   EdgeStyle,
   EdgeStyleRegistry,
   EllipseShape,
   FitPlugin,
   InternalEvent,
-  MarkerShape,
   PanningHandler,
   Perimeter,
   PerimeterRegistry,
   RubberBandHandler,
   SelectionCellsHandler,
   SelectionHandler,
+  ShapeRegistry,
 } from '@maxgraph/core';
 
 /**
@@ -43,7 +43,7 @@ class CustomGraph extends BaseGraph {
   protected override registerDefaults() {
     // Register shapes
     // RectangleShape is not registered here because it is always available. It is the fallback shape for vertices when no shape is returned by the registry
-    CellRenderer.registerShape('ellipse', EllipseShape);
+    ShapeRegistry.add('ellipse', EllipseShape);
 
     // Register styles
     PerimeterRegistry.add('ellipsePerimeter', Perimeter.EllipsePerimeter);
@@ -54,8 +54,8 @@ class CustomGraph extends BaseGraph {
     });
 
     const arrowFunction = EdgeMarker.createArrow(2);
-    MarkerShape.addMarker('classic', arrowFunction);
-    MarkerShape.addMarker('block', arrowFunction);
+    EdgeMarkerRegistry.add('classic', arrowFunction);
+    EdgeMarkerRegistry.add('block', arrowFunction);
   }
 }
 
