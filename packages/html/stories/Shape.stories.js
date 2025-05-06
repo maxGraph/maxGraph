@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, CylinderShape, CellRenderer, ShapeRegistry } from '@maxgraph/core';
+import { Graph, CylinderShape, ShapeRegistry } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer } from './shared/configure.js';
 

@@ -63,7 +63,6 @@ import {
   ConnectionConstraint,
   Point,
   CylinderShape,
-  CellRenderer,
   DomHelpers,
   Rectangle,
   EdgeHandler,

@@ -45,7 +45,7 @@ import Cell from './Cell';
 import CellOverlay from './CellOverlay';
 import { getClientX, getClientY, getSource } from '../../util/EventUtils';
 import { isNode } from '../../util/domUtils';
-import type { CellStateStyle, ShapeConstructor, StyleShapeValue } from '../../types';
+import type { CellStateStyle, ShapeConstructor } from '../../types';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 
 const placeholderStyleValues = ['inherit', 'swimlane', 'indicated'];
