@@ -28,6 +28,19 @@ test('registration', () => {
   expect(baseRegistry.get(undefined)).toBeNull();
 });
 
+test('registration override', () => {
+  const baseRegistry = new BaseRegistry<Record<string, string>>();
+  const object1 = { property: 'value1' };
+  const object2 = { property: 'value2' };
+
+  baseRegistry.add('name', object1);
+  expect(baseRegistry.get('name')).toBe(object1);
+
+  baseRegistry.add('name', object2);
+  expect(baseRegistry.get('name')).toBe(object2);
+  expect(baseRegistry.get('name')).not.toBe(object1);
+});
+
 test('clear', () => {
   const baseRegistry = new BaseRegistry();
   baseRegistry.add('name', { property: 'value' });
