@@ -24,6 +24,10 @@ updates:
       - dependency-name: "@types/node"
       # Bumping to eslint v9 requires all plugins to support it and configuration changes (flat configuration)
       - dependency-name: "eslint"
+      # use react 19.0.0 in website, otherwise this impacts storybook 7.x which requires at most react 19.x
+      # see https://github.com/maxGraph/maxGraph/issues/747
+      - dependency-name: "react"
+      - dependency-name: "react-dom"
       # use storybook 7.x for now, bumping to a major version requires a migration
       - dependency-name: "@storybook/*"
       - dependency-name: "storybook"
