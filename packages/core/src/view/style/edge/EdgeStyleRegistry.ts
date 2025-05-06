@@ -18,18 +18,18 @@ import type {
   EdgeStyleFunction,
   EdgeStyleHandlerKind,
   EdgeStyleMetaData,
+  EdgeStyleRegistryInterface,
 } from '../../../types';
 import { isNullish } from '../../../internal/utils';
-import { BaseRegistry } from '../../../util/BaseRegistry';
+import { BaseRegistry } from '../../../internal/BaseRegistry';
 
 /**
- * Implementation of the {@link EdgeStyleRegistry}.
- *
- * @since 0.20.0
- * @category Style
- * @category Configuration
+ * @private
  */
-export class EdgeStyleRegistryImpl extends BaseRegistry<EdgeStyleFunction> {
+class EdgeStyleRegistryImpl
+  extends BaseRegistry<EdgeStyleFunction>
+  implements EdgeStyleRegistryInterface
+{
   private readonly handlerMapping = new Map<EdgeStyleFunction, EdgeStyleHandlerKind>();
   private readonly orthogonalStates = new Map<EdgeStyleFunction, boolean>();
 
@@ -40,28 +40,14 @@ export class EdgeStyleRegistryImpl extends BaseRegistry<EdgeStyleFunction> {
       this.orthogonalStates.set(edgeStyle, metaData.isOrthogonal);
   }
 
-  /**
-   * Retrieves the orthogonal state of the specified `edgeStyle` as it was registered.
-   *
-   * If the `edgeStyle` is not registered or the orthogonal state was not set during registration, this method returns `false`.
-   */
   isOrthogonal(edgeStyle?: EdgeStyleFunction | null): boolean {
     return this.orthogonalStates.get(edgeStyle!) ?? false;
   }
 
-  /**
-   * Retrieves the handler kind of the specified `edgeStyle` as it was registered.
-   *
-   * If the `edgeStyle` is not registered or the `handlerKind` was not set during registration, this method returns  `'default'`.
-   */
   getHandlerKind(edgeStyle?: EdgeStyleFunction | null): EdgeStyleHandlerKind {
     return this.handlerMapping.get(edgeStyle!) ?? 'default';
   }
 
-  /**
-   * **WARNING**: this method should not be called directly. Call the {@link unregisterAllEdgeStyles} function instead.
-   * @private
-   */
   clear(): void {
     super.clear();
     this.handlerMapping.clear();
@@ -76,4 +62,4 @@ export class EdgeStyleRegistryImpl extends BaseRegistry<EdgeStyleFunction> {
  * @category Style
  * @category Configuration
  */
-export const EdgeStyleRegistry = new EdgeStyleRegistryImpl();
+export const EdgeStyleRegistry: EdgeStyleRegistryInterface = new EdgeStyleRegistryImpl();

@@ -1488,6 +1488,26 @@ export type DialectValue =
 export type ElbowValue = 'horizontal' | 'vertical';
 
 /**
+ * The base definition of all registries storing "style" configuration.
+ * @category Style
+ * @category Configuration
+ * @since 0.20.0
+ */
+export interface Registry<V> {
+  add(name: string, value: V): void;
+
+  get(name: string | null | undefined): V | null;
+
+  getName(value: V | null): string | null;
+
+  /**
+   * **WARNING**: this method should not be called directly. Call the related global unregister function instead.
+   * @private
+   */
+  clear(): void;
+}
+
+/**
  * Allowed values for {@link EdgeStyleMetaData.handlerKind}.
  *
  * @since 0.20.0
@@ -1519,3 +1539,28 @@ export type EdgeStyleMetaData = {
    * @default false */
   isOrthogonal?: boolean;
 };
+
+/**
+ * The definition of a registry that stores the {@link EdgeStyleFunction}s and their configuration.
+ *
+ * @since 0.20.0
+ * @category Style
+ * @category Configuration
+ */
+export interface EdgeStyleRegistryInterface extends Registry<EdgeStyleFunction> {
+  add(name: string, edgeStyle: EdgeStyleFunction, metaData?: EdgeStyleMetaData): void;
+
+  /**
+   * Retrieves the orthogonal state of the specified `edgeStyle` as it was registered.
+   *
+   * If the `edgeStyle` is not registered or the orthogonal state was not set during registration, this method returns `false`.
+   */
+  isOrthogonal(edgeStyle?: EdgeStyleFunction | null): boolean;
+
+  /**
+   * Retrieves the handler kind of the specified `edgeStyle` as it was registered.
+   *
+   * If the `edgeStyle` is not registered or the `handlerKind` was not set during registration, this method returns  `'default'`.
+   */
+  getHandlerKind(edgeStyle?: EdgeStyleFunction | null): EdgeStyleHandlerKind;
+}

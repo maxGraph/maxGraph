@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { BaseRegistry } from '../../../util/BaseRegistry';
-import { PerimeterFunction } from '../../../types';
+import { BaseRegistry } from '../../../internal/BaseRegistry';
+import type { PerimeterFunction, Registry } from '../../../types';
 
 /**
- * A registry that stores the {@link Perimeter}s.
+ * A registry that stores the {@link PerimeterFunction}s.
  *
  * @since 0.20.0
  * @category Style
  * @category Configuration
  */
-export const PerimeterRegistry = new BaseRegistry<PerimeterFunction>();
+export const PerimeterRegistry: Registry<PerimeterFunction> = new BaseRegistry();

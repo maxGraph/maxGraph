@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { BaseRegistry } from '../../src';
+import { BaseRegistry } from '../../src/internal/BaseRegistry';
 
 test('registration', () => {
   const baseRegistry = new BaseRegistry();

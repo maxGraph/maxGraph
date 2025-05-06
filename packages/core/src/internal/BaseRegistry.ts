@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import type { Registry } from '../types';
+
 /**
  * Base implementation for all registries storing "style" configuration.
- * @category Style
- * @category Configuration
+ * @private
  * @since 0.20.0
  */
-export class BaseRegistry<V> {
+export class BaseRegistry<V> implements Registry<V> {
   protected readonly values = new Map<string, V>();
 
   add(name: string, value: V): void {
@@ -40,10 +41,6 @@ export class BaseRegistry<V> {
     return null;
   }
 
-  /**
-   * **WARNING**: this method should not be called directly. Call the related global unregister function instead.
-   * @private
-   */
   clear(): void {
     this.values.clear();
   }

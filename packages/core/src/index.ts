@@ -181,7 +181,6 @@ export * as styleUtils from './util/styleUtils';
  */
 export * as xmlUtils from './util/xmlUtils';
 
-export * from './util/BaseRegistry';
 export * from './util/config';
 export * from './util/logger';
 
