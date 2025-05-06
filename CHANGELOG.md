@@ -30,6 +30,8 @@ _**Note:** Yet to be released breaking changes appear here._
   - `EdgeHandlerConfig`
   - `HandleConfig`
   - `VertexHandlerConfig`
+- `StyleRegistry` has been removed. Use `EdgeStyleRegistry` and `PerimeterRegistry` instead.
+  The methods of the new registries are also named differently.
 
 ## 0.19.0
 

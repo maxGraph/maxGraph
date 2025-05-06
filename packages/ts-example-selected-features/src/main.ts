@@ -23,16 +23,17 @@ import {
   constants,
   EdgeMarker,
   EdgeStyle,
+  EdgeStyleRegistry,
   EllipseShape,
   FitPlugin,
   InternalEvent,
   MarkerShape,
   PanningHandler,
   Perimeter,
+  PerimeterRegistry,
   RubberBandHandler,
   SelectionCellsHandler,
   SelectionHandler,
-  StyleRegistry,
 } from '@maxgraph/core';
 
 /**
@@ -45,9 +46,12 @@ class CustomGraph extends BaseGraph {
     CellRenderer.registerShape('ellipse', EllipseShape);
 
     // Register styles
-    StyleRegistry.putValue('ellipsePerimeter', Perimeter.EllipsePerimeter);
-    StyleRegistry.putValue('rectanglePerimeter', Perimeter.RectanglePerimeter); // declared in the default vertex style, so must be registered to be used
-    StyleRegistry.putValue('orthogonalEdgeStyle', EdgeStyle.OrthConnector);
+    PerimeterRegistry.add('ellipsePerimeter', Perimeter.EllipsePerimeter);
+    PerimeterRegistry.add('rectanglePerimeter', Perimeter.RectanglePerimeter); // declared in the default vertex style, so must be registered to be used
+    EdgeStyleRegistry.add('orthogonalEdgeStyle', EdgeStyle.OrthConnector, {
+      handlerKind: 'segment',
+      isOrthogonal: true,
+    });
 
     const arrowFunction = EdgeMarker.createArrow(2);
     MarkerShape.addMarker('classic', arrowFunction);

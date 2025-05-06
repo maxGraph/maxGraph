@@ -52,9 +52,10 @@ See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues
 
 `maxGraph` provides several global registries used to register style configurations.
 
+  - `EdgeStyleRegistry`: edge styles (since 0.20.0, previously managed by `StyleRegistry`)
   - `CellRenderer`: shapes
   - `MarkerShape`: edge markers (also known as `startArrow` and `endArrow` in `CellStateStyle`)
-  - `StyleRegistry`: edge styles and perimeters
+  - `PerimeterRegistry`: perimeters (since 0.20.0, previously managed by `StyleRegistry`)
   - `StencilShapeRegistry`: stencil shapes
 
 When instantiating a `Graph` object, the registries are filled with `maxGraph` default style configurations. There is no default stencil shapes registered by default.
@@ -72,7 +73,9 @@ It is possible to unregister all elements from a style registry using the relate
 
 ```javascript
 unregisterAllEdgeMarkers();
+unregisterAllEdgeStyles(); // since 0.20.0
 unregisterAllEdgeStylesAndPerimeters();
+unregisterAllPerimeters(); // since 0.20.0
 unregisterAllShapes();
 unregisterAllStencilShapes();
 ```

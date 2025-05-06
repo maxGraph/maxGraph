@@ -24,7 +24,7 @@ import type { PerimeterFunction } from '../../../types';
 /**
  * Describes a rectangular perimeter for the given bounds.
  *
- * This perimeter is registered under `rectanglePerimeter` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.
+ * This perimeter is registered under `rectanglePerimeter` in {@link PerimeterRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.
  *
  * @category Perimeter
  */

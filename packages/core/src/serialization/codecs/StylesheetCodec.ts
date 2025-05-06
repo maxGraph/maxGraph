@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import ObjectCodec from '../ObjectCodec';
+import { getNameFromRegistries } from './utils';
 import { Stylesheet } from '../../view/style/Stylesheet';
 import type Codec from '../Codec';
-import StyleRegistry from '../../view/style/StyleRegistry';
 import { clone } from '../../util/cloneUtils';
 import { GlobalConfig } from '../../util/config';
 import { isNumeric } from '../../util/mathUtils';
@@ -84,8 +84,9 @@ export class StylesheetCodec extends ObjectCodec {
   getStringValue(key: string, value: any): string | null {
     const type = typeof value;
 
+    // Tries to turn functions into strings
     if (type === 'function') {
-      value = StyleRegistry.getName(value);
+      value = getNameFromRegistries(value);
     } else if (type === 'object') {
       value = null;
     }

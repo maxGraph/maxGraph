@@ -18,10 +18,15 @@ An `EdgeStyle` is configured within the style properties of the Cell that relate
 By default, an edge `EdgeStyle` is unset.
 
 :::note
-All EdgeStyles provided by `maxGraph` are automatically registered in the `StyleRegistry` when a `Graph` instance is created. For more details, see the [Global Configuration](global-configuration.md#styles) documentation.  
+All EdgeStyles provided by `maxGraph` are automatically registered in the `EdgeStyleRegistry` when a `Graph` instance is created. For more details, see the [Global Configuration](global-configuration.md#styles) documentation.  
 To check the list of registered EdgeStyles, refer to the `registerDefaultStyleElements` function.
 :::
 
+:::info
+The `EdgeStyleRegistry` is a new registry introduced in version 0.20.0 to manage edge styles.
+
+Edge styles were previously managed by the `StyleRegistry`, which has then been removed.
+:::
 
 ## How to Use a Specific EdgeStyle
 
@@ -31,7 +36,7 @@ For more details about the usage of EdgeStyles, see the documentation of `CellSt
 
 `maxGraph` provides various edgeStyle functions under the `EdgeStyle` namespace to be used in the `style` property of an Edge as the value of `CellStateStyle.edgeStyle`.
 
-The following example uses the built-in `ElbowConnector` (registered under the `elbowEdgeStyle` key in `StyleRegistry`):
+The following example uses the built-in `ElbowConnector` which is registered by default under the `elbowEdgeStyle` key in `EdgeStyleRegistry`:
 
 ```javascript
 style.edgeStyle = 'elbowEdgeStyle';
@@ -43,7 +48,7 @@ The `CellStateStyle.edgeStyle` type guides you on how to set the EdgeStyle value
 
 :::
 
-It is possible to configure the default EdgeStyle for all edges in the `Graph`, for example to use `SegmentConnector` (registered by default under the `segmentEdgeStyle` key in the `StyleRegistry`), as follows:
+It is possible to configure the default EdgeStyle for all edges in the `Graph`, for example to use `SegmentConnector` (registered by default under the `segmentEdgeStyle` key in the `EdgeStyleRegistry`), as follows:
 
 ```javascript
 const style = stylesheet.getDefaultEdgeStyle();
@@ -75,11 +80,19 @@ const MyStyle: EdgeStyleFunction = (state, source, target, points, result) => {
 };
 ```
 
-The new edge style can then be registered in the `StyleRegistry` as follows:
+The new edge style can then be registered in the `EdgeStyleRegistry` as follows:
 ```javascript
-StyleRegistry.putValue('myEdgeStyle', MyStyle);
+const edgeStyleMetadata = {
+  handlerKind: 'segment',
+  isOrthogonal: true,
+};
+EdgeStyleRegistry.add('myEdgeStyle', MyStyle, edgeStyleMetadata);
 ```
 
+:::warning
+When registering the `EdgeStyle`, be sure to register it in the `EdgeStyleRegistry` with correct `EdgeStyleMetaData`.
+Some maxGraph features depend on the `EdgeStyleMetaData` to work correctly.
+:::
 
 ### Using a Custom EdgeStyle
 

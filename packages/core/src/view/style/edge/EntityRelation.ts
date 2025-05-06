@@ -35,7 +35,11 @@ import { EntityRelationConnectorConfig } from '../config';
  *
  * The first and the last point in the result array are then replaced with Point that take into account the terminal's perimeter and next point on the edge.
  *
- * This EdgeStyle is registered under `entityRelationEdgeStyle` in {@link StyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
+ * This EdgeStyle is registered under `entityRelationEdgeStyle` in {@link EdgeStyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
+ *
+ * **IMPORTANT**: When registering it manually  in {@link EdgeStyleRegistry}, the following metadata must be used:
+ * - handlerKind: 'default' or unset
+ * - isOrthogonal: true
  *
  * @param state {@link CellState} that represents the edge to be updated.
  * @param source {@link CellState} that represents the source terminal.

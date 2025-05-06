@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import ObjectCodec from '../ObjectCodec';
+import { getNameFromRegistries } from './utils';
 import GraphView from '../../view/GraphView';
 import Cell from '../../view/cell/Cell';
-import StyleRegistry from '../../view/style/StyleRegistry';
 import Point from '../../view/geometry/Point';
 
 /**
@@ -108,9 +108,9 @@ export class GraphViewCodec extends ObjectCodec {
             // @ts-ignore
             let value = state.style[i];
 
-            // Tries to turn objects and functions into strings
-            if (typeof value === 'function' && typeof value === 'object') {
-              value = StyleRegistry.getName(value);
+            // Tries to turn functions into strings
+            if (typeof value === 'function') {
+              value = getNameFromRegistries(value);
             }
 
             if (

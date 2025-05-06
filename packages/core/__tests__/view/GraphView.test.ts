@@ -19,10 +19,12 @@ import {
   BaseGraph,
   CellState,
   EdgeStyle,
+  EdgeStyleRegistry,
   GraphView,
   Perimeter,
-  StyleRegistry,
-  unregisterAllEdgeStylesAndPerimeters,
+  PerimeterRegistry,
+  unregisterAllEdgeStyles,
+  unregisterAllPerimeters,
 } from '../../src';
 
 describe('getEdgeStyle ', () => {
@@ -55,10 +57,10 @@ describe('getEdgeStyle ', () => {
   describe('isLoopStyleEnabled returns false', () => {
     // Prevents side effects between tests
     beforeEach(() => {
-      unregisterAllEdgeStylesAndPerimeters();
+      unregisterAllEdgeStyles();
     });
     afterAll(() => {
-      unregisterAllEdgeStylesAndPerimeters();
+      unregisterAllEdgeStyles();
     });
 
     // use manual double instead of jest mock as this is a very simple use case, and we don't want to do any asserts on the fake method
@@ -85,7 +87,7 @@ describe('getEdgeStyle ', () => {
 
     test('edgeStyle in CellStateStyle is a string, element matching in the registry', () => {
       const connector = EdgeStyle.OrthConnector;
-      StyleRegistry.putValue('customEdgeStyle', connector);
+      EdgeStyleRegistry.add('customEdgeStyle', connector);
 
       const graph = createGraph();
       const cellState = new CellState(graph.view, null, { edgeStyle: 'customEdgeStyle' });
@@ -94,7 +96,7 @@ describe('getEdgeStyle ', () => {
 
     test('edgeStyle in CellStateStyle is a string, element matching in the registry BUT CellStateStyle.noEdgeStyle is true', () => {
       const connector = EdgeStyle.OrthConnector;
-      StyleRegistry.putValue('customEdgeStyle', connector);
+      EdgeStyleRegistry.add('customEdgeStyle', connector);
 
       const graph = createGraph();
       const cellState = new CellState(graph.view, null, {
@@ -117,10 +119,10 @@ describe('getEdgeStyle ', () => {
 describe('getPerimeterFunction', () => {
   // Prevents side effects between tests
   beforeEach(() => {
-    unregisterAllEdgeStylesAndPerimeters();
+    unregisterAllPerimeters();
   });
   afterAll(() => {
-    unregisterAllEdgeStylesAndPerimeters();
+    unregisterAllPerimeters();
   });
 
   test('no perimeter in CellStateStyle, no element matching in the registry', () => {
@@ -137,7 +139,7 @@ describe('getPerimeterFunction', () => {
 
   test('perimeter in CellStateStyle is a string, element matching in the registry', () => {
     const perimeter = Perimeter.HexagonPerimeter;
-    StyleRegistry.putValue('customPerimeter', perimeter);
+    PerimeterRegistry.add('customPerimeter', perimeter);
 
     const graph = new BaseGraph();
     const cellState = new CellState(graph.view, null, { perimeter: 'customPerimeter' });
