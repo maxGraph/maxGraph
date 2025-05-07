@@ -21,7 +21,7 @@ Note that they are based on `maxGraph` features, which require the use of [CSS a
 
 ## Interactive Demos
 - the [storybook stories](https://github.com/maxGraph/maxGraph/tree/main/packages/html/stories) demonstrates various features of maxGraph.
-  - The stories were originally written in `JavaScript` and are progressively migrated to `TypeScript`.
+  - The stories were originally written in `JavaScript` and are being progressively migrated to `TypeScript`.
   - A live instance is available on the [maxGraph website](https://maxgraph.github.io/maxGraph/demo).
 
 ## TypeScript Examples
