@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import RectangleShape from '../geometry/node/RectangleShape';
-import ConnectorShape from '../geometry/edge/ConnectorShape';
-import ImageShape from '../geometry/node/ImageShape';
-import TextShape from '../geometry/node/TextShape';
+import RectangleShape from '../shape/node/RectangleShape';
+import ConnectorShape from '../shape/edge/ConnectorShape';
+import ImageShape from '../shape/node/ImageShape';
+import TextShape from '../shape/node/TextShape';
 import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
@@ -31,15 +31,15 @@ import { getRotatedPoint, mod, toRadians } from '../../util/mathUtils';
 import { convertPoint } from '../../util/styleUtils';
 import { equalEntries, equalPoints } from '../../util/arrayUtils';
 import Rectangle from '../geometry/Rectangle';
-import { ShapeRegistry } from '../geometry/ShapeRegistry';
-import { StencilShapeRegistry } from '../geometry/stencil/StencilShapeRegistry';
+import { ShapeRegistry } from '../shape/ShapeRegistry';
+import { StencilShapeRegistry } from '../shape/stencil/StencilShapeRegistry';
 import InternalEvent from '../event/InternalEvent';
 import Client from '../../Client';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import Dictionary from '../../util/Dictionary';
 import EventObject from '../event/EventObject';
 import Point from '../geometry/Point';
-import Shape from '../geometry/Shape';
+import Shape from '../shape/Shape';
 import CellState from './CellState';
 import Cell from './Cell';
 import CellOverlay from './CellOverlay';

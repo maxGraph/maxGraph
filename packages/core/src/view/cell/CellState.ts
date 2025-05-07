@@ -20,12 +20,12 @@ import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
 import type Cell from './Cell';
 import type GraphView from '../../view/GraphView';
-import Shape from '../geometry/Shape';
-import TextShape from '../geometry/node/TextShape';
+import type Shape from '../shape/Shape';
+import TextShape from '../shape/node/TextShape';
 import Dictionary from '../../util/Dictionary';
 import { NONE } from '../../util/Constants';
 import { CellStateStyle } from '../../types';
-import RectangleShape from '../geometry/node/RectangleShape';
+import RectangleShape from '../shape/node/RectangleShape';
 import CellOverlay from './CellOverlay';
 
 /**

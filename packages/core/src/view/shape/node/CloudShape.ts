@@ -16,50 +16,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../Point';
 import ActorShape from './ActorShape';
-import { LINE_ARCSIZE } from '../../../util/Constants';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import Rectangle from '../../geometry/Rectangle';
 
 /**
- * Implementation of the triangle shape.
+ * Extends {@link ActorShape} to implement a cloud shape.
  *
- * This shape is registered under `triangle` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `cloud` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */
-class TriangleShape extends ActorShape {
-  constructor() {
+class CloudShape extends ActorShape {
+  constructor(bounds: Rectangle, fill: string, stroke: string, strokeWidth = 1) {
     super();
-  }
-
-  /**
-   * Adds roundable support.
-   * @returns {boolean}
-   */
-  isRoundable() {
-    return true;
+    this.bounds = bounds;
+    this.fill = fill;
+    this.stroke = stroke;
+    this.strokeWidth = strokeWidth;
   }
 
   /**
    * Draws the path for this shape.
-   * @param {mxAbstractCanvas2D} c
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
-   * @param {number} h
    */
   redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
-    const arcSize = (this.style?.arcSize ?? LINE_ARCSIZE) / 2;
-
-    this.addPoints(
-      c,
-      [new Point(0, 0), new Point(w, 0.5 * h), new Point(0, h)],
-      this.isRounded,
-      arcSize,
-      true
-    );
+    c.moveTo(0.25 * w, 0.25 * h);
+    c.curveTo(0.05 * w, 0.25 * h, 0, 0.5 * h, 0.16 * w, 0.55 * h);
+    c.curveTo(0, 0.66 * h, 0.18 * w, 0.9 * h, 0.31 * w, 0.8 * h);
+    c.curveTo(0.4 * w, h, 0.7 * w, h, 0.8 * w, 0.8 * h);
+    c.curveTo(w, 0.8 * h, w, 0.6 * h, 0.875 * w, 0.5 * h);
+    c.curveTo(w, 0.3 * h, 0.8 * w, 0.1 * h, 0.625 * w, 0.2 * h);
+    c.curveTo(0.5 * w, 0.05 * h, 0.3 * w, 0.05 * h, 0.25 * w, 0.25 * h);
+    c.close();
   }
 }
 
-export default TriangleShape;
+export default CloudShape;

@@ -26,10 +26,10 @@ import {
 } from '../../util/Constants';
 import Point from '../geometry/Point';
 import Rectangle from '../geometry/Rectangle';
-import RectangleShape from '../geometry/node/RectangleShape';
+import RectangleShape from '../shape/node/RectangleShape';
 import type { AbstractGraph } from '../AbstractGraph';
 import { BaseGraph } from '../BaseGraph';
-import ImageShape from '../geometry/node/ImageShape';
+import ImageShape from '../shape/node/ImageShape';
 import InternalEvent from '../event/InternalEvent';
 import Image from '../image/ImageBox';
 import EventObject from '../event/EventObject';

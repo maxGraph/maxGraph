@@ -18,7 +18,7 @@ limitations under the License.
 
 import type { StyleArrowValue } from '../../../types';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import type Shape from '../../geometry/Shape';
+import type Shape from '../../shape/Shape';
 import type Point from '../../geometry/Point';
 
 const isClassicOrClassicThin = (type: StyleArrowValue): boolean =>

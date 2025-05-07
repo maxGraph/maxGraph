@@ -25,7 +25,7 @@ import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
 import type CellState from './CellState';
 import type { AbstractGraph } from '../AbstractGraph';
-import Shape from '../geometry/Shape';
+import type Shape from '../shape/Shape';
 
 import type { ColorValue } from '../../types';
 

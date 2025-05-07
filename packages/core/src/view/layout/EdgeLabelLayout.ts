@@ -22,7 +22,7 @@ import { intersects } from '../../util/mathUtils';
 import type Cell from '../cell/Cell';
 import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
-import TextShape from '../geometry/node/TextShape';
+import TextShape from '../shape/node/TextShape';
 import Rectangle from '../geometry/Rectangle';
 
 /**

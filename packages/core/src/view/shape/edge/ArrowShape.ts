@@ -18,9 +18,9 @@ limitations under the License.
 
 import Shape from '../Shape';
 import { ARROW_SIZE, ARROW_SPACING, ARROW_WIDTH } from '../../../util/Constants';
-import Rectangle from '../Rectangle';
+import Rectangle from '../../geometry/Rectangle';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import Point from '../Point';
+import Point from '../../geometry/Point';
 import { ColorValue } from '../../../types';
 
 /**

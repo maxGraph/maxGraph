@@ -20,8 +20,8 @@ import Shape from '../Shape';
 import { ARROW_SIZE, ARROW_SPACING, ARROW_WIDTH, NONE } from '../../../util/Constants';
 import { relativeCcw } from '../../../util/mathUtils';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import Point from '../Point';
-import Rectangle from '../Rectangle';
+import Point from '../../geometry/Point';
+import Rectangle from '../../geometry/Rectangle';
 import CellState from '../../cell/CellState';
 import { ColorValue } from '../../../types';
 

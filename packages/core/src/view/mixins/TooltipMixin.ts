@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { htmlEntities } from '../../util/StringUtils';
-import type Shape from '../geometry/Shape';
+import type Shape from '../shape/Shape';
 import type Cell from '../cell/Cell';
 import type { AbstractGraph } from '../AbstractGraph';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';

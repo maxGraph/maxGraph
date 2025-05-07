@@ -35,9 +35,9 @@ import {
   ptSegDistSq,
 } from '../../util/mathUtils';
 import { convertPoint, getOffset, setOpacity } from '../../util/styleUtils';
-import EllipseShape from '../geometry/node/EllipseShape';
-import ImageShape from '../geometry/node/ImageShape';
-import RectangleShape from '../geometry/node/RectangleShape';
+import EllipseShape from '../shape/node/EllipseShape';
+import ImageShape from '../shape/node/ImageShape';
+import RectangleShape from '../shape/node/RectangleShape';
 import ConnectionConstraint from '../other/ConnectionConstraint';
 import InternalEvent from '../event/InternalEvent';
 import ConstraintHandler from './ConstraintHandler';
@@ -53,7 +53,7 @@ import {
 } from '../../util/EventUtils';
 import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
-import Shape from '../geometry/Shape';
+import Shape from '../shape/Shape';
 import type { CellHandle, ColorValue, Listenable, MouseListenerSet } from '../../types';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import Cell from '../cell/Cell';

@@ -30,11 +30,11 @@ import {
   NONE,
   WORD_WRAP,
 } from '../../util/Constants';
-import TextShape from '../geometry/node/TextShape';
+import TextShape from '../shape/node/TextShape';
 import Cell from '../cell/Cell';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import CellState from '../cell/CellState';
-import Shape from '../geometry/Shape';
+import Shape from '../shape/Shape';
 import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/domUtils';
 import { htmlEntities, replaceTrailingNewlines } from '../../util/StringUtils';
 import {

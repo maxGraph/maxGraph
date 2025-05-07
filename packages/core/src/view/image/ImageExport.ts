@@ -18,7 +18,7 @@ limitations under the License.
 
 import AbstractCanvas2D from '../canvas/AbstractCanvas2D';
 import CellState from '../cell/CellState';
-import Shape from '../geometry/Shape';
+import Shape from '../shape/Shape';
 
 /**
  * Creates a new image export instance to be used with an export canvas.

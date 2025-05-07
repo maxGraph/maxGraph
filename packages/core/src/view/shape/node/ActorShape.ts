@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Rectangle from '../Rectangle';
+import type Rectangle from '../../geometry/Rectangle';
 import Shape from '../Shape';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { ColorValue } from '../../../types';

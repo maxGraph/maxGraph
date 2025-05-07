@@ -26,7 +26,6 @@ import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../../view/cell/Cell';
 import { UndoableChange } from '../../types';
 import Geometry from '../geometry/Geometry';
-import Shape from '../geometry/Shape';
 
 /**
  * Provides animation effects.
@@ -83,7 +82,7 @@ class Effects {
             isRequired = true;
 
             if (change.constructor !== GeometryChange || change.cell.isEdge()) {
-              setOpacity((<Shape>state.shape).node, (100 * step) / maxStep);
+              setOpacity(state.shape!.node, (100 * step) / maxStep);
             } else {
               const { scale } = graph.getView();
               const geometry = <Geometry>change.geometry;
@@ -144,7 +143,7 @@ class Effects {
       const childState = graph.getView().getState(child);
 
       if (childState != null) {
-        setOpacity((<Shape>childState.shape).node, opacity);
+        setOpacity(childState.shape!.node, opacity);
         Effects.cascadeOpacity(graph, child, opacity);
       }
     }
@@ -157,7 +156,7 @@ class Effects {
         const edgeState = graph.getView().getState(edges[i]);
 
         if (edgeState != null) {
-          setOpacity((<Shape>edgeState.shape).node, opacity);
+          setOpacity(edgeState.shape!.node, opacity);
         }
       }
     }

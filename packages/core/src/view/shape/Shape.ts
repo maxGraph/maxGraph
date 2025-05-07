@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from './Rectangle';
+import Rectangle from '../geometry/Rectangle';
 import { isNullish } from '../../internal/utils';
 import { getBoundingBox, getDirectedBounds, mod } from '../../util/mathUtils';
 import {
@@ -25,7 +25,7 @@ import {
   NS_SVG,
   RECTANGLE_ROUNDING_FACTOR,
 } from '../../util/Constants';
-import Point from './Point';
+import Point from '../geometry/Point';
 import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
 import SvgCanvas2D from '../canvas/SvgCanvas2D';
 import InternalEvent from '../event/InternalEvent';

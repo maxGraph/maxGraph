@@ -17,8 +17,8 @@ limitations under the License.
 */
 
 import Shape from '../Shape';
-import AbstractCanvas2D from '../../../view/canvas/AbstractCanvas2D';
-import Rectangle from '../Rectangle';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import Rectangle from '../../geometry/Rectangle';
 
 /**
  * Extends {@link Shape} to implement an ellipse shape.

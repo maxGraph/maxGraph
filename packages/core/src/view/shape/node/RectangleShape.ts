@@ -19,7 +19,7 @@ limitations under the License.
 import { LINE_ARCSIZE, NONE, RECTANGLE_ROUNDING_FACTOR } from '../../../util/Constants';
 import Shape from '../Shape';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import Rectangle from '../Rectangle';
+import Rectangle from '../../geometry/Rectangle';
 import { ColorValue } from '../../../types';
 
 /**

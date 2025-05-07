@@ -23,7 +23,7 @@ import CellRenderer from './cell/CellRenderer';
 import GraphDataModel from './GraphDataModel';
 import { Stylesheet } from './style/Stylesheet';
 import GraphSelectionModel from './GraphSelectionModel';
-import { registerDefaultShapes } from './cell/register-shapes';
+import { registerDefaultShapes } from './shape/register-shapes';
 import {
   registerDefaultEdgeMarkers,
   registerDefaultEdgeStyles,

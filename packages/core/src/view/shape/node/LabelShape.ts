@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../Rectangle';
+import Rectangle from '../../geometry/Rectangle';
 import { DEFAULT_IMAGESIZE, NONE } from '../../../util/Constants';
 import RectangleShape from './RectangleShape';
 import { ColorValue } from '../../../types';
