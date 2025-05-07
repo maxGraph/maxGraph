@@ -393,50 +393,6 @@ export abstract class AbstractGraph extends EventSource {
   };
 
   // ===================================================================================================================
-  // Group: "Create Class Instance" factory functions.
-  // These can be overridden in subclasses to allow the Graph to instantiate user-defined implementations with custom behavior.
-  // Notice that the methods will be moved as part of https://github.com/maxGraph/maxGraph/issues/762
-  // ===================================================================================================================
-
-  /**
-   * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
-   *
-   * @param state {@link CellState} to create the handler for.
-   */
-  createEdgeHandlerInstance(state: CellState): EdgeHandler {
-    // Note this method not being called createEdgeHandler to keep compatibility
-    // with older code which overrides/calls createEdgeHandler
-    return new EdgeHandler(state);
-  }
-
-  /**
-   * Hooks to create a new {@link EdgeSegmentHandler} for the given {@link CellState}.
-   *
-   * @param state {@link CellState} to create the handler for.
-   */
-  createEdgeSegmentHandler(state: CellState): EdgeSegmentHandler {
-    return new EdgeSegmentHandler(state);
-  }
-
-  /**
-   * Hooks to create a new {@link ElbowEdgeHandler} for the given {@link CellState}.
-   *
-   * @param state {@link CellState} to create the handler for.
-   */
-  createElbowEdgeHandler(state: CellState): ElbowEdgeHandler {
-    return new ElbowEdgeHandler(state);
-  }
-
-  /**
-   * Hooks to create a new {@link VertexHandler} for the given {@link CellState}.
-   *
-   * @param state {@link CellState} to create the handler for.
-   */
-  createVertexHandler(state: CellState): VertexHandler {
-    return new VertexHandler(state);
-  }
-
-  // ===================================================================================================================
   // Group: Main graph constructor and functions
   // ===================================================================================================================
 
@@ -630,7 +586,7 @@ export abstract class AbstractGraph extends EventSource {
     // Handles two special cases where the shape does not need to be
     // recreated from scratch, it only needs to be invalidated.
     else if (change instanceof TerminalChange || change instanceof GeometryChange) {
-      // Checks if the geometry has changed to avoid unnessecary revalidation
+      // Checks if the geometry has changed to avoid unnecessary revalidation
       if (
         change instanceof TerminalChange ||
         (change.previous == null && change.geometry != null) ||
@@ -801,58 +757,6 @@ export abstract class AbstractGraph extends EventSource {
     const container = <HTMLElement>this.container;
     container.style.width = `${Math.ceil(width)}px`;
     container.style.height = `${Math.ceil(height)}px`;
-  }
-
-  /*****************************************************************************
-   * Group: UNCLASSIFIED
-   *****************************************************************************/
-
-  /**
-   * Creates a new handler for the given cell state. This implementation
-   * returns a new {@link EdgeHandler} of the corresponding cell is an edge,
-   * otherwise it returns an {@link VertexHandler}.
-   *
-   * @param state {@link CellState} whose handler should be created.
-   */
-  createHandler(state: CellState) {
-    let result: EdgeHandler | VertexHandler | null = null;
-
-    if (state.cell.isEdge()) {
-      const source = state.getVisibleTerminalState(true);
-      const target = state.getVisibleTerminalState(false);
-      const geo = state.cell.getGeometry();
-
-      const edgeStyle = this.getView().getEdgeStyle(
-        state,
-        geo ? geo.points || undefined : undefined,
-        source,
-        target
-      );
-      result = this.createEdgeHandler(state, edgeStyle);
-    } else {
-      result = this.createVertexHandler(state);
-    }
-    return result;
-  }
-
-  /**
-   * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
-   *
-   * This method relies on the registered elements in {@link EdgeStyleRegistry} to know which {@link EdgeHandler} to create.
-   * If the {@link EdgeStyle} is not registered, it will return a default {@link EdgeHandler}.
-   *
-   * @param state {@link CellState} to create the handler for.
-   * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
-   */
-  createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
-    const handlerKind = EdgeStyleRegistry.getHandlerKind(edgeStyle);
-    switch (handlerKind) {
-      case 'elbow':
-        return this.createElbowEdgeHandler(state);
-      case 'segment':
-        return this.createEdgeSegmentHandler(state);
-    }
-    return this.createEdgeHandlerInstance(state);
   }
 
   /*****************************************************************************

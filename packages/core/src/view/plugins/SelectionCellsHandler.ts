@@ -23,12 +23,27 @@ import { sortCells } from '../../util/styleUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import Cell from '../cell/Cell.js';
 import CellState from '../cell/CellState.js';
-import type { GraphPlugin, MouseListenerSet } from '../../types.js';
-import type EdgeHandler from '../handler/EdgeHandler.js';
-import type VertexHandler from '../handler/VertexHandler.js';
+import type {
+  EdgeStyleFunction,
+  EdgeStyleHandlerKind,
+  GraphPlugin,
+  MouseListenerSet,
+} from '../../types.js';
+import EdgeHandler from '../handler/EdgeHandler.js';
+import VertexHandler from '../handler/VertexHandler.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import ElbowEdgeHandler from '../handler/ElbowEdgeHandler';
+import EdgeSegmentHandler from '../handler/EdgeSegmentHandler';
+import { EdgeStyleRegistry } from '../style/edge/EdgeStyleRegistry';
 
+// TODO export and move to types.ts and rename to CellHandler
 type Handler = EdgeHandler | VertexHandler;
+
+// TODO export and move to types.ts
+// TODO review the name
+type VertexHandlerFactoryFunction = (state: CellState) => VertexHandler;
+type EdgeHandlerFactoryFunction = (state: CellState) => EdgeHandler;
+// type EdgeHandlerFactoryFunction<T extends EdgeHandler> = (state: CellState) => T;
 
 /**
  * An event handler that manages cell handlers and invokes their mouse event processing functions.
@@ -49,6 +64,19 @@ type Handler = EdgeHandler | VertexHandler;
  */
 class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseListenerSet {
   static readonly pluginId = 'SelectionCellsHandler';
+
+  private vertexHandlerFactory: VertexHandlerFactoryFunction = (state: CellState) => {
+    return new VertexHandler(state);
+  };
+
+  private edgeHandlerFactories = new Map<
+    EdgeStyleHandlerKind,
+    EdgeHandlerFactoryFunction
+  >([
+    ['default', (state: CellState) => new EdgeHandler(state)],
+    ['elbow', (state: CellState) => new ElbowEdgeHandler(state)],
+    ['segment', (state: CellState) => new EdgeSegmentHandler(state)],
+  ]);
 
   constructor(graph: AbstractGraph) {
     super();
@@ -196,7 +224,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
         let handler = this.handlers.get(tmp[i]);
 
         if (!handler) {
-          handler = this.graph.createHandler(state);
+          handler = this.createHandler(state);
           this.fireEvent(new EventObject(InternalEvent.ADD, { state }));
           this.handlers.set(tmp[i], handler);
         } else {
@@ -204,6 +232,66 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
         }
       }
     }
+  }
+
+  /**
+   * Hooks to create a new handler for the given cell state.
+   *
+   * This implementation returns a new {@link EdgeHandler} of the corresponding cell is an edge,
+   * otherwise it returns an {@link VertexHandler}.
+   *
+   * @param state {@link CellState} whose handler should be created.
+   */
+  protected createHandler(state: CellState): Handler {
+    if (state.cell.isEdge()) {
+      const source = state.getVisibleTerminalState(true);
+      const target = state.getVisibleTerminalState(false);
+      const geo = state.cell.getGeometry();
+
+      // TODO test parameters pass to the function
+      const edgeStyle = this.graph.view.getEdgeStyle(
+        state,
+        // TODO check if this can be replaced by geo?.points
+        geo ? geo.points || undefined : undefined,
+        source,
+        target
+      );
+
+      return this.createEdgeHandler(state, edgeStyle);
+    }
+    return this.vertexHandlerFactory(state);
+  }
+
+  /**
+   * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
+   *
+   * This method relies on the registered elements in {@link EdgeStyleRegistry} to know which {@link EdgeHandler} to create.
+   * If the `EdgeStyle` is not registered, it will return a default {@link EdgeHandler}.
+   *
+   * @param state {@link CellState} to create the handler for.
+   * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
+   */
+  protected createEdgeHandler(
+    state: CellState,
+    edgeStyle: EdgeStyleFunction | null
+  ): EdgeHandler {
+    const handlerKind = EdgeStyleRegistry.getHandlerKind(edgeStyle);
+    return (
+      this.edgeHandlerFactories.get(handlerKind)?.(state) ??
+      // there is always an entry for 'default'
+      this.edgeHandlerFactories.get('default')!(state)
+    );
+  }
+
+  configureVertexHandler(factory: VertexHandlerFactoryFunction): void {
+    this.vertexHandlerFactory = factory;
+  }
+
+  configureEdgeHandler(
+    handlerKind: EdgeStyleHandlerKind,
+    factory: EdgeHandlerFactoryFunction
+  ): void {
+    this.edgeHandlerFactories.set(handlerKind, factory);
   }
 
   /**
@@ -227,7 +315,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
       const y = handler.startY;
 
       handler.onDestroy();
-      handler = this.graph.createHandler(state);
+      handler = this.createHandler(state);
 
       if (handler) {
         this.handlers.set(state.cell, handler);
