@@ -38,6 +38,13 @@ const customEdgeStyle: EdgeStyleFunction = () => {
   // do nothing, we just need a custom implementation that is not registered by default
 };
 
+beforeEach(() => {
+  unregisterAllEdgeStyles();
+});
+afterAll(() => {
+  unregisterAllEdgeStyles();
+});
+
 describe('isOrthogonal', () => {
   test('Style of the CellState, orthogonal: true', () => {
     const graph = new BaseGraph();
@@ -58,11 +65,7 @@ describe('isOrthogonal', () => {
 
   describe('Default builtin styles registered', () => {
     beforeEach(() => {
-      unregisterAllEdgeStyles();
       registerDefaultEdgeStyles();
-    });
-    afterAll(() => {
-      unregisterAllEdgeStyles();
     });
 
     test.each([
@@ -129,11 +132,7 @@ const createCellStateOfEdge = (graph: AbstractGraph): CellState =>
 describe('createEdgeHandler', () => {
   describe('Default builtin styles registered', () => {
     beforeEach(() => {
-      unregisterAllEdgeStyles();
       registerDefaultEdgeStyles();
-    });
-    afterAll(() => {
-      unregisterAllEdgeStyles();
     });
 
     test.each([
