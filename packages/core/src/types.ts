@@ -1145,9 +1145,32 @@ export type VertexParameters = {
   y?: number;
 };
 
+/**
+ * The ids of all built-in {@link GraphPlugin} provided by maxGraph.
+ * @since 0.20.0
+ * @category Plugin
+ */
+export type BuiltinPluginId =
+  | 'CellEditorHandler'
+  | 'ConnectionHandler'
+  | 'fit'
+  | 'PanningHandler'
+  | 'PopupMenuHandler'
+  | 'RubberBandHandler'
+  | 'SelectionCellsHandler'
+  | 'SelectionHandler'
+  | 'TooltipHandler';
+
+/**
+ * The ids that can be used to define a {@link GraphPlugin}.
+ * @since 0.20.0
+ * @category Plugin
+ */
+export type PluginId = BuiltinPluginId | (string & Record<never, never>); // any other string value
+
 /** @category Plugin */
 export interface GraphPluginConstructor {
-  pluginId: string;
+  pluginId: PluginId;
   new (graph: AbstractGraph): GraphPlugin;
 }
 

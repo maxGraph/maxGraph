@@ -53,6 +53,7 @@ import type {
   GraphOptions,
   GraphPlugin,
   MouseListenerSet,
+  PluginId,
 } from '../types';
 import Multiplicity from './other/Multiplicity';
 import ImageBundle from './image/ImageBundle';
@@ -493,7 +494,7 @@ export abstract class AbstractGraph extends EventSource {
   }
 
   getContainer = () => this.container;
-  getPlugin = <T extends GraphPlugin>(id: string): T => this.plugins[id] as T;
+  getPlugin = <T extends GraphPlugin>(id: PluginId): T => this.plugins[id] as T;
   getCellRenderer = () => this.cellRenderer;
   getDialect = () => this.dialect;
   isPageVisible = () => this.pageVisible;
