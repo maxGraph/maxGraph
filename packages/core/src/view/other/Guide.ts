@@ -18,9 +18,9 @@ limitations under the License.
 
 import { GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/Constants';
 import Point from '../geometry/Point';
-import PolylineShape from '../geometry/edge/PolylineShape';
+import PolylineShape from '../shape/edge/PolylineShape';
 import type CellState from '../cell/CellState';
-import Shape from '../geometry/Shape';
+import Shape from '../shape/Shape';
 import Rectangle from '../geometry/Rectangle';
 import type { AbstractGraph } from '../AbstractGraph';
 

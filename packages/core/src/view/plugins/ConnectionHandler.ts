@@ -36,10 +36,10 @@ import {
 import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import { convertPoint, getOffset } from '../../util/styleUtils';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import ImageShape from '../geometry/node/ImageShape';
+import ImageShape from '../shape/node/ImageShape';
 import CellMarker from '../cell/CellMarker';
 import ConstraintHandler from '../handler/ConstraintHandler';
-import PolylineShape from '../geometry/edge/PolylineShape';
+import PolylineShape from '../shape/edge/PolylineShape';
 import EventSource from '../event/EventSource';
 import Rectangle from '../geometry/Rectangle';
 import { GlobalConfig } from '../../util/config';
@@ -54,7 +54,7 @@ import Image from '../image/ImageBox';
 import CellState from '../cell/CellState';
 import type { AbstractGraph } from '../AbstractGraph';
 import ConnectionConstraint from '../other/ConnectionConstraint';
-import Shape from '../geometry/Shape';
+import Shape from '../shape/Shape';
 import type {
   CellStyle,
   ColorValue,

@@ -24,7 +24,7 @@ import type InternalMouseEvent from './view/event/InternalMouseEvent';
 import type Geometry from './view/geometry/Geometry';
 import type Point from './view/geometry/Point';
 import type Rectangle from './view/geometry/Rectangle';
-import type Shape from './view/geometry/Shape';
+import type Shape from './view/shape/Shape';
 import type ImageBox from './view/image/ImageBox';
 import type CellRenderer from './view/cell/CellRenderer';
 import type GraphDataModel from './view/GraphDataModel';

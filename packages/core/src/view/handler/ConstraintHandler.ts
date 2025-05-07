@@ -27,8 +27,8 @@ import {
 import InternalEvent from '../event/InternalEvent';
 import { intersects } from '../../util/mathUtils';
 import Rectangle from '../geometry/Rectangle';
-import ImageShape from '../geometry/node/ImageShape';
-import RectangleShape from '../geometry/node/RectangleShape';
+import ImageShape from '../shape/node/ImageShape';
+import RectangleShape from '../shape/node/RectangleShape';
 import { isShiftDown } from '../../util/EventUtils';
 import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';

@@ -18,7 +18,7 @@ limitations under the License.
 
 import Shape from '../Shape';
 import { LINE_ARCSIZE } from '../../../util/Constants';
-import Point from '../Point';
+import Point from '../../geometry/Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { ColorValue } from '../../../types';
 

@@ -14,24 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ShapeRegistry } from '../geometry/ShapeRegistry';
+import { ShapeRegistry } from './ShapeRegistry';
 import type { ShapeConstructor, ShapeValue } from '../../types';
-import RectangleShape from '../geometry/node/RectangleShape';
-import EllipseShape from '../geometry/node/EllipseShape';
-import RhombusShape from '../geometry/node/RhombusShape';
-import CylinderShape from '../geometry/node/CylinderShape';
-import ConnectorShape from '../geometry/edge/ConnectorShape';
-import ActorShape from '../geometry/node/ActorShape';
-import TriangleShape from '../geometry/node/TriangleShape';
-import HexagonShape from '../geometry/node/HexagonShape';
-import CloudShape from '../geometry/node/CloudShape';
-import LineShape from '../geometry/edge/LineShape';
-import ArrowShape from '../geometry/edge/ArrowShape';
-import ArrowConnectorShape from '../geometry/edge/ArrowConnectorShape';
-import DoubleEllipseShape from '../geometry/node/DoubleEllipseShape';
-import SwimlaneShape from '../geometry/node/SwimlaneShape';
-import ImageShape from '../geometry/node/ImageShape';
-import LabelShape from '../geometry/node/LabelShape';
+import RectangleShape from './node/RectangleShape';
+import EllipseShape from './node/EllipseShape';
+import RhombusShape from './node/RhombusShape';
+import CylinderShape from './node/CylinderShape';
+import ConnectorShape from './edge/ConnectorShape';
+import ActorShape from './node/ActorShape';
+import TriangleShape from './node/TriangleShape';
+import HexagonShape from './node/HexagonShape';
+import CloudShape from './node/CloudShape';
+import LineShape from './edge/LineShape';
+import ArrowShape from './edge/ArrowShape';
+import ArrowConnectorShape from './edge/ArrowConnectorShape';
+import DoubleEllipseShape from './node/DoubleEllipseShape';
+import SwimlaneShape from './node/SwimlaneShape';
+import ImageShape from './node/ImageShape';
+import LabelShape from './node/LabelShape';
 
 let isDefaultElementsRegistered = false;
 

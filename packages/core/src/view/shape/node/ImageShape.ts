@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import RectangleShape from './RectangleShape';
-import type Rectangle from '../Rectangle';
+import type Rectangle from '../../geometry/Rectangle';
 import CellState from '../../cell/CellState';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { NONE } from '../../../util/Constants';

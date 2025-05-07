@@ -21,7 +21,7 @@ import Dictionary from '../../util/Dictionary';
 import type GraphView from '../GraphView';
 import type Cell from './Cell';
 import type CellState from './CellState';
-import type Shape from '../geometry/Shape';
+import type Shape from '../shape/Shape';
 
 /**
  * Creates a temporary set of cell states.

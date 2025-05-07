@@ -17,12 +17,12 @@ limitations under the License.
 */
 
 import ConnectionConstraint from '../../other/ConnectionConstraint';
-import Rectangle from '../Rectangle';
+import Rectangle from '../../geometry/Rectangle';
 import Shape from '../Shape';
 import { NONE, RECTANGLE_ROUNDING_FACTOR } from '../../../util/Constants';
 import { StencilShapeRegistry } from './StencilShapeRegistry';
 import { getChildNodes, getTextContent } from '../../../util/domUtils';
-import Point from '../Point';
+import Point from '../../geometry/Point';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types';
 import { doEval, isElement, isNullish } from '../../../internal/utils';

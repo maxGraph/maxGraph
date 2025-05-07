@@ -18,11 +18,11 @@ limitations under the License.
 
 import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import Point from '../geometry/Point';
-import ImageShape from '../geometry/node/ImageShape';
+import ImageShape from '../shape/node/ImageShape';
 import Rectangle from '../geometry/Rectangle';
-import RectangleShape from '../geometry/node/RectangleShape';
+import RectangleShape from '../shape/node/RectangleShape';
 import InternalEvent from '../event/InternalEvent';
-import Shape from '../geometry/Shape';
+import type Shape from '../shape/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import ImageBox from '../image/ImageBox';
 import CellState from './CellState';

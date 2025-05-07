@@ -25,7 +25,7 @@ import {
 } from '../../util/EventUtils';
 import { isAncestorNode } from '../../util/domUtils';
 import CellState from '../cell/CellState';
-import Shape from '../geometry/Shape';
+import Shape from '../shape/Shape';
 
 /**
  * Base class for all mouse events in mxGraph. A listener for this event should

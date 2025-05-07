@@ -95,34 +95,36 @@ export * from './serialization/codecs/_other-codecs';
 export * from './serialization/register-model-codecs';
 export * from './serialization/register-other-codecs';
 
-export { default as ActorShape } from './view/geometry/node/ActorShape';
-export { default as LabelShape } from './view/geometry/node/LabelShape';
-export { default as Shape } from './view/geometry/Shape';
-export { default as SwimlaneShape } from './view/geometry/node/SwimlaneShape';
-export { default as TextShape } from './view/geometry/node/TextShape';
-export { default as TriangleShape } from './view/geometry/node/TriangleShape';
+export { default as ActorShape } from './view/shape/node/ActorShape';
+export { default as LabelShape } from './view/shape/node/LabelShape';
+export { default as Shape } from './view/shape/Shape';
+export { default as SwimlaneShape } from './view/shape/node/SwimlaneShape';
+export { default as TextShape } from './view/shape/node/TextShape';
+export { default as TriangleShape } from './view/shape/node/TriangleShape';
 
-export { default as ArrowShape } from './view/geometry/edge/ArrowShape';
-export { default as ArrowConnectorShape } from './view/geometry/edge/ArrowConnectorShape';
-export { default as ConnectorShape } from './view/geometry/edge/ConnectorShape';
-export { default as LineShape } from './view/geometry/edge/LineShape';
-export { default as PolylineShape } from './view/geometry/edge/PolylineShape';
+export { default as ArrowShape } from './view/shape/edge/ArrowShape';
+export { default as ArrowConnectorShape } from './view/shape/edge/ArrowConnectorShape';
+export { default as ConnectorShape } from './view/shape/edge/ConnectorShape';
+export { default as LineShape } from './view/shape/edge/LineShape';
+export { default as PolylineShape } from './view/shape/edge/PolylineShape';
 
-export { default as CloudShape } from './view/geometry/node/CloudShape';
-export { default as CylinderShape } from './view/geometry/node/CylinderShape';
-export { default as DoubleEllipseShape } from './view/geometry/node/DoubleEllipseShape';
-export { default as EllipseShape } from './view/geometry/node/EllipseShape';
-export { default as HexagonShape } from './view/geometry/node/HexagonShape';
-export { default as ImageShape } from './view/geometry/node/ImageShape';
-export { default as RectangleShape } from './view/geometry/node/RectangleShape';
-export { default as RhombusShape } from './view/geometry/node/RhombusShape';
+export { default as CloudShape } from './view/shape/node/CloudShape';
+export { default as CylinderShape } from './view/shape/node/CylinderShape';
+export { default as DoubleEllipseShape } from './view/shape/node/DoubleEllipseShape';
+export { default as EllipseShape } from './view/shape/node/EllipseShape';
+export { default as HexagonShape } from './view/shape/node/HexagonShape';
+export { default as ImageShape } from './view/shape/node/ImageShape';
+export { default as RectangleShape } from './view/shape/node/RectangleShape';
+export { default as RhombusShape } from './view/shape/node/RhombusShape';
+export * from './view/shape/ShapeRegistry';
+export * from './view/shape/register-shapes';
 
-export { unregisterAllStencilShapes } from './view/geometry/stencil/register';
+export { unregisterAllStencilShapes } from './view/shape/stencil/register';
 export {
   default as StencilShape,
   StencilShapeConfig,
-} from './view/geometry/stencil/StencilShape';
-export * from './view/geometry/stencil/StencilShapeRegistry';
+} from './view/shape/stencil/StencilShape';
+export * from './view/shape/stencil/StencilShapeRegistry';
 
 export { default as Guide } from './view/other/Guide';
 
@@ -197,7 +199,6 @@ export { default as Geometry } from './view/geometry/Geometry';
 export { default as ObjectIdentity } from './util/ObjectIdentity';
 export { default as Point } from './view/geometry/Point';
 export { default as Rectangle } from './view/geometry/Rectangle';
-export * from './view/geometry/ShapeRegistry';
 
 export * from './view/style/builtin-style-elements';
 export * from './view/style/config';
@@ -244,7 +245,6 @@ export { default as Clipboard } from './util/Clipboard';
 export { default as UndoableEdit } from './view/undoable_changes/UndoableEdit';
 export { default as UndoManager } from './view/undoable_changes/UndoManager';
 
-export * from './view/cell/register-shapes';
 export { Cell } from './view/cell/Cell';
 export { default as CellOverlay } from './view/cell/CellOverlay';
 export { default as CellPath } from './view/cell/CellPath';

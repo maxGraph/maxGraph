@@ -16,7 +16,7 @@ limitations under the License.
 
 import Rectangle from '../geometry/Rectangle';
 import Point from '../geometry/Point';
-import PolylineShape from '../geometry/edge/PolylineShape';
+import PolylineShape from '../shape/edge/PolylineShape';
 import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<

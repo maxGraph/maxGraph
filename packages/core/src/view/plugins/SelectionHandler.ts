@@ -20,7 +20,7 @@ import Client from '../../Client';
 import InternalEvent from '../event/InternalEvent';
 import { contains, getRotatedPoint, isNumeric, toRadians } from '../../util/mathUtils';
 import { convertPoint } from '../../util/styleUtils';
-import RectangleShape from '../geometry/node/RectangleShape';
+import RectangleShape from '../shape/node/RectangleShape';
 import Guide from '../other/Guide';
 import Point from '../geometry/Point';
 import {
@@ -39,7 +39,7 @@ import {
   isMultiTouchEvent,
 } from '../../util/EventUtils';
 import type { AbstractGraph } from '../AbstractGraph';
-import Shape from '../geometry/Shape';
+import Shape from '../shape/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import type SelectionCellsHandler from './SelectionCellsHandler';
 import Cell from '../cell/Cell';
