@@ -16,7 +16,11 @@ limitations under the License.
 
 import type { StorybookConfig } from '@storybook/html-vite';
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: [
+    '../stories/**/Introduction.mdx',
+    '../stories/**/*.stories.@(js|jsx|ts|tsx)',
+    '../stories/**/*.mdx',
+  ],
   core: {
     disableTelemetry: true,
   },
