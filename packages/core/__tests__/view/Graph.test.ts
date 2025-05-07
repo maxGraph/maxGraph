@@ -24,6 +24,7 @@ import {
   EdgeSegmentHandler,
   EdgeStyle,
   type EdgeStyleFunction,
+  EdgeStyleRegistry,
   ElbowEdgeHandler,
   Point,
   Rectangle,
@@ -190,6 +191,56 @@ describe('createEdgeHandler', () => {
       expectExactInstanceOfEdgeHandler(graph.createEdgeHandler(cellState, edgeStyle));
     }
   );
+
+  describe('Custom edge handler', () => {
+    test('default', () => {
+      class CustomEdgeHandler extends EdgeHandler {}
+      const edgeStyle = customEdgeStyle;
+      // EdgeStyleRegistry.add('custom', edgeStyle);
+
+      const graph = new BaseGraph();
+      graph.createEdgeHandlerInstance = (state) => {
+        return new CustomEdgeHandler(state);
+      };
+
+      const cellState = createCellStateOfEdge(graph);
+      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+        CustomEdgeHandler
+      );
+    });
+
+    test('elbow', () => {
+      class CustomEdgeHandler extends ElbowEdgeHandler {}
+      const edgeStyle = customEdgeStyle;
+      EdgeStyleRegistry.add('custom', edgeStyle, { handlerKind: 'elbow' });
+
+      const graph = new BaseGraph();
+      graph.createElbowEdgeHandler = (state) => {
+        return new CustomEdgeHandler(state);
+      };
+
+      const cellState = createCellStateOfEdge(graph);
+      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+        CustomEdgeHandler
+      );
+    });
+
+    test('segment', () => {
+      class CustomEdgeHandler extends EdgeSegmentHandler {}
+      const edgeStyle = customEdgeStyle;
+      EdgeStyleRegistry.add('custom', edgeStyle, { handlerKind: 'segment' });
+
+      const graph = new BaseGraph();
+      graph.createEdgeSegmentHandler = (state) => {
+        return new CustomEdgeHandler(state);
+      };
+
+      const cellState = createCellStateOfEdge(graph);
+      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+        CustomEdgeHandler
+      );
+    });
+  });
 });
 
 describe('createHandler', () => {
