@@ -195,7 +195,6 @@ describe('createEdgeHandler', () => {
     test('default', () => {
       class CustomEdgeHandler extends EdgeHandler {}
       const edgeStyle = customEdgeStyle;
-      // EdgeStyleRegistry.add('custom', edgeStyle);
 
       const graph = new BaseGraph();
       graph.createEdgeHandlerInstance = (state) => {
