@@ -24,6 +24,7 @@ import {
   EdgeSegmentHandler,
   EdgeStyle,
   type EdgeStyleFunction,
+  EdgeStyleRegistry,
   ElbowEdgeHandler,
   Point,
   Rectangle,
@@ -36,6 +37,13 @@ import {
 const customEdgeStyle: EdgeStyleFunction = () => {
   // do nothing, we just need a custom implementation that is not registered by default
 };
+
+beforeEach(() => {
+  unregisterAllEdgeStyles();
+});
+afterAll(() => {
+  unregisterAllEdgeStyles();
+});
 
 describe('isOrthogonal', () => {
   test('Style of the CellState, orthogonal: true', () => {
@@ -57,11 +65,7 @@ describe('isOrthogonal', () => {
 
   describe('Default builtin styles registered', () => {
     beforeEach(() => {
-      unregisterAllEdgeStyles();
       registerDefaultEdgeStyles();
-    });
-    afterAll(() => {
-      unregisterAllEdgeStyles();
     });
 
     test.each([
@@ -128,11 +132,7 @@ const createCellStateOfEdge = (graph: AbstractGraph): CellState =>
 describe('createEdgeHandler', () => {
   describe('Default builtin styles registered', () => {
     beforeEach(() => {
-      unregisterAllEdgeStyles();
       registerDefaultEdgeStyles();
-    });
-    afterAll(() => {
-      unregisterAllEdgeStyles();
     });
 
     test.each([
@@ -190,6 +190,55 @@ describe('createEdgeHandler', () => {
       expectExactInstanceOfEdgeHandler(graph.createEdgeHandler(cellState, edgeStyle));
     }
   );
+
+  describe('Custom edge handler', () => {
+    test('default', () => {
+      class CustomEdgeHandler extends EdgeHandler {}
+      const edgeStyle = customEdgeStyle;
+
+      const graph = new BaseGraph();
+      graph.createEdgeHandlerInstance = (state) => {
+        return new CustomEdgeHandler(state);
+      };
+
+      const cellState = createCellStateOfEdge(graph);
+      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+        CustomEdgeHandler
+      );
+    });
+
+    test('elbow', () => {
+      class CustomEdgeHandler extends ElbowEdgeHandler {}
+      const edgeStyle = customEdgeStyle;
+      EdgeStyleRegistry.add('custom', edgeStyle, { handlerKind: 'elbow' });
+
+      const graph = new BaseGraph();
+      graph.createElbowEdgeHandler = (state) => {
+        return new CustomEdgeHandler(state);
+      };
+
+      const cellState = createCellStateOfEdge(graph);
+      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+        CustomEdgeHandler
+      );
+    });
+
+    test('segment', () => {
+      class CustomEdgeHandler extends EdgeSegmentHandler {}
+      const edgeStyle = customEdgeStyle;
+      EdgeStyleRegistry.add('custom', edgeStyle, { handlerKind: 'segment' });
+
+      const graph = new BaseGraph();
+      graph.createEdgeSegmentHandler = (state) => {
+        return new CustomEdgeHandler(state);
+      };
+
+      const cellState = createCellStateOfEdge(graph);
+      expect(graph.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+        CustomEdgeHandler
+      );
+    });
+  });
 });
 
 describe('createHandler', () => {
