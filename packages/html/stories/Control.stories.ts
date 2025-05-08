@@ -16,16 +16,22 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  InternalEvent,
-  RubberBandHandler,
-  DomHelpers,
-  ImageShape,
-  Rectangle,
   CellRenderer,
+  type CellState,
+  DomHelpers,
+  getDefaultPlugins,
+  Graph,
+  type GraphPluginConstructor,
   ImageBox,
+  ImageShape,
+  InternalEvent,
+  Rectangle,
+  RubberBandHandler,
+  Shape,
 } from '@maxgraph/core';
 import {
+  contextMenuTypes,
+  contextMenuValues,
   globalTypes,
   globalValues,
   rubberBandTypes,
@@ -38,31 +44,42 @@ import '@maxgraph/core/css/common.css';
 export default {
   title: 'Icon_Images/Control',
   argTypes: {
+    ...contextMenuTypes,
     ...globalTypes,
     ...rubberBandTypes,
+    resizeContainer: {
+      type: 'boolean',
+      defaultValue: false,
+    },
   },
   args: {
     ...globalValues,
+    resizeContainer: false,
+    ...contextMenuValues,
     ...rubberBandValues,
   },
 };
 
-const Template = ({ label, ...args }) => {
+type CustomCellState = CellState & { deleteControl: Shape | null };
+
+const Template = ({ label, ...args }: Record<string, any>) => {
   const div = document.createElement('div');
   const container = createGraphContainer(args);
   div.appendChild(container);
+
+  if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Specifies the URL and size of the new control
   const deleteImage = new ImageBox('images/overlays/forbidden.png', 16, 16);
 
   class MyCustomCellRenderer extends CellRenderer {
-    createControl(state) {
+    override createControl(state: CustomCellState) {
       super.createControl(state);
 
       const { graph } = state.view;
 
       if (state.cell.isVertex()) {
-        if (state.deleteControl == null) {
+        if (!state.deleteControl) {
           const b = new Rectangle(0, 0, deleteImage.width, deleteImage.height);
           state.deleteControl = new ImageShape(b, deleteImage.src);
           state.deleteControl.dialect = graph.dialect;
@@ -75,18 +92,18 @@ const Template = ({ label, ...args }) => {
             }
           });
         }
-      } else if (state.deleteControl != null) {
+      } else if (state.deleteControl) {
         state.deleteControl.destroy();
         state.deleteControl = null;
       }
     }
 
-    getDeleteControlBounds(state) {
-      // Helper function to compute the bounds of the control
-      if (state.deleteControl != null) {
+    // Helper function to compute the bounds of the control
+    private getDeleteControlBounds(state: CustomCellState) {
+      if (state.deleteControl) {
         const oldScale = state.deleteControl.scale;
-        const w = state.deleteControl.bounds.width / oldScale;
-        const h = state.deleteControl.bounds.height / oldScale;
+        const w = state.deleteControl.bounds!.width / oldScale;
+        const h = state.deleteControl.bounds!.height / oldScale;
         const s = state.view.scale;
 
         return state.cell.isEdge()
@@ -101,17 +118,17 @@ const Template = ({ label, ...args }) => {
       return null;
     }
 
-    redrawControl(state) {
-      // Overridden to update the scale and bounds of the control
+    // Overridden to update the scale and bounds of the control
+    override redrawControl(state: CustomCellState) {
       super.redrawControl(state);
 
-      if (state.deleteControl != null) {
+      if (state.deleteControl) {
         const bounds = this.getDeleteControlBounds(state);
         const s = state.view.scale;
 
         if (
           state.deleteControl.scale !== s ||
-          !state.deleteControl.bounds.equals(bounds)
+          !state.deleteControl.bounds!.equals(bounds)
         ) {
           state.deleteControl.bounds = bounds;
           state.deleteControl.scale = s;
@@ -120,11 +137,11 @@ const Template = ({ label, ...args }) => {
       }
     }
 
-    destroy(state) {
-      // Overridden to remove the control if the state is destroyed
+    // Overridden to remove the control if the state is destroyed
+    override destroy(state: CustomCellState) {
       super.destroy(state);
 
-      if (state.deleteControl != null) {
+      if (state.deleteControl) {
         state.deleteControl.destroy();
         state.deleteControl = null;
       }
@@ -132,44 +149,70 @@ const Template = ({ label, ...args }) => {
   }
 
   class MyCustomGraph extends Graph {
-    createCellRenderer() {
+    constructor(container: HTMLElement, plugins: GraphPluginConstructor[]) {
+      super(container, undefined, plugins);
+    }
+
+    override createCellRenderer() {
       return new MyCustomCellRenderer();
     }
   }
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
   // Creates the graph inside the given container
-  const graph = new MyCustomGraph(container);
+  const graph = new MyCustomGraph(container, plugins);
   graph.setPanning(true);
 
-  // Uncomment the following if you want the container
-  // to fit the size of the graph
-  // graph.setResizeContainer(true);
-
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
-
-  // Gets the default parent for inserting new cells. This
-  // is normally the first child of the root (ie. layer 0).
-  const parent = graph.getDefaultParent();
+  if (args.resizeContainer) {
+    graph.setResizeContainer(true);
+  }
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex({
-      parent,
       value: 'Hello,',
       position: [20, 20],
       size: [80, 30],
     });
     const v2 = graph.insertVertex({
-      parent,
       value: 'World!',
       position: [200, 150],
       size: [80, 30],
     });
-    const e1 = graph.insertEdge({
-      parent,
+    graph.insertEdge({
       source: v1,
       target: v2,
+    });
+    const v3 = graph.insertVertex({
+      value: 'People',
+      position: [400, 50],
+      size: [80, 30],
+    });
+    graph.insertEdge({
+      source: v2,
+      target: v3,
+      style: {
+        edgeStyle: 'elbowEdgeStyle',
+        endArrow: 'openThin',
+        endFill: false,
+      },
+    });
+    const v4 = graph.insertVertex({
+      value: 'Earth',
+      position: [90, 270],
+      size: [80, 30],
+    });
+    graph.insertEdge({
+      source: v2,
+      target: v4,
+      style: {
+        edgeStyle: 'orthogonalEdgeStyle',
+        endArrow: 'blockThin',
+        endFill: false,
+      },
     });
   });
 
@@ -183,10 +226,14 @@ const Template = ({ label, ...args }) => {
       graph.zoomIn();
     })
   );
-
   buttons.appendChild(
     DomHelpers.button('Zoom Out', () => {
       graph.zoomOut();
+    })
+  );
+  buttons.appendChild(
+    DomHelpers.button('Reset Zoom', () => {
+      graph.zoomActual();
     })
   );
 
