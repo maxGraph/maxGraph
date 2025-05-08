@@ -62,7 +62,7 @@ export default {
 
 type CustomCellState = CellState & { deleteControl: Shape | null };
 
-const Template = ({ label, ...args }: Record<string, any>) => {
+const Template = ({ ...args }: Record<string, any>) => {
   const div = document.createElement('div');
   const container = createGraphContainer(args);
   div.appendChild(container);
