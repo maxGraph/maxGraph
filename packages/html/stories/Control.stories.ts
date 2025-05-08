@@ -158,12 +158,12 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     }
   }
 
-  // Enables rubberband selection
-  const plugins = getDefaultPlugins();
-  if (args.rubberBand) plugins.push(RubberBandHandler);
-
   // Creates the graph inside the given container
-  const graph = new MyCustomGraph(container, plugins);
+  const graph = new MyCustomGraph(container, [
+    ...getDefaultPlugins(),
+    // Enables rubberband selection
+    ...(args.rubberBand ? [RubberBandHandler] : []),
+  ]);
   graph.setPanning(true);
 
   if (args.resizeContainer) {
