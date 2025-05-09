@@ -111,20 +111,17 @@ export const link = (
 };
 
 /**
- * Returns a new button with the given level and function as an onclick
- * event handler.
+ * Returns a new button with the given level and function as an onclick event handler.
  *
  * ```javascript
- * document.body.appendChild(mxUtils.button('Test', (evt)=>
- * {
+ * document.body.appendChild('Test', (evt) => {
  *   alert('Hello, World!');
- * }));
+ * });
  * ```
  *
  * @param label String that represents the label of the button.
  * @param funct Function to be called if the button is pressed.
- * @param doc Optional document to be used for creating the button. Default is the
- * current document.
+ * @param doc Optional document to be used for creating the button. Default is the current document.
  */
 export const button = (
   label: string,
