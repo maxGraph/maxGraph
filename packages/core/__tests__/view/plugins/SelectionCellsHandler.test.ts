@@ -24,6 +24,7 @@ import {
   EdgeSegmentHandler,
   EdgeStyle,
   type EdgeStyleFunction,
+  EdgeStyleHandlerKind,
   EdgeStyleRegistry,
   ElbowEdgeHandler,
   Point,
@@ -192,55 +193,26 @@ describe('createEdgeHandler', () => {
   );
 
   describe('Register custom edge handler', () => {
-    test('default', () => {
-      class CustomEdgeHandler extends EdgeHandler {}
-      const edgeStyle = customEdgeStyle;
+    test.each(['default', 'elbow', 'segment'])(
+      '%s',
+      (handlerKind: EdgeStyleHandlerKind) => {
+        class CustomEdgeHandler extends ElbowEdgeHandler {}
+        const edgeStyle = customEdgeStyle;
+        handlerKind != 'default' && // when not registered, it will use 'default'
+          EdgeStyleRegistry.add('custom', edgeStyle, { handlerKind });
 
-      const graph = createNewGraph();
-      const plugin = getPlugin(graph);
-      plugin.configureEdgeHandler('default', (state) => {
-        return new CustomEdgeHandler(state);
-      });
+        const graph = createNewGraph();
+        const plugin = getPlugin(graph);
+        plugin.configureEdgeHandler(handlerKind, (state) => {
+          return new CustomEdgeHandler(state);
+        });
 
-      const cellState = createCellStateOfEdge(graph);
-      expect(plugin.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-        CustomEdgeHandler
-      );
-    });
-
-    test('elbow', () => {
-      class CustomEdgeHandler extends ElbowEdgeHandler {}
-      const edgeStyle = customEdgeStyle;
-      EdgeStyleRegistry.add('custom', edgeStyle, { handlerKind: 'elbow' });
-
-      const graph = createNewGraph();
-      const plugin = getPlugin(graph);
-      plugin.configureEdgeHandler('elbow', (state) => {
-        return new CustomEdgeHandler(state);
-      });
-
-      const cellState = createCellStateOfEdge(graph);
-      expect(plugin.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-        CustomEdgeHandler
-      );
-    });
-
-    test('segment', () => {
-      class CustomEdgeHandler extends EdgeSegmentHandler {}
-      const edgeStyle = customEdgeStyle;
-      EdgeStyleRegistry.add('custom', edgeStyle, { handlerKind: 'segment' });
-
-      const graph = createNewGraph();
-      const plugin = getPlugin(graph);
-      plugin.configureEdgeHandler('segment', (state) => {
-        return new CustomEdgeHandler(state);
-      });
-
-      const cellState = createCellStateOfEdge(graph);
-      expect(plugin.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
-        CustomEdgeHandler
-      );
-    });
+        const cellState = createCellStateOfEdge(graph);
+        expect(plugin.createEdgeHandler(cellState, edgeStyle)).toBeInstanceOf(
+          CustomEdgeHandler
+        );
+      }
+    );
   });
 
   describe('Custom handlerKind', () => {
