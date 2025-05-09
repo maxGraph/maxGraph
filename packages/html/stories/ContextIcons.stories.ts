@@ -29,6 +29,7 @@ import {
   type SelectionHandler,
   getDefaultPlugins,
   type GraphPluginConstructor,
+  type SelectionCellsHandler,
 } from '@maxgraph/core';
 
 import {
@@ -141,6 +142,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       img.style.width = '16px';
       img.style.height = '16px';
 
+      const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
       InternalEvent.addGestureListeners(img, (evt) => {
         const pt = styleUtils.convertPoint(
           this.graph.container,
@@ -185,13 +187,6 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     constructor(container: HTMLElement, plugins: GraphPluginConstructor[]) {
       super(container, undefined, plugins);
     }
-
-    override createHandler(state: CellState) {
-      if (state != null && state.cell.isVertex()) {
-        return new CustomVertexToolHandler(state);
-      }
-      return super.createHandler(state);
-    }
   }
 
   // Enables rubberband selection
@@ -201,6 +196,13 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   // Creates the graph inside the given container
   const graph = new MyCustomGraph(container, plugins);
   graph.setConnectable(true);
+
+  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
+    'SelectionCellsHandler'
+  );
+  selectionCellsHandler.configureVertexHandler(
+    (state) => new CustomVertexToolHandler(state)
+  );
 
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.createTarget = true;
