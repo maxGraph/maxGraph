@@ -12,7 +12,7 @@ if [[ $# -gt 0 && "$1" == "--list-size-only" ]]; then
 fi
 
 if [ "$LIST_SIZE_ONLY" = true ]; then
-  echo "Skip building examples..."
+  echo "Skip building examples."
 else
   echo "Building all examples..."
 
