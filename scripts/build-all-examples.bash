@@ -45,11 +45,6 @@ for dir in packages/ts-example* packages/js-example*; do
         size_kb = $5 / 1000
         printf "%.2f kB %s\n", size_kb, $9
       }'
-
-      # Calculate total size with 2 decimal places
-      total_bytes=$(find "$dir/dist" -name "*.js" -type f -exec du -b {} \; | awk '{sum += $1} END {print sum}')
-      total_kb=$(echo "scale=2; $total_bytes/1000" | bc)
-      echo "Total JS size: ${total_kb} kB"
     else
       echo "No dist directory found in $dir"
     fi
