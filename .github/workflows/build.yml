@@ -56,7 +56,7 @@ jobs:
       - name: Test TypeScript support
         run: npm test -w packages/ts-support
       - name: Build all examples
-        run: ./build-all-examples.bash
+        run: ./scripts/build-all-examples.bash
       - name: Build Storybook mini-site
         run: npm run build -w packages/html
       - name: Upload all examples as artifact

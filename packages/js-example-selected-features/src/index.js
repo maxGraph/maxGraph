@@ -20,7 +20,6 @@ import {
   BaseGraph,
   CellEditorHandler,
   constants,
-  DomHelpers,
   EdgeMarker,
   EdgeMarkerRegistry,
   InternalEvent,
@@ -109,14 +108,11 @@ const popup = (content) => {
   window.alert(content);
 };
 
-container.parentElement.appendChild(
-  DomHelpers.button('View Original XML', () => {
-    popup(xmlWithVerticesAndEdges);
-  })
-);
-container.parentElement.appendChild(
-  DomHelpers.button('Export XML', () => {
-    const xml = new ModelXmlSerializer(graph.model).export();
-    popup(xml);
-  })
-);
+// Control buttons
+document.getElementById('view-original-xml').addEventListener('click', () => {
+  popup(xmlWithVerticesAndEdges);
+});
+document.getElementById('export-xml').addEventListener('click', () => {
+  const xml = new ModelXmlSerializer(graph.model).export();
+  popup(xml);
+});
