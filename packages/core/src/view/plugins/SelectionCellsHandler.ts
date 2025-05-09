@@ -43,7 +43,6 @@ type Handler = EdgeHandler | VertexHandler;
 // TODO review the name
 type VertexHandlerFactoryFunction = (state: CellState) => VertexHandler;
 type EdgeHandlerFactoryFunction = (state: CellState) => EdgeHandler;
-// type EdgeHandlerFactoryFunction<T extends EdgeHandler> = (state: CellState) => T;
 
 /**
  * An event handler that manages cell handlers and invokes their mouse event processing functions.
@@ -69,7 +68,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     return new VertexHandler(state);
   };
 
-  private edgeHandlerFactories = new Map<
+  private readonly edgeHandlerFactories = new Map<
     EdgeStyleHandlerKind,
     EdgeHandlerFactoryFunction
   >([
