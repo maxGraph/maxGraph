@@ -41,13 +41,8 @@ import CellState from './cell/CellState.js';
 import { isNode } from '../util/domUtils.js';
 import { EdgeStyle } from './style/builtin-style-elements.js';
 import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry.js';
-import EdgeHandler from './handler/EdgeHandler.js';
-import VertexHandler from './handler/VertexHandler.js';
-import EdgeSegmentHandler from './handler/EdgeSegmentHandler.js';
-import ElbowEdgeHandler from './handler/ElbowEdgeHandler.js';
 import type {
   DialectValue,
-  EdgeStyleFunction,
   GraphCollaboratorsOptions,
   GraphFoldingOptions,
   GraphOptions,
