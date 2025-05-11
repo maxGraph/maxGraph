@@ -122,14 +122,14 @@ const Template = ({ ...args }: Record<string, any>) => {
         //   constraints
         // );
 
-        for (const constraint of constraints ?? []) {
-          const cp = this.graph.getConnectionPoint(this.previous, constraint);
+        for (const referenceConstraint of constraints ?? []) {
+          const cp = this.graph.getConnectionPoint(this.previous, referenceConstraint);
 
           if (cp != null) {
             const tmp = (cp.x - pt.x) * (cp.x - pt.x) + (cp.y - pt.y) * (cp.y - pt.y);
 
             if (dist == null || tmp < dist) {
-              nearestConstraint = constraint;
+              nearestConstraint = referenceConstraint;
               dist = tmp;
             }
           }
@@ -157,22 +157,6 @@ const Template = ({ ...args }: Record<string, any>) => {
       return new CellState(this.graph.view, edge, this.graph.getCellStyle(edge));
     }
   }
-
-  // TODO review migration from mxgraph
-  //
-  // // Disables floating connections (only use with no connect image)
-  // if (graph.connectionHandler.connectImage == null)
-  // {
-  //   graph.connectionHandler.isConnectableCell = function(cell)
-  //   {
-  //     return false;
-  //   };
-  //   mxEdgeHandler.prototype.isConnectableCell = function(cell)
-  //   {
-  //     return graph.connectionHandler.isConnectableCell(cell);
-  //   };
-  // }
-  //
 
   class MyCustomEdgeHandler extends ElbowEdgeHandler {
     override createConstraintHandler() {
