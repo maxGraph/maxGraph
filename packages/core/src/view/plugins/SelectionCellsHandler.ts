@@ -38,11 +38,14 @@ import EdgeSegmentHandler from '../handler/EdgeSegmentHandler';
 import { EdgeStyleRegistry } from '../style/edge/EdgeStyleRegistry';
 
 // TODO export and move to types.ts and rename to CellHandler
-type Handler = EdgeHandler | VertexHandler;
+/** @since 0.21.0 */
+type CellHandler = EdgeHandler | VertexHandler;
 
 // TODO export and move to types.ts
 // TODO review the name
+/** @since 0.21.0 */
 type VertexHandlerFactoryFunction = (state: CellState) => VertexHandler;
+/** @since 0.21.0 */
 type EdgeHandlerFactoryFunction = (state: CellState) => EdgeHandler;
 
 /**
@@ -63,7 +66,7 @@ type EdgeHandlerFactoryFunction = (state: CellState) => EdgeHandler;
  * @category Plugin
  */
 class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseListenerSet {
-  static pluginId = 'SelectionCellsHandler';
+  static readonly pluginId = 'SelectionCellsHandler';
 
   private vertexHandlerFactory: VertexHandlerFactoryFunction = (state: CellState) => {
     return new VertexHandler(state);
@@ -125,7 +128,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   /**
    * {@link Dictionary} that maps from cells to handlers.
    */
-  handlers: Dictionary<Cell, Handler>;
+  handlers: Dictionary<Cell, CellHandler>;
 
   /**
    * Returns <enabled>.
@@ -238,8 +241,9 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    * otherwise it returns an {@link VertexHandler}.
    *
    * @param state {@link CellState} whose handler should be created.
+   * @since 0.21.0
    */
-  protected createHandler(state: CellState): Handler {
+  protected createHandler(state: CellState): CellHandler {
     if (state.cell.isEdge()) {
       const source = state.getVisibleTerminalState(true);
       const target = state.getVisibleTerminalState(false);
@@ -267,6 +271,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    *
    * @param state {@link CellState} to create the handler for.
    * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
+   * @since 0.21.0
    */
   protected createEdgeHandler(
     state: CellState,
@@ -280,10 +285,14 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     );
   }
 
+  // TODO JSDoc + review name
+  /** @since 0.21.0 */
   configureVertexHandler(factory: VertexHandlerFactoryFunction): void {
     this.vertexHandlerFactory = factory;
   }
 
+  // TODO JSDoc + review name
+  /** @since 0.21.0 */
   configureEdgeHandler(
     handlerKind: EdgeStyleHandlerKind,
     factory: EdgeHandlerFactoryFunction
@@ -294,7 +303,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   /**
    * Returns true if the given handler is active and should not be redrawn.
    */
-  isHandlerActive(handler: Handler) {
+  isHandlerActive(handler: CellHandler) {
     return handler.index !== null;
   }
 
