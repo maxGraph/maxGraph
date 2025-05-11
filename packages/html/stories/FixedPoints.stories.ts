@@ -30,6 +30,10 @@ import {
   type Rectangle,
   RubberBandHandler,
   type EdgeStyleFunction,
+  CellEditorHandler,
+  SelectionCellsHandler,
+  SelectionHandler,
+  AbstractGraph,
 } from '@maxgraph/core';
 
 import {
@@ -38,7 +42,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -55,6 +59,7 @@ export default {
 };
 
 const Template = ({ ...args }: Record<string, any>) => {
+  configureImagesBasePath();
   const container = createGraphContainer(args);
 
   class MyCustomConstraintHandler extends ConstraintHandler {
@@ -74,13 +79,15 @@ const Template = ({ ...args }: Record<string, any>) => {
     }
   }
 
-  // TODO must be registered in plugins
-  // in commit msg, Fix connection handling + use the right edge handler
   class MyCustomConnectionHandler extends ConnectionHandler {
     // TODO commented in mxgraph example, so remove
     // connectImage = new ImageBox('images/connector.gif', 16, 16);
 
-    // TODO set constraintHandler in constructor
+    constructor(graph: AbstractGraph) {
+      super(graph);
+      // TODO use the new createConstraintHandler in constructor
+      this.constraintHandler = new MyCustomConstraintHandler(graph);
+    }
     // previously in CustomGraph:
     //     createConnectionHandler() {
     //       const r = new MyCustomConnectionHandler();
@@ -178,7 +185,15 @@ const Template = ({ ...args }: Record<string, any>) => {
   }
 
   // Creates the graph inside the given container
-  const graph = new MyCustomGraph(container);
+  const plugins = [
+    CellEditorHandler,
+    SelectionCellsHandler,
+    MyCustomConnectionHandler,
+    SelectionHandler,
+    //PanningHandler,
+  ];
+
+  const graph = new MyCustomGraph(container, undefined, plugins);
   graph.setConnectable(true);
 
   // TODO configure with plugin
