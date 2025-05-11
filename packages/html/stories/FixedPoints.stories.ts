@@ -36,6 +36,7 @@ import {
 import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
+import Cell from '@maxgraph/core/lib/view/cell/Cell.ts';
 
 export default {
   title: 'Connections/FixedPoints',
@@ -49,12 +50,12 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ ...args }: Record<string, any>) => {
   const container = createGraphContainer(args);
 
   class MyCustomConstraintHandler extends ConstraintHandler {
     // Snaps to fixed points
-    intersects(icon, point, source, existingEdge) {
+    override intersects(icon, point, source, existingEdge) {
       return !source || existingEdge || mathUtils.intersects(icon.bounds, point);
     }
   }
@@ -62,7 +63,7 @@ const Template = ({ label, ...args }) => {
   class MyCustomConnectionHandler extends ConnectionHandler {
     // connectImage = new ImageBox('images/connector.gif', 16, 16);
 
-    isConnectableCell(cell) {
+    override isConnectableCell(_cell: Cell) {
       return false;
     }
 
@@ -73,7 +74,7 @@ const Template = ({ label, ...args }) => {
      * sourceConstraint to null in mouseMove and updating it and returning the
      * nearest point (cp) in getSourcePerimeterPoint (see below)
      */
-    updateEdgeState(pt, constraint) {
+    override updateEdgeState(pt: Point, constraint: ConnectionConstraint | null) {
       if (pt != null && this.previous != null) {
         const constraints = this.graph.getAllConnectionConstraints(this.previous);
         let nearestConstraint = null;
@@ -105,7 +106,7 @@ const Template = ({ label, ...args }) => {
       return super.updateEdgeState(pt, constraint);
     }
 
-    createEdgeState(me) {
+    override createEdgeState(me) {
       // Connect preview
       const edge = this.graph.createEdge(null, null, null, null, null, {
         edgeStyle: 'orthogonalEdgeStyle',
@@ -117,8 +118,10 @@ const Template = ({ label, ...args }) => {
 
   class MyCustomEdgeHandler extends EdgeHandler {
     // Disables floating connections (only use with no connect image)
-    isConnectableCell(cell) {
-      return graph.getPlugin('ConnectionHandler').isConnectableCell(cell);
+    override isConnectableCell(cell: Cell) {
+      return graph
+        .getPlugin<ConnectionHandler>('ConnectionHandler')
+        .isConnectableCell(cell);
     }
   }
 
@@ -129,13 +132,13 @@ const Template = ({ label, ...args }) => {
       return r;
     }
 
-    createEdgeHandler(state, edgeStyle) {
+    override createEdgeHandler(state, edgeStyle) {
       const r = new MyCustomEdgeHandler(state, edgeStyle);
       r.constraintHandler = new MyCustomConstraintHandler(this);
       return r;
     }
 
-    getAllConnectionConstraints(terminal) {
+    override getAllConnectionConstraints(terminal) {
       if (terminal != null && terminal.cell.isVertex()) {
         return [
           new ConnectionConstraint(new Point(0, 0), true),
