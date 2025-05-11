@@ -117,6 +117,11 @@ const Template = ({ ...args }: Record<string, any>) => {
         let nearestConstraint = null;
         let dist = null;
 
+        // console.warn(
+        //   'MyCustomConnectionHandler.updateEdgeState - constraints',
+        //   constraints
+        // );
+
         for (const constraint of constraints ?? []) {
           const cp = this.graph.getConnectionPoint(this.previous, constraint);
 
@@ -233,7 +238,10 @@ const Template = ({ ...args }: Record<string, any>) => {
       value: 'Hello,',
       position: [20, 20],
       size: [80, 60],
-      style: { shape: 'triangle', perimeter: 'trianglePerimeter' },
+      style: {
+        shape: 'triangle',
+        perimeter: 'trianglePerimeter',
+      },
     });
     const v2 = graph.insertVertex({
       value: 'World!',
@@ -276,7 +284,9 @@ const Template = ({ ...args }: Record<string, any>) => {
     });
   });
 
-  // TODO configure with Storybook args + description in doc page and/or above the container
+  // Note for the future
+  // The following could be enabled with Storybook args to demonstrate a second use-case.
+
   // Use this code to snap the source point for new connections without a connect preview,
   // ie. without an overridden graph.getPlugin('ConnectionHandler').createEdgeState
   /*
