@@ -203,7 +203,7 @@ type FactoryMethod = (
  * @category Plugin
  */
 class ConnectionHandler extends EventSource implements GraphPlugin, MouseListenerSet {
-  static pluginId = 'ConnectionHandler';
+  static readonly pluginId = 'ConnectionHandler';
 
   previous: CellState | null = null;
   iconState: CellState | null = null;

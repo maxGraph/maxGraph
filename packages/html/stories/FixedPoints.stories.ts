@@ -74,7 +74,10 @@ const Template = ({ ...args }: Record<string, any>) => {
     }
   }
 
+  // TODO must be registered in plugins
+  // in commit msg, Fix connection handling + use the right edge handler
   class MyCustomConnectionHandler extends ConnectionHandler {
+    // TODO commented in mxgraph example, so remove
     // connectImage = new ImageBox('images/connector.gif', 16, 16);
 
     override isConnectableCell(_cell: Cell) {
@@ -140,12 +143,6 @@ const Template = ({ ...args }: Record<string, any>) => {
   }
 
   class MyCustomGraph extends Graph {
-    createConnectionHandler() {
-      const r = new MyCustomConnectionHandler();
-      r.constraintHandler = new MyCustomConstraintHandler(this);
-      return r;
-    }
-
     override createEdgeHandler(state: CellState, _edgeStyle: EdgeStyleFunction | null) {
       const edgeHandler = new MyCustomEdgeHandler(state);
       edgeHandler.constraintHandler = new MyCustomConstraintHandler(this);
