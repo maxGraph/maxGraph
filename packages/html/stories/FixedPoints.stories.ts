@@ -25,7 +25,7 @@ import {
   Graph,
   type ImageShape,
   mathUtils,
-  type Point,
+  Point,
   type Rectangle,
   RubberBandHandler,
   type EdgeStyleFunction,
@@ -89,18 +89,18 @@ const Template = ({ ...args }: Record<string, any>) => {
      */
     override updateEdgeState(pt: Point, constraint: ConnectionConstraint | null) {
       if (pt != null && this.previous != null) {
-        const constraints = this.graph.getAllConnectionConstraints(this.previous);
+        const constraints = this.graph.getAllConnectionConstraints(this.previous, true); // the 2nd parameter is ignored in this implementation
         let nearestConstraint = null;
         let dist = null;
 
-        for (let i = 0; i < constraints.length; i++) {
-          const cp = this.graph.getConnectionPoint(this.previous, constraints[i]);
+        for (const constraint of constraints ?? []) {
+          const cp = this.graph.getConnectionPoint(this.previous, constraint);
 
           if (cp != null) {
             const tmp = (cp.x - pt.x) * (cp.x - pt.x) + (cp.y - pt.y) * (cp.y - pt.y);
 
             if (dist == null || tmp < dist) {
-              nearestConstraint = constraints[i];
+              nearestConstraint = constraint;
               dist = tmp;
             }
           }
@@ -151,7 +151,10 @@ const Template = ({ ...args }: Record<string, any>) => {
       return edgeHandler;
     }
 
-    override getAllConnectionConstraints(terminal) {
+    override getAllConnectionConstraints = (
+      terminal: CellState | null,
+      _source: boolean
+    ): ConnectionConstraint[] | null => {
       if (terminal != null && terminal.cell.isVertex()) {
         return [
           new ConnectionConstraint(new Point(0, 0), true),
@@ -165,7 +168,7 @@ const Template = ({ ...args }: Record<string, any>) => {
         ];
       }
       return null;
-    }
+    };
   }
 
   // Creates the graph inside the given container
