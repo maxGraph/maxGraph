@@ -148,6 +148,22 @@ const Template = ({ ...args }: Record<string, any>) => {
     }
   }
 
+  // TODO review migration from mxgraph
+  //
+  // // Disables floating connections (only use with no connect image)
+  // if (graph.connectionHandler.connectImage == null)
+  // {
+  //   graph.connectionHandler.isConnectableCell = function(cell)
+  //   {
+  //     return false;
+  //   };
+  //   mxEdgeHandler.prototype.isConnectableCell = function(cell)
+  //   {
+  //     return graph.connectionHandler.isConnectableCell(cell);
+  //   };
+  // }
+  //
+
   class MyCustomEdgeHandler extends EdgeHandler {
     // Disables floating connections (only use with no connect image)
     override isConnectableCell(cell: Cell) {
@@ -158,7 +174,11 @@ const Template = ({ ...args }: Record<string, any>) => {
   }
 
   class MyCustomGraph extends Graph {
+    // TODO this must be an custom Elbow edge handler because all edgeStyle are set to elbowEdgeStyle
+    // See also https://github.com/maxGraph/maxGraph/pull/88/commits/59f764eb2f26e2ac9906b62cc4af931b5fcf3c46#diff-07cc14d24696df1fc9c3e11a30504607f931b79b62bd50213dc6f63d7fe9deef
     override createEdgeHandler(state: CellState, _edgeStyle: EdgeStyleFunction | null) {
+      console.warn('MyCustomGraph.createEdgeHandler');
+      // TODO implement this in the constructor of the edge handler
       const edgeHandler = new MyCustomEdgeHandler(state);
       edgeHandler.constraintHandler = new MyCustomConstraintHandler(this);
       return edgeHandler;
