@@ -16,12 +16,15 @@ limitations under the License.
 */
 
 import {
+  type AbstractGraph,
   type Cell,
+  CellEditorHandler,
   CellState,
-  ConnectionHandler,
   ConnectionConstraint,
+  ConnectionHandler,
   ConstraintHandler,
-  EdgeHandler,
+  type EdgeStyleFunction,
+  ElbowEdgeHandler,
   Graph,
   type ImageShape,
   type InternalMouseEvent,
@@ -29,11 +32,8 @@ import {
   Point,
   type Rectangle,
   RubberBandHandler,
-  type EdgeStyleFunction,
-  CellEditorHandler,
   SelectionCellsHandler,
   SelectionHandler,
-  AbstractGraph,
 } from '@maxgraph/core';
 
 import {
@@ -102,7 +102,7 @@ const Template = ({ ...args }: Record<string, any>) => {
     /*
      * Special case: Snaps source of new connections to fixed points
      * Without a connect preview in connectionHandler.createEdgeState mouseMove
-     * and getSourcePerimeterPoint should be overriden by setting sourceConstraint
+     * and getSourcePerimeterPoint should be overridden by setting sourceConstraint
      * sourceConstraint to null in mouseMove and updating it and returning the
      * nearest point (cp) in getSourcePerimeterPoint (see below)
      */
@@ -164,7 +164,12 @@ const Template = ({ ...args }: Record<string, any>) => {
   // }
   //
 
-  class MyCustomEdgeHandler extends EdgeHandler {
+  class MyCustomEdgeHandler extends ElbowEdgeHandler {
+    override createConstraintHandler() {
+      console.warn('MyCustomEdgeHandler.createConstraintHandler');
+      return new MyCustomConstraintHandler(this.graph);
+    }
+
     // Disables floating connections (only use with no connect image)
     override isConnectableCell(cell: Cell) {
       return graph
@@ -178,10 +183,7 @@ const Template = ({ ...args }: Record<string, any>) => {
     // See also https://github.com/maxGraph/maxGraph/pull/88/commits/59f764eb2f26e2ac9906b62cc4af931b5fcf3c46#diff-07cc14d24696df1fc9c3e11a30504607f931b79b62bd50213dc6f63d7fe9deef
     override createEdgeHandler(state: CellState, _edgeStyle: EdgeStyleFunction | null) {
       console.warn('MyCustomGraph.createEdgeHandler');
-      // TODO implement this in the constructor of the edge handler
-      const edgeHandler = new MyCustomEdgeHandler(state);
-      edgeHandler.constraintHandler = new MyCustomConstraintHandler(this);
-      return edgeHandler;
+      return new MyCustomEdgeHandler(state);
     }
 
     override getAllConnectionConstraints = (
