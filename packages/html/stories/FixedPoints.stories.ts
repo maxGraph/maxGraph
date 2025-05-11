@@ -16,15 +16,19 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  RubberBandHandler,
+  type Cell,
+  type CellState,
   ConnectionHandler,
   ConnectionConstraint,
   ConstraintHandler,
-  Point,
-  CellState,
   EdgeHandler,
+  Graph,
+  type ImageShape,
   mathUtils,
+  type Point,
+  type Rectangle,
+  RubberBandHandler,
+  type EdgeStyleFunction,
 } from '@maxgraph/core';
 
 import {
@@ -36,7 +40,6 @@ import {
 import { createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
-import Cell from '@maxgraph/core/lib/view/cell/Cell.ts';
 
 export default {
   title: 'Connections/FixedPoints',
@@ -55,8 +58,18 @@ const Template = ({ ...args }: Record<string, any>) => {
 
   class MyCustomConstraintHandler extends ConstraintHandler {
     // Snaps to fixed points
-    override intersects(icon, point, source, existingEdge) {
-      return !source || existingEdge || mathUtils.intersects(icon.bounds, point);
+    override intersects(
+      icon: ImageShape,
+      rectangle: Rectangle,
+      source: boolean,
+      existingEdge: boolean
+    ) {
+      return (
+        !source ||
+        existingEdge ||
+        // ignore null icon.bounds as in the implementation of the super class
+        mathUtils.intersects(icon.bounds!, rectangle)
+      );
     }
   }
 
@@ -132,10 +145,10 @@ const Template = ({ ...args }: Record<string, any>) => {
       return r;
     }
 
-    override createEdgeHandler(state, edgeStyle) {
-      const r = new MyCustomEdgeHandler(state, edgeStyle);
-      r.constraintHandler = new MyCustomConstraintHandler(this);
-      return r;
+    override createEdgeHandler(state: CellState, _edgeStyle: EdgeStyleFunction | null) {
+      const edgeHandler = new MyCustomEdgeHandler(state);
+      edgeHandler.constraintHandler = new MyCustomConstraintHandler(this);
+      return edgeHandler;
     }
 
     override getAllConnectionConstraints(terminal) {
@@ -159,9 +172,11 @@ const Template = ({ ...args }: Record<string, any>) => {
   const graph = new MyCustomGraph(container);
   graph.setConnectable(true);
 
+  // TODO configure with plugin
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);
 
+  // TODO remove parent
   // Gets the default parent for inserting new cells. This
   // is normally the first child of the root (ie. layer 0).
   const parent = graph.getDefaultParent();
@@ -198,10 +213,10 @@ const Template = ({ ...args }: Record<string, any>) => {
         elbow: 'horizontal',
         exitX: 0.5,
         exitY: 1,
-        exitPerimeter: 1,
+        exitPerimeter: true,
         entryX: 0,
         entryY: 0,
-        entryPerimeter: 1,
+        entryPerimeter: true,
       },
     });
     const e2 = graph.insertEdge({
@@ -212,14 +227,15 @@ const Template = ({ ...args }: Record<string, any>) => {
       style: {
         edgeStyle: 'elbowEdgeStyle',
         elbow: 'horizontal',
-        orthogonal: 0,
+        orthogonal: false,
         entryX: 0,
         entryY: 0,
-        entryPerimeter: 1,
+        entryPerimeter: true,
       },
     });
   });
 
+  // TODO configure with Storybook args + description in doc page and/or above the container
   // Use this code to snap the source point for new connections without a connect preview,
   // ie. without an overridden graph.getPlugin('ConnectionHandler').createEdgeState
   /*
