@@ -177,35 +177,26 @@ const Template = ({ ...args }: Record<string, any>) => {
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);
 
-  // TODO remove parent
-  // Gets the default parent for inserting new cells. This
-  // is normally the first child of the root (ie. layer 0).
-  const parent = graph.getDefaultParent();
-
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex({
-      parent,
       value: 'Hello,',
       position: [20, 20],
       size: [80, 60],
       style: { shape: 'triangle', perimeter: 'trianglePerimeter' },
     });
     const v2 = graph.insertVertex({
-      parent,
       value: 'World!',
       position: [200, 150],
       size: [80, 60],
       style: { shape: 'ellipse', perimeter: 'ellipsePerimeter' },
     });
     const v3 = graph.insertVertex({
-      parent,
       value: 'Hello,',
       position: [200, 20],
       size: [80, 30],
     });
     graph.insertEdge({
-      parent,
       value: '',
       source: v1,
       target: v2,
@@ -221,7 +212,6 @@ const Template = ({ ...args }: Record<string, any>) => {
       },
     });
     graph.insertEdge({
-      parent,
       value: '',
       source: v3,
       target: v2,
