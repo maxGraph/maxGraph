@@ -404,6 +404,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
 
     this.graph.addMouseListener(this);
     this.marker = this.createMarker();
+    // TODO add a factory method createConstraintHandler for subclassing + make private
     this.constraintHandler = new ConstraintHandler(this.graph);
 
     // Redraws the icons if the graph changes

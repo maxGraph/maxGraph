@@ -231,6 +231,7 @@ class EdgeHandler implements MouseListenerSet {
 
     this.graph = this.state.view.graph;
     this.marker = this.createMarker();
+    // TODO add a factory method createConstraintHandler for subclassing + make private
     this.constraintHandler = new ConstraintHandler(this.graph);
 
     // Clones the original points from the cell

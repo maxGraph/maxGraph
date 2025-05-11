@@ -80,6 +80,14 @@ const Template = ({ ...args }: Record<string, any>) => {
     // TODO commented in mxgraph example, so remove
     // connectImage = new ImageBox('images/connector.gif', 16, 16);
 
+    // TODO set constraintHandler in constructor
+    // previously in CustomGraph:
+    //     createConnectionHandler() {
+    //       const r = new MyCustomConnectionHandler();
+    //       r.constraintHandler = new MyCustomConstraintHandler(this);
+    //       return r;
+    //     }
+
     override isConnectableCell(_cell: Cell) {
       return false;
     }
