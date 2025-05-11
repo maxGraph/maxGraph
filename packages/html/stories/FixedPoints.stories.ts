@@ -17,13 +17,14 @@ limitations under the License.
 
 import {
   type Cell,
-  type CellState,
+  CellState,
   ConnectionHandler,
   ConnectionConstraint,
   ConstraintHandler,
   EdgeHandler,
   Graph,
   type ImageShape,
+  type InternalMouseEvent,
   mathUtils,
   Point,
   type Rectangle,
@@ -119,9 +120,9 @@ const Template = ({ ...args }: Record<string, any>) => {
       return super.updateEdgeState(pt, constraint);
     }
 
-    override createEdgeState(me) {
+    override createEdgeState(_me: InternalMouseEvent) {
       // Connect preview
-      const edge = this.graph.createEdge(null, null, null, null, null, {
+      const edge = this.graph.createEdge(null, null!, null, null, null, {
         edgeStyle: 'orthogonalEdgeStyle',
       });
 
@@ -206,7 +207,7 @@ const Template = ({ ...args }: Record<string, any>) => {
       position: [200, 20],
       size: [80, 30],
     });
-    const e1 = graph.insertEdge({
+    graph.insertEdge({
       parent,
       value: '',
       source: v1,
@@ -222,7 +223,7 @@ const Template = ({ ...args }: Record<string, any>) => {
         entryPerimeter: true,
       },
     });
-    const e2 = graph.insertEdge({
+    graph.insertEdge({
       parent,
       value: '',
       source: v3,
