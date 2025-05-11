@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import {
-  type AbstractGraph,
   type Cell,
   CellEditorHandler,
   CellState,
@@ -83,11 +82,17 @@ const Template = ({ ...args }: Record<string, any>) => {
     // TODO commented in mxgraph example, so remove
     // connectImage = new ImageBox('images/connector.gif', 16, 16);
 
-    constructor(graph: AbstractGraph) {
-      super(graph);
-      // TODO use the new createConstraintHandler in constructor
-      this.constraintHandler = new MyCustomConstraintHandler(graph);
+    // constructor(graph: AbstractGraph) {
+    //   super(graph);
+    //   // TODO use the new createConstraintHandler in constructor
+    //   this.constraintHandler = new MyCustomConstraintHandler(graph);
+    // }
+
+    protected override createConstraintHandler(): ConstraintHandler {
+      console.warn('MyCustomConnectionHandler.createConstraintHandler');
+      return new MyCustomConstraintHandler(this.graph);
     }
+
     // previously in CustomGraph:
     //     createConnectionHandler() {
     //       const r = new MyCustomConnectionHandler();

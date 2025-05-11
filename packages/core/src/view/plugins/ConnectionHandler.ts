@@ -285,8 +285,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   marker: CellMarker;
 
   /**
-   * Holds the {@link ConstraintHandler} used for drawing and highlighting
-   * constraints.
+   * Holds the {@link ConstraintHandler} used for drawing and highlighting constraints.
    */
   constraintHandler: ConstraintHandler;
 
@@ -404,8 +403,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
 
     this.graph.addMouseListener(this);
     this.marker = this.createMarker();
-    // TODO add a factory method createConstraintHandler for subclassing + make private
-    this.constraintHandler = new ConstraintHandler(this.graph);
+    this.constraintHandler = this.createConstraintHandler();
 
     // Redraws the icons if the graph changes
     this.changeHandler = (sender: Listenable) => {
@@ -443,6 +441,14 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
     };
 
     this.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
+  }
+
+  /**
+   * Hook for subclasses to change the implementation of {@link ConstraintHandler} used here.
+   * @since 0.21.0
+   */
+  protected createConstraintHandler() {
+    return new ConstraintHandler(this.graph);
   }
 
   /**
