@@ -25,10 +25,13 @@ import type { AbstractGraph } from '../AbstractGraph';
 import Cell from '../cell/Cell';
 import CellState from '../cell/CellState';
 import type {
+  CellHandler,
+  EdgeHandlerFactoryFunction,
   EdgeStyleFunction,
   EdgeStyleHandlerKind,
   GraphPlugin,
   MouseListenerSet,
+  VertexHandlerFactoryFunction,
 } from '../../types';
 import EdgeHandler from '../handler/EdgeHandler';
 import VertexHandler from '../handler/VertexHandler';
@@ -36,17 +39,6 @@ import InternalMouseEvent from '../event/InternalMouseEvent';
 import ElbowEdgeHandler from '../handler/ElbowEdgeHandler';
 import EdgeSegmentHandler from '../handler/EdgeSegmentHandler';
 import { EdgeStyleRegistry } from '../style/edge/EdgeStyleRegistry';
-
-// TODO export and move to types.ts and rename to CellHandler
-/** @since 0.21.0 */
-type CellHandler = EdgeHandler | VertexHandler;
-
-// TODO export and move to types.ts
-// TODO review the name
-/** @since 0.21.0 */
-type VertexHandlerFactoryFunction = (state: CellState) => VertexHandler;
-/** @since 0.21.0 */
-type EdgeHandlerFactoryFunction = (state: CellState) => EdgeHandler;
 
 /**
  * An event handler that manages cell handlers and invokes their mouse event processing functions.
