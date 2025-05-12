@@ -112,7 +112,9 @@ const Template = ({ ...args }: Record<string, any>) => {
      * nearest point (cp) in getSourcePerimeterPoint (see below)
      */
     override updateEdgeState(pt: Point, constraint: ConnectionConstraint | null) {
+      console.warn('MyCustomConnectionHandler.updateEdgeState');
       if (pt != null && this.previous != null) {
+        console.warn('MyCustomConnectionHandler.updateEdgeState - custom code');
         const constraints = this.graph.getAllConnectionConstraints(this.previous, true); // the 2nd parameter is ignored in this implementation
         let nearestConstraint = null;
         let dist = null;
@@ -145,10 +147,12 @@ const Template = ({ ...args }: Record<string, any>) => {
         // update the cell style as follows:
         // this.edgeState.cell.style = utils.setStyle(this.edgeState.cell.style, 'edgeStyle', this.edgeState.style.edgeStyle);
       }
-      return super.updateEdgeState(pt, constraint);
+      super.updateEdgeState(pt, constraint);
     }
 
     override createEdgeState(_me: InternalMouseEvent) {
+      console.warn('MyCustomConnectionHandler.createEdgeState (connect preview)');
+
       // Connect preview
       const edge = this.graph.createEdge(null, null!, null, null, null, {
         edgeStyle: 'orthogonalEdgeStyle',
