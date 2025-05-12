@@ -1282,7 +1282,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Updates <edgeState>.
+   * Updates {@link edgeState}.
    */
   updateEdgeState(current: Point | null, constraint: ConnectionConstraint | null) {
     if (!this.edgeState) return;
