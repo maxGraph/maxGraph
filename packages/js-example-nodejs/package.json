@@ -1,0 +1,18 @@
+{
+  "name": "@maxgraph/js-example-nodejs",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "run-s build:cjs",
+    "build:esm": "node src/index.mjs",
+    "build:cjs": "node src/index.cjs"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "jsdom": "~26.1.0",
+    "jsdom-global": "~3.0.2",
+    "npm-run-all": "~4.1.5"
+  }
+}

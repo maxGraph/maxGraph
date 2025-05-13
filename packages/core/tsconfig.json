@@ -6,7 +6,7 @@
     "declarationMap": false,
     "emitDeclarationOnly": false,
     "isolatedModules": true,
-    "outDir": "./lib",
+    "outDir": "./lib/esm",
     "strict": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
