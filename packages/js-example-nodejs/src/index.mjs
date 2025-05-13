@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // TODO this fails because the import statements in the files of the maxGraph package doesn't add the "js" file extension
-// Node.js requires such extensions. This should be fixed when implementing XXX
+// Node.js requires such extensions. This should be fixed when implementing https://github.com/maxGraph/maxGraph/issues/827
 import { BaseGraph } from '@maxgraph/core';
 
 console.info('maxGraph example with Node.js using ESM');
