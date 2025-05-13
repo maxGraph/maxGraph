@@ -1,4 +1,4 @@
-# Integrate `maxGraph` in headless environment with Node.js
+# Integrate `maxGraph` in a headless environment with Node.js
 
 Demonstrate how to integrate maxGraph with Node.js to use it in a headless environment.
 
