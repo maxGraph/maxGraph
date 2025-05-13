@@ -55,7 +55,7 @@
     "dev": "tsc --watch",
     "build": "run-s build:*",
     "build:esm": "tsc --version && tsc",
-    "build:cjs": "tsc --version && tsc --outDir lib/cjs --module commonjs && echo '{\"type\": \"commonjs\"}' > lib/cjs/package.json",
+    "build:cjs": "tsc --version && tsc --outDir lib/cjs --module commonjs && node scripts/generate-cjs-package-json.mjs",
     "check:circular-dependencies": "madge --circular --extensions js lib",
     "docs:api": "typedoc src/index.ts",
     "prepack": "run-s clean build",
