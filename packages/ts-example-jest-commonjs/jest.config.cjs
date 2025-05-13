@@ -18,6 +18,6 @@ limitations under the License.
 module.exports = {
   testEnvironment: 'jsdom', // need to access to the browser objects
   transform: {
-    '^.+\.tsx?$': ['ts-jest', {}],
+    '^.+\\.tsx?$': ['ts-jest', {}],
   },
 };
