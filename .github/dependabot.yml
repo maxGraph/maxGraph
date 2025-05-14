@@ -52,9 +52,13 @@ updates:
         patterns:
           - "@jest/*"
           - "@testing-library/*"
+          - "@types/jest"
           - "@swc/*"
           - "jest"
           - "jest-*"
+          - "jsdom"
+          - "jsdom-*"
+          - "ts-jest"
       webpack:
         patterns:
           - "copy-webpack-plugin"

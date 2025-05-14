@@ -15,13 +15,18 @@
     "graph",
     "svg"
   ],
-  "module": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/esm/index.d.ts",
   "exports": {
     ".": {
       "import": {
-        "types": "./lib/index.d.ts",
-        "default": "./lib/index.js"
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/esm/index.js"
+      },
+      "require": {
+        "types": "./lib/cjs/index.d.ts",
+        "default": "./lib/cjs/index.js"
       }
     },
     "./css/*": "./css/*",
@@ -40,7 +45,7 @@
   "homepage": "https://github.com/maxGraph/maxGraph",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxGraph/maxGraph"
+    "url": "git+https://github.com/maxGraph/maxGraph.git"
   },
   "bugs": {
     "url": "https://github.com/maxGraph/maxGraph/issues"
@@ -48,7 +53,9 @@
   "scripts": {
     "clean": "rimraf lib",
     "dev": "tsc --watch",
-    "build": "tsc --version && tsc",
+    "build": "run-s build:*",
+    "build:esm": "tsc --version && tsc",
+    "build:cjs": "tsc --version && tsc --outDir lib/cjs --module commonjs && node scripts/generate-cjs-package-json.mjs",
     "check:circular-dependencies": "madge --circular --extensions js lib",
     "docs:api": "typedoc src/index.ts",
     "prepack": "run-s clean build",

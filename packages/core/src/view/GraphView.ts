@@ -315,8 +315,7 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Returns the DOM node that contains the background-, draw- and
-   * overlay- and decoratorpanes.
+   * Returns the DOM node that contains the background-, draw-, overlay- and decorator- panes.
    */
   getCanvas() {
     return this.canvas;
@@ -351,7 +350,7 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Returns the union of all {@link mxCellStates} for the given array of {@link Cell}.
+   * Returns the union of all {@link CellState}s for the given array of {@link Cell}.
    *
    * @param cells Array of {@link Cell} whose bounds should be returned.
    */
@@ -381,7 +380,7 @@ export class GraphView extends EventSource {
    * Sets and returns the current root and fires an {@link undo} event before
    * calling {@link AbstractGraph.sizeDidChange}.
    *
-   * @param root {@link mxCell} that specifies the root of the displayed cell hierarchy.
+   * @param root {@link Cell} that specifies the root of the displayed cell hierarchy.
    */
   setCurrentRoot(root: Cell | null) {
     if (this.currentRoot !== root) {
@@ -535,7 +534,7 @@ export class GraphView extends EventSource {
 
   /**
    * Calls {@link validateCell} and {@link validateCellState} and updates the {@link graphBounds}
-   * using {@link getBoundingBox}. Finally the background is validated using
+   * using {@link getBoundingBox}. Finally, the background is validated using
    * {@link validateBackground}.
    *
    * @param cell Optional {@link Cell} to be used as the root of the validation.
@@ -618,7 +617,7 @@ export class GraphView extends EventSource {
   /**
    * Creates and returns the shape used as the background page.
    *
-   * @param bounds {@link mxRectangle} that represents the bounds of the shape.
+   * @param bounds {@link Rectangle} that represents the bounds of the shape.
    */
   createBackgroundPageShape(bounds: Rectangle) {
     return new RectangleShape(bounds, 'white', 'black');
@@ -686,7 +685,7 @@ export class GraphView extends EventSource {
             }) as EventListener);
           }
 
-          // Adds basic listeners for graph event dispatching outside of the
+          // Adds basic listeners for graph event dispatching outside the
           // container and finishing the handling of a single gesture
           InternalEvent.addGestureListeners(
             this.backgroundPageShape.node,
@@ -760,8 +759,8 @@ export class GraphView extends EventSource {
    * };
    * ```
    *
-   * @param backgroundImage {@link mxImageShape} that represents the background image.
-   * @param bg {@link mxImage} that specifies the image and its dimensions.
+   * @param backgroundImage {@link ImageShape} that represents the background image.
+   * @param bg {@link Image} that specifies the image and its dimensions.
    */
   redrawBackgroundImage(backgroundImage: ImageShape, bg: Image) {
     backgroundImage.scale = this.scale;
@@ -782,7 +781,7 @@ export class GraphView extends EventSource {
    * the given cell is visible. If the cell is not visible but the state exists
    * then it is removed using {@link removeState}.
    *
-   * @param cell {@link mxCell} whose {@link CellState} should be created.
+   * @param cell {@link Cell} whose {@link CellState} should be created.
    * @param visible Optional boolean indicating if the cell should be visible. Default
    * is true.
    */
@@ -809,7 +808,7 @@ export class GraphView extends EventSource {
   /**
    * Validates and repaints the {@link CellState} for the given {@link Cell}.
    *
-   * @param cell {@link mxCell} whose {@link CellState} should be validated.
+   * @param cell {@link Cell} whose {@link CellState} should be validated.
    * @param recurse Optional boolean indicating if the children of the cell should be
    * validated. Default is true.
    */
@@ -847,7 +846,7 @@ export class GraphView extends EventSource {
           if (cell !== this.currentRoot && !state.invalid) {
             this.graph.cellRenderer.redraw(state, false, this.isRendering());
 
-            // Handles changes to invertex paintbounds after update of rendering shape
+            // Handles changes to vertex paint bounds after update of rendering shape
             state.updateCachedBounds();
           }
         }
@@ -1128,8 +1127,8 @@ export class GraphView extends EventSource {
   /**
    * Sets the fixed source or target terminal point on the given edge.
    *
-   * @param edge <CellState> whose terminal point should be updated.
-   * @param terminal <CellState> which represents the actual terminal.
+   * @param edge {@link CellState} whose terminal point should be updated.
+   * @param terminal {@link CellState} which represents the actual terminal.
    * @param source Boolean that specifies if the terminal is the source.
    * @param constraint {@link ConnectionConstraint} that specifies the connection.
    */
@@ -1148,8 +1147,8 @@ export class GraphView extends EventSource {
   /**
    * Returns the fixed source or target terminal point for the given edge.
    *
-   * @param edge <CellState> whose terminal point should be returned.
-   * @param terminal <CellState> which represents the actual terminal.
+   * @param edge {@link CellState} whose terminal point should be returned.
+   * @param terminal {@link CellState} which represents the actual terminal.
    * @param source Boolean that specifies if the terminal is the source.
    * @param constraint {@link ConnectionConstraint} that specifies the connection.
    */
@@ -1185,7 +1184,7 @@ export class GraphView extends EventSource {
    * if it has a fixed aspect and returns the previous bounds as an {@link Rectangle} if
    * the bounds have been modified or null otherwise.
    *
-   * @param edge {@link CellState} whose bounds should be updated.
+   * @param state {@link CellState} whose bounds should be updated.
    */
   updateBoundsFromStencil(state: CellState | null) {
     let previous = null;
@@ -1638,7 +1637,7 @@ export class GraphView extends EventSource {
    * to be connected to this terminal on the display. The result of this method
    * is cached in {@link CellState.getVisibleTerminalState}.
    *
-   * @param edge {@link mxCell} whose visible terminal should be returned.
+   * @param edge {@link Cell} whose visible terminal should be returned.
    * @param source Boolean that specifies if the source or target terminal
    * should be returned.
    */
@@ -1669,8 +1668,7 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Updates the given state using the bounding box of t
-   * he absolute points.
+   * Updates the given state using the bounding box of the absolute points.
    * Also updates {@link CellState.terminalDistance}, {@link CellState.length} and
    * {@link CellState.segments}.
    *
@@ -1737,7 +1735,7 @@ export class GraphView extends EventSource {
    * {@link CellState}.
    *
    * @param state {@link CellState} that represents the state of the parent edge.
-   * @param geometry {@link mxGeometry} that represents the relative location.
+   * @param geometry {@link Geometry} that represents the relative location.
    */
   getPoint(state: CellState, geometry: Geometry | null = null): Point {
     let x = state.getCenterX();
@@ -1799,7 +1797,7 @@ export class GraphView extends EventSource {
    * Gets the relative point that describes the given, absolute label
    * position for the given edge state.
    *
-   * @param state {@link CellState} that represents the state of the parent edge.
+   * @param edgeState {@link CellState} that represents the state of the parent edge.
    * @param x Specifies the x-coordinate of the absolute label location.
    * @param y Specifies the y-coordinate of the absolute label location.
    */
@@ -1892,7 +1890,7 @@ export class GraphView extends EventSource {
 
   /**
    * Updates {@link CellState.absoluteOffset} for the given state. The absolute
-   * offset is normally used for the position of the edge label. Is is
+   * offset is normally used for the position of the edge label. It is
    * calculated from the geometry as an absolute offset from the center
    * between the two endpoints if the geometry is absolute, or as the
    * relative distance between the center along the line and the absolute
@@ -1945,7 +1943,7 @@ export class GraphView extends EventSource {
    * Returns the {@link CellState} for the given cell. If create is true, then
    * the state is created if it does not yet exist.
    *
-   * @param cell {@link mxCell} for which the {@link CellState} should be returned.
+   * @param cell {@link Cell} for which the {@link CellState} should be returned.
    * @param create Optional boolean indicating if a new state should be created
    * if it does not yet exist. Default is false.
    */
@@ -1965,7 +1963,7 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Returns the {@link mxCellStates} for the given array of {@link Cell}. The array
+   * Returns the {@link CellState}s for the given array of {@link Cell}. The array
    * contains all states that are not null, that is, the returned array may
    * have less elements than the given array. If no argument is given, then
    * this returns {@link states}.
@@ -1990,7 +1988,7 @@ export class GraphView extends EventSource {
   /**
    * Removes and returns the {@link CellState} for the given cell.
    *
-   * @param cell {@link mxCell} for which the {@link CellState} should be removed.
+   * @param cell {@link Cell} for which the {@link CellState} should be removed.
    */
   removeState(cell: Cell) {
     const state: CellState | null = this.states.remove(cell);
@@ -2008,7 +2006,7 @@ export class GraphView extends EventSource {
    * Creates and returns an {@link CellState} for the given cell and initializes
    * it using {@link cellRenderer.initialize}.
    *
-   * @param cell {@link mxCell} for which a new {@link CellState} should be created.
+   * @param cell {@link Cell} for which a new {@link CellState} should be created.
    */
   createState(cell: Cell) {
     return new CellState(this, cell, this.graph.getCellStyle(cell));
@@ -2263,8 +2261,6 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Function: createHtml
-   *
    * Creates the DOM nodes for the HTML display.
    */
   createHtml() {
@@ -2293,8 +2289,6 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Function: updateHtmlCanvasSize
-   *
    * Updates the size of the HTML canvas.
    */
   updateHtmlCanvasSize(width: number, height: number) {
@@ -2317,8 +2311,6 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Function: createHtmlPane
-   *
    * Creates and returns a drawing pane in HTML (DIV).
    */
   createHtmlPane(width: string, height: string) {
