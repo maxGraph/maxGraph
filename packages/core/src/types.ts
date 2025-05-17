@@ -18,7 +18,7 @@ import type { IDENTITY_FIELD_NAME } from './util/Constants';
 import type { AbstractGraph } from './view/AbstractGraph';
 import type AbstractCanvas2D from './view/canvas/AbstractCanvas2D';
 import type Cell from './view/cell/Cell';
-import type CellState from './view/cell/CellState';
+import CellState from './view/cell/CellState';
 import type EventSource from './view/event/EventSource';
 import type InternalMouseEvent from './view/event/InternalMouseEvent';
 import type Geometry from './view/geometry/Geometry';
@@ -31,6 +31,8 @@ import type GraphDataModel from './view/GraphDataModel';
 import type { Stylesheet } from './view/style/Stylesheet';
 import type GraphSelectionModel from './view/GraphSelectionModel';
 import type GraphView from './view/GraphView';
+import EdgeHandler from './view/handler/EdgeHandler';
+import VertexHandler from './view/handler/VertexHandler';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -1616,3 +1618,11 @@ export interface EdgeMarkerRegistryInterface extends Registry<MarkerFactoryFunct
     filled: boolean
   ): MarkerFunction | null;
 }
+
+/** @since 0.21.0 */
+export type CellHandler = EdgeHandler | VertexHandler;
+// TODO review the name
+/** @since 0.21.0 */
+export type VertexHandlerFactoryFunction = (state: CellState) => VertexHandler;
+/** @since 0.21.0 */
+export type EdgeHandlerFactoryFunction = (state: CellState) => EdgeHandler;
