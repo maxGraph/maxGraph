@@ -84,6 +84,9 @@ export class FitPlugin implements GraphPlugin {
       clientWidth / width,
       clientHeight / height
     );
+    if (!Number.isFinite(newScale)) {
+      newScale = originalScale;
+    }
 
     const translateX = Math.floor(
       view.translate.x +
