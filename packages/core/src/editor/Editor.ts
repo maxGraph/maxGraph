@@ -60,6 +60,7 @@ import type MaxPopupMenu from '../gui/MaxPopupMenu';
 import { isNullish } from '../internal/utils';
 import { isI18nEnabled, translate } from '../internal/i18n-utils';
 import { error } from '../gui/guiUtils';
+import type { FitPlugin } from '../view/plugins';
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
@@ -1027,7 +1028,7 @@ export class Editor extends EventSource {
     });
 
     this.addAction('fit', (editor: Editor) => {
-      editor.graph.fit();
+      editor.graph.getPlugin<FitPlugin>('fit')?.fit();
     });
 
     this.addAction('showProperties', (editor: Editor, cell: Cell) => {

@@ -284,7 +284,7 @@ const Template = ({ label, ...args }) => {
     }
 
     menu.addItem('Fit', 'images/zoom.gif', function () {
-      graph.fit();
+      graph.getPlugin('fit')?.fit();
     });
 
     menu.addItem('Actual', 'images/zoomactual.gif', function () {
