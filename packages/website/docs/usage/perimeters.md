@@ -92,7 +92,7 @@ This includes, for example, `SegmentConnector` and `EntityRelation`.
 :::note  
 An example of orthogonal projection is available in the Storybook demo:
 - **Live demo**: [Orthogonal](https://maxgraph.github.io/maxGraph/demo/?path=/story/connections-orthogonal--default)
-- **Source code**: [Orthogonal.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/Orthogonal.stories.js)  
+- **Source code**: [Orthogonal.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/Orthogonal.stories.ts)  
 :::
 
 
