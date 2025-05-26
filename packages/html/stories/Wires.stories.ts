@@ -140,23 +140,24 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return super.createHandler(state);
     }
 
-    // override as WireConnector is managed by EdgeSegmentHandler, so it has to be considered as orthogonal for consistency
-    // This won't be required anymore once https://github.com/maxGraph/maxGraph/issues/767 has been implemented
-    override isOrthogonal(edge: CellState) {
-      // replicate the logic from the super method
-      const orthogonal = edge.style.orthogonal;
-      if (orthogonal != null && orthogonal != undefined) {
-        return orthogonal;
-      }
-
-      // fallback when the orthogonal style is not defined
-      const edgeStyle = this.view.getEdgeStyle(edge);
-      if (edgeStyle == WireConnector) {
-        return true;
-      }
-
-      return super.isOrthogonal(edge);
-    }
+    // TODO validate this work, after configuring the WireConnector as orthogonal
+    // // override as WireConnector is managed by EdgeSegmentHandler, so it has to be considered as orthogonal for consistency
+    // // This won't be required anymore once https://github.com/maxGraph/maxGraph/issues/767 has been implemented
+    // override isOrthogonal(edge: CellState) {
+    //   // replicate the logic from the super method
+    //   const orthogonal = edge.style.orthogonal;
+    //   if (orthogonal != null && orthogonal != undefined) {
+    //     return orthogonal;
+    //   }
+    //
+    //   // fallback when the orthogonal style is not defined
+    //   const edgeStyle = this.view.getEdgeStyle(edge);
+    //   if (edgeStyle == WireConnector) {
+    //     return true;
+    //   }
+    //
+    //   return super.isOrthogonal(edge);
+    // }
 
     // Adds oval markers for edge-to-edge connections.
     override getCellStyle = (cell: Cell) => {
@@ -789,7 +790,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   };
 
-  EdgeStyleRegistry.add('wireEdgeStyle', WireConnector);
+  EdgeStyleRegistry.add('wireEdgeStyle', WireConnector, { isOrthogonal: true });
 
   const graph = new MyCustomGraph(container, undefined, [
     MyCustomCellEditorHandler,
