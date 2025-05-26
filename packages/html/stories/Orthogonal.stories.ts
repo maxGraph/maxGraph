@@ -16,17 +16,15 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  RubberBandHandler,
-  ConnectionHandler,
-  SelectionHandler,
-  Guide,
-  Point,
-  CellState,
-  EdgeHandler,
-  GraphView,
-  InternalEvent,
   cellArrayUtils,
+  CellState,
+  ConnectionHandler,
+  eventUtils,
+  getDefaultPlugins,
+  Graph,
+  Point,
+  RubberBandHandler,
+  SelectionHandler,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -34,7 +32,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -49,25 +47,20 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
+  const div = createMainDiv(
+    'Demonstrates the use of port constraints, orthogonal edge styles and handlers.'
+  );
+
   const container = createGraphContainer(args);
+  div.appendChild(container);
 
-  // Enables guides
-  SelectionHandler.prototype.guidesEnabled = true;
-
-  // Alt disables guides
-  Guide.prototype.isEnabledForEvent = function (evt) {
-    return !InternalEvent.isAltDown(evt);
-  };
-
-  // Enables snapping waypoints to terminals
-  EdgeHandler.prototype.snapToTerminals = true;
-
-  // Enables orthogonal connect preview in IE
-  ConnectionHandler.prototype.movePreviewAway = false;
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
 
   // Creates the graph inside the given container
-  const graph = new Graph(container);
+  const graph = new Graph(container, undefined, plugins);
   graph.disconnectOnMove = false;
   graph.options.foldingEnabled = false;
   graph.cellsResizable = false;
@@ -75,8 +68,9 @@ const Template = ({ label, ...args }) => {
   graph.setConnectable(true);
 
   // Implements perimeter-less connection points as fixed points (computed before the edge style).
-  graph.view.updateFixedTerminalPoint = function (edge, terminal, source, constraint) {
-    GraphView.prototype.updateFixedTerminalPoint.apply(this, arguments);
+  const originalUpdateFixedTerminalPoint = graph.view.updateFixedTerminalPoint;
+  graph.view.updateFixedTerminalPoint = function (edge, terminal, source, _constraint) {
+    originalUpdateFixedTerminalPoint.call(this, edge, terminal, source, _constraint);
 
     const pts = edge.absolutePoints;
     const pt = pts[source ? 0 : pts.length - 1];
@@ -93,24 +87,39 @@ const Template = ({ label, ...args }) => {
   graph.getStylesheet().getDefaultEdgeStyle().edgeStyle = 'orthogonalEdgeStyle';
   delete graph.getStylesheet().getDefaultEdgeStyle().endArrow;
 
-  const connectionHandler = graph.getPlugin('ConnectionHandler');
+  // Enables snapping waypoints to terminals
+  const originalGraphCreateEdgeHandler = graph.createEdgeHandler;
+  graph.createEdgeHandler = function (state, edgeStyle) {
+    const edgeHandler = originalGraphCreateEdgeHandler.call(this, state, edgeStyle);
+    edgeHandler.snapToTerminals = true;
+    return edgeHandler;
+  };
 
-  // Implements the connect preview
-  connectionHandler.createEdgeState = function (me) {
-    const edge = graph.createEdge(null, null, null, null, null);
+  // Enables guides
+  const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler');
+  selectionHandler.guidesEnabled = true;
 
+  // Alt disables guides
+  const originalCreateGuide = selectionHandler.createGuide;
+  selectionHandler.createGuide = function () {
+    const guide = originalCreateGuide.call(this);
+    guide.isEnabledForEvent = function (evt) {
+      return !eventUtils.isAltDown(evt);
+    };
+    return guide;
+  };
+
+  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+  // Implements the connect preview, using the configured edge style
+  connectionHandler.createEdgeState = function (_me) {
+    const edge = graph.createEdge(null, null!, null, null, null);
     return new CellState(this.graph.view, edge, this.graph.getCellStyle(edge));
   };
 
-  // Uncomment the following if you want the container
-  // to fit the size of the graph
+  // Uncomment the following if you want the container to fit the size of the graph
   // graph.setResizeContainer(true);
 
-  // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
-
-  // Gets the default parent for inserting new cells. This
-  // is normally the first child of the root (ie. layer 0).
+  // Gets the default parent for inserting new cells. This is normally the first child of the root (i.e. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
@@ -125,10 +134,10 @@ const Template = ({ label, ...args }) => {
       0,
       10,
       40,
-      { portConstraint: 'northsouth' },
+      { portConstraint: ['north', 'south'] },
       true
     );
-    v11.geometry.offset = new Point(-5, -5);
+    v11.geometry!.offset = new Point(-5, -5);
     const v12 = graph.insertVertex(
       v1,
       null,
@@ -147,7 +156,7 @@ const Template = ({ label, ...args }) => {
       },
       true
     );
-    v12.geometry.offset = new Point(-10, -5);
+    v12.geometry!.offset = new Point(-10, -5);
     const v13 = graph.insertVertex(
       v1,
       null,
@@ -166,26 +175,26 @@ const Template = ({ label, ...args }) => {
       },
       true
     );
-    v13.geometry.offset = new Point(0, -5);
+    v13.geometry!.offset = new Point(0, -5);
 
-    const v2 = graph.addCell(cellArrayUtils.cloneCell(v1));
-    v2.geometry.x = 200;
-    v2.geometry.y = 60;
+    const v2 = graph.addCell(cellArrayUtils.cloneCell(v1)!, null);
+    v2.geometry!.x = 200;
+    v2.geometry!.y = 60;
 
-    const v3 = graph.addCell(cellArrayUtils.cloneCell(v1));
-    v3.geometry.x = 40;
-    v3.geometry.y = 150;
+    const v3 = graph.addCell(cellArrayUtils.cloneCell(v1)!, null);
+    v3.geometry!.x = 40;
+    v3.geometry!.y = 150;
 
-    const v4 = graph.addCell(cellArrayUtils.cloneCell(v1));
-    v4.geometry.x = 200;
-    v4.geometry.y = 170;
+    const v4 = graph.addCell(cellArrayUtils.cloneCell(v1)!, null);
+    v4.geometry!.x = 200;
+    v4.geometry!.y = 170;
 
     graph.insertEdge(parent, null, '', v1.getChildAt(2), v2.getChildAt(1));
     graph.insertEdge(parent, null, '', v2.getChildAt(2), v3.getChildAt(1));
     graph.insertEdge(parent, null, '', v3.getChildAt(2), v4.getChildAt(1));
   });
 
-  return container;
+  return div;
 };
 
 export const Default = Template.bind({});
