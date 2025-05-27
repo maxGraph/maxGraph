@@ -152,7 +152,7 @@ export const ConnectionsMixin: PartialType = {
     return null;
   },
 
-  getAllConnectionConstraints(terminal, source) {
+  getAllConnectionConstraints(terminal, _source) {
     return terminal?.shape?.stencil?.constraints ?? null;
   },
 

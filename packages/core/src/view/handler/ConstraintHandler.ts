@@ -463,8 +463,13 @@ class ConstraintHandler {
   /**
    * Returns true if the given icon intersects the given rectangle.
    */
-  intersects(icon: ImageShape, mouse: Rectangle, source: boolean, existingEdge: boolean) {
-    return intersects(icon.bounds as Rectangle, mouse);
+  intersects(
+    icon: ImageShape,
+    rectangle: Rectangle,
+    source: boolean,
+    existingEdge: boolean
+  ) {
+    return intersects(icon.bounds!, rectangle);
   }
 
   /**

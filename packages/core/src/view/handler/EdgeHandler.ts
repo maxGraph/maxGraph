@@ -89,8 +89,7 @@ class EdgeHandler implements MouseListenerSet {
   marker: CellMarker;
 
   /**
-   * Holds the {@link ConstraintHandler} used for drawing and highlighting
-   * constraints.
+   * Holds the {@link ConstraintHandler} used for drawing and highlighting constraints.
    */
   constraintHandler: ConstraintHandler;
 
@@ -231,7 +230,7 @@ class EdgeHandler implements MouseListenerSet {
 
     this.graph = this.state.view.graph;
     this.marker = this.createMarker();
-    this.constraintHandler = new ConstraintHandler(this.graph);
+    this.constraintHandler = this.createConstraintHandler();
 
     // Clones the original points from the cell
     // and makes sure at least one point exists
@@ -311,6 +310,14 @@ class EdgeHandler implements MouseListenerSet {
     };
 
     this.state.view.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
+  }
+
+  /**
+   * Hook for subclasses to change the implementation of {@link ConstraintHandler} used here.
+   * @since 0.21.0
+   */
+  protected createConstraintHandler() {
+    return new ConstraintHandler(this.graph);
   }
 
   /**
