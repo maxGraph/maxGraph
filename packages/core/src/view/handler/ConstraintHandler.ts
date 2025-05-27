@@ -461,7 +461,7 @@ class ConstraintHandler {
   }
 
   /**
-   * Returns true if the given icon intersects the given rectangle.
+   * Returns `true` if the given icon intersects the given rectangle.
    */
   intersects(
     icon: ImageShape,
