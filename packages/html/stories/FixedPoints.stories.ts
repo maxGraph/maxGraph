@@ -16,15 +16,24 @@ limitations under the License.
 */
 
 import {
-  Graph,
-  RubberBandHandler,
-  ConnectionHandler,
-  ConnectionConstraint,
-  ConstraintHandler,
-  Point,
+  type Cell,
+  CellEditorHandler,
   CellState,
-  EdgeHandler,
+  ConnectionConstraint,
+  ConnectionHandler,
+  ConstraintHandler,
+  type EdgeStyleFunction,
+  ElbowEdgeHandler,
+  Graph,
+  type GraphPluginConstructor,
+  type ImageShape,
+  type InternalMouseEvent,
   mathUtils,
+  Point,
+  type Rectangle,
+  RubberBandHandler,
+  SelectionCellsHandler,
+  SelectionHandler,
 } from '@maxgraph/core';
 
 import {
@@ -33,7 +42,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -49,44 +58,58 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ ...args }: Record<string, any>) => {
+  configureImagesBasePath();
   const container = createGraphContainer(args);
 
   class MyCustomConstraintHandler extends ConstraintHandler {
     // Snaps to fixed points
-    intersects(icon, point, source, existingEdge) {
-      return !source || existingEdge || mathUtils.intersects(icon.bounds, point);
+    override intersects(
+      icon: ImageShape,
+      rectangle: Rectangle,
+      source: boolean,
+      existingEdge: boolean
+    ) {
+      return (
+        !source ||
+        existingEdge ||
+        // ignore null icon.bounds as in the implementation of the super class
+        mathUtils.intersects(icon.bounds!, rectangle)
+      );
     }
   }
 
   class MyCustomConnectionHandler extends ConnectionHandler {
-    // connectImage = new ImageBox('images/connector.gif', 16, 16);
+    protected override createConstraintHandler(): ConstraintHandler {
+      return new MyCustomConstraintHandler(this.graph);
+    }
 
-    isConnectableCell(cell) {
+    override isConnectableCell(_cell: Cell) {
       return false;
     }
 
     /*
      * Special case: Snaps source of new connections to fixed points
      * Without a connect preview in connectionHandler.createEdgeState mouseMove
-     * and getSourcePerimeterPoint should be overriden by setting sourceConstraint
+     * and getSourcePerimeterPoint should be overridden by setting sourceConstraint
      * sourceConstraint to null in mouseMove and updating it and returning the
      * nearest point (cp) in getSourcePerimeterPoint (see below)
      */
-    updateEdgeState(pt, constraint) {
+    override updateEdgeState(pt: Point, constraint: ConnectionConstraint | null) {
       if (pt != null && this.previous != null) {
-        const constraints = this.graph.getAllConnectionConstraints(this.previous);
+        // the 2nd parameter is ignored in the custom implementation of Graph used in this story
+        const constraints = this.graph.getAllConnectionConstraints(this.previous, true);
         let nearestConstraint = null;
         let dist = null;
 
-        for (let i = 0; i < constraints.length; i++) {
-          const cp = this.graph.getConnectionPoint(this.previous, constraints[i]);
+        for (const referenceConstraint of constraints ?? []) {
+          const cp = this.graph.getConnectionPoint(this.previous, referenceConstraint);
 
           if (cp != null) {
             const tmp = (cp.x - pt.x) * (cp.x - pt.x) + (cp.y - pt.y) * (cp.y - pt.y);
 
             if (dist == null || tmp < dist) {
-              nearestConstraint = constraints[i];
+              nearestConstraint = referenceConstraint;
               dist = tmp;
             }
           }
@@ -100,14 +123,14 @@ const Template = ({ label, ...args }) => {
         // this.edgeState.style.edgeStyle = 'orthogonalEdgeStyle';
         // And to use the new edge style in the new edge inserted into the graph,
         // update the cell style as follows:
-        // this.edgeState.cell.style = utils.setStyle(this.edgeState.cell.style, 'edgeStyle', this.edgeState.style.edgeStyle);
+        // this.edgeState.cell.style.edgeStyle =  this.edgeState.style.edgeStyle
       }
-      return super.updateEdgeState(pt, constraint);
+      super.updateEdgeState(pt, constraint);
     }
 
-    createEdgeState(me) {
+    override createEdgeState(_me: InternalMouseEvent) {
       // Connect preview
-      const edge = this.graph.createEdge(null, null, null, null, null, {
+      const edge = this.graph.createEdge(null, null!, null, null, null, {
         edgeStyle: 'orthogonalEdgeStyle',
       });
 
@@ -115,27 +138,30 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  class MyCustomEdgeHandler extends EdgeHandler {
+  class CustomElbowEdgeHandler extends ElbowEdgeHandler {
+    override createConstraintHandler() {
+      return new MyCustomConstraintHandler(this.graph);
+    }
+
     // Disables floating connections (only use with no connect image)
-    isConnectableCell(cell) {
-      return graph.getPlugin('ConnectionHandler').isConnectableCell(cell);
+    override isConnectableCell(cell: Cell) {
+      return this.graph
+        .getPlugin<ConnectionHandler>('ConnectionHandler')
+        .isConnectableCell(cell);
     }
   }
 
   class MyCustomGraph extends Graph {
-    createConnectionHandler() {
-      const r = new MyCustomConnectionHandler();
-      r.constraintHandler = new MyCustomConstraintHandler(this);
-      return r;
+    // enforce usage of the CustomElbowEdgeHandler (elbow) for all edges
+    // this may not be the best way to do this, let's review it later when implementing https://github.com/maxGraph/maxGraph/pull/823
+    override createEdgeHandler(state: CellState, _edgeStyle: EdgeStyleFunction | null) {
+      return new CustomElbowEdgeHandler(state);
     }
 
-    createEdgeHandler(state, edgeStyle) {
-      const r = new MyCustomEdgeHandler(state, edgeStyle);
-      r.constraintHandler = new MyCustomConstraintHandler(this);
-      return r;
-    }
-
-    getAllConnectionConstraints(terminal) {
+    override getAllConnectionConstraints = (
+      terminal: CellState | null,
+      _source: boolean
+    ): ConnectionConstraint[] | null => {
       if (terminal != null && terminal.cell.isVertex()) {
         return [
           new ConnectionConstraint(new Point(0, 0), true),
@@ -149,44 +175,45 @@ const Template = ({ label, ...args }) => {
         ];
       }
       return null;
-    }
+    };
   }
 
   // Creates the graph inside the given container
-  const graph = new MyCustomGraph(container);
-  graph.setConnectable(true);
-
+  const plugins: GraphPluginConstructor[] = [
+    CellEditorHandler,
+    MyCustomConnectionHandler,
+    SelectionCellsHandler,
+    SelectionHandler,
+  ];
   // Enables rubberband selection
-  if (args.rubberBand) new RubberBandHandler(graph);
+  if (args.rubberBand) plugins.push(RubberBandHandler);
 
-  // Gets the default parent for inserting new cells. This
-  // is normally the first child of the root (ie. layer 0).
-  const parent = graph.getDefaultParent();
+  const graph = new MyCustomGraph(container, undefined, plugins);
+  graph.setConnectable(true);
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex({
-      parent,
       value: 'Hello,',
       position: [20, 20],
       size: [80, 60],
-      style: { shape: 'triangle', perimeter: 'trianglePerimeter' },
+      style: {
+        shape: 'triangle',
+        perimeter: 'trianglePerimeter',
+      },
     });
     const v2 = graph.insertVertex({
-      parent,
       value: 'World!',
       position: [200, 150],
       size: [80, 60],
       style: { shape: 'ellipse', perimeter: 'ellipsePerimeter' },
     });
     const v3 = graph.insertVertex({
-      parent,
       value: 'Hello,',
       position: [200, 20],
       size: [80, 30],
     });
-    const e1 = graph.insertEdge({
-      parent,
+    graph.insertEdge({
       value: '',
       source: v1,
       target: v2,
@@ -195,27 +222,29 @@ const Template = ({ label, ...args }) => {
         elbow: 'horizontal',
         exitX: 0.5,
         exitY: 1,
-        exitPerimeter: 1,
+        exitPerimeter: true,
         entryX: 0,
         entryY: 0,
-        entryPerimeter: 1,
+        entryPerimeter: true,
       },
     });
-    const e2 = graph.insertEdge({
-      parent,
+    graph.insertEdge({
       value: '',
       source: v3,
       target: v2,
       style: {
         edgeStyle: 'elbowEdgeStyle',
         elbow: 'horizontal',
-        orthogonal: 0,
+        orthogonal: false,
         entryX: 0,
         entryY: 0,
-        entryPerimeter: 1,
+        entryPerimeter: true,
       },
     });
   });
+
+  // Note for the future
+  // The following could be enabled with Storybook args to demonstrate a second use-case.
 
   // Use this code to snap the source point for new connections without a connect preview,
   // ie. without an overridden graph.getPlugin('ConnectionHandler').createEdgeState
