@@ -49,7 +49,7 @@ type Handler = EdgeHandler | VertexHandler;
  * @category Plugin
  */
 class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseListenerSet {
-  static pluginId = 'SelectionCellsHandler';
+  static readonly pluginId = 'SelectionCellsHandler';
 
   constructor(graph: AbstractGraph) {
     super();

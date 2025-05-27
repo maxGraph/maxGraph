@@ -63,7 +63,7 @@ import type { ColorValue, GraphPlugin } from '../../types';
  * @category Plugin
  */
 class SelectionHandler implements GraphPlugin {
-  static pluginId = 'SelectionHandler';
+  static readonly pluginId = 'SelectionHandler';
 
   /**
    * Constructs an event handler that creates handles for the selection cells.
