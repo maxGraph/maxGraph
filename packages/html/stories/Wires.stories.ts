@@ -58,6 +58,7 @@ import {
   type CellStateStyle,
   type EdgeStyleFunction,
   ShapeRegistry,
+  type GraphPluginConstructor,
 } from '@maxgraph/core';
 
 import {
@@ -785,7 +786,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   EdgeStyleRegistry.add('wireEdgeStyle', WireConnector, { isOrthogonal: true });
 
-  const plugins = [
+  const plugins: GraphPluginConstructor[] = [
     MyCustomCellEditorHandler,
     TooltipHandler,
     SelectionCellsHandler,
