@@ -264,9 +264,9 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
   }
 
   /**
-   * Returns true if the given event is a panning trigger for the optional
-   * given cell. This returns true if control-shift is pressed or if
-   * <usePopupTrigger> is true and the event is a popup trigger.
+   * Returns `true` if the given event is a panning trigger for the optional given cell.
+   *
+   * This returns true if control-shift is pressed or if {@link usePopupTrigger} is `true` and the event is a popup trigger.
    */
   isPanningTrigger(me: InternalMouseEvent) {
     const evt = me.getEvent();
