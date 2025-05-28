@@ -2389,8 +2389,7 @@ export class Editor extends EventSource {
    * - pan - Pans using the left mouse button, new connections are disabled.
    */
   setMode(modename: any): void {
-    const panningHandler: PanningHandler =
-      this.graph.getPlugin<PanningHandler>('PanningHandler');
+    const panningHandler = this.graph.getPlugin<PanningHandler>('PanningHandler');
     if (modename === 'select') {
       panningHandler && (panningHandler.useLeftButtonForPanning = false);
       this.graph.setConnectable(false);

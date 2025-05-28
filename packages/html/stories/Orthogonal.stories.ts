@@ -96,7 +96,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   };
 
   // Enables guides
-  const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler');
+  const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler')!;
   selectionHandler.guidesEnabled = true;
 
   // Alt disables guides
@@ -109,7 +109,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     return guide;
   };
 
-  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   // Implements the connect preview, using the configured edge style
   connectionHandler.createEdgeState = function (_me) {
     const edge = graph.createEdge(null, null!, null, null, null);

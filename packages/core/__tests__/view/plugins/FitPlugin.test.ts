@@ -53,7 +53,7 @@ describe('fitCenter', () => {
     const graph = new BaseGraph({ plugins: [FitPlugin] });
     const viewMock = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const scale = graph.getPlugin<FitPlugin>('fit').fitCenter();
+    const scale = graph.getPlugin<FitPlugin>('fit')!.fitCenter();
     expect(scale).toBe(1);
     expect(viewMock).toHaveBeenCalledWith(1, 0, 0);
     expect(viewMock).toHaveBeenCalledTimes(1);
@@ -69,7 +69,7 @@ describe('fitCenter', () => {
     graph.view.setGraphBounds(new Rectangle(30, 20, 1000, 1000));
     const viewMock = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const scale = graph.getPlugin<FitPlugin>('fit').fitCenter();
+    const scale = graph.getPlugin<FitPlugin>('fit')!.fitCenter();
     expect(scale).toBe(0.02);
     expect(viewMock).toHaveBeenCalledWith(0.02, 95, 105);
     expect(viewMock).toHaveBeenCalledTimes(1);
@@ -85,7 +85,7 @@ describe('fitCenter', () => {
     graph.view.setGraphBounds(new Rectangle(-172, 67, 100, 200));
     const viewMock = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const scale = graph.getPlugin<FitPlugin>('fit').fitCenter({ margin: 20 });
+    const scale = graph.getPlugin<FitPlugin>('fit')!.fitCenter({ margin: 20 });
     expect(scale).toBe(2.46);
     expect(viewMock).toHaveBeenCalledWith(2.46, 217, -59);
     expect(viewMock).toHaveBeenCalledTimes(1);
@@ -101,7 +101,7 @@ describe('fitCenter', () => {
     graph.view.setGraphBounds(new Rectangle(70, -30, 100, 100));
     const viewMock = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const plugin = graph.getPlugin<FitPlugin>('fit');
+    const plugin = graph.getPlugin<FitPlugin>('fit')!;
     plugin.maxFitScale = 7;
     const scale = plugin.fitCenter();
     expect(scale).toBe(7);
@@ -115,7 +115,7 @@ describe('fit', () => {
     const graph = new BaseGraph({ plugins: [FitPlugin] });
     const viewMock = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const scale = graph.getPlugin<FitPlugin>('fit').fit();
+    const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
     expect(scale).toBe(1);
     expect(viewMock).not.toHaveBeenCalled();
   });
@@ -130,7 +130,7 @@ describe('fit', () => {
     graph.view.setGraphBounds(new Rectangle(30, 20, 100, 100));
     const viewMock = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const scale = graph.getPlugin<FitPlugin>('fit').fit();
+    const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
     expect(scale).toBe(0.18);
     expect(viewMock).toHaveBeenCalledWith(0.18, -30, -20);
     expect(viewMock).toHaveBeenCalledTimes(1);
@@ -146,7 +146,7 @@ describe('fit', () => {
     graph.view.setGraphBounds(new Rectangle(30, 20, 100, 100));
     const viewMock = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const plugin = graph.getPlugin<FitPlugin>('fit');
+    const plugin = graph.getPlugin<FitPlugin>('fit')!;
     plugin.minFitScale = 0.5;
     const scale = plugin.fit();
     expect(scale).toBe(0.5);
@@ -164,7 +164,7 @@ describe('fit', () => {
     graph.view.setGraphBounds(new Rectangle(70, -60, 100, 100));
     const viewMock = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const scale = graph.getPlugin<FitPlugin>('fit').fit();
+    const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
     expect(scale).toBe(4.78);
     expect(viewMock).toHaveBeenCalledWith(4.78, -70, 60);
     expect(viewMock).toHaveBeenCalledTimes(1);
@@ -180,7 +180,7 @@ describe('fit', () => {
     graph.view.setGraphBounds(new Rectangle(70, -60, 100, 100));
     const viewMock = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const plugin = graph.getPlugin<FitPlugin>('fit');
+    const plugin = graph.getPlugin<FitPlugin>('fit')!;
     plugin.maxFitScale = 3;
     const scale = plugin.fit();
     expect(scale).toBe(3);

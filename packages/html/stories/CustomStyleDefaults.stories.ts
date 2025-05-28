@@ -79,7 +79,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setVertexLabelsMovable(true);
   graph.setEdgeLabelsMovable(true);
 
-  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.outlineConnect = true;
 
   // Changes default styles to increase the contrast

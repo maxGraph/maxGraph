@@ -98,7 +98,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const graph = new MyCustomGraph(container, plugins);
 
   // Sets the image to be used for creating new connections
-  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.connectImage = new ImageBox(
     `${Client.imageBasePath}/green-dot.gif`,
     14,
@@ -128,7 +128,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.edgeStyle = EdgeStyle.ElbowConnector;
   graph.alternateEdgeStyle = { elbow: 'vertical' };
 
-  const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
+  const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler')!;
   // Installs a popupmenu handler using local function (see below).
   popupMenuHandler.factoryMethod = (menu, cell, evt) => {
     return createPopupMenu(graph, menu, cell, evt);

@@ -147,7 +147,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   graph.setAllowDanglingEdges(false);
 
-  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.select = false;
 
   graph.view.setTranslate(20, 20);
@@ -219,7 +219,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       const evt2 = eo.getProperty('event');
       const state = eo.getProperty('state');
 
-      const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
+      const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler')!;
       popupMenuHandler.hideMenu();
 
       graph.stopEditing(false);

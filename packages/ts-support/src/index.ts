@@ -33,8 +33,10 @@ const graph = new Graph(container);
 graph.setPanning(true); // Use mouse right button for panning
 
 const rubberBandHandler = graph.getPlugin<RubberBandHandler>('RubberBandHandler');
-rubberBandHandler.defaultOpacity = 50;
-rubberBandHandler.fadeOut = true;
+if (rubberBandHandler) {
+  rubberBandHandler.defaultOpacity = 50;
+  rubberBandHandler.fadeOut = true;
+}
 
 // call methods and properties defined in mixins to ensure that interface augmentation is correctly defined
 graph.getAllConnectionConstraints(new CellState(), true);

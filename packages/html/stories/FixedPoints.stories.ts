@@ -146,7 +146,7 @@ const Template = ({ ...args }: Record<string, any>) => {
     // Disables floating connections (only use with no connect image)
     override isConnectableCell(cell: Cell) {
       return this.graph
-        .getPlugin<ConnectionHandler>('ConnectionHandler')
+        .getPlugin<ConnectionHandler>('ConnectionHandler')!
         .isConnectableCell(cell);
     }
   }

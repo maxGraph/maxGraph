@@ -45,7 +45,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const graph = new Graph(container);
 
   // Enables guides
-  graph.getPlugin<SelectionHandler>('SelectionHandler').guidesEnabled = true;
+  graph.getPlugin<SelectionHandler>('SelectionHandler')!.guidesEnabled = true;
 
   // Hack to rerender edge on any node move
   graph.model.addListener(InternalEvent.CHANGE, (_sender: unknown, evt: EventObject) => {
