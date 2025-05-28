@@ -356,7 +356,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   // TODO isPopupTrigger seems have been removed from PanningHandler during migration
-  // check mxGraph code
+  // check mxGraph code: no such method in mxPanningHandler
+  // setting PanningHandler.usePopupTrigger = false may have the same effect
   class MyCustomPanningHandler extends PanningHandler {
     // Panning handler consumed right click so this must be
     // disabled if right click should stop connection handler.
