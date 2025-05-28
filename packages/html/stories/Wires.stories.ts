@@ -473,7 +473,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       super.updateCurrentState(me, point);
 
       if (this.edgeState) {
-        // TODO review method signature to accept null
         this.edgeState.cell.geometry?.setTerminalPoint(null, false);
 
         if (this.shape && this.currentState && this.currentState.cell.isEdge()) {
