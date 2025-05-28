@@ -1029,6 +1029,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     e7.geometry!.points = [new Point(500, 350)];
   });
 
+  // Controls
+  // TODO add margin top and right as in other stories
+
   parentContainer.appendChild(
     DomHelpers.button('Zoom In', function () {
       graph.zoomIn();
@@ -1080,16 +1083,17 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   domUtils.write(parentContainer, 'Wire Mode');
 
   // Grid
-  if (darkMode) {
-    container.style.backgroundImage = '';
-  }
+  // if (darkMode) {
+  //   container.style.backgroundImage = '';
+  // }
   const checkboxGrid = document.createElement('input');
   checkboxGrid.setAttribute('type', 'checkbox');
   checkboxWireMode.setAttribute(
     'title',
     'Display grid in the background (click to toggle)'
   );
-  !darkMode && checkboxGrid.setAttribute('checked', 'true');
+  // !darkMode &&
+  checkboxGrid.setAttribute('checked', 'true');
 
   parentContainer.appendChild(checkboxGrid);
   domUtils.write(parentContainer, 'Grid');
