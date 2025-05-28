@@ -81,12 +81,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setResizeContainer(true);
   configureExpandedAndCollapsedImages(graph);
 
-  const graphHandler = graph.getPlugin<SelectionHandler>('SelectionHandler');
-  graphHandler.setRemoveCellsFromParent(false);
+  const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler')!;
+  selectionHandler.setRemoveCellsFromParent(false);
 
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
-  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.connectImage = new ImageBox(
     `${Client.imageBasePath}/connector.gif`,
     16,

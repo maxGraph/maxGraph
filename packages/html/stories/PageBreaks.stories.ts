@@ -76,10 +76,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Removes header and footer from page height
   graph.pageFormat.height -= headerSize + footerSize;
 
-  const graphHandler = graph.getPlugin<SelectionHandler>('SelectionHandler');
+  const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler')!;
 
   // Takes zoom into account for moving cells
-  graphHandler.scaleGrid = true;
+  selectionHandler.scaleGrid = true;
 
   // Enables rubberband selection
   if (args.rubberBand) new RubberBandHandler(graph);

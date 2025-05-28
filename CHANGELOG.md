@@ -10,8 +10,10 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 _**Note:** Yet to be released breaking changes appear here._
 
 **Breaking Changes**:
-- the `AbstractGraph.fit` method moved to `FitPlugin`, as well as the `minFitScale` and `maxFitScale` properties.
-The method now accepts a single parameter, mainly to minimize the need to pass many default values.
+- The `AbstractGraph.fit` method moved to `FitPlugin`, as well as the `minFitScale` and `maxFitScale` properties.
+  The method now accepts a single parameter, mainly to minimize the need to pass many default values.
+- The `AbstractGraph.getPlugin` method now explicitly returns `undefined` when a plugin is not found.  
+  TypeScript users must update their code to handle the `undefined` case when calling this method.
 
 ## 0.20.0
 
