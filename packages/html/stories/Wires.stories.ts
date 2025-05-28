@@ -785,7 +785,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   EdgeStyleRegistry.add('wireEdgeStyle', WireConnector, { isOrthogonal: true });
 
-  const graph = new MyCustomGraph(container, undefined, [
+  const plugins = [
     MyCustomCellEditorHandler,
     TooltipHandler,
     SelectionCellsHandler,
@@ -793,7 +793,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     MyCustomConnectionHandler,
     MyCustomSelectionHandler,
     MyCustomPanningHandler,
-  ]);
+  ];
+  // Adds rubberband selection
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
+  const graph = new MyCustomGraph(container, undefined, plugins);
 
   const labelBackground = invert ? '#000000' : '#FFFFFF';
   const fontColor = invert ? '#FFFFFF' : '#000000';
@@ -813,10 +817,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Enables return key to stop editing (use shift-enter for newlines)
   graph.setEnterStopsCellEditing(true);
-
-  // TODO declare as plugin
-  // Adds rubberband selection
-  new RubberBandHandler(graph);
 
   // Adds a special tooltip for edges
   graph.setTooltips(true);
