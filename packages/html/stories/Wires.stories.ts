@@ -77,11 +77,16 @@ export default {
   argTypes: {
     ...contextMenuTypes,
     ...globalTypes,
+    darkMode: {
+      type: 'boolean',
+      defaultValue: false,
+    },
     ...rubberBandTypes,
   },
   args: {
     ...contextMenuValues,
     ...globalValues,
+    darkMode: false,
     ...rubberBandValues,
   },
 };
@@ -323,12 +328,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
-  // TODO use storybook args to control this value
   // Switch for black background and bright styles
-  const invert = false;
+  const darkMode = args.darkMode ?? false;
   let MyCustomCellEditorHandler;
 
-  if (invert) {
+  if (darkMode) {
     container.style.backgroundColor = 'black';
 
     // White in-place editor text color
@@ -346,7 +350,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   class MyCustomSelectionHandler extends SelectionHandler {
-    override previewColor = invert ? 'white' : 'black';
+    override previewColor = darkMode ? 'white' : 'black';
     // Enables guides
     override guidesEnabled = true;
 
@@ -801,10 +805,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const graph = new MyCustomGraph(container, undefined, plugins);
 
-  const labelBackground = invert ? '#000000' : '#FFFFFF';
-  const fontColor = invert ? '#FFFFFF' : '#000000';
-  const strokeColor = invert ? '#C0C0C0' : '#000000';
-  const fillColor = invert ? 'none' : '#FFFFFF';
+  const labelBackground = darkMode ? '#000000' : '#FFFFFF';
+  const fontColor = darkMode ? '#FFFFFF' : '#000000';
+  const strokeColor = darkMode ? '#C0C0C0' : '#000000';
+  const fillColor = darkMode ? 'none' : '#FFFFFF';
 
   graph.view.scale = 1;
   graph.setPanning(true);
@@ -1059,9 +1063,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   domUtils.write(parentContainer, 'Wire Mode');
 
   // Grid
+  if (darkMode) {
+    container.style.backgroundImage = '';
+  }
   const checkbox2 = document.createElement('input');
   checkbox2.setAttribute('type', 'checkbox');
-  checkbox2.setAttribute('checked', 'true');
+  !darkMode && checkbox2.setAttribute('checked', 'true');
 
   parentContainer.appendChild(checkbox2);
   domUtils.write(parentContainer, 'Grid');
@@ -1072,7 +1079,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     } else {
       container.style.background = '';
     }
-    container.style.backgroundColor = invert ? 'black' : 'white';
+    container.style.backgroundColor = darkMode ? 'black' : 'white';
   });
   InternalEvent.disableContextMenu(container);
 
