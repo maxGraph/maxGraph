@@ -647,7 +647,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           // TODO: Only set this if the target or source terminal is an edge
           clone.cell.geometry?.setTerminalPoint(point, this.isSource);
         } else {
-          clone.cell.geometry?.setTerminalPoint(null, this.isSource); // TODO setTerminalPoint signature should be updated to accept null, its implementation is supposed to work with null
+          clone.cell.geometry?.setTerminalPoint(null, this.isSource);
         }
       }
 
@@ -659,12 +659,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
    * Implements a custom resistor shape. Direction currently ignored here.
    */
   class ResistorShape extends CylinderShape {
-    constructor() {
-      // TODO check mxGraph example
-      // TODO: The original didn't seem to call the super
-      super(null, null, null, null);
-    }
-
     override redrawPath(
       c: AbstractCanvas2D,
       _x: number,
