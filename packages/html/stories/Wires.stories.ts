@@ -102,6 +102,10 @@ export default {
 // `;
 
 // TODO background images wire-grid
+// background-position:-1px
+// cursor
+
+// FIXME let connect to the pin of vertices
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   const parentContainer = document.createElement('div');
@@ -360,6 +364,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   // TODO isPopupTrigger seems have been removed from PanningHandler during migration
+  // there is no PannningHandler used here
   // check mxGraph code: no such method in mxPanningHandler
   // setting PanningHandler.usePopupTrigger = false may have the same effect
   class MyCustomPanningHandler extends PanningHandler {
