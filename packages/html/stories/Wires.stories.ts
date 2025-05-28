@@ -69,7 +69,11 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import {
+  configureImagesBasePath,
+  createGraphContainer,
+  createMainDiv,
+} from './shared/configure.js';
 import '@maxgraph/core/css/common.css'; // style required by RubberBand
 
 export default {
@@ -108,13 +112,26 @@ export default {
 const backgroundImageWiresGrid = 'url("./images/wires-grid.gif")';
 
 const Template = ({ label, ...args }: Record<string, string>) => {
-  const parentContainer = document.createElement('div');
+  configureImagesBasePath();
+
+  // const parentContainer = document.createElement('div');
+  // TODO add description: Starts connections on the background in wire-mode
+  // select several with left click, pan with right click
+  const parentContainer = createMainDiv(`<h3>Overlays</h3>
+  Demonstrate usage of standard overlays (using an image) and custom overlays (using custom shapes and DOM content).
+  <p>
+  Add an overlay when clicking on a vertex or an edge. The shape and the position of the overlay are random.
+  The circle overlay has a pulsating effect.
+  <br>
+  Click again to remove the overlay.
+  `);
+
   const container = createGraphContainer(args);
   parentContainer.appendChild(container);
-  container.style.overflow = 'auto';
+  InternalEvent.disableContextMenu(container);
+  container.style.overflow = 'hidden';
   container.style.cursor = 'crosshair';
   container.style.backgroundImage = backgroundImageWiresGrid;
-  // TODO add description: Starts connections on the background in wire-mode
 
   // Changes some default colors
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
@@ -1106,7 +1123,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
     container.style.backgroundColor = darkMode ? 'black' : 'white';
   });
-  InternalEvent.disableContextMenu(container);
 
   return parentContainer;
 };
