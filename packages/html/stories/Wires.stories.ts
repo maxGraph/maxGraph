@@ -86,6 +86,7 @@ export default {
   args: {
     ...contextMenuValues,
     ...globalValues,
+    height: 640, // overrides global values to ensure no scrollbar is displayed when loading the example
     darkMode: false,
     ...rubberBandValues,
   },
@@ -101,16 +102,19 @@ export default {
 // </html>
 // `;
 
-// TODO background images wire-grid
-// background-position:-1px
-// cursor
+// TODO background-position:-1px?
 
 // FIXME let connect to the pin of vertices
+const backgroundImageWiresGrid = 'url("./images/wires-grid.gif")';
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   const parentContainer = document.createElement('div');
   const container = createGraphContainer(args);
   parentContainer.appendChild(container);
+  container.style.overflow = 'auto';
+  container.style.cursor = 'crosshair';
+  container.style.backgroundImage = backgroundImageWiresGrid;
+  // TODO add description: Starts connections on the background in wire-mode
 
   // Changes some default colors
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
@@ -262,6 +266,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   class MyCustomEdgeHandler extends EdgeHandler {
     constructor(state: CellState) {
+      console.info('constructor of MyCustomEdgeHandler');
       super(state);
       updateConstraintHandlerPointImage(this);
       // Enables snapping waypoints to terminals
@@ -430,7 +435,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     // Starts connections on the background in wire-mode
     override isStartEvent(me: InternalMouseEvent): boolean {
-      return checkbox.checked || super.isStartEvent(me);
+      return checkboxWireMode.checked || super.isStartEvent(me);
     }
 
     // Avoids any connections for gestures within tolerance except when in wire-mode or when over a port
@@ -443,7 +448,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         if (dx < this.graph.tolerance && dy < this.graph.tolerance) {
           // Selects edges in non-wire mode for single clicks, but starts
           // connecting for non-edges regardless of wire-mode
-          if (!checkbox.checked && this.previous.cell.isEdge()) {
+          if (!checkboxWireMode.checked && this.previous.cell.isEdge()) {
             this.reset();
           }
           return;
@@ -794,7 +799,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   };
 
-  EdgeStyleRegistry.add('wireEdgeStyle', WireConnector, { isOrthogonal: true });
+  EdgeStyleRegistry.add('wireEdgeStyle', WireConnector, {
+    isOrthogonal: true,
+    handlerKind: 'segment',
+  });
 
   const plugins: GraphPluginConstructor[] = [
     MyCustomCellEditorHandler,
@@ -1061,26 +1069,34 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   );
 
   // Wire-mode
-  const checkbox = document.createElement('input');
-  checkbox.setAttribute('type', 'checkbox');
+  const checkboxWireMode = document.createElement('input');
+  checkboxWireMode.setAttribute('type', 'checkbox');
+  checkboxWireMode.setAttribute(
+    'title',
+    'Starts connections on the background in wire-mode'
+  );
 
-  parentContainer.appendChild(checkbox);
+  parentContainer.appendChild(checkboxWireMode);
   domUtils.write(parentContainer, 'Wire Mode');
 
   // Grid
   if (darkMode) {
     container.style.backgroundImage = '';
   }
-  const checkbox2 = document.createElement('input');
-  checkbox2.setAttribute('type', 'checkbox');
-  !darkMode && checkbox2.setAttribute('checked', 'true');
+  const checkboxGrid = document.createElement('input');
+  checkboxGrid.setAttribute('type', 'checkbox');
+  checkboxWireMode.setAttribute(
+    'title',
+    'Display grid in the background (click to toggle)'
+  );
+  !darkMode && checkboxGrid.setAttribute('checked', 'true');
 
-  parentContainer.appendChild(checkbox2);
+  parentContainer.appendChild(checkboxGrid);
   domUtils.write(parentContainer, 'Grid');
 
-  InternalEvent.addListener(checkbox2, 'click', function () {
-    if (checkbox2.checked) {
-      container.style.background = 'url(./images/grid.gif)';
+  InternalEvent.addListener(checkboxGrid, 'click', function () {
+    if (checkboxGrid.checked) {
+      container.style.background = backgroundImageWiresGrid;
     } else {
       container.style.background = '';
     }
