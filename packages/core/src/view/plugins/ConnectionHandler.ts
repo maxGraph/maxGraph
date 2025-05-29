@@ -1461,7 +1461,7 @@ export default class ConnectionHandler
   }
 
   /**
-   * Adds the waypoint for the given event to <waypoints>.
+   * Adds the waypoint for the given event to {@link waypoints}.
    */
   addWaypointForEvent(me: InternalMouseEvent) {
     if (!this.first) return;
@@ -1485,9 +1485,9 @@ export default class ConnectionHandler
   }
 
   /**
-   * Returns true if the connection for the given constraints is valid. This
-   * implementation returns true if the constraints are not pointing to the
-   * same fixed connection point.
+   * Returns `true` if the connection for the given constraints is valid.
+   *
+   * This implementation returns `true` if the constraints are not pointing to the same fixed connection point.
    */
   checkConstraints(c1: ConnectionConstraint | null, c2: ConnectionConstraint | null) {
     return (
@@ -1594,8 +1594,7 @@ export default class ConnectionHandler
   }
 
   /**
-   * Redraws the preview edge using the color and width returned by
-   * <getEdgeColor> and <getEdgeWidth>.
+   * Redraws the preview edge using the color and width returned by {@link getEdgeColor} and {@link getEdgeWidth}.
    */
   drawPreview() {
     this.updatePreview(this.error === null);
@@ -1603,11 +1602,10 @@ export default class ConnectionHandler
   }
 
   /**
-   * Returns the color used to draw the preview edge. This returns green if
-   * there is no edge validation error and red otherwise.
+   * Returns the color used to draw the preview edge.
+   * This returns green if there is no edge validation error and red otherwise.
    *
-   * @param valid Boolean indicating if the color for a valid edge should be
-   * returned.
+   * @param valid Boolean indicating if the color for a valid edge should be returned.
    */
   updatePreview(valid: boolean) {
     if (this.shape) {
@@ -1617,11 +1615,11 @@ export default class ConnectionHandler
   }
 
   /**
-   * Returns the color used to draw the preview edge. This returns green if
-   * there is no edge validation error and red otherwise.
+   * Returns the color used to draw the preview edge.
    *
-   * @param valid Boolean indicating if the color for a valid edge should be
-   * returned.
+   * This returns green if there is no edge validation error and red otherwise.
+   *
+   * @param valid Boolean indicating if the color for a valid edge should be returned.
    */
   getEdgeColor(valid: boolean) {
     return valid ? VALID_COLOR : INVALID_COLOR;
