@@ -1434,24 +1434,27 @@ export default class ConnectionHandler
 
     return result;
   }
-
   /**
-   * Hook to update the icon position(s) based on a mouseOver event. This is
-   * an empty implementation.
+   * Hook to update the icon position(s) based on a mouseOver event.
    *
-   * @param state <CellState> under the mouse.
+   * This is an empty implementation.
+   *
+   * @param state {@link CellState} under the mouse.
    * @param icons Array of currently displayed icons.
    * @param me {@link MouseEvent} that contains the mouse event.
    */
+
   updateIcons(state: CellState, icons: ImageShape[], me: InternalMouseEvent) {
     // empty
   }
 
   /**
-   * Returns true if the given mouse up event should stop this handler. The
-   * connection will be created if <error> is null. Note that this is only
-   * called if <waypointsEnabled> is true. This implemtation returns true
-   * if there is a cell state in the given event.
+   * Returns `true` if the given mouse up event should stop this handler.
+   *
+   * The connection will be created if {@link error} is `null`.
+   * Note that this is only called if {@link waypointsEnabled} is `true`.
+   *
+   * This implementation returns `true` if there is a cell state in the given event.
    */
   isStopEvent(me: InternalMouseEvent) {
     return !!me.getState();
