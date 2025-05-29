@@ -475,11 +475,11 @@ export default class ConnectionHandler
   /**
    * Returns <insertBeforeSource> for non-loops and false for loops.
    *
-   * @param edge <Cell> that represents the edge to be inserted.
-   * @param source <Cell> that represents the source terminal.
-   * @param target <Cell> that represents the target terminal.
+   * @param edge {@link Cell} that represents the edge to be inserted.
+   * @param source {@link Cell} that represents the source terminal.
+   * @param target {@link Cell} that represents the target terminal.
    * @param evt Mousedown event of the connect gesture.
-   * @param dropTarget <Cell> that represents the cell under the mouse when it was
+   * @param dropTarget {@link Cell} that represents the cell under the mouse when it was
    * released.
    */
   isInsertBefore(
@@ -572,7 +572,7 @@ export default class ConnectionHandler
   /**
    * Returns {@link AbstractGraph.isValidSource} for the given source terminal.
    *
-   * @param cell <Cell> that represents the source terminal.
+   * @param cell {@link Cell} that represents the source terminal.
    * @param me {@link MouseEvent} that is associated with this call.
    */
   isValidSource(cell: Cell, me: InternalMouseEvent) {
@@ -584,7 +584,7 @@ export default class ConnectionHandler
    * {@link AbstractGraph.getEdgeValidationError} in <validateConnection>. This is an
    * additional hook for disabling certain targets in this specific handler.
    *
-   * @param cell <Cell> that represents the target terminal.
+   * @param cell {@link Cell} that represents the target terminal.
    */
   isValidTarget(cell: Cell) {
     return true;
@@ -595,8 +595,8 @@ export default class ConnectionHandler
    * given source target pair is not valid. Otherwise it returns null. This
    * implementation uses {@link AbstractGraph.getEdgeValidationError}.
    *
-   * @param source <Cell> that represents the source terminal.
-   * @param target <Cell> that represents the target terminal.
+   * @param source {@link Cell} that represents the source terminal.
+   * @param target {@link Cell} that represents the target terminal.
    */
   validateConnection(source: Cell, target: Cell) {
     if (!this.isValidTarget(target)) {
@@ -1626,24 +1626,25 @@ export default class ConnectionHandler
   }
 
   /**
-   * Returns the width used to draw the preview edge. This returns 3 if
-   * there is no edge validation error and 1 otherwise.
+   * Returns the width used to draw the preview edge.
    *
-   * @param valid Boolean indicating if the width for a valid edge should be
-   * returned.
+   * This returns `3` if there is no edge validation error and `1` otherwise.
+   *
+   * @param valid Boolean indicating if the width for a valid edge should be returned.
    */
   getEdgeWidth(valid: boolean): number {
     return valid ? 3 : 1;
   }
 
   /**
-   * Connects the given source and target using a new edge. This
-   * implementation uses <createEdge> to create the edge.
+   * Connects the given source and target using a new edge.
    *
-   * @param source <Cell> that represents the source terminal.
-   * @param target <Cell> that represents the target terminal.
-   * @param evt Mousedown event of the connect gesture.
-   * @param dropTarget <Cell> that represents the cell under the mouse when it was
+   * This implementation uses {@link createEdge} to create the edge.
+   *
+   * @param source {@link Cell} that represents the source terminal.
+   * @param target {@link Cell} that represents the target terminal.
+   * @param evt {@link MouseEvent} event of the connect gesture.
+   * @param dropTarget {@link Cell} that represents the cell under the mouse when it was
    * released.
    */
   connect(
@@ -1870,7 +1871,7 @@ export default class ConnectionHandler
    * returns null.
    *
    * @param evt Mousedown event of the connect gesture.
-   * @param source <Cell> that represents the source terminal.
+   * @param source {@link Cell} that represents the source terminal.
    */
   createTargetVertex(evt: MouseEvent, source: Cell) {
     // Uses the first non-relative source
