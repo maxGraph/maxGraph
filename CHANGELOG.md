@@ -44,7 +44,7 @@ This new version improves registry consistency, removes legacy enums, supports C
   - `VertexHandlerConfig`
 - All registries used to manage "styles" elements now derived from the `Registry` interface for consistency.
   So, they all share the same methods (add, get and clear) and their internal storage is no longer accessible.
-- The `MarkerShape` registry has been renamed to `MarkerShapeRegistry`.
+- The `MarkerShape` registry has been renamed to `EdgeMarkerRegistry`.
 - The Shapes are now registered in `ShapeRegistry` instead in `CellRenderer`.
 - `StyleRegistry` has been removed. Use `EdgeStyleRegistry` and `PerimeterRegistry` instead.
 
