@@ -375,8 +375,8 @@ class Codec {
 
   /**
    * Encoding of cell hierarchies is built-into the core, but
-   * is a higher-level function that needs to be explicitely
-   * used by the respective object encoders (eg. {@link ModelCodec},
+   * is a higher-level function that needs to be explicitly
+   * used by the respective object encoders (e.g. {@link ModelCodec},
    * {@link ChildChangeCodec} and {@link RootChangeCodec}). This
    * implementation writes the given cell and its children as a
    * (flat) sequence into the given node. The children are not
@@ -384,7 +384,7 @@ class Codec {
    * function is in charge of adding the result into the
    * given node and has no return value.
    *
-   * @param cell {@link mxCell} to be encoded.
+   * @param cell {@link Cell} to be encoded.
    * @param node Parent XML node to add the encoded cell into.
    * @param includeChildren Optional boolean indicating if the
    * function should include all descendents. Default is true.
