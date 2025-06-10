@@ -26,6 +26,14 @@ import { load } from '../util/requestUtils';
 import type Codec from './Codec';
 import { doEval, isElement } from '../internal/utils';
 
+const geometryNumericAttributes: Array<keyof Geometry> = [
+  '_x',
+  '_y',
+  '_width',
+  '_height',
+];
+const pointNumericAttributes: Array<keyof Geometry> = ['_x', '_y'];
+
 /**
  * Generic codec for JavaScript objects that implements a mapping between
  * JavaScript objects and XML nodes that maps each field or element to an
@@ -596,29 +604,9 @@ class ObjectCodec {
    */
   isNumericAttribute(dec: Codec, attr: any, obj: any): boolean {
     // Handles known numeric attributes for generic objects
-
-    const geometryNumericAttributes: Array<keyof Geometry> = [
-      '_x',
-      '_y',
-      '_width',
-      '_height',
-    ];
-    const pointNumericAttributes: Array<keyof Geometry> = ['_x', '_y'];
-
-    if (obj instanceof Geometry && geometryNumericAttributes.includes(attr.name)) {
-      console.info('Geometry attribute:', attr.name, 'is numeric');
-    }
-    if (obj instanceof Point && pointNumericAttributes.includes(attr.name)) {
-      console.info('Point attribute:', attr.name, 'is numeric');
-    }
-
     return (
-      (obj.constructor === Geometry && geometryNumericAttributes.includes(attr.name)) ||
-      // (attr.name === 'x' ||
-      //   attr.name === 'y' ||
-      //   attr.name === 'width' ||
-      //   attr.name === 'height')) ||
-      (obj.constructor === Point && (attr.name === 'x' || attr.name === 'y')) ||
+      (obj instanceof Geometry && geometryNumericAttributes.includes(attr.name)) ||
+      (obj instanceof Point && pointNumericAttributes.includes(attr.name)) ||
       isNumeric(attr.value)
     );
   }
