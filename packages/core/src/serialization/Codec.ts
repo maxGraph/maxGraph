@@ -158,6 +158,7 @@ class Codec {
   /**
    * Lookup table for resolving IDs to elements.
    */
+  // FIXME check this or remove the todo
   elements: any = null; // TODO why not { [key: string]: Element } | null
 
   /**
