@@ -596,12 +596,28 @@ class ObjectCodec {
    */
   isNumericAttribute(dec: Codec, attr: any, obj: any): boolean {
     // Handles known numeric attributes for generic objects
+
+    const geometryNumericAttributes: Array<keyof Geometry> = [
+      '_x',
+      '_y',
+      '_width',
+      '_height',
+    ];
+    const pointNumericAttributes: Array<keyof Geometry> = ['_x', '_y'];
+
+    if (obj instanceof Geometry && geometryNumericAttributes.includes(attr.name)) {
+      console.info('Geometry attribute:', attr.name, 'is numeric');
+    }
+    if (obj instanceof Point && pointNumericAttributes.includes(attr.name)) {
+      console.info('Point attribute:', attr.name, 'is numeric');
+    }
+
     return (
-      (obj.constructor === Geometry &&
-        (attr.name === 'x' ||
-          attr.name === 'y' ||
-          attr.name === 'width' ||
-          attr.name === 'height')) ||
+      (obj.constructor === Geometry && geometryNumericAttributes.includes(attr.name)) ||
+      // (attr.name === 'x' ||
+      //   attr.name === 'y' ||
+      //   attr.name === 'width' ||
+      //   attr.name === 'height')) ||
       (obj.constructor === Point && (attr.name === 'x' || attr.name === 'y')) ||
       isNumeric(attr.value)
     );
