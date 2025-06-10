@@ -367,7 +367,7 @@ class Codec {
       if (dec != null) {
         obj = dec.decode(this, node, into);
       } else {
-        // TODO add a warning here
+        // TODO add a warning here + add a test for this
         obj = <Element>node.cloneNode(true);
         obj.removeAttribute('as');
       }
