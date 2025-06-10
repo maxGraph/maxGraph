@@ -161,7 +161,8 @@ class Codec {
   elements: any = null; // TODO why not { [key: string]: Element } | null
 
   /**
-   * Specifies if default values should be encoded. Default is false.
+   * Specifies if default values should be encoded.
+   * @default false
    */
   encodeDefaults = false;
 
