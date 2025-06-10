@@ -18,15 +18,15 @@ limitations under the License.
 
 import ObjectCodec from '../ObjectCodec';
 import { Graph } from '../../view/Graph';
+import { AbstractGraph } from '../../view/AbstractGraph';
 
-export const excludedFields = [
-  'graphListeners',
+export const excludedFields: Array<keyof AbstractGraph> = [
   'eventListeners',
   'view',
   'container',
   'cellRenderer',
-  'editor',
   'selectionModel',
+  // @ts-ignore private property
   'plugins',
 ];
 
@@ -36,12 +36,10 @@ export const excludedFields = [
  *
  * Transient Fields:
  *
- * - graphListeners
  * - eventListeners
  * - view
  * - container
  * - cellRenderer
- * - editor
  * - selectionModel
  * - plugins
  *

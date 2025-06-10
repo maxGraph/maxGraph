@@ -23,12 +23,10 @@ import { excludedFields } from './GraphCodec';
  *
  * Transient Fields:
  *
- * - graphListeners
  * - eventListeners
  * - view
  * - container
  * - cellRenderer
- * - editor
  * - selectionModel
  * - plugins
  *
