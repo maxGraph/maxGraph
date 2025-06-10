@@ -163,9 +163,8 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
     });
   });
 
-  // TODO add test, value is an object (import and export)
-
-  test('use Graph - import then export', () => {
+  // TODO use a custom model with a custom property that must be filled by the xml content
+  test('xml model includes additional node (not only root)', () => {
     const xmlWithNonRootNode = `<GraphDataModel>
     <root>
         <Cell id="0">
@@ -189,6 +188,63 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
     modelChecker.checkRootCells();
 
     // TODO expect
+  });
+
+  // TODO add test, value is an object for EXPORT
+
+  test('cell value is an object', () => {
+    const xmlWithNonRootNode = `<GraphDataModel>
+    <root>
+        <Cell id="0">
+            <Object as="style"/>
+        </Cell>
+        <Cell id="1" parent="0">
+          <Object as="style" />
+        </Cell>
+        <Cell id="custom_cell" vertex="1" parent="1">
+          <Object label="1st Cell" name="CELL-001" description="a custom value for a cell" count="10" as="value">
+            <Array as="info">
+              <Object identifier="1" name="field1" />
+              <Object identifier="2" name="field2" />
+            </Array>
+            <Array as="incomingConnections"/>
+            <Array as="additionalInfo"/>
+          </Object>
+          <Geometry _x="30" _y="40" _width="50" _height="50" as="geometry"/>      
+        </Cell>
+    </root>
+</GraphDataModel>`;
+
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model).import(xmlWithNonRootNode);
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+
+    modelChecker.expectIsVertex(
+      model.getCell('custom_cell'),
+      {
+        additionalInfo: [],
+        count: 10,
+        description: 'a custom value for a cell',
+        incomingConnections: [],
+        info: [
+          {
+            identifier: 1,
+            name: 'field1',
+          },
+          {
+            identifier: 2,
+            name: 'field2',
+          },
+        ],
+        label: '1st Cell',
+        name: 'CELL-001',
+      },
+      {
+        geometry: new Geometry(30, 40, 50, 50),
+      }
+    );
   });
 });
 
