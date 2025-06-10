@@ -164,6 +164,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
   });
 
   // TODO use a custom model with a custom property that must be filled by the xml content
+  // TODO decide if we need the same kind of test for the export
   test('xml model includes additional node (not only root)', () => {
     const xmlWithNonRootNode = `<GraphDataModel>
     <root>
@@ -189,8 +190,6 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
 
     // TODO expect
   });
-
-  // TODO add test, value is an object for EXPORT
 
   test('cell value is an object', () => {
     const xmlWithNonRootNode = `<GraphDataModel>
@@ -399,6 +398,11 @@ describe('export', () => {
 </GraphDataModel>
 `
     );
+  });
+
+  test('cell value is an object', () => {
+    //
+    // TODO add test, value is an object for EXPORT
   });
 });
 
