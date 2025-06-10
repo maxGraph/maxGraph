@@ -48,7 +48,7 @@ export class EditorCodec extends ObjectCodec {
       'undoManager',
       'graphContainer',
       'toolbarContainer',
-    ]);
+    ] as Array<keyof Editor>);
   }
 
   /**
