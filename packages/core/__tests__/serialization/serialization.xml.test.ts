@@ -162,6 +162,29 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
       style: { fillColor: 'green', shape: 'triangle', strokeWidth: 4 },
     });
   });
+
+  test('use Graph - import then export', () => {
+    const xmlWithNonRootNode = `<GraphDataModel>
+    <root>
+        <Cell id="0">
+            <Object as="style"/>
+        </Cell>
+    </root>
+    <Cell id="B_#0" value="rootNode" vertex="1" parent="1">
+        <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry"/>
+        <!-- not in the xml of issue 178, same issue as with Geometry -->
+        <Object fillColor="green" strokeWidth="4" shape="triangle" as="style" />
+    </Cell>
+</GraphDataModel>`;
+
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model).import(xmlWithNonRootNode);
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+
+    // TODO expect
+  });
 });
 
 test('Import then export - expect the same xml content', () => {
