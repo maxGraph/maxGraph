@@ -163,6 +163,8 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
     });
   });
 
+  // TODO add test, value is an object (import and export)
+
   test('use Graph - import then export', () => {
     const xmlWithNonRootNode = `<GraphDataModel>
     <root>
