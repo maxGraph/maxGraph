@@ -18,6 +18,7 @@ import ObjectCodec from '../ObjectCodec';
 import ChildChange from '../../view/undoable_changes/ChildChange';
 import type Codec from '../Codec';
 import { isElement } from '../../internal/utils';
+import Cell from '../../view/cell/Cell';
 
 /**
  * Codec for {@link ChildChange}s.
@@ -42,8 +43,8 @@ export class ChildChangeCodec extends ObjectCodec {
     const __dummy: any = undefined;
     super(
       new ChildChange(__dummy, __dummy, __dummy),
-      ['model', 'child', 'previousIndex'],
-      ['parent', 'previous']
+      ['model', 'child', 'previousIndex'] as Array<keyof ChildChange>,
+      ['parent', 'previous'] as Array<keyof ChildChange>
     );
   }
 
