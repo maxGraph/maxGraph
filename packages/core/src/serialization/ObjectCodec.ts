@@ -435,6 +435,7 @@ class ObjectCodec {
   ): void {
     if (value != null) {
       // TODO: What is the case where `name` can be `null`? =========================================================================
+      // FIXME make ObjectCodec.isReference accept null as name
       if (name != null && this.isReference(obj, name, value, true)) {
         const tmp = enc.getId(value);
 
