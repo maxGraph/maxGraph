@@ -88,7 +88,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Defines an icon for creating new connections in the connection handler.
   // This will automatically disable the highlighting of the source vertex.
-  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+  const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.connectImage = new ImageBox(
     `${Client.imageBasePath}/connector.gif`,
     16,

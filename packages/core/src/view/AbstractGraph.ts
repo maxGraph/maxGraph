@@ -110,7 +110,7 @@ export abstract class AbstractGraph extends EventSource {
    */
   model!: GraphDataModel; // initialized in "initializeCollaborators"
 
-  private plugins: Record<string, GraphPlugin> = {};
+  private plugins = new Map<string, GraphPlugin>();
 
   /**
    * Holds the {@link GraphView} that caches the {@link CellState}s for the cells.
@@ -219,7 +219,7 @@ export abstract class AbstractGraph extends EventSource {
    * Specifies the page format for the background page.
    * This is used as the default in {@link PrintPreview} and for painting the background page
    * if {@link pageVisible} is `true` and the page breaks if {@link pageBreaksVisible} is `true`.
-   * @default {@link mxConstants.PAGE_FORMAT_A4_PORTRAIT}
+   * @default {@link PAGE_FORMAT_A4_PORTRAIT}
    */
   pageFormat = new Rectangle(...PAGE_FORMAT_A4_PORTRAIT);
 
@@ -476,13 +476,14 @@ export abstract class AbstractGraph extends EventSource {
     this.sizeDidChange();
 
     // Initializes plugins
-    options?.plugins?.forEach((p) => (this.plugins[p.pluginId] = new p(this)));
+    options?.plugins?.forEach((p) => this.plugins.set(p.pluginId, new p(this)));
 
     this.view.revalidate();
   }
 
   getContainer = () => this.container;
-  getPlugin = <T extends GraphPlugin>(id: PluginId): T => this.plugins[id] as T;
+  getPlugin = <T extends GraphPlugin>(id: PluginId): T | undefined =>
+    this.plugins.get(id) as T;
   getCellRenderer = () => this.cellRenderer;
   getDialect = () => this.dialect;
   isPageVisible = () => this.pageVisible;

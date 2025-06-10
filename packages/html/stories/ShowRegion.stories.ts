@@ -106,7 +106,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     override mouseUp(sender: EventSource, me: InternalMouseEvent) {
       if (eventUtils.isPopupTrigger(me.getEvent())) {
-        if (!graph.getPlugin<PopupMenuHandler>('PopupMenuHandler').isMenuShowing()) {
+        if (!graph.getPlugin<PopupMenuHandler>('PopupMenuHandler')!.isMenuShowing()) {
           const origin = styleUtils.getScrollOrigin();
           this.popupMenu.popup(
             me.getX() + origin.x + 1,
