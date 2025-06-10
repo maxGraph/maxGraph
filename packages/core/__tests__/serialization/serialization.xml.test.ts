@@ -169,10 +169,13 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
         <Cell id="0">
             <Object as="style"/>
         </Cell>
+        <Cell id="1" parent="0">
+          <Object as="style" />
+        </Cell>
     </root>
+    <!-- This is an extra node which has no match in the model. -->
     <Cell id="B_#0" value="rootNode" vertex="1" parent="1">
         <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry"/>
-        <!-- not in the xml of issue 178, same issue as with Geometry -->
         <Object fillColor="green" strokeWidth="4" shape="triangle" as="style" />
     </Cell>
 </GraphDataModel>`;

@@ -867,7 +867,7 @@ class ObjectCodec {
       if (fieldname != null && fieldname.length > 0) {
         obj[fieldname] = value;
       } else {
-        obj.push(value);
+        obj.push?.(value);
       }
     }
   }

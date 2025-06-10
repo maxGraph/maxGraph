@@ -49,8 +49,7 @@ export class ModelCodec extends ObjectCodec {
     if (child.nodeName === 'root') {
       this.decodeRoot(dec, child, <GraphDataModel>obj);
     } else {
-      // throw new Error('Unknown child node: ' + child.nodeName);
-      this.decodeChild.apply(this, [dec, child, obj]);
+      super.decodeChild(dec, child, obj);
     }
   }
 
