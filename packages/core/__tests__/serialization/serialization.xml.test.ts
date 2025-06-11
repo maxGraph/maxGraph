@@ -163,8 +163,6 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
     });
   });
 
-  // TODO use a custom model with a custom property that must be filled by the xml content
-  // TODO decide if we need the same kind of test for the export
   test('xml model includes additional node (not only root)', () => {
     const xmlWithNonRootNode = `<GraphDataModel>
     <root>
@@ -175,8 +173,8 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
           <Object as="style" />
         </Cell>
     </root>
-    <!-- This is an extra node which has no match in the model. -->
-    <Cell id="B_#0" value="rootNode" vertex="1" parent="1">
+    <!-- This is an extra node which has no matching property in the model. However, the property will be added to the model instance during the XML import. -->
+    <Cell id="B_#0" value="rootNode" vertex="1" parent="1" as="extraProperty">
         <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry"/>
         <Object fillColor="green" strokeWidth="4" shape="triangle" as="style" />
     </Cell>
@@ -188,7 +186,12 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
     const modelChecker = new ModelChecker(model);
     modelChecker.checkRootCells();
 
-    // TODO expect
+    // The extraProperty should be present as a property on the model and should be a Cell with id 'B_#0'
+    // The serializer attaches extra nodes as properties on the model
+    const extraProperty = (model as any).extraProperty;
+    expect(extraProperty).toBeDefined();
+    expect(extraProperty).toBeInstanceOf(Cell);
+    expect(extraProperty.id).toBe('B_#0');
   });
 
   test('cell value is an object', () => {
