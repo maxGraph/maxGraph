@@ -449,30 +449,6 @@ describe('export', () => {
 </GraphDataModel>
 `
     );
-
-    //
-    // TODO add test, value is an object for EXPORT
-
-    //     modelChecker.expectIsVertex(
-    //       model.getCell('custom_cell'),
-    //       {
-    //         additionalInfo: [],
-    //         description: 'a custom value for a cell',
-    //         info: [
-    //           {
-    //             identifier: 1,
-    //             name: 'field1',
-    //           },
-    //           {
-    //             identifier: 2,
-    //             name: 'field2',
-    //           },
-    //         ],
-    //       },
-    //       {
-    //         geometry: new Geometry(30, 40, 50, 50),
-    //       }
-    //     );
   });
 });
 
