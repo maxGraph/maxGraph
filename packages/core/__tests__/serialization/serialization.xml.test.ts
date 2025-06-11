@@ -28,7 +28,7 @@ import {
 } from '../../src';
 
 // inspired by VertexMixin.createVertex
-const newVertex = (id: string, value: string) => {
+const newVertex = (id: string, value: string | object) => {
   const vertex = new Cell(value);
   vertex.setId(id);
   vertex.setVertex(true);
@@ -401,8 +401,78 @@ describe('export', () => {
   });
 
   test('cell value is an object', () => {
+    const model = new GraphDataModel();
+    const parent = getParent(model);
+
+    const vertex = newVertex('#v1', {
+      additionalInfo: [],
+      description: 'a custom value for a cell',
+      info: [
+        {
+          identifier: 1,
+          name: 'field1',
+        },
+        {
+          identifier: 2,
+          name: 'field2',
+        },
+      ],
+      other: {
+        property: 'value',
+      },
+    });
+    vertex.geometry = new Geometry(30, 40, 50, 50);
+    model.add(parent, vertex);
+
+    expect(new ModelXmlSerializer(model).export()).toEqual(
+      `<GraphDataModel>
+  <root>
+    <Cell id="0">
+      <Object as="style" />
+    </Cell>
+    <Cell id="1" parent="0">
+      <Object as="style" />
+    </Cell>
+    <Cell id="#v1" vertex="1" parent="1">
+      <Object description="a custom value for a cell" as="value">
+        <Array as="additionalInfo" />
+        <Array as="info">
+          <Object identifier="1" name="field1" />
+          <Object identifier="2" name="field2" />
+        </Array>
+        <Object property="value" as="other" />
+      </Object>
+      <Geometry _x="30" _y="40" _width="50" _height="50" as="geometry" />
+      <Object as="style" />
+    </Cell>
+  </root>
+</GraphDataModel>
+`
+    );
+
     //
     // TODO add test, value is an object for EXPORT
+
+    //     modelChecker.expectIsVertex(
+    //       model.getCell('custom_cell'),
+    //       {
+    //         additionalInfo: [],
+    //         description: 'a custom value for a cell',
+    //         info: [
+    //           {
+    //             identifier: 1,
+    //             name: 'field1',
+    //           },
+    //           {
+    //             identifier: 2,
+    //             name: 'field2',
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         geometry: new Geometry(30, 40, 50, 50),
+    //       }
+    //     );
   });
 });
 
