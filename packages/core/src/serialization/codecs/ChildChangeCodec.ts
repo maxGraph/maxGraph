@@ -18,7 +18,6 @@ import ObjectCodec from '../ObjectCodec';
 import ChildChange from '../../view/undoable_changes/ChildChange';
 import type Codec from '../Codec';
 import { isElement } from '../../internal/utils';
-import Cell from '../../view/cell/Cell';
 
 /**
  * Codec for {@link ChildChange}s.
