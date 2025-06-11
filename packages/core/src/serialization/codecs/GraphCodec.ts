@@ -18,7 +18,7 @@ limitations under the License.
 
 import ObjectCodec from '../ObjectCodec';
 import { Graph } from '../../view/Graph';
-import { AbstractGraph } from '../../view/AbstractGraph';
+import type { AbstractGraph } from '../../view/AbstractGraph';
 
 export const excludedFields: Array<keyof AbstractGraph> = [
   'eventListeners',
