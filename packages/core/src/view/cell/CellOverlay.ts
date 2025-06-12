@@ -39,7 +39,7 @@ import { AlignValue, VAlignValue } from '../../types';
  *
  * ### Example
  *
- * The following adds a new overlays for a given vertex and selects the cell if the overlay is clicked.
+ * The following adds a new overlay for a given vertex and selects the cell if the overlay is clicked.
  *
  * ```javascript
  * const overlay = new CellOverlay(img, html);
@@ -65,12 +65,12 @@ class CellOverlay extends EventSource implements ObjectIdentity {
   /**
    * Constructs a new overlay using the given image and tooltip.
    *
-   * @param image {@link Image} that represents the icon to be displayed.
+   * @param image {@link ImageBox} that represents the icon to be displayed.
    * @param tooltip Optional string that specifies the tooltip.
    * @param align Optional horizontal alignment for the overlay. Possible values are 'left', 'center' and 'right' (default).
    * @param verticalAlign Vertical alignment for the overlay. Possible values are 'top', 'middle' and 'bottom' (default).
-   * @param offset
-   * @param cursor
+   * @param offset Optional offset for positioning the overlay relative to its alignment. Scaled according to the current graph scale. Default is `new Point()`.
+   * @param cursor Optional CSS cursor for the overlay. Default is `'help'`.
    */
   constructor(
     image: ImageBox,
