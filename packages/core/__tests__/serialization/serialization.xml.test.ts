@@ -26,6 +26,7 @@ import {
   Point,
   unregisterAllCodecs,
 } from '../../src';
+import { getXml } from '../../src/util/xmlUtils';
 
 // inspired by VertexMixin.createVertex
 const newVertex = (id: string, value: string | object) => {
@@ -164,7 +165,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
   });
 
   test('xml model includes additional node (not only root)', () => {
-    const xmlWithNonRootNode = `<GraphDataModel>
+    const xml = `<GraphDataModel>
     <root>
         <Cell id="0">
             <Object as="style"/>
@@ -181,7 +182,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
 </GraphDataModel>`;
 
     const model = new GraphDataModel();
-    new ModelXmlSerializer(model).import(xmlWithNonRootNode);
+    new ModelXmlSerializer(model).import(xml);
 
     const modelChecker = new ModelChecker(model);
     modelChecker.checkRootCells();
@@ -195,7 +196,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
   });
 
   test('cell value is an object', () => {
-    const xmlWithNonRootNode = `<GraphDataModel>
+    const xml = `<GraphDataModel>
     <root>
         <Cell id="0">
             <Object as="style"/>
@@ -218,7 +219,7 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
 </GraphDataModel>`;
 
     const model = new GraphDataModel();
-    new ModelXmlSerializer(model).import(xmlWithNonRootNode);
+    new ModelXmlSerializer(model).import(xml);
 
     const modelChecker = new ModelChecker(model);
     modelChecker.checkRootCells();
@@ -246,6 +247,38 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
       {
         geometry: new Geometry(30, 40, 50, 50),
       }
+    );
+  });
+
+  test('xml model includes a node that does not match an existing (fallback to xml content)', () => {
+    const xml = `<GraphDataModel>
+    <root>
+        <Cell id="0">
+            <Object as="style"/>
+        </Cell>
+        <Cell id="1" parent="0">
+          <Object as="style" />
+        </Cell>
+        <!-- This is an extra node which has no matching property in the model. However, the property will be added to the model instance during the XML import. -->
+        <Cell id="custom" value="custom" vertex="1" parent="1" as="extraProperty">
+            <NodeWithoutMatchingCodec fillColor="green" strokeWidth="4" shape="triangle" as="style" />
+        </Cell>
+    </root>
+</GraphDataModel>`;
+
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model).import(xml);
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
+
+    // here, we only check the style property which as not been correctly deserialized
+    const cell = model.getCell('custom');
+    const style = cell?.style;
+    expect(style).toBeInstanceOf(Element); // xml element
+    expect(getXml(style as Element)).toEqual(
+      '<NodeWithoutMatchingCodec fillColor="green" strokeWidth="4" shape="triangle"/>'
     );
   });
 });
