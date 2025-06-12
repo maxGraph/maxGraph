@@ -21,6 +21,8 @@ import type Cell from '../../view/cell/Cell';
 import type Point from '../../view/geometry/Point';
 import type Codec from '../Codec';
 
+// TODO add minimal tests
+
 /**
  * Custom encoder for {@link GraphView}s.
  *
