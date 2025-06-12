@@ -691,7 +691,7 @@ class ObjectCodec {
    * @param into Optional object to encode the node into.
    */
   decode(dec: Codec, node: Element, into?: any): any {
-    const id = <string>node.getAttribute('id');
+    const id = node.getAttribute('id')!; // the subsequent calls work when id is null
     let obj = dec.objects[id];
 
     if (obj == null) {
@@ -712,7 +712,7 @@ class ObjectCodec {
    *
    * @param dec {@link Codec} that controls the decoding process.
    * @param node XML node to be decoded.
-   * @param obj Objec to encode the node into.
+   * @param obj Object to encode the node into.
    */
   decodeNode(dec: Codec, node: Element | null, obj: any): void {
     if (node != null) {
