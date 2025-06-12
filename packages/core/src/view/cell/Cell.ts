@@ -417,21 +417,19 @@ export class Cell implements IdentityObject {
   /**
    * Returns the child at the specified index.
    *
-   * @param indexInteger that specifies the child to be returned.
+   * @param index Integer that specifies the child to be returned.
    */
   getChildAt(index: number): Cell {
     return this.children[index];
   }
 
   /**
-   * Inserts the specified child into the child array at the specified index
-   * and updates the parent reference of the child. If not childIndex is
-   * specified then the child is appended to the child array. Returns the
-   * inserted child.
+   * Inserts the specified child into the child array at the specified index and updates the parent reference of the child.
+   * If not index is specified, then the child is appended to the child array.
+   * Returns the inserted child.
    *
-   * @param child<Cell> to be inserted or appended to the child array.
-   * @param indexOptional integer that specifies the index at which the child
-   * should be inserted into the child array.
+   * @param child {@link Cell} to be inserted or appended to the child array.
+   * @param index Optional integer that specifies the index at which the child should be inserted into the child array.
    */
   insert(child: Cell, index?: number): Cell | null {
     if (index === undefined) {
@@ -451,12 +449,10 @@ export class Cell implements IdentityObject {
   }
 
   /**
-   * Removes the child at the specified index from the child array and
-   * returns the child that was removed. Will remove the parent reference of
-   * the child.
+   * Removes the child at the specified index from the child array and returns the child that was removed.
+   * Will remove the parent reference of the child.
    *
-   * @param indexInteger that specifies the index of the child to be
-   * removed.
+   * @param index Integer that specifies the index of the child to be removed.
    */
   remove(index: number): Cell | null {
     let child = null;
@@ -490,18 +486,18 @@ export class Cell implements IdentityObject {
   }
 
   /**
-   * Returns the index of the specified edge in <edges>.
+   * Returns the index of the specified edge in {@link edges}.
    *
-   * @param edge<Cell> whose index in <edges> should be returned.
+   * @param edge {@link Cell} whose index in {@link edges} should be returned.
    */
   getEdgeIndex(edge: Cell) {
     return this.edges.indexOf(edge);
   }
 
   /**
-   * Returns the edge at the specified index in <edges>.
+   * Returns the edge at the specified index in {@link edges}.
    *
-   * @param indexInteger that specifies the index of the edge to be returned.
+   * @param index Integer that specifies the index of the edge to be returned.
    */
   getEdgeAt(index: number) {
     return this.edges[index];
@@ -511,7 +507,7 @@ export class Cell implements IdentityObject {
    * Inserts the specified edge into the edge array and returns the edge.
    * Will update the respective terminal reference of the edge.
    *
-   * @param edge              <Cell> to be inserted into the edge array.
+   * @param edge {@link Cell} to be inserted into the edge array.
    * @param isOutgoing Boolean that specifies if the edge is outgoing.
    */
   insertEdge(edge: Cell, isOutgoing = false) {
@@ -533,7 +529,7 @@ export class Cell implements IdentityObject {
    * Removes the specified edge from the edge array and returns the edge.
    * Will remove the respective terminal reference from the edge.
    *
-   * @param edge<Cell> to be removed from the edge array.
+   * @param edge {@link Cell} to be removed from the edge array.
    * @param isOutgoing Boolean that specifies if the edge is outgoing.
    */
   removeEdge(edge: Cell | null, isOutgoing = false): Cell | null {
@@ -635,7 +631,7 @@ export class Cell implements IdentityObject {
   /**
    * Returns the nearest common ancestor for the specified cells to `this`.
    *
-   * @param {Cell} cell2  that specifies the second cell in the tree.
+   * @param {Cell} cell2 that specifies the second cell in the tree.
    */
   getNearestCommonAncestor(cell2: Cell): Cell | null {
     // Creates the cell path for the second cell
