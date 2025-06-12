@@ -308,22 +308,22 @@ declare module '../AbstractGraph' {
     /**
      * Adds the cells to the parent at the given index, connecting each cell to
      * the optional source and target terminal. The change is carried out using
-     * {@link cellsAdded}. This method fires {@link Event#ADD_CELLS} while the
+     * {@link cellsAdded}. This method fires {@link InternalEvent.ADD_CELLS} while the
      * transaction is in progress. Returns the cells that were added.
      *
      * @param cells Array of {@link Cell}s to be inserted.
-     * @param parent {@link Cell} that represents the new parent. If no parent is given then the default parent is used.
-     * @param index Optional index to insert the cells at. Default is to append.
-     * @param source Optional source {@link Cell} for all inserted cells.
-     * @param target Optional target {@link Cell} for all inserted cells.
+     * @param parent {@link Cell} that represents the new parent. If no parent is given then the default parent is used. Default is `null`.
+     * @param index Optional index to insert the cells at.  Default is `null` (append).
+     * @param source Optional source {@link Cell} for all inserted cells. Default is `null`.
+     * @param target Optional target {@link Cell} for all inserted cells. Default is `null`.
      * @param absolute Optional boolean indicating of cells should be kept at their absolute position. Default is `false`.
      */
     addCells: (
       cells: Cell[],
-      parent: Cell | null,
-      index: number | null,
-      source: Cell | null,
-      target: Cell | null,
+      parent?: Cell | null,
+      index?: number | null,
+      source?: Cell | null,
+      target?: Cell | null,
       absolute?: boolean
     ) => Cell[];
 
