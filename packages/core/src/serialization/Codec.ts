@@ -415,25 +415,10 @@ class Codec {
    * given type.
    */
   isCellCodec(codec: ObjectCodec | null): boolean {
-    if (codec && 'isCellCodec' in codec) {
-      // @ts-ignore
+    if (codec && 'isCellCodec' in codec && typeof codec.isCellCodec === 'function') {
       return codec.isCellCodec();
     }
     return false;
-
-    // // if (codec != null && 'isCellCodec' in codec && codec.isCellCodec === 'function') {
-    // // if (codec && 'isCellCodec' in codec && codec.isCellCodec === 'function') {
-    // if (
-    //   codec &&
-    //   'isCellCodec' in codec &&
-    //   codec.isCellCodec === 'function'
-    //   // && typeof (codec as { isCellCodec?: unknown }).isCellCodec === 'function'
-    // ) {
-    //   // const cellCodec = codec.isCellCodec();
-    //   // return <boolean>codec.isCellCodec();
-    //   return (codec as { isCellCodec: () => boolean }).isCellCodec();
-    // }
-    // return false;
   }
 
   /**
