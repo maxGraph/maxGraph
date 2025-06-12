@@ -2165,20 +2165,18 @@ export class GraphView extends EventSource {
       return state;
     };
 
-    // Adds basic listeners for graph event dispatching outside the
-    // container and finishing the handling of a single gesture
-    // Implemented via graph event dispatch loop to avoid duplicate events
-    // in Firefox and Chrome
+    // Adds basic listeners for graph event dispatching outside the container and finishing the handling of a single gesture
+    // Implemented via graph event dispatch loop to avoid duplicate events in Firefox and Chrome
     graph.addMouseListener({
       mouseDown: () => {
         const popupMenuHandler = graph.getPlugin<PopupMenuHandler>('PopupMenuHandler');
         popupMenuHandler?.hideMenu();
       },
       mouseMove: () => {
-        return;
+        // do nothing
       },
       mouseUp: () => {
-        return;
+        // do nothing
       },
     });
 

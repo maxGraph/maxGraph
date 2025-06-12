@@ -31,36 +31,42 @@ import {
 import PanningManager from '../other/PanningManager';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 
-import type { GraphPlugin, MouseEventListener } from '../../types';
+import type { GraphPlugin, MouseEventListener, MouseListenerSet } from '../../types';
 import type { AbstractGraph } from '../AbstractGraph';
 
 /**
- * Event handler that pans and creates popupmenus. To use the left
- * mouse button for panning without interfering with cell moving and
- * resizing, use <isUseLeftButton> and <isIgnoreCell>. For grid size
- * steps while panning, use <useGrid>.
+ * Event handler that pans and creates popupmenus.
+ *
+ * To use the left mouse button for panning without interfering with cell moving and resizing, use {@link useLeftButtonForPanning} and {@link ignoreCell}.
+ *
+ * For grid size steps while panning, use {@link useGrid}.
  *
  * When registered in the {@link AbstractGraph.constructor} plugins list, it can be enabled using {@link AbstractGraph.setPanning}.
  *
- * Event: mxEvent.PAN_START
+ * ### Events
  *
- * Fires when the panning handler changes its <active> state to true. The
- * <code>event</code> property contains the corresponding {@link MouseEvent}.
+ * **{@link InternalEvent.PAN_START}**
  *
- * Event: mxEvent.PAN
+ * Fires when the panning handler changes its {@link active} state to `true`.
  *
- * Fires while handle is processing events. The <code>event</code> property contains
- * the corresponding {@link MouseEvent}.
+ * In the {@link EventObject} parameter of the listener function, the `event` property contains the corresponding {@link MouseEvent}.
  *
- * Event: mxEvent.PAN_END
+ * **{@link InternalEvent.PAN}**
  *
- * Fires when the panning handler changes its <active> state to false. The
- * <code>event</code> property contains the corresponding {@link MouseEvent}.
+ * Fires while handle is processing events.
+ *
+ * In the {@link EventObject} parameter of the listener function, the `event` property contains the corresponding {@link MouseEvent}.
+ *
+ * **{@link InternalEvent.PAN_END}**
+ *
+ * Fires when the panning handler changes its {@link active} state to `false`.
+ *
+ * In the {@link EventObject} parameter of the listener function, the `event` property contains the corresponding {@link MouseEvent}.
  *
  * @category Plugin
  * @category Navigation
  */
-class PanningHandler extends EventSource implements GraphPlugin {
+class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSet {
   static pluginId = 'PanningHandler';
 
   constructor(graph: AbstractGraph) {
@@ -70,7 +76,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
     this.graph.addMouseListener(this);
 
     // Handles force panning event
-    this.forcePanningHandler = (sender: EventSource, eo: EventObject) => {
+    this.forcePanningHandler = (_sender: EventSource, eo: EventObject) => {
       const evtName = eo.getProperty('eventName');
       const me = eo.getProperty('event');
 
@@ -85,7 +91,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
     this.graph.addListener(InternalEvent.FIRE_MOUSE_EVENT, this.forcePanningHandler);
 
     // Handles pinch gestures
-    this.gestureHandler = (sender: EventSource, eo: EventObject) => {
+    this.gestureHandler = (_sender: EventSource, eo: EventObject) => {
       if (this.isPinchEnabled()) {
         const evt = eo.getProperty('event');
 
@@ -132,51 +138,59 @@ class PanningHandler extends EventSource implements GraphPlugin {
 
   /**
    * Specifies if panning should be active for the left mouse button.
-   * Setting this to true may conflict with {@link RubberBandHandler}. Default is false.
+   * Setting this to true may conflict with {@link RubberBandHandler}.
+   *
+   * @default false
    */
   useLeftButtonForPanning = false;
 
   /**
-   * Specifies if {@link Event#isPopupTrigger} should also be used for panning.
+   * Specifies if {@link Event.isPopupTrigger} should also be used for panning.
+   * @default true
    */
   usePopupTrigger = true;
 
   /**
-   * Specifies if panning should be active even if there is a cell under the
-   * mousepointer. Default is false.
+   * Specifies if panning should be active even if there is a cell under the mouse pointer.
+   * @default false
    */
   ignoreCell = false;
 
   /**
-   * Specifies if the panning should be previewed. Default is true.
+   * Specifies if the panning should be previewed.
+   * @default true
    */
   previewEnabled = true;
 
   /**
    * Specifies if the panning steps should be aligned to the grid size.
-   * Default is false.
+   * @default false
    */
   useGrid = false;
 
   /**
-   * Specifies if panning should be enabled. Default is false.
+   * Specifies if panning should be enabled.
+   * @default false
    */
   panningEnabled = false;
 
   /**
-   * Specifies if pinch gestures should be handled as zoom. Default is true.
+   * Specifies if pinch gestures should be handled as zoom.
+   * @default true
    */
   pinchEnabled = true;
 
   initialScale = 0;
 
   /**
-   * Specifies the maximum scale. Default is 8.
+   * Specifies the maximum scale.
+   * @default 8
    */
   maxScale = 8;
 
   /**
-   * Specifies the minimum scale. Default is 0.01.
+   * Specifies the minimum scale.
+   * @default 0.01
    */
   minScale = 0.01;
 
@@ -265,9 +279,9 @@ class PanningHandler extends EventSource implements GraphPlugin {
   }
 
   /**
-   * Returns true if the given {@link MouseEvent} should start panning. This
-   * implementation always returns true if <ignoreCell> is true or for
-   * multi touch events.
+   * Returns true if the given {@link MouseEvent} should start panning.
+   *
+   * This implementation always returns `true` if {@link ignoreCell} is `true` or for multi touch events.
    */
   isForcePanningEvent(me: InternalMouseEvent) {
     return this.ignoreCell || isMultiTouchEvent(me.getEvent());
@@ -277,7 +291,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
    * Handles the event by initiating the panning. By consuming the event all
    * subsequent events of the gesture are redirected to this handler.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+  mouseDown(_sender: EventSource, me: InternalMouseEvent) {
     this.mouseDownEvent = me;
 
     if (
@@ -340,7 +354,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
   /**
    * Handles the event by updating the panning on the graph.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent) {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent) {
     this.dx = me.getX() - this.startX;
     this.dy = me.getY() - this.startY;
 
@@ -379,7 +393,7 @@ class PanningHandler extends EventSource implements GraphPlugin {
    * Handles the event by setting the translation on the view or showing the
    * popupmenu.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+  mouseUp(_sender: EventSource, me: InternalMouseEvent) {
     if (this.active) {
       if (this.dx !== 0 && this.dy !== 0) {
         // Ignores if scrollbars have been used for panning

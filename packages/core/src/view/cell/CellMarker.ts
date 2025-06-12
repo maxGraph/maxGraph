@@ -38,24 +38,23 @@ import type Cell from './Cell';
 /**
  * A helper class to process mouse locations and highlight cells.
  *
- * Helper class to highlight cells. To add a cell marker to an existing graph
- * for highlighting all cells, the following code is used:
+ * To add a cell marker to an existing graph for highlighting all cells, the following code is used:
  *
  * ```javascript
  * const marker = new CellMarker(graph);
  * graph.addMouseListener({
  *   mouseDown: ()=> {},
- *   mouseMove: (sender, me)=>
- *   {
+ *   mouseMove: (sender, me) => {
  *     marker.process(me);
  *   },
  *   mouseUp: ()=> {}
  * });
  * ```
  *
- * **Event: {@link InternalEvent.MARK}**
+ * ### Events
+ * **{@link InternalEvent.MARK}**
  *
- * Fires after a cell has been marked or unmarked. The `state` property contains the marked <CellState> or null if no state is marked.
+ * Fires after a cell has been marked or unmarked. The `state` property contains the marked {@link CellState} or `null` if no state is marked.
  */
 class CellMarker extends EventSource {
   /**

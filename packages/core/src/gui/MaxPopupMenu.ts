@@ -44,7 +44,9 @@ import type { PopupMenuItem } from '../types';
  * };
  * ```
  *
- * ### `InternalEvent.SHOW`
+ * ### Events
+ *
+ * **{@link InternalEvent.SHOW}**
  *
  * Fires after the menu has been shown in {@link popup}.
  *
@@ -166,23 +168,19 @@ class MaxPopupMenu extends EventSource {
   }
 
   /**
-   * Adds the given item to the given parent item. If no parent item is specified
-   * then the item is added to the top-level menu. The return value may be used
-   * as the parent argument, ie. as a submenu item. The return value is the table
-   * row that represents the item.
+   * Adds the given item to the given parent item. If no parent item is specified then the item is added to the top-level menu.
    *
-   * Paramters:
+   * The return value may be used as the parent argument, i.e. as a submenu item.
+   * The return value is the table row that represents the item.
    *
-   * title - String that represents the title of the menu item.
-   * image - Optional URL for the image icon.
-   * funct - Function associated that takes a mouseup or touchend event.
-   * parent - Optional item returned by <addItem>.
-   * iconCls - Optional string that represents the CSS class for the image icon.
-   * IconsCls is ignored if image is given.
-   * enabled - Optional boolean indicating if the item is enabled. Default is true.
-   * active - Optional boolean indicating if the menu should implement any event handling.
-   * Default is true.
-   * noHover - Optional boolean to disable hover state.
+   * @param title String that represents the title of the menu item.
+   * @param image Optional URL for the image icon.
+   * @param funct Function associated that takes a `mouseup` or `touchend` event.
+   * @param parent Optional item returned by {@link addItem}.
+   * @param iconCls Optional string that represents the CSS class for the image icon. It is ignored if image is given.
+   * @param enabled Optional boolean indicating if the item is enabled. Default is `true`.
+   * @param active Optional boolean indicating if the menu should implement any event handling. Default is `true`.
+   * @param noHover Optional boolean to disable hover state. Default is `false`.
    */
   addItem(
     title: string,

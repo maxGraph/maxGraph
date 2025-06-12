@@ -227,14 +227,14 @@ declare module '../AbstractGraph' {
     /**
      * Handles the {@link InternalMouseEvent} by highlighting the {@link CellState}.
      *
-     * @param me {@link mxMouseEvent} that represents the touch event.
+     * @param me {@link InternalMouseEvent} that represents the touch event.
      */
     tapAndHold: (me: InternalMouseEvent) => void;
 
     /**
      * Adds a listener to the graph event dispatch loop.
      *
-     * The listener must implement the mouseDown, mouseMove and mouseUp methods as shown in the {@link InternalMouseEvent} class.
+     * The listener must implement the `mouseDown`, `mouseMove` and `mouseUp` methods as shown in the {@link InternalMouseEvent} class.
      *
      * @param listener Listener to be added to the graph event listeners.
      */
