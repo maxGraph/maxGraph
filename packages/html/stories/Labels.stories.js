@@ -57,10 +57,10 @@ const Template = ({ label, ...args }) => {
 
   new KeyHandler(graph);
 
-  const graphHandler = graph.getPlugin('SelectionHandler');
+  const selectionHandler = graph.getPlugin('SelectionHandler');
 
   // Do not allow removing labels from parents
-  graphHandler.removeCellsFromParent = false;
+  selectionHandler.removeCellsFromParent = false;
 
   // Allow auto-size labels on insert
   graph.autoSizeCellsOnAdd = true;
