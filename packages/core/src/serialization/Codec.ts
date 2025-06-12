@@ -367,7 +367,9 @@ class Codec {
       if (dec != null) {
         obj = dec.decode(this, node, into);
       } else {
-        // TODO add a warning here + add a test for this
+        GlobalConfig.logger.warn(
+          `Codec.decode: No codec found for node '${node.nodeName}', so the node won't be decoded, the original XML Element is returned instead.`
+        );
         obj = <Element>node.cloneNode(true);
         obj.removeAttribute('as');
       }
