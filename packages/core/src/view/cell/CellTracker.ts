@@ -35,42 +35,33 @@ import type { ColorValue, MouseListenerSet } from '../../types';
  * graph.addMouseListener(
  * {
  *   cell: null,
- *   mouseDown: function(sender, me) { },
- *   mouseMove: function(sender, me)
- *   {
- *     var tmp = me.getCell();
+ *   mouseDown: function(sender, me) {},
+ *   mouseMove: function(sender, me) {
+ *     const tmp = me.getCell();
  *
- *     if (tmp != this.cell)
- *     {
- *       if (this.cell != null)
- *       {
+ *     if (tmp != this.cell) {
+ *       if (this.cell) {
  *         this.dragLeave(me.getEvent(), this.cell);
  *       }
  *
  *       this.cell = tmp;
- *
- *       if (this.cell != null)
- *       {
+ *       if (this.cell) {
  *         this.dragEnter(me.getEvent(), this.cell);
  *       }
  *     }
  *
- *     if (this.cell != null)
- *     {
+ *     if (this.cell) {
  *       this.dragOver(me.getEvent(), this.cell);
  *     }
  *   },
- *   mouseUp: function(sender, me) { },
- *   dragEnter: function(evt, cell)
- *   {
+ *   mouseUp: function(sender, me) {},
+ *   dragEnter: function(evt, cell) {
  *     GlobalConfig.logger.debug('dragEnter', cell.value);
  *   },
- *   dragOver: function(evt, cell)
- *   {
+ *   dragOver: function(evt, cell) {
  *     GlobalConfig.logger.debug('dragOver', cell.value);
  *   },
- *   dragLeave: function(evt, cell)
- *   {
+ *   dragLeave: function(evt, cell) {
  *     GlobalConfig.logger.debug('dragLeave', cell.value);
  *   }
  * });
@@ -113,7 +104,7 @@ class CellTracker extends CellMarker implements MouseListenerSet {
    * Handles the event by resetting the highlight.
    */
   mouseUp() {
-    return;
+    // do nothing
   }
 
   /**

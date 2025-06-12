@@ -22,7 +22,7 @@ import { getScrollOrigin } from '../../util/styleUtils';
 import { getMainEvent, isMultiTouchEvent } from '../../util/EventUtils';
 import type { AbstractGraph } from '../AbstractGraph';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import type { GraphPlugin } from '../../types';
+import type { GraphPlugin, MouseListenerSet } from '../../types';
 import type TooltipHandler from './TooltipHandler';
 import EventSource from '../event/EventSource';
 import EventObject from '../event/EventObject';
@@ -34,7 +34,7 @@ import EventObject from '../event/EventObject';
  *
  * @category Plugin
  */
-class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
+class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin, MouseListenerSet {
   static pluginId = 'PopupMenuHandler';
 
   constructor(graph: AbstractGraph) {
@@ -118,9 +118,9 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
    * Handles the event by initiating the panning. By consuming the event all
    * subsequent events of the gesture are redirected to this handler.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+  mouseDown(_sender: EventSource, me: InternalMouseEvent) {
     if (this.isEnabled() && !isMultiTouchEvent(me.getEvent())) {
-      // Hides the popupmenu if is is being displayed
+      // Hides the popupmenu if it is being displayed
       this.hideMenu();
       this.triggerX = me.getGraphX();
       this.triggerY = me.getGraphY();
@@ -134,7 +134,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   /**
    * Handles the event by updating the panning on the graph.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent) {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent) {
     // Popup trigger may change on mouseUp so ignore it
     if (this.inTolerance && this.screenX != null && this.screenY != null) {
       if (
@@ -149,10 +149,9 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin {
   }
 
   /**
-   * Handles the event by setting the translation on the view or showing the
-   * popupmenu.
+   * Handles the event by setting the translation on the view or showing the popupmenu.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+  mouseUp(_sender: EventSource, me: InternalMouseEvent) {
     if (
       this.popupTrigger &&
       this.inTolerance &&

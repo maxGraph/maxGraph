@@ -50,7 +50,7 @@ import EventObject from '../event/EventObject';
 import type ConnectionHandler from './ConnectionHandler';
 import { EdgeHandlerConfig, VertexHandlerConfig } from '../handler/config';
 import type CellEditorHandler from './CellEditorHandler';
-import type { ColorValue, GraphPlugin } from '../../types';
+import type { ColorValue, GraphPlugin, MouseListenerSet } from '../../types';
 
 /**
  * Graph event handler that handles selection.
@@ -62,7 +62,7 @@ import type { ColorValue, GraphPlugin } from '../../types';
  *
  * @category Plugin
  */
-class SelectionHandler implements GraphPlugin {
+class SelectionHandler implements GraphPlugin, MouseListenerSet {
   static readonly pluginId = 'SelectionHandler';
 
   /**
@@ -525,32 +525,30 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Consumes the given mouse event. NOTE: This may be used to enable click
-   * events for links in labels on iOS as follows as consuming the initial
-   * touchStart disables firing the subsequent click evnent on the link.
+   * Consumes the given mouse event.
    *
-   * <code>
-   * consumeMouseEvent(evtName, me)
-   * {
-   *   var source = mxEvent.getSource(me.getEvent());
+   * **NOTE**: This may be used to enable click events for links in labels on iOS as follows as consuming the initial
+   * touchStart disables firing the subsequent click event on the link.
    *
-   *   if (!mxEvent.isTouchEvent(me.getEvent()) || source.nodeName != 'A')
-   *   {
+   * ```js
+   * consumeMouseEvent(evtName, me) {
+   *   const source = eventUtils.getSource(me.getEvent());
+   *
+   *   if (!eventUtils.isTouchEvent(me.getEvent()) || source.nodeName != 'A') {
    *     me.consume();
    *   }
    * }
-   * </code>
+   * ```
    */
-  consumeMouseEvent(evtName: string, me: InternalMouseEvent) {
+  consumeMouseEvent(_evtName: string, me: InternalMouseEvent) {
     me.consume();
   }
 
   /**
-   * Handles the event by selecing the given cell and creating a handle for
-   * it. By consuming the event all subsequent events of the gesture are
-   * redirected to this handler.
+   * Handles the event by selecting the given cell and creating a handle for it.
+   * By consuming the event all subsequent events of the gesture are redirected to this handler.
    */
-  mouseDown(sender: EventSource, me: InternalMouseEvent) {
+  mouseDown(_sender: EventSource, me: InternalMouseEvent) {
     if (
       !me.isConsumed() &&
       this.isEnabled() &&
@@ -893,10 +891,9 @@ class SelectionHandler implements GraphPlugin {
   }
 
   /**
-   * Handles the event by highlighting possible drop targets and updating the
-   * preview.
+   * Handles the event by highlighting possible drop targets and updating the preview.
    */
-  mouseMove(sender: EventSource, me: InternalMouseEvent) {
+  mouseMove(_sender: EventSource, me: InternalMouseEvent) {
     const { graph } = this;
 
     if (
@@ -1386,7 +1383,7 @@ class SelectionHandler implements GraphPlugin {
   /**
    * Handles the event by applying the changes to the selection cells.
    */
-  mouseUp(sender: EventSource, me: InternalMouseEvent) {
+  mouseUp(_sender: EventSource, me: InternalMouseEvent) {
     if (!me.isConsumed()) {
       if (this.livePreviewUsed) {
         this.resetLivePreview();

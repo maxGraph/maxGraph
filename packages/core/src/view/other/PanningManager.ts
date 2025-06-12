@@ -43,10 +43,10 @@ class PanningManager {
 
     this.mouseListener = {
       mouseDown: () => {
-        return;
+        // do nothing
       },
       mouseMove: () => {
-        return;
+        // do nothing
       },
       mouseUp: () => {
         if (this.active) {
@@ -221,7 +221,7 @@ class PanningManager {
   delay = 10;
 
   /**
-   * Specifies if mouse events outside of the component should be handled. Default is true.
+   * Specifies if mouse events outside the component should be handled. Default is true.
    */
   handleMouseOut = true;
 

@@ -32,18 +32,14 @@ import Shape from '../shape/Shape';
  * implement the following methods:
  *
  * ```javascript
- * graph.addMouseListener(
- * {
- *   mouseDown: (sender, evt)=>
- *   {
+ * graph.addMouseListener({
+ *   mouseDown: (sender, evt) => {
  *     GlobalConfig.logger.debug('mouseDown');
  *   },
- *   mouseMove: (sender, evt)=>
- *   {
+ *   mouseMove: (sender, evt) => {
  *     GlobalConfig.logger.debug('mouseMove');
  *   },
- *   mouseUp: (sender, evt)=>
- *   {
+ *   mouseUp: (sender, evt) => {
  *     GlobalConfig.logger.debug('mouseUp');
  *   }
  * });
