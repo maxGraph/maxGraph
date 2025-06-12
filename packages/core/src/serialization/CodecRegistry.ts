@@ -75,10 +75,10 @@ class CodecRegistry {
   }
 
   /**
-   * Adds an alias for mapping a classname to a codec name.
+   * Adds an alias for mapping a class name to a codec name.
    */
-  static addAlias(classname: string, codecname: string): void {
-    CodecRegistry.aliases[classname] = codecname;
+  static addAlias(className: string, codecName: string): void {
+    CodecRegistry.aliases[className] = codecName;
   }
 
   /**
