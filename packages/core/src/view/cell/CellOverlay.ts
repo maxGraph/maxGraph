@@ -25,56 +25,53 @@ import ObjectIdentity from '../../util/ObjectIdentity';
 import { AlignValue, VAlignValue } from '../../types';
 
 /**
- * Extends {@link EventSource} to implement a graph overlay, represented by an icon
- * and a tooltip. Overlays can handle and fire <click> events and are added to
- * the graph using {@link AbstractGraph.addCellOverlay}, and removed using
+ * Extends {@link EventSource} to implement a graph overlay, represented by an icon and a tooltip.
+ *
+ * Overlays can handle and fire  {@link InternalEvent.CLICK} events and are added to the graph using {@link AbstractGraph.addCellOverlay}, and removed using
  * {@link AbstractGraph.removeCellOverlay}, or {@link AbstractGraph.removeCellOverlays} to remove all overlays.
- * The {@link AbstractGraph.getCellOverlays} function returns the array of overlays for a given
- * cell in a graph. If multiple overlays exist for the same cell, then
- * <getBounds> should be overridden in at least one of the overlays.
+ * The {@link AbstractGraph.getCellOverlays} function returns the array of overlays for a given cell in a graph.
+ * If multiple overlays exist for the same cell, then {@link getBounds} should be overridden in at least one of the overlays.
  *
- * Overlays appear on top of all cells in a special layer. If this is not
- * desirable, then the image must be rendered as part of the shape or label of
- * the cell instead.
+ * Overlays appear on top of all cells in a special layer.
+ * If this is not desirable, then the image must be rendered as part of the shape or label of the cell instead.
  *
- * Example:
+ * For cell overlays to be printed, use {@link PrintPreview.printOverlays}.
  *
- * The following adds a new overlays for a given vertex and selects the cell
- * if the overlay is clicked.
+ * ### Example
+ *
+ * The following adds a new overlays for a given vertex and selects the cell if the overlay is clicked.
  *
  * ```javascript
- * let overlay = new CellOverlay(img, html);
+ * const overlay = new CellOverlay(img, html);
  * graph.addCellOverlay(vertex, overlay);
- * overlay.addListener(mxEvent.CLICK, (sender, evt)=>
- * {
- *   let cell = evt.getProperty('cell');
+ * overlay.addListener(InternalEvent.CLICK, (sender, evt) => {
+ *   const cell = evt.getProperty('cell');
  *   graph.setSelectionCell(cell);
  * });
  * ```
  *
- * For cell overlays to be printed use {@link PrintPreview#printOverlays}.
+ * ### Events
  *
- * Event: mxEvent.CLICK
+ * **{@link InternalEvent.CLICK}**
  *
- * Fires when the user clicks on the overlay. The <code>event</code> property
- * contains the corresponding mouse event and the <code>cell</code> property
- * contains the cell. For touch devices this is fired if the element receives
- * a touchend event.
+ * Fires when the user clicks on the overlay.
+ * In the {@link EventObject} parameter of the listener function:
+ * - the `event` property contains the corresponding {@link MouseEvent}
+ * - the `cell` property contains the {@link Cell}.
  *
- * Constructor: CellOverlay
- *
- * Constructs a new overlay using the given image and tooltip.
- *
- * @param image {@link Image} that represents the icon to be displayed.
- * @param tooltip Optional string that specifies the tooltip.
- * @param align Optional horizontal alignment for the overlay. Possible
- * values are <ALIGN_LEFT>, <ALIGN_CENTER> and <ALIGN_RIGHT>
- * (default).
- * @param verticalAlign Vertical alignment for the overlay. Possible
- * values are <ALIGN_TOP>, <ALIGN_MIDDLE> and <ALIGN_BOTTOM>
- * (default).
+ * For touch devices this is fired if the element receives a touchend event.
  */
 class CellOverlay extends EventSource implements ObjectIdentity {
+  /**
+   * Constructs a new overlay using the given image and tooltip.
+   *
+   * @param image {@link Image} that represents the icon to be displayed.
+   * @param tooltip Optional string that specifies the tooltip.
+   * @param align Optional horizontal alignment for the overlay. Possible values are 'left', 'center' and 'right' (default).
+   * @param verticalAlign Vertical alignment for the overlay. Possible values are 'top', 'middle' and 'bottom' (default).
+   * @param offset
+   * @param cursor
+   */
   constructor(
     image: ImageBox,
     tooltip: string | null = null,
