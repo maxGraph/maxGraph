@@ -23,6 +23,7 @@ import { GlobalConfig } from '../util/config';
 import { getFunctionName } from '../util/StringUtils';
 import { importNode, isNode } from '../util/domUtils';
 import { isElement } from '../internal/utils';
+import ObjectCodec from './ObjectCodec';
 
 const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);
@@ -413,9 +414,18 @@ class Codec {
    * {@link CellCodec.isCellCodec} to check if the codec is of the
    * given type.
    */
-  isCellCodec(codec: any): boolean {
-    if (codec != null && 'isCellCodec' in codec) {
-      return codec.isCellCodec();
+  isCellCodec(codec: ObjectCodec | null): boolean {
+    // if (codec != null && 'isCellCodec' in codec && codec.isCellCodec === 'function') {
+    // if (codec && 'isCellCodec' in codec && codec.isCellCodec === 'function') {
+    if (
+      codec &&
+      'isCellCodec' in codec &&
+      codec.isCellCodec === 'function'
+      // && typeof (codec as { isCellCodec?: unknown }).isCellCodec === 'function'
+    ) {
+      // const cellCodec = codec.isCellCodec();
+      // return <boolean>codec.isCellCodec();
+      return (codec as { isCellCodec: () => boolean }).isCellCodec();
     }
     return false;
   }
