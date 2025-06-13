@@ -20,16 +20,12 @@ import {
   CellEditorHandler,
   type CellStateStyle,
   ConnectionHandler,
-  FitPlugin,
   Graph,
   InternalEvent,
   InternalMouseEvent,
-  PanningHandler,
-  PopupMenuHandler,
   RubberBandHandler,
   SelectionCellsHandler,
   SelectionHandler,
-  TooltipHandler,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
@@ -77,15 +73,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   class MyCustomGraph extends Graph {
     constructor(container: HTMLElement) {
       super(container, undefined, [
-        // same as getDefaultPlugins, but with custom SelectionHandler
+        // part of getDefaultPlugins
         CellEditorHandler,
-        TooltipHandler,
         SelectionCellsHandler,
-        PopupMenuHandler,
         ConnectionHandler,
         MyCustomSelectionHandler, // replaces SelectionHandler
-        PanningHandler,
-        FitPlugin,
         // additional plugin for rubber band selection
         RubberBandHandler,
       ]);

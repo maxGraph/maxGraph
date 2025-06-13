@@ -27,12 +27,8 @@ import {
   Cell,
   Geometry,
   CellEditorHandler,
-  TooltipHandler,
   SelectionCellsHandler,
-  PopupMenuHandler,
   ConnectionHandler,
-  PanningHandler,
-  FitPlugin,
 } from '@maxgraph/core';
 
 import {
@@ -80,15 +76,11 @@ const Template = ({ label, ...args }) => {
   class MyCustomGraph extends Graph {
     constructor(container) {
       super(container, undefined, [
-        // same as getDefaultPlugins, but with custom SelectionHandler
+        // part of getDefaultPlugins
         CellEditorHandler,
-        TooltipHandler,
         SelectionCellsHandler,
-        PopupMenuHandler,
         ConnectionHandler,
         MyCustomSelectionHandler, // replaces SelectionHandler
-        PanningHandler,
-        FitPlugin,
       ]);
       this.options.foldingEnabled = false;
       this.recursiveResize = true;
