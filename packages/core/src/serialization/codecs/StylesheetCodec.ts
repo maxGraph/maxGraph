@@ -49,6 +49,7 @@ export class StylesheetCodec extends ObjectCodec {
   /**
    * Encodes a stylesheet. See {@link decode} for a description of the format.
    */
+  // TODO obj should be of type Stylesheet + adapt code
   encode(enc: Codec, obj: any): Element {
     const node = enc.document.createElement(this.getName());
 
