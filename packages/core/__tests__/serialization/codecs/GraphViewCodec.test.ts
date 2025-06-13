@@ -15,7 +15,12 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { BaseGraph, GraphView } from '../../../src';
+import {
+  BaseGraph,
+  GraphView,
+  registerCoreCodecs,
+  unregisterAllCodecs,
+} from '../../../src';
 import Codec from '../../../src/serialization/Codec';
 import { getPrettyXml, parseXml } from '../../../src/util/xmlUtils';
 
@@ -34,6 +39,17 @@ function createGraphView(): GraphView {
   const graph = new BaseGraph();
   return new GraphView(graph);
 }
+
+// Prevents side effects between tests
+beforeAll(() => {
+  unregisterAllCodecs();
+});
+beforeEach(() => {
+  registerCoreCodecs();
+});
+afterEach(() => {
+  unregisterAllCodecs();
+});
 
 test('import', () => {
   const view = createGraphView();
