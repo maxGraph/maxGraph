@@ -170,7 +170,7 @@ export class EditorToolbar {
   /**
    * Helper method to invoke {@link MaxToolbar.addCombo} on toolbar and return the resulting DOM node.
    */
-  addCombo(): HTMLElement {
+  addCombo(): HTMLSelectElement {
     return (<MaxToolbar>this.toolbar).addCombo();
   }
 
@@ -209,8 +209,8 @@ export class EditorToolbar {
   addOption(
     combo: HTMLSelectElement,
     title: string,
-    value: string | ((evt: any) => void) | null
-  ): HTMLElement {
+    value?: string | ((evt: any) => void) | null
+  ): HTMLOptionElement {
     return (<MaxToolbar>this.toolbar).addOption(combo, title, value);
   }
 
