@@ -50,8 +50,8 @@ import type { DropHandler } from '../view/other/DragSource';
  *
  * ### Codec
  *
- * This class uses the {@link DefaultToolbarCodec} to read configuration
- * data into an existing instance. See {@link DefaultToolbarCodec} for a
+ * This class uses the {@link EditorToolbarCodec} to read configuration
+ * data into an existing instance. See {@link EditorToolbarCodec} for a
  * description of the configuration format.
  *
  * @category Editor
@@ -143,7 +143,12 @@ export class EditorToolbar {
    * @param action - Name of the action to execute when the item is clicked.
    * @param pressed - Optional URL of the icon for the pressed state.
    */
-  addItem(title: string, icon: string, action: string, pressed?: string): any {
+  addItem(
+    title: string | null,
+    icon: string | null,
+    action: string,
+    pressed?: string | null
+  ): any {
     const clickHandler = () => {
       if (action != null && action.length > 0) {
         (<Editor>this.editor).execute(action);
@@ -255,7 +260,7 @@ export class EditorToolbar {
    */
   addPrototype(
     title: string,
-    icon: string,
+    icon: string | null,
     ptype: Function | Cell,
     pressed: string,
     insert: (

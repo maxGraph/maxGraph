@@ -44,7 +44,7 @@ export class EditorPopupMenuCodec extends ObjectCodec {
   /**
    * Uses the given node as the config for {@link EditorPopupMenu}.
    */
-  decode(dec: Codec, node: Element, into: any) {
+  decode(dec: Codec, node: Element, into: EditorPopupMenu) {
     const inc = node.getElementsByTagName('include')[0];
 
     if (inc != null) {
