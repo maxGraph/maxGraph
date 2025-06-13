@@ -35,7 +35,7 @@ export class EditorKeyHandlerCodec extends ObjectCodec {
   /**
    * Returns `null`.
    */
-  encode(enc: Codec, obj: any) {
+  encode(_enc: Codec, _obj: EditorKeyHandler) {
     return null;
   }
 
