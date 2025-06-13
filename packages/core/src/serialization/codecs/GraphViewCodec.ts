@@ -47,7 +47,7 @@ export class GraphViewCodec extends ObjectCodec {
    * Encodes the given {@link GraphView} using {@link encodeCell} starting at the model's root. This returns the
    * top-level graph node of the recursive encoding.
    */
-  encode(enc: Codec, view: GraphView) {
+  override encode(enc: Codec, view: GraphView): Element | null {
     return this.encodeCell(enc, view, view.graph.getDataModel().getRoot()!);
   }
 
@@ -63,8 +63,8 @@ export class GraphViewCodec extends ObjectCodec {
    * For edges the points are encoded into a points attribute as a space-separated list of comma-separated coordinate pairs (e.g. x0,y0 x1,y1 ... xn,yn).
    * All values from the cell style are added as attribute values to the node.
    */
-  encodeCell(enc: Codec, view: GraphView, cell: Cell) {
-    let node: HTMLElement;
+  encodeCell(enc: Codec, view: GraphView, cell: Cell): Element | null {
+    let node: Element | null = null;
     const model = view.graph.getDataModel();
     const state = view.getState(cell);
     const parent = cell.getParent();
