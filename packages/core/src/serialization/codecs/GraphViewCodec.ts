@@ -23,6 +23,10 @@ import type Codec from '../Codec';
 
 // TODO add minimal tests
 
+function setNodeAttribute(node: Element, name: string, value: number) {
+  node.setAttribute(name, `${value}`);
+}
+
 /**
  * Custom encoder for {@link GraphView}s.
  *
@@ -98,13 +102,13 @@ export class GraphViewCodec extends ObjectCodec {
           const bounds = view.getGraphBounds();
 
           if (bounds != null) {
-            node.setAttribute('x', Math.round(bounds.x));
-            node.setAttribute('y', Math.round(bounds.y));
-            node.setAttribute('width', Math.round(bounds.width));
-            node.setAttribute('height', Math.round(bounds.height));
+            setNodeAttribute(node, 'x', Math.round(bounds.x));
+            setNodeAttribute(node, 'y', Math.round(bounds.y));
+            setNodeAttribute(node, 'width', Math.round(bounds.width));
+            setNodeAttribute(node, 'height', Math.round(bounds.height));
           }
 
-          node.setAttribute('scale', view.scale);
+          setNodeAttribute(node, 'scale', view.scale);
         } else if (state != null && geo != null) {
           // Writes each key, value in the style pair to an attribute
           for (const i in state.style) {
@@ -121,7 +125,7 @@ export class GraphViewCodec extends ObjectCodec {
               typeof value !== 'function' &&
               typeof value !== 'object'
             ) {
-              node.setAttribute(i, value);
+              setNodeAttribute(node, i, value);
             }
           }
 
@@ -140,10 +144,10 @@ export class GraphViewCodec extends ObjectCodec {
 
           // Writes the bounds into 4 attributes
           else {
-            node.setAttribute('x', Math.round(state.x));
-            node.setAttribute('y', Math.round(state.y));
-            node.setAttribute('width', Math.round(state.width));
-            node.setAttribute('height', Math.round(state.height));
+            setNodeAttribute(node, 'x', Math.round(state.x));
+            setNodeAttribute(node, 'y', Math.round(state.y));
+            setNodeAttribute(node, 'width', Math.round(state.width));
+            setNodeAttribute(node, 'height', Math.round(state.height));
           }
 
           const offset = state.absoluteOffset;
@@ -151,11 +155,11 @@ export class GraphViewCodec extends ObjectCodec {
           // Writes the offset into 2 attributes
           if (offset != null) {
             if (offset.x !== 0) {
-              node.setAttribute('dx', Math.round(offset.x));
+              setNodeAttribute(node, 'dx', Math.round(offset.x));
             }
 
             if (offset.y !== 0) {
-              node.setAttribute('dy', Math.round(offset.y));
+              setNodeAttribute(node, 'dy', Math.round(offset.y));
             }
           }
         }
