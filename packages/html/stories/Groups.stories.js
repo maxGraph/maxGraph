@@ -53,9 +53,9 @@ const Template = ({ label, ...args }) => {
   };
 
   // Don't clear selection if multiple cells selected
-  const graphHandlerMouseDown = SelectionHandler.prototype.mouseDown;
+  const selectionHandlerMouseDown = SelectionHandler.prototype.mouseDown;
   SelectionHandler.prototype.mouseDown = function (sender, me) {
-    graphHandlerMouseDown.apply(this, arguments);
+    selectionHandlerMouseDown.apply(this, arguments);
 
     if (this.graph.isCellSelected(me.getCell()) && this.graph.getSelectionCount() > 1) {
       this.delayedSelection = false;
@@ -63,13 +63,13 @@ const Template = ({ label, ...args }) => {
   };
 
   // Selects descendants before children selection mode
-  const graphHandlerGetInitialCellForEvent =
+  const selectionHandlerGetInitialCellForEvent =
     SelectionHandler.prototype.getInitialCellForEvent;
   SelectionHandler.prototype.getInitialCellForEvent = function (me) {
     const psel = this.graph.getSelectionCell()
       ? this.graph.getSelectionCell().getParent()
       : null;
-    let cell = graphHandlerGetInitialCellForEvent.apply(this, arguments);
+    let cell = selectionHandlerGetInitialCellForEvent.apply(this, arguments);
     let parent = cell.getParent();
 
     if (psel == null || (psel != cell && psel != parent)) {
@@ -88,9 +88,10 @@ const Template = ({ label, ...args }) => {
   };
 
   // Selection is delayed to mouseup if child selected
-  const graphHandlerIsDelayedSelection = SelectionHandler.prototype.isDelayedSelection;
+  const selectionHandlerIsDelayedSelection =
+    SelectionHandler.prototype.isDelayedSelection;
   SelectionHandler.prototype.isDelayedSelection = function (cell) {
-    let result = graphHandlerIsDelayedSelection.apply(this, arguments);
+    let result = selectionHandlerIsDelayedSelection.apply(this, arguments);
     const psel = this.graph.getSelectionCell()
       ? this.graph.getSelectionCell().getParent()
       : null;

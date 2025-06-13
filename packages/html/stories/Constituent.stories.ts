@@ -17,12 +17,14 @@ limitations under the License.
 
 import {
   type Cell,
+  CellEditorHandler,
   type CellStateStyle,
-  getDefaultPlugins,
+  ConnectionHandler,
   Graph,
   InternalEvent,
   InternalMouseEvent,
   RubberBandHandler,
+  SelectionCellsHandler,
   SelectionHandler,
 } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
@@ -51,7 +53,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  class MyCustomGraphHandler extends SelectionHandler {
+  class MyCustomSelectionHandler extends SelectionHandler {
     /**
      * Redirects start drag to parent.
      */
@@ -70,7 +72,15 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   class MyCustomGraph extends Graph {
     constructor(container: HTMLElement) {
-      super(container, undefined, [...getDefaultPlugins(), RubberBandHandler]);
+      super(container, undefined, [
+        // part of getDefaultPlugins
+        CellEditorHandler,
+        SelectionCellsHandler,
+        ConnectionHandler,
+        MyCustomSelectionHandler, // replaces SelectionHandler
+        // additional plugin for rubber band selection
+        RubberBandHandler,
+      ]);
       this.options.foldingEnabled = false;
       this.recursiveResize = true;
     }
@@ -91,10 +101,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
       super.selectCellForEvent(cell, evt);
     };
-
-    createGraphHandler() {
-      return new MyCustomGraphHandler(this);
-    }
   }
 
   // Creates the graph inside the given container

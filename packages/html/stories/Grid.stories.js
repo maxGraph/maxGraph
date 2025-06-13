@@ -61,9 +61,9 @@ const Template = ({ label, ...args }) => {
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
   // Creates the graph inside the given container
-  var graph = new Graph(container);
-  const graphHandler = graph.getPlugin('SelectionHandler');
-  graphHandler.scaleGrid = true;
+  const graph = new Graph(container);
+  const selectionHandler = graph.getPlugin('SelectionHandler');
+  selectionHandler.scaleGrid = true;
   graph.setPanning(true);
 
   // Enables rubberband selection

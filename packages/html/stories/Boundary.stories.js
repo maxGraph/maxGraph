@@ -151,10 +151,10 @@ const Template = ({ label, ...args }) => {
   style.fontStyle = 1;
   graph.getStylesheet().putDefaultVertexStyle(style);
 
-  const graphHandler = graph.getPlugin('SelectionHandler');
+  const selectionHandler = graph.getPlugin('SelectionHandler');
 
   // Replaces move preview for relative children
-  graphHandler.getDelta = function (me) {
+  selectionHandler.getDelta = function (me) {
     const point = styleUtils.convertPoint(this.graph.container, me.getX(), me.getY());
     let delta = new Point(point.x - this.first.x, point.y - this.first.y);
 
@@ -178,7 +178,7 @@ const Template = ({ label, ...args }) => {
   };
 
   // Relative children cannot be removed from parent
-  graphHandler.shouldRemoveCellsFromParent = function (parent, cells, evt) {
+  selectionHandler.shouldRemoveCellsFromParent = function (parent, cells, evt) {
     return (
       cells.length === 0 &&
       !cells[0].geometry.relative &&

@@ -21,12 +21,14 @@ import {
   RubberBandHandler,
   DragSource,
   gestureUtils,
-  EdgeHandler,
   SelectionHandler,
   Guide,
   eventUtils,
   Cell,
   Geometry,
+  CellEditorHandler,
+  SelectionCellsHandler,
+  ConnectionHandler,
 } from '@maxgraph/core';
 
 import {
@@ -62,7 +64,7 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  class MyCustomGraphHandler extends SelectionHandler {
+  class MyCustomSelectionHandler extends SelectionHandler {
     // Enables guides
     guidesEnabled = true;
 
@@ -71,18 +73,23 @@ const Template = ({ label, ...args }) => {
     }
   }
 
-  class MyCustomEdgeHandler extends EdgeHandler {
-    // Enables snapping waypoints to terminals
-    snapToTerminals = true;
-  }
-
   class MyCustomGraph extends Graph {
-    createGraphHandler() {
-      return new MyCustomGraphHandler(this);
+    constructor(container) {
+      super(container, undefined, [
+        // part of getDefaultPlugins
+        CellEditorHandler,
+        SelectionCellsHandler,
+        ConnectionHandler,
+        MyCustomSelectionHandler, // replaces SelectionHandler
+      ]);
+      this.options.foldingEnabled = false;
+      this.recursiveResize = true;
     }
 
     createEdgeHandler(state, edgeStyle) {
-      return new MyCustomEdgeHandler(state, edgeStyle);
+      const edgeHandler = super.createEdgeHandler(state, edgeStyle);
+      edgeHandler.snapToTerminals = true; // Enables snapping waypoints to terminals
+      return edgeHandler;
     }
   }
 
