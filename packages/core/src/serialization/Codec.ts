@@ -332,6 +332,16 @@ class Codec {
 
     if (obj != null && obj.constructor != null) {
       const enc = CodecRegistry.getCodec(obj.constructor);
+      GlobalConfig.logger.debug(
+        // TODO use obj.constructor.name instead of getFunctionName
+        'Codec.encode: obj=' + getFunctionName(obj.constructor)
+        // +
+        //   ', codec=' +
+        //   enc?.constructor
+        // +
+        //   '/' +
+        //   getFunctionName(enc?.constructor)
+      );
 
       if (enc != null) {
         node = enc.encode(this, obj);

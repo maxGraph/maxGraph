@@ -17,6 +17,8 @@ limitations under the License.
 import { expect, test } from '@jest/globals';
 import {
   BaseGraph,
+  ConsoleLogger,
+  GlobalConfig,
   GraphView,
   registerCoreCodecs,
   unregisterAllCodecs,
@@ -41,15 +43,15 @@ function createGraphView(): GraphView {
 }
 
 // Prevents side effects between tests
-beforeAll(() => {
-  unregisterAllCodecs();
-});
-beforeEach(() => {
-  registerCoreCodecs();
-});
-afterEach(() => {
-  unregisterAllCodecs();
-});
+// beforeAll(() => {
+//   unregisterAllCodecs();
+// });
+// beforeEach(() => {
+//   registerCoreCodecs();
+// });
+// afterEach(() => {
+//   unregisterAllCodecs();
+// });
 
 test('import', () => {
   const view = createGraphView();
@@ -57,6 +59,13 @@ test('import', () => {
 });
 
 test('export', () => {
+  // TODO enable logs, debug/info when registering automatically a codec and debug when moving retrieving a codec
+  const logger = new ConsoleLogger();
+  GlobalConfig.logger = logger;
+  logger.infoEnabled = true;
+  logger.debugEnabled = true;
+  // logger.traceEnabled = true;
+
   // TODO without registering the codec, we reproduce the "RangeError: Maximum call stack size exceeded" problem
   const view = createGraphView();
   const xml = exportGraphView(view);
