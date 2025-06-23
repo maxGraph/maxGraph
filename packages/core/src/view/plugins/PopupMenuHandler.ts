@@ -44,7 +44,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin, MouseListene
     this.graph.addMouseListener(this);
 
     // Does not show menu if any touch gestures take place after the trigger
-    this.gestureHandler = (sender: EventSource, eo: EventObject) => {
+    this.gestureHandler = (_sender: EventSource, _eventObject: EventObject) => {
       this.inTolerance = false;
     };
 
@@ -53,7 +53,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin, MouseListene
     this.init();
   }
 
-  gestureHandler: (sender: EventSource, eo: EventObject) => void;
+  gestureHandler: (sender: EventSource, eventObject: EventObject) => void;
 
   inTolerance = false;
   popupTrigger = false;

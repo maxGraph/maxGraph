@@ -24,7 +24,7 @@ type EventListenerObject = {
 };
 
 export type EventListenerFunction = (
-  sender: EventTarget, // TODO why not EventSource?
+  sender: EventTarget, // TODO why not EventSource? or both objects?
   eventObject: EventObject
 ) => void;
 
@@ -150,6 +150,7 @@ class EventSource {
         sender = this.getEventSource();
       }
       if (!sender) {
+        // TODO check mxgraph implementation, this is not extending EventTarget
         sender = <EventTarget>(<unknown>this);
       }
 

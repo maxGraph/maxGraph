@@ -93,7 +93,7 @@ class DragSource {
    */
   dropHandler: DropHandler;
 
-  eventConsumer: (sender: EventSource, evt: EventObject) => void;
+  eventConsumer: (sender: EventSource, eventObject: EventObject) => void;
 
   /**
    * {@link Point} that specifies the offset of the {@link dragElement}. Default is null.
