@@ -72,7 +72,7 @@ class DragSource {
       InternalEvent.consume(evt);
     });
 
-    this.eventConsumer = (sender: EventSource, evt: EventObject) => {
+    this.eventConsumer = (_sender: EventSource, evt: EventObject) => {
       const evtName = evt.getProperty('eventName');
       const me = evt.getProperty('event');
 
