@@ -78,6 +78,7 @@ export class EditorToolbar {
   /**
    * Reference to the function used to reset the {@link toolbar}.
    */
+  // TODO can we use EventListenerFunction type here?
   resetHandler: (() => void) | null = null;
 
   /**

@@ -3,11 +3,12 @@ import Dictionary from './Dictionary';
 import ObjectIdentity from './ObjectIdentity';
 import type { FilterFunction } from '../types';
 
+// TODO review this function that seems to have been moved in the main branch!
 /**
  * Returns the cells from the given array where the given filter function
  * returns true.
  */
-export const filterCells = (filter: Function) => (cells: Cell[]) => {
+export const filterCells = (filter: FilterFunction) => (cells: Cell[]) => {
   const result = [] as Cell[];
 
   for (let i = 0; i < cells.length; i += 1) {
