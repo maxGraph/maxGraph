@@ -96,26 +96,13 @@ export default {
   },
 };
 
-// TODO apply this settings to the container used by the Graph
-// const HTML_TEMPLATE = `
-// <body onload="main(document.getElementById('graphContainer'))">
-//   <div id="graphContainer"
-//     style="overflow:auto;position:relative;width:800px;height:600px;border:1px solid gray;background:url('images/wires-grid.gif');background-position:-1px 0px;cursor:crosshair;">
-//   </div>
-// </body>
-// </html>
-// `;
-
-// TODO background-position:-1px?
-
 // FIXME let connect to the pin of vertices
 const backgroundImageWiresGrid = 'url("./images/wires-grid.gif")';
 
 const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
 
-  // const parentContainer = document.createElement('div');
-  // TODO add description: Starts connections on the background in wire-mode
+  // TODO use the correct description: Starts connections on the background in wire-mode
   // select several with left click, pan with right click
   const parentContainer = createMainDiv(`<h3>Overlays</h3>
   Demonstrate usage of standard overlays (using an image) and custom overlays (using custom shapes and DOM content).
@@ -132,6 +119,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   container.style.overflow = 'hidden';
   container.style.cursor = 'crosshair';
   container.style.backgroundImage = backgroundImageWiresGrid;
+  // TODO background-position:-1px 0px?
 
   // Changes some default colors
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
@@ -291,9 +279,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     override isConnectableCell(cell: Cell) {
-      return this.graph
-        .getPlugin<ConnectionHandler>('ConnectionHandler')
-        .isConnectableCell(cell);
+      return (
+        this.graph
+          .getPlugin<ConnectionHandler>('ConnectionHandler')
+          ?.isConnectableCell(cell) ?? true
+      );
     }
 
     override connect(
@@ -349,7 +339,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       marker.highlight.highlight =
         this.graph.getPlugin<ConnectionHandler>(
           'ConnectionHandler'
-        ).marker.highlight.highlight;
+        )!.marker.highlight.highlight;
       return marker;
     }
   }
@@ -594,11 +584,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         pt = this.graph.getConnectionPoint(terminal!, constraint);
       }
 
-      if (source) {
-        edge.sourceSegment = null;
-      } else {
-        edge.targetSegment = null;
-      }
+      // TODO source and target segments are not used in the current implementation (check mxGraph)
+      // if (source) {
+      //   edge.sourceSegment = null;
+      // } else {
+      //   edge.targetSegment = null;
+      // }
 
       if (pt == null) {
         const s = this.scale;
@@ -731,16 +722,20 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     let horizontal = true;
 
     // Gets the initial connection from the source terminal or edge
-    if (source != null && source.cell.isEdge()) {
-      horizontal = state.style.sourceConstraint == 'horizontal'; // TODO use custom CellStateStyle type
-    } else if (source != null) {
-      horizontal = source.style.portConstraint != 'vertical';
+    if (source) {
+      if (source.cell.isEdge()) {
+        // if (source != null && source.cell.isEdge()) {
+        horizontal = state.style.sourceConstraint == 'horizontal'; // TODO use custom CellStateStyle type
+      } else {
+        // } else if (source != null) {
+        horizontal = source.style.portConstraint != 'vertical';
 
-      // Checks the direction of the shape and rotates
-      const direction = source.style.direction;
+        // Checks the direction of the shape and rotates
+        const direction = source.style.direction;
 
-      if (direction == 'north' || direction == 'south') {
-        horizontal = !horizontal;
+        if (direction == 'north' || direction == 'south') {
+          horizontal = !horizontal;
+        }
       }
     }
 
@@ -963,7 +958,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       direction: 'north',
       spacingBottom: 12,
       align: 'center',
-      portConstraint: 'horizontal',
+      portConstraint: 'horizontal', // TODO use sourceConstraint or targetConstraint instead (see mxGraph implementation)
       fontSize: 8,
       strokeColor,
       routingCenterY: 0.5,
