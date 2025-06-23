@@ -22,8 +22,6 @@ updates:
       - dependency-name: "typescript"
       # We must use a version that matches the version of node used to build. This is not the latest one, so manage this manually.
       - dependency-name: "@types/node"
-      # Bumping to eslint v9 requires all plugins to support it and configuration changes (flat configuration)
-      - dependency-name: "eslint"
       # use react 19.0.0 in website, otherwise this impacts storybook 7.x which requires at most react 19.x
       # see https://github.com/maxGraph/maxGraph/issues/747
       - dependency-name: "react"
@@ -45,9 +43,10 @@ updates:
           - "react-*"
       lint:
         patterns:
-          - "@typescript-eslint/*"
+          - "eslint"
           - "eslint-*"
           - "prettier"
+          - "typescript-eslint"
       test:
         patterns:
           - "@jest/*"
