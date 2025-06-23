@@ -78,7 +78,7 @@ export const load = (url: string): MaxXmlRequest => {
  */
 export const get = (
   url: string,
-  onload: Function | null = null,
+  onload: ((sender: MaxXmlRequest) => void) | null = null,
   onerror: Function | null = null,
   binary = false,
   timeout: number | null = null,

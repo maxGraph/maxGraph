@@ -1430,7 +1430,7 @@ export interface I18nProvider {
   addResource(
     basename?: string | null,
     language?: string | null,
-    callback?: Function | null
+    callback?: (() => void) | null
   ): void;
 }
 
