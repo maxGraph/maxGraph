@@ -66,7 +66,6 @@ export default tsEslint.config(
       '@typescript-eslint/no-this-alias': 'warn',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-duplicate-enum-values': 'off', // check the impact of changing enum values if we want to enable this
-      '@typescript-eslint/no-unsafe-function-type': 'off', // will be managed later
       '@typescript-eslint/no-unused-expressions': [
         'error',
         {
