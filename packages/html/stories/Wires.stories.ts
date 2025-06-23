@@ -19,46 +19,46 @@ import {
   type AbstractCanvas2D,
   type AbstractGraph,
   type Cell,
+  cellArrayUtils,
+  CellEditorHandler,
   CellHighlight,
-  ConnectionHandlerCellMarker,
-  domUtils,
-  type EventObject,
-  styleUtils,
-  mathUtils,
+  type CellState,
+  type CellStateStyle,
   cloneUtils,
+  ConnectionConstraint,
+  ConnectionHandler,
+  ConnectionHandlerCellMarker,
+  ConstraintHandler,
+  CylinderShape,
+  DomHelpers,
+  domUtils,
+  EdgeHandler,
+  EdgeSegmentHandler,
+  type EdgeStyleFunction,
+  EdgeStyleRegistry,
+  type EventObject,
   EventSource,
   eventUtils,
   Graph,
-  InternalEvent,
-  InternalMouseEvent,
-  RubberBandHandler,
-  ConnectionHandler,
-  ConnectionConstraint,
-  Point,
-  CylinderShape,
-  DomHelpers,
-  Rectangle,
-  EdgeHandler,
-  EdgeStyleRegistry,
-  EdgeSegmentHandler,
-  UndoManager,
-  CellEditorHandler,
-  ConstraintHandler,
+  type GraphPluginConstructor,
+  GraphView,
   Guide,
   ImageBox,
-  GraphView,
-  SelectionHandler,
+  InternalEvent,
+  InternalMouseEvent,
+  mathUtils,
   PanningHandler,
-  TooltipHandler,
-  SelectionCellsHandler,
+  Point,
   PopupMenuHandler,
-  cellArrayUtils,
-  StyleDefaultsConfig,
-  type CellState,
-  type CellStateStyle,
-  type EdgeStyleFunction,
+  Rectangle,
+  RubberBandHandler,
+  SelectionCellsHandler,
+  SelectionHandler,
   ShapeRegistry,
-  type GraphPluginConstructor,
+  StyleDefaultsConfig,
+  styleUtils,
+  TooltipHandler,
+  UndoManager,
 } from '@maxgraph/core';
 
 import {
@@ -569,6 +569,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   // Updates connection points before the routing is called.
+  type CustomCellStateStyle = CellStateStyle & {
+    sourceConstraint?: 'horizontal' | 'vertical';
+    targetConstraint?: 'horizontal' | 'vertical';
+  };
 
   class MyCustomGraphView extends GraphView {
     // Computes the position of edge to edge connection points.
@@ -613,8 +617,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
             // Stores the segment in the edge state
             const key = source ? 'sourceConstraint' : 'targetConstraint';
-            const value = horizontal ? 'horizontal' : 'vertical';
-            edge.style[key] = value; // TODO use custom CellStateStyle type
+            // const value = horizontal ? 'horizontal' : 'vertical';
+            (edge.style as CustomCellStateStyle)[key] = horizontal
+              ? 'horizontal'
+              : 'vertical';
 
             // Keeps the coordinate within the segment bounds
             if (horizontal) {
@@ -725,7 +731,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     if (source) {
       if (source.cell.isEdge()) {
         // if (source != null && source.cell.isEdge()) {
-        horizontal = state.style.sourceConstraint == 'horizontal'; // TODO use custom CellStateStyle type
+        horizontal =
+          (state.style as CustomCellStateStyle).sourceConstraint == 'horizontal';
       } else {
         // } else if (source != null) {
         horizontal = source.style.portConstraint != 'vertical';
