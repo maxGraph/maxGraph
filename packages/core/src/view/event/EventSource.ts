@@ -24,7 +24,7 @@ type EventListenerObject = {
 };
 
 export type EventListenerFunction = (
-  sender: EventTarget,
+  sender: EventTarget, // TODO why not EventSource?
   eventObject: EventObject
 ) => void;
 
