@@ -18,7 +18,7 @@ limitations under the License.
 
 import Image from './image/ImageBox';
 import EventObject from './event/EventObject';
-import EventSource from './event/EventSource';
+import EventSource, { EventListenerFunction } from './event/EventSource';
 import InternalEvent from './event/InternalEvent';
 import Rectangle from './geometry/Rectangle';
 import Client from '../Client';
@@ -83,7 +83,7 @@ export abstract class AbstractGraph extends EventSource {
 
   destroyed = false;
 
-  graphModelChangeListener: Function | null = null;
+  graphModelChangeListener: EventListenerFunction | null = null;
   paintBackground: Function | null = null;
   isConstrainedMoving = false;
 
