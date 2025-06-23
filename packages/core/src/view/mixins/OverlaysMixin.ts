@@ -138,14 +138,11 @@ export const OverlaysMixin: PartialType = {
 
       // Adds a handler for single mouseclicks to select the cell
       if (isSelect) {
-        overlay.addListener(
-          InternalEvent.CLICK,
-          (sender: any, evt: InternalMouseEvent) => {
-            if (this.isEnabled()) {
-              this.setSelectionCell(cell);
-            }
+        overlay.addListener(InternalEvent.CLICK, () => {
+          if (this.isEnabled()) {
+            this.setSelectionCell(cell);
           }
-        );
+        });
       }
 
       // Sets and returns the overlay in the graph
