@@ -334,7 +334,8 @@ class Codec {
       const enc = CodecRegistry.getCodec(obj.constructor);
       GlobalConfig.logger.debug(
         // TODO use obj.constructor.name instead of getFunctionName
-        'Codec.encode: obj=' + getFunctionName(obj.constructor)
+        'Codec.encode: obj=' + obj.constructor.name
+        // 'Codec.encode: obj=' + getFunctionName(obj.constructor)
         // +
         //   ', codec=' +
         //   enc?.constructor
