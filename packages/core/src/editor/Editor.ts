@@ -62,6 +62,7 @@ import { isI18nEnabled, translate } from '../internal/i18n-utils';
 import { error } from '../gui/guiUtils';
 import type { FitPlugin } from '../view/plugins';
 
+// TODO move to types.ts?
 export type EditorActionFunction = (
   editor: Editor,
   cell: Cell | null,
