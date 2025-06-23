@@ -405,7 +405,7 @@ export class TranslationsAsI18n implements I18nProvider {
   addResource(
     basename?: string | null,
     language?: string | null,
-    callback?: Function | null
+    callback?: (() => void) | null
   ): void {
     Translations.add(basename, language, callback);
   }
