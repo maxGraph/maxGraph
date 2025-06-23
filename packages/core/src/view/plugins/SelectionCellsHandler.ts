@@ -58,7 +58,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     this.handlers = new Dictionary();
     this.graph.addMouseListener(this);
 
-    this.refreshHandler = (sender: EventSource, evt: EventObject) => {
+    this.refreshHandler = () => {
       if (this.isEnabled()) {
         this.refresh();
       }
@@ -88,6 +88,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   /**
    * Keeps a reference to an event listener for later removal.
    */
+  // TODO use EventListenerFunction type instead
   refreshHandler: (sender: EventSource, evt: EventObject) => void;
 
   /**

@@ -221,7 +221,9 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
 
   active = false;
 
+  // TODO use EventListenerFunction type instead
   forcePanningHandler: (sender: EventSource, evt: EventObject) => void;
+  // TODO use EventListenerFunction type instead
   gestureHandler: (sender: EventSource, evt: EventObject) => void;
 
   mouseUpListener: MouseEventListener;

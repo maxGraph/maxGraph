@@ -194,6 +194,7 @@ class EdgeHandler implements MouseListenerSet {
    */
   manageLabelHandle = false;
 
+  // TODO use EventListenerFunction type instead
   escapeHandler: (sender: Listenable, eventObject: EventObject) => void;
 
   currentPoint: Point | null = null;

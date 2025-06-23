@@ -47,6 +47,7 @@ import { HandleConfig, VertexHandlerConfig } from './config';
  * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
 class VertexHandler implements MouseListenerSet {
+  // TODO use EventListenerFunction type instead
   escapeHandler: (sender: Listenable, evt: Event) => void;
   selectionBounds: Rectangle;
   bounds: Rectangle;
@@ -319,7 +320,7 @@ class VertexHandler implements MouseListenerSet {
     }
 
     // Handles escape keystrokes
-    this.escapeHandler = (_sender: Listenable, _evt: Event) => {
+    this.escapeHandler = () => {
       if (this.livePreview && this.index != null) {
         // Redraws the live preview
         this.state.view.graph.cellRenderer.redraw(this.state, true);

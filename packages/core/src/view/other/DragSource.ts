@@ -93,6 +93,7 @@ class DragSource {
    */
   dropHandler: DropHandler;
 
+  // TODO use EventListenerFunction type instead
   eventConsumer: (sender: EventSource, eventObject: EventObject) => void;
 
   /**

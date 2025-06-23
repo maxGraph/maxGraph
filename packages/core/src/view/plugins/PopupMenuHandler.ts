@@ -53,6 +53,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin, MouseListene
     this.init();
   }
 
+  // TODO use EventListenerFunction type instead
   gestureHandler: (sender: EventSource, eventObject: EventObject) => void;
 
   inTolerance = false;

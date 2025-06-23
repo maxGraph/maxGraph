@@ -85,14 +85,14 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
     this.graph.addListener(InternalEvent.PAN, this.panHandler);
 
     // Handles escape keystrokes
-    this.escapeHandler = (sender, evt) => {
+    this.escapeHandler = () => {
       this.reset();
     };
 
     this.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
 
     // Updates the preview box for remote changes
-    this.refreshHandler = (sender, evt) => {
+    this.refreshHandler = () => {
       // Merges multiple pending calls
       if (this.refreshThread) {
         window.clearTimeout(this.refreshThread);
@@ -170,7 +170,9 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   graph: AbstractGraph;
 
   panHandler: () => void;
+  // TODO use EventListenerFunction type instead
   escapeHandler: (sender: EventSource, evt: EventObject) => void;
+  // TODO use EventListenerFunction type instead
   refreshHandler: (sender: EventSource, evt: EventObject) => void;
   keyHandler: (e: KeyboardEvent) => void;
   refreshThread: number | null = null;
