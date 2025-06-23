@@ -235,7 +235,7 @@ class DragSource {
    * Returns the graph for the given mouse event. This implementation returns
    * `null`.
    */
-  getGraphForEvent(evt: MouseEvent): Graph | null {
+  getGraphForEvent(evt: MouseEvent): AbstractGraph | null {
     return null;
   }
 

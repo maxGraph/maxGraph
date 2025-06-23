@@ -101,23 +101,19 @@ export class EditorToolbar {
     if (container != null) {
       this.toolbar = new MaxToolbar(container);
 
-      // Installs the insert function in the editor if an item is
-      // selected in the toolbar
-      this.toolbar.addListener(
-        InternalEvent.SELECT,
-        (sender: Element, evt: EventObject) => {
-          const funct = evt.getProperty('function');
+      // Installs the insert function in the editor if an item is selected in the toolbar
+      this.toolbar.addListener(InternalEvent.SELECT, () => {
+        const funct = evt.getProperty('function');
 
-          if (funct != null) {
-            (<Editor>this.editor).insertFunction = () => {
-              funct.apply(this, [container]);
-              (<MaxToolbar>this.toolbar).resetMode();
-            };
-          } else {
-            (<Editor>this.editor).insertFunction = null;
-          }
+        if (funct != null) {
+          (<Editor>this.editor).insertFunction = () => {
+            funct.apply(this, [container]);
+            (<MaxToolbar>this.toolbar).resetMode();
+          };
+        } else {
+          (<Editor>this.editor).insertFunction = null;
         }
-      );
+      });
 
       // Resets the selected tool after a double click or escape keystroke
       this.resetHandler = () => {
