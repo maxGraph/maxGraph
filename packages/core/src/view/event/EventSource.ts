@@ -137,13 +137,13 @@ class EventSource {
    * fireEvent(new mxEventObject("eventName", key1, val1, .., keyN, valN))
    * ```
    *
-   * @param evt {@link EventObject} that represents the event.
+   * @param eventObject {@link EventObject} that represents the event.
    * @param sender Optional sender to be passed to the listener. Default value is the returned value of {@link getEventSource}.
    */
-  fireEvent(evt: EventObject, sender: EventTarget | null = null) {
+  fireEvent(eventObject: EventObject, sender: EventTarget | null = null) {
     if (this.isEventsEnabled()) {
-      if (!evt) {
-        evt = new EventObject('');
+      if (!eventObject) {
+        eventObject = new EventObject('');
       }
 
       if (!sender) {
@@ -155,8 +155,8 @@ class EventSource {
       }
 
       for (const eventListener of this.eventListeners) {
-        if (eventListener.name === null || eventListener.name === evt.getName()) {
-          eventListener.funct.apply(this, [sender, evt]);
+        if (eventListener.name === null || eventListener.name === eventObject.getName()) {
+          eventListener.funct.apply(this, [sender, eventObject]);
         }
       }
     }
