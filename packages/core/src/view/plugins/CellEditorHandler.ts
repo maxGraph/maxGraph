@@ -44,7 +44,7 @@ import {
   isMetaDown,
   isShiftDown,
 } from '../../util/EventUtils';
-import EventSource from '../event/EventSource';
+import EventSource, { EventListenerFunction } from '../event/EventSource';
 import { matchBinaryMask } from '../../internal/utils';
 import type { AbstractGraph } from '../AbstractGraph';
 import type { AlignValue, GraphPlugin } from '../../types';
@@ -159,7 +159,7 @@ class CellEditorHandler implements GraphPlugin {
     };
 
     // Handling of deleted cells while editing
-    this.changeHandler = (_sender: EventSource) => {
+    this.changeHandler = () => {
       if (this.editingCell && !this.graph.getView().getState(this.editingCell, false)) {
         this.stopEditing(true);
       }
@@ -171,7 +171,7 @@ class CellEditorHandler implements GraphPlugin {
   }
 
   // TODO: Document me!
-  changeHandler: (sender: EventSource) => void;
+  changeHandler: EventListenerFunction;
 
   zoomHandler: () => void;
 
