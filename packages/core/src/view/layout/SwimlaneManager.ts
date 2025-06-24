@@ -20,8 +20,9 @@ import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
 import type { AbstractGraph } from '../AbstractGraph';
-import EventObject from '../event/EventObject';
+import type EventObject from '../event/EventObject';
 import type Cell from '../cell/Cell';
+import type { EventListenerFunction } from '../../types';
 
 /**
  * Manager for swimlanes and nested swimlanes that sets the size of newly added
@@ -44,13 +45,13 @@ class SwimlaneManager extends EventSource {
     this.addEnabled = addEnabled;
     this.resizeEnabled = resizeEnabled;
 
-    this.addHandler = (_sender: EventSource, evt: EventObject) => {
+    this.addHandler = (_sender: EventTarget, evt: EventObject) => {
       if (this.isEnabled() && this.isAddEnabled()) {
         this.cellsAdded(evt.getProperty('cells'));
       }
     };
 
-    this.resizeHandler = (_sender: EventSource, evt: EventObject) => {
+    this.resizeHandler = (_sender: EventTarget, evt: EventObject) => {
       if (this.isEnabled() && this.isResizeEnabled()) {
         this.cellsResized(evt.getProperty('cells'));
       }
@@ -92,14 +93,12 @@ class SwimlaneManager extends EventSource {
   /**
    * Holds the function that handles the move event.
    */
-  // TODO use EventListenerFunction type instead
-  addHandler: (sender: EventSource, evt: EventObject) => void;
+  addHandler: EventListenerFunction;
 
   /**
    * Holds the function that handles the move event.
    */
-  // TODO use EventListenerFunction type instead
-  resizeHandler: (sender: EventSource, evt: EventObject) => void;
+  resizeHandler: EventListenerFunction;
 
   /**
    * Returns true if events are handled. This implementation
