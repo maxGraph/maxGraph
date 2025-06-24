@@ -146,7 +146,7 @@ export class EditorToolbar {
         this.editor!.execute(action);
       }
     };
-    return (<MaxToolbar>this.toolbar).addItem(title, icon, clickHandler, pressed);
+    return this.toolbar!.addItem(title, icon, clickHandler, pressed);
   }
 
   /**
@@ -156,14 +156,14 @@ export class EditorToolbar {
    */
   addSeparator(icon?: string): void {
     icon = icon || `${Client.imageBasePath}/separator.gif`;
-    (<MaxToolbar>this.toolbar).addSeparator(icon);
+    this.toolbar!.addSeparator(icon);
   }
 
   /**
    * Helper method to invoke {@link MaxToolbar.addCombo} on toolbar and return the resulting DOM node.
    */
   addCombo(): HTMLElement {
-    return (<MaxToolbar>this.toolbar).addCombo();
+    return this.toolbar!.addCombo();
   }
 
   /**
@@ -173,7 +173,7 @@ export class EditorToolbar {
    * @param title String that represents the title of the combo.
    */
   addActionCombo(title: string) {
-    return (<MaxToolbar>this.toolbar).addActionCombo(title);
+    return this.toolbar!.addActionCombo(title);
   }
 
   /**
@@ -203,7 +203,7 @@ export class EditorToolbar {
     title: string,
     value: string | ((evt: any) => void) | null
   ): HTMLElement {
-    return (<MaxToolbar>this.toolbar).addOption(combo, title, value);
+    return this.toolbar!.addOption(combo, title, value);
   }
 
   /**
@@ -227,7 +227,7 @@ export class EditorToolbar {
       this.editor!.setMode(mode);
       funct?.(this.editor!);
     };
-    return (<MaxToolbar>this.toolbar).addSwitchMode(title, icon, clickHandler, pressed);
+    return this.toolbar!.addSwitchMode(title, icon, clickHandler, pressed);
   }
 
   /**
@@ -278,18 +278,11 @@ export class EditorToolbar {
         this.drop(factory(), evt, cell);
       }
 
-      (<MaxToolbar>this.toolbar).resetMode();
+      this.toolbar!.resetMode();
       InternalEvent.consume(evt);
     };
 
-    const img = (<MaxToolbar>this.toolbar).addMode(
-      title,
-      icon,
-      clickHandler,
-      pressed,
-      null,
-      toggle
-    );
+    const img = this.toolbar!.addMode(title, icon, clickHandler, pressed, null, toggle);
 
     // Creates a wrapper function that calls the click handler without the graph argument
     const dropHandler: DropHandler = (
