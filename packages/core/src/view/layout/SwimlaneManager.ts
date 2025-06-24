@@ -20,7 +20,6 @@ import EventSource from '../event/EventSource';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
 import type { AbstractGraph } from '../AbstractGraph';
-import type EventObject from '../event/EventObject';
 import type Cell from '../cell/Cell';
 import type { EventListenerFunction } from '../../types';
 
@@ -45,13 +44,13 @@ class SwimlaneManager extends EventSource {
     this.addEnabled = addEnabled;
     this.resizeEnabled = resizeEnabled;
 
-    this.addHandler = (_sender: EventTarget, evt: EventObject) => {
+    this.addHandler = (_sender, evt) => {
       if (this.isEnabled() && this.isAddEnabled()) {
         this.cellsAdded(evt.getProperty('cells'));
       }
     };
 
-    this.resizeHandler = (_sender: EventTarget, evt: EventObject) => {
+    this.resizeHandler = (_sender, evt) => {
       if (this.isEnabled() && this.isResizeEnabled()) {
         this.cellsResized(evt.getProperty('cells'));
       }
