@@ -61,6 +61,7 @@ import { isNullish } from '../internal/utils';
 import { isI18nEnabled, translate } from '../internal/i18n-utils';
 import { error } from '../gui/guiUtils';
 import type { FitPlugin } from '../view/plugins';
+import type MaxXmlRequest from '../util/MaxXmlRequest';
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
@@ -1925,7 +1926,7 @@ export class Editor extends EventSource {
       data = encodeURIComponent(data);
     }
 
-    post(url, `${this.postParameterName}=${data}`, (req: string) => {
+    post(url, `${this.postParameterName}=${data}`, (req: MaxXmlRequest) => {
       this.fireEvent(new EventObject(InternalEvent.POST, { request: req, url, data }));
     });
   }

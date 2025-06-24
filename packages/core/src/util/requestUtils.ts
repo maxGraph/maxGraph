@@ -180,7 +180,8 @@ export const getAll = (
 export const post = (
   url: string,
   params: string | null = null,
-  onload: Function,
+  onload: (sender: MaxXmlRequest) => void,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   onerror: Function | null = null
 ) => {
   return new MaxXmlRequest(url, params).send(onload, onerror);
