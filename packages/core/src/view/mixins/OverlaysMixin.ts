@@ -17,7 +17,6 @@ limitations under the License.
 import CellOverlay from '../cell/CellOverlay';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import type InternalMouseEvent from '../event/InternalMouseEvent';
 import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<
