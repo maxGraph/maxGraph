@@ -36,7 +36,7 @@ import EventObject from '../event/EventObject';
 import { getSource, isMouseEvent } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 import { hasScrollbars } from '../../util/styleUtils';
-import type { Listenable, MouseListenerSet } from '../../types';
+import type { EventListenerFunction, Listenable, MouseListenerSet } from '../../types';
 import { getDefaultPlugins } from '../plugins';
 
 /**
@@ -101,7 +101,7 @@ class Outline implements MouseListenerSet {
     this.outline.labelsVisible = this.labelsVisible;
     this.outline.setEnabled(false);
 
-    this.updateHandler = (sender: any, evt: EventObject) => {
+    this.updateHandler = () => {
       if (!this.suspended && !this.active) {
         this.update();
       }
@@ -123,7 +123,7 @@ class Outline implements MouseListenerSet {
     // @ts-ignore because sender and evt don't seem used
     InternalEvent.addListener(this.source.container, 'scroll', this.updateHandler);
 
-    this.panHandler = (sender: any, evt: EventObject) => {
+    this.panHandler = (sender: EventTarget, evt: EventObject) => {
       if (this.updateOnPan) {
         this.updateHandler?.(sender, evt);
       }
@@ -131,7 +131,7 @@ class Outline implements MouseListenerSet {
     this.source.addListener(InternalEvent.PAN, this.panHandler);
 
     // Refreshes the graph in the outline after a refresh of the main graph
-    this.refreshHandler = (sender: any) => {
+    this.refreshHandler = () => {
       const outline = this.outline;
       outline?.setStylesheet(this.source.getStylesheet());
       outline?.refresh();
@@ -199,11 +199,11 @@ class Outline implements MouseListenerSet {
 
   selectionBorder: RectangleShape | null = null;
 
-  updateHandler: ((sender: any, evt: EventObject) => void) | null = null;
+  updateHandler: EventListenerFunction | null = null;
 
-  refreshHandler: ((sender: any, evt: EventObject) => void) | null = null;
+  refreshHandler: EventListenerFunction | null = null;
 
-  panHandler: ((sender: any, evt: EventObject) => void) | null = null;
+  panHandler: EventListenerFunction | null = null;
 
   active: boolean | null = null;
 
