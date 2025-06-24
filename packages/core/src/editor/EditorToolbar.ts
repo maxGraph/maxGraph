@@ -431,7 +431,7 @@ export class EditorToolbar {
     sprite.setAttribute('src', img.getAttribute('src')!);
 
     // Handles delayed loading of the images
-    const loader = (evt: InternalEvent) => {
+    const loader = (_evt: InternalEvent) => {
       // Preview uses the image node with double size. Later this can be
       // changed to use a separate preview and guides, but for this the
       // dropHandler must use the additional x- and y-arguments and the
