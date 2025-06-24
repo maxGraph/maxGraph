@@ -31,6 +31,7 @@ import type GraphDataModel from './view/GraphDataModel';
 import type { Stylesheet } from './view/style/Stylesheet';
 import type GraphSelectionModel from './view/GraphSelectionModel';
 import type GraphView from './view/GraphView';
+import EventObject from './view/event/EventObject';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -1616,3 +1617,8 @@ export interface EdgeMarkerRegistryInterface extends Registry<MarkerFactoryFunct
     filled: boolean
   ): MarkerFunction | null;
 }
+
+export type EventListenerFunction = (
+  sender: EventTarget, // TODO why not EventSource? or both objects?
+  eventObject: EventObject
+) => void;

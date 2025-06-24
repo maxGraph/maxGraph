@@ -17,16 +17,12 @@ limitations under the License.
 */
 
 import EventObject from './EventObject';
+import { EventListenerFunction } from '../../types';
 
 type EventListenerObject = {
   funct: EventListenerFunction;
   name: string;
 };
-
-export type EventListenerFunction = (
-  sender: EventTarget, // TODO why not EventSource? or both objects?
-  eventObject: EventObject
-) => void;
 
 /**
  * Base class for objects that dispatch named events.

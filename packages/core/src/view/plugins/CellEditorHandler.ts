@@ -44,10 +44,10 @@ import {
   isMetaDown,
   isShiftDown,
 } from '../../util/EventUtils';
-import EventSource, { EventListenerFunction } from '../event/EventSource';
+import EventSource from '../event/EventSource';
 import { matchBinaryMask } from '../../internal/utils';
 import type { AbstractGraph } from '../AbstractGraph';
-import type { AlignValue, GraphPlugin } from '../../types';
+import type { AlignValue, EventListenerFunction, GraphPlugin } from '../../types';
 import type TooltipHandler from './TooltipHandler';
 
 /**
