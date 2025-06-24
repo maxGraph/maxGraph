@@ -468,7 +468,7 @@ export abstract class AbstractGraph extends EventSource {
     this.initializeCollaborators(options);
 
     // Adds a graph model listener to update the view
-    this.graphModelChangeListener = (_sender: any, evt: EventObject) => {
+    this.graphModelChangeListener = (_sender, evt) => {
       this.graphModelChanged(evt.getProperty('edit').changes);
     };
     this.getDataModel().addListener(InternalEvent.CHANGE, this.graphModelChangeListener);
