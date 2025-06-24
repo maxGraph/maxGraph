@@ -32,7 +32,6 @@ import { BaseGraph } from '../BaseGraph';
 import ImageShape from '../shape/node/ImageShape';
 import InternalEvent from '../event/InternalEvent';
 import Image from '../image/ImageBox';
-import EventObject from '../event/EventObject';
 import { getSource, isMouseEvent } from '../../util/EventUtils';
 import EventSource from '../event/EventSource';
 import { hasScrollbars } from '../../util/styleUtils';
@@ -123,7 +122,7 @@ class Outline implements MouseListenerSet {
     // @ts-ignore because sender and evt don't seem used
     InternalEvent.addListener(this.source.container, 'scroll', this.updateHandler);
 
-    this.panHandler = (sender: EventTarget, evt: EventObject) => {
+    this.panHandler = (sender, evt) => {
       if (this.updateOnPan) {
         this.updateHandler?.(sender, evt);
       }
