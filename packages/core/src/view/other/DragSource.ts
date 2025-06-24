@@ -38,11 +38,10 @@ import {
   isPenEvent,
   isTouchEvent,
 } from '../../util/EventUtils';
-import EventSource from '../event/EventSource';
-import EventObject from '../event/EventObject';
 import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 import type SelectionHandler from '../plugins/SelectionHandler';
+import type { EventListenerFunction } from '../../types';
 
 export type DropHandler = (
   graph: AbstractGraph,
@@ -72,7 +71,7 @@ class DragSource {
       InternalEvent.consume(evt);
     });
 
-    this.eventConsumer = (_sender: EventSource, evt: EventObject) => {
+    this.eventConsumer = (_sender, evt) => {
       const evtName = evt.getProperty('eventName');
       const me = evt.getProperty('event');
 
@@ -93,8 +92,7 @@ class DragSource {
    */
   dropHandler: DropHandler;
 
-  // TODO use EventListenerFunction type instead
-  eventConsumer: (sender: EventSource, eventObject: EventObject) => void;
+  eventConsumer: EventListenerFunction;
 
   /**
    * {@link Point} that specifies the offset of the {@link dragElement}. Default is null.
