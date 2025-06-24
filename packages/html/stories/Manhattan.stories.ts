@@ -47,8 +47,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.getPlugin<SelectionHandler>('SelectionHandler')!.guidesEnabled = true;
 
   // Hack to rerender edge on any node move
-  graph.model.addListener(InternalEvent.CHANGE, (_sender, evt) => {
-    const changes = evt.getProperty('changes');
+  graph.model.addListener(InternalEvent.CHANGE, (_sender, eventObject) => {
+    const changes = eventObject.getProperty('changes');
     const hasMoveEdits = changes?.some(
       // checks for the existence of the geometry and previous properties which are characteristic of GeometryChange in the model
       (c: any) => typeof c.geometry !== 'undefined' && typeof c.previous !== 'undefined'
