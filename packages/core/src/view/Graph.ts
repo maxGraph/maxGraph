@@ -30,7 +30,6 @@ import {
   registerDefaultPerimeters,
 } from './style/register';
 import { getDefaultPlugins } from './plugins';
-import type AbstractCanvas2D from './canvas/AbstractCanvas2D';
 
 /**
  * An implementation of {@link AbstractGraph} that automatically loads some default built-ins (plugins, style elements).
