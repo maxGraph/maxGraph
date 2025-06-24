@@ -95,7 +95,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
           <number>parent.swimlaneIndex < <number>node.swimlaneIndex &&
           connectingEdge.source === node;
 
-        if (isAncestor && connectingEdge != null) {
+        if (isAncestor && connectingEdge) {
           connectingEdge.invert();
           remove(connectingEdge, parent.connectsAsSource);
           node.connectsAsSource.push(connectingEdge);
