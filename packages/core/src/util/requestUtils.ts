@@ -79,12 +79,10 @@ export const load = (url: string): MaxXmlRequest => {
 export const get = (
   url: string,
   onload: ((sender: MaxXmlRequest) => void) | null = null,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
-  onerror: Function | null = null,
+  onerror: ((this: XMLHttpRequest, ev: ProgressEvent) => any) | null = null,
   binary = false,
   timeout: number | null = null,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
-  ontimeout: Function | null = null,
+  ontimeout: ((this: XMLHttpRequest, ev: ProgressEvent) => any) | null = null,
   headers: { [key: string]: string } | null = null
 ) => {
   const req = new MaxXmlRequest(url, null, 'GET');
@@ -183,8 +181,7 @@ export const post = (
   url: string,
   params: string | null = null,
   onload: (sender: MaxXmlRequest) => void,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
-  onerror: Function | null = null
+  onerror: ((this: XMLHttpRequest, ev: ProgressEvent) => any) | null = null
 ) => {
   return new MaxXmlRequest(url, params).send(onload, onerror);
 };

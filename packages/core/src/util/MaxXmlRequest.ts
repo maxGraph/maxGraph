@@ -149,7 +149,7 @@ export default class MaxXmlRequest {
   /**
    * Holds the inner, browser-specific request object.
    */
-  request: any = null;
+  request: XMLHttpRequest = null!;
 
   /**
    * Specifies if request values should be decoded as URIs before setting the
@@ -251,11 +251,11 @@ export default class MaxXmlRequest {
    */
   send(
     onload: ((sender: MaxXmlRequest) => void) | null = null,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
-    onerror: Function | null = null,
+    onerror: ((this: XMLHttpRequest, ev: ProgressEvent) => any) | null = null,
     timeout: number | null = null,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
-    ontimeout: Function | null = null
+    ontimeout:
+      | ((this: XMLHttpRequest, ev: ProgressEvent<EventTarget>) => any)
+      | null = null
   ): void {
     this.request = this.create();
 
@@ -273,7 +273,7 @@ export default class MaxXmlRequest {
       this.setRequestHeaders(this.request, this.params);
 
       if (window.XMLHttpRequest && this.withCredentials) {
-        this.request.withCredentials = 'true';
+        this.request.withCredentials = true;
       }
 
       if (window.XMLHttpRequest && timeout != null && ontimeout != null) {
