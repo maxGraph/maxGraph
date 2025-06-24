@@ -31,7 +31,12 @@ import {
 import PanningManager from '../other/PanningManager';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 
-import type { GraphPlugin, MouseEventListener, MouseListenerSet } from '../../types';
+import type {
+  EventListenerFunction,
+  GraphPlugin,
+  MouseEventListener,
+  MouseListenerSet,
+} from '../../types';
 import type { AbstractGraph } from '../AbstractGraph';
 
 /**
@@ -76,9 +81,9 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
     this.graph.addMouseListener(this);
 
     // Handles force panning event
-    this.forcePanningHandler = (_sender: EventSource, eo: EventObject) => {
-      const evtName = eo.getProperty('eventName');
-      const me = eo.getProperty('event');
+    this.forcePanningHandler = (_sender, eventObject) => {
+      const evtName = eventObject.getProperty('eventName');
+      const me = eventObject.getProperty('event');
 
       if (evtName === InternalEvent.MOUSE_DOWN && this.isForcePanningEvent(me)) {
         this.start(me);
@@ -91,9 +96,9 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
     this.graph.addListener(InternalEvent.FIRE_MOUSE_EVENT, this.forcePanningHandler);
 
     // Handles pinch gestures
-    this.gestureHandler = (_sender: EventSource, eo: EventObject) => {
+    this.gestureHandler = (_sender, eventObject) => {
       if (this.isPinchEnabled()) {
-        const evt = eo.getProperty('event');
+        const evt = eventObject.getProperty('event');
 
         if (!isConsumed(evt) && evt.type === 'gesturestart') {
           this.initialScale = this.graph.view.scale;
@@ -221,10 +226,8 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
 
   active = false;
 
-  // TODO use EventListenerFunction type instead
-  forcePanningHandler: (sender: EventSource, evt: EventObject) => void;
-  // TODO use EventListenerFunction type instead
-  gestureHandler: (sender: EventSource, evt: EventObject) => void;
+  forcePanningHandler: EventListenerFunction;
+  gestureHandler: EventListenerFunction;
 
   mouseUpListener: MouseEventListener;
 
