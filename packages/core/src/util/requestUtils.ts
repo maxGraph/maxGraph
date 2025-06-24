@@ -79,9 +79,11 @@ export const load = (url: string): MaxXmlRequest => {
 export const get = (
   url: string,
   onload: ((sender: MaxXmlRequest) => void) | null = null,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   onerror: Function | null = null,
   binary = false,
   timeout: number | null = null,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- require a generic function type
   ontimeout: Function | null = null,
   headers: { [key: string]: string } | null = null
 ) => {
