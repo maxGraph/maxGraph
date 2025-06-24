@@ -26,7 +26,6 @@ import { getElapseMillisecondsMessage } from '../internal/time-utils';
 import { VERSION } from '../util/Constants';
 import { GlobalConfig } from '../util/config';
 import { popup } from './guiUtils';
-import EventObject from '../view/event/EventObject';
 
 const copyTextToClipboard = (text: string): void => {
   navigator.clipboard.writeText(text).then(
