@@ -22,10 +22,9 @@ import { getScrollOrigin } from '../../util/styleUtils';
 import { getMainEvent, isMultiTouchEvent } from '../../util/EventUtils';
 import type { AbstractGraph } from '../AbstractGraph';
 import InternalMouseEvent from '../event/InternalMouseEvent';
-import type { GraphPlugin, MouseListenerSet } from '../../types';
+import type { EventListenerFunction, GraphPlugin, MouseListenerSet } from '../../types';
 import type TooltipHandler from './TooltipHandler';
-import EventSource from '../event/EventSource';
-import EventObject from '../event/EventObject';
+import type EventSource from '../event/EventSource';
 
 /**
  * Event handler that creates popupmenus.
@@ -44,7 +43,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin, MouseListene
     this.graph.addMouseListener(this);
 
     // Does not show menu if any touch gestures take place after the trigger
-    this.gestureHandler = (_sender: EventSource, _eventObject: EventObject) => {
+    this.gestureHandler = (_sender, _eventObject) => {
       this.inTolerance = false;
     };
 
@@ -53,8 +52,7 @@ class PopupMenuHandler extends MaxPopupMenu implements GraphPlugin, MouseListene
     this.init();
   }
 
-  // TODO use EventListenerFunction type instead
-  gestureHandler: (sender: EventSource, eventObject: EventObject) => void;
+  gestureHandler: EventListenerFunction;
 
   inTolerance = false;
   popupTrigger = false;
