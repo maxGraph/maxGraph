@@ -109,7 +109,7 @@ export class EditorToolbar {
           const funct = evt.getProperty('function');
 
           if (funct != null) {
-            (<Editor>this.editor).insertFunction = () => {
+            this.editor!.insertFunction = () => {
               funct.apply(this, [container]);
               this.toolbar!.resetMode();
             };
@@ -126,11 +126,8 @@ export class EditorToolbar {
         }
       };
 
-      (<Editor>this.editor).graph.addListener(
-        InternalEvent.DOUBLE_CLICK,
-        this.resetHandler
-      );
-      (<Editor>this.editor).addListener(InternalEvent.ESCAPE, this.resetHandler);
+      this.editor!.graph.addListener(InternalEvent.DOUBLE_CLICK, this.resetHandler);
+      this.editor!.addListener(InternalEvent.ESCAPE, this.resetHandler);
     }
   }
 
@@ -146,7 +143,7 @@ export class EditorToolbar {
   addItem(title: string, icon: string, action: string, pressed?: string): any {
     const clickHandler = () => {
       if (action != null && action.length > 0) {
-        (<Editor>this.editor).execute(action);
+        this.editor!.execute(action);
       }
     };
     return (<MaxToolbar>this.toolbar).addItem(title, icon, clickHandler, pressed);
@@ -188,7 +185,7 @@ export class EditorToolbar {
    */
   addActionOption(combo: HTMLSelectElement, title: string, action: string): void {
     const clickHandler = () => {
-      (<Editor>this.editor).execute(action);
+      this.editor!.execute(action);
     };
 
     this.addOption(combo, title, clickHandler);
@@ -227,11 +224,8 @@ export class EditorToolbar {
     funct: ((editor: Editor) => void) | null = null
   ): any {
     const clickHandler = () => {
-      (<Editor>this.editor).setMode(mode);
-
-      if (funct != null) {
-        funct(<Editor>this.editor);
-      }
+      this.editor!.setMode(mode);
+      funct?.(this.editor!);
     };
     return (<MaxToolbar>this.toolbar).addSwitchMode(title, icon, clickHandler, pressed);
   }
@@ -272,7 +266,7 @@ export class EditorToolbar {
       if (typeof ptype === 'function') {
         return ptype();
       }
-      return (<Editor>this.editor).graph.cloneCell(ptype);
+      return this.editor!.graph.cloneCell(ptype);
     };
 
     // Defines the function for a click event on the graph
@@ -362,7 +356,7 @@ export class EditorToolbar {
       ) {
         return graph.splitEdge(target, [vertex], null, pt.x, pt.y);
       }
-      return (<Editor>this.editor).addVertex(target, vertex, pt.x, pt.y);
+      return this.editor!.addVertex(target, vertex, pt.x, pt.y);
     }
     return null;
   }
@@ -398,7 +392,7 @@ export class EditorToolbar {
         const step = this.spacing * graph.gridSize;
         const dist = source.getDirectedEdgeCount(true) * 20;
 
-        if ((<Editor>this.editor).horizontalFlow) {
+        if (this.editor!.horizontalFlow) {
           g.x += (g.width + geo.width) / 2 + step + dist;
         } else {
           g.y += (g.height + geo.height) / 2 + step + dist;
@@ -414,7 +408,7 @@ export class EditorToolbar {
 
         // Creates the edge using the editor instance and calls
         // the second function that fires an add event
-        edge = (<Editor>this.editor).createEdge(source, vertex);
+        edge = this.editor!.createEdge(source, vertex);
 
         if (edge.getGeometry() == null) {
           const edgeGeometry = new Geometry();
@@ -453,7 +447,7 @@ export class EditorToolbar {
       sprite.style.width = `${2 * img.offsetWidth}px`;
       sprite.style.height = `${2 * img.offsetHeight}px`;
 
-      makeDraggable(img, (<Editor>this.editor).graph, dropHandler, sprite);
+      makeDraggable(img, this.editor!.graph, dropHandler, sprite);
       InternalEvent.removeListener(sprite, 'load', loader);
     };
   }
@@ -464,8 +458,8 @@ export class EditorToolbar {
    */
   destroy(): void {
     if (this.resetHandler != null) {
-      (<Editor>this.editor).graph.removeListener(this.resetHandler);
-      (<Editor>this.editor).removeListener(this.resetHandler);
+      this.editor!.graph.removeListener(this.resetHandler);
+      this.editor!.removeListener(this.resetHandler);
       this.resetHandler = null;
     }
 
