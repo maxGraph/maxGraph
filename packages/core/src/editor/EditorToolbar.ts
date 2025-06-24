@@ -28,6 +28,7 @@ import type Cell from '../view/cell/Cell';
 import type { AbstractGraph } from '../view/AbstractGraph';
 import EventObject from '../view/event/EventObject';
 import type { DropHandler } from '../view/other/DragSource';
+import { EventListenerFunction } from '../types';
 
 /**
  * Toolbar for the editor.
@@ -50,8 +51,8 @@ import type { DropHandler } from '../view/other/DragSource';
  *
  * ### Codec
  *
- * This class uses the {@link DefaultToolbarCodec} to read configuration
- * data into an existing instance. See {@link DefaultToolbarCodec} for a
+ * This class uses the {@link EditorToolbarCodec} to read configuration
+ * data into an existing instance. See {@link EditorToolbarCodec} for a
  * description of the configuration format.
  *
  * @category Editor
@@ -78,8 +79,7 @@ export class EditorToolbar {
   /**
    * Reference to the function used to reset the {@link toolbar}.
    */
-  // TODO can we use EventListenerFunction type here?
-  resetHandler: (() => void) | null = null;
+  resetHandler: EventListenerFunction | null = null;
 
   /**
    * Defines the spacing between existing and new vertices in gridSize units when a new vertex is dropped on an existing cell.
