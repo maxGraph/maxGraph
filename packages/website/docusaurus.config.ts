@@ -28,8 +28,10 @@ const config: Config = {
   onBrokenAnchors: 'throw',
   onBrokenMarkdownLinks: 'throw',
 
-  // Enable rspack build introduce in 3.6.0, see https://docusaurus.io/blog/releases/3.6#adoption-strategy
   future: {
+    // v3.8: `future.experimental_faster.ssgWorkerThreads` requires the future flag `future.v4.removeLegacyPostBuildHeadAttribute` to be turned on.
+    v4: true,
+    // Enable rspack build introduce in 3.6.0, see https://docusaurus.io/blog/releases/3.6#adoption-strategy
     experimental_faster: true,
   },
 
