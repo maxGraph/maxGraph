@@ -18,7 +18,8 @@ limitations under the License.
 
 import Image from './image/ImageBox';
 import EventObject from './event/EventObject';
-import EventSource, { EventListenerFunction } from './event/EventSource';
+import type { EventListenerFunction } from './event/EventSource';
+import EventSource from './event/EventSource';
 import InternalEvent from './event/InternalEvent';
 import Rectangle from './geometry/Rectangle';
 import Client from '../Client';

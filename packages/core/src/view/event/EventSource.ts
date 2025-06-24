@@ -134,7 +134,7 @@ class EventSource {
    * Example:
    *
    * ```javascript
-   * fireEvent(new mxEventObject("eventName", key1, val1, .., keyN, valN))
+   * fireEvent(new EventObject("eventName", key1, val1, .., keyN, valN))
    * ```
    *
    * @param eventObject {@link EventObject} that represents the event.
