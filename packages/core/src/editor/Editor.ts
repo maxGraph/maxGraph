@@ -51,7 +51,7 @@ import type PopupMenuHandler from '../view/plugins/PopupMenuHandler';
 import RubberBandHandler from '../view/plugins/RubberBandHandler';
 import InternalEvent from '../view/event/InternalEvent';
 import InternalMouseEvent from '../view/event/InternalMouseEvent';
-import { CellStateStyle, MouseListenerSet } from '../types';
+import type { CellStateStyle, EditorActionFunction, MouseListenerSet } from '../types';
 import type ConnectionHandler from '../view/plugins/ConnectionHandler';
 import { show } from '../util/printUtils';
 import type PanningHandler from '../view/plugins/PanningHandler';
@@ -61,13 +61,6 @@ import { isNullish } from '../internal/utils';
 import { isI18nEnabled, translate } from '../internal/i18n-utils';
 import { error } from '../gui/guiUtils';
 import type { FitPlugin } from '../view/plugins';
-
-// TODO move to types.ts?
-export type EditorActionFunction = (
-  editor: Editor,
-  cell: Cell | null,
-  evt?: Event | null
-) => void;
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
