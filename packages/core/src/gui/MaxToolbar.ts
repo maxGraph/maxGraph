@@ -340,7 +340,7 @@ class MaxToolbar extends EventSource {
   /**
    * Adds a new item to the toolbar. The selection is typically reset after
    * the item has been consumed, for example by adding a new vertex to the
-   * graph. The reset is not carried out if the item is double clicked.
+   * graph. The reset is not carried out if the item is double-clicked.
    *
    * The function argument uses the following signature: funct(evt, cell) where
    * evt is the native mouse event and cell is the cell under the mouse.

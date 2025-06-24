@@ -175,9 +175,8 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
       const cells = graph.getSelectionCells();
       const bounds = graph.getView().getBounds(cells);
 
-      // Function that is executed when the image is dropped on
-      // the graph. The cell argument points to the cell under
-      // the mousepointer if there is one.
+      // Function that is executed when the image is dropped on the graph.
+      // The cell argument points to the cell under the mouse-pointer if there is one.
       const funct = (graph: AbstractGraph, _evt: MouseEvent, cell: Cell | null) => {
         graph.stopEditing(false);
 
@@ -205,9 +204,8 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
     image: string,
     title?: string
   ) {
-    // Function that is executed when the image is dropped on
-    // the graph. The cell argument points to the cell under
-    // the mousepointer if there is one.
+    // Function that is executed when the image is dropped on the graph.
+    // The cell argument points to the cell under the mouse-pointer if there is one.
     const funct = (graph: AbstractGraph, evt: MouseEvent, cell: Cell | null) => {
       graph.stopEditing(false);
 
