@@ -44,7 +44,6 @@ import {
   isMetaDown,
   isShiftDown,
 } from '../../util/EventUtils';
-import EventSource from '../event/EventSource';
 import { matchBinaryMask } from '../../internal/utils';
 import type { AbstractGraph } from '../AbstractGraph';
 import type { AlignValue, EventListenerFunction, GraphPlugin } from '../../types';
