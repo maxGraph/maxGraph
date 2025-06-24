@@ -35,6 +35,7 @@ updates:
     groups:
       docusaurus:
         patterns:
+          - "@easyops-cn/docusaurus-search-local"
           - "@docusaurus/*"
           - "@mdx-js/"
           - "clsx"
