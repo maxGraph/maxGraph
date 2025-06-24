@@ -1625,6 +1625,7 @@ export type EventListenerFunction = (
   eventObject: EventObject
 ) => void;
 
+// TODO rename to EditorAction?
 export type EditorActionFunction = (
   editor: Editor,
   cell: Cell | null,
