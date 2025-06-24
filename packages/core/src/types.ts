@@ -1619,6 +1619,6 @@ export interface EdgeMarkerRegistryInterface extends Registry<MarkerFactoryFunct
 }
 
 export type EventListenerFunction = (
-  sender: EventTarget, // TODO why not EventSource? or both objects?
+  sender: EventTarget, // TODO why not EventSource? Listenable? or both objects?
   eventObject: EventObject
 ) => void;

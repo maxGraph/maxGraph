@@ -54,7 +54,12 @@ import {
 import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import Shape from '../shape/Shape';
-import type { CellHandle, ColorValue, Listenable, MouseListenerSet } from '../../types';
+import type {
+  CellHandle,
+  ColorValue,
+  EventListenerFunction,
+  MouseListenerSet,
+} from '../../types';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import Cell from '../cell/Cell';
 import ImageBox from '../image/ImageBox';
@@ -62,7 +67,6 @@ import EventSource from '../event/EventSource';
 import type SelectionHandler from '../plugins/SelectionHandler';
 import { equalPoints } from '../../util/arrayUtils';
 import { EdgeHandlerConfig, HandleConfig } from './config';
-import EventObject from '../event/EventObject';
 
 /**
  * Graph event handler that reconnects edges, modifies control points and the edge label location.
@@ -194,8 +198,7 @@ class EdgeHandler implements MouseListenerSet {
    */
   manageLabelHandle = false;
 
-  // TODO use EventListenerFunction type instead
-  escapeHandler: (sender: Listenable, eventObject: EventObject) => void;
+  escapeHandler: EventListenerFunction;
 
   currentPoint: Point | null = null;
 
