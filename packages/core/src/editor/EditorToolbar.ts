@@ -167,7 +167,7 @@ export class EditorToolbar {
   }
 
   /**
-   * Helper method to invoke <MaxToolbar.addActionCombo> on <toolbar> using
+   * Helper method to invoke {@link MaxToolbar.addActionCombo}> on {@link toolbar} using
    * the given title and return the resulting DOM node.
    *
    * @param title String that represents the title of the combo.
@@ -232,7 +232,7 @@ export class EditorToolbar {
 
   /**
    * Creates an item for inserting a clone of the specified prototype cell into
-   * the <editor>'s graph. The ptype may either be a cell or a function that
+   * the {@link editor}'s graph. The `ptype` may either be a cell or a function that
    * returns a cell.
    *
    * @param title String that represents the title of the item.
@@ -242,8 +242,8 @@ export class EditorToolbar {
    * instances.
    * @param pressed Optional URL of the icon that represents the pressed state.
    * @param insert Optional JavaScript function that handles an insert of the new
-   * cell. This function takes the <Editor>, new cell to be inserted, mouse
-   * event and optional <Cell> under the mouse pointer as arguments.
+   * cell. This function takes the {@link Editor}, new cell to be inserted, mouse
+   * event and optional {@link Cell} under the mouse pointer as arguments.
    * @param toggle Optional boolean that specifies if the item can be toggled.
    * Default is true.
    */
@@ -273,7 +273,7 @@ export class EditorToolbar {
     // after this item has been selected in the toolbar
     const clickHandler = (evt: MouseEvent, cell: Cell | null) => {
       if (typeof insert === 'function') {
-        insert(<Editor>this.editor, factory(), evt, cell);
+        insert(this.editor!, factory(), evt, cell);
       } else {
         this.drop(factory(), evt, cell);
       }
@@ -307,7 +307,7 @@ export class EditorToolbar {
    * @param target - Optional {@link Cell} that represents the drop target.
    */
   drop(vertex: Cell, evt: MouseEvent, target: Cell | null = null): void {
-    const { graph } = <Editor>this.editor;
+    const { graph } = this.editor!;
     const model = graph.getDataModel();
 
     if (
@@ -334,7 +334,7 @@ export class EditorToolbar {
    * @param target - Optional {@link Cell} that represents the parent.
    */
   insert(vertex: Cell, evt: MouseEvent, target: Cell | null = null): any {
-    const { graph } = <Editor>this.editor;
+    const { graph } = this.editor!;
 
     if (graph.canImportCell(vertex)) {
       const x = getClientX(evt);
@@ -358,11 +358,11 @@ export class EditorToolbar {
    * Handles a drop by connecting the given vertex to the given source cell.
    *
    * @param vertex - {@link Cell} to be inserted.
-   * @param evt - Mouse event that represents the drop.
+   * @param _evt - Mouse event that represents the drop.
    * @param source - Optional {@link Cell} that represents the source terminal.
    */
-  connect(vertex: Cell, evt: MouseEvent, source: Cell | null = null): void {
-    const { graph } = <Editor>this.editor;
+  connect(vertex: Cell, _evt: MouseEvent, source: Cell | null = null): void {
+    const { graph } = this.editor!;
     const model = graph.getDataModel();
 
     if (
@@ -374,8 +374,8 @@ export class EditorToolbar {
 
       model.beginUpdate();
       try {
-        const geo = <Geometry>source.getGeometry();
-        const g = (<Geometry>vertex.getGeometry()).clone();
+        const geo = source.getGeometry()!;
+        const g = vertex.getGeometry()!.clone();
 
         // Moves the vertex away from the drop target that will
         // be used as the source for the new connection
@@ -428,7 +428,7 @@ export class EditorToolbar {
    */
   installDropHandler(img: HTMLElement, dropHandler: DropHandler): void {
     const sprite = document.createElement('img');
-    sprite.setAttribute('src', <string>img.getAttribute('src'));
+    sprite.setAttribute('src', img.getAttribute('src')!);
 
     // Handles delayed loading of the images
     const loader = (evt: InternalEvent) => {
