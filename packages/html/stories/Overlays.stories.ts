@@ -22,7 +22,6 @@ import {
   type CellState,
   CellTracker,
   EllipseShape,
-  type EventObject,
   Graph,
   ImageBox,
   InternalEvent,
@@ -123,8 +122,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   // Installs a handler for click events in the graph that toggles the overlay for the respective cell
-  graph.addListener(InternalEvent.CLICK, (_sender: EventTarget, evt: EventObject) => {
-    const cell = evt.getProperty('cell');
+  graph.addListener(InternalEvent.CLICK, (_sender, eventObject) => {
+    const cell = eventObject.getProperty('cell');
 
     if (cell) {
       const overlays = graph.getCellOverlays(cell);
@@ -138,12 +137,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         );
 
         // Installs a handler for clicks on the overlay
-        overlay.addListener(
-          InternalEvent.CLICK,
-          (_sender: EventTarget, _evt: EventObject) => {
-            window.alert('Overlay clicked');
-          }
-        );
+        overlay.addListener(InternalEvent.CLICK, (_sender, _eventObject) => {
+          window.alert('Overlay clicked');
+        });
 
         // Sets the overlay for the cell in the graph
         graph.addCellOverlay(cell, overlay);
@@ -155,14 +151,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Installs a handler for double click events in the graph
   // that shows an alert box
-  graph.addListener(
-    InternalEvent.DOUBLE_CLICK,
-    (_sender: EventTarget, evt: EventObject) => {
-      const cell = evt.getProperty('cell');
-      alert(`Double-click: ${cell != null ? 'Cell' : 'Graph'}`);
-      evt.consume();
-    }
-  );
+  graph.addListener(InternalEvent.DOUBLE_CLICK, (_sender, eventObject) => {
+    const cell = eventObject.getProperty('cell');
+    alert(`Double-click: ${cell != null ? 'Cell' : 'Graph'}`);
+    eventObject.consume();
+  });
 
   // Gets the default parent for inserting new cells. This is normally the first child of the root (i.e. layer 0).
   const parent = graph.getDefaultParent();
