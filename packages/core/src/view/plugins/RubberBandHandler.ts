@@ -32,7 +32,6 @@ import { isAltDown, isMultiTouchEvent } from '../../util/EventUtils';
 import { clearSelection } from '../../util/domUtils';
 import type { AbstractGraph } from '../AbstractGraph';
 import type { EventListenerFunction, GraphPlugin, MouseListenerSet } from '../../types';
-import type EventObject from '../event/EventObject';
 import type EventSource from '../event/EventSource';
 
 /**
@@ -65,7 +64,7 @@ class RubberBandHandler implements GraphPlugin, MouseListenerSet {
     this.graph.addMouseListener(this);
 
     // Handles force rubberband event
-    this.forceRubberbandHandler = (_sender: EventTarget, evt: EventObject) => {
+    this.forceRubberbandHandler = (_sender, evt) => {
       const evtName = evt.getProperty('eventName');
       const me = evt.getProperty('event');
 
