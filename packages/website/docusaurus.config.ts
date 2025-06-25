@@ -1,6 +1,7 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type { PluginOptions as SearchPluginOptions } from '@easyops-cn/docusaurus-search-local';
 
 const baseUrl = '/maxGraph/';
 const editUrl = 'https://github.com/maxGraph/maxGraph/edit/main/packages/website/';
@@ -174,6 +175,19 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+
+  themes: [
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        // `hashed` is recommended as long-term-cache of index file is possible.
+        hashed: true,
+        language: ['en'],
+        highlightSearchTermsOnTargetPage: false,
+        explicitSearchResultPath: true,
+      } satisfies SearchPluginOptions,
+    ],
+  ],
 
   plugins: [
     [
