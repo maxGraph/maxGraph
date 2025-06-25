@@ -48,6 +48,7 @@ import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
 import type {
   DialectValue,
   EdgeStyleFunction,
+  EventListenerFunction,
   GraphCollaboratorsOptions,
   GraphFoldingOptions,
   GraphOptions,
@@ -60,6 +61,7 @@ import ImageBundle from './image/ImageBundle';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply';
 import { isNullish } from '../internal/utils';
 import { isI18nEnabled } from '../internal/i18n-utils';
+import AbstractCanvas2D from './canvas/AbstractCanvas2D';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the entry point class of the package.
@@ -83,8 +85,10 @@ export abstract class AbstractGraph extends EventSource {
 
   destroyed = false;
 
-  graphModelChangeListener: Function | null = null;
-  paintBackground: Function | null = null;
+  graphModelChangeListener: EventListenerFunction | null = null;
+  paintBackground:
+    | ((c: AbstractCanvas2D, x: number, y: number, w: number, h: number) => void)
+    | null = null;
   isConstrainedMoving = false;
 
   // ===================================================================================================================
@@ -464,7 +468,7 @@ export abstract class AbstractGraph extends EventSource {
     this.initializeCollaborators(options);
 
     // Adds a graph model listener to update the view
-    this.graphModelChangeListener = (_sender: any, evt: EventObject) => {
+    this.graphModelChangeListener = (_sender, evt) => {
       this.graphModelChanged(evt.getProperty('edit').changes);
     };
     this.getDataModel().addListener(InternalEvent.CHANGE, this.graphModelChangeListener);

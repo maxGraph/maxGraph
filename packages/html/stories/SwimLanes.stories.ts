@@ -17,6 +17,7 @@ limitations under the License.
 
 import {
   type ConnectionHandler,
+  type EventListenerFunction,
   ImageBox,
   Perimeter,
   Point,
@@ -28,7 +29,6 @@ import {
   Graph,
   type Cell,
   type EdgeParameters,
-  type EventObject,
   type SelectionHandler,
   type VertexParameters,
   Client,
@@ -231,8 +231,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     };
 
     // Keeps widths on collapse/expand
-    const foldingHandler = function (_sender: any, evt: EventObject) {
-      const cells = evt.getProperty('cells');
+    const foldingHandler: EventListenerFunction = function (_sender, eventObject) {
+      const cells = eventObject.getProperty('cells');
 
       for (let i = 0; i < cells.length; i++) {
         const geo = cells[i].getGeometry();

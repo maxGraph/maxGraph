@@ -28,6 +28,7 @@ import type Cell from '../view/cell/Cell';
 import type { AbstractGraph } from '../view/AbstractGraph';
 import EventObject from '../view/event/EventObject';
 import type { DropHandler } from '../view/other/DragSource';
+import { EventListenerFunction } from '../types';
 
 /**
  * Toolbar for the editor.
@@ -50,8 +51,8 @@ import type { DropHandler } from '../view/other/DragSource';
  *
  * ### Codec
  *
- * This class uses the {@link DefaultToolbarCodec} to read configuration
- * data into an existing instance. See {@link DefaultToolbarCodec} for a
+ * This class uses the {@link EditorToolbarCodec} to read configuration
+ * data into an existing instance. See {@link EditorToolbarCodec} for a
  * description of the configuration format.
  *
  * @category Editor
@@ -78,7 +79,7 @@ export class EditorToolbar {
   /**
    * Reference to the function used to reset the {@link toolbar}.
    */
-  resetHandler: Function | null = null;
+  resetHandler: EventListenerFunction | null = null;
 
   /**
    * Defines the spacing between existing and new vertices in gridSize units when a new vertex is dropped on an existing cell.
@@ -101,20 +102,19 @@ export class EditorToolbar {
     if (container != null) {
       this.toolbar = new MaxToolbar(container);
 
-      // Installs the insert function in the editor if an item is
-      // selected in the toolbar
+      // Installs the insert function in the editor if an item is selected in the toolbar
       this.toolbar.addListener(
         InternalEvent.SELECT,
-        (sender: Element, evt: EventObject) => {
+        (_sender: EventTarget, evt: EventObject) => {
           const funct = evt.getProperty('function');
 
           if (funct != null) {
-            (<Editor>this.editor).insertFunction = () => {
+            this.editor!.insertFunction = () => {
               funct.apply(this, [container]);
-              (<MaxToolbar>this.toolbar).resetMode();
+              this.toolbar!.resetMode();
             };
           } else {
-            (<Editor>this.editor).insertFunction = null;
+            this.editor!.insertFunction = null;
           }
         }
       );
@@ -126,11 +126,8 @@ export class EditorToolbar {
         }
       };
 
-      (<Editor>this.editor).graph.addListener(
-        InternalEvent.DOUBLE_CLICK,
-        this.resetHandler
-      );
-      (<Editor>this.editor).addListener(InternalEvent.ESCAPE, this.resetHandler);
+      this.editor!.graph.addListener(InternalEvent.DOUBLE_CLICK, this.resetHandler);
+      this.editor!.addListener(InternalEvent.ESCAPE, this.resetHandler);
     }
   }
 
@@ -146,10 +143,10 @@ export class EditorToolbar {
   addItem(title: string, icon: string, action: string, pressed?: string): any {
     const clickHandler = () => {
       if (action != null && action.length > 0) {
-        (<Editor>this.editor).execute(action);
+        this.editor!.execute(action);
       }
     };
-    return (<MaxToolbar>this.toolbar).addItem(title, icon, clickHandler, pressed);
+    return this.toolbar!.addItem(title, icon, clickHandler, pressed);
   }
 
   /**
@@ -159,24 +156,24 @@ export class EditorToolbar {
    */
   addSeparator(icon?: string): void {
     icon = icon || `${Client.imageBasePath}/separator.gif`;
-    (<MaxToolbar>this.toolbar).addSeparator(icon);
+    this.toolbar!.addSeparator(icon);
   }
 
   /**
    * Helper method to invoke {@link MaxToolbar.addCombo} on toolbar and return the resulting DOM node.
    */
   addCombo(): HTMLElement {
-    return (<MaxToolbar>this.toolbar).addCombo();
+    return this.toolbar!.addCombo();
   }
 
   /**
-   * Helper method to invoke <MaxToolbar.addActionCombo> on <toolbar> using
+   * Helper method to invoke {@link MaxToolbar.addActionCombo}> on {@link toolbar} using
    * the given title and return the resulting DOM node.
    *
    * @param title String that represents the title of the combo.
    */
   addActionCombo(title: string) {
-    return (<MaxToolbar>this.toolbar).addActionCombo(title);
+    return this.toolbar!.addActionCombo(title);
   }
 
   /**
@@ -188,7 +185,7 @@ export class EditorToolbar {
    */
   addActionOption(combo: HTMLSelectElement, title: string, action: string): void {
     const clickHandler = () => {
-      (<Editor>this.editor).execute(action);
+      this.editor!.execute(action);
     };
 
     this.addOption(combo, title, clickHandler);
@@ -206,7 +203,7 @@ export class EditorToolbar {
     title: string,
     value: string | ((evt: any) => void) | null
   ): HTMLElement {
-    return (<MaxToolbar>this.toolbar).addOption(combo, title, value);
+    return this.toolbar!.addOption(combo, title, value);
   }
 
   /**
@@ -224,21 +221,18 @@ export class EditorToolbar {
     icon: string,
     mode: string,
     pressed: string | null = null,
-    funct: Function | null = null
+    funct: ((editor: Editor) => void) | null = null
   ): any {
     const clickHandler = () => {
-      (<Editor>this.editor).setMode(mode);
-
-      if (funct != null) {
-        funct(<Editor>this.editor);
-      }
+      this.editor!.setMode(mode);
+      funct?.(this.editor!);
     };
-    return (<MaxToolbar>this.toolbar).addSwitchMode(title, icon, clickHandler, pressed);
+    return this.toolbar!.addSwitchMode(title, icon, clickHandler, pressed);
   }
 
   /**
    * Creates an item for inserting a clone of the specified prototype cell into
-   * the <editor>'s graph. The ptype may either be a cell or a function that
+   * the {@link editor}'s graph. The `ptype` may either be a cell or a function that
    * returns a cell.
    *
    * @param title String that represents the title of the item.
@@ -248,15 +242,15 @@ export class EditorToolbar {
    * instances.
    * @param pressed Optional URL of the icon that represents the pressed state.
    * @param insert Optional JavaScript function that handles an insert of the new
-   * cell. This function takes the <Editor>, new cell to be inserted, mouse
-   * event and optional <Cell> under the mouse pointer as arguments.
+   * cell. This function takes the {@link Editor}, new cell to be inserted, mouse
+   * event and optional {@link Cell} under the mouse pointer as arguments.
    * @param toggle Optional boolean that specifies if the item can be toggled.
    * Default is true.
    */
   addPrototype(
     title: string,
     icon: string,
-    ptype: Function | Cell,
+    ptype: (() => Cell) | Cell,
     pressed: string,
     insert: (
       editor: Editor,
@@ -272,33 +266,23 @@ export class EditorToolbar {
       if (typeof ptype === 'function') {
         return ptype();
       }
-      if (ptype != null) {
-        return (<Editor>this.editor).graph.cloneCell(ptype);
-      }
-      return null;
+      return this.editor!.graph.cloneCell(ptype);
     };
 
     // Defines the function for a click event on the graph
     // after this item has been selected in the toolbar
     const clickHandler = (evt: MouseEvent, cell: Cell | null) => {
       if (typeof insert === 'function') {
-        insert(<Editor>this.editor, factory(), evt, cell);
+        insert(this.editor!, factory(), evt, cell);
       } else {
         this.drop(factory(), evt, cell);
       }
 
-      (<MaxToolbar>this.toolbar).resetMode();
+      this.toolbar!.resetMode();
       InternalEvent.consume(evt);
     };
 
-    const img = (<MaxToolbar>this.toolbar).addMode(
-      title,
-      icon,
-      clickHandler,
-      pressed,
-      null,
-      toggle
-    );
+    const img = this.toolbar!.addMode(title, icon, clickHandler, pressed, null, toggle);
 
     // Creates a wrapper function that calls the click handler without the graph argument
     const dropHandler: DropHandler = (
@@ -323,7 +307,7 @@ export class EditorToolbar {
    * @param target - Optional {@link Cell} that represents the drop target.
    */
   drop(vertex: Cell, evt: MouseEvent, target: Cell | null = null): void {
-    const { graph } = <Editor>this.editor;
+    const { graph } = this.editor!;
     const model = graph.getDataModel();
 
     if (
@@ -350,7 +334,7 @@ export class EditorToolbar {
    * @param target - Optional {@link Cell} that represents the parent.
    */
   insert(vertex: Cell, evt: MouseEvent, target: Cell | null = null): any {
-    const { graph } = <Editor>this.editor;
+    const { graph } = this.editor!;
 
     if (graph.canImportCell(vertex)) {
       const x = getClientX(evt);
@@ -365,7 +349,7 @@ export class EditorToolbar {
       ) {
         return graph.splitEdge(target, [vertex], null, pt.x, pt.y);
       }
-      return (<Editor>this.editor).addVertex(target, vertex, pt.x, pt.y);
+      return this.editor!.addVertex(target, vertex, pt.x, pt.y);
     }
     return null;
   }
@@ -374,11 +358,11 @@ export class EditorToolbar {
    * Handles a drop by connecting the given vertex to the given source cell.
    *
    * @param vertex - {@link Cell} to be inserted.
-   * @param evt - Mouse event that represents the drop.
+   * @param _evt - Mouse event that represents the drop.
    * @param source - Optional {@link Cell} that represents the source terminal.
    */
-  connect(vertex: Cell, evt: MouseEvent, source: Cell | null = null): void {
-    const { graph } = <Editor>this.editor;
+  connect(vertex: Cell, _evt: MouseEvent, source: Cell | null = null): void {
+    const { graph } = this.editor!;
     const model = graph.getDataModel();
 
     if (
@@ -390,8 +374,8 @@ export class EditorToolbar {
 
       model.beginUpdate();
       try {
-        const geo = <Geometry>source.getGeometry();
-        const g = (<Geometry>vertex.getGeometry()).clone();
+        const geo = source.getGeometry()!;
+        const g = vertex.getGeometry()!.clone();
 
         // Moves the vertex away from the drop target that will
         // be used as the source for the new connection
@@ -401,7 +385,7 @@ export class EditorToolbar {
         const step = this.spacing * graph.gridSize;
         const dist = source.getDirectedEdgeCount(true) * 20;
 
-        if ((<Editor>this.editor).horizontalFlow) {
+        if (this.editor!.horizontalFlow) {
           g.x += (g.width + geo.width) / 2 + step + dist;
         } else {
           g.y += (g.height + geo.height) / 2 + step + dist;
@@ -417,7 +401,7 @@ export class EditorToolbar {
 
         // Creates the edge using the editor instance and calls
         // the second function that fires an add event
-        edge = (<Editor>this.editor).createEdge(source, vertex);
+        edge = this.editor!.createEdge(source, vertex);
 
         if (edge.getGeometry() == null) {
           const edgeGeometry = new Geometry();
@@ -444,10 +428,10 @@ export class EditorToolbar {
    */
   installDropHandler(img: HTMLElement, dropHandler: DropHandler): void {
     const sprite = document.createElement('img');
-    sprite.setAttribute('src', <string>img.getAttribute('src'));
+    sprite.setAttribute('src', img.getAttribute('src')!);
 
     // Handles delayed loading of the images
-    const loader = (evt: InternalEvent) => {
+    const loader = (_evt: InternalEvent) => {
       // Preview uses the image node with double size. Later this can be
       // changed to use a separate preview and guides, but for this the
       // dropHandler must use the additional x- and y-arguments and the
@@ -456,7 +440,7 @@ export class EditorToolbar {
       sprite.style.width = `${2 * img.offsetWidth}px`;
       sprite.style.height = `${2 * img.offsetHeight}px`;
 
-      makeDraggable(img, (<Editor>this.editor).graph, dropHandler, sprite);
+      makeDraggable(img, this.editor!.graph, dropHandler, sprite);
       InternalEvent.removeListener(sprite, 'load', loader);
     };
   }
@@ -467,8 +451,8 @@ export class EditorToolbar {
    */
   destroy(): void {
     if (this.resetHandler != null) {
-      (<Editor>this.editor).graph.removeListener(this.resetHandler);
-      (<Editor>this.editor).removeListener(this.resetHandler);
+      this.editor!.graph.removeListener(this.resetHandler);
+      this.editor!.removeListener(this.resetHandler);
       this.resetHandler = null;
     }
 

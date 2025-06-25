@@ -38,11 +38,10 @@ import {
   isPenEvent,
   isTouchEvent,
 } from '../../util/EventUtils';
-import EventSource from '../event/EventSource';
-import EventObject from '../event/EventObject';
 import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 import type SelectionHandler from '../plugins/SelectionHandler';
+import type { EventListenerFunction } from '../../types';
 
 export type DropHandler = (
   graph: AbstractGraph,
@@ -72,7 +71,7 @@ class DragSource {
       InternalEvent.consume(evt);
     });
 
-    this.eventConsumer = (sender: EventSource, evt: EventObject) => {
+    this.eventConsumer = (_sender, evt) => {
       const evtName = evt.getProperty('eventName');
       const me = evt.getProperty('event');
 
@@ -93,7 +92,7 @@ class DragSource {
    */
   dropHandler: DropHandler;
 
-  eventConsumer: (sender: EventSource, evt: EventObject) => void;
+  eventConsumer: EventListenerFunction;
 
   /**
    * {@link Point} that specifies the offset of the {@link dragElement}. Default is null.
@@ -233,9 +232,9 @@ class DragSource {
 
   /**
    * Returns the graph for the given mouse event. This implementation returns
-   * null.
+   * `null`.
    */
-  getGraphForEvent(evt: MouseEvent) {
+  getGraphForEvent(evt: MouseEvent): AbstractGraph | null {
     return null;
   }
 

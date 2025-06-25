@@ -46,11 +46,15 @@ import Cell from '../cell/Cell';
 import type PopupMenuHandler from './PopupMenuHandler';
 import EventSource from '../event/EventSource';
 import CellState from '../cell/CellState';
-import EventObject from '../event/EventObject';
 import type ConnectionHandler from './ConnectionHandler';
 import { EdgeHandlerConfig, VertexHandlerConfig } from '../handler/config';
 import type CellEditorHandler from './CellEditorHandler';
-import type { ColorValue, GraphPlugin, MouseListenerSet } from '../../types';
+import type {
+  ColorValue,
+  EventListenerFunction,
+  GraphPlugin,
+  MouseListenerSet,
+} from '../../types';
 
 /**
  * Graph event handler that handles selection.
@@ -85,14 +89,14 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
     this.graph.addListener(InternalEvent.PAN, this.panHandler);
 
     // Handles escape keystrokes
-    this.escapeHandler = (sender, evt) => {
+    this.escapeHandler = () => {
       this.reset();
     };
 
     this.graph.addListener(InternalEvent.ESCAPE, this.escapeHandler);
 
     // Updates the preview box for remote changes
-    this.refreshHandler = (sender, evt) => {
+    this.refreshHandler = () => {
       // Merges multiple pending calls
       if (this.refreshThread) {
         window.clearTimeout(this.refreshThread);
@@ -170,18 +174,19 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   graph: AbstractGraph;
 
   panHandler: () => void;
-  escapeHandler: (sender: EventSource, evt: EventObject) => void;
-  refreshHandler: (sender: EventSource, evt: EventObject) => void;
+  escapeHandler: EventListenerFunction;
+  refreshHandler: EventListenerFunction;
   keyHandler: (e: KeyboardEvent) => void;
   refreshThread: number | null = null;
 
   /**
-   * Defines the maximum number of cells to paint subhandles
-   * for. Default is 50 for Firefox and 20 for IE. Set this
-   * to 0 if you want an unlimited number of handles to be
-   * displayed. This is only recommended if the number of
-   * cells in the graph is limited to a small number, eg.
-   * 500.
+   * Defines the maximum number of cells to paint sub-handles for.
+   *
+   * Set this to 0 if you want an unlimited number of handles to be displayed.
+   *
+   * This is only recommended if the number of cells in the graph is limited to a small number, e.g. 500.
+   *
+   * @default 50
    */
   maxCells = 50;
 

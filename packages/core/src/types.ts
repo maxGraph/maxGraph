@@ -31,6 +31,8 @@ import type GraphDataModel from './view/GraphDataModel';
 import type { Stylesheet } from './view/style/Stylesheet';
 import type GraphSelectionModel from './view/GraphSelectionModel';
 import type GraphView from './view/GraphView';
+import type EventObject from './view/event/EventObject';
+import type Editor from './editor/Editor';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -1430,7 +1432,7 @@ export interface I18nProvider {
   addResource(
     basename?: string | null,
     language?: string | null,
-    callback?: Function | null
+    callback?: (() => void) | null
   ): void;
 }
 
@@ -1616,3 +1618,16 @@ export interface EdgeMarkerRegistryInterface extends Registry<MarkerFactoryFunct
     filled: boolean
   ): MarkerFunction | null;
 }
+
+// TODO rename to EventListener?
+export type EventListenerFunction = (
+  sender: EventTarget, // TODO why not EventSource? Listenable? or both objects?
+  eventObject: EventObject
+) => void;
+
+// TODO rename to EditorAction?
+export type EditorActionFunction = (
+  editor: Editor,
+  cell: Cell | null,
+  evt?: Event | null
+) => void;

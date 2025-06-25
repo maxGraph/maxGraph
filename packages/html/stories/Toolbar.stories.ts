@@ -59,7 +59,7 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }: { [p: string]: any }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
   const div = document.createElement('div');
   div.style.display = 'flex';
@@ -169,15 +169,18 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
   addEdge('images/entity.gif', 50, 50, {});
   addToolbarLine();
 
+  const selectFunction: (evt: MouseEvent, cell: Cell | null) => void = () => {
+    // do nothing
+  };
+
   const button = DomHelpers.button('Create toolbar entry from selection', (evt) => {
     if (!graph.isSelectionEmpty()) {
       // Creates a copy of the selection array to preserve its state
       const cells = graph.getSelectionCells();
       const bounds = graph.getView().getBounds(cells);
 
-      // Function that is executed when the image is dropped on
-      // the graph. The cell argument points to the cell under
-      // the mousepointer if there is one.
+      // Function that is executed when the image is dropped on the graph.
+      // The cell argument points to the cell under the mouse-pointer if there is one.
       const funct = (graph: AbstractGraph, _evt: MouseEvent, cell: Cell | null) => {
         graph.stopEditing(false);
 
@@ -189,7 +192,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
       };
 
       // Creates the image which is used as the drag icon (preview)
-      const img = toolbar.addMode(null, 'images/outline.gif', funct, '');
+      const img = toolbar.addMode(null, 'images/outline.gif', selectFunction, '');
       gestureUtils.makeDraggable(img, graph, funct);
     }
   });
@@ -205,9 +208,8 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
     image: string,
     title?: string
   ) {
-    // Function that is executed when the image is dropped on
-    // the graph. The cell argument points to the cell under
-    // the mousepointer if there is one.
+    // Function that is executed when the image is dropped on the graph.
+    // The cell argument points to the cell under the mouse-pointer if there is one.
     const funct = (graph: AbstractGraph, evt: MouseEvent, cell: Cell | null) => {
       graph.stopEditing(false);
 
@@ -232,7 +234,7 @@ const Template = ({ label, ...args }: { [p: string]: any }) => {
     };
 
     // Creates the image which is used as the drag icon (preview)
-    const img = toolbar.addMode(title, image, funct, '');
+    const img = toolbar.addMode(title, image, selectFunction, '');
     gestureUtils.makeDraggable(img, graph, funct);
   }
 

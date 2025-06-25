@@ -52,8 +52,8 @@ class TemporaryCellStates {
     view: GraphView,
     scale = 1,
     cells: Cell[],
-    isCellVisibleFn: Function | null = null,
-    getLinkForCellState: Function | null = null
+    isCellVisibleFn: ((cell: Cell) => boolean) | null = null,
+    getLinkForCellState: ((state: CellState) => string | null) | null = null
   ) {
     this.view = view;
 
@@ -104,9 +104,7 @@ class TemporaryCellStates {
     // Validates the vertices and edges without adding them to
     // the model so that the original cells are not modified
     for (const cell of cells) {
-      const bounds = view.getBoundingBox(
-        view.validateCellState(<Cell>view.validateCell(<Cell>cell))
-      );
+      const bounds = view.getBoundingBox(view.validateCellState(view.validateCell(cell)));
       if (bbox == null) {
         bbox = bounds;
       } else {

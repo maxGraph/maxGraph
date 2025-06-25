@@ -98,16 +98,16 @@ class MaxLog {
       table.appendChild(tbody);
 
       // Adds various debugging buttons
-      MaxLog.addButton('Info', function (evt: MouseEvent) {
+      MaxLog.addButton('Info', function () {
         MaxLog.info();
       });
 
-      MaxLog.addButton('DOM', function (evt: MouseEvent) {
+      MaxLog.addButton('DOM', function () {
         const content = getInnerHtml(document.body);
         MaxLog.debug(content);
       });
 
-      MaxLog.addButton('Trace', function (evt: MouseEvent) {
+      MaxLog.addButton('Trace', function () {
         MaxLog.TRACE = !MaxLog.TRACE;
 
         if (MaxLog.TRACE) {
@@ -117,7 +117,7 @@ class MaxLog {
         }
       });
 
-      MaxLog.addButton('Copy', function (evt: MouseEvent) {
+      MaxLog.addButton('Copy', function () {
         try {
           copyTextToClipboard((<HTMLTextAreaElement>MaxLog.textarea).value);
         } catch (err) {
@@ -125,7 +125,7 @@ class MaxLog {
         }
       });
 
-      MaxLog.addButton('Show', function (evt: MouseEvent) {
+      MaxLog.addButton('Show', function () {
         try {
           popup((<HTMLTextAreaElement>MaxLog.textarea).value);
         } catch (err) {
@@ -133,7 +133,7 @@ class MaxLog {
         }
       });
 
-      MaxLog.addButton('Clear', function (evt: MouseEvent) {
+      MaxLog.addButton('Clear', function () {
         (<HTMLTextAreaElement>MaxLog.textarea).value = '';
       });
 
@@ -172,7 +172,7 @@ class MaxLog {
       ) {
         const elt = MaxLog.window.getElement();
 
-        const resizeHandler = (sender: any, evt: MouseEvent) => {
+        const resizeHandler = () => {
           (<HTMLTextAreaElement>MaxLog.textarea).style.height = `${Math.max(
             0,
             elt.offsetHeight - 70

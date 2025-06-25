@@ -17,7 +17,6 @@ limitations under the License.
 import CellOverlay from '../cell/CellOverlay';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import type InternalMouseEvent from '../event/InternalMouseEvent';
 import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<
@@ -138,14 +137,11 @@ export const OverlaysMixin: PartialType = {
 
       // Adds a handler for single mouseclicks to select the cell
       if (isSelect) {
-        overlay.addListener(
-          InternalEvent.CLICK,
-          (sender: any, evt: InternalMouseEvent) => {
-            if (this.isEnabled()) {
-              this.setSelectionCell(cell);
-            }
+        overlay.addListener(InternalEvent.CLICK, () => {
+          if (this.isEnabled()) {
+            this.setSelectionCell(cell);
           }
-        );
+        });
       }
 
       // Sets and returns the overlay in the graph

@@ -31,9 +31,8 @@ import Rectangle from '../geometry/Rectangle';
 import { isAltDown, isMultiTouchEvent } from '../../util/EventUtils';
 import { clearSelection } from '../../util/domUtils';
 import type { AbstractGraph } from '../AbstractGraph';
-import type { GraphPlugin, MouseListenerSet } from '../../types';
-import EventObject from '../event/EventObject';
-import EventSource from '../event/EventSource';
+import type { EventListenerFunction, GraphPlugin, MouseListenerSet } from '../../types';
+import type EventSource from '../event/EventSource';
 
 /**
  * Event handler that selects rectangular regions.
@@ -65,7 +64,7 @@ class RubberBandHandler implements GraphPlugin, MouseListenerSet {
     this.graph.addMouseListener(this);
 
     // Handles force rubberband event
-    this.forceRubberbandHandler = (sender: EventSource, evt: EventObject) => {
+    this.forceRubberbandHandler = (_sender, evt) => {
       const evtName = evt.getProperty('eventName');
       const me = evt.getProperty('event');
 
@@ -89,7 +88,7 @@ class RubberBandHandler implements GraphPlugin, MouseListenerSet {
     this.graph.addListener(InternalEvent.PAN, this.panHandler);
 
     // Does not show menu if any touch gestures take place after the trigger
-    this.gestureHandler = (sender: EventSource, eo: EventObject) => {
+    this.gestureHandler = () => {
       if (this.first) {
         this.reset();
       }
@@ -98,9 +97,9 @@ class RubberBandHandler implements GraphPlugin, MouseListenerSet {
     this.graph.addListener(InternalEvent.GESTURE, this.gestureHandler);
   }
 
-  forceRubberbandHandler: Function;
-  panHandler: Function;
-  gestureHandler: Function;
+  forceRubberbandHandler: EventListenerFunction;
+  panHandler: () => void;
+  gestureHandler: EventListenerFunction;
   graph: AbstractGraph;
   first: Point | null = null;
   destroyed = false;

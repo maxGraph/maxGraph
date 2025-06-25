@@ -51,7 +51,7 @@ import type PopupMenuHandler from '../view/plugins/PopupMenuHandler';
 import RubberBandHandler from '../view/plugins/RubberBandHandler';
 import InternalEvent from '../view/event/InternalEvent';
 import InternalMouseEvent from '../view/event/InternalMouseEvent';
-import { CellStateStyle, MouseListenerSet } from '../types';
+import type { CellStateStyle, EditorActionFunction, MouseListenerSet } from '../types';
 import type ConnectionHandler from '../view/plugins/ConnectionHandler';
 import { show } from '../util/printUtils';
 import type PanningHandler from '../view/plugins/PanningHandler';
@@ -61,6 +61,7 @@ import { isNullish } from '../internal/utils';
 import { isI18nEnabled, translate } from '../internal/i18n-utils';
 import { error } from '../gui/guiUtils';
 import type { FitPlugin } from '../view/plugins';
+import type MaxXmlRequest from '../util/MaxXmlRequest';
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
@@ -432,7 +433,7 @@ export class Editor extends EventSource {
     }
   }
 
-  onInit: Function | null = null;
+  onInit: (() => void) | null = null;
   lastSnapshot: number | null = null;
   ignoredChanges: number | null = null;
   swimlaneLayout: any;
@@ -553,7 +554,7 @@ export class Editor extends EventSource {
    * by name, passing the cell to be operated upon as the second
    * argument.
    */
-  actions: { [key: string]: Function } = {};
+  actions: { [key: string]: EditorActionFunction } = {};
 
   // =====================================================================================
   // Group: Actions and Options
@@ -601,7 +602,7 @@ export class Editor extends EventSource {
    * cells into the graph. This is assigned from the
    * {@link EditorToolbar} if a vertex-tool is clicked.
    */
-  insertFunction: Function | null = null;
+  insertFunction: ((evt: MouseEvent, cell: Cell | null) => void) | null = null;
 
   // =====================================================================================
   // Group: Templates
@@ -1031,7 +1032,7 @@ export class Editor extends EventSource {
       editor.graph.getPlugin<FitPlugin>('fit')?.fit();
     });
 
-    this.addAction('showProperties', (editor: Editor, cell: Cell) => {
+    this.addAction('showProperties', (editor: Editor, cell: Cell | null) => {
       editor.showProperties(cell);
     });
 
@@ -1059,26 +1060,26 @@ export class Editor extends EventSource {
       }
     });
 
-    this.addAction('edit', (editor: Editor, cell: Cell) => {
-      if (editor.graph.isEnabled() && editor.graph.isCellEditable(cell)) {
+    this.addAction('edit', (editor: Editor, cell: Cell | null) => {
+      if (editor.graph.isEnabled() && (!cell || editor.graph.isCellEditable(cell))) {
         editor.graph.startEditingAtCell(cell);
       }
     });
 
-    this.addAction('toBack', (editor: Editor, cell: Cell) => {
+    this.addAction('toBack', (editor: Editor, _cell: Cell | null) => {
       if (editor.graph.isEnabled()) {
         editor.graph.orderCells(true);
       }
     });
 
-    this.addAction('toFront', (editor: Editor, cell: Cell) => {
+    this.addAction('toFront', (editor: Editor, _cell: Cell | null) => {
       if (editor.graph.isEnabled()) {
         editor.graph.orderCells(false);
       }
     });
 
-    this.addAction('enterGroup', (editor: Editor, cell: Cell) => {
-      editor.graph.enterGroup(cell);
+    this.addAction('enterGroup', (editor: Editor, cell: Cell | null) => {
+      cell && editor.graph.enterGroup(cell);
     });
 
     this.addAction('exitGroup', (editor: Editor) => {
@@ -1328,7 +1329,7 @@ export class Editor extends EventSource {
    * of the function is the editor it is used with,
    * the second argument is the cell it operates upon.
    */
-  addAction(actionname: string, funct: Function): void {
+  addAction(actionname: string, funct: EditorActionFunction): void {
     this.actions[actionname] = funct;
   }
 
@@ -1353,12 +1354,7 @@ export class Editor extends EventSource {
 
     if (action) {
       try {
-        // Creates the array of arguments by replacing the actionname
-        // with the editor instance in the args of this function
-        const args = [this, cell, evt];
-
-        // Invokes the function on the editor using the args
-        action.apply(this, args);
+        action(this, cell, evt);
       } catch (e: any) {
         error(`Cannot execute ${actionname}: ${e.message}`, 280, true);
 
@@ -1930,7 +1926,7 @@ export class Editor extends EventSource {
       data = encodeURIComponent(data);
     }
 
-    post(url, `${this.postParameterName}=${data}`, (req: string) => {
+    post(url, `${this.postParameterName}=${data}`, (req: MaxXmlRequest) => {
       this.fireEvent(new EventObject(InternalEvent.POST, { request: req, url, data }));
     });
   }

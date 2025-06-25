@@ -24,7 +24,7 @@ import { sortCells } from '../../util/styleUtils';
 import type { AbstractGraph } from '../AbstractGraph';
 import Cell from '../cell/Cell';
 import CellState from '../cell/CellState';
-import type { GraphPlugin, MouseListenerSet } from '../../types';
+import type { EventListenerFunction, GraphPlugin, MouseListenerSet } from '../../types';
 import type EdgeHandler from '../handler/EdgeHandler';
 import type VertexHandler from '../handler/VertexHandler';
 import InternalMouseEvent from '../event/InternalMouseEvent';
@@ -58,7 +58,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     this.handlers = new Dictionary();
     this.graph.addMouseListener(this);
 
-    this.refreshHandler = (sender: EventSource, evt: EventObject) => {
+    this.refreshHandler = () => {
       if (this.isEnabled()) {
         this.refresh();
       }
@@ -88,7 +88,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   /**
    * Keeps a reference to an event listener for later removal.
    */
-  refreshHandler: (sender: EventSource, evt: EventObject) => void;
+  refreshHandler: EventListenerFunction;
 
   /**
    * Defines the maximum number of handlers to paint individually. Default is 100.

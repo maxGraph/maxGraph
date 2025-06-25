@@ -54,7 +54,12 @@ import {
 import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import Shape from '../shape/Shape';
-import type { CellHandle, ColorValue, Listenable, MouseListenerSet } from '../../types';
+import type {
+  CellHandle,
+  ColorValue,
+  EventListenerFunction,
+  MouseListenerSet,
+} from '../../types';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import Cell from '../cell/Cell';
 import ImageBox from '../image/ImageBox';
@@ -193,7 +198,7 @@ class EdgeHandler implements MouseListenerSet {
    */
   manageLabelHandle = false;
 
-  escapeHandler: (sender: Listenable, evt: Event) => void;
+  escapeHandler: EventListenerFunction;
 
   currentPoint: Point | null = null;
 
@@ -300,7 +305,7 @@ class EdgeHandler implements MouseListenerSet {
     this.redraw();
 
     // Handles escape keystrokes
-    this.escapeHandler = (_sender: Listenable, _evt: Event) => {
+    this.escapeHandler = () => {
       const dirty = this.index != null;
       this.reset();
 

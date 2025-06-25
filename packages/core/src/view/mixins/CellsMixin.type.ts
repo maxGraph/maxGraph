@@ -653,7 +653,7 @@ declare module '../AbstractGraph' {
      *
      * @param x X-coordinate of the location to be checked.
      * @param y Y-coordinate of the location to be checked.
-     * @param parent {@link mxCell} that should be used as the root of the recursion. Default is current root of the view or the root of the model.
+     * @param parent {@link Cell} that should be used as the root of the recursion. Default is current root of the view or the root of the model.
      * @param vertices Optional boolean indicating if vertices should be returned. Default is `true`.
      * @param edges Optional boolean indicating if edges should be returned. Default is `true`.
      * @param ignoreFn Optional function that returns true if cell should be ignored. The function is passed the cell state and the x and y parameter. Default is `null`.
@@ -664,7 +664,7 @@ declare module '../AbstractGraph' {
       parent?: Cell | null,
       vertices?: boolean | null,
       edges?: boolean | null,
-      ignoreFn?: Function | null
+      ignoreFn?: ((state: CellState, x: number, y: number) => boolean) | null
     ) => Cell | null;
 
     /**
@@ -677,7 +677,7 @@ declare module '../AbstractGraph' {
      * @param y Y-coordinate of the rectangle.
      * @param width Width of the rectangle.
      * @param height Height of the rectangle.
-     * @param parent {@link mxCell} that should be used as the root of the recursion. Default is current root of the view or the root of the model.
+     * @param parent {@link Cell} that should be used as the root of the recursion. Default is current root of the view or the root of the model.
      * @param result Optional array to store the result in. Default is an empty Array.
      * @param intersection Default is `null`.
      * @param ignoreFn Default is `null`.
@@ -691,7 +691,7 @@ declare module '../AbstractGraph' {
       parent?: Cell | null,
       result?: Cell[],
       intersection?: Rectangle | null,
-      ignoreFn?: Function | null,
+      ignoreFn?: ((state: CellState) => boolean) | null,
       includeDescendants?: boolean
     ) => Cell[];
 

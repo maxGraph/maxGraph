@@ -17,7 +17,6 @@ limitations under the License.
 
 import {
   Effects,
-  EventObject,
   Graph,
   GraphDataModel,
   InternalEvent,
@@ -54,8 +53,8 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   graph.setEnabled(false);
 
   // Handles clicks on cells
-  graph.addListener(InternalEvent.CLICK, function (_sender: any, evt: EventObject) {
-    const cell = evt.getProperty('cell');
+  graph.addListener(InternalEvent.CLICK, function (_sender, eventObject) {
+    const cell = eventObject.getProperty('cell');
 
     if (cell != null) {
       load(graph, cell);
@@ -78,12 +77,10 @@ const Template = ({ label, ...args }: Record<string, any>) => {
   const cell = graph.insertVertex(parent, '0-0', '0-0', cx - 20, cy - 15, 60, 40);
 
   // Animates the changes in the graph model
-  graph
-    .getDataModel()
-    .addListener(InternalEvent.CHANGE, function (_sender: any, evt: EventObject) {
-      const { changes } = evt.getProperty('edit');
-      Effects.animateChanges(graph, changes);
-    });
+  graph.getDataModel().addListener(InternalEvent.CHANGE, function (_sender, eventObject) {
+    const { changes } = eventObject.getProperty('edit');
+    Effects.animateChanges(graph, changes);
+  });
 
   // Loads the links for the given cell into the given graph
   // by requesting the respective data in the server-side

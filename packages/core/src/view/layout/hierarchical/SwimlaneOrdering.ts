@@ -72,11 +72,11 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
 
     model.visit(
       (
-        parent: GraphHierarchyNode,
+        parent: GraphHierarchyNode | null,
         node: GraphHierarchyNode,
-        connectingEdge: GraphHierarchyEdge,
-        layer: any,
-        seen: any
+        connectingEdge: GraphHierarchyEdge | null,
+        layer: number,
+        seen: number
       ) => {
         // Check if the cell is in it's own ancestor list, if so
         // invert the connecting edge and reverse the target/source
@@ -95,7 +95,7 @@ class SwimlaneOrdering extends HierarchicalLayoutStage {
           <number>parent.swimlaneIndex < <number>node.swimlaneIndex &&
           connectingEdge.source === node;
 
-        if (isAncestor) {
+        if (isAncestor && connectingEdge) {
           connectingEdge.invert();
           remove(connectingEdge, parent.connectsAsSource);
           node.connectsAsSource.push(connectingEdge);

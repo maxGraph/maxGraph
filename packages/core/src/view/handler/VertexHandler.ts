@@ -30,11 +30,11 @@ import type { AbstractGraph } from '../AbstractGraph';
 import CellState from '../cell/CellState';
 import Image from '../image/ImageBox';
 import type Cell from '../cell/Cell';
-import type { CellHandle, Listenable, MouseListenerSet } from '../../types';
+import type { CellHandle, EventListenerFunction, MouseListenerSet } from '../../types';
 import Shape from '../shape/Shape';
 import InternalMouseEvent from '../event/InternalMouseEvent';
 import EdgeHandler from './EdgeHandler';
-import EventSource from '../event/EventSource';
+import type EventSource from '../event/EventSource';
 import type SelectionHandler from '../plugins/SelectionHandler';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
 import { HandleConfig, VertexHandlerConfig } from './config';
@@ -47,7 +47,7 @@ import { HandleConfig, VertexHandlerConfig } from './config';
  * Some elements of this handler and its subclasses can be configured using {@link EdgeHandlerConfig}.
  */
 class VertexHandler implements MouseListenerSet {
-  escapeHandler: (sender: Listenable, evt: Event) => void;
+  escapeHandler: EventListenerFunction;
   selectionBounds: Rectangle;
   bounds: Rectangle;
   selectionBorder: RectangleShape;
@@ -319,7 +319,7 @@ class VertexHandler implements MouseListenerSet {
     }
 
     // Handles escape keystrokes
-    this.escapeHandler = (_sender: Listenable, _evt: Event) => {
+    this.escapeHandler = () => {
       if (this.livePreview && this.index != null) {
         // Redraws the live preview
         this.state.view.graph.cellRenderer.redraw(this.state, true);

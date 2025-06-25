@@ -263,7 +263,7 @@ export class EditorPopupMenu {
     editor: Editor,
     lab: string,
     icon: string | null = null,
-    funct: Function | null = null,
+    funct: ((editor: Editor, cell: Cell | null, event: MouseEvent) => void) | null = null,
     action: string | null = null,
     cell: Cell | null = null,
     parent: PopupMenuItem | null = null,
