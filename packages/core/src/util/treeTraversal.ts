@@ -87,33 +87,16 @@ export function findTreeRoots(
 }
 
 /**
- * Traverses the (directed) graph invoking the given function for each
- * visited vertex and edge. The function is invoked with the current vertex
- * and the incoming edge as a parameter. This implementation makes sure
- * each vertex is only visited once. The function may return false if the
- * traversal should stop at the given vertex.
+ * Performs a depth-first traversal of a graph, visiting each vertex once and invoking a callback on each visited vertex and its incoming edge.
  *
- * Example:
+ * Traversal can be directed or undirected, and can proceed in the inverse direction if specified. The callback function receives the current vertex and the incoming edge; returning false from the callback halts traversal at that vertex.
  *
- * ```javascript
- * GlobalConfig.logger.show();
- * let cell = graph.getSelectionCell();
- * graph.traverse(cell, false, (vertex, edge)=>
- * {
- *   GlobalConfig.logger.debug(graph.getLabel(vertex));
- * });
- * ```
- *
- * @param vertex <Cell> that represents the vertex where the traversal starts.
- * @param directed Optional boolean indicating if edges should only be traversed
- * from source to target. Default is true.
- * @param func Visitor function that takes the current vertex and the incoming
- * edge as arguments. The traversal stops if the function returns false.
- * @param edge Optional <Cell> that represents the incoming edge. This is
- * null for the first step of the traversal.
- * @param visited Optional {@link Map} from cells to true for the visited cells.
- * @param inverse Optional boolean to traverse in inverse direction. Default is false.
- * This is ignored if directed is false.
+ * @param vertex - The starting vertex for traversal
+ * @param directed - If true, traverses edges respecting their direction; if false, treats edges as undirected. Defaults to true.
+ * @param func - Callback invoked with each visited vertex and its incoming edge; returning false stops traversal at that vertex.
+ * @param edge - The incoming edge to the current vertex; null for the starting vertex.
+ * @param visited - Optional map tracking visited vertices to prevent revisiting.
+ * @param inverse - If true and traversal is directed, traverses edges in the inverse direction. Defaults to false.
  */
 export function traverse(
   vertex: Cell | null = null,
