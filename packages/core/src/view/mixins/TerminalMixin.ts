@@ -48,19 +48,17 @@ export const TerminalMixin: PartialType = {
         ? state.getVisibleTerminal(false)
         : this.getView().getVisibleTerminal(edges[i], false);
 
-      // Checks if the terminal is the source of the edge and if the
-      // target should be stored in the result
+      // Checks if the terminal is the source of the edge and if the target should be stored in the result
       if (source === terminal && target && target !== terminal && includeTargets) {
-        if (!coveredEntries.get(target)) {
+        if (!coveredEntries.has(target)) {
           coveredEntries.set(target, true);
           terminals.push(target);
         }
       }
 
-      // Checks if the terminal is the taget of the edge and if the
-      // source should be stored in the result
+      // Checks if the terminal is the target of the edge and if the source should be stored in the result
       else if (target === terminal && source && source !== terminal && includeSources) {
-        if (!coveredEntries.get(source)) {
+        if (!coveredEntries.has(source)) {
           coveredEntries.set(source, true);
           terminals.push(source);
         }

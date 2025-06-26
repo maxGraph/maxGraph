@@ -284,7 +284,7 @@ export const SelectionMixin: PartialType = {
     const cells: Cell[] = [];
 
     const addCell = (cell: Cell) => {
-      if (!coveredElements.get(cell) && this.getDataModel().contains(cell)) {
+      if (!coveredElements.has(cell) && this.getDataModel().contains(cell)) {
         if (cell.isEdge() || cell.isVertex()) {
           coveredElements.set(cell, true);
           cells.push(cell);

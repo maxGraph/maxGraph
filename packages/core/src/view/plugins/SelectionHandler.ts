@@ -800,8 +800,8 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   /**
    * Returns true if the given cell is currently being moved.
    */
-  isCellMoving(cell: Cell) {
-    return this.allCells.get(cell);
+  isCellMoving(cell: Cell): boolean {
+    return this.allCells.has(cell);
   }
 
   /**
