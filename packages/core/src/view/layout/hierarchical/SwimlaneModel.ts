@@ -231,7 +231,7 @@ class SwimlaneModel {
           if (
             undirectedEdges != null &&
             undirectedEdges.length > 0 &&
-            this.edgeMapper.get(undirectedEdges[0]) == null &&
+            !this.edgeMapper.has(undirectedEdges[0]) &&
             directedEdges.length * 2 >= undirectedEdges.length
           ) {
             const internalEdge = new GraphHierarchyEdge(undirectedEdges);
