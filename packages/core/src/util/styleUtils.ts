@@ -24,7 +24,6 @@ import {
   LINE_HEIGHT,
 } from './Constants';
 import Point from '../view/geometry/Point';
-import Dictionary from './Dictionary';
 import CellPath from '../view/cell/CellPath';
 import Rectangle from '../view/geometry/Rectangle';
 import Cell from '../view/cell/Cell';
@@ -495,21 +494,21 @@ export const getSizeForString = (
  * Ascending is optional and defaults to `true`.
  */
 export const sortCells = (cells: Cell[], ascending = true): Cell[] => {
-  const lookup = new Dictionary<Cell, string[]>();
+  const lookup = new Map<Cell, string[]>();
 
   cells.sort((o1, o2) => {
     let p1 = lookup.get(o1);
 
     if (p1 == null) {
       p1 = CellPath.create(o1).split(CellPath.PATH_SEPARATOR);
-      lookup.put(o1, p1);
+      lookup.set(o1, p1);
     }
 
     let p2 = lookup.get(o2);
 
     if (p2 == null) {
       p2 = CellPath.create(o2).split(CellPath.PATH_SEPARATOR);
-      lookup.put(o2, p2);
+      lookup.set(o2, p2);
     }
 
     const comp = CellPath.compare(p1, p2);

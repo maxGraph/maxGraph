@@ -194,7 +194,6 @@ export { default as AbstractCanvas2D } from './view/canvas/AbstractCanvas2D';
 export { default as SvgCanvas2D } from './view/canvas/SvgCanvas2D';
 export { default as XmlCanvas2D } from './view/canvas/XmlCanvas2D';
 
-export { default as Dictionary } from './util/Dictionary';
 export { default as Geometry } from './view/geometry/Geometry';
 export { default as ObjectIdentity } from './util/ObjectIdentity';
 export { default as Point } from './view/geometry/Point';

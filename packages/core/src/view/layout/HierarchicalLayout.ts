@@ -19,7 +19,6 @@ limitations under the License.
 import GraphLayout from './GraphLayout';
 import type { DirectionValue } from '../../types';
 import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
-import Dictionary from '../../util/Dictionary';
 import GraphHierarchyModel from './hierarchical/GraphHierarchyModel';
 import ObjectIdentity from '../../util/ObjectIdentity';
 import MinimumCycleRemover from './hierarchical/MinimumCycleRemover';
@@ -147,17 +146,17 @@ class HierarchicalLayout extends GraphLayout {
   /**
    * A cache of edges whose source terminal is the key
    */
-  edgesCache: Dictionary<Cell, Cell[]> = new Dictionary();
+  edgesCache: Map<Cell, Cell[]> = new Map();
 
   /**
    * A cache of edges whose source terminal is the key
    */
-  edgeSourceTermCache: Dictionary<Cell, Cell> = new Dictionary();
+  edgeSourceTermCache: Map<Cell, Cell> = new Map();
 
   /**
    * A cache of edges whose source terminal is the key
    */
-  edgesTargetTermCache: Dictionary<Cell, Cell> = new Dictionary();
+  edgesTargetTermCache: Map<Cell, Cell> = new Map();
 
   /**
    * The style to apply between cell layers to edge segments.
@@ -180,9 +179,9 @@ class HierarchicalLayout extends GraphLayout {
    */
   execute(parent: Cell, roots: Cell[] | Cell | null = null): void {
     this.parent = parent;
-    this.edgesCache = new Dictionary();
-    this.edgeSourceTermCache = new Dictionary();
-    this.edgesTargetTermCache = new Dictionary();
+    this.edgesCache = new Map();
+    this.edgeSourceTermCache = new Map();
+    this.edgesTargetTermCache = new Map();
 
     if (roots != null && !(roots instanceof Array)) {
       roots = [roots];
@@ -355,7 +354,7 @@ class HierarchicalLayout extends GraphLayout {
       }
     }
 
-    this.edgesCache.put(cell, result);
+    this.edgesCache.set(cell, result);
     return result;
   }
 
@@ -366,12 +365,7 @@ class HierarchicalLayout extends GraphLayout {
    * @param source Boolean that specifies whether the source or target terminal is to be returned
    */
   getVisibleTerminal(edge: Cell, source: boolean) {
-    let terminalCache;
-    if (source) {
-      terminalCache = this.edgeSourceTermCache;
-    } else {
-      terminalCache = this.edgesTargetTermCache;
-    }
+    const terminalCache = source ? this.edgeSourceTermCache : this.edgesTargetTermCache;
 
     const term = terminalCache.get(edge);
     if (term != null) {
@@ -396,7 +390,7 @@ class HierarchicalLayout extends GraphLayout {
       if (this.isPort(terminal)) {
         terminal = <Cell>terminal.getParent();
       }
-      terminalCache.put(edge, terminal);
+      terminalCache.set(edge, terminal);
     }
     return terminal;
   }

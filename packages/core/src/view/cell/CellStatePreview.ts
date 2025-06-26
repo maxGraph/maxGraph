@@ -17,18 +17,23 @@ limitations under the License.
 */
 
 import Point from '../geometry/Point';
-import Dictionary from '../../util/Dictionary';
 import type CellState from './CellState';
 import type Cell from './Cell';
 import type { AbstractGraph } from '../AbstractGraph';
 import type GraphView from '../GraphView';
+
+// only used by the deltas property which is not supposed to be accessed directly (should be private)
+interface CellDelta {
+  point: Point;
+  state: CellState;
+}
 
 /**
  * Implements a live preview for moving cells.
  */
 class CellStatePreview {
   constructor(graph: AbstractGraph) {
-    this.deltas = new Dictionary();
+    this.deltas = new Map();
     this.graph = graph;
   }
 
@@ -37,7 +42,7 @@ class CellStatePreview {
    */
   graph: AbstractGraph;
 
-  deltas: Dictionary<Cell, { point: Point; state: CellState }>;
+  deltas: Map<Cell, CellDelta>;
 
   /**
    * Contains the number of entries in the map.
@@ -51,15 +56,6 @@ class CellStatePreview {
     return this.count === 0;
   }
 
-  /**
-   *
-   * @param {CellState} state
-   * @param {number} dx
-   * @param {number} dy
-   * @param {boolean} add
-   * @param {boolean} includeEdges
-   * @return {*}  {mxPoint}
-   */
   moveState(
     state: CellState,
     dx: number,
@@ -72,7 +68,7 @@ class CellStatePreview {
     if (delta == null) {
       // Note: Deltas stores the point and the state since the key is a string.
       delta = { point: new Point(dx, dy), state };
-      this.deltas.put(state.cell, delta);
+      this.deltas.set(state.cell, delta);
       this.count++;
     } else if (add) {
       delta.point.x += dx;
@@ -93,21 +89,15 @@ class CellStatePreview {
    * @param {Function} visitor
    */
   show(visitor: Function | null = null): void {
-    this.deltas.visit((key: string, delta: any) => {
+    this.deltas.forEach((delta) => {
       this.translateState(delta.state, delta.point.x, delta.point.y);
     });
 
-    this.deltas.visit((key: string, delta: any) => {
+    this.deltas.forEach((delta) => {
       this.revalidateState(delta.state, delta.point.x, delta.point.y, visitor);
     });
   }
 
-  /**
-   *
-   * @param {CellState} state
-   * @param {number} dx
-   * @param {number} dy
-   */
   translateState(state: CellState, dx: number, dy: number): void {
     if (state != null) {
       if (state.cell.isVertex()) {
@@ -133,13 +123,6 @@ class CellStatePreview {
     }
   }
 
-  /**
-   *
-   * @param {CellState} state
-   * @param {number} dx
-   * @param {number} dy
-   * @param {Function} visitor
-   */
   revalidateState(
     state: CellState,
     dx: number,
@@ -179,10 +162,6 @@ class CellStatePreview {
     }
   }
 
-  /**
-   *
-   * @param {CellState} state
-   */
   addEdges(state: CellState): void {
     const edgeCount = state.cell.getEdgeCount();
 

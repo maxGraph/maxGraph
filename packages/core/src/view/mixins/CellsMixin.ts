@@ -33,7 +33,6 @@ import Geometry from '../geometry/Geometry';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import Rectangle from '../geometry/Rectangle';
-import Dictionary from '../../util/Dictionary';
 import Point from '../geometry/Point';
 import { htmlEntities } from '../../util/StringUtils';
 import CellState from '../cell/CellState';
@@ -458,11 +457,11 @@ export const CellsMixin: PartialType = {
     let clones: Cell[];
 
     // Creates a dictionary for fast lookups
-    const dict = new Dictionary<Cell, boolean>();
+    const dict = new Map<Cell, boolean>();
     const tmp = [];
 
     for (const cell of cells) {
-      dict.put(cell, true);
+      dict.set(cell, true);
       tmp.push(cell);
     }
 
@@ -705,15 +704,15 @@ export const CellsMixin: PartialType = {
       // Removes edges that are currently not
       // visible as those cannot be updated
       const edges = this.getDeletableCells(this.getAllEdges(cells));
-      const dict = new Dictionary<Cell, boolean>();
+      const dict = new Map<Cell, boolean>();
 
       for (const cell of cells) {
-        dict.put(cell, true);
+        dict.set(cell, true);
       }
 
       for (const edge of edges) {
         if (!this.getView().getState(edge) && !dict.get(edge)) {
-          dict.put(edge, true);
+          dict.set(edge, true);
           cells.push(edge);
         }
       }
@@ -736,10 +735,10 @@ export const CellsMixin: PartialType = {
 
       this.batchUpdate(() => {
         // Creates hashtable for faster lookup
-        const dict = new Dictionary<Cell, boolean>();
+        const dict = new Map<Cell, boolean>();
 
         for (const cell of cells) {
-          dict.put(cell, true);
+          dict.set(cell, true);
         }
 
         for (const cell of cells) {
@@ -806,7 +805,7 @@ export const CellsMixin: PartialType = {
 
           for (const edge of edges) {
             if (!dict.get(edge)) {
-              dict.put(edge, true);
+              dict.set(edge, true);
               disconnectTerminal(edge, true);
               disconnectTerminal(edge, false);
             }
@@ -1221,10 +1220,10 @@ export const CellsMixin: PartialType = {
       this.batchUpdate(() => {
         // Faster cell lookups to remove relative edge labels with selected
         // terminals to avoid explicit and implicit move at same time
-        const dict = new Dictionary<Cell, boolean>();
+        const dict = new Map<Cell, boolean>();
 
         for (const cell of cells) {
-          dict.put(cell, true);
+          dict.set(cell, true);
         }
 
         const isSelected = (cell: Cell | null) => {

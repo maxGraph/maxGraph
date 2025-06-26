@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import type Cell from '../cell/Cell';
-import Dictionary from '../../util/Dictionary';
 import type { AbstractGraph } from '../AbstractGraph';
 
 type PartialGraph = Pick<AbstractGraph, 'getView'>;
@@ -37,7 +36,7 @@ export const TerminalMixin: PartialType = {
     const terminals: Cell[] = [];
 
     // Fast lookup to avoid duplicates in terminals array
-    const dict = new Dictionary<Cell, boolean>();
+    const coveredEntries = new Map<Cell, boolean>();
 
     for (let i = 0; i < edges.length; i += 1) {
       const state = this.getView().getState(edges[i]);
@@ -52,8 +51,8 @@ export const TerminalMixin: PartialType = {
       // Checks if the terminal is the source of the edge and if the
       // target should be stored in the result
       if (source === terminal && target && target !== terminal && includeTargets) {
-        if (!dict.get(target)) {
-          dict.put(target, true);
+        if (!coveredEntries.get(target)) {
+          coveredEntries.set(target, true);
           terminals.push(target);
         }
       }
@@ -61,8 +60,8 @@ export const TerminalMixin: PartialType = {
       // Checks if the terminal is the taget of the edge and if the
       // source should be stored in the result
       else if (target === terminal && source && source !== terminal && includeSources) {
-        if (!dict.get(source)) {
-          dict.put(source, true);
+        if (!coveredEntries.get(source)) {
+          coveredEntries.set(source, true);
           terminals.push(source);
         }
       }

@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Dictionary from '../../../util/Dictionary';
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
 import Cell from '../../cell/Cell';
@@ -56,10 +55,9 @@ class GraphHierarchyModel {
     this.roots = roots;
     this.parent = parent;
 
-    // map of cells to internal cell needed for second run through
-    // to setup the sink of edges correctly
-    this.vertexMapper = new Dictionary();
-    this.edgeMapper = new Dictionary();
+    // map of cells to internal cell needed for second run through to set up the sink of edges correctly
+    this.vertexMapper = new Map();
+    this.edgeMapper = new Map();
     this.maxRank = 0;
     const internalVertices: { [key: number]: GraphHierarchyNode } = {};
 
@@ -127,12 +125,12 @@ class GraphHierarchyModel {
   /**
    * Map from graph vertices to internal model nodes.
    */
-  vertexMapper: Dictionary<Cell, GraphHierarchyNode>;
+  vertexMapper: Map<Cell, GraphHierarchyNode>;
 
   /**
    * Map from graph edges to internal model edges
    */
-  edgeMapper: Dictionary<Cell, GraphHierarchyEdge>;
+  edgeMapper: Map<Cell, GraphHierarchyEdge>;
 
   /**
    * Mapping from rank number to actual rank
@@ -170,9 +168,9 @@ class GraphHierarchyModel {
    * Creates all edges in the internal model
    *
    * @param layout Reference to the <HierarchicalLayout> algorithm.
-   * @param vertices Array of {@link Cells} that represent the vertices whom are to
+   * @param vertices Array of {@link Cell}s that represent the vertices whom are to
    * have an internal representation created.
-   * @param internalVertices The array of {@link GraphHierarchyNodes} to have their
+   * @param internalVertices The array of {@link GraphHierarchyNode}s to have their
    * information filled in using the real vertices.
    */
   createInternalCells(
@@ -185,7 +183,7 @@ class GraphHierarchyModel {
     // Create internal edges
     for (let i = 0; i < vertices.length; i += 1) {
       internalVertices[i] = new GraphHierarchyNode(vertices[i]);
-      this.vertexMapper.put(vertices[i], internalVertices[i]);
+      this.vertexMapper.set(vertices[i], internalVertices[i]);
 
       // If the layout is deterministic, order the cells
       // List outgoingCells = graph.getNeighbours(vertices[i], deterministic);
@@ -226,7 +224,7 @@ class GraphHierarchyModel {
 
             for (let k = 0; k < undirectedEdges.length; k++) {
               const edge = undirectedEdges[k];
-              this.edgeMapper.put(edge, internalEdge);
+              this.edgeMapper.set(edge, internalEdge);
 
               // Resets all point on the edge and disables the edge style
               // without deleting it from the cell style
@@ -270,7 +268,7 @@ class GraphHierarchyModel {
       }
     }
 
-    const internalNodes = this.vertexMapper.getValues();
+    const internalNodes = Array.from(this.vertexMapper.values());
 
     for (let i = 0; i < internalNodes.length; i += 1) {
       // Mark the node as not having had a layer assigned

@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import EventSource from '../event/EventSource';
-import Dictionary from '../../util/Dictionary';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
 import { sortCells } from '../../util/styleUtils';
@@ -55,7 +54,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     super();
 
     this.graph = graph;
-    this.handlers = new Dictionary();
+    this.handlers = new Map();
     this.graph.addMouseListener(this);
 
     this.refreshHandler = (sender: EventSource, evt: EventObject) => {
@@ -98,7 +97,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   /**
    * {@link Dictionary} that maps from cells to handlers.
    */
-  handlers: Dictionary<Cell, Handler>;
+  handlers: Map<Cell, Handler>;
 
   /**
    * Returns <enabled>.
@@ -132,7 +131,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    * Resets all handlers.
    */
   reset() {
-    this.handlers.visit((key, handler) => {
+    this.handlers.forEach((handler) => {
       handler.reset.apply(handler);
     });
   }
@@ -150,7 +149,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   refresh() {
     // Removes all existing handlers
     const oldHandlers = this.handlers;
-    this.handlers = new Dictionary();
+    this.handlers = new Map();
 
     // Creates handles for all selection cells
     const tmp = sortCells(this.getHandledSelectionCells(), false);
@@ -160,7 +159,8 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
       const state = this.graph.view.getState(tmp[i]);
 
       if (state) {
-        let handler = oldHandlers.remove(tmp[i]);
+        let handler = oldHandlers.get(tmp[i]) ?? null;
+        oldHandlers.delete(tmp[i]);
 
         if (handler) {
           if (handler.state !== state) {
@@ -175,13 +175,13 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
         }
 
         if (handler) {
-          this.handlers.put(tmp[i], handler);
+          this.handlers.set(tmp[i], handler);
         }
       }
     }
 
     // Destroys unused handlers
-    oldHandlers.visit((key, handler) => {
+    oldHandlers.forEach((handler) => {
       this.fireEvent(new EventObject(InternalEvent.REMOVE, { state: handler.state }));
       handler.onDestroy();
     });
@@ -196,7 +196,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
         if (!handler) {
           handler = this.graph.createHandler(state);
           this.fireEvent(new EventObject(InternalEvent.ADD, { state }));
-          this.handlers.put(tmp[i], handler);
+          this.handlers.set(tmp[i], handler);
         } else {
           handler.updateParentHighlight();
         }
@@ -215,7 +215,8 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    * Updates the handler for the given shape if one exists.
    */
   updateHandler(state: CellState) {
-    let handler = this.handlers.remove(state.cell);
+    let handler = this.handlers.get(state.cell);
+    this.handlers.delete(state.cell);
 
     if (handler) {
       // Transfers the current state to the new handler
@@ -227,7 +228,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
       handler = this.graph.createHandler(state);
 
       if (handler) {
-        this.handlers.put(state.cell, handler);
+        this.handlers.set(state.cell, handler);
 
         if (index !== null) {
           handler.start(x, y, index);
@@ -241,7 +242,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    */
   mouseDown(sender: EventSource, me: InternalMouseEvent) {
     if (this.graph.isEnabled() && this.isEnabled()) {
-      this.handlers.visit((key, handler) => {
+      this.handlers.forEach((handler) => {
         handler.mouseDown(sender, me);
       });
     }
@@ -252,7 +253,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    */
   mouseMove(sender: EventSource, me: InternalMouseEvent) {
     if (this.graph.isEnabled() && this.isEnabled()) {
-      this.handlers.visit((key, handler) => {
+      this.handlers.forEach((handler) => {
         handler.mouseMove(sender, me);
       });
     }
@@ -263,7 +264,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    */
   mouseUp(sender: EventSource, me: InternalMouseEvent) {
     if (this.graph.isEnabled() && this.isEnabled()) {
-      this.handlers.visit((key, handler) => {
+      this.handlers.forEach((handler) => {
         handler.mouseUp(sender, me);
       });
     }

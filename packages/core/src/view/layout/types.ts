@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import type Cell from '../cell/Cell';
-import type Dictionary from '../../util/Dictionary';
 import type GraphHierarchyNode from './datatypes/GraphHierarchyNode';
 
 /**
@@ -26,7 +25,7 @@ export interface GraphLayoutTraverseArgs {
   directed: boolean | null;
   func: Function | null;
   edge: Cell | null;
-  visited: Dictionary<Cell, boolean> | null;
+  visited: Map<Cell, boolean> | null;
 }
 
 /**

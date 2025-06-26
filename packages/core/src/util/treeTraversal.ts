@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import type Cell from '../view/cell/Cell';
-import Dictionary from './Dictionary';
 import type { AbstractGraph } from '../view/AbstractGraph';
 
 /*****************************************************************************
@@ -112,7 +111,7 @@ export function findTreeRoots(
  * edge as arguments. The traversal stops if the function returns false.
  * @param edge Optional <Cell> that represents the incoming edge. This is
  * null for the first step of the traversal.
- * @param visited Optional {@link Dictionary} from cells to true for the visited cells.
+ * @param visited Optional {@link Map} from cells to true for the visited cells.
  * @param inverse Optional boolean to traverse in inverse direction. Default is false.
  * This is ignored if directed is false.
  */
@@ -121,16 +120,16 @@ export function traverse(
   directed = true,
   func: Function | null = null,
   edge: Cell | null = null,
-  visited: Dictionary<Cell, boolean> | null = null,
+  visited: Map<Cell, boolean> | null = null,
   inverse = false
 ) {
   if (func != null && vertex != null) {
     directed = directed != null ? directed : true;
     inverse = inverse != null ? inverse : false;
-    visited = visited || new Dictionary<Cell, boolean>();
+    visited = visited || new Map<Cell, boolean>();
 
     if (!visited.get(vertex)) {
-      visited.put(vertex, true);
+      visited.set(vertex, true);
       const result = func(vertex, edge);
 
       if (result == null || result) {
