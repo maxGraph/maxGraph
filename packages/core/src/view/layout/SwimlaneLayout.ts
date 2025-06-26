@@ -287,12 +287,9 @@ class SwimlaneLayout extends GraphLayout {
     const cells = [];
     const model = <SwimlaneModel>this.model;
 
-    for (const key in model.edgeMapper) {
-      // @ts-expect-error
-      const edge = model.edgeMapper[key];
-
-      for (let i = 0; i < edge.edges.length; i += 1) {
-        cells.push(edge.edges[i]);
+    for (const cell of model.edgeMapper.keys()) {
+      for (let i = 0; i < cell.edges.length; i += 1) {
+        cells.push(cell.edges[i]);
       }
     }
 
