@@ -493,8 +493,7 @@ class SwimlaneLayout extends GraphLayout {
     const terminalCache = source ? this.edgeSourceTermCache : this.edgesTargetTermCache;
 
     const term = terminalCache.get(edge);
-
-    if (term != null) {
+    if (term) {
       return term;
     }
 

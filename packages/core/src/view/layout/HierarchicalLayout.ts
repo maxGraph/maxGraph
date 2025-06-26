@@ -314,7 +314,7 @@ class HierarchicalLayout extends GraphLayout {
    */
   getEdges(cell: Cell) {
     const cachedEdges = this.edgesCache.get(cell);
-    if (cachedEdges != null) {
+    if (cachedEdges) {
       return cachedEdges;
     }
 
@@ -368,7 +368,7 @@ class HierarchicalLayout extends GraphLayout {
     const terminalCache = source ? this.edgeSourceTermCache : this.edgesTargetTermCache;
 
     const term = terminalCache.get(edge);
-    if (term != null) {
+    if (term) {
       return term;
     }
 
