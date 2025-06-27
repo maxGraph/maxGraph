@@ -19,7 +19,6 @@ limitations under the License.
 import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
 import CellPath from '../../cell/CellPath';
-import Dictionary from '../../../util/Dictionary';
 import Cell from '../../cell/Cell';
 import { clone } from '../../../util/cloneUtils';
 import SwimlaneLayout from '../SwimlaneLayout';
@@ -56,10 +55,9 @@ class SwimlaneModel {
     this.roots = roots;
     this.parent = parent;
 
-    // map of cells to internal cell needed for second run through
-    // to setup the sink of edges correctly
-    this.vertexMapper = new Dictionary();
-    this.edgeMapper = new Dictionary();
+    // map of cells to internal cell needed for second run through to set up the sink of edges correctly
+    this.vertexMapper = new Map();
+    this.edgeMapper = new Map();
     this.maxRank = 0;
     const internalVertices: GraphHierarchyNode[] = [];
 
@@ -127,12 +125,12 @@ class SwimlaneModel {
   /**
    * Map from graph vertices to internal model nodes.
    */
-  vertexMapper: Dictionary<Cell, GraphHierarchyNode>;
+  vertexMapper: Map<Cell, GraphHierarchyNode>;
 
   /**
    * Map from graph edges to internal model edges
    */
-  edgeMapper: Dictionary<Cell, GraphHierarchyEdge>;
+  edgeMapper: Map<Cell, GraphHierarchyEdge>;
 
   /**
    * Mapping from rank number to actual rank
@@ -191,7 +189,7 @@ class SwimlaneModel {
     // Create internal edges
     for (let i = 0; i < vertices.length; i += 1) {
       internalVertices[i] = new GraphHierarchyNode(vertices[i]);
-      this.vertexMapper.put(vertices[i], internalVertices[i]);
+      this.vertexMapper.set(vertices[i], internalVertices[i]);
       internalVertices[i].swimlaneIndex = -1;
 
       for (let ii = 0; ii < swimlanes.length; ii += 1) {
@@ -233,14 +231,14 @@ class SwimlaneModel {
           if (
             undirectedEdges != null &&
             undirectedEdges.length > 0 &&
-            this.edgeMapper.get(undirectedEdges[0]) == null &&
+            !this.edgeMapper.has(undirectedEdges[0]) &&
             directedEdges.length * 2 >= undirectedEdges.length
           ) {
             const internalEdge = new GraphHierarchyEdge(undirectedEdges);
 
             for (let k = 0; k < undirectedEdges.length; k += 1) {
               const edge = undirectedEdges[k];
-              this.edgeMapper.put(edge, internalEdge);
+              this.edgeMapper.set(edge, internalEdge);
 
               // Resets all point on the edge and disables the edge style
               // without deleting it from the cell style
@@ -304,7 +302,7 @@ class SwimlaneModel {
 
     this.maxRank = upperRank[0];
 
-    const internalNodes = this.vertexMapper.getValues();
+    const internalNodes = Array.from(this.vertexMapper.values());
 
     for (let i = 0; i < internalNodes.length; i += 1) {
       // Mark the node as not having had a layer assigned

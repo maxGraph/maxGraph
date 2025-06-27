@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import Point from '../view/geometry/Point';
-import Dictionary from './Dictionary';
 
 import type { Properties } from '../types';
 
@@ -111,14 +110,14 @@ export const equalEntries = (a: Properties | null, b: Properties | null) => {
 /**
  * Removes all duplicates from the given array.
  */
-export const removeDuplicates = (arr: any) => {
-  const dict = new Dictionary();
+export const removeDuplicates = (arr: any[]): any[] => {
+  const coveredEntries = new Map();
   const result = [];
 
   for (let i = 0; i < arr.length; i += 1) {
-    if (!dict.get(arr[i])) {
+    if (!coveredEntries.get(arr[i])) {
       result.push(arr[i]);
-      dict.put(arr[i], true);
+      coveredEntries.set(arr[i], true);
     }
   }
   return result;

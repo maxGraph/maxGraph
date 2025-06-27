@@ -20,7 +20,6 @@ import { getRotatedPoint, toRadians } from '../../util/mathUtils';
 import Cell from '../cell/Cell';
 import EventObject from '../event/EventObject';
 import InternalEvent from '../event/InternalEvent';
-import Dictionary from '../../util/Dictionary';
 import type { AbstractGraph } from '../AbstractGraph';
 import type ConnectionHandler from '../plugins/ConnectionHandler';
 
@@ -373,10 +372,10 @@ export const ConnectionsMixin: PartialType = {
       const { scale, translate: tr } = this.getView();
 
       // Fast lookup for finding cells in array
-      const dict = new Dictionary<Cell, boolean>();
+      const dict = new Map<Cell, boolean>();
 
       for (let i = 0; i < cells.length; i += 1) {
-        dict.put(cells[i], true);
+        dict.set(cells[i], true);
       }
 
       for (const cell of cells) {

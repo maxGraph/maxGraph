@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Dictionary from '../../util/Dictionary';
 import Rectangle from '../geometry/Rectangle';
 import Geometry from '../geometry/Geometry';
 import Point from '../geometry/Point';
@@ -143,15 +142,15 @@ class GraphLayout {
    * edge as arguments. The traversal stops if the function returns false.
    * @param edge Optional {@link Cell} that represents the incoming edge. This is
    * null for the first step of the traversal.
-   * @param visited Optional {@link Dictionary} of cell paths for the visited cells.
+   * @param visited Optional {@link Map} of cell paths for the visited cells.
    */
   traverse({ vertex, directed, func, edge, visited }: GraphLayoutTraverseArgs): void {
     if (func != null && vertex != null) {
       directed = directed != null ? directed : true;
-      visited = visited || new Dictionary();
+      visited = visited || new Map();
 
       if (!visited.get(vertex)) {
-        visited.put(vertex, true);
+        visited.set(vertex, true);
         const result = func(vertex, edge);
 
         if (result == null || result) {

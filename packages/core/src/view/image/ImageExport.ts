@@ -152,13 +152,9 @@ class ImageExport {
    * is true.
    */
   drawOverlays(state: CellState, canvas: AbstractCanvas2D): void {
-    if (state.overlays != null) {
-      state.overlays.visit((_id, shape) => {
-        if (shape instanceof Shape) {
-          shape.paint(canvas);
-        }
-      });
-    }
+    state.overlays?.forEach((shape) => {
+      shape.paint(canvas);
+    });
   }
 }
 

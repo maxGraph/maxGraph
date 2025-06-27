@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import Cell from '../cell/Cell';
-import Dictionary from '../../util/Dictionary';
 import RootChange from '../undoable_changes/RootChange';
 import ChildChange from '../undoable_changes/ChildChange';
 import type { AbstractGraph } from '../AbstractGraph';
@@ -281,13 +280,13 @@ export const SelectionMixin: PartialType = {
    *****************************************************************************/
 
   getSelectionCellsForChanges(changes, ignoreFn = null) {
-    const dict = new Dictionary();
+    const coveredElements = new Map<Cell, boolean>();
     const cells: Cell[] = [];
 
     const addCell = (cell: Cell) => {
-      if (!dict.get(cell) && this.getDataModel().contains(cell)) {
+      if (!coveredElements.has(cell) && this.getDataModel().contains(cell)) {
         if (cell.isEdge() || cell.isVertex()) {
-          dict.put(cell, true);
+          coveredElements.set(cell, true);
           cells.push(cell);
         } else {
           const childCount = cell.getChildCount();

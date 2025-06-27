@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Dictionary from '../../util/Dictionary';
 import Point from '../geometry/Point';
 import GraphLayout from './GraphLayout';
 import CellPath from '../cell/CellPath';
@@ -413,7 +412,7 @@ export class CompactTreeLayout extends GraphLayout {
    * Called if {@link sortEdges} is true to sort the array of outgoing edges in place.
    */
   sortOutgoingEdges(source: Cell, edges: Cell[]): void {
-    const lookup = new Dictionary();
+    const lookup = new Map<Cell, string[]>();
 
     edges.sort((e1, e2) => {
       const end1 = <Cell>e1.getTerminal(e1.getTerminal(false) == source);
@@ -421,7 +420,7 @@ export class CompactTreeLayout extends GraphLayout {
 
       if (p1 == null) {
         p1 = CellPath.create(end1).split(CellPath.PATH_SEPARATOR);
-        lookup.put(end1, p1);
+        lookup.set(end1, p1);
       }
 
       const end2 = <Cell>e2.getTerminal(e2.getTerminal(false) === source);
@@ -429,7 +428,7 @@ export class CompactTreeLayout extends GraphLayout {
 
       if (p2 == null) {
         p2 = CellPath.create(end2).split(CellPath.PATH_SEPARATOR);
-        lookup.put(end2, p2);
+        lookup.set(end2, p2);
       }
 
       return CellPath.compare(<string[]>p1, <string[]>p2);

@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import Rectangle from '../geometry/Rectangle';
-import Dictionary from '../../util/Dictionary';
 import type GraphView from '../GraphView';
 import type Cell from './Cell';
 import type CellState from './CellState';
@@ -36,7 +35,7 @@ class TemporaryCellStates {
   /**
    * Holds the states of the rectangle.
    */
-  oldStates: Dictionary<Cell, CellState>;
+  oldStates: Map<Cell, CellState>;
 
   /**
    * Holds the bounds of the rectangle.
@@ -95,7 +94,7 @@ class TemporaryCellStates {
     };
 
     // Creates space for new states
-    view.setStates(new Dictionary());
+    view.setStates(new Map());
     view.setScale(scale);
 
     view.resetValidationState();

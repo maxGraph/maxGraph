@@ -29,7 +29,6 @@ import {
   NONE,
   VALID_COLOR,
 } from '../../util/Constants';
-import Dictionary from '../../util/Dictionary';
 import CellHighlight from '../cell/CellHighlight';
 import Rectangle from '../geometry/Rectangle';
 import {
@@ -319,7 +318,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   cells: Cell[] | null = null;
   bounds: Rectangle | null = null;
   pBounds: Rectangle | null = null;
-  allCells: Dictionary<Cell, CellState> = new Dictionary();
+  allCells: Map<Cell, CellState> = new Map();
 
   cellWasClicked = false;
   cloning = false;
@@ -749,14 +748,14 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
       const ignore = parent.getChildCount() < 2;
 
       // Uses connected states as guides
-      const connected = new Dictionary();
+      const connected = new Map<CellState, boolean>();
       const opps = this.graph.getOpposites(this.graph.getEdges(this.cell), this.cell);
 
       for (let i = 0; i < opps.length; i += 1) {
         const state = this.graph.view.getState(opps[i]);
 
         if (state && !connected.get(state)) {
-          connected.put(state, true);
+          connected.set(state, true);
         }
       }
 
@@ -777,16 +776,16 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Adds the states for the given cell recursively to the given dictionary.
+   * Adds the states for the given cell recursively to the given Map.
    * @param cell
    * @param dict
    */
-  addStates(cell: Cell, dict: Dictionary<Cell, CellState>) {
+  addStates(cell: Cell, dict: Map<Cell, CellState>) {
     const state = this.graph.view.getState(cell);
     let count = 0;
 
     if (state && !dict.get(cell)) {
-      dict.put(cell, state);
+      dict.set(cell, state);
       count++;
 
       const childCount = cell.getChildCount();
@@ -801,8 +800,8 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   /**
    * Returns true if the given cell is currently being moved.
    */
-  isCellMoving(cell: Cell) {
-    return this.allCells.get(cell);
+  isCellMoving(cell: Cell): boolean {
+    return this.allCells.has(cell);
   }
 
   /**
@@ -1079,7 +1078,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
       const states: CellState[][] = [];
 
       if (this.allCells) {
-        this.allCells.visit((key, state: CellState | null) => {
+        this.allCells.forEach((state: CellState | null) => {
           const realState = state ? this.graph.view.getState(state.cell) : null;
 
           // Checks if cell was removed or replaced
@@ -1087,9 +1086,9 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
             state.destroy();
 
             if (realState) {
-              this.allCells.put(state.cell, realState);
+              this.allCells.set(state.cell, realState);
             } else {
-              this.allCells.remove(state.cell);
+              this.allCells.delete(state.cell);
             }
 
             state = realState;
@@ -1305,7 +1304,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
    * Resets the livew preview.
    */
   resetLivePreview() {
-    this.allCells.visit((key, state) => {
+    this.allCells.forEach((state) => {
       // Restores event handling
       if (state.shape && state.shape.originalPointerEvents !== null) {
         state.shape.pointerEvents = state.shape.originalPointerEvents;
@@ -1551,10 +1550,10 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
       // Removes parent if all child cells are removed
       if (!clone && target && this.removeEmptyParents) {
         // Collects all non-selected parents
-        const dict = new Dictionary();
+        const dict = new Map<Cell, boolean>();
 
         for (let i = 0; i < cells.length; i += 1) {
-          dict.put(cells[i], true);
+          dict.set(cells[i], true);
         }
 
         // LATER: Recurse up the cell hierarchy
@@ -1562,7 +1561,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
           const par = cells[i].getParent();
 
           if (par && !dict.get(par)) {
-            dict.put(par, true);
+            dict.set(par, true);
             parents.push(par);
           }
         }

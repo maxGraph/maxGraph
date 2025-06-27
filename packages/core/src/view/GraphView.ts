@@ -18,7 +18,6 @@ limitations under the License.
 
 import Point from './geometry/Point';
 import Rectangle from './geometry/Rectangle';
-import Dictionary from '../util/Dictionary';
 import EventSource from './event/EventSource';
 import EventObject from './event/EventObject';
 import RectangleShape from './shape/node/RectangleShape';
@@ -176,7 +175,7 @@ export class GraphView extends EventSource {
    */
   translate = new Point();
 
-  states = new Dictionary<Cell, CellState>();
+  states = new Map<Cell, CellState>();
 
   /**
    * Specifies if the style should be updated in each validation step. If this
@@ -310,7 +309,7 @@ export class GraphView extends EventSource {
   /**
    * Sets {@link states}.
    */
-  setStates(value: Dictionary<Cell, CellState>) {
+  setStates(value: Map<Cell, CellState>) {
     this.states = value;
   }
 
@@ -1944,16 +1943,15 @@ export class GraphView extends EventSource {
    * the state is created if it does not yet exist.
    *
    * @param cell {@link Cell} for which the {@link CellState} should be returned.
-   * @param create Optional boolean indicating if a new state should be created
-   * if it does not yet exist. Default is false.
+   * @param create Optional boolean indicating if a new state should be created if it does not yet exist. Default is false.
    */
-  getState(cell: Cell, create = false) {
-    let state: CellState | null = this.states.get(cell);
+  getState(cell: Cell, create = false): CellState | null {
+    let state: CellState | null = this.states.get(cell) ?? null;
 
     if (create && (!state || this.updateStyle) && cell.isVisible()) {
       if (!state) {
         state = this.createState(cell);
-        this.states.put(cell, state);
+        this.states.set(cell, state);
       } else {
         state.style = this.graph.getCellStyle(cell);
       }
@@ -1963,14 +1961,15 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Returns the {@link CellState}s for the given array of {@link Cell}. The array
-   * contains all states that are not null, that is, the returned array may
-   * have less elements than the given array. If no argument is given, then
-   * this returns {@link states}.
+   * Returns the {@link CellState}s for the given array of {@link Cell}.
+   *
+   * The array contains all states that are not null, that is, the returned array may have fewer elements than the given array.
+   *
+   * If no argument is given, then this returns the {@link CellState} of {@link states}.
    */
-  getCellStates(cells: Cell[] | null = null) {
+  getCellStates(cells: Cell[] | null = null): CellState[] {
     if (!cells) {
-      return this.states.getValues();
+      return Array.from(this.states.values());
     }
 
     const result: CellState[] = [];
@@ -1990,8 +1989,9 @@ export class GraphView extends EventSource {
    *
    * @param cell {@link Cell} for which the {@link CellState} should be removed.
    */
-  removeState(cell: Cell) {
-    const state: CellState | null = this.states.remove(cell);
+  removeState(cell: Cell): CellState | null {
+    const state: CellState | null = this.states.get(cell) ?? null;
+    this.states.delete(cell);
 
     if (state) {
       this.graph.cellRenderer.destroy(state);

@@ -19,7 +19,6 @@ limitations under the License.
 import GraphLayout from './GraphLayout';
 import type { DirectionValue } from '../../types';
 import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
-import Dictionary from '../../util/Dictionary';
 import Rectangle from '../geometry/Rectangle';
 import SwimlaneModel from './hierarchical/SwimlaneModel';
 import ObjectIdentity from '../../util/ObjectIdentity';
@@ -159,17 +158,17 @@ class SwimlaneLayout extends GraphLayout {
   /**
    * A cache of edges whose source terminal is the key
    */
-  edgesCache: Dictionary<Cell, Cell[]> = new Dictionary();
+  edgesCache: Map<Cell, Cell[]> = new Map();
 
   /**
    * A cache of edges whose source terminal is the key
    */
-  edgeSourceTermCache: Dictionary<Cell, Cell> = new Dictionary();
+  edgeSourceTermCache: Map<Cell, Cell> = new Map();
 
   /**
    * A cache of edges whose source terminal is the key
    */
-  edgesTargetTermCache: Dictionary<Cell, Cell> = new Dictionary();
+  edgesTargetTermCache: Map<Cell, Cell> = new Map();
 
   /**
    * The style to apply between cell layers to edge segments.
@@ -193,9 +192,9 @@ class SwimlaneLayout extends GraphLayout {
   execute(parent: Cell, swimlanes: Cell[] | null = null): void {
     this.parent = parent;
     const { model } = this.graph;
-    this.edgesCache = new Dictionary();
-    this.edgeSourceTermCache = new Dictionary();
-    this.edgesTargetTermCache = new Dictionary();
+    this.edgesCache = new Map();
+    this.edgeSourceTermCache = new Map();
+    this.edgesTargetTermCache = new Map();
 
     // If the roots are set and the parent is set, only
     // use the roots that are some dependent of the that
@@ -288,12 +287,9 @@ class SwimlaneLayout extends GraphLayout {
     const cells = [];
     const model = <SwimlaneModel>this.model;
 
-    for (const key in model.edgeMapper) {
-      // @ts-expect-error
-      const edge = model.edgeMapper[key];
-
-      for (let i = 0; i < edge.edges.length; i += 1) {
-        cells.push(edge.edges[i]);
+    for (const cell of model.edgeMapper.keys()) {
+      for (let i = 0; i < cell.edges.length; i += 1) {
+        cells.push(cell.edges[i]);
       }
     }
 
@@ -480,7 +476,7 @@ class SwimlaneLayout extends GraphLayout {
       }
     }
 
-    this.edgesCache.put(cell, result);
+    this.edgesCache.set(cell, result);
     return result;
   }
 
@@ -491,15 +487,10 @@ class SwimlaneLayout extends GraphLayout {
    * @param source Boolean that specifies whether the source or target terminal is to be returned
    */
   getVisibleTerminal(edge: Cell, source: boolean): Cell | null {
-    let terminalCache = this.edgesTargetTermCache;
-
-    if (source) {
-      terminalCache = this.edgeSourceTermCache;
-    }
+    const terminalCache = source ? this.edgeSourceTermCache : this.edgesTargetTermCache;
 
     const term = terminalCache.get(edge);
-
-    if (term != null) {
+    if (term) {
       return term;
     }
 
@@ -521,7 +512,7 @@ class SwimlaneLayout extends GraphLayout {
       if (this.isPort(terminal)) {
         terminal = <Cell>terminal.getParent();
       }
-      terminalCache.put(edge, terminal);
+      terminalCache.set(edge, terminal);
     }
     return terminal;
   }

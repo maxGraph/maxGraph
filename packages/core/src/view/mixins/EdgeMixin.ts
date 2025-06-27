@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import type { CellStyle } from '../../types';
-import Dictionary from '../../util/Dictionary';
 import { removeDuplicates } from '../../util/arrayUtils';
 import { findNearestSegment } from '../../util/mathUtils';
 import type { AbstractGraph } from '../AbstractGraph';
@@ -392,10 +391,10 @@ export const EdgeMixin: PartialType = {
 
   resetEdges(cells) {
     // Prepares faster cells lookup
-    const dict = new Dictionary();
+    const dict = new Map<Cell | null, boolean>();
 
     for (let i = 0; i < cells.length; i += 1) {
-      dict.put(cells[i], true);
+      dict.set(cells[i], true);
     }
 
     this.batchUpdate(() => {

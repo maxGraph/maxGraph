@@ -20,7 +20,6 @@ import HierarchicalLayoutStage from './HierarchicalLayoutStage';
 import type { DirectionValue } from '../../../types';
 import { GlobalConfig } from '../../../util/config';
 import WeightedCellSorter from '../util/WeightedCellSorter';
-import Dictionary from '../../../util/Dictionary';
 import Point from '../../geometry/Point';
 import HierarchicalEdgeStyle from '../datatypes/HierarchicalEdgeStyle';
 import HierarchicalLayout from '../HierarchicalLayout';
@@ -293,23 +292,21 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     const nodeList: WeightedCellSorter[] = [];
 
     // Need to be able to map from cell to cellWrapper
-    const map: Dictionary<GraphAbstractHierarchyCell, WeightedCellSorter> =
-      new Dictionary();
+    const map: Map<GraphAbstractHierarchyCell, WeightedCellSorter> = new Map();
     const rank = [];
 
     for (let i = 0; i <= model.maxRank; i += 1) {
       rank[i] = (<GraphAbstractHierarchyCell[][]>model.ranks)[i];
 
       for (let j = 0; j < rank[i].length; j += 1) {
-        // Use the weight to store the rank and visited to store whether
-        // or not the cell is in the list
+        // Use the weight to store the rank and visited to store whether the cell is in the list
         const node = rank[i][j];
         const nodeWrapper = new WeightedCellSorter(node, i);
         nodeWrapper.rankIndex = j;
         nodeWrapper.visited = true;
         nodeList.push(nodeWrapper);
 
-        map.put(node, nodeWrapper);
+        map.set(node, nodeWrapper);
       }
     }
 
@@ -861,7 +858,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     // preferred direction used is the one where the final
     // control points have the least offset from the connectable
     // region of the terminating vertices
-    const edges = model.edgeMapper.getValues();
+    const edges = Array.from(model.edgeMapper.values());
 
     for (let j = 0; j < edges.length; j++) {
       const cell = edges[j];
@@ -1034,7 +1031,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       this.rankBottomY[i] = -Number.MAX_VALUE;
     }
 
-    const vertices = model.vertexMapper.getValues();
+    const vertices = Array.from(model.vertexMapper.values());
 
     // Process vertices all first, since they define the lower and
     // limits of each rank. Between these limits lie the channels
@@ -1054,7 +1051,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       this.localEdgeProcessing(model);
     }
 
-    const edges = model.edgeMapper.getValues();
+    const edges = Array.from(model.edgeMapper.values());
     for (let i = 0; i < edges.length; i += 1) {
       this.setEdgePosition(edges[i]);
     }
