@@ -1616,3 +1616,11 @@ export interface EdgeMarkerRegistryInterface extends Registry<MarkerFactoryFunct
     filled: boolean
   ): MarkerFunction | null;
 }
+
+export type DropHandler = (
+  graph: AbstractGraph,
+  evt: MouseEvent,
+  cell: Cell | null,
+  x?: number,
+  y?: number
+) => void;

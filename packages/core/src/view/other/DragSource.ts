@@ -43,14 +43,7 @@ import EventObject from '../event/EventObject';
 import type { AbstractGraph } from '../AbstractGraph';
 import type Cell from '../cell/Cell';
 import type SelectionHandler from '../plugins/SelectionHandler';
-
-export type DropHandler = (
-  graph: AbstractGraph,
-  evt: MouseEvent,
-  cell: Cell | null,
-  x?: number,
-  y?: number
-) => void;
+import type { DropHandler } from '../../types';
 
 /**
  * Wrapper to create a drag source from a DOM element so that the element can be dragged over a graph and dropped into the graph as a new cell.
