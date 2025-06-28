@@ -1617,6 +1617,11 @@ export interface EdgeMarkerRegistryInterface extends Registry<MarkerFactoryFunct
   ): MarkerFunction | null;
 }
 
+/**
+ * Function that handles the dropping of an element, usually into a `Graph`.
+ *
+ * @since 0.21.0
+ */
 export type DropHandler = (
   graph: AbstractGraph,
   evt: MouseEvent,
