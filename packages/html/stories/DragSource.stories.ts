@@ -31,7 +31,7 @@ import {
   SelectionCellsHandler,
   ConnectionHandler,
   type EdgeStyleFunction,
-  DropHandler,
+  type DropHandler,
   InternalEvent,
   PanningHandler,
   type GraphPluginConstructor,
