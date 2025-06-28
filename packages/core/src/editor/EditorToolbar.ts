@@ -27,7 +27,8 @@ import Editor from './Editor';
 import type Cell from '../view/cell/Cell';
 import type { AbstractGraph } from '../view/AbstractGraph';
 import EventObject from '../view/event/EventObject';
-import type { DropHandler } from '../view/other/DragSource';
+
+import type { DropHandler } from '../types';
 
 /**
  * Toolbar for the editor.

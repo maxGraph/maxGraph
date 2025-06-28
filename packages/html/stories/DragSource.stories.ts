@@ -17,6 +17,7 @@ limitations under the License.
 
 import {
   Graph,
+  type CellState,
   domUtils,
   RubberBandHandler,
   DragSource,
@@ -29,6 +30,11 @@ import {
   CellEditorHandler,
   SelectionCellsHandler,
   ConnectionHandler,
+  type EdgeStyleFunction,
+  type DropHandler,
+  InternalEvent,
+  PanningHandler,
+  type GraphPluginConstructor,
 } from '@maxgraph/core';
 
 import {
@@ -37,7 +43,7 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -53,12 +59,16 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
-  const container = createGraphContainer(args);
-  container.style.background = ''; // no grid
+const Template = ({ label, ...args }: Record<string, string>) => {
+  const container =
+    createMainDiv(`Drag and drop the "gear" icon at the bottom of the page to one of the Graph to create a new vertex.
+  <br>
+    Panning is enabled in all Graphs.
+  `);
+  InternalEvent.disableContextMenu(container);
 
   class MyCustomGuide extends Guide {
-    isEnabledForEvent(evt) {
+    override isEnabledForEvent(evt: MouseEvent) {
       // Alt disables guides
       return !eventUtils.isAltDown(evt);
     }
@@ -66,70 +76,65 @@ const Template = ({ label, ...args }) => {
 
   class MyCustomSelectionHandler extends SelectionHandler {
     // Enables guides
-    guidesEnabled = true;
+    override guidesEnabled = true;
 
-    createGuide() {
+    override createGuide() {
       return new MyCustomGuide(this.graph, this.getGuideStates());
     }
   }
 
   class MyCustomGraph extends Graph {
-    constructor(container) {
-      super(container, undefined, [
+    constructor(container: HTMLElement) {
+      const plugins: GraphPluginConstructor[] = [
         // part of getDefaultPlugins
         CellEditorHandler,
-        SelectionCellsHandler,
         ConnectionHandler,
+        SelectionCellsHandler,
         MyCustomSelectionHandler, // replaces SelectionHandler
-      ]);
+        PanningHandler,
+      ];
+      // Enables rubberband selection
+      args.rubberBand && plugins.push(RubberBandHandler);
+
+      super(container, undefined, plugins);
       this.options.foldingEnabled = false;
       this.recursiveResize = true;
     }
 
-    createEdgeHandler(state, edgeStyle) {
+    override createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null) {
       const edgeHandler = super.createEdgeHandler(state, edgeStyle);
       edgeHandler.snapToTerminals = true; // Enables snapping waypoints to terminals
       return edgeHandler;
     }
   }
 
-  const graphs = [];
+  const graphs: Graph[] = [];
 
   // Creates the graph inside the given container
-  for (let i = 0; i < 2; i++) {
-    const subContainer = createGraphContainer({ width: 321, height: 241 });
+  const numberOfGraphs = 2;
+  for (let i = 0; i < numberOfGraphs; i++) {
+    const subContainer = createGraphContainer({ width: '321', height: '241' });
     container.appendChild(subContainer);
 
     const graph = new MyCustomGraph(subContainer);
     graph.gridSize = 30;
 
-    // Uncomment the following if you want the container
-    // to fit the size of the graph
-    // graph.setResizeContainer(true);
-
-    // Enables rubberband selection
-    if (args.rubberBand) new RubberBandHandler(graph);
-
-    // Gets the default parent for inserting new cells. This
-    // is normally the first child of the root (ie. layer 0).
-    const parent = graph.getDefaultParent();
+    // Enables panning
+    graph.setPanning(true);
 
     // Adds cells to the model in a single step
     graph.batchUpdate(() => {
       const v1 = graph.insertVertex({
-        parent,
         value: 'Hello,',
         position: [20, 20],
         size: [80, 30],
       });
       const v2 = graph.insertVertex({
-        parent,
         value: 'World!',
         position: [200, 150],
         size: [80, 30],
       });
-      const e1 = graph.insertEdge({
-        parent,
+      graph.insertEdge({
         source: v1,
         target: v2,
       });
@@ -139,7 +144,7 @@ const Template = ({ label, ...args }) => {
   }
 
   // Returns the graph under the mouse
-  const graphF = (evt) => {
+  const graphF = (evt: MouseEvent) => {
     const x = eventUtils.getClientX(evt);
     const y = eventUtils.getClientY(evt);
     const elt = document.elementFromPoint(x, y);
@@ -153,7 +158,7 @@ const Template = ({ label, ...args }) => {
   };
 
   // Inserts a cell at the given location
-  const funct = (graph, evt, target, x, y) => {
+  const dropHandlerFunction: DropHandler = (graph, _evt, target, x, y) => {
     const cell = new Cell('Test', new Geometry(0, 0, 120, 40));
     cell.vertex = true;
     const cells = graph.importCells([cell], x, y, target);
@@ -176,29 +181,30 @@ const Template = ({ label, ...args }) => {
   dragElt.style.width = '120px';
   dragElt.style.height = '40px';
 
-  // Drag source is configured to use dragElt for preview and as drag icon
-  // if scalePreview (last) argument is true. Dx and dy are null to force
-  // the use of the defaults. Note that dx and dy are only used for the
-  // drag icon but not for the preview.
-  const ds = gestureUtils.makeDraggable(
+  // Drag source is configured to use dragElt for preview and as drag icon if scalePreview (last) argument is true.
+  // Dx and dy are null to force the use of the defaults.
+  // Note that dx and dy are only used for the drag icon but not for the preview.
+  const dragSource = gestureUtils.makeDraggable(
     img,
     graphF,
-    funct,
+    dropHandlerFunction,
     dragElt,
     null,
     null,
-    graphs[0].autoscroll,
+    graphs[0].autoScroll,
     true
   );
 
-  // Redirects feature to global switch. Note that this feature should only be used
-  // if the the x and y arguments are used in funct to insert the cell.
-  ds.isGuidesEnabled = () => {
-    return graphs[0].getPlugin('SelectionHandler')?.guidesEnabled;
+  // Redirects feature to global switch.
+  // Note that this feature should only be used if the x and y arguments are used in dropHandlerFunction to insert the cell.
+  dragSource.isGuidesEnabled = () => {
+    return (
+      graphs[0].getPlugin<SelectionHandler>('SelectionHandler')?.guidesEnabled ?? false
+    );
   };
 
   // Restores original drag icon while outside of graph
-  ds.createDragElement = DragSource.prototype.createDragElement;
+  dragSource.createDragElement = DragSource.prototype.createDragElement;
 
   return container;
 };

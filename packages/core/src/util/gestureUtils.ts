@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import DragSource, { DropHandler } from '../view/other/DragSource';
+import DragSource from '../view/other/DragSource';
 import Point from '../view/geometry/Point';
 import { TOOLTIP_VERTICAL_OFFSET } from './Constants';
 import type { AbstractGraph } from '../view/AbstractGraph';
 import type Cell from '../view/cell/Cell';
+import type { DropHandler } from '../types';
 
 /**
  * Configures the given DOM element to act as a drag source for the
