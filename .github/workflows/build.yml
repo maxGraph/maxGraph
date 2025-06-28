@@ -37,7 +37,7 @@ jobs:
       # we want to run the full build on all os: don't cancel running jobs even if one fails
       fail-fast: false
       matrix:
-        os: ['ubuntu-22.04', 'macos-14', 'windows-2022']
+        os: ['ubuntu-24.04', 'macos-14', 'windows-2022']
     steps:
       - uses: actions/checkout@v4
       - name: Build Setup

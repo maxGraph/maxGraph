@@ -7,7 +7,7 @@ on:
 
 jobs:
   create_release:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: write # create the GH release
     steps:
