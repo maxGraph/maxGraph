@@ -63,7 +63,7 @@
     "test-check": "tsc --noEmit --project tsconfig.test.json"
   },
   "devDependencies": {
-    "@swc/core": "~1.12.7",
+    "@swc/core": "~1.12.9",
     "@swc/jest": "~0.2.38",
     "jest": "~30.0.3",
     "jest-environment-jsdom": "~30.0.2",
