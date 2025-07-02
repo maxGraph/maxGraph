@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { htmlEntities } from '../../util/StringUtils';
-import type Shape from '../shape/Shape';
-import type Cell from '../cell/Cell';
-import type { AbstractGraph } from '../AbstractGraph';
-import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
-import type TooltipHandler from '../plugins/TooltipHandler';
-import { translate } from '../../internal/i18n-utils';
+import { htmlEntities } from '../../util/StringUtils.js';
+import type Shape from '../shape/Shape.js';
+import type Cell from '../cell/Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
+import type TooltipHandler from '../plugins/TooltipHandler.js';
+import { translate } from '../../internal/i18n-utils.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

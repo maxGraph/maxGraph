@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
+import Point from '../geometry/Point.js';
 
 /**
  * Defines an object that contains the constraints about how to connect one side of an edge to its terminal.

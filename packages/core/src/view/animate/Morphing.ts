@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
-import CellStatePreview from '../cell/CellStatePreview';
-import Animation from './Animation';
-import type CellState from '../cell/CellState';
-import type Cell from '../cell/Cell';
-import type { AbstractGraph } from '../AbstractGraph';
+import Point from '../geometry/Point.js';
+import CellStatePreview from '../cell/CellStatePreview.js';
+import Animation from './Animation.js';
+import type CellState from '../cell/CellState.js';
+import type Cell from '../cell/Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 /**
  * Implements animation for morphing cells.

@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from './ObjectCodec';
+import ObjectCodec from './ObjectCodec.js';
 
 /**
  * Singleton class that acts as a global registry for codecs.

@@ -20,14 +20,14 @@ import {
   DEFAULT_VALID_COLOR,
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_STROKEWIDTH,
-} from '../../util/Constants';
-import InternalEvent from '../event/InternalEvent';
-import Rectangle from '../geometry/Rectangle';
-import type CellState from './CellState';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Shape from '../shape/Shape';
+} from '../../util/Constants.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Rectangle from '../geometry/Rectangle.js';
+import type CellState from './CellState.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Shape from '../shape/Shape.js';
 
-import type { ColorValue } from '../../types';
+import type { ColorValue } from '../../types.js';
 
 /**
  * A helper class to highlight cells. Here is an example for a given cell.

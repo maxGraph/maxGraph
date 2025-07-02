@@ -16,8 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../../geometry/Point';
-import type CellState from '../../cell/CellState';
+import Point from '../../geometry/Point.js';
+import type CellState from '../../cell/CellState.js';
 
 /**
  * Scales an array of {@link Point}

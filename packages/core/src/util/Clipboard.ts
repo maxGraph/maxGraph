@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../view/cell/Cell';
-import type { AbstractGraph } from '../view/AbstractGraph';
-import { getTopmostCells } from './cellArrayUtils';
+import type Cell from '../view/cell/Cell.js';
+import type { AbstractGraph } from '../view/AbstractGraph.js';
+import { getTopmostCells } from './cellArrayUtils.js';
 
 /**
  * @class

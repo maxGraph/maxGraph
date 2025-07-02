@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../cell/Cell';
-import type Rectangle from '../geometry/Rectangle';
+import type Cell from '../cell/Cell.js';
+import type Rectangle from '../geometry/Rectangle.js';
 import type {
   AlignValue,
   CellStateStyle,
   CellStyle,
   NumericCellStateStyleKeys,
   VAlignValue,
-} from '../../types';
-import type Geometry from '../geometry/Geometry';
-import type CellState from '../cell/CellState';
+} from '../../types.js';
+import type Geometry from '../geometry/Geometry.js';
+import type CellState from '../cell/CellState.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {

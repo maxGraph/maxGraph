@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODE_TYPE } from './Constants';
+import { NODE_TYPE } from './Constants.js';
 
 /**
  * Returns the text content of the specified node.

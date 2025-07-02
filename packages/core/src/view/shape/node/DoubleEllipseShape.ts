@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../../geometry/Rectangle';
-import Shape from '../Shape';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import Rectangle from '../../geometry/Rectangle.js';
+import Shape from '../Shape.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
 /**
  * Extends {@link Shape} to implement a double ellipse shape.

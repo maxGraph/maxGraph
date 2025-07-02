@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../Client';
-import { PAGE_FORMAT_A4_PORTRAIT } from './Constants';
-import Rectangle from '../view/geometry/Rectangle';
-import { getOuterHtml } from './domUtils';
-import type { AbstractGraph } from '../view/AbstractGraph';
-import { removeCursors } from './styleUtils';
+import Client from '../Client.js';
+import { PAGE_FORMAT_A4_PORTRAIT } from './Constants.js';
+import Rectangle from '../view/geometry/Rectangle.js';
+import { getOuterHtml } from './domUtils.js';
+import type { AbstractGraph } from '../view/AbstractGraph.js';
+import { removeCursors } from './styleUtils.js';
 
 /**
  * Returns the scale to be used for printing the graph with the given

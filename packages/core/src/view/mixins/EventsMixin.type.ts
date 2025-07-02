@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { MouseEventListener, MouseListenerSet } from '../../types';
-import type Cell from '../cell/Cell';
-import type InternalMouseEvent from '../event/InternalMouseEvent';
-import type CellState from '../cell/CellState';
-import type EventSource from '../event/EventSource';
-import type Point from '../geometry/Point';
+import type { MouseEventListener, MouseListenerSet } from '../../types.js';
+import type Cell from '../cell/Cell.js';
+import type InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type CellState from '../cell/CellState.js';
+import type EventSource from '../event/EventSource.js';
+import type Point from '../geometry/Point.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {

@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export { ElbowConnector } from './Elbow';
-export { EntityRelation } from './EntityRelation';
-export { Loop } from './Loop';
-export { ManhattanConnector } from './Manhattan';
-export { OrthogonalConnector as OrthConnector } from './Orthogonal';
-export { SegmentConnector } from './Segment';
-export { SideToSide } from './SideToSide';
-export { TopToBottom } from './TopToBottom';
+export { ElbowConnector } from './Elbow.js';
+export { EntityRelation } from './EntityRelation.js';
+export { Loop } from './Loop.js';
+export { ManhattanConnector } from './Manhattan.js';
+export { OrthogonalConnector as OrthConnector } from './Orthogonal.js';
+export { SegmentConnector } from './Segment.js';
+export { SideToSide } from './SideToSide.js';
+export { TopToBottom } from './TopToBottom.js';

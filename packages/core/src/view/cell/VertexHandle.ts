@@ -16,20 +16,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getRotatedPoint, toRadians } from '../../util/mathUtils';
-import Point from '../geometry/Point';
-import ImageShape from '../shape/node/ImageShape';
-import Rectangle from '../geometry/Rectangle';
-import RectangleShape from '../shape/node/RectangleShape';
-import InternalEvent from '../event/InternalEvent';
-import type Shape from '../shape/Shape';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import ImageBox from '../image/ImageBox';
-import CellState from './CellState';
+import { getRotatedPoint, toRadians } from '../../util/mathUtils.js';
+import Point from '../geometry/Point.js';
+import ImageShape from '../shape/node/ImageShape.js';
+import Rectangle from '../geometry/Rectangle.js';
+import RectangleShape from '../shape/node/RectangleShape.js';
+import InternalEvent from '../event/InternalEvent.js';
+import type Shape from '../shape/Shape.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import ImageBox from '../image/ImageBox.js';
+import CellState from './CellState.js';
 
-import type { AbstractGraph } from '../AbstractGraph';
-import type { CellHandle, CellStateStyle } from '../../types';
-import { HandleConfig } from '../handler/config';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type { CellHandle, CellStateStyle } from '../../types.js';
+import { HandleConfig } from '../handler/config.js';
 
 /**
  * Implements a single custom handle for vertices.

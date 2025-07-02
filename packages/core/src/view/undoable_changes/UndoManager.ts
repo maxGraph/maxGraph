@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../event/InternalEvent';
-import EventObject from '../event/EventObject';
-import EventSource from '../event/EventSource';
-import UndoableEdit from './UndoableEdit';
+import InternalEvent from '../event/InternalEvent.js';
+import EventObject from '../event/EventObject.js';
+import EventSource from '../event/EventSource.js';
+import UndoableEdit from './UndoableEdit.js';
 
 /**
  * @class UndoManager

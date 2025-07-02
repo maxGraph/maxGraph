@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
-import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
-import Cell from '../../cell/Cell';
-import HierarchicalLayout from '../HierarchicalLayout';
-import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
+import GraphHierarchyNode from '../datatypes/GraphHierarchyNode.js';
+import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge.js';
+import Cell from '../../cell/Cell.js';
+import HierarchicalLayout from '../HierarchicalLayout.js';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell.js';
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges

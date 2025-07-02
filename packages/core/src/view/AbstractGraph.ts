@@ -16,35 +16,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Image from './image/ImageBox';
-import EventObject from './event/EventObject';
-import EventSource from './event/EventSource';
-import InternalEvent from './event/InternalEvent';
-import Rectangle from './geometry/Rectangle';
-import Client from '../Client';
-import type PanningHandler from './plugins/PanningHandler';
-import GraphView from './GraphView';
-import CellRenderer from './cell/CellRenderer';
-import Point from './geometry/Point';
-import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils';
-import Cell from './cell/Cell';
-import GraphDataModel from './GraphDataModel';
-import { Stylesheet } from './style/Stylesheet';
-import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants';
-import ChildChange from './undoable_changes/ChildChange';
-import GeometryChange from './undoable_changes/GeometryChange';
-import RootChange from './undoable_changes/RootChange';
-import StyleChange from './undoable_changes/StyleChange';
-import TerminalChange from './undoable_changes/TerminalChange';
-import ValueChange from './undoable_changes/ValueChange';
-import CellState from './cell/CellState';
-import { isNode } from '../util/domUtils';
-import { EdgeStyle } from './style/builtin-style-elements';
-import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry';
-import EdgeHandler from './handler/EdgeHandler';
-import VertexHandler from './handler/VertexHandler';
-import EdgeSegmentHandler from './handler/EdgeSegmentHandler';
-import ElbowEdgeHandler from './handler/ElbowEdgeHandler';
+import Image from './image/ImageBox.js';
+import EventObject from './event/EventObject.js';
+import EventSource from './event/EventSource.js';
+import InternalEvent from './event/InternalEvent.js';
+import Rectangle from './geometry/Rectangle.js';
+import Client from '../Client.js';
+import type PanningHandler from './plugins/PanningHandler.js';
+import GraphView from './GraphView.js';
+import CellRenderer from './cell/CellRenderer.js';
+import Point from './geometry/Point.js';
+import { getCurrentStyle, hasScrollbars, parseCssNumber } from '../util/styleUtils.js';
+import Cell from './cell/Cell.js';
+import GraphDataModel from './GraphDataModel.js';
+import { Stylesheet } from './style/Stylesheet.js';
+import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants.js';
+import ChildChange from './undoable_changes/ChildChange.js';
+import GeometryChange from './undoable_changes/GeometryChange.js';
+import RootChange from './undoable_changes/RootChange.js';
+import StyleChange from './undoable_changes/StyleChange.js';
+import TerminalChange from './undoable_changes/TerminalChange.js';
+import ValueChange from './undoable_changes/ValueChange.js';
+import CellState from './cell/CellState.js';
+import { isNode } from '../util/domUtils.js';
+import { EdgeStyle } from './style/builtin-style-elements.js';
+import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry.js';
+import EdgeHandler from './handler/EdgeHandler.js';
+import VertexHandler from './handler/VertexHandler.js';
+import EdgeSegmentHandler from './handler/EdgeSegmentHandler.js';
+import ElbowEdgeHandler from './handler/ElbowEdgeHandler.js';
 import type {
   DialectValue,
   EdgeStyleFunction,
@@ -54,12 +54,12 @@ import type {
   GraphPlugin,
   MouseListenerSet,
   PluginId,
-} from '../types';
-import Multiplicity from './other/Multiplicity';
-import ImageBundle from './image/ImageBundle';
-import { applyGraphMixins } from './mixins/_graph-mixins-apply';
-import { isNullish } from '../internal/utils';
-import { isI18nEnabled } from '../internal/i18n-utils';
+} from '../types.js';
+import Multiplicity from './other/Multiplicity.js';
+import ImageBundle from './image/ImageBundle.js';
+import { applyGraphMixins } from './mixins/_graph-mixins-apply.js';
+import { isNullish } from '../internal/utils.js';
+import { isI18nEnabled } from '../internal/i18n-utils.js';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the entry point class of the package.

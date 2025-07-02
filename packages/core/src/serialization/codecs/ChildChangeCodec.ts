@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../ObjectCodec';
-import ChildChange from '../../view/undoable_changes/ChildChange';
-import type Codec from '../Codec';
-import { isElement } from '../../internal/utils';
+import ObjectCodec from '../ObjectCodec.js';
+import ChildChange from '../../view/undoable_changes/ChildChange.js';
+import type Codec from '../Codec.js';
+import { isElement } from '../../internal/utils.js';
 
 /**
  * Codec for {@link ChildChange}s.

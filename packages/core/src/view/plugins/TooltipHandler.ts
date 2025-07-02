@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../event/InternalEvent';
-import { fit, getScrollOrigin } from '../../util/styleUtils';
-import { TOOLTIP_VERTICAL_OFFSET } from '../../util/Constants';
-import { getSource, isMouseEvent } from '../../util/EventUtils';
-import { isNode } from '../../util/domUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import CellState from '../cell/CellState';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import type PopupMenuHandler from './PopupMenuHandler';
-import type { GraphPlugin, MouseListenerSet } from '../../types';
-import EventSource from '../event/EventSource';
+import InternalEvent from '../event/InternalEvent.js';
+import { fit, getScrollOrigin } from '../../util/styleUtils.js';
+import { TOOLTIP_VERTICAL_OFFSET } from '../../util/Constants.js';
+import { getSource, isMouseEvent } from '../../util/EventUtils.js';
+import { isNode } from '../../util/domUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import CellState from '../cell/CellState.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type PopupMenuHandler from './PopupMenuHandler.js';
+import type { GraphPlugin, MouseListenerSet } from '../../types.js';
+import EventSource from '../event/EventSource.js';
 
 /**
  * Graph event handler that displays tooltips.

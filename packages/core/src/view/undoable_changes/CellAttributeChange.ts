@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isNullish } from '../../internal/utils';
-import Cell from '../cell/Cell';
-import type { UndoableChange } from '../../types';
+import { isNullish } from '../../internal/utils.js';
+import Cell from '../cell/Cell.js';
+import type { UndoableChange } from '../../types.js';
 
 /**
  * Action to change the attribute of a cell's user object.

@@ -16,23 +16,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from './event/EventSource';
-import UndoableEdit from './undoable_changes/UndoableEdit';
-import CellPath from './cell/CellPath';
-import Cell from './cell/Cell';
-import { isNumeric } from '../util/mathUtils';
-import EventObject from './event/EventObject';
-import InternalEvent from './event/InternalEvent';
-import ChildChange from './undoable_changes/ChildChange';
-import CollapseChange from './undoable_changes/CollapseChange';
-import GeometryChange from './undoable_changes/GeometryChange';
-import RootChange from './undoable_changes/RootChange';
-import StyleChange from './undoable_changes/StyleChange';
-import TerminalChange from './undoable_changes/TerminalChange';
-import ValueChange from './undoable_changes/ValueChange';
-import VisibleChange from './undoable_changes/VisibleChange';
-import Geometry from './geometry/Geometry';
-import type { CellStyle, FilterFunction } from '../types';
+import EventSource from './event/EventSource.js';
+import UndoableEdit from './undoable_changes/UndoableEdit.js';
+import CellPath from './cell/CellPath.js';
+import Cell from './cell/Cell.js';
+import { isNumeric } from '../util/mathUtils.js';
+import EventObject from './event/EventObject.js';
+import InternalEvent from './event/InternalEvent.js';
+import ChildChange from './undoable_changes/ChildChange.js';
+import CollapseChange from './undoable_changes/CollapseChange.js';
+import GeometryChange from './undoable_changes/GeometryChange.js';
+import RootChange from './undoable_changes/RootChange.js';
+import StyleChange from './undoable_changes/StyleChange.js';
+import TerminalChange from './undoable_changes/TerminalChange.js';
+import ValueChange from './undoable_changes/ValueChange.js';
+import VisibleChange from './undoable_changes/VisibleChange.js';
+import Geometry from './geometry/Geometry.js';
+import type { CellStyle, FilterFunction } from '../types.js';
 
 /**
  * Extends {@link EventSource} to implement a graph model. The graph model acts as

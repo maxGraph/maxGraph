@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { write } from './domUtils';
+import { write } from './domUtils.js';
 
 /**
  * This class provides a cross-browser abstraction for Ajax requests. It is an XML HTTP request wrapper.

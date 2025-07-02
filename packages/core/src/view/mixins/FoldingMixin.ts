@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../cell/Cell';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import Geometry from '../geometry/Geometry';
-import { toRadians } from '../../util/mathUtils';
-import Rectangle from '../geometry/Rectangle';
-import type { AbstractGraph } from '../AbstractGraph';
-import { isI18nEnabled } from '../../internal/i18n-utils';
+import Cell from '../cell/Cell.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Geometry from '../geometry/Geometry.js';
+import { toRadians } from '../../util/mathUtils.js';
+import Rectangle from '../geometry/Rectangle.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import { isI18nEnabled } from '../../internal/i18n-utils.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

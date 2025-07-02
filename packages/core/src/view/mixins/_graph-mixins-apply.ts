@@ -14,31 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mixInto } from '../../internal/utils';
-import type { AbstractGraph } from '../AbstractGraph';
-import { CellsMixin } from './CellsMixin';
-import { ConnectionsMixin } from './ConnectionsMixin';
-import { DragDropMixin } from './DragDropMixin';
-import { EdgeMixin } from './EdgeMixin';
-import { EditingMixin } from './EditingMixin';
-import { EventsMixin } from './EventsMixin';
-import { FoldingMixin } from './FoldingMixin';
-import { GroupingMixin } from './GroupingMixin';
-import { ImageMixin } from './ImageMixin';
-import { LabelMixin } from './LabelMixin';
-import { OrderMixin } from './OrderMixin';
-import { OverlaysMixin } from './OverlaysMixin';
-import { PageBreaksMixin } from './PageBreaksMixin';
-import { PanningMixin } from './PanningMixin';
-import { PortsMixin } from './PortsMixin';
-import { SelectionMixin } from './SelectionMixin';
-import { SnapMixin } from './SnapMixin';
-import { SwimlaneMixin } from './SwimlaneMixin';
-import { TerminalMixin } from './TerminalMixin';
-import { TooltipMixin } from './TooltipMixin';
-import { ValidationMixin } from './ValidationMixin';
-import { VertexMixin } from './VertexMixin';
-import { ZoomMixin } from './ZoomMixin';
+import { mixInto } from '../../internal/utils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import { CellsMixin } from './CellsMixin.js';
+import { ConnectionsMixin } from './ConnectionsMixin.js';
+import { DragDropMixin } from './DragDropMixin.js';
+import { EdgeMixin } from './EdgeMixin.js';
+import { EditingMixin } from './EditingMixin.js';
+import { EventsMixin } from './EventsMixin.js';
+import { FoldingMixin } from './FoldingMixin.js';
+import { GroupingMixin } from './GroupingMixin.js';
+import { ImageMixin } from './ImageMixin.js';
+import { LabelMixin } from './LabelMixin.js';
+import { OrderMixin } from './OrderMixin.js';
+import { OverlaysMixin } from './OverlaysMixin.js';
+import { PageBreaksMixin } from './PageBreaksMixin.js';
+import { PanningMixin } from './PanningMixin.js';
+import { PortsMixin } from './PortsMixin.js';
+import { SelectionMixin } from './SelectionMixin.js';
+import { SnapMixin } from './SnapMixin.js';
+import { SwimlaneMixin } from './SwimlaneMixin.js';
+import { TerminalMixin } from './TerminalMixin.js';
+import { TooltipMixin } from './TooltipMixin.js';
+import { ValidationMixin } from './ValidationMixin.js';
+import { VertexMixin } from './VertexMixin.js';
+import { ZoomMixin } from './ZoomMixin.js';
 
 export const applyGraphMixins = (target: typeof AbstractGraph) => {
   const mixIntoGraph = mixInto(target);

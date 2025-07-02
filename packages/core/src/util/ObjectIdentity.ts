@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IdentityFunction, IdentityObject } from '../types';
-import { IDENTITY_FIELD_NAME } from './Constants';
-import { getFunctionName } from './StringUtils';
+import { IdentityFunction, IdentityObject } from '../types.js';
+import { IDENTITY_FIELD_NAME } from './Constants.js';
+import { getFunctionName } from './StringUtils.js';
 
 /**
  * @class

@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type GraphView from '../GraphView';
-import EventObject from '../event/EventObject';
-import Point from '../geometry/Point';
-import type Cell from '../cell/Cell';
-import InternalEvent from '../event/InternalEvent';
-import type { UndoableChange } from '../../types';
+import type GraphView from '../GraphView.js';
+import EventObject from '../event/EventObject.js';
+import Point from '../geometry/Point.js';
+import type Cell from '../cell/Cell.js';
+import InternalEvent from '../event/InternalEvent.js';
+import type { UndoableChange } from '../../types.js';
 
 /**
  * Action to change the current root in a view.

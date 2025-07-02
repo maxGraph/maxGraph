@@ -16,28 +16,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../geometry/Rectangle';
-import { NONE } from '../../util/Constants';
-import InternalEvent from '../event/InternalEvent';
-import RectangleShape from '../shape/node/RectangleShape';
-import ImageShape from '../shape/node/ImageShape';
-import EllipseShape from '../shape/node/EllipseShape';
-import Point from '../geometry/Point';
-import { getRotatedPoint, intersects, mod, toRadians } from '../../util/mathUtils';
-import Client from '../../Client';
-import { isMouseEvent, isShiftDown } from '../../util/EventUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import CellState from '../cell/CellState';
-import Image from '../image/ImageBox';
-import type Cell from '../cell/Cell';
-import type { CellHandle, Listenable, MouseListenerSet } from '../../types';
-import Shape from '../shape/Shape';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import EdgeHandler from './EdgeHandler';
-import EventSource from '../event/EventSource';
-import type SelectionHandler from '../plugins/SelectionHandler';
-import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
-import { HandleConfig, VertexHandlerConfig } from './config';
+import Rectangle from '../geometry/Rectangle.js';
+import { NONE } from '../../util/Constants.js';
+import InternalEvent from '../event/InternalEvent.js';
+import RectangleShape from '../shape/node/RectangleShape.js';
+import ImageShape from '../shape/node/ImageShape.js';
+import EllipseShape from '../shape/node/EllipseShape.js';
+import Point from '../geometry/Point.js';
+import { getRotatedPoint, intersects, mod, toRadians } from '../../util/mathUtils.js';
+import Client from '../../Client.js';
+import { isMouseEvent, isShiftDown } from '../../util/EventUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import CellState from '../cell/CellState.js';
+import Image from '../image/ImageBox.js';
+import type Cell from '../cell/Cell.js';
+import type { CellHandle, Listenable, MouseListenerSet } from '../../types.js';
+import Shape from '../shape/Shape.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import EdgeHandler from './EdgeHandler.js';
+import EventSource from '../event/EventSource.js';
+import type SelectionHandler from '../plugins/SelectionHandler.js';
+import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
+import { HandleConfig, VertexHandlerConfig } from './config.js';
 
 /**
  * Event handler for resizing cells.

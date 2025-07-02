@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell.js';
 
 /**
  * A utility class used to track cells whilst sorting occurs on the median

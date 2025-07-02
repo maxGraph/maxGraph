@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { convertStyleFromString } from './utils';
-import { CellCodec } from '../CellCodec';
-import type Codec from '../../Codec';
+import { convertStyleFromString } from './utils.js';
+import { CellCodec } from '../CellCodec.js';
+import type Codec from '../../Codec.js';
 
 /**
  * Add support for the legacy `mxGraph` format of {@link Cell}.

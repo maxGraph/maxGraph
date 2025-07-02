@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from '../event/EventSource';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
+import EventSource from '../event/EventSource.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
 
 /**
  * Implements a basic animation in JavaScript.

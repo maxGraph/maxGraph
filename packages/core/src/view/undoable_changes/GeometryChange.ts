@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Geometry from '../geometry/Geometry';
-import Cell from '../cell/Cell';
-import GraphDataModel from '../GraphDataModel';
+import Geometry from '../geometry/Geometry.js';
+import Cell from '../cell/Cell.js';
+import GraphDataModel from '../GraphDataModel.js';
 
-import type { UndoableChange } from '../../types';
+import type { UndoableChange } from '../../types.js';
 
 /**
  * Action to change a cell's geometry in a model.

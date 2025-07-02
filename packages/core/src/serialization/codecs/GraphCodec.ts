@@ -16,8 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../ObjectCodec';
-import { Graph } from '../../view/Graph';
+import ObjectCodec from '../ObjectCodec.js';
+import { Graph } from '../../view/Graph.js';
 
 export const excludedFields = [
   'graphListeners',

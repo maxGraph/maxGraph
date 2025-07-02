@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../ObjectCodec';
-import GraphDataModel from '../../view/GraphDataModel';
-import Cell from '../../view/cell/Cell';
-import type Codec from '../Codec';
+import ObjectCodec from '../ObjectCodec.js';
+import GraphDataModel from '../../view/GraphDataModel.js';
+import Cell from '../../view/cell/Cell.js';
+import type Codec from '../Codec.js';
 
 /**
  * Codec for {@link GraphDataModel}s.

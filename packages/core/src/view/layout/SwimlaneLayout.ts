@@ -16,19 +16,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphLayout from './GraphLayout';
-import type { DirectionValue } from '../../types';
-import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
-import Rectangle from '../geometry/Rectangle';
-import SwimlaneModel from './hierarchical/SwimlaneModel';
-import ObjectIdentity from '../../util/ObjectIdentity';
-import SwimlaneOrdering from './hierarchical/SwimlaneOrdering';
-import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction';
-import CoordinateAssignment from './hierarchical/CoordinateAssignment';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../cell/Cell';
-import Geometry from '../../view/geometry/Geometry';
-import { SwimlaneGraphLayoutTraverseArgs } from './types';
+import GraphLayout from './GraphLayout.js';
+import type { DirectionValue } from '../../types.js';
+import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle.js';
+import Rectangle from '../geometry/Rectangle.js';
+import SwimlaneModel from './hierarchical/SwimlaneModel.js';
+import ObjectIdentity from '../../util/ObjectIdentity.js';
+import SwimlaneOrdering from './hierarchical/SwimlaneOrdering.js';
+import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction.js';
+import CoordinateAssignment from './hierarchical/CoordinateAssignment.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
+import Geometry from '../../view/geometry/Geometry.js';
+import { SwimlaneGraphLayoutTraverseArgs } from './types.js';
 
 /**
  * A hierarchical layout algorithm.

@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EdgeHandler from './EdgeHandler';
-import InternalEvent from '../event/InternalEvent';
-import Point from '../geometry/Point';
-import Rectangle from '../geometry/Rectangle';
-import { intersects } from '../../util/mathUtils';
-import { isConsumed } from '../../util/EventUtils';
-import CellState from '../cell/CellState';
-import { EdgeHandlerConfig, HandleConfig } from './config';
-import { isI18nEnabled, translate } from '../../internal/i18n-utils';
+import EdgeHandler from './EdgeHandler.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Point from '../geometry/Point.js';
+import Rectangle from '../geometry/Rectangle.js';
+import { intersects } from '../../util/mathUtils.js';
+import { isConsumed } from '../../util/EventUtils.js';
+import CellState from '../cell/CellState.js';
+import { EdgeHandlerConfig, HandleConfig } from './config.js';
+import { isI18nEnabled, translate } from '../../internal/i18n-utils.js';
 
 /**
  * Graph event handler that reconnects edges and modifies control points and

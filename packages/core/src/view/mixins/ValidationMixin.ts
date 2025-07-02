@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../cell/Cell';
-import { isNode } from '../../util/domUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import { translate } from '../../internal/i18n-utils';
+import type Cell from '../cell/Cell.js';
+import { isNode } from '../../util/domUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import { translate } from '../../internal/i18n-utils.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

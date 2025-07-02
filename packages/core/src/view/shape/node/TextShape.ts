@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../../../Client';
+import Client from '../../../Client.js';
 import {
   ABSOLUTE_LINE_HEIGHT,
   DEFAULT_FONTFAMILY,
@@ -27,25 +27,29 @@ import {
   NONE,
   WORD_WRAP,
   LINE_HEIGHT,
-} from '../../../util/Constants';
-import { getBoundingBox } from '../../../util/mathUtils';
-import { getAlignmentAsPoint } from '../../../util/styleUtils';
-import Point from '../../geometry/Point';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import Shape from '../Shape';
-import Rectangle from '../../geometry/Rectangle';
-import CellState from '../../cell/CellState';
-import { htmlEntities, replaceTrailingNewlines, trim } from '../../../util/StringUtils';
-import { isNode } from '../../../util/domUtils';
+} from '../../../util/Constants.js';
+import { getBoundingBox } from '../../../util/mathUtils.js';
+import { getAlignmentAsPoint } from '../../../util/styleUtils.js';
+import Point from '../../geometry/Point.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import Shape from '../Shape.js';
+import Rectangle from '../../geometry/Rectangle.js';
+import CellState from '../../cell/CellState.js';
+import {
+  htmlEntities,
+  replaceTrailingNewlines,
+  trim,
+} from '../../../util/StringUtils.js';
+import { isNode } from '../../../util/domUtils.js';
 import {
   AlignValue,
   ColorValue,
   OverflowValue,
   TextDirectionValue,
   VAlignValue,
-} from '../../../types';
-import SvgCanvas2D from '../../canvas/SvgCanvas2D';
-import { matchBinaryMask } from '../../../internal/utils';
+} from '../../../types.js';
+import SvgCanvas2D from '../../canvas/SvgCanvas2D.js';
+import { matchBinaryMask } from '../../../internal/utils.js';
 
 /**
  * Extends {@link Shape} to implement a text shape.

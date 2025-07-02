@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DEFAULT_MARKERSIZE, NONE } from '../../../util/Constants';
-import PolylineShape from './PolylineShape';
-import { EdgeMarkerRegistry } from '../../style/marker/EdgeMarkerRegistry';
-import Point from '../../geometry/Point';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import Rectangle from '../../geometry/Rectangle';
-import { ArrowValue, ColorValue } from '../../../types';
+import { DEFAULT_MARKERSIZE, NONE } from '../../../util/Constants.js';
+import PolylineShape from './PolylineShape.js';
+import { EdgeMarkerRegistry } from '../../style/marker/EdgeMarkerRegistry.js';
+import Point from '../../geometry/Point.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import Rectangle from '../../geometry/Rectangle.js';
+import { ArrowValue, ColorValue } from '../../../types.js';
 
 /**
  * Extends {@link PolylineShape} to implement a connector shape including a polyline (a line with multiple points)

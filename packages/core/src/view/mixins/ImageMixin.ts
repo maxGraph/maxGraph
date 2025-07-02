@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { AbstractGraph } from '../AbstractGraph';
-import type ImageBundle from '../image/ImageBundle';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type ImageBundle from '../image/ImageBundle.js';
 
 type PartialImage = Pick<
   AbstractGraph,

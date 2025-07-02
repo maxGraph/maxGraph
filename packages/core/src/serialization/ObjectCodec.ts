@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectIdentity from '../util/ObjectIdentity';
-import { GlobalConfig } from '../util/config';
-import Geometry from '../view/geometry/Geometry';
-import Point from '../view/geometry/Point';
-import { isInteger, isNumeric } from '../util/mathUtils';
-import { getTextContent } from '../util/domUtils';
-import { load } from '../util/requestUtils';
-import type Codec from './Codec';
-import { doEval, isElement } from '../internal/utils';
+import ObjectIdentity from '../util/ObjectIdentity.js';
+import { GlobalConfig } from '../util/config.js';
+import Geometry from '../view/geometry/Geometry.js';
+import Point from '../view/geometry/Point.js';
+import { isInteger, isNumeric } from '../util/mathUtils.js';
+import { getTextContent } from '../util/domUtils.js';
+import { load } from '../util/requestUtils.js';
+import type Codec from './Codec.js';
+import { doEval, isElement } from '../internal/utils.js';
 
 /**
  * Generic codec for JavaScript objects that implements a mapping between

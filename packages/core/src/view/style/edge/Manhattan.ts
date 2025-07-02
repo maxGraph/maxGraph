@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { DirectionValue, EdgeStyleFunction } from '../../../types';
-import type CellState from '../../cell/CellState';
-import Point from '../../geometry/Point';
-import Rectangle from '../../geometry/Rectangle';
-import { ManhattanConnectorConfig } from '../config';
-import Geometry from '../../geometry/Geometry';
-import { OrthogonalConnector } from './Orthogonal';
-import { SegmentConnector } from './Segment';
+import type { DirectionValue, EdgeStyleFunction } from '../../../types.js';
+import type CellState from '../../cell/CellState.js';
+import Point from '../../geometry/Point.js';
+import Rectangle from '../../geometry/Rectangle.js';
+import { ManhattanConnectorConfig } from '../config.js';
+import Geometry from '../../geometry/Geometry.js';
+import { OrthogonalConnector } from './Orthogonal.js';
+import { SegmentConnector } from './Segment.js';
 
 /**
  * ManhattanConnector code is based on code from https://github.com/mwangm/mxgraph-manhattan-connector

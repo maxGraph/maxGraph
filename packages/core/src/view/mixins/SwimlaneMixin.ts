@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../geometry/Rectangle';
-import { convertPoint } from '../../util/styleUtils';
-import { mod } from '../../util/mathUtils';
-import { DEFAULT_STARTSIZE } from '../../util/Constants';
-import { getClientX, getClientY } from '../../util/EventUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import type { DirectionValue } from '../../types';
+import Rectangle from '../geometry/Rectangle.js';
+import { convertPoint } from '../../util/styleUtils.js';
+import { mod } from '../../util/mathUtils.js';
+import { DEFAULT_STARTSIZE } from '../../util/Constants.js';
+import { getClientX, getClientY } from '../../util/EventUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type { DirectionValue } from '../../types.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

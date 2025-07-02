@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
-import ConnectionConstraint from '../other/ConnectionConstraint';
-import { getRotatedPoint, toRadians } from '../../util/mathUtils';
-import Cell from '../cell/Cell';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import type { AbstractGraph } from '../AbstractGraph';
-import type ConnectionHandler from '../plugins/ConnectionHandler';
+import Point from '../geometry/Point.js';
+import ConnectionConstraint from '../other/ConnectionConstraint.js';
+import { getRotatedPoint, toRadians } from '../../util/mathUtils.js';
+import Cell from '../cell/Cell.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type ConnectionHandler from '../plugins/ConnectionHandler.js';
 
 type PartialGraph = Pick<AbstractGraph, 'getView' | 'getDataModel' | 'isPortsEnabled'>;
 type PartialConnections = Pick<

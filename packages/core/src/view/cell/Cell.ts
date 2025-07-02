@@ -16,14 +16,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Geometry from '../geometry/Geometry';
-import CellOverlay from './CellOverlay';
-import { clone } from '../../util/cloneUtils';
-import Point from '../geometry/Point';
-import CellPath from './CellPath';
-import type { CellStyle, FilterFunction, IdentityObject } from '../../types';
-import type { UserObject } from '../../internal/types';
-import { isElement, isNullish } from '../../internal/utils';
+import Geometry from '../geometry/Geometry.js';
+import CellOverlay from './CellOverlay.js';
+import { clone } from '../../util/cloneUtils.js';
+import Point from '../geometry/Point.js';
+import CellPath from './CellPath.js';
+import type { CellStyle, FilterFunction, IdentityObject } from '../../types.js';
+import type { UserObject } from '../../internal/types.js';
+import { isElement, isNullish } from '../../internal/utils.js';
 
 /**
  * Cells are the elements of the graph model. They represent the state

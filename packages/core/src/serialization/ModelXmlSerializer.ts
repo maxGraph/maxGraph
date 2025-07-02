@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { registerModelCodecs } from './register-model-codecs';
-import { getPrettyXml, getXml, parseXml } from '../util/xmlUtils';
-import Codec from './Codec';
-import type GraphDataModel from '../view/GraphDataModel';
+import { registerModelCodecs } from './register-model-codecs.js';
+import { getPrettyXml, getXml, parseXml } from '../util/xmlUtils.js';
+import Codec from './Codec.js';
+import type GraphDataModel from '../view/GraphDataModel.js';
 
 /**
  * Export options of {@link ModelXmlSerializer}.

@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CellState from '../../cell/CellState';
-import Point from '../../geometry/Point';
-import { contains } from '../../../util/mathUtils';
-import { scaleCellState, scalePointArray } from './shared';
+import CellState from '../../cell/CellState.js';
+import Point from '../../geometry/Point.js';
+import { contains } from '../../../util/mathUtils.js';
+import { scaleCellState, scalePointArray } from './shared.js';
 
-import type { EdgeStyleFunction } from '../../../types';
+import type { EdgeStyleFunction } from '../../../types.js';
 
 /**
  * Implements an orthogonal edge style.

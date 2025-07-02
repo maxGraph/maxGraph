@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
-import type CellState from './CellState';
-import type Cell from './Cell';
-import type { AbstractGraph } from '../AbstractGraph';
-import type GraphView from '../GraphView';
+import Point from '../geometry/Point.js';
+import type CellState from './CellState.js';
+import type Cell from './Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type GraphView from '../GraphView.js';
 
 // only used by the deltas property which is not supposed to be accessed directly (should be private)
 interface CellDelta {

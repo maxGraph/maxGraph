@@ -27,8 +27,8 @@ import {
   VERTEX_SELECTION_COLOR,
   VERTEX_SELECTION_DASHED,
   VERTEX_SELECTION_STROKEWIDTH,
-} from '../../util/Constants';
-import { shallowCopy } from '../../internal/clone-utils';
+} from '../../util/Constants.js';
+import { shallowCopy } from '../../internal/clone-utils.js';
 
 /**
  * Describes {@link EdgeHandlerConfig}.
