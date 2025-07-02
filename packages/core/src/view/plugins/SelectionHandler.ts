@@ -16,40 +16,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../../Client';
-import InternalEvent from '../event/InternalEvent';
-import { contains, getRotatedPoint, isNumeric, toRadians } from '../../util/mathUtils';
-import { convertPoint } from '../../util/styleUtils';
-import RectangleShape from '../shape/node/RectangleShape';
-import Guide from '../other/Guide';
-import Point from '../geometry/Point';
+import Client from '../../Client.js';
+import InternalEvent from '../event/InternalEvent.js';
+import { contains, getRotatedPoint, isNumeric, toRadians } from '../../util/mathUtils.js';
+import { convertPoint } from '../../util/styleUtils.js';
+import RectangleShape from '../shape/node/RectangleShape.js';
+import Guide from '../other/Guide.js';
+import Point from '../geometry/Point.js';
 import {
   DROP_TARGET_COLOR,
   INVALID_CONNECT_TARGET_COLOR,
   NONE,
   VALID_COLOR,
-} from '../../util/Constants';
-import CellHighlight from '../cell/CellHighlight';
-import Rectangle from '../geometry/Rectangle';
+} from '../../util/Constants.js';
+import CellHighlight from '../cell/CellHighlight.js';
+import Rectangle from '../geometry/Rectangle.js';
 import {
   getClientX,
   getClientY,
   isAltDown,
   isMultiTouchEvent,
-} from '../../util/EventUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import Shape from '../shape/Shape';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import type SelectionCellsHandler from './SelectionCellsHandler';
-import Cell from '../cell/Cell';
-import type PopupMenuHandler from './PopupMenuHandler';
-import EventSource from '../event/EventSource';
-import CellState from '../cell/CellState';
-import EventObject from '../event/EventObject';
-import type ConnectionHandler from './ConnectionHandler';
-import { EdgeHandlerConfig, VertexHandlerConfig } from '../handler/config';
-import type CellEditorHandler from './CellEditorHandler';
-import type { ColorValue, GraphPlugin, MouseListenerSet } from '../../types';
+} from '../../util/EventUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import Shape from '../shape/Shape.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type SelectionCellsHandler from './SelectionCellsHandler.js';
+import Cell from '../cell/Cell.js';
+import type PopupMenuHandler from './PopupMenuHandler.js';
+import EventSource from '../event/EventSource.js';
+import CellState from '../cell/CellState.js';
+import EventObject from '../event/EventObject.js';
+import type ConnectionHandler from './ConnectionHandler.js';
+import { EdgeHandlerConfig, VertexHandlerConfig } from '../handler/config.js';
+import type CellEditorHandler from './CellEditorHandler.js';
+import type { ColorValue, GraphPlugin, MouseListenerSet } from '../../types.js';
 
 /**
  * Graph event handler that handles selection.

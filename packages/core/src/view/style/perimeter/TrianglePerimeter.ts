@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Rectangle from '../../geometry/Rectangle';
-import type CellState from '../../cell/CellState';
-import Point from '../../geometry/Point';
-import type { PerimeterFunction } from '../../../types';
-import { intersection } from '../../../util/mathUtils';
+import type Rectangle from '../../geometry/Rectangle.js';
+import type CellState from '../../cell/CellState.js';
+import Point from '../../geometry/Point.js';
+import type { PerimeterFunction } from '../../../types.js';
+import { intersection } from '../../../util/mathUtils.js';
 
 /**
  * This perimeter is registered under `trianglePerimeter` in {@link PerimeterRegistry} when using {@link Graph} or calling {@link registerDefaultPerimeters}.

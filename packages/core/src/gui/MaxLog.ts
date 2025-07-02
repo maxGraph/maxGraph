@@ -16,16 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../Client';
-import InternalEvent from '../view/event/InternalEvent';
-import { getInnerHtml, write } from '../util/domUtils';
-import { toString } from '../util/StringUtils';
-import MaxWindow from './MaxWindow';
-import { KeyboardEventListener, MouseEventListener } from '../types';
-import { getElapseMillisecondsMessage } from '../internal/time-utils';
-import { VERSION } from '../util/Constants';
-import { GlobalConfig } from '../util/config';
-import { popup } from './guiUtils';
+import Client from '../Client.js';
+import InternalEvent from '../view/event/InternalEvent.js';
+import { getInnerHtml, write } from '../util/domUtils.js';
+import { toString } from '../util/StringUtils.js';
+import MaxWindow from './MaxWindow.js';
+import { KeyboardEventListener, MouseEventListener } from '../types.js';
+import { getElapseMillisecondsMessage } from '../internal/time-utils.js';
+import { VERSION } from '../util/Constants.js';
+import { GlobalConfig } from '../util/config.js';
+import { popup } from './guiUtils.js';
 
 const copyTextToClipboard = (text: string): void => {
   navigator.clipboard.writeText(text).then(

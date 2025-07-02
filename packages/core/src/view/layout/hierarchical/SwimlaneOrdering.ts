@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import { remove } from '../../../util/arrayUtils';
-import CellPath from '../../cell/CellPath';
-import { clone } from '../../../util/cloneUtils';
-import Cell from '../../../view/cell/Cell';
-import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
-import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
-import SwimlaneLayout from '../SwimlaneLayout';
-import SwimlaneModel from './SwimlaneModel';
+import HierarchicalLayoutStage from './HierarchicalLayoutStage.js';
+import { remove } from '../../../util/arrayUtils.js';
+import CellPath from '../../cell/CellPath.js';
+import { clone } from '../../../util/cloneUtils.js';
+import Cell from '../../../view/cell/Cell.js';
+import GraphHierarchyNode from '../datatypes/GraphHierarchyNode.js';
+import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge.js';
+import SwimlaneLayout from '../SwimlaneLayout.js';
+import SwimlaneModel from './SwimlaneModel.js';
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward

@@ -16,16 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from '../view/event/EventSource';
-import { fit, getDocumentScrollOrigin } from '../util/styleUtils';
-import EventObject from '../view/event/EventObject';
-import Client from '../Client';
-import InternalEvent from '../view/event/InternalEvent';
-import { write } from '../util/domUtils';
-import { isLeftMouseButton } from '../util/EventUtils';
-import Cell from '../view/cell/Cell';
-import InternalMouseEvent from '../view/event/InternalMouseEvent';
-import type { PopupMenuItem } from '../types';
+import EventSource from '../view/event/EventSource.js';
+import { fit, getDocumentScrollOrigin } from '../util/styleUtils.js';
+import EventObject from '../view/event/EventObject.js';
+import Client from '../Client.js';
+import InternalEvent from '../view/event/InternalEvent.js';
+import { write } from '../util/domUtils.js';
+import { isLeftMouseButton } from '../util/EventUtils.js';
+import Cell from '../view/cell/Cell.js';
+import InternalMouseEvent from '../view/event/InternalMouseEvent.js';
+import type { PopupMenuItem } from '../types.js';
 
 /**
  * Basic popup menu.

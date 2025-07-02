@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from '../event/EventSource';
-import InternalEvent from '../event/InternalEvent';
-import Rectangle from '../geometry/Rectangle';
-import type { AbstractGraph } from '../AbstractGraph';
-import EventObject from '../event/EventObject';
-import type Cell from '../cell/Cell';
+import EventSource from '../event/EventSource.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Rectangle from '../geometry/Rectangle.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import EventObject from '../event/EventObject.js';
+import type Cell from '../cell/Cell.js';
 
 /**
  * Manager for swimlanes and nested swimlanes that sets the size of newly added

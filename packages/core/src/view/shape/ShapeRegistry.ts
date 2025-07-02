@@ -16,8 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Registry, ShapeConstructor } from '../../types';
-import { BaseRegistry } from '../../internal/BaseRegistry';
+import type { Registry, ShapeConstructor } from '../../types.js';
+import { BaseRegistry } from '../../internal/BaseRegistry.js';
 
 /**
  * A registry that stores the {@link ShapeConstructor}s and their configuration.

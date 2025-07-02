@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EdgeStyleRegistry } from '../../view/style/edge/EdgeStyleRegistry';
-import { PerimeterRegistry } from '../../view/style/perimeter/PerimeterRegistry';
+import { EdgeStyleRegistry } from '../../view/style/edge/EdgeStyleRegistry.js';
+import { PerimeterRegistry } from '../../view/style/perimeter/PerimeterRegistry.js';
 
 const registries = [EdgeStyleRegistry, PerimeterRegistry];
 

@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import HierarchicalLayout from '../HierarchicalLayout';
-import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
-import GraphHierarchyModel from './GraphHierarchyModel';
-import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import MedianCellSorter from '../util/MedianCellSorter';
-import SwimlaneLayout from '../SwimlaneLayout';
+import HierarchicalLayout from '../HierarchicalLayout.js';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell.js';
+import GraphHierarchyModel from './GraphHierarchyModel.js';
+import HierarchicalLayoutStage from './HierarchicalLayoutStage.js';
+import MedianCellSorter from '../util/MedianCellSorter.js';
+import SwimlaneLayout from '../SwimlaneLayout.js';
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.

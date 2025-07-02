@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../cell/Cell';
-import RootChange from '../undoable_changes/RootChange';
-import ChildChange from '../undoable_changes/ChildChange';
-import type { AbstractGraph } from '../AbstractGraph';
+import Cell from '../cell/Cell.js';
+import RootChange from '../undoable_changes/RootChange.js';
+import ChildChange from '../undoable_changes/ChildChange.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

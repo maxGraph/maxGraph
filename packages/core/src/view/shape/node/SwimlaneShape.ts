@@ -15,16 +15,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import Shape from '../Shape';
-import Rectangle from '../../geometry/Rectangle';
+import Shape from '../Shape.js';
+import Rectangle from '../../geometry/Rectangle.js';
 import {
   DEFAULT_STARTSIZE,
   LINE_ARCSIZE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
-} from '../../../util/Constants';
-import { ColorValue } from '../../../types';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+} from '../../../util/Constants.js';
+import { ColorValue } from '../../../types.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
 /**
  * Extends {@link Shape} to implement a swimlane shape.

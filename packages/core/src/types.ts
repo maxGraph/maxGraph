@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { IDENTITY_FIELD_NAME } from './util/Constants';
-import type { AbstractGraph } from './view/AbstractGraph';
-import type AbstractCanvas2D from './view/canvas/AbstractCanvas2D';
-import type Cell from './view/cell/Cell';
-import type CellState from './view/cell/CellState';
-import type EventSource from './view/event/EventSource';
-import type InternalMouseEvent from './view/event/InternalMouseEvent';
-import type Geometry from './view/geometry/Geometry';
-import type Point from './view/geometry/Point';
-import type Rectangle from './view/geometry/Rectangle';
-import type Shape from './view/shape/Shape';
-import type ImageBox from './view/image/ImageBox';
-import type CellRenderer from './view/cell/CellRenderer';
-import type GraphDataModel from './view/GraphDataModel';
-import type { Stylesheet } from './view/style/Stylesheet';
-import type GraphSelectionModel from './view/GraphSelectionModel';
-import type GraphView from './view/GraphView';
+import type { IDENTITY_FIELD_NAME } from './util/Constants.js';
+import type { AbstractGraph } from './view/AbstractGraph.js';
+import type AbstractCanvas2D from './view/canvas/AbstractCanvas2D.js';
+import type Cell from './view/cell/Cell.js';
+import type CellState from './view/cell/CellState.js';
+import type EventSource from './view/event/EventSource.js';
+import type InternalMouseEvent from './view/event/InternalMouseEvent.js';
+import type Geometry from './view/geometry/Geometry.js';
+import type Point from './view/geometry/Point.js';
+import type Rectangle from './view/geometry/Rectangle.js';
+import type Shape from './view/shape/Shape.js';
+import type ImageBox from './view/image/ImageBox.js';
+import type CellRenderer from './view/cell/CellRenderer.js';
+import type GraphDataModel from './view/GraphDataModel.js';
+import type { Stylesheet } from './view/style/Stylesheet.js';
+import type GraphSelectionModel from './view/GraphSelectionModel.js';
+import type GraphView from './view/GraphView.js';
 
 export type FilterFunction = (cell: Cell) => boolean;
 

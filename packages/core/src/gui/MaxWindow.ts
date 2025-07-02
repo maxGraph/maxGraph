@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../view/geometry/Rectangle';
-import EventObject from '../view/event/EventObject';
-import EventSource from '../view/event/EventSource';
-import { fit, getCurrentStyle } from '../util/styleUtils';
-import InternalEvent from '../view/event/InternalEvent';
-import Client from '../Client';
-import { NODE_TYPE } from '../util/Constants';
-import { write } from '../util/domUtils';
-import { getClientX, getClientY } from '../util/EventUtils';
+import Rectangle from '../view/geometry/Rectangle.js';
+import EventObject from '../view/event/EventObject.js';
+import EventSource from '../view/event/EventSource.js';
+import { fit, getCurrentStyle } from '../util/styleUtils.js';
+import InternalEvent from '../view/event/InternalEvent.js';
+import Client from '../Client.js';
+import { NODE_TYPE } from '../util/Constants.js';
+import { write } from '../util/domUtils.js';
+import { getClientX, getClientY } from '../util/EventUtils.js';
 
 let activeWindow: MaxWindow | null = null;
 

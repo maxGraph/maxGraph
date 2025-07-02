@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../cell/Cell';
-import GraphDataModel from '../GraphDataModel';
+import Cell from '../cell/Cell.js';
+import GraphDataModel from '../GraphDataModel.js';
 
-import type { CellStyle, UndoableChange } from '../../types';
+import type { CellStyle, UndoableChange } from '../../types.js';
 
 /**
  * Action to change a cell's style in a model.

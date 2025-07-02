@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CodecRegistry from '../CodecRegistry';
-import ObjectCodec from '../ObjectCodec';
-import Cell from '../../view/cell/Cell';
-import type Codec from '../Codec';
-import { importNode } from '../../util/domUtils';
-import { removeWhitespace } from '../../util/StringUtils';
-import { isElement } from '../../internal/utils';
+import CodecRegistry from '../CodecRegistry.js';
+import ObjectCodec from '../ObjectCodec.js';
+import Cell from '../../view/cell/Cell.js';
+import type Codec from '../Codec.js';
+import { importNode } from '../../util/domUtils.js';
+import { removeWhitespace } from '../../util/StringUtils.js';
+import { isElement } from '../../internal/utils.js';
 
 /**
  * Codec for {@link Cell}s.

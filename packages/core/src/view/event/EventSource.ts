@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventObject from './EventObject';
+import EventObject from './EventObject.js';
 
 type EventListenerObject = {
   funct: Function;

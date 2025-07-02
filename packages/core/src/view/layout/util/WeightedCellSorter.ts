@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _mxCompactTreeLayoutNode } from '../CompactTreeLayout';
-import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
+import { _mxCompactTreeLayoutNode } from '../CompactTreeLayout.js';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell.js';
 
 /**
  * A utility class used to track cells whilst sorting occurs on the weighted

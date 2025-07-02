@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type StencilShape from './StencilShape';
-import { BaseRegistry } from '../../../internal/BaseRegistry';
-import type { Registry } from '../../../types';
+import type StencilShape from './StencilShape.js';
+import { BaseRegistry } from '../../../internal/BaseRegistry.js';
+import type { Registry } from '../../../types.js';
 
 /**
  * A registry that stores the {@link StencilShape}s and their configuration.

@@ -16,26 +16,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Image from '../image/ImageBox';
-import Client from '../../Client';
+import Image from '../image/ImageBox.js';
+import Client from '../../Client.js';
 import {
   DEFAULT_VALID_COLOR,
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_SIZE,
   HIGHLIGHT_STROKEWIDTH,
-} from '../../util/Constants';
-import InternalEvent from '../event/InternalEvent';
-import { intersects } from '../../util/mathUtils';
-import Rectangle from '../geometry/Rectangle';
-import ImageShape from '../shape/node/ImageShape';
-import RectangleShape from '../shape/node/RectangleShape';
-import { isShiftDown } from '../../util/EventUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import CellState from '../cell/CellState';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import ConnectionConstraint from '../other/ConnectionConstraint';
-import Point from '../geometry/Point';
-import type Cell from '../cell/Cell';
+} from '../../util/Constants.js';
+import InternalEvent from '../event/InternalEvent.js';
+import { intersects } from '../../util/mathUtils.js';
+import Rectangle from '../geometry/Rectangle.js';
+import ImageShape from '../shape/node/ImageShape.js';
+import RectangleShape from '../shape/node/RectangleShape.js';
+import { isShiftDown } from '../../util/EventUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import CellState from '../cell/CellState.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import ConnectionConstraint from '../other/ConnectionConstraint.js';
+import Point from '../geometry/Point.js';
+import type Cell from '../cell/Cell.js';
 
 /**
  * Handles constraints on connection targets. This class is in charge of

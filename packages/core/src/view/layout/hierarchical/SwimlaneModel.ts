@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
-import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
-import CellPath from '../../cell/CellPath';
-import Cell from '../../cell/Cell';
-import { clone } from '../../../util/cloneUtils';
-import SwimlaneLayout from '../SwimlaneLayout';
+import GraphHierarchyNode from '../datatypes/GraphHierarchyNode.js';
+import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge.js';
+import CellPath from '../../cell/CellPath.js';
+import Cell from '../../cell/Cell.js';
+import { clone } from '../../../util/cloneUtils.js';
+import SwimlaneLayout from '../SwimlaneLayout.js';
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges

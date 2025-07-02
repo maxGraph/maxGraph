@@ -14,10 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// This fails because the import statements in the files of the maxGraph package doesn't add the "js" file extension
-// Node.js requires such extensions. This should be fixed when implementing https://github.com/maxGraph/maxGraph/issues/827
-import { BaseGraph } from '@maxgraph/core';
+// This is needed to create a DOM environment for Node.js, required when importing from maxGraph ESM
+// Must be placed before importing any maxGraph code
+import 'jsdom-global/register.js';
+// import directly from ESM to ensure everything works. See https://github.com/maxGraph/maxGraph/issues/827
+// the shared code in the _shared.js file is CommonJS, so it is not able to detect errors in the ESM code
+import { constants } from '@maxgraph/core';
+import { createGraphAndExport } from './_shared.js';
 
-console.info('maxGraph example with Node.js using ESM');
-
-const graph = new BaseGraph();
+console.info(`maxGraph example with Node.js using ESM of maxGraph ${constants.VERSION}`);
+createGraphAndExport('ESM', 'esm');

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../cell/Cell';
-import type { CellStyle, VertexParameters } from '../../types';
-import type Geometry from '../geometry/Geometry';
+import type Cell from '../cell/Cell.js';
+import type { CellStyle, VertexParameters } from '../../types.js';
+import type Geometry from '../geometry/Geometry.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {

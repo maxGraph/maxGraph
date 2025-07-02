@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getAlignmentAsPoint, setPrefixedStyle } from '../../util/styleUtils';
-import Rectangle from '../geometry/Rectangle';
-import InternalEvent from '../event/InternalEvent';
-import Client from '../../Client';
+import { getAlignmentAsPoint, setPrefixedStyle } from '../../util/styleUtils.js';
+import Rectangle from '../geometry/Rectangle.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Client from '../../Client.js';
 import {
   ABSOLUTE_LINE_HEIGHT,
   DEFAULT_FONTFAMILY,
@@ -29,26 +29,30 @@ import {
   LINE_HEIGHT,
   NONE,
   WORD_WRAP,
-} from '../../util/Constants';
-import TextShape from '../shape/node/TextShape';
-import Cell from '../cell/Cell';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import CellState from '../cell/CellState';
-import Shape from '../shape/Shape';
-import { clearSelection, extractTextWithWhitespace, isNode } from '../../util/domUtils';
-import { htmlEntities, replaceTrailingNewlines } from '../../util/StringUtils';
+} from '../../util/Constants.js';
+import TextShape from '../shape/node/TextShape.js';
+import Cell from '../cell/Cell.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import CellState from '../cell/CellState.js';
+import Shape from '../shape/Shape.js';
+import {
+  clearSelection,
+  extractTextWithWhitespace,
+  isNode,
+} from '../../util/domUtils.js';
+import { htmlEntities, replaceTrailingNewlines } from '../../util/StringUtils.js';
 import {
   getSource,
   isConsumed,
   isControlDown,
   isMetaDown,
   isShiftDown,
-} from '../../util/EventUtils';
-import EventSource from '../event/EventSource';
-import { matchBinaryMask } from '../../internal/utils';
-import type { AbstractGraph } from '../AbstractGraph';
-import type { AlignValue, GraphPlugin } from '../../types';
-import type TooltipHandler from './TooltipHandler';
+} from '../../util/EventUtils.js';
+import EventSource from '../event/EventSource.js';
+import { matchBinaryMask } from '../../internal/utils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type { AlignValue, GraphPlugin } from '../../types.js';
+import type TooltipHandler from './TooltipHandler.js';
 
 /**
  * In-place editor for the graph.

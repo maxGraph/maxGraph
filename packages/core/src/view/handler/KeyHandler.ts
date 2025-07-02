@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { AbstractGraph } from '../AbstractGraph';
-import InternalEvent from '../event/InternalEvent';
-import { isAncestorNode } from '../../util/domUtils';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import InternalEvent from '../event/InternalEvent.js';
+import { isAncestorNode } from '../../util/domUtils.js';
 import {
   getSource,
   isAltDown,
   isConsumed,
   isControlDown as _isControlDown,
   isShiftDown,
-} from '../../util/EventUtils';
-import type CellEditorHandler from '../plugins/CellEditorHandler';
+} from '../../util/EventUtils.js';
+import type CellEditorHandler from '../plugins/CellEditorHandler.js';
 
 /**
  * Event handler that listens to keystroke events. This is not a singleton,

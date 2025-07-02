@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../view/event/InternalEvent';
-import EventObject from '../view/event/EventObject';
-import KeyHandler from '../view/handler/KeyHandler';
-import Editor from './Editor';
+import InternalEvent from '../view/event/InternalEvent.js';
+import EventObject from '../view/event/EventObject.js';
+import KeyHandler from '../view/handler/KeyHandler.js';
+import Editor from './Editor.js';
 
 /**
  * Binds keycodes to action names in an editor.

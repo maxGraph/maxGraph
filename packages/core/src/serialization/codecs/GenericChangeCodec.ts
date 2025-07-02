@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../ObjectCodec';
-import { isNode } from '../../util/domUtils';
-import type Codec from '../Codec';
+import ObjectCodec from '../ObjectCodec.js';
+import { isNode } from '../../util/domUtils.js';
+import type Codec from '../Codec.js';
 
 /**
  * Codec for {@link ValueChange}s, {@link StyleChange}s, {@link GeometryChange}s, {@link CollapseChange}s and {@link VisibleChange}s.

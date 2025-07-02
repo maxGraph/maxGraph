@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../geometry/Rectangle';
-import GraphLayout from './GraphLayout';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../cell/Cell';
+import Rectangle from '../geometry/Rectangle.js';
+import GraphLayout from './GraphLayout.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
 
 /**
  * Extends {@link GraphLayout} for partitioning the parent cell vertically or

@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isNumeric } from '../../../util/mathUtils';
-import type { CellStyle } from '../../../types';
+import { isNumeric } from '../../../util/mathUtils.js';
+import type { CellStyle } from '../../../types.js';
 
 // from mxGraph to maxGraph
 const fieldMapping = new Map<string, string>([['autosize', 'autoSize']]);

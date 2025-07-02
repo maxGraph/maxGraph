@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isMultiTouchEvent } from '../../util/EventUtils';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import type { AbstractGraph } from '../AbstractGraph';
-import type CellEditorHandler from '../plugins/CellEditorHandler';
+import { isMultiTouchEvent } from '../../util/EventUtils.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type CellEditorHandler from '../plugins/CellEditorHandler.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

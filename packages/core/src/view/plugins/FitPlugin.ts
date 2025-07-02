@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { GraphPlugin } from '../../types';
-import type { AbstractGraph } from '../AbstractGraph';
-import { hasScrollbars } from '../../util/styleUtils';
+import type { GraphPlugin } from '../../types.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import { hasScrollbars } from '../../util/styleUtils.js';
 
 function keep2digits(value: number): number {
   return Number(value.toFixed(2));

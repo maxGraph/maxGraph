@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { BaseRegistry } from '../../../internal/BaseRegistry';
-import type { PerimeterFunction, Registry } from '../../../types';
+import { BaseRegistry } from '../../../internal/BaseRegistry.js';
+import type { PerimeterFunction, Registry } from '../../../types.js';
 
 /**
  * A registry that stores the {@link PerimeterFunction}s.

@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../event/InternalEvent';
-import EventObject from '../event/EventObject';
-import EventSource from '../event/EventSource';
+import InternalEvent from '../event/InternalEvent.js';
+import EventObject from '../event/EventObject.js';
+import EventSource from '../event/EventSource.js';
 
-import type { UndoableChange } from '../../types';
+import type { UndoableChange } from '../../types.js';
 
 /**
  * Implements a composite undoable edit. Here is an example for a custom change

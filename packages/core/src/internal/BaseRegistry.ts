@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Registry } from '../types';
+import type { Registry } from '../types.js';
 
 /**
  * Base implementation for all registries storing "style" configuration.

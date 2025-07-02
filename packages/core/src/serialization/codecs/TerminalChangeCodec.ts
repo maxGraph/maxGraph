@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../ObjectCodec';
-import TerminalChange from '../../view/undoable_changes/TerminalChange';
-import type Codec from '../Codec';
+import ObjectCodec from '../ObjectCodec.js';
+import TerminalChange from '../../view/undoable_changes/TerminalChange.js';
+import type Codec from '../Codec.js';
 
 /**
  * Codec for {@link TerminalChange}s.

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODE_TYPE } from '../util/Constants';
-import { UserObject } from './types';
-import { GlobalConfig } from '../util/config';
+import { NODE_TYPE } from '../util/Constants.js';
+import { UserObject } from './types.js';
+import { GlobalConfig } from '../util/config.js';
 
 /**
  * @private

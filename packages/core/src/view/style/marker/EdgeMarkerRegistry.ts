@@ -21,11 +21,11 @@ import type {
   MarkerFactoryFunction,
   MarkerFunction,
   StyleArrowValue,
-} from '../../../types';
-import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import type Point from '../../geometry/Point';
-import type Shape from '../../shape/Shape';
-import { BaseRegistry } from '../../../internal/BaseRegistry';
+} from '../../../types.js';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import type Point from '../../geometry/Point.js';
+import type Shape from '../../shape/Shape.js';
+import { BaseRegistry } from '../../../internal/BaseRegistry.js';
 
 class EdgeMarkerRegistryImpl
   extends BaseRegistry<MarkerFactoryFunction>

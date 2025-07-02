@@ -14,24 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ShapeRegistry } from './ShapeRegistry';
-import type { ShapeConstructor, ShapeValue } from '../../types';
-import RectangleShape from './node/RectangleShape';
-import EllipseShape from './node/EllipseShape';
-import RhombusShape from './node/RhombusShape';
-import CylinderShape from './node/CylinderShape';
-import ConnectorShape from './edge/ConnectorShape';
-import ActorShape from './node/ActorShape';
-import TriangleShape from './node/TriangleShape';
-import HexagonShape from './node/HexagonShape';
-import CloudShape from './node/CloudShape';
-import LineShape from './edge/LineShape';
-import ArrowShape from './edge/ArrowShape';
-import ArrowConnectorShape from './edge/ArrowConnectorShape';
-import DoubleEllipseShape from './node/DoubleEllipseShape';
-import SwimlaneShape from './node/SwimlaneShape';
-import ImageShape from './node/ImageShape';
-import LabelShape from './node/LabelShape';
+import { ShapeRegistry } from './ShapeRegistry.js';
+import type { ShapeConstructor, ShapeValue } from '../../types.js';
+import RectangleShape from './node/RectangleShape.js';
+import EllipseShape from './node/EllipseShape.js';
+import RhombusShape from './node/RhombusShape.js';
+import CylinderShape from './node/CylinderShape.js';
+import ConnectorShape from './edge/ConnectorShape.js';
+import ActorShape from './node/ActorShape.js';
+import TriangleShape from './node/TriangleShape.js';
+import HexagonShape from './node/HexagonShape.js';
+import CloudShape from './node/CloudShape.js';
+import LineShape from './edge/LineShape.js';
+import ArrowShape from './edge/ArrowShape.js';
+import ArrowConnectorShape from './edge/ArrowConnectorShape.js';
+import DoubleEllipseShape from './node/DoubleEllipseShape.js';
+import SwimlaneShape from './node/SwimlaneShape.js';
+import ImageShape from './node/ImageShape.js';
+import LabelShape from './node/LabelShape.js';
 
 let isDefaultElementsRegistered = false;
 

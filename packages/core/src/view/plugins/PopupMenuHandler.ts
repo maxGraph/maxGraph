@@ -16,16 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import MaxPopupMenu from '../../gui/MaxPopupMenu';
-import InternalEvent from '../event/InternalEvent';
-import { getScrollOrigin } from '../../util/styleUtils';
-import { getMainEvent, isMultiTouchEvent } from '../../util/EventUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import type { GraphPlugin, MouseListenerSet } from '../../types';
-import type TooltipHandler from './TooltipHandler';
-import EventSource from '../event/EventSource';
-import EventObject from '../event/EventObject';
+import MaxPopupMenu from '../../gui/MaxPopupMenu.js';
+import InternalEvent from '../event/InternalEvent.js';
+import { getScrollOrigin } from '../../util/styleUtils.js';
+import { getMainEvent, isMultiTouchEvent } from '../../util/EventUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type { GraphPlugin, MouseListenerSet } from '../../types.js';
+import type TooltipHandler from './TooltipHandler.js';
+import EventSource from '../event/EventSource.js';
+import EventObject from '../event/EventObject.js';
 
 /**
  * Event handler that creates popupmenus.

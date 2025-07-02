@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../../geometry/Rectangle';
-import { DEFAULT_IMAGESIZE, NONE } from '../../../util/Constants';
-import RectangleShape from './RectangleShape';
-import { ColorValue } from '../../../types';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import Rectangle from '../../geometry/Rectangle.js';
+import { DEFAULT_IMAGESIZE, NONE } from '../../../util/Constants.js';
+import RectangleShape from './RectangleShape.js';
+import { ColorValue } from '../../../types.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
 /**
  * Extends {@link RectangleShape} to implement an image shape with a label.

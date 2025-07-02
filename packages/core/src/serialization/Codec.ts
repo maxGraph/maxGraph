@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CellPath from '../view/cell/CellPath';
-import CodecRegistry from './CodecRegistry';
-import Cell from '../view/cell/Cell';
-import { GlobalConfig } from '../util/config';
-import { getFunctionName } from '../util/StringUtils';
-import { importNode, isNode } from '../util/domUtils';
-import { isElement } from '../internal/utils';
+import CellPath from '../view/cell/CellPath.js';
+import CodecRegistry from './CodecRegistry.js';
+import Cell from '../view/cell/Cell.js';
+import { GlobalConfig } from '../util/config.js';
+import { getFunctionName } from '../util/StringUtils.js';
+import { importNode, isNode } from '../util/domUtils.js';
+import { isElement } from '../internal/utils.js';
 
 const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);

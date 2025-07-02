@@ -16,36 +16,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import RectangleShape from '../shape/node/RectangleShape';
-import ConnectorShape from '../shape/edge/ConnectorShape';
-import ImageShape from '../shape/node/ImageShape';
-import TextShape from '../shape/node/TextShape';
+import RectangleShape from '../shape/node/RectangleShape.js';
+import ConnectorShape from '../shape/edge/ConnectorShape.js';
+import ImageShape from '../shape/node/ImageShape.js';
+import TextShape from '../shape/node/TextShape.js';
 import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
   DEFAULT_TEXT_DIRECTION,
   NONE,
-} from '../../util/Constants';
-import { getRotatedPoint, mod, toRadians } from '../../util/mathUtils';
-import { convertPoint } from '../../util/styleUtils';
-import { equalEntries, equalPoints } from '../../util/arrayUtils';
-import Rectangle from '../geometry/Rectangle';
-import { ShapeRegistry } from '../shape/ShapeRegistry';
-import { StencilShapeRegistry } from '../shape/stencil/StencilShapeRegistry';
-import InternalEvent from '../event/InternalEvent';
-import Client from '../../Client';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import EventObject from '../event/EventObject';
-import Point from '../geometry/Point';
-import Shape from '../shape/Shape';
-import CellState from './CellState';
-import Cell from './Cell';
-import CellOverlay from './CellOverlay';
-import { getClientX, getClientY, getSource } from '../../util/EventUtils';
-import { isNode } from '../../util/domUtils';
-import type { CellStateStyle, ShapeConstructor } from '../../types';
-import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
+} from '../../util/Constants.js';
+import { getRotatedPoint, mod, toRadians } from '../../util/mathUtils.js';
+import { convertPoint } from '../../util/styleUtils.js';
+import { equalEntries, equalPoints } from '../../util/arrayUtils.js';
+import Rectangle from '../geometry/Rectangle.js';
+import { ShapeRegistry } from '../shape/ShapeRegistry.js';
+import { StencilShapeRegistry } from '../shape/stencil/StencilShapeRegistry.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Client from '../../Client.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import EventObject from '../event/EventObject.js';
+import Point from '../geometry/Point.js';
+import Shape from '../shape/Shape.js';
+import CellState from './CellState.js';
+import Cell from './Cell.js';
+import CellOverlay from './CellOverlay.js';
+import { getClientX, getClientY, getSource } from '../../util/EventUtils.js';
+import { isNode } from '../../util/domUtils.js';
+import type { CellStateStyle, ShapeConstructor } from '../../types.js';
+import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
 
 const placeholderStyleValues = ['inherit', 'swimlane', 'indicated'];
 const placeholderStyleProperties: (keyof CellStateStyle)[] = [

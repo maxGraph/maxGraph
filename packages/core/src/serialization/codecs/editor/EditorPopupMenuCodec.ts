@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../../ObjectCodec';
-import type Codec from '../../Codec';
-import EditorPopupMenu from '../../../editor/EditorPopupMenu';
+import ObjectCodec from '../../ObjectCodec.js';
+import type Codec from '../../Codec.js';
+import EditorPopupMenu from '../../../editor/EditorPopupMenu.js';
 
 /**
  * Custom codec for configuring {@link EditorPopupMenu}s.

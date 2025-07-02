@@ -16,19 +16,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../geometry/Rectangle';
-import CellHighlight from '../cell/CellHighlight';
+import Rectangle from '../geometry/Rectangle.js';
+import CellHighlight from '../cell/CellHighlight.js';
 import {
   getDocumentScrollOrigin,
   getOffset,
   getScrollOrigin,
   setOpacity,
-} from '../../util/styleUtils';
-import InternalEvent from '../event/InternalEvent';
-import Client from '../../Client';
-import Guide from './Guide';
-import { DROP_TARGET_COLOR } from '../../util/Constants';
-import Point from '../geometry/Point';
+} from '../../util/styleUtils.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Client from '../../Client.js';
+import Guide from './Guide.js';
+import { DROP_TARGET_COLOR } from '../../util/Constants.js';
+import Point from '../geometry/Point.js';
 import {
   getClientX,
   getClientY,
@@ -37,13 +37,13 @@ import {
   isMouseEvent,
   isPenEvent,
   isTouchEvent,
-} from '../../util/EventUtils';
-import EventSource from '../event/EventSource';
-import EventObject from '../event/EventObject';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../cell/Cell';
-import type SelectionHandler from '../plugins/SelectionHandler';
-import type { DropHandler } from '../../types';
+} from '../../util/EventUtils.js';
+import EventSource from '../event/EventSource.js';
+import EventObject from '../event/EventObject.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
+import type SelectionHandler from '../plugins/SelectionHandler.js';
+import type { DropHandler } from '../../types.js';
 
 /**
  * Wrapper to create a drag source from a DOM element so that the element can be dragged over a graph and dropped into the graph as a new cell.

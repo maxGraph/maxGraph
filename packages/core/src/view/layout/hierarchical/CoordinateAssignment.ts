@@ -16,21 +16,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import HierarchicalLayoutStage from './HierarchicalLayoutStage';
-import type { DirectionValue } from '../../../types';
-import { GlobalConfig } from '../../../util/config';
-import WeightedCellSorter from '../util/WeightedCellSorter';
-import Point from '../../geometry/Point';
-import HierarchicalEdgeStyle from '../datatypes/HierarchicalEdgeStyle';
-import HierarchicalLayout from '../HierarchicalLayout';
-import GraphHierarchyModel from './GraphHierarchyModel';
-import Cell from '../../../view/cell/Cell';
-import GraphHierarchyNode from '../datatypes/GraphHierarchyNode';
-import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell';
-import type { AbstractGraph } from '../../AbstractGraph';
-import Geometry from '../../../view/geometry/Geometry';
-import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge';
-import SwimlaneLayout from '../SwimlaneLayout';
+import HierarchicalLayoutStage from './HierarchicalLayoutStage.js';
+import type { DirectionValue } from '../../../types.js';
+import { GlobalConfig } from '../../../util/config.js';
+import WeightedCellSorter from '../util/WeightedCellSorter.js';
+import Point from '../../geometry/Point.js';
+import HierarchicalEdgeStyle from '../datatypes/HierarchicalEdgeStyle.js';
+import HierarchicalLayout from '../HierarchicalLayout.js';
+import GraphHierarchyModel from './GraphHierarchyModel.js';
+import Cell from '../../../view/cell/Cell.js';
+import GraphHierarchyNode from '../datatypes/GraphHierarchyNode.js';
+import GraphAbstractHierarchyCell from '../datatypes/GraphAbstractHierarchyCell.js';
+import type { AbstractGraph } from '../../AbstractGraph.js';
+import Geometry from '../../../view/geometry/Geometry.js';
+import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge.js';
+import SwimlaneLayout from '../SwimlaneLayout.js';
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.

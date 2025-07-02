@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../geometry/Rectangle';
-import type GraphView from '../GraphView';
-import type Cell from './Cell';
-import type CellState from './CellState';
-import type Shape from '../shape/Shape';
+import Rectangle from '../geometry/Rectangle.js';
+import type GraphView from '../GraphView.js';
+import type Cell from './Cell.js';
+import type CellState from './CellState.js';
+import type Shape from '../shape/Shape.js';
 
 /**
  * Creates a temporary set of cell states.

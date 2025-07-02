@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import AbstractCanvas2D from '../canvas/AbstractCanvas2D';
-import CellState from '../cell/CellState';
-import Shape from '../shape/Shape';
+import AbstractCanvas2D from '../canvas/AbstractCanvas2D.js';
+import CellState from '../cell/CellState.js';
+import Shape from '../shape/Shape.js';
 
 /**
  * Creates a new image export instance to be used with an export canvas.

@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import AbstractCanvas2D from './AbstractCanvas2D';
-import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, NONE } from '../../util/Constants';
-import { getOuterHtml, isNode } from '../../util/domUtils';
-import { DirectionValue, TextDirectionValue } from '../../types';
-import { StyleDefaultsConfig } from '../../util/config';
+import AbstractCanvas2D from './AbstractCanvas2D.js';
+import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, NONE } from '../../util/Constants.js';
+import { getOuterHtml, isNode } from '../../util/domUtils.js';
+import { DirectionValue, TextDirectionValue } from '../../types.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 
 /**
  * @category Serialization

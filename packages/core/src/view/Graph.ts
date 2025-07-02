@@ -16,20 +16,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { GraphCollaboratorsOptions, GraphPluginConstructor } from '../types';
-import { AbstractGraph } from './AbstractGraph';
-import GraphView from './GraphView';
-import CellRenderer from './cell/CellRenderer';
-import GraphDataModel from './GraphDataModel';
-import { Stylesheet } from './style/Stylesheet';
-import GraphSelectionModel from './GraphSelectionModel';
-import { registerDefaultShapes } from './shape/register-shapes';
+import type { GraphCollaboratorsOptions, GraphPluginConstructor } from '../types.js';
+import { AbstractGraph } from './AbstractGraph.js';
+import GraphView from './GraphView.js';
+import CellRenderer from './cell/CellRenderer.js';
+import GraphDataModel from './GraphDataModel.js';
+import { Stylesheet } from './style/Stylesheet.js';
+import GraphSelectionModel from './GraphSelectionModel.js';
+import { registerDefaultShapes } from './shape/register-shapes.js';
 import {
   registerDefaultEdgeMarkers,
   registerDefaultEdgeStyles,
   registerDefaultPerimeters,
-} from './style/register';
-import { getDefaultPlugins } from './plugins';
+} from './style/register.js';
+import { getDefaultPlugins } from './plugins/index.js';
 
 /**
  * An implementation of {@link AbstractGraph} that automatically loads some default built-ins (plugins, style elements).

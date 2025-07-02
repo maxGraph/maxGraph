@@ -16,8 +16,8 @@ limitations under the License.
 
 // The elements in this file are private and are not intended to be exported by the npm package
 
-import CodecRegistry from './CodecRegistry';
-import ObjectCodec from './ObjectCodec';
+import CodecRegistry from './CodecRegistry.js';
+import ObjectCodec from './ObjectCodec.js';
 
 /**
  * @private

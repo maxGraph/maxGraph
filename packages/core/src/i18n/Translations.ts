@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../Client';
-import { NONE } from '../util/Constants';
-import type MaxXmlRequest from '../util/MaxXmlRequest';
-import { get, load } from '../util/requestUtils';
-import { TranslationsConfig } from './config';
-import { isNullish } from '../internal/utils';
-import { I18nProvider } from '../types';
+import Client from '../Client.js';
+import { NONE } from '../util/Constants.js';
+import type MaxXmlRequest from '../util/MaxXmlRequest.js';
+import { get, load } from '../util/requestUtils.js';
+import { TranslationsConfig } from './config.js';
+import { isNullish } from '../internal/utils.js';
+import { I18nProvider } from '../types.js';
 
 // mxGraph source code: https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/src/js/util/mxResources.js
 

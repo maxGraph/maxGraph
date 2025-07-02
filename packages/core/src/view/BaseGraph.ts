@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { GraphCollaboratorsOptions } from '../types';
-import { AbstractGraph } from './AbstractGraph';
-import GraphDataModel from './GraphDataModel';
-import CellRenderer from './cell/CellRenderer';
-import { Stylesheet } from './style/Stylesheet';
-import GraphSelectionModel from './GraphSelectionModel';
-import GraphView from './GraphView';
+import type { GraphCollaboratorsOptions } from '../types.js';
+import { AbstractGraph } from './AbstractGraph.js';
+import GraphDataModel from './GraphDataModel.js';
+import CellRenderer from './cell/CellRenderer.js';
+import { Stylesheet } from './style/Stylesheet.js';
+import GraphSelectionModel from './GraphSelectionModel.js';
+import GraphView from './GraphView.js';
 
 /**
  * An implementation of {@link AbstractGraph} that does not load any default built-ins (plugins, style elements).

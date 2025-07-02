@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../view/event/InternalEvent';
-import Point from '../view/geometry/Point';
-import MaxPopupMenu from './MaxPopupMenu';
-import EventSource from '../view/event/EventSource';
-import EventObject from '../view/event/EventObject';
-import Client from '../Client';
-import { br, write, writeln } from '../util/domUtils';
-import Cell from '../view/cell/Cell';
-import { KeyboardEventListener, MouseEventListener, PopupMenuItem } from '../types';
+import InternalEvent from '../view/event/InternalEvent.js';
+import Point from '../view/geometry/Point.js';
+import MaxPopupMenu from './MaxPopupMenu.js';
+import EventSource from '../view/event/EventSource.js';
+import EventObject from '../view/event/EventObject.js';
+import Client from '../Client.js';
+import { br, write, writeln } from '../util/domUtils.js';
+import Cell from '../view/cell/Cell.js';
+import { KeyboardEventListener, MouseEventListener, PopupMenuItem } from '../types.js';
 
 interface HTMLSelectOptionWithFunct extends HTMLOptionElement {
   funct?: (evt: any) => void;

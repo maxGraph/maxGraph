@@ -16,28 +16,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalMouseEvent from '../event/InternalMouseEvent';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
 import {
   NONE,
   OUTLINE_COLOR,
   OUTLINE_HANDLE_FILLCOLOR,
   OUTLINE_HANDLE_STROKECOLOR,
   OUTLINE_STROKEWIDTH,
-} from '../../util/Constants';
-import Point from '../geometry/Point';
-import Rectangle from '../geometry/Rectangle';
-import RectangleShape from '../shape/node/RectangleShape';
-import type { AbstractGraph } from '../AbstractGraph';
-import { BaseGraph } from '../BaseGraph';
-import ImageShape from '../shape/node/ImageShape';
-import InternalEvent from '../event/InternalEvent';
-import Image from '../image/ImageBox';
-import EventObject from '../event/EventObject';
-import { getSource, isMouseEvent } from '../../util/EventUtils';
-import EventSource from '../event/EventSource';
-import { hasScrollbars } from '../../util/styleUtils';
-import type { Listenable, MouseListenerSet } from '../../types';
-import { getDefaultPlugins } from '../plugins';
+} from '../../util/Constants.js';
+import Point from '../geometry/Point.js';
+import Rectangle from '../geometry/Rectangle.js';
+import RectangleShape from '../shape/node/RectangleShape.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import { BaseGraph } from '../BaseGraph.js';
+import ImageShape from '../shape/node/ImageShape.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Image from '../image/ImageBox.js';
+import EventObject from '../event/EventObject.js';
+import { getSource, isMouseEvent } from '../../util/EventUtils.js';
+import EventSource from '../event/EventSource.js';
+import { hasScrollbars } from '../../util/styleUtils.js';
+import type { Listenable, MouseListenerSet } from '../../types.js';
+import { getDefaultPlugins } from '../plugins/index.js';
 
 /**
  * Implements an outline (aka overview or minimap) for a `Graph`.

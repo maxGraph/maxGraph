@@ -15,10 +15,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import ObjectIdentity from '../../util/ObjectIdentity';
-import GraphLayout from './GraphLayout';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../cell/Cell';
+import ObjectIdentity from '../../util/ObjectIdentity.js';
+import GraphLayout from './GraphLayout.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
 
 /**
  * Extends {@link GraphLayout} to implement a fast organic layout algorithm.

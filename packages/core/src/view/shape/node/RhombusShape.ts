@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Shape from '../Shape';
-import Point from '../../geometry/Point';
-import { LINE_ARCSIZE } from '../../../util/Constants';
-import Rectangle from '../../geometry/Rectangle';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import Shape from '../Shape.js';
+import Point from '../../geometry/Point.js';
+import { LINE_ARCSIZE } from '../../../util/Constants.js';
+import Rectangle from '../../geometry/Rectangle.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
 /**
  * Extends {@link Shape} to implement a rhombus (aka diamond) shape.

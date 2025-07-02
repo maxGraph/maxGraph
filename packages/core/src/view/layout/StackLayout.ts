@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphLayout from './GraphLayout';
-import { DEFAULT_STARTSIZE } from '../../util/Constants';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../cell/Cell';
-import Geometry from '../geometry/Geometry';
+import GraphLayout from './GraphLayout.js';
+import { DEFAULT_STARTSIZE } from '../../util/Constants.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
+import Geometry from '../geometry/Geometry.js';
 
 /**
  * Extends {@link GraphLayout} to create a horizontal or vertical stack of the child vertices.

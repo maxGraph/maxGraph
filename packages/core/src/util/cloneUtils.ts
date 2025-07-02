@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectIdentity from './ObjectIdentity';
+import ObjectIdentity from './ObjectIdentity.js';
 
 /**
  * Recursively clones the specified object ignoring all field names in the

@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isNode } from '../../util/domUtils';
-import type Cell from '../cell/Cell';
-import type { AbstractGraph } from '../AbstractGraph';
-import { translate } from '../../internal/i18n-utils';
+import { isNode } from '../../util/domUtils.js';
+import type Cell from '../cell/Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import { translate } from '../../internal/i18n-utils.js';
 
 /**
  * @class Multiplicity

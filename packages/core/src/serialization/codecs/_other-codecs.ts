@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './editor';
-export * from './BaseGraphCodec';
-export * from './ChildChangeCodec';
-export * from './GenericChangeCodec';
-export { GraphCodec } from './GraphCodec';
-export * from './GraphViewCodec';
-export * from './RootChangeCodec';
-export * from './StylesheetCodec';
-export * from './TerminalChangeCodec';
+export * from './editor/index.js';
+export * from './BaseGraphCodec.js';
+export * from './ChildChangeCodec.js';
+export * from './GenericChangeCodec.js';
+export { GraphCodec } from './GraphCodec.js';
+export * from './GraphViewCodec.js';
+export * from './RootChangeCodec.js';
+export * from './StylesheetCodec.js';
+export * from './TerminalChangeCodec.js';

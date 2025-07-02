@@ -22,18 +22,18 @@ import {
   getScrollOrigin,
   setOpacity,
   setPrefixedStyle,
-} from '../../util/styleUtils';
-import InternalEvent from '../event/InternalEvent';
-import Point from '../geometry/Point';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import Client from '../../Client';
-import Rectangle from '../geometry/Rectangle';
-import { isAltDown, isMultiTouchEvent } from '../../util/EventUtils';
-import { clearSelection } from '../../util/domUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import type { GraphPlugin, MouseListenerSet } from '../../types';
-import EventObject from '../event/EventObject';
-import EventSource from '../event/EventSource';
+} from '../../util/styleUtils.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Point from '../geometry/Point.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import Client from '../../Client.js';
+import Rectangle from '../geometry/Rectangle.js';
+import { isAltDown, isMultiTouchEvent } from '../../util/EventUtils.js';
+import { clearSelection } from '../../util/domUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type { GraphPlugin, MouseListenerSet } from '../../types.js';
+import EventObject from '../event/EventObject.js';
+import EventSource from '../event/EventSource.js';
 
 /**
  * Event handler that selects rectangular regions.

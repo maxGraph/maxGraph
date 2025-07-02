@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../cell/Cell';
-import { sortCells } from '../../util/styleUtils';
-import Geometry from '../geometry/Geometry';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import Rectangle from '../geometry/Rectangle';
-import type Point from '../geometry/Point';
-import type { AbstractGraph } from '../AbstractGraph';
+import Cell from '../cell/Cell.js';
+import { sortCells } from '../../util/styleUtils.js';
+import Geometry from '../geometry/Geometry.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Rectangle from '../geometry/Rectangle.js';
+import type Point from '../geometry/Point.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

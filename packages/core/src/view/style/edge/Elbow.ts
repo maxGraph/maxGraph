@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { SideToSide } from './SideToSide';
-import { TopToBottom } from './TopToBottom';
-import CellState from '../../cell/CellState';
-import Point from '../../geometry/Point';
+import { SideToSide } from './SideToSide.js';
+import { TopToBottom } from './TopToBottom.js';
+import CellState from '../../cell/CellState.js';
+import Point from '../../geometry/Point.js';
 
-import type { EdgeStyleFunction } from '../../../types';
+import type { EdgeStyleFunction } from '../../../types.js';
 
 /**
  * Uses either {@link SideToSide} or {@link TopToBottom} depending on the horizontal flag in the cell style.

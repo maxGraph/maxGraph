@@ -6,12 +6,8 @@ In this example, `jsdom` is used to provide an implementation of the browser obj
 These objects are not provided by Node.js.
 
 The example provides a script using CommonJS and another one using ESM.
-
-The CommonJS example creates a Graph, exports its model to an XML file and to an SVG file.
-
-**IMPORTANT**: the ESM script is currently not working because `maxGraph` doesn't yet provide ESM compatibility for Node.js.
-This will be implemented in the future with [#827](https://github.com/maxGraph/maxGraph/issues/827).
-
+- Contents: creates a Graph, exports its model to an XML file and to an SVG file.
+- They use same shared code to perform the operations.
 
 ## Setup
 

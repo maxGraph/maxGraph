@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { BaseGraph } from '../../view/BaseGraph';
-import ObjectCodec from '../ObjectCodec';
-import { excludedFields } from './GraphCodec';
+import { BaseGraph } from '../../view/BaseGraph.js';
+import ObjectCodec from '../ObjectCodec.js';
+import { excludedFields } from './GraphCodec.js';
 
 /**
  * Codec for {@link BaseGraph}s.

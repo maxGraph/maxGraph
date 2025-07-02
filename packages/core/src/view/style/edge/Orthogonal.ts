@@ -16,19 +16,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { scaleCellState, scalePointArray } from './shared';
-import { DEFAULT_MARKERSIZE, DIRECTION_MASK, NONE } from '../../../util/Constants';
+import { scaleCellState, scalePointArray } from './shared.js';
+import { DEFAULT_MARKERSIZE, DIRECTION_MASK, NONE } from '../../../util/Constants.js';
 import {
   getBoundingBox,
   getPortConstraints,
   reversePortConstraints,
-} from '../../../util/mathUtils';
-import type CellState from '../../cell/CellState';
-import { OrthogonalConnectorConfig } from '../config';
-import type { EdgeStyleFunction } from '../../../types';
-import Point from '../../geometry/Point';
-import Rectangle from '../../geometry/Rectangle';
-import { SegmentConnector } from './Segment';
+} from '../../../util/mathUtils.js';
+import type CellState from '../../cell/CellState.js';
+import { OrthogonalConnectorConfig } from '../config.js';
+import type { EdgeStyleFunction } from '../../../types.js';
+import Point from '../../geometry/Point.js';
+import Rectangle from '../../geometry/Rectangle.js';
+import { SegmentConnector } from './Segment.js';
 
 const dirVectors = [
   [-1, 0],

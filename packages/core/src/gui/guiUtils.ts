@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { htmlEntities } from '../util/StringUtils';
-import Client from '../Client';
-import { br, write } from '../util/domUtils';
-import { translate } from '../internal/i18n-utils';
-import InternalEvent from '../view/event/InternalEvent';
-import MaxWindow from './MaxWindow';
+import { htmlEntities } from '../util/StringUtils.js';
+import Client from '../Client.js';
+import { br, write } from '../util/domUtils.js';
+import { translate } from '../internal/i18n-utils.js';
+import InternalEvent from '../view/event/InternalEvent.js';
+import MaxWindow from './MaxWindow.js';
 
 /**
  * Shows the specified text content in a new {@link MaxWindow} or a new browser window if `isInternalWindow` is `false`.

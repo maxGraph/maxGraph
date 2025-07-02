@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../ObjectCodec';
-import RootChange from '../../view/undoable_changes/RootChange';
-import type Codec from '../Codec';
-import { isElement } from '../../internal/utils';
+import ObjectCodec from '../ObjectCodec.js';
+import RootChange from '../../view/undoable_changes/RootChange.js';
+import type Codec from '../Codec.js';
+import { isElement } from '../../internal/utils.js';
 
 /**
  * Codec for {@link RootChange}s.

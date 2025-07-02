@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from '../event/EventSource';
-import { hasScrollbars } from '../../util/styleUtils';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
+import EventSource from '../event/EventSource.js';
+import { hasScrollbars } from '../../util/styleUtils.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
 import {
   isConsumed,
   isControlDown,
@@ -27,12 +27,12 @@ import {
   isMultiTouchEvent,
   isPopupTrigger,
   isShiftDown,
-} from '../../util/EventUtils';
-import PanningManager from '../other/PanningManager';
-import InternalMouseEvent from '../event/InternalMouseEvent';
+} from '../../util/EventUtils.js';
+import PanningManager from '../other/PanningManager.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
 
-import type { GraphPlugin, MouseEventListener, MouseListenerSet } from '../../types';
-import type { AbstractGraph } from '../AbstractGraph';
+import type { GraphPlugin, MouseEventListener, MouseListenerSet } from '../../types.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 /**
  * Event handler that pans and creates popupmenus.

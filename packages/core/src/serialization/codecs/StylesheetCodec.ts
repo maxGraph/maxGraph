@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../ObjectCodec';
-import { getNameFromRegistries } from './utils';
-import { Stylesheet } from '../../view/style/Stylesheet';
-import type Codec from '../Codec';
-import { clone } from '../../util/cloneUtils';
-import { GlobalConfig } from '../../util/config';
-import { isNumeric } from '../../util/mathUtils';
-import { getTextContent } from '../../util/domUtils';
-import { doEval, isElement } from '../../internal/utils';
+import ObjectCodec from '../ObjectCodec.js';
+import { getNameFromRegistries } from './utils.js';
+import { Stylesheet } from '../../view/style/Stylesheet.js';
+import type Codec from '../Codec.js';
+import { clone } from '../../util/cloneUtils.js';
+import { GlobalConfig } from '../../util/config.js';
+import { isNumeric } from '../../util/mathUtils.js';
+import { getTextContent } from '../../util/domUtils.js';
+import { doEval, isElement } from '../../internal/utils.js';
 
 /**
  * Codec for {@link Stylesheet}s.

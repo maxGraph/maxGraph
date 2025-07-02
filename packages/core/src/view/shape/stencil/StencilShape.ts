@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ConnectionConstraint from '../../other/ConnectionConstraint';
-import Rectangle from '../../geometry/Rectangle';
-import Shape from '../Shape';
-import { NONE, RECTANGLE_ROUNDING_FACTOR } from '../../../util/Constants';
-import { StencilShapeRegistry } from './StencilShapeRegistry';
-import { getChildNodes, getTextContent } from '../../../util/domUtils';
-import Point from '../../geometry/Point';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import { AlignValue, ColorValue, VAlignValue } from '../../../types';
-import { doEval, isElement, isNullish } from '../../../internal/utils';
-import { translate } from '../../../internal/i18n-utils';
+import ConnectionConstraint from '../../other/ConnectionConstraint.js';
+import Rectangle from '../../geometry/Rectangle.js';
+import Shape from '../Shape.js';
+import { NONE, RECTANGLE_ROUNDING_FACTOR } from '../../../util/Constants.js';
+import { StencilShapeRegistry } from './StencilShapeRegistry.js';
+import { getChildNodes, getTextContent } from '../../../util/domUtils.js';
+import Point from '../../geometry/Point.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import { AlignValue, ColorValue, VAlignValue } from '../../../types.js';
+import { doEval, isElement, isNullish } from '../../../internal/utils.js';
+import { translate } from '../../../internal/i18n-utils.js';
 
 /**
  * Configure global settings for stencil shapes.

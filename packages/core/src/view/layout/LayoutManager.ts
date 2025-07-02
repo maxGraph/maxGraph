@@ -16,22 +16,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from '../event/EventSource';
-import InternalEvent from '../event/InternalEvent';
-import { convertPoint, sortCells } from '../../util/styleUtils';
-import RootChange from '../undoable_changes/RootChange';
-import ChildChange from '../undoable_changes/ChildChange';
-import TerminalChange from '../undoable_changes/TerminalChange';
-import GeometryChange from '../undoable_changes/GeometryChange';
-import VisibleChange from '../undoable_changes/VisibleChange';
-import StyleChange from '../undoable_changes/StyleChange';
-import EventObject from '../event/EventObject';
-import type Cell from '../cell/Cell';
-import Rectangle from '../geometry/Rectangle';
-import { getClientX, getClientY } from '../../util/EventUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import GraphLayout from './GraphLayout';
-import UndoableEdit from '../undoable_changes/UndoableEdit';
+import EventSource from '../event/EventSource.js';
+import InternalEvent from '../event/InternalEvent.js';
+import { convertPoint, sortCells } from '../../util/styleUtils.js';
+import RootChange from '../undoable_changes/RootChange.js';
+import ChildChange from '../undoable_changes/ChildChange.js';
+import TerminalChange from '../undoable_changes/TerminalChange.js';
+import GeometryChange from '../undoable_changes/GeometryChange.js';
+import VisibleChange from '../undoable_changes/VisibleChange.js';
+import StyleChange from '../undoable_changes/StyleChange.js';
+import EventObject from '../event/EventObject.js';
+import type Cell from '../cell/Cell.js';
+import Rectangle from '../geometry/Rectangle.js';
+import { getClientX, getClientY } from '../../util/EventUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import GraphLayout from './GraphLayout.js';
+import UndoableEdit from '../undoable_changes/UndoableEdit.js';
 
 /**
  * Implements a layout manager that runs a given layout after any changes to the graph:

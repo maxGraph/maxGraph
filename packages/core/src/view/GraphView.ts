@@ -16,37 +16,42 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from './geometry/Point';
-import Rectangle from './geometry/Rectangle';
-import EventSource from './event/EventSource';
-import EventObject from './event/EventObject';
-import RectangleShape from './shape/node/RectangleShape';
-import { NS_SVG } from '../util/Constants';
-import Client from '../Client';
-import InternalEvent from './event/InternalEvent';
-import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils';
-import { getRotatedPoint, ptSegDistSq, relativeCcw, toRadians } from '../util/mathUtils';
-import { GlobalConfig } from '../util/config';
-import CellState from './cell/CellState';
-import UndoableEdit from './undoable_changes/UndoableEdit';
-import ImageShape from './shape/node/ImageShape';
-import InternalMouseEvent from './event/InternalMouseEvent';
-import Cell from './cell/Cell';
-import Image from './image/ImageBox';
-import CurrentRootChange from './undoable_changes/CurrentRootChange';
-import Shape from './shape/Shape';
-import Geometry from './geometry/Geometry';
-import ConnectionConstraint from './other/ConnectionConstraint';
-import type PopupMenuHandler from './plugins/PopupMenuHandler';
-import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils';
-import { clone } from '../util/cloneUtils';
-import type { AbstractGraph } from './AbstractGraph';
-import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry';
-import { PerimeterRegistry } from './style/perimeter/PerimeterRegistry';
-import type TooltipHandler from './plugins/TooltipHandler';
-import type { EdgeStyleFunction, MouseEventListener } from '../types';
-import { doEval } from '../internal/utils';
-import { isI18nEnabled } from '../internal/i18n-utils';
+import Point from './geometry/Point.js';
+import Rectangle from './geometry/Rectangle.js';
+import EventSource from './event/EventSource.js';
+import EventObject from './event/EventObject.js';
+import RectangleShape from './shape/node/RectangleShape.js';
+import { NS_SVG } from '../util/Constants.js';
+import Client from '../Client.js';
+import InternalEvent from './event/InternalEvent.js';
+import { convertPoint, getCurrentStyle, getOffset } from '../util/styleUtils.js';
+import {
+  getRotatedPoint,
+  ptSegDistSq,
+  relativeCcw,
+  toRadians,
+} from '../util/mathUtils.js';
+import { GlobalConfig } from '../util/config.js';
+import CellState from './cell/CellState.js';
+import UndoableEdit from './undoable_changes/UndoableEdit.js';
+import ImageShape from './shape/node/ImageShape.js';
+import InternalMouseEvent from './event/InternalMouseEvent.js';
+import Cell from './cell/Cell.js';
+import Image from './image/ImageBox.js';
+import CurrentRootChange from './undoable_changes/CurrentRootChange.js';
+import Shape from './shape/Shape.js';
+import Geometry from './geometry/Geometry.js';
+import ConnectionConstraint from './other/ConnectionConstraint.js';
+import type PopupMenuHandler from './plugins/PopupMenuHandler.js';
+import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils.js';
+import { clone } from '../util/cloneUtils.js';
+import type { AbstractGraph } from './AbstractGraph.js';
+import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry.js';
+import { PerimeterRegistry } from './style/perimeter/PerimeterRegistry.js';
+import type TooltipHandler from './plugins/TooltipHandler.js';
+import type { EdgeStyleFunction, MouseEventListener } from '../types.js';
+import { doEval } from '../internal/utils.js';
+import { isI18nEnabled } from '../internal/i18n-utils.js';
 
 /**
  * @class GraphView

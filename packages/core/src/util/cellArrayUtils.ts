@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../view/cell/Cell';
-import ObjectIdentity from './ObjectIdentity';
+import Cell from '../view/cell/Cell.js';
+import ObjectIdentity from './ObjectIdentity.js';
 
 /**
  * Returns all opposite vertices terminal for the given edges, only returning sources and/or targets as specified.

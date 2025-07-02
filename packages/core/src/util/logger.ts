@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Logger } from '../types';
+import type { Logger } from '../types.js';
 
-import { getElapseMillisecondsMessage } from '../internal/time-utils';
+import { getElapseMillisecondsMessage } from '../internal/time-utils.js';
 
 /**
  * A {@link Logger} that does nothing.

@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EdgeStyle, EdgeMarker, Perimeter } from './builtin-style-elements';
-import { EdgeStyleRegistry } from './edge/EdgeStyleRegistry';
-import { EdgeMarkerRegistry } from './marker/EdgeMarkerRegistry';
-import { PerimeterRegistry } from './perimeter/PerimeterRegistry';
+import { EdgeStyle, EdgeMarker, Perimeter } from './builtin-style-elements.js';
+import { EdgeStyleRegistry } from './edge/EdgeStyleRegistry.js';
+import { EdgeMarkerRegistry } from './marker/EdgeMarkerRegistry.js';
+import { PerimeterRegistry } from './perimeter/PerimeterRegistry.js';
 import type {
   ArrowValue,
   EdgeStyleFunction,
@@ -26,7 +26,7 @@ import type {
   MarkerFactoryFunction,
   PerimeterFunction,
   PerimeterValue,
-} from '../../types';
+} from '../../types.js';
 
 let isDefaultEdgeStylesRegistered = false;
 

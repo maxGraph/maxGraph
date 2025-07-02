@@ -19,9 +19,9 @@ import type {
   EdgeStyleHandlerKind,
   EdgeStyleMetaData,
   EdgeStyleRegistryInterface,
-} from '../../../types';
-import { isNullish } from '../../../internal/utils';
-import { BaseRegistry } from '../../../internal/BaseRegistry';
+} from '../../../types.js';
+import { isNullish } from '../../../internal/utils.js';
+import { BaseRegistry } from '../../../internal/BaseRegistry.js';
 
 /**
  * @private

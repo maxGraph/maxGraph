@@ -14,20 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CodecRegistry from './CodecRegistry';
+import CodecRegistry from './CodecRegistry.js';
 import {
   CellCodec,
   ModelCodec,
   mxCellCodec,
   mxGeometryCodec,
-} from './codecs/_model-codecs';
-import Geometry from '../view/geometry/Geometry';
-import Point from '../view/geometry/Point';
+} from './codecs/_model-codecs.js';
+import Geometry from '../view/geometry/Geometry.js';
+import Point from '../view/geometry/Point.js';
 import {
   CodecRegistrationStates,
   createObjectCodec,
   registerBaseCodecs,
-} from './register-shared';
+} from './register-shared.js';
 
 /**
  * Register model codecs i.e. codecs used to import/export the Graph Model, see {@link GraphDataModel}.

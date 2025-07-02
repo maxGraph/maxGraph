@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphLayout from './GraphLayout';
-import type { DirectionValue } from '../../types';
-import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle';
-import GraphHierarchyModel from './hierarchical/GraphHierarchyModel';
-import ObjectIdentity from '../../util/ObjectIdentity';
-import MinimumCycleRemover from './hierarchical/MinimumCycleRemover';
-import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction';
-import CoordinateAssignment from './hierarchical/CoordinateAssignment';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../cell/Cell';
-import { HierarchicalGraphLayoutTraverseArgs } from './types';
+import GraphLayout from './GraphLayout.js';
+import type { DirectionValue } from '../../types.js';
+import HierarchicalEdgeStyle from './datatypes/HierarchicalEdgeStyle.js';
+import GraphHierarchyModel from './hierarchical/GraphHierarchyModel.js';
+import ObjectIdentity from '../../util/ObjectIdentity.js';
+import MinimumCycleRemover from './hierarchical/MinimumCycleRemover.js';
+import MedianHybridCrossingReduction from './hierarchical/MedianHybridCrossingReduction.js';
+import CoordinateAssignment from './hierarchical/CoordinateAssignment.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
+import { HierarchicalGraphLayoutTraverseArgs } from './types.js';
 
 /**
  * A hierarchical layout algorithm.

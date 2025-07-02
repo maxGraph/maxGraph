@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DIRECTION_MASK } from './Constants';
-import Point from '../view/geometry/Point';
-import Rectangle from '../view/geometry/Rectangle';
-import CellState from '../view/cell/CellState';
-import type { CellStateStyle } from '../types';
-import { isNullish } from '../internal/utils';
+import { DIRECTION_MASK } from './Constants.js';
+import Point from '../view/geometry/Point.js';
+import Rectangle from '../view/geometry/Rectangle.js';
+import CellState from '../view/cell/CellState.js';
+import type { CellStateStyle } from '../types.js';
+import { isNullish } from '../internal/utils.js';
 
 /**
  * Converts the given degree to radians.

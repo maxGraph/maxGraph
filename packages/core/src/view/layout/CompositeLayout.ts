@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../cell/Cell';
-import type { AbstractGraph } from '../AbstractGraph';
-import GraphLayout from './GraphLayout';
+import type Cell from '../cell/Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import GraphLayout from './GraphLayout.js';
 
 /**
  * Allows to compose multiple layouts into a single layout.

@@ -16,19 +16,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../Client';
-import MaxToolbar from '../gui/MaxToolbar';
-import Geometry from '../view/geometry/Geometry';
-import { convertPoint } from '../util/styleUtils';
-import InternalEvent from '../view/event/InternalEvent';
-import { getClientX, getClientY } from '../util/EventUtils';
-import { makeDraggable } from '../util/gestureUtils';
-import Editor from './Editor';
-import type Cell from '../view/cell/Cell';
-import type { AbstractGraph } from '../view/AbstractGraph';
-import EventObject from '../view/event/EventObject';
-
-import type { DropHandler } from '../types';
+import Client from '../Client.js';
+import MaxToolbar from '../gui/MaxToolbar.js';
+import Geometry from '../view/geometry/Geometry.js';
+import { convertPoint } from '../util/styleUtils.js';
+import InternalEvent from '../view/event/InternalEvent.js';
+import { getClientX, getClientY } from '../util/EventUtils.js';
+import { makeDraggable } from '../util/gestureUtils.js';
+import Editor from './Editor.js';
+import type Cell from '../view/cell/Cell.js';
+import type { AbstractGraph } from '../view/AbstractGraph.js';
+import EventObject from '../view/event/EventObject.js';
+import type { DropHandler } from '../types.js';
 
 /**
  * Toolbar for the editor.

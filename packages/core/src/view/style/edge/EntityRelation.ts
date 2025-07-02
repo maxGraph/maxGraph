@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CellState from '../../cell/CellState';
-import Geometry from '../../geometry/Geometry';
-import Point from '../../geometry/Point';
-import { DIRECTION_MASK } from '../../../util/Constants';
-import { getPortConstraints } from '../../../util/mathUtils';
-import type { EdgeStyleFunction } from '../../../types';
-import { EntityRelationConnectorConfig } from '../config';
+import CellState from '../../cell/CellState.js';
+import Geometry from '../../geometry/Geometry.js';
+import Point from '../../geometry/Point.js';
+import { DIRECTION_MASK } from '../../../util/Constants.js';
+import { getPortConstraints } from '../../../util/mathUtils.js';
+import type { EdgeStyleFunction } from '../../../types.js';
+import { EntityRelationConnectorConfig } from '../config.js';
 
 /**
  * Implements an entity relation style for edges (as used in database schema diagrams).

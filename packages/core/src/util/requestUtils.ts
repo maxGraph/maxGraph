@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import MaxXmlRequest from './MaxXmlRequest';
+import MaxXmlRequest from './MaxXmlRequest.js';
 
 /**
  * Loads the specified URL *synchronously* and returns the {@link MaxXmlRequest}.

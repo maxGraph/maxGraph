@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CellMarker from './CellMarker';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from './Cell';
-import EventSource from '../event/EventSource';
-import type { ColorValue, MouseListenerSet } from '../../types';
+import CellMarker from './CellMarker.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from './Cell.js';
+import EventSource from '../event/EventSource.js';
+import type { ColorValue, MouseListenerSet } from '../../types.js';
 
 /**
  * Event handler that highlights cells

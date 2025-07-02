@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
-import Rectangle from '../geometry/Rectangle';
-import { contains } from '../../util/mathUtils';
-import { setOpacity } from '../../util/styleUtils';
-import ElbowEdgeHandler from './ElbowEdgeHandler';
-import CellState from '../cell/CellState';
-import Cell from '../cell/Cell';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import { EdgeHandlerConfig } from './config';
+import Point from '../geometry/Point.js';
+import Rectangle from '../geometry/Rectangle.js';
+import { contains } from '../../util/mathUtils.js';
+import { setOpacity } from '../../util/styleUtils.js';
+import ElbowEdgeHandler from './ElbowEdgeHandler.js';
+import CellState from '../cell/CellState.js';
+import Cell from '../cell/Cell.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import { EdgeHandlerConfig } from './config.js';
 
 class EdgeSegmentHandler extends ElbowEdgeHandler {
   constructor(state: CellState) {

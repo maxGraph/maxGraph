@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODE_TYPE } from './Constants';
-import { getTextContent } from './domUtils';
+import { NODE_TYPE } from './Constants.js';
+import { getTextContent } from './domUtils.js';
 
-import type { Properties } from '../types';
+import type { Properties } from '../types.js';
 
 /**
  * Strips all whitespaces from the beginning of the string. Without the

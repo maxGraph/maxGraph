@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Shape from '../Shape';
-import { LINE_ARCSIZE } from '../../../util/Constants';
-import Point from '../../geometry/Point';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import { ColorValue } from '../../../types';
+import Shape from '../Shape.js';
+import { LINE_ARCSIZE } from '../../../util/Constants.js';
+import Point from '../../geometry/Point.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import { ColorValue } from '../../../types.js';
 
 /**
  * Extends {@link Shape} to implement a polyline (a line with multiple points).

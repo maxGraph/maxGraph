@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Codec from '../../Codec';
-import ObjectCodec from '../../ObjectCodec';
-import Geometry from '../../../view/geometry/Geometry';
-import Point from '../../../view/geometry/Point';
+import type Codec from '../../Codec.js';
+import ObjectCodec from '../../ObjectCodec.js';
+import Geometry from '../../../view/geometry/Geometry.js';
+import Point from '../../../view/geometry/Point.js';
 
 /**
  * Add support for the legacy `mxGraph` format of {@link Geometry}.

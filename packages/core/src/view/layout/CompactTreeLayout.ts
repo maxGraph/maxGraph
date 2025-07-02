@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
-import GraphLayout from './GraphLayout';
-import CellPath from '../cell/CellPath';
-import Rectangle from '../geometry/Rectangle';
-import { sortCells } from '../../util/styleUtils';
-import WeightedCellSorter from './util/WeightedCellSorter';
-import type Cell from '../cell/Cell';
-import type { AbstractGraph } from '../AbstractGraph';
-import { findTreeRoots } from '../../util/treeTraversal';
+import Point from '../geometry/Point.js';
+import GraphLayout from './GraphLayout.js';
+import CellPath from '../cell/CellPath.js';
+import Rectangle from '../geometry/Rectangle.js';
+import { sortCells } from '../../util/styleUtils.js';
+import WeightedCellSorter from './util/WeightedCellSorter.js';
+import type Cell from '../cell/Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import { findTreeRoots } from '../../util/treeTraversal.js';
 
 /**
  * @category Layout

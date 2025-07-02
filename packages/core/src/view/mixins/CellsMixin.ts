@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../cell/Cell';
+import Cell from '../cell/Cell.js';
 import {
   contains,
   getBoundingBox,
@@ -22,22 +22,22 @@ import {
   intersects,
   ptSegDistSq,
   toRadians,
-} from '../../util/mathUtils';
+} from '../../util/mathUtils.js';
 import {
   getSizeForString,
   setCellStyleFlags,
   setCellStyles,
-} from '../../util/styleUtils';
-import { DEFAULT_FONTSIZE, DEFAULT_IMAGESIZE } from '../../util/Constants';
-import Geometry from '../geometry/Geometry';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import Rectangle from '../geometry/Rectangle';
-import Point from '../geometry/Point';
-import { htmlEntities } from '../../util/StringUtils';
-import CellState from '../cell/CellState';
-import type { AbstractGraph } from '../AbstractGraph';
-import { cloneCells, getTopmostCells } from '../../util/cellArrayUtils';
+} from '../../util/styleUtils.js';
+import { DEFAULT_FONTSIZE, DEFAULT_IMAGESIZE } from '../../util/Constants.js';
+import Geometry from '../geometry/Geometry.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Rectangle from '../geometry/Rectangle.js';
+import Point from '../geometry/Point.js';
+import { htmlEntities } from '../../util/StringUtils.js';
+import CellState from '../cell/CellState.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import { cloneCells, getTopmostCells } from '../../util/cellArrayUtils.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

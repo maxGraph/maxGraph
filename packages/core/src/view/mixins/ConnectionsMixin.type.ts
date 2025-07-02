@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Point from '../geometry/Point';
-import type CellState from '../cell/CellState';
-import type InternalMouseEvent from '../event/InternalMouseEvent';
-import type ConnectionConstraint from '../other/ConnectionConstraint';
-import type Cell from '../cell/Cell';
+import type Point from '../geometry/Point.js';
+import type CellState from '../cell/CellState.js';
+import type InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type ConnectionConstraint from '../other/ConnectionConstraint.js';
+import type Cell from '../cell/Cell.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {

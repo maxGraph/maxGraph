@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../cell/Cell';
-import Geometry from '../geometry/Geometry';
-import type { AbstractGraph } from '../AbstractGraph';
-import type { CellStyle } from '../../types';
+import Cell from '../cell/Cell.js';
+import Geometry from '../geometry/Geometry.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type { CellStyle } from '../../types.js';
 
 type PartialGraph = Pick<AbstractGraph, 'addCell' | 'getChildCells'>;
 type PartialVertex = Pick<

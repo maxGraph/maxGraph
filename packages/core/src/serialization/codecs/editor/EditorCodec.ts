@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../../ObjectCodec';
-import Editor from '../../../editor/Editor';
-import type Codec from '../../Codec';
-import MaxWindow from '../../../gui/MaxWindow';
-import { addLinkToHead, getChildNodes } from '../../../util/domUtils';
-import { GlobalConfig } from '../../../util/config';
-import { translate } from '../../../internal/i18n-utils';
+import ObjectCodec from '../../ObjectCodec.js';
+import Editor from '../../../editor/Editor.js';
+import type Codec from '../../Codec.js';
+import MaxWindow from '../../../gui/MaxWindow.js';
+import { addLinkToHead, getChildNodes } from '../../../util/domUtils.js';
+import { GlobalConfig } from '../../../util/config.js';
+import { translate } from '../../../internal/i18n-utils.js';
 
 /**
  * Codec for {@link Editor}s.

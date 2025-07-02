@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
 
-import type { UndoableChange } from '../../types';
-import { AbstractGraph } from '../AbstractGraph';
-import Cell from '../cell/Cell';
+import type { UndoableChange } from '../../types.js';
+import { AbstractGraph } from '../AbstractGraph.js';
+import Cell from '../cell/Cell.js';
 
 /**
  * Action to change the current root in a view.

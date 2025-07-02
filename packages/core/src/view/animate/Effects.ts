@@ -16,16 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { setOpacity } from '../../util/styleUtils';
-import GeometryChange from '../undoable_changes/GeometryChange';
-import TerminalChange from '../undoable_changes/TerminalChange';
-import ValueChange from '../undoable_changes/ValueChange';
-import ChildChange from '../undoable_changes/ChildChange';
-import StyleChange from '../undoable_changes/StyleChange';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../../view/cell/Cell';
-import { UndoableChange } from '../../types';
-import Geometry from '../geometry/Geometry';
+import { setOpacity } from '../../util/styleUtils.js';
+import GeometryChange from '../undoable_changes/GeometryChange.js';
+import TerminalChange from '../undoable_changes/TerminalChange.js';
+import ValueChange from '../undoable_changes/ValueChange.js';
+import ChildChange from '../undoable_changes/ChildChange.js';
+import StyleChange from '../undoable_changes/StyleChange.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../../view/cell/Cell.js';
+import { UndoableChange } from '../../types.js';
+import Geometry from '../geometry/Geometry.js';
 
 /**
  * Provides animation effects.

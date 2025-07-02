@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphLayout from './GraphLayout';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../cell/Cell';
+import GraphLayout from './GraphLayout.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
 
 /**
  * Extends {@link GraphLayout} to implement a circular layout for a given radius.

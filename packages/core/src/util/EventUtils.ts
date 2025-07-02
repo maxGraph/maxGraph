@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../Client';
+import Client from '../Client.js';
 
 /**
  * Returns the touch or mouse event that contains the mouse coordinates.

@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { StyleArrowValue } from '../../../types';
-import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import type Shape from '../../shape/Shape';
-import type Point from '../../geometry/Point';
+import type { StyleArrowValue } from '../../../types.js';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import type Shape from '../../shape/Shape.js';
+import type Point from '../../geometry/Point.js';
 
 const isClassicOrClassicThin = (type: StyleArrowValue): boolean =>
   type === 'classic' || type === 'classicThin';

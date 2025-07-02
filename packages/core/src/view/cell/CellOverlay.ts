@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
-import Rectangle from '../geometry/Rectangle';
-import EventSource from '../event/EventSource';
-import ImageBox from '../image/ImageBox';
-import CellState from './CellState';
-import ObjectIdentity from '../../util/ObjectIdentity';
-import { AlignValue, VAlignValue } from '../../types';
+import Point from '../geometry/Point.js';
+import Rectangle from '../geometry/Rectangle.js';
+import EventSource from '../event/EventSource.js';
+import ImageBox from '../image/ImageBox.js';
+import CellState from './CellState.js';
+import ObjectIdentity from '../../util/ObjectIdentity.js';
+import { AlignValue, VAlignValue } from '../../types.js';
 
 /**
  * Extends {@link EventSource} to implement a graph overlay, represented by an icon and a tooltip.

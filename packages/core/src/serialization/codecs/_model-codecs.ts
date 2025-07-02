@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './CellCodec';
-export * from './ModelCodec';
-export * from './mxGraph/mxCellCodec';
-export * from './mxGraph/mxGeometryCodec';
+export * from './CellCodec.js';
+export * from './ModelCodec.js';
+export * from './mxGraph/mxCellCodec.js';
+export * from './mxGraph/mxGeometryCodec.js';

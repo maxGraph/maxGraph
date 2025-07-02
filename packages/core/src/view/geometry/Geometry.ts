@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from './Point';
-import Rectangle from './Rectangle';
-import { getRotatedPoint, toRadians } from '../../util/mathUtils';
-import { equalPoints } from '../../util/arrayUtils';
-import { clone } from '../../util/cloneUtils';
+import Point from './Point.js';
+import Rectangle from './Rectangle.js';
+import { getRotatedPoint, toRadians } from '../../util/mathUtils.js';
+import { equalPoints } from '../../util/arrayUtils.js';
+import { clone } from '../../util/cloneUtils.js';
 
 /**
  * For vertices, the geometry consists of the x- and y-location, and the width

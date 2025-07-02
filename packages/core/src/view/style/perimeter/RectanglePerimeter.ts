@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Rectangle from '../../geometry/Rectangle';
-import type CellState from '../../cell/CellState';
-import Point from '../../geometry/Point';
-import type { PerimeterFunction } from '../../../types';
+import type Rectangle from '../../geometry/Rectangle.js';
+import type CellState from '../../cell/CellState.js';
+import Point from '../../geometry/Point.js';
+import type { PerimeterFunction } from '../../../types.js';
 
 /**
  * Describes a rectangular perimeter for the given bounds.

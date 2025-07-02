@@ -19,14 +19,14 @@ limitations under the License.
  *
  * @category EdgeStyle
  */
-export * as EdgeStyle from './edge';
+export * as EdgeStyle from './edge/index.js';
 
 /**
  * Provides various perimeter functions to be used in a style as the value of {@link CellStateStyle.perimeter}.
  *
  * @category Perimeter
  */
-export * as Perimeter from './perimeter';
+export * as Perimeter from './perimeter/index.js';
 
 /**
  * Includes all builtins edge markers which can be registered in {@link EdgeMarkerRegistry}.
@@ -36,4 +36,4 @@ export * as Perimeter from './perimeter';
  * @since 0.18.0
  * @category Style
  */
-export * as EdgeMarker from './marker/edge-markers';
+export * as EdgeMarker from './marker/edge-markers.js';

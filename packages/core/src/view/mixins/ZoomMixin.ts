@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../geometry/Rectangle';
-import { hasScrollbars } from '../../util/styleUtils';
-import type { AbstractGraph } from '../AbstractGraph';
+import Rectangle from '../geometry/Rectangle.js';
+import { hasScrollbars } from '../../util/styleUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

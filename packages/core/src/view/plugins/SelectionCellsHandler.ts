@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from '../event/EventSource';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import { sortCells } from '../../util/styleUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import Cell from '../cell/Cell';
-import CellState from '../cell/CellState';
-import type { GraphPlugin, MouseListenerSet } from '../../types';
-import type EdgeHandler from '../handler/EdgeHandler';
-import type VertexHandler from '../handler/VertexHandler';
-import InternalMouseEvent from '../event/InternalMouseEvent';
+import EventSource from '../event/EventSource.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import { sortCells } from '../../util/styleUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import Cell from '../cell/Cell.js';
+import CellState from '../cell/CellState.js';
+import type { GraphPlugin, MouseListenerSet } from '../../types.js';
+import type EdgeHandler from '../handler/EdgeHandler.js';
+import type VertexHandler from '../handler/VertexHandler.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
 
 type Handler = EdgeHandler | VertexHandler;
 

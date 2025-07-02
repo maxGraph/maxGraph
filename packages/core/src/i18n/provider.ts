@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { I18nProvider } from '../types';
+import { I18nProvider } from '../types.js';
 
 /**
  * A {@link I18nProvider} that does nothing.

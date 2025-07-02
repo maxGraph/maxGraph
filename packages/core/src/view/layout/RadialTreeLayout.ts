@@ -20,9 +20,9 @@ import {
   CompactTreeLayout,
   _mxCompactTreeLayoutLine,
   _mxCompactTreeLayoutNode,
-} from './CompactTreeLayout';
-import type Cell from '../cell/Cell';
-import type { AbstractGraph } from '../AbstractGraph';
+} from './CompactTreeLayout.js';
+import type Cell from '../cell/Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 /**
  * Extends {@link CompactTreeLayout} to implement a radial tree algorithm. This

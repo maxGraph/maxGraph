@@ -22,10 +22,10 @@ import {
   getSource,
   isMouseEvent,
   isPopupTrigger,
-} from '../../util/EventUtils';
-import { isAncestorNode } from '../../util/domUtils';
-import CellState from '../cell/CellState';
-import Shape from '../shape/Shape';
+} from '../../util/EventUtils.js';
+import { isAncestorNode } from '../../util/domUtils.js';
+import CellState from '../cell/CellState.js';
+import Shape from '../shape/Shape.js';
 
 /**
  * Base class for all mouse events in mxGraph. A listener for this event should

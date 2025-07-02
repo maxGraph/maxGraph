@@ -4,7 +4,7 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "build": "run-s build:cjs",
+    "build": "run-s build:*",
     "build:esm": "node src/index.mjs",
     "build:cjs": "node src/index.cjs"
   },

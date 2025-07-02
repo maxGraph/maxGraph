@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../geometry/Rectangle';
-import Geometry from '../geometry/Geometry';
-import Point from '../geometry/Point';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../cell/Cell';
-import { GraphLayoutTraverseArgs } from './types';
+import Rectangle from '../geometry/Rectangle.js';
+import Geometry from '../geometry/Geometry.js';
+import Point from '../geometry/Point.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
+import { GraphLayoutTraverseArgs } from './types.js';
 
 /**
  * Base class for all layout algorithms in maxGraph.

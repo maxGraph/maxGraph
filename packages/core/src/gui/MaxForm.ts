@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../Client';
-import InternalEvent from '../view/event/InternalEvent';
-import { write, writeln } from '../util/domUtils';
+import Client from '../Client.js';
+import InternalEvent from '../view/event/InternalEvent.js';
+import { write, writeln } from '../util/domUtils.js';
 
-import { translate } from '../internal/i18n-utils';
+import { translate } from '../internal/i18n-utils.js';
 
 /**
  * A simple class for creating HTML forms.

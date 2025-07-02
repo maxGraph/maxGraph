@@ -16,17 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
-import Rectangle from '../geometry/Rectangle';
-import TemporaryCellStates from '../cell/TemporaryCellStates';
-import InternalEvent from '../event/InternalEvent';
-import Client from '../../Client';
-import { intersects } from '../../util/mathUtils';
-import { addLinkToHead, write } from '../../util/domUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import type CellState from '../cell/CellState';
-import type Cell from '../cell/Cell';
-import { GlobalConfig } from '../../util/config';
+import Point from '../geometry/Point.js';
+import Rectangle from '../geometry/Rectangle.js';
+import TemporaryCellStates from '../cell/TemporaryCellStates.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Client from '../../Client.js';
+import { intersects } from '../../util/mathUtils.js';
+import { addLinkToHead, write } from '../../util/domUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type CellState from '../cell/CellState.js';
+import type Cell from '../cell/Cell.js';
+import { GlobalConfig } from '../../util/config.js';
 
 /**
  * Implements printing of a diagram across multiple pages.

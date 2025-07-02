@@ -16,16 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NODE_TYPE, NS_SVG } from './Constants';
-import Point from '../view/geometry/Point';
-import type Cell from '../view/cell/Cell';
-import type { AbstractGraph } from '../view/AbstractGraph';
-import { htmlEntities, trim } from './StringUtils';
-import TemporaryCellStates from '../view/cell/TemporaryCellStates';
-import type { StyleValue } from '../types';
-import { getTextContent } from './domUtils';
-import Codec from '../serialization/Codec';
-import { isElement } from '../internal/utils';
+import { NODE_TYPE, NS_SVG } from './Constants.js';
+import Point from '../view/geometry/Point.js';
+import type Cell from '../view/cell/Cell.js';
+import type { AbstractGraph } from '../view/AbstractGraph.js';
+import { htmlEntities, trim } from './StringUtils.js';
+import TemporaryCellStates from '../view/cell/TemporaryCellStates.js';
+import type { StyleValue } from '../types.js';
+import { getTextContent } from './domUtils.js';
+import Codec from '../serialization/Codec.js';
+import { isElement } from '../internal/utils.js';
 
 /**
  * Returns a new, empty XML document.

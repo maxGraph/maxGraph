@@ -16,11 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { LINE_ARCSIZE, NONE, RECTANGLE_ROUNDING_FACTOR } from '../../../util/Constants';
-import Shape from '../Shape';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import Rectangle from '../../geometry/Rectangle';
-import { ColorValue } from '../../../types';
+import {
+  LINE_ARCSIZE,
+  NONE,
+  RECTANGLE_ROUNDING_FACTOR,
+} from '../../../util/Constants.js';
+import Shape from '../Shape.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import Rectangle from '../../geometry/Rectangle.js';
+import { ColorValue } from '../../../types.js';
 
 /**
  * Extends {@link Shape} to implement a rectangle shape.
