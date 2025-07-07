@@ -57,12 +57,14 @@
     "build:esm": "tsc --version && tsc",
     "build:cjs": "tsc --version && tsc --outDir lib/cjs --module commonjs && node scripts/generate-cjs-package-json.mjs",
     "check:circular-dependencies": "madge --circular --extensions js lib",
+    "check:npm-package": "attw --pack",
     "docs:api": "typedoc src/index.ts",
     "prepack": "run-s clean build",
     "test": "jest --runInBand",
     "test-check": "tsc --noEmit --project tsconfig.test.json"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "~0.18.2",
     "@swc/core": "~1.12.9",
     "@swc/jest": "~0.2.38",
     "jest": "~30.0.3",
