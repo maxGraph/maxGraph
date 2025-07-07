@@ -16,16 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
-import Rectangle from '../geometry/Rectangle';
-import type Cell from './Cell';
-import type GraphView from '../../view/GraphView';
-import type Shape from '../shape/Shape';
-import TextShape from '../shape/node/TextShape';
-import { NONE } from '../../util/Constants';
-import { CellStateStyle } from '../../types';
-import RectangleShape from '../shape/node/RectangleShape';
-import CellOverlay from './CellOverlay';
+import Point from '../geometry/Point.js';
+import Rectangle from '../geometry/Rectangle.js';
+import type Cell from './Cell.js';
+import type GraphView from '../../view/GraphView.js';
+import type Shape from '../shape/Shape.js';
+import TextShape from '../shape/node/TextShape.js';
+import { NONE } from '../../util/Constants.js';
+import { CellStateStyle } from '../../types.js';
+import RectangleShape from '../shape/node/RectangleShape.js';
+import CellOverlay from './CellOverlay.js';
 
 /**
  * Represents the current state of a cell in a given {@link GraphView}.

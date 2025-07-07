@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphAbstractHierarchyCell from './GraphAbstractHierarchyCell';
-import ObjectIdentity from '../../../util/ObjectIdentity';
-import Cell from '../../cell/Cell';
-import GraphHierarchyEdge from './GraphHierarchyEdge';
+import GraphAbstractHierarchyCell from './GraphAbstractHierarchyCell.js';
+import ObjectIdentity from '../../../util/ObjectIdentity.js';
+import Cell from '../../cell/Cell.js';
+import GraphHierarchyEdge from './GraphHierarchyEdge.js';
 
 /**
  * An abstraction of a hierarchical edge for the hierarchy layout

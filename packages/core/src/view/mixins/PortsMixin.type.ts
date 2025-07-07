@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../cell/Cell';
+import type Cell from '../cell/Cell.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {

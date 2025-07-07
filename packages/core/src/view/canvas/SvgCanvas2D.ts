@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isNullish, matchBinaryMask } from '../../internal/utils';
-import { mod } from '../../util/mathUtils';
-import { getAlignmentAsPoint } from '../../util/styleUtils';
-import Client from '../../Client';
+import { isNullish, matchBinaryMask } from '../../internal/utils.js';
+import { mod } from '../../util/mathUtils.js';
+import { getAlignmentAsPoint } from '../../util/styleUtils.js';
+import Client from '../../Client.js';
 import {
   ABSOLUTE_LINE_HEIGHT,
   DEFAULT_FONTFAMILY,
@@ -30,12 +30,12 @@ import {
   NS_SVG,
   NS_XLINK,
   WORD_WRAP,
-} from '../../util/Constants';
-import Rectangle from '../geometry/Rectangle';
-import AbstractCanvas2D from './AbstractCanvas2D';
-import { getXml } from '../../util/xmlUtils';
-import { isNode, write } from '../../util/domUtils';
-import { htmlEntities, trim } from '../../util/StringUtils';
+} from '../../util/Constants.js';
+import Rectangle from '../geometry/Rectangle.js';
+import AbstractCanvas2D from './AbstractCanvas2D.js';
+import { getXml } from '../../util/xmlUtils.js';
+import { isNode, write } from '../../util/domUtils.js';
+import { htmlEntities, trim } from '../../util/StringUtils.js';
 import {
   AlignValue,
   ColorValue,
@@ -45,7 +45,7 @@ import {
   OverflowValue,
   TextDirectionValue,
   VAlignValue,
-} from '../../types';
+} from '../../types.js';
 
 // Activates workaround for gradient ID resolution if base tag is used.
 const useAbsoluteIds =

@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../ObjectCodec';
-import { getNameFromRegistries } from './utils';
-import GraphView from '../../view/GraphView';
-import Cell from '../../view/cell/Cell';
-import Point from '../../view/geometry/Point';
+import ObjectCodec from '../ObjectCodec.js';
+import { getNameFromRegistries } from './utils.js';
+import GraphView from '../../view/GraphView.js';
+import Cell from '../../view/cell/Cell.js';
+import Point from '../../view/geometry/Point.js';
 
 /**
  * Custom encoder for {@link GraphView}s.

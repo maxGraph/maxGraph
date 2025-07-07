@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../../ObjectCodec';
-import { EditorToolbar } from '../../../editor/EditorToolbar';
-import type Codec from '../../Codec';
-import type Editor from '../../../editor/Editor';
-import { GlobalConfig } from '../../../util/config';
-import { convertPoint } from '../../../util/styleUtils';
-import { getClientX, getClientY } from '../../../util/EventUtils';
-import InternalEvent from '../../../view/event/InternalEvent';
-import { getChildNodes, getTextContent } from '../../../util/domUtils';
-import { doEval, isElement } from '../../../internal/utils';
-import { translate } from '../../../internal/i18n-utils';
+import ObjectCodec from '../../ObjectCodec.js';
+import { EditorToolbar } from '../../../editor/EditorToolbar.js';
+import type Codec from '../../Codec.js';
+import type Editor from '../../../editor/Editor.js';
+import { GlobalConfig } from '../../../util/config.js';
+import { convertPoint } from '../../../util/styleUtils.js';
+import { getClientX, getClientY } from '../../../util/EventUtils.js';
+import InternalEvent from '../../../view/event/InternalEvent.js';
+import { getChildNodes, getTextContent } from '../../../util/domUtils.js';
+import { doEval, isElement } from '../../../internal/utils.js';
+import { translate } from '../../../internal/i18n-utils.js';
 
 /**
  * Custom codec for configuring {@link EditorToolbar}s.

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
 import {
   getClientX,
   getClientY,
@@ -31,18 +31,18 @@ import {
   isPopupTrigger,
   isShiftDown,
   isTouchEvent,
-} from '../../util/EventUtils';
-import CellState from '../cell/CellState';
-import Cell from '../cell/Cell';
-import type PanningHandler from '../plugins/PanningHandler';
-import type ConnectionHandler from '../plugins/ConnectionHandler';
-import Point from '../geometry/Point';
-import { convertPoint } from '../../util/styleUtils';
-import { NONE } from '../../util/Constants';
-import Client from '../../Client';
-import type CellEditorHandler from '../plugins/CellEditorHandler';
-import type { AbstractGraph } from '../AbstractGraph';
-import type TooltipHandler from '../plugins/TooltipHandler';
+} from '../../util/EventUtils.js';
+import CellState from '../cell/CellState.js';
+import Cell from '../cell/Cell.js';
+import type PanningHandler from '../plugins/PanningHandler.js';
+import type ConnectionHandler from '../plugins/ConnectionHandler.js';
+import Point from '../geometry/Point.js';
+import { convertPoint } from '../../util/styleUtils.js';
+import { NONE } from '../../util/Constants.js';
+import Client from '../../Client.js';
+import type CellEditorHandler from '../plugins/CellEditorHandler.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type TooltipHandler from '../plugins/TooltipHandler.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

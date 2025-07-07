@@ -16,12 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import RectangleShape from './RectangleShape';
-import type Rectangle from '../../geometry/Rectangle';
-import CellState from '../../cell/CellState';
-import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
-import { NONE } from '../../../util/Constants';
-import { ColorValue } from '../../../types';
+import RectangleShape from './RectangleShape.js';
+import type Rectangle from '../../geometry/Rectangle.js';
+import CellState from '../../cell/CellState.js';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import { NONE } from '../../../util/Constants.js';
+import { ColorValue } from '../../../types.js';
 
 /**
  * Extends {@link RectangleShape} to implement an image shape.

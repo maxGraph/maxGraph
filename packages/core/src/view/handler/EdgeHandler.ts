@@ -16,8 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CellMarker from '../cell/CellMarker';
-import Point from '../geometry/Point';
+import CellMarker from '../cell/CellMarker.js';
+import Point from '../geometry/Point.js';
 import {
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
@@ -27,41 +27,46 @@ import {
   NONE,
   OUTLINE_HIGHLIGHT_COLOR,
   OUTLINE_HIGHLIGHT_STROKEWIDTH,
-} from '../../util/Constants';
+} from '../../util/Constants.js';
 import {
   contains,
   findNearestSegment,
   intersects,
   ptSegDistSq,
-} from '../../util/mathUtils';
-import { convertPoint, getOffset, setOpacity } from '../../util/styleUtils';
-import EllipseShape from '../shape/node/EllipseShape';
-import ImageShape from '../shape/node/ImageShape';
-import RectangleShape from '../shape/node/RectangleShape';
-import ConnectionConstraint from '../other/ConnectionConstraint';
-import InternalEvent from '../event/InternalEvent';
-import ConstraintHandler from './ConstraintHandler';
-import Rectangle from '../geometry/Rectangle';
-import Client from '../../Client';
-import { EdgeStyle } from '../style/builtin-style-elements';
+} from '../../util/mathUtils.js';
+import { convertPoint, getOffset, setOpacity } from '../../util/styleUtils.js';
+import EllipseShape from '../shape/node/EllipseShape.js';
+import ImageShape from '../shape/node/ImageShape.js';
+import RectangleShape from '../shape/node/RectangleShape.js';
+import ConnectionConstraint from '../other/ConnectionConstraint.js';
+import InternalEvent from '../event/InternalEvent.js';
+import ConstraintHandler from './ConstraintHandler.js';
+import Rectangle from '../geometry/Rectangle.js';
+import Client from '../../Client.js';
+import { EdgeStyle } from '../style/builtin-style-elements.js';
 import {
   getClientX,
   getClientY,
   isAltDown,
   isMouseEvent,
   isShiftDown,
-} from '../../util/EventUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import CellState from '../cell/CellState';
-import Shape from '../shape/Shape';
-import type { CellHandle, ColorValue, Listenable, MouseListenerSet } from '../../types';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import Cell from '../cell/Cell';
-import ImageBox from '../image/ImageBox';
-import EventSource from '../event/EventSource';
-import type SelectionHandler from '../plugins/SelectionHandler';
-import { equalPoints } from '../../util/arrayUtils';
-import { EdgeHandlerConfig, HandleConfig } from './config';
+} from '../../util/EventUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import CellState from '../cell/CellState.js';
+import Shape from '../shape/Shape.js';
+import type {
+  CellHandle,
+  ColorValue,
+  Listenable,
+  MouseListenerSet,
+} from '../../types.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import Cell from '../cell/Cell.js';
+import ImageBox from '../image/ImageBox.js';
+import EventSource from '../event/EventSource.js';
+import type SelectionHandler from '../plugins/SelectionHandler.js';
+import { equalPoints } from '../../util/arrayUtils.js';
+import { EdgeHandlerConfig, HandleConfig } from './config.js';
 
 /**
  * Graph event handler that reconnects edges, modifies control points and the edge label location.

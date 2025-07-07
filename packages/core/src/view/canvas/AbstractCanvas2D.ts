@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { arcToCurves, getRotatedPoint } from '../../util/mathUtils';
-import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, NONE } from '../../util/Constants';
-import UrlConverter from '../../util/UrlConverter';
-import Point from '../geometry/Point';
-import { clone } from '../../util/cloneUtils';
+import { arcToCurves, getRotatedPoint } from '../../util/mathUtils.js';
+import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, NONE } from '../../util/Constants.js';
+import UrlConverter from '../../util/UrlConverter.js';
+import Point from '../geometry/Point.js';
+import { clone } from '../../util/cloneUtils.js';
 
 import type {
   AlignValue,
@@ -30,8 +30,8 @@ import type {
   OverflowValue,
   TextDirectionValue,
   VAlignValue,
-} from '../../types';
-import { StyleDefaultsConfig } from '../../util/config';
+} from '../../types.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 
 /**
  * Base class for all canvases.

@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from '../event/EventSource';
-import InternalEvent from '../event/InternalEvent';
-import type { AbstractGraph } from '../AbstractGraph';
+import EventSource from '../event/EventSource.js';
+import InternalEvent from '../event/InternalEvent.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 /**
  * Manager for automatically saving diagrams. The <save> hook must be

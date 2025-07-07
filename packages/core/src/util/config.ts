@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { I18nProvider, Logger } from '../types';
-import { NoOpLogger } from './logger';
+import type { I18nProvider, Logger } from '../types.js';
+import { NoOpLogger } from './logger.js';
 import {
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
   SHADOW_OPACITY,
   SHADOWCOLOR,
-} from './Constants';
-import { shallowCopy } from '../internal/clone-utils';
-import { NoOpI18n } from '../i18n/provider';
+} from './Constants.js';
+import { shallowCopy } from '../internal/clone-utils.js';
+import { NoOpI18n } from '../i18n/provider.js';
 
 /**
  * Global configuration for maxGraph.

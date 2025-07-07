@@ -16,8 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export { EllipsePerimeter } from './EllipsePerimeter';
-export { HexagonPerimeter } from './HexagonPerimeter';
-export { RectanglePerimeter } from './RectanglePerimeter';
-export { RhombusPerimeter } from './RhombusPerimeter';
-export { TrianglePerimeter } from './TrianglePerimeter';
+export { EllipsePerimeter } from './EllipsePerimeter.js';
+export { HexagonPerimeter } from './HexagonPerimeter.js';
+export { RectanglePerimeter } from './RectanglePerimeter.js';
+export { RhombusPerimeter } from './RhombusPerimeter.js';
+export { TrianglePerimeter } from './TrianglePerimeter.js';

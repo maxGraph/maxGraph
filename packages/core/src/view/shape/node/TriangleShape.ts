@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../../geometry/Point';
-import ActorShape from './ActorShape';
-import { LINE_ARCSIZE } from '../../../util/Constants';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D';
+import Point from '../../geometry/Point.js';
+import ActorShape from './ActorShape.js';
+import { LINE_ARCSIZE } from '../../../util/Constants.js';
+import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
 /**
  * Implementation of the triangle shape.

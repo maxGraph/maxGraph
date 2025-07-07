@@ -16,14 +16,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from '../view/event/EventSource';
-import type { AbstractGraph } from './AbstractGraph';
-import type Cell from './cell/Cell';
-import SelectionChange from './undoable_changes/SelectionChange';
-import UndoableEdit from './undoable_changes/UndoableEdit';
-import EventObject from './event/EventObject';
-import InternalEvent from './event/InternalEvent';
-import { isI18nEnabled } from '../internal/i18n-utils';
+import EventSource from '../view/event/EventSource.js';
+import type { AbstractGraph } from './AbstractGraph.js';
+import type Cell from './cell/Cell.js';
+import SelectionChange from './undoable_changes/SelectionChange.js';
+import UndoableEdit from './undoable_changes/UndoableEdit.js';
+import EventObject from './event/EventObject.js';
+import InternalEvent from './event/InternalEvent.js';
+import { isI18nEnabled } from '../internal/i18n-utils.js';
 
 /**
  * Implements the selection model for a graph.

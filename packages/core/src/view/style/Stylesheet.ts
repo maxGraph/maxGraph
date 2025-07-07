@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NONE } from '../../util/Constants';
-import { clone } from '../../util/cloneUtils';
-import type { CellStateStyle, CellStyle } from '../../types';
+import { NONE } from '../../util/Constants.js';
+import { clone } from '../../util/cloneUtils.js';
+import type { CellStateStyle, CellStyle } from '../../types.js';
 
 /**
  * Defines the appearance of the cells in a graph. See {@link putCellStyle} for an example

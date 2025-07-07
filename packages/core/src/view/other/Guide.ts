@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/Constants';
-import Point from '../geometry/Point';
-import PolylineShape from '../shape/edge/PolylineShape';
-import type CellState from '../cell/CellState';
-import Shape from '../shape/Shape';
-import Rectangle from '../geometry/Rectangle';
-import type { AbstractGraph } from '../AbstractGraph';
+import { GUIDE_COLOR, GUIDE_STROKEWIDTH } from '../../util/Constants.js';
+import Point from '../geometry/Point.js';
+import PolylineShape from '../shape/edge/PolylineShape.js';
+import type CellState from '../cell/CellState.js';
+import Shape from '../shape/Shape.js';
+import Rectangle from '../geometry/Rectangle.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 /**
  * Implements the alignment of selection cells to other cells in the graph.

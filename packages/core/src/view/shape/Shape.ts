@@ -16,24 +16,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../geometry/Rectangle';
-import { isNullish } from '../../internal/utils';
-import { getBoundingBox, getDirectedBounds, mod } from '../../util/mathUtils';
+import Rectangle from '../geometry/Rectangle.js';
+import { isNullish } from '../../internal/utils.js';
+import { getBoundingBox, getDirectedBounds, mod } from '../../util/mathUtils.js';
 import {
   LINE_ARCSIZE,
   NONE,
   NS_SVG,
   RECTANGLE_ROUNDING_FACTOR,
-} from '../../util/Constants';
-import Point from '../geometry/Point';
-import type AbstractCanvas2D from '../canvas/AbstractCanvas2D';
-import SvgCanvas2D from '../canvas/SvgCanvas2D';
-import InternalEvent from '../event/InternalEvent';
-import Client from '../../Client';
-import type CellState from '../cell/CellState';
-import type StencilShape from './stencil/StencilShape';
-import type CellOverlay from '../cell/CellOverlay';
-import type ImageBox from '../image/ImageBox';
+} from '../../util/Constants.js';
+import Point from '../geometry/Point.js';
+import type AbstractCanvas2D from '../canvas/AbstractCanvas2D.js';
+import SvgCanvas2D from '../canvas/SvgCanvas2D.js';
+import InternalEvent from '../event/InternalEvent.js';
+import Client from '../../Client.js';
+import type CellState from '../cell/CellState.js';
+import type StencilShape from './stencil/StencilShape.js';
+import type CellOverlay from '../cell/CellOverlay.js';
+import type ImageBox from '../image/ImageBox.js';
 import type {
   ArrowValue,
   CellStateStyle,
@@ -41,8 +41,8 @@ import type {
   DialectValue,
   DirectionValue,
   GradientMap,
-} from '../../types';
-import { StyleDefaultsConfig } from '../../util/config';
+} from '../../types.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 
 /**
  * Base class for all shapes.

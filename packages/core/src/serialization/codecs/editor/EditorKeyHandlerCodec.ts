@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ObjectCodec from '../../ObjectCodec';
-import type Codec from '../../Codec';
-import EditorKeyHandler from '../../../editor/EditorKeyHandler';
+import ObjectCodec from '../../ObjectCodec.js';
+import type Codec from '../../Codec.js';
+import EditorKeyHandler from '../../../editor/EditorKeyHandler.js';
 
 /**
  * Custom codec for configuring {@link EditorKeyHandler}s.

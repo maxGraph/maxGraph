@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { CellStyle, EdgeParameters, EdgeParametersValue } from '../../types';
-import type Cell from '../cell/Cell';
+import type { CellStyle, EdgeParameters, EdgeParametersValue } from '../../types.js';
+import type Cell from '../cell/Cell.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {

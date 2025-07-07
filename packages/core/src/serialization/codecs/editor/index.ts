@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './EditorCodec';
-export * from './EditorKeyHandlerCodec';
-export * from './EditorPopupMenuCodec';
-export * from './EditorToolbarCodec';
+export * from './EditorCodec.js';
+export * from './EditorKeyHandlerCodec.js';
+export * from './EditorPopupMenuCodec.js';
+export * from './EditorToolbarCodec.js';

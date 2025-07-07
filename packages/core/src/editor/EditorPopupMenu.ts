@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Cell from '../view/cell/Cell';
-import MaxPopupMenu from '../gui/MaxPopupMenu';
-import { getTextContent } from '../util/domUtils';
-import Editor from './Editor';
-import { PopupMenuItem } from '../types';
-import { doEval, isNullish } from '../internal/utils';
-import { translate } from '../internal/i18n-utils';
+import Cell from '../view/cell/Cell.js';
+import MaxPopupMenu from '../gui/MaxPopupMenu.js';
+import { getTextContent } from '../util/domUtils.js';
+import Editor from './Editor.js';
+import { PopupMenuItem } from '../types.js';
+import { doEval, isNullish } from '../internal/utils.js';
+import { translate } from '../internal/i18n-utils.js';
 
 /**
  * Creates popupmenus for mouse events.

@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { sortCells } from '../../util/styleUtils';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import type { AbstractGraph } from '../AbstractGraph';
-import type Cell from '../cell/Cell';
+import { sortCells } from '../../util/styleUtils.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Geometry from '../geometry/Geometry';
-import Cell from '../cell/Cell';
-import Point from '../geometry/Point';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
+import Geometry from '../geometry/Geometry.js';
+import Cell from '../cell/Cell.js';
+import Point from '../geometry/Point.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
 import {
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
@@ -32,36 +32,36 @@ import {
   OUTLINE_HIGHLIGHT_STROKEWIDTH,
   TOOLTIP_VERTICAL_OFFSET,
   VALID_COLOR,
-} from '../../util/Constants';
-import { getRotatedPoint, toRadians } from '../../util/mathUtils';
-import { convertPoint, getOffset } from '../../util/styleUtils';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import ImageShape from '../shape/node/ImageShape';
-import CellMarker from '../cell/CellMarker';
-import ConstraintHandler from '../handler/ConstraintHandler';
-import PolylineShape from '../shape/edge/PolylineShape';
-import EventSource from '../event/EventSource';
-import Rectangle from '../geometry/Rectangle';
-import { GlobalConfig } from '../../util/config';
+} from '../../util/Constants.js';
+import { getRotatedPoint, toRadians } from '../../util/mathUtils.js';
+import { convertPoint, getOffset } from '../../util/styleUtils.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import ImageShape from '../shape/node/ImageShape.js';
+import CellMarker from '../cell/CellMarker.js';
+import ConstraintHandler from '../handler/ConstraintHandler.js';
+import PolylineShape from '../shape/edge/PolylineShape.js';
+import EventSource from '../event/EventSource.js';
+import Rectangle from '../geometry/Rectangle.js';
+import { GlobalConfig } from '../../util/config.js';
 import {
   getClientX,
   getClientY,
   isAltDown,
   isConsumed,
   isShiftDown,
-} from '../../util/EventUtils';
-import Image from '../image/ImageBox';
-import CellState from '../cell/CellState';
-import type { AbstractGraph } from '../AbstractGraph';
-import ConnectionConstraint from '../other/ConnectionConstraint';
-import Shape from '../shape/Shape';
+} from '../../util/EventUtils.js';
+import Image from '../image/ImageBox.js';
+import CellState from '../cell/CellState.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import ConnectionConstraint from '../other/ConnectionConstraint.js';
+import Shape from '../shape/Shape.js';
 import type {
   CellStyle,
   ColorValue,
   GraphPlugin,
   Listenable,
   MouseListenerSet,
-} from '../../types';
+} from '../../types.js';
 
 type FactoryMethod = (
   source: Cell | null,

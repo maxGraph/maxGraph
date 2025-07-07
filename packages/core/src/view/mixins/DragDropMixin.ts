@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { AbstractGraph } from '../AbstractGraph';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 type PartialGraph = Pick<AbstractGraph, 'getEdgeValidationError'>;
 type PartialDragDrop = Pick<

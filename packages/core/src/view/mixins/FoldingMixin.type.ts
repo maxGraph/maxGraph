@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../cell/Cell';
-import type CellState from '../cell/CellState';
-import type ImageBox from '../image/ImageBox';
-import type Geometry from '../geometry/Geometry';
+import type Cell from '../cell/Cell.js';
+import type CellState from '../cell/CellState.js';
+import type ImageBox from '../image/ImageBox.js';
+import type Geometry from '../geometry/Geometry.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {

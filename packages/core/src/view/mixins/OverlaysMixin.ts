@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CellOverlay from '../cell/CellOverlay';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import type InternalMouseEvent from '../event/InternalMouseEvent';
-import type { AbstractGraph } from '../AbstractGraph';
+import CellOverlay from '../cell/CellOverlay.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import type InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

@@ -16,18 +16,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalMouseEvent from './InternalMouseEvent';
-import Client from '../../Client';
-import { isConsumed, isMouseEvent } from '../../util/EventUtils';
-import type CellState from '../cell/CellState';
+import InternalMouseEvent from './InternalMouseEvent.js';
+import Client from '../../Client.js';
+import { isConsumed, isMouseEvent } from '../../util/EventUtils.js';
+import type CellState from '../cell/CellState.js';
 import type {
   EventCache,
   GestureEvent,
   KeyboardEventListener,
   Listenable,
   MouseEventListener,
-} from '../../types';
-import type { AbstractGraph } from '../AbstractGraph';
+} from '../../types.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 // Checks if passive event listeners are supported
 // see https://github.com/Modernizr/Modernizr/issues/1894

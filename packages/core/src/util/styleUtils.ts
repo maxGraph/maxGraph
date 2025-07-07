@@ -16,26 +16,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Client from '../Client';
+import Client from '../Client.js';
 import {
   DEFAULT_FONTFAMILY,
   DEFAULT_FONTSIZE,
   FONT_STYLE_MASK,
   LINE_HEIGHT,
-} from './Constants';
-import Point from '../view/geometry/Point';
-import CellPath from '../view/cell/CellPath';
-import Rectangle from '../view/geometry/Rectangle';
-import Cell from '../view/cell/Cell';
-import GraphDataModel from '../view/GraphDataModel';
+} from './Constants.js';
+import Point from '../view/geometry/Point.js';
+import CellPath from '../view/cell/CellPath.js';
+import Rectangle from '../view/geometry/Rectangle.js';
+import Cell from '../view/cell/Cell.js';
+import GraphDataModel from '../view/GraphDataModel.js';
 import type {
   AlignValue,
   CellStateStyle,
   CellStyle,
   NumericCellStateStyleKeys,
   VAlignValue,
-} from '../types';
-import { matchBinaryMask } from '../internal/utils';
+} from '../types.js';
+import { matchBinaryMask } from '../internal/utils.js';
 
 /**
  * Removes the cursors from the style of the given DOM node and its descendants.

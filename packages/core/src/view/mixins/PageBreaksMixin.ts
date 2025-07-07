@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Rectangle from '../geometry/Rectangle';
-import Point from '../geometry/Point';
-import PolylineShape from '../shape/edge/PolylineShape';
-import type { AbstractGraph } from '../AbstractGraph';
+import Rectangle from '../geometry/Rectangle.js';
+import Point from '../geometry/Point.js';
+import PolylineShape from '../shape/edge/PolylineShape.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

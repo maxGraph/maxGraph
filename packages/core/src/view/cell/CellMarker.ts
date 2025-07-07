@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventSource from '../event/EventSource';
+import EventSource from '../event/EventSource.js';
 import {
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
@@ -24,16 +24,16 @@ import {
   MAX_HOTSPOT_SIZE,
   MIN_HOTSPOT_SIZE,
   NONE,
-} from '../../util/Constants';
-import CellHighlight from './CellHighlight';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import { intersectsHotspot } from '../../util/mathUtils';
-import type { AbstractGraph } from '../AbstractGraph';
-import { ColorValue } from '../../types';
-import type CellState from './CellState';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import type Cell from './Cell';
+} from '../../util/Constants.js';
+import CellHighlight from './CellHighlight.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import { intersectsHotspot } from '../../util/mathUtils.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import { ColorValue } from '../../types.js';
+import type CellState from './CellState.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type Cell from './Cell.js';
 
 /**
  * A helper class to process mouse locations and highlight cells.

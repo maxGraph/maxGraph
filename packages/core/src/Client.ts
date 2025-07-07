@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NS_SVG } from './util/Constants';
+import { NS_SVG } from './util/Constants.js';
 
 /**
  * @category Configuration

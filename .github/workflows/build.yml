@@ -71,3 +71,6 @@ jobs:
         run: npm run check:circular-dependencies -w packages/core
       - name: Ensure no lint errors
         run: npm run lint
+      # See https://github.com/arethetypeswrong/arethetypeswrong.github.io/tree/main/packages/cli
+      - name: Check npm package
+        run: npm run check:npm-package -w packages/core

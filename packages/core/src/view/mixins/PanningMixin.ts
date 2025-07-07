@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { hasScrollbars } from '../../util/styleUtils';
-import EventObject from '../event/EventObject';
-import InternalEvent from '../event/InternalEvent';
-import type PanningHandler from '../plugins/PanningHandler';
-import type { AbstractGraph } from '../AbstractGraph';
-import Rectangle from '../geometry/Rectangle';
-import Point from '../geometry/Point';
-import type SelectionCellsHandler from '../plugins/SelectionCellsHandler';
+import { hasScrollbars } from '../../util/styleUtils.js';
+import EventObject from '../event/EventObject.js';
+import InternalEvent from '../event/InternalEvent.js';
+import type PanningHandler from '../plugins/PanningHandler.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import Rectangle from '../geometry/Rectangle.js';
+import Point from '../geometry/Point.js';
+import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import GraphDataModel from '../GraphDataModel';
-import Cell from '../cell/Cell';
+import GraphDataModel from '../GraphDataModel.js';
+import Cell from '../cell/Cell.js';
 
-import type { UndoableChange } from '../../types';
+import type { UndoableChange } from '../../types.js';
 
 /**
  * Action to add or remove a child in a model.

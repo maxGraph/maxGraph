@@ -16,14 +16,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from '../geometry/Point';
-import GraphLayout from './GraphLayout';
-import { intersects } from '../../util/mathUtils';
-import type Cell from '../cell/Cell';
-import type { AbstractGraph } from '../AbstractGraph';
-import CellState from '../cell/CellState';
-import TextShape from '../shape/node/TextShape';
-import Rectangle from '../geometry/Rectangle';
+import Point from '../geometry/Point.js';
+import GraphLayout from './GraphLayout.js';
+import { intersects } from '../../util/mathUtils.js';
+import type Cell from '../cell/Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import CellState from '../cell/CellState.js';
+import TextShape from '../shape/node/TextShape.js';
+import Rectangle from '../geometry/Rectangle.js';
 
 /**
  * Extends {@link GraphLayout} to implement an edge label layout. This layout

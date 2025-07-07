@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StencilShapeRegistry } from './StencilShapeRegistry';
+import { StencilShapeRegistry } from './StencilShapeRegistry.js';
 
 /**
  * Unregister all {@link StencilShape}s from {@link StencilShapeRegistry}.

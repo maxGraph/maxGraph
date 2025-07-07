@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../cell/Cell';
-import type { AbstractGraph } from '../AbstractGraph';
+import type Cell from '../cell/Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 
 type PartialGraph = Pick<AbstractGraph, 'getView'>;
 type PartialTerminal = Pick<AbstractGraph, 'isTerminalPointMovable' | 'getOpposites'>;

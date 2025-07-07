@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Point from './Point';
+import Point from './Point.js';
 
 /**
  * Extends {@link Point} to implement a 2-dimensional rectangle with double precision coordinates.

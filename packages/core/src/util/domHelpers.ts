@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Editor from '../editor/Editor';
-import { KeyboardEventListener, MouseEventListener } from '../types';
-import InternalEvent from '../view/event/InternalEvent';
-import { write } from './domUtils';
+import Editor from '../editor/Editor.js';
+import { KeyboardEventListener, MouseEventListener } from '../types.js';
+import InternalEvent from '../view/event/InternalEvent.js';
+import { write } from './domUtils.js';
 
 /**
  * Adds a hyperlink to the specified parent that invokes action on the

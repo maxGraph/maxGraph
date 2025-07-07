@@ -36,4 +36,10 @@ module.exports = {
       },
     ],
   },
+  // maxGraph imports include a "js" extension which makes jest unable to resolve the imports
+  // So use this workaround to remove the ".js" extension from the module names
+  // Taken from https://github.com/swc-project/jest/issues/64#issuecomment-1029753225
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
 };

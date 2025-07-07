@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../cell/Cell';
-import type InternalMouseEvent from '../event/InternalMouseEvent';
-import type EventObject from '../event/EventObject';
+import type Cell from '../cell/Cell.js';
+import type InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type EventObject from '../event/EventObject.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {

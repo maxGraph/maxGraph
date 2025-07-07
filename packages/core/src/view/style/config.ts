@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ENTITY_SEGMENT } from '../../util/Constants';
-import { shallowCopy } from '../../internal/clone-utils';
-import type { DirectionValue } from '../../types';
+import { ENTITY_SEGMENT } from '../../util/Constants.js';
+import { shallowCopy } from '../../internal/clone-utils.js';
+import type { DirectionValue } from '../../types.js';
 
 /**
  * Configure the {@link EntityRelation} connector.

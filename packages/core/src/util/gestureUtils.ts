@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import DragSource from '../view/other/DragSource';
-import Point from '../view/geometry/Point';
-import { TOOLTIP_VERTICAL_OFFSET } from './Constants';
-import type { AbstractGraph } from '../view/AbstractGraph';
-import type Cell from '../view/cell/Cell';
-import type { DropHandler } from '../types';
+import DragSource from '../view/other/DragSource.js';
+import Point from '../view/geometry/Point.js';
+import { TOOLTIP_VERTICAL_OFFSET } from './Constants.js';
+import type { AbstractGraph } from '../view/AbstractGraph.js';
+import type Cell from '../view/cell/Cell.js';
+import type { DropHandler } from '../types.js';
 
 /**
  * Configures the given DOM element to act as a drag source for the

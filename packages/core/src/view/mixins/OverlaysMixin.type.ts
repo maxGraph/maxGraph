@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Cell from '../cell/Cell';
-import type CellOverlay from '../cell/CellOverlay';
-import type Image from '../image/ImageBox';
+import type Cell from '../cell/Cell.js';
+import type CellOverlay from '../cell/CellOverlay.js';
+import type Image from '../image/ImageBox.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {

@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Logger } from '../types';
-import MaxLog from './MaxLog';
+import { Logger } from '../types.js';
+import MaxLog from './MaxLog.js';
 
 /**
  * A {@link Logger} that uses {@link MaxLog} to log messages.

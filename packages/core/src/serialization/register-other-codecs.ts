@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import CodecRegistry from './CodecRegistry';
+import CodecRegistry from './CodecRegistry.js';
 import {
   BaseGraphCodec,
   ChildChangeCodec,
@@ -28,21 +28,21 @@ import {
   RootChangeCodec,
   StylesheetCodec,
   TerminalChangeCodec,
-} from './codecs/_other-codecs';
-import Rectangle from '../view/geometry/Rectangle';
-import ImageBox from '../view/image/ImageBox';
-import CellAttributeChange from '../view/undoable_changes/CellAttributeChange';
-import CollapseChange from '../view/undoable_changes/CollapseChange';
-import GeometryChange from '../view/undoable_changes/GeometryChange';
-import StyleChange from '../view/undoable_changes/StyleChange';
-import ValueChange from '../view/undoable_changes/ValueChange';
-import VisibleChange from '../view/undoable_changes/VisibleChange';
+} from './codecs/_other-codecs.js';
+import Rectangle from '../view/geometry/Rectangle.js';
+import ImageBox from '../view/image/ImageBox.js';
+import CellAttributeChange from '../view/undoable_changes/CellAttributeChange.js';
+import CollapseChange from '../view/undoable_changes/CollapseChange.js';
+import GeometryChange from '../view/undoable_changes/GeometryChange.js';
+import StyleChange from '../view/undoable_changes/StyleChange.js';
+import ValueChange from '../view/undoable_changes/ValueChange.js';
+import VisibleChange from '../view/undoable_changes/VisibleChange.js';
 import {
   CodecRegistrationStates,
   createObjectCodec,
   registerBaseCodecs,
-} from './register-shared';
-import { registerModelCodecs } from './register-model-codecs';
+} from './register-shared.js';
+import { registerModelCodecs } from './register-model-codecs.js';
 
 const registerGenericChangeCodecs = () => {
   const __dummy: any = undefined;
