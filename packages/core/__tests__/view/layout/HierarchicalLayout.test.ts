@@ -37,15 +37,15 @@ describe('layout execute', () => {
       const v8 = graph.insertVertex(parent, null, '8', 0, 0, 80, 30);
       const v9 = graph.insertVertex(parent, 'v9', '9', 0, 0, 80, 30);
 
-      graph.insertEdge(parent, null, '', v1, v2);
-      graph.insertEdge(parent, null, '', v2, v3);
-      graph.insertEdge(parent, null, '', v3, v4);
-      graph.insertEdge(parent, null, '', v4, v5);
-      graph.insertEdge(parent, null, '', v5, v3); // this introduces the circular path
-      graph.insertEdge(parent, null, '', v5, v6);
-      graph.insertEdge(parent, null, '', v6, v7);
-      graph.insertEdge(parent, null, '', v7, v8);
-      graph.insertEdge(parent, null, '', v8, v9);
+      graph.insertEdge({ parent, value: '', source: v1, target: v2 });
+      graph.insertEdge({ parent, value: '', source: v2, target: v3 });
+      graph.insertEdge({ parent, value: '', source: v3, target: v4 });
+      graph.insertEdge({ parent, value: '', source: v4, target: v5 });
+      graph.insertEdge({ parent, value: '', source: v5, target: v3 }); // this introduces the circular path
+      graph.insertEdge({ parent, value: '', source: v5, target: v6 });
+      graph.insertEdge({ parent, value: '', source: v6, target: v7 });
+      graph.insertEdge({ parent, value: '', source: v7, target: v8 });
+      graph.insertEdge({ parent, value: '', source: v8, target: v9 });
 
       // Execute the layout
       layout.execute(parent);
