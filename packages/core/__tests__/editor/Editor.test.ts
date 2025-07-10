@@ -18,6 +18,7 @@ import { describe, expect, test } from '@jest/globals';
 import { Editor, Geometry } from '../../src';
 import { ModelChecker } from '../serialization/utils';
 import { parseXml } from '../../src/util/xmlUtils';
+import Cell from '../../src/view/cell/Cell';
 
 describe('writeGraphModel', () => {
   test('empty model', () => {
@@ -96,5 +97,44 @@ test('readGraphModel', () => {
       fillColor: 'green',
       strokeWidth: 4,
     },
+  });
+});
+
+describe('cycleAttribute', () => {
+  test('nullish cycleAttributeName, so untouched style', () => {
+    const editor = new Editor(null!);
+    editor.cycleAttributeName = null!; // force nullish value
+
+    const cell = new Cell();
+    const originalStyle = { ...cell.getStyle() };
+    editor.cycleAttribute(cell);
+    expect(cell.getStyle()).toEqual(originalStyle);
+  });
+
+  test('default cycleAttributeName, consumeCycleAttribute returns a value', () => {
+    const editor = new Editor(null!);
+    editor.consumeCycleAttribute = () => {
+      return 'orange'; // simulate for test
+    };
+
+    const cell = new Cell();
+    cell.getStyle().strokeColor = 'yellow';
+    const originalStyle = { ...cell.getStyle() };
+    expect(cell.getStyle().fillColor).toBeUndefined();
+    editor.cycleAttribute(cell);
+    expect(cell.getStyle()).toEqual({ ...originalStyle, fillColor: 'orange' });
+  });
+
+  test('default cycleAttributeName, consumeCycleAttribute returns no value', () => {
+    const editor = new Editor(null!);
+    editor.consumeCycleAttribute = () => {
+      return undefined; // simulate for test
+    };
+
+    const cell = new Cell();
+    cell.getStyle().fillColor = 'yellow';
+    const originalStyle = { ...cell.getStyle() };
+    editor.cycleAttribute(cell);
+    expect(cell.getStyle()).toEqual(originalStyle);
   });
 });

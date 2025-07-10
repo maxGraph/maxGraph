@@ -111,7 +111,6 @@ export class Stylesheet {
    * Returns the default style for vertices.
    */
   getDefaultVertexStyle(): CellStateStyle {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- the style is set in the constructor
     return this.styles.get('defaultVertex')!;
   }
 
@@ -119,7 +118,6 @@ export class Stylesheet {
    * Returns the default style for edges.
    */
   getDefaultEdgeStyle(): CellStateStyle {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- the style is set in the constructor
     return this.styles.get('defaultEdge')!;
   }
 
