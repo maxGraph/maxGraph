@@ -759,7 +759,8 @@ export class Editor extends EventSource {
    * Name of the attribute to be assigned a {@link cycleAttributeValues} when inserting new swimlanes.
    * @default 'fillColor'
    */
-  cycleAttributeName: keyof CellStateStyle | string = 'fillColor';
+  cycleAttributeName: keyof CellStateStyle | (string & Record<never, never>) =
+    'fillColor';
 
   /**
    * Holds the {@link MaxWindow} created in {@link showTasks}.
