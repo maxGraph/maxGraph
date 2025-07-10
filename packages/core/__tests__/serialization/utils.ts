@@ -22,6 +22,8 @@ type ExpectCellProperties = {
   style?: CellStyle;
 };
 
+type NullableStringOrObject = string | object | null;
+
 /**
  * Utility class to check the content of GraphDataModel.
  */
@@ -47,7 +49,7 @@ export class ModelChecker {
 
   expectIsVertex(
     cell: Cell | null,
-    value: string | object | null,
+    value: NullableStringOrObject,
     properties?: ExpectCellProperties
   ) {
     this.checkCellBaseProperties(cell, value, properties);
@@ -60,7 +62,7 @@ export class ModelChecker {
 
   expectIsEdge(
     cell: Cell | null,
-    value: string | object | null = null,
+    value: NullableStringOrObject = null,
     properties?: ExpectCellProperties
   ) {
     this.checkCellBaseProperties(cell, value, properties);
@@ -73,7 +75,7 @@ export class ModelChecker {
 
   private checkCellBaseProperties(
     cell: Cell | null,
-    value: string | object | null,
+    value: NullableStringOrObject,
     properties?: ExpectCellProperties
   ) {
     expect(cell).toBeDefined();
