@@ -47,7 +47,7 @@ export class ModelChecker {
 
   expectIsVertex(
     cell: Cell | null,
-    value: string | null,
+    value: string | object | null,
     properties?: ExpectCellProperties
   ) {
     this.checkCellBaseProperties(cell, value, properties);
@@ -60,7 +60,7 @@ export class ModelChecker {
 
   expectIsEdge(
     cell: Cell | null,
-    value: string | null = null,
+    value: string | object | null = null,
     properties?: ExpectCellProperties
   ) {
     this.checkCellBaseProperties(cell, value, properties);
@@ -73,7 +73,7 @@ export class ModelChecker {
 
   private checkCellBaseProperties(
     cell: Cell | null,
-    value: string | null,
+    value: string | object | null,
     properties?: ExpectCellProperties
   ) {
     expect(cell).toBeDefined();

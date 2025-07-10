@@ -23,6 +23,7 @@ import { GlobalConfig } from '../util/config.js';
 import { getFunctionName } from '../util/StringUtils.js';
 import { importNode, isNode } from '../util/domUtils.js';
 import { isElement } from '../internal/utils.js';
+import type ObjectCodec from './ObjectCodec.js';
 
 const createXmlDocument = () => {
   return document.implementation.createDocument('', '', null);
@@ -158,10 +159,11 @@ class Codec {
   /**
    * Lookup table for resolving IDs to elements.
    */
-  elements: any = null; // TODO why not { [key: string]: Element } | null
+  elements: Record<string, Element> = {};
 
   /**
-   * Specifies if default values should be encoded. Default is false.
+   * Specifies if default values should be encoded.
+   * @default false
    */
   encodeDefaults = false;
 
@@ -235,9 +237,7 @@ class Codec {
   }
 
   updateElements(): void {
-    if (this.elements == null) {
-      this.elements = {};
-
+    if (Object.keys(this.elements).length === 0) {
       if (this.document.documentElement != null) {
         this.addElement(this.document.documentElement);
       }
@@ -355,7 +355,7 @@ class Codec {
    * @param node XML node to be decoded.
    * @param into Optional object to be decoded into.
    */
-  decode(node: Element | null, into?: any): any {
+  decode(node: Element | null, into?: object): object | null {
     this.updateElements();
     let obj = null;
 
@@ -365,6 +365,9 @@ class Codec {
       if (dec != null) {
         obj = dec.decode(this, node, into);
       } else {
+        GlobalConfig.logger.warn(
+          `Codec.decode: No codec found for node '${node.nodeName}', so the node won't be decoded, the original XML Element is returned instead.`
+        );
         obj = <Element>node.cloneNode(true);
         obj.removeAttribute('as');
       }
@@ -374,8 +377,8 @@ class Codec {
 
   /**
    * Encoding of cell hierarchies is built-into the core, but
-   * is a higher-level function that needs to be explicitely
-   * used by the respective object encoders (eg. {@link ModelCodec},
+   * is a higher-level function that needs to be explicitly
+   * used by the respective object encoders (e.g. {@link ModelCodec},
    * {@link ChildChangeCodec} and {@link RootChangeCodec}). This
    * implementation writes the given cell and its children as a
    * (flat) sequence into the given node. The children are not
@@ -408,8 +411,8 @@ class Codec {
    * {@link CellCodec.isCellCodec} to check if the codec is of the
    * given type.
    */
-  isCellCodec(codec: any): boolean {
-    if (codec != null && 'isCellCodec' in codec) {
+  isCellCodec(codec: ObjectCodec | null): boolean {
+    if (codec && 'isCellCodec' in codec && typeof codec.isCellCodec === 'function') {
       return codec.isCellCodec();
     }
     return false;

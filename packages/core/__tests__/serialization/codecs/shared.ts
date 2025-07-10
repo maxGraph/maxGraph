@@ -14,27 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { BaseGraph } from '../../view/BaseGraph.js';
-import ObjectCodec from '../ObjectCodec.js';
-import { excludedFields } from './GraphCodec.js';
+import { getPrettyXml, parseXml } from '../../../src/util/xmlUtils';
+import Codec from '../../../src/serialization/Codec';
 
-/**
- * Codec for {@link BaseGraph}s.
- *
- * Transient Fields:
- *
- * - eventListeners
- * - view
- * - container
- * - cellRenderer
- * - selectionModel
- * - plugins
- *
- * @category Serialization with Codecs
- */
-export class BaseGraphCodec extends ObjectCodec {
-  constructor() {
-    super(new BaseGraph(), excludedFields);
-    this.setName('BaseGraph');
-  }
-}
+export const importToObject = (obj: object, xml: string): void => {
+  const doc = parseXml(xml);
+  new Codec(doc).decode(doc.documentElement, obj);
+};
+
+export const exportObject = (obj: object): string => {
+  const encodedNode = new Codec().encode(obj);
+  return getPrettyXml(encodedNode);
+};

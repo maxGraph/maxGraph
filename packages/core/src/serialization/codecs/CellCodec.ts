@@ -56,8 +56,8 @@ export class CellCodec extends ObjectCodec {
   constructor() {
     super(
       new Cell(),
-      ['children', 'edges', 'overlays', 'mxTransient'],
-      ['parent', 'source', 'target']
+      ['children', 'edges', 'overlays', 'mxTransient'] as Array<keyof Cell>,
+      ['parent', 'source', 'target'] as Array<keyof Cell>
     );
     this.setName('Cell');
   }

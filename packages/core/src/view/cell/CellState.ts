@@ -89,7 +89,7 @@ class CellState extends Rectangle {
   origin: Point;
 
   /**
-   * Holds an array of <Point> that represent the absolute points of an edge.
+   * Holds an array of {@link Point} that represent the absolute points of an edge.
    */
   absolutePoints: (null | Point)[] = [];
 

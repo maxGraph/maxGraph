@@ -34,8 +34,8 @@ export const CodecRegistrationStates: Record<string, boolean> = {
  */
 export const registerBaseCodecs = (force = false) => {
   if (!CodecRegistrationStates.base || force) {
-    CodecRegistry.register(new ObjectCodec({})); // Object
-    CodecRegistry.register(new ObjectCodec([])); // Array
+    CodecRegistry.register(createObjectCodec({}, 'Object'));
+    CodecRegistry.register(createObjectCodec([], 'Array'));
 
     CodecRegistrationStates.base = true;
   }

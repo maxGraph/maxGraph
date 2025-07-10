@@ -49,23 +49,24 @@ export class StylesheetCodec extends ObjectCodec {
   /**
    * Encodes a stylesheet. See {@link decode} for a description of the format.
    */
-  encode(enc: Codec, obj: any): Element {
+  encode(enc: Codec, obj: Stylesheet): Element {
     const node = enc.document.createElement(this.getName());
 
-    for (const i in obj.styles) {
-      const style = obj.styles[i];
+    for (const styleName of obj.styles.keys()) {
+      const style = obj.styles.get(styleName);
       const styleNode = enc.document.createElement('add');
 
-      if (i != null) {
-        styleNode.setAttribute('as', i);
+      if (styleName) {
+        styleNode.setAttribute('as', styleName);
 
-        for (const j in style) {
-          const value = this.getStringValue(j, style[j]);
+        for (const stylePropertyName of Object.keys(style ?? {})) {
+          // @ts-ignore style is not defined as indexed type
+          const value = this.getStringValue(stylePropertyName, style[stylePropertyName]);
 
           if (value != null) {
             const entry = enc.document.createElement('add');
             entry.setAttribute('value', value);
-            entry.setAttribute('as', j);
+            entry.setAttribute('as', stylePropertyName);
             styleNode.appendChild(entry);
           }
         }

@@ -48,7 +48,7 @@ export class EditorCodec extends ObjectCodec {
       'undoManager',
       'graphContainer',
       'toolbarContainer',
-    ]);
+    ] as Array<keyof Editor>);
   }
 
   /**
@@ -103,7 +103,7 @@ export class EditorCodec extends ObjectCodec {
    * </ui>
    * ```
    */
-  afterDecode(dec: Codec, node: Element, obj: any): any {
+  afterDecode(_dec: Codec, node: Element, obj: Editor) {
     // Assigns the specified templates for edges
     const defaultEdge = node.getAttribute('defaultEdge');
 
@@ -125,7 +125,7 @@ export class EditorCodec extends ObjectCodec {
   /**
    * Overrides decode child to handle special child nodes.
    */
-  decodeChild(dec: Codec, child: Element, obj: any) {
+  decodeChild(dec: Codec, child: Element, obj: Editor) {
     if (child.nodeName === 'Array') {
       const role = child.getAttribute('as');
 
@@ -143,7 +143,7 @@ export class EditorCodec extends ObjectCodec {
   /**
    * Decodes the ui elements from the given node.
    */
-  decodeUi(dec: Codec, node: Element, editor: Editor) {
+  decodeUi(_dec: Codec, node: Element, editor: Editor) {
     let tmp = <Element>node.firstChild;
     while (tmp != null) {
       if (tmp.nodeName === 'add') {

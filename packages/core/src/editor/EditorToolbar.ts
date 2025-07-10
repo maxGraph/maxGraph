@@ -50,8 +50,8 @@ import type { DropHandler } from '../types.js';
  *
  * ### Codec
  *
- * This class uses the {@link DefaultToolbarCodec} to read configuration
- * data into an existing instance. See {@link DefaultToolbarCodec} for a
+ * This class uses the {@link EditorToolbarCodec} to read configuration
+ * data into an existing instance. See {@link EditorToolbarCodec} for a
  * description of the configuration format.
  *
  * @category Editor
@@ -143,7 +143,12 @@ export class EditorToolbar {
    * @param action - Name of the action to execute when the item is clicked.
    * @param pressed - Optional URL of the icon for the pressed state.
    */
-  addItem(title: string, icon: string, action: string, pressed?: string): any {
+  addItem(
+    title: string | null,
+    icon: string | null,
+    action: string,
+    pressed?: string | null
+  ): any {
     const clickHandler = () => {
       if (action != null && action.length > 0) {
         (<Editor>this.editor).execute(action);
@@ -165,7 +170,7 @@ export class EditorToolbar {
   /**
    * Helper method to invoke {@link MaxToolbar.addCombo} on toolbar and return the resulting DOM node.
    */
-  addCombo(): HTMLElement {
+  addCombo(): HTMLSelectElement {
     return (<MaxToolbar>this.toolbar).addCombo();
   }
 
@@ -204,9 +209,9 @@ export class EditorToolbar {
   addOption(
     combo: HTMLSelectElement,
     title: string,
-    value: string | ((evt: any) => void) | null
-  ): HTMLElement {
-    return (<MaxToolbar>this.toolbar).addOption(combo, title, value);
+    value?: string | ((evt: any) => void) | null
+  ): HTMLOptionElement {
+    return this.toolbar!.addOption(combo, title, value);
   }
 
   /**
@@ -238,7 +243,7 @@ export class EditorToolbar {
 
   /**
    * Creates an item for inserting a clone of the specified prototype cell into
-   * the <editor>'s graph. The ptype may either be a cell or a function that
+   * the {@link editor}'s graph. The `ptype` may either be a cell or a function that
    * returns a cell.
    *
    * @param title String that represents the title of the item.
@@ -255,7 +260,7 @@ export class EditorToolbar {
    */
   addPrototype(
     title: string,
-    icon: string,
+    icon: string | null,
     ptype: Function | Cell,
     pressed: string,
     insert: (
@@ -265,7 +270,7 @@ export class EditorToolbar {
       cellUnderMousePointer?: Cell | null
     ) => void,
     toggle = true
-  ): HTMLImageElement | HTMLButtonElement {
+  ): HTMLImageElement {
     // Creates a wrapper function that is in charge of constructing
     // the new cell instance to be inserted into the graph
     const factory = () => {
@@ -287,18 +292,11 @@ export class EditorToolbar {
         this.drop(factory(), evt, cell);
       }
 
-      (<MaxToolbar>this.toolbar).resetMode();
+      this.toolbar?.resetMode();
       InternalEvent.consume(evt);
     };
 
-    const img = (<MaxToolbar>this.toolbar).addMode(
-      title,
-      icon,
-      clickHandler,
-      pressed,
-      null,
-      toggle
-    );
+    const img = this.toolbar!.addMode(title, icon, clickHandler, pressed, null, toggle);
 
     // Creates a wrapper function that calls the click handler without the graph argument
     const dropHandler: DropHandler = (
