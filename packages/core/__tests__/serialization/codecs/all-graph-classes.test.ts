@@ -16,8 +16,6 @@ limitations under the License.
 
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
 import { createGraphWithoutContainer } from '../../utils';
-import Codec from '../../../src/serialization/Codec';
-import { getPrettyXml, parseXml } from '../../../src/util/xmlUtils';
 import {
   type AbstractGraph,
   BaseGraph,

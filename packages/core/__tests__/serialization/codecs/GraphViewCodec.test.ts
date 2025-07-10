@@ -17,13 +17,11 @@ limitations under the License.
 import { expect, test } from '@jest/globals';
 import {
   BaseGraph,
-  ConsoleLogger,
-  GlobalConfig,
   GraphView,
   registerCoreCodecs,
   unregisterAllCodecs,
 } from '../../../src';
-import { exportObject, importToObject } from './shared';
+import { exportObject } from './shared';
 import Rectangle from '../../../src/view/geometry/Rectangle';
 
 function createGraphView(): GraphView {
