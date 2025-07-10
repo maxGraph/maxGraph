@@ -225,7 +225,7 @@ class SwimlaneManager extends EventSource {
    * Updates the size of the given swimlane to match that of any existing
    * siblings swimlanes.
    *
-   * @param swimlane {@link mxCell} that represents the new swimlane.
+   * @param swimlane {@link Cell} that represents the new swimlane.
    */
   swimlaneAdded(swimlane: Cell) {
     const parent = <Cell>swimlane.getParent();
@@ -296,7 +296,7 @@ class SwimlaneManager extends EventSource {
    * the size of the siblings and the size of the parent swimlanes, recursively,
    * if {@link bubbling} is true.
    *
-   * @param swimlane {@link mxCell} whose size has changed.
+   * @param swimlane {@link Cell} whose size has changed.
    */
   resizeSwimlane(swimlane: Cell, w: number, h: number, parentHorizontal: boolean) {
     const model = this.graph.getDataModel();

@@ -24,7 +24,6 @@ import type GraphDataModel from '../view/GraphDataModel.js';
  *
  * **WARN**: this is an experimental feature that is subject to change.
  *
- * @alpha
  * @experimental
  * @since 0.6.0
  * @category Serialization with Codecs
@@ -42,7 +41,6 @@ export type ModelExportOptions = {
  *
  * **WARN**: this is an experimental feature that is subject to change (class and method names).
  *
- * @alpha
  * @experimental
  * @since 0.6.0
  * @category Serialization with Codecs

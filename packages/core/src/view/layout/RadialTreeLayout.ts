@@ -118,9 +118,9 @@ class RadialTreeLayout extends CompactTreeLayout {
   row: _mxCompactTreeLayoutNode[][] = [];
 
   /**
-   * Returns a boolean indicating if the given {@link mxCell} should be ignored as a vertex.
+   * Returns a boolean indicating if the given {@link Cell} should be ignored as a vertex.
    *
-   * @param vertex {@link mxCell} whose ignored state should be returned.
+   * @param vertex {@link Cell} whose ignored state should be returned.
    * @return true if the cell has no connections.
    */
   isVertexIgnored(vertex: Cell): boolean {
@@ -136,8 +136,8 @@ class RadialTreeLayout extends CompactTreeLayout {
    * the tree. Else, {@link AbstractGraph.findTreeRoots} will be used to find a suitable
    * root node within the set of children of the given parent.
    *
-   * @param parent    {@link mxCell} whose children should be laid out.
-   * @param root      Optional {@link mxCell} that will be used as the root of the tree.
+   * @param parent    {@link Cell} whose children should be laid out.
+   * @param root      Optional {@link Cell} that will be used as the root of the tree.
    */
   execute(parent: Cell, root: Cell | null = null): void {
     this.parent = parent;

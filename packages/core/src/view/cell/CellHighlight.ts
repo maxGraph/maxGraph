@@ -33,7 +33,7 @@ import type { ColorValue } from '../../types.js';
  * A helper class to highlight cells. Here is an example for a given cell.
  *
  * ```javascript
- * var highlight = new mxCellHighlight(graph, '#ff0000', 2);
+ * cont highlight = new CellHighlight(graph, '#ff0000', 2);
  * highlight.highlight(graph.view.getState(cell)));
  * ```
  */

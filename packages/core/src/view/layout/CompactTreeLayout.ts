@@ -229,10 +229,10 @@ export class CompactTreeLayout extends GraphLayout {
   node: _mxCompactTreeLayoutNode | null = null;
 
   /**
-   * Returns a boolean indicating if the given {@link mxCell} should be ignored as a
+   * Returns a boolean indicating if the given {@link Cell} should be ignored as a
    * vertex. This returns true if the cell has no connections.
    *
-   * @param vertex {@link mxCell} whose ignored state should be returned.
+   * @param vertex {@link Cell} whose ignored state should be returned.
    */
   isVertexIgnored(vertex: Cell): boolean {
     return super.isVertexIgnored(vertex) || vertex.getConnections().length === 0;
@@ -252,8 +252,8 @@ export class CompactTreeLayout extends GraphLayout {
    * the tree. Else, {@link mxGraph.findTreeRoots} will be used to find a suitable
    * root node within the set of children of the given parent.
    *
-   * @param parent  {@link mxCell} whose children should be laid out.
-   * @param root    Optional {@link mxCell} that will be used as the root of the tree. Overrides {@link root} if specified.
+   * @param parent  {@link Cell} whose children should be laid out.
+   * @param root    Optional {@link Cell} that will be used as the root of the tree. Overrides {@link root} if specified.
    */
   execute(parent: Cell, root?: Cell): void {
     this.parent = parent;

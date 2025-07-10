@@ -383,7 +383,7 @@ class Codec {
    * function is in charge of adding the result into the
    * given node and has no return value.
    *
-   * @param cell {@link mxCell} to be encoded.
+   * @param cell {@link Cell} to be encoded.
    * @param node Parent XML node to add the encoded cell into.
    * @param includeChildren Optional boolean indicating if the
    * function should include all descendents. Default is true.
@@ -435,7 +435,7 @@ class Codec {
 
     // Tries to find a codec for the given node name. If that does
     // not return a codec then the node is the user object (an XML node
-    // that contains the mxCell, aka inversion).
+    // that contains the Cell, aka inversion).
     let decoder = CodecRegistry.getCodec(node.nodeName);
 
     // Tries to find the codec for the cell inside the user object.

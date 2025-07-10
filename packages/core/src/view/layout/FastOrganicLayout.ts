@@ -250,7 +250,7 @@ class MxFastOrganicLayout extends GraphLayout {
             this.setEdgeStyleEnabled(edges[j], false);
           }
 
-          // Looks the cell up in the indices dictionary
+          // Looks the cell up in the indices map
           const id = <string>ObjectIdentity.get(cells[j]);
           const index = this.indices[id];
 

@@ -49,5 +49,20 @@
     "navigation": {
       "includeCategories": true, // not enough categories to warrant this
     },
+    // add some languages for syntax highlighting to the typedoc defaults
+    "highlightLanguages": [
+      "bash",
+      "console",
+      "csharp", // added
+      "css",
+      "html",
+      "java", // added
+      "javascript",
+      "json",
+      "jsonc",
+      "json5",
+      "typescript",
+      "xml", // added
+    ],
   }
 }

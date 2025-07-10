@@ -351,8 +351,8 @@ export class GraphDataModel extends EventSource {
    * Example:
    *
    * ```javascript
-   * var root = new mxCell();
-   * root.insert(new mxCell());
+   * const root = new Cell();
+   * root.insert(new Cell());
    * model.setRoot(root);
    * ```
    *
@@ -474,7 +474,7 @@ export class GraphDataModel extends EventSource {
             collision = this.getCell(<string>cell.getId());
           }
 
-          // Lazily creates the cells dictionary
+          // Lazily creates the cells map
           if (this.cells == null) {
             this.cells = {};
           }
@@ -637,7 +637,7 @@ export class GraphDataModel extends EventSource {
         this.cellRemoved(<Cell>cell.getChildAt(i));
       }
 
-      // Removes the dictionary entry for the cell
+      // Removes the map entry for the cell
       if (this.cells != null && cell.getId() != null) {
         // @ts-ignore
         delete this.cells[cell.getId()];
@@ -689,7 +689,6 @@ export class GraphDataModel extends EventSource {
    * @param isSource  Boolean indicating if the terminal is the new source or
    * target terminal of the edge.
    */
-  // setTerminal(edge: mxCell, terminal: mxCell, isSource: boolean): mxCell;
   setTerminal(edge: Cell, terminal: Cell | null, isSource: boolean): Cell | null {
     const terminalChanged = terminal !== edge.getTerminal(isSource);
     this.execute(new TerminalChange(this, edge, terminal, isSource));
@@ -708,7 +707,6 @@ export class GraphDataModel extends EventSource {
    * @param {Cell} source  that specifies the new source terminal.
    * @param {Cell} target  that specifies the new target terminal.
    */
-  // setTerminals(edge: mxCell, source: mxCell, target: mxCell): void;
   setTerminals(edge: Cell, source: Cell | null, target: Cell | null): void {
     this.beginUpdate();
     try {
@@ -728,7 +726,6 @@ export class GraphDataModel extends EventSource {
    * @param isSource  Boolean indicating if the terminal is the new source or
    * target terminal of the edge.
    */
-  // terminalForCellChanged(edge: mxCell, terminal: mxCell, isSource: boolean): mxCell;
   terminalForCellChanged(
     edge: Cell,
     terminal: Cell | null,
