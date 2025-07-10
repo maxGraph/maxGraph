@@ -45,7 +45,7 @@ const newEdge = (id: string, value: string) => {
 
 const getParent = (model: GraphDataModel) => {
   // As done in the Graph object
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- here we know that model is not null
+
   return model.getRoot()!.getChildAt(0);
 };
 
