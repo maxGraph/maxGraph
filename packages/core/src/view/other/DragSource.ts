@@ -130,12 +130,12 @@ class DragSource {
   currentPoint: Point | null = null;
 
   /**
-   * Holds an {@link Guide} for the {@link currentGraph} if {@link dragElement} is not `null`.
+   * Holds a {@link Guide} for the {@link currentGraph} (only created when {@link dragElement} exists).
    */
   currentGuide: Guide | null = null;
 
   /**
-   * Holds an {@link CellHighlight} for the {@link currentGraph}.
+   * Holds a {@link CellHighlight} for the {@link currentGraph}.
    */
   currentHighlight: CellHighlight | null = null;
 

@@ -469,7 +469,7 @@ declare module '../AbstractGraph' {
      *   if (cells) {
      *     for (const cell of cells) {
      *       if (graph.getDataModel().getChildCount(cell) > 0) {
-     *         const geo = cell.getGeometry();
+     *         let geo = cell.getGeometry();
      *
      *         if (geo) {
      *           const children = graph.getChildCells(cell, true, true);

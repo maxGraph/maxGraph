@@ -34,7 +34,7 @@ import type Cell from '../cell/Cell.js';
  *
  * @category Layout
  */
-class MxFastOrganicLayout extends GraphLayout {
+class FastOrganicLayout extends GraphLayout {
   constructor(graph: AbstractGraph) {
     super(graph);
   }
@@ -250,7 +250,7 @@ class MxFastOrganicLayout extends GraphLayout {
             this.setEdgeStyleEnabled(edges[j], false);
           }
 
-          // Looks the cell up in the indices map
+          // Looks the cell up in the indices lookup table
           const id = <string>ObjectIdentity.get(cells[j]);
           const index = this.indices[id];
 
@@ -483,4 +483,4 @@ class MxFastOrganicLayout extends GraphLayout {
   }
 }
 
-export default MxFastOrganicLayout;
+export default FastOrganicLayout;
