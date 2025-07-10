@@ -36,7 +36,6 @@ beforeAll(() => {
   unregisterAllCodecs();
 });
 beforeEach(() => {
-  // TODO comment to reproduce the "RangeError: Maximum call stack size exceeded" problem
   registerCoreCodecs();
 });
 afterEach(() => {
@@ -45,13 +44,6 @@ afterEach(() => {
 
 // GraphViewCodec only supports export, not import, so we only test export here.
 test('export', () => {
-  // TODO enable logs, debug/info when registering automatically a codec and debug when moving retrieving a codec
-  const logger = new ConsoleLogger();
-  GlobalConfig.logger = logger;
-  logger.infoEnabled = true;
-  logger.debugEnabled = true;
-  // logger.traceEnabled = true;
-
   const view = createGraphView();
   view.setGraphBounds(new Rectangle(10, 10, 400, 300));
 
