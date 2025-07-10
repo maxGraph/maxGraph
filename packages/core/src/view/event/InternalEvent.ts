@@ -68,9 +68,7 @@ try {
  */
 class InternalEvent {
   /**
-   * Binds the function to the specified event on the given element. Use
-   * {@link mxUtils.bind} in order to bind the "this" keyword inside the function
-   * to a given execution scope.
+   * Binds the function to the specified event on the given element.
    */
   static addListener(
     element: Listenable,

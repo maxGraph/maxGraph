@@ -65,11 +65,9 @@ export class ChildChange implements UndoableChange {
   }
 
   /**
-   * Disconnects the given cell recursively from its
-   * terminals and stores the previous terminal in the
-   * cell's terminals.
+   * Connects the source and the target of the given cell.
    *
-   * @warning doc from mxGraph source code is incorrect
+   * If {@link isConnect} is true, the source and target terminals are referenced  as such in the model. Otherwise, they are removed.
    */
   connect(cell: Cell, isConnect = true) {
     const source = cell.getTerminal(true);

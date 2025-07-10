@@ -50,7 +50,7 @@ declare module '../AbstractGraph' {
      *
      * @param x X-coordinate of the location to be checked.
      * @param y Y-coordinate of the location to be checked.
-     * @param parent {@link mxCell} that should be used as the root of the recursion. Default is {@link defaultParent}.
+     * @param parent {@link Cell} that should be used as the root of the recursion. Default is {@link defaultParent}.
      */
     getSwimlaneAt: (x: number, y: number, parent?: Cell | null) => Cell | null;
 
@@ -67,7 +67,7 @@ declare module '../AbstractGraph' {
      * Returns the start size of the given swimlane, that is, the width or height of the part that contains the title, depending on the horizontal style.
      * The return value is an {@link Rectangle} with either width or height set as appropriate.
      *
-     * @param swimlane {@link mxCell} whose start size should be returned.
+     * @param swimlane {@link Cell} whose start size should be returned.
      * @param ignoreState Optional boolean that specifies if cell state should be ignored.
      */
     getStartSize: (swimlane: Cell, ignoreState?: boolean) => Rectangle;
@@ -81,7 +81,7 @@ declare module '../AbstractGraph' {
      * Returns the actual start size of the given swimlane taking into account direction and horizontal and vertical flip styles.
      * The start size is returned as an {@link Rectangle} where top, left, bottom, right start sizes are returned as x, y, height and width, respectively.
      *
-     * @param swimlane {@link mxCell} whose start size should be returned.
+     * @param swimlane {@link Cell} whose start size should be returned.
      * @param ignoreState Optional boolean that specifies if cell state should be ignored.
      */
     getActualStartSize: (swimlane: Cell, ignoreState: boolean) => Rectangle;

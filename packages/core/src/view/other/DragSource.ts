@@ -95,13 +95,12 @@ class DragSource {
 
   /**
    * Holds the DOM node that is used to represent the drag preview. If this is
-   * null then the source element will be cloned and used for the drag preview.
+   * `null` then the source element will be cloned and used for the drag preview.
    */
   dragElement: HTMLElement | null = null;
 
   /**
-   * TODO - wrong description
-   * Optional {@link Rectangle} that specifies the unscaled size of the preview.
+   * Holds the DOM node that is used to represent the drag preview in the graph.
    */
   previewElement: HTMLElement | null = null;
 
@@ -131,13 +130,12 @@ class DragSource {
   currentPoint: Point | null = null;
 
   /**
-   * Holds an {@link Guide} for the {@link currentGraph} if {@link dragPreview} is not null.
+   * Holds a {@link Guide} for the {@link currentGraph} (only created when {@link dragElement} exists).
    */
   currentGuide: Guide | null = null;
 
   /**
-   * Holds an {@link Guide} for the {@link currentGraph} if {@link dragPreview} is not null.
-   * @note wrong doc
+   * Holds a {@link CellHighlight} for the {@link currentGraph}.
    */
   currentHighlight: CellHighlight | null = null;
 

@@ -456,7 +456,7 @@ export const CellsMixin: PartialType = {
   cloneCells(cells, allowInvalidEdges = true, mapping = {}, keepPosition = false) {
     let clones: Cell[];
 
-    // Creates a dictionary for fast lookups
+    // Creates a map for fast lookups
     const dict = new Map<Cell, boolean>();
     const tmp = [];
 

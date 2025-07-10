@@ -69,7 +69,7 @@ declare module '../AbstractGraph' {
      * });
      * ```
      *
-     * @param cell {@link mxCell} whose label should be returned.
+     * @param cell {@link Cell} whose label should be returned.
      */
     getLabel: (cell: Cell) => string | null;
 

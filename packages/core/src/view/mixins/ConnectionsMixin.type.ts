@@ -204,8 +204,8 @@ declare module '../AbstractGraph' {
      * Returns true if the given cell is disconnectable from the source or target terminal.
      * This returns {@link isCellsDisconnectable} for all given cells if {@link isCellLocked} does not return `true` for the given cell.
      *
-     * @param cell {@link mxCell} whose disconnectable state should be returned.
-     * @param terminal {@link mxCell} that represents the source or target terminal.
+     * @param cell {@link Cell} whose disconnectable state should be returned.
+     * @param terminal {@link Cell} that represents the source or target terminal.
      * @param source Boolean indicating if the source or target terminal is to be disconnected.
      */
     isCellDisconnectable: (cell: Cell, terminal: Cell | null, source: boolean) => boolean;
@@ -225,14 +225,14 @@ declare module '../AbstractGraph' {
      *
      * This implementation returns `true` for all non-null values and is called by is called by {@link isValidConnection}.
      *
-     * @param cell {@link mxCell} that represents a possible source or `null`.
+     * @param cell {@link Cell} that represents a possible source or `null`.
      */
     isValidSource: (cell: Cell | null) => boolean;
 
     /**
      * Returns {@link isValidSource} for the given cell. This is called by {@link isValidConnection}.
      *
-     * @param cell {@link mxCell} that represents a possible target or `null`.
+     * @param cell {@link Cell} that represents a possible target or `null`.
      */
     isValidTarget: (cell: Cell | null) => boolean;
 

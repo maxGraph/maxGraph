@@ -121,19 +121,18 @@ class EventSource {
   }
 
   /**
-   * Dispatches the given event to the listeners which are registered for
-   * the event. The sender argument is optional. The current execution scope
-   * ("this") is used for the listener invocation (see {@link Utils#bind}).
+   * Dispatches the given event to the listeners which are registered for the event.
+   * The sender argument is optional.
+   * The current execution scope ("this") is used for the listener invocation.
    *
    * Example:
    *
    * ```javascript
-   * fireEvent(new mxEventObject("eventName", key1, val1, .., keyN, valN))
+   * fireEvent(new EventObject("eventName", key1, val1, .., keyN, valN))
    * ```
    *
    * @param evt {@link EventObject} that represents the event.
-   * @param sender Optional sender to be passed to the listener. Default value is
-   * the return value of <getEventSource>.
+   * @param sender Optional sender to be passed to the listener. Default value is the return value of {@link getEventSource}.
    */
   fireEvent(evt: EventObject, sender: EventTarget | null = null) {
     if (this.isEventsEnabled()) {

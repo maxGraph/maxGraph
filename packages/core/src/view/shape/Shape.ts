@@ -46,16 +46,16 @@ import { StyleDefaultsConfig } from '../../util/config.js';
 
 /**
  * Base class for all shapes.
- * A shape in mxGraph is a separate implementation for SVG, VML and HTML.
+ * A shape in maxGraph is a separate implementation for SVG, VML and HTML.
  * Which implementation to use is controlled by the dialect property which
- * is assigned from within the mxCellRenderer when the shape is created.
+ * is assigned from within the CellRenderer when the shape is created.
  * The dialect must be assigned for a shape, and it does normally depend on
- * the browser and the configuration of the graph (see mxGraph rendering hint).
+ * the browser and the configuration of the graph (see maxGraph rendering hint).
  *
  * For each supported shape in SVG and VML, a corresponding shape exists in
- * mxGraph, namely for text, image, rectangle, rhombus, ellipse and polyline.
- * The other shapes are a combination of these shapes (eg. label and swimlane)
- * or they consist of one or more (filled) path objects (eg. actor and cylinder).
+ * maxGraph, namely for text, image, rectangle, rhombus, ellipse and polyline.
+ * The other shapes are a combination of these shapes (e.g. label and swimlane)
+ * or they consist of one or more (filled) path objects (e.g. actor and cylinder).
  * The HTML implementation is optional but may be required for a HTML-only view
  * of the graph.
  *
@@ -73,14 +73,14 @@ import { StyleDefaultsConfig } from '../../util/config.js';
  * To register a custom shape in an existing graph instance, one must register the
  * shape under a new name in the graph’s cell renderer as follows:
  * ```javascript
- * mxCellRenderer.registerShape('customShape', CustomShape);
+ * ShapeRegistry.add('customShape', CustomShape);
  * ```
  * The second argument is the name of the constructor.
  * In order to use the shape you can refer to the given name above in a stylesheet.
  * For example, to change the shape for the default vertex style, the following code
  * is used:
  * ```javascript
- * var style = graph.getStylesheet().getDefaultVertexStyle();
+ * const style = graph.getStylesheet().getDefaultVertexStyle();
  * style.shape = 'customShape';
  * ```
  *
@@ -96,7 +96,7 @@ class Shape {
   indicator: Shape | null = null;
   indicatorShape: typeof Shape | null = null;
 
-  // Assigned in mxCellHighlight
+  /** @see CellHighlight */
   opacity = 100;
   isDashed = false;
 

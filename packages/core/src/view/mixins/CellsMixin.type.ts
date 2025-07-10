@@ -290,8 +290,8 @@ declare module '../AbstractGraph' {
      *
      * This is a shortcut method.
      *
-     * @param cell {@link mxCell} to be inserted into the given parent.
-     * @param parent {@link mxCell} that represents the new parent. If no parent is given then the default parent is used.
+     * @param cell {@link Cell} to be inserted into the given parent.
+     * @param parent {@link Cell} that represents the new parent. If no parent is given then the default parent is used.
      * @param index Optional index to insert the cells at. Default is 'to append'.
      * @param source Optional {@link Cell} that represents the source terminal.
      * @param target Optional {@link Cell} that represents the target terminal.
@@ -345,7 +345,7 @@ declare module '../AbstractGraph' {
     /**
      * Resizes the specified cell to just fit around its label and/or children.
      *
-     * @param cell {@link mxCell} to be resized.
+     * @param cell {@link Cell} to be resized.
      * @param recurse Optional boolean which specifies if all descendants should be auto-sized. Default is `true`.
      */
     autoSizeCell: (cell: Cell, recurse?: boolean) => void;
@@ -428,7 +428,7 @@ declare module '../AbstractGraph' {
      * };
      * ```
      *
-     * @param cell {@link mxCell} for which the preferred size should be returned.
+     * @param cell {@link Cell} for which the preferred size should be returned.
      * @param textWidth Optional maximum text width for word wrapping.
      */
     getPreferredSizeForCell: (cell: Cell, textWidth?: number | null) => Rectangle | null;
@@ -463,28 +463,23 @@ declare module '../AbstractGraph' {
      * that all child cells stay within the group.
      *
      * ```javascript
-     * graph.addListener(mxEvent.CELLS_RESIZED, function(sender, evt)
-     * {
-     *   var cells = evt.getProperty('cells');
+     * graph.addListener(InternalEvent.CELLS_RESIZED, function(sender, evt) {
+     *   const cells = evt.getProperty('cells');
      *
-     *   if (cells != null)
-     *   {
-     *     for (var i = 0; i < cells.length; i++)
-     *     {
-     *       if (graph.getDataModel().getChildCount(cells[i]) > 0)
-     *       {
-     *         var geo = cells[i].getGeometry();
+     *   if (cells) {
+     *     for (const cell of cells) {
+     *       if (graph.getDataModel().getChildCount(cell) > 0) {
+     *         let geo = cell.getGeometry();
      *
-     *         if (geo != null)
-     *         {
-     *           var children = graph.getChildCells(cells[i], true, true);
-     *           var bounds = graph.getBoundingBoxFromGeometry(children, true);
+     *         if (geo) {
+     *           const children = graph.getChildCells(cell, true, true);
+     *           const bounds = graph.getBoundingBoxFromGeometry(children, true);
      *
      *           geo = geo.clone();
      *           geo.width = Math.max(geo.width, bounds.width);
      *           geo.height = Math.max(geo.height, bounds.height);
      *
-     *           graph.getDataModel().setGeometry(cells[i], geo);
+     *           graph.getDataModel().setGeometry(cell, geo);
      *         }
      *       }
      *     }
@@ -638,7 +633,7 @@ declare module '../AbstractGraph' {
      *
      * If vertices and edges is `false`, then all children are returned.
      *
-     * @param parent {@link mxCell} whose children should be returned.
+     * @param parent {@link Cell} whose children should be returned.
      * @param vertices Optional boolean that specifies if child vertices should be returned. Default is `false`.
      * @param edges Optional boolean that specifies if child edges should be returned. Default is `false`.
      */
@@ -653,7 +648,7 @@ declare module '../AbstractGraph' {
      *
      * @param x X-coordinate of the location to be checked.
      * @param y Y-coordinate of the location to be checked.
-     * @param parent {@link mxCell} that should be used as the root of the recursion. Default is current root of the view or the root of the model.
+     * @param parent {@link Cell} that should be used as the root of the recursion. Default is current root of the view or the root of the model.
      * @param vertices Optional boolean indicating if vertices should be returned. Default is `true`.
      * @param edges Optional boolean indicating if edges should be returned. Default is `true`.
      * @param ignoreFn Optional function that returns true if cell should be ignored. The function is passed the cell state and the x and y parameter. Default is `null`.
@@ -677,7 +672,7 @@ declare module '../AbstractGraph' {
      * @param y Y-coordinate of the rectangle.
      * @param width Width of the rectangle.
      * @param height Height of the rectangle.
-     * @param parent {@link mxCell} that should be used as the root of the recursion. Default is current root of the view or the root of the model.
+     * @param parent {@link Cell} that should be used as the root of the recursion. Default is current root of the view or the root of the model.
      * @param result Optional array to store the result in. Default is an empty Array.
      * @param intersection Default is `null`.
      * @param ignoreFn Default is `null`.
@@ -697,7 +692,7 @@ declare module '../AbstractGraph' {
 
     /**
      * Returns the children of the given parent that are contained in the half-pane from the given point (x0, y0) rightwards or downwards
-     * depending on rightHalfpane and bottomHalfpane.
+     * depending on `rightHalfpane` and `bottomHalfpane`.
      *
      * @param x0 X-coordinate of the origin.
      * @param y0 Y-coordinate of the origin.

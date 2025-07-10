@@ -318,7 +318,7 @@ declare module '../AbstractGraph' {
     /**
      * Resets the control points of the given edge.
      *
-     * @param edge {@link mxCell} whose points should be reset.
+     * @param edge {@link Cell} whose points should be reset.
      */
     resetEdge: (edge: Cell) => Cell;
   }

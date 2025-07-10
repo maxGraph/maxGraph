@@ -132,7 +132,7 @@ class GraphSelectionModel extends EventSource {
   /**
    * Selects the specified {@link Cell} using {@link setCells}.
    *
-   * @param cell {@link mxCell} to be selected.
+   * @param cell {@link Cell} to be selected.
    */
   setCell(cell: Cell) {
     this.setCells(cell ? [cell] : []);
@@ -172,7 +172,7 @@ class GraphSelectionModel extends EventSource {
   /**
    * Adds the given {@link Cell} to the selection and fires a {@link select} event.
    *
-   * @param cell {@link mxCell} to add to the selection.
+   * @param cell {@link Cell} to add to the selection.
    */
   addCell(cell: Cell) {
     this.addCells([cell]);
@@ -207,7 +207,7 @@ class GraphSelectionModel extends EventSource {
    * Removes the specified {@link Cell} from the selection and fires a {@link select}
    * event for the remaining cells.
    *
-   * @param cell {@link mxCell} to remove from the selection.
+   * @param cell {@link Cell} to remove from the selection.
    */
   removeCell(cell: Cell) {
     this.removeCells([cell]);
@@ -217,7 +217,7 @@ class GraphSelectionModel extends EventSource {
    * Removes the specified {@link Cell} from the selection and fires a {@link select}
    * event for the remaining cells.
    *
-   * @param cells {@link mxCell}s to remove from the selection.
+   * @param cells {@link Cell}s to remove from the selection.
    */
   removeCells(cells: Cell[]) {
     const tmp = [];
@@ -255,7 +255,7 @@ class GraphSelectionModel extends EventSource {
    *
    * Paramters:
    *
-   * @param cell {@link mxCell} to add to the selection.
+   * @param cell {@link Cell} to add to the selection.
    */
   cellAdded(cell: Cell) {
     if (!this.isSelected(cell)) {
@@ -267,7 +267,7 @@ class GraphSelectionModel extends EventSource {
    * Inner callback to remove the specified {@link Cell} from the selection. No
    * event is fired in this implementation.
    *
-   * @param cell {@link mxCell} to remove from the selection.
+   * @param cell {@link Cell} to remove from the selection.
    */
   cellRemoved(cell: Cell) {
     const index = this.cells.indexOf(cell);

@@ -193,7 +193,7 @@ import type { FitPlugin } from '../view/plugins/index.js';
  * must refer to an existing template.
  *
  * In the following example, the task node is a business object and only the
- * mxCell node and its mxGeometry child contain graph information:
+ * Cell node and its Geometry child contain graph information:
  *
  * ```javascript
  * <Task label="Task" description="">
@@ -214,7 +214,7 @@ import type { FitPlugin } from '../view/plugins/index.js';
  *
  * The Task node can have any tag name, attributes and child nodes. The
  * {@link Codec} will use the XML hierarchy as the user object, while removing the
- * "known annotations", such as the mxCell node. At save-time the cell data
+ * "known annotations", such as the Cell node. At save-time the cell data
  * will be "merged" back into the user object. The user object is only modified
  * via the properties dialog during the lifecycle of the cell.
  *

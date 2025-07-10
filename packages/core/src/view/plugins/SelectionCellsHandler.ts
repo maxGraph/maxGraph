@@ -95,7 +95,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   maxHandlers = 100;
 
   /**
-   * {@link Dictionary} that maps from cells to handlers.
+   * Maps from cells to handlers.
    */
   handlers: Map<Cell, Handler>;
 

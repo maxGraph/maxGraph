@@ -533,7 +533,7 @@ export abstract class AbstractGraph extends EventSource {
   }
 
   /**
-   * Returns the {@link GraphView} that contains the {@link mxCellStates}.
+   * Returns the {@link GraphView} that contains the {@link CellState}s.
    */
   getView() {
     return this.view;
