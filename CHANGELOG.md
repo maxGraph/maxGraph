@@ -17,7 +17,7 @@ _**Note:** Yet to be released breaking changes appear here._
 - The `Dictionary` class has been removed. The maxGraph API use the `Map` class instead, which is a standard JavaScript feature.
   If your code depends on the `Dictionary` class, you can use the `Map` class instead.
 - The return types of some methods of EditorToolbar are now more precise.
-  - addPrototype(): HTMLImageElement, no longer HTMLImageElement | HTMLButtonElement
+  - addPrototype(): HTMLImageElement instead of HTMLImageElement | HTMLButtonElement
   - addCombo(): HTMLSelectElement instead of HTMLElement
 
 ## 0.20.0
