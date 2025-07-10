@@ -225,7 +225,7 @@ import type { FitPlugin } from '../view/plugins/index.js';
  * action in {@link action}. Alternatively, the entry in the config file's popupmenu
  * section can be modified to invoke a different action.
  *
- * If you want to displey the properties dialog on a doubleclick, you can set
+ * If you want to display the properties dialog on a double click, you can set
  * {@link Editor.dblClickAction} to showProperties as follows:
  *
  * ```javascript
@@ -733,17 +733,14 @@ export class Editor extends EventSource {
   maintainSwimlanes = false;
 
   /**
-   * Specifies if the children of swimlanes should
-   * be layed out, either vertically or horizontally
-   * depending on {@link horizontalFlow}. Default is false.
+   * Specifies if the children of swimlanes should be layed out, either vertically or horizontally depending on {@link horizontalFlow}.
    * @default false
    */
   layoutSwimlanes = false;
 
   /**
    * Specifies the attribute values to be cycled when inserting new swimlanes.
-   * Default is an empty array.
-   * @default any[]
+   * @default []
    */
   cycleAttributeValues: any[] = [];
 
@@ -752,24 +749,20 @@ export class Editor extends EventSource {
   // =====================================================================================
 
   /**
-   * Index of the last consumed attribute index. If a new
-   * swimlane is inserted, then the {@link cycleAttributeValues}
-   * at this index will be used as the value for
-   * {@link cycleAttributeName}. Default is 0.
+   * Index of the last consumed attribute index.
+   * If a new swimlane is inserted, then the {@link cycleAttributeValues} at this index will be used as the value for {@link cycleAttributeName}.
    * @default 0
    */
   cycleAttributeIndex = 0;
 
   /**
-   * Name of the attribute to be assigned a {@link cycleAttributeValues}
-   * when inserting new swimlanes. Default is 'fillColor'.
+   * Name of the attribute to be assigned a {@link cycleAttributeValues} when inserting new swimlanes.
    * @default 'fillColor'
    */
-  // cycleAttributeName: 'fillColor';
-  cycleAttributeName = 'fillColor';
+  cycleAttributeName: keyof CellStateStyle | string = 'fillColor';
 
   /**
-   * Holds the [@link MaxWindow} created in {@link showTasks}.
+   * Holds the {@link MaxWindow} created in {@link showTasks}.
    */
   tasks: any = null;
 
@@ -1967,21 +1960,21 @@ export class Editor extends EventSource {
   }
 
   /**
-   * Swaps the styles for the given names in the graph's
-   * stylesheet and refreshes the graph.
-   * @param first
-   * @param second
+   * Swaps the styles for the given names in the graph's stylesheet and refreshes the graph.
+   * @param first the name of the first style to swap
+   * @param second the name of the second style to swap
    */
-  swapStyles(first: keyof CellStateStyle, second: string): void {
-    // @ts-ignore
-    const style = this.graph.getStylesheet().styles[second];
-    this.graph
-      .getView()
-      // @ts-ignore
-      .getStylesheet()
-      // @ts-ignore
-      .putCellStyle(second, this.graph.getStylesheet().styles[first]);
-    this.graph.getStylesheet().putCellStyle(first, style);
+  swapStyles(first: string, second: string): void {
+    // Note that this method is not used in maxGraph and its examples. It wasn't used in the mxGraph repository either.
+    const stylesheet = this.graph.getStylesheet();
+    const styles = stylesheet.styles; // use internals here as there is no public API to get styles
+    const firstStyle = styles.get(first);
+    const secondStyle = styles.get(second);
+    if (!firstStyle || !secondStyle) {
+      return;
+    }
+    stylesheet.putCellStyle(second, firstStyle);
+    stylesheet.putCellStyle(first, secondStyle);
     this.graph.refresh();
   }
 
@@ -2478,8 +2471,9 @@ export class Editor extends EventSource {
       const value = this.consumeCycleAttribute(cell);
 
       if (!isNullish(value)) {
-        // @ts-expect-error TODO - style is no longer a string
-        cell.setStyle(`${cell.getStyle()};${this.cycleAttributeName}=${value}`);
+        const style = cell.getStyle();
+        // @ts-ignore ignore "not an indexed type" error
+        style[this.cycleAttributeName] = value;
       }
     }
   }
