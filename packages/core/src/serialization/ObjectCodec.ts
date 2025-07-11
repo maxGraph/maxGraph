@@ -32,7 +32,7 @@ const geometryNumericAttributes: Array<keyof Geometry> = [
   '_width',
   '_height',
 ];
-const pointNumericAttributes: Array<keyof Geometry> = ['_x', '_y'];
+const pointNumericAttributes: Array<keyof Point> = ['_x', '_y'];
 
 /**
  * Generic codec for JavaScript objects that implements a mapping between
@@ -455,8 +455,7 @@ class ObjectCodec {
         value = tmp;
       }
 
-      // Checks if the value is a default value and
-      // the name is correct
+      // Checks if the value is a default value and the name is correct
       if (name == null || enc.encodeDefaults || this.template[name] != value) {
         name = this.getAttributeName(name);
         this.writeAttribute(enc, obj, name, value, node);
@@ -603,6 +602,7 @@ class ObjectCodec {
   isNumericAttribute(dec: Codec, attr: any, obj: any): boolean {
     // Handles known numeric attributes for generic objects
     return (
+      // There is currently no specific codec for Geometry or Point, so the check is done here
       (obj instanceof Geometry && geometryNumericAttributes.includes(attr.name)) ||
       (obj instanceof Point && pointNumericAttributes.includes(attr.name)) ||
       isNumeric(attr.value)
