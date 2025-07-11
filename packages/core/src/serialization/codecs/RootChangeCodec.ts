@@ -35,7 +35,9 @@ import { isElement } from '../../internal/utils.js';
 export class RootChangeCodec extends ObjectCodec {
   constructor() {
     const __dummy: any = undefined;
-    super(new RootChange(__dummy, __dummy), ['model', 'previous', 'root']);
+    super(new RootChange(__dummy, __dummy), ['model', 'previous', 'root'] as Array<
+      keyof RootChange
+    >);
   }
 
   /**

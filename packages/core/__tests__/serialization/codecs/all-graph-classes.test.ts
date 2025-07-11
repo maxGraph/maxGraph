@@ -16,8 +16,6 @@ limitations under the License.
 
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
 import { createGraphWithoutContainer } from '../../utils';
-import Codec from '../../../src/serialization/Codec';
-import { getPrettyXml, parseXml } from '../../../src/util/xmlUtils';
 import {
   type AbstractGraph,
   BaseGraph,
@@ -27,16 +25,7 @@ import {
   registerCoreCodecs,
   unregisterAllCodecs,
 } from '../../../src';
-
-function exportGraph(graph: AbstractGraph): string {
-  const encodedNode = new Codec().encode(graph);
-  return getPrettyXml(encodedNode);
-}
-
-function importGraph(graph: AbstractGraph, input: string): void {
-  const doc = parseXml(input);
-  new Codec(doc).decode(doc.documentElement, graph);
-}
+import { exportObject, importToObject } from './shared';
 
 // Prevents side effects between tests
 beforeAll(() => {
@@ -68,7 +57,25 @@ function buildXml(name: string): string {
       </Cell>
     </root>
   </GraphDataModel>
-  <Stylesheet as="stylesheet" />
+  <Stylesheet as="stylesheet">
+    <add as="defaultVertex">
+      <add value="rectangle" as="shape" />
+      <add value="rectanglePerimeter" as="perimeter" />
+      <add value="middle" as="verticalAlign" />
+      <add value="center" as="align" />
+      <add value="#C3D9FF" as="fillColor" />
+      <add value="#6482B9" as="strokeColor" />
+      <add value="#774400" as="fontColor" />
+    </add>
+    <add as="defaultEdge">
+      <add value="connector" as="shape" />
+      <add value="classic" as="endArrow" />
+      <add value="middle" as="verticalAlign" />
+      <add value="center" as="align" />
+      <add value="#6482B9" as="strokeColor" />
+      <add value="#446299" as="fontColor" />
+    </add>
+  </Stylesheet>
   <Rectangle _x="123" _y="453" _width="60" _height="60" as="pageFormat" />
   <ImageBox src="./warning.gif" width="16" height="16" as="warningImage" />
   <Object foldingEnabled="1" collapseToPreferredSize="1" as="options">
@@ -94,7 +101,7 @@ describe.each([
     graph.pageFormat = new Rectangle(123, 453, 60, 60);
     graph.options.collapsedImage = new ImageBox('./collapsed-new.gif', 10, 10);
 
-    expect(exportGraph(graph)).toBe(buildXml(name));
+    expect(exportObject(graph)).toBe(buildXml(name));
   });
 
   test('Import', () => {
@@ -103,7 +110,7 @@ describe.each([
     expect(graph.pageFormat).toEqual(new Rectangle(0, 0, 827, 1169));
     expect(graph.options.collapsedImage).toEqual(new ImageBox('./collapsed.gif', 9, 9));
 
-    importGraph(graph, buildXml(name));
+    importToObject(graph, buildXml(name));
 
     // new values due to import
     expect(graph.pageFormat).toEqual(new Rectangle(123, 453, 60, 60));

@@ -26,9 +26,10 @@ import {
   Point,
   unregisterAllCodecs,
 } from '../../src';
+import { getXml } from '../../src/util/xmlUtils';
 
 // inspired by VertexMixin.createVertex
-const newVertex = (id: string, value: string) => {
+const newVertex = (id: string, value: string | object) => {
   const vertex = new Cell(value);
   vertex.setId(id);
   vertex.setVertex(true);
@@ -161,6 +162,124 @@ describe('import before the export (reproduce https://github.com/maxGraph/maxGra
       geometry: new Geometry(100, 100, 100, 80),
       style: { fillColor: 'green', shape: 'triangle', strokeWidth: 4 },
     });
+  });
+
+  test('xml model includes additional node (not only root)', () => {
+    const xml = `<GraphDataModel>
+    <root>
+        <Cell id="0">
+            <Object as="style"/>
+        </Cell>
+        <Cell id="1" parent="0">
+          <Object as="style" />
+        </Cell>
+    </root>
+    <!-- This is an extra node which has no matching property in the model. However, the property will be added to the model instance during the XML import. -->
+    <Cell id="B_#0" value="rootNode" vertex="1" parent="1" as="extraProperty">
+        <Geometry _x="100" _y="100" _width="100" _height="80" as="geometry"/>
+        <Object fillColor="green" strokeWidth="4" shape="triangle" as="style" />
+    </Cell>
+</GraphDataModel>`;
+
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model).import(xml);
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+
+    // The extraProperty should be present as a property on the model and should be a Cell with id 'B_#0'
+    // The serializer attaches extra nodes as properties on the model
+    const extraProperty = (model as any).extraProperty;
+    expect(extraProperty).toBeDefined();
+    expect(extraProperty).toBeInstanceOf(Cell);
+    expect(extraProperty.id).toBe('B_#0');
+  });
+
+  test('cell value is an object', () => {
+    const xml = `<GraphDataModel>
+    <root>
+        <Cell id="0">
+            <Object as="style"/>
+        </Cell>
+        <Cell id="1" parent="0">
+          <Object as="style" />
+        </Cell>
+        <Cell id="custom_cell" vertex="1" parent="1">
+          <Object label="1st Cell" name="CELL-001" description="a custom value for a cell" count="10" as="value">
+            <Array as="info">
+              <Object identifier="1" name="field1" />
+              <Object identifier="2" name="field2" />
+            </Array>
+            <Array as="incomingConnections"/>
+            <Array as="additionalInfo"/>
+          </Object>
+          <Geometry _x="30" _y="40" _width="50" _height="50" as="geometry"/>      
+        </Cell>
+    </root>
+</GraphDataModel>`;
+
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model).import(xml);
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+
+    modelChecker.expectIsVertex(
+      model.getCell('custom_cell'),
+      {
+        additionalInfo: [],
+        count: 10,
+        description: 'a custom value for a cell',
+        incomingConnections: [],
+        info: [
+          {
+            identifier: 1,
+            name: 'field1',
+          },
+          {
+            identifier: 2,
+            name: 'field2',
+          },
+        ],
+        label: '1st Cell',
+        name: 'CELL-001',
+      },
+      {
+        geometry: new Geometry(30, 40, 50, 50),
+      }
+    );
+  });
+
+  test('xml model includes a node that does not match an existing (fallback to xml content)', () => {
+    const xml = `<GraphDataModel>
+    <root>
+        <Cell id="0">
+            <Object as="style"/>
+        </Cell>
+        <Cell id="1" parent="0">
+          <Object as="style" />
+        </Cell>
+        <!-- This is an extra node which has no matching property in the model. However, the property will be added to the model instance during the XML import. -->
+        <Cell id="custom" value="custom" vertex="1" parent="1" as="extraProperty">
+            <NodeWithoutMatchingCodec fillColor="green" strokeWidth="4" shape="triangle" as="style" />
+        </Cell>
+    </root>
+</GraphDataModel>`;
+
+    const model = new GraphDataModel();
+    new ModelXmlSerializer(model).import(xml);
+
+    const modelChecker = new ModelChecker(model);
+    modelChecker.checkRootCells();
+    modelChecker.checkCellsCount(3);
+
+    // here, we only check the style property which as not been correctly deserialized
+    const cell = model.getCell('custom');
+    const style = cell?.style;
+    expect(style).toBeInstanceOf(Element); // xml element
+    expect(getXml(style as Element)).toEqual(
+      '<NodeWithoutMatchingCodec fillColor="green" strokeWidth="4" shape="triangle"/>'
+    );
   });
 });
 
@@ -310,6 +429,57 @@ describe('export', () => {
     <Cell id="e2" value="edge 2" edge="1" parent="1" source="v2" target="v1">
       <Geometry as="geometry" />
       <Object edgeStyle="manhattanEdgeStyle" strokeColor="orange" as="style" />
+    </Cell>
+  </root>
+</GraphDataModel>
+`
+    );
+  });
+
+  test('cell value is an object', () => {
+    const model = new GraphDataModel();
+    const parent = getParent(model);
+
+    const vertex = newVertex('#v1', {
+      additionalInfo: [],
+      description: 'a custom value for a cell',
+      info: [
+        {
+          identifier: 1,
+          name: 'field1',
+        },
+        {
+          identifier: 2,
+          name: 'field2',
+        },
+      ],
+      other: {
+        property: 'value',
+      },
+    });
+    vertex.geometry = new Geometry(30, 40, 50, 50);
+    model.add(parent, vertex);
+
+    expect(new ModelXmlSerializer(model).export()).toEqual(
+      `<GraphDataModel>
+  <root>
+    <Cell id="0">
+      <Object as="style" />
+    </Cell>
+    <Cell id="1" parent="0">
+      <Object as="style" />
+    </Cell>
+    <Cell id="#v1" vertex="1" parent="1">
+      <Object description="a custom value for a cell" as="value">
+        <Array as="additionalInfo" />
+        <Array as="info">
+          <Object identifier="1" name="field1" />
+          <Object identifier="2" name="field2" />
+        </Array>
+        <Object property="value" as="other" />
+      </Object>
+      <Geometry _x="30" _y="40" _width="50" _height="50" as="geometry" />
+      <Object as="style" />
     </Cell>
   </root>
 </GraphDataModel>

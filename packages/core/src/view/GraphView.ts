@@ -462,13 +462,11 @@ export class GraphView extends EventSource {
   }
 
   /**
-   * Removes the state of the given cell and all descendants if the given
-   * cell is not the current root.
+   * Removes the state of the given cell and all descendants if the given cell is not the current root.
    *
-   * @param cell Optional {@link Cell} for which the state should be removed. Default
-   * is the root of the model.
-   * @param force Boolean indicating if the current root should be ignored for
-   * recursion.
+   * @param cell Optional {@link Cell} for which the state should be removed. Default is the root of the model.
+   * @param force Optional boolean indicating if the current root should be ignored for recursion. Default is `false`.
+   * @param recurse Optional boolean indicating if the descendants should be cleared as well. Default is `true`.
    */
   clear(cell?: Cell | null, force = false, recurse = true) {
     if (!cell) {

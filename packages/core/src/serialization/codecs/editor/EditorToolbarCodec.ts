@@ -26,6 +26,8 @@ import { getChildNodes, getTextContent } from '../../../util/domUtils.js';
 import { doEval, isElement } from '../../../internal/utils.js';
 import { translate } from '../../../internal/i18n-utils.js';
 
+type HTMLOptionElementWithCellStyle = HTMLOptionElement & { cellStyle?: string | null };
+
 /**
  * Custom codec for configuring {@link EditorToolbar}s.
  *
@@ -128,9 +130,9 @@ export class EditorToolbarCodec extends ObjectCodec {
    * </EditorToolbar>
    * ```
    */
-  decode(dec: Codec, _node: Element, into: any) {
+  decode(dec: Codec, _node: Element, into: EditorToolbar) {
     if (into != null) {
-      const editor: Editor = into.editor;
+      const editor: Editor = into.editor!;
       let node: Element | null = <Element | null>_node.firstChild;
 
       while (node != null) {
@@ -139,9 +141,9 @@ export class EditorToolbarCodec extends ObjectCodec {
             if (node.nodeName === 'separator') {
               into.addSeparator();
             } else if (node.nodeName === 'br') {
-              into.toolbar.addBreak();
+              into.toolbar!.addBreak();
             } else if (node.nodeName === 'hr') {
-              into.toolbar.addLine();
+              into.toolbar!.addLine();
             } else if (node.nodeName === 'add') {
               let as = <string>node.getAttribute('as');
               as = translate(as) || as;
@@ -159,7 +161,7 @@ export class EditorToolbarCodec extends ObjectCodec {
                 elt = into.addItem(as, icon, action, pressedIcon);
               } else if (mode != null) {
                 funct = EditorToolbarCodec.allowEval ? doEval(text) : null;
-                elt = into.addMode(as, icon, mode, pressedIcon, funct);
+                elt = into.addMode(as, icon!, mode, pressedIcon, funct);
               } else if (template != null || (text != null && text.length > 0)) {
                 let cell = template ? editor.templates[template] : null;
                 const style = node.getAttribute('style');
@@ -179,7 +181,7 @@ export class EditorToolbarCodec extends ObjectCodec {
                   as,
                   icon,
                   cell,
-                  pressedIcon,
+                  pressedIcon!,
                   insertFunction,
                   toggle
                 );
@@ -196,8 +198,8 @@ export class EditorToolbarCodec extends ObjectCodec {
                       if (child.nodeName === 'separator') {
                         into.addOption(combo, '---');
                       } else if (child.nodeName === 'add') {
-                        const lab = child.getAttribute('as');
-                        const act = child.getAttribute('action');
+                        const lab = child.getAttribute('as')!;
+                        const act = child.getAttribute('action')!;
                         into.addActionOption(combo, lab, act);
                       }
                     }
@@ -209,10 +211,13 @@ export class EditorToolbarCodec extends ObjectCodec {
 
                       if (template != null) {
                         const clone = template.clone();
-                        // @ts-ignore
-                        const style = select.options[select.selectedIndex].cellStyle;
+                        const style = (
+                          select.options[
+                            select.selectedIndex
+                          ] as HTMLOptionElementWithCellStyle
+                        ).cellStyle;
 
-                        if (style != null) {
+                        if (style) {
                           clone.setStyle(style);
                         }
 
@@ -223,12 +228,11 @@ export class EditorToolbarCodec extends ObjectCodec {
                       return null;
                     };
 
-                    const img = into.addPrototype(as, icon, create, null, null, toggle);
+                    const img = into.addPrototype(as, icon, create, null!, null!, toggle);
 
-                    // Selects the toolbar icon if a selection change
-                    // is made in the corresponding combobox.
+                    // Selects the toolbar icon if a selection change is made in the corresponding combobox.
                     InternalEvent.addListener(select, 'change', () => {
-                      into.toolbar.selectMode(img, (evt: MouseEvent) => {
+                      into.toolbar!.selectMode(img, (evt: MouseEvent) => {
                         const pt = convertPoint(
                           editor.graph.container,
                           getClientX(evt),
@@ -238,7 +242,7 @@ export class EditorToolbarCodec extends ObjectCodec {
                         return editor.addVertex(null, funct(), pt.x, pt.y);
                       });
 
-                      into.toolbar.noReset = false;
+                      into.toolbar!.noReset = false;
                     });
 
                     // Adds the entries to the combobox
@@ -248,9 +252,13 @@ export class EditorToolbarCodec extends ObjectCodec {
                       if (child.nodeName === 'separator') {
                         into.addOption(select, '---');
                       } else if (child.nodeName === 'add') {
-                        const lab = child.getAttribute('as');
+                        const lab = child.getAttribute('as')!;
                         const tmp = child.getAttribute('template');
-                        const option = into.addOption(select, lab, tmp || template);
+                        const option = into.addOption(
+                          select,
+                          lab,
+                          tmp || template
+                        ) as HTMLOptionElementWithCellStyle;
                         option.cellStyle = child.getAttribute('style');
                       }
                     }

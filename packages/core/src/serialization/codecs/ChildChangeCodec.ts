@@ -42,8 +42,8 @@ export class ChildChangeCodec extends ObjectCodec {
     const __dummy: any = undefined;
     super(
       new ChildChange(__dummy, __dummy, __dummy),
-      ['model', 'child', 'previousIndex'],
-      ['parent', 'previous']
+      ['model', 'child', 'previousIndex'] as Array<keyof ChildChange>,
+      ['parent', 'previous'] as Array<keyof ChildChange>
     );
   }
 
@@ -51,11 +51,11 @@ export class ChildChangeCodec extends ObjectCodec {
    * Returns `true` for the child attribute if the child cell had a previous parent or if we're reading the
    * child as an attribute rather than a child node, in which case it's always a reference.
    */
-  isReference(obj: any, attr: string, value: any, isWrite: boolean) {
+  isReference(obj: any, attr: string | null, value: any, isWrite: boolean) {
     if (attr === 'child' && (!isWrite || obj.model.contains(obj.previous))) {
       return true;
     }
-    return this.idrefs.indexOf(attr) >= 0;
+    return super.isReference(obj, attr, value, isWrite);
   }
 
   /**

@@ -56,8 +56,8 @@ export class CellCodec extends ObjectCodec {
   constructor() {
     super(
       new Cell(),
-      ['children', 'edges', 'overlays', 'mxTransient'],
-      ['parent', 'source', 'target']
+      ['children', 'edges', 'overlays', 'mxTransient'] as Array<keyof Cell>,
+      ['parent', 'source', 'target'] as Array<keyof Cell>
     );
     this.setName('Cell');
   }
@@ -72,14 +72,14 @@ export class CellCodec extends ObjectCodec {
   /**
    * Overridden to disable conversion of value to number.
    */
-  isNumericAttribute(dec: Codec, attr: Element, obj: any) {
+  isNumericAttribute(dec: Codec, attr: Element, obj: Cell) {
     return attr.nodeName !== 'value' && super.isNumericAttribute(dec, attr, obj);
   }
 
   /**
    * Excludes user objects that are XML nodes.
    */
-  isExcluded(obj: any, attr: string, value: Element, isWrite: boolean) {
+  isExcluded(obj: Cell, attr: string, value: Element, isWrite: boolean) {
     return (
       super.isExcluded(obj, attr, value, isWrite) ||
       (isWrite && attr === 'value' && isElement(value))

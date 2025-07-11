@@ -40,8 +40,8 @@ export class TerminalChangeCodec extends ObjectCodec {
     const __dummy: any = undefined;
     super(
       new TerminalChange(__dummy, __dummy, __dummy, __dummy),
-      ['model', 'previous'],
-      ['cell', 'terminal']
+      ['model', 'previous'] as Array<keyof TerminalChange>,
+      ['cell', 'terminal'] as Array<keyof TerminalChange>
     );
   }
 

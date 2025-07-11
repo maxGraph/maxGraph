@@ -41,7 +41,6 @@ export const getClientX = (evt: MouseEvent) => {
 /**
  * Returns true if the meta key is pressed for the given event.
  */
-// static getClientY(e: TouchEvent | MouseEvent): number;
 export const getClientY = (evt: MouseEvent) => {
   return getMainEvent(evt).clientY;
 };
@@ -117,10 +116,9 @@ export const isMouseEvent = (evt: Event) => {
 /**
  * Returns true if the left mouse button is pressed for the given event.
  * To check if a button is pressed during a mouseMove you should use the
- * {@link mxGraph.isMouseDown} property. Note that this returns true in Firefox
+ * {@link AbstractGraph.isMouseDown} property. Note that this returns true in Firefox
  * for control+left-click on the Mac.
  */
-// static isLeftMouseButton(evt: MouseEvent): boolean;
 export const isLeftMouseButton = (evt: MouseEvent) => {
   // Special case for mousemove and mousedown we check the buttons
   // if it exists because which is 0 even if no button is pressed
@@ -136,7 +134,7 @@ export const isLeftMouseButton = (evt: MouseEvent) => {
 /**
  * Returns true if the middle mouse button is pressed for the given event.
  * To check if a button is pressed during a mouseMove you should use the
- * {@link mxGraph.isMouseDown} property.
+ * {@link AbstractGraph.isMouseDown} property.
  */
 export const isMiddleMouseButton = (evt: MouseEvent) => {
   return evt.button === 4;

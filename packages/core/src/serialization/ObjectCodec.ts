@@ -26,6 +26,14 @@ import { load } from '../util/requestUtils.js';
 import type Codec from './Codec.js';
 import { doEval, isElement } from '../internal/utils.js';
 
+const geometryNumericAttributes: Array<keyof Geometry> = [
+  '_x',
+  '_y',
+  '_width',
+  '_height',
+];
+const pointNumericAttributes: Array<keyof Point> = ['_x', '_y'];
+
 /**
  * Generic codec for JavaScript objects that implements a mapping between
  * JavaScript objects and XML nodes that maps each field or element to an
@@ -339,8 +347,8 @@ class ObjectCodec {
    * @param write Boolean indicating if the field is being encoded or decoded.
    * Write is true if the field is being encoded, else it is being decoded.
    */
-  isReference(obj: any, attr: string, value: any, write?: boolean): boolean {
-    return this.idrefs.indexOf(attr) >= 0;
+  isReference(obj: any, attr: string | null, value: any, write?: boolean): boolean {
+    return attr == null ? false : this.idrefs.includes(attr);
   }
 
   /**
@@ -434,8 +442,7 @@ class ObjectCodec {
     node: Element
   ): void {
     if (value != null) {
-      // TODO: What is the case where `name` can be `null`? =========================================================================
-      if (name != null && this.isReference(obj, name, value, true)) {
+      if (this.isReference(obj, name, value, true)) {
         const tmp = enc.getId(value);
 
         if (tmp == null) {
@@ -448,8 +455,7 @@ class ObjectCodec {
         value = tmp;
       }
 
-      // Checks if the value is a default value and
-      // the name is correct
+      // Checks if the value is a default value and the name is correct
       if (name == null || enc.encodeDefaults || this.template[name] != value) {
         name = this.getAttributeName(name);
         this.writeAttribute(enc, obj, name, value, node);
@@ -596,12 +602,9 @@ class ObjectCodec {
   isNumericAttribute(dec: Codec, attr: any, obj: any): boolean {
     // Handles known numeric attributes for generic objects
     return (
-      (obj.constructor === Geometry &&
-        (attr.name === 'x' ||
-          attr.name === 'y' ||
-          attr.name === 'width' ||
-          attr.name === 'height')) ||
-      (obj.constructor === Point && (attr.name === 'x' || attr.name === 'y')) ||
+      // There is currently no specific codec for Geometry or Point, so the check is done here
+      (obj instanceof Geometry && geometryNumericAttributes.includes(attr.name)) ||
+      (obj instanceof Point && pointNumericAttributes.includes(attr.name)) ||
       isNumeric(attr.value)
     );
   }
@@ -686,7 +689,7 @@ class ObjectCodec {
    * @param into Optional object to encode the node into.
    */
   decode(dec: Codec, node: Element, into?: any): any {
-    const id = <string>node.getAttribute('id');
+    const id = node.getAttribute('id')!; // the subsequent calls work when id is null
     let obj = dec.objects[id];
 
     if (obj == null) {
@@ -707,7 +710,7 @@ class ObjectCodec {
    *
    * @param dec {@link Codec} that controls the decoding process.
    * @param node XML node to be decoded.
-   * @param obj Objec to encode the node into.
+   * @param obj Object to encode the node into.
    */
   decodeNode(dec: Codec, node: Element | null, obj: any): void {
     if (node != null) {
@@ -867,7 +870,7 @@ class ObjectCodec {
       if (fieldname != null && fieldname.length > 0) {
         obj[fieldname] = value;
       } else {
-        obj.push(value);
+        obj.push?.(value);
       }
     }
   }
