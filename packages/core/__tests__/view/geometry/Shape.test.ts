@@ -53,7 +53,7 @@ describe('Shape', () => {
         expect(shape.getArcSize(0, 0)).toBe(0);
       });
 
-      test('arcSize is not set', () => {
+      test('arcSize is not set, large dimensions', () => {
         shape.style = { absoluteArcSize: true };
         expect(shape.getArcSize(170, 90)).toBe(10);
       });
@@ -64,6 +64,7 @@ describe('Shape', () => {
       });
     });
 
+    // TODO add more tests for absoluteArcSize: false
     describe('absoluteArcSize: false', () => {
       test('returns correct arc size when absoluteArcSize is false', () => {
         shape.style = { absoluteArcSize: false, arcSize: 20 };
@@ -76,11 +77,11 @@ describe('Shape', () => {
       });
     });
 
-    test('returns correct arc size when style is undefined', () => {
+    test('style is undefined', () => {
       shape.style = null;
       expect(shape.getArcSize(100, 50)).toBe(7.5);
     });
-    test('returns correct arc size when style is undefined v2', () => {
+    test('style is undefined, large dimensions', () => {
       shape.style = null;
       expect(shape.getArcSize(200, 468)).toBe(30);
     });
