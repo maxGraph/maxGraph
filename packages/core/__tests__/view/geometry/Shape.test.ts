@@ -28,28 +28,28 @@ describe('Shape', () => {
 
     // TODO split into 2 describe blocks regarding the absoluteArcSize (try to manage undefined absoluteArcSize as well)
     describe('absoluteArcSize: true', () => {
-      test('arcSize 1', () => {
+      test('height is smaller than width', () => {
         shape.style = { absoluteArcSize: true, arcSize: 20 };
         expect(shape.getArcSize(100, 50)).toBe(10);
       });
 
-      test('returns correct arc size when width is smaller than height', () => {
-        shape.style = { absoluteArcSize: true, arcSize: 20 };
-        expect(shape.getArcSize(50, 100)).toBe(10);
+      test('width is smaller than height', () => {
+        shape.style = { absoluteArcSize: true, arcSize: 13 };
+        expect(shape.getArcSize(50, 100)).toBe(6.5);
       });
 
-      test('returns correct arc size when width and height are equal', () => {
-        shape.style = { absoluteArcSize: true, arcSize: 20 };
-        expect(shape.getArcSize(50, 50)).toBe(10);
+      test('width and height are equal', () => {
+        shape.style = { absoluteArcSize: true, arcSize: 30 };
+        expect(shape.getArcSize(50, 50)).toBe(15);
       });
 
-      test('returns correct arc size when arcSize is zero', () => {
+      test('arcSize is zero', () => {
         shape.style = { absoluteArcSize: true, arcSize: 0 };
         expect(shape.getArcSize(100, 50)).toBe(0);
       });
 
-      test('returns correct arc size when width and height are zero', () => {
-        shape.style = { absoluteArcSize: true, arcSize: 20 };
+      test('width and height are zero', () => {
+        shape.style = { absoluteArcSize: true, arcSize: 60 };
         expect(shape.getArcSize(0, 0)).toBe(0);
       });
 
