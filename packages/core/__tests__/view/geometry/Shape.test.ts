@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import { beforeEach, describe, expect, test } from '@jest/globals';
-
-import Shape from '../../../src/view/geometry/Shape';
+import Shape from '../../../src/view/shape/Shape';
 
 describe('Shape', () => {
   // add test with other combination of values of arcSize
