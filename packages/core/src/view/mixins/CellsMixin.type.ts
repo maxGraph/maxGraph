@@ -811,7 +811,9 @@ declare module '../AbstractGraph' {
      * ```javascript
      * isCellSelectable(cell) {
      *   const style = this.getCurrentCellStyle(cell);
-     *   return this.isCellsSelectable() && !this.isCellLocked(cell) && style.selectable ?? true;
+     *   return this.isCellsSelectable() &&
+     *     !this.isCellLocked(cell) &&
+     *     (style.selectable ?? true);
      * };
      * ```
      *
