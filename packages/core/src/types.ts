@@ -115,7 +115,7 @@ export type CellStateStyle = {
    *
    *
    * The possible values are between `0` and `100`.
-   * If this value is not specified, then `constants.RECTANGLE_ROUNDING_FACTOR * 100` is used.
+   * If this value is not specified, then {@link RECTANGLE_ROUNDING_FACTOR}` * 100` is used.
    *
    * For **edge**, this defines the absolute size of the {@link rounded} corners in pixels.
    * If this value is not specified, then {@link LINE_ARCSIZE} is used.
