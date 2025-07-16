@@ -37,7 +37,7 @@ import { isElement, isNullish } from '../../internal/utils.js';
  * const node = doc.createElement('MyNode')
  * node.setAttribute('label', 'MyLabel');
  * node.setAttribute('attribute1', 'value1');
- * graph.insertVertex(graph.getDefaultParent(), null, node, 40, 40, 80, 30);
+ * graph.insertVertex({parent: graph.getDefaultParent(), value: node, position: [40, 40], size: [80, 30]});
  * ```
  *
  * For the label to work, {@link AbstractGraph.convertValueToString} and

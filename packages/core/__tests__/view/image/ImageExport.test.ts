@@ -55,7 +55,7 @@ const createGraphWithVerticesAndOverlays = () => {
       new CellOverlay(new ImageBox('element.png', 16, 16), 'Information')
     );
 
-    graph.insertEdge(parent, null, '', v1, v2);
+    graph.insertEdge({ parent, value: '', source: v1, target: v2 });
     const e1 = graph.insertEdge({
       parent,
       id: 'e1',

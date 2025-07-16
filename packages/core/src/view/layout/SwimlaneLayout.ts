@@ -238,15 +238,11 @@ class SwimlaneLayout extends GraphLayout {
       const children = this.graph.getChildCells(swimlanes[i]);
 
       if (children == null || children.length === 0) {
-        const vertex = this.graph.insertVertex(
-          swimlanes[i],
-          null,
-          null,
-          0,
-          0,
-          this.dummyVertexWidth,
-          0
-        );
+        const vertex = this.graph.insertVertex({
+          parent: swimlanes[i],
+          position: [0, 0],
+          size: [this.dummyVertexWidth, 0],
+        });
         dummyVertices.push(vertex);
       }
     }

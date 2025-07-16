@@ -30,20 +30,20 @@ import type { DropHandler } from '../types.js';
  * Example:
  *
  * ```javascript
- * let funct = (graph, evt, cell, x, y)=>
- * {
- *   if (graph.canImportCell(cell))
- *   {
- *     let parent = graph.getDefaultParent();
+ * const funct = (graph, evt, cell, x, y) => {
+ *   if (graph.canImportCell(cell)) {
+ *     const parent = graph.getDefaultParent();
  *     let vertex = null;
  *
  *     graph.getDataModel().beginUpdate();
- *     try
- *     {
- *        vertex = graph.insertVertex(parent, null, 'Hello', x, y, 80, 30);
- *     }
- *     finally
- *     {
+ *     try {
+ *        vertex = graph.insertVertex({
+ *          parent,
+ *          value: 'Hello',
+ *          position: [x, y],
+ *          size: [80, 30],
+ *        });
+ *     } finally {
  *       graph.getDataModel().endUpdate();
  *     }
  *
@@ -51,7 +51,7 @@ import type { DropHandler } from '../types.js';
  *   }
  * }
  *
- * let img = document.createElement('img');
+ * const img = document.createElement('img');
  * img.setAttribute('src', 'editors/images/rectangle.gif');
  * img.style.position = 'absolute';
  * img.style.left = '0px';
@@ -59,10 +59,10 @@ import type { DropHandler } from '../types.js';
  * img.style.width = '16px';
  * img.style.height = '16px';
  *
- * let dragImage = img.cloneNode(true);
+ * const dragImage = img.cloneNode(true);
  * dragImage.style.width = '32px';
  * dragImage.style.height = '32px';
- * mxUtils.makeDraggable(img, graph, funct, dragImage);
+ * gestureUtils.makeDraggable(img, graph, funct, dragImage);
  * document.body.appendChild(img);
  * ```
  *

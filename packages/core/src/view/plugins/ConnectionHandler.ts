@@ -1841,7 +1841,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
 
   /**
    * Creates, inserts and returns the new edge for the given parameters. This
-   * implementation does only use <createEdge> if <factoryMethod> is defined,
+   * implementation does only use {@link createEdge} if {@link factoryMethod} is defined,
    * otherwise {@link AbstractGraph.insertEdge} will be used.
    */
   insertEdge(
@@ -1853,7 +1853,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
     style: CellStyle
   ): Cell {
     if (!this.factoryMethod) {
-      return this.graph.insertEdge(parent, id, value, source, target, style);
+      return this.graph.insertEdge({ parent, id, value, source, target, style });
     }
     let edge = this.createEdge(value, source, target, style);
     edge = this.graph.addEdge(edge, parent, source, target);
@@ -1925,14 +1925,14 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Creates and returns a new edge using <factoryMethod> if one exists. If
+   * Creates and returns a new edge using {@link factoryMethod} if one exists. If
    * no factory method is defined, then a new default edge is returned. The
    * source and target arguments are informal, the actual connection is
-   * setup later by the caller of this function.
+   * set up later by the caller of this function.
    *
    * @param value Value to be used for creating the edge.
-   * @param source <Cell> that represents the source terminal.
-   * @param target <Cell> that represents the target terminal.
+   * @param source {@link Cell} that represents the source terminal.
+   * @param target {@link Cell} that represents the target terminal.
    * @param style Optional style from the preview edge.
    */
   createEdge(

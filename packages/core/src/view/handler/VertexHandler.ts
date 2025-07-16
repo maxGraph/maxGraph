@@ -1492,13 +1492,12 @@ class VertexHandler implements MouseListenerSet {
    * the following code can be used.
    *
    * ```javascript
-   * let vertexHandlerUnion = union;
-   * union = (bounds, dx, dy, index, gridEnabled, scale, tr, constrained)=>
-   * {
-   *   let result = vertexHandlerUnion.apply(this, arguments);
+   * const vertexHandlerUnion = union;
+   * vertexHandler.union = (bounds, dx, dy, index, gridEnabled, scale, tr, constrained) => {
+   *   const result = vertexHandlerUnion.apply(this, arguments);
    *
-   *   result.width = Math.max(result.width, mxUtils.getNumber(this.state.style, 'minWidth', 0));
-   *   result.height = Math.max(result.height, mxUtils.getNumber(this.state.style, 'minHeight', 0));
+   *   result.width = Math.max(result.width, this.state.style.minWidth ?? 0));
+   *   result.height = Math.max(result.height, this.state.style.minHeight ?? 0));
    *
    *   return result;
    * };
@@ -1507,27 +1506,35 @@ class VertexHandler implements MouseListenerSet {
    * The minWidth/-Height style can then be used as follows:
    *
    * ```javascript
-   * graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30, 'minWidth=100;minHeight=100;');
+   * graph.insertVertex({
+   *   parent,
+   *   value: 'Hello,',
+   *   position: [20, 20],
+   *   size: [80, 30],
+   *   style: {
+   *     minWidth: 100,
+   *     minHeight: 100,
+   *   },
+   * });
    * ```
    *
    * To override this to update the height for a wrapped text if the width of a vertex is
    * changed, the following can be used.
    *
    * ```javascript
-   * let mxVertexHandlerUnion = union;
-   * union = (bounds, dx, dy, index, gridEnabled, scale, tr, constrained)=>
-   * {
-   *   let result = mxVertexHandlerUnion.apply(this, arguments);
-   *   let s = this.state;
+   * const vertexHandlerUnion = union;
+   * vertexHandler.union = (bounds, dx, dy, index, gridEnabled, scale, tr, constrained) => {
+   *   const result = vertexHandlerUnion.apply(this, arguments);
+   *   const s = this.state;
    *
-   *   if (this.graph.isHtmlLabel(s.cell) && (index == 3 || index == 4) &&
-   *       s.text != null && s.style.whiteSpace == 'wrap')
-   *   {
-   *     let label = this.graph.getLabel(s.cell);
-   *     let fontSize = mxUtils.getNumber(s.style, 'fontSize', mxConstants.DEFAULT_FONTSIZE);
-   *     let ww = result.width / s.view.scale - s.text.spacingRight - s.text.spacingLeft
+   *   if (this.graph.isHtmlLabel(s.cell)
+   *        && (index == 3 || index == 4)
+   *        && s.text != null && s.style.whiteSpace == 'wrap') {
+   *     const label = this.graph.getLabel(s.cell);
+   *     const fontSize = s.style.fontSize ?? constants.DEFAULT_FONTSIZE;
+   *     const ww = result.width / s.view.scale - s.text.spacingRight - s.text.spacingLeft
    *
-   *     result.height = mxUtils.getSizeForString(label, fontSize, s.style.fontFamily, ww).height;
+   *     result.height = styleUtils.getSizeForString(label, fontSize, s.style.fontFamily, ww).height;
    *   }
    *
    *   return result;

@@ -27,25 +27,65 @@ describe('layout execute', () => {
 
     // execute test
     graph.batchUpdate(() => {
-      const v1 = graph.insertVertex(parent, null, '1', 0, 0, 80, 30);
-      const v2 = graph.insertVertex(parent, null, '2', 0, 0, 80, 30);
-      const v3 = graph.insertVertex(parent, 'v3', '3', 0, 0, 80, 30);
-      const v4 = graph.insertVertex(parent, null, '4', 0, 0, 80, 30);
-      const v5 = graph.insertVertex(parent, null, '5', 0, 0, 80, 30);
-      const v6 = graph.insertVertex(parent, null, '6', 0, 0, 80, 30);
-      const v7 = graph.insertVertex(parent, 'v7', '7', 0, 0, 80, 30);
-      const v8 = graph.insertVertex(parent, null, '8', 0, 0, 80, 30);
-      const v9 = graph.insertVertex(parent, 'v9', '9', 0, 0, 80, 30);
+      const size: [number, number] = [80, 30];
+      const v1 = graph.insertVertex({
+        parent,
+        value: '1',
+        size,
+      });
+      const v2 = graph.insertVertex({
+        parent,
+        value: '2',
+        size,
+      });
+      const v3 = graph.insertVertex({
+        parent,
+        id: 'v3',
+        value: '3',
+        size,
+      });
+      const v4 = graph.insertVertex({
+        parent,
+        value: '4',
+        size,
+      });
+      const v5 = graph.insertVertex({
+        parent,
+        value: '5',
+        size,
+      });
+      const v6 = graph.insertVertex({
+        parent,
+        value: '6',
+        size,
+      });
+      const v7 = graph.insertVertex({
+        parent,
+        id: 'v7',
+        value: '7',
+        size,
+      });
+      const v8 = graph.insertVertex({
+        parent,
+        value: '8',
+        size,
+      });
+      const v9 = graph.insertVertex({
+        parent,
+        id: 'v9',
+        value: '9',
+        size,
+      });
 
-      graph.insertEdge(parent, null, '', v1, v2);
-      graph.insertEdge(parent, null, '', v2, v3);
-      graph.insertEdge(parent, null, '', v3, v4);
-      graph.insertEdge(parent, null, '', v4, v5);
-      graph.insertEdge(parent, null, '', v5, v3); // this introduces the circular path
-      graph.insertEdge(parent, null, '', v5, v6);
-      graph.insertEdge(parent, null, '', v6, v7);
-      graph.insertEdge(parent, null, '', v7, v8);
-      graph.insertEdge(parent, null, '', v8, v9);
+      graph.insertEdge({ parent, value: '', source: v1, target: v2 });
+      graph.insertEdge({ parent, value: '', source: v2, target: v3 });
+      graph.insertEdge({ parent, value: '', source: v3, target: v4 });
+      graph.insertEdge({ parent, value: '', source: v4, target: v5 });
+      graph.insertEdge({ parent, value: '', source: v5, target: v3 }); // this introduces the circular path
+      graph.insertEdge({ parent, value: '', source: v5, target: v6 });
+      graph.insertEdge({ parent, value: '', source: v6, target: v7 });
+      graph.insertEdge({ parent, value: '', source: v7, target: v8 });
+      graph.insertEdge({ parent, value: '', source: v8, target: v9 });
 
       // Execute the layout
       layout.execute(parent);
@@ -74,29 +114,69 @@ describe('layout execute', () => {
 
     // execute test - graph is based on HierarchicalLayout.stories.js
     graph.batchUpdate(() => {
-      const v1 = graph.insertVertex(parent, 'v1', '1', 0, 0, 80, 30);
-      const v2 = graph.insertVertex(parent, null, '2', 0, 0, 80, 30);
-      const v3 = graph.insertVertex(parent, null, '3', 0, 0, 80, 30);
-      const v4 = graph.insertVertex(parent, null, '4', 0, 0, 80, 30);
-      const v5 = graph.insertVertex(parent, null, '5', 0, 0, 80, 30);
-      const v6 = graph.insertVertex(parent, 'v6', '6', 0, 0, 80, 30);
-      const v7 = graph.insertVertex(parent, null, '7', 0, 0, 80, 30);
-      const v8 = graph.insertVertex(parent, 'v8', '8', 0, 0, 80, 30);
-      const v9 = graph.insertVertex(parent, null, '9', 0, 0, 80, 30);
+      const size: [number, number] = [80, 30];
+      const v1 = graph.insertVertex({
+        parent,
+        id: 'v1',
+        value: '1',
+        size,
+      });
+      const v2 = graph.insertVertex({
+        parent,
+        value: '2',
+        size,
+      });
+      const v3 = graph.insertVertex({
+        parent,
+        value: '3',
+        size,
+      });
+      const v4 = graph.insertVertex({
+        parent,
+        value: '4',
+        size,
+      });
+      const v5 = graph.insertVertex({
+        parent,
+        value: '5',
+        size,
+      });
+      const v6 = graph.insertVertex({
+        parent,
+        id: 'v6',
+        value: '6',
+        size,
+      });
+      const v7 = graph.insertVertex({
+        parent,
+        value: '7',
+        size,
+      });
+      const v8 = graph.insertVertex({
+        parent,
+        id: 'v8',
+        value: '8',
+        size,
+      });
+      const v9 = graph.insertVertex({
+        parent,
+        value: '9',
+        size,
+      });
 
-      graph.insertEdge(parent, null, '', v1, v2);
-      graph.insertEdge(parent, null, '', v1, v3);
-      graph.insertEdge(parent, null, '', v3, v4);
-      graph.insertEdge(parent, null, '', v2, v5);
-      graph.insertEdge(parent, null, '', v1, v6);
-      graph.insertEdge(parent, null, '', v2, v3);
-      graph.insertEdge(parent, null, '', v6, v4);
-      graph.insertEdge(parent, null, '', v6, v1);
-      graph.insertEdge(parent, null, '', v6, v7);
-      graph.insertEdge(parent, null, '', v7, v8);
-      graph.insertEdge(parent, null, '', v7, v9);
-      graph.insertEdge(parent, null, '', v7, v6);
-      graph.insertEdge(parent, null, '', v7, v5);
+      graph.insertEdge({ parent, value: '', source: v1, target: v2 });
+      graph.insertEdge({ parent, value: '', source: v1, target: v3 });
+      graph.insertEdge({ parent, value: '', source: v3, target: v4 });
+      graph.insertEdge({ parent, value: '', source: v2, target: v5 });
+      graph.insertEdge({ parent, value: '', source: v1, target: v6 });
+      graph.insertEdge({ parent, value: '', source: v2, target: v3 });
+      graph.insertEdge({ parent, value: '', source: v6, target: v4 });
+      graph.insertEdge({ parent, value: '', source: v6, target: v1 });
+      graph.insertEdge({ parent, value: '', source: v6, target: v7 });
+      graph.insertEdge({ parent, value: '', source: v7, target: v8 });
+      graph.insertEdge({ parent, value: '', source: v7, target: v9 });
+      graph.insertEdge({ parent, value: '', source: v7, target: v6 });
+      graph.insertEdge({ parent, value: '', source: v7, target: v5 });
 
       // Execute the layout
       layout.execute(parent);

@@ -19,12 +19,13 @@ import { createGraphWithoutContainer } from '../../utils';
 import { Cell, type CellStyle, Geometry } from '../../../src';
 
 describe('insertEdge', () => {
-  test('with several parameters', () => {
+  test('Legacy method (with several parameters)', () => {
     const graph = createGraphWithoutContainer();
     const source = new Cell();
     const target = new Cell();
 
     const style: CellStyle = { rounded: true, shape: 'line' };
+    // Use the legacy method here as it is the method under test
     const cell = graph.insertEdge(null, 'edge_1', 'a value', source, target, style);
     expect(cell.getId()).toBe('edge_1');
     expect(cell.vertex).toBeFalsy();
