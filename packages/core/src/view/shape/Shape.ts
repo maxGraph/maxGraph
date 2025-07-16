@@ -770,6 +770,7 @@ class Shape {
     if (this.style?.absoluteArcSize ?? false) {
       // TODO check parenthesis in mxGraph
       // TODO why not computing the min value, then divided by 2, instead of dividing everywhere?
+      // TODO introduce a getBaseArcSize method for this.style?.arcSize ?? LINE_ARCSIZE) / 2 and use it everywhere
       r = Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
     } else {
       // TODO check parenthesis?
