@@ -34,11 +34,22 @@ So, though many of the main API calls are through the `maxGraph` class, keep in 
 // Adds cells to the model in a single step
 graph.getModel().beginUpdate();
 try {
-   const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-   const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-   graph.insertEdge(parent, null, '', v1, v2);
-}
-finally {
+    const v1 = graph.insertVertex({
+        value: 'Hello',
+        position: [20, 20],
+        size: [80, 30],
+    });
+    const v2 = graph.insertVertex({
+        value: 'World!',
+        position: [200, 150],
+        size: [80, 30],
+    });
+    graph.insertEdge({
+        value: '', 
+        source: v1,
+        target: v2
+    });
+} finally {
    // Updates the display
    graph.getModel().endUpdate();
 }
@@ -135,21 +146,18 @@ The function of the model requires that the cell to be added is already created,
 
 **Core API functions:**
 
-- **Graph.insertVertex(parent, id, value, x, y, width, height, style)** - creates and inserts a new vertex into the model, within a begin/end update call.
-- **Graph.insertEdge(parent, id, value, source, target, style)** - creates and inserts a new edge into the model, within a begin/end update call.
+- **Graph.insertVertex(params)** - creates and inserts a new vertex into the model, within a begin/end update call.
+- **Graph.insertEdge(params)** - creates and inserts a new edge into the model, within a begin/end update call.
 
-
-`Graph.insertVertex()` will create an `Cell` object and return it from the method used. The parameters of the function are:
+`Graph.insertVertex()` will create an `Cell` object and return it from the method used. The properties of of the parameter of the function are:
 - `parent`: the cell which is the immediate parent of the new cell in the group structure.
 We will address the group structure shortly, but for now use `graph.getDefaultParent()` as your default parent, as used in the HelloWorld example.
 - `id`: this is a global unique identifier that describes the cell, it is always a string. This is primarily for referencing the cells in the persistent output externally.
-If you do not wish to maintain ids yourself, pass null into this parameter and ensure that GraphDataModel.isCreateIds() returns true. This way the model will manage the ids and ensure they are unique.
+If you do not wish to maintain ids yourself, pass null into this parameter and ensure that `GraphDataModel.isCreateIds()` returns true. This way the model will manage the ids and ensure they are unique.
 - `value`: this is the user object of the cell. User object are simply that, just objects, but form the objects that allow you to associate the business logic of an application with the visual representation of `maxGraph`.
 They will be described in more detail later in this manual, however, to start with if you use a string as the user object, this will be displayed as the label on the vertex or edge.
-- `x, y, width, height`: as the names suggest, these are the x and y position of the top left corner of the vertex and its width and height.
-- `style`: the style description to be applied to this vertex. Styles will be described in more detail shortly, but at a simple level this parameter is a string that follows a particular format.
-In the string appears zero or more style names and some number of key/value pairs that override the global style or set a  new style.
-Until we create custom styles, we will just use those currently available.
+- `x, y, width, height`: as the names suggest, these are the x and y position of the top left corner of the vertex and its width and height. The position and size properties can be used as well.
+- `style`: the style description to be applied to this vertex. Styles will be described in more detail shortly, but until we create custom styles, we will just use those currently available.
 
 With the edge addition method, the identically named parameters perform the same function as in the vertex addition method.
 The source and target parameters define the vertices to which the edge is connected.

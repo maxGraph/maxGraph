@@ -229,38 +229,39 @@ export class GraphDataModel extends EventSource {
   cells: { [key: string]: Cell } | null = {};
 
   /**
-   * Specifies if edges should automatically be moved into the nearest common
-   * ancestor of their terminals. Default is true.
+   * Specifies if edges should automatically be moved into the nearest common ancestor of their terminals.
+   * @default true
    */
   maintainEdgeParent = true;
 
   /**
-   * Specifies if relative edge parents should be ignored for finding the nearest
-   * common ancestors of an edge's terminals. Default is true.
+   * Specifies if relative edge parents should be ignored for finding the nearest common ancestors of an edge's terminals.
+   * @default true
    */
   ignoreRelativeEdgeParent = true;
 
   /**
    * Specifies if the model should automatically create Ids for new cells.
-   * Default is true.
+   * @default true.
    */
   createIds = true;
 
   /**
    * Defines the prefix of new Ids. Default is an empty string.
+   * @default ''
    */
   prefix = '';
 
   /**
-   * Defines the postfix of new Ids. Default is an empty string.
+   * Defines the postfix of new Ids.
+   * @default ''
    */
   postfix = '';
 
   /**
    * Specifies the next Id to be created. Initial value is 0.
    */
-  // nextId: number | string;
-  nextId = 0;
+  nextId: number = 0;
 
   /**
    * Holds the changes for the current transaction. If the transaction is
@@ -503,7 +504,7 @@ export class GraphDataModel extends EventSource {
    *
    * @param {Cell} cell  to create the Id for.
    */
-  createId(cell: Cell) {
+  createId(cell: Cell): string {
     const id = this.nextId;
     this.nextId++;
     return this.prefix + id + this.postfix;
@@ -518,16 +519,16 @@ export class GraphDataModel extends EventSource {
     const childCount = cell.getChildCount();
 
     for (let i = 0; i < childCount; i += 1) {
-      const child = <Cell>cell.getChildAt(i);
+      const child = cell.getChildAt(i);
       this.updateEdgeParents(child, root);
     }
 
     // Updates the parents of all connected edges
     const edgeCount = cell.getEdgeCount();
-    const edges = [];
+    const edges: Cell[] = [];
 
     for (let i = 0; i < edgeCount; i += 1) {
-      edges.push(<Cell>cell.getEdgeAt(i));
+      edges.push(cell.getEdgeAt(i));
     }
 
     for (let i = 0; i < edges.length; i += 1) {

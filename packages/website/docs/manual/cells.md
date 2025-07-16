@@ -72,36 +72,52 @@ Note that the base style names and the other style properties may be in any orde
 Below are examples to demonstrate this concept, adapting the `insertVertex` call we saw in the [hello world example](../tutorials/the-hello-world-example.md):
 - A new style called _ROUNDED_ has been created, to apply this to a vertex:
 ```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
-    {
-      baseStyleNames: ['ROUNDED'],
-    });
+const v1 = graph.insertVertex({
+  value: 'Hello',
+  position: [20, 20],
+  size: [80, 30],
+  style: {
+    baseStyleNames: ['ROUNDED'],
+  },
+});
 ```
 - To create a new vertex with the _ROUNDED_ style, overriding the stroke and fill colors:
 ```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
-    {
-      baseStyleNames: ['ROUNDED'],
-      strokeColor: 'red',
-      fillColor: 'green',
-    });
+const v1 = graph.insertVertex({
+  value: 'Hello',
+  position: [20, 20],
+  size: [80, 30],
+  style: {
+    baseStyleNames: ['ROUNDED'],
+    strokeColor: 'red',
+    fillColor: 'green',
+  },
+});
 ```
 - To create a new vertex with no global style, but with local stroke and fill colors:
 ```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
-    {
-      ignoreDefaultStyle: true,
-      strokeColor: 'red',
-      fillColor: 'green',
-    });
+const v1 = graph.insertVertex({
+  value: 'Hello',
+  position: [20, 20],
+  size: [80, 30],
+  style: {
+    ignoreDefaultStyle: true,
+    strokeColor: 'red',
+    fillColor: 'green',
+  },
+});
 ```
 - To create a vertex that uses the _defaultVertex_ style, but a local value of the fill color:
 ```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
-  {
+const v1 = graph.insertVertex({
+  value: 'Hello',
+  position: [20, 20],
+  size: [80, 30],
+  style: {
     baseStyleNames: ['defaultVertex'], // This can be ommited, as it is the default style applied for vertices
     fillColor: 'blue',
-  });
+  },
+});
 ```
 
 Again, the `maxGraph` class provides utility functions that form the core API for accessing and changing the styles of cells:

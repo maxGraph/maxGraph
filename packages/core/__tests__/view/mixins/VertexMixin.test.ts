@@ -57,7 +57,7 @@ const relativeGeometry = (x: number, y: number, width: number, height: number) =
 };
 
 describe('insertVertex', () => {
-  describe('with several parameters', () => {
+  describe('Legacy method (with several parameters)', () => {
     test('with position, size and style', () => {
       const graph = createGraphWithoutContainer();
       const style: CellStyle = { rounded: true, shape: 'cloud' };

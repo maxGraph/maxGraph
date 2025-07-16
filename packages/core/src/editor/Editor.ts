@@ -289,7 +289,7 @@ import type { FitPlugin } from '../view/plugins/index.js';
  * const model = editor.graph.model;
  * model.beginUpdate();
  * try {
- *   editor.graph.insertVertex(parent, null, userObject, 20, 20, 80, 30);
+ *   editor.graph.insertVertex({parent, value: userObject, position: [20, 20], size: [80, 30]});
  * } finally
  *   model.endUpdate();
  * }

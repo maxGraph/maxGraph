@@ -68,9 +68,9 @@ const parent = graph.getDefaultParent();
 // Adds cells to the model in a single step
 model.beginUpdate();
 try  {
-    const v1 = graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30);
-    const v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
-    graph.insertEdge(parent, null, '', v1, v2);
+    const v1 = graph.insertVertex({ parent, value: 'Hello,', position: [20, 20], size: [80, 30] });
+    const v2 = graph.insertVertex({ parent, value: 'World!', position:[200, 150], size: [80, 30] });
+    graph.insertEdge({ parent, source: v1, target: v2 });
 }
 finally {
     // Updates the display
