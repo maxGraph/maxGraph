@@ -141,10 +141,10 @@ class SwimlaneShape extends Shape {
       // TODO check parenthesis position (compare with mxGraph: incorrect migration)
       return Math.min(w / 2, Math.min(h / 2, this.style?.arcSize ?? LINE_ARCSIZE / 2));
     }
-    const f = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+    const roundingFactor = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
     // end of duplication
 
-    return start * f * 3;
+    return start * roundingFactor * 3;
   }
 
   /**
