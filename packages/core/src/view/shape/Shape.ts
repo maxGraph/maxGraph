@@ -767,17 +767,15 @@ class Shape {
     // TODO remove this var, return directly
     let r = 0;
 
-    if (this.style?.absoluteArcSize ?? false) {
+    if (this.style?.absoluteArcSize) {
       // TODO check parenthesis in mxGraph
       // TODO why not computing the min value, then divided by 2, instead of dividing everywhere?
       // TODO introduce a getBaseArcSize method for this.style?.arcSize ?? LINE_ARCSIZE) / 2 and use it everywhere
       r = Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
     } else {
-      // TODO check parenthesis?
       const roundingFactor =
         (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
-      // TODO compute min then multiply by roundingFactor
-      r = Math.min(w * roundingFactor, h * roundingFactor);
+      r = Math.min(w, h) * roundingFactor;
     }
     return r;
   }
