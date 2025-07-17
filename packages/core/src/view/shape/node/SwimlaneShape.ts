@@ -133,7 +133,7 @@ class SwimlaneShape extends Shape {
   }
 
   /**
-   * Returns the arcsize for the swimlane.
+   * Returns the arc size for the swimlane.
    */
   getSwimlaneArcSize(w: number, h: number, start: number) {
     // TODO duplication with RectangleShape
