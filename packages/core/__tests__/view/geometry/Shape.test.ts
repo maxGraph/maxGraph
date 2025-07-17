@@ -63,7 +63,6 @@ describe('Shape', () => {
       });
     });
 
-    // TODO add more tests for absoluteArcSize: false/undefined
     describe.each([false, undefined])(
       'absoluteArcSize: %s',
       (absoluteArcSize?: boolean) => {
@@ -99,14 +98,26 @@ describe('Shape', () => {
       }
     );
 
-    // TODO review parameters, use a describe 'style is undefined'
-    test('style is undefined', () => {
-      shape.style = null;
-      expect(shape.getArcSize(100, 50)).toBe(7.5);
-    });
-    test('style is undefined, large dimensions', () => {
-      shape.style = null;
-      expect(shape.getArcSize(200, 468)).toBe(30);
+    describe('absoluteArcSize: true', () => {
+      test('height is smaller than width', () => {
+        shape.style = null;
+        expect(shape.getArcSize(400, 350)).toBe(52.5);
+      });
+
+      test('width is smaller than height', () => {
+        shape.style = null;
+        expect(shape.getArcSize(40, 60)).toBe(6);
+      });
+
+      test('style is undefined, large dimensions', () => {
+        shape.style = null;
+        expect(shape.getArcSize(200, 468)).toBe(30);
+      });
+
+      test('width and height are equal', () => {
+        shape.style = null;
+        expect(shape.getArcSize(85, 85)).toBe(12.75);
+      });
     });
   });
 });
