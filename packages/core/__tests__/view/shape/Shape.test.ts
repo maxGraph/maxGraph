@@ -107,7 +107,7 @@ describe('getArcSize', () => {
       expect(shape.getArcSize(40, 60)).toBe(6);
     });
 
-    test('style is undefined, large dimensions', () => {
+    test('large dimensions', () => {
       shape.style = null;
       expect(shape.getArcSize(200, 468)).toBe(30);
     });
