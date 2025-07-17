@@ -26,7 +26,6 @@ describe('Shape', () => {
       shape = new Shape();
     });
 
-    // TODO test undefined absoluteArcSize as well
     describe('absoluteArcSize: true', () => {
       test('height is smaller than width', () => {
         shape.style = { absoluteArcSize: true, arcSize: 20 };
@@ -64,28 +63,43 @@ describe('Shape', () => {
       });
     });
 
-    // TODO add more tests for absoluteArcSize: false
-    describe('absoluteArcSize: false', () => {
-      test('arcSize set, large dimensions', () => {
-        shape.style = { absoluteArcSize: false, arcSize: 40 };
-        expect(shape.getArcSize(100, 50)).toBe(20);
-      });
-      test('arcSize set, small dimensions', () => {
-        shape.style = { absoluteArcSize: false, arcSize: 40 };
-        expect(shape.getArcSize(10, 12)).toBe(4);
-      });
+    // TODO add more tests for absoluteArcSize: false/undefined
+    describe.each([false, undefined])(
+      'absoluteArcSize: %s',
+      (absoluteArcSize?: boolean) => {
+        test('height is smaller than width', () => {
+          shape.style = { absoluteArcSize, arcSize: 40 };
+          expect(shape.getArcSize(400, 350)).toBe(140);
+        });
 
-      test('arcSize not set, large dimensions', () => {
-        shape.style = { absoluteArcSize: false };
-        expect(shape.getArcSize(250, 310)).toBe(37.5);
-      });
+        test('width is smaller than height', () => {
+          shape.style = { absoluteArcSize, arcSize: 30 };
+          expect(shape.getArcSize(40, 60)).toBe(12);
+        });
 
-      test('arcSize not set, small dimensions', () => {
-        shape.style = { absoluteArcSize: false };
-        expect(shape.getArcSize(13, 10)).toBe(1.5);
-      });
-    });
+        test('width and height are equal', () => {
+          shape.style = { absoluteArcSize, arcSize: 60 };
+          expect(shape.getArcSize(85, 85)).toBe(51);
+        });
 
+        test('arcSize not set, height is smaller than width', () => {
+          shape.style = { absoluteArcSize };
+          expect(shape.getArcSize(400, 350)).toBe(52.5);
+        });
+
+        test('arcSize not set, width is smaller than height', () => {
+          shape.style = { absoluteArcSize };
+          expect(shape.getArcSize(40, 60)).toBe(6);
+        });
+
+        test('arcSize not set, width and height are equal', () => {
+          shape.style = { absoluteArcSize };
+          expect(shape.getArcSize(85, 85)).toBe(12.75);
+        });
+      }
+    );
+
+    // TODO review parameters, use a describe 'style is undefined'
     test('style is undefined', () => {
       shape.style = null;
       expect(shape.getArcSize(100, 50)).toBe(7.5);
