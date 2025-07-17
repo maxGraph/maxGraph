@@ -300,15 +300,14 @@ class Shape {
   }
 
   /**
-   * Returns true if HTML is allowed for this shape. This implementation always
-   * returns false.
+   * Returns true if HTML is allowed for this shape. This implementation always returns `false`.
    */
   isHtmlAllowed() {
     return false;
   }
 
   /**
-   * Returns 0, or 0.5 if <strokewidth> % 2 == 1.
+   * Returns 0, or 0.5 if {@link strokeWidth} % 2 == 1.
    */
   getSvgScreenOffset(): number {
     const sw =
