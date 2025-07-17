@@ -99,25 +99,25 @@ describe('getSwimlaneArcSize', () => {
   //   }
   // );
 
-  // describe('absoluteArcSize: true', () => {
-  //   test('height is smaller than width', () => {
-  //     shape.style = null;
-  //     expect(shape.getSwimlaneArcSize(400, 350)).toBe(52.5);
-  //   });
-  //
-  //   test('width is smaller than height', () => {
-  //     shape.style = null;
-  //     expect(shape.getSwimlaneArcSize(40, 60)).toBe(6);
-  //   });
-  //
-  //   test('style is undefined, large dimensions', () => {
-  //     shape.style = null;
-  //     expect(shape.getSwimlaneArcSize(200, 468)).toBe(30);
-  //   });
-  //
-  //   test('width and height are equal', () => {
-  //     shape.style = null;
-  //     expect(shape.getSwimlaneArcSize(85, 85)).toBe(12.75);
-  //   });
-  // });
+  describe('style is not set', () => {
+    test('height is smaller than width', () => {
+      shape.style = null;
+      expect(shape.getSwimlaneArcSize(400, 350, 40)).toBe(18);
+    });
+
+    test('width is smaller than height', () => {
+      shape.style = null;
+      expect(shape.getSwimlaneArcSize(40, 60, 20)).toBe(9);
+    });
+
+    test('large dimensions', () => {
+      shape.style = null;
+      expect(shape.getSwimlaneArcSize(200, 468, 15)).toBe(6.75);
+    });
+
+    test('width and height are equal', () => {
+      shape.style = null;
+      expect(shape.getSwimlaneArcSize(85, 85, 19)).toBe(8.55);
+    });
+  });
 });
