@@ -137,8 +137,9 @@ class SwimlaneShape extends Shape {
    */
   getSwimlaneArcSize(w: number, h: number, start: number) {
     // TODO duplication with RectangleShape
+    // TODO remove false
     if (this.style?.absoluteArcSize ?? false) {
-      // TODO check parenthesis position (compare with mxGraph: incorrect migration)
+      // TODO use the getBaseArcSize method instead + change order
       return Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
     }
     const roundingFactor = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
