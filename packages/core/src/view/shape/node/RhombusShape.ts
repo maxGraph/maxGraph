@@ -58,7 +58,7 @@ class RhombusShape extends Shape {
     const hw = w / 2;
     const hh = h / 2;
 
-    const arcSize = (this.style?.arcSize ?? LINE_ARCSIZE) / 2;
+    const arcSize = this.getBaseArcSize();
 
     c.begin();
     this.addPoints(
