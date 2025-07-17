@@ -276,8 +276,7 @@ class Shape {
   }
 
   /**
-   * Initializes the shape by creaing the DOM node using <create>
-   * and adding it into the given container.
+   * Initializes the shape by adding it into the given container if the node of the shape doesn't already have a parent.
    *
    * @param container DOM node that will contain the shape.
    */
