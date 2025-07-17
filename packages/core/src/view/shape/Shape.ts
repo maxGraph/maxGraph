@@ -758,16 +758,20 @@ class Shape {
     return;
   }
 
+  // TODO use everywhere + jsdoc
+  protected getBaseArcSize(): number {
+    return (this.style?.arcSize ?? LINE_ARCSIZE) / 2;
+  }
+
   /**
    * Returns the arc size for the given dimension.
    */
-  getArcSize(w: number, h: number) {
+  getArcSize(w: number, h: number): number {
     // TODO Shape.getArcSize should be used in RectangleShape.paintBackground to remove duplicate code
 
     // TODO check parenthesis in mxGraph
     if (this.style?.absoluteArcSize) {
-      // TODO introduce a getBaseArcSize method for this.style?.arcSize ?? LINE_ARCSIZE) / 2 and use it everywhere
-      return Math.min((this.style?.arcSize ?? LINE_ARCSIZE) / 2, Math.min(h, w) / 2);
+      return Math.min(this.getBaseArcSize(), Math.min(h, w) / 2);
     }
     const roundingFactor = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
     return Math.min(w, h) * roundingFactor;
