@@ -96,7 +96,7 @@ describe('getArcSize', () => {
     }
   );
 
-  describe('absoluteArcSize: true', () => {
+  describe('style is not set', () => {
     test('height is smaller than width', () => {
       shape.style = null;
       expect(shape.getArcSize(400, 350)).toBe(52.5);
