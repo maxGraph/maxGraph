@@ -77,6 +77,7 @@ class RectangleShape extends Shape {
 
       if (this.isRounded) {
         // TODO should call Shape.getArcSize
+        // const roundingValue = this.getArcSize(w, h);
         let r = 0; // TODO remove initializer
 
         if (this.style?.absoluteArcSize ?? false) {
