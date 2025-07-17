@@ -139,7 +139,7 @@ class SwimlaneShape extends Shape {
     // TODO duplication with RectangleShape
     if (this.style?.absoluteArcSize ?? false) {
       // TODO check parenthesis position (compare with mxGraph: incorrect migration)
-      return Math.min(w / 2, Math.min(h / 2, this.style?.arcSize ?? LINE_ARCSIZE / 2));
+      return Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
     }
     const roundingFactor = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
     // end of duplication
