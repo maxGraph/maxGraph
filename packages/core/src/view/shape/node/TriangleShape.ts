@@ -18,7 +18,6 @@ limitations under the License.
 
 import Point from '../../geometry/Point.js';
 import ActorShape from './ActorShape.js';
-import { LINE_ARCSIZE } from '../../../util/Constants.js';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
 /**
