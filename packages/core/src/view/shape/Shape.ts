@@ -764,11 +764,9 @@ class Shape {
   getArcSize(w: number, h: number) {
     // TODO Shape.getArcSize should be used in RectangleShape.paintBackground to remove duplicate code
 
+    // TODO check parenthesis in mxGraph
     if (this.style?.absoluteArcSize) {
-      // TODO check parenthesis in mxGraph
-      // TODO why not computing the min value, then divided by 2, instead of dividing everywhere?
       // TODO introduce a getBaseArcSize method for this.style?.arcSize ?? LINE_ARCSIZE) / 2 and use it everywhere
-      // r = Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
       return Math.min((this.style?.arcSize ?? LINE_ARCSIZE) / 2, Math.min(h, w) / 2);
     }
     const roundingFactor = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
