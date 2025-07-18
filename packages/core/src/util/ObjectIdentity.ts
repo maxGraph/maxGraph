@@ -21,11 +21,9 @@ import { IDENTITY_FIELD_NAME } from './Constants.js';
 import { getFunctionName } from './StringUtils.js';
 
 /**
- * @class
+ * Identity for JavaScript objects and functions.
  *
- * Identity for JavaScript objects and functions. This is implemented using
- * a simple incrementing counter which is stored in each object under
- * {@link FIELD_NAME}.
+ * This is implemented using a simple incrementing counter which is stored in each object under {@link FIELD_NAME}.
  *
  * The identity for an object does not change during its lifecycle.
  */

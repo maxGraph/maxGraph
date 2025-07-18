@@ -21,13 +21,13 @@ import Rectangle from '../geometry/Rectangle.js';
 import EventSource from '../event/EventSource.js';
 import ImageBox from '../image/ImageBox.js';
 import CellState from './CellState.js';
-import ObjectIdentity from '../../util/ObjectIdentity.js';
+import type ObjectIdentity from '../../util/ObjectIdentity.js';
 import { AlignValue, VAlignValue } from '../../types.js';
 
 /**
  * Extends {@link EventSource} to implement a graph overlay, represented by an icon and a tooltip.
  *
- * Overlays can handle and fire  {@link InternalEvent.CLICK} events and are added to the graph using {@link AbstractGraph.addCellOverlay}, and removed using
+ * Overlays can handle and fire {@link InternalEvent.CLICK} events and are added to the graph using {@link AbstractGraph.addCellOverlay}, and removed using
  * {@link AbstractGraph.removeCellOverlay}, or {@link AbstractGraph.removeCellOverlays} to remove all overlays.
  * The {@link AbstractGraph.getCellOverlays} function returns the array of overlays for a given cell in a graph.
  * If multiple overlays exist for the same cell, then {@link getBounds} should be overridden in at least one of the overlays.
@@ -117,8 +117,7 @@ class CellOverlay extends EventSource implements ObjectIdentity {
   verticalAlign: VAlignValue = 'bottom';
 
   /**
-   * Holds the offset as an {@link Point}. The offset will be scaled according to the
-   * current scale.
+   * Holds the offset as an {@link Point}. The offset will be scaled according to the current scale.
    */
   offset = new Point();
 
@@ -129,28 +128,25 @@ class CellOverlay extends EventSource implements ObjectIdentity {
   cursor = 'help';
 
   /**
-   * Defines the overlapping for the overlay, that is, the proportional distance
-   * from the origin to the point defined by the alignment. Default is 0.5.
+   * Defines the overlapping for the overlay, that is, the proportional distance from the origin to the point defined by the alignment.
+   * @default 0.5
    */
   defaultOverlap = 0.5;
 
   /**
-   * Returns the bounds of the overlay for the given <CellState> as an
-   * {@link Rectangle}. This should be overridden when using multiple overlays
-   * per cell so that the overlays do not overlap.
+   * Returns the bounds of the overlay for the given {@link CellState} as an {@link Rectangle}.
+   * This should be overridden when using multiple overlays per cell so that the overlays do not overlap.
    *
-   * The following example will place the overlay along an edge (where
-   * x=[-1..1] from the start to the end of the edge and y is the
-   * orthogonal offset in px).
+   * The following example will place the overlay along an edge (where x=[-1..1] from the start to the end of the edge
+   * and y is the orthogonal offset in px).
    *
    * ```javascript
-   * overlay.getBounds = function(state)
-   * {
-   *   var bounds = getBounds.apply(this, arguments);
+   * const overlayBounds = overlay.getBounds;
+   * overlay.getBounds = function(state) {
+   *   const bounds = overlayBounds.call(this, state);
    *
-   *   if (state.view.graph.getDataModel().isEdge(state.cell))
-   *   {
-   *     var pt = state.view.getPoint(state, {x: 0, y: 0, relative: true});
+   *   if (state.view.graph.getDataModel().isEdge(state.cell)) {
+   *     const pt = state.view.getPoint(state, {x: 0, y: 0, relative: true});
    *
    *     bounds.x = pt.x - bounds.width / 2;
    *     bounds.y = pt.y - bounds.height / 2;
@@ -160,8 +156,7 @@ class CellOverlay extends EventSource implements ObjectIdentity {
    * };
    * ```
    *
-   * @param state <CellState> that represents the current state of the
-   * associated cell.
+   * @param state {@link CellState} that represents the current state of the associated cell.
    */
   getBounds(state: CellState): Rectangle {
     const isEdge = state.cell.isEdge();
@@ -216,10 +211,11 @@ class CellOverlay extends EventSource implements ObjectIdentity {
   }
 
   /**
-   * Returns the textual representation of the overlay to be used as the
-   * tooltip. This implementation returns <tooltip>.
+   * Returns the textual representation of the overlay to be used as the tooltip.
+   *
+   * This implementation returns {@link tooltip}.
    */
-  toString() {
+  toString(): string | null | undefined {
     return this.tooltip;
   }
 }
