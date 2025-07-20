@@ -71,7 +71,7 @@ declare module '../AbstractGraph' {
      *
      * @param cell {@link Cell} whose label should be returned.
      */
-    getLabel: (cell: Cell) => string | null;
+    getLabel: (cell?: Cell | null) => string | null;
 
     /**
      * Returns true if the label must be rendered as HTML markup.

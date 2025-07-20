@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, Perimeter, Point } from '@maxgraph/core';
+import { type CellStyle, Graph, Perimeter, Point } from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
-import { createGraphContainer } from './shared/configure.js';
+import { createGraphContainer, createMainDiv } from './shared/configure.js';
 
 export default {
   title: 'Styles/Stylesheet',
@@ -29,8 +29,14 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
+  const div = createMainDiv(`
+  This example demonstrates using a custom stylesheet and control points in edges, as well as overriding the <code>getLabel</code> and <code>getTooltip</code>
+  functions to return dynamic information for edges.
+  `);
+
   const container = createGraphContainer(args);
+  div.appendChild(container);
 
   // Creates the graph inside the DOM node.
   const graph = new Graph(container);
@@ -39,10 +45,11 @@ const Template = ({ label, ...args }) => {
   graph.setEnabled(false);
 
   // Returns a special label for edges. Note: This does a super call to use the default implementation.
+  const originalGraphGetLabel = graph.getLabel;
   graph.getLabel = function (cell) {
-    const label = Graph.prototype.getLabel.apply(this, arguments);
+    const label = originalGraphGetLabel.call(this, cell);
 
-    if (cell.isEdge()) {
+    if (cell?.isEdge()) {
       return `Transfer ${label}`;
     }
     return label;
@@ -62,8 +69,7 @@ const Template = ({ label, ...args }) => {
   };
 
   // Creates the default style for vertices
-  /** @type {import('@maxgraph/core').CellStyle} */
-  const defaultVertexStyle = {
+  const defaultVertexStyle: CellStyle = {
     align: 'center',
     fillColor: '#EEEEEE',
     fontColor: '#774400',
@@ -79,8 +85,7 @@ const Template = ({ label, ...args }) => {
   graph.getStylesheet().putDefaultVertexStyle(defaultVertexStyle);
 
   // Creates the default style for edges
-  /** @type {import('@maxgraph/core').CellStyle} */
-  const defaultEdgeStyle = {
+  const defaultEdgeStyle: CellStyle = {
     align: 'center',
     edgeStyle: 'elbowEdgeStyle',
     endArrow: 'classic',
@@ -93,8 +98,7 @@ const Template = ({ label, ...args }) => {
 
   // Additional styles
   const redColor = '#f10d0d';
-  /** @type {import('@maxgraph/core').CellStyle} */
-  const edgeImportantStyle = {
+  const edgeImportantStyle: CellStyle = {
     fontColor: redColor,
     fontSize: 14,
     fontStyle: 3,
@@ -102,12 +106,10 @@ const Template = ({ label, ...args }) => {
   };
   graph.getStylesheet().putCellStyle('importantEdge', edgeImportantStyle);
 
-  /** @type {import('@maxgraph/core').CellStyle} */
-  const shapeImportantStyle = { strokeColor: redColor };
+  const shapeImportantStyle: CellStyle = { strokeColor: redColor };
   graph.getStylesheet().putCellStyle('importantShape', shapeImportantStyle);
 
-  // Gets the default parent for inserting new cells. This
-  // is normally the first child of the root (ie. layer 0).
+  // Gets the default parent for inserting new cells. This is normally the first child of the root (i.e. layer 0).
   const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
@@ -119,10 +121,30 @@ const Template = ({ label, ...args }) => {
       size: [180, 30],
       style: { baseStyleNames: ['importantShape'] },
     });
-    const v2 = graph.insertVertex(parent, null, 'Interval 2', 140, 80, 280, 30);
-    const v3 = graph.insertVertex(parent, null, 'Interval 3', 200, 140, 360, 30);
-    const v4 = graph.insertVertex(parent, null, 'Interval 4', 480, 200, 120, 30);
-    const v5 = graph.insertVertex(parent, null, 'Interval 5', 60, 260, 400, 30);
+    const v2 = graph.insertVertex({
+      parent,
+      value: 'Interval 2',
+      position: [140, 80],
+      size: [280, 30],
+    });
+    const v3 = graph.insertVertex({
+      parent,
+      value: 'Interval 3',
+      position: [200, 140],
+      size: [360, 30],
+    });
+    const v4 = graph.insertVertex({
+      parent,
+      value: 'Interval 4',
+      position: [480, 200],
+      size: [120, 30],
+    });
+    const v5 = graph.insertVertex({
+      parent,
+      value: 'Interval 5',
+      position: [60, 260],
+      size: [400, 30],
+    });
     const v6 = graph.insertVertex({
       parent,
       value: 'Interval 6 (ignore default style)',
@@ -134,8 +156,8 @@ const Template = ({ label, ...args }) => {
         strokeColor: 'black',
       },
     });
-    const e1 = graph.insertEdge(parent, null, '1', v1, v2);
-    e1.getGeometry().points = [new Point(160, 60)];
+    const e1 = graph.insertEdge({ parent, value: '1', source: v1, target: v2 });
+    e1.getGeometry()!.points = [new Point(160, 60)];
     const e2 = graph.insertEdge({
       parent,
       value: '2',
@@ -143,17 +165,17 @@ const Template = ({ label, ...args }) => {
       target: v5,
       style: { baseStyleNames: ['importantEdge'] },
     });
-    e2.getGeometry().points = [new Point(80, 60)];
-    const e3 = graph.insertEdge(parent, null, '3', v2, v3);
-    e3.getGeometry().points = [new Point(280, 120)];
-    const e4 = graph.insertEdge(parent, null, '4', v3, v4);
-    e4.getGeometry().points = [new Point(500, 180)];
-    const e5 = graph.insertEdge(parent, null, '5', v3, v5);
-    e5.getGeometry().points = [new Point(380, 180)];
-    const e6 = graph.insertEdge(parent, null, '6', v5, v6);
+    e2.getGeometry()!.points = [new Point(80, 60)];
+    const e3 = graph.insertEdge({ parent, value: '3', source: v2, target: v3 });
+    e3.getGeometry()!.points = [new Point(280, 120)];
+    const e4 = graph.insertEdge({ parent, value: '4', source: v3, target: v4 });
+    e4.getGeometry()!.points = [new Point(500, 180)];
+    const e5 = graph.insertEdge({ parent, value: '5', source: v3, target: v5 });
+    e5.getGeometry()!.points = [new Point(380, 180)];
+    graph.insertEdge({ parent, value: '6', source: v5, target: v6 });
   });
 
-  return container;
+  return div;
 };
 
 export const Default = Template.bind({});

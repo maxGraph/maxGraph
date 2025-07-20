@@ -258,7 +258,7 @@ export const EdgeMixin: PartialType = {
     const edge = new Cell(value, new Geometry(), style);
     edge.setId(id);
     edge.setEdge(true);
-    (<Geometry>edge.geometry).relative = true;
+    edge.geometry!.relative = true; // geometry is set when creating the cell above
     return edge;
   },
 

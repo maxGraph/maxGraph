@@ -44,7 +44,7 @@ export const LabelMixin: PartialType = {
   getLabel(cell) {
     let result: string | null = '';
 
-    if (this.isLabelsVisible() && cell != null) {
+    if (this.isLabelsVisible() && cell) {
       const style = this.getCurrentCellStyle(cell);
 
       if (!(style.noLabel ?? false)) {

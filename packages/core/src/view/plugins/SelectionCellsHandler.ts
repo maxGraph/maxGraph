@@ -57,7 +57,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     this.handlers = new Map();
     this.graph.addMouseListener(this);
 
-    this.refreshHandler = (sender: EventSource, evt: EventObject) => {
+    this.refreshHandler = () => {
       if (this.isEnabled()) {
         this.refresh();
       }
@@ -80,7 +80,8 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   graph: AbstractGraph;
 
   /**
-   * Specifies if events are handled. Default is true.
+   * Specifies if events are handled.
+   * @default true
    */
   enabled = true;
 
@@ -90,7 +91,8 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   refreshHandler: (sender: EventSource, evt: EventObject) => void;
 
   /**
-   * Defines the maximum number of handlers to paint individually. Default is 100.
+   * Defines the maximum number of handlers to paint individually.
+   * @default 100
    */
   maxHandlers = 100;
 
@@ -100,14 +102,14 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   handlers: Map<Cell, Handler>;
 
   /**
-   * Returns <enabled>.
+   * Returns {@link enabled}.
    */
   isEnabled() {
     return this.enabled;
   }
 
   /**
-   * Sets <enabled>.
+   * Sets {@link enabled}.
    */
   setEnabled(value: boolean) {
     this.enabled = value;
