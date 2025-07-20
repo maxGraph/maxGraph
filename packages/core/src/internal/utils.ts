@@ -50,7 +50,7 @@ export const mixInto = (dest: any) => (mixin: any) => {
   try {
     for (const key of keys) {
       Object.defineProperty(dest.prototype, key, {
-        value: mixin[key],
+        value: mixin[key], // TODO should clone the object (at least for array)
         writable: true,
       });
     }
