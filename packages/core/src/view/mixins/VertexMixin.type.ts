@@ -58,7 +58,12 @@ declare module '../AbstractGraph' {
      * ```javascript
      * const pt = graph.getPointForEvent(evt);
      * const parent = graph.getDefaultParent();
-     * graph.insertVertex(parent, null, 'Hello, World!', pt.x, pt.y, 220, 30);
+     * graph.insertVertex({
+     *   parent,
+     *   value: 'Hello, World!',
+     *   position: [pt.x, pt.y],
+     *   size: [220, 30]
+     * });
      * ```
      *
      * For adding image cells, the style parameter can be assigned as
@@ -100,6 +105,11 @@ declare module '../AbstractGraph' {
      * Adds a new vertex into the given parent {@link Cell} using value as the user
      * object and the given coordinates as the {@link Geometry} of the new vertex.
      * The id and style are used for the respective properties of the new `Cell`, which is returned.
+     *
+     * **IMPORTANT**:
+     * - If the position of the vertex is not set at vertex creation (by setting the `x` and `y` properties, or the `position` property), it is advised to use a {@link GraphLayout} or a {@link LayoutManager} to automatically compute the actual position.
+     * - If the size of the vertex is not set at vertex creation (by setting the `width` and the `height` properties, or the `size` property), it is advised to later set the size on the geometry of the vertex instance.
+     * Otherwise, the vertex has no size and it is not displayed.
      *
      * When adding new vertices from a mouse event, one should take into
      * account the offset of the graph container and the scale and translation

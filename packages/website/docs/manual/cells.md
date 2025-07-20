@@ -69,39 +69,50 @@ If you wanted to specify a style other than the default for a cell, you must pas
 The style that you pass has the form style name, and it must be stored in the `baseStyleNames` property of the `CellStyle` object representing the entire style.
 Note that the base style names and the other style properties may be in any order.
 
+By default, even if it is not set in the `baseStyleNames` property, a default style is used for style computation:
+- for vertices, the default style is `defaultVertex`
+- for edges, the default style is `defaultEdge`
+
+This behavior can be disabled by setting the `ignoreDefaultStyle` property to true in the style object passed to the cell. In this case, the style will not be merged with the default style for that cell type.
+
 Below are examples to demonstrate this concept, adapting the `insertVertex` call we saw in the [hello world example](../tutorials/the-hello-world-example.md):
 - A new style called _ROUNDED_ has been created, to apply this to a vertex:
 ```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
-    {
-      baseStyleNames: ['ROUNDED'],
-    });
+const v1 = graph.insertVertex({
+  value: 'Hello',
+  position: [20, 20],
+  size: [80, 30],
+  style: {
+    baseStyleNames: ['ROUNDED'],
+  },
+});
 ```
 - To create a new vertex with the _ROUNDED_ style, overriding the stroke and fill colors:
 ```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
-    {
-      baseStyleNames: ['ROUNDED'],
-      strokeColor: 'red',
-      fillColor: 'green',
-    });
+const v1 = graph.insertVertex({
+  value: 'Hello',
+  position: [20, 20],
+  size: [80, 30],
+  style: {
+    baseStyleNames: ['ROUNDED'],
+    strokeColor: 'red',
+    fillColor: 'green',
+  },
+});
 ```
-- To create a new vertex with no global style, but with local stroke and fill colors:
+- To create a new vertex with no default style but the _ROUNDED_ style, and with local stroke and fill colors:
 ```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
-    {
-      ignoreDefaultStyle: true,
-      strokeColor: 'red',
-      fillColor: 'green',
-    });
-```
-- To create a vertex that uses the _defaultVertex_ style, but a local value of the fill color:
-```javascript
-const v1 = graph.insertVertex(parent, null, 'Hello', 20, 20, 80, 30,
-  {
-    baseStyleNames: ['defaultVertex'], // This can be ommited, as it is the default style applied for vertices
-    fillColor: 'blue',
-  });
+const v1 = graph.insertVertex({
+  value: 'Hello',
+  position: [20, 20],
+  size: [80, 30],
+  style: {
+    baseStyleNames: ['ROUNDED'],
+    ignoreDefaultStyle: true,
+    strokeColor: 'yellow',
+    fillColor: 'orange',
+  },
+});
 ```
 
 Again, the `maxGraph` class provides utility functions that form the core API for accessing and changing the styles of cells:

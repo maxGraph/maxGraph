@@ -1095,7 +1095,7 @@ export type VertexParameters = {
    */
   geometryClass?: typeof Geometry;
   /**
-   * It is mandatory to set this value or the {@link size} property.
+   * If not set, falls back to the {@link size} property.
    */
   height?: number;
   /**
@@ -1132,15 +1132,15 @@ export type VertexParameters = {
    */
   value?: any;
   /**
-   * It is mandatory to set this value or the {@link size} property.
+   * If not set, falls back to the {@link size} property.
    */
   width?: number;
   /**
-   * It is mandatory to set this value or the {@link position} property.
+   * If not set, falls back to the {@link position} property.
    */
   x?: number;
   /**
-   * It is mandatory to set this value or the {@link position} property.
+   * If not set, falls back to the {@link position} property.
    */
   y?: number;
 };

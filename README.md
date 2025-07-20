@@ -62,7 +62,7 @@ yarn add @maxgraph/core
 `maxGraph` is written in TypeScript and provides type definitions for seamless integration into TypeScript applications.
 
 Compatibility of the npm package:
-- The JavaScript code conforms to `ES2020` and is provided as ES Modules only
+- The JavaScript code conforms to the `ES2020` standard and is available in both CommonJS and ES Module formats
 - TypeScript integration requires **TypeScript 3.8** or higher
 
 <!-- END OF 'copied into packages/website/docs/getting-started.mdx' -->
@@ -87,20 +87,15 @@ InternalEvent.disableContextMenu(container);
 
 const graph = new Graph(container);
 graph.setPanning(true); // Use mouse right button for panning
-// Gets the default parent for inserting new cells.
-// This is normally the first child of the root (ie. layer 0).
-const parent = graph.getDefaultParent();
 
 // Adds cells to the model in a single step
 graph.batchUpdate(() => {
   const vertex01 = graph.insertVertex({
-    parent,
     position: [10, 10],
     size: [100, 100],
     value: 'rectangle',
   });
   const vertex02 = graph.insertVertex({
-    parent,
     position: [350, 90],
     size: [50, 50],
     style: {
@@ -112,7 +107,6 @@ graph.batchUpdate(() => {
     value: 'ellipse',
   });
   graph.insertEdge({
-    parent,
     source: vertex01,
     target: vertex02,
     value: 'edge',

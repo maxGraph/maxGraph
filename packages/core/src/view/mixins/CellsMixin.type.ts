@@ -809,18 +809,26 @@ declare module '../AbstractGraph' {
      * To add a new style for making cells (un)selectable, use the following code.
      *
      * ```javascript
-     * isCellSelectable(cell)
-     * {
-     *   var style = this.getCurrentCellStyle(cell);
-     *
-     *   return this.isCellsSelectable() && !this.isCellLocked(cell) && style.selectable != 0;
+     * isCellSelectable(cell) {
+     *   const style = this.getCurrentCellStyle(cell);
+     *   return this.isCellsSelectable() &&
+     *     !this.isCellLocked(cell) &&
+     *     (style.selectable ?? true);
      * };
      * ```
      *
      * You can then use the new style as shown in this example.
      *
      * ```javascript
-     * graph.insertVertex(parent, null, 'Hello,', 20, 20, 80, 30, 'selectable=0');
+     * graph.insertVertex({
+     *   parent,
+     *   value: 'Hello,',
+     *   position: [20, 20],
+     *   size: [80, 30],
+     *   style: {
+     *     selectable: false,
+     *   },
+     * });
      * ```
      *
      * @param cell {@link Cell} whose selectable state should be returned.
