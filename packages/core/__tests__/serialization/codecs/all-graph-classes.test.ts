@@ -21,6 +21,7 @@ import {
   BaseGraph,
   getDefaultPlugins,
   ImageBox,
+  Multiplicity,
   Rectangle,
   registerCoreCodecs,
   unregisterAllCodecs,
@@ -40,13 +41,24 @@ afterEach(() => {
 
 function buildXml(name: string): string {
   const xmlTemplate = `<@NAME@>
+  <Object as="alternateEdgeStyle" />
   <Array as="cells" />
   <Array as="imageBundles" />
   <Array as="mouseListeners">
     <Object />
     <Object />
   </Array>
-  <Array as="multiplicities" />
+  <Array as="multiplicities">
+    <Multiplicity type="rectangle" source="1" max="2" countError="Only 2 targets allowed" typeError="Only circle targets allowed">
+      <Array as="validNeighbors">
+        <add value="circle" />
+      </Array>
+    </Multiplicity>
+  </Array>
+  <Object foldingEnabled="1" collapseToPreferredSize="1" as="options">
+    <ImageBox src="./collapsed-new.gif" width="10" height="10" as="collapsedImage" />
+    <ImageBox src="./expanded.gif" width="9" height="9" as="expandedImage" />
+  </Object>
   <GraphDataModel as="model">
     <root>
       <Cell id="0">
@@ -78,10 +90,6 @@ function buildXml(name: string): string {
   </Stylesheet>
   <Rectangle _x="123" _y="453" _width="60" _height="60" as="pageFormat" />
   <ImageBox src="./warning.gif" width="16" height="16" as="warningImage" />
-  <Object foldingEnabled="1" collapseToPreferredSize="1" as="options">
-    <ImageBox src="./collapsed-new.gif" width="10" height="10" as="collapsedImage" />
-    <ImageBox src="./expanded.gif" width="9" height="9" as="expandedImage" />
-  </Object>
 </@NAME@>
 `;
 
@@ -97,6 +105,21 @@ describe.each([
 ])('%s', (name, graphFactory: () => AbstractGraph) => {
   test('Export', () => {
     const graph = graphFactory();
+
+    graph.multiplicities.push(
+      new Multiplicity(
+        true,
+        'rectangle',
+        null,
+        null,
+        0,
+        2,
+        ['circle'],
+        'Only 2 targets allowed',
+        'Only circle targets allowed'
+      )
+    );
+
     // override defaults to ensure it is taken into account
     graph.pageFormat = new Rectangle(123, 453, 60, 60);
     graph.options.collapsedImage = new ImageBox('./collapsed-new.gif', 10, 10);

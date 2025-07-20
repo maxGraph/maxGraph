@@ -46,6 +46,7 @@ import VertexHandler from './handler/VertexHandler.js';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler.js';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler.js';
 import type {
+  CellStyle,
   DialectValue,
   EdgeStyleFunction,
   GraphCollaboratorsOptions,
@@ -56,7 +57,7 @@ import type {
   PluginId,
 } from '../types.js';
 import Multiplicity from './other/Multiplicity.js';
-import ImageBundle from './image/ImageBundle.js';
+import type ImageBundle from './image/ImageBundle.js';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply.js';
 import { isNullish } from '../internal/utils.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';
@@ -88,8 +89,17 @@ export abstract class AbstractGraph extends EventSource {
   isConstrainedMoving = false;
 
   // ===================================================================================================================
-  // Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)
+  // Group: Variables that should be in the mixins
+  // The current implementation of the function applying mixins create a shared state for properties with "complex" type (object, array)
+  // whereas here, we need to be created a specific instance for each new class instance.
+  // See https://github.com/maxGraph/maxGraph/pull/751 and https://github.com/maxGraph/maxGraph/pull/879
   // ===================================================================================================================
+
+  /**
+   * Specifies the alternate edge style to be used if the main control point on an edge is being double-clicked.
+   * @default {}
+   */
+  alternateEdgeStyle: CellStyle = {};
 
   cells: Cell[] = [];
 
@@ -104,6 +114,18 @@ export abstract class AbstractGraph extends EventSource {
    * An array of {@link Multiplicity} describing the allowed connections in a graph.
    */
   multiplicities: Multiplicity[] = [];
+
+  /** Folding options. */
+  options: GraphFoldingOptions = {
+    foldingEnabled: true,
+    collapsedImage: new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9),
+    expandedImage: new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9),
+    collapseToPreferredSize: true,
+  };
+
+  // ===================================================================================================================
+  // Group: Variables managed here (not in mixins)
+  // ===================================================================================================================
 
   /**
    * Holds the {@link GraphDataModel} that contains the cells to be displayed.
@@ -383,14 +405,6 @@ export abstract class AbstractGraph extends EventSource {
   containsValidationErrorsResource: string = isI18nEnabled()
     ? 'containsValidationErrors'
     : '';
-
-  /** Folding options. */
-  options: GraphFoldingOptions = {
-    foldingEnabled: true,
-    collapsedImage: new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9),
-    expandedImage: new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9),
-    collapseToPreferredSize: true,
-  };
 
   // ===================================================================================================================
   // Group: "Create Class Instance" factory functions.
