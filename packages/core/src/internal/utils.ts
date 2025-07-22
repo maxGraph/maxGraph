@@ -49,8 +49,14 @@ export const mixInto = (dest: any) => (mixin: any) => {
   const keys = Reflect.ownKeys(mixin);
   try {
     for (const key of keys) {
+      const rawValue = mixin[key];
+      const value = Array.isArray(rawValue) ? [...rawValue] : rawValue;
+      // Array.isArray(newValue) && (newValue = [...value]); // clone the array
+      // console.info(`${String(key)} / ${newValue} - isArray: ${Array.isArray(newValue)}`);
+
       Object.defineProperty(dest.prototype, key, {
-        value: mixin[key], // TODO should clone the object (at least for array)
+        value,
+        // value: mixin[key], // TODO should clone the object (at least for array)
         writable: true,
       });
     }

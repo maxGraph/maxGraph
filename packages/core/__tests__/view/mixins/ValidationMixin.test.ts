@@ -19,5 +19,6 @@ test('Ensure no side effects with the multiplicities property', () => {
       'Only circle targets allowed'
     )
   );
+  expect(graph2.multiplicities).toBe([]);
   expect(graph1.multiplicities).not.toBe(graph2.multiplicities);
 });
