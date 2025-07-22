@@ -36,9 +36,9 @@ import { clone } from '../../util/cloneUtils.js';
  * follows.
  *
  * ```javascript
- * geometry.setTerminalPoint(new mxPoint(x1, y1), true);
- * geometry.points: [new mxPoint(x2, y2)];
- * geometry.setTerminalPoint(new mxPoint(x3, y3), false);
+ * geometry.setTerminalPoint(new Point(x1, y1), true);
+ * geometry.points: [new Point(x2, y2)];
+ * geometry.setTerminalPoint(new Point(x3, y3), false);
  * ```
  *
  * Control points are used regardless of the connected state of an edge and may
