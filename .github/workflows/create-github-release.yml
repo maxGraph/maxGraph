@@ -14,6 +14,7 @@ jobs:
       - name: Set env
         run: |
           echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+          echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Get milestone number
         env:
           GH_TOKEN: ${{ github.token }}
@@ -34,6 +35,8 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           body: |
+            _Version ${{ env.VERSION }} released on ${{ env.RELEASE_DATE }}._
+            
             **Adapt this one liner summary**
             ⚡ This new version improves ... ⚡
 
