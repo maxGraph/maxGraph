@@ -16,11 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  LINE_ARCSIZE,
-  NONE,
-  RECTANGLE_ROUNDING_FACTOR,
-} from '../../../util/Constants.js';
+import { NONE } from '../../../util/Constants.js';
 import Shape from '../Shape.js';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 import Rectangle from '../../geometry/Rectangle.js';
@@ -76,15 +72,7 @@ class RectangleShape extends Shape {
       }
 
       if (this.isRounded) {
-        let r = 0;
-
-        if (this.style?.absoluteArcSize ?? false) {
-          r = Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
-        } else {
-          const f = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
-          r = Math.min(w * f, h * f);
-        }
-
+        const r = this.getArcSize(w, h);
         c.roundrect(x, y, w, h, r, r);
       } else {
         c.rect(x, y, w, h);

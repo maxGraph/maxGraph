@@ -18,7 +18,6 @@ limitations under the License.
 
 import ActorShape from './ActorShape.js';
 import Point from '../../geometry/Point.js';
-import { LINE_ARCSIZE } from '../../../util/Constants.js';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
 /**
@@ -37,7 +36,7 @@ class HexagonShape extends ActorShape {
    * Draws the path for this shape.
    */
   redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
-    const arcSize = (this.style?.arcSize ?? LINE_ARCSIZE) / 2;
+    const arcSize = this.getBaseArcSize();
 
     this.addPoints(
       c,

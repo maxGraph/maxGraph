@@ -18,7 +18,6 @@ limitations under the License.
 
 import Shape from '../Shape.js';
 import Point from '../../geometry/Point.js';
-import { LINE_ARCSIZE } from '../../../util/Constants.js';
 import Rectangle from '../../geometry/Rectangle.js';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
@@ -58,7 +57,7 @@ class RhombusShape extends Shape {
     const hw = w / 2;
     const hh = h / 2;
 
-    const arcSize = (this.style?.arcSize ?? LINE_ARCSIZE) / 2;
+    const arcSize = this.getBaseArcSize();
 
     c.begin();
     this.addPoints(

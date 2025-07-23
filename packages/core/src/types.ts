@@ -101,20 +101,21 @@ export type CellStateStyle = {
    */
   anchorPointDirection?: boolean;
   /**
-   * For **vertex**, this defines the rounding factor for a {@link rounded} vertex in percent.
-   * The possible values are between `0` and `100`.
-   * If this value is not specified, then `constants.RECTANGLE_ROUNDING_FACTOR * 100` is used.
-   *
-   * Shapes supporting `arcSize`:
-   * - Rectangle
+   * For **vertex**, this defines the absolute size of the {@link rounded} corners in pixels for the following shapes:
+   * - Hexagon
    * - Rhombus
-   * - Swimlane
    * - Triangle
+   * - `Rectangle` and `Swimlane`, if {@link absoluteArcSize} is `true`
+   *
+   * If this value is not specified, then {@link LINE_ARCSIZE} is used.
+   *
+   * For the `Rectangle` and `Swimlane` shapes, if {@link absoluteArcSize} is not `true`, this defines the rounding factor for a {@link rounded} vertex in percent.
+   * The possible values are between `0` and `100`.
+   * If this value is not specified, then {@link RECTANGLE_ROUNDING_FACTOR}` * 100` is used.
+   *
    *
    * For **edge**, this defines the absolute size of the {@link rounded} corners in pixels.
    * If this value is not specified, then {@link LINE_ARCSIZE} is used.
-   *
-   * See also {@link absoluteArcSize}.
    */
   arcSize?: number;
   /**

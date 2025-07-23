@@ -12,10 +12,12 @@ _**Note:** Yet to be released breaking changes appear here._
 **Breaking Changes**:
 - The `AbstractGraph.fit` method moved to `FitPlugin`, as well as the `minFitScale` and `maxFitScale` properties.
   The method now accepts a single parameter, mainly to minimize the need to pass many default values.
-- The `AbstractGraph.getPlugin` method now explicitly returns `undefined` when a plugin is not found.  
-  TypeScript users must update their code to handle the `undefined` case when calling this method.
 - The `Dictionary` class has been removed. The maxGraph API use the `Map` class instead, which is a standard JavaScript feature.
   If your code depends on the `Dictionary` class, you can use the `Map` class instead.
+- The `arcSize` of rounded shapes was not always correctly computed in the past. The computation is now consistent everywhere in the code and matches the mxGraph behavior.
+To have the same rendering as before for edges, you must multiply the `arcSize` by `2` in your styles.
+- The `AbstractGraph.getPlugin` method now explicitly returns `undefined` when a plugin is not found.  
+  TypeScript users must update their code to handle the `undefined` case when calling this method.
 - The return types of some methods of EditorToolbar are now more precise.
   - addPrototype(): HTMLImageElement instead of HTMLImageElement | HTMLButtonElement
   - addCombo(): HTMLSelectElement instead of HTMLElement

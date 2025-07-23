@@ -276,8 +276,7 @@ class Shape {
   }
 
   /**
-   * Initializes the shape by creaing the DOM node using <create>
-   * and adding it into the given container.
+   * Initializes the shape by adding it into the given container if the node of the shape doesn't already have a parent.
    *
    * @param container DOM node that will contain the shape.
    */
@@ -301,15 +300,14 @@ class Shape {
   }
 
   /**
-   * Returns true if HTML is allowed for this shape. This implementation always
-   * returns false.
+   * Returns true if HTML is allowed for this shape. This implementation always returns `false`.
    */
   isHtmlAllowed() {
     return false;
   }
 
   /**
-   * Returns 0, or 0.5 if <strokewidth> % 2 == 1.
+   * Returns 0, or 0.5 if {@link strokeWidth} % 2 == 1.
    */
   getSvgScreenOffset(): number {
     const sw =
@@ -759,18 +757,22 @@ class Shape {
   }
 
   /**
+   * Base arc size for the shape, taken from the style.
+   * @since 0.21.0
+   */
+  protected getBaseArcSize(): number {
+    return (this.style?.arcSize ?? LINE_ARCSIZE) / 2;
+  }
+
+  /**
    * Returns the arc size for the given dimension.
    */
-  getArcSize(w: number, h: number) {
-    let r = 0;
-
-    if (this.style?.absoluteArcSize ?? false) {
-      r = Math.min(w / 2, Math.min(h / 2, (this.style?.arcSize ?? LINE_ARCSIZE) / 2));
-    } else {
-      const f = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
-      r = Math.min(w * f, h * f);
+  getArcSize(w: number, h: number): number {
+    if (this.style?.absoluteArcSize) {
+      return Math.min(this.getBaseArcSize(), Math.min(h, w) / 2);
     }
-    return r;
+    const roundingFactor = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+    return Math.min(w, h) * roundingFactor;
   }
 
   /**
@@ -1011,7 +1013,7 @@ class Shape {
   }
 
   /**
-   * Hook for subclassers.
+   * Hook for subclassers. This implementation returns `false`.
    */
   isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     return false;
