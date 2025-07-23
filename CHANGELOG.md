@@ -9,6 +9,14 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+## 0.21.0
+
+Release date: `2025-07-22`
+
+For more details, see the [0.21.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.21.0) on the GitHub release page.
+
+This release improves Webpack and Node.js compatibility, removes legacy code, and slightly reduces bundle size.
+
 **Breaking Changes**:
 - The `AbstractGraph.fit` method moved to `FitPlugin`, as well as the `minFitScale` and `maxFitScale` properties.
   The method now accepts a single parameter, mainly to minimize the need to pass many default values.
