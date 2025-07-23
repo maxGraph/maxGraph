@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import Shape from '../Shape.js';
-import { LINE_ARCSIZE } from '../../../util/Constants.js';
 import Point from '../../geometry/Point.js';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 import { ColorValue } from '../../../types.js';
@@ -86,10 +85,8 @@ class PolylineShape extends Shape {
    * Paints the line shape.
    */
   paintLine(c: AbstractCanvas2D, pts: Point[], rounded?: boolean) {
-    const arcSize = this.style?.arcSize ?? LINE_ARCSIZE;
-
     c.begin();
-    this.addPoints(c, pts, rounded, arcSize, false);
+    this.addPoints(c, pts, rounded, this.getBaseArcSize(), false);
     c.stroke();
   }
 

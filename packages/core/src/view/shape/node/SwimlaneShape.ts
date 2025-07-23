@@ -19,7 +19,6 @@ import Shape from '../Shape.js';
 import Rectangle from '../../geometry/Rectangle.js';
 import {
   DEFAULT_STARTSIZE,
-  LINE_ARCSIZE,
   NONE,
   RECTANGLE_ROUNDING_FACTOR,
 } from '../../../util/Constants.js';
@@ -51,9 +50,7 @@ class SwimlaneShape extends Shape {
   }
 
   /**
-   * Default imagewidth and imageheight if an image but no imagewidth
-   * and imageheight are defined in the style. Value is 16.
-   * @type {number}
+   * Default image width and image height if an image but no image width and image height are defined in the style.
    * @default 16
    */
   imageSize = 16;
@@ -62,12 +59,6 @@ class SwimlaneShape extends Shape {
 
   /**
    * Adds roundable support.
-   * @param {mxAbstractCanvas2D} c
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
-   * @param {number} h
-   * @returns {boolean}
    */
   isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     return true;
@@ -139,15 +130,14 @@ class SwimlaneShape extends Shape {
   }
 
   /**
-   * Returns the arcsize for the swimlane.
+   * Returns the arc size for the swimlane.
    */
   getSwimlaneArcSize(w: number, h: number, start: number) {
-    if (this.style?.absoluteArcSize ?? false) {
-      return Math.min(w / 2, Math.min(h / 2, this.style?.arcSize ?? LINE_ARCSIZE / 2));
+    if (this.style?.absoluteArcSize) {
+      return Math.min(this.getBaseArcSize(), Math.min(h, w) / 2);
     }
-    const f = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
-
-    return start * f * 3;
+    const roundingFactor = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+    return start * roundingFactor * 3;
   }
 
   /**

@@ -324,14 +324,14 @@ export const DEFAULT_IMAGESIZE = 24;
 export const ENTITY_SEGMENT = 30;
 
 /**
- * Defines the default rounding factor for the rounded vertices in percent between
- * `0` and `1`. Values should be smaller than `0.5`.
+ * Defines the default rounding factor for the rounded vertices in percent between `0` and `1`.
+ * Values should be smaller than `0.5`.
  * See {@link CellStateStyle.arcSize}.
  */
 export const RECTANGLE_ROUNDING_FACTOR = 0.15;
 
 /**
- * Defines the default size in pixels of the arcs for the rounded edges.
+ * Defines the default size in pixels of the arcs for the rounded edges and vertices.
  * See {@link CellStateStyle.arcSize}.
  */
 export const LINE_ARCSIZE = 20;
