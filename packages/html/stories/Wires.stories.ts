@@ -32,7 +32,6 @@ import {
   CylinderShape,
   DomHelpers,
   domUtils,
-  EdgeHandler,
   EdgeSegmentHandler,
   type EdgeStyleFunction,
   EdgeStyleRegistry,
@@ -359,13 +358,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     override highlight(state: CellState | null = null) {
       if (this.state != state) {
-        if (this.state != null) {
+        if (this.state) {
           this.state.style = this.lastStyle;
 
           // Workaround for shape using current stroke width if no strokewidth defined
-          // TODO use ?= (may require eslint config change to support es2020)
-          this.state.style.strokeWidth = this.state.style.strokeWidth ?? 1;
-          this.state.style.strokeColor = this.state.style.strokeColor ?? 'none';
+          this.state.style.strokeWidth ??= 1;
+          this.state.style.strokeColor ??= 'none';
 
           if (this.state.shape) {
             this.state.view.graph.cellRenderer.configureShape(this.state);
