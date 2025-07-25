@@ -22,30 +22,26 @@ import type { AbstractGraph } from '../AbstractGraph.js';
 import { translate } from '../../internal/i18n-utils.js';
 
 /**
- * @class Multiplicity
- *
  * Defines invalid connections along with the error messages that they produce.
- * To add or remove rules on a graph, you must add/remove instances of this
- * class to {@link AbstractGraph.multiplicities}.
+ * To add or remove rules on a graph, you must add/remove instances of this class to {@link AbstractGraph.multiplicities}.
  *
  * ### Example
  *
  * ```javascript
- * graph.multiplicities.push(new mxMultiplicity(
+ * graph.multiplicities.push(new Multiplicity(
  *   true, 'rectangle', null, null, 0, 2, ['circle'],
  *   'Only 2 targets allowed',
  *   'Only circle targets allowed'));
  * ```
  *
- * Defines a rule where each rectangle must be connected to no more than 2
- * circles and no other types of targets are allowed.
+ * Defines a rule where each rectangle must be connected to no more than 2 circles and no other types of targets are allowed.
  */
 class Multiplicity {
   constructor(
     source: boolean,
     type: string,
-    attr: string,
-    value: string,
+    attr: string, // TODO allow null + in the property as well
+    value: string, // TODO allow null + in the property as well
     min: number | null | undefined,
     max: number | null | undefined,
     validNeighbors: string[],
@@ -67,26 +63,25 @@ class Multiplicity {
 
   /**
    * Defines the type of the source or target terminal. The type is a string
-   * passed to {@link mxUtils.isNode} together with the source or target vertex
+   * passed to {@link isNode} together with the source or target vertex
    * value as the first argument.
    */
   type: string;
 
   /**
-   * Optional string that specifies the attributename to be passed to
-   * {@link mxUtils.isNode} to check if the rule applies to a cell.
+   * Optional string that specifies the attribute name to be passed to
+   * {@link isNode} to check if the rule applies to a cell.
    */
   attr: string;
 
   /**
    * Optional string that specifies the value of the attribute to be passed
-   * to {@link mxUtils.isNode} to check if the rule applies to a cell.
+   * to {@link isNode} to check if the rule applies to a cell.
    */
   value: string;
 
   /**
-   * Boolean that specifies if the rule is applied to the source or target
-   * terminal of an edge.
+   * Boolean that specifies if the rule is applied to the source or target terminal of an edge.
    */
   source: boolean;
 

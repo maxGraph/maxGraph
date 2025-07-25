@@ -55,7 +55,6 @@ import type {
   MouseListenerSet,
   PluginId,
 } from '../types.js';
-import Multiplicity from './other/Multiplicity.js';
 import ImageBundle from './image/ImageBundle.js';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply.js';
 import { isNullish } from '../internal/utils.js';
@@ -99,11 +98,6 @@ export abstract class AbstractGraph extends EventSource {
    * Holds the mouse event listeners. See {@link fireMouseEvent}.
    */
   mouseListeners: MouseListenerSet[] = [];
-
-  /**
-   * An array of {@link Multiplicity} describing the allowed connections in a graph.
-   */
-  multiplicities: Multiplicity[] = [];
 
   /**
    * Holds the {@link GraphDataModel} that contains the cells to be displayed.
