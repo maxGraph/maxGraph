@@ -102,8 +102,6 @@ const backgroundImageWiresGrid = 'url("./images/wires-grid.gif")';
 const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
 
-  // TODO use the correct description: Starts connections on the background in wire-mode
-  // select several with left click, pan with right click
   const parentContainer = createMainDiv(`<h3>Wires</h3>
   Demonstrate usage of custom Shapes, Edge Handlers and dark mode.
   `);
@@ -114,7 +112,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   container.style.overflow = 'hidden';
   container.style.cursor = 'crosshair';
   container.style.backgroundImage = backgroundImageWiresGrid;
-  // TODO background-position:-1px 0px?
 
   // Changes some default colors
   StyleDefaultsConfig.shadowColor = '#C0C0C0';
@@ -125,9 +122,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   class MyCustomGraph extends Graph {
     override resetEdgesOnConnect = false;
 
-    override createEdgeSegmentHandler(state: CellState) {
-      return new MyCustomEdgeSegmentHandler(state);
-    }
+    // override createEdgeSegmentHandler(state: CellState) {
+    //   return new MyCustomEdgeSegmentHandler(state);
+    // }
 
     override createGraphView() {
       return new MyCustomGraphView(this);
@@ -135,43 +132,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     // FIXME customize EdgeSegmentHandler instead
     // see mxGraph example which was overriding the prototype of EdgeHandler, this is why this was working
-    override createEdgeHandler(state: CellState) {
-      console.info('@@MyCustomGraph.createEdgeHandler called!');
-      return new MyCustomEdgeHandler(state);
-    }
-
-    override createHandler(state: CellState) {
-      if (state) {
-        if (state.cell.isEdge()) {
-          const style = this.view.getEdgeStyle(state);
-
-          if (style == WireConnector) {
-            return new EdgeSegmentHandler(state);
-          }
-        }
+    override createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null) {
+      if (edgeStyle == WireConnector) {
+        return new MyCustomEdgeSegmentHandler(state);
       }
 
-      return super.createHandler(state);
+      return super.createEdgeHandler(state, edgeStyle);
     }
-
-    // TODO validate this work, after configuring the WireConnector as orthogonal
-    // // override as WireConnector is managed by EdgeSegmentHandler, so it has to be considered as orthogonal for consistency
-    // // This won't be required anymore once https://github.com/maxGraph/maxGraph/issues/767 has been implemented
-    // override isOrthogonal(edge: CellState) {
-    //   // replicate the logic from the super method
-    //   const orthogonal = edge.style.orthogonal;
-    //   if (orthogonal != null && orthogonal != undefined) {
-    //     return orthogonal;
-    //   }
-    //
-    //   // fallback when the orthogonal style is not defined
-    //   const edgeStyle = this.view.getEdgeStyle(edge);
-    //   if (edgeStyle == WireConnector) {
-    //     return true;
-    //   }
-    //
-    //   return super.isOrthogonal(edge);
-    // }
 
     // Adds oval markers for edge-to-edge connections.
     override getCellStyle = (cell: Cell) => {
@@ -264,9 +231,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
   }
 
+  // TODO use this or apply it directly to the customSegmenthandler
   class MyCustomEdgeHandler extends EdgeHandler {
     constructor(state: CellState) {
-      console.info('constructor of MyCustomEdgeHandler');
       super(state);
       updateConstraintHandlerPointImage(this);
       // Enables snapping waypoints to terminals
@@ -831,6 +798,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   if (args.rubberBand) plugins.push(RubberBandHandler);
 
   const graph = new MyCustomGraph(container, undefined, plugins);
+
+  const constraintHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+  if (constraintHandler) {
+    updateConstraintHandlerPointImage(constraintHandler);
+  }
 
   const labelBackground = darkMode ? '#000000' : '#FFFFFF';
   const fontColor = darkMode ? '#FFFFFF' : '#000000';
