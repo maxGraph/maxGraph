@@ -431,6 +431,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       let pt = null;
 
       if (constraint != null) {
+        // FIXME terminal can be null, check mxGraph implementation
         pt = this.graph.getConnectionPoint(terminal!, constraint);
       }
 
@@ -459,6 +460,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
             // Finds orientation of the segment
             const p0 = terminal.absolutePoints[seg];
             const pe = terminal.absolutePoints[seg + 1];
+            // TODO p0 can be null, check mxGraph implementation
             const horizontal = p0!.x - pe!.x === 0;
 
             // Stores the segment in the edge state
