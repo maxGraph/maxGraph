@@ -122,10 +122,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   class MyCustomGraph extends Graph {
     override resetEdgesOnConnect = false;
 
-    // override createEdgeSegmentHandler(state: CellState) {
-    //   return new WireEdgeHandler(state);
-    // }
-
     override createGraphView() {
       return new MyCustomGraphView(this);
     }
@@ -205,23 +201,32 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     };
   }
 
-  // FIXME: Provide means to make EdgeHandler and ConnectionHandler instantiate this subclass!
-  // class MyCustomConstraintHandler extends ConstraintHandler {
-  //   // Replaces the port image
-  //   override pointImage = new ImageBox('images/dot.gif', 10, 10);
-  // }
+  class MyCustomConstraintHandler extends ConstraintHandler {
+    // Replaces the port image
+    override pointImage = new ImageBox('images/dot.gif', 10, 10);
 
-  // TODO also apply it to ConnectionHandler
-  // we currently have no entry point to choose the implementation of ConstraintHandler in various places,
-  // so update the property directly on the constraintHandler property of the related instances
-  function updateConstraintHandlerPointImage(obj: {
-    constraintHandler: ConstraintHandler;
-  }) {
-    const constraintHandler = obj.constraintHandler;
-    if (constraintHandler) {
-      constraintHandler.pointImage = new ImageBox('images/dot.gif', 10, 10);
+    constructor(graph: AbstractGraph) {
+      super(graph);
+      console.info('MyCustomConstraintHandler created, pointImage=', this.pointImage);
+    }
+
+    override setFocus(me: InternalMouseEvent, state: CellState | null, source: boolean) {
+      // console.info('MyCustomConstraintHandler.setFocus()');
+      super.setFocus(me, state, source);
     }
   }
+
+  // no longer true, we can use factory methods to create the ConstraintHandler
+  // we currently have no entry point to choose the implementation of ConstraintHandler in various places,
+  // so update the property directly on the constraintHandler property of the related instances
+  // function updateConstraintHandlerPointImage(obj: {
+  //   constraintHandler: ConstraintHandler;
+  // }) {
+  //   const constraintHandler = obj.constraintHandler;
+  //   if (constraintHandler) {
+  //     constraintHandler.pointImage = new ImageBox('images/dot.gif', 10, 10);
+  //   }
+  // }
 
   class MyCustomGuide extends Guide {
     // Alt disables guides
@@ -234,7 +239,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   class MyCustomEdgeHandler extends EdgeHandler {
     constructor(state: CellState) {
       super(state);
-      updateConstraintHandlerPointImage(this);
+      //      updateConstraintHandlerPointImage(this);
       // Enables snapping waypoints to terminals
       this.snapToTerminals = true;
     }
@@ -476,6 +481,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return new MyCustomConnectionHandlerCellMarker(this.graph, this);
     }
 
+    override createConstraintHandler() {
+      console.info('MyCustomConnectionHandler.createConstraintHandler()');
+      return new MyCustomConstraintHandler(this.graph);
+    }
+
     // Makes sure non-relative cells can only be connected via constraints
     override isConnectableCell(cell: Cell) {
       if (cell.isEdge()) {
@@ -580,7 +590,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   class WireEdgeHandler extends EdgeSegmentHandler {
     constructor(state: CellState) {
       super(state);
-      updateConstraintHandlerPointImage(this);
+      // updateConstraintHandlerPointImage(this);
+    }
+
+    protected override createConstraintHandler(): ConstraintHandler {
+      console.info('WireEdgeHandler.createConstraintHandler()');
+      return new MyCustomConstraintHandler(this.graph);
     }
 
     override clonePreviewState(point: Point, terminal: Cell | null) {
@@ -756,10 +771,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const graph = new MyCustomGraph(container, undefined, plugins);
 
-  const constraintHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
-  if (constraintHandler) {
-    updateConstraintHandlerPointImage(constraintHandler);
-  }
+  // const constraintHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+  // if (constraintHandler) {
+  //   updateConstraintHandlerPointImage(constraintHandler);
+  // }
 
   const labelBackground = darkMode ? '#000000' : '#FFFFFF';
   const fontColor = darkMode ? '#FFFFFF' : '#000000';
@@ -1026,10 +1041,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // Grid
   const checkboxGrid = document.createElement('input');
   checkboxGrid.setAttribute('type', 'checkbox');
-  checkboxWireMode.setAttribute(
-    'title',
-    'Display grid in the background (click to toggle)'
-  );
+  checkboxGrid.setAttribute('title', 'Display grid in the background (click to toggle)');
   checkboxGrid.setAttribute('checked', 'true');
 
   parentContainer.appendChild(checkboxGrid);
