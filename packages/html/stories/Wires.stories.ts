@@ -203,6 +203,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   class MyCustomConstraintHandler extends ConstraintHandler {
     // Replaces the port image
+    // TODO validate the path to image
     override pointImage = new ImageBox('images/dot.gif', 10, 10);
 
     constructor(graph: AbstractGraph) {
@@ -210,10 +211,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       console.info('MyCustomConstraintHandler created, pointImage=', this.pointImage);
     }
 
-    override setFocus(me: InternalMouseEvent, state: CellState | null, source: boolean) {
-      // console.info('MyCustomConstraintHandler.setFocus()');
-      super.setFocus(me, state, source);
-    }
+    // override setFocus(me: InternalMouseEvent, state: CellState | null, source: boolean) {
+    //   console.info('MyCustomConstraintHandler.setFocus()');
+    //   super.setFocus(me, state, source);
+    // }
   }
 
   // no longer true, we can use factory methods to create the ConstraintHandler
@@ -236,79 +237,79 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   // TODO use this or apply it directly to the customSegmenthandler
-  class MyCustomEdgeHandler extends EdgeHandler {
-    constructor(state: CellState) {
-      super(state);
-      //      updateConstraintHandlerPointImage(this);
-      // Enables snapping waypoints to terminals
-      this.snapToTerminals = true;
-    }
-
-    override isConnectableCell(cell: Cell) {
-      return (
-        this.graph
-          .getPlugin<ConnectionHandler>('ConnectionHandler')
-          ?.isConnectableCell(cell) ?? true
-      );
-    }
-
-    override connect(
-      edge: Cell,
-      terminal: Cell,
-      isSource: boolean,
-      isClone: boolean,
-      me: InternalMouseEvent
-    ): Cell {
-      let result: Cell | null = null;
-      const model = this.graph.getDataModel();
-
-      model.beginUpdate();
-      try {
-        result = super.connect(edge, terminal, isSource, isClone, me);
-        let geo = result.getGeometry();
-
-        if (geo) {
-          geo = geo.clone();
-          let pt: Point | null = null;
-
-          if (terminal.isEdge()) {
-            pt = this.abspoints[this.isSource ? 0 : this.abspoints.length - 1]!; // here, we know that the point exists in the array
-            pt.x = pt.x / this.graph.view.scale - this.graph.view.translate.x;
-            pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
-
-            const pstate = this.graph.getView().getState(edge.getParent()!); // here, we know that the edge has a parent
-
-            if (pstate != null) {
-              pt.x -= pstate.origin.x;
-              pt.y -= pstate.origin.y;
-            }
-
-            pt.x -= this.graph.panDx / this.graph.view.scale;
-            pt.y -= this.graph.panDy / this.graph.view.scale;
-
-            // TODO check mxGraph, may be done outside the if in mxGraph
-            geo.setTerminalPoint(pt, isSource);
-          }
-
-          model.setGeometry(edge, geo);
-        }
-      } finally {
-        model.endUpdate();
-      }
-
-      return result;
-    }
-
-    override createMarker() {
-      const marker = super.createMarker();
-      // Adds in-place highlighting when reconnecting existing edges
-      marker.highlight.highlight =
-        this.graph.getPlugin<ConnectionHandler>(
-          'ConnectionHandler'
-        )!.marker.highlight.highlight;
-      return marker;
-    }
-  }
+  // class MyCustomEdgeHandler extends EdgeHandler {
+  //   constructor(state: CellState) {
+  //     super(state);
+  //     //      updateConstraintHandlerPointImage(this);
+  //     // Enables snapping waypoints to terminals
+  //     this.snapToTerminals = true;
+  //   }
+  //
+  //   override isConnectableCell(cell: Cell) {
+  //     return (
+  //       this.graph
+  //         .getPlugin<ConnectionHandler>('ConnectionHandler')
+  //         ?.isConnectableCell(cell) ?? true
+  //     );
+  //   }
+  //
+  //   override connect(
+  //     edge: Cell,
+  //     terminal: Cell,
+  //     isSource: boolean,
+  //     isClone: boolean,
+  //     me: InternalMouseEvent
+  //   ): Cell {
+  //     let result: Cell | null = null;
+  //     const model = this.graph.getDataModel();
+  //
+  //     model.beginUpdate();
+  //     try {
+  //       result = super.connect(edge, terminal, isSource, isClone, me);
+  //       let geo = result.getGeometry();
+  //
+  //       if (geo) {
+  //         geo = geo.clone();
+  //         let pt: Point | null = null;
+  //
+  //         if (terminal.isEdge()) {
+  //           pt = this.abspoints[this.isSource ? 0 : this.abspoints.length - 1]!; // here, we know that the point exists in the array
+  //           pt.x = pt.x / this.graph.view.scale - this.graph.view.translate.x;
+  //           pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
+  //
+  //           const pstate = this.graph.getView().getState(edge.getParent()!); // here, we know that the edge has a parent
+  //
+  //           if (pstate != null) {
+  //             pt.x -= pstate.origin.x;
+  //             pt.y -= pstate.origin.y;
+  //           }
+  //
+  //           pt.x -= this.graph.panDx / this.graph.view.scale;
+  //           pt.y -= this.graph.panDy / this.graph.view.scale;
+  //
+  //           // TODO check mxGraph, may be done outside the if in mxGraph
+  //           geo.setTerminalPoint(pt, isSource);
+  //         }
+  //
+  //         model.setGeometry(edge, geo);
+  //       }
+  //     } finally {
+  //       model.endUpdate();
+  //     }
+  //
+  //     return result;
+  //   }
+  //
+  //   override createMarker() {
+  //     const marker = super.createMarker();
+  //     // Adds in-place highlighting when reconnecting existing edges
+  //     marker.highlight.highlight =
+  //       this.graph.getPlugin<ConnectionHandler>(
+  //         'ConnectionHandler'
+  //       )!.marker.highlight.highlight;
+  //     return marker;
+  //   }
+  // }
 
   // Switch for black background and bright styles
   const darkMode = args.darkMode ?? false;
@@ -591,6 +592,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     constructor(state: CellState) {
       super(state);
       // updateConstraintHandlerPointImage(this);
+      // Enables snapping waypoints to terminals
+      this.snapToTerminals = true;
     }
 
     protected override createConstraintHandler(): ConstraintHandler {
@@ -615,6 +618,71 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       }
 
       return clone;
+    }
+
+    override isConnectableCell(cell: Cell) {
+      return (
+        this.graph
+          .getPlugin<ConnectionHandler>('ConnectionHandler')
+          ?.isConnectableCell(cell) ?? true
+      );
+    }
+
+    override connect(
+      edge: Cell,
+      terminal: Cell,
+      isSource: boolean,
+      isClone: boolean,
+      me: InternalMouseEvent
+    ): Cell {
+      let result: Cell | null = null;
+      const model = this.graph.getDataModel();
+
+      model.beginUpdate();
+      try {
+        result = super.connect(edge, terminal, isSource, isClone, me);
+        let geo = result.getGeometry();
+
+        if (geo) {
+          geo = geo.clone();
+          let pt: Point | null = null;
+
+          if (terminal.isEdge()) {
+            pt = this.abspoints[this.isSource ? 0 : this.abspoints.length - 1]!; // here, we know that the point exists in the array
+            pt.x = pt.x / this.graph.view.scale - this.graph.view.translate.x;
+            pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
+
+            const pstate = this.graph.getView().getState(edge.getParent()!); // here, we know that the edge has a parent
+
+            if (pstate != null) {
+              pt.x -= pstate.origin.x;
+              pt.y -= pstate.origin.y;
+            }
+
+            pt.x -= this.graph.panDx / this.graph.view.scale;
+            pt.y -= this.graph.panDy / this.graph.view.scale;
+
+            // TODO check mxGraph, may be done outside the if in mxGraph
+            geo.setTerminalPoint(pt, isSource);
+          }
+
+          model.setGeometry(edge, geo);
+        }
+      } finally {
+        model.endUpdate();
+      }
+
+      return result;
+    }
+
+    override createMarker() {
+      const marker = super.createMarker();
+      // Adds in-place highlighting when reconnecting existing edges
+      marker.highlight.highlight =
+        this.graph.getPlugin<ConnectionHandler>(
+          'ConnectionHandler'
+        )!.marker.highlight.highlight;
+      return marker;
     }
   }
 
@@ -770,11 +838,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   if (args.rubberBand) plugins.push(RubberBandHandler);
 
   const graph = new MyCustomGraph(container, undefined, plugins);
-
-  // const constraintHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
-  // if (constraintHandler) {
-  //   updateConstraintHandlerPointImage(constraintHandler);
-  // }
 
   const labelBackground = darkMode ? '#000000' : '#FFFFFF';
   const fontColor = darkMode ? '#FFFFFF' : '#000000';
