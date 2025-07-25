@@ -123,7 +123,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     override resetEdgesOnConnect = false;
 
     // override createEdgeSegmentHandler(state: CellState) {
-    //   return new MyCustomEdgeSegmentHandler(state);
+    //   return new WireEdgeHandler(state);
     // }
 
     override createGraphView() {
@@ -134,7 +134,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // see mxGraph example which was overriding the prototype of EdgeHandler, this is why this was working
     override createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null) {
       if (edgeStyle == WireConnector) {
-        return new MyCustomEdgeSegmentHandler(state);
+        return new WireEdgeHandler(state);
       }
 
       return super.createEdgeHandler(state, edgeStyle);
@@ -620,7 +620,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   }
 
   // Updates the terminal and control points in the cloned preview.
-  class MyCustomEdgeSegmentHandler extends EdgeSegmentHandler {
+  class WireEdgeHandler extends EdgeSegmentHandler {
     constructor(state: CellState) {
       super(state);
       updateConstraintHandlerPointImage(this);
