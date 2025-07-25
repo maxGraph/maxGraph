@@ -184,13 +184,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       _source: boolean
     ): ConnectionConstraint[] | null => {
       const geo = terminal != null ? terminal.cell.getGeometry() : null;
-
       if (
-        (geo?.relative ?? false) &&
-        // (geo != null ? !geo.relative : false) &&
+        !geo?.relative &&
         terminal?.cell.isVertex() &&
         terminal?.cell.getChildCount() === 0
       ) {
+        console.info('MyCustomGraph.getAllConnectionConstraints() - vertex');
         return [
           new ConnectionConstraint(new Point(0, 0.5), false),
           new ConnectionConstraint(new Point(1, 0.5), false),
@@ -203,7 +202,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   class MyCustomConstraintHandler extends ConstraintHandler {
     // Replaces the port image
     // TODO validate the path to image
-    override pointImage = new ImageBox('images/dot.gif', 10, 10);
+    override pointImage = new ImageBox('./images/dot.gif', 10, 10);
 
     constructor(graph: AbstractGraph) {
       super(graph);
@@ -491,7 +490,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         return true;
       } else {
         const geo = cell.getGeometry();
-        return geo?.relative ?? false;
+        const connectable = geo?.relative ?? false;
+        console.info(
+          'MyCustomConnectionHandler.isConnectableCell() - vertex %s / connectable %s',
+          cell.getValue(),
+          connectable
+        );
+        return connectable;
       }
     }
   }
