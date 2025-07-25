@@ -215,99 +215,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // }
   }
 
-  // no longer true, we can use factory methods to create the ConstraintHandler
-  // we currently have no entry point to choose the implementation of ConstraintHandler in various places,
-  // so update the property directly on the constraintHandler property of the related instances
-  // function updateConstraintHandlerPointImage(obj: {
-  //   constraintHandler: ConstraintHandler;
-  // }) {
-  //   const constraintHandler = obj.constraintHandler;
-  //   if (constraintHandler) {
-  //     constraintHandler.pointImage = new ImageBox('images/dot.gif', 10, 10);
-  //   }
-  // }
-
   class MyCustomGuide extends Guide {
     // Alt disables guides
     override isEnabledForEvent(evt: any) {
       return !eventUtils.isAltDown(evt);
     }
   }
-
-  // TODO use this or apply it directly to the customSegmenthandler
-  // class MyCustomEdgeHandler extends EdgeHandler {
-  //   constructor(state: CellState) {
-  //     super(state);
-  //     //      updateConstraintHandlerPointImage(this);
-  //     // Enables snapping waypoints to terminals
-  //     this.snapToTerminals = true;
-  //   }
-  //
-  //   override isConnectableCell(cell: Cell) {
-  //     return (
-  //       this.graph
-  //         .getPlugin<ConnectionHandler>('ConnectionHandler')
-  //         ?.isConnectableCell(cell) ?? true
-  //     );
-  //   }
-  //
-  //   override connect(
-  //     edge: Cell,
-  //     terminal: Cell,
-  //     isSource: boolean,
-  //     isClone: boolean,
-  //     me: InternalMouseEvent
-  //   ): Cell {
-  //     let result: Cell | null = null;
-  //     const model = this.graph.getDataModel();
-  //
-  //     model.beginUpdate();
-  //     try {
-  //       result = super.connect(edge, terminal, isSource, isClone, me);
-  //       let geo = result.getGeometry();
-  //
-  //       if (geo) {
-  //         geo = geo.clone();
-  //         let pt: Point | null = null;
-  //
-  //         if (terminal.isEdge()) {
-  //           pt = this.abspoints[this.isSource ? 0 : this.abspoints.length - 1]!; // here, we know that the point exists in the array
-  //           pt.x = pt.x / this.graph.view.scale - this.graph.view.translate.x;
-  //           pt.y = pt.y / this.graph.view.scale - this.graph.view.translate.y;
-  //
-  //           const pstate = this.graph.getView().getState(edge.getParent()!); // here, we know that the edge has a parent
-  //
-  //           if (pstate != null) {
-  //             pt.x -= pstate.origin.x;
-  //             pt.y -= pstate.origin.y;
-  //           }
-  //
-  //           pt.x -= this.graph.panDx / this.graph.view.scale;
-  //           pt.y -= this.graph.panDy / this.graph.view.scale;
-  //
-  //           // TODO check mxGraph, may be done outside the if in mxGraph
-  //           geo.setTerminalPoint(pt, isSource);
-  //         }
-  //
-  //         model.setGeometry(edge, geo);
-  //       }
-  //     } finally {
-  //       model.endUpdate();
-  //     }
-  //
-  //     return result;
-  //   }
-  //
-  //   override createMarker() {
-  //     const marker = super.createMarker();
-  //     // Adds in-place highlighting when reconnecting existing edges
-  //     marker.highlight.highlight =
-  //       this.graph.getPlugin<ConnectionHandler>(
-  //         'ConnectionHandler'
-  //       )!.marker.highlight.highlight;
-  //     return marker;
-  //   }
-  // }
 
   // Switch for black background and bright styles
   const darkMode = args.darkMode ?? false;
@@ -344,13 +257,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   // there is no PannningHandler used here
   // check mxGraph code: no such method in mxPanningHandler
   // setting PanningHandler.usePopupTrigger = false may have the same effect
-  class MyCustomPanningHandler extends PanningHandler {
-    // Panning handler consumed right click so this must be
-    // disabled if right click should stop connection handler.
-    isPopupTrigger() {
-      return false;
-    }
-  }
+  // class MyCustomPanningHandler extends PanningHandler {
+  //   // Panning handler consumed right click so this must be
+  //   // disabled if right click should stop connection handler.
+  //   isPopupTrigger() {
+  //     return false;
+  //   }
+  // }
 
   class MyCustomCellHighlight extends CellHighlight {
     lastStyle: CellStateStyle = {};
@@ -835,7 +748,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     PopupMenuHandler,
     MyCustomConnectionHandler,
     MyCustomSelectionHandler,
-    MyCustomPanningHandler,
+    PanningHandler,
   ];
   // Adds rubberband selection
   if (args.rubberBand) plugins.push(RubberBandHandler);
