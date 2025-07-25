@@ -747,11 +747,11 @@ export default class ConnectionHandler
   }
 
   /**
-   * Returns true if the given mouse down event should start this handler. The
+   * Returns true if the given mouse down event should start this handler.
    * This implementation returns true if the event does not force marquee
    * selection, and the currentConstraint and currentFocus of the
-   * <constraintHandler> are not null, or <previous> and <error> are not null and
-   * <icons> is null or <icons> and <icon> are not null.
+   * {@link constraintHandler} are not null, or {@link previous} and {@link error} are not null and
+   * {@link icons} is null or {@link icons} and {@link icon} are not `null`.
    */
   isStartEvent(me: InternalMouseEvent) {
     return (
