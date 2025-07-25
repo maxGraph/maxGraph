@@ -104,13 +104,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // TODO use the correct description: Starts connections on the background in wire-mode
   // select several with left click, pan with right click
-  const parentContainer = createMainDiv(`<h3>Overlays</h3>
-  Demonstrate usage of standard overlays (using an image) and custom overlays (using custom shapes and DOM content).
-  <p>
-  Add an overlay when clicking on a vertex or an edge. The shape and the position of the overlay are random.
-  The circle overlay has a pulsating effect.
-  <br>
-  Click again to remove the overlay.
+  const parentContainer = createMainDiv(`<h3>Wires</h3>
+  Demonstrate usage of custom Shapes, Edge Handlers and dark mode.
   `);
 
   const container = createGraphContainer(args);
@@ -1049,8 +1044,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   });
 
   // Controls
-  // TODO add margin top and right as in other stories
-
   parentContainer.appendChild(
     DomHelpers.button('Zoom In', function () {
       graph.zoomIn();
@@ -1102,16 +1095,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   domUtils.write(parentContainer, 'Wire Mode');
 
   // Grid
-  // if (darkMode) {
-  //   container.style.backgroundImage = '';
-  // }
   const checkboxGrid = document.createElement('input');
   checkboxGrid.setAttribute('type', 'checkbox');
   checkboxWireMode.setAttribute(
     'title',
     'Display grid in the background (click to toggle)'
   );
-  // !darkMode &&
   checkboxGrid.setAttribute('checked', 'true');
 
   parentContainer.appendChild(checkboxGrid);
