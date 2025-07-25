@@ -130,10 +130,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return new MyCustomGraphView(this);
     }
 
-    // FIXME customize EdgeSegmentHandler instead
     // see mxGraph example which was overriding the prototype of EdgeHandler, this is why this was working
     override createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null) {
-      if (edgeStyle == WireConnector) {
+      const handlerKind = EdgeStyleRegistry.getHandlerKind(edgeStyle);
+      if (handlerKind == 'wire') {
         return new WireEdgeHandler(state);
       }
 
@@ -183,8 +183,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     }
 
     // Alternative solution for implementing connection points without child cells.
-    // This can be extended as shown in portrefs.html example to allow for per-port
-    // incoming/outgoing direction.
+    // This can be extended as shown in portrefs.html example to allow for per-port incoming/outgoing direction.
     override getAllConnectionConstraints = (
       terminal: CellState | null,
       _source: boolean
@@ -475,48 +474,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // Adds in-place highlighting for complete cell area (no hotspot).
     override createMarker() {
       return new MyCustomConnectionHandlerCellMarker(this.graph, this);
-
-      // const marker = super.createMarker();
-
-      // // Uses complete area of cell for new connections (no hotspot)
-      // marker.intersects = function (_state, _evt) {
-      //   return true;
-      // };
-
-      // Adds in-place highlighting
-      // marker.highlight.highlight = function (state) {
-      //   // TODO: Should this be a subclass of marker rather than assigning directly?
-      //   if (this.state != state) {
-      //     if (this.state != null) {
-      //       this.state.style = this.lastStyle;
-      //
-      //       // Workaround for shape using current stroke width if no strokewidth defined
-      //       // TODO use ?= (may require eslint config change to support es2020)
-      //       this.state.style.strokeWidth = this.state.style.strokeWidth ?? 1;
-      //       this.state.style.strokeColor = this.state.style.strokeColor ?? 'none';
-      //
-      //       if (this.state.shape) {
-      //         this.state.view.graph.cellRenderer.configureShape(this.state);
-      //         this.state.shape.redraw();
-      //       }
-      //     }
-      //
-      //     if (state) {
-      //       this.lastStyle = state.style;
-      //       state.style = cloneUtils.clone(state.style);
-      //       state.style.strokeColor = '#00ff00';
-      //       state.style.strokeWidth = 3;
-      //
-      //       if (state.shape) {
-      //         state.view.graph.cellRenderer.configureShape(state);
-      //         state.shape.redraw();
-      //       }
-      //     }
-      //     this.state = state ?? null;
-      //   }
-      // };
-
-      // return marker;
     }
 
     // Makes sure non-relative cells can only be connected via constraints
@@ -782,7 +739,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   EdgeStyleRegistry.add('wireEdgeStyle', WireConnector, {
     isOrthogonal: true,
-    handlerKind: 'segment',
+    handlerKind: 'wire',
   });
 
   const plugins: GraphPluginConstructor[] = [
