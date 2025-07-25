@@ -19,6 +19,9 @@ test('Ensure no side effects with the multiplicities property', () => {
       'Only circle targets allowed'
     )
   );
-  expect(graph2.multiplicities).toBe([]);
+  expect(graph2.multiplicities).toStrictEqual([]);
   expect(graph1.multiplicities).not.toBe(graph2.multiplicities);
 });
+
+// TODO move this to the graph tests
+// TODO add tests for all AbstractGraph properties whose are object (for example, "options")
