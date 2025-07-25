@@ -134,6 +134,7 @@ class CellMarker extends EventSource {
 
   /**
    * Hook method to override the implementation of {@link highlight}.
+   * @since 0.22.0
    */
   protected createCellHighlight(graph: AbstractGraph): CellHighlight {
     return new CellHighlight(graph);
