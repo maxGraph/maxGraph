@@ -111,81 +111,83 @@ describe('fitCenter', () => {
 });
 
 describe('fit', () => {
-  test('container and graph have dimensions set to zero', () => {
-    const graph = new BaseGraph({ plugins: [FitPlugin] });
-    const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
+  describe('no ignored dimensions', () => {
+    test('container and graph have dimensions set to zero', () => {
+      const graph = new BaseGraph({ plugins: [FitPlugin] });
+      const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-    const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
-    expect(scale).toBe(1);
-    expect(scaleAndTranslateSpy).not.toHaveBeenCalled();
-  });
-
-  test('no ignored dimensions, decreased scale', () => {
-    const container = createContainer({
-      offsetWidth: 20,
-      offsetHeight: 20,
+      const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
+      expect(scale).toBe(1);
+      expect(scaleAndTranslateSpy).not.toHaveBeenCalled();
     });
 
-    const graph = new BaseGraph({ container, plugins: [FitPlugin] });
-    graph.view.setGraphBounds(new Rectangle(30, 20, 100, 100));
-    const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
+    test('decreased scale', () => {
+      const container = createContainer({
+        offsetWidth: 20,
+        offsetHeight: 20,
+      });
 
-    const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
-    expect(scale).toBe(0.18);
-    expect(scaleAndTranslateSpy).toHaveBeenCalledWith(0.18, -30, -20);
-    expect(scaleAndTranslateSpy).toHaveBeenCalledTimes(1);
-  });
+      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      graph.view.setGraphBounds(new Rectangle(30, 20, 100, 100));
+      const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-  test('no ignored dimensions, decreased scale, limited to minFitScale', () => {
-    const container = createContainer({
-      offsetWidth: 0,
-      offsetHeight: 0,
+      const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
+      expect(scale).toBe(0.18);
+      expect(scaleAndTranslateSpy).toHaveBeenCalledWith(0.18, -30, -20);
+      expect(scaleAndTranslateSpy).toHaveBeenCalledTimes(1);
     });
 
-    const graph = new BaseGraph({ container, plugins: [FitPlugin] });
-    graph.view.setGraphBounds(new Rectangle(30, 20, 100, 100));
-    const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
+    test('decreased scale, limited to minFitScale', () => {
+      const container = createContainer({
+        offsetWidth: 0,
+        offsetHeight: 0,
+      });
 
-    const plugin = graph.getPlugin<FitPlugin>('fit')!;
-    plugin.minFitScale = 0.5;
-    const scale = plugin.fit();
-    expect(scale).toBe(0.5);
-    expect(scaleAndTranslateSpy).toHaveBeenCalledWith(0.5, -30, -20);
-    expect(scaleAndTranslateSpy).toHaveBeenCalledTimes(1);
-  });
+      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      graph.view.setGraphBounds(new Rectangle(30, 20, 100, 100));
+      const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-  test('no ignored dimensions, increased scale', () => {
-    const container = createContainer({
-      offsetWidth: 480,
-      offsetHeight: 820,
+      const plugin = graph.getPlugin<FitPlugin>('fit')!;
+      plugin.minFitScale = 0.5;
+      const scale = plugin.fit();
+      expect(scale).toBe(0.5);
+      expect(scaleAndTranslateSpy).toHaveBeenCalledWith(0.5, -30, -20);
+      expect(scaleAndTranslateSpy).toHaveBeenCalledTimes(1);
     });
 
-    const graph = new BaseGraph({ container, plugins: [FitPlugin] });
-    graph.view.setGraphBounds(new Rectangle(70, -60, 100, 100));
-    const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
+    test('increased scale', () => {
+      const container = createContainer({
+        offsetWidth: 480,
+        offsetHeight: 820,
+      });
 
-    const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
-    expect(scale).toBe(4.78);
-    expect(scaleAndTranslateSpy).toHaveBeenCalledWith(4.78, -70, 60);
-    expect(scaleAndTranslateSpy).toHaveBeenCalledTimes(1);
-  });
+      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      graph.view.setGraphBounds(new Rectangle(70, -60, 100, 100));
+      const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
 
-  test('no ignored dimensions, increased scale, limited to maxFitScale', () => {
-    const container = createContainer({
-      offsetWidth: 480,
-      offsetHeight: 820,
+      const scale = graph.getPlugin<FitPlugin>('fit')!.fit();
+      expect(scale).toBe(4.78);
+      expect(scaleAndTranslateSpy).toHaveBeenCalledWith(4.78, -70, 60);
+      expect(scaleAndTranslateSpy).toHaveBeenCalledTimes(1);
     });
 
-    const graph = new BaseGraph({ container, plugins: [FitPlugin] });
-    graph.view.setGraphBounds(new Rectangle(70, -60, 100, 100));
-    const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
+    test('increased scale, limited to maxFitScale', () => {
+      const container = createContainer({
+        offsetWidth: 480,
+        offsetHeight: 820,
+      });
 
-    const plugin = graph.getPlugin<FitPlugin>('fit')!;
-    plugin.maxFitScale = 3;
-    const scale = plugin.fit();
-    expect(scale).toBe(3);
-    expect(scaleAndTranslateSpy).toHaveBeenCalledWith(3, -70, 60);
-    expect(scaleAndTranslateSpy).toHaveBeenCalledTimes(1);
+      const graph = new BaseGraph({ container, plugins: [FitPlugin] });
+      graph.view.setGraphBounds(new Rectangle(70, -60, 100, 100));
+      const scaleAndTranslateSpy = jest.spyOn(graph.view, 'scaleAndTranslate');
+
+      const plugin = graph.getPlugin<FitPlugin>('fit')!;
+      plugin.maxFitScale = 3;
+      const scale = plugin.fit();
+      expect(scale).toBe(3);
+      expect(scaleAndTranslateSpy).toHaveBeenCalledWith(3, -70, 60);
+      expect(scaleAndTranslateSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   test('border', () => {
