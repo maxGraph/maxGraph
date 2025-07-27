@@ -136,91 +136,95 @@ export class FitPlugin implements GraphPlugin {
       maxHeight = null,
     } = options;
     const { backgroundImage, container, view } = this.graph;
-    if (container) {
-      // Adds spacing and border from css
-      const cssBorder = this.graph.getBorderSizes();
-      let w1: number = container.offsetWidth - cssBorder.x - cssBorder.width - 1;
-      let h1: number =
-        maxHeight ?? container.offsetHeight - cssBorder.y - cssBorder.height - 1;
-      let bounds = view.getGraphBounds();
 
-      if (bounds.width > 0 && bounds.height > 0) {
-        if (keepOrigin && bounds.x != null && bounds.y != null) {
-          bounds = bounds.clone();
-          bounds.width += bounds.x;
-          bounds.height += bounds.y;
-          bounds.x = 0;
-          bounds.y = 0;
-        }
+    if (!container) {
+      return view.scale;
+    }
+    let bounds = view.getGraphBounds();
+    if (!(bounds.width > 0 && bounds.height > 0)) {
+      return view.scale;
+    }
 
-        // LATER: Use unscaled bounding boxes to fix rounding errors
-        const originalScale = view.scale;
-        let w2 = bounds.width / originalScale;
-        let h2 = bounds.height / originalScale;
+    // Adds spacing and border from css
+    const cssBorder = this.graph.getBorderSizes();
+    let w1: number = container.offsetWidth - cssBorder.x - cssBorder.width - 1;
+    let h1: number =
+      maxHeight ?? container.offsetHeight - cssBorder.y - cssBorder.height - 1;
 
-        // Fits to the size of the background image if required
-        if (backgroundImage) {
-          w2 = Math.max(w2, backgroundImage.width - bounds.x / originalScale);
-          h2 = Math.max(h2, backgroundImage.height - bounds.y / originalScale);
-        }
+    if (keepOrigin && bounds.x != null && bounds.y != null) {
+      bounds = bounds.clone();
+      bounds.width += bounds.x;
+      bounds.height += bounds.y;
+      bounds.x = 0;
+      bounds.y = 0;
+    }
 
-        const b: number = (keepOrigin ? border : 2 * border) + margin + 1;
+    // LATER: Use unscaled bounding boxes to fix rounding errors
+    const originalScale = view.scale;
+    let w2 = bounds.width / originalScale;
+    let h2 = bounds.height / originalScale;
 
-        w1 -= b;
-        h1 -= b;
+    // Fits to the size of the background image if required
+    if (backgroundImage) {
+      w2 = Math.max(w2, backgroundImage.width - bounds.x / originalScale);
+      h2 = Math.max(h2, backgroundImage.height - bounds.y / originalScale);
+    }
 
-        let newScale = ignoreWidth
-          ? h1 / h2
-          : ignoreHeight
-            ? w1 / w2
-            : Math.min(w1 / w2, h1 / h2);
+    const b: number = (keepOrigin ? border : 2 * border) + margin + 1;
 
-        const minScale = this.minFitScale ?? 0;
-        const maxScale = this.maxFitScale ?? Infinity;
-        newScale = Math.max(Math.min(newScale, maxScale), minScale);
+    w1 -= b;
+    h1 -= b;
 
-        if (enabled) {
-          if (!keepOrigin) {
-            if (!hasScrollbars(container)) {
-              const x0 =
-                bounds.x != null
-                  ? Math.floor(
-                      view.translate.x -
-                        bounds.x / originalScale +
-                        border / newScale +
-                        margin / 2
-                    )
-                  : border;
-              const y0 =
-                bounds.y != null
-                  ? Math.floor(
-                      view.translate.y -
-                        bounds.y / originalScale +
-                        border / newScale +
-                        margin / 2
-                    )
-                  : border;
+    let newScale = ignoreWidth
+      ? h1 / h2
+      : ignoreHeight
+        ? w1 / w2
+        : Math.min(w1 / w2, h1 / h2);
 
-              view.scaleAndTranslate(newScale, x0, y0);
-            } else {
-              view.setScale(newScale);
-              const newBounds = this.graph.getGraphBounds();
+    const minScale = this.minFitScale ?? 0;
+    const maxScale = this.maxFitScale ?? Infinity;
+    newScale = Math.max(Math.min(newScale, maxScale), minScale);
 
-              if (newBounds.x != null) {
-                container.scrollLeft = newBounds.x;
-              }
+    if (enabled) {
+      if (!keepOrigin) {
+        if (!hasScrollbars(container)) {
+          const x0 =
+            bounds.x != null
+              ? Math.floor(
+                  view.translate.x -
+                    bounds.x / originalScale +
+                    border / newScale +
+                    margin / 2
+                )
+              : border;
+          const y0 =
+            bounds.y != null
+              ? Math.floor(
+                  view.translate.y -
+                    bounds.y / originalScale +
+                    border / newScale +
+                    margin / 2
+                )
+              : border;
 
-              if (newBounds.y != null) {
-                container.scrollTop = newBounds.y;
-              }
-            }
-          } else if (view.scale != newScale) {
-            view.setScale(newScale);
-          }
+          view.scaleAndTranslate(newScale, x0, y0);
         } else {
-          return newScale;
+          view.setScale(newScale);
+          const newBounds = this.graph.getGraphBounds();
+
+          if (newBounds.x != null) {
+            container.scrollLeft = newBounds.x;
+          }
+
+          if (newBounds.y != null) {
+            container.scrollTop = newBounds.y;
+          }
         }
+      } else if (view.scale != newScale) {
+        view.setScale(newScale);
       }
+    } else {
+      return newScale;
     }
     return view.scale;
   }
