@@ -192,7 +192,7 @@ class Geometry extends Rectangle {
    * @param {Point} point to be used as the new source or target point.
    * @param {Boolean} isSource that specifies if the source or target point should be set.
    */
-  setTerminalPoint(point: Point, isSource: boolean) {
+  setTerminalPoint(point: Point | null, isSource: boolean) {
     if (isSource) {
       this.sourcePoint = point;
     } else {
