@@ -881,7 +881,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     });
 
     // Uses implementation of connection points via constraints (see above)
-    // TODO rename as this is for vertex connection points, not edges
     const connectionPointsWithConstraints =
       args.connectionPointsWithConstraints as unknown as boolean;
     if (connectionPointsWithConstraints) {
