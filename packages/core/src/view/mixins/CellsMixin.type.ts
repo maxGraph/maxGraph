@@ -299,7 +299,7 @@ declare module '../AbstractGraph' {
      */
     addCell: (
       cell: Cell,
-      parent: Cell | null,
+      parent?: Cell | null,
       index?: number | null,
       source?: Cell | null,
       target?: Cell | null

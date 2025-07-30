@@ -89,9 +89,9 @@ declare module '../AbstractGraph' {
      *                      This can be useful for defining custom constraints. Default is {@link Geometry}.
      */
     insertVertex(
-      parent: Cell | null,
-      id: string | null | undefined,
-      value: any,
+      parent?: Cell | null,
+      id?: string | null,
+      value?: any,
       x?: number,
       y?: number,
       width?: number,
@@ -162,9 +162,9 @@ declare module '../AbstractGraph' {
      *                      This can be useful for defining custom constraints. Default is {@link Geometry}.
      */
     createVertex(
-      parent: Cell | null,
-      id: string | null | undefined,
-      value: any,
+      parent?: Cell | null,
+      id?: string | null,
+      value?: any,
       x?: number,
       y?: number,
       width?: number,

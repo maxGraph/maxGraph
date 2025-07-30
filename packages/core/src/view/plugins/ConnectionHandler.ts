@@ -202,7 +202,10 @@ type FactoryMethod = (
  *
  * @category Plugin
  */
-class ConnectionHandler extends EventSource implements GraphPlugin, MouseListenerSet {
+export default class ConnectionHandler
+  extends EventSource
+  implements GraphPlugin, MouseListenerSet
+{
   static readonly pluginId = 'ConnectionHandler';
 
   previous: CellState | null = null;
@@ -242,7 +245,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   /**
    * Specifies if icons should be moved to the back of the overlay pane. This can
    * be set to true if the icons of the connection handler conflict with other
-   * handles, such as the vertex label move handle. Default is false.
+   * handles, such as the vertex label move handle.
+   * @default false
    */
   moveIconBack = false;
 
@@ -254,28 +258,31 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   connectImage: Image | null = null;
 
   /**
-   * Specifies if the connect icon should be centered on the target state
-   * while connections are being previewed. Default is false.
+   * Specifies if the connect icon should be centered on the target state while connections are being previewed.
+   * @default false
    */
   targetConnectImage = false;
 
   /**
-   * Specifies if events are handled. Default is false.
+   * Specifies if events are handled.
+   * @default false
    */
   enabled = false;
 
   /**
-   * Specifies if new edges should be selected. Default is true.
+   * Specifies if new edges should be selected.
+   * @default true
    */
   select = true;
 
   /**
-   * Specifies if <createTargetVertex> should be called if no target was under the
+   * Specifies if {@link createTargetVertex} should be called if no target was under the
    * mouse for the new connection. Setting this to true means the connection
    * will be drawn as valid if no target is under the mouse, and
-   * <createTargetVertex> will be called before the connection is created between
-   * the source cell and the newly created vertex in <createTargetVertex>, which
-   * can be overridden to create a new target. Default is false.
+   * {@link createTargetVertex} will be called before the connection is created between
+   * the source cell and the newly created vertex in {@link createTargetVertex}, which
+   * can be overridden to create a new target.
+   * @default false
    */
   createTarget = false;
 
@@ -291,39 +298,41 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
 
   /**
    * Holds the current validation error while connections are being created.
+   * @default null
    */
   error: string | null = null;
 
   /**
-   * Specifies if single clicks should add waypoints on the new edge. Default is
-   * false.
+   * Specifies if single clicks should add waypoints on the new edge.
+   * @default false
    */
   waypointsEnabled = false;
 
   /**
-   * Specifies if the connection handler should ignore the state of the mouse
-   * button when highlighting the source. Default is false, that is, the
-   * handler only highlights the source if no button is being pressed.
+   * Specifies if the connection handler should ignore the state of the mouse button when highlighting the source.
+   *
+   * When false, that is, the handler only highlights the source if no button is being pressed.
+   *
+   * @default false
    */
   ignoreMouseDown = false;
 
   /**
-   * Holds the {@link Point} where the mouseDown took place while the handler is
-   * active.
+   * Holds the {@link Point} where the mouseDown took place while the handler is active.
    */
   first: Point | null = null;
 
   /**
    * Holds the offset for connect icons during connection preview.
-   * Default is mxPoint(0, {@link Constants#TOOLTIP_VERTICAL_OFFSET}).
+   * Default is mxPoint(0, {@link TOOLTIP_VERTICAL_OFFSET}).
    * Note that placing the icon under the mouse pointer with an
    * offset of (0,0) will affect hit detection.
    */
   connectIconOffset = new Point(0, TOOLTIP_VERTICAL_OFFSET);
 
   /**
-   * Optional <CellState> that represents the preview edge while the
-   * handler is active. This is created in <createEdgeState>.
+   * Optional {@link CellState} that represents the preview edge while the
+   * handler is active. This is created in {@link createEdgeState}.
    */
   edgeState: CellState | null = null;
 
@@ -344,7 +353,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   mouseDownCounter = 0;
 
   /**
-   * Switch to enable moving the preview away from the mousepointer. This is required in browsers
+   * Switch to enable moving the preview away from the mouse pointer. This is required in browsers
    * where the preview cannot be made transparent to events and if the built-in hit detection on
    * the HTML elements in the page should be used.
    * @default false
@@ -361,7 +370,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
 
   /**
    * Specifies if the actual shape of the edge state should be used for the preview.
-   * Default is false. (Ignored if no edge state is created in <createEdgeState>.)
+   * This is ignored if no edge state is created in {@link createEdgeState}.
+   * @default false
    */
   livePreview = false;
 
@@ -472,11 +482,11 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   /**
    * Returns <insertBeforeSource> for non-loops and false for loops.
    *
-   * @param edge <Cell> that represents the edge to be inserted.
-   * @param source <Cell> that represents the source terminal.
-   * @param target <Cell> that represents the target terminal.
+   * @param edge {@link Cell} that represents the edge to be inserted.
+   * @param source {@link Cell} that represents the source terminal.
+   * @param target {@link Cell} that represents the target terminal.
    * @param evt Mousedown event of the connect gesture.
-   * @param dropTarget <Cell> that represents the cell under the mouse when it was
+   * @param dropTarget {@link Cell} that represents the cell under the mouse when it was
    * released.
    */
   isInsertBefore(
@@ -536,7 +546,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Creates and returns the {@link CellMarker} used in {@link arker}.
+   * Creates and returns the {@link CellMarker} used in {@link marker}.
    */
   createMarker() {
     return new ConnectionHandlerCellMarker(this.graph, this);
@@ -569,7 +579,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   /**
    * Returns {@link AbstractGraph.isValidSource} for the given source terminal.
    *
-   * @param cell <Cell> that represents the source terminal.
+   * @param cell {@link Cell} that represents the source terminal.
    * @param me {@link MouseEvent} that is associated with this call.
    */
   isValidSource(cell: Cell, me: InternalMouseEvent) {
@@ -581,7 +591,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
    * {@link AbstractGraph.getEdgeValidationError} in <validateConnection>. This is an
    * additional hook for disabling certain targets in this specific handler.
    *
-   * @param cell <Cell> that represents the target terminal.
+   * @param cell {@link Cell} that represents the target terminal.
    */
   isValidTarget(cell: Cell) {
     return true;
@@ -592,8 +602,8 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
    * given source target pair is not valid. Otherwise it returns null. This
    * implementation uses {@link AbstractGraph.getEdgeValidationError}.
    *
-   * @param source <Cell> that represents the source terminal.
-   * @param target <Cell> that represents the target terminal.
+   * @param source {@link Cell} that represents the source terminal.
+   * @param target {@link Cell} that represents the target terminal.
    */
   validateConnection(source: Cell, target: Cell) {
     if (!this.isValidTarget(target)) {
@@ -689,9 +699,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Redraws the given array of {@link ImageShapes}.
+   * Redraws the given array of {@link ImageShape}s.
    *
-   * @param icons Array of {@link ImageShapes} to be redrawn.
+   * @param icons Array of {@link ImageShape}s to be redrawn.
+   * @param state {@link CellState} under the mouse.
    */
   redrawIcons(icons: ImageShape[], state: CellState) {
     if (icons[0] && icons[0].bounds) {
@@ -702,7 +713,12 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
     }
   }
 
-  // TODO: Document me! ===========================================================================================================
+  /**
+   * Returns the center position of the given icon.
+   *
+   * @param icon The connect icon of {@link ImageShape} with the mouse.
+   * @param state {@link CellState} under the mouse.
+   */
   getIconPosition(icon: ImageShape, state: CellState) {
     const { scale } = this.graph.getView();
     let cx = state.getCenterX();
@@ -744,11 +760,11 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Returns true if the given mouse down event should start this handler. The
+   * Returns true if the given mouse down event should start this handler.
    * This implementation returns true if the event does not force marquee
    * selection, and the currentConstraint and currentFocus of the
-   * <constraintHandler> are not null, or <previous> and <error> are not null and
-   * <icons> is null or <icons> and <icon> are not null.
+   * {@link constraintHandler} are not null, or {@link previous} and {@link error} are not null and
+   * {@link icons} is null or {@link icons} and {@link icon} are not `null`.
    */
   isStartEvent(me: InternalMouseEvent) {
     return (
@@ -874,8 +890,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Updates the current state for a given mouse move event by using
-   * the {@link arker}.
+   * Updates the current state for a given mouse move event by using the {@link marker}.
    */
   updateCurrentState(me: InternalMouseEvent, point: Point): void {
     this.constraintHandler.update(
@@ -1288,12 +1303,12 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
     if (!this.edgeState) return;
 
     // TODO: Use generic method for writing constraint to style
-    if (this.sourceConstraint && this.sourceConstraint.point) {
+    if (this.sourceConstraint?.point) {
       this.edgeState.style.exitX = this.sourceConstraint.point.x;
       this.edgeState.style.exitY = this.sourceConstraint.point.y;
     }
 
-    if (constraint && constraint.point) {
+    if (constraint?.point) {
       this.edgeState.style.entryX = constraint.point.x;
       this.edgeState.style.entryY = constraint.point.y;
     } else {
@@ -1432,31 +1447,34 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
 
     return result;
   }
-
   /**
-   * Hook to update the icon position(s) based on a mouseOver event. This is
-   * an empty implementation.
+   * Hook to update the icon position(s) based on a mouseOver event.
    *
-   * @param state <CellState> under the mouse.
+   * This is an empty implementation.
+   *
+   * @param state {@link CellState} under the mouse.
    * @param icons Array of currently displayed icons.
    * @param me {@link MouseEvent} that contains the mouse event.
    */
+
   updateIcons(state: CellState, icons: ImageShape[], me: InternalMouseEvent) {
     // empty
   }
 
   /**
-   * Returns true if the given mouse up event should stop this handler. The
-   * connection will be created if <error> is null. Note that this is only
-   * called if <waypointsEnabled> is true. This implemtation returns true
-   * if there is a cell state in the given event.
+   * Returns `true` if the given mouse up event should stop this handler.
+   *
+   * The connection will be created if {@link error} is `null`.
+   * Note that this is only called if {@link waypointsEnabled} is `true`.
+   *
+   * This implementation returns `true` if there is a cell state in the given event.
    */
   isStopEvent(me: InternalMouseEvent) {
     return !!me.getState();
   }
 
   /**
-   * Adds the waypoint for the given event to <waypoints>.
+   * Adds the waypoint for the given event to {@link waypoints}.
    */
   addWaypointForEvent(me: InternalMouseEvent) {
     if (!this.first) return;
@@ -1480,9 +1498,9 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Returns true if the connection for the given constraints is valid. This
-   * implementation returns true if the constraints are not pointing to the
-   * same fixed connection point.
+   * Returns `true` if the connection for the given constraints is valid.
+   *
+   * This implementation returns `true` if the constraints are not pointing to the same fixed connection point.
    */
   checkConstraints(c1: ConnectionConstraint | null, c2: ConnectionConstraint | null) {
     return (
@@ -1589,8 +1607,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Redraws the preview edge using the color and width returned by
-   * <getEdgeColor> and <getEdgeWidth>.
+   * Redraws the preview edge using the color and width returned by {@link getEdgeColor} and {@link getEdgeWidth}.
    */
   drawPreview() {
     this.updatePreview(this.error === null);
@@ -1598,11 +1615,10 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Returns the color used to draw the preview edge. This returns green if
-   * there is no edge validation error and red otherwise.
+   * Returns the color used to draw the preview edge.
+   * This returns green if there is no edge validation error and red otherwise.
    *
-   * @param valid Boolean indicating if the color for a valid edge should be
-   * returned.
+   * @param valid Boolean indicating if the color for a valid edge should be returned.
    */
   updatePreview(valid: boolean) {
     if (this.shape) {
@@ -1612,35 +1628,36 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 
   /**
-   * Returns the color used to draw the preview edge. This returns green if
-   * there is no edge validation error and red otherwise.
+   * Returns the color used to draw the preview edge.
    *
-   * @param valid Boolean indicating if the color for a valid edge should be
-   * returned.
+   * This returns green if there is no edge validation error and red otherwise.
+   *
+   * @param valid Boolean indicating if the color for a valid edge should be returned.
    */
   getEdgeColor(valid: boolean) {
     return valid ? VALID_COLOR : INVALID_COLOR;
   }
 
   /**
-   * Returns the width used to draw the preview edge. This returns 3 if
-   * there is no edge validation error and 1 otherwise.
+   * Returns the width used to draw the preview edge.
    *
-   * @param valid Boolean indicating if the width for a valid edge should be
-   * returned.
+   * This returns `3` if there is no edge validation error and `1` otherwise.
+   *
+   * @param valid Boolean indicating if the width for a valid edge should be returned.
    */
   getEdgeWidth(valid: boolean): number {
     return valid ? 3 : 1;
   }
 
   /**
-   * Connects the given source and target using a new edge. This
-   * implementation uses <createEdge> to create the edge.
+   * Connects the given source and target using a new edge.
    *
-   * @param source <Cell> that represents the source terminal.
-   * @param target <Cell> that represents the target terminal.
-   * @param evt Mousedown event of the connect gesture.
-   * @param dropTarget <Cell> that represents the cell under the mouse when it was
+   * This implementation uses {@link createEdge} to create the edge.
+   *
+   * @param source {@link Cell} that represents the source terminal.
+   * @param target {@link Cell} that represents the target terminal.
+   * @param evt {@link MouseEvent} event of the connect gesture.
+   * @param dropTarget {@link Cell} that represents the cell under the mouse when it was
    * released.
    */
   connect(
@@ -1867,7 +1884,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
    * returns null.
    *
    * @param evt Mousedown event of the connect gesture.
-   * @param source <Cell> that represents the source terminal.
+   * @param source {@link Cell} that represents the source terminal.
    */
   createTargetVertex(evt: MouseEvent, source: Cell) {
     // Uses the first non-relative source
@@ -2000,7 +2017,7 @@ class ConnectionHandler extends EventSource implements GraphPlugin, MouseListene
   }
 }
 
-class ConnectionHandlerCellMarker extends CellMarker {
+export class ConnectionHandlerCellMarker extends CellMarker {
   connectionHandler: ConnectionHandler;
 
   hotspotEnabled = true;
@@ -2113,5 +2130,3 @@ class ConnectionHandlerCellMarker extends CellMarker {
     return super.intersects(state, evt);
   }
 }
-
-export default ConnectionHandler;

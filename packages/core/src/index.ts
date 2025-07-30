@@ -49,6 +49,7 @@ export { Editor } from './editor/Editor.js';
 
 export { default as CellHighlight } from './view/cell/CellHighlight.js';
 export { default as CellMarker } from './view/cell/CellMarker.js';
+export { ConnectionHandlerCellMarker } from './view/plugins/ConnectionHandler.js';
 export { default as CellTracker } from './view/cell/CellTracker.js';
 export { default as ConstraintHandler } from './view/handler/ConstraintHandler.js';
 export { default as EdgeHandler } from './view/handler/EdgeHandler.js';

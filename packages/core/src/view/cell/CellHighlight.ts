@@ -228,7 +228,7 @@ class CellHighlight {
   }
 
   /**
-   * Marks the {@link arkedState} and fires a {@link ark} event.
+   * Marks the {@link CellState} and fires a {@link InternalEvent.MARK} event.
    */
   highlight(state: CellState | null = null): void {
     if (this.state !== state) {

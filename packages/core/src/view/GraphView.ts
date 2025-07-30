@@ -1138,10 +1138,10 @@ export class GraphView extends EventSource {
     edge: CellState,
     terminal: CellState | null,
     source: boolean,
-    constraint: ConnectionConstraint
+    constraint: ConnectionConstraint | null
   ) {
     edge.setAbsoluteTerminalPoint(
-      <Point>this.getFixedTerminalPoint(edge, terminal, source, constraint),
+      this.getFixedTerminalPoint(edge, terminal, source, constraint),
       source
     );
   }
