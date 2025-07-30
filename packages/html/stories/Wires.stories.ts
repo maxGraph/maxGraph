@@ -78,25 +78,30 @@ import '@maxgraph/core/css/common.css'; // style required by RubberBand
 export default {
   title: 'Connections/Wires',
   argTypes: {
-    ...contextMenuTypes,
-    ...globalTypes,
+    connectionPointsWithConstraints: {
+      type: 'boolean',
+      defaultValue: false,
+    },
     darkMode: {
       type: 'boolean',
       defaultValue: false,
     },
-    ...rubberBandTypes,
     snapToGrid: {
       type: 'boolean',
       defaultValue: true,
     },
+    ...contextMenuTypes,
+    ...globalTypes,
+    ...rubberBandTypes,
   },
   args: {
+    connectionPointsWithConstraints: false,
+    darkMode: false,
+    snapToGrid: true,
     ...contextMenuValues,
     ...globalValues,
     height: 640, // overrides global values to ensure no scrollbar is displayed when loading the example
-    darkMode: false,
     ...rubberBandValues,
-    snapToGrid: true,
   },
 };
 
@@ -876,54 +881,93 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     });
 
     // Uses implementation of connection points via constraints (see above)
-    //v2.setConnectable(false);
+    // TODO rename as this is for vertex connection points, not edges
+    const connectionPointsWithConstraints =
+      args.connectionPointsWithConstraints as unknown as boolean;
+    if (connectionPointsWithConstraints) {
+      v2.setConnectable(false);
 
-    /*let v21 = graph.insertVertex(v2, null, 'A', 0, 0.5, 10, 1,
-        'shape=none;spacingBottom=11;spacingLeft=1;align=left;fontSize=8;'+
-        'fontColor=#4c4c4c;strokeColor=#909090;');
-      v21.geometry.relative = true;
-      v21.geometry.offset = new Point(0, -1);
+      const v21 = graph.insertVertex(v2, null, 'A', 0, 0.5, 10, 1, {
+        shape: 'none',
+        spacingBottom: 11,
+        spacingLeft: 1,
+        align: 'left',
+        fontSize: 8,
+        fontColor: '#4c4c4c',
+        strokeColor: '#909090',
+      });
+      v21.geometry!.relative = true;
+      v21.geometry!.offset = new Point(0, -1);
 
-      let v22 = graph.insertVertex(v2, null, 'B', 1, 0.5, 10, 1,
-        'spacingBottom=11;spacingLeft=1;align=left;fontSize=8;'+
-        'fontColor=#4c4c4c;strokeColor=#909090;');
-      v22.geometry.relative = true;
-      v22.geometry.offset = new Point(-10, -1);*/
+      const v22 = graph.insertVertex(v2, null, 'B', 1, 0.5, 10, 1, {
+        // shape: 'none',
+        spacingBottom: 11,
+        spacingLeft: 1,
+        align: 'left',
+        fontSize: 8,
+        fontColor: '#4c4c4c',
+        strokeColor: '#909090',
+      });
+      v22.geometry!.relative = true;
+      v22.geometry!.offset = new Point(-10, -1);
+    }
 
     const v3 = graph.addCell(cellArrayUtils.cloneCell(v1)!); // cloneCell returns null only if the cell is null, which is not the case here
     v3.value = 'J3';
     v3.geometry!.x = 420;
     v3.geometry!.y = 340;
 
-    // Connection constraints implemented in edges, alternatively this
-    // can be implemented using references, see: portrefs.html
-    const e1 = graph.insertEdge(parent, null, 'e1', v1.getChildAt(7), v2, {
-      entryX: 0,
-      entryY: 0.5,
-      entryPerimeter: false,
-    });
-    e1.geometry!.points = [new Point(180, 110)];
+    // Connection constraints implemented in edges, alternatively this can be implemented using references, see the PortRefs story
+    if (!connectionPointsWithConstraints) {
+      const e1 = graph.insertEdge({
+        parent,
+        value: 'e1',
+        source: v1.getChildAt(7),
+        target: v2,
+        style: {
+          entryX: 0,
+          entryY: 0.5,
+          entryPerimeter: false,
+        },
+      });
+      e1.geometry!.points = [new Point(180, 110)];
 
-    const e2 = graph.insertEdge(parent, null, 'e2', v1.getChildAt(4), v2, {
-      entryX: 1,
-      entryY: 0.5,
-      entryPerimeter: false,
-    });
-    e2.geometry!.points = [new Point(320, 50), new Point(320, 230)];
+      const e2 = graph.insertEdge({
+        parent,
+        value: 'e2',
+        source: v1.getChildAt(4),
+        target: v2,
+        style: {
+          entryX: 1,
+          entryY: 0.5,
+          entryPerimeter: false,
+        },
+      });
+      e2.geometry!.points = [new Point(320, 50), new Point(320, 230)];
 
-    const e3 = graph.insertEdge(parent, null, 'crossover', e1, e2);
-    e3.geometry!.setTerminalPoint(new Point(180, 140), true);
-    e3.geometry!.setTerminalPoint(new Point(320, 140), false);
+      const e3 = graph.insertEdge({ parent, value: 'crossover', source: e1, target: e2 });
+      e3.geometry!.setTerminalPoint(new Point(180, 140), true);
+      e3.geometry!.setTerminalPoint(new Point(320, 140), false);
+    } else {
+      const e1 = graph.insertEdge({
+        parent,
+        value: 'e1',
+        source: v1.getChildAt(7),
+        target: v2.getChildAt(0),
+      });
+      e1.geometry!.points = [new Point(180, 140)];
 
-    //  let e1 = graph.insertEdge(parent, null, 'e1', v1.getChildAt(7), v2.getChildAt(0));
-    //  e1.geometry.points = [new Point(180, 140)];
+      const e2 = graph.insertEdge({
+        parent,
+        source: v1.getChildAt(4),
+        target: v2.getChildAt(1),
+      });
+      e2.geometry!.points = [new Point(320, 80)];
 
-    //  let e2 = graph.insertEdge(parent, null, '', v1.getChildAt(4), v2.getChildAt(1));
-    //  e2.geometry.points = [new Point(320, 80)];
-
-    //  let e3 = graph.insertEdge(parent, null, 'crossover', e1, e2);
-    //  e3.geometry.setTerminalPoint(new Point(180, 160), true);
-    //  e3.geometry.setTerminalPoint(new Point(320, 160), false);
+      const e3 = graph.insertEdge({ parent, value: 'crossover', source: e1, target: e2 });
+      e3.geometry!.setTerminalPoint(new Point(180, 160), true);
+      e3.geometry!.setTerminalPoint(new Point(320, 160), false);
+    }
 
     const e4 = graph.insertEdge(parent, null, 'e4', v2, v3.getChildAt(0), {
       exitX: 1,
