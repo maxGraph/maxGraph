@@ -85,6 +85,10 @@ export default {
       defaultValue: false,
     },
     ...rubberBandTypes,
+    snapToGrid: {
+      type: 'boolean',
+      defaultValue: true,
+    },
   },
   args: {
     ...contextMenuValues,
@@ -92,6 +96,7 @@ export default {
     height: 640, // overrides global values to ensure no scrollbar is displayed when loading the example
     darkMode: false,
     ...rubberBandValues,
+    snapToGrid: true,
   },
 };
 
@@ -361,7 +366,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       if (this.edgeState) {
         this.edgeState.cell.geometry?.setTerminalPoint(null, false);
 
-        if (this.shape && this.currentState && this.currentState.cell.isEdge()) {
+        if (this.shape && this.currentState?.cell.isEdge()) {
           const scale = this.graph.view.scale;
           const tr = this.graph.view.translate;
           const pt = new Point(
@@ -431,7 +436,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           pt = new Point(s * (tr.x + pt.x + orig.x), s * (tr.y + pt.y + orig.y));
 
           // Finds nearest segment on edge and computes intersection
-          if (terminal && terminal.absolutePoints) {
+          if (terminal?.absolutePoints) {
             const seg = mathUtils.findNearestSegment(terminal, pt.x, pt.y);
 
             // Finds orientation of the segment
@@ -441,7 +446,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
             // Stores the segment in the edge state
             const key = source ? 'sourceConstraint' : 'targetConstraint';
-            // const value = horizontal ? 'horizontal' : 'vertical';
             (edge.style as CustomCellStateStyle)[key] = horizontal
               ? 'horizontal'
               : 'vertical';
@@ -459,7 +463,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
           }
         }
         // Computes constraint connection points on vertices and ports
-        else if (terminal && terminal.cell.geometry?.relative) {
+        else if (terminal?.cell.geometry?.relative) {
           pt = new Point(
             this.getRoutingCenterX(terminal),
             this.getRoutingCenterY(terminal)
@@ -467,14 +471,15 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         }
 
         // Snaps point to grid
-        /*if (pt != null)
-        {
-          let tr = this.graph.view.translate;
-          let s = this.graph.view.scale;
+        if (args.snapToGrid) {
+          if (pt != null) {
+            const tr = this.graph.view.translate;
+            const s = this.graph.view.scale;
 
-          pt.x = (this.graph.snap(pt.x / s - tr.x) + tr.x) * s;
-          pt.y = (this.graph.snap(pt.y / s - tr.y) + tr.y) * s;
-        }*/
+            pt.x = (this.graph.snap(pt.x / s - tr.x) + tr.x) * s;
+            pt.y = (this.graph.snap(pt.y / s - tr.y) + tr.y) * s;
+          }
+        }
       }
 
       edge.setAbsoluteTerminalPoint(pt, source);
@@ -547,7 +552,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
             const pstate = this.graph.getView().getState(edge.getParent()!); // here, we know that the edge has a parent
 
-            if (pstate != null) {
+            if (pstate) {
               pt.x -= pstate.origin.x;
               pt.y -= pstate.origin.y;
             }
@@ -623,11 +628,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     // Gets the initial connection from the source terminal or edge
     if (source) {
       if (source.cell.isEdge()) {
-        // if (source != null && source.cell.isEdge()) {
         horizontal =
           (state.style as CustomCellStateStyle).sourceConstraint == 'horizontal';
       } else {
-        // } else if (source != null) {
         // mxGraph implementation originally uses an existing property for a different purpose, we should use a dedicated routing property
         // @ts-expect-error portConstraint used with a different purpose here
         horizontal = source.style.portConstraint != 'vertical';
@@ -675,9 +678,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         //horizontal = !horizontal;
       }*/
 
-      for (let i = 0; i < hints.length; i++) {
+      for (const hintElem of hints) {
         horizontal = !horizontal;
-        hint = state.view.transformControlPoint(state, hints[i]);
+        hint = state.view.transformControlPoint(state, hintElem);
 
         if (horizontal) {
           if (pt!.y !== hint!.y) {
@@ -763,7 +766,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   style.fontSize = 9;
   style.movable = false;
   style.strokeWidth = strokeWidth;
-  //style.rounded = '1';
 
   // Sets join node size
   style.startSize = joinNodeSize;
@@ -771,9 +773,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   style = graph.getStylesheet().getDefaultVertexStyle();
   style.gradientDirection = 'south';
-  //style.gradientColor = '#909090';
   style.strokeColor = strokeColor;
-  //style.fillColor = '#e0e0e0';
   style.fillColor = 'none';
   style.fontColor = fontColor;
   style.fontStyle = 1;
