@@ -256,7 +256,7 @@ export const EdgeMixin: PartialType = {
   ) {
     // Creates the edge
     const edge = new Cell(value, new Geometry(), style);
-    edge.setId(id!); // the auto-generated id is done when adding the cell to the model
+    edge.setId(id!); // this is not an issue to set undefined here. If so, the id will be auto-generated when adding the cell to the model
     edge.setEdge(true);
     edge.geometry!.relative = true; // geometry is set when creating the cell above
     return edge;

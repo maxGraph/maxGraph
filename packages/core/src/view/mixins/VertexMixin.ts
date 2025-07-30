@@ -115,7 +115,7 @@ export const VertexMixin: PartialType = {
 
     // Creates the vertex
     const vertex = new Cell(value, geometry, style);
-    vertex.setId(id!); // the auto-generated id is done when adding the cell to the model
+    vertex.setId(id!); // this is not an issue to set undefined here. If so, the id will be auto-generated when adding the cell to the model
     vertex.setVertex(true);
     vertex.setConnectable(true);
 
