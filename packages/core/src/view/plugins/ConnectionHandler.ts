@@ -699,9 +699,10 @@ export default class ConnectionHandler
   }
 
   /**
-   * Redraws the given array of {@link ImageShapes}.
+   * Redraws the given array of {@link ImageShape}s.
    *
-   * @param icons Array of {@link ImageShapes} to be redrawn.
+   * @param icons Array of {@link ImageShape}s to be redrawn.
+   * @param state {@link CellState} under the mouse.
    */
   redrawIcons(icons: ImageShape[], state: CellState) {
     if (icons[0] && icons[0].bounds) {
@@ -712,7 +713,12 @@ export default class ConnectionHandler
     }
   }
 
-  // TODO: Document me! ===========================================================================================================
+  /**
+   * Returns the center position of the given icon.
+   *
+   * @param icon The connect icon of {@link ImageShape} with the mouse.
+   * @param state {@link CellState} under the mouse.
+   */
   getIconPosition(icon: ImageShape, state: CellState) {
     const { scale } = this.graph.getView();
     let cx = state.getCenterX();
