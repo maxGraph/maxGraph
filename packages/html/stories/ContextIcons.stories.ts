@@ -119,9 +119,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       img.style.width = '16px';
       img.style.height = '16px';
 
-      const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler')!;
-      const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
-
+      const selectionHandler = graph.getPlugin<SelectionHandler>('SelectionHandler')!; // we know that this plugin is always available
       InternalEvent.addGestureListeners(img, (evt) => {
         selectionHandler.start(
           this.state.cell,
@@ -142,7 +140,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
       img.style.width = '16px';
       img.style.height = '16px';
 
-      const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler');
+      const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!; // we know that this plugin is always available
       InternalEvent.addGestureListeners(img, (evt) => {
         const pt = styleUtils.convertPoint(
           this.graph.container,
@@ -200,7 +198,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
 
   const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
     'SelectionCellsHandler'
-  );
+  )!; // we know that this plugin is always available
   selectionCellsHandler.configureVertexHandler(
     (state) => new CustomVertexToolHandler(state)
   );
