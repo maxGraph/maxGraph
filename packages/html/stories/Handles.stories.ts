@@ -210,7 +210,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
     'SelectionCellsHandler'
-  );
+  )!; // we know that this plugin is always available
   selectionCellsHandler.configureVertexHandler((state) => {
     return new MyCustomVertexHandler(state);
   });
