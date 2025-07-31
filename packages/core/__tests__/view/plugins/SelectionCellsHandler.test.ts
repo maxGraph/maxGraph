@@ -70,7 +70,7 @@ class SelectionCellsHandlerForTest extends SelectionCellsHandler {
 const createNewGraph = () => new BaseGraph({ plugins: [SelectionCellsHandler] });
 
 const getPlugin = (graph: BaseGraph) =>
-  graph.getPlugin<SelectionCellsHandlerForTest>('SelectionCellsHandler');
+  graph.getPlugin<SelectionCellsHandlerForTest>('SelectionCellsHandler')!;
 
 const expectExactInstanceOfEdgeHandler = (handler: EdgeHandler): void => {
   expect(handler).toBeInstanceOf(EdgeHandler);
