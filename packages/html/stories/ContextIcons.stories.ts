@@ -183,6 +183,7 @@ const Template = ({ label, ...args }: Record<string, any>) => {
     }
   }
 
+  // TODO remove this class, useless
   class MyCustomGraph extends Graph {
     constructor(container: HTMLElement, plugins: GraphPluginConstructor[]) {
       super(container, undefined, plugins);
