@@ -21,6 +21,7 @@ import {
   BaseGraph,
   getDefaultPlugins,
   ImageBox,
+  Multiplicity,
   Rectangle,
   registerCoreCodecs,
   unregisterAllCodecs,
@@ -97,6 +98,22 @@ describe.each([
 ])('%s', (name, graphFactory: () => AbstractGraph) => {
   test('Export', () => {
     const graph = graphFactory();
+
+    // TODO multiplicities are not exported, when unset or set
+    graph.multiplicities.push(
+      new Multiplicity(
+        true,
+        'rectangle',
+        null!, // TODO constructor signature must be updated
+        null!, // TODO constructor signature must be updated
+        0,
+        2,
+        ['circle'],
+        'Only 2 targets allowed',
+        'Only circle targets allowed'
+      )
+    );
+
     // override defaults to ensure it is taken into account
     graph.pageFormat = new Rectangle(123, 453, 60, 60);
     graph.options.collapsedImage = new ImageBox('./collapsed-new.gif', 10, 10);
