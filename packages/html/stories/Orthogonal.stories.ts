@@ -24,6 +24,7 @@ import {
   Graph,
   Point,
   RubberBandHandler,
+  type SelectionCellsHandler,
   SelectionHandler,
 } from '@maxgraph/core';
 import {
@@ -88,9 +89,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   delete graph.getStylesheet().getDefaultEdgeStyle().endArrow;
 
   // Enables snapping waypoints to terminals
-  const originalGraphCreateEdgeHandler = graph.createEdgeHandler;
-  graph.createEdgeHandler = function (state, edgeStyle) {
-    const edgeHandler = originalGraphCreateEdgeHandler.call(this, state, edgeStyle);
+  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
+    'SelectionCellsHandler'
+  )!; // we know that this plugin is always available
+  const originalCreateEdgeHandler = selectionCellsHandler.createEdgeHandler;
+  selectionCellsHandler.createEdgeHandler = function (state, edgeStyle) {
+    const edgeHandler = originalCreateEdgeHandler.call(this, state, edgeStyle);
     edgeHandler.snapToTerminals = true;
     return edgeHandler;
   };
