@@ -31,8 +31,8 @@ import type GraphDataModel from './view/GraphDataModel.js';
 import type { Stylesheet } from './view/style/Stylesheet.js';
 import type GraphSelectionModel from './view/GraphSelectionModel.js';
 import type GraphView from './view/GraphView.js';
-import EdgeHandler from './view/handler/EdgeHandler';
-import VertexHandler from './view/handler/VertexHandler';
+import EdgeHandler from './view/handler/EdgeHandler.js';
+import VertexHandler from './view/handler/VertexHandler.js';
 
 export type FilterFunction = (cell: Cell) => boolean;
 
@@ -1633,10 +1633,10 @@ export type DropHandler = (
   y?: number
 ) => void;
 
-/** @since 0.21.0 */
+/** @since 0.22.0 */
 export type CellHandler = EdgeHandler | VertexHandler;
 // TODO review the name
-/** @since 0.21.0 */
+/** @since 0.22.0 */
 export type VertexHandlerFactoryFunction = (state: CellState) => VertexHandler;
-/** @since 0.21.0 */
+/** @since 0.22.0 */
 export type EdgeHandlerFactoryFunction = (state: CellState) => EdgeHandler;
