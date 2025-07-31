@@ -237,7 +237,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    * @param state {@link CellState} whose handler should be created.
    * @since 0.22.0
    */
-  protected createHandler(state: CellState): CellHandler {
+  createHandler(state: CellState): CellHandler {
     if (state.cell.isEdge()) {
       const source = state.getVisibleTerminalState(true);
       const target = state.getVisibleTerminalState(false);
@@ -267,10 +267,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
    * @since 0.22.0
    */
-  protected createEdgeHandler(
-    state: CellState,
-    edgeStyle: EdgeStyleFunction | null
-  ): EdgeHandler {
+  createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null): EdgeHandler {
     const handlerKind = EdgeStyleRegistry.getHandlerKind(edgeStyle);
     return (
       this.edgeHandlerFactories.get(handlerKind)?.(state) ??
