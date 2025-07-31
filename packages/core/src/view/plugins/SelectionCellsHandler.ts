@@ -35,9 +35,9 @@ import type {
 import EdgeHandler from '../handler/EdgeHandler.js';
 import VertexHandler from '../handler/VertexHandler.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
-import ElbowEdgeHandler from '../handler/ElbowEdgeHandler';
-import EdgeSegmentHandler from '../handler/EdgeSegmentHandler';
-import { EdgeStyleRegistry } from '../style/edge/EdgeStyleRegistry';
+import ElbowEdgeHandler from '../handler/ElbowEdgeHandler.js';
+import EdgeSegmentHandler from '../handler/EdgeSegmentHandler.js';
+import { EdgeStyleRegistry } from '../style/edge/EdgeStyleRegistry.js';
 
 /**
  * An event handler that manages cell handlers and invokes their mouse event processing functions.
@@ -235,7 +235,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    * otherwise it returns an {@link VertexHandler}.
    *
    * @param state {@link CellState} whose handler should be created.
-   * @since 0.21.0
+   * @since 0.22.0
    */
   protected createHandler(state: CellState): CellHandler {
     if (state.cell.isEdge()) {
