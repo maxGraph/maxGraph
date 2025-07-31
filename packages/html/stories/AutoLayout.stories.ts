@@ -142,15 +142,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
     'SelectionCellsHandler'
-  );
-  if (selectionCellsHandler) {
-    // use the same handler for all edge styles
-    for (const handlerKind of ['default', 'elbow', 'segment']) {
-      selectionCellsHandler.configureEdgeHandler(
-        handlerKind,
-        (state) => new MyCustomEdgeHandler(state)
-      );
-    }
+  )!; // we know that this plugin is always available
+  // use the same handler for all edge styles
+  for (const handlerKind of ['default', 'elbow', 'segment']) {
+    selectionCellsHandler.configureEdgeHandler(
+      handlerKind,
+      (state) => new MyCustomEdgeHandler(state)
+    );
   }
 
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
