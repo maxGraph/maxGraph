@@ -265,7 +265,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    *
    * @param state {@link CellState} to create the handler for.
    * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
-   * @since 0.21.0
+   * @since 0.22.0
    */
   protected createEdgeHandler(
     state: CellState,
@@ -280,13 +280,13 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
   }
 
   // TODO JSDoc + review name
-  /** @since 0.21.0 */
+  /** @since 0.22.0 */
   configureVertexHandler(factory: VertexHandlerFactoryFunction): void {
     this.vertexHandlerFactory = factory;
   }
 
   // TODO JSDoc + review name
-  /** @since 0.21.0 */
+  /** @since 0.22.0 */
   configureEdgeHandler(
     handlerKind: EdgeStyleHandlerKind,
     factory: EdgeHandlerFactoryFunction
