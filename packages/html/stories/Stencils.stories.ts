@@ -29,6 +29,7 @@ import {
   Point,
   type Rectangle,
   RubberBandHandler,
+  type SelectionCellsHandler,
   Shape,
   ShapeRegistry,
   StencilShape,
@@ -36,7 +37,6 @@ import {
   StyleDefaultsConfig,
   VertexHandler,
   VertexHandlerConfig,
-  type SelectionCellsHandler,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
