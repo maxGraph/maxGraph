@@ -154,15 +154,15 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     this.handlers = new Map();
 
     // Creates handles for all selection cells
-    const tmp = sortCells(this.getHandledSelectionCells(), false);
+    const cells = sortCells(this.getHandledSelectionCells(), false);
 
     // Destroys or updates old handlers
-    for (let i = 0; i < tmp.length; i += 1) {
-      const state = this.graph.view.getState(tmp[i]);
+    for (const cell of cells) {
+      const state = this.graph.view.getState(cell);
 
       if (state) {
-        let handler = oldHandlers.get(tmp[i]) ?? null;
-        oldHandlers.delete(tmp[i]);
+        let handler = oldHandlers.get(cell) ?? null;
+        oldHandlers.delete(cell);
 
         if (handler) {
           if (handler.state !== state) {
@@ -177,7 +177,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
         }
 
         if (handler) {
-          this.handlers.set(tmp[i], handler);
+          this.handlers.set(cell, handler);
         }
       }
     }
@@ -189,16 +189,16 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
     });
 
     // Creates new handlers and updates parent highlight on existing handlers
-    for (let i = 0; i < tmp.length; i += 1) {
-      const state = this.graph.view.getState(tmp[i]);
+    for (const cell of cells) {
+      const state = this.graph.view.getState(cell);
 
       if (state) {
-        let handler = this.handlers.get(tmp[i]);
+        let handler = this.handlers.get(cell);
 
         if (!handler) {
           handler = this.graph.createHandler(state);
           this.fireEvent(new EventObject(InternalEvent.ADD, { state }));
-          this.handlers.set(tmp[i], handler);
+          this.handlers.set(cell, handler);
         } else {
           handler.updateParentHighlight();
         }

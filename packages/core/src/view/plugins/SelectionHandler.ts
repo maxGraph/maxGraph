@@ -669,14 +669,14 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
     let result = null;
 
     if (cells.length > 0) {
-      for (let i = 0; i < cells.length; i += 1) {
-        if (cells[i].isVertex() || cells[i].isEdge()) {
-          const state = this.graph.view.getState(cells[i]);
+      for (const cell of cells) {
+        if (cell.isVertex() || cell.isEdge()) {
+          const state = this.graph.view.getState(cell);
 
           if (state) {
             let bbox = null;
 
-            if (cells[i].isVertex() && state.shape && state.shape.boundingBox) {
+            if (cell.isVertex() && state.shape && state.shape.boundingBox) {
               bbox = state.shape.boundingBox;
             }
 
@@ -738,8 +738,8 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
     this.cloning = false;
     this.cellCount = 0;
 
-    for (let i = 0; i < this.cells.length; i += 1) {
-      this.cellCount += this.addStates(this.cells[i], this.allCells);
+    for (const cell of this.cells) {
+      this.cellCount += this.addStates(cell, this.allCells);
     }
 
     if (this.guidesEnabled) {
@@ -749,10 +749,13 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
 
       // Uses connected states as guides
       const connected = new Map<CellState, boolean>();
-      const opps = this.graph.getOpposites(this.graph.getEdges(this.cell), this.cell);
+      const opposites = this.graph.getOpposites(
+        this.graph.getEdges(this.cell),
+        this.cell
+      );
 
-      for (let i = 0; i < opps.length; i += 1) {
-        const state = this.graph.view.getState(opps[i]);
+      for (const opposite of opposites) {
+        const state = this.graph.view.getState(opposite);
 
         if (state && !connected.get(state)) {
           connected.set(state, true);
@@ -788,10 +791,8 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
       dict.set(cell, state);
       count++;
 
-      const childCount = cell.getChildCount();
-
-      for (let i = 0; i < childCount; i += 1) {
-        count += this.addStates(cell.getChildAt(i), dict);
+      for (const child of cell.children) {
+        count += this.addStates(child, dict);
       }
     }
     return count;
@@ -1162,29 +1163,23 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
         // Redraws connected edges
         const s = this.graph.view.scale;
 
-        for (let i = 0; i < states.length; i += 1) {
-          const state = states[i][0];
+        for (const statesEntry of states) {
+          const state = statesEntry[0];
 
           if (state.cell.isEdge()) {
             const geometry = state.cell.getGeometry();
-            const points = [];
+            const points: Point[] = [];
 
-            if (geometry && geometry.points) {
-              for (let j = 0; j < geometry.points.length; j++) {
-                if (geometry.points[j]) {
-                  points.push(
-                    new Point(
-                      geometry.points[j].x + dx / s,
-                      geometry.points[j].y + dy / s
-                    )
-                  );
-                }
+            if (geometry?.points) {
+              const geometryPoints = geometry.points;
+              for (const point of geometryPoints) {
+                point && points.push(new Point(point.x + dx / s, point.y + dy / s));
               }
             }
 
             let source = state.visibleSourceState;
             let target = state.visibleTargetState;
-            const pts = states[i][1].absolutePoints;
+            const pts = statesEntry[1].absolutePoints;
 
             if (source == null || !this.isCellMoving(source.cell)) {
               const pt0 = pts[0];
@@ -1243,8 +1238,8 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   redrawHandles(states: CellState[][]) {
     const selectionCellsHandler = this.getSelectionCellsHandler();
 
-    for (let i = 0; i < states.length; i += 1) {
-      const handler = selectionCellsHandler?.getHandler(states[i][0].cell);
+    for (const statesEntry of states) {
+      const handler = selectionCellsHandler?.getHandler(statesEntry[0].cell);
       handler?.redraw(true);
     }
   }
@@ -1253,8 +1248,8 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
    * Resets the given preview states array.
    */
   resetPreviewStates(states: CellState[][]) {
-    for (let i = 0; i < states.length; i += 1) {
-      states[i][0].setState(states[i][1]);
+    for (const statesEntry of states) {
+      statesEntry[0].setState(statesEntry[1]);
     }
   }
 
@@ -1356,8 +1351,8 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
 
       const selectionCellsHandler = this.getSelectionCellsHandler();
 
-      for (let i = 0; i < cells.length; i += 1) {
-        const handler = selectionCellsHandler?.getHandler(cells[i]);
+      for (const cell of cells) {
+        const handler = selectionCellsHandler?.getHandler(cell);
         if (handler) {
           handler.setHandlesVisible(visible);
           if (visible) {
@@ -1552,17 +1547,17 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
         // Collects all non-selected parents
         const dict = new Map<Cell, boolean>();
 
-        for (let i = 0; i < cells.length; i += 1) {
-          dict.set(cells[i], true);
+        for (const cell of cells) {
+          dict.set(cell, true);
         }
 
         // LATER: Recurse up the cell hierarchy
-        for (let i = 0; i < cells.length; i += 1) {
-          const par = cells[i].getParent();
+        for (const cell of cells) {
+          const aParent = cell.getParent();
 
-          if (par && !dict.get(par)) {
-            dict.set(par, true);
-            parents.push(par);
+          if (aParent && !dict.get(aParent)) {
+            dict.set(aParent, true);
+            parents.push(aParent);
           }
         }
       }
@@ -1574,9 +1569,9 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
       // Removes parent if all child cells are removed
       const temp = [];
 
-      for (let i = 0; i < parents.length; i += 1) {
-        if (this.shouldRemoveParent(parents[i])) {
-          temp.push(parents[i]);
+      for (const aParent of parents) {
+        if (this.shouldRemoveParent(aParent)) {
+          temp.push(aParent);
         }
       }
 

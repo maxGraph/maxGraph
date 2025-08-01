@@ -749,8 +749,8 @@ export default class ConnectionHandler
    * Destroys the connect icons and resets the respective state.
    */
   destroyIcons() {
-    for (let i = 0; i < this.icons.length; i += 1) {
-      this.icons[i].destroy();
+    for (const icon of this.icons) {
+      icon.destroy();
     }
 
     this.icons = [];
@@ -1795,8 +1795,7 @@ export default class ConnectionHandler
             const tr = this.graph.view.translate;
             geo.points = [];
 
-            for (let i = 0; i < this.waypoints.length; i += 1) {
-              const pt = this.waypoints[i];
+            for (const pt of this.waypoints) {
               geo.points.push(new Point(pt.x / s - tr.x, pt.y / s - tr.y));
             }
           }
