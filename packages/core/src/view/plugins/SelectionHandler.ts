@@ -175,44 +175,47 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   refreshThread: number | null = null;
 
   /**
-   * Defines the maximum number of cells to paint subhandles
-   * for. Default is 50 for Firefox and 20 for IE. Set this
-   * to 0 if you want an unlimited number of handles to be
-   * displayed. This is only recommended if the number of
-   * cells in the graph is limited to a small number, eg.
-   * 500.
+   * Defines the maximum number of cells to paint sub-handles for.
+   *
+   * Set this to `0` if you want an unlimited number of handles to be displayed.
+   * This is only recommended if the number of cells in the graph is limited to a small number, e.g. 500.
+   * @default 50
    */
   maxCells = 50;
 
   /**
-   * Specifies if events are handled. Default is true.
+   * Specifies if events are handled.
+   * @default true
    */
   enabled = true;
 
   /**
-   * Specifies if drop targets under the mouse should be enabled. Default is
-   * true.
+   * Specifies if drop targets under the mouse should be enabled.
+   * @default true
    */
   highlightEnabled = true;
 
   /**
-   * Specifies if cloning by control-drag is enabled. Default is true.
+   * Specifies if cloning by control-drag is enabled.
+   * @default true
    */
   cloneEnabled = true;
 
   /**
-   * Specifies if moving is enabled. Default is true.
+   * Specifies if moving is enabled.
+   * @default true
    */
   moveEnabled = true;
 
   /**
-   * Specifies if other cells should be used for snapping the right, center or
-   * left side of the current selection. Default is false.
+   * Specifies if other cells should be used for snapping the right, center or left side of the current selection.
+   * @default false
    */
   guidesEnabled = false;
 
   /**
    * Whether the handles of the selection are currently visible.
+   * @default true
    */
   handlesVisible = true;
 
@@ -232,30 +235,32 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   currentDy = 0;
 
   /**
-   * Specifies if a move cursor should be shown if the mouse is over a movable
-   * cell. Default is true.
+   * Specifies if a move cursor should be shown if the mouse is over a movable cell.
+   * @default true
    */
   updateCursor = true;
 
   /**
-   * Specifies if selecting is enabled. Default is true.
+   * Specifies if selecting is enabled.
+   * @default true
    */
   selectEnabled = true;
 
   /**
-   * Specifies if cells may be moved out of their parents. Default is true.
+   * Specifies if cells may be moved out of their parents.
+   * @default true
    */
   removeCellsFromParent = true;
 
   /**
-   * If empty parents should be removed from the model after all child cells
-   * have been moved out. Default is true.
+   * If empty parents should be removed from the model after all child cells have been moved out.
+   * @default false
    */
   removeEmptyParents = false;
 
   /**
-   * Specifies if drop events are interpreted as new connections if no other
-   * drop action is defined. Default is false.
+   * Specifies if drop events are interpreted as new connections if no other drop action is defined.
+   * @default false
    */
   connectOnDrop = false;
 
@@ -266,20 +271,22 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   scrollOnMove = true;
 
   /**
-   * Specifies the minimum number of pixels for the width and height of a
-   * selection border. Default is 6.
+   * Specifies the minimum number of pixels for the width and height of a selection border.
+   * @default 6
    */
   minimumSize = 6;
 
   /**
-   * Specifies the color of the preview shape. Default is black.
+   * Specifies the color of the preview shape.
+   * @default black
    */
   previewColor: ColorValue = 'black';
 
   /**
    * Specifies if the graph container should be used for preview. If this is used
    * then drop target detection relies entirely on {@link AbstractGraph.getCellAt} because
-   * the HTML preview does not "let events through". Default is false.
+   * the HTML preview does not "let events through".
+   * @default false
    */
   htmlPreview = false;
 
@@ -289,24 +296,28 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   shape: Shape | null = null;
 
   /**
-   * Specifies if the grid should be scaled. Default is false.
+   * Specifies if the grid should be scaled.
+   * @default false
    */
   scaleGrid = false;
 
   /**
-   * Specifies if the bounding box should allow for rotation. Default is true.
+   * Specifies if the bounding box should allow for rotation.
+   * @default true
    */
   rotationEnabled = true;
 
   /**
-   * Maximum number of cells for which live preview should be used.  Default is 0 which means no live preview.
+   * Maximum number of cells for which live preview should be used.
+   *
+   * `0` means no live preview.
+   * @default 0
    */
   maxLivePreview = 0;
 
   /**
-   * Variable allowLivePreview
-   *
-   * If live preview is allowed on this system.  Default is true for systems with SVG support.
+   * If live preview is allowed on this system.
+   * @default true for systems with SVG support.
    */
   allowLivePreview = Client.IS_SVG;
 
@@ -333,28 +344,28 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   highlight: CellHighlight | null = null;
 
   /**
-   * Returns <enabled>.
+   * Returns {@link enabled}.
    */
   isEnabled() {
     return this.enabled;
   }
 
   /**
-   * Sets <enabled>.
+   * Sets {@link enabled}.
    */
   setEnabled(value: boolean) {
     this.enabled = value;
   }
 
   /**
-   * Returns <cloneEnabled>.
+   * Returns {@link cloneEnabled}.
    */
   isCloneEnabled() {
     return this.cloneEnabled;
   }
 
   /**
-   * Sets <cloneEnabled>.
+   * Sets {@link cloneEnabled}.
    *
    * @param value Boolean that specifies the new clone enabled state.
    */
@@ -363,50 +374,49 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Returns {@link oveEnabled}.
+   * Returns {@link moveEnabled}.
    */
   isMoveEnabled() {
     return this.moveEnabled;
   }
 
   /**
-   * Sets {@link oveEnabled}.
+   * Sets {@link moveEnabled}.
    */
   setMoveEnabled(value: boolean) {
     this.moveEnabled = value;
   }
 
   /**
-   * Returns <selectEnabled>.
+   * Returns {@link selectEnabled}.
    */
   isSelectEnabled() {
     return this.selectEnabled;
   }
 
   /**
-   * Sets <selectEnabled>.
+   * Sets {@link selectEnabled}.
    */
   setSelectEnabled(value: boolean) {
     this.selectEnabled = value;
   }
 
   /**
-   * Returns <removeCellsFromParent>.
+   * Returns {@link removeCellsFromParent}.
    */
   isRemoveCellsFromParent() {
     return this.removeCellsFromParent;
   }
 
   /**
-   * Sets <removeCellsFromParent>.
+   * Sets {@link removeCellsFromParent}.
    */
   setRemoveCellsFromParent(value: boolean) {
     this.removeCellsFromParent = value;
   }
 
   /**
-   * Returns true if the given cell and parent should propagate
-   * selection state to the parent.
+   * Returns `true` if the given cell and parent should propagate selection state to the parent.
    */
   isPropagateSelectionCell(cell: Cell, immediate: boolean, me: InternalMouseEvent) {
     const parent = cell.getParent() as Cell;
@@ -609,12 +619,12 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Returns the cells to be modified by this handler. This implementation
-   * returns all selection cells that are movable, or the given initial cell if
-   * the given cell is not selected and movable. This handles the case of moving
-   * unselectable or unselected cells.
+   * Returns the cells to be modified by this handler.
    *
-   * @param initialCell <Cell> that triggered this handler.
+   * This implementation returns all selection cells that are movable, or the given initial cell if the given cell is not selected and movable.
+   * This handles the case of moving unselectable or unselected cells.
+   *
+   * @param initialCell {@link Cell} that triggered this handler.
    */
   getCells(initialCell: Cell): Cell[] {
     if (!this.delayedSelection && this.graph.isCellMovable(initialCell)) {
@@ -624,8 +634,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Returns the {@link Rectangle} used as the preview bounds for
-   * moving the given cells.
+   * Returns the {@link Rectangle} used as the preview bounds for moving the given cells.
    */
   getPreviewBounds(cells: Cell[]) {
     const bounds = this.getBoundingBox(cells);
@@ -657,13 +666,13 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Returns the union of the {@link CellStates} for the given array of {@link Cells}.
-   * For vertices, this method uses the bounding box of the corresponding shape
-   * if one exists. The bounding box of the corresponding text label and all
-   * controls and overlays are ignored. See also: {@link GraphView#getBounds} and
-   * {@link AbstractGraph.getBoundingBox}.
+   * Returns the union of the {@link CellState}s for the given array of {@link Cell}s.
    *
-   * @param cells Array of {@link Cells} whose bounding box should be returned.
+   * For vertices, this method uses the bounding box of the corresponding shape if one exists.
+   * The bounding box of the corresponding text label and all controls and overlays are ignored.
+   * See also: {@link GraphView#getBounds} and {@link AbstractGraph.getBoundingBox}.
+   *
+   * @param cells Array of {@link Cell}s whose bounding box should be returned.
    */
   getBoundingBox(cells: Cell[]) {
     let result = null;
@@ -722,6 +731,9 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
     return shape;
   }
 
+  /**
+   * Hook to override the creation of the {@link Guide} instance used by the class.
+   */
   createGuide() {
     return new Guide(this.graph, this.getGuideStates());
   }
@@ -780,8 +792,6 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
 
   /**
    * Adds the states for the given cell recursively to the given Map.
-   * @param cell
-   * @param dict
    */
   addStates(cell: Cell, dict: Map<Cell, CellState>) {
     const state = this.graph.view.getState(cell);
@@ -817,7 +827,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Snaps the given vector to the grid and returns the given mxPoint instance.
+   * Snaps the given vector to the grid and returns the given {@link Point} instance.
    */
   snap(vector: Point) {
     const scale = this.scaleGrid ? this.graph.view.scale : 1;
@@ -827,8 +837,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Returns an {@link Point} that represents the vector for moving the cells
-   * for the given {@link MouseEvent}.
+   * Returns an {@link Point} that represents the vector for moving the cells for the given {@link MouseEvent}.
    */
   getDelta(me: InternalMouseEvent) {
     const point = convertPoint(this.graph.container, me.getX(), me.getY());
@@ -856,14 +865,14 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Hook for rounding the unscaled vector. This uses Math.round.
+   * Hook for rounding the unscaled vector. This uses `Math.round` and keep only 2 digits.
    */
   roundLength(length: number) {
     return Math.round(length * 100) / 100;
   }
 
   /**
-   * Returns true if the given cell is a valid drop target.
+   * Returns `true` if the given cell is a valid drop target.
    */
   isValidDropTarget(target: Cell, me: InternalMouseEvent) {
     return this.cell ? this.cell.getParent() !== target : false;
@@ -1254,7 +1263,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Suspends the livew preview.
+   * Suspends the live preview.
    */
   suspend() {
     if (!this.suspended) {
@@ -1275,7 +1284,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Suspends the livew preview.
+   * Suspends the live preview.
    */
   resume() {
     if (this.suspended) {
@@ -1296,7 +1305,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Resets the livew preview.
+   * Resets the live preview.
    */
   resetLivePreview() {
     this.allCells.forEach((state) => {
@@ -1481,8 +1490,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Returns true if the given cells should be removed from the parent for the specified
-   * mousereleased event.
+   * Returns true if the given cells should be removed from the parent for the specified "mouse released" event.
    */
   shouldRemoveCellsFromParent(parent: Cell, cells: Cell[], evt: MouseEvent) {
     if (parent.isVertex()) {
@@ -1589,7 +1597,7 @@ class SelectionHandler implements GraphPlugin, MouseListenerSet {
   }
 
   /**
-   * Returns true if the given parent should be removed after removal of child cells.
+   * Returns `true` if the given parent should be removed after removal of child cells.
    */
   shouldRemoveParent(parent: Cell) {
     const state = this.graph.view.getState(parent);
