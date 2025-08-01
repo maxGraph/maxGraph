@@ -261,7 +261,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    * Hooks to create a new {@link EdgeHandler} for the given {@link CellState}.
    *
    * This method relies on the registered elements in {@link EdgeStyleRegistry} to know which {@link EdgeHandler} to create.
-   * If the `EdgeStyle` is not registered, it will return a default {@link EdgeHandler}.
+   * If the `EdgeStyle` is not registered, it will return the {@link EdgeHandler} registered under the 'default' handler kind.
    *
    * @param state {@link CellState} to create the handler for.
    * @param edgeStyle the {@link EdgeStyleFunction} that let choose the actual edge handler.
