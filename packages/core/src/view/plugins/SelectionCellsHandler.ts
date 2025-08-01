@@ -246,8 +246,7 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
       // TODO test parameters pass to the function
       const edgeStyle = this.graph.view.getEdgeStyle(
         state,
-        // TODO check if this can be replaced by geo?.points
-        geo ? geo.points || undefined : undefined,
+        geo?.points ?? undefined,
         source,
         target
       );
