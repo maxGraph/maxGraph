@@ -17,7 +17,6 @@ limitations under the License.
 
 import {
   Graph,
-  type CellState,
   domUtils,
   RubberBandHandler,
   DragSource,
@@ -30,7 +29,6 @@ import {
   CellEditorHandler,
   SelectionCellsHandler,
   ConnectionHandler,
-  type EdgeStyleFunction,
   type DropHandler,
   InternalEvent,
   PanningHandler,
@@ -100,12 +98,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       this.options.foldingEnabled = false;
       this.recursiveResize = true;
     }
-
-    override createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null) {
-      const edgeHandler = super.createEdgeHandler(state, edgeStyle);
-      edgeHandler.snapToTerminals = true; // Enables snapping waypoints to terminals
-      return edgeHandler;
-    }
   }
 
   const graphs: Graph[] = [];
@@ -118,6 +110,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
     const graph = new MyCustomGraph(subContainer);
     graph.gridSize = 30;
+
+    const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
+      'SelectionCellsHandler'
+    )!; // we know that this plugin is always available
+    const originalCreateEdgeHandler = selectionCellsHandler.createEdgeHandler;
+    selectionCellsHandler.createEdgeHandler = function (state, edgeStyle) {
+      const edgeHandler = originalCreateEdgeHandler.call(this, state, edgeStyle);
+      edgeHandler.snapToTerminals = true; // Enables snapping waypoints to terminals
+      return edgeHandler;
+    };
 
     // Enables panning
     graph.setPanning(true);
