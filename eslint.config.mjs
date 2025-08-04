@@ -97,8 +97,6 @@ export default tsEslint.config(
       ...nodePlugin.configs['flat/recommended-script'].rules, // without this line, the rules are not applied when specifying custom rules
       'n/file-extension-in-import': ['error', 'always'],
       'n/no-unsupported-features/node-builtins': 'off', // we don't use node in this package, and most errors are due to "navigator.xxx is still an experimental feature and is not supported until Node.js yyy"
-      // https://typescript-eslint.io/rules/prefer-for-of/ part of "plugin:@typescript-eslint/stylistic"
-      '@typescript-eslint/prefer-for-of': 'error',
     },
   },
 
