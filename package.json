@@ -20,7 +20,7 @@
     "lint:fix": "eslint --fix \"**/*.ts\""
   },
   "devDependencies": {
-    "@types/node": "^18.19.50",
+    "@types/node": "^18.19.123",
     "eslint": "~9.34.0",
     "eslint-config-prettier": "~10.1.8",
     "eslint-plugin-import": "~2.32.0",
