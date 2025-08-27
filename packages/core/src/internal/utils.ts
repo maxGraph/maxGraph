@@ -34,11 +34,10 @@ export const isElement = (node?: Node | UserObject | null): node is Element =>
   node?.nodeType === NODE_TYPE.ELEMENT;
 
 /**
- * Use this function to check for null or undefined values for objects having falsy values in addition to nullish values:
+ * Returns true if the input is null or undefined.
  *
- * - boolean (false)
- * - number (0)
- * - string (empty)
+ * **Note**: falsy-but-defined values (false, 0, '') are NOT considered nullish.
+ * Use this when you must allow falsy values but reject absent ones, generally when the parameter is boolean, number or string.
  *
  * @private not part of the public API, can be removed or changed without prior notice
  */
