@@ -34,9 +34,15 @@ export const isElement = (node?: Node | UserObject | null): node is Element =>
   node?.nodeType === NODE_TYPE.ELEMENT;
 
 /**
+ * Use this function to check for null or undefined values for objects having falsy values in addition to nullish values:
+ *
+ * - boolean (false)
+ * - number (0)
+ * - string (empty)
+ *
  * @private not part of the public API, can be removed or changed without prior notice
  */
-export const isNullish = (v: string | object | null | undefined | number | boolean) =>
+export const isNullish = (v: unknown): v is null | undefined =>
   v === null || v === undefined;
 
 /**
