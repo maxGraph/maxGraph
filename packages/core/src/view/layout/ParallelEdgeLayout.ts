@@ -50,7 +50,7 @@ import Geometry from '../geometry/Geometry.js';
  *     const src2 = model.getTerminal(edge2, true);
  *     const trg2 = model.getTerminal(edge2, false);
  *
- *     return !(model.isEdge(edge2) && ((src == src2 && trg == trg2) || (src == trg2 && trg == src2)));
+ *     return !(model.isEdge(edge2) && ((src === src2 && trg === trg2) || (src === trg2 && trg === src2)));
  *   };
  *
  *   layout.execute(graph.getDefaultParent());
@@ -65,13 +65,13 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Defines the spacing between the parallels.
+   * Defines the spacing between parallel edges.
    * @default 20
    */
   spacing = 20;
 
   /**
-   * Specifies if only overlapping edges should be considered parallel.
+   * Specifies whether only overlapping edges should be considered parallel.
    * @default false
    */
   checkOverlap = false;
@@ -96,8 +96,8 @@ class ParallelEdgeLayout extends GraphLayout {
   /**
    * Finds the parallel edges in the given parent.
    */
-  findParallels(parent: Cell, cells: Cell[] | null = null) {
-    const lookup: Record<string, Array<Cell>> = {};
+  findParallels(parent: Cell, cells: Cell[] | null = null): Record<string, Cell[]> {
+    const lookup: Record<string, Cell[]> = {};
 
     const addCell = (cell: Cell) => {
       if (!this.isEdgeIgnored(cell)) {
@@ -131,7 +131,7 @@ class ParallelEdgeLayout extends GraphLayout {
 
   /**
    * Returns a unique ID for the given edge.
-   * The id is independent of the edge direction and is built using the visible terminal of the given edge.
+   * The id is independent of the edge direction and is built using the visible terminals of the given edge.
    */
   getEdgeId(edge: Cell) {
     const view = this.graph.getView();
