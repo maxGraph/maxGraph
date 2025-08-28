@@ -24,9 +24,9 @@ import type Cell from '../cell/Cell.js';
 import Geometry from '../geometry/Geometry.js';
 
 /**
- * Extends {@link GraphLayout} for arranging parallel edges. This layout works
- * on edges for all pairs of vertices where there is more than one edge
- * connecting the latter.
+ * Extends {@link GraphLayout} for arranging parallel edges.
+ *
+ * This layout works on edges for all pairs of vertices where there is more than one edge connecting the latter.
  *
  * Example:
  *
@@ -35,21 +35,18 @@ import Geometry from '../geometry/Geometry.js';
  * layout.execute(graph.getDefaultParent());
  * ```
  *
- * To run the layout for the parallel edges of a changed edge only, the
- * following code can be used.
+ * To run the layout for the parallel edges of a changed edge only, the following code can be used.
  *
  * ```javascript
  * const layout = new ParallelEdgeLayout(graph);
  *
- * graph.addListener(mxEvent.CELL_CONNECTED, (sender, evt) =>
- * {
+ * graph.addListener(InternalEvent.CELL_CONNECTED, (sender, evt) => {
  *   const model = graph.getDataModel();
  *   const edge = evt.getProperty('edge');
  *   const src = model.getTerminal(edge, true);
  *   const trg = model.getTerminal(edge, false);
  *
- *   layout.isEdgeIgnored = (edge2) =>
- *   {
+ *   layout.isEdgeIgnored = (edge2) => {
  *     const src2 = model.getTerminal(edge2, true);
  *     const trg2 = model.getTerminal(edge2, false);
  *
@@ -68,13 +65,14 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Defines the spacing between the parallels. Default is 20.
+   * Defines the spacing between the parallels.
+   * @default 20
    */
   spacing = 20;
 
   /**
-   * Specifies if only overlapping edges should be considered
-   * parallel. Default is false.
+   * Specifies if only overlapping edges should be considered parallel.
+   * @default false
    */
   checkOverlap = false;
 
@@ -99,7 +97,7 @@ class ParallelEdgeLayout extends GraphLayout {
    * Finds the parallel edges in the given parent.
    */
   findParallels(parent: Cell, cells: Cell[] | null = null) {
-    const lookup: any = [];
+    const lookup: Record<string, Array<Cell>> = {};
 
     const addCell = (cell: Cell) => {
       if (!this.isEdgeIgnored(cell)) {
@@ -132,9 +130,8 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Returns a unique ID for the given edge. The id is independent of the
-   * edge direction and is built using the visible terminal of the given
-   * edge.
+   * Returns a unique ID for the given edge.
+   * The id is independent of the edge direction and is built using the visible terminal of the given edge.
    */
   getEdgeId(edge: Cell) {
     const view = this.graph.getView();
