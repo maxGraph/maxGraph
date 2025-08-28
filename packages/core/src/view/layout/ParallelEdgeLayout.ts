@@ -22,11 +22,12 @@ import ObjectIdentity from '../../util/ObjectIdentity.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type Cell from '../cell/Cell.js';
 import Geometry from '../geometry/Geometry.js';
+import { isNullish } from '../../internal/utils.js';
 
 /**
- * Extends {@link GraphLayout} for arranging parallel edges. This layout works
- * on edges for all pairs of vertices where there is more than one edge
- * connecting the latter.
+ * Extends {@link GraphLayout} for arranging parallel edges.
+ *
+ * This layout works on edges for all pairs of vertices where there is more than one edge connecting the latter.
  *
  * Example:
  *
@@ -35,25 +36,22 @@ import Geometry from '../geometry/Geometry.js';
  * layout.execute(graph.getDefaultParent());
  * ```
  *
- * To run the layout for the parallel edges of a changed edge only, the
- * following code can be used.
+ * To run the layout for the parallel edges of a changed edge only, the following code can be used.
  *
  * ```javascript
  * const layout = new ParallelEdgeLayout(graph);
  *
- * graph.addListener(mxEvent.CELL_CONNECTED, (sender, evt) =>
- * {
+ * graph.addListener(InternalEvent.CELL_CONNECTED, (sender, evt) => {
  *   const model = graph.getDataModel();
  *   const edge = evt.getProperty('edge');
  *   const src = model.getTerminal(edge, true);
  *   const trg = model.getTerminal(edge, false);
  *
- *   layout.isEdgeIgnored = (edge2) =>
- *   {
+ *   layout.isEdgeIgnored = (edge2) => {
  *     const src2 = model.getTerminal(edge2, true);
  *     const trg2 = model.getTerminal(edge2, false);
  *
- *     return !(model.isEdge(edge2) && ((src == src2 && trg == trg2) || (src == trg2 && trg == src2)));
+ *     return !(model.isEdge(edge2) && ((src === src2 && trg === trg2) || (src === trg2 && trg === src2)));
  *   };
  *
  *   layout.execute(graph.getDefaultParent());
@@ -68,13 +66,14 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Defines the spacing between the parallels. Default is 20.
+   * Defines the spacing between parallel edges.
+   * @default 20
    */
   spacing = 20;
 
   /**
-   * Specifies if only overlapping edges should be considered
-   * parallel. Default is false.
+   * Specifies whether only overlapping edges should be considered parallel.
+   * @default false
    */
   checkOverlap = false;
 
@@ -85,9 +84,7 @@ class ParallelEdgeLayout extends GraphLayout {
     const lookup = this.findParallels(parent, cells);
 
     this.graph.batchUpdate(() => {
-      for (const i in lookup) {
-        const parallels = lookup[i];
-
+      for (const parallels of Object.values(lookup)) {
         if (parallels.length > 1) {
           this.layout(parallels);
         }
@@ -98,26 +95,22 @@ class ParallelEdgeLayout extends GraphLayout {
   /**
    * Finds the parallel edges in the given parent.
    */
-  findParallels(parent: Cell, cells: Cell[] | null = null) {
-    const lookup: any = [];
+  findParallels(parent: Cell, cells: Cell[] | null = null): Record<string, Cell[]> {
+    const lookup = Object.create(null) as Record<string, Cell[]>;
 
     const addCell = (cell: Cell) => {
       if (!this.isEdgeIgnored(cell)) {
         const id = this.getEdgeId(cell);
 
-        if (id != null) {
-          if (lookup[id] == null) {
-            lookup[id] = [];
-          }
-
-          lookup[id].push(cell);
+        if (!isNullish(id)) {
+          (lookup[id] ??= []).push(cell);
         }
       }
     };
 
-    if (cells != null) {
-      for (let i = 0; i < cells.length; i += 1) {
-        addCell(cells[i]);
+    if (cells) {
+      for (const cell of cells) {
+        addCell(cell);
       }
     } else {
       const model = this.graph.getDataModel();
@@ -132,14 +125,13 @@ class ParallelEdgeLayout extends GraphLayout {
   }
 
   /**
-   * Returns a unique ID for the given edge. The id is independent of the
-   * edge direction and is built using the visible terminal of the given
-   * edge.
+   * Returns a unique ID for the given edge.
+   * The id is independent of the edge direction and is built using the visible terminals of the given edge.
    */
-  getEdgeId(edge: Cell) {
+  getEdgeId(edge: Cell): string | null {
     const view = this.graph.getView();
 
-    // Cannot used cached visible terminal because this could be triggered in BEFORE_UNDO
+    // Cannot use cached visible terminal because this could be triggered in BEFORE_UNDO
     let src: Cell | string | null = view.getVisibleTerminal(edge, true);
     let trg: Cell | string | null = view.getVisibleTerminal(edge, false);
     let pts = '';
@@ -149,7 +141,7 @@ class ParallelEdgeLayout extends GraphLayout {
       trg = ObjectIdentity.get(trg);
 
       if (this.checkOverlap) {
-        const state = this.graph.view.getState(edge);
+        const state = view.getState(edge);
 
         if (state != null && state.absolutePoints != null) {
           const tmp = [];
