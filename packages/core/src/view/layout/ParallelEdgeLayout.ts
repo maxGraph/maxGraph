@@ -141,7 +141,7 @@ class ParallelEdgeLayout extends GraphLayout {
       trg = ObjectIdentity.get(trg);
 
       if (this.checkOverlap) {
-        const state = this.graph.view.getState(edge);
+        const state = view.getState(edge);
 
         if (state != null && state.absolutePoints != null) {
           const tmp = [];
