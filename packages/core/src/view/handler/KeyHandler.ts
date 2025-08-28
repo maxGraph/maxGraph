@@ -56,9 +56,11 @@ import type CellEditorHandler from '../plugins/CellEditorHandler.js';
  * To support the Command key and the Control key on the Mac, the following code can be used.
  *
  * ```javascript
- * keyHandler.getFunction = (evt) => {
+ * keyHandler.getFunction = function (evt) {
  *   if (evt) {
- *     return (InternalEvent.isControlDown(evt) || (Client.IS_MAC && evt.metaKey)) ? this.controlKeys[evt.keyCode] : this.normalKeys[evt.keyCode];
+ *     return (InternalEvent.isControlDown(evt) || (Client.IS_MAC && evt.metaKey))
+ *       ? this.controlKeys[evt.keyCode]
+ *       : this.normalKeys[evt.keyCode];
  *   }
  *   return null;
  * };
@@ -133,7 +135,7 @@ class KeyHandler {
   }
 
   /**
-   * Enables or disables event handling by updating <enabled>.
+   * Enables or disables event handling by updating {@link enabled}.
    *
    * @param enabled Boolean that specifies the new enabled state.
    */
@@ -219,7 +221,7 @@ class KeyHandler {
 
   /**
    * Returns `true` if the event should be processed by this handler.
-   * That is, if the event source is either the target, one of its direct children a descendant of the {@link AbstractGraph.container},
+   * That is, if the event source is either the target, one of its direct children, or a descendant of the {@link AbstractGraph.container},
    * or the {@link CellEditorHandler} plugin of the {@link graph}.
    *
    * @param evt Key event that represents the keystroke.
