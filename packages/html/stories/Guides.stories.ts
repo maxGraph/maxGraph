@@ -60,6 +60,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   `);
 
   const container = createGraphContainer(args);
+  // Ensure focusable for keyboard events (some containers default to tabIndex -1) - not enough to make KeyHandler work in Storybook
+  if (container.tabIndex < 0) container.tabIndex = 0;
   div.appendChild(container);
 
   // TODO provide a change default value of GUIDE_COLOR and GUIDE_STROKEWIDTH, see https://github.com/maxGraph/maxGraph/issues/192
@@ -143,7 +145,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // TODO not working in storybook, work in vanilla example. This is probably due to events already installed by storybook
   // Handles keystroke events
-  const keyHandler = new KeyHandler(graph);
+  // Scope to container to avoid Storybook-level key handling conflicts (not working)
+  const keyHandler = new KeyHandler(graph, graph.container);
 
   // Ignores enter keystroke. Remove this line if you want the enter keystroke to stop editing
   // keyHandler.enter = function () {};
