@@ -253,7 +253,9 @@ class KeyHandler {
    * @param evt Key event that represents the keystroke.
    */
   keyDown(evt: KeyboardEvent) {
+    console.warn('KeyHandler.keyDown called');
     if (this.isEnabledForEvent(evt)) {
+      console.warn('KeyHandler.keyDown - isEnabledForEvent detected');
       // Cancels the editing if escape is pressed
       if (evt.keyCode === 27 /* Escape */) {
         this.escape(evt);

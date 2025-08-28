@@ -62,6 +62,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
   // Ensure focusable for keyboard events (some containers default to tabIndex -1) - not enough to make KeyHandler work in Storybook
   if (container.tabIndex < 0) container.tabIndex = 0;
+  container.style.outline = 'none'; // Remove focus outline
   div.appendChild(container);
 
   // TODO provide a change default value of GUIDE_COLOR and GUIDE_STROKEWIDTH, see https://github.com/maxGraph/maxGraph/issues/192
@@ -141,12 +142,20 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   };
 
   // Transfer initial focus to graph container for keystroke handling
-  graph.container.focus();
+  // graph.container.focus();
 
   // TODO not working in storybook, work in vanilla example. This is probably due to events already installed by storybook
   // Handles keystroke events
   // Scope to container to avoid Storybook-level key handling conflicts (not working)
-  const keyHandler = new KeyHandler(graph, graph.container);
+  // const keyHandler = new KeyHandler(graph, graph.container);
+  // KeyHandler should work now with proper focus management
+  const keyHandler = new KeyHandler(graph); // Use default document.documentElement
+
+  // Force focus after setup
+  setTimeout(() => {
+    window.focus(); // Focus the iframe window
+    container.focus(); // Focus the container
+  }, 0);
 
   // Ignores enter keystroke. Remove this line if you want the enter keystroke to stop editing
   // keyHandler.enter = function () {};
