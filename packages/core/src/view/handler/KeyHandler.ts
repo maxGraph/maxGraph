@@ -29,42 +29,38 @@ import {
 import type CellEditorHandler from '../plugins/CellEditorHandler.js';
 
 /**
- * Event handler that listens to keystroke events. This is not a singleton,
- * however, it is normally only required once if the target is the document
- * element (default).
+ * Event handler that listens to keystroke events.
+ * This is not a singleton, however, it is normally only required once if the target is the document element (default).
  *
- * This handler installs a key event listener in the topmost DOM node and
- * processes all events that originate from descendants of {@link AbstractGraph.container}
- * or from the topmost DOM node. The latter means that all unhandled keystrokes
- * are handled by this object regardless of the focused state of the {@link graph}.
+ * This handler installs a key event listener in the topmost DOM node and processes all events that originate from descendants of {@link AbstractGraph.container} or from the topmost DOM node.
+ * The latter means that all unhandled keystrokes are handled by this object regardless of the focused state of the {@link graph}.
  *
- * Example:
+ * ### Example
  *
- * The following example creates a key handler that listens to the delete key
- * (46) and deletes the selection cells if the graph is enabled.
+ * The following example creates a key handler that listens to the delete key (46) and deletes the selection cells if the graph is enabled.
  *
  * ```javascript
  * const keyHandler = new KeyHandler(graph);
- * keyHandler.bindKey(46, (evt) => {
+ * keyHandler.bindKey(46, () => {
  *   if (graph.isEnabled()) {
  *     graph.removeCells();
  *   }
  * });
  * ```
  *
- * Keycodes:
+ * ### Keycodes
  *
- * See http://tinyurl.com/yp8jgl or http://tinyurl.com/229yqw for a list of
- * keycodes or install a key event listener into the document element and print
- * the key codes of the respective events to the console.
+ * See http://tinyurl.com/yp8jgl or http://tinyurl.com/229yqw for a list of keycodes
+ * or install a key event listener into the document element and print the key codes of the respective events to the console.
  *
- * To support the Command key and the Control key on the Mac, the following
- * code can be used.
+ * To support the Command key and the Control key on the Mac, the following code can be used.
  *
  * ```javascript
- * keyHandler.getFunction = (evt) => {
+ * keyHandler.getFunction = function (evt) {
  *   if (evt) {
- *     return (InternalEvent.isControlDown(evt) || (Client.IS_MAC && evt.metaKey)) ? this.controlKeys[evt.keyCode] : this.normalKeys[evt.keyCode];
+ *     return (InternalEvent.isControlDown(evt) || (Client.IS_MAC && evt.metaKey))
+ *       ? this.controlKeys[evt.keyCode]
+ *       : this.normalKeys[evt.keyCode];
  *   }
  *   return null;
  * };
@@ -100,8 +96,7 @@ class KeyHandler {
   graph: AbstractGraph | null = null;
 
   /**
-   * Reference to the target DOM, that is, the DOM node where the key event
-   * listeners are installed.
+   * Reference to the target DOM, that is, the DOM node where the key event listeners are installed.
    */
   target: Element | null = null;
 
@@ -126,20 +121,21 @@ class KeyHandler {
   controlShiftKeys: { [key: number]: Function } = {};
 
   /**
-   * Specifies if events are handled. Default is true.
+   * Specifies if events are handled.
+   * @default true
    */
   enabled = true;
 
   /**
-   * Returns true if events are handled. This implementation returns
-   * <enabled>.
+   * Returns true if events are handled.
+   * This implementation returns {@link enabled}.
    */
   isEnabled() {
     return this.enabled;
   }
 
   /**
-   * Enables or disables event handling by updating <enabled>.
+   * Enables or disables event handling by updating {@link enabled}.
    *
    * @param enabled Boolean that specifies the new enabled state.
    */
@@ -225,7 +221,7 @@ class KeyHandler {
 
   /**
    * Returns `true` if the event should be processed by this handler.
-   * That is, if the event source is either the target, one of its direct children a descendant of the {@link AbstractGraph.container},
+   * That is, if the event source is either the target, one of its direct children, or a descendant of the {@link AbstractGraph.container},
    * or the {@link CellEditorHandler} plugin of the {@link graph}.
    *
    * @param evt Key event that represents the keystroke.

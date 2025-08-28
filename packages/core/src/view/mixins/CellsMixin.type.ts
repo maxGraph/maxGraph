@@ -356,7 +356,7 @@ declare module '../AbstractGraph' {
      * This method fires {@link InternalEvent.REMOVE_CELLS} while the transaction is in
      * progress. The removed cells are returned as an array.
      *
-     * @param cells Array of {@link Cell} to remove. If null is specified then the selection cells which are deletable are used.
+     * @param cells Array of {@link Cell} to remove. If `null` is specified, then the selection cells which are deletable are used.
      * @param includeEdges Optional boolean which specifies if all connected edges should be removed as well. Default is `true`.
      */
     removeCells: (cells?: Cell[] | null, includeEdges?: boolean | null) => Cell[];
