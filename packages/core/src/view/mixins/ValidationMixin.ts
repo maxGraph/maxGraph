@@ -47,6 +47,8 @@ type PartialType = PartialGraph & PartialValidation;
 
 // @ts-expect-error The properties of PartialGraph are defined elsewhere.
 export const ValidationMixin: PartialType = {
+  multiplicities: [],
+
   validationAlert(message: string) {
     alert(message);
   },
