@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@maxgraph/core?color=blue&style=flat)](https://www.npmjs.com/package/@maxgraph/core)
 [![build status](https://github.com/maxGraph/maxGraph/workflows/Build/badge.svg)](https://github.com/maxGraph/maxGraph/actions/workflows/build.yml)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/maxGraph/maxGraph)
 
 <!-- copied into packages/core/README.md and packages/website/docs/intro.md -->
 `maxGraph` is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides: 
