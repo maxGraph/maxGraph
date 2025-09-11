@@ -18,6 +18,7 @@ import type Cell from '../cell/Cell.js';
 import { isNode } from '../../util/domUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import { translate } from '../../internal/i18n-utils.js';
+import { isNullish } from '../../internal/utils.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
@@ -112,14 +113,14 @@ export const ValidationMixin: PartialType = {
           targetIn
         );
 
-        if (err != null) {
+        if (!isNullish(err)) {
           error += err;
         }
       }
 
       // Validates the source and target terminals independently
-      const err = this.validateEdge(<Cell>edge, source, target);
-      if (err != null) {
+      const err = this.validateEdge(edge!, source, target);
+      if (!isNullish(err)) {
         error += err;
       }
       return error.length > 0 ? error : null;
@@ -186,13 +187,13 @@ export const ValidationMixin: PartialType = {
           cell.getTerminal(false)
         ) || '';
     } else {
-      warning += this.getCellValidationError(<Cell>cell) || '';
+      warning += this.getCellValidationError(cell) || '';
     }
 
     // Checks custom validation rules
-    const err = this.validateCell(<Cell>cell, context);
+    const err = this.validateCell(cell, context);
 
-    if (err != null) {
+    if (!isNullish(err)) {
       warning += err;
     }
 

@@ -22,6 +22,7 @@ import {
   Multiplicity,
   KeyHandler,
   InternalEvent,
+  getDefaultPlugins,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -29,7 +30,11 @@ import {
   rubberBandTypes,
   rubberBandValues,
 } from './shared/args.js';
-import { configureImagesBasePath, createGraphContainer } from './shared/configure.js';
+import {
+  configureImagesBasePath,
+  createGraphContainer,
+  createMainDiv,
+} from './shared/configure.js';
 // style required by RubberBand
 import '@maxgraph/core/css/common.css';
 
@@ -45,18 +50,27 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   configureImagesBasePath();
 
+  const div = createMainDiv(`
+  This example demonstrates using multiplicities for automatically validating a graph. 
+  `);
+
   const container = createGraphContainer(args);
+  div.appendChild(container);
 
   const xmlDocument = xmlUtils.createXmlDocument();
   const sourceNode = xmlDocument.createElement('Source');
   const targetNode = xmlDocument.createElement('Target');
   const subtargetNode = xmlDocument.createElement('Subtarget');
 
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
+
   // Creates the graph inside the given container
-  const graph = new Graph(container);
+  const graph = new Graph(container, undefined, plugins);
   graph.setConnectable(true);
   graph.setTooltips(true);
   graph.setAllowDanglingEdges(false);
@@ -107,65 +121,69 @@ const Template = ({ label, ...args }) => {
     )
   );
 
-  // Enables rubberband selection
-  new RubberBandHandler(graph);
-
   // Removes cells when [DELETE] is pressed
+  // TODO pressing the delete key has no effect in FF and Chrome (https://github.com/maxGraph/maxGraph/issues/910)
   const keyHandler = new KeyHandler(graph);
-  keyHandler.bindKey(46, function (evt) {
+  keyHandler.bindKey(46, function () {
     if (graph.isEnabled()) {
       graph.removeCells();
     }
   });
 
-  // Installs automatic validation (use editor.validation = true
-  // if you are using an Editor instance)
-  const listener = function (sender, evt) {
+  // Installs automatic validation (use editor.validation = true if you are using an Editor instance)
+  const listener = function () {
     graph.validateGraph();
   };
-
   graph.getDataModel().addListener(InternalEvent.CHANGE, listener);
-
-  // Gets the default parent for inserting new cells. This
-  // is normally the first child of the root (ie. layer 0).
-  const parent = graph.getDefaultParent();
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(parent, null, sourceNode, 20, 20, 80, 30);
-    const v2 = graph.insertVertex(parent, null, targetNode, 200, 20, 80, 30);
+    const v1 = graph.insertVertex({
+      value: sourceNode,
+      x: 20,
+      y: 20,
+      width: 80,
+      height: 30,
+    });
+    const v2 = graph.insertVertex({
+      value: targetNode,
+      x: 200,
+      y: 20,
+      width: 80,
+      height: 30,
+    });
     const v3 = graph.insertVertex({
-      parent,
       value: targetNode.cloneNode(true),
       position: [200, 80],
       size: [80, 30],
     });
-    const v4 = graph.insertVertex(
-      parent,
-      null,
-      targetNode.cloneNode(true),
-      200,
-      140,
-      80,
-      30
-    );
-    const v5 = graph.insertVertex(parent, null, subtargetNode, 200, 200, 80, 30);
-    const v6 = graph.insertVertex(
-      parent,
-      null,
-      sourceNode.cloneNode(true),
-      20,
-      140,
-      80,
-      30
-    );
-    const e1 = graph.insertEdge(parent, null, '', v1, v2);
-    const e2 = graph.insertEdge(parent, null, '', v1, v3);
-    const e3 = graph.insertEdge(parent, null, '', v6, v4);
-    // var e4 = graph.insertEdge(parent, null, '', v1, v4);
+    const v4 = graph.insertVertex({
+      value: targetNode.cloneNode(true),
+      x: 200,
+      y: 140,
+      width: 80,
+      height: 30,
+    });
+    graph.insertVertex({
+      value: subtargetNode,
+      x: 200,
+      y: 200,
+      width: 80,
+      height: 30,
+    });
+    const v6 = graph.insertVertex({
+      value: sourceNode.cloneNode(true),
+      x: 20,
+      y: 140,
+      width: 80,
+      height: 30,
+    });
+    graph.insertEdge({ source: v1, target: v2 });
+    graph.insertEdge({ source: v1, target: v3 });
+    graph.insertEdge({ source: v6, target: v4 });
   });
 
-  return container;
+  return div;
 };
 
 export const Default = Template.bind({});

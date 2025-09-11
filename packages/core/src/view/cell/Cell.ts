@@ -207,16 +207,14 @@ export class Cell implements IdentityObject {
   }
 
   /**
-   * Returns the user object of the cell. The user
-   * object is stored in <value>.
+   * Returns the user object of the cell. The user object is stored in {@link value}.
    */
   getValue(): any {
     return this.value;
   }
 
   /**
-   * Sets the user object of the cell. The user object
-   * is stored in <value>.
+   * Sets the user object of the cell. The user object is stored in {@link value}.
    */
   setValue(value: any): void {
     this.value = value;

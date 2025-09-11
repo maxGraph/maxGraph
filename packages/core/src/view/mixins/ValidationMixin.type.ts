@@ -20,8 +20,6 @@ import type CellState from '../cell/CellState.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {
-    multiplicities: Multiplicity[];
-
     /**
      * Displays the given validation error in a dialog.
      *
