@@ -55,7 +55,6 @@ import type {
   MouseListenerSet,
   PluginId,
 } from '../types.js';
-import Multiplicity from './other/Multiplicity.js';
 import ImageBundle from './image/ImageBundle.js';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply.js';
 import { isNullish } from '../internal/utils.js';
@@ -89,6 +88,7 @@ export abstract class AbstractGraph extends EventSource {
 
   // ===================================================================================================================
   // Group: Variables (that maybe should be in the mixins, but need to be created for each new class instance)
+  // TODO link to PR with options fix (move from mixins to here)
   // ===================================================================================================================
 
   cells: Cell[] = [];
@@ -100,10 +100,17 @@ export abstract class AbstractGraph extends EventSource {
    */
   mouseListeners: MouseListenerSet[] = [];
 
-  /**
-   * An array of {@link Multiplicity} describing the allowed connections in a graph.
-   */
-  multiplicities: Multiplicity[] = [];
+  /** Folding options. */
+  options: GraphFoldingOptions = {
+    foldingEnabled: true,
+    collapsedImage: new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9),
+    expandedImage: new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9),
+    collapseToPreferredSize: true,
+  };
+
+  // ===================================================================================================================
+  // Group: Variables managed here (not in mixins)
+  // ===================================================================================================================
 
   /**
    * Holds the {@link GraphDataModel} that contains the cells to be displayed.
@@ -383,14 +390,6 @@ export abstract class AbstractGraph extends EventSource {
   containsValidationErrorsResource: string = isI18nEnabled()
     ? 'containsValidationErrors'
     : '';
-
-  /** Folding options. */
-  options: GraphFoldingOptions = {
-    foldingEnabled: true,
-    collapsedImage: new Image(`${Client.imageBasePath}/collapsed.gif`, 9, 9),
-    expandedImage: new Image(`${Client.imageBasePath}/expanded.gif`, 9, 9),
-    collapseToPreferredSize: true,
-  };
 
   // ===================================================================================================================
   // Group: "Create Class Instance" factory functions.
