@@ -207,16 +207,14 @@ export class Cell implements IdentityObject {
   }
 
   /**
-   * Returns the user object of the cell. The user
-   * object is stored in <value>.
+   * Returns the user object of the cell. The user object is stored in {@link value}.
    */
   getValue(): any {
     return this.value;
   }
 
   /**
-   * Sets the user object of the cell. The user object
-   * is stored in <value>.
+   * Sets the user object of the cell. The user object is stored in {@link value}.
    */
   setValue(value: any): void {
     this.value = value;
@@ -235,14 +233,14 @@ export class Cell implements IdentityObject {
   }
 
   /**
-   * Returns the {@link Geometry} that describes the <geometry>.
+   * Returns the {@link Geometry} that describes the {@link geometry}.
    */
   getGeometry(): Geometry | null {
     return this.geometry;
   }
 
   /**
-   * Sets the {@link Geometry} to be used as the <geometry>.
+   * Sets the {@link Geometry} to be used as the {@link geometry}.
    */
   setGeometry(geometry: Geometry | null) {
     this.geometry = geometry;

@@ -14,14 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Multiplicity from '../other/Multiplicity.js';
 import type Cell from '../cell/Cell.js';
 import type CellState from '../cell/CellState.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {
-    multiplicities: Multiplicity[];
-
     /**
      * Displays the given validation error in a dialog.
      *

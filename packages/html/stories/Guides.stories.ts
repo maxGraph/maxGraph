@@ -142,6 +142,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.container.focus();
 
   // TODO not working in storybook, work in vanilla example. This is probably due to events already installed by storybook
+  // See https://github.com/maxGraph/maxGraph/issues/910
   // Handles keystroke events
   const keyHandler = new KeyHandler(graph);
 

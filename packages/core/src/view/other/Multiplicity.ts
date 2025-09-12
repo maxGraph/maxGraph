@@ -20,37 +20,40 @@ import { isNode } from '../../util/domUtils.js';
 import type Cell from '../cell/Cell.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import { translate } from '../../internal/i18n-utils.js';
+import { isNullish } from '../../internal/utils.js';
 
 /**
- * @class Multiplicity
- *
  * Defines invalid connections along with the error messages that they produce.
- * To add or remove rules on a graph, you must add/remove instances of this
- * class to {@link AbstractGraph.multiplicities}.
+ * To add or remove rules on a graph, you must add/remove instances of this class to {@link AbstractGraph.multiplicities}.
  *
  * ### Example
  *
+ * Defines a rule where each rectangle must be connected to no more than 2 circles and no other types of targets are allowed.
+ *
  * ```javascript
- * graph.multiplicities.push(new mxMultiplicity(
- *   true, 'rectangle', null, null, 0, 2, ['circle'],
+ * graph.multiplicities.push(new Multiplicity(
+ *   true,
+ *   'rectangle',
+ *   null,
+ *   null,
+ *   0,
+ *   2,
+ *   ['circle'],
  *   'Only 2 targets allowed',
  *   'Only circle targets allowed'));
  * ```
- *
- * Defines a rule where each rectangle must be connected to no more than 2
- * circles and no other types of targets are allowed.
  */
 class Multiplicity {
   constructor(
     source: boolean,
     type: string,
-    attr: string,
-    value: string,
+    attr: string | null | undefined,
+    value: string | null | undefined,
     min: number | null | undefined,
     max: number | null | undefined,
-    validNeighbors: string[],
-    countError: string,
-    typeError: string,
+    validNeighbors: string[] | null | undefined,
+    countError: string | null | undefined,
+    typeError: string | null | undefined,
     validNeighborsAllowed = true
   ) {
     this.source = source;
@@ -59,34 +62,31 @@ class Multiplicity {
     this.value = value;
     this.min = min ?? 0;
     this.max = max ?? Number.MAX_VALUE;
-    this.validNeighbors = validNeighbors;
-    this.countError = translate(countError) || countError;
-    this.typeError = translate(typeError) || typeError;
+    this.validNeighbors = validNeighbors ?? [];
+    this.countError = (translate(countError) || countError) ?? '';
+    this.typeError = (translate(typeError) || typeError) ?? '';
     this.validNeighborsAllowed = validNeighborsAllowed;
   }
 
   /**
-   * Defines the type of the source or target terminal. The type is a string
-   * passed to {@link mxUtils.isNode} together with the source or target vertex
-   * value as the first argument.
+   * Defines the type of the source or target terminal.
+   *
+   * The type is a string passed to {@link isNode} together with the source or target vertex value as the first argument.
    */
   type: string;
 
   /**
-   * Optional string that specifies the attributename to be passed to
-   * {@link mxUtils.isNode} to check if the rule applies to a cell.
+   * Optional string that specifies the attribute name to be passed to {@link isNode} to check if the rule applies to a cell.
    */
-  attr: string;
+  attr: string | null | undefined;
 
   /**
-   * Optional string that specifies the value of the attribute to be passed
-   * to {@link mxUtils.isNode} to check if the rule applies to a cell.
+   * Optional string that specifies the value of the attribute to be passed to {@link isNode} to check if the rule applies to a cell.
    */
-  value: string;
+  value: string | null | undefined;
 
   /**
-   * Boolean that specifies if the rule is applied to the source or target
-   * terminal of an edge.
+   * Boolean that specifies if the rule is applied to the source or target terminal of an edge.
    */
   source: boolean;
 
@@ -110,27 +110,22 @@ class Multiplicity {
   validNeighbors: Array<string>;
 
   /**
-   * Boolean indicating if the list of validNeighbors are those that are allowed
-   * for this rule or those that are not allowed for this rule.
+   * Boolean indicating if the list of {@link validNeighbors} are those that are allowed for this rule or those that are not allowed for this rule.
    */
   validNeighborsAllowed = true;
 
   /**
-   * Holds the localized error message to be displayed if the number of
-   * connections for which the rule applies is smaller than {@link min} or greater
-   * than {@link max}.
+   * Holds the localized error message to be displayed if the number of connections for which the rule applies is smaller than {@link min} or greater than {@link max}.
    */
   countError: string;
 
   /**
-   * Holds the localized error message to be displayed if the type of the
-   * neighbor for a connection does not match the rule.
+   * Holds the localized error message to be displayed if the type of the neighbor for a connection does not match the rule.
    */
   typeError: string;
 
   /**
-   * Checks the multiplicity for the given arguments and returns the error
-   * for the given connection or null if the multiplicity does not apply.
+   * Checks the multiplicity for the given arguments and returns the error for the given connection or `null` if the multiplicity does not apply.
    *
    * @param graph Reference to the enclosing {@link AbstractGraph} instance.
    * @param edge {@link Cell} that represents the edge to validate.
@@ -178,10 +173,10 @@ class Multiplicity {
   }
 
   /**
-   * Checks if there are any valid neighbours in {@link validNeighbors}. This is only
-   * called if {@link validNeighbors} is a non-empty array.
+   * Checks if there are any valid neighbours in {@link validNeighbors}.
+   * This is only called if {@link validNeighbors} is a non-empty array.
    */
-  checkNeighbors(graph: AbstractGraph, edge: Cell, source: Cell, target: Cell): boolean {
+  checkNeighbors(graph: AbstractGraph, _edge: Cell, source: Cell, target: Cell): boolean {
     const sourceValue = source.getValue();
     const targetValue = target.getValue();
     let isValid = !this.validNeighborsAllowed;
@@ -201,11 +196,12 @@ class Multiplicity {
   }
 
   /**
-   * Checks the given terminal cell and returns true if this rule applies. The
-   * given cell is the source or target of the given edge, depending on
-   * {@link source}. This implementation uses {@link checkType} on the terminal's value.
+   * Checks the given terminal cell and returns true if this rule applies.
+   * The given cell is the source or target of the given edge, depending on {@link source}.
+   *
+   * This implementation uses {@link checkType} on the terminal's value.
    */
-  checkTerminal(graph: AbstractGraph, edge: Cell, terminal: Cell): boolean {
+  checkTerminal(graph: AbstractGraph, _edge: Cell, terminal: Cell): boolean {
     const value = terminal?.getValue() ?? null;
 
     return this.checkType(graph, value, this.type, this.attr, this.value);
@@ -215,24 +211,25 @@ class Multiplicity {
    * Checks the type of the given value.
    */
   checkType(
-    graph: AbstractGraph,
-    value: string | Element | Cell,
+    _graph: AbstractGraph,
+    value: string | Element | Cell | null,
     type: string,
-    attr?: string,
+    attr?: string | null,
     attrValue?: any
   ): boolean {
-    if (value != null) {
-      if (
-        typeof value !== 'string' &&
-        'nodeType' in value &&
-        !Number.isNaN(value.nodeType)
-      ) {
-        // Checks if value is a DOM node
-        return isNode(value, type, attr, attrValue);
-      }
-      return value === type;
+    if (isNullish(value)) {
+      return false;
     }
-    return false;
+
+    if (
+      typeof value !== 'string' &&
+      'nodeType' in value &&
+      !Number.isNaN(value.nodeType)
+    ) {
+      // Checks if value is a DOM node
+      return isNode(value, type, attr, attrValue);
+    }
+    return value === type;
   }
 }
 

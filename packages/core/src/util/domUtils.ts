@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { NODE_TYPE } from './Constants.js';
+import { isNullish } from '../internal/utils.js';
 
 /**
  * Returns the text content of the specified node.
@@ -223,15 +224,18 @@ export const para = (parent: Element, text: string) => {
 export const isNode = (
   value: any,
   nodeName: string | null = null,
-  attributeName?: string,
-  attributeValue?: string
+  attributeName?: string | null,
+  attributeValue?: string | null
 ) => {
   if (
-    value != null &&
-    !isNaN(value.nodeType) &&
-    (nodeName == null || value.nodeName.toLowerCase() == nodeName.toLowerCase())
+    !isNullish(value) &&
+    typeof value.nodeType === 'number' &&
+    (isNullish(nodeName) || value.nodeName.toLowerCase() == nodeName.toLowerCase())
   ) {
-    return attributeName == null || value.getAttribute(attributeName) == attributeValue;
+    // Intentionally using loose equality to treat null and undefined as equivalent here.
+    return (
+      isNullish(attributeName) || value.getAttribute(attributeName) == attributeValue
+    );
   }
 
   return false;
