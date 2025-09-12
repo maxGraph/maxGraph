@@ -233,14 +233,14 @@ export class Cell implements IdentityObject {
   }
 
   /**
-   * Returns the {@link Geometry} that describes the <geometry>.
+   * Returns the {@link Geometry} that describes the {@link geometry}.
    */
   getGeometry(): Geometry | null {
     return this.geometry;
   }
 
   /**
-   * Sets the {@link Geometry} to be used as the <geometry>.
+   * Sets the {@link Geometry} to be used as the {@link geometry}.
    */
   setGeometry(geometry: Geometry | null) {
     this.geometry = geometry;
