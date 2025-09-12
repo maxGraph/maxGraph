@@ -229,9 +229,10 @@ export const isNode = (
 ) => {
   if (
     !isNullish(value) &&
-    !isNaN(value.nodeType) &&
+    typeof value.nodeType === 'number' &&
     (isNullish(nodeName) || value.nodeName.toLowerCase() == nodeName.toLowerCase())
   ) {
+    // Intentionally using loose equality to treat null and undefined as equivalent here.
     return (
       isNullish(attributeName) || value.getAttribute(attributeName) == attributeValue
     );
