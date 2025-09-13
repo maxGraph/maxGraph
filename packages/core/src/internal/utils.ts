@@ -54,52 +54,10 @@ export const mixInto = (dest: any) => (mixin: any) => {
   const keys = Reflect.ownKeys(mixin);
   try {
     for (const key of keys) {
-      // const rawValue = mixin[key];
-      // const value = Array.isArray(rawValue) ? [...rawValue] : rawValue;
-      // Array.isArray(newValue) && (newValue = [...value]); // clone the array
-      // console.info(`${String(key)} / ${newValue} - isArray: ${Array.isArray(newValue)}`);
-
-      // Object.defineProperty(dest.prototype, key, {
-      //   value,
-      //   // value: mixin[key], // TODO should clone the object (at least for array)
-      //   writable: true,
-      // });
-
-      const rawValue = mixin[key];
-      if (Array.isArray(rawValue)) {
-        Object.defineProperty(dest.prototype, key, {
-          get() {
-            return [...rawValue];
-          },
-          set(newValue) {
-            Object.defineProperty(this, key, {
-              value: newValue,
-              writable: true,
-              configurable: true,
-            });
-          },
-          configurable: true,
-        });
-      } else if (rawValue !== null && typeof rawValue === 'object') {
-        Object.defineProperty(dest.prototype, key, {
-          get() {
-            return structuredClone(rawValue);
-          },
-          set(newValue) {
-            Object.defineProperty(this, key, {
-              value: newValue,
-              writable: true,
-              configurable: true,
-            });
-          },
-          configurable: true,
-        });
-      } else {
-        Object.defineProperty(dest.prototype, key, {
-          value: rawValue,
-          writable: true,
-        });
-      }
+      Object.defineProperty(dest.prototype, key, {
+        value: mixin[key],
+        writable: true,
+      });
     }
   } catch (e) {
     GlobalConfig.logger.error('Error while mixing', e);
