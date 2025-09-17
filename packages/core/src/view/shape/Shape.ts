@@ -577,14 +577,12 @@ class Shape {
     let strokeDrawn = false;
 
     if (c && this.outline) {
-      const { stroke } = c;
+      const { fillAndStroke, stroke } = c;
 
       c.stroke = (...args) => {
         strokeDrawn = true;
         stroke.apply(c, args);
       };
-
-      const { fillAndStroke } = c;
 
       c.fillAndStroke = (...args) => {
         strokeDrawn = true;
