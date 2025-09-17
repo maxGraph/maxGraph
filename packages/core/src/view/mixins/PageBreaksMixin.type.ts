@@ -14,17 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// TODO TMP workaround, need an import, otherwise TSC complains
-// TS2436: Ambient module declaration cannot specify relative module name.
-export {};
+import type Shape from '../shape/Shape.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {
     /** @default null */
-    horizontalPageBreaks: any[] | null;
+    horizontalPageBreaks: Shape[] | null;
 
     /** @default null */
-    verticalPageBreaks: any[] | null;
+    verticalPageBreaks: Shape[] | null;
 
     /**
      * Invokes from {@link sizeDidChange} to redraw the page breaks.
