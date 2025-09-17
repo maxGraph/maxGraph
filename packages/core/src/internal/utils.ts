@@ -45,7 +45,12 @@ export const isNullish = (v: unknown): v is null | undefined =>
   v === null || v === undefined;
 
 /**
- * Merge a mixin into the destination
+ * Merge a mixin into the destination.
+ *
+ * WARN: do not use "complex" properties type (object, array), as they will be shared between all instances of the destination class.
+ * This is a limitation of this simple mixin implementation, and we are not trying to fix it as the current plan is to move mixin code to dedicated plugin.
+ * See https://github.com/maxGraph/maxGraph/issues/762.
+ *
  * @param dest the destination class
  *
  * @private not part of the public API, can be removed or changed without prior notice
@@ -57,6 +62,8 @@ export const mixInto = (dest: any) => (mixin: any) => {
       Object.defineProperty(dest.prototype, key, {
         value: mixin[key],
         writable: true,
+        // enumerable should probably set to true.
+        // For example, when exporting a Graph with Codecs, properties added via mixins are not serialized whereas properties directly defined on the class are.
       });
     }
   } catch (e) {
