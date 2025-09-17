@@ -65,10 +65,11 @@ import { StyleDefaultsConfig } from '../../util/config.js';
  * or one filled region and an additional stroke the mxActor and mxCylinder
  * should be subclassed, respectively.
  * ```javascript
- * function CustomShape() { }
- *
- * CustomShape.prototype = new mxShape();
- * CustomShape.prototype.constructor = CustomShape;
+ * class CustomShape extends Shape {
+ *   constructor() {
+ *     super();
+ *   }
+ * }
  * ```
  * To register a custom shape in an existing graph instance, one must register the
  * shape under a new name in the graph’s cell renderer as follows:
