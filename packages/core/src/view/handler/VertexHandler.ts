@@ -430,16 +430,16 @@ class VertexHandler implements MouseListenerSet {
    * Creates the shape used to draw the selection border.
    */
   createSelectionShape(bounds: Rectangle): Shape {
-    const shape = new RectangleShape(
-      Rectangle.fromRectangle(bounds),
-      NONE,
-      this.getSelectionColor()
-    );
+    // const shape = new RectangleShape(
+    //   Rectangle.fromRectangle(bounds),
+    //   NONE,
+    //   this.getSelectionColor()
+    // );
 
     // TODO add an option to use the shape of the state
     // TODO when using this, ensure the preview works when performing rotation
-    // const shape: Shape = // @ts-ignore known to work at runtime
-    //   new this.state.shape.constructor();
+    const shape: Shape = // @ts-ignore known to work at runtime
+      new this.state.shape.constructor();
 
     // TODO taken from another place, check if needed
     // this.selectionBorder.dialect = 'svg';
@@ -450,6 +450,9 @@ class VertexHandler implements MouseListenerSet {
     shape.stroke = this.getSelectionColor();
     shape.strokeWidth = this.getSelectionStrokeWidth();
     shape.isDashed = this.isSelectionDashed();
+
+    // TODO bonus, make an option
+    shape.isRounded = this.state.shape?.isRounded ?? false;
 
     return shape;
   }
