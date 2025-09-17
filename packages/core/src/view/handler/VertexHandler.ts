@@ -224,8 +224,7 @@ class VertexHandler implements MouseListenerSet {
       this.selectionBounds.height
     );
     this.selectionBorder = this.createSelectionShape(this.bounds);
-    // VML dialect required here for event transparency in IE
-    this.selectionBorder.dialect = 'svg';
+    // this.selectionBorder.dialect = 'svg';
     this.selectionBorder.pointerEvents = false;
     this.selectionBorder.rotation = this.state.style.rotation ?? 0;
     this.selectionBorder.init(this.graph.getView().getOverlayPane());
@@ -438,6 +437,15 @@ class VertexHandler implements MouseListenerSet {
     );
 
     // shape = new this.state.shape?.constructor();
+
+    shape.outline = true;
+    shape.bounds = bounds;
+    shape.stroke = HandleConfig.strokeColor;
+    // shape.strokeWidth = this.getSelectionStrokeWidth();
+    // shape.isDashed = this.isSelectionDashed();
+    // shape.isShadow = true;
+
+    // this.selectionBorder.dialect = 'svg';
 
     shape.strokeWidth = this.getSelectionStrokeWidth();
     shape.isDashed = this.isSelectionDashed();
