@@ -122,7 +122,17 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.batchUpdate(() => {
     const v1 = graph.insertVertex(parent, null, 'A1', 20, 20, 40, 80, { shape: 'and' });
     const v2 = graph.insertVertex(parent, null, 'A2', 20, 220, 40, 80, { shape: 'and' });
-    const v3 = graph.insertVertex(parent, null, 'X1', 160, 110, 80, 80, { shape: 'xor' });
+    const v3 = graph.insertVertex({
+      value: 'X1 circle\nnot resizable',
+      x: 160,
+      y: 110,
+      width: 80,
+      height: 80,
+      style: {
+        resizable: false,
+        shape: 'ellipse',
+      },
+    });
     const e1 = graph.insertEdge(parent, null, 'Edge from A1 to X1', v1, v3);
     e1.geometry!.points = [new Point(90, 60), new Point(90, 130)];
     const e2 = graph.insertEdge(parent, null, 'Edge from A2 to X1', v2, v3);
