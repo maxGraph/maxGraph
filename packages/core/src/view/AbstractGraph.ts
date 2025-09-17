@@ -89,9 +89,9 @@ export abstract class AbstractGraph extends EventSource {
   isConstrainedMoving = false;
 
   // ===================================================================================================================
-  // Group: Variables that should be in the mixins
-  // The current implementation of the function applying mixins create a shared state for properties with "complex" type (object, array)
-  // whereas here, we need to be created a specific instance for each new class instance.
+  // Group: Variables that should be in the mixins but requiring per-instance initialization
+  // The mixin application currently causes shared state for complex types (object/array),
+  // so these are defined here to ensure a fresh instance per Graph.
   // See https://github.com/maxGraph/maxGraph/pull/751 and https://github.com/maxGraph/maxGraph/pull/879
   // ===================================================================================================================
 
