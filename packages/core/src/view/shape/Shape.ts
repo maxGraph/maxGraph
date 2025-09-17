@@ -232,10 +232,12 @@ class Shape {
   stencilPointerEvents = false;
 
   /**
-   * Specifies if the shape should be drawn as an outline. This disables all
-   * fill colors and can be used to disable other drawing states that should
-   * not be painted for outlines. Default is false. This should be set before
-   * calling <apply>.
+   * Specifies if the shape should be drawn as an outline.
+   *
+   * This disables all fill colors and can be used to disable other drawing states that should not be painted for outlines.
+   * This should be set before calling {@link apply}.
+   *
+   * @default false
    */
   outline = false;
 
