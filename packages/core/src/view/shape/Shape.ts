@@ -208,26 +208,30 @@ class Shape {
   svgStrokeTolerance = 8;
 
   /**
-   * Specifies if pointer events should be handled. Default is true.
+   * Specifies if pointer events should be handled.
+   * @default true
    */
   pointerEvents = true;
 
   originalPointerEvents: boolean | null = null;
 
   /**
-   * Specifies if pointer events should be handled. Default is true.
+   * Specifies if pointer events should be handled.
+   * @default 'all'
    */
   svgPointerEvents = 'all';
 
   /**
-   * Specifies if pointer events outside of shape should be handled. Default
-   * is false.
+   * Specifies if pointer events outside of shape should be handled.
+   * @default false
    */
   shapePointerEvents = false;
 
   /**
-   * Specifies if pointer events outside of stencils should be handled. Default
-   * is false. Set this to true for backwards compatibility with the 1.x branch.
+   * Specifies if pointer events outside of stencils should be handled.
+   * Set this to `true` for backwards compatibility with the 1.x branch.
+   *
+   * @default false
    */
   stencilPointerEvents = false;
 
@@ -242,13 +246,14 @@ class Shape {
   outline = false;
 
   /**
-   * Specifies if the shape is visible. Default is true.
+   * Specifies if the shape is visible.
+   * @default true
    */
   visible = true;
 
   /**
-   * Allows to use the SVG bounding box in SVG. Default is false for performance
-   * reasons.
+   * Allows to use the SVG bounding box in SVG.
+   * @default true
    */
   useSvgBoundingBox = true;
 
