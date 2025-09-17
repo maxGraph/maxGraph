@@ -86,6 +86,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     HandleConfig.strokeColor = '#0088cf';
 
     VertexHandlerConfig.selectionColor = selectionColor;
+    VertexHandlerConfig.selectionDashed = false;
     VertexHandlerConfig.selectionStrokeWidth = 2;
   }
 
@@ -136,7 +137,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       height: 80,
       style: {
         rotation: -30,
-        shape: 'and',
       },
     });
     const v3 = graph.insertVertex({
@@ -175,9 +175,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     const e4 = graph.insertEdge(parent, null, 'Edge from A4 to X2', v5, v6);
     e4.geometry!.points = [new Point(490, 260), new Point(350, 220)];
 
-    const v7 = graph.insertVertex(parent, null, 'O1', 250, 260, 80, 60, {
-      shape: 'or',
-      direction: 'south',
+    const v7 = graph.insertVertex(parent, null, 'O1\nnot movable', 250, 260, 100, 60, {
+      perimeter: 'rhombusPerimeter',
+      movable: false,
+      shape: 'rhombus',
     });
     const e5 = graph.insertEdge(parent, null, '', v6, v7);
     e5.geometry!.points = [new Point(310, 150)];
