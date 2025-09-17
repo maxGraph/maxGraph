@@ -120,8 +120,25 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(parent, null, 'A1', 20, 20, 40, 80, { shape: 'and' });
-    const v2 = graph.insertVertex(parent, null, 'A2', 20, 220, 40, 80, { shape: 'and' });
+    const v1 = graph.insertVertex({
+      value: 'A1\nnot rotatable',
+      x: 5,
+      y: 15,
+      width: 80,
+      height: 80,
+      style: { rotatable: false },
+    });
+    const v2 = graph.insertVertex({
+      value: 'A2\npre rotated',
+      x: 20,
+      y: 220,
+      width: 60,
+      height: 80,
+      style: {
+        rotation: -30,
+        shape: 'and',
+      },
+    });
     const v3 = graph.insertVertex({
       value: 'X1 circle\nnot resizable',
       x: 160,
@@ -129,6 +146,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       width: 80,
       height: 80,
       style: {
+        perimeter: 'ellipsePerimeter',
         resizable: false,
         shape: 'ellipse',
       },
