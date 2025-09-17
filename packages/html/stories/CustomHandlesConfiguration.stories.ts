@@ -127,7 +127,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       y: 15,
       width: 80,
       height: 80,
-      style: { rotatable: false },
+      style: { rotatable: false, rounded: true },
     });
     const v2 = graph.insertVertex({
       value: 'A2\npre rotated',
@@ -137,6 +137,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       height: 80,
       style: {
         rotation: -30,
+        rounded: true,
       },
     });
     const v3 = graph.insertVertex({
@@ -160,9 +161,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       shape: 'customShape',
       flipH: true,
     });
-    const v5 = graph.insertVertex(parent, null, 'A4', 520, 220, 40, 80, {
-      shape: 'and',
-      flipH: true,
+    const v5 = graph.insertVertex({
+      value: 'A4',
+      x: 520,
+      y: 220,
+      width: 60,
+      height: 60,
+      style: {
+        perimeter: 'ellipsePerimeter',
+        shape: 'ellipse',
+      },
     });
     const v6 = graph.insertVertex(parent, null, 'X2', 340, 110, 80, 80, {
       shape: 'xor',
@@ -178,6 +186,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     const v7 = graph.insertVertex(parent, null, 'O1\nnot movable', 250, 260, 100, 60, {
       perimeter: 'rhombusPerimeter',
       movable: false,
+      rounded: true,
       shape: 'rhombus',
     });
     const e5 = graph.insertEdge(parent, null, '', v6, v7);
