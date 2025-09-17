@@ -22,7 +22,6 @@ import {
   ConnectionConstraint,
   ConnectionHandler,
   ConstraintHandler,
-  type EdgeStyleFunction,
   ElbowEdgeHandler,
   Graph,
   type GraphPluginConstructor,
@@ -152,12 +151,6 @@ const Template = ({ ...args }: Record<string, any>) => {
   }
 
   class MyCustomGraph extends Graph {
-    // enforce usage of the CustomElbowEdgeHandler (elbow) for all edges
-    // this may not be the best way to do this, let's review it later when implementing https://github.com/maxGraph/maxGraph/pull/823
-    override createEdgeHandler(state: CellState, _edgeStyle: EdgeStyleFunction | null) {
-      return new CustomElbowEdgeHandler(state);
-    }
-
     override getAllConnectionConstraints = (
       terminal: CellState | null,
       _source: boolean
@@ -190,6 +183,18 @@ const Template = ({ ...args }: Record<string, any>) => {
 
   const graph = new MyCustomGraph(container, undefined, plugins);
   graph.setConnectable(true);
+
+  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
+    'SelectionCellsHandler'
+  )!; // we know that this plugin is always available
+  //     // enforce usage of the CustomElbowEdgeHandler (elbow) for all edges
+  //     // this may not be the best way to do this, let's review it later when implementing https://github.com/maxGraph/maxGraph/pull/823
+  //     override createEdgeHandler(state: CellState, _edgeStyle: EdgeStyleFunction | null) {
+  //       return new CustomElbowEdgeHandler(state);
+  //     }
+  selectionCellsHandler.configureEdgeHandler('elbow', (state) => {
+    return new CustomElbowEdgeHandler(state);
+  });
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
@@ -247,7 +252,7 @@ const Template = ({ ...args }: Record<string, any>) => {
   // The following could be enabled with Storybook args to demonstrate a second use-case.
 
   // Use this code to snap the source point for new connections without a connect preview,
-  // ie. without an overridden graph.getPlugin('ConnectionHandler').createEdgeState
+  // i.e. without an overridden graph.getPlugin('ConnectionHandler').createEdgeState
   /*
     let mxConnectionHandlerMouseMove = ConnectionHandler.prototype.mouseMove;
     ConnectionHandler.prototype.mouseMove = function(sender, me)

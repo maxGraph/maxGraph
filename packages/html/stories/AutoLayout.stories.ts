@@ -33,12 +33,12 @@ import {
   type Cell,
   type CellState,
   type ConnectionHandler,
-  type EdgeStyleFunction,
   type InternalMouseEvent,
   type PopupMenuHandler,
   type Rectangle,
   type Shape,
   type GraphPluginConstructor,
+  type SelectionCellsHandler,
 } from '@maxgraph/core';
 
 import {
@@ -119,13 +119,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       super(container, undefined, plugins);
     }
 
-    override createEdgeHandler(
-      state: CellState,
-      _edgeStyle: EdgeStyleFunction | null
-    ): EdgeHandler {
-      return new MyCustomEdgeHandler(state);
-    }
-
     override createCellRenderer() {
       return new MyCustomCellRenderer();
     }
@@ -146,6 +139,17 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setPanning(true);
 
   graph.setAllowDanglingEdges(false);
+
+  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
+    'SelectionCellsHandler'
+  )!; // we know that this plugin is always available
+  // use the same handler for all edge styles
+  for (const handlerKind of ['default', 'elbow', 'segment']) {
+    selectionCellsHandler.configureEdgeHandler(
+      handlerKind,
+      (state) => new MyCustomEdgeHandler(state)
+    );
+  }
 
   const connectionHandler = graph.getPlugin<ConnectionHandler>('ConnectionHandler')!;
   connectionHandler.select = false;

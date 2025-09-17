@@ -18,7 +18,6 @@ limitations under the License.
 import {
   type AbstractCanvas2D,
   CellHighlight,
-  type CellState,
   ConnectionHandler,
   DomHelpers,
   EdgeHandler,
@@ -30,6 +29,7 @@ import {
   Point,
   type Rectangle,
   RubberBandHandler,
+  type SelectionCellsHandler,
   Shape,
   ShapeRegistry,
   StencilShape,
@@ -123,10 +123,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     constructor(container: HTMLElement) {
       super(container, undefined, plugins);
     }
-
-    override createVertexHandler(state: CellState) {
-      return new CustomVertexHandler(state);
-    }
   }
 
   // Defines a custom Shape via the canvas API
@@ -191,6 +187,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setConnectable(true);
   graph.setTooltips(true);
   graph.setPanning(true);
+
+  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
+    'SelectionCellsHandler'
+  )!; // we know that this plugin is always available
+  selectionCellsHandler.configureVertexHandler((state) => {
+    return new CustomVertexHandler(state);
+  });
 
   graph.getTooltipForCell = function (cell) {
     return cell ? JSON.stringify(cell.style) : 'Cell without dedicated style';

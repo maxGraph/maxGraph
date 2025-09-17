@@ -142,16 +142,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return new MyCustomGraphView(this);
     }
 
-    // The mxGraph example was overriding the prototype of EdgeHandler, so it did not do this trick (https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/examples/wires.html)
-    override createEdgeHandler(state: CellState, edgeStyle: EdgeStyleFunction | null) {
-      const handlerKind = EdgeStyleRegistry.getHandlerKind(edgeStyle);
-      if (handlerKind == 'wire') {
-        return new WireEdgeHandler(state);
-      }
-
-      return super.createEdgeHandler(state, edgeStyle);
-    }
-
     // Adds oval markers for edge-to-edge connections.
     override getCellStyle = (cell: Cell) => {
       let style = super.getCellStyle(cell);
@@ -739,6 +729,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   if (args.rubberBand) plugins.push(RubberBandHandler);
 
   const graph = new MyCustomGraph(container, undefined, plugins);
+  const selectionCellsHandler = graph.getPlugin<SelectionCellsHandler>(
+    'SelectionCellsHandler'
+  )!; // we know that this plugin is always available
+  // The mxGraph example was overriding the prototype of EdgeHandler, so it did not do this trick (https://github.com/jgraph/mxgraph/blob/v4.2.2/javascript/examples/wires.html)
+  selectionCellsHandler.configureEdgeHandler('wire', (state) => {
+    return new WireEdgeHandler(state);
+  });
 
   const labelBackground = darkMode ? '#000000' : '#FFFFFF';
   const fontColor = darkMode ? '#FFFFFF' : '#000000';
