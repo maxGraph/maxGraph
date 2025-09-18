@@ -57,13 +57,6 @@ declare module '../AbstractGraph' {
     cloneInvalidEdges: boolean;
 
     /**
-     * Specifies the alternate edge style to be used if the main control point
-     * on an edge is being double-clicked.
-     * @default {}
-     */
-    alternateEdgeStyle: CellStyle;
-
-    /**
      * Specifies the return value for edges in {@link isLabelMovable}.
      * @default true
      */

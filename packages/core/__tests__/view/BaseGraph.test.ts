@@ -26,6 +26,8 @@ import {
   type EdgeStyleFunction,
   EdgeStyleRegistry,
   ElbowEdgeHandler,
+  ImageBundle,
+  Multiplicity,
   Point,
   Rectangle,
   RectangleShape,
@@ -260,3 +262,79 @@ function expectExactInstanceOfEdgeHandler(handler: EdgeHandler): void {
   expect(handler).not.toBeInstanceOf(EdgeSegmentHandler);
   expect(handler).not.toBeInstanceOf(ElbowEdgeHandler);
 }
+
+// For "complex" properties, for example: arrays or object.
+describe('Expect no global state for properties coming from mixins', () => {
+  test('alternateEdgeStyle', () => {
+    const graph1 = new BaseGraph();
+    const graph2 = new BaseGraph();
+
+    graph1.alternateEdgeStyle.arcSize = 10;
+    graph1.alternateEdgeStyle.fillColor = 'red';
+    expect(graph1.alternateEdgeStyle).not.toEqual(graph2.alternateEdgeStyle);
+    expect(graph1.alternateEdgeStyle).not.toBe(graph2.alternateEdgeStyle);
+  });
+
+  test('cells', () => {
+    const graph1 = new BaseGraph();
+    const graph2 = new BaseGraph();
+
+    graph1.cells.push(new Cell());
+    expect(graph2.cells).toStrictEqual([]);
+    expect(graph1.cells).not.toBe(graph2.cells);
+  });
+
+  test('imageBundles', () => {
+    const graph1 = new BaseGraph();
+    const graph2 = new BaseGraph();
+
+    graph1.imageBundles.push(new ImageBundle());
+    expect(graph2.imageBundles).toStrictEqual([]);
+    expect(graph1.imageBundles).not.toBe(graph2.imageBundles);
+  });
+
+  test('mouseListeners', () => {
+    const graph1 = new BaseGraph();
+    expect(graph1.mouseListeners).toHaveLength(1);
+    const graph2 = new BaseGraph();
+    expect(graph2.mouseListeners).toHaveLength(1);
+
+    graph1.mouseListeners.push({
+      mouseDown: () => {},
+      mouseMove: () => {},
+      mouseUp: () => {},
+    });
+    expect(graph2.mouseListeners).toHaveLength(1);
+    expect(graph1.mouseListeners).toHaveLength(2);
+    expect(graph1.mouseListeners).not.toBe(graph2.mouseListeners);
+  });
+
+  test('multiplicities', () => {
+    const graph1 = new BaseGraph();
+    const graph2 = new BaseGraph();
+
+    graph1.multiplicities.push(
+      new Multiplicity(
+        true,
+        'rectangle',
+        null,
+        null,
+        0,
+        2,
+        ['circle'],
+        'Only 2 targets allowed',
+        'Only circle targets allowed'
+      )
+    );
+    expect(graph2.multiplicities).toStrictEqual([]);
+    expect(graph1.multiplicities).not.toBe(graph2.multiplicities);
+  });
+
+  test('options', () => {
+    const graph1 = new BaseGraph();
+    const graph2 = new BaseGraph();
+
+    graph1.options.foldingEnabled = false;
+    expect(graph1.options).not.toBe(graph2.options);
+  });
+});

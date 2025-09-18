@@ -26,6 +26,7 @@ import type Point from '../geometry/Point.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
+  | 'alternateEdgeStyle'
   | 'batchUpdate'
   | 'fireEvent'
   | 'getDataModel'
@@ -46,7 +47,6 @@ type PartialEdge = Pick<
   | 'connectableEdges'
   | 'allowDanglingEdges'
   | 'cloneInvalidEdges'
-  | 'alternateEdgeStyle'
   | 'edgeLabelsMovable'
   | 'isResetEdgesOnMove'
   | 'isResetEdgesOnConnect'
@@ -103,8 +103,6 @@ export const EdgeMixin: PartialType = {
   allowDanglingEdges: true,
 
   cloneInvalidEdges: false,
-
-  alternateEdgeStyle: {},
 
   edgeLabelsMovable: true,
 
