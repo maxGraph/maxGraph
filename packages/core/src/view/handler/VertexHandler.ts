@@ -223,6 +223,7 @@ class VertexHandler implements MouseListenerSet {
       this.selectionBounds.height
     );
     this.selectionBorder = this.createSelectionShape(this.bounds);
+    // TODO decide if we keep it here or in createSelectionShape
     // this.selectionBorder.dialect = 'svg';
     this.selectionBorder.pointerEvents = false;
     this.selectionBorder.rotation = this.state.style.rotation ?? 0;
@@ -409,6 +410,7 @@ class VertexHandler implements MouseListenerSet {
    */
   getSelectionBounds(state: CellState) {
     // TODO add margin using configuration (default to 0)
+    // TODO name it padding?
     const margin = 6;
     return new Rectangle(
       Math.round(state.x) - margin,
