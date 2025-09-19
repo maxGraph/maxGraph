@@ -38,6 +38,7 @@ import EventSource from '../event/EventSource.js';
 import type SelectionHandler from '../plugins/SelectionHandler.js';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
 import { HandleConfig, VertexHandlerConfig } from './config.js';
+import { StencilShapeRegistry } from '../shape/stencil/StencilShapeRegistry.js';
 
 /**
  * Event handler for resizing cells.
@@ -439,18 +440,32 @@ class VertexHandler implements MouseListenerSet {
 
     // TODO add an option to use the shape of the state
     // TODO when using this, ensure the preview works when performing rotation
-    const shape: Shape = // @ts-ignore known to work at runtime
-      new this.state.shape.constructor();
+
+    // TODO taken from the stencils story
+    const stencil = StencilShapeRegistry.get(this.state.style.shape);
+    let shape: Shape;
+
+    if (stencil) {
+      shape = new Shape(stencil);
+      shape.apply(this.state);
+    } else {
+      // @ts-ignore known to work at runtime
+      shape = new this.state.shape.constructor();
+    }
+
+    // const shape: Shape = // @ts-ignore known to work at runtime
+    //   new this.state.shape.constructor();
 
     // TODO taken from another place, check if needed
     // this.selectionBorder.dialect = 'svg';
     shape.dialect = 'svg';
 
-    // shape.outline = true;
+    shape.outline = true;
     shape.bounds = bounds;
+    shape.isDashed = this.isSelectionDashed();
+    shape.isShadow = false;
     shape.stroke = this.getSelectionColor();
     shape.strokeWidth = this.getSelectionStrokeWidth();
-    shape.isDashed = this.isSelectionDashed();
 
     // TODO bonus, make an option
     shape.isRounded = this.state.shape?.isRounded ?? false;
