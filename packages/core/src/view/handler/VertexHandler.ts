@@ -164,7 +164,7 @@ class VertexHandler implements MouseListenerSet {
   horizontalOffset = 0;
 
   /**
-   * The horizontal offset for the handles. This is updated in <redrawHandles>
+   * The horizontal offset for the handles. This is updated in {@link redrawHandles}
    * if {@link manageSizers} is true and the sizers are offset vertically.
    */
   verticalOffset = 0;
