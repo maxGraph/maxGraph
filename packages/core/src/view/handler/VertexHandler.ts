@@ -128,8 +128,7 @@ class VertexHandler implements MouseListenerSet {
   rotationCursor = 'crosshair';
 
   /**
-   * Specifies if resize should change the cell in-place. This is an experimental
-   * feature for non-touch devices.
+   * Specifies if resize should change the cell in-place. This is an experimental feature for non-touch devices.
    * @default false
    */
   livePreview = false;
@@ -1750,8 +1749,7 @@ class VertexHandler implements MouseListenerSet {
    * Redraws the handles. To hide certain handles the following code can be used.
    *
    * ```javascript
-   * redrawHandles()
-   * {
+   * redrawHandles() {
    *   mxVertexHandlerRedrawHandles.apply(this, arguments);
    *
    *   if (this.sizers != null && this.sizers.length > 7)
@@ -1955,8 +1953,6 @@ class VertexHandler implements MouseListenerSet {
 
   /**
    * Returns `true` if the parent highlight should be visible.
-   *
-   * This implementation always returns `true`.
    */
   isParentHighlightVisible() {
     const parent = this.state.cell.getParent();
