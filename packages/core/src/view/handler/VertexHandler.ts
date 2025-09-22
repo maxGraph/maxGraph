@@ -467,8 +467,9 @@ class VertexHandler implements MouseListenerSet {
     shape.stroke = this.getSelectionColor();
     shape.strokeWidth = this.getSelectionStrokeWidth();
 
-    // TODO bonus, make an option
-    shape.isRounded = this.state.shape?.isRounded ?? false;
+    // disabled not needed, not nice effects
+    // bonus, make an option
+    // shape.isRounded = this.state.shape?.isRounded ?? false;
 
     return shape;
   }
