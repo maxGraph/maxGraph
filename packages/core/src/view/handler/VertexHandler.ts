@@ -410,7 +410,7 @@ class VertexHandler implements MouseListenerSet {
    */
   getSelectionBounds(state: CellState) {
     // TODO add margin using configuration (default to 0)
-    // TODO name it padding?
+    //     const margin = VertexHandlerConfig.margin;
     const margin = 6;
     return new Rectangle(
       Math.round(state.x) - margin,
@@ -437,12 +437,13 @@ class VertexHandler implements MouseListenerSet {
     //   this.getSelectionColor()
     // );
 
+    let shape: Shape;
     // TODO add an option to use the shape of the state
+    // selectionShapeMatchVertex
     // TODO when using this, ensure the preview works when performing rotation
 
     // TODO taken from the stencils story
     const stencil = StencilShapeRegistry.get(this.state.style.shape);
-    let shape: Shape;
 
     if (stencil) {
       shape = new Shape(stencil);
@@ -455,7 +456,7 @@ class VertexHandler implements MouseListenerSet {
     // const shape: Shape = // @ts-ignore known to work at runtime
     //   new this.state.shape.constructor();
 
-    shape.outline = true;
+    shape.outline = true; // no foreground, and other details. Particularly important for Stencil shapes.
     shape.bounds = bounds;
     shape.isDashed = this.isSelectionDashed();
     shape.isShadow = false;

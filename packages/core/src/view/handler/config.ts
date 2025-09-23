@@ -269,6 +269,15 @@ export const VertexHandlerConfig = {
    * @since 0.14.0
    */
   selectionStrokeWidth: VERTEX_SELECTION_STROKEWIDTH,
+
+  /**
+   * Specifies if the selection border should match the shape of the vertex. If false, the border is rectangular.
+   * This mimics the behavior of {@link CellRenderer}: first check if the shape is available in the {@link StencilShapeRegistry}, otherwise use the shape of the vertex.
+   *
+   * @default false
+   * @since 0.22.0
+   */
+  selectionShapeMatchVertex: false,
 };
 
 const defaultVertexHandlerConfig = { ...VertexHandlerConfig };
