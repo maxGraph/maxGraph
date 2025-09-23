@@ -431,30 +431,25 @@ class VertexHandler implements MouseListenerSet {
    * Creates the shape used to draw the selection border.
    */
   createSelectionShape(bounds: Rectangle): Shape {
-    // const shape = new RectangleShape(
-    //   Rectangle.fromRectangle(bounds),
-    //   NONE,
-    //   this.getSelectionColor()
-    // );
-
     let shape: Shape;
-    // TODO add an option to use the shape of the state
-    // selectionShapeMatchVertex
     // TODO when using this, ensure the preview works when performing rotation
+    if (VertexHandlerConfig.selectionShapeMatchVertex) {
+      const stencil = StencilShapeRegistry.get(this.state.style.shape);
 
-    // TODO taken from the stencils story
-    const stencil = StencilShapeRegistry.get(this.state.style.shape);
-
-    if (stencil) {
-      shape = new Shape(stencil);
-      shape.apply(this.state);
+      if (stencil) {
+        shape = new Shape(stencil);
+        shape.apply(this.state);
+      } else {
+        // @ts-ignore known to work at runtime
+        shape = new this.state.shape.constructor();
+      }
     } else {
-      // @ts-ignore known to work at runtime
-      shape = new this.state.shape.constructor();
+      shape = new RectangleShape(
+        Rectangle.fromRectangle(bounds),
+        NONE,
+        this.getSelectionColor()
+      );
     }
-
-    // const shape: Shape = // @ts-ignore known to work at runtime
-    //   new this.state.shape.constructor();
 
     shape.outline = true; // no foreground, and other details. Particularly important for Stencil shapes.
     shape.bounds = bounds;
@@ -462,10 +457,6 @@ class VertexHandler implements MouseListenerSet {
     shape.isShadow = false;
     shape.stroke = this.getSelectionColor();
     shape.strokeWidth = this.getSelectionStrokeWidth();
-
-    // disabled not needed, not nice effects
-    // bonus, make an option
-    // shape.isRounded = this.state.shape?.isRounded ?? false;
 
     return shape;
   }
