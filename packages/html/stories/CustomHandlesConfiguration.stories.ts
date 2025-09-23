@@ -85,8 +85,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     HandleConfig.size = 8;
     HandleConfig.strokeColor = '#0088cf';
 
+    VertexHandlerConfig.margin = 6;
     VertexHandlerConfig.selectionColor = selectionColor;
     VertexHandlerConfig.selectionDashed = false;
+    VertexHandlerConfig.selectionShapeMatchVertex = true;
     VertexHandlerConfig.selectionStrokeWidth = 2;
   }
 
