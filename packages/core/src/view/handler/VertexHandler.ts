@@ -224,8 +224,7 @@ class VertexHandler implements MouseListenerSet {
       this.selectionBounds.height
     );
     this.selectionBorder = this.createSelectionShape(this.bounds);
-    // TODO decide if we keep it here or in createSelectionShape
-    // this.selectionBorder.dialect = 'svg';
+    this.selectionBorder.dialect = 'svg';
     this.selectionBorder.pointerEvents = false;
     this.selectionBorder.rotation = this.state.style.rotation ?? 0;
     this.selectionBorder.init(this.graph.getView().getOverlayPane());
@@ -455,10 +454,6 @@ class VertexHandler implements MouseListenerSet {
 
     // const shape: Shape = // @ts-ignore known to work at runtime
     //   new this.state.shape.constructor();
-
-    // TODO taken from another place, check if needed
-    // this.selectionBorder.dialect = 'svg';
-    shape.dialect = 'svg';
 
     shape.outline = true;
     shape.bounds = bounds;
