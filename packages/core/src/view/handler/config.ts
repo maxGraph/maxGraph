@@ -237,6 +237,13 @@ export const VertexHandlerConfig = {
   cursorMovable: 'move',
 
   /**
+   * Margin to be added between the selection border and the vertex's bounding box.
+   * @default 0
+   * @since 0.22.0
+   */
+  margin: 0,
+
+  /**
    * Enable rotation handle
    * @default false
    */
@@ -250,18 +257,18 @@ export const VertexHandlerConfig = {
   selectionColor: VERTEX_SELECTION_COLOR,
 
   /**
-   * Defines the default stroke width to be used for vertex selections.
-   * @default {@link VERTEX_SELECTION_STROKEWIDTH}
-   * @since 0.14.0
-   */
-  selectionStrokeWidth: VERTEX_SELECTION_STROKEWIDTH,
-
-  /**
    * Defines the default dashed state to be used for the vertex selection border.
    * @default {@link VERTEX_SELECTION_DASHED}
    * @since 0.14.0
    */
   selectionDashed: VERTEX_SELECTION_DASHED,
+
+  /**
+   * Defines the default stroke width to be used for vertex selections.
+   * @default {@link VERTEX_SELECTION_STROKEWIDTH}
+   * @since 0.14.0
+   */
+  selectionStrokeWidth: VERTEX_SELECTION_STROKEWIDTH,
 };
 
 const defaultVertexHandlerConfig = { ...VertexHandlerConfig };
