@@ -53,14 +53,14 @@ class LabelShape extends RectangleShape {
    */
   imageSize = DEFAULT_IMAGESIZE;
 
-  imageSrc: string | null = null;
+  override imageSrc: string | null = null;
 
   /**
    * Default value for image spacing
    * @type {number}
    * @default 2
    */
-  spacing = 2;
+  override spacing = 2;
 
   /**
    * Default width and height for the indicicator.
@@ -76,12 +76,12 @@ class LabelShape extends RectangleShape {
    */
   indicatorSpacing = 2;
 
-  indicatorImageSrc: string | null = null;
+  override indicatorImageSrc: string | null = null;
 
   /**
    * Initializes the shape and the <indicator>.
    */
-  init(container: SVGElement) {
+  override init(container: SVGElement) {
     super.init(container);
 
     if (this.indicatorShape) {
@@ -95,7 +95,7 @@ class LabelShape extends RectangleShape {
    * Reconfigures this shape. This will update the colors of the indicator
    * and reconfigure it if required.
    */
-  redraw() {
+  override redraw() {
     if (this.indicator) {
       this.indicator.fill = this.indicatorColor;
       this.indicator.stroke = this.indicatorStrokeColor;
@@ -110,7 +110,7 @@ class LabelShape extends RectangleShape {
    * Returns true for non-rounded, non-rotated shapes with no glass gradient and
    * no indicator shape.
    */
-  isHtmlAllowed() {
+  override isHtmlAllowed() {
     return super.isHtmlAllowed() && this.indicatorColor === NONE && !!this.indicatorShape;
   }
 
@@ -122,7 +122,13 @@ class LabelShape extends RectangleShape {
    * @param {number} w
    * @param {number} h
    */
-  paintForeground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintForeground(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     this.paintImage(c, x, y, w, h);
     this.paintIndicator(c, x, y, w, h);
     super.paintForeground(c, x, y, w, h);
@@ -253,7 +259,7 @@ class LabelShape extends RectangleShape {
   /**
    * Generic background painting implementation.
    */
-  redrawHtmlShape() {
+  override redrawHtmlShape() {
     super.redrawHtmlShape();
 
     // Removes all children

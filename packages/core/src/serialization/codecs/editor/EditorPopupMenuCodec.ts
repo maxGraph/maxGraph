@@ -37,14 +37,14 @@ export class EditorPopupMenuCodec extends ObjectCodec {
   /**
    * Returns null.
    */
-  encode(_enc: Codec, _obj: Element): Element | null {
+  override encode(_enc: Codec, _obj: Element): Element | null {
     return null;
   }
 
   /**
    * Uses the given node as the config for {@link EditorPopupMenu}.
    */
-  decode(dec: Codec, node: Element, into: EditorPopupMenu) {
+  override decode(dec: Codec, node: Element, into: EditorPopupMenu) {
     const inc = node.getElementsByTagName('include')[0];
 
     if (inc != null) {

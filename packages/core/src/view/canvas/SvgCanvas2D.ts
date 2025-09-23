@@ -235,7 +235,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Default value for active pointer events.
    * @default all
    */
-  pointerEventsValue = 'all';
+  override pointerEventsValue = 'all';
 
   /**
    * Padding to be added for text that is not wrapped to account for differences in font metrics on different platforms in pixels.
@@ -346,7 +346,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Rounds all numbers to 2 decimal points.
    */
-  format(value: number) {
+  override format(value: number) {
     return parseFloat(value.toFixed(2));
   }
 
@@ -370,7 +370,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Returns any offsets for rendering pixels.
    */
-  reset() {
+  override reset() {
     super.reset();
     this.gradients = {};
   }
@@ -879,7 +879,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Experimental implementation for hyperlinks.
    */
-  setLink(link: string) {
+  override setLink(link: string) {
     if (!link) {
       this.root = this.originalRoot;
     } else {
@@ -903,7 +903,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Sets the rotation of the canvas. Note that rotation cannot be concatenated.
    */
-  rotate(theta: number, flipH: boolean, flipV: boolean, cx: number, cy: number) {
+  override rotate(theta: number, flipH: boolean, flipV: boolean, cx: number, cy: number) {
     if (theta !== 0 || flipH || flipV) {
       const s = this.state;
       cx += s.dx;
@@ -948,9 +948,9 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Extends superclass to create path.
+   * Begins a new path.
    */
-  begin() {
+  override begin() {
     super.begin();
     this.node = this.createElement('path');
   }

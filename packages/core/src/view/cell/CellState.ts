@@ -338,7 +338,7 @@ class CellState extends Rectangle {
   /**
    * Returns a clone of this {@link Point}.
    */
-  clone() {
+  override clone() {
     const clone = new CellState(this.view, this.cell, this.style);
 
     // Clones the absolute points

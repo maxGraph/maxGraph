@@ -189,7 +189,7 @@ class SwimlaneLayout extends GraphLayout {
    * @param parent Parent <Cell> that contains the children to be laid out.
    * @param swimlanes Ordered array of swimlanes to be laid out
    */
-  execute(parent: Cell, swimlanes: Cell[] | null = null): void {
+  override execute(parent: Cell, swimlanes: Cell[] | null = null): void {
     this.parent = parent;
     const { model } = this.graph;
     this.edgesCache = new Map();
@@ -719,7 +719,7 @@ class SwimlaneLayout extends GraphLayout {
    * @param allVertices Array of cell paths for the visited cells.
    * @param swimlaneIndex the laid out order index of the swimlane vertex is contained in
    */
-  traverse({
+  override traverse({
     vertex,
     directed,
     allVertices,

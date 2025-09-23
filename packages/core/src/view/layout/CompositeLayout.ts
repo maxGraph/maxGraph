@@ -66,7 +66,7 @@ class CompositeLayout extends GraphLayout {
   /**
    * Calls `move` on {@link master} or the first layout in {@link layouts}.
    */
-  moveCell(cell: Cell, x: number, y: number) {
+  override moveCell(cell: Cell, x: number, y: number) {
     if (this.master != null) {
       this.master.moveCell.apply(this.master, [cell, x, y]);
     } else {
@@ -77,7 +77,7 @@ class CompositeLayout extends GraphLayout {
   /**
    * Implements {@link GraphLayout#execute} by executing all {@link layouts} in a single transaction.
    */
-  execute(parent: Cell): void {
+  override execute(parent: Cell): void {
     this.graph.batchUpdate(() => {
       for (let i = 0; i < this.layouts.length; i += 1) {
         this.layouts[i].execute.apply(this.layouts[i], [parent]);

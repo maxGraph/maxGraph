@@ -342,7 +342,7 @@ class Geometry extends Rectangle {
   /**
    * Returns true if the given object equals this geometry.
    */
-  equals(geom: Geometry | null) {
+  override equals(geom: Geometry | null) {
     if (!geom) return false;
 
     return (
@@ -360,7 +360,7 @@ class Geometry extends Rectangle {
     );
   }
 
-  clone() {
+  override clone() {
     return clone(this) as Geometry;
   }
 }

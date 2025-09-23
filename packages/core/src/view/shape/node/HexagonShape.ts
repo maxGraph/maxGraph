@@ -35,7 +35,7 @@ class HexagonShape extends ActorShape {
   /**
    * Draws the path for this shape.
    */
-  redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     const arcSize = this.getBaseArcSize();
 
     this.addPoints(

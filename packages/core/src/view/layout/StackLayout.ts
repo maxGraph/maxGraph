@@ -152,7 +152,7 @@ class StackLayout extends GraphLayout {
   /**
    * Implements mxGraphLayout.moveCell.
    */
-  moveCell(cell: Cell, x: number, y: number): void {
+  override moveCell(cell: Cell, x: number, y: number): void {
     const model = this.graph.getDataModel();
     const parent = cell.getParent();
     const horizontal = this.isHorizontal();
@@ -275,7 +275,7 @@ class StackLayout extends GraphLayout {
   /**
    * Implements mxGraphLayout.execute.
    */
-  execute(parent: Cell): void {
+  override execute(parent: Cell): void {
     if (parent != null) {
       const pgeo = this.getParentSize(parent);
       const horizontal = this.isHorizontal();

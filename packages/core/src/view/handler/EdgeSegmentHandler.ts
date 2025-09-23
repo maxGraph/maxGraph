@@ -31,7 +31,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
     super(state);
   }
 
-  points: Point[] = [];
+  override points: Point[] = [];
 
   /**
    * Returns the current absolute points.
@@ -63,7 +63,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   /**
    * Updates the given preview state taking into account the state of the constraint handler.
    */
-  getPreviewPoints(point: Point) {
+  override getPreviewPoints(point: Point) {
     if (this.isSource || this.isTarget) {
       return super.getPreviewPoints(point);
     }
@@ -118,7 +118,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   /**
    * Overridden to perform optimization of the edge style result.
    */
-  updatePreviewState(
+  override updatePreviewState(
     edge: CellState,
     point: Point,
     terminalState: CellState,
@@ -221,7 +221,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   /**
    * Overriden to merge edge segments.
    */
-  connect(
+  override connect(
     edge: Cell,
     terminal: Cell,
     isSource: boolean,
@@ -278,14 +278,14 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   /**
    * Returns no tooltips.
    */
-  getTooltipForNode(node: Element): string | null {
+  override getTooltipForNode(node: Element): string | null {
     return null;
   }
 
   /**
    * Adds custom bends for the center of each segment.
    */
-  start(x: number, y: number, index: number) {
+  override start(x: number, y: number, index: number) {
     super.start(x, y, index);
 
     if (
@@ -301,7 +301,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   /**
    * Adds custom bends for the center of each segment.
    */
-  createBends() {
+  override createBends() {
     const bends = [];
 
     // Source
@@ -345,7 +345,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   /**
    * Overridden to invoke <refresh> before the redraw.
    */
-  redraw() {
+  override redraw() {
     this.refresh();
     super.redraw();
   }
@@ -353,7 +353,7 @@ class EdgeSegmentHandler extends ElbowEdgeHandler {
   /**
    * Updates the position of the custom bends.
    */
-  redrawInnerBends(p0: Point, pe: Point) {
+  override redrawInnerBends(p0: Point, pe: Point) {
     if (this.graph.isCellBendable(this.state.cell)) {
       const pts = this.getCurrentPoints();
 

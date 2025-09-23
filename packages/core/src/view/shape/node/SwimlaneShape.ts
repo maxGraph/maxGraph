@@ -55,12 +55,12 @@ class SwimlaneShape extends Shape {
    */
   imageSize = 16;
 
-  imageSrc: string | null = null;
+  override imageSrc: string | null = null;
 
   /**
    * Adds roundable support.
    */
-  isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     return true;
   }
 
@@ -74,7 +74,7 @@ class SwimlaneShape extends Shape {
   /**
    * Returns the bounding box for the gradient box for this shape.
    */
-  getLabelBounds(rect: Rectangle) {
+  override getLabelBounds(rect: Rectangle) {
     const start = this.getTitleSize();
     const bounds = new Rectangle(rect.x, rect.y, rect.width, rect.height);
     const horizontal = this.isHorizontal();
@@ -118,7 +118,13 @@ class SwimlaneShape extends Shape {
   /**
    * Returns the bounding box for the gradient box for this shape.
    */
-  getGradientBounds(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override getGradientBounds(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     let start = this.getTitleSize();
 
     if (this.isHorizontal()) {
@@ -150,7 +156,13 @@ class SwimlaneShape extends Shape {
   /**
    * Paints the swimlane vertex shape.
    */
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintVertexShape(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     let start = this.getTitleSize();
     const fill = this.style?.swimlaneFillColor ?? NONE;
     const swimlaneLine = this.style?.swimlaneLine ?? true;

@@ -10,8 +10,6 @@
     "strict": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
-    // Do not enable for now, as we want maxGraph to support TS 3.8 and this feature requires TS 4.3+
-    "noImplicitOverride": false,
   },
   "include": ["src/**/*.ts"],
   "typedocOptions": {

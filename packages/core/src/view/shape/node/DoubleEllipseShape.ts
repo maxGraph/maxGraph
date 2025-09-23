@@ -63,7 +63,13 @@ class DoubleEllipseShape extends Shape {
   /**
    * Paints the background.
    */
-  paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintBackground(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     c.ellipse(x, y, w, h);
     c.fillAndStroke();
   }
@@ -71,7 +77,13 @@ class DoubleEllipseShape extends Shape {
   /**
    * Paints the foreground.
    */
-  paintForeground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintForeground(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     if (!this.outline) {
       const margin =
         this.style?.margin ?? Math.min(3 + this.strokeWidth, Math.min(w / 5, h / 5));
@@ -93,7 +105,7 @@ class DoubleEllipseShape extends Shape {
   /**
    * @returns the bounds for the label.
    */
-  getLabelBounds(rect: Rectangle) {
+  override getLabelBounds(rect: Rectangle) {
     const margin =
       this.style?.margin ??
       Math.min(

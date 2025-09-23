@@ -78,9 +78,9 @@ class ParallelEdgeLayout extends GraphLayout {
   checkOverlap = false;
 
   /**
-   * Implements {@link GraphLayout#execute}.
+   * Implements {@link GraphLayout.execute}.
    */
-  execute(parent: Cell, cells: Cell[] | null = null): void {
+  override execute(parent: Cell, cells: Cell[] | null = null): void {
     const lookup = this.findParallels(parent, cells);
 
     this.graph.batchUpdate(() => {

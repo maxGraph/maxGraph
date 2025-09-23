@@ -234,7 +234,7 @@ export class CompactTreeLayout extends GraphLayout {
    *
    * @param vertex {@link Cell} whose ignored state should be returned.
    */
-  isVertexIgnored(vertex: Cell): boolean {
+  override isVertexIgnored(vertex: Cell): boolean {
     return super.isVertexIgnored(vertex) || vertex.getConnections().length === 0;
   }
 
@@ -249,13 +249,13 @@ export class CompactTreeLayout extends GraphLayout {
    * Implements {@link GraphLayout.execute}.
    *
    * If the parent has any connected edges, then it is used as the root of
-   * the tree. Else, {@link mxGraph.findTreeRoots} will be used to find a suitable
+   * the tree. Else, {@link findTreeRoots} will be used to find a suitable
    * root node within the set of children of the given parent.
    *
    * @param parent  {@link Cell} whose children should be laid out.
    * @param root    Optional {@link Cell} that will be used as the root of the tree. Overrides {@link root} if specified.
    */
-  execute(parent: Cell, root?: Cell): void {
+  override execute(parent: Cell, root?: Cell): void {
     this.parent = parent;
     const model = this.graph.getDataModel();
 

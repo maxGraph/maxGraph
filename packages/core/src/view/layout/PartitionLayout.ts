@@ -77,7 +77,7 @@ class PartitionLayout extends GraphLayout {
     return this.horizontal;
   }
 
-  moveCell(cell: Cell, x: number, y: number): void {
+  override moveCell(cell: Cell, x: number, y: number): void {
     const model = this.graph.getDataModel();
     const parent = cell.getParent();
 
@@ -115,7 +115,7 @@ class PartitionLayout extends GraphLayout {
    * Implements {@link GraphLayout#execute}. All children where <isVertexIgnored>
    * returns false and <isVertexMovable> returns true are modified.
    */
-  execute(parent: Cell): void {
+  override execute(parent: Cell): void {
     const horizontal = this.isHorizontal();
     const model = this.graph.getDataModel();
     let pgeo = <Rectangle>parent.getGeometry();

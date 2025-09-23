@@ -51,7 +51,7 @@ class ImageShape extends RectangleShape {
   /**
    * Disables offset in IE9 for crisper image output.
    */
-  getSvgScreenOffset() {
+  override getSvgScreenOffset() {
     return 0;
   }
 
@@ -65,7 +65,7 @@ class ImageShape extends RectangleShape {
    *
    * @param {CellState} state   {@link CellState} of the corresponding cell.
    */
-  apply(state: CellState) {
+  override apply(state: CellState) {
     super.apply(state);
 
     this.fill = NONE;
@@ -81,21 +81,27 @@ class ImageShape extends RectangleShape {
    * Returns true if HTML is allowed for this shape. This implementation always
    * returns false.
    */
-  isHtmlAllowed() {
+  override isHtmlAllowed() {
     return !this.preserveImageAspect;
   }
 
   /**
    * Disables inherited roundable support.
    */
-  isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     return false;
   }
 
   /**
    * Generic background painting implementation.
    */
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintVertexShape(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     if (this.imageSrc) {
       const fill = this.style?.imageBackground ?? NONE;
       const stroke = this.style?.imageBorder ?? NONE;

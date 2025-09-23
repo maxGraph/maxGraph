@@ -53,7 +53,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   /**
    * The object identity of the wrapped cell
    */
-  id: string;
+  override id: string;
 
   /**
    * Collection of hierarchy edges that have this node as a target
@@ -130,7 +130,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
   /**
    * Returns true.
    */
-  isVertex(): boolean {
+  override isVertex(): boolean {
     return true;
   }
 
@@ -148,7 +148,7 @@ class GraphHierarchyNode extends GraphAbstractHierarchyCell {
     this.temp[0] = value;
   }
 
-  isAncestor(otherNode: GraphHierarchyNode): boolean {
+  override isAncestor(otherNode: GraphHierarchyNode): boolean {
     // Firstly, the hash code of this node needs to be shorter than the
     // other node
     if (

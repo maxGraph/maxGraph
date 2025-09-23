@@ -215,7 +215,7 @@ class CellOverlay extends EventSource implements ObjectIdentity {
    *
    * This implementation returns {@link tooltip}.
    */
-  toString(): string | null | undefined {
+  override toString(): string | null | undefined {
     return this.tooltip;
   }
 }

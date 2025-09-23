@@ -163,7 +163,7 @@ class Rectangle extends Point {
   /**
    * Returns true if the given object equals this rectangle.
    */
-  equals(rect: Rectangle | null) {
+  override equals(rect: Rectangle | null) {
     if (!rect) return false;
 
     return (
@@ -174,7 +174,7 @@ class Rectangle extends Point {
     );
   }
 
-  clone() {
+  override clone() {
     return new Rectangle(this.x, this.y, this.width, this.height);
   }
 }

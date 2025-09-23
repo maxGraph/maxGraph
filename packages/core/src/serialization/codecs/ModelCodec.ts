@@ -36,7 +36,7 @@ export class ModelCodec extends ObjectCodec {
    * Encodes the given {@link GraphDataModel} by writing a (flat) XML sequence of cell nodes as produced by the {@link CellCodec}.
    * The sequence is wrapped-up in a node with the name `root`.
    */
-  encodeObject(enc: Codec, obj: Cell, node: Element) {
+  override encodeObject(enc: Codec, obj: Cell, node: Element) {
     const rootNode = enc.document.createElement('root');
     enc.encodeCell(obj.getRoot(), rootNode);
     node.appendChild(rootNode);
@@ -45,7 +45,7 @@ export class ModelCodec extends ObjectCodec {
   /**
    * Overrides decode child to handle special child nodes.
    */
-  decodeChild(dec: Codec, child: Element, obj: Cell | GraphDataModel) {
+  override decodeChild(dec: Codec, child: Element, obj: Cell | GraphDataModel) {
     if (child.nodeName === 'root') {
       this.decodeRoot(dec, child, <GraphDataModel>obj);
     } else {

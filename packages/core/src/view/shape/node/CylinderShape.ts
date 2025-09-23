@@ -47,12 +47,18 @@ class CylinderShape extends Shape {
   /**
    * Sets stroke tolerance to 0 for SVG.
    */
-  svgStrokeTolerance = 0;
+  override svgStrokeTolerance = 0;
 
   /**
    * Redirects to redrawPath for subclasses to work.
    */
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintVertexShape(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     c.translate(x, y);
     c.begin();
     this.redrawPath(c, x, y, w, h, false);
