@@ -409,9 +409,7 @@ class VertexHandler implements MouseListenerSet {
    * Returns the Rectangle that defines the bounds of the selection border.
    */
   getSelectionBounds(state: CellState) {
-    // TODO add margin using configuration (default to 0)
-    //     const margin = VertexHandlerConfig.margin;
-    const margin = 6;
+    const margin = VertexHandlerConfig.margin;
     return new Rectangle(
       Math.round(state.x) - margin,
       Math.round(state.y) - margin,
