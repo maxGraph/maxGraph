@@ -8,8 +8,10 @@
     "strict": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "noImplicitAny": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
+    "noImplicitThis": true,
   },
   "exclude": ["node_modules", "**/*.spec.ts"],
   "include": ["packages/*/src"]
