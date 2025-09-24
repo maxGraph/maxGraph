@@ -123,7 +123,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
   /**
    * Scales the output.
    *
-   * @param scale Number that represents the scale where 1 is equal to 100%.
+   * @param value Number that represents the scale where 1 is equal to 100%.
    */
   override scale(value: number): void {
     const elem = this.createElement('scale');
@@ -350,9 +350,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * Enables or disables dashed lines.
    *
    * @param value Boolean that specifies if dashed lines should be enabled.
-   * @param value Boolean that specifies if the stroke width should be ignored
-   * for the dash pattern.
-   * @default false
+   * @param fixDash Boolean that specifies if the stroke width should be ignored for the dash pattern. Default is false.
    */
   override setDashed(value: boolean, fixDash: boolean): void {
     if (this.compressed) {
