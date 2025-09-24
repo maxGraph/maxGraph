@@ -45,13 +45,14 @@ import EdgeHandler from './handler/EdgeHandler.js';
 import VertexHandler from './handler/VertexHandler.js';
 import EdgeSegmentHandler from './handler/EdgeSegmentHandler.js';
 import ElbowEdgeHandler from './handler/ElbowEdgeHandler.js';
-import type {
+import {
   DialectValue,
   EdgeStyleFunction,
   GraphCollaboratorsOptions,
   GraphFoldingOptions,
   GraphOptions,
   GraphPlugin,
+  GraphPluginConstructor,
   MouseListenerSet,
   PluginId,
 } from '../types.js';
@@ -479,6 +480,23 @@ export abstract class AbstractGraph extends EventSource {
     options?.plugins?.forEach((p) => this.plugins.set(p.pluginId, new p(this)));
 
     this.view.revalidate();
+  }
+
+  // TODO names of methods to review
+  // decide if we allow to load several plugins by passing an array or an single object
+  // same for unloadPlugin
+  // TODO add various tests on the 2 methods
+  loadPlugin(plugin: GraphPluginConstructor): void {
+    this.plugins.set(plugin.pluginId, new plugin(this));
+  }
+
+  unloadPlugin(pluginId: string) {
+    // destroy the plugin, remove it
+    this.plugins.get(pluginId)?.onDestroy();
+    this.plugins.delete(pluginId);
+
+    // from the destroy method
+    // Object.values(this.plugins).forEach((p) => p.onDestroy());
   }
 
   getContainer = () => this.container;
