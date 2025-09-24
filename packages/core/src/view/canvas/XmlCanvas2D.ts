@@ -572,8 +572,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
   /**
    * Sets the current font style.
    *
-   * @param value Numeric representation of the font family. This is the sum of the
-   * font styles from {@link mxConstants}.
+   * @param value Numeric representation of the font style. This is the sum of the font styles from {@link FONT_STYLE_MASK}.
    */
   override setFontStyle(value: number | null = 0): void {
     if (this.textEnabled) {

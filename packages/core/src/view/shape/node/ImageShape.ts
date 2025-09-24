@@ -77,10 +77,6 @@ class ImageShape extends RectangleShape {
     }
   }
 
-  /**
-   * Returns true if HTML is allowed for this shape. This implementation always
-   * returns false.
-   */
   override isHtmlAllowed() {
     return !this.preserveImageAspect;
   }
