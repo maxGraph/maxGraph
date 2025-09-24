@@ -103,7 +103,7 @@ export class EditorCodec extends ObjectCodec {
    * </ui>
    * ```
    */
-  afterDecode(_dec: Codec, node: Element, obj: Editor) {
+  override afterDecode(_dec: Codec, node: Element, obj: Editor) {
     // Assigns the specified templates for edges
     const defaultEdge = node.getAttribute('defaultEdge');
 
@@ -119,13 +119,14 @@ export class EditorCodec extends ObjectCodec {
       node.removeAttribute('defaultGroup');
       obj.defaultGroup = obj.templates[defaultGroup];
     }
+
     return obj;
   }
 
   /**
    * Overrides decode child to handle special child nodes.
    */
-  decodeChild(dec: Codec, child: Element, obj: Editor) {
+  override decodeChild(dec: Codec, child: Element, obj: Editor) {
     if (child.nodeName === 'Array') {
       const role = child.getAttribute('as');
 

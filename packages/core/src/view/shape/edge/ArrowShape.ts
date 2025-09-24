@@ -57,7 +57,7 @@ class ArrowShape extends Shape {
   /**
    * Augments the bounding box with the edge width and markers.
    */
-  augmentBoundingBox(bbox: Rectangle) {
+  override augmentBoundingBox(bbox: Rectangle) {
     super.augmentBoundingBox(bbox);
 
     const w = Math.max(this.arrowWidth, this.endSize);
@@ -67,7 +67,7 @@ class ArrowShape extends Shape {
   /**
    * Paints the line shape.
    */
-  paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {
+  override paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {
     // Geometry of arrow
     const spacing = ARROW_SPACING;
     const width = ARROW_WIDTH;

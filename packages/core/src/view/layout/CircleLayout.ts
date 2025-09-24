@@ -84,7 +84,7 @@ class CircleLayout extends GraphLayout {
   /**
    * Implements {@link GraphLayout#execute}.
    */
-  execute(parent: Cell) {
+  override execute(parent: Cell) {
     // Moves the vertices to build a circle. Makes sure the
     // radius is large enough for the vertices to not
     // overlap

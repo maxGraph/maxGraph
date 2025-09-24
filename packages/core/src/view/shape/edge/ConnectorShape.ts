@@ -43,7 +43,7 @@ class ConnectorShape extends PolylineShape {
    * Updates the {@link boundingBox} for this shape using {@link createBoundingBox}
    * and {@link augmentBoundingBox} and stores the result in {@link boundingBox}.
    */
-  updateBoundingBox() {
+  override updateBoundingBox() {
     this.useSvgBoundingBox = this.style?.curved ?? false;
     super.updateBoundingBox();
   }
@@ -51,7 +51,7 @@ class ConnectorShape extends PolylineShape {
   /**
    * Paints the line shape.
    */
-  paintEdgeShape(c: AbstractCanvas2D, pts: Point[]): void {
+  override paintEdgeShape(c: AbstractCanvas2D, pts: Point[]): void {
     // The indirection via functions for markers is needed in
     // order to apply the offsets before painting the line and
     // paint the markers after painting the line.
@@ -141,7 +141,7 @@ class ConnectorShape extends PolylineShape {
   /**
    * Augments the bounding box with the strokewidth and shadow offsets.
    */
-  augmentBoundingBox(bbox: Rectangle) {
+  override augmentBoundingBox(bbox: Rectangle) {
     super.augmentBoundingBox(bbox);
 
     if (!this.style) return;

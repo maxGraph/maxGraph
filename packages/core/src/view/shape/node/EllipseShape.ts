@@ -39,7 +39,13 @@ class EllipseShape extends Shape {
   /**
    * Paints the ellipse shape.
    */
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintVertexShape(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     c.ellipse(x, y, w, h);
     c.fillAndStroke();
   }

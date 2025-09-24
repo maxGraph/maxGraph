@@ -24,11 +24,11 @@ import type Codec from '../../Codec.js';
  * @category Serialization with Codecs
  */
 export class mxCellCodec extends CellCodec {
-  getName(): string {
+  override getName(): string {
     return 'mxCell';
   }
 
-  decodeAttribute(dec: Codec, attr: any, obj?: any) {
+  override decodeAttribute(dec: Codec, attr: any, obj?: any) {
     const attributeNodeName = attr.nodeName;
     if (obj && attributeNodeName == 'style') {
       obj['style'] = convertStyleFromString(attr.value);

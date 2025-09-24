@@ -48,7 +48,7 @@ export class TerminalChangeCodec extends ObjectCodec {
   /**
    * Restores the state by assigning the previous value.
    */
-  afterDecode(_dec: Codec, _node: Element, obj: any): any {
+  override afterDecode(_dec: Codec, _node: Element, obj: any): any {
     obj.previous = obj.terminal;
     return obj;
   }

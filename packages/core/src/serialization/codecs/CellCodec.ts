@@ -72,14 +72,14 @@ export class CellCodec extends ObjectCodec {
   /**
    * Overridden to disable conversion of value to number.
    */
-  isNumericAttribute(dec: Codec, attr: Element, obj: Cell) {
+  override isNumericAttribute(dec: Codec, attr: Element, obj: Cell) {
     return attr.nodeName !== 'value' && super.isNumericAttribute(dec, attr, obj);
   }
 
   /**
    * Excludes user objects that are XML nodes.
    */
-  isExcluded(obj: Cell, attr: string, value: Element, isWrite: boolean) {
+  override isExcluded(obj: Cell, attr: string, value: Element, isWrite: boolean) {
     return (
       super.isExcluded(obj, attr, value, isWrite) ||
       (isWrite && attr === 'value' && isElement(value))
@@ -89,7 +89,7 @@ export class CellCodec extends ObjectCodec {
   /**
    * Encodes a {@link Cell} and wraps the XML up inside the XML of the user object (inversion).
    */
-  afterEncode(enc: Codec, obj: Cell, node: Element) {
+  override afterEncode(enc: Codec, obj: Cell, node: Element) {
     if (isElement(obj.value)) {
       // Wraps the graphical annotation up in the user object (inversion)
       // by putting the result of the default encoding into a clone of the
@@ -111,7 +111,7 @@ export class CellCodec extends ObjectCodec {
   /**
    * Decodes an {@link Cell} and uses the enclosing XML node as the user object for the cell (inversion).
    */
-  beforeDecode(dec: Codec, node: Element, obj: Cell): Element | null {
+  override beforeDecode(dec: Codec, node: Element, obj: Cell): Element | null {
     let inner: Element | null = <Element>node.cloneNode(true);
     const classname = this.getName();
 

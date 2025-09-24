@@ -44,12 +44,12 @@ export class StylesheetCodec extends ObjectCodec {
    *
    * @default false
    */
-  static allowEval = false;
+  static override allowEval = false;
 
   /**
    * Encodes a stylesheet. See {@link decode} for a description of the format.
    */
-  encode(enc: Codec, obj: Stylesheet): Element {
+  override encode(enc: Codec, obj: Stylesheet): Element {
     const node = enc.document.createElement(this.getName());
 
     for (const styleName of obj.styles.keys()) {
@@ -127,7 +127,7 @@ export class StylesheetCodec extends ObjectCodec {
    * </Stylesheet>
    * ```
    */
-  decode(dec: Codec, _node: Element, into: any): any {
+  override decode(dec: Codec, _node: Element, into: any): any {
     const obj = into || new this.template.constructor();
     const id = _node.getAttribute('id');
 

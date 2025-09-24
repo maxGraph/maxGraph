@@ -111,7 +111,7 @@ class CellTracker extends CellMarker implements MouseListenerSet {
    * Destroys the object and all its resources and DOM nodes. This doesn't normally need to be called.
    * It is called automatically when the window unloads.
    */
-  destroy() {
+  override destroy() {
     if (!this.destroyed) {
       this.destroyed = true;
 

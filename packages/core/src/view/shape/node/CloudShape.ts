@@ -39,7 +39,7 @@ class CloudShape extends ActorShape {
   /**
    * Draws the path for this shape.
    */
-  redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     c.moveTo(0.25 * w, 0.25 * h);
     c.curveTo(0.05 * w, 0.25 * h, 0, 0.5 * h, 0.16 * w, 0.55 * h);
     c.curveTo(0, 0.66 * h, 0.18 * w, 0.9 * h, 0.31 * w, 0.8 * h);

@@ -25,7 +25,7 @@ import Point from '../../../view/geometry/Point.js';
  * @category Serialization with Codecs
  */
 export class mxGeometryCodec extends ObjectCodec {
-  getName(): string {
+  override getName(): string {
     return 'mxGeometry';
   }
 
@@ -33,7 +33,7 @@ export class mxGeometryCodec extends ObjectCodec {
     super(new Geometry());
   }
 
-  afterDecode(dec: Codec, node: Element | null, obj?: any): any {
+  override afterDecode(dec: Codec, node: Element | null, obj?: any): any {
     // Convert points to the right form
     // input: [ { x: 420, y: 60 }, ... ]
     // output: [ Point { _x: 420, _y: 60 }, ... ]

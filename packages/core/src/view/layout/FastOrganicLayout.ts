@@ -157,7 +157,7 @@ class FastOrganicLayout extends GraphLayout {
    *
    * @param vertex <Cell> whose ignored state should be returned.
    */
-  isVertexIgnored(vertex: Cell) {
+  override isVertexIgnored(vertex: Cell) {
     return (
       super.isVertexIgnored(vertex) || this.graph.getConnections(vertex).length === 0
     );
@@ -167,7 +167,7 @@ class FastOrganicLayout extends GraphLayout {
    * Implements {@link GraphLayout#execute}. This operates on all children of the
    * given parent where <isVertexIgnored> returns false.
    */
-  execute(parent: Cell) {
+  override execute(parent: Cell) {
     this.vertexArray = [];
     let cells = this.graph.getChildVertices(parent);
 

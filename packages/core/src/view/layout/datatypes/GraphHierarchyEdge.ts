@@ -31,7 +31,7 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
    * The graph edge(s) this object represents. Parallel edges are all grouped
    * together within one hierarchy edge.
    */
-  edges: Cell[];
+  override edges: Cell[];
 
   /**
    * The object identities of the wrapped cells
@@ -41,12 +41,12 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**
    * The node this edge is sourced at
    */
-  source: GraphHierarchyNode | null = null;
+  override source: GraphHierarchyNode | null = null;
 
   /**
    * The node this edge targets
    */
-  target: GraphHierarchyNode | null = null;
+  override target: GraphHierarchyNode | null = null;
 
   /**
    * Whether or not the direction of this edge has been reversed
@@ -82,7 +82,7 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**
    * Returns the cells this cell connects to on the next layer up
    */
-  getNextLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] {
+  override getNextLayerConnectedCells(layer: number): GraphAbstractHierarchyCell[] {
     if (this.nextLayerConnectedCells == null) {
       this.nextLayerConnectedCells = [];
 
@@ -102,7 +102,7 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**
    * Returns the cells this cell connects to on the next layer down
    */
-  getPreviousLayerConnectedCells(layer: number) {
+  override getPreviousLayerConnectedCells(layer: number) {
     if (this.previousLayerConnectedCells == null) {
       this.previousLayerConnectedCells = [];
 
@@ -124,7 +124,7 @@ class GraphHierarchyEdge extends GraphAbstractHierarchyCell {
   /**
    * Returns true.
    */
-  isEdge() {
+  override isEdge() {
     return true;
   }
 

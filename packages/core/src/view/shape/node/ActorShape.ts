@@ -60,7 +60,13 @@ class ActorShape extends Shape {
   /**
    * Redirects to redrawPath for subclasses to work.
    */
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintVertexShape(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     c.translate(x, y);
     c.begin();
     this.redrawPath(c, x, y, w, h);

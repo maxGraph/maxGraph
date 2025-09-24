@@ -52,7 +52,7 @@ export class GenericChangeCodec extends ObjectCodec {
   /**
    * Restores the state by assigning the previous value.
    */
-  afterDecode(dec: Codec, _node: Element, obj: any): any {
+  override afterDecode(dec: Codec, _node: Element, obj: any): any {
     // Allows forward references in sessions. This is a workaround
     // for the sequence of edits in mxGraph.moveCells and cellsAdded.
     if (isNode(obj.cell)) {

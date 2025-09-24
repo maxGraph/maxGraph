@@ -43,7 +43,7 @@ export class RootChangeCodec extends ObjectCodec {
   /**
    * Encodes the child recursively.
    */
-  afterEncode(enc: Codec, obj: any, node: Element) {
+  override afterEncode(enc: Codec, obj: any, node: Element) {
     enc.encodeCell(obj.root, node);
     return node;
   }
@@ -51,7 +51,7 @@ export class RootChangeCodec extends ObjectCodec {
   /**
    * Decodes the optional children as cells using the respective decoder.
    */
-  beforeDecode(dec: Codec, node: Element, obj: any): any {
+  override beforeDecode(dec: Codec, node: Element, obj: any): any {
     if (isElement(node.firstChild)) {
       // Makes sure the original node isn't modified
       node = <Element>node.cloneNode(true);
@@ -76,7 +76,7 @@ export class RootChangeCodec extends ObjectCodec {
   /**
    * Restores the state by assigning the previous value.
    */
-  afterDecode(_dec: Codec, _node: Element, obj: any): any {
+  override afterDecode(_dec: Codec, _node: Element, obj: any): any {
     obj.previous = obj.root;
 
     return obj;

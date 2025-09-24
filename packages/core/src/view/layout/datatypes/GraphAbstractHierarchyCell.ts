@@ -100,14 +100,14 @@ abstract class GraphAbstractHierarchyCell extends Cell {
   /**
    * Returns whether or not this cell is an edge
    */
-  isEdge() {
+  override isEdge() {
     return false;
   }
 
   /**
    * Returns whether or not this cell is a node
    */
-  isVertex() {
+  override isVertex() {
     return false;
   }
 

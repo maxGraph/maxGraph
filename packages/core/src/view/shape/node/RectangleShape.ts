@@ -41,7 +41,7 @@ class RectangleShape extends Shape {
   /**
    * Returns true for non-rounded, non-rotated shapes with no glass gradient.
    */
-  isHtmlAllowed() {
+  override isHtmlAllowed() {
     let events = true;
 
     if (this.style && this.style.pointerEvents != null) {
@@ -59,7 +59,13 @@ class RectangleShape extends Shape {
   /**
    * Generic background painting implementation.
    */
-  paintBackground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintBackground(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     let events = true;
 
     if (this.style && this.style.pointerEvents != null) {
@@ -85,14 +91,20 @@ class RectangleShape extends Shape {
   /**
    * Adds roundable support.
    */
-  isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override isRoundable(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     return true;
   }
 
   /**
    * Generic background painting implementation.
    */
-  paintForeground(c: AbstractCanvas2D, x: number, y: number, w: number, h: number): void {
+  override paintForeground(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ): void {
     if (this.glass && !this.outline && this.fill !== NONE) {
       this.paintGlassEffect(
         c,

@@ -2020,7 +2020,7 @@ export default class ConnectionHandler
 export class ConnectionHandlerCellMarker extends CellMarker {
   connectionHandler: ConnectionHandler;
 
-  hotspotEnabled = true;
+  override hotspotEnabled = true;
 
   constructor(
     graph: AbstractGraph,
@@ -2035,7 +2035,7 @@ export class ConnectionHandlerCellMarker extends CellMarker {
 
   // Overrides to return cell at location only if valid (so that
   // there is no highlight for invalid cells)
-  getCell(me: InternalMouseEvent) {
+  override getCell(me: InternalMouseEvent) {
     let cell = super.getCell(me);
     this.connectionHandler.error = null;
 
@@ -2106,7 +2106,7 @@ export class ConnectionHandlerCellMarker extends CellMarker {
   }
 
   // Sets the highlight color according to validateConnection
-  isValidState(state: CellState) {
+  override isValidState(state: CellState) {
     if (this.connectionHandler.isConnecting()) {
       return !this.connectionHandler.error;
     }
@@ -2115,7 +2115,7 @@ export class ConnectionHandlerCellMarker extends CellMarker {
 
   // Overrides to use marker color only in highlight mode or for
   // target selection
-  getMarkerColor(evt: Event, state: CellState, isValid: boolean) {
+  override getMarkerColor(evt: Event, state: CellState, isValid: boolean) {
     return !this.connectionHandler.connectImage || this.connectionHandler.isConnecting()
       ? super.getMarkerColor(evt, state, isValid)
       : NONE;
@@ -2123,7 +2123,7 @@ export class ConnectionHandlerCellMarker extends CellMarker {
 
   // Overrides to use hotspot only for source selection otherwise
   // intersects always returns true when over a cell
-  intersects(state: CellState, evt: InternalMouseEvent) {
+  override intersects(state: CellState, evt: InternalMouseEvent) {
     if (this.connectionHandler.connectImage || this.connectionHandler.isConnecting()) {
       return true;
     }

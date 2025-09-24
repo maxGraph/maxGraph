@@ -45,7 +45,7 @@ export class EditorToolbarCodec extends ObjectCodec {
   /**
    * Returns `null`.
    */
-  encode(_enc: any, _obj: any) {
+  override encode(_enc: any, _obj: any) {
     return null;
   }
 
@@ -130,7 +130,7 @@ export class EditorToolbarCodec extends ObjectCodec {
    * </EditorToolbar>
    * ```
    */
-  decode(dec: Codec, _node: Element, into: EditorToolbar) {
+  override decode(dec: Codec, _node: Element, into: EditorToolbar) {
     if (into != null) {
       const editor: Editor = into.editor!;
       let node: Element | null = <Element | null>_node.firstChild;
