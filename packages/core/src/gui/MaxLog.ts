@@ -273,6 +273,7 @@ class MaxLog {
       MaxLog.writeln(`Entering ${string}`);
       return new Date().getTime();
     }
+    return undefined;
   }
 
   /**

@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "noImplicitOverride": true,
+    "noImplicitReturns": true,
   },
   "exclude": ["node_modules", "**/*.spec.ts"],
   "include": ["packages/*/src"]
