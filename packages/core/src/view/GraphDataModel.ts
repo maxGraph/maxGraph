@@ -79,16 +79,11 @@ import type { CellStyle, FilterFunction } from '../types.js';
  * each change from the given array of changes.
  *
  * ```javascript
- * model.addListener(mxEvent.CHANGE, function(sender, evt)
- * {
- *   var changes = evt.getProperty('edit').changes;
- *   var nodes = [];
- *   var codec = new Codec();
+ * model.addListener(mxEvent.CHANGE, function(sender, evt) {
+ *   const changes = evt.getProperty('edit').changes;
+ *   const codec = new Codec();
  *
- *   for (var i = 0; i < changes.length; i++)
- *   {
- *     nodes.push(codec.encode(changes[i]));
- *   }
+ *   const nodes = changes.map(change => codec.encode(change));
  *   // do something with the nodes
  * });
  * ```
@@ -146,17 +141,11 @@ import type { CellStyle, FilterFunction } from '../types.js';
  * For finding newly inserted cells, the following code can be used:
  *
  * ```javascript
- * graph.model.addListener(mxEvent.CHANGE, function(sender, evt)
- * {
- *   var changes = evt.getProperty('edit').changes;
+ * graph.model.addListener(mxEvent.CHANGE, function(sender, evt) {
+ *   const changes = evt.getProperty('edit').changes;
  *
- *   for (var i = 0; i < changes.length; i++)
- *   {
- *     var change = changes[i];
- *
- *     if (change instanceof mxChildChange &&
- *       change.change.previous == null)
- *     {
+ *   for (const change of changes) {
+ *     if (change instanceof ChildChange && !change.change.previous) {
  *       graph.startEditingAtCell(change.child);
  *       break;
  *     }
