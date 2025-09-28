@@ -14,16 +14,42 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import '@maxgraph/core/css/common.css'; // required by RubberBandHandler
+// not available in v0.1.0
+// import '@maxgraph/core/css/common.css'; // required by RubberBandHandler
 import './style.css';
 import {
-  constants,
-  getDefaultPlugins,
+  // constants,
+  Client,
+  Codec,
+  // getDefaultPlugins,
   Graph,
   InternalEvent,
-  ModelXmlSerializer,
+  // ModelExportOptions,
+  // ModelXmlSerializer,
+  // registerModelCodecs,
   RubberBandHandler,
+  xmlUtils,
 } from '@maxgraph/core';
+
+// not available in v0.1.0,
+export class ModelXmlSerializer {
+  constructor(dataModel) {
+    this.dataModel = dataModel;
+  }
+
+  import(input) {
+    const doc =
+      typeof input === 'string' ? xmlUtils.parseXml(input) : input.ownerDocument;
+    new Codec(doc).decode(doc.documentElement, this.dataModel);
+  }
+
+  export(options) {
+    const encodedNode = new Codec().encode(this.dataModel);
+    return (options?.pretty ?? true)
+      ? xmlUtils.getPrettyXml(encodedNode)
+      : xmlUtils.getXml(encodedNode);
+  }
+}
 
 const xmlWithVerticesAndEdges = `<GraphDataModel>
     <root>
@@ -59,10 +85,12 @@ const initializeGraph = (container) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  const graph = new Graph(container, undefined, [
-    ...getDefaultPlugins(),
-    RubberBandHandler, // Enables rubber band selection
-  ]);
+  // const graph = new Graph(container, undefined, [
+  //   ...getDefaultPlugins(),
+  //   RubberBandHandler, // Enables rubber band selection
+  // ]);
+  const graph = new Graph(container);
+  new RubberBandHandler(graph); // Enables rubber band selection
   graph.setPanning(true); // Use mouse right button for panning
 
   const modelXmlSerializer = new ModelXmlSerializer(graph.model);
@@ -73,7 +101,7 @@ const initializeGraph = (container) => {
 
 // display the maxGraph version in the footer
 const footer = document.querySelector('footer');
-footer.innerText = `Built with maxGraph ${constants.VERSION}`;
+footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 
 // Creates the graph inside the given container
 const container = document.querySelector('#graph-container');

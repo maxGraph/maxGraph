@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import '@maxgraph/core/css/common.css'; // required by RubberBandHandler
+// not available in v0.1.0
+// import '@maxgraph/core/css/common.css'; // required by RubberBandHandler
 import './style.css';
 import {
-  constants,
-  type FitPlugin,
-  getDefaultPlugins,
+  Client,
+  // type FitPlugin,
+  // getDefaultPlugins,
   Graph,
   InternalEvent,
   Perimeter,
@@ -31,10 +32,12 @@ const initializeGraph = (container: HTMLElement) => {
   // Disables the built-in context menu
   InternalEvent.disableContextMenu(container);
 
-  const graph = new Graph(container, undefined, [
-    ...getDefaultPlugins(),
-    RubberBandHandler, // Enables rubber band selection
-  ]);
+  // const graph = new Graph(container, undefined, [
+  //   ...getDefaultPlugins(),
+  //   RubberBandHandler, // Enables rubber band selection
+  // ]);
+  const graph = new Graph(container);
+  new RubberBandHandler(graph); // Enables rubber band selection
   graph.setPanning(true); // Use mouse right button for panning
 
   // shapes and styles
@@ -103,7 +106,7 @@ const initializeGraph = (container: HTMLElement) => {
 
 // display the maxGraph version in the footer
 const footer = document.querySelector('footer')!;
-footer.innerText = `Built with maxGraph ${constants.VERSION}`;
+footer.innerText = `Built with maxGraph ${Client.VERSION}`;
 
 // Creates the graph inside the given container
 const graph = initializeGraph(document.querySelector('#graph-container')!);
@@ -113,5 +116,7 @@ document.getElementById('reset-zoom')!.addEventListener('click', () => {
   graph.zoomActual();
 });
 document.getElementById('fit-center')!.addEventListener('click', () => {
-  graph.getPlugin<FitPlugin>('fit')?.fitCenter({ margin: 20 });
+  console.warn('Fit center is not available in v0.1.0');
+  // Do not exist in v0.1.0
+  //graph.getPlugin<FitPlugin>('fit')?.fitCenter({ margin: 20 });
 });

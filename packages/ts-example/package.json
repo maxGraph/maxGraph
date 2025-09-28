@@ -8,6 +8,9 @@
     "build": "tsc --version && tsc && vite build --base ./",
     "preview": "vite preview"
   },
+  "dependencies": {
+    "@maxgraph/core": "0.1.0"
+  },
   "devDependencies": {
     "vite": "~6.3.5"
   }
