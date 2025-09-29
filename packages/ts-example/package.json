@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@maxgraph/core": "0.3.0"
+    "@maxgraph/core": "0.4.0"
   },
   "devDependencies": {
     "vite": "~6.3.5"
