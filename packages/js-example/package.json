@@ -7,7 +7,7 @@
     "preview": "http-server -c-1 dist"
   },
   "dependencies": {
-    "@maxgraph/core": "0.5.0"
+    "@maxgraph/core": "0.6.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "~13.0.1",
