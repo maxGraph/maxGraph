@@ -44,16 +44,19 @@ export const MAX_HOTSPOT_SIZE = 0;
 /**
  * Name of the field to be used to store the object ID.
  */
+// TODO should not be configurable
 export const IDENTITY_FIELD_NAME = 'mxObjectId';
 
 /**
  * Defines the SVG namespace.
  */
+// TODO should not be configurable
 export const NS_SVG = 'http://www.w3.org/2000/svg';
 
 /**
  * Defines the XLink namespace.
  */
+// TODO should not be configurable
 export const NS_XLINK = 'http://www.w3.org/1999/xlink';
 
 /** Default value of {@link StyleDefaultsConfig.shadowColor}. */
@@ -260,7 +263,7 @@ export const OUTLINE_HANDLE_STROKECOLOR = '#0033FF';
 /**
  * Defines the default family for all fonts. Default is Arial,Helvetica.
  */
-export const DEFAULT_FONTFAMILY = 'Arial,Helvetica';
+export const DEFAULT_FONTFAMILY = "Arial,Helvetica, sans-serif'";
 
 /**
  * Defines the default size (in px). Default is 11.
