@@ -17,9 +17,9 @@ limitations under the License.
 */
 
 import {
-  DEFAULT_VALID_COLOR,
   HIGHLIGHT_OPACITY,
   HIGHLIGHT_STROKEWIDTH,
+  VALID_COLOR,
 } from '../../util/Constants.js';
 import InternalEvent from '../event/InternalEvent.js';
 import Rectangle from '../geometry/Rectangle.js';
@@ -87,7 +87,7 @@ class CellHighlight {
     dashed?: boolean
   ) {
     this.graph = graph;
-    this.highlightColor = highlightColor ?? DEFAULT_VALID_COLOR;
+    this.highlightColor = highlightColor ?? VALID_COLOR;
     this.strokeWidth = strokeWidth ?? HIGHLIGHT_STROKEWIDTH;
     this.dashed = dashed ?? false;
     this.opacity = HIGHLIGHT_OPACITY;

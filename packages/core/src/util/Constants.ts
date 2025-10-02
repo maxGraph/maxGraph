@@ -77,10 +77,10 @@ export const SHADOW_OPACITY = 1;
  */
 export const TOOLTIP_VERTICAL_OFFSET = 16;
 
-/**
- * Specifies the default valid color. Default is #0000FF.
- */
-export const DEFAULT_VALID_COLOR = '#00FF00';
+// /**
+//  * Specifies the default valid color. Default is #0000FF.
+//  */
+// export const DEFAULT_VALID_COLOR = '#00FF00';
 
 /**
  * Specifies the default invalid color. Default is #FF0000.
@@ -147,8 +147,8 @@ export const INVALID_CONNECT_TARGET_COLOR = '#FF0000';
 export const DROP_TARGET_COLOR = '#0000FF';
 
 /**
- * Defines the color to be used for the coloring valid connection
- * previews. Use 'none' for no color. Default is #FF0000.
+ * Defines the color to be used for the coloring valid connection previews or other valid elements.
+ * Use 'none' for no color. Default is #FF0000.
  */
 export const VALID_COLOR = '#00FF00';
 

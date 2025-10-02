@@ -20,10 +20,10 @@ import EventSource from '../event/EventSource.js';
 import {
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
-  DEFAULT_VALID_COLOR,
   MAX_HOTSPOT_SIZE,
   MIN_HOTSPOT_SIZE,
   NONE,
+  VALID_COLOR,
 } from '../../util/Constants.js';
 import CellHighlight from './CellHighlight.js';
 import EventObject from '../event/EventObject.js';
@@ -119,7 +119,7 @@ class CellMarker extends EventSource {
    */
   constructor(
     graph: AbstractGraph,
-    validColor: ColorValue = DEFAULT_VALID_COLOR,
+    validColor: ColorValue = VALID_COLOR,
     invalidColor: ColorValue = DEFAULT_INVALID_COLOR,
     hotspot: number = DEFAULT_HOTSPOT
   ) {
