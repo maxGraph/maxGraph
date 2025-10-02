@@ -17,10 +17,11 @@ limitations under the License.
 */
 
 import Rectangle from '../../geometry/Rectangle.js';
-import { DEFAULT_IMAGESIZE, NONE } from '../../../util/Constants.js';
+import { NONE } from '../../../util/Constants.js';
 import RectangleShape from './RectangleShape.js';
 import { ColorValue } from '../../../types.js';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import { StyleDefaultsConfig } from '../../../util/config.js';
 
 /**
  * Extends {@link RectangleShape} to implement an image shape with a label.
@@ -49,9 +50,9 @@ class LabelShape extends RectangleShape {
 
   /**
    * Default width and height for the image.
-   * @default mxConstants.DEFAULT_IMAGESIZE
+   * @default {@link StyleDefaultsConfig.imageSize}
    */
-  imageSize = DEFAULT_IMAGESIZE;
+  imageSize = StyleDefaultsConfig.imageSize;
 
   override imageSrc: string | null = null;
 
@@ -168,8 +169,8 @@ class LabelShape extends RectangleShape {
   getImageBounds(x: number, y: number, w: number, h: number) {
     const align = this.style?.imageAlign ?? 'left';
     const valign = this.style?.verticalAlign ?? 'middle';
-    const width = this.style?.imageWidth ?? DEFAULT_IMAGESIZE;
-    const height = this.style?.imageHeight ?? DEFAULT_IMAGESIZE;
+    const width = this.style?.imageWidth ?? StyleDefaultsConfig.imageSize;
+    const height = this.style?.imageHeight ?? StyleDefaultsConfig.imageSize;
     const spacing = this.style?.spacing ?? this.spacing + 5;
 
     if (align === 'center') {

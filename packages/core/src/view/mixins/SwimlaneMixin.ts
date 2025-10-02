@@ -17,10 +17,10 @@ limitations under the License.
 import Rectangle from '../geometry/Rectangle.js';
 import { convertPoint } from '../../util/styleUtils.js';
 import { mod } from '../../util/mathUtils.js';
-import { DEFAULT_STARTSIZE } from '../../util/Constants.js';
 import { getClientX, getClientY } from '../../util/EventUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type { DirectionValue } from '../../types.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
@@ -128,7 +128,7 @@ export const SwimlaneMixin: PartialType = {
   getStartSize(swimlane, ignoreState = false) {
     const result = new Rectangle();
     const style = this.getCurrentCellStyle(swimlane, ignoreState);
-    const size = style.startSize ?? DEFAULT_STARTSIZE;
+    const size = style.startSize ?? StyleDefaultsConfig.startSize;
 
     if (style.horizontal ?? true) {
       result.height = size;
@@ -182,7 +182,7 @@ export const SwimlaneMixin: PartialType = {
 
     if (this.isSwimlane(swimlane, ignoreState)) {
       const style = this.getCurrentCellStyle(swimlane, ignoreState);
-      const size = style.startSize ?? DEFAULT_STARTSIZE;
+      const size = style.startSize ?? StyleDefaultsConfig.startSize;
       const dir = this.getSwimlaneDirection(style);
 
       switch (dir) {

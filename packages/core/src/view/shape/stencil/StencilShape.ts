@@ -19,7 +19,7 @@ limitations under the License.
 import ConnectionConstraint from '../../other/ConnectionConstraint.js';
 import Rectangle from '../../geometry/Rectangle.js';
 import Shape from '../Shape.js';
-import { NONE, RECTANGLE_ROUNDING_FACTOR } from '../../../util/Constants.js';
+import { NONE } from '../../../util/Constants.js';
 import { StencilShapeRegistry } from './StencilShapeRegistry.js';
 import { getChildNodes, getTextContent } from '../../../util/domUtils.js';
 import Point from '../../geometry/Point.js';
@@ -27,6 +27,7 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 import { AlignValue, ColorValue, VAlignValue } from '../../../types.js';
 import { doEval, isElement, isNullish } from '../../../internal/utils.js';
 import { translate } from '../../../internal/i18n-utils.js';
+import { StyleDefaultsConfig } from '../../../util/config.js';
 
 /**
  * Configure global settings for stencil shapes.
@@ -510,7 +511,7 @@ class StencilShape extends Shape {
           let arcsize = Number(node.getAttribute('arcsize'));
 
           if (arcsize === 0) {
-            arcsize = RECTANGLE_ROUNDING_FACTOR * 100;
+            arcsize = StyleDefaultsConfig.roundingFactor * 100;
           }
 
           const w = Number(node.getAttribute('w')) * sx;
