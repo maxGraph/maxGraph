@@ -261,12 +261,12 @@ export const OUTLINE_HANDLE_FILLCOLOR = '#00FFFF';
 export const OUTLINE_HANDLE_STROKECOLOR = '#0033FF';
 
 /**
- * Defines the default family for all fonts. Default is Arial,Helvetica.
+ * Default value of {@link StyleDefaultsConfig.fontFamily}.
  */
 export const DEFAULT_FONTFAMILY = "Arial,Helvetica, sans-serif'";
 
 /**
- * Defines the default size (in px). Default is 11.
+ * Default value of {@link StyleDefaultsConfig.fontSize}.
  */
 export const DEFAULT_FONTSIZE = 11;
 

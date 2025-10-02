@@ -17,6 +17,8 @@ limitations under the License.
 import type { I18nProvider, Logger } from '../types.js';
 import { NoOpLogger } from './logger.js';
 import {
+  DEFAULT_FONTFAMILY,
+  DEFAULT_FONTSIZE,
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
   SHADOW_OPACITY,
@@ -80,6 +82,16 @@ export const GlobalConfig = {
  * @category Configuration
  */
 export const StyleDefaultsConfig = {
+  /**
+   * Defines the default family for all fonts.
+   * @default {@link DEFAULT_FONTFAMILY}
+   */
+  fontFamily: DEFAULT_FONTFAMILY,
+  /**
+   * Defines the default size (in px).
+   * @default {@link DEFAULT_FONTSIZE}
+   */
+  fontSize: DEFAULT_FONTSIZE,
   /**
    * Defines the color to be used to draw shadows in shapes and windows.
    * @default {@link SHADOWCOLOR}
