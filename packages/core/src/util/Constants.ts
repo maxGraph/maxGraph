@@ -271,9 +271,8 @@ export const DEFAULT_FONTFAMILY = "Arial,Helvetica, sans-serif'";
 export const DEFAULT_FONTSIZE = 11;
 
 /**
- * Defines the default value for the <STYLE_TEXT_DIRECTION> if no value is
- * defined for it in the style. Default value is an empty string which means
- * the default system setting is used and no direction is set.
+ * Defines the default value for the {@link CellStateStyle.textDirection} if no value is defined for it in the style.
+ * Default value is an empty string which means the default system setting is used and no direction is set.
  */
 export const DEFAULT_TEXT_DIRECTION = '';
 
