@@ -486,7 +486,7 @@ export class GraphDataModel extends EventSource {
 
       // Makes sure IDs of deleted cells are not reused
       if (isNumeric(String(cell.getId()))) {
-        this.nextId = Math.max(this.nextId, parseInt(<string>cell.getId()));
+        this.nextId = Math.max(this.nextId, Number.parseInt(<string>cell.getId()));
       }
 
       // Recursively processes child cells

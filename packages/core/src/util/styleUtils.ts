@@ -73,15 +73,26 @@ export const getCurrentStyle = (element: HTMLElement) => {
  * Parses the given CSS numeric value adding handling for the values thin, medium and thick (2, 4 and 6).
  */
 export const parseCssNumber = (value: string) => {
-  if (value === 'thin') {
-    value = '2';
-  } else if (value === 'medium') {
-    value = '4';
-  } else if (value === 'thick') {
-    value = '6';
+  switch (value) {
+    case 'thin': {
+      value = '2';
+
+      break;
+    }
+    case 'medium': {
+      value = '4';
+
+      break;
+    }
+    case 'thick': {
+      value = '6';
+
+      break;
+    }
+    // No default
   }
 
-  let n = parseFloat(value);
+  let n = Number.parseFloat(value);
 
   if (Number.isNaN(n)) {
     n = 0;

@@ -885,7 +885,8 @@ class CellRenderer {
       ) {
         result =
           // @ts-ignore
-          parseFloat(String(shape[property])) - parseFloat(String(shape.spacing)) !==
+          Number.parseFloat(String(shape[property])) -
+            Number.parseFloat(String(shape.spacing)) !==
           (state.style[styleName] || defaultValue);
       } else {
         // @ts-ignore

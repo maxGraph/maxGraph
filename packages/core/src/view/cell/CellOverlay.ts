@@ -181,24 +181,46 @@ class CellOverlay extends EventSource implements ObjectIdentity {
     } else {
       pt = new Point();
 
-      if (this.align === 'left') {
-        pt.x = state.x;
-      } else if (this.align === 'center') {
-        pt.x = state.x + state.width / 2;
-      } else if (this.align === 'right') {
-        pt.x = state.x + state.width;
-      } else {
-        throw new Error();
+      switch (this.align) {
+        case 'left': {
+          pt.x = state.x;
+
+          break;
+        }
+        case 'center': {
+          pt.x = state.x + state.width / 2;
+
+          break;
+        }
+        case 'right': {
+          pt.x = state.x + state.width;
+
+          break;
+        }
+        default: {
+          throw new Error();
+        }
       }
 
-      if (this.verticalAlign === 'top') {
-        pt.y = state.y;
-      } else if (this.verticalAlign === 'middle') {
-        pt.y = state.y + state.height / 2;
-      } else if (this.verticalAlign === 'bottom') {
-        pt.y = state.y + state.height;
-      } else {
-        throw new Error();
+      switch (this.verticalAlign) {
+        case 'top': {
+          pt.y = state.y;
+
+          break;
+        }
+        case 'middle': {
+          pt.y = state.y + state.height / 2;
+
+          break;
+        }
+        case 'bottom': {
+          pt.y = state.y + state.height;
+
+          break;
+        }
+        default: {
+          throw new Error();
+        }
       }
     }
 

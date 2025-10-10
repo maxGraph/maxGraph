@@ -170,7 +170,7 @@ export class StylesheetCodec extends ObjectCodec {
                   value = entry.getAttribute('value');
 
                   if (isNumeric(value)) {
-                    value = parseFloat(value);
+                    value = Number.parseFloat(value);
                   }
                 }
 

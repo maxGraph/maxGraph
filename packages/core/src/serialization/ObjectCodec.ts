@@ -582,7 +582,7 @@ class ObjectCodec {
     let { value } = attr;
 
     if (this.isNumericAttribute(dec, attr, obj)) {
-      value = parseFloat(value);
+      value = Number.parseFloat(value);
 
       if (Number.isNaN(value) || !Number.isFinite(value)) {
         value = 0;

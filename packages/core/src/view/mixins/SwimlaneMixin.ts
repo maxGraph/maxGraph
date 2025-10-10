@@ -145,12 +145,23 @@ export const SwimlaneMixin: PartialType = {
     const h = style.horizontal ?? true;
     let n = h ? 0 : 3;
 
-    if (dir === 'north') {
-      n--;
-    } else if (dir === 'west') {
-      n += 2;
-    } else if (dir === 'south') {
-      n += 1;
+    switch (dir) {
+      case 'north': {
+        n--;
+
+        break;
+      }
+      case 'west': {
+        n += 2;
+
+        break;
+      }
+      case 'south': {
+        n += 1;
+
+        break;
+      }
+      // No default
     }
 
     const _mod = mod(n, 2);
@@ -174,14 +185,25 @@ export const SwimlaneMixin: PartialType = {
       const size = style.startSize ?? DEFAULT_STARTSIZE;
       const dir = this.getSwimlaneDirection(style);
 
-      if (dir === 'north') {
-        result.y = size;
-      } else if (dir === 'west') {
-        result.x = size;
-      } else if (dir === 'south') {
-        result.height = size;
-      } else {
-        result.width = size;
+      switch (dir) {
+        case 'north': {
+          result.y = size;
+
+          break;
+        }
+        case 'west': {
+          result.x = size;
+
+          break;
+        }
+        case 'south': {
+          result.height = size;
+
+          break;
+        }
+        default: {
+          result.width = size;
+        }
       }
     }
     return result;

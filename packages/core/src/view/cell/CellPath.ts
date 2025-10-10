@@ -90,7 +90,7 @@ class CellPath {
 
     const tokens = path.split(CellPath.PATH_SEPARATOR);
     for (let i = 0; i < tokens.length; i += 1) {
-      parent = parent.getChildAt(parseInt(tokens[i]));
+      parent = parent.getChildAt(Number.parseInt(tokens[i]));
     }
 
     return parent;
@@ -109,8 +109,8 @@ class CellPath {
         if (p1[i].length === 0 || p2[i].length === 0) {
           comp = p1[i] === p2[i] ? 0 : p1[i] > p2[i] ? 1 : -1;
         } else {
-          const t1 = parseInt(p1[i]);
-          const t2 = parseInt(p2[i]);
+          const t1 = Number.parseInt(p1[i]);
+          const t2 = Number.parseInt(p2[i]);
           comp = t1 === t2 ? 0 : t1 > t2 ? 1 : -1;
         }
         break;

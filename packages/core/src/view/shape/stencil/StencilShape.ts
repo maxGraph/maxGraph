@@ -365,265 +365,360 @@ class StencilShape extends Shape {
     } else if (name === 'restore') {
       canvas.restore();
     } else if (paint) {
-      if (name === 'path') {
-        canvas.begin();
+      switch (name) {
+        case 'path': {
+          canvas.begin();
 
-        let parseRegularly = true;
+          let parseRegularly = true;
 
-        if (node.getAttribute('rounded') == '1') {
-          parseRegularly = false;
+          if (node.getAttribute('rounded') == '1') {
+            parseRegularly = false;
 
-          const arcSize = Number(node.getAttribute('arcSize'));
-          let pointCount = 0;
-          const segs: Point[][] = [];
+            const arcSize = Number(node.getAttribute('arcSize'));
+            let pointCount = 0;
+            const segs: Point[][] = [];
 
-          // Renders the elements inside the given path
-          let childNode = node.firstChild as Element;
+            // Renders the elements inside the given path
+            let childNode = node.firstChild as Element;
 
-          while (childNode != null) {
-            if (isElement(childNode)) {
-              const childName = childNode.nodeName;
+            while (childNode != null) {
+              if (isElement(childNode)) {
+                const childName = childNode.nodeName;
 
-              if (childName === 'move' || childName === 'line') {
-                if (childName === 'move' || segs.length === 0) {
-                  segs.push([]);
+                if (childName === 'move' || childName === 'line') {
+                  if (childName === 'move' || segs.length === 0) {
+                    segs.push([]);
+                  }
+
+                  segs[segs.length - 1].push(
+                    new Point(
+                      x0 + Number(childNode.getAttribute('x')) * sx,
+                      y0 + Number(childNode.getAttribute('y')) * sy
+                    )
+                  );
+                  pointCount++;
+                } else {
+                  // We only support move and line for rounded corners
+                  parseRegularly = true;
+                  break;
+                }
+              }
+
+              childNode = childNode.nextSibling as Element;
+            }
+
+            if (!parseRegularly && pointCount > 0) {
+              for (let i = 0; i < segs.length; i += 1) {
+                let close = false;
+                const ps = segs[i][0];
+                const pe = segs[i][segs[i].length - 1];
+
+                if (ps.x === pe.x && ps.y === pe.y) {
+                  segs[i].pop();
+                  close = true;
                 }
 
-                segs[segs.length - 1].push(
-                  new Point(
-                    x0 + Number(childNode.getAttribute('x')) * sx,
-                    y0 + Number(childNode.getAttribute('y')) * sy
-                  )
-                );
-                pointCount++;
-              } else {
-                // We only support move and line for rounded corners
-                parseRegularly = true;
-                break;
+                this.addPoints(canvas, segs[i], true, arcSize, close);
               }
+            } else {
+              parseRegularly = true;
             }
-
-            childNode = childNode.nextSibling as Element;
           }
 
-          if (!parseRegularly && pointCount > 0) {
-            for (let i = 0; i < segs.length; i += 1) {
-              let close = false;
-              const ps = segs[i][0];
-              const pe = segs[i][segs[i].length - 1];
+          if (parseRegularly) {
+            // Renders the elements inside the given path
+            let childNode = node.firstChild as Element;
 
-              if (ps.x === pe.x && ps.y === pe.y) {
-                segs[i].pop();
-                close = true;
+            while (childNode) {
+              if (isElement(childNode)) {
+                this.drawNode(canvas, shape, childNode, aspect, disableShadow, paint);
               }
 
-              this.addPoints(canvas, segs[i], true, arcSize, close);
+              childNode = childNode.nextSibling as Element;
             }
-          } else {
-            parseRegularly = true;
           }
+
+          break;
         }
+        case 'close': {
+          canvas.close();
 
-        if (parseRegularly) {
-          // Renders the elements inside the given path
-          let childNode = node.firstChild as Element;
-
-          while (childNode) {
-            if (isElement(childNode)) {
-              this.drawNode(canvas, shape, childNode, aspect, disableShadow, paint);
-            }
-
-            childNode = childNode.nextSibling as Element;
-          }
+          break;
         }
-      } else if (name === 'close') {
-        canvas.close();
-      } else if (name === 'move') {
-        canvas.moveTo(
-          x0 + Number(node.getAttribute('x')) * sx,
-          y0 + Number(node.getAttribute('y')) * sy
-        );
-      } else if (name === 'line') {
-        canvas.lineTo(
-          x0 + Number(node.getAttribute('x')) * sx,
-          y0 + Number(node.getAttribute('y')) * sy
-        );
-      } else if (name === 'quad') {
-        canvas.quadTo(
-          x0 + Number(node.getAttribute('x1')) * sx,
-          y0 + Number(node.getAttribute('y1')) * sy,
-          x0 + Number(node.getAttribute('x2')) * sx,
-          y0 + Number(node.getAttribute('y2')) * sy
-        );
-      } else if (name === 'curve') {
-        canvas.curveTo(
-          x0 + Number(node.getAttribute('x1')) * sx,
-          y0 + Number(node.getAttribute('y1')) * sy,
-          x0 + Number(node.getAttribute('x2')) * sx,
-          y0 + Number(node.getAttribute('y2')) * sy,
-          x0 + Number(node.getAttribute('x3')) * sx,
-          y0 + Number(node.getAttribute('y3')) * sy
-        );
-      } else if (name === 'arc') {
-        canvas.arcTo(
-          Number(node.getAttribute('rx')) * sx,
-          Number(node.getAttribute('ry')) * sy,
-          Number(node.getAttribute('x-axis-rotation')),
-          toBoolean(node.getAttribute('large-arc-flag')),
-          toBoolean(node.getAttribute('sweep-flag')),
-          x0 + Number(node.getAttribute('x')) * sx,
-          y0 + Number(node.getAttribute('y')) * sy
-        );
-      } else if (name === 'rect') {
-        canvas.rect(
-          x0 + Number(node.getAttribute('x')) * sx,
-          y0 + Number(node.getAttribute('y')) * sy,
-          Number(node.getAttribute('w')) * sx,
-          Number(node.getAttribute('h')) * sy
-        );
-      } else if (name === 'roundrect') {
-        let arcsize = Number(node.getAttribute('arcsize'));
+        case 'move': {
+          canvas.moveTo(
+            x0 + Number(node.getAttribute('x')) * sx,
+            y0 + Number(node.getAttribute('y')) * sy
+          );
 
-        if (arcsize === 0) {
-          arcsize = RECTANGLE_ROUNDING_FACTOR * 100;
+          break;
         }
+        case 'line': {
+          canvas.lineTo(
+            x0 + Number(node.getAttribute('x')) * sx,
+            y0 + Number(node.getAttribute('y')) * sy
+          );
 
-        const w = Number(node.getAttribute('w')) * sx;
-        const h = Number(node.getAttribute('h')) * sy;
-        const factor = Number(arcsize) / 100;
-        const r = Math.min(w * factor, h * factor);
+          break;
+        }
+        case 'quad': {
+          canvas.quadTo(
+            x0 + Number(node.getAttribute('x1')) * sx,
+            y0 + Number(node.getAttribute('y1')) * sy,
+            x0 + Number(node.getAttribute('x2')) * sx,
+            y0 + Number(node.getAttribute('y2')) * sy
+          );
 
-        canvas.roundrect(
-          x0 + Number(node.getAttribute('x')) * sx,
-          y0 + Number(node.getAttribute('y')) * sy,
-          w,
-          h,
-          r,
-          r
-        );
-      } else if (name === 'ellipse') {
-        canvas.ellipse(
-          x0 + Number(node.getAttribute('x')) * sx,
-          y0 + Number(node.getAttribute('y')) * sy,
-          Number(node.getAttribute('w')) * sx,
-          Number(node.getAttribute('h')) * sy
-        );
-      } else if (name === 'image') {
-        if (!shape.outline) {
-          const src = this.evaluateAttribute(node, 'src', shape) as string;
+          break;
+        }
+        case 'curve': {
+          canvas.curveTo(
+            x0 + Number(node.getAttribute('x1')) * sx,
+            y0 + Number(node.getAttribute('y1')) * sy,
+            x0 + Number(node.getAttribute('x2')) * sx,
+            y0 + Number(node.getAttribute('y2')) * sy,
+            x0 + Number(node.getAttribute('x3')) * sx,
+            y0 + Number(node.getAttribute('y3')) * sy
+          );
 
-          canvas.image(
+          break;
+        }
+        case 'arc': {
+          canvas.arcTo(
+            Number(node.getAttribute('rx')) * sx,
+            Number(node.getAttribute('ry')) * sy,
+            Number(node.getAttribute('x-axis-rotation')),
+            toBoolean(node.getAttribute('large-arc-flag')),
+            toBoolean(node.getAttribute('sweep-flag')),
+            x0 + Number(node.getAttribute('x')) * sx,
+            y0 + Number(node.getAttribute('y')) * sy
+          );
+
+          break;
+        }
+        case 'rect': {
+          canvas.rect(
             x0 + Number(node.getAttribute('x')) * sx,
             y0 + Number(node.getAttribute('y')) * sy,
             Number(node.getAttribute('w')) * sx,
-            Number(node.getAttribute('h')) * sy,
-            src,
-            false,
-            node.getAttribute('flipH') === '1',
-            node.getAttribute('flipV') === '1'
+            Number(node.getAttribute('h')) * sy
           );
+
+          break;
         }
-      } else if (name === 'text') {
-        if (!shape.outline) {
-          const str = this.evaluateTextAttribute(node, 'str', shape) as string;
-          let rotation = node.getAttribute('vertical') == '1' ? -90 : 0;
+        case 'roundrect': {
+          let arcsize = Number(node.getAttribute('arcsize'));
 
-          if (node.getAttribute('align-shape') === '0') {
-            const dr = shape.rotation;
-
-            // Depends on flipping
-            const flipH = shape.style?.flipH ?? false;
-            const flipV = shape.style?.flipV ?? false;
-
-            if (flipH && flipV) {
-              rotation -= dr;
-            } else if (flipH || flipV) {
-              rotation += dr;
-            } else {
-              rotation -= dr;
-            }
+          if (arcsize === 0) {
+            arcsize = RECTANGLE_ROUNDING_FACTOR * 100;
           }
 
-          rotation -= Number(node.getAttribute('rotation'));
-
-          canvas.text(
-            x0 + Number(node.getAttribute('x')) * sx,
-            y0 + Number(node.getAttribute('y')) * sy,
-            0,
-            0,
-            str,
-            (node.getAttribute('align') as AlignValue) ?? 'left',
-            (node.getAttribute('valign') as VAlignValue) ?? 'top',
-            false,
-            '',
-            'auto',
-            false,
-            rotation,
-            'auto'
-          );
-        }
-      } else if (name === 'include-shape') {
-        const stencil = StencilShapeRegistry.get(node.getAttribute('name'));
-
-        if (stencil) {
-          const x = x0 + Number(node.getAttribute('x')) * sx;
-          const y = y0 + Number(node.getAttribute('y')) * sy;
           const w = Number(node.getAttribute('w')) * sx;
           const h = Number(node.getAttribute('h')) * sy;
+          const factor = Number(arcsize) / 100;
+          const r = Math.min(w * factor, h * factor);
 
-          stencil.drawShape(canvas, shape, x, y, w, h);
+          canvas.roundrect(
+            x0 + Number(node.getAttribute('x')) * sx,
+            y0 + Number(node.getAttribute('y')) * sy,
+            w,
+            h,
+            r,
+            r
+          );
+
+          break;
         }
-      } else if (name === 'fillstroke') {
-        canvas.fillAndStroke();
-      } else if (name === 'fill') {
-        canvas.fill();
-      } else if (name === 'stroke') {
-        canvas.stroke();
-      } else if (name === 'strokewidth') {
-        const s = node.getAttribute('fixed') === '1' ? 1 : minScale;
-        canvas.setStrokeWidth(Number(node.getAttribute('width')) * s);
-      } else if (name === 'dashed') {
-        canvas.setDashed(node.getAttribute('dashed') === '1');
-      } else if (name === 'dashpattern') {
-        let value = node.getAttribute('pattern');
+        case 'ellipse': {
+          canvas.ellipse(
+            x0 + Number(node.getAttribute('x')) * sx,
+            y0 + Number(node.getAttribute('y')) * sy,
+            Number(node.getAttribute('w')) * sx,
+            Number(node.getAttribute('h')) * sy
+          );
 
-        if (value != null) {
-          const tmp = value.split(' ');
-          const pat = [];
+          break;
+        }
+        case 'image': {
+          if (!shape.outline) {
+            const src = this.evaluateAttribute(node, 'src', shape) as string;
 
-          for (let i = 0; i < tmp.length; i += 1) {
-            if (tmp[i].length > 0) {
-              pat.push(Number(tmp[i]) * minScale);
-            }
+            canvas.image(
+              x0 + Number(node.getAttribute('x')) * sx,
+              y0 + Number(node.getAttribute('y')) * sy,
+              Number(node.getAttribute('w')) * sx,
+              Number(node.getAttribute('h')) * sy,
+              src,
+              false,
+              node.getAttribute('flipH') === '1',
+              node.getAttribute('flipV') === '1'
+            );
           }
 
-          value = pat.join(' ');
-          canvas.setDashPattern(value);
+          break;
         }
-      } else if (name === 'strokecolor') {
-        canvas.setStrokeColor(node.getAttribute('color') as ColorValue);
-      } else if (name === 'linecap') {
-        canvas.setLineCap(node.getAttribute('cap') as string);
-      } else if (name === 'linejoin') {
-        canvas.setLineJoin(node.getAttribute('join') as string);
-      } else if (name === 'miterlimit') {
-        canvas.setMiterLimit(Number(node.getAttribute('limit')));
-      } else if (name === 'fillcolor') {
-        canvas.setFillColor(node.getAttribute('color') as ColorValue);
-      } else if (name === 'alpha') {
-        canvas.setAlpha(Number(node.getAttribute('alpha')));
-      } else if (name === 'fillalpha') {
-        canvas.setAlpha(Number(node.getAttribute('alpha')));
-      } else if (name === 'strokealpha') {
-        canvas.setAlpha(Number(node.getAttribute('alpha')));
-      } else if (name === 'fontcolor') {
-        canvas.setFontColor(node.getAttribute('color') as ColorValue);
-      } else if (name === 'fontstyle') {
-        canvas.setFontStyle(Number(node.getAttribute('style')));
-      } else if (name === 'fontfamily') {
-        canvas.setFontFamily(node.getAttribute('family') as string);
-      } else if (name === 'fontsize') {
-        canvas.setFontSize(Number(node.getAttribute('size')) * minScale);
+        case 'text': {
+          if (!shape.outline) {
+            const str = this.evaluateTextAttribute(node, 'str', shape) as string;
+            let rotation = node.getAttribute('vertical') == '1' ? -90 : 0;
+
+            if (node.getAttribute('align-shape') === '0') {
+              const dr = shape.rotation;
+
+              // Depends on flipping
+              const flipH = shape.style?.flipH ?? false;
+              const flipV = shape.style?.flipV ?? false;
+
+              if (flipH && flipV) {
+                rotation -= dr;
+              } else if (flipH || flipV) {
+                rotation += dr;
+              } else {
+                rotation -= dr;
+              }
+            }
+
+            rotation -= Number(node.getAttribute('rotation'));
+
+            canvas.text(
+              x0 + Number(node.getAttribute('x')) * sx,
+              y0 + Number(node.getAttribute('y')) * sy,
+              0,
+              0,
+              str,
+              (node.getAttribute('align') as AlignValue) ?? 'left',
+              (node.getAttribute('valign') as VAlignValue) ?? 'top',
+              false,
+              '',
+              'auto',
+              false,
+              rotation,
+              'auto'
+            );
+          }
+
+          break;
+        }
+        case 'include-shape': {
+          const stencil = StencilShapeRegistry.get(node.getAttribute('name'));
+
+          if (stencil) {
+            const x = x0 + Number(node.getAttribute('x')) * sx;
+            const y = y0 + Number(node.getAttribute('y')) * sy;
+            const w = Number(node.getAttribute('w')) * sx;
+            const h = Number(node.getAttribute('h')) * sy;
+
+            stencil.drawShape(canvas, shape, x, y, w, h);
+          }
+
+          break;
+        }
+        case 'fillstroke': {
+          canvas.fillAndStroke();
+
+          break;
+        }
+        case 'fill': {
+          canvas.fill();
+
+          break;
+        }
+        case 'stroke': {
+          canvas.stroke();
+
+          break;
+        }
+        case 'strokewidth': {
+          const s = node.getAttribute('fixed') === '1' ? 1 : minScale;
+          canvas.setStrokeWidth(Number(node.getAttribute('width')) * s);
+
+          break;
+        }
+        case 'dashed': {
+          canvas.setDashed(node.getAttribute('dashed') === '1');
+
+          break;
+        }
+        case 'dashpattern': {
+          let value = node.getAttribute('pattern');
+
+          if (value != null) {
+            const tmp = value.split(' ');
+            const pat = [];
+
+            for (let i = 0; i < tmp.length; i += 1) {
+              if (tmp[i].length > 0) {
+                pat.push(Number(tmp[i]) * minScale);
+              }
+            }
+
+            value = pat.join(' ');
+            canvas.setDashPattern(value);
+          }
+
+          break;
+        }
+        case 'strokecolor': {
+          canvas.setStrokeColor(node.getAttribute('color') as ColorValue);
+
+          break;
+        }
+        case 'linecap': {
+          canvas.setLineCap(node.getAttribute('cap') as string);
+
+          break;
+        }
+        case 'linejoin': {
+          canvas.setLineJoin(node.getAttribute('join') as string);
+
+          break;
+        }
+        case 'miterlimit': {
+          canvas.setMiterLimit(Number(node.getAttribute('limit')));
+
+          break;
+        }
+        case 'fillcolor': {
+          canvas.setFillColor(node.getAttribute('color') as ColorValue);
+
+          break;
+        }
+        case 'alpha': {
+          canvas.setAlpha(Number(node.getAttribute('alpha')));
+
+          break;
+        }
+        case 'fillalpha': {
+          canvas.setAlpha(Number(node.getAttribute('alpha')));
+
+          break;
+        }
+        case 'strokealpha': {
+          canvas.setAlpha(Number(node.getAttribute('alpha')));
+
+          break;
+        }
+        case 'fontcolor': {
+          canvas.setFontColor(node.getAttribute('color') as ColorValue);
+
+          break;
+        }
+        case 'fontstyle': {
+          canvas.setFontStyle(Number(node.getAttribute('style')));
+
+          break;
+        }
+        case 'fontfamily': {
+          canvas.setFontFamily(node.getAttribute('family') as string);
+
+          break;
+        }
+        case 'fontsize': {
+          canvas.setFontSize(Number(node.getAttribute('size')) * minScale);
+
+          break;
+        }
+        // No default
       }
 
       if (

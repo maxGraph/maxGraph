@@ -708,12 +708,23 @@ export const EventsMixin: PartialType = {
         }
 
         for (const l of mouseListeners) {
-          if (evtName === InternalEvent.MOUSE_DOWN) {
-            l.mouseDown(sender, me);
-          } else if (evtName === InternalEvent.MOUSE_MOVE) {
-            l.mouseMove(sender, me);
-          } else if (evtName === InternalEvent.MOUSE_UP) {
-            l.mouseUp(sender, me);
+          switch (evtName) {
+            case InternalEvent.MOUSE_DOWN: {
+              l.mouseDown(sender, me);
+
+              break;
+            }
+            case InternalEvent.MOUSE_MOVE: {
+              l.mouseMove(sender, me);
+
+              break;
+            }
+            case InternalEvent.MOUSE_UP: {
+              l.mouseUp(sender, me);
+
+              break;
+            }
+            // No default
           }
         }
 

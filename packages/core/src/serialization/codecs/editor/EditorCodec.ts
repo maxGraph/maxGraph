@@ -147,59 +147,79 @@ export class EditorCodec extends ObjectCodec {
   decodeUi(_dec: Codec, node: Element, editor: Editor) {
     let tmp = <Element>node.firstChild;
     while (tmp != null) {
-      if (tmp.nodeName === 'add') {
-        const as = <string>tmp.getAttribute('as');
-        const elt = tmp.getAttribute('element');
-        const style = tmp.getAttribute('style');
-        let element = null;
+      switch (tmp.nodeName) {
+        case 'add': {
+          const as = <string>tmp.getAttribute('as');
+          const elt = tmp.getAttribute('element');
+          const style = tmp.getAttribute('style');
+          let element = null;
 
-        if (elt != null) {
-          element = document.getElementById(elt);
+          if (elt != null) {
+            element = document.getElementById(elt);
 
-          if (element != null && style != null) {
-            element.style.cssText += `;${style}`;
+            if (element != null && style != null) {
+              element.style.cssText += `;${style}`;
+            }
+          } else {
+            const x = Number.parseInt(<string>tmp.getAttribute('x'));
+            const y = Number.parseInt(<string>tmp.getAttribute('y'));
+            const width = tmp.getAttribute('width') || null;
+            const height = tmp.getAttribute('height') || null;
+
+            // Creates a new window around the element
+            element = document.createElement('div');
+            if (style != null) {
+              element.style.cssText = style;
+            }
+
+            const wnd = new MaxWindow(
+              translate(as) || as,
+              element,
+              x,
+              y,
+              width ? Number.parseInt(width) : null,
+              height ? Number.parseInt(height) : null,
+              false,
+              true
+            );
+            wnd.setVisible(true);
           }
-        } else {
-          const x = parseInt(<string>tmp.getAttribute('x'));
-          const y = parseInt(<string>tmp.getAttribute('y'));
-          const width = tmp.getAttribute('width') || null;
-          const height = tmp.getAttribute('height') || null;
 
-          // Creates a new window around the element
-          element = document.createElement('div');
-          if (style != null) {
-            element.style.cssText = style;
+          // TODO: Make more generic
+          switch (as) {
+            case 'graph': {
+              editor.setGraphContainer(element);
+              break;
+            }
+            case 'toolbar': {
+              editor.setToolbarContainer(element);
+              break;
+            }
+            case 'title': {
+              editor.setTitleContainer(element);
+              break;
+            }
+            case 'status': {
+              editor.setStatusContainer(element);
+              break;
+            }
+            case 'map': {
+              throw new Error('Unimplemented');
+            }
+            // No default
           }
 
-          const wnd = new MaxWindow(
-            translate(as) || as,
-            element,
-            x,
-            y,
-            width ? parseInt(width) : null,
-            height ? parseInt(height) : null,
-            false,
-            true
-          );
-          wnd.setVisible(true);
+          break;
         }
-
-        // TODO: Make more generic
-        if (as === 'graph') {
-          editor.setGraphContainer(element);
-        } else if (as === 'toolbar') {
-          editor.setToolbarContainer(element);
-        } else if (as === 'title') {
-          editor.setTitleContainer(element);
-        } else if (as === 'status') {
-          editor.setStatusContainer(element);
-        } else if (as === 'map') {
-          throw new Error('Unimplemented');
+        case 'resource': {
+          GlobalConfig.i18n.addResource(tmp.getAttribute('basename'));
+          break;
         }
-      } else if (tmp.nodeName === 'resource') {
-        GlobalConfig.i18n.addResource(tmp.getAttribute('basename'));
-      } else if (tmp.nodeName === 'stylesheet') {
-        addLinkToHead('stylesheet', tmp.getAttribute('name')!);
+        case 'stylesheet': {
+          addLinkToHead('stylesheet', tmp.getAttribute('name')!);
+          break;
+        }
+        // No default
       }
 
       tmp = <Element>tmp.nextSibling;

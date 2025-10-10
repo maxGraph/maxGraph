@@ -407,21 +407,32 @@ export const getDirectedBounds = (
 
   const m2 = Rectangle.fromRectangle(m);
 
-  if (d === 'south') {
-    m2.y = m.x;
-    m2.x = m.height;
-    m2.width = m.y;
-    m2.height = m.width;
-  } else if (d === 'west') {
-    m2.y = m.height;
-    m2.x = m.width;
-    m2.width = m.x;
-    m2.height = m.y;
-  } else if (d === 'north') {
-    m2.y = m.width;
-    m2.x = m.y;
-    m2.width = m.height;
-    m2.height = m.x;
+  switch (d) {
+    case 'south': {
+      m2.y = m.x;
+      m2.x = m.height;
+      m2.width = m.y;
+      m2.height = m.width;
+
+      break;
+    }
+    case 'west': {
+      m2.y = m.height;
+      m2.x = m.width;
+      m2.width = m.x;
+      m2.height = m.y;
+
+      break;
+    }
+    case 'north': {
+      m2.y = m.width;
+      m2.x = m.y;
+      m2.width = m.height;
+      m2.height = m.x;
+
+      break;
+    }
+    // No default
   }
 
   return new Rectangle(
@@ -661,8 +672,8 @@ export const intersectsHotspot = (
  */
 export const isNumeric = (n: any): n is number | string => {
   return (
-    !Number.isNaN(parseFloat(n)) &&
-    isFinite(+n) &&
+    !Number.isNaN(Number.parseFloat(n)) &&
+    Number.isFinite(+n) &&
     (typeof n !== 'string' || n.toLowerCase().indexOf('0x') < 0)
   );
 };
@@ -673,7 +684,7 @@ export const isNumeric = (n: any): n is number | string => {
  * @param n String representing the possibly numeric value.
  */
 export const isInteger = (n: string) => {
-  return String(parseInt(n)) === String(n);
+  return String(Number.parseInt(n)) === String(n);
 };
 
 /**

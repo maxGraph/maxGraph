@@ -112,7 +112,7 @@ export const ManhattanConnector: EdgeStyleFunction = (
 
   function toPointFromString(pointString: string) {
     const xy = pointString.split(pointString.indexOf('@') === -1 ? ' ' : '@');
-    return new Point(parseInt(xy[0], 10), parseInt(xy[1], 10));
+    return new Point(Number.parseInt(xy[0], 10), Number.parseInt(xy[1], 10));
   }
 
   function pointToString(point: Point) {

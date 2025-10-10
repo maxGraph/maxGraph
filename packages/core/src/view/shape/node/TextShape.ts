@@ -211,14 +211,14 @@ class TextShape extends Shape {
    */
   override checkBounds() {
     return (
-      !isNaN(this.scale) &&
-      isFinite(this.scale) &&
+      !Number.isNaN(this.scale) &&
+      Number.isFinite(this.scale) &&
       this.scale > 0 &&
       this.bounds &&
-      !isNaN(this.bounds.x) &&
-      !isNaN(this.bounds.y) &&
-      !isNaN(this.bounds.width) &&
-      !isNaN(this.bounds.height)
+      !Number.isNaN(this.bounds.x) &&
+      !Number.isNaN(this.bounds.y) &&
+      !Number.isNaN(this.bounds.width) &&
+      !Number.isNaN(this.bounds.height)
     );
   }
 

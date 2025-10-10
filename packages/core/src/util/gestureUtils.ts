@@ -137,8 +137,8 @@ export const makeDraggable = (
       dragSource.createPreviewElement = (graph) => {
         const elt = <HTMLElement>dragElement.cloneNode(true);
 
-        const w = parseInt(elt.style.width);
-        const h = parseInt(elt.style.height);
+        const w = Number.parseInt(elt.style.width);
+        const h = Number.parseInt(elt.style.height);
         elt.style.width = `${Math.round(w * graph.view.scale)}px`;
         elt.style.height = `${Math.round(h * graph.view.scale)}px`;
 
