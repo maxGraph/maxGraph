@@ -1124,12 +1124,23 @@ class Shape {
   getShapeRotation() {
     let rot = this.getRotation();
 
-    if (this.direction === 'north') {
-      rot += 270;
-    } else if (this.direction === 'west') {
-      rot += 180;
-    } else if (this.direction === 'south') {
-      rot += 90;
+    switch (this.direction) {
+      case 'north': {
+        rot += 270;
+
+        break;
+      }
+      case 'west': {
+        rot += 180;
+
+        break;
+      }
+      case 'south': {
+        rot += 90;
+
+        break;
+      }
+      // No default
     }
 
     return rot;

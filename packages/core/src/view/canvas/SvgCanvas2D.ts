@@ -347,7 +347,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Rounds all numbers to 2 decimal points.
    */
   override format(value: number) {
-    return parseFloat(value.toFixed(2));
+    return Number.parseFloat(value.toFixed(2));
   }
 
   /**
@@ -601,13 +601,25 @@ class SvgCanvas2D extends AbstractCanvas2D {
 
     if (direction == null || direction === 'south') {
       gradient.setAttribute('y2', '100%');
-    } else if (direction === 'east') {
-      gradient.setAttribute('x2', '100%');
-    } else if (direction === 'north') {
-      gradient.setAttribute('y1', '100%');
-    } else if (direction === 'west') {
-      gradient.setAttribute('x1', '100%');
-    }
+    } else
+      switch (direction) {
+        case 'east': {
+          gradient.setAttribute('x2', '100%');
+
+          break;
+        }
+        case 'north': {
+          gradient.setAttribute('y1', '100%');
+
+          break;
+        }
+        case 'west': {
+          gradient.setAttribute('x1', '100%');
+
+          break;
+        }
+        // No default
+      }
 
     let op = alpha1 < 1 ? `;stop-opacity:${alpha1}` : '';
 
@@ -832,7 +844,8 @@ class SvgCanvas2D extends AbstractCanvas2D {
    */
   createTolerance(node: SVGElement) {
     const tol = node.cloneNode(true) as SVGElement;
-    const sw = parseFloat(tol.getAttribute('stroke-width') || '1') + this.strokeTolerance;
+    const sw =
+      Number.parseFloat(tol.getAttribute('stroke-width') || '1') + this.strokeTolerance;
     tol.setAttribute('pointer-events', 'stroke');
     tol.setAttribute('visibility', 'hidden');
     tol.removeAttribute('stroke-dasharray');

@@ -87,9 +87,9 @@ class XmlCanvas2D extends AbstractCanvas2D {
    */
   override format(value: string | number): number {
     if (typeof value === 'string') {
-      return parseFloat(parseFloat(value).toFixed(2));
+      return Number.parseFloat(Number.parseFloat(value).toFixed(2));
     } else {
-      return parseFloat(value.toFixed(2));
+      return Number.parseFloat(value.toFixed(2));
     }
   }
 

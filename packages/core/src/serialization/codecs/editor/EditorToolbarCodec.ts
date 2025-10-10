@@ -138,142 +138,160 @@ export class EditorToolbarCodec extends ObjectCodec {
       while (node != null) {
         if (isElement(node)) {
           if (!this.processInclude(dec, node, into)) {
-            if (node.nodeName === 'separator') {
-              into.addSeparator();
-            } else if (node.nodeName === 'br') {
-              into.toolbar!.addBreak();
-            } else if (node.nodeName === 'hr') {
-              into.toolbar!.addLine();
-            } else if (node.nodeName === 'add') {
-              let as = <string>node.getAttribute('as');
-              as = translate(as) || as;
-              const icon = node.getAttribute('icon');
-              const pressedIcon = node.getAttribute('pressedIcon');
-              const action = node.getAttribute('action');
-              const mode = node.getAttribute('mode');
-              const template = node.getAttribute('template');
-              const toggle = node.getAttribute('toggle') != '0';
-              const text = getTextContent(<Text>(<unknown>node));
-              let elt = null;
-              let funct: any;
+            switch (node.nodeName) {
+              case 'separator': {
+                into.addSeparator();
+                break;
+              }
+              case 'br': {
+                into.toolbar!.addBreak();
+                break;
+              }
+              case 'hr': {
+                into.toolbar!.addLine();
+                break;
+              }
+              case 'add': {
+                let as = <string>node.getAttribute('as');
+                as = translate(as) || as;
+                const icon = node.getAttribute('icon');
+                const pressedIcon = node.getAttribute('pressedIcon');
+                const action = node.getAttribute('action');
+                const mode = node.getAttribute('mode');
+                const template = node.getAttribute('template');
+                const toggle = node.getAttribute('toggle') != '0';
+                const text = getTextContent(<Text>(<unknown>node));
+                let elt = null;
+                let funct: any;
 
-              if (action != null) {
-                elt = into.addItem(as, icon, action, pressedIcon);
-              } else if (mode != null) {
-                funct = EditorToolbarCodec.allowEval ? doEval(text) : null;
-                elt = into.addMode(as, icon!, mode, pressedIcon, funct);
-              } else if (template != null || (text != null && text.length > 0)) {
-                let cell = template ? editor.templates[template] : null;
-                const style = node.getAttribute('style');
+                if (action != null) {
+                  elt = into.addItem(as, icon, action, pressedIcon);
+                } else if (mode != null) {
+                  funct = EditorToolbarCodec.allowEval ? doEval(text) : null;
+                  elt = into.addMode(as, icon!, mode, pressedIcon, funct);
+                } else if (template != null || (text != null && text.length > 0)) {
+                  let cell = template ? editor.templates[template] : null;
+                  const style = node.getAttribute('style');
 
-                if (cell != null && style != null) {
-                  cell = editor.graph.cloneCell(cell);
-                  cell.setStyle(style);
-                }
+                  if (cell != null && style != null) {
+                    cell = editor.graph.cloneCell(cell);
+                    cell.setStyle(style);
+                  }
 
-                let insertFunction = null;
+                  let insertFunction = null;
 
-                if (text != null && text.length > 0 && EditorToolbarCodec.allowEval) {
-                  insertFunction = doEval(text);
-                }
+                  if (text != null && text.length > 0 && EditorToolbarCodec.allowEval) {
+                    insertFunction = doEval(text);
+                  }
 
-                elt = into.addPrototype(
-                  as,
-                  icon,
-                  cell,
-                  pressedIcon!,
-                  insertFunction,
-                  toggle
-                );
-              } else {
-                const children = getChildNodes(node);
+                  elt = into.addPrototype(
+                    as,
+                    icon,
+                    cell,
+                    pressedIcon!,
+                    insertFunction,
+                    toggle
+                  );
+                } else {
+                  const children = getChildNodes(node);
 
-                if (children.length > 0) {
-                  if (icon == null) {
-                    const combo = into.addActionCombo(as);
+                  if (children.length > 0) {
+                    if (icon == null) {
+                      const combo = into.addActionCombo(as);
 
-                    for (let i = 0; i < children.length; i += 1) {
-                      const child = <Element>children[i];
+                      for (let i = 0; i < children.length; i += 1) {
+                        const child = <Element>children[i];
 
-                      if (child.nodeName === 'separator') {
-                        into.addOption(combo, '---');
-                      } else if (child.nodeName === 'add') {
-                        const lab = child.getAttribute('as')!;
-                        const act = child.getAttribute('action')!;
-                        into.addActionOption(combo, lab, act);
-                      }
-                    }
-                  } else {
-                    const select: HTMLSelectElement = into.addCombo();
-
-                    const create = () => {
-                      const template = editor.templates[select.value];
-
-                      if (template != null) {
-                        const clone = template.clone();
-                        const style = (
-                          select.options[
-                            select.selectedIndex
-                          ] as HTMLOptionElementWithCellStyle
-                        ).cellStyle;
-
-                        if (style) {
-                          clone.setStyle(style);
+                        if (child.nodeName === 'separator') {
+                          into.addOption(combo, '---');
+                        } else if (child.nodeName === 'add') {
+                          const lab = child.getAttribute('as')!;
+                          const act = child.getAttribute('action')!;
+                          into.addActionOption(combo, lab, act);
                         }
-
-                        return clone;
                       }
-                      GlobalConfig.logger.warn(`Template ${template} not found`);
+                    } else {
+                      const select: HTMLSelectElement = into.addCombo();
 
-                      return null;
-                    };
+                      const create = () => {
+                        const template = editor.templates[select.value];
 
-                    const img = into.addPrototype(as, icon, create, null!, null!, toggle);
+                        if (template != null) {
+                          const clone = template.clone();
+                          const style = (
+                            select.options[
+                              select.selectedIndex
+                            ] as HTMLOptionElementWithCellStyle
+                          ).cellStyle;
 
-                    // Selects the toolbar icon if a selection change is made in the corresponding combobox.
-                    InternalEvent.addListener(select, 'change', () => {
-                      into.toolbar!.selectMode(img, (evt: MouseEvent) => {
-                        const pt = convertPoint(
-                          editor.graph.container,
-                          getClientX(evt),
-                          getClientY(evt)
-                        );
+                          if (style) {
+                            clone.setStyle(style);
+                          }
 
-                        return editor.addVertex(null, funct(), pt.x, pt.y);
+                          return clone;
+                        }
+                        GlobalConfig.logger.warn(`Template ${template} not found`);
+
+                        return null;
+                      };
+
+                      const img = into.addPrototype(
+                        as,
+                        icon,
+                        create,
+                        null!,
+                        null!,
+                        toggle
+                      );
+
+                      // Selects the toolbar icon if a selection change is made in the corresponding combobox.
+                      InternalEvent.addListener(select, 'change', () => {
+                        into.toolbar!.selectMode(img, (evt: MouseEvent) => {
+                          const pt = convertPoint(
+                            editor.graph.container,
+                            getClientX(evt),
+                            getClientY(evt)
+                          );
+
+                          return editor.addVertex(null, funct(), pt.x, pt.y);
+                        });
+
+                        into.toolbar!.noReset = false;
                       });
 
-                      into.toolbar!.noReset = false;
-                    });
+                      // Adds the entries to the combobox
+                      for (let i = 0; i < children.length; i += 1) {
+                        const child = <Element>children[i];
 
-                    // Adds the entries to the combobox
-                    for (let i = 0; i < children.length; i += 1) {
-                      const child = <Element>children[i];
-
-                      if (child.nodeName === 'separator') {
-                        into.addOption(select, '---');
-                      } else if (child.nodeName === 'add') {
-                        const lab = child.getAttribute('as')!;
-                        const tmp = child.getAttribute('template');
-                        const option = into.addOption(
-                          select,
-                          lab,
-                          tmp || template
-                        ) as HTMLOptionElementWithCellStyle;
-                        option.cellStyle = child.getAttribute('style');
+                        if (child.nodeName === 'separator') {
+                          into.addOption(select, '---');
+                        } else if (child.nodeName === 'add') {
+                          const lab = child.getAttribute('as')!;
+                          const tmp = child.getAttribute('template');
+                          const option = into.addOption(
+                            select,
+                            lab,
+                            tmp || template
+                          ) as HTMLOptionElementWithCellStyle;
+                          option.cellStyle = child.getAttribute('style');
+                        }
                       }
                     }
                   }
                 }
-              }
 
-              // Assigns an ID to the created element to access it later.
-              if (elt != null) {
-                const id = node.getAttribute('id');
+                // Assigns an ID to the created element to access it later.
+                if (elt != null) {
+                  const id = node.getAttribute('id');
 
-                if (id != null && id.length > 0) {
-                  elt.setAttribute('id', id);
+                  if (id != null && id.length > 0) {
+                    elt.setAttribute('id', id);
+                  }
                 }
+
+                break;
               }
+              // No default
             }
           }
         }

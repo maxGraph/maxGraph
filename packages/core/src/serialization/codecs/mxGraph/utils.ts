@@ -48,7 +48,7 @@ function convertToNumericIfNeeded(value: string): string | number {
     return value;
   }
 
-  let numericValue = parseFloat(value);
+  let numericValue = Number.parseFloat(value);
 
   if (Number.isNaN(numericValue) || !Number.isFinite(numericValue)) {
     numericValue = 0;

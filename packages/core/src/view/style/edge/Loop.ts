@@ -87,15 +87,27 @@ export const Loop: EdgeStyleFunction = (
       if (pt != null) {
         x = pt.x;
         dy = Math.max(Math.abs(y - pt.y), dy);
-      } else if (dir === 'north') {
-        y = source.y - 2 * dx;
-      } else if (dir === 'south') {
-        y = source.y + source.height + 2 * dx;
-      } else if (dir === 'east') {
-        x = source.x - 2 * dy;
-      } else {
-        x = source.x + source.width + 2 * dy;
-      }
+      } else
+        switch (dir) {
+          case 'north': {
+            y = source.y - 2 * dx;
+
+            break;
+          }
+          case 'south': {
+            y = source.y + source.height + 2 * dx;
+
+            break;
+          }
+          case 'east': {
+            x = source.x - 2 * dy;
+
+            break;
+          }
+          default: {
+            x = source.x + source.width + 2 * dy;
+          }
+        }
     } else if (pt !== null) {
       x = view.getRoutingCenterX(source);
       dx = Math.max(Math.abs(x - pt.x), dy);

@@ -1228,9 +1228,9 @@ export class Editor extends EventSource {
       );
 
       if (preInput) {
-        const scale = parseFloat(preInput) / 100;
+        const scale = Number.parseFloat(preInput) / 100;
 
-        if (!isNaN(scale)) {
+        if (!Number.isNaN(scale)) {
           editor.graph.getView().setScale(scale);
         }
       }
@@ -2124,10 +2124,10 @@ export class Editor extends EventSource {
           if (geo && xField && yField && widthField && heightField) {
             geo = geo.clone();
 
-            geo.x = parseFloat(xField.value);
-            geo.y = parseFloat(yField.value);
-            geo.width = parseFloat(widthField.value);
-            geo.height = parseFloat(heightField.value);
+            geo.x = Number.parseFloat(xField.value);
+            geo.y = Number.parseFloat(yField.value);
+            geo.width = Number.parseFloat(widthField.value);
+            geo.height = Number.parseFloat(heightField.value);
 
             model.setGeometry(cell, geo);
           }
@@ -2383,15 +2383,23 @@ export class Editor extends EventSource {
    */
   setMode(modename: any): void {
     const panningHandler = this.graph.getPlugin<PanningHandler>('PanningHandler');
-    if (modename === 'select') {
-      panningHandler && (panningHandler.useLeftButtonForPanning = false);
-      this.graph.setConnectable(false);
-    } else if (modename === 'connect') {
-      panningHandler && (panningHandler.useLeftButtonForPanning = false);
-      this.graph.setConnectable(true);
-    } else if (modename === 'pan') {
-      panningHandler && (panningHandler.useLeftButtonForPanning = true);
-      this.graph.setConnectable(false);
+    switch (modename) {
+      case 'select': {
+        panningHandler && (panningHandler.useLeftButtonForPanning = false);
+        this.graph.setConnectable(false);
+        break;
+      }
+      case 'connect': {
+        panningHandler && (panningHandler.useLeftButtonForPanning = false);
+        this.graph.setConnectable(true);
+        break;
+      }
+      case 'pan': {
+        panningHandler && (panningHandler.useLeftButtonForPanning = true);
+        this.graph.setConnectable(false);
+        break;
+      }
+      // No default
     }
   }
 

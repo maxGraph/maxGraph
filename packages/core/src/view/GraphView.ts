@@ -1017,39 +1017,50 @@ export class GraphView extends EventSource {
   updateVertexLabelOffset(state: CellState): void {
     const h = state.style.labelPosition ?? 'center';
 
-    if (h === 'left') {
-      let lw = state.style.labelWidth ?? null;
+    switch (h) {
+      case 'left': {
+        let lw = state.style.labelWidth ?? null;
 
-      if (lw != null) {
-        lw *= this.scale;
-      } else {
-        lw = state.width;
-      }
-
-      // @ts-ignore
-      state.absoluteOffset.x -= lw;
-    } else if (h === 'right') {
-      // @ts-ignore
-      state.absoluteOffset.x += state.width;
-    } else if (h === 'center') {
-      const lw = state.style.labelWidth ?? null;
-
-      if (lw != null) {
-        // Aligns text block with given width inside the vertex width
-        const align = state.style.align ?? 'center';
-        let dx = 0;
-
-        if (align === 'center') {
-          dx = 0.5;
-        } else if (align === 'right') {
-          dx = 1;
+        if (lw != null) {
+          lw *= this.scale;
+        } else {
+          lw = state.width;
         }
 
-        if (dx !== 0) {
-          // @ts-ignore
-          state.absoluteOffset.x -= (lw * this.scale - state.width) * dx;
-        }
+        // @ts-ignore
+        state.absoluteOffset.x -= lw;
+
+        break;
       }
+      case 'right': {
+        // @ts-ignore
+        state.absoluteOffset.x += state.width;
+
+        break;
+      }
+      case 'center': {
+        const lw = state.style.labelWidth ?? null;
+
+        if (lw != null) {
+          // Aligns text block with given width inside the vertex width
+          const align = state.style.align ?? 'center';
+          let dx = 0;
+
+          if (align === 'center') {
+            dx = 0.5;
+          } else if (align === 'right') {
+            dx = 1;
+          }
+
+          if (dx !== 0) {
+            // @ts-ignore
+            state.absoluteOffset.x -= (lw * this.scale - state.width) * dx;
+          }
+        }
+
+        break;
+      }
+      // No default
     }
 
     const v = state.style.verticalLabelPosition ?? 'middle';

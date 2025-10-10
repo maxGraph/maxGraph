@@ -48,17 +48,28 @@ export const TrianglePerimeter: PerimeterFunction = (
   let corner = new Point(x + w, cy);
   let end = new Point(x, y + h);
 
-  if (direction === 'north') {
-    start = end;
-    corner = new Point(cx, y);
-    end = new Point(x + w, y + h);
-  } else if (direction === 'south') {
-    corner = new Point(cx, y + h);
-    end = new Point(x + w, y);
-  } else if (direction === 'west') {
-    start = new Point(x + w, y);
-    corner = new Point(x, cy);
-    end = new Point(x + w, y + h);
+  switch (direction) {
+    case 'north': {
+      start = end;
+      corner = new Point(cx, y);
+      end = new Point(x + w, y + h);
+
+      break;
+    }
+    case 'south': {
+      corner = new Point(cx, y + h);
+      end = new Point(x + w, y);
+
+      break;
+    }
+    case 'west': {
+      start = new Point(x + w, y);
+      corner = new Point(x, cy);
+      end = new Point(x + w, y + h);
+
+      break;
+    }
+    // No default
   }
 
   let dx = next.x - cx;
@@ -88,15 +99,27 @@ export const TrianglePerimeter: PerimeterFunction = (
       } else {
         result = new Point(start.x, next.y);
       }
-    } else if (direction === 'north') {
-      result = new Point(x + w / 2 + (h * Math.tan(alpha)) / 2, y + h);
-    } else if (direction === 'south') {
-      result = new Point(x + w / 2 - (h * Math.tan(alpha)) / 2, y);
-    } else if (direction === 'west') {
-      result = new Point(x + w, y + h / 2 + (w * Math.tan(alpha)) / 2);
-    } else {
-      result = new Point(x, y + h / 2 - (w * Math.tan(alpha)) / 2);
-    }
+    } else
+      switch (direction) {
+        case 'north': {
+          result = new Point(x + w / 2 + (h * Math.tan(alpha)) / 2, y + h);
+
+          break;
+        }
+        case 'south': {
+          result = new Point(x + w / 2 - (h * Math.tan(alpha)) / 2, y);
+
+          break;
+        }
+        case 'west': {
+          result = new Point(x + w, y + h / 2 + (w * Math.tan(alpha)) / 2);
+
+          break;
+        }
+        default: {
+          result = new Point(x, y + h / 2 - (w * Math.tan(alpha)) / 2);
+        }
+      }
   } else {
     if (orthogonal) {
       const pt = new Point(cx, cy);

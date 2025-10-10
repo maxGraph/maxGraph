@@ -43,8 +43,8 @@ export const EllipsePerimeter: PerimeterFunction = (
 
   // Calculates straight line equation through
   // point and ellipse center y = d * x + h
-  const dx = parseInt(String(px - cx));
-  const dy = parseInt(String(py - cy));
+  const dx = Number.parseInt(String(px - cx));
+  const dy = Number.parseInt(String(py - cy));
 
   if (dx === 0 && dy !== 0) {
     return new Point(cx, cy + (b * dy) / Math.abs(dy));

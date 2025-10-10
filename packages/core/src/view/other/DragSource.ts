@@ -597,8 +597,8 @@ class DragSource {
       // Grid and guides
       if (this.currentGuide && this.currentGuide.isEnabledForEvent(evt)) {
         // LATER: HTML preview appears smaller than SVG preview
-        const w = parseInt(this.previewElement.style.width);
-        const h = parseInt(this.previewElement.style.height);
+        const w = Number.parseInt(this.previewElement.style.width);
+        const h = Number.parseInt(this.previewElement.style.height);
         const bounds = new Rectangle(0, 0, w, h);
         let delta = new Point(x, y);
         delta = this.currentGuide.move(bounds, delta, gridEnabled, true);

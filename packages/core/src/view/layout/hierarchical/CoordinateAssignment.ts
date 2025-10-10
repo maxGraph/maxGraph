@@ -325,7 +325,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       );
 
       const rankValue = cellWrapper.weightedValue;
-      const rankIndex = parseInt(String(cellWrapper.rankIndex));
+      const rankIndex = Number.parseInt(String(cellWrapper.rankIndex));
 
       const nextLayerConnectedCells = <GraphAbstractHierarchyCell[]>(
         cell.getNextLayerConnectedCells(rankValue)
