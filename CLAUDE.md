@@ -285,6 +285,96 @@ Styles are defined as objects conforming to `CellStyle` type. See `packages/core
 - Use `@swc/jest` for fast TypeScript compilation
 - Import paths in tests should omit `.js` extension (handled by moduleNameMapper)
 
+## Commit Message Style
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages.
+
+### Format
+
+```
+type(scope): subject
+
+Optional body with more details
+- Can use bullet points
+- To explain the changes
+```
+
+### Types
+
+- **feat**: New feature or enhancement
+  - Example: `feat: allow to pass more null and undefined to Multiplicity (#914)`
+- **fix**: Bug fix
+  - Example: `fix: correct edge rendering in Safari`
+- **refactor**: Code refactoring (no functional changes)
+  - Example: `refactor: simplify implementation of ParallelEdgeLayout (#909)`
+- **chore**: Maintenance tasks (dependencies, build, config)
+  - Example: `chore: use stricter options with the TS compiler (#922)`
+- **docs**: Documentation changes
+  - Example: `docs: add badge to DeepWiki in the README (#913)`
+- **test**: Adding or updating tests
+- **perf**: Performance improvements
+- **style**: Code style changes (formatting, whitespace)
+
+### Scopes (optional but recommended)
+
+Common scopes used in this project:
+- **docs**: Documentation files (README, CLAUDE.md, etc.)
+- **deps-dev**: Development dependencies
+- **deps-gha**: GitHub Actions dependencies
+- **typescript**: TypeScript configuration or type-related changes
+- Component/module names (e.g., `graph`, `layout`, `serialization`)
+
+### Subject Line Guidelines
+
+- Use lowercase (except for proper nouns like "Claude")
+- Be concise and descriptive (50-72 characters recommended)
+- Use imperative mood ("add" not "added", "fix" not "fixed")
+- No period at the end
+- Include PR number at the end if applicable: `(#123)`
+
+### Body Guidelines
+
+- Wrap at 72 characters
+- Explain the "why" not the "what" (code shows the what)
+- Use bullet points for multiple items
+- Separate body from subject with a blank line
+- Provide context and reasoning for the change
+
+### Examples from this Repository
+
+**Simple change:**
+```
+chore(deps-gha): bump actions/setup-node from v4 to v6 (#929)
+
+Update the build-setup action.
+```
+
+**Feature with detailed body:**
+```
+feat: allow to pass more null and undefined to Multiplicity (#914)
+
+- Update type signatures to accept nullish values
+- Improve API flexibility for edge cases
+- Add tests for null/undefined handling
+```
+
+**Documentation update:**
+```
+chore(docs): add Claude Code configuration file
+
+Add CLAUDE.md with comprehensive guidance for Claude Code AI assistant including:
+- All development, build, and testing commands
+- Architecture overview (Graph class hierarchy, mixin pattern, plugin system)
+- Directory structure and important implementation patterns
+
+This file also serves as a useful reference for contributors.
+```
+
+**Refactoring:**
+```
+refactor: simplify implementation of ParallelEdgeLayout (#909)
+```
+
 ## Build Output
 
 The core package generates:
