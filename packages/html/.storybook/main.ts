@@ -1,5 +1,3 @@
-import { createRequire } from 'node:module';
-import { dirname, join } from 'node:path';
 /*
 Copyright 2023-present The maxGraph project Contributors
 
@@ -16,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
 import type { StorybookConfig } from '@storybook/html-vite';
 const require = createRequire(import.meta.url);
 const config: StorybookConfig = {
