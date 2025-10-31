@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Preview } from '@storybook/html';
+import type { Preview } from '@storybook/html-vite';
 import {
   Client,
   GlobalConfig,
@@ -96,11 +96,16 @@ function destroyUnreleasedElements() {
 const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
+
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/,
       },
+    },
+
+    docs: {
+      codePanel: true,
     },
   },
   decorators: [
