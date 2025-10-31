@@ -330,7 +330,6 @@ Common scopes used in this project:
 - Be concise and descriptive (50-72 characters recommended)
 - Use imperative mood ("add" not "added", "fix" not "fixed")
 - No period at the end
-- Include PR number at the end if applicable: `(#123)`
 
 ### Body Guidelines
 
@@ -344,14 +343,14 @@ Common scopes used in this project:
 
 **Simple change:**
 ```
-chore(deps-gha): bump actions/setup-node from v4 to v6 (#929)
+chore(deps-gha): bump actions/setup-node from v4 to v6
 
 Update the build-setup action.
 ```
 
 **Feature with detailed body:**
 ```
-feat: allow to pass more null and undefined to Multiplicity (#914)
+feat: allow to pass more null and undefined to Multiplicity
 
 - Update type signatures to accept nullish values
 - Improve API flexibility for edge cases

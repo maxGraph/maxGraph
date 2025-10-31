@@ -119,6 +119,9 @@ const config: Config = {
         },
       ],
     },
+    colorMode: {
+      respectPrefersColorScheme: true, // Enable system theme mode
+    },
     footer: {
       style: 'dark',
       links: [
