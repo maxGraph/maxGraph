@@ -166,6 +166,6 @@ describe('installDblClickHandler', () => {
     expect(mockExecute).toHaveBeenCalledWith('testAction', cell);
 
     // Clean up
-    document.body.removeChild(container);
+    container.remove();
   });
 });
