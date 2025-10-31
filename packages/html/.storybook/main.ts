@@ -1,3 +1,5 @@
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
 /*
 Copyright 2023-present The maxGraph project Contributors
 
@@ -15,26 +17,30 @@ limitations under the License.
 */
 
 import type { StorybookConfig } from '@storybook/html-vite';
+const require = createRequire(import.meta.url);
 const config: StorybookConfig = {
   stories: [
     '../stories/**/Introduction.mdx',
     '../stories/**/*.stories.@(js|jsx|ts|tsx)',
     '../stories/**/*.mdx',
   ],
+
   core: {
     disableTelemetry: true,
   },
+
   addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-storysource',
+    getAbsolutePath('@storybook/addon-links'),
+    getAbsolutePath('@storybook/addon-docs'),
   ],
+
   framework: {
-    name: '@storybook/html-vite',
+    name: getAbsolutePath('@storybook/html-vite'),
     options: {},
-  },
-  docs: {
-    autodocs: 'tag',
   },
 };
 export default config;
+
+function getAbsolutePath(value: string): any {
+  return dirname(require.resolve(join(value, 'package.json')));
+}
