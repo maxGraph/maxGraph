@@ -11,13 +11,15 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "~7.6.20",
-    "@storybook/addon-links": "~7.6.20",
-    "@storybook/addon-storysource": "~7.6.20",
-    "@storybook/blocks": "~7.6.20",
-    "@storybook/html": "~7.6.20",
-    "@storybook/html-vite": "~7.6.20",
-    "storybook": "~7.6.20",
+    "@storybook/addon-essentials": "8.6.14",
+    "@storybook/addon-links": "8.6.14",
+    "@storybook/addon-storysource": "8.6.14",
+    "@storybook/blocks": "8.6.14",
+    "@storybook/html": "8.6.14",
+    "@storybook/html-vite": "8.6.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "storybook": "8.6.14",
     "vite": "~5.4.19"
   }
 }
