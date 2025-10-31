@@ -260,7 +260,7 @@ export const OUTLINE_HANDLE_STROKECOLOR = '#0033FF';
 /**
  * Defines the default family for all fonts. Default is Arial,Helvetica.
  */
-export const DEFAULT_FONTFAMILY = 'Arial,Helvetica';
+export const DEFAULT_FONTFAMILY = 'Arial,Helvetica,sans-serif';
 
 /**
  * Defines the default size (in px). Default is 11.
