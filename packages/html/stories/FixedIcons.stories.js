@@ -19,7 +19,6 @@ import {
   Graph,
   RubberBandHandler,
   Rectangle,
-  constants,
   LabelShape,
   StyleDefaultsConfig,
 } from '@maxgraph/core';
