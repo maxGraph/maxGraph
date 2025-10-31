@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { Editor, Geometry } from '../../src';
+import { Editor, Geometry, EventObject, InternalEvent } from '../../src';
 import { ModelChecker } from '../serialization/utils';
 import { parseXml } from '../../src/util/xmlUtils';
 import Cell from '../../src/view/cell/Cell';
@@ -136,5 +136,36 @@ describe('cycleAttribute', () => {
     const originalStyle = { ...cell.getStyle() };
     editor.cycleAttribute(cell);
     expect(cell.getStyle()).toEqual(originalStyle);
+  });
+});
+
+describe('installDblClickHandler', () => {
+  test('double-click handler has correct editor context', () => {
+    const editor = new Editor(null!);
+    const mockExecute = jest.fn();
+    editor.execute = mockExecute;
+    editor.dblClickAction = 'testAction';
+
+    // Create a container element for the graph
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    editor.setGraphContainer(container);
+
+    // Create a test cell
+    const cell = editor.graph.insertVertex({
+      value: 'test',
+      position: [10, 10],
+      size: [100, 100],
+    });
+
+    // Fire the DOUBLE_CLICK event with proper EventObject
+    const eventObj = new EventObject(InternalEvent.DOUBLE_CLICK, { cell, event: {} });
+    editor.graph.fireEvent(eventObj);
+
+    // Verify that execute was called on the editor instance with the correct action and cell
+    expect(mockExecute).toHaveBeenCalledWith('testAction', cell);
+
+    // Clean up
+    document.body.removeChild(container);
   });
 });
