@@ -22,8 +22,6 @@ import InternalEvent from '../event/InternalEvent.js';
 import Client from '../../Client.js';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
   DEFAULT_TEXT_DIRECTION,
   FONT_STYLE_MASK,
   LINE_HEIGHT,
@@ -53,6 +51,7 @@ import { matchBinaryMask } from '../../internal/utils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type { AlignValue, GraphPlugin } from '../../types.js';
 import type TooltipHandler from './TooltipHandler.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 
 /**
  * In-place editor for the graph.
@@ -697,8 +696,8 @@ class CellEditorHandler implements GraphPlugin {
       // Configures the style of the in-place editor
       // Notice that the logic here is duplicated with styleUtils.getSizeForString
       const stateStyle = state.style;
-      const size = stateStyle.fontSize ?? DEFAULT_FONTSIZE;
-      const family = stateStyle.fontFamily ?? DEFAULT_FONTFAMILY;
+      const size = stateStyle.fontSize ?? StyleDefaultsConfig.fontSize;
+      const family = stateStyle.fontFamily ?? StyleDefaultsConfig.fontFamily;
       const color = stateStyle.fontColor ?? 'black';
       const align = stateStyle.align ?? 'left';
       const fontStyle = stateStyle.fontStyle ?? 0;

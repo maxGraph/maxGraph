@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import { arcToCurves, getRotatedPoint } from '../../util/mathUtils.js';
-import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, NONE } from '../../util/Constants.js';
+import { NONE } from '../../util/Constants.js';
 import UrlConverter from '../../util/UrlConverter.js';
 import Point from '../geometry/Point.js';
 import { clone } from '../../util/cloneUtils.js';
@@ -172,8 +172,8 @@ abstract class AbstractCanvas2D {
       fontColor: '#000000',
       fontBackgroundColor: NONE,
       fontBorderColor: NONE,
-      fontSize: DEFAULT_FONTSIZE,
-      fontFamily: DEFAULT_FONTFAMILY,
+      fontSize: StyleDefaultsConfig.fontSize,
+      fontFamily: StyleDefaultsConfig.fontFamily,
       fontStyle: 0,
       shadow: false,
       shadowColor: StyleDefaultsConfig.shadowColor,
