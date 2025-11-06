@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import AbstractCanvas2D from './AbstractCanvas2D.js';
-import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, NONE } from '../../util/Constants.js';
+import { NONE } from '../../util/Constants.js';
 import { getOuterHtml, isNode } from '../../util/domUtils.js';
 import { DirectionValue, TextDirectionValue } from '../../types.js';
 import { StyleDefaultsConfig } from '../../util/config.js';
@@ -60,11 +60,11 @@ class XmlCanvas2D extends AbstractCanvas2D {
 
     // Writes font defaults
     elem = this.createElement('fontfamily');
-    elem.setAttribute('family', DEFAULT_FONTFAMILY);
+    elem.setAttribute('family', StyleDefaultsConfig.fontFamily);
     this.root.appendChild(elem);
 
     elem = this.createElement('fontsize');
-    elem.setAttribute('size', String(DEFAULT_FONTSIZE));
+    elem.setAttribute('size', String(StyleDefaultsConfig.fontSize));
     this.root.appendChild(elem);
 
     // Writes shadow defaults
@@ -526,7 +526,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
 
   /**
    * Sets the current font size.
-   * @default {@link mxConstants.DEFAULT_FONTSIZE}
+   * @default {@link StyleDefaultsConfig.fontSize}
    *
    * @param value Numeric representation of the font size.
    */
@@ -547,7 +547,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
 
   /**
    * Sets the current font family.
-   * @default {@link mxConstants.DEFAULT_FONTFAMILY}
+   * @default {@link StyleDefaultsConfig.fontFamily}
    *
    * @param value String representation of the font family. This handles the same
    * values as the CSS font-family property.

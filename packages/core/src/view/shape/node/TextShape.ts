@@ -19,8 +19,6 @@ limitations under the License.
 import Client from '../../../Client.js';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
   DEFAULT_TEXT_DIRECTION,
   FONT_STYLE_MASK,
@@ -50,6 +48,7 @@ import {
 } from '../../../types.js';
 import SvgCanvas2D from '../../canvas/SvgCanvas2D.js';
 import { matchBinaryMask } from '../../../internal/utils.js';
+import { StyleDefaultsConfig } from '../../../util/config.js';
 
 /**
  * Extends {@link Shape} to implement a text shape.
@@ -70,8 +69,8 @@ class TextShape extends Shape {
     align: AlignValue = 'center',
     valign: VAlignValue = 'middle',
     color = 'black',
-    family = DEFAULT_FONTFAMILY,
-    size = DEFAULT_FONTSIZE,
+    family = StyleDefaultsConfig.fontFamily,
+    size = StyleDefaultsConfig.fontSize,
     fontStyle = DEFAULT_FONTSTYLE,
     spacing = 2,
     spacingTop = 0,
@@ -94,8 +93,8 @@ class TextShape extends Shape {
     this.color = color ?? 'black';
     this.align = align ?? 'center';
     this.valign = valign ?? 'middle';
-    this.family = family ?? DEFAULT_FONTFAMILY;
-    this.size = size ?? DEFAULT_FONTSIZE;
+    this.family = family ?? StyleDefaultsConfig.fontFamily;
+    this.size = size ?? StyleDefaultsConfig.fontSize;
     this.fontStyle = fontStyle ?? DEFAULT_FONTSTYLE;
     this.spacing = spacing ?? 2;
     this.spacingTop = this.spacing + (spacingTop ?? 0);
@@ -347,8 +346,8 @@ class TextShape extends Shape {
     this.color = 'black';
     this.align = 'center';
     this.valign = 'middle';
-    this.family = DEFAULT_FONTFAMILY;
-    this.size = DEFAULT_FONTSIZE;
+    this.family = StyleDefaultsConfig.fontFamily;
+    this.size = StyleDefaultsConfig.fontSize;
     this.fontStyle = DEFAULT_FONTSTYLE;
     this.spacing = 2;
     this.spacingTop = 2;

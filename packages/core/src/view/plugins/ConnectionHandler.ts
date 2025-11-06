@@ -24,7 +24,6 @@ import InternalEvent from '../event/InternalEvent.js';
 import {
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
-  DEFAULT_VALID_COLOR,
   HIGHLIGHT_STROKEWIDTH,
   INVALID_COLOR,
   NONE,
@@ -995,7 +994,7 @@ export default class ConnectionHandler
               this.marker.highlight.shape.stroke = 'transparent';
               this.currentState = null;
             } else {
-              this.marker.highlight.shape.stroke = DEFAULT_VALID_COLOR;
+              this.marker.highlight.shape.stroke = VALID_COLOR;
             }
 
             this.marker.highlight.shape.strokeWidth = HIGHLIGHT_STROKEWIDTH / s / s;
@@ -2025,7 +2024,7 @@ export class ConnectionHandlerCellMarker extends CellMarker {
   constructor(
     graph: AbstractGraph,
     connectionHandler: ConnectionHandler,
-    validColor: ColorValue = DEFAULT_VALID_COLOR,
+    validColor: ColorValue = VALID_COLOR,
     invalidColor: ColorValue = DEFAULT_INVALID_COLOR,
     hotspot: number = DEFAULT_HOTSPOT
   ) {

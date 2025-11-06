@@ -22,8 +22,6 @@ import { getAlignmentAsPoint } from '../../util/styleUtils.js';
 import Client from '../../Client.js';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
   FONT_STYLE_MASK,
   LINE_HEIGHT,
   NONE,
@@ -46,6 +44,7 @@ import {
   TextDirectionValue,
   VAlignValue,
 } from '../../types.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 
 // Activates workaround for gradient ID resolution if base tag is used.
 const useAbsoluteIds =
@@ -387,7 +386,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     style.setAttribute('type', 'text/css');
     write(
       style,
-      `svg{font-family:${DEFAULT_FONTFAMILY};font-size:${DEFAULT_FONTSIZE};fill:none;stroke-miterlimit:10}`
+      `svg{font-family:${StyleDefaultsConfig.fontFamily};font-size:${StyleDefaultsConfig.fontSize};fill:none;stroke-miterlimit:10}`
     );
     return style;
   }
@@ -1578,7 +1577,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       node.setAttribute('text-anchor', anchor);
     }
 
-    if (!this.styleEnabled || size !== DEFAULT_FONTSIZE) {
+    if (!this.styleEnabled || size !== StyleDefaultsConfig.fontSize) {
       node.setAttribute('font-size', `${size * s.scale}px`);
     }
 
@@ -1658,7 +1657,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       node.setAttribute('fill', s.fontColor);
     }
 
-    if (!this.styleEnabled || s.fontFamily !== DEFAULT_FONTFAMILY) {
+    if (!this.styleEnabled || s.fontFamily !== StyleDefaultsConfig.fontFamily) {
       node.setAttribute('font-family', s.fontFamily);
     }
 

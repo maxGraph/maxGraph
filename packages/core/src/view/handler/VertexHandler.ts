@@ -1531,7 +1531,7 @@ class VertexHandler implements MouseListenerSet {
    *        && (index == 3 || index == 4)
    *        && s.text != null && s.style.whiteSpace == 'wrap') {
    *     const label = this.graph.getLabel(s.cell);
-   *     const fontSize = s.style.fontSize ?? constants.DEFAULT_FONTSIZE;
+   *     const fontSize = s.style.fontSize ?? StyleDefaultsConfig.fontSize;
    *     const ww = result.width / s.view.scale - s.text.spacingRight - s.text.spacingLeft
    *
    *     result.height = styleUtils.getSizeForString(label, fontSize, s.style.fontFamily, ww).height;

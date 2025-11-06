@@ -1533,10 +1533,10 @@ export class Editor extends EventSource {
    */
   installDblClickHandler(graph: AbstractGraph): void {
     // Installs a listener for double click events
-    graph.addListener(InternalEvent.DOUBLE_CLICK, (sender: any, evt: EventObject) => {
+    graph.addListener(InternalEvent.DOUBLE_CLICK, (_sender: any, evt: EventObject) => {
       const cell = evt.getProperty('cell');
 
-      if (cell != null && graph.isEnabled() && this.dblClickAction != null) {
+      if (cell && graph.isEnabled() && this.dblClickAction) {
         this.execute(this.dblClickAction, cell);
         evt.consume();
       }
