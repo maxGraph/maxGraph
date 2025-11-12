@@ -62,9 +62,8 @@ declare module '../AbstractGraph' {
      * ```javascript
      * graph.addListener(mxEvent.RESIZE_CELLS, function(sender, evt) {
      *   const cells = evt.getProperty('cells');
-     *
-     *   for (let i = 0; i < cells.length; i++) {
-     *     this.view.removeState(cells[i]);
+     *   for (const cell of cells) {
+     *     this.view.removeState(cell);
      *   }
      * });
      * ```
