@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to `maxGraph`! We welcome contributions from the community and appreciate your help in making this project better.
 
-All members of our community are expected to follow our [Code of Conduct](CODE_OF_CONDUCT.md). Please make sure you are welcoming and friendly in all of our spaces.
+All members of our community are expected to follow our [Code of Conduct](CODE_OF_CONDUCT.md). Please ensure you are welcoming and friendly in all of our spaces.
 
 ## Table of Contents
 
