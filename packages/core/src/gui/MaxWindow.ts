@@ -387,7 +387,7 @@ export default class MaxWindow extends EventSource {
    */
   setScrollable(scrollable: boolean): void {
     // Workaround for hang in Presto 2.5.22 (Opera 10.5)
-    if (navigator.userAgent == null || navigator.userAgent.indexOf('Presto/2.5') < 0) {
+    if (!navigator.userAgent?.includes('Presto/2.5')) {
       if (scrollable) {
         this.contentWrapper.style.overflow = 'auto';
       } else {
