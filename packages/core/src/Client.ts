@@ -118,7 +118,7 @@ class Client {
   static IS_GC = isWindowObjectAvailable() && /Google Inc/.test(navigator.vendor);
 
   /**
-   * `true` if the this is running inside a Chrome App.
+   * `true` if this is running inside a Chrome App.
    */
   static IS_CHROMEAPP =
     isWindowObjectAvailable() &&
