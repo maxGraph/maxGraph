@@ -44,7 +44,7 @@ Before you invest time in working on code changes, please follow these critical 
 There are many valuable ways to contribute to `maxGraph`:
 
 - **Help others** - Answer questions on [GitHub Issues](https://github.com/maxGraph/maxGraph/issues)
-- **Report bugs** - Submit bug reports using the [bug report template](#reporting-issues)
+- **Report bugs** - Submit bug reports when maxGraph doesn't work as expected
 - **Request features** - Suggest new features or enhancements
 - **Write code** - Fix bugs or implement new features
 - **Improve documentation** - Help make our docs clearer and more comprehensive
@@ -81,6 +81,8 @@ When filing a bug report, you **MUST** fill out **ALL** sections of the template
   - Node/npm version (if applicable)
   - Used frameworks (if applicable)
 - **Additional context** - Any other relevant information
+
+Do your best to provide a code snippet or a minimal reproduction repository that demonstrates the issue, as maintainers often cannot reproduce bugs without such information.
 
 **Incomplete bug reports waste maintainer time and delay fixes for everyone.** If you don't provide enough information, your issue will be closed, and you'll be asked to create a new one with complete details.
 
