@@ -18,6 +18,18 @@ limitations under the License.
 
 import { NS_SVG } from './util/Constants.js';
 
+const isWindowObjectAvailable = (): boolean => typeof window !== 'undefined';
+
+const isUserAgentAvailable = (): boolean => !!navigator.userAgent;
+
+const isUserAgentIncludes = (substring: string): boolean =>
+  navigator.userAgent.includes(substring);
+
+const isAppVersionAvailable = (): boolean => !!navigator.appVersion;
+
+const isAppVersionIncludes = (substring: string): boolean =>
+  navigator.appVersion.includes(substring);
+
 /**
  * @category Configuration
  */
@@ -64,51 +76,52 @@ class Client {
   };
 
   /**
-   * True if the current browser is Microsoft Edge.
+   * `true` if the current browser is Microsoft Edge.
    */
   static IS_EDGE =
-    typeof window !== 'undefined' &&
-    navigator.userAgent != null &&
+    isWindowObjectAvailable() &&
+    isUserAgentAvailable() &&
     !!navigator.userAgent.match(/Edge\//);
 
   /**
-   * True if the current browser is Netscape (including Firefox).
+   * `true` if the current browser is Netscape (including Firefox).
    */
   static IS_NS =
-    typeof window !== 'undefined' &&
-    navigator.userAgent != null &&
-    navigator.userAgent.includes('Mozilla/') &&
-    !navigator.userAgent.includes('MSIE') &&
-    !navigator.userAgent.includes('Edge/');
+    isWindowObjectAvailable() &&
+    isUserAgentAvailable() &&
+    isUserAgentIncludes('Mozilla/') &&
+    !isUserAgentIncludes('MSIE') &&
+    !isUserAgentIncludes('Edge/');
 
   /**
-   * True if the current browser is Safari.
+   * `true` if the current browser is Safari.
    */
   static IS_SF =
-    typeof window !== 'undefined' && /Apple Computer, Inc/.test(navigator.vendor);
+    isWindowObjectAvailable() && /Apple Computer, Inc/.test(navigator.vendor);
 
   /**
-   * Returns true if the user agent contains Android.
+   * Returns `true` if the user agent contains Android.
    */
   static IS_ANDROID =
-    typeof window !== 'undefined' && navigator.appVersion.includes('Android');
+    isWindowObjectAvailable() &&
+    isAppVersionAvailable() &&
+    isAppVersionIncludes('Android');
 
   /**
-   * Returns true if the user agent is an iPad, iPhone or iPod.
+   * Returns `true` if the user agent is an iPad, iPhone or iPod.
    */
-  static IS_IOS =
-    typeof window !== 'undefined' && /iP(hone|od|ad)/.test(navigator.platform);
+  static IS_IOS = isWindowObjectAvailable() && /iP(hone|od|ad)/.test(navigator.platform);
 
   /**
-   * True if the current browser is Google Chrome.
+   * `true` if the current browser is Google Chrome.
    */
-  static IS_GC = typeof window !== 'undefined' && /Google Inc/.test(navigator.vendor);
+  static IS_GC = isWindowObjectAvailable() && /Google Inc/.test(navigator.vendor);
 
   /**
-   * True if the this is running inside a Chrome App.
+   * `true` if this is running inside a Chrome App.
    */
   static IS_CHROMEAPP =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     // @ts-ignore
     window.chrome != null &&
     // @ts-ignore
@@ -117,84 +130,84 @@ class Client {
     chrome.app.runtime != null;
 
   /**
-   * True if the current browser is Firefox.
+   * `true` if the current browser is Firefox.
    */
-  static IS_FF = navigator.userAgent.toLowerCase().includes('firefox');
+  static IS_FF =
+    isUserAgentAvailable() && navigator.userAgent.toLowerCase().includes('firefox');
 
   /**
-   * True if -moz-transform is available as a CSS style. This is the case
+   * `true` if -moz-transform is available as a CSS style. This is the case
    * for all Firefox-based browsers newer than or equal 3, such as Camino,
    * Iceweasel, Seamonkey and Iceape.
    */
   static IS_MT =
-    typeof window !== 'undefined' &&
-    ((navigator.userAgent.includes('Firefox/') &&
-      !navigator.userAgent.includes('Firefox/1.') &&
-      !navigator.userAgent.includes('Firefox/2.')) ||
-      (navigator.userAgent.includes('Iceweasel/') &&
-        !navigator.userAgent.includes('Iceweasel/1.') &&
-        !navigator.userAgent.includes('Iceweasel/2.')) ||
-      (navigator.userAgent.includes('SeaMonkey/') &&
-        !navigator.userAgent.includes('SeaMonkey/1.')) ||
-      (navigator.userAgent.includes('Iceape/') &&
-        !navigator.userAgent.includes('Iceape/1.')));
+    isWindowObjectAvailable() &&
+    isUserAgentAvailable() &&
+    ((isUserAgentIncludes('Firefox/') &&
+      !isUserAgentIncludes('Firefox/1.') &&
+      !isUserAgentIncludes('Firefox/2.')) ||
+      (isUserAgentIncludes('Iceweasel/') &&
+        !isUserAgentIncludes('Iceweasel/1.') &&
+        !isUserAgentIncludes('Iceweasel/2.')) ||
+      (isUserAgentIncludes('SeaMonkey/') && !isUserAgentIncludes('SeaMonkey/1.')) ||
+      (isUserAgentIncludes('Iceape/') && !isUserAgentIncludes('Iceape/1.')));
 
   /**
-   * True if the browser supports SVG.
+   * `true` if the browser supports SVG.
    */
   static IS_SVG =
-    typeof window !== 'undefined' &&
-    navigator.appName.toUpperCase() !== 'MICROSOFT INTERNET EXPLORER';
+    isWindowObjectAvailable() &&
+    navigator.appName?.toUpperCase() !== 'MICROSOFT INTERNET EXPLORER';
 
   /**
-   * True if foreignObject support is not available. This is the case for
+   * `true` if foreignObject support is not available. This is the case for
    * Opera, older SVG-based browsers and all versions of IE.
    */
   static NO_FO =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     (!document.createElementNS ||
       document.createElementNS(NS_SVG, 'foreignObject').toString() !==
         '[object SVGForeignObjectElement]' ||
-      navigator.userAgent.includes('Opera/'));
+      isUserAgentIncludes('Opera/'));
 
   /**
-   * True if the client is a Windows.
+   * `true` if the client is a Windows.
    */
   static IS_WIN =
-    typeof window !== 'undefined' && navigator.appVersion.indexOf('Win') > 0;
+    isWindowObjectAvailable() && isAppVersionAvailable() && isAppVersionIncludes('Win');
 
   /**
-   * True if the client is a Mac.
+   * `true` if the client is a Mac.
    */
   static IS_MAC =
-    typeof window !== 'undefined' && navigator.appVersion.indexOf('Mac') > 0;
+    isWindowObjectAvailable() && isAppVersionAvailable() && isAppVersionIncludes('Mac');
 
   /**
-   * True if the client is a Chrome OS.
+   * `true` if the client is a Chrome OS.
    */
-  static IS_CHROMEOS =
-    typeof window !== 'undefined' && /\bCrOS\b/.test(navigator.appVersion);
+  static IS_CHROMEOS = isWindowObjectAvailable() && /\bCrOS\b/.test(navigator.appVersion);
 
   /**
-   * True if this device supports touchstart/-move/-end events (Apple iOS,
+   * `true` if this device supports touchstart/-move/-end events (Apple iOS,
    * Android, Chromebook and Chrome Browser on touch-enabled devices).
    */
   static IS_TOUCH =
-    typeof window !== 'undefined' && 'ontouchstart' in document.documentElement;
+    isWindowObjectAvailable() && 'ontouchstart' in document.documentElement;
 
   /**
-   * True if this device supports Microsoft pointer events (always false on Macs).
+   * `true` if this device supports Microsoft pointer events (always false on Macs).
    */
   static IS_POINTER =
-    typeof window !== 'undefined' &&
-    window.PointerEvent != null &&
-    !(navigator.appVersion.indexOf('Mac') > 0);
+    isWindowObjectAvailable() &&
+    !!window.PointerEvent &&
+    isAppVersionAvailable() &&
+    !isAppVersionIncludes('Mac');
 
   /**
-   * True if the documents location does not start with http:// or https://.
+   * `true` if the documents location does not start with http:// or https://.
    */
   static IS_LOCAL =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     !document.location.href.includes('http://') &&
     !document.location.href.includes('https://');
 }
