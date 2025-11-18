@@ -266,7 +266,7 @@ export const SwimlaneMixin: PartialType = {
     // Checks if parent is dropped into child if not cloning
     let parentCell = cell;
     if (!clone) {
-      while (parentCell && cells.indexOf(parentCell) < 0) {
+      while (parentCell && !cells.includes(parentCell)) {
         parentCell = parentCell.getParent();
       }
     }

@@ -849,7 +849,7 @@ class Shape {
         let dx = pt.x - tmp.x;
         let dy = pt.y - tmp.y;
 
-        if (rounded && (dx !== 0 || dy !== 0) && exclude.indexOf(i - 1) < 0) {
+        if (rounded && (dx !== 0 || dy !== 0) && !exclude.includes(i - 1)) {
           // Draws a line from the last point to the current
           // point with a spacing of size off the current point
           // into direction of the last point

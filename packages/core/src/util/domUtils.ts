@@ -68,7 +68,7 @@ export const extractTextWithWhitespace = (elems: Element[]): string => {
           doExtract(<Element[]>Array.from(elem.childNodes));
         }
 
-        if (i < elts.length - 1 && blocks.indexOf(elts[i + 1].nodeName) >= 0) {
+        if (i < elts.length - 1 && blocks.includes(elts[i + 1].nodeName)) {
           ret.push('\n');
         }
       }

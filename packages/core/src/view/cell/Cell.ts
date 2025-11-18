@@ -515,7 +515,7 @@ export class Cell implements IdentityObject {
     if (
       this.edges.length === 0 ||
       edge.getTerminal(!isOutgoing) !== this ||
-      this.edges.indexOf(edge) < 0
+      !this.edges.includes(edge)
     ) {
       this.edges.push(edge);
     }

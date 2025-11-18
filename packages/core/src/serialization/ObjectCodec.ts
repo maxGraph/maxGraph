@@ -333,7 +333,7 @@ class ObjectCodec {
    * Write is true if the field is being encoded, else it is being decoded.
    */
   isExcluded(obj: any, attr: string, value: any, write?: boolean): boolean {
-    return attr == ObjectIdentity.FIELD_NAME || this.exclude.indexOf(attr) >= 0;
+    return attr == ObjectIdentity.FIELD_NAME || this.exclude.includes(attr);
   }
 
   /**
