@@ -254,7 +254,7 @@ export const getPortConstraints = (
     }
   }
 
-  if (directions.indexOf('north') >= 0) {
+  if (directions.includes('north')) {
     switch (quad) {
       case 0:
         returnValue |= DIRECTION_MASK.NORTH;
@@ -270,7 +270,7 @@ export const getPortConstraints = (
         break;
     }
   }
-  if (directions.indexOf('west') >= 0) {
+  if (directions.includes('west')) {
     switch (quad) {
       case 0:
         returnValue |= DIRECTION_MASK.WEST;
@@ -286,7 +286,7 @@ export const getPortConstraints = (
         break;
     }
   }
-  if (directions.indexOf('south') >= 0) {
+  if (directions.includes('south')) {
     switch (quad) {
       case 0:
         returnValue |= DIRECTION_MASK.SOUTH;
@@ -302,7 +302,7 @@ export const getPortConstraints = (
         break;
     }
   }
-  if (directions.indexOf('east') >= 0) {
+  if (directions.includes('east')) {
     switch (quad) {
       case 0:
         returnValue |= DIRECTION_MASK.EAST;
@@ -674,7 +674,7 @@ export const isNumeric = (n: any): n is number | string => {
   return (
     !Number.isNaN(Number.parseFloat(n)) &&
     Number.isFinite(+n) &&
-    (typeof n !== 'string' || n.toLowerCase().indexOf('0x') < 0)
+    (typeof n !== 'string' || !n.toLowerCase().includes('0x'))
   );
 };
 

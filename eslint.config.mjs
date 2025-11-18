@@ -103,6 +103,7 @@ export default tsEslint.config(
       'n/file-extension-in-import': ['error', 'always'],
       'n/no-unsupported-features/node-builtins': 'off', // we don't use node in this package, and most errors are due to "navigator.xxx is still an experimental feature and is not supported until Node.js yyy"
       // apply a subset of unicorn rules for now
+      'unicorn/prefer-includes': 'error',
       'unicorn/prefer-number-properties': 'error',
       'unicorn/prefer-switch': 'error',
     },

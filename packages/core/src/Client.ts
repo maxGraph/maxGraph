@@ -77,9 +77,9 @@ class Client {
   static IS_NS =
     typeof window !== 'undefined' &&
     navigator.userAgent != null &&
-    navigator.userAgent.indexOf('Mozilla/') >= 0 &&
-    navigator.userAgent.indexOf('MSIE') < 0 &&
-    navigator.userAgent.indexOf('Edge/') < 0;
+    navigator.userAgent.includes('Mozilla/') &&
+    !navigator.userAgent.includes('MSIE') &&
+    !navigator.userAgent.includes('Edge/');
 
   /**
    * True if the current browser is Safari.
@@ -91,7 +91,7 @@ class Client {
    * Returns true if the user agent contains Android.
    */
   static IS_ANDROID =
-    typeof window !== 'undefined' && navigator.appVersion.indexOf('Android') >= 0;
+    typeof window !== 'undefined' && navigator.appVersion.includes('Android');
 
   /**
    * Returns true if the user agent is an iPad, iPhone or iPod.
@@ -119,7 +119,7 @@ class Client {
   /**
    * True if the current browser is Firefox.
    */
-  static IS_FF = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+  static IS_FF = navigator.userAgent.toLowerCase().includes('firefox');
 
   /**
    * True if -moz-transform is available as a CSS style. This is the case
@@ -128,16 +128,16 @@ class Client {
    */
   static IS_MT =
     typeof window !== 'undefined' &&
-    ((navigator.userAgent.indexOf('Firefox/') >= 0 &&
-      navigator.userAgent.indexOf('Firefox/1.') < 0 &&
-      navigator.userAgent.indexOf('Firefox/2.') < 0) ||
-      (navigator.userAgent.indexOf('Iceweasel/') >= 0 &&
-        navigator.userAgent.indexOf('Iceweasel/1.') < 0 &&
-        navigator.userAgent.indexOf('Iceweasel/2.') < 0) ||
-      (navigator.userAgent.indexOf('SeaMonkey/') >= 0 &&
-        navigator.userAgent.indexOf('SeaMonkey/1.') < 0) ||
-      (navigator.userAgent.indexOf('Iceape/') >= 0 &&
-        navigator.userAgent.indexOf('Iceape/1.') < 0));
+    ((navigator.userAgent.includes('Firefox/') &&
+      !navigator.userAgent.includes('Firefox/1.') &&
+      !navigator.userAgent.includes('Firefox/2.')) ||
+      (navigator.userAgent.includes('Iceweasel/') &&
+        !navigator.userAgent.includes('Iceweasel/1.') &&
+        !navigator.userAgent.includes('Iceweasel/2.')) ||
+      (navigator.userAgent.includes('SeaMonkey/') &&
+        !navigator.userAgent.includes('SeaMonkey/1.')) ||
+      (navigator.userAgent.includes('Iceape/') &&
+        !navigator.userAgent.includes('Iceape/1.')));
 
   /**
    * True if the browser supports SVG.
@@ -155,7 +155,7 @@ class Client {
     (!document.createElementNS ||
       document.createElementNS(NS_SVG, 'foreignObject').toString() !==
         '[object SVGForeignObjectElement]' ||
-      navigator.userAgent.indexOf('Opera/') >= 0);
+      navigator.userAgent.includes('Opera/'));
 
   /**
    * True if the client is a Windows.
@@ -195,8 +195,8 @@ class Client {
    */
   static IS_LOCAL =
     typeof window !== 'undefined' &&
-    document.location.href.indexOf('http://') < 0 &&
-    document.location.href.indexOf('https://') < 0;
+    !document.location.href.includes('http://') &&
+    !document.location.href.includes('https://');
 }
 
 export default Client;
