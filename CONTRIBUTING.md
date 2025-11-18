@@ -140,11 +140,11 @@ Before making code or documentation changes, ensure you have:
    - `docs/ISSUE_NUMBER-short-description` - For documentation
    - `refactor/ISSUE_NUMBER-short-description` - For refactoring
 
-   > **Note:** The following branch naming convention is **required for branches created directly by maintainers in the repository**.
-   > This helps to easily identify the related issue and keep branches organized.
-   > For branches created from a forked repository, following this guideline is helpful but not mandatory.
-
    Example: `feat/25-annotations_to_tasks` or `fix/42-edge-rendering-safari`
+
+> **Note:** The following branch naming convention is **required for branches created directly by maintainers in the repository**.
+> This helps to easily identify the related issue and keep branches organized.
+> For branches created from a forked repository, following this guideline is helpful but not mandatory.
 
 ### Development Commands
 
