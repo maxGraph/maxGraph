@@ -17,13 +17,10 @@ limitations under the License.
 */
 import Shape from '../Shape.js';
 import Rectangle from '../../geometry/Rectangle.js';
-import {
-  DEFAULT_STARTSIZE,
-  NONE,
-  RECTANGLE_ROUNDING_FACTOR,
-} from '../../../util/Constants.js';
+import { NONE } from '../../../util/Constants.js';
 import { ColorValue } from '../../../types.js';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import { StyleDefaultsConfig } from '../../../util/config.js';
 
 /**
  * Extends {@link Shape} to implement a swimlane shape.
@@ -68,7 +65,7 @@ class SwimlaneShape extends Shape {
    * Returns the bounding box for the gradient box for this shape.
    */
   getTitleSize() {
-    return Math.max(0, this.style?.startSize ?? DEFAULT_STARTSIZE);
+    return Math.max(0, this.style?.startSize ?? StyleDefaultsConfig.startSize);
   }
 
   /**
@@ -142,7 +139,8 @@ class SwimlaneShape extends Shape {
     if (this.style?.absoluteArcSize) {
       return Math.min(this.getBaseArcSize(), Math.min(h, w) / 2);
     }
-    const roundingFactor = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+    const roundingFactor =
+      (this.style?.arcSize ?? StyleDefaultsConfig.roundingFactor * 100) / 100;
     return start * roundingFactor * 3;
   }
 

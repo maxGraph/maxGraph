@@ -19,8 +19,8 @@ import {
   Graph,
   RubberBandHandler,
   KeyHandler,
-  constants,
   Rectangle,
+  StyleDefaultsConfig,
 } from '@maxgraph/core';
 import {
   globalTypes,
@@ -89,7 +89,7 @@ const Template = ({ label, ...args }) => {
       geometry.width >= 2
     ) {
       const style = this.getCellStyle(cell);
-      const fontSize = style.fontSize || constants.DEFAULT_FONTSIZE;
+      const fontSize = style.fontSize || StyleDefaultsConfig.fontSize;
       const max = geometry.width / (fontSize * 0.625);
 
       if (max < label.length) {

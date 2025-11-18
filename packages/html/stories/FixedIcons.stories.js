@@ -19,7 +19,6 @@ import {
   Graph,
   RubberBandHandler,
   Rectangle,
-  constants,
   LabelShape,
   StyleDefaultsConfig,
 } from '@maxgraph/core';
@@ -51,8 +50,8 @@ const Template = ({ label, ...args }) => {
 
   // Overrides the image bounds code to change the position
   LabelShape.prototype.getImageBounds = function (x, y, w, h) {
-    const iw = this.style.imageWidth ?? constants.DEFAULT_IMAGESIZE;
-    const ih = this.style.imageHeight ?? constants.DEFAULT_IMAGESIZE;
+    const iw = this.style.imageWidth ?? StyleDefaultsConfig.imageSize;
+    const ih = this.style.imageHeight ?? StyleDefaultsConfig.imageSize;
 
     // Places the icon
     const ix = (w - iw) / 2;

@@ -28,7 +28,7 @@ import {
   setCellStyleFlags,
   setCellStyles,
 } from '../../util/styleUtils.js';
-import { DEFAULT_FONTSIZE, DEFAULT_IMAGESIZE } from '../../util/Constants.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 import Geometry from '../geometry/Geometry.js';
 import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
@@ -976,7 +976,7 @@ export const CellsMixin: PartialType = {
     const { style } = state;
 
     if (!cell.isEdge()) {
-      const fontSize = style.fontSize || DEFAULT_FONTSIZE;
+      const fontSize = style.fontSize || StyleDefaultsConfig.fontSize;
       let dx = 0;
       let dy = 0;
 
@@ -984,11 +984,11 @@ export const CellsMixin: PartialType = {
       if (state.getImageSrc() || style.image) {
         if (style.shape === 'label') {
           if (style.verticalAlign === 'middle') {
-            dx += style.imageWidth || DEFAULT_IMAGESIZE;
+            dx += style.imageWidth || StyleDefaultsConfig.imageSize;
           }
 
           if (style.align !== 'center') {
-            dy += style.imageHeight || DEFAULT_IMAGESIZE;
+            dy += style.imageHeight || StyleDefaultsConfig.imageSize;
           }
         }
       }
