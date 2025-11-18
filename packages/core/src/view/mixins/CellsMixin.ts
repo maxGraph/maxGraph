@@ -2054,7 +2054,7 @@ export const CellsMixin: PartialType = {
                     geo.height
                   );
 
-                  if (cells.indexOf(parent) >= 0) {
+                  if (cells.includes(parent)) {
                     bbox.x += tmp.x;
                     bbox.y += tmp.y;
                   }
@@ -2063,7 +2063,7 @@ export const CellsMixin: PartialType = {
             } else {
               bbox = Rectangle.fromRectangle(geo);
 
-              if (parent && parent.isVertex() && cells.indexOf(parent) >= 0) {
+              if (parent && parent.isVertex() && cells.includes(parent)) {
                 tmp = this.getBoundingBoxFromGeometry([parent], false);
 
                 if (tmp) {

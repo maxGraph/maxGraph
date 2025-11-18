@@ -43,7 +43,7 @@ export const clone = function _clone(
     for (const i in obj) {
       if (
         i != ObjectIdentity.FIELD_NAME &&
-        (transients == null || transients.indexOf(i) < 0)
+        (transients == null || !transients.includes(i))
       ) {
         if (!shallow && typeof obj[i] === 'object') {
           clone[i] = _clone(obj[i]);

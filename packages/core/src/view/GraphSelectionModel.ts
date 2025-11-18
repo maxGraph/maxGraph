@@ -111,7 +111,7 @@ class GraphSelectionModel extends EventSource {
    * Returns true if the given {@link Cell} is selected.
    */
   isSelected(cell: Cell) {
-    return this.cells.indexOf(cell) >= 0;
+    return this.cells.includes(cell);
   }
 
   /**
