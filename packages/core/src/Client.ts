@@ -18,6 +18,8 @@ limitations under the License.
 
 import { NS_SVG } from './util/Constants.js';
 
+const isWindowObjectAvailable = (): boolean => typeof window !== 'undefined';
+
 /**
  * @category Configuration
  */
@@ -67,7 +69,7 @@ class Client {
    * True if the current browser is Microsoft Edge.
    */
   static IS_EDGE =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     navigator.userAgent != null &&
     !!navigator.userAgent.match(/Edge\//);
 
@@ -75,7 +77,7 @@ class Client {
    * True if the current browser is Netscape (including Firefox).
    */
   static IS_NS =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     navigator.userAgent != null &&
     navigator.userAgent.indexOf('Mozilla/') >= 0 &&
     navigator.userAgent.indexOf('MSIE') < 0 &&
@@ -85,30 +87,29 @@ class Client {
    * True if the current browser is Safari.
    */
   static IS_SF =
-    typeof window !== 'undefined' && /Apple Computer, Inc/.test(navigator.vendor);
+    isWindowObjectAvailable() && /Apple Computer, Inc/.test(navigator.vendor);
 
   /**
    * Returns true if the user agent contains Android.
    */
   static IS_ANDROID =
-    typeof window !== 'undefined' && navigator.appVersion.indexOf('Android') >= 0;
+    isWindowObjectAvailable() && navigator.appVersion.indexOf('Android') >= 0;
 
   /**
    * Returns true if the user agent is an iPad, iPhone or iPod.
    */
-  static IS_IOS =
-    typeof window !== 'undefined' && /iP(hone|od|ad)/.test(navigator.platform);
+  static IS_IOS = isWindowObjectAvailable() && /iP(hone|od|ad)/.test(navigator.platform);
 
   /**
    * True if the current browser is Google Chrome.
    */
-  static IS_GC = typeof window !== 'undefined' && /Google Inc/.test(navigator.vendor);
+  static IS_GC = isWindowObjectAvailable() && /Google Inc/.test(navigator.vendor);
 
   /**
    * True if the this is running inside a Chrome App.
    */
   static IS_CHROMEAPP =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     // @ts-ignore
     window.chrome != null &&
     // @ts-ignore
@@ -127,7 +128,7 @@ class Client {
    * Iceweasel, Seamonkey and Iceape.
    */
   static IS_MT =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     ((navigator.userAgent.indexOf('Firefox/') >= 0 &&
       navigator.userAgent.indexOf('Firefox/1.') < 0 &&
       navigator.userAgent.indexOf('Firefox/2.') < 0) ||
@@ -143,7 +144,7 @@ class Client {
    * True if the browser supports SVG.
    */
   static IS_SVG =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     navigator.appName.toUpperCase() !== 'MICROSOFT INTERNET EXPLORER';
 
   /**
@@ -151,7 +152,7 @@ class Client {
    * Opera, older SVG-based browsers and all versions of IE.
    */
   static NO_FO =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     (!document.createElementNS ||
       document.createElementNS(NS_SVG, 'foreignObject').toString() !==
         '[object SVGForeignObjectElement]' ||
@@ -160,33 +161,30 @@ class Client {
   /**
    * True if the client is a Windows.
    */
-  static IS_WIN =
-    typeof window !== 'undefined' && navigator.appVersion.indexOf('Win') > 0;
+  static IS_WIN = isWindowObjectAvailable() && navigator.appVersion.indexOf('Win') > 0;
 
   /**
    * True if the client is a Mac.
    */
-  static IS_MAC =
-    typeof window !== 'undefined' && navigator.appVersion.indexOf('Mac') > 0;
+  static IS_MAC = isWindowObjectAvailable() && navigator.appVersion.indexOf('Mac') > 0;
 
   /**
    * True if the client is a Chrome OS.
    */
-  static IS_CHROMEOS =
-    typeof window !== 'undefined' && /\bCrOS\b/.test(navigator.appVersion);
+  static IS_CHROMEOS = isWindowObjectAvailable() && /\bCrOS\b/.test(navigator.appVersion);
 
   /**
    * True if this device supports touchstart/-move/-end events (Apple iOS,
    * Android, Chromebook and Chrome Browser on touch-enabled devices).
    */
   static IS_TOUCH =
-    typeof window !== 'undefined' && 'ontouchstart' in document.documentElement;
+    isWindowObjectAvailable() && 'ontouchstart' in document.documentElement;
 
   /**
    * True if this device supports Microsoft pointer events (always false on Macs).
    */
   static IS_POINTER =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     window.PointerEvent != null &&
     !(navigator.appVersion.indexOf('Mac') > 0);
 
@@ -194,7 +192,7 @@ class Client {
    * True if the documents location does not start with http:// or https://.
    */
   static IS_LOCAL =
-    typeof window !== 'undefined' &&
+    isWindowObjectAvailable() &&
     document.location.href.indexOf('http://') < 0 &&
     document.location.href.indexOf('https://') < 0;
 }
