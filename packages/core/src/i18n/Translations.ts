@@ -116,7 +116,7 @@ export default class Translations {
   static isLanguageSupported = (lan: string): boolean => {
     const languages = TranslationsConfig.getLanguages();
     if (languages) {
-      return languages.indexOf(lan) >= 0;
+      return languages.includes(lan);
     }
     return true;
   };

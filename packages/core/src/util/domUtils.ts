@@ -17,28 +17,29 @@ limitations under the License.
 import { NODE_TYPE } from './Constants.js';
 import { isNullish } from '../internal/utils.js';
 
+// Known block elements for handling linefeed (list is not complete)
+const blocks = new Set([
+  'BLOCKQUOTE',
+  'DIV',
+  'H1',
+  'H2',
+  'H3',
+  'H4',
+  'H5',
+  'H6',
+  'OL',
+  'P',
+  'PRE',
+  'TABLE',
+  'UL',
+]);
+
 /**
  * Returns the text content of the specified node.
  *
  * @param elems DOM nodes to return the text for.
  */
 export const extractTextWithWhitespace = (elems: Element[]): string => {
-  // Known block elements for handling linefeeds (list is not complete)
-  const blocks = [
-    'BLOCKQUOTE',
-    'DIV',
-    'H1',
-    'H2',
-    'H3',
-    'H4',
-    'H5',
-    'H6',
-    'OL',
-    'P',
-    'PRE',
-    'TABLE',
-    'UL',
-  ];
   const ret: string[] = [];
 
   function doExtract(elts: Element[]) {
@@ -68,7 +69,7 @@ export const extractTextWithWhitespace = (elems: Element[]): string => {
           doExtract(<Element[]>Array.from(elem.childNodes));
         }
 
-        if (i < elts.length - 1 && blocks.indexOf(elts[i + 1].nodeName) >= 0) {
+        if (i < elts.length - 1 && blocks.has(elts[i + 1].nodeName)) {
           ret.push('\n');
         }
       }
@@ -146,7 +147,7 @@ export const write = (parent: Element, text: string) => {
   const doc = parent.ownerDocument;
   const node = doc.createTextNode(text);
 
-  if (parent != null) {
+  if (parent) {
     parent.appendChild(node);
   }
 
@@ -164,7 +165,7 @@ export const writeln = (parent: Element, text: string) => {
   const doc = parent.ownerDocument;
   const node = doc.createTextNode(text);
 
-  if (parent != null) {
+  if (parent) {
     parent.appendChild(node);
     parent.appendChild(document.createElement('br'));
   }

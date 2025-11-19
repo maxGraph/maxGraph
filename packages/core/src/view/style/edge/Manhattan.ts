@@ -111,7 +111,7 @@ export const ManhattanConnector: EdgeStyleFunction = (
   }
 
   function toPointFromString(pointString: string) {
-    const xy = pointString.split(pointString.indexOf('@') === -1 ? ' ' : '@');
+    const xy = pointString.split(!pointString.includes('@') ? ' ' : '@');
     return new Point(Number.parseInt(xy[0], 10), Number.parseInt(xy[1], 10));
   }
 
@@ -477,7 +477,7 @@ export const ManhattanConnector: EdgeStyleFunction = (
             : getDirectionAngle(startCenter, currentPoint, opt.directions.length);
 
         // if get the endpoint
-        if (endPointsKeys.indexOf(currentKey) >= 0) {
+        if (endPointsKeys.includes(currentKey)) {
           // stop route to enter the end point in opposite direction.
           const directionChangedAngle = getDirectionChange(
             currentDirectionAngle,
