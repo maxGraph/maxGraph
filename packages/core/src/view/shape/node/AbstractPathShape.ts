@@ -23,17 +23,17 @@ import type { ColorValue } from '../../../types.js';
 import { NONE } from '../../../util/Constants.js';
 
 /**
- * Base {@link Shape} class to implement a shape with a specific .
+ * Base {@link Shape} for vertex shapes rendered from a single path.
  *
- * If a custom shape with one filled area is needed, then this shape's {@link redrawPath} method should be overridden like in the following example:
+ * If a custom shape with one filled area is needed, override {@link redrawPath} as in the following example:
  *
  * ```typescript
  * class SampleShape extends AbstractPathShape {
  *   redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
- *     path.moveTo(0, 0);
- *     path.lineTo(w, h);
+ *     c.moveTo(0, 0);
+ *     c.lineTo(w, h);
  *     // ...
- *     path.close();
+ *     c.close();
  *   }
  * }
  * ```
