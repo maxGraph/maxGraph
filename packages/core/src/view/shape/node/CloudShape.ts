@@ -16,9 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ActorShape from './ActorShape.js';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
-import Rectangle from '../../geometry/Rectangle.js';
+import { AbstractPathShape } from './AbstractPathShape.js';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import type Rectangle from '../../geometry/Rectangle.js';
+import type { ColorValue } from '../../../types.js';
 
 /**
  * Extends {@link ActorShape} to implement a cloud shape.
@@ -27,13 +28,14 @@ import Rectangle from '../../geometry/Rectangle.js';
  *
  * @category Vertex Shapes
  */
-class CloudShape extends ActorShape {
-  constructor(bounds: Rectangle, fill: string, stroke: string, strokeWidth = 1) {
-    super();
-    this.bounds = bounds;
-    this.fill = fill;
-    this.stroke = stroke;
-    this.strokeWidth = strokeWidth;
+class CloudShape extends AbstractPathShape {
+  constructor(
+    bounds?: Rectangle | null,
+    fill?: ColorValue,
+    stroke?: ColorValue,
+    strokeWidth?: number
+  ) {
+    super(bounds, fill, stroke, strokeWidth);
   }
 
   /**

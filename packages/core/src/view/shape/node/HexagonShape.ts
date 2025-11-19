@@ -16,9 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ActorShape from './ActorShape.js';
+import { AbstractPathShape } from './AbstractPathShape.js';
 import Point from '../../geometry/Point.js';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
+import type Rectangle from '../../geometry/Rectangle.js';
+import type { ColorValue } from '../../../types.js';
 
 /**
  * Implementation of the hexagon shape.
@@ -27,9 +29,14 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
  *
  * @category Vertex Shapes
  */
-class HexagonShape extends ActorShape {
-  constructor() {
-    super();
+class HexagonShape extends AbstractPathShape {
+  constructor(
+    bounds?: Rectangle | null,
+    fill?: ColorValue,
+    stroke?: ColorValue,
+    strokeWidth?: number
+  ) {
+    super(bounds, fill, stroke, strokeWidth);
   }
 
   /**
