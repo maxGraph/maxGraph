@@ -28,7 +28,6 @@ import {
   InternalEvent,
   requestUtils,
   Point,
-  type Rectangle,
   RubberBandHandler,
   Shape,
   ShapeRegistry,
@@ -78,6 +77,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   HandleConfig.fillColor = '#99ccff';
   HandleConfig.strokeColor = '#0088cf';
   VertexHandlerConfig.selectionColor = '#00a8ff';
+  VertexHandlerConfig.selectionShapeMatchVertex = true;
 
   // Enables connections along the outline
   ConnectionHandler.prototype.outlineConnect = true;
@@ -87,32 +87,9 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   class CustomVertexHandler extends VertexHandler {
     // Enable rotation handle
-    // use an alternate way to enable rotation handle as we already override the VertexHandler for other purposes
-    // another way to enable rotation handle is to set `VertexHandlerConfig.rotationEnabled = true`;
+    // another way to enable rotation is to set `VertexHandlerConfig.rotationEnabled = true`;
     override isRotationEnabled(): boolean {
       return true;
-    }
-
-    // Uses the shape for resize previews
-    override createSelectionShape(bounds: Rectangle) {
-      const stencil = StencilShapeRegistry.get(this.state.style.shape);
-      let shape: Shape;
-
-      if (stencil) {
-        shape = new Shape(stencil);
-        shape.apply(this.state);
-      } else {
-        // @ts-ignore known to work at runtime
-        shape = new this.state.shape.constructor();
-      }
-
-      shape.outline = true;
-      shape.bounds = bounds;
-      shape.stroke = HandleConfig.strokeColor;
-      shape.strokeWidth = this.getSelectionStrokeWidth();
-      shape.isDashed = this.isSelectionDashed();
-      shape.isShadow = false;
-      return shape;
     }
   }
   // Enables rubberband selection

@@ -237,6 +237,13 @@ export const VertexHandlerConfig = {
   cursorMovable: 'move',
 
   /**
+   * Margin to be added between the selection border and the vertex's bounding box.
+   * @default 0
+   * @since 0.22.0
+   */
+  margin: 0,
+
+  /**
    * Enable rotation handle
    * @default false
    */
@@ -250,6 +257,13 @@ export const VertexHandlerConfig = {
   selectionColor: VERTEX_SELECTION_COLOR,
 
   /**
+   * Defines the default dashed state to be used for the vertex selection border.
+   * @default {@link VERTEX_SELECTION_DASHED}
+   * @since 0.14.0
+   */
+  selectionDashed: VERTEX_SELECTION_DASHED,
+
+  /**
    * Defines the default stroke width to be used for vertex selections.
    * @default {@link VERTEX_SELECTION_STROKEWIDTH}
    * @since 0.14.0
@@ -257,11 +271,13 @@ export const VertexHandlerConfig = {
   selectionStrokeWidth: VERTEX_SELECTION_STROKEWIDTH,
 
   /**
-   * Defines the default dashed state to be used for the vertex selection border.
-   * @default {@link VERTEX_SELECTION_DASHED}
-   * @since 0.14.0
+   * Specifies if the selection border should match the shape of the vertex. If false, the border is rectangular.
+   * This mimics the behavior of {@link CellRenderer}: first check if the shape is available in the {@link StencilShapeRegistry}, otherwise use the shape of the vertex.
+   *
+   * @default false
+   * @since 0.22.0
    */
-  selectionDashed: VERTEX_SELECTION_DASHED,
+  selectionShapeMatchVertex: false,
 };
 
 const defaultVertexHandlerConfig = { ...VertexHandlerConfig };
