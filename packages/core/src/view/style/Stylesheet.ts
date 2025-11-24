@@ -63,32 +63,30 @@ export class Stylesheet {
   /**
    * Creates and returns the default vertex style.
    */
-  createDefaultVertexStyle() {
-    const style = {} as CellStateStyle;
-    style.shape = 'rectangle';
-    style.perimeter = 'rectanglePerimeter';
-    style.verticalAlign = 'middle';
-    style.align = 'center';
-    style.fillColor = '#C3D9FF';
-    style.strokeColor = '#6482B9';
-    style.fontColor = '#774400';
-
-    return style;
+  createDefaultVertexStyle(): CellStateStyle {
+    return {
+      shape: 'rectangle',
+      perimeter: 'rectanglePerimeter',
+      verticalAlign: 'middle',
+      align: 'center',
+      fillColor: '#C3D9FF',
+      strokeColor: '#6482B9',
+      fontColor: '#774400',
+    } as CellStateStyle;
   }
 
   /**
    * Creates and returns the default edge style.
    */
-  createDefaultEdgeStyle() {
-    const style = {} as CellStateStyle;
-    style.shape = 'connector';
-    style.endArrow = 'classic';
-    style.verticalAlign = 'middle';
-    style.align = 'center';
-    style.strokeColor = '#6482B9';
-    style.fontColor = '#446299';
-
-    return style;
+  createDefaultEdgeStyle(): CellStateStyle {
+    return {
+      shape: 'connector',
+      endArrow: 'classic',
+      verticalAlign: 'middle',
+      align: 'center',
+      strokeColor: '#6482B9',
+      fontColor: '#446299',
+    } as CellStateStyle;
   }
 
   /**
