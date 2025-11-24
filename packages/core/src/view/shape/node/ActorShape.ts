@@ -16,10 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Rectangle from '../../geometry/Rectangle.js';
 import { AbstractPathShape } from './AbstractPathShape.js';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
-import type { ColorValue } from '../../../types.js';
 
 /**
  * Path-based actor vertex shape built on {@link AbstractPathShape}.
@@ -29,15 +27,6 @@ import type { ColorValue } from '../../../types.js';
  * @category Vertex Shapes
  */
 class ActorShape extends AbstractPathShape {
-  constructor(
-    bounds?: Rectangle | null,
-    fill?: ColorValue,
-    stroke?: ColorValue,
-    strokeWidth?: number
-  ) {
-    super(bounds, fill, stroke, strokeWidth);
-  }
-
   /**
    * Draws the path for this shape.
    */

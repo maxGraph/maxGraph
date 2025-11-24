@@ -19,8 +19,6 @@ limitations under the License.
 import Point from '../../geometry/Point.js';
 import { AbstractPathShape } from './AbstractPathShape.js';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
-import type Rectangle from '../../geometry/Rectangle.js';
-import type { ColorValue } from '../../../types.js';
 
 /**
  * Implementation of the triangle shape.
@@ -30,15 +28,6 @@ import type { ColorValue } from '../../../types.js';
  * @category Vertex Shapes
  */
 class TriangleShape extends AbstractPathShape {
-  constructor(
-    bounds?: Rectangle | null,
-    fill?: ColorValue,
-    stroke?: ColorValue,
-    strokeWidth?: number
-  ) {
-    super(bounds, fill, stroke, strokeWidth);
-  }
-
   /**
    * Adds roundable support.
    * @returns {boolean}

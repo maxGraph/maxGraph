@@ -18,8 +18,6 @@ limitations under the License.
 
 import { AbstractPathShape } from './AbstractPathShape.js';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
-import type Rectangle from '../../geometry/Rectangle.js';
-import type { ColorValue } from '../../../types.js';
 
 /**
  * Extends {@link ActorShape} to implement a cloud shape.
@@ -29,15 +27,6 @@ import type { ColorValue } from '../../../types.js';
  * @category Vertex Shapes
  */
 class CloudShape extends AbstractPathShape {
-  constructor(
-    bounds?: Rectangle | null,
-    fill?: ColorValue,
-    stroke?: ColorValue,
-    strokeWidth?: number
-  ) {
-    super(bounds, fill, stroke, strokeWidth);
-  }
-
   /**
    * Draws the path for this shape.
    */
