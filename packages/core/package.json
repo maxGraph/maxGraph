@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "~0.18.2",
-    "@swc/core": "~1.15.1",
+    "@swc/core": "~1.15.3",
     "@swc/jest": "~0.2.39",
     "jest": "~30.2.0",
     "jest-environment-jsdom": "~30.2.0",
