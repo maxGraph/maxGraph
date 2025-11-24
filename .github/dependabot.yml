@@ -22,15 +22,9 @@ updates:
       - dependency-name: "typescript"
       # We must use a version that matches the version of node used to build. This is not the latest one, so manage this manually.
       - dependency-name: "@types/node"
-      # use react 19.0.0 in website, otherwise this impacts storybook 7.x which requires at most react 19.x
-      # see https://github.com/maxGraph/maxGraph/issues/747
-      - dependency-name: "react"
-      - dependency-name: "react-dom"
-      # use storybook 7.x for now, bumping to a major version requires a migration
+      # use storybook 9.x for now, bumping to a major version requires a migration
       - dependency-name: "@storybook/*"
       - dependency-name: "storybook"
-      # storybook 7.x only support vite v5, bumping manually in other packages
-      - dependency-name: "vite"
 
     groups:
       docusaurus:
