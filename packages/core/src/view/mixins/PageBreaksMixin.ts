@@ -18,6 +18,7 @@ import Rectangle from '../geometry/Rectangle.js';
 import Point from '../geometry/Point.js';
 import PolylineShape from '../shape/edge/PolylineShape.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
+import type Shape from '../shape/Shape.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
@@ -77,56 +78,51 @@ export const PageBreaksMixin: PartialType = {
       this.verticalPageBreaks = [];
     }
 
-    const drawPageBreaks = (breaks: any) => {
-      if (breaks != null) {
-        const count =
-          breaks === this.horizontalPageBreaks ? horizontalCount : verticalCount;
-
-        for (let i = 0; i <= count; i += 1) {
-          const pts =
-            breaks === this.horizontalPageBreaks
-              ? [
-                  new Point(
-                    Math.round(bounds.x),
-                    Math.round(bounds.y + i * bounds.height)
-                  ),
-                  new Point(
-                    Math.round(bounds.x + right),
-                    Math.round(bounds.y + i * bounds.height)
-                  ),
-                ]
-              : [
-                  new Point(
-                    Math.round(bounds.x + i * bounds.width),
-                    Math.round(bounds.y)
-                  ),
-                  new Point(
-                    Math.round(bounds.x + i * bounds.width),
-                    Math.round(bounds.y + bottom)
-                  ),
-                ];
-
-          if (breaks[i] != null) {
-            breaks[i].points = pts;
-            breaks[i].redraw();
-          } else {
-            const pageBreak = new PolylineShape(pts, this.getPageBreakColor());
-            pageBreak.dialect = this.getDialect();
-            pageBreak.pointerEvents = false;
-            pageBreak.isDashed = this.isPageBreakDashed();
-            pageBreak.init(this.getView().backgroundPane);
-            pageBreak.redraw();
-
-            breaks[i] = pageBreak;
-          }
-        }
-
-        for (let i = count; i < breaks.length; i += 1) {
-          breaks[i].destroy();
-        }
-
-        breaks.splice(count, breaks.length - count);
+    const drawPageBreaks = (breaks: Shape[] | null) => {
+      if (!breaks) {
+        return;
       }
+      const count =
+        breaks === this.horizontalPageBreaks ? horizontalCount : verticalCount;
+
+      for (let i = 0; i <= count; i += 1) {
+        const pts =
+          breaks === this.horizontalPageBreaks
+            ? [
+                new Point(Math.round(bounds.x), Math.round(bounds.y + i * bounds.height)),
+                new Point(
+                  Math.round(bounds.x + right),
+                  Math.round(bounds.y + i * bounds.height)
+                ),
+              ]
+            : [
+                new Point(Math.round(bounds.x + i * bounds.width), Math.round(bounds.y)),
+                new Point(
+                  Math.round(bounds.x + i * bounds.width),
+                  Math.round(bounds.y + bottom)
+                ),
+              ];
+
+        if (breaks[i] != null) {
+          breaks[i].points = pts;
+          breaks[i].redraw();
+        } else {
+          const pageBreak = new PolylineShape(pts, this.getPageBreakColor());
+          pageBreak.dialect = this.getDialect();
+          pageBreak.pointerEvents = false;
+          pageBreak.isDashed = this.isPageBreakDashed();
+          pageBreak.init(this.getView().backgroundPane);
+          pageBreak.redraw();
+
+          breaks[i] = pageBreak;
+        }
+      }
+
+      for (let i = count; i < breaks.length; i += 1) {
+        breaks[i].destroy();
+      }
+
+      breaks.splice(count, breaks.length - count);
     };
 
     drawPageBreaks(this.horizontalPageBreaks);
