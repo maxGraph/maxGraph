@@ -22,7 +22,7 @@ import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 import type { ColorValue } from '../../../types.js';
 
 /**
- * Extends {@link Shape} to implement an actor shape.
+ * Path-based actor vertex shape built on {@link AbstractPathShape}.
  *
  * This shape is registered under `actor` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
