@@ -41,7 +41,7 @@ import { NONE } from '../../../util/Constants.js';
  * @category Vertex Shapes
  */
 export abstract class AbstractPathShape extends Shape {
-  protected constructor(
+  constructor(
     bounds: Rectangle | null = null,
     fill: ColorValue = NONE,
     stroke: ColorValue = NONE,
