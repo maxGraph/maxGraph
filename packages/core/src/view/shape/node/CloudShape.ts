@@ -20,7 +20,7 @@ import { AbstractPathShape } from './AbstractPathShape.js';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
 /**
- * Extends {@link ActorShape} to implement a cloud shape.
+ * Path-based cloud vertex shape built on {@link AbstractPathShape}.
  *
  * This shape is registered under `cloud` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
