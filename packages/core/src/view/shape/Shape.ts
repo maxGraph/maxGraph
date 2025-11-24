@@ -1016,8 +1016,8 @@ class Shape {
   }
 
   /**
-   * Updates the <boundingBox> for this shape using <createBoundingBox> and
-   * <augmentBoundingBox> and stores the result in <boundingBox>.
+   * Updates the {@link boundingBox} for this shape using {@link createBoundingBox} and
+   * {@link augmentBoundingBox} and stores the result in {@link boundingBox}.
    */
   updateBoundingBox() {
     // Tries to get bounding box from SVG subsystem
