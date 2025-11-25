@@ -34,14 +34,16 @@ updates:
           - "@mdx-js/"
           - "clsx"
           - "prism-react-renderer"
-          - "react"
-          - "react-*"
       lint:
         patterns:
           - "eslint"
           - "eslint-*"
           - "prettier"
           - "typescript-eslint"
+      react:
+        patterns:
+          - "react"
+          - "react-*"
       test:
         patterns:
           - "@jest/*"
