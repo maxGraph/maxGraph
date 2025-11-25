@@ -60,10 +60,11 @@ import { StyleDefaultsConfig } from '../../util/config.js';
  * or one filled region and an additional stroke the mxActor and mxCylinder
  * should be subclassed, respectively.
  * ```javascript
- * function CustomShape() { }
- *
- * CustomShape.prototype = new mxShape();
- * CustomShape.prototype.constructor = CustomShape;
+ * class CustomShape extends Shape {
+ *   constructor() {
+ *     super();
+ *   }
+ * }
  * ```
  * To register a custom shape in an existing graph instance, one must register the
  * shape under a new name in the graph’s cell renderer as follows:
@@ -203,45 +204,52 @@ class Shape {
   svgStrokeTolerance = 8;
 
   /**
-   * Specifies if pointer events should be handled. Default is true.
+   * Specifies if pointer events should be handled.
+   * @default true
    */
   pointerEvents = true;
 
   originalPointerEvents: boolean | null = null;
 
   /**
-   * Specifies if pointer events should be handled. Default is true.
+   * Specifies if pointer events should be handled.
+   * @default 'all'
    */
   svgPointerEvents = 'all';
 
   /**
-   * Specifies if pointer events outside of shape should be handled. Default
-   * is false.
+   * Specifies if pointer events outside of shape should be handled.
+   * @default false
    */
   shapePointerEvents = false;
 
   /**
-   * Specifies if pointer events outside of stencils should be handled. Default
-   * is false. Set this to true for backwards compatibility with the 1.x branch.
+   * Specifies if pointer events outside of stencils should be handled.
+   * Set this to `true` for backwards compatibility with the 1.x branch.
+   *
+   * @default false
    */
   stencilPointerEvents = false;
 
   /**
-   * Specifies if the shape should be drawn as an outline. This disables all
-   * fill colors and can be used to disable other drawing states that should
-   * not be painted for outlines. Default is false. This should be set before
-   * calling <apply>.
+   * Specifies if the shape should be drawn as an outline.
+   *
+   * This disables all fill colors and can be used to disable other drawing states that should not be painted for outlines.
+   * This should be set before calling {@link apply}.
+   *
+   * @default false
    */
   outline = false;
 
   /**
-   * Specifies if the shape is visible. Default is true.
+   * Specifies if the shape is visible.
+   * @default true
    */
   visible = true;
 
   /**
-   * Allows to use the SVG bounding box in SVG. Default is false for performance
-   * reasons.
+   * Allows to use the SVG bounding box in SVG.
+   * @default true
    */
   useSvgBoundingBox = true;
 
@@ -565,14 +573,12 @@ class Shape {
     let strokeDrawn = false;
 
     if (c && this.outline) {
-      const { stroke } = c;
+      const { fillAndStroke, stroke } = c;
 
       c.stroke = (...args) => {
         strokeDrawn = true;
         stroke.apply(c, args);
       };
-
-      const { fillAndStroke } = c;
 
       c.fillAndStroke = (...args) => {
         strokeDrawn = true;
