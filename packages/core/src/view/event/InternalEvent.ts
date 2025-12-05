@@ -229,12 +229,10 @@ class InternalEvent {
   }
 
   /**
-   * Redirects the mouse events from the given DOM node to the graph dispatch
-   * loop using the event and given state as event arguments. State can
-   * either be an instance of <CellState> or a function that returns an
-   * <CellState>. The down, move, up and dblClick arguments are optional
-   * functions that take the trigger event as arguments and replace the
-   * default behaviour.
+   * Redirects the mouse events from the given DOM node to the graph dispatch loop using the event and given state as event arguments.
+   * State can either be an instance of {@link CellState} or a function that returns an {@link CellState}.
+   *
+   * The down, move, up and dblClick arguments are optional functions that take the trigger event as arguments and replace the default behaviour.
    */
   static redirectMouseEvents(
     node: Listenable,
