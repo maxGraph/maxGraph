@@ -8,6 +8,10 @@ assignees: ''
 ---
 
 ### Describe the bug
+
+NOTE: PLEASE FOLLOW THIS TEMPLATE AND FILL ALL SECTIONS.
+Investigations generally cannot correctly start without all details requested in the template.
+
 A clear and concise description of what the bug is.
 
 Please create a single issue for each bug. If you have multiple bugs, please create multiple issues.
@@ -21,11 +25,14 @@ Steps to reproduce the behavior:
 3. Scroll down to '....'
 4. See error (if the error is taking from the browser console, please provide the error message in the text form, no image)
 
-If possible provide a repository to reproduce the issue. At minimum, provide the code (in text form, no image) that produces the issue.
+If possible provide a repository to reproduce the issue.
+At minimum, provide the code (in text form, no image) that produces the issue.
 
 ### Expected behavior
 A clear and concise description of what you expected to happen.
 
+If the feature existed in `mxGraph`, please mention if it was working with `mxGraph`.
+If you don't know the `mxGraph` status, please say it.
 
 ### Screenshots
 If applicable, add screenshots or videos to help explain your problem.
