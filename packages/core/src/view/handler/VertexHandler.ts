@@ -635,7 +635,7 @@ class VertexHandler implements MouseListenerSet {
     if (!me.isConsumed() && this.graph.isEnabled()) {
       const handle = this.getHandleForEvent(me);
 
-      if (handle) {
+      if (handle !== null) {
         this.start(me.getGraphX(), me.getGraphY(), handle);
         me.consume();
       }
