@@ -730,7 +730,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     MyCustomCellEditorHandler,
     TooltipHandler,
     SelectionCellsHandler,
-    PopupMenuHandler,
     MyCustomConnectionHandler,
     MyCustomSelectionHandler,
     PanningHandler,
