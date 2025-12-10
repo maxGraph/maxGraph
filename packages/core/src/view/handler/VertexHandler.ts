@@ -881,7 +881,7 @@ class VertexHandler implements MouseListenerSet {
       me.consume();
     }
     // Workaround for disabling the connect highlight when over handle
-    else if (!this.graph.isMouseDown && this.getHandleForEvent(me)) {
+    else if (!this.graph.isMouseDown && !isNullish(this.getHandleForEvent(me))) {
       me.consume(false);
     }
   }
