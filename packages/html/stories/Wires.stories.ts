@@ -48,7 +48,6 @@ import {
   mathUtils,
   PanningHandler,
   Point,
-  PopupMenuHandler,
   Rectangle,
   RubberBandHandler,
   SelectionCellsHandler,
