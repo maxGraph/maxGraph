@@ -15,9 +15,9 @@ maxGraph is a TypeScript library for displaying and interacting with vector diag
 
 ## Build & Development Environment
 
-**Node.js Version:** ALWAYS use Node.js version 20 (specified in `.nvmrc`). This is the version used in CI/CD. Run `nvm use` if using nvm.
+**Node.js Version:** ALWAYS use the Node.js version specified in `.nvmrc`. This is the version used in CI/CD. Run `nvm use` if using nvm.
 
-**Critical:** This is an npm workspaces monorepo. ALWAYS run `npm install` from the repository root before any other commands.
+**Critical:** This is a npm workspace monorepo. ALWAYS run `npm install` from the repository root before any other commands.
 
 ### Installation & Setup
 
