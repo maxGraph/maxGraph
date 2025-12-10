@@ -248,8 +248,7 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
             state &&
             node &&
             !this.graph.isEditing() &&
-            popupMenuHandler &&
-            !popupMenuHandler.isMenuShowing() &&
+            !popupMenuHandler?.isMenuShowing() &&
             !this.graph.isMouseDown
           ) {
             // Uses information from inside event cause using the event at
