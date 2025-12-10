@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 maxGraph is a TypeScript library for displaying and interacting with vector diagrams. It's the successor to the end-of-life mxGraph library, providing the same features with TypeScript support, modern modular architecture, and tree-shaking capabilities.
 
+## Build & Development Environment
+
+**Node.js Version:** ALWAYS use the Node.js version specified in `.nvmrc`. This is the version used in CI/CD. Run `nvm use` if using nvm.
+
 ## Development Commands
 
 ### Setup
