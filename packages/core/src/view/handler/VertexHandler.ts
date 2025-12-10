@@ -38,6 +38,7 @@ import EventSource from '../event/EventSource.js';
 import type SelectionHandler from '../plugins/SelectionHandler.js';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
 import { HandleConfig, VertexHandlerConfig } from './config.js';
+import { StencilShapeRegistry } from '../shape/stencil/StencilShapeRegistry.js';
 
 /**
  * Event handler for resizing cells.
@@ -128,8 +129,7 @@ class VertexHandler implements MouseListenerSet {
   rotationCursor = 'crosshair';
 
   /**
-   * Specifies if resize should change the cell in-place. This is an experimental
-   * feature for non-touch devices.
+   * Specifies if resize should change the cell in-place. This is an experimental feature for non-touch devices.
    * @default false
    */
   livePreview = false;
@@ -165,7 +165,7 @@ class VertexHandler implements MouseListenerSet {
   horizontalOffset = 0;
 
   /**
-   * The horizontal offset for the handles. This is updated in <redrawHandles>
+   * The horizontal offset for the handles. This is updated in {@link redrawHandles}
    * if {@link manageSizers} is true and the sizers are offset vertically.
    */
   verticalOffset = 0;
@@ -224,7 +224,6 @@ class VertexHandler implements MouseListenerSet {
       this.selectionBounds.height
     );
     this.selectionBorder = this.createSelectionShape(this.bounds);
-    // VML dialect required here for event transparency in IE
     this.selectionBorder.dialect = 'svg';
     this.selectionBorder.pointerEvents = false;
     this.selectionBorder.rotation = this.state.style.rotation ?? 0;
@@ -368,7 +367,7 @@ class VertexHandler implements MouseListenerSet {
   /**
    * Returns `true` if the center of the vertex should be maintained during the resize.
    */
-  isCenteredEvent(state: CellState, me: InternalMouseEvent) {
+  isCenteredEvent(_state: CellState, _me: InternalMouseEvent) {
     return false;
   }
 
@@ -410,11 +409,12 @@ class VertexHandler implements MouseListenerSet {
    * Returns the Rectangle that defines the bounds of the selection border.
    */
   getSelectionBounds(state: CellState) {
+    const margin = VertexHandlerConfig.margin;
     return new Rectangle(
-      Math.round(state.x),
-      Math.round(state.y),
-      Math.round(state.width),
-      Math.round(state.height)
+      Math.round(state.x) - margin,
+      Math.round(state.y) - margin,
+      Math.round(state.width) + 2 * margin,
+      Math.round(state.height) + 2 * margin
     );
   }
 
@@ -428,14 +428,32 @@ class VertexHandler implements MouseListenerSet {
   /**
    * Creates the shape used to draw the selection border.
    */
-  createSelectionShape(bounds: Rectangle) {
-    const shape = new RectangleShape(
-      Rectangle.fromRectangle(bounds),
-      NONE,
-      this.getSelectionColor()
-    );
-    shape.strokeWidth = this.getSelectionStrokeWidth();
+  createSelectionShape(bounds: Rectangle): Shape {
+    let shape: Shape;
+    if (VertexHandlerConfig.selectionShapeMatchVertex) {
+      const stencil = StencilShapeRegistry.get(this.state.style.shape);
+
+      if (stencil) {
+        shape = new Shape(stencil);
+        shape.apply(this.state);
+      } else {
+        // @ts-ignore known to work at runtime
+        shape = new this.state.shape.constructor();
+      }
+    } else {
+      shape = new RectangleShape(
+        Rectangle.fromRectangle(bounds),
+        NONE,
+        this.getSelectionColor()
+      );
+    }
+
+    shape.outline = true; // no foreground, and other details. Particularly important for Stencil shapes.
+    shape.bounds = bounds;
     shape.isDashed = this.isSelectionDashed();
+    shape.isShadow = false;
+    shape.stroke = this.getSelectionColor();
+    shape.strokeWidth = this.getSelectionStrokeWidth();
 
     return shape;
   }
@@ -1700,7 +1718,7 @@ class VertexHandler implements MouseListenerSet {
   }
 
   /**
-   * Returns the padding to be used for drawing handles for the current <bounds>.
+   * Returns the padding to be used for drawing handles for the current {@link bounds}.
    */
   getHandlePadding() {
     // KNOWN: Tolerance depends on event type (eg. 0 for mouse events)
@@ -1730,15 +1748,15 @@ class VertexHandler implements MouseListenerSet {
   }
 
   /**
-   * Redraws the handles. To hide certain handles the following code can be used.
+   * Redraws the handles.
+   *
+   * To hide certain handles the following code can be used:
    *
    * ```javascript
-   * redrawHandles()
-   * {
-   *   mxVertexHandlerRedrawHandles.apply(this, arguments);
+   * redrawHandles() {
+   *   originalVertexHandlerRedrawHandles.apply(this, arguments);
    *
-   *   if (this.sizers != null && this.sizers.length > 7)
-   *   {
+   *   if (this.sizers?.length > 7) {
    *     this.sizers[1].node.style.display = 'none';
    *     this.sizers[6].node.style.display = 'none';
    *   }
@@ -1938,8 +1956,6 @@ class VertexHandler implements MouseListenerSet {
 
   /**
    * Returns `true` if the parent highlight should be visible.
-   *
-   * This implementation always returns `true`.
    */
   isParentHighlightVisible() {
     const parent = this.state.cell.getParent();

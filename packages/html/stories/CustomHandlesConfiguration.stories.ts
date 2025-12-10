@@ -85,7 +85,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     HandleConfig.size = 8;
     HandleConfig.strokeColor = '#0088cf';
 
+    VertexHandlerConfig.margin = 6;
     VertexHandlerConfig.selectionColor = selectionColor;
+    VertexHandlerConfig.selectionDashed = false;
+    VertexHandlerConfig.selectionShapeMatchVertex = true;
     VertexHandlerConfig.selectionStrokeWidth = 2;
   }
 
@@ -120,9 +123,37 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Adds cells to the model in a single step
   graph.batchUpdate(() => {
-    const v1 = graph.insertVertex(parent, null, 'A1', 20, 20, 40, 80, { shape: 'and' });
-    const v2 = graph.insertVertex(parent, null, 'A2', 20, 220, 40, 80, { shape: 'and' });
-    const v3 = graph.insertVertex(parent, null, 'X1', 160, 110, 80, 80, { shape: 'xor' });
+    const v1 = graph.insertVertex({
+      value: 'A1\nnot rotatable',
+      x: 5,
+      y: 15,
+      width: 80,
+      height: 80,
+      style: { rotatable: false, rounded: true },
+    });
+    const v2 = graph.insertVertex({
+      value: 'A2\npre rotated',
+      x: 20,
+      y: 220,
+      width: 60,
+      height: 80,
+      style: {
+        rotation: -30,
+        rounded: true,
+      },
+    });
+    const v3 = graph.insertVertex({
+      value: 'X1 circle\nnot resizable',
+      x: 160,
+      y: 110,
+      width: 80,
+      height: 80,
+      style: {
+        perimeter: 'ellipsePerimeter',
+        resizable: false,
+        shape: 'ellipse',
+      },
+    });
     const e1 = graph.insertEdge(parent, null, 'Edge from A1 to X1', v1, v3);
     e1.geometry!.points = [new Point(90, 60), new Point(90, 130)];
     const e2 = graph.insertEdge(parent, null, 'Edge from A2 to X1', v2, v3);
@@ -132,9 +163,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       shape: 'customShape',
       flipH: true,
     });
-    const v5 = graph.insertVertex(parent, null, 'A4', 520, 220, 40, 80, {
-      shape: 'and',
-      flipH: true,
+    const v5 = graph.insertVertex({
+      value: 'A4',
+      x: 520,
+      y: 220,
+      width: 60,
+      height: 60,
+      style: {
+        perimeter: 'ellipsePerimeter',
+        shape: 'ellipse',
+      },
     });
     const v6 = graph.insertVertex(parent, null, 'X2', 340, 110, 80, 80, {
       shape: 'xor',
@@ -147,9 +185,11 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     const e4 = graph.insertEdge(parent, null, 'Edge from A4 to X2', v5, v6);
     e4.geometry!.points = [new Point(490, 260), new Point(350, 220)];
 
-    const v7 = graph.insertVertex(parent, null, 'O1', 250, 260, 80, 60, {
-      shape: 'or',
-      direction: 'south',
+    const v7 = graph.insertVertex(parent, null, 'O1\nnot movable', 250, 260, 100, 60, {
+      perimeter: 'rhombusPerimeter',
+      movable: false,
+      rounded: true,
+      shape: 'rhombus',
     });
     const e5 = graph.insertEdge(parent, null, '', v6, v7);
     e5.geometry!.points = [new Point(310, 150)];
