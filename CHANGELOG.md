@@ -9,6 +9,14 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+## 0.22.0
+
+Release date: `2025-12-11`
+
+For more details, see the [0.22.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.22.0) on the GitHub release page.
+
+This new version makes default style properties globally configurable and includes bug fixes for a smoother developer experience.
+
 ## 0.21.0
 
 Release date: `2025-07-22`
