@@ -38,6 +38,7 @@ import EventSource from '../event/EventSource.js';
 import type SelectionHandler from '../plugins/SelectionHandler.js';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
 import { HandleConfig, VertexHandlerConfig } from './config.js';
+import { isNullish } from '../../internal/utils.js';
 
 /**
  * Event handler for resizing cells.
@@ -635,7 +636,7 @@ class VertexHandler implements MouseListenerSet {
     if (!me.isConsumed() && this.graph.isEnabled()) {
       const handle = this.getHandleForEvent(me);
 
-      if (handle) {
+      if (!isNullish(handle)) {
         this.start(me.getGraphX(), me.getGraphY(), handle);
         me.consume();
       }
@@ -880,7 +881,7 @@ class VertexHandler implements MouseListenerSet {
       me.consume();
     }
     // Workaround for disabling the connect highlight when over handle
-    else if (!this.graph.isMouseDown && this.getHandleForEvent(me)) {
+    else if (!this.graph.isMouseDown && !isNullish(this.getHandleForEvent(me))) {
       me.consume(false);
     }
   }

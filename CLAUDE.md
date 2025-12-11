@@ -244,6 +244,22 @@ packages/
 └── website/                # Documentation website (Docusaurus)
 ```
 
+## Coding Practices
+
+### Null/Undefined Checks
+
+Use the `isNullish` function when checking for `null` or `undefined` on variables that can have falsy values (numbers, strings, booleans). This avoids bugs where `0`, `""`, or `false` are incorrectly treated as nullish.
+
+```typescript
+import { isNullish } from '../internal/utils.js';
+
+// Good - correctly handles index = 0
+if (isNullish(index)) { ... }
+
+// Bad - treats index = 0 as falsy
+if (!index) { ... }
+```
+
 ## Important Patterns
 
 ### Using Graph vs BaseGraph
