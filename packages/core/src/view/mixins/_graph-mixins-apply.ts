@@ -35,7 +35,6 @@ import { SelectionMixin } from './SelectionMixin.js';
 import { SnapMixin } from './SnapMixin.js';
 import { SwimlaneMixin } from './SwimlaneMixin.js';
 import { TerminalMixin } from './TerminalMixin.js';
-import { TooltipMixin } from './TooltipMixin.js';
 import { ValidationMixin } from './ValidationMixin.js';
 import { VertexMixin } from './VertexMixin.js';
 import { ZoomMixin } from './ZoomMixin.js';
@@ -65,7 +64,6 @@ export const applyGraphMixins = (target: typeof AbstractGraph) => {
     SnapMixin,
     SwimlaneMixin,
     TerminalMixin,
-    TooltipMixin,
     ValidationMixin,
     VertexMixin,
     ZoomMixin,
