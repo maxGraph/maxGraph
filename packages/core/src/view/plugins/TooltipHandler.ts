@@ -348,6 +348,8 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
    * @param node DOM node that is currently under the mouse.
    * @param x X-coordinate of the mouse.
    * @param y Y-coordinate of the mouse.
+   *
+   * @since 0.23.0
    */
   getTooltip(
     state: CellState,
@@ -412,6 +414,8 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
    * ```
    *
    * @param cell {@link Cell} whose tooltip should be returned.
+   *
+   * @since 0.23.0
    */
   getTooltipForCell(cell: Cell): string {
     if (cell && 'getTooltip' in cell && typeof cell.getTooltip === 'function') {
