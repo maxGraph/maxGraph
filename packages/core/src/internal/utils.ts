@@ -17,6 +17,7 @@ limitations under the License.
 import { NODE_TYPE } from '../util/Constants.js';
 import { UserObject } from './types.js';
 import { GlobalConfig } from '../util/config.js';
+import { Logger } from '../types.js';
 
 /**
  * @private
@@ -45,6 +46,11 @@ export const isNullish = (v: unknown): v is null | undefined =>
   v === null || v === undefined;
 
 /**
+ * Returns the global logger.
+ */
+export const log = (): Logger => GlobalConfig.logger;
+
+/**
  * Merge a mixin into the destination.
  *
  * WARN: do not use "complex" properties type (object, array), as they will be shared between all instances of the destination class.
@@ -67,7 +73,7 @@ export const mixInto = (dest: any) => (mixin: any) => {
       });
     }
   } catch (e) {
-    GlobalConfig.logger.error('Error while mixing', e);
+    log().error('Error while mixing', e);
   }
 };
 

@@ -17,14 +17,13 @@ limitations under the License.
 */
 
 import ObjectIdentity from '../util/ObjectIdentity.js';
-import { GlobalConfig } from '../util/config.js';
 import Geometry from '../view/geometry/Geometry.js';
 import Point from '../view/geometry/Point.js';
 import { isInteger, isNumeric } from '../util/mathUtils.js';
 import { getTextContent } from '../util/domUtils.js';
 import { load } from '../util/requestUtils.js';
 import type Codec from './Codec.js';
-import { doEval, isElement } from '../internal/utils.js';
+import { doEval, isElement, log } from '../internal/utils.js';
 
 const geometryNumericAttributes: Array<keyof Geometry> = [
   '_x',
@@ -56,11 +55,11 @@ const pointNumericAttributes: Array<keyof Point> = ['_x', '_y'];
  * const node = enc.encode(obj);
  * ```
  *
- * The output of the encoding may be viewed using {@link GlobalConfig.logger} as follows.
+ * The output of the encoding may be viewed using {@link log()} as follows.
  *
  * ```javascript
- * GlobalConfig.logger.show();
- * GlobalConfig.logger.debug(mxUtils.getPrettyXml(node));
+ * log().show();
+ * log().debug(mxUtils.getPrettyXml(node));
  * ```
  *
  * Finally, the result of the encoding looks as follows.
@@ -381,7 +380,7 @@ class ObjectCodec {
    * if the value is a function.
    *
    * If no ID exists for a variable in {@link idrefs} or if an object
-   * cannot be encoded, a warning is issued using {@link GlobalConfig.logger}.
+   * cannot be encoded, a warning is issued using {@link log()}.
    *
    * Returns the resulting XML node that represents the given
    * object.
@@ -446,9 +445,7 @@ class ObjectCodec {
         const tmp = enc.getId(value);
 
         if (tmp == null) {
-          GlobalConfig.logger.warn(
-            `ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`
-          );
+          log().warn(`ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`);
           return; // exit
         }
 
@@ -527,9 +524,7 @@ class ObjectCodec {
 
       node.appendChild(child);
     } else {
-      GlobalConfig.logger.warn(
-        `ObjectCodec.encode: No node for ${this.getName()}.${name}: ${value}`
-      );
+      log().warn(`ObjectCodec.encode: No node for ${this.getName()}.${name}: ${value}`);
     }
   }
 
@@ -679,7 +674,7 @@ class ObjectCodec {
    * ```
    *
    * If no object exists for an ID in {@link idrefs} a warning is issued
-   * using {@link GlobalConfig.logger}.
+   * using {@link log()}.
    *
    * Returns the resulting object that represents the given XML node
    * or the object given to the method as the into parameter.
@@ -770,7 +765,7 @@ class ObjectCodec {
         const tmp = dec.getObject(value);
 
         if (tmp == null) {
-          GlobalConfig.logger.warn(
+          log().warn(
             `ObjectCodec.decode: No object for ${this.getName()}.${name}=${value}`
           );
           return; // exit

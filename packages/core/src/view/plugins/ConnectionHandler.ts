@@ -41,7 +41,6 @@ import ConstraintHandler from '../handler/ConstraintHandler.js';
 import PolylineShape from '../shape/edge/PolylineShape.js';
 import EventSource from '../event/EventSource.js';
 import Rectangle from '../geometry/Rectangle.js';
-import { GlobalConfig } from '../../util/config.js';
 import {
   getClientX,
   getClientY,
@@ -61,6 +60,7 @@ import type {
   Listenable,
   MouseListenerSet,
 } from '../../types.js';
+import { log } from '../../internal/utils.js';
 
 type FactoryMethod = (
   source: Cell | null,
@@ -190,8 +190,8 @@ type FactoryMethod = (
  *   const sourcePortId = style.sourcePort;
  *   const targetPortId = style.targetPort;
  *
- *   GlobalConfig.logger.show();
- *   GlobalConfig.logger.debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
+ *   log().show();
+ *   log().debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
  * });
  * ```
  *
@@ -1832,11 +1832,11 @@ export default class ConnectionHandler
           );
         }
       } catch (e: any) {
-        GlobalConfig.logger.show();
+        log().show();
         const errorMessage = `Error in ConnectionHandler: ${
           e instanceof Error ? e.message + '\n' + e.stack : 'unknown cause'
         }`;
-        GlobalConfig.logger.debug(errorMessage);
+        log().debug(errorMessage);
       } finally {
         model.endUpdate();
       }

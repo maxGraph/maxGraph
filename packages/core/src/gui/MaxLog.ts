@@ -23,17 +23,17 @@ import { toString } from '../util/StringUtils.js';
 import MaxWindow from './MaxWindow.js';
 import { KeyboardEventListener, MouseEventListener } from '../types.js';
 import { getElapseMillisecondsMessage } from '../internal/time-utils.js';
+import { log } from '../internal/utils.js';
 import { VERSION } from '../util/Constants.js';
-import { GlobalConfig } from '../util/config.js';
 import { popup } from './guiUtils.js';
 
 const copyTextToClipboard = (text: string): void => {
   navigator.clipboard.writeText(text).then(
     function () {
-      GlobalConfig.logger.info('Async: Copying to clipboard was successful!');
+      log().info('Async: Copying to clipboard was successful!');
     },
     function (err) {
-      GlobalConfig.logger.error('Async: Could not copy text: ', err);
+      log().error('Async: Could not copy text: ', err);
     }
   );
 };
