@@ -21,6 +21,5 @@ import { Cell, CellState, TooltipHandler } from '../../../src';
 test('The "SelectionCellsHandler" plugin is not available', () => {
   const tooltipHandler = new TooltipHandler(createGraphWithoutPlugins());
   // just validate there is no error in this case
-  // @ts-ignore - TODO getTooltip is currently protected
   tooltipHandler.getTooltip(new CellState(null, new Cell()), null!, 0, 0);
 });

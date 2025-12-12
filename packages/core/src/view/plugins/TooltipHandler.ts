@@ -16,22 +16,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../event/InternalEvent';
-import { fit, getScrollOrigin } from '../../util/styleUtils';
-import { TOOLTIP_VERTICAL_OFFSET } from '../../util/Constants';
-import { getSource, isMouseEvent } from '../../util/EventUtils';
-import { isNode } from '../../util/domUtils';
-import type { AbstractGraph } from '../Graph';
-import CellState from '../cell/CellState';
-import InternalMouseEvent from '../event/InternalMouseEvent';
-import type PopupMenuHandler from './PopupMenuHandler';
-import type { GraphPlugin, MouseListenerSet } from '../../types';
-import type EventSource from '../event/EventSource';
-import { htmlEntities } from '../../util/StringUtils';
-import Translations from '../../util/Translations';
-import type Shape from '../geometry/Shape';
-import type SelectionCellsHandler from './SelectionCellsHandler';
-import type Cell from '../cell/Cell';
+import InternalEvent from '../event/InternalEvent.js';
+import { fit, getScrollOrigin } from '../../util/styleUtils.js';
+import { TOOLTIP_VERTICAL_OFFSET } from '../../util/Constants.js';
+import { getSource, isMouseEvent } from '../../util/EventUtils.js';
+import { isNode } from '../../util/domUtils.js';
+import type { AbstractGraph } from '../Graph.js';
+import CellState from '../cell/CellState.js';
+import InternalMouseEvent from '../event/InternalMouseEvent.js';
+import type PopupMenuHandler from './PopupMenuHandler.js';
+import type { GraphPlugin, MouseListenerSet } from '../../types.js';
+import type EventSource from '../event/EventSource.js';
+import { htmlEntities } from '../../util/StringUtils.js';
+import Translations from '../../util/Translations.js';
+import type Shape from '../geometry/Shape.js';
+import type SelectionCellsHandler from './SelectionCellsHandler.js';
+import type Cell from '../cell/Cell.js';
 
 /**
  * Graph event handler that displays tooltips.
@@ -349,7 +349,7 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
    * @param x X-coordinate of the mouse.
    * @param y Y-coordinate of the mouse.
    */
-  protected getTooltip(
+  getTooltip(
     state: CellState,
     node: HTMLElement | SVGElement,
     x: number,
@@ -419,7 +419,7 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
    *
    * @param cell {@link Cell} whose tooltip should be returned.
    */
-  protected getTooltipForCell(cell: Cell): string {
+  getTooltipForCell(cell: Cell): string {
     let tip = null;
 
     if (cell && 'getTooltip' in cell && typeof cell.getTooltip === 'function') {
