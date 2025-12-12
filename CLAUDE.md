@@ -246,6 +246,8 @@ packages/
 
 ## Coding Practices
 
+When developing in the core package, follow these guidelines:
+
 ### Null/Undefined Checks
 
 Use the `isNullish` function when checking for `null` or `undefined` on variables that can have falsy values (numbers, strings, booleans). This avoids bugs where `0`, `""`, or `false` are incorrectly treated as nullish.
@@ -258,6 +260,34 @@ if (isNullish(index)) { ... }
 
 // Bad - treats index = 0 as falsy
 if (!index) { ... }
+```
+
+### Logging and i18n
+
+Use the internal utility functions instead of accessing `GlobalConfig` directly:
+
+**For logging**, use the `log()` function from `internal/utils.js`:
+```typescript
+import { log } from '../internal/utils.js';
+
+// Good - uses internal log function
+log().warn('Something unexpected happened');
+log().error('An error occurred', error);
+
+// Bad - accesses GlobalConfig directly
+GlobalConfig.logger.warn('Something unexpected happened');
+```
+
+**For internationalization**, use functions from `internal/i18n-utils.js`:
+```typescript
+import { translate, isI18nEnabled } from '../internal/i18n-utils.js';
+
+// Good - uses internal i18n functions
+const message = translate('key', params, 'default');
+if (isI18nEnabled()) { ... }
+
+// Bad - accesses GlobalConfig directly
+const message = GlobalConfig.i18n.get('key', params, 'default');
 ```
 
 ## Important Patterns

@@ -19,10 +19,9 @@ import { getNameFromRegistries } from './utils.js';
 import { Stylesheet } from '../../view/style/Stylesheet.js';
 import type Codec from '../Codec.js';
 import { clone } from '../../util/cloneUtils.js';
-import { GlobalConfig } from '../../util/config.js';
 import { isNumeric } from '../../util/mathUtils.js';
 import { getTextContent } from '../../util/domUtils.js';
-import { doEval, isElement } from '../../internal/utils.js';
+import { doEval, isElement, log } from '../../internal/utils.js';
 
 /**
  * Codec for {@link Stylesheet}s.
@@ -147,7 +146,7 @@ export class StylesheetCodec extends ObjectCodec {
 
           if (!style) {
             if (extend) {
-              GlobalConfig.logger.warn(
+              log().warn(
                 `StylesheetCodec.decode: stylesheet ${extend} not found to extend`
               );
             }

@@ -26,7 +26,7 @@ import { addLinkToHead, write } from '../../util/domUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type CellState from '../cell/CellState.js';
 import type Cell from '../cell/Cell.js';
-import { GlobalConfig } from '../../util/config.js';
+import { log } from '../../internal/utils.js';
 
 /**
  * Implements printing of a diagram across multiple pages.
@@ -886,7 +886,7 @@ class PrintPreview {
         return this.getLinkForCellState(state);
       });
     } catch (e: unknown) {
-      GlobalConfig.logger.error('PrintPreview unable to generate the preview', e);
+      log().error('PrintPreview unable to generate the preview', e);
     } finally {
       // Removes everything but the SVG node
       let tmp = <HTMLElement>div.firstChild;

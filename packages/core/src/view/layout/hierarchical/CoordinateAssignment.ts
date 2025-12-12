@@ -18,7 +18,6 @@ limitations under the License.
 
 import HierarchicalLayoutStage from './HierarchicalLayoutStage.js';
 import type { DirectionValue } from '../../../types.js';
-import { GlobalConfig } from '../../../util/config.js';
 import WeightedCellSorter from '../util/WeightedCellSorter.js';
 import Point from '../../geometry/Point.js';
 import HierarchicalEdgeStyle from '../datatypes/HierarchicalEdgeStyle.js';
@@ -31,6 +30,7 @@ import type { AbstractGraph } from '../../AbstractGraph.js';
 import Geometry from '../../../view/geometry/Geometry.js';
 import GraphHierarchyEdge from '../datatypes/GraphHierarchyEdge.js';
 import SwimlaneLayout from '../SwimlaneLayout.js';
+import { log } from '../../../internal/utils.js';
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.
@@ -205,7 +205,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     const model = <GraphHierarchyModel>this.layout.getDataModel();
     const ranks = <GraphAbstractHierarchyCell[][]>model.ranks;
 
-    const logger = GlobalConfig.logger;
+    const logger = log();
     logger.show();
     logger.info('======Coord assignment debug=======');
 
@@ -727,7 +727,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
         if (node.edges != null) {
           numEdges = node.edges.length;
         } else {
-          GlobalConfig.logger.warn('edge.edges is null');
+          log().warn('edge.edges is null');
         }
 
         node.width = (numEdges - 1) * this.parallelEdgeSpacing;
@@ -742,7 +742,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
     }
 
     if (boundsWarning) {
-      GlobalConfig.logger.warn('At least one cell has no bounds');
+      log().warn('At least one cell has no bounds');
     }
   }
 
@@ -801,7 +801,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
           if (node.edges != null) {
             numEdges = node.edges.length;
           } else {
-            GlobalConfig.logger.warn('edge.edges is null');
+            log().warn('edge.edges is null');
           }
 
           node.width = (numEdges - 1) * this.parallelEdgeSpacing;
@@ -823,7 +823,7 @@ class CoordinateAssignment extends HierarchicalLayoutStage {
       }
 
       if (boundsWarning) {
-        GlobalConfig.logger.warn('At least one cell has no bounds');
+        log().warn('At least one cell has no bounds');
       }
 
       this.rankY[rankValue] = y;

@@ -18,12 +18,11 @@ import ObjectCodec from '../../ObjectCodec.js';
 import { EditorToolbar } from '../../../editor/EditorToolbar.js';
 import type Codec from '../../Codec.js';
 import type Editor from '../../../editor/Editor.js';
-import { GlobalConfig } from '../../../util/config.js';
 import { convertPoint } from '../../../util/styleUtils.js';
 import { getClientX, getClientY } from '../../../util/EventUtils.js';
 import InternalEvent from '../../../view/event/InternalEvent.js';
 import { getChildNodes, getTextContent } from '../../../util/domUtils.js';
-import { doEval, isElement } from '../../../internal/utils.js';
+import { doEval, isElement, log } from '../../../internal/utils.js';
 import { translate } from '../../../internal/i18n-utils.js';
 
 type HTMLOptionElementWithCellStyle = HTMLOptionElement & { cellStyle?: string | null };
@@ -230,7 +229,7 @@ export class EditorToolbarCodec extends ObjectCodec {
 
                           return clone;
                         }
-                        GlobalConfig.logger.warn(`Template ${template} not found`);
+                        log().warn(`Template ${template} not found`);
 
                         return null;
                       };
