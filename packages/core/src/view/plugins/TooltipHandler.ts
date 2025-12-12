@@ -420,15 +420,10 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
    * @param cell {@link Cell} whose tooltip should be returned.
    */
   getTooltipForCell(cell: Cell): string {
-    let tip = null;
-
     if (cell && 'getTooltip' in cell && typeof cell.getTooltip === 'function') {
-      tip = cell.getTooltip();
-    } else {
-      tip = this.graph.convertValueToString(cell);
+      return cell.getTooltip();
     }
-
-    return tip;
+    return this.graph.convertValueToString(cell);
   }
 }
 
