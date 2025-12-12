@@ -16,17 +16,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import InternalEvent from '../event/InternalEvent.js';
-import { fit, getScrollOrigin } from '../../util/styleUtils.js';
-import { TOOLTIP_VERTICAL_OFFSET } from '../../util/Constants.js';
-import { getSource, isMouseEvent } from '../../util/EventUtils.js';
-import { isNode } from '../../util/domUtils.js';
-import type { AbstractGraph } from '../AbstractGraph.js';
-import CellState from '../cell/CellState.js';
-import InternalMouseEvent from '../event/InternalMouseEvent.js';
-import type PopupMenuHandler from './PopupMenuHandler.js';
-import type { GraphPlugin, MouseListenerSet } from '../../types.js';
-import EventSource from '../event/EventSource.js';
+import InternalEvent from '../event/InternalEvent';
+import { fit, getScrollOrigin } from '../../util/styleUtils';
+import { TOOLTIP_VERTICAL_OFFSET } from '../../util/Constants';
+import { getSource, isMouseEvent } from '../../util/EventUtils';
+import { isNode } from '../../util/domUtils';
+import type { AbstractGraph } from '../Graph';
+import CellState from '../cell/CellState';
+import InternalMouseEvent from '../event/InternalMouseEvent';
+import type PopupMenuHandler from './PopupMenuHandler';
+import type { GraphPlugin, MouseListenerSet } from '../../types';
+import type EventSource from '../event/EventSource';
+import { htmlEntities } from '../../util/StringUtils';
+import Translations from '../../util/Translations';
+import type Shape from '../geometry/Shape';
+import type SelectionCellsHandler from './SelectionCellsHandler';
+import type Cell from '../cell/Cell';
 
 /**
  * Graph event handler that displays tooltips.
@@ -254,12 +259,7 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
             // Uses information from inside event cause using the event at
             // this (delayed) point in time is not possible in IE as it no
             // longer contains the required information (member not found)
-            const tip = this.graph.getTooltip(
-              state,
-              node as HTMLElement | SVGElement,
-              x,
-              y
-            );
+            const tip = this.getTooltip(state, node as HTMLElement | SVGElement, x, y);
             this.show(tip, x, y);
             this.state = state;
             this.node = node;
@@ -332,6 +332,103 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
       this.destroyed = true;
       this.div = null;
     }
+  }
+
+  /**
+   * Returns the string or DOM node that represents the tooltip for the given
+   * state, node and coordinate pair. This implementation checks if the given
+   * node is a folding icon or overlay and returns the respective tooltip. If
+   * this does not result in a tooltip, the handler for the cell is retrieved
+   * from {@link SelectionCellsHandler} and the optional getTooltipForNode method is
+   * called. If no special tooltip exists here then {@link getTooltipForCell} is used
+   * with the cell in the given state as the argument to return a tooltip for the
+   * given state.
+   *
+   * @param state {@link CellState} whose tooltip should be returned.
+   * @param node DOM node that is currently under the mouse.
+   * @param x X-coordinate of the mouse.
+   * @param y Y-coordinate of the mouse.
+   */
+  protected getTooltip(
+    state: CellState,
+    node: HTMLElement | SVGElement,
+    x: number,
+    y: number
+  ): HTMLElement | string | null {
+    let tip: HTMLElement | string | null = null;
+
+    // Checks if the mouse is over the folding icon
+    if (
+      state.control &&
+      (node === state.control.node || node.parentNode === state.control.node)
+    ) {
+      tip = this.graph.getCollapseExpandResource();
+      tip = htmlEntities(Translations.get(tip) || tip, true).replace(/\\n/g, '<br>');
+    }
+
+    if (!tip && state.overlays) {
+      state.overlays.visit((id: string, shape: Shape) => {
+        // LATER: Exit loop if tip is not null
+        if (!tip && (node === shape.node || node.parentNode === shape.node)) {
+          tip = shape.overlay ? (shape.overlay.toString() ?? null) : null;
+        }
+      });
+    }
+
+    if (!tip) {
+      const selectionCellsHandler = this.graph.getPlugin<SelectionCellsHandler>(
+        'SelectionCellsHandler'
+      );
+
+      const handler = selectionCellsHandler?.getHandler(state.cell);
+
+      if (
+        handler &&
+        'getTooltipForNode' in handler &&
+        typeof handler.getTooltipForNode === 'function'
+      ) {
+        tip = handler.getTooltipForNode(node);
+      }
+    }
+
+    if (!tip) {
+      tip = this.getTooltipForCell(state.cell);
+    }
+
+    return tip;
+  }
+
+  // TODO simplify implementation (return in if)
+  // TODO JSDoc adapt example
+
+  /**
+   * Returns the string or DOM node to be used as the tooltip for the given
+   * cell. This implementation uses the {@link Cell.getTooltip} function if it
+   * exists, or else it returns {@link convertValueToString} for the cell.
+   *
+   * @example
+   *
+   * ```javascript
+   * graph.getTooltipForCell = function(cell)
+   * {
+   *   return 'Hello, World!';
+   * }
+   * ```
+   *
+   * Replaces all tooltips with the string Hello, World!
+   *
+   * @param cell {@link Cell} whose tooltip should be returned.
+   */
+  protected getTooltipForCell(cell: Cell): string {
+    let tip = null;
+
+    if (cell && 'getTooltip' in cell && typeof cell.getTooltip === 'function') {
+      tip = cell.getTooltip();
+    } else {
+      tip = this.graph.convertValueToString(cell);
+    }
+
+    return tip;
   }
 }
 
