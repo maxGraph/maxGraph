@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import { test } from '@jest/globals';
-import { createGraphWithoutPlugins } from '../../utils';
+import { createGraphWithoutPlugins } from '../utils';
 
-test('The "TooltipHandler" plugin is not available', () => {
+test('setTooltips - the "TooltipHandler" plugin is not available', () => {
   const graph = createGraphWithoutPlugins();
+  // just validate there is no error in this case
   graph.setTooltips(true);
 });
