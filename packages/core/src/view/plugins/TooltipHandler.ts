@@ -21,15 +21,15 @@ import { fit, getScrollOrigin } from '../../util/styleUtils.js';
 import { TOOLTIP_VERTICAL_OFFSET } from '../../util/Constants.js';
 import { getSource, isMouseEvent } from '../../util/EventUtils.js';
 import { isNode } from '../../util/domUtils.js';
-import type { AbstractGraph } from '../Graph.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
 import CellState from '../cell/CellState.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
 import type PopupMenuHandler from './PopupMenuHandler.js';
 import type { GraphPlugin, MouseListenerSet } from '../../types.js';
 import type EventSource from '../event/EventSource.js';
 import { htmlEntities } from '../../util/StringUtils.js';
-import Translations from '../../util/Translations.js';
-import type Shape from '../geometry/Shape.js';
+import { translate } from '../../internal/i18n-utils.js';
+import Shape from '../shape/Shape.js';
 import type SelectionCellsHandler from './SelectionCellsHandler.js';
 import type Cell from '../cell/Cell.js';
 
@@ -363,11 +363,11 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
       (node === state.control.node || node.parentNode === state.control.node)
     ) {
       tip = this.graph.getCollapseExpandResource();
-      tip = htmlEntities(Translations.get(tip) || tip, true).replace(/\\n/g, '<br>');
+      tip = htmlEntities(translate(tip) || tip, true).replace(/\\n/g, '<br>');
     }
 
     if (!tip && state.overlays) {
-      state.overlays.visit((id: string, shape: Shape) => {
+      state.overlays.forEach((shape: Shape) => {
         // LATER: Exit loop if tip is not null
         if (!tip && (node === shape.node || node.parentNode === shape.node)) {
           tip = shape.overlay ? (shape.overlay.toString() ?? null) : null;
