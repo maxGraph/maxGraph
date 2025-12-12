@@ -36,7 +36,7 @@ import type Cell from '../cell/Cell.js';
 /**
  * Graph event handler that displays tooltips.
  *
- * {@link AbstractGraph.getTooltip} is used to get the tooltip for a cell or handle.
+ * {@link getTooltip} is used to get the tooltip for a cell or handle.
  *
  * This handler is generally enabled using {@link AbstractGraph.setTooltips}.
  *
