@@ -398,24 +398,18 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
     return tip;
   }
 
-  // TODO simplify implementation (return in if)
-  // TODO JSDoc adapt example
-
   /**
-   * Returns the string or DOM node to be used as the tooltip for the given
-   * cell. This implementation uses the {@link Cell.getTooltip} function if it
-   * exists, or else it returns {@link convertValueToString} for the cell.
+   * Returns the string or DOM node to be used as the tooltip for the given cell.
+   * This implementation uses the {@link Cell.getTooltip} function if it exists, or else it returns {@link convertValueToString} for the cell.
    *
-   * @example
+   * To replace all tooltips with the string "Hello, World!", use the following code:
    *
-   * ```javascript
-   * graph.getTooltipForCell = function(cell)
-   * {
+   * ```typescript
+   * const tooltipHandler = graph.getPlugin<TooltipHandler>('TooltipHandler')!;
+   * tooltipHandler.getTooltipForCell = function(cell) {
    *   return 'Hello, World!';
    * }
    * ```
-   *
-   * Replaces all tooltips with the string Hello, World!
    *
    * @param cell {@link Cell} whose tooltip should be returned.
    */
