@@ -29,7 +29,7 @@ import type { GraphPlugin, MouseListenerSet } from '../../types.js';
 import type EventSource from '../event/EventSource.js';
 import { htmlEntities } from '../../util/StringUtils.js';
 import { translate } from '../../internal/i18n-utils.js';
-import Shape from '../shape/Shape.js';
+import type Shape from '../shape/Shape.js';
 import type SelectionCellsHandler from './SelectionCellsHandler.js';
 import type Cell from '../cell/Cell.js';
 
