@@ -144,17 +144,17 @@ class HierarchicalLayout extends GraphLayout {
   model: GraphHierarchyModel | null = null;
 
   /**
-   * A cache of edges whose source terminal is the key
+   * Maps each vertex to its computed list of incident edges considered by the layout.
    */
   edgesCache: Map<Cell, Cell[]> = new Map();
 
   /**
-   * A cache of edges whose source terminal is the key
+   * Maps each edge to its resolved visible source terminal vertex.
    */
   edgeSourceTermCache: Map<Cell, Cell> = new Map();
 
   /**
-   * A cache of edges whose source terminal is the key
+   * Maps each edge to its resolved visible target terminal vertex.
    */
   edgesTargetTermCache: Map<Cell, Cell> = new Map();
 
@@ -318,7 +318,6 @@ class HierarchicalLayout extends GraphLayout {
       return cachedEdges;
     }
 
-    const { model } = this.graph;
     let edges: Cell[] = [];
     const isCollapsed = cell.isCollapsed();
     const childCount = cell.getChildCount();
