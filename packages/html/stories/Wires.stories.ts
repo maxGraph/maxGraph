@@ -169,30 +169,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       return style;
     };
 
-    override getTooltipForCell(cell: Cell) {
-      let tip = '';
-
-      if (cell) {
-        const src = cell.getTerminal(true);
-        if (src) {
-          tip += this.getTooltipForCell(src) + ' ';
-        }
-
-        const parent = cell.getParent();
-        if (parent?.isVertex()) {
-          tip += this.getTooltipForCell(parent) + '.';
-        }
-
-        tip += super.getTooltipForCell(cell);
-
-        const trg = cell.getTerminal(false);
-        if (trg != null) {
-          tip += ' ' + this.getTooltipForCell(trg);
-        }
-      }
-      return tip;
-    }
-
     // Alternative solution for implementing connection points without child cells.
     // This can be extended as shown in the "PortRefs" story to allow for per-port incoming/outgoing direction.
     override getAllConnectionConstraints = (
@@ -399,6 +375,32 @@ const Template = ({ label, ...args }: Record<string, string>) => {
         const geo = cell.getGeometry();
         return geo?.relative ?? false;
       }
+    }
+  }
+
+  class MyCustomTooltipHandler extends TooltipHandler {
+    override getTooltipForCell(cell: Cell): string {
+      let tip = '';
+
+      if (cell) {
+        const src = cell.getTerminal(true);
+        if (src) {
+          tip += this.getTooltipForCell(src) + ' ';
+        }
+
+        const parent = cell.getParent();
+        if (parent?.isVertex()) {
+          tip += this.getTooltipForCell(parent) + '.';
+        }
+
+        tip += super.getTooltipForCell(cell);
+
+        const trg = cell.getTerminal(false);
+        if (trg != null) {
+          tip += ' ' + this.getTooltipForCell(trg);
+        }
+      }
+      return tip;
     }
   }
 
@@ -727,7 +729,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const plugins: GraphPluginConstructor[] = [
     MyCustomCellEditorHandler,
-    TooltipHandler,
+    MyCustomTooltipHandler,
     SelectionCellsHandler,
     MyCustomConnectionHandler,
     MyCustomSelectionHandler,

@@ -15,15 +15,10 @@ limitations under the License.
 */
 
 import { test } from '@jest/globals';
-import { createGraphWithoutPlugins } from '../../utils';
-import { Cell, CellState } from '../../../src';
+import { createGraphWithoutPlugins } from '../utils';
 
-test('The "TooltipHandler" plugin is not available', () => {
+test('setTooltips - the "TooltipHandler" plugin is not available', () => {
   const graph = createGraphWithoutPlugins();
+  // just validate there is no error in this case
   graph.setTooltips(true);
-});
-
-test('The "SelectionCellsHandler" plugin is not available', () => {
-  const graph = createGraphWithoutPlugins();
-  graph.getTooltip(new CellState(null, new Cell()), null!, 0, 0);
 });

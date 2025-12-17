@@ -15,7 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { type CellStyle, Graph, Perimeter, Point } from '@maxgraph/core';
+import {
+  type CellStyle,
+  Graph,
+  Perimeter,
+  Point,
+  type TooltipHandler,
+} from '@maxgraph/core';
 import { globalTypes, globalValues } from './shared/args.js';
 import { createGraphContainer, createMainDiv } from './shared/configure.js';
 
@@ -57,15 +63,16 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   // Installs a custom global tooltip
   graph.setTooltips(true);
-  graph.getTooltip = function (state) {
+  const tooltipHandler = graph.getPlugin<TooltipHandler>('TooltipHandler')!;
+  tooltipHandler.getTooltip = function (state) {
     const { cell } = state;
     if (cell.isEdge()) {
-      const source = this.getLabel(cell.getTerminal(true));
-      const target = this.getLabel(cell.getTerminal(false));
+      const source = this.graph.getLabel(cell.getTerminal(true));
+      const target = this.graph.getLabel(cell.getTerminal(false));
 
       return `${source} -> ${target}`;
     }
-    return this.getLabel(cell);
+    return this.graph.getLabel(cell);
   };
 
   // Creates the default style for vertices

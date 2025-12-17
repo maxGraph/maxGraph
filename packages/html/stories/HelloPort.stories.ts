@@ -24,6 +24,7 @@ import {
   Point,
   guiUtils,
   RubberBandHandler,
+  type TooltipHandler,
 } from '@maxgraph/core';
 
 import {
@@ -75,18 +76,21 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   };
 
   // Implements a tooltip that shows the actual source and target of an edge
-  graph.getTooltipForCell = function (cell) {
+  const tooltipHandler = graph.getPlugin<TooltipHandler>('TooltipHandler')!;
+  const { getTooltipForCell } = tooltipHandler;
+
+  tooltipHandler.getTooltipForCell = function (cell) {
     if (cell && cell.isEdge()) {
       const source = cell.getTerminal(true);
       const target = cell.getTerminal(false);
       if (source && target) {
-        return `${this.convertValueToString(source)} => ${this.convertValueToString(
+        return `${this.graph.convertValueToString(source)} => ${this.graph.convertValueToString(
           target
         )}`;
       }
     }
 
-    return Graph.prototype.getTooltipForCell.apply(this, [cell]);
+    return getTooltipForCell.apply(this, [cell]);
   };
 
   // Removes the folding icon and disables any folding

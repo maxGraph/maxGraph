@@ -61,6 +61,7 @@ import type ImageBundle from './image/ImageBundle.js';
 import { applyGraphMixins } from './mixins/_graph-mixins-apply.js';
 import { isNullish } from '../internal/utils.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';
+import type TooltipHandler from './plugins/TooltipHandler.js';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the entry point class of the package.
@@ -527,6 +528,11 @@ export abstract class AbstractGraph extends EventSource {
   getAlreadyConnectedResource = () => this.alreadyConnectedResource;
 
   getContainsValidationErrorsResource = () => this.containsValidationErrorsResource;
+
+  setTooltips(enabled: boolean): void {
+    const tooltipHandler = this.getPlugin<TooltipHandler>('TooltipHandler');
+    tooltipHandler?.setEnabled(enabled);
+  }
 
   /**
    * Updates the model in a transaction.

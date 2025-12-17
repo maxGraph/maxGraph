@@ -35,7 +35,6 @@ import './SelectionMixin.type.js';
 import './SnapMixin.type.js';
 import './SwimlaneMixin.type.js';
 import './TerminalMixin.type.js';
-import './TooltipMixin.type.js';
 import './ValidationMixin.type.js';
 import './VertexMixin.type.js';
 import './ZoomMixin.type.js';

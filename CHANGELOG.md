@@ -9,6 +9,10 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- The `getTooltip` and `getTooltipForCell` methods have been moved from `AbstractGraph` to the `TooltipHandler` plugin.
+  If you were overriding these methods in a `AbstractGraph` subclass, you should now extend `TooltipHandler` instead.
+
 ## 0.22.0
 
 Release date: `2025-12-11`
@@ -187,6 +191,9 @@ They are replaced by global configuration in `EdgeHandlerConfig`:
   - This function was only used internally in `mxGraph` to support older versions of IE
   - It was not intended to be part of the public API
   - No migration steps are needed as the function was unused
+
+2 methods of Graph moved to plugin
+
 
 ## 0.14.0
 
