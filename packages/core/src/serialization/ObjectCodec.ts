@@ -55,11 +55,11 @@ const pointNumericAttributes: Array<keyof Point> = ['_x', '_y'];
  * const node = enc.encode(obj);
  * ```
  *
- * The output of the encoding may be viewed using {@link log()} as follows.
+ * The output of the encoding may be viewed using {@link GlobalConfig.logger} as follows.
  *
  * ```javascript
- * log().show();
- * log().debug(mxUtils.getPrettyXml(node));
+ * GlobalConfig.logger.show();
+ * GlobalConfig.logger.debug(mxUtils.getPrettyXml(node));
  * ```
  *
  * Finally, the result of the encoding looks as follows.
@@ -380,7 +380,7 @@ class ObjectCodec {
    * if the value is a function.
    *
    * If no ID exists for a variable in {@link idrefs} or if an object
-   * cannot be encoded, a warning is issued using {@link log()}.
+   * cannot be encoded, a warning is issued using {@link GlobalConfig.logger}.
    *
    * Returns the resulting XML node that represents the given
    * object.
@@ -674,7 +674,7 @@ class ObjectCodec {
    * ```
    *
    * If no object exists for an ID in {@link idrefs} a warning is issued
-   * using {@link log()}.
+   * using {@link GlobalConfig.logger}.
    *
    * Returns the resulting object that represents the given XML node
    * or the object given to the method as the into parameter.
