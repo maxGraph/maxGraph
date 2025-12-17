@@ -18,7 +18,8 @@ import { test } from '@jest/globals';
 import { createGraphWithoutPlugins } from '../../utils';
 import { Cell, CellState, TooltipHandler } from '../../../src';
 
-test('The "SelectionCellsHandler" plugin is not available', () => {
+// ensure that no error occurs in this case
+test('Call getTooltip when the "SelectionCellsHandler" plugin is not available', () => {
   const tooltipHandler = new TooltipHandler(createGraphWithoutPlugins());
   // just validate there is no error in this case
   tooltipHandler.getTooltip(new CellState(null, new Cell()), null!, 0, 0);
