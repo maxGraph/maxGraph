@@ -174,9 +174,13 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     if (cell.isEdge()) {
       const src = this.graph.getLabel(cell.getTerminal(true)!);
       const trg = this.graph.getLabel(cell.getTerminal(false)!);
-      return `${src} ${cell.value.nodeName} ${trg}`;
+
+      if (src && trg) {
+        return `${src} ${cell.value.nodeName} ${trg}`;
+      }
+      return getTooltipForCell.call(this, cell);
     }
-    return getTooltipForCell.apply(this, [cell]);
+    return getTooltipForCell.call(this, cell);
   };
 
   const buttons = document.createElement('div');
