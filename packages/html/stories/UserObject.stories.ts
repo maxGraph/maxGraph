@@ -172,8 +172,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   tooltipHandler.getTooltipForCell = function (cell) {
     // Adds some relation details for edges
     if (cell.isEdge()) {
-      const src = this.graph.getLabel(cell.getTerminal(true)!);
-      const trg = this.graph.getLabel(cell.getTerminal(false)!);
+      const src = this.graph.getLabel(cell.getTerminal(true));
+      const trg = this.graph.getLabel(cell.getTerminal(false));
 
       if (src && trg) {
         return `${src} ${cell.value.nodeName} ${trg}`;
