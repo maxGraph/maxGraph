@@ -190,8 +190,8 @@ type FactoryMethod = (
  *   const sourcePortId = style.sourcePort;
  *   const targetPortId = style.targetPort;
  *
- *   log().show();
- *   log().debug(`connect edge=${edge.id} source=${source.id} target=${target.id} sourcePort=${sourcePortId} targetPort=${targetPortId}`);
+ *   GlobalConfig.logger.show();
+ *   GlobalConfig.logger.debug(`connect edge=${edge.id} source=${source.id} target=${target.id} sourcePort=${sourcePortId} targetPort=${targetPortId}`);
  * });
  * ```
  *
