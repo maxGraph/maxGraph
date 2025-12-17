@@ -192,9 +192,6 @@ They are replaced by global configuration in `EdgeHandlerConfig`:
   - It was not intended to be part of the public API
   - No migration steps are needed as the function was unused
 
-2 methods of Graph moved to plugin
-
-
 ## 0.14.0
 
 Release date: `2024-11-27`
