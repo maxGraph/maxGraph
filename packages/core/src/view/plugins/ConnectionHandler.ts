@@ -191,7 +191,7 @@ type FactoryMethod = (
  *   const targetPortId = style.targetPort;
  *
  *   log().show();
- *   log().debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
+ *   log().debug(`connect edge=${edge.id} source=${source.id} target=${target.id} sourcePort=${sourcePortId} targetPort=${targetPortId}`);
  * });
  * ```
  *
