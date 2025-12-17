@@ -17,7 +17,7 @@ limitations under the License.
 import { NODE_TYPE } from '../util/Constants.js';
 import { UserObject } from './types.js';
 import { GlobalConfig } from '../util/config.js';
-import { Logger } from '../types.js';
+import type { Logger } from '../types.js';
 
 /**
  * @private
