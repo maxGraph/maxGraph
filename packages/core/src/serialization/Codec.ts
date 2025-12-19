@@ -120,8 +120,8 @@ const createXmlDocument = () => {
  * const oldEncode = encode;
  * encode(obj)
  * {
- *   log().show();
- *   log().debug('Codec.encode: obj=' + StringUtils.getFunctionName(obj.constructor));
+ *   GlobalConfig.logger.show();
+ *   GlobalConfig.logger.debug('Codec.encode: obj=' + StringUtils.getFunctionName(obj.constructor));
  *
  *   return oldEncode.apply(this, arguments);
  * };
