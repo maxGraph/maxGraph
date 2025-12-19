@@ -24,7 +24,6 @@ import InternalEvent from '../event/InternalEvent.js';
 import {
   DEFAULT_HOTSPOT,
   DEFAULT_INVALID_COLOR,
-  DEFAULT_VALID_COLOR,
   HIGHLIGHT_STROKEWIDTH,
   INVALID_COLOR,
   NONE,
@@ -42,7 +41,6 @@ import ConstraintHandler from '../handler/ConstraintHandler.js';
 import PolylineShape from '../shape/edge/PolylineShape.js';
 import EventSource from '../event/EventSource.js';
 import Rectangle from '../geometry/Rectangle.js';
-import { GlobalConfig } from '../../util/config.js';
 import {
   getClientX,
   getClientY,
@@ -62,6 +60,7 @@ import type {
   Listenable,
   MouseListenerSet,
 } from '../../types.js';
+import { log } from '../../internal/utils.js';
 
 type FactoryMethod = (
   source: Cell | null,
@@ -192,7 +191,7 @@ type FactoryMethod = (
  *   const targetPortId = style.targetPort;
  *
  *   GlobalConfig.logger.show();
- *   GlobalConfig.logger.debug('connect', edge, source.id, target.id, sourcePortId, targetPortId);
+ *   GlobalConfig.logger.debug(`connect edge=${edge.id} source=${source.id} target=${target.id} sourcePort=${sourcePortId} targetPort=${targetPortId}`);
  * });
  * ```
  *
@@ -995,7 +994,7 @@ export default class ConnectionHandler
               this.marker.highlight.shape.stroke = 'transparent';
               this.currentState = null;
             } else {
-              this.marker.highlight.shape.stroke = DEFAULT_VALID_COLOR;
+              this.marker.highlight.shape.stroke = VALID_COLOR;
             }
 
             this.marker.highlight.shape.strokeWidth = HIGHLIGHT_STROKEWIDTH / s / s;
@@ -1832,11 +1831,11 @@ export default class ConnectionHandler
           );
         }
       } catch (e: any) {
-        GlobalConfig.logger.show();
+        log().show();
         const errorMessage = `Error in ConnectionHandler: ${
           e instanceof Error ? e.message + '\n' + e.stack : 'unknown cause'
         }`;
-        GlobalConfig.logger.debug(errorMessage);
+        log().debug(errorMessage);
       } finally {
         model.endUpdate();
       }
@@ -2019,12 +2018,12 @@ export default class ConnectionHandler
 export class ConnectionHandlerCellMarker extends CellMarker {
   connectionHandler: ConnectionHandler;
 
-  hotspotEnabled = true;
+  override hotspotEnabled = true;
 
   constructor(
     graph: AbstractGraph,
     connectionHandler: ConnectionHandler,
-    validColor: ColorValue = DEFAULT_VALID_COLOR,
+    validColor: ColorValue = VALID_COLOR,
     invalidColor: ColorValue = DEFAULT_INVALID_COLOR,
     hotspot: number = DEFAULT_HOTSPOT
   ) {
@@ -2034,7 +2033,7 @@ export class ConnectionHandlerCellMarker extends CellMarker {
 
   // Overrides to return cell at location only if valid (so that
   // there is no highlight for invalid cells)
-  getCell(me: InternalMouseEvent) {
+  override getCell(me: InternalMouseEvent) {
     let cell = super.getCell(me);
     this.connectionHandler.error = null;
 
@@ -2105,7 +2104,7 @@ export class ConnectionHandlerCellMarker extends CellMarker {
   }
 
   // Sets the highlight color according to validateConnection
-  isValidState(state: CellState) {
+  override isValidState(state: CellState) {
     if (this.connectionHandler.isConnecting()) {
       return !this.connectionHandler.error;
     }
@@ -2114,7 +2113,7 @@ export class ConnectionHandlerCellMarker extends CellMarker {
 
   // Overrides to use marker color only in highlight mode or for
   // target selection
-  getMarkerColor(evt: Event, state: CellState, isValid: boolean) {
+  override getMarkerColor(evt: Event, state: CellState, isValid: boolean) {
     return !this.connectionHandler.connectImage || this.connectionHandler.isConnecting()
       ? super.getMarkerColor(evt, state, isValid)
       : NONE;
@@ -2122,7 +2121,7 @@ export class ConnectionHandlerCellMarker extends CellMarker {
 
   // Overrides to use hotspot only for source selection otherwise
   // intersects always returns true when over a cell
-  intersects(state: CellState, evt: InternalMouseEvent) {
+  override intersects(state: CellState, evt: InternalMouseEvent) {
     if (this.connectionHandler.connectImage || this.connectionHandler.isConnecting()) {
       return true;
     }

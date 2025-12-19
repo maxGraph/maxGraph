@@ -16,30 +16,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ActorShape from './ActorShape.js';
-import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
-import Rectangle from '../../geometry/Rectangle.js';
+import { AbstractPathShape } from './AbstractPathShape.js';
+import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 
 /**
- * Extends {@link ActorShape} to implement a cloud shape.
+ * Path-based cloud vertex shape built on {@link AbstractPathShape}.
  *
  * This shape is registered under `cloud` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */
-class CloudShape extends ActorShape {
-  constructor(bounds: Rectangle, fill: string, stroke: string, strokeWidth = 1) {
-    super();
-    this.bounds = bounds;
-    this.fill = fill;
-    this.stroke = stroke;
-    this.strokeWidth = strokeWidth;
-  }
-
+class CloudShape extends AbstractPathShape {
   /**
    * Draws the path for this shape.
    */
-  redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     c.moveTo(0.25 * w, 0.25 * h);
     c.curveTo(0.05 * w, 0.25 * h, 0, 0.5 * h, 0.16 * w, 0.55 * h);
     c.curveTo(0, 0.66 * h, 0.18 * w, 0.9 * h, 0.31 * w, 0.8 * h);

@@ -51,7 +51,7 @@ export class ChildChangeCodec extends ObjectCodec {
    * Returns `true` for the child attribute if the child cell had a previous parent or if we're reading the
    * child as an attribute rather than a child node, in which case it's always a reference.
    */
-  isReference(obj: any, attr: string | null, value: any, isWrite: boolean) {
+  override isReference(obj: any, attr: string | null, value: any, isWrite: boolean) {
     if (attr === 'child' && (!isWrite || obj.model.contains(obj.previous))) {
       return true;
     }
@@ -61,7 +61,7 @@ export class ChildChangeCodec extends ObjectCodec {
   /**
    * Excludes references to parent or previous if not in the model.
    */
-  isExcluded(obj: any, attr: string, value: any, write: boolean) {
+  override isExcluded(obj: any, attr: string, value: any, write: boolean) {
     return (
       super.isExcluded(obj, attr, value, write) ||
       (write &&
@@ -74,7 +74,7 @@ export class ChildChangeCodec extends ObjectCodec {
   /**
    * Encodes the child recursively and adds the result to the given node.
    */
-  afterEncode(enc: Codec, obj: any, node: Element) {
+  override afterEncode(enc: Codec, obj: any, node: Element) {
     if (this.isReference(obj, 'child', obj.child, true)) {
       // Encodes as reference (id)
       node.setAttribute('child', enc.getId(obj.child));
@@ -92,7 +92,7 @@ export class ChildChangeCodec extends ObjectCodec {
   /**
    * Decodes any child nodes as using the respective codec from the registry.
    */
-  beforeDecode(dec: Codec, _node: Element, obj: any): any {
+  override beforeDecode(dec: Codec, _node: Element, obj: any): any {
     if (isElement(_node.firstChild)) {
       // Makes sure the original node isn't modified
       const node = _node.cloneNode(true);
@@ -135,7 +135,7 @@ export class ChildChangeCodec extends ObjectCodec {
   /**
    * Restores object state in the child change.
    */
-  afterDecode(dec: Codec, node: Element, obj: any): any {
+  override afterDecode(dec: Codec, node: Element, obj: any): any {
     // Cells are decoded here after a complete transaction so the previous
     // parent must be restored on the cell for the case where the cell was
     // added. This is needed for the local model to identify the cell as a

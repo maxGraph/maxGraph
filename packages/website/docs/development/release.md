@@ -4,9 +4,9 @@ description: Explain how to do a release of maxGraph.
 
 # Release how-to
 
-This page explains the steps needed to release a new version of maxgraph@core.
+This page explains how to release a new version of `@maxgraph/core`.
 
-Currently, the release process is completely manual. Automation will come later based on the information provided here.
+The release process is partially automated with GitHub Actions, but initialization steps (version updates, tagging) are manual. Further automation is tracked in [#664](https://github.com/maxGraph/maxGraph/issues/664).
 
 ## Prerequisites
 
@@ -39,14 +39,15 @@ released. Rename it if necessary.
 Apply changes in the source code
 - Prerequisites:
   - Releases are done from the default branch, so all changes are done in the `main` branch.
-  - These changes are going to be done locally, and then pushed to the repository.
-  - Make sure that the code is up-to-date with the `main` branch. Run `git pull` to get the latest changes.
+  - These changes are going to be done locally and then pushed to the repository.
+  - Make sure that the code is up to date with the `main` branch. Run `git pull` to get the latest changes.
 - Update the version in various files by running, from the repository root: `node scripts/update-versions.mjs <version>` (replace `<version>` with the new version).
-- Update the `CHANGELOG` file to list the major changes included in the new version. Be generic and add a
-link to the future GitHub release that will contain detailed release notes, as shown below.
+- Update the `CHANGELOG.md` file to document the changes in the new version:
+  - Add a short sentence describing the main changes. Use the same sentence as the one used in the detailed release notes that will be [created later](#create-the-github-release).
+  - Include all breaking changes (if any). These are typically listed under a "Breaking Changes" section when PRs were merged. Review and reorganize as needed.
+  - Add a link to the future GitHub release, as shown below:
 ```
-For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) on
-the GitHub release page.
+For more details, see the [0.1.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.1.0) on the GitHub release page.
 ```
 
 - Make a single commit that includes the changes described above
@@ -57,7 +58,7 @@ the GitHub release page.
   - Run the git push command.
   - Update the ruleset to remove the bypass permission. 
 
-- Create a git annotated tag, prefixing the version with a `v`. For example, if the version is 0.2.0, run:
+- Create a git-annotated tag, prefixing the version with a `v`. For example, if the version is 0.2.0, run:
 ```
 git fetch --tags
 git tag -a v0.2.0 -m "chore: release version 0.2.0"

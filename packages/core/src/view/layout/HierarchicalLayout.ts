@@ -177,7 +177,7 @@ class HierarchicalLayout extends GraphLayout {
    * @param parent Parent <Cell> that contains the children to be laid out.
    * @param roots Optional starting roots of the layout.
    */
-  execute(parent: Cell, roots: Cell[] | Cell | null = null): void {
+  override execute(parent: Cell, roots: Cell[] | Cell | null = null): void {
     this.parent = parent;
     this.edgesCache = new Map();
     this.edgeSourceTermCache = new Map();
@@ -592,7 +592,7 @@ class HierarchicalLayout extends GraphLayout {
    * null for the first step of the traversal.
    * @param allVertices Array of cell paths for the visited cells.
    */
-  traverse({
+  override traverse({
     vertex,
     directed,
     allVertices,

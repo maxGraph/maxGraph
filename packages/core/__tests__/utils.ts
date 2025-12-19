@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { Cell, type CellStateStyle, Graph } from '../src';
-import { jest } from '@jest/globals';
 
 /**
  * Creates a new {@link Graph} without `container` (use the default value of the parameters).

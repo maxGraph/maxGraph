@@ -16,13 +16,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DEFAULT_MARKERSIZE, NONE } from '../../../util/Constants.js';
+import { NONE } from '../../../util/Constants.js';
 import PolylineShape from './PolylineShape.js';
 import { EdgeMarkerRegistry } from '../../style/marker/EdgeMarkerRegistry.js';
 import Point from '../../geometry/Point.js';
 import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 import Rectangle from '../../geometry/Rectangle.js';
 import { ArrowValue, ColorValue } from '../../../types.js';
+import { StyleDefaultsConfig } from '../../../util/config.js';
 
 /**
  * Extends {@link PolylineShape} to implement a connector shape including a polyline (a line with multiple points)
@@ -43,7 +44,7 @@ class ConnectorShape extends PolylineShape {
    * Updates the {@link boundingBox} for this shape using {@link createBoundingBox}
    * and {@link augmentBoundingBox} and stores the result in {@link boundingBox}.
    */
-  updateBoundingBox() {
+  override updateBoundingBox() {
     this.useSvgBoundingBox = this.style?.curved ?? false;
     super.updateBoundingBox();
   }
@@ -51,7 +52,7 @@ class ConnectorShape extends PolylineShape {
   /**
    * Paints the line shape.
    */
-  paintEdgeShape(c: AbstractCanvas2D, pts: Point[]): void {
+  override paintEdgeShape(c: AbstractCanvas2D, pts: Point[]): void {
     // The indirection via functions for markers is needed in
     // order to apply the offsets before painting the line and
     // paint the markers after painting the line.
@@ -115,7 +116,8 @@ class ConnectorShape extends PolylineShape {
       const unitY = dy / dist;
 
       const size =
-        (source ? this.style.startSize : this.style.endSize) ?? DEFAULT_MARKERSIZE;
+        (source ? this.style.startSize : this.style.endSize) ??
+        StyleDefaultsConfig.markerSize;
 
       // Allow for stroke width in the end point used and the
       // orthogonal vectors describing the direction of the marker
@@ -141,7 +143,7 @@ class ConnectorShape extends PolylineShape {
   /**
    * Augments the bounding box with the strokewidth and shadow offsets.
    */
-  augmentBoundingBox(bbox: Rectangle) {
+  override augmentBoundingBox(bbox: Rectangle) {
     super.augmentBoundingBox(bbox);
 
     if (!this.style) return;
@@ -150,11 +152,11 @@ class ConnectorShape extends PolylineShape {
     let size = 0;
 
     if (this.style.startArrow !== NONE) {
-      size = (this.style.startSize ?? DEFAULT_MARKERSIZE) + 1;
+      size = (this.style.startSize ?? StyleDefaultsConfig.markerSize) + 1;
     }
 
     if (this.style.endArrow !== NONE) {
-      size = Math.max(size, this.style.endSize ?? DEFAULT_MARKERSIZE) + 1;
+      size = Math.max(size, this.style.endSize ?? StyleDefaultsConfig.markerSize) + 1;
     }
 
     bbox.grow(size * this.scale);

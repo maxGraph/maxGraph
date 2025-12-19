@@ -21,7 +21,7 @@ limitations under the License.
  */
 // WARN: this constant is updated at release time by the script located at 'scripts/update-versions.mjs'.
 // So, if you modify the name of this file or this constant, please update the script accordingly.
-export const VERSION = '0.21.0';
+export const VERSION = '0.22.0';
 
 /**
  * Defines the portion of the cell which is to be used as a connectable
@@ -144,8 +144,8 @@ export const INVALID_CONNECT_TARGET_COLOR = '#FF0000';
 export const DROP_TARGET_COLOR = '#0000FF';
 
 /**
- * Defines the color to be used for the coloring valid connection
- * previews. Use 'none' for no color. Default is #FF0000.
+ * Defines the color to be used for the coloring valid connection previews or other valid elements.
+ * Use 'none' for no color. Default is #FF0000.
  */
 export const VALID_COLOR = '#00FF00';
 
@@ -258,19 +258,18 @@ export const OUTLINE_HANDLE_FILLCOLOR = '#00FFFF';
 export const OUTLINE_HANDLE_STROKECOLOR = '#0033FF';
 
 /**
- * Defines the default family for all fonts. Default is Arial,Helvetica.
+ * Default value of {@link StyleDefaultsConfig.fontFamily}.
  */
-export const DEFAULT_FONTFAMILY = 'Arial,Helvetica';
+export const DEFAULT_FONTFAMILY = 'Arial,Helvetica,sans-serif';
 
 /**
- * Defines the default size (in px). Default is 11.
+ * Default value of {@link StyleDefaultsConfig.fontSize}.
  */
 export const DEFAULT_FONTSIZE = 11;
 
 /**
- * Defines the default value for the <STYLE_TEXT_DIRECTION> if no value is
- * defined for it in the style. Default value is an empty string which means
- * the default system setting is used and no direction is set.
+ * Defines the default value for the {@link CellStateStyle.textDirection} if no value is defined for it in the style.
+ * Default value is an empty string which means the default system setting is used and no direction is set.
  */
 export const DEFAULT_TEXT_DIRECTION = '';
 
@@ -303,18 +302,17 @@ export const ABSOLUTE_LINE_HEIGHT = false;
 export const DEFAULT_FONTSTYLE = 0;
 
 /**
- * Defines the default start size for swimlanes. Default is 40.
+ * Default value of {@link StyleDefaultsConfig.startSize}.
  */
 export const DEFAULT_STARTSIZE = 40;
 
 /**
- * Defines the default size for all markers. Default is 6.
+ * Default value of {@link StyleDefaultsConfig.markerSize}.
  */
 export const DEFAULT_MARKERSIZE = 6;
 
 /**
- * Defines the default width and height for images used in the
- * label shape. Default is 24.
+ * Default value of {@link StyleDefaultsConfig.imageSize}.
  */
 export const DEFAULT_IMAGESIZE = 24;
 
@@ -324,30 +322,27 @@ export const DEFAULT_IMAGESIZE = 24;
 export const ENTITY_SEGMENT = 30;
 
 /**
- * Defines the default rounding factor for the rounded vertices in percent between `0` and `1`.
- * Values should be smaller than `0.5`.
- * See {@link CellStateStyle.arcSize}.
+ * Default value of {@link StyleDefaultsConfig.roundingFactor}.
  */
 export const RECTANGLE_ROUNDING_FACTOR = 0.15;
 
 /**
- * Defines the default size in pixels of the arcs for the rounded edges and vertices.
- * See {@link CellStateStyle.arcSize}.
+ * Default value of {@link StyleDefaultsConfig.lineArcSize}.
  */
 export const LINE_ARCSIZE = 20;
 
 /**
- * Defines the spacing between the arrow shape and its terminals. Default is 0.
+ * Default value of {@link StyleDefaultsConfig.arrowSpacing}.
  */
 export const ARROW_SPACING = 0;
 
 /**
- * Defines the width of the arrow shape. Default is 30.
+ * Default value of {@link StyleDefaultsConfig.arrowWidth}.
  */
 export const ARROW_WIDTH = 30;
 
 /**
- * Defines the size of the arrowhead in the arrow shape. Default is 30.
+ * Default value of {@link StyleDefaultsConfig.arrowSize}.
  */
 export const ARROW_SIZE = 30;
 

@@ -18,8 +18,6 @@ import type ImageBundle from '../image/ImageBundle.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {
-    imageBundles: ImageBundle[];
-
     /**
      * Adds the specified {@link ImageBundle}.
      */

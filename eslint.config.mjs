@@ -18,6 +18,7 @@ import eslintJs from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import nodePlugin from 'eslint-plugin-n';
 import prettierRecommendedConfig from 'eslint-plugin-prettier/recommended';
+import unicornPlugin from 'eslint-plugin-unicorn';
 import tsEslint from 'typescript-eslint';
 
 export default tsEslint.config(
@@ -93,10 +94,18 @@ export default tsEslint.config(
   {
     files: ['packages/core/src/**/*'],
     ...nodePlugin.configs['flat/recommended-script'],
+    plugins: {
+      n: nodePlugin,
+      unicorn: unicornPlugin,
+    },
     rules: {
       ...nodePlugin.configs['flat/recommended-script'].rules, // without this line, the rules are not applied when specifying custom rules
       'n/file-extension-in-import': ['error', 'always'],
       'n/no-unsupported-features/node-builtins': 'off', // we don't use node in this package, and most errors are due to "navigator.xxx is still an experimental feature and is not supported until Node.js yyy"
+      // apply a subset of unicorn rules for now
+      'unicorn/prefer-includes': 'error',
+      'unicorn/prefer-number-properties': 'error',
+      'unicorn/prefer-switch': 'error',
     },
   },
 

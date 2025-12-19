@@ -31,6 +31,7 @@ import {
   RubberBandHandler,
   getDefaultPlugins,
   type GraphPluginConstructor,
+  type TooltipHandler,
 } from '@maxgraph/core';
 import {
   contextMenuTypes,
@@ -83,11 +84,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     constructor(container: HTMLElement, plugins: GraphPluginConstructor[]) {
       super(container, undefined, plugins);
     }
-
-    // Installs a custom tooltip for cells
-    override getTooltipForCell(_cell: Cell): HTMLElement | string {
-      return 'Double-click and right- or shift-click';
-    }
   }
 
   // Enables rubberband (marquee) selection.
@@ -109,6 +105,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setPanning(true);
   graph.setTooltips(true);
   graph.setConnectable(true);
+
+  // Custom tooltip
+  const tooltipHandler = graph.getPlugin<TooltipHandler>('TooltipHandler')!;
+  tooltipHandler.getTooltipForCell = function () {
+    return 'Double-click and right- or shift-click';
+  };
 
   // Automatically handle parallel edges
   const layout = new ParallelEdgeLayout(graph);

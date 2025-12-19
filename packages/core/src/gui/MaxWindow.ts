@@ -387,7 +387,7 @@ export default class MaxWindow extends EventSource {
    */
   setScrollable(scrollable: boolean): void {
     // Workaround for hang in Presto 2.5.22 (Opera 10.5)
-    if (navigator.userAgent == null || navigator.userAgent.indexOf('Presto/2.5') < 0) {
+    if (!navigator.userAgent?.includes('Presto/2.5')) {
       if (scrollable) {
         this.contentWrapper.style.overflow = 'auto';
       } else {
@@ -402,7 +402,7 @@ export default class MaxWindow extends EventSource {
   activate(): void {
     if (activeWindow !== this) {
       const style = getCurrentStyle(this.getElement());
-      const index = style != null ? parseInt(style.zIndex) : 3;
+      const index = style != null ? Number.parseInt(style.zIndex) : 3;
 
       if (activeWindow) {
         const elt = activeWindow.getElement();
@@ -683,8 +683,8 @@ export default class MaxWindow extends EventSource {
           this.minimize.style.display = 'none';
 
           // Saves window state
-          x = parseInt(this.div.style.left);
-          y = parseInt(this.div.style.top);
+          x = Number.parseInt(this.div.style.left);
+          y = Number.parseInt(this.div.style.top);
           height = this.table.style.height;
           width = this.table.style.width;
 
@@ -812,14 +812,14 @@ export default class MaxWindow extends EventSource {
    * Returns the current position on the x-axis.
    */
   getX(): number {
-    return parseInt(this.div.style.left);
+    return Number.parseInt(this.div.style.left);
   }
 
   /**
    * Returns the current position on the y-axis.
    */
   getY(): number {
-    return parseInt(this.div.style.top);
+    return Number.parseInt(this.div.style.top);
   }
 
   /**

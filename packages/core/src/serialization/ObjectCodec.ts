@@ -17,14 +17,13 @@ limitations under the License.
 */
 
 import ObjectIdentity from '../util/ObjectIdentity.js';
-import { GlobalConfig } from '../util/config.js';
 import Geometry from '../view/geometry/Geometry.js';
 import Point from '../view/geometry/Point.js';
 import { isInteger, isNumeric } from '../util/mathUtils.js';
 import { getTextContent } from '../util/domUtils.js';
 import { load } from '../util/requestUtils.js';
 import type Codec from './Codec.js';
-import { doEval, isElement } from '../internal/utils.js';
+import { doEval, isElement, log } from '../internal/utils.js';
 
 const geometryNumericAttributes: Array<keyof Geometry> = [
   '_x',
@@ -333,7 +332,7 @@ class ObjectCodec {
    * Write is true if the field is being encoded, else it is being decoded.
    */
   isExcluded(obj: any, attr: string, value: any, write?: boolean): boolean {
-    return attr == ObjectIdentity.FIELD_NAME || this.exclude.indexOf(attr) >= 0;
+    return attr == ObjectIdentity.FIELD_NAME || this.exclude.includes(attr);
   }
 
   /**
@@ -446,9 +445,7 @@ class ObjectCodec {
         const tmp = enc.getId(value);
 
         if (tmp == null) {
-          GlobalConfig.logger.warn(
-            `ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`
-          );
+          log().warn(`ObjectCodec.encode: No ID for ${this.getName()}.${name}=${value}`);
           return; // exit
         }
 
@@ -527,9 +524,7 @@ class ObjectCodec {
 
       node.appendChild(child);
     } else {
-      GlobalConfig.logger.warn(
-        `ObjectCodec.encode: No node for ${this.getName()}.${name}: ${value}`
-      );
+      log().warn(`ObjectCodec.encode: No node for ${this.getName()}.${name}: ${value}`);
     }
   }
 
@@ -582,7 +577,7 @@ class ObjectCodec {
     let { value } = attr;
 
     if (this.isNumericAttribute(dec, attr, obj)) {
-      value = parseFloat(value);
+      value = Number.parseFloat(value);
 
       if (Number.isNaN(value) || !Number.isFinite(value)) {
         value = 0;
@@ -770,7 +765,7 @@ class ObjectCodec {
         const tmp = dec.getObject(value);
 
         if (tmp == null) {
-          GlobalConfig.logger.warn(
+          log().warn(
             `ObjectCodec.decode: No object for ${this.getName()}.${name}=${value}`
           );
           return; // exit

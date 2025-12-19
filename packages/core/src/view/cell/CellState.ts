@@ -335,10 +335,7 @@ class CellState extends Rectangle {
     this.unscaledHeight = state.unscaledHeight;
   }
 
-  /**
-   * Returns a clone of this {@link Point}.
-   */
-  clone() {
+  override clone() {
     const clone = new CellState(this.view, this.cell, this.style);
 
     // Clones the absolute points

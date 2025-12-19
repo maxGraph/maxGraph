@@ -48,28 +48,28 @@ class PolylineShape extends Shape {
   /**
    * Returns 0.
    */
-  getRotation() {
+  override getRotation() {
     return 0;
   }
 
   /**
    * Returns 0.
    */
-  getShapeRotation() {
+  override getShapeRotation() {
     return 0;
   }
 
   /**
    * Returns false.
    */
-  isPaintBoundsInverted() {
+  override isPaintBoundsInverted() {
     return false;
   }
 
   /**
    * Paints the line shape.
    */
-  paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {
+  override paintEdgeShape(c: AbstractCanvas2D, pts: Point[]) {
     const prev = c.pointerEventsValue;
     c.pointerEventsValue = 'stroke';
 

@@ -64,6 +64,7 @@ export class ConsoleLogger implements Logger {
       console.trace(`Entering ${message}`);
       return new Date().getTime();
     }
+    return undefined;
   }
 
   leave(message: string, baseTimestamp?: number): void {

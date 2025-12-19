@@ -52,7 +52,13 @@ class LineShape extends Shape {
    * @param {number} w
    * @param {number} h
    */
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintVertexShape(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     c.begin();
 
     if (this.vertical) {

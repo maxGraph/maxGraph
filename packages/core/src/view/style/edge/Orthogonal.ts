@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import { scaleCellState, scalePointArray } from './shared.js';
-import { DEFAULT_MARKERSIZE, DIRECTION_MASK, NONE } from '../../../util/Constants.js';
+import { DIRECTION_MASK, NONE } from '../../../util/Constants.js';
 import {
   getBoundingBox,
   getPortConstraints,
@@ -25,6 +25,7 @@ import {
 } from '../../../util/mathUtils.js';
 import type CellState from '../../cell/CellState.js';
 import { OrthogonalConnectorConfig } from '../config.js';
+import { StyleDefaultsConfig } from '../../../util/config.js';
 import type { EdgeStyleFunction } from '../../../types.js';
 import Point from '../../geometry/Point.js';
 import Rectangle from '../../geometry/Rectangle.js';
@@ -131,7 +132,8 @@ function getJettySize(state: CellState, isSource: boolean): number {
 
     if (type !== NONE) {
       const size =
-        (isSource ? state.style.startSize : state.style.endSize) ?? DEFAULT_MARKERSIZE;
+        (isSource ? state.style.startSize : state.style.endSize) ??
+        StyleDefaultsConfig.markerSize;
       value = Math.max(2, Math.ceil((size + buffer) / buffer)) * buffer;
     } else {
       value = 2 * buffer;

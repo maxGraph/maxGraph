@@ -19,10 +19,9 @@ import { getNameFromRegistries } from './utils.js';
 import { Stylesheet } from '../../view/style/Stylesheet.js';
 import type Codec from '../Codec.js';
 import { clone } from '../../util/cloneUtils.js';
-import { GlobalConfig } from '../../util/config.js';
 import { isNumeric } from '../../util/mathUtils.js';
 import { getTextContent } from '../../util/domUtils.js';
-import { doEval, isElement } from '../../internal/utils.js';
+import { doEval, isElement, log } from '../../internal/utils.js';
 
 /**
  * Codec for {@link Stylesheet}s.
@@ -44,12 +43,12 @@ export class StylesheetCodec extends ObjectCodec {
    *
    * @default false
    */
-  static allowEval = false;
+  static override allowEval = false;
 
   /**
    * Encodes a stylesheet. See {@link decode} for a description of the format.
    */
-  encode(enc: Codec, obj: Stylesheet): Element {
+  override encode(enc: Codec, obj: Stylesheet): Element {
     const node = enc.document.createElement(this.getName());
 
     for (const styleName of obj.styles.keys()) {
@@ -127,7 +126,7 @@ export class StylesheetCodec extends ObjectCodec {
    * </Stylesheet>
    * ```
    */
-  decode(dec: Codec, _node: Element, into: any): any {
+  override decode(dec: Codec, _node: Element, into: any): any {
     const obj = into || new this.template.constructor();
     const id = _node.getAttribute('id');
 
@@ -147,7 +146,7 @@ export class StylesheetCodec extends ObjectCodec {
 
           if (!style) {
             if (extend) {
-              GlobalConfig.logger.warn(
+              log().warn(
                 `StylesheetCodec.decode: stylesheet ${extend} not found to extend`
               );
             }
@@ -170,7 +169,7 @@ export class StylesheetCodec extends ObjectCodec {
                   value = entry.getAttribute('value');
 
                   if (isNumeric(value)) {
-                    value = parseFloat(value);
+                    value = Number.parseFloat(value);
                   }
                 }
 

@@ -2270,7 +2270,7 @@ class EdgeHandlerCellMarker extends CellMarker {
   }
   // Only returns edges if they are connectable and never returns
   // the edge that is currently being modified
-  getCell = (me: InternalMouseEvent) => {
+  override getCell = (me: InternalMouseEvent) => {
     let cell = super.getCell(me);
 
     // Checks for cell at preview point (with grid)
@@ -2319,7 +2319,7 @@ class EdgeHandlerCellMarker extends CellMarker {
   };
 
   // Sets the highlight color according to validateConnection
-  isValidState = (state: CellState) => {
+  override isValidState = (state: CellState) => {
     const cell = this.edgeHandler.state.cell.getTerminal(
       !this.edgeHandler.isSource
     ) as Cell;

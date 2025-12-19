@@ -17,6 +17,7 @@ limitations under the License.
 import { NODE_TYPE } from '../util/Constants.js';
 import { UserObject } from './types.js';
 import { GlobalConfig } from '../util/config.js';
+import type { Logger } from '../types.js';
 
 /**
  * @private
@@ -34,13 +35,28 @@ export const isElement = (node?: Node | UserObject | null): node is Element =>
   node?.nodeType === NODE_TYPE.ELEMENT;
 
 /**
+ * Returns true if the input is null or undefined.
+ *
+ * **Note**: falsy-but-defined values (false, 0, '') are NOT considered nullish.
+ * Use this when you must allow falsy values but reject absent ones, generally when the parameter is boolean, number or string.
+ *
  * @private not part of the public API, can be removed or changed without prior notice
  */
-export const isNullish = (v: string | object | null | undefined | number | boolean) =>
+export const isNullish = (v: unknown): v is null | undefined =>
   v === null || v === undefined;
 
 /**
- * Merge a mixin into the destination
+ * Returns the global logger.
+ */
+export const log = (): Logger => GlobalConfig.logger;
+
+/**
+ * Merge a mixin into the destination.
+ *
+ * WARN: do not use "complex" properties type (object, array), as they will be shared between all instances of the destination class.
+ * This is a limitation of this simple mixin implementation, and we are not trying to fix it as the current plan is to move mixin code to dedicated plugin.
+ * See https://github.com/maxGraph/maxGraph/issues/762.
+ *
  * @param dest the destination class
  *
  * @private not part of the public API, can be removed or changed without prior notice
@@ -52,10 +68,12 @@ export const mixInto = (dest: any) => (mixin: any) => {
       Object.defineProperty(dest.prototype, key, {
         value: mixin[key],
         writable: true,
+        // enumerable should probably set to true.
+        // For example, when exporting a Graph with Codecs, properties added via mixins are not serialized whereas properties directly defined on the class are.
       });
     }
   } catch (e) {
-    GlobalConfig.logger.error('Error while mixing', e);
+    log().error('Error while mixing', e);
   }
 };
 

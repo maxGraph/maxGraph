@@ -31,7 +31,6 @@ import {
   relativeCcw,
   toRadians,
 } from '../util/mathUtils.js';
-import { GlobalConfig } from '../util/config.js';
 import CellState from './cell/CellState.js';
 import UndoableEdit from './undoable_changes/UndoableEdit.js';
 import ImageShape from './shape/node/ImageShape.js';
@@ -50,7 +49,7 @@ import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry.js';
 import { PerimeterRegistry } from './style/perimeter/PerimeterRegistry.js';
 import type TooltipHandler from './plugins/TooltipHandler.js';
 import type { EdgeStyleFunction, MouseEventListener } from '../types.js';
-import { doEval } from '../internal/utils.js';
+import { doEval, log } from '../internal/utils.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';
 
 /**
@@ -543,7 +542,7 @@ export class GraphView extends EventSource {
    * Default is {@link currentRoot} or the root of the model.
    */
   validate(cell: Cell | null = null) {
-    const t0 = GlobalConfig.logger.enter('GraphView.validate');
+    const t0 = log().enter('GraphView.validate');
 
     this.resetValidationState();
 
@@ -560,7 +559,7 @@ export class GraphView extends EventSource {
       this.resetValidationState();
     }
 
-    GlobalConfig.logger.leave('GraphView.validate', t0);
+    log().leave('GraphView.validate', t0);
   }
 
   /**
@@ -1017,39 +1016,50 @@ export class GraphView extends EventSource {
   updateVertexLabelOffset(state: CellState): void {
     const h = state.style.labelPosition ?? 'center';
 
-    if (h === 'left') {
-      let lw = state.style.labelWidth ?? null;
+    switch (h) {
+      case 'left': {
+        let lw = state.style.labelWidth ?? null;
 
-      if (lw != null) {
-        lw *= this.scale;
-      } else {
-        lw = state.width;
-      }
-
-      // @ts-ignore
-      state.absoluteOffset.x -= lw;
-    } else if (h === 'right') {
-      // @ts-ignore
-      state.absoluteOffset.x += state.width;
-    } else if (h === 'center') {
-      const lw = state.style.labelWidth ?? null;
-
-      if (lw != null) {
-        // Aligns text block with given width inside the vertex width
-        const align = state.style.align ?? 'center';
-        let dx = 0;
-
-        if (align === 'center') {
-          dx = 0.5;
-        } else if (align === 'right') {
-          dx = 1;
+        if (lw != null) {
+          lw *= this.scale;
+        } else {
+          lw = state.width;
         }
 
-        if (dx !== 0) {
-          // @ts-ignore
-          state.absoluteOffset.x -= (lw * this.scale - state.width) * dx;
-        }
+        // @ts-ignore
+        state.absoluteOffset.x -= lw;
+
+        break;
       }
+      case 'right': {
+        // @ts-ignore
+        state.absoluteOffset.x += state.width;
+
+        break;
+      }
+      case 'center': {
+        const lw = state.style.labelWidth ?? null;
+
+        if (lw != null) {
+          // Aligns text block with given width inside the vertex width
+          const align = state.style.align ?? 'center';
+          let dx = 0;
+
+          if (align === 'center') {
+            dx = 0.5;
+          } else if (align === 'right') {
+            dx = 1;
+          }
+
+          if (dx !== 0) {
+            // @ts-ignore
+            state.absoluteOffset.x -= (lw * this.scale - state.width) * dx;
+          }
+        }
+
+        break;
+      }
+      // No default
     }
 
     const v = state.style.verticalLabelPosition ?? 'middle';

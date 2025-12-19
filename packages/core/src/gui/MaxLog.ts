@@ -23,17 +23,17 @@ import { toString } from '../util/StringUtils.js';
 import MaxWindow from './MaxWindow.js';
 import { KeyboardEventListener, MouseEventListener } from '../types.js';
 import { getElapseMillisecondsMessage } from '../internal/time-utils.js';
+import { log } from '../internal/utils.js';
 import { VERSION } from '../util/Constants.js';
-import { GlobalConfig } from '../util/config.js';
 import { popup } from './guiUtils.js';
 
 const copyTextToClipboard = (text: string): void => {
   navigator.clipboard.writeText(text).then(
     function () {
-      GlobalConfig.logger.info('Async: Copying to clipboard was successful!');
+      log().info('Async: Copying to clipboard was successful!');
     },
     function (err) {
-      GlobalConfig.logger.error('Async: Could not copy text: ', err);
+      log().error('Async: Could not copy text: ', err);
     }
   );
 };
@@ -273,6 +273,7 @@ class MaxLog {
       MaxLog.writeln(`Entering ${string}`);
       return new Date().getTime();
     }
+    return undefined;
   }
 
   /**
@@ -333,7 +334,7 @@ class MaxLog {
       MaxLog.textarea.value = MaxLog.textarea.value + string;
 
       // Workaround for no update in Presto 2.5.22 (Opera 10.5)
-      if (navigator.userAgent != null && navigator.userAgent.indexOf('Presto/2.5') >= 0) {
+      if (navigator.userAgent?.includes('Presto/2.5')) {
         MaxLog.textarea.style.visibility = 'hidden';
         MaxLog.textarea.style.visibility = 'visible';
       }

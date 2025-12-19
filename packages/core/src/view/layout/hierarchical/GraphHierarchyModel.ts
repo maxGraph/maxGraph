@@ -104,7 +104,7 @@ class GraphHierarchyModel {
               internalTargetCell.connectsAsTarget = [];
             }
 
-            if (internalTargetCell.connectsAsTarget.indexOf(internalEdge) < 0) {
+            if (!internalTargetCell.connectsAsTarget.includes(internalEdge)) {
               internalTargetCell.connectsAsTarget.push(internalEdge);
             }
           }
@@ -238,7 +238,7 @@ class GraphHierarchyModel {
 
             internalEdge.source = internalVertices[i];
 
-            if (internalVertices[i].connectsAsSource.indexOf(internalEdge) < 0) {
+            if (!internalVertices[i].connectsAsSource.includes(internalEdge)) {
               internalVertices[i].connectsAsSource.push(internalEdge);
             }
           }

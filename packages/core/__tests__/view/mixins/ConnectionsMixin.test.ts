@@ -47,10 +47,10 @@ describe('getAllConnectionConstraints', () => {
         super(null!);
         this.constraints = constraints;
       }
-      parseDescription() {
+      override parseDescription() {
         // do nothing
       }
-      parseConstraints() {
+      override parseConstraints() {
         // do nothing, constraints passed in constructor
       }
     }

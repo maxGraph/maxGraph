@@ -19,12 +19,7 @@ limitations under the License.
 import Rectangle from '../geometry/Rectangle.js';
 import { isNullish } from '../../internal/utils.js';
 import { getBoundingBox, getDirectedBounds, mod } from '../../util/mathUtils.js';
-import {
-  LINE_ARCSIZE,
-  NONE,
-  NS_SVG,
-  RECTANGLE_ROUNDING_FACTOR,
-} from '../../util/Constants.js';
+import { NONE, NS_SVG } from '../../util/Constants.js';
 import Point from '../geometry/Point.js';
 import type AbstractCanvas2D from '../canvas/AbstractCanvas2D.js';
 import SvgCanvas2D from '../canvas/SvgCanvas2D.js';
@@ -761,7 +756,7 @@ class Shape {
    * @since 0.21.0
    */
   protected getBaseArcSize(): number {
-    return (this.style?.arcSize ?? LINE_ARCSIZE) / 2;
+    return (this.style?.arcSize ?? StyleDefaultsConfig.lineArcSize) / 2;
   }
 
   /**
@@ -771,7 +766,8 @@ class Shape {
     if (this.style?.absoluteArcSize) {
       return Math.min(this.getBaseArcSize(), Math.min(h, w) / 2);
     }
-    const roundingFactor = (this.style?.arcSize ?? RECTANGLE_ROUNDING_FACTOR * 100) / 100;
+    const roundingFactor =
+      (this.style?.arcSize ?? StyleDefaultsConfig.roundingFactor * 100) / 100;
     return Math.min(w, h) * roundingFactor;
   }
 
@@ -849,7 +845,7 @@ class Shape {
         let dx = pt.x - tmp.x;
         let dy = pt.y - tmp.y;
 
-        if (rounded && (dx !== 0 || dy !== 0) && exclude.indexOf(i - 1) < 0) {
+        if (rounded && (dx !== 0 || dy !== 0) && !exclude.includes(i - 1)) {
           // Draws a line from the last point to the current
           // point with a spacing of size off the current point
           // into direction of the last point
@@ -1020,8 +1016,8 @@ class Shape {
   }
 
   /**
-   * Updates the <boundingBox> for this shape using <createBoundingBox> and
-   * <augmentBoundingBox> and stores the result in <boundingBox>.
+   * Updates the {@link boundingBox} for this shape using {@link createBoundingBox} and
+   * {@link augmentBoundingBox} and stores the result in {@link boundingBox}.
    */
   updateBoundingBox() {
     // Tries to get bounding box from SVG subsystem
@@ -1124,12 +1120,23 @@ class Shape {
   getShapeRotation() {
     let rot = this.getRotation();
 
-    if (this.direction === 'north') {
-      rot += 270;
-    } else if (this.direction === 'west') {
-      rot += 180;
-    } else if (this.direction === 'south') {
-      rot += 90;
+    switch (this.direction) {
+      case 'north': {
+        rot += 270;
+
+        break;
+      }
+      case 'west': {
+        rot += 180;
+
+        break;
+      }
+      case 'south': {
+        rot += 90;
+
+        break;
+      }
+      // No default
     }
 
     return rot;

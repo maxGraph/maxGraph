@@ -60,7 +60,7 @@ class ElbowEdgeHandler extends EdgeHandler {
   /**
    * Overrides {@link EdgeHandler.createBends} to create custom bends.
    */
-  createBends() {
+  override createBends() {
     const bends = [];
 
     // Source
@@ -142,7 +142,7 @@ class ElbowEdgeHandler extends EdgeHandler {
    * @param point {@link Point} to be converted.
    * @param gridEnabled Boolean that specifies if the grid should be applied.
    */
-  convertPoint(point: Point, gridEnabled: boolean) {
+  override convertPoint(point: Point, gridEnabled: boolean) {
     const scale = this.graph.getView().getScale();
     const tr = this.graph.getView().getTranslate();
     const { origin } = this.state;
@@ -164,7 +164,7 @@ class ElbowEdgeHandler extends EdgeHandler {
    * @param p0 {@link Point} that represents the location of the first point.
    * @param pe {@link Point} that represents the location of the last point.
    */
-  redrawInnerBends(p0: Point, pe: Point) {
+  override redrawInnerBends(p0: Point, pe: Point) {
     const g = this.state.cell.getGeometry();
     const pts = this.state.absolutePoints;
     let pt = null;

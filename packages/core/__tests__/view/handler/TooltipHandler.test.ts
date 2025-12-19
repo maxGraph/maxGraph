@@ -1,5 +1,5 @@
 /*
-Copyright 2023-present The maxGraph project Contributors
+Copyright 2025-present The maxGraph project Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,14 +16,11 @@ limitations under the License.
 
 import { test } from '@jest/globals';
 import { createGraphWithoutPlugins } from '../../utils';
-import { Cell, CellState } from '../../../src';
+import { Cell, CellState, TooltipHandler } from '../../../src';
 
-test('The "TooltipHandler" plugin is not available', () => {
-  const graph = createGraphWithoutPlugins();
-  graph.setTooltips(true);
-});
-
-test('The "SelectionCellsHandler" plugin is not available', () => {
-  const graph = createGraphWithoutPlugins();
-  graph.getTooltip(new CellState(null, new Cell()), null!, 0, 0);
+// ensure that no error occurs in this case
+test('Call getTooltip when the "SelectionCellsHandler" plugin is not available', () => {
+  const tooltipHandler = new TooltipHandler(createGraphWithoutPlugins());
+  // just validate there is no error in this case
+  tooltipHandler.getTooltip(new CellState(null, new Cell()), null!, 0, 0);
 });

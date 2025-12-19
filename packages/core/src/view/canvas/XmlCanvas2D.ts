@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import AbstractCanvas2D from './AbstractCanvas2D.js';
-import { DEFAULT_FONTFAMILY, DEFAULT_FONTSIZE, NONE } from '../../util/Constants.js';
+import { NONE } from '../../util/Constants.js';
 import { getOuterHtml, isNode } from '../../util/domUtils.js';
 import { DirectionValue, TextDirectionValue } from '../../types.js';
 import { StyleDefaultsConfig } from '../../util/config.js';
@@ -60,11 +60,11 @@ class XmlCanvas2D extends AbstractCanvas2D {
 
     // Writes font defaults
     elem = this.createElement('fontfamily');
-    elem.setAttribute('family', DEFAULT_FONTFAMILY);
+    elem.setAttribute('family', StyleDefaultsConfig.fontFamily);
     this.root.appendChild(elem);
 
     elem = this.createElement('fontsize');
-    elem.setAttribute('size', String(DEFAULT_FONTSIZE));
+    elem.setAttribute('size', String(StyleDefaultsConfig.fontSize));
     this.root.appendChild(elem);
 
     // Writes shadow defaults
@@ -85,11 +85,11 @@ class XmlCanvas2D extends AbstractCanvas2D {
   /**
    * Returns a formatted number with 2 decimal places.
    */
-  format(value: string | number): number {
+  override format(value: string | number): number {
     if (typeof value === 'string') {
-      return parseFloat(parseFloat(value).toFixed(2));
+      return Number.parseFloat(Number.parseFloat(value).toFixed(2));
     } else {
-      return parseFloat(value.toFixed(2));
+      return Number.parseFloat(value.toFixed(2));
     }
   }
 
@@ -103,7 +103,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
   /**
    * Saves the drawing state.
    */
-  save(): void {
+  override save(): void {
     if (this.compressed) {
       super.save();
     }
@@ -113,7 +113,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
   /**
    * Restores the drawing state.
    */
-  restore(): void {
+  override restore(): void {
     if (this.compressed) {
       super.restore();
     }
@@ -123,9 +123,9 @@ class XmlCanvas2D extends AbstractCanvas2D {
   /**
    * Scales the output.
    *
-   * @param scale Number that represents the scale where 1 is equal to 100%.
+   * @param value Number that represents the scale where 1 is equal to 100%.
    */
-  scale(value: number): void {
+  override scale(value: number): void {
     const elem = this.createElement('scale');
     elem.setAttribute('scale', String(value));
     this.root.appendChild(elem);
@@ -137,7 +137,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param dx Number that specifies the horizontal translation.
    * @param dy Number that specifies the vertical translation.
    */
-  translate(dx: number, dy: number): void {
+  override translate(dx: number, dy: number): void {
     const elem = this.createElement('translate');
     elem.setAttribute('dx', String(this.format(dx)));
     elem.setAttribute('dy', String(this.format(dy)));
@@ -154,9 +154,14 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param cx Number that represents the x-coordinate of the rotation center.
    * @param cy Number that represents the y-coordinate of the rotation center.
    */
-  rotate(theta: number, flipH: boolean, flipV: boolean, cx: number, cy: number): void {
+  override rotate(
+    theta: number,
+    flipH: boolean,
+    flipV: boolean,
+    cx: number,
+    cy: number
+  ): void {
     const elem = this.createElement('rotate');
-
     if (theta !== 0 || flipH || flipV) {
       elem.setAttribute('theta', String(this.format(theta)));
       elem.setAttribute('flipH', flipH ? '1' : '0');
@@ -173,7 +178,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param value Number that represents the new alpha. Possible values are between
    * 1 (opaque) and 0 (transparent).
    */
-  setAlpha(value: number): void {
+  override setAlpha(value: number): void {
     if (this.compressed) {
       if (this.state.alpha === value) {
         return;
@@ -192,7 +197,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param value Number that represents the new fill alpha. Possible values are between
    * 1 (opaque) and 0 (transparent).
    */
-  setFillAlpha(value: number): void {
+  override setFillAlpha(value: number): void {
     if (this.compressed) {
       if (this.state.fillAlpha === value) {
         return;
@@ -211,7 +216,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param value Number that represents the new stroke alpha. Possible values are between
    * 1 (opaque) and 0 (transparent).
    */
-  setStrokeAlpha(value: number): void {
+  override setStrokeAlpha(value: number): void {
     if (this.compressed) {
       if (this.state.strokeAlpha === value) {
         return;
@@ -229,7 +234,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    *
    * @param value Hexadecimal representation of the color or 'none'.
    */
-  setFillColor(value: string | null = null): void {
+  override setFillColor(value: string | null = null): void {
     if (value === NONE) {
       value = null;
     }
@@ -262,7 +267,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param alpha2 Optional alpha of the end color. Default is 1. Possible values
    * are between 1 (opaque) and 0 (transparent).
    */
-  setGradient(
+  override setGradient(
     color1: string | null,
     color2: string | null,
     x: number,
@@ -306,7 +311,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    *
    * @param value Hexadecimal representation of the color or 'none'.
    */
-  setStrokeColor(value: string | null = null): void {
+  override setStrokeColor(value: string | null = null): void {
     if (value === NONE) {
       value = null;
     }
@@ -328,7 +333,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    *
    * @param value Numeric representation of the stroke width.
    */
-  setStrokeWidth(value: number): void {
+  override setStrokeWidth(value: number): void {
     if (this.compressed) {
       if (this.state.strokeWidth === value) {
         return;
@@ -345,11 +350,9 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * Enables or disables dashed lines.
    *
    * @param value Boolean that specifies if dashed lines should be enabled.
-   * @param value Boolean that specifies if the stroke width should be ignored
-   * for the dash pattern.
-   * @default false
+   * @param fixDash Boolean that specifies if the stroke width should be ignored for the dash pattern. Default is false.
    */
-  setDashed(value: boolean, fixDash: boolean): void {
+  override setDashed(value: boolean, fixDash: boolean): void {
     if (this.compressed) {
       if (this.state.dashed === value) {
         return;
@@ -376,7 +379,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * between the dashes. The lengths are relative to the line width - a length
    * of 1 is equals to the line width.
    */
-  setDashPattern(value: string): void {
+  override setDashPattern(value: string): void {
     if (this.compressed) {
       if (this.state.dashPattern === value) {
         return;
@@ -396,7 +399,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param value String that represents the line cap. Possible values are flat, round
    * and square.
    */
-  setLineCap(value: string): void {
+  override setLineCap(value: string): void {
     if (this.compressed) {
       if (this.state.lineCap === value) {
         return;
@@ -416,7 +419,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param value String that represents the line join. Possible values are miter,
    * round and bevel.
    */
-  setLineJoin(value: string): void {
+  override setLineJoin(value: string): void {
     if (this.compressed) {
       if (this.state.lineJoin === value) {
         return;
@@ -435,7 +438,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    *
    * @param value Number that represents the miter limit.
    */
-  setMiterLimit(value: number): void {
+  override setMiterLimit(value: number): void {
     if (this.compressed) {
       if (this.state.miterLimit === value) {
         return;
@@ -454,7 +457,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    *
    * @param value Hexadecimal representation of the color or 'none'.
    */
-  setFontColor(value: string | null = null): void {
+  override setFontColor(value: string | null = null): void {
     if (this.textEnabled) {
       if (value === NONE) {
         value = null;
@@ -478,7 +481,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    *
    * @param value Hexadecimal representation of the color or 'none'.
    */
-  setFontBackgroundColor(value: string | null = null): void {
+  override setFontBackgroundColor(value: string | null = null): void {
     if (this.textEnabled) {
       if (value === NONE) {
         value = null;
@@ -502,7 +505,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    *
    * @param value Hexadecimal representation of the color or 'none'.
    */
-  setFontBorderColor(value: string | null = null): void {
+  override setFontBorderColor(value: string | null = null): void {
     if (this.textEnabled) {
       if (value === NONE) {
         value = null;
@@ -523,11 +526,11 @@ class XmlCanvas2D extends AbstractCanvas2D {
 
   /**
    * Sets the current font size.
-   * @default {@link mxConstants.DEFAULT_FONTSIZE}
+   * @default {@link StyleDefaultsConfig.fontSize}
    *
    * @param value Numeric representation of the font size.
    */
-  setFontSize(value: number): void {
+  override setFontSize(value: number): void {
     if (this.textEnabled) {
       if (this.compressed) {
         if (this.state.fontSize === value) {
@@ -544,12 +547,12 @@ class XmlCanvas2D extends AbstractCanvas2D {
 
   /**
    * Sets the current font family.
-   * @default {@link mxConstants.DEFAULT_FONTFAMILY}
+   * @default {@link StyleDefaultsConfig.fontFamily}
    *
    * @param value String representation of the font family. This handles the same
    * values as the CSS font-family property.
    */
-  setFontFamily(value: string): void {
+  override setFontFamily(value: string): void {
     if (this.textEnabled) {
       if (this.compressed) {
         if (this.state.fontFamily === value) {
@@ -567,10 +570,9 @@ class XmlCanvas2D extends AbstractCanvas2D {
   /**
    * Sets the current font style.
    *
-   * @param value Numeric representation of the font family. This is the sum of the
-   * font styles from {@link mxConstants}.
+   * @param value Numeric representation of the font style. This is the sum of the font styles from {@link FONT_STYLE_MASK}.
    */
-  setFontStyle(value: number | null = 0): void {
+  override setFontStyle(value: number | null = 0): void {
     if (this.textEnabled) {
       if (value == null) {
         value = 0;
@@ -594,7 +596,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    *
    * @param value Boolean that specifies if shadows should be enabled.
    */
-  setShadow(value: boolean): void {
+  override setShadow(value: boolean): void {
     if (this.compressed) {
       if (this.state.shadow === value) {
         return;
@@ -607,12 +609,8 @@ class XmlCanvas2D extends AbstractCanvas2D {
     this.root.appendChild(elem);
   }
 
-  setShadowColor(value: string | null = null): void {
+  override setShadowColor(value: string | null = null): void {
     if (this.compressed) {
-      if (value === NONE) {
-        value = null;
-      }
-
       if (this.state.shadowColor === value) {
         return;
       }
@@ -625,7 +623,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
     this.root.appendChild(elem);
   }
 
-  setShadowAlpha(value: number): void {
+  override setShadowAlpha(value: number): void {
     if (this.compressed) {
       if (this.state.shadowAlpha === value) {
         return;
@@ -638,7 +636,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
     this.root.appendChild(elem);
   }
 
-  setShadowOffset(dx: number, dy: number): void {
+  override setShadowOffset(dx: number, dy: number): void {
     if (this.compressed) {
       if (this.state.shadowDx === dx && this.state.shadowDy === dy) {
         return;
@@ -751,7 +749,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
   /**
    * Starts a new path and puts it into the drawing buffer.
    */
-  begin(): void {
+  override begin(): void {
     this.root.appendChild(this.createElement('begin'));
     this.lastX = 0;
     this.lastY = 0;
@@ -767,7 +765,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param x Number that represents the x-coordinate of the point.
    * @param y Number that represents the y-coordinate of the point.
    */
-  moveTo(x: number, y: number): void {
+  override moveTo(x: number, y: number): void {
     const elem = this.createElement('move');
     elem.setAttribute('x', String(this.format(x)));
     elem.setAttribute('y', String(this.format(y)));
@@ -782,7 +780,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param x Number that represents the x-coordinate of the endpoint.
    * @param y Number that represents the y-coordinate of the endpoint.
    */
-  lineTo(x: number, y: number): void {
+  override lineTo(x: number, y: number): void {
     const elem = this.createElement('line');
     elem.setAttribute('x', String(this.format(x)));
     elem.setAttribute('y', String(this.format(y)));
@@ -799,7 +797,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param x2 Number that represents the x-coordinate of the endpoint.
    * @param y2 Number that represents the y-coordinate of the endpoint.
    */
-  quadTo(x1: number, y1: number, x2: number, y2: number): void {
+  override quadTo(x1: number, y1: number, x2: number, y2: number): void {
     const elem = this.createElement('quad');
     elem.setAttribute('x1', String(this.format(x1)));
     elem.setAttribute('y1', String(this.format(y1)));
@@ -820,7 +818,14 @@ class XmlCanvas2D extends AbstractCanvas2D {
    * @param x3 Number that represents the x-coordinate of the endpoint.
    * @param y3 Number that represents the y-coordinate of the endpoint.
    */
-  curveTo(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): void {
+  override curveTo(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    x3: number,
+    y3: number
+  ): void {
     const elem = this.createElement('curve');
     elem.setAttribute('x1', String(this.format(x1)));
     elem.setAttribute('y1', String(this.format(y1)));
@@ -836,7 +841,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
   /**
    * Closes the current path.
    */
-  close(): void {
+  override close(): void {
     this.root.appendChild(this.createElement('close'));
   }
 

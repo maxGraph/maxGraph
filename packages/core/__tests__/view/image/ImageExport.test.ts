@@ -96,7 +96,7 @@ test.each([false, true])(
   <image x="172" y="122" w="16" h="16" src="http://localhost/element.png" aspect="0" flipH="0" flipV="0" />`;
 
     const expectedData = `<data>
-  <fontfamily family="Arial,Helvetica" />
+  <fontfamily family="Arial,Helvetica,sans-serif" />
   <fontsize size="11" />
   <shadowcolor color="gray" />
   <shadowalpha alpha="1" />
@@ -217,14 +217,14 @@ test.each([false, true])(
   <defs />
   <g>
     <rect x="0" y="0" width="80" height="30" fill="#c3d9ff" stroke="#6482b9" pointer-events="none" />
-    <g fill="#774400" font-family="Arial,Helvetica" pointer-events="none" direction="" text-anchor="middle" font-size="11px">
+    <g fill="#774400" font-family="Arial,Helvetica,sans-serif" pointer-events="none" direction="" text-anchor="middle" font-size="11px">
       <rect fill="none" stroke="none" x="40" y="16" width="2" height="1" stroke-width="1" />
       <text x="40" y="19.5">
         vertex 1
       </text>
     </g>
     <rect x="100" y="100" width="80" height="30" fill="#c3d9ff" stroke="#6482b9" pointer-events="none" />
-    <g fill="#774400" font-family="Arial,Helvetica" pointer-events="none" direction="" text-anchor="middle" font-size="11px">
+    <g fill="#774400" font-family="Arial,Helvetica,sans-serif" pointer-events="none" direction="" text-anchor="middle" font-size="11px">
       <rect fill="none" stroke="none" x="140" y="116" width="2" height="1" stroke-width="1" />
       <text x="140" y="119.5">
         vertex 2
@@ -234,7 +234,7 @@ test.each([false, true])(
     <path d="M 124.21 99.21 L 116.78 96.73 L 120.5 95.5 L 121.73 91.78 Z" fill="#6482b9" stroke="#6482b9" stroke-miterlimit="10" pointer-events="none" />
     <path d="M 44.29 30 L 50 50 L 114.07 96.27" fill="none" stroke="#6482b9" stroke-miterlimit="10" pointer-events="none" />
     <path d="M 118.32 99.35 L 110.6 98.08 L 114.07 96.27 L 114.7 92.41 Z" fill="#6482b9" stroke="#6482b9" stroke-miterlimit="10" pointer-events="none" />
-    <g fill="#446299" font-family="Arial,Helvetica" pointer-events="none" direction="" text-anchor="middle" font-size="11px">
+    <g fill="#446299" font-family="Arial,Helvetica,sans-serif" pointer-events="none" direction="" text-anchor="middle" font-size="11px">
       <rect fill="none" stroke="none" x="76" y="69" width="2" height="1" stroke-width="1" />
       <text x="76.1" y="73.35">
         edge 1

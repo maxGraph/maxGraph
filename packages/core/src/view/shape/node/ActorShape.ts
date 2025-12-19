@@ -16,61 +16,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type Rectangle from '../../geometry/Rectangle.js';
-import Shape from '../Shape.js';
+import { AbstractPathShape } from './AbstractPathShape.js';
 import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
-import { ColorValue } from '../../../types.js';
-import { NONE } from '../../../util/Constants.js';
 
 /**
- * Extends {@link Shape} to implement an actor shape.
+ * Path-based actor vertex shape built on {@link AbstractPathShape}.
  *
  * This shape is registered under `actor` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
- * If a custom shape with one filled area is needed, then this shape's {@link redrawPath} method should be overridden
- * like in the following example:
- *
- * ```typescript
- * class SampleShape extends ActorShape {
- *   redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
- *     path.moveTo(0, 0);
- *     path.lineTo(w, h);
- *     // ...
- *     path.close();
- *   }
- * }
- * ```
- *
  * @category Vertex Shapes
  */
-class ActorShape extends Shape {
-  constructor(
-    bounds: Rectangle | null = null,
-    fill: ColorValue = NONE,
-    stroke: ColorValue = NONE,
-    strokeWidth = 1
-  ) {
-    super();
-    this.bounds = bounds;
-    this.fill = fill;
-    this.stroke = stroke;
-    this.strokeWidth = strokeWidth;
-  }
-
-  /**
-   * Redirects to redrawPath for subclasses to work.
-   */
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
-    c.translate(x, y);
-    c.begin();
-    this.redrawPath(c, x, y, w, h);
-    c.fillAndStroke();
-  }
-
+class ActorShape extends AbstractPathShape {
   /**
    * Draws the path for this shape.
    */
-  redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override redrawPath(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
     const width = w / 3;
     c.moveTo(0, h);
     c.curveTo(0, (3 * h) / 5, 0, (2 * h) / 5, w / 2, (2 * h) / 5);

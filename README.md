@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@maxgraph/core?color=blue&style=flat)](https://www.npmjs.com/package/@maxgraph/core)
 [![build status](https://github.com/maxGraph/maxGraph/workflows/Build/badge.svg)](https://github.com/maxGraph/maxGraph/actions/workflows/build.yml)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/maxGraph/maxGraph)
 
 <!-- copied into packages/core/README.md and packages/website/docs/intro.md -->
 `maxGraph` is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides: 
@@ -37,7 +38,7 @@ In the meantime, new features are also being added to enrich the library.
 
 Please try it in your application and [submit an issue](https://github.com/maxGraph/maxGraph/issues) if you think that something is not working.
 
-You can also test `maxGraph` by running the [Storybook examples](#development) or [build the npm package locally](#build-local-npm-package) to get the latest changes.
+You can also test `maxGraph` by running the [Storybook examples](#development).
 
 ## Install
 <!-- copied into packages/website/docs/getting-started.mdx -->
@@ -200,56 +201,53 @@ Starting from the `mxGraph` 4.2.2 release, we
 
 ## Development
 
-### Clean former mxGraph tags
+### Contributing
 
-Ensure you don't have the former `mxGraph` tags locally (see [#92](https://github.com/maxGraph/maxGraph/issues/92) fore more details):
-```
-git fetch --all --tags --prune
-```
+We welcome contributions! Please see the [contributing guide](./CONTRIBUTING.md) for:
+- Setup instructions and prerequisites
+- Development workflow and commands
+- Code quality standards
+- Pull request process
 
-### Setting up local development environment
+### Quick Command Reference
 
-NodeJS requirements:
-- use the version declared in [.nvmrc](./.nvmrc). Other versions may work but are not supported.
-- this is the version used by GitHub Actions
-- nvm users can run `nvm use`. If the Node version is not installed, nvm will state how to install the required version.
+```bash
+# Setup
+nvm use                           # Use correct Node.js version
+npm install                       # Install dependencies
 
-Note: maxGraph relies on npm workspaces to build.
+# Development (run in parallel)
+npm run dev -w packages/core      # Watch and rebuild core
+npm run dev -w packages/html      # Run Storybook examples
 
-In the project root directory, execute
+# Building
+npm run all                       # Build everything + run tests
 
-```sh
-$ npm install
-```
-
-To watch the core package, execute:
-
-```sh
-$ npm run dev -w packages/core
-```
-
-To watch the examples provided as [Storybook](https://storybook.js.org/) stories, execute:
-
-```sh
-$ npm run dev -w packages/html
+# Testing
+npm test -w packages/core         # Run tests
+npm run lint                      # Check code quality
 ```
 
-Since both commands are in watch mode, so it's recommended to open two terminals and run them separately. When a file is saved from the core package, the html storybook will be automatically updated.
+For comprehensive commands and architecture details, see [CLAUDE.md](CLAUDE.md).
 
-For more details about `@maxgraph/html`, see the README that explains the [maxGraph examples](./packages/html/README.md).
+### Building the npm Package Locally
 
-### <a id="build-local-npm-package"></a> Building the npm package locally
+Released versions are available at [npmjs](https://www.npmjs.com/package/@maxgraph/core).
 
-**Reminder**: the released version are available at [npmjs](https://www.npmjs.com/package/@maxgraph/core). 
+To build locally:
 
-Run
-- from the project root: `npm install`
-- then, from the `packages/core` folder: `npm pack`
+```bash
+# From project root
+npm install
 
-The `packages/core` folder or the generated `packages/core/maxgraph-core-***.tgz` file are now ready for use in your application, using [npm link](https://docs.npmjs.com/cli/v8/commands/npm-link) or `npm install`.
+# From packages/core folder
+npm pack
+```
 
-Examples of use can be found in the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository.
+The `packages/core` folder or the generated `maxgraph-core-*.tgz` file can be used in your application via [npm link](https://docs.npmjs.com/cli/v8/commands/npm-link) or `npm install`.
 
-### Release
+Integration examples can be found in the [maxgraph-integration-examples](https://github.com/maxGraph/maxgraph-integration-examples) repository.
 
-See the dedicated [release](packages/website/docs/development/release.md) page.
+### Release Process
+
+See the [release documentation](packages/website/docs/development/release.md) for details on the release process.

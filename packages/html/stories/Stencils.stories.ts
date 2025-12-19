@@ -35,6 +35,7 @@ import {
   StencilShape,
   StencilShapeRegistry,
   StyleDefaultsConfig,
+  type TooltipHandler,
   VertexHandler,
   VertexHandlerConfig,
 } from '@maxgraph/core';
@@ -192,7 +193,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setTooltips(true);
   graph.setPanning(true);
 
-  graph.getTooltipForCell = function (cell) {
+  const tooltipHandler = graph.getPlugin<TooltipHandler>('TooltipHandler')!;
+  tooltipHandler.getTooltipForCell = function (cell) {
     return cell ? JSON.stringify(cell.style) : 'Cell without dedicated style';
   };
 

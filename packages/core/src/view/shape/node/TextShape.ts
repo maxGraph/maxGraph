@@ -19,8 +19,6 @@ limitations under the License.
 import Client from '../../../Client.js';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
   DEFAULT_FONTSTYLE,
   DEFAULT_TEXT_DIRECTION,
   FONT_STYLE_MASK,
@@ -50,6 +48,7 @@ import {
 } from '../../../types.js';
 import SvgCanvas2D from '../../canvas/SvgCanvas2D.js';
 import { matchBinaryMask } from '../../../internal/utils.js';
+import { StyleDefaultsConfig } from '../../../util/config.js';
 
 /**
  * Extends {@link Shape} to implement a text shape.
@@ -70,8 +69,8 @@ class TextShape extends Shape {
     align: AlignValue = 'center',
     valign: VAlignValue = 'middle',
     color = 'black',
-    family = DEFAULT_FONTFAMILY,
-    size = DEFAULT_FONTSIZE,
+    family = StyleDefaultsConfig.fontFamily,
+    size = StyleDefaultsConfig.fontSize,
     fontStyle = DEFAULT_FONTSTYLE,
     spacing = 2,
     spacingTop = 0,
@@ -94,8 +93,8 @@ class TextShape extends Shape {
     this.color = color ?? 'black';
     this.align = align ?? 'center';
     this.valign = valign ?? 'middle';
-    this.family = family ?? DEFAULT_FONTFAMILY;
-    this.size = size ?? DEFAULT_FONTSIZE;
+    this.family = family ?? StyleDefaultsConfig.fontFamily;
+    this.size = size ?? StyleDefaultsConfig.fontSize;
     this.fontStyle = fontStyle ?? DEFAULT_FONTSTYLE;
     this.spacing = spacing ?? 2;
     this.spacingTop = this.spacing + (spacingTop ?? 0);
@@ -116,14 +115,14 @@ class TextShape extends Shape {
   }
 
   value: string | HTMLElement | SVGGElement;
-  bounds: Rectangle;
+  override bounds: Rectangle;
   align: AlignValue;
   valign: VAlignValue;
   color: ColorValue;
   family: string;
   size: number;
   fontStyle: number;
-  spacing: number;
+  override spacing: number;
   spacingTop: number;
   spacingRight: number;
   spacingBottom: number;
@@ -138,8 +137,8 @@ class TextShape extends Shape {
   textDirection: TextDirectionValue;
   margin: Point | null = null;
   unrotatedBoundingBox: Rectangle | null = null;
-  flipH = false;
-  flipV = false;
+  override flipH = false;
+  override flipV = false;
 
   /**
    * Specifies the spacing to be added to the top spacing. Default is 0. Use the
@@ -172,7 +171,7 @@ class TextShape extends Shape {
   /**
    * Rotation for vertical text. Default is -90 (bottom to top).
    */
-  verticalTextRotation = -90;
+  override verticalTextRotation = -90;
 
   /**
    * Specifies if the string size should be measured in <updateBoundingBox> if
@@ -202,30 +201,30 @@ class TextShape extends Shape {
   /**
    * Disables offset in IE9 for crisper image output.
    */
-  getSvgScreenOffset() {
+  override getSvgScreenOffset() {
     return 0;
   }
 
   /**
    * Returns true if the bounds are not null and all of its variables are numeric.
    */
-  checkBounds() {
+  override checkBounds() {
     return (
-      !isNaN(this.scale) &&
-      isFinite(this.scale) &&
+      !Number.isNaN(this.scale) &&
+      Number.isFinite(this.scale) &&
       this.scale > 0 &&
       this.bounds &&
-      !isNaN(this.bounds.x) &&
-      !isNaN(this.bounds.y) &&
-      !isNaN(this.bounds.width) &&
-      !isNaN(this.bounds.height)
+      !Number.isNaN(this.bounds.x) &&
+      !Number.isNaN(this.bounds.y) &&
+      !Number.isNaN(this.bounds.width) &&
+      !Number.isNaN(this.bounds.height)
     );
   }
 
   /**
    * Generic rendering code.
    */
-  paint(c: AbstractCanvas2D, update = false): void {
+  override paint(c: AbstractCanvas2D, update = false): void {
     // Scale is passed-through to canvas
     const s = this.scale;
     const x = this.bounds.x / s;
@@ -304,7 +303,7 @@ class TextShape extends Shape {
   /**
    * Renders the text using the given DOM nodes.
    */
-  redraw(): void {
+  override redraw(): void {
     if (
       this.visible &&
       this.checkBounds() &&
@@ -341,14 +340,14 @@ class TextShape extends Shape {
   /**
    * Resets all styles.
    */
-  resetStyles(): void {
+  override resetStyles(): void {
     super.resetStyles();
 
     this.color = 'black';
     this.align = 'center';
     this.valign = 'middle';
-    this.family = DEFAULT_FONTFAMILY;
-    this.size = DEFAULT_FONTSIZE;
+    this.family = StyleDefaultsConfig.fontFamily;
+    this.size = StyleDefaultsConfig.fontSize;
     this.fontStyle = DEFAULT_FONTSTYLE;
     this.spacing = 2;
     this.spacingTop = 2;
@@ -367,7 +366,7 @@ class TextShape extends Shape {
    *
    * @param state <CellState> of the corresponding cell.
    */
-  apply(state: CellState): void {
+  override apply(state: CellState): void {
     const old = this.spacing;
     super.apply(state);
 
@@ -441,7 +440,7 @@ class TextShape extends Shape {
   /**
    * Updates the <boundingBox> for this shape using the given node and position.
    */
-  updateBoundingBox() {
+  override updateBoundingBox() {
     let { node } = this;
     this.boundingBox = this.bounds.clone();
     const rot = this.getTextRotation();
@@ -536,14 +535,14 @@ class TextShape extends Shape {
   /**
    * Returns 0 to avoid using rotation in the canvas via updateTransform.
    */
-  getShapeRotation() {
+  override getShapeRotation() {
     return 0;
   }
 
   /**
    * Returns the rotation for the text label of the corresponding shape.
    */
-  getTextRotation() {
+  override getTextRotation() {
     return this.state && this.state.shape ? this.state.shape.getTextRotation() : 0;
   }
 
@@ -551,14 +550,20 @@ class TextShape extends Shape {
    * Inverts the bounds if {@link Shape#isBoundsInverted} returns true or if the
    * horizontal style is false.
    */
-  isPaintBoundsInverted() {
+  override isPaintBoundsInverted() {
     return !this.horizontal && !!this.state && this.state.cell.isVertex();
   }
 
   /**
    * Sets the state of the canvas for drawing the shape.
    */
-  configureCanvas(c: AbstractCanvas2D, x: number, y: number, w: number, h: number): void {
+  override configureCanvas(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ): void {
     super.configureCanvas(c, x, y, w, h);
 
     c.setFontColor(this.color);
@@ -616,7 +621,7 @@ class TextShape extends Shape {
   /**
    * Updates the HTML node(s) to reflect the latest bounds and scale.
    */
-  redrawHtmlShape() {
+  override redrawHtmlShape() {
     const w = Math.max(0, Math.round(this.bounds.width / this.scale));
     const h = Math.max(0, Math.round(this.bounds.height / this.scale));
     const flex =

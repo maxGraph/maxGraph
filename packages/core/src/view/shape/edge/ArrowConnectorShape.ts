@@ -62,19 +62,19 @@ class ArrowConnectorShape extends Shape {
    * Allows to use the SVG bounding box in SVG.
    * @defaultValue `false` for performance reasons.
    */
-  useSvgBoundingBox = true;
+  override useSvgBoundingBox = true;
 
   /**
    * Hook for subclassers.
    */
-  isRoundable() {
+  override isRoundable() {
     return true;
   }
 
   /**
    * Overrides mxShape to reset spacing.
    */
-  resetStyles() {
+  override resetStyles() {
     super.resetStyles();
     this.arrowSpacing = ARROW_SPACING;
   }
@@ -82,7 +82,7 @@ class ArrowConnectorShape extends Shape {
   /**
    * Overrides apply to get smooth transition from default start- and endsize.
    */
-  apply(state: CellState): void {
+  override apply(state: CellState): void {
     super.apply(state);
 
     if (this.style && this.style.startSize != null && this.style.endSize != null) {
@@ -94,7 +94,7 @@ class ArrowConnectorShape extends Shape {
   /**
    * Augments the bounding box with the edge width and markers.
    */
-  augmentBoundingBox(bbox: Rectangle): void {
+  override augmentBoundingBox(bbox: Rectangle): void {
     super.augmentBoundingBox(bbox);
 
     let w = this.getEdgeWidth();
@@ -113,7 +113,7 @@ class ArrowConnectorShape extends Shape {
   /**
    * Paints the line shape.
    */
-  paintEdgeShape(c: AbstractCanvas2D, pts: Point[]): void {
+  override paintEdgeShape(c: AbstractCanvas2D, pts: Point[]): void {
     // Geometry of arrow
     let strokeWidth = this.strokeWidth;
 

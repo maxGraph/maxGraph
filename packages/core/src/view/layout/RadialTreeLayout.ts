@@ -66,13 +66,13 @@ class RadialTreeLayout extends CompactTreeLayout {
    * Holds the levelDistance.
    * @default 120
    */
-  levelDistance = 120;
+  override levelDistance = 120;
 
   /**
    * Holds the nodeDistance.
    * @default 10
    */
-  nodeDistance = 10;
+  override nodeDistance = 10;
 
   /**
    * Specifies if the radios should be computed automatically
@@ -85,7 +85,7 @@ class RadialTreeLayout extends CompactTreeLayout {
    * opposite terminal cell in the model.
    * @default false
    */
-  sortEdges = false;
+  override sortEdges = false;
 
   /**
    * Array of leftmost x coordinate of each row
@@ -123,7 +123,7 @@ class RadialTreeLayout extends CompactTreeLayout {
    * @param vertex {@link Cell} whose ignored state should be returned.
    * @return true if the cell has no connections.
    */
-  isVertexIgnored(vertex: Cell): boolean {
+  override isVertexIgnored(vertex: Cell): boolean {
     return (
       super.isVertexIgnored(vertex) || this.graph.getConnections(vertex).length === 0
     );
@@ -139,7 +139,7 @@ class RadialTreeLayout extends CompactTreeLayout {
    * @param parent    {@link Cell} whose children should be laid out.
    * @param root      Optional {@link Cell} that will be used as the root of the tree.
    */
-  execute(parent: Cell, root: Cell | null = null): void {
+  override execute(parent: Cell, root: Cell | null = null): void {
     this.parent = parent;
 
     this.useBoundingBox = false;

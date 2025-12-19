@@ -44,7 +44,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Build Setup
         uses: ./.github/actions/build-setup
       - name: Build @maxgraph/core API docs
@@ -56,7 +56,7 @@ jobs:
       - name: Build website
         run: npm run build -w packages/website
       - name: Upload website artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: packages/website/build/
       - name: Check types in website

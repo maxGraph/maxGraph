@@ -89,7 +89,7 @@ class Morphing extends Animation {
   /**
    * Animation step.
    */
-  updateAnimation() {
+  override updateAnimation() {
     super.updateAnimation();
     const move = new CellStatePreview(this.graph);
 

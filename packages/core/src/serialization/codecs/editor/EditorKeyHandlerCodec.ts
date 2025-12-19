@@ -35,7 +35,7 @@ export class EditorKeyHandlerCodec extends ObjectCodec {
   /**
    * Returns `null`.
    */
-  encode(_enc: Codec, _obj: EditorKeyHandler) {
+  override encode(_enc: Codec, _obj: EditorKeyHandler) {
     return null;
   }
 
@@ -67,7 +67,7 @@ export class EditorKeyHandlerCodec extends ObjectCodec {
    *
    * See also: <EditorKeyHandler.bindAction>, http://www.js-examples.com/page/tutorials__key_codes.html
    */
-  decode(dec: Codec, _node: Element, into: any) {
+  override decode(dec: Codec, _node: Element, into: any) {
     if (into != null) {
       const { editor } = into;
       let node: Element | null = <Element | null>_node.firstChild;

@@ -28,7 +28,7 @@ import {
   setCellStyleFlags,
   setCellStyles,
 } from '../../util/styleUtils.js';
-import { DEFAULT_FONTSIZE, DEFAULT_IMAGESIZE } from '../../util/Constants.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 import Geometry from '../geometry/Geometry.js';
 import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
@@ -374,30 +374,44 @@ export const CellsMixin: PartialType = {
 
           if (state && !cell.isEdge()) {
             if (param === null) {
-              if (align === 'center') {
-                param = state.x + state.width / 2;
-                break;
-              } else if (align === 'right') {
-                param = state.x + state.width;
-              } else if (align === 'top') {
-                param = state.y;
-              } else if (align === 'middle') {
-                param = state.y + state.height / 2;
-                break;
-              } else if (align === 'bottom') {
-                param = state.y + state.height;
-              } else {
-                param = state.x;
+              switch (align) {
+                case 'center':
+                  param = state.x + state.width / 2;
+                  break;
+                case 'right':
+                  param = state.x + state.width;
+                  break;
+                case 'top':
+                  param = state.y;
+                  break;
+                case 'middle':
+                  param = state.y + state.height / 2;
+                  break;
+                case 'bottom':
+                  param = state.y + state.height;
+                  break;
+                default:
+                  param = state.x;
+                  break;
               }
-            } else if (align === 'right') {
-              param = Math.max(param, state.x + state.width);
-            } else if (align === 'top') {
-              param = Math.min(param, state.y);
-            } else if (align === 'bottom') {
-              param = Math.max(param, state.y + state.height);
-            } else {
-              param = Math.min(param, state.x);
-            }
+            } else
+              switch (align) {
+                case 'right': {
+                  param = Math.max(param, state.x + state.width);
+                  break;
+                }
+                case 'top': {
+                  param = Math.min(param, state.y);
+                  break;
+                }
+                case 'bottom': {
+                  param = Math.max(param, state.y + state.height);
+                  break;
+                }
+                default: {
+                  param = Math.min(param, state.x);
+                }
+              }
           }
         }
       }
@@ -418,18 +432,35 @@ export const CellsMixin: PartialType = {
               if (geo != null && !cell.isEdge()) {
                 geo = geo.clone();
 
-                if (align === 'center') {
-                  geo.x += (p - state.x - state.width / 2) / s;
-                } else if (align === 'right') {
-                  geo.x += (p - state.x - state.width) / s;
-                } else if (align === 'top') {
-                  geo.y += (p - state.y) / s;
-                } else if (align === 'middle') {
-                  geo.y += (p - state.y - state.height / 2) / s;
-                } else if (align === 'bottom') {
-                  geo.y += (p - state.y - state.height) / s;
-                } else {
-                  geo.x += (p - state.x) / s;
+                switch (align) {
+                  case 'center': {
+                    geo.x += (p - state.x - state.width / 2) / s;
+
+                    break;
+                  }
+                  case 'right': {
+                    geo.x += (p - state.x - state.width) / s;
+
+                    break;
+                  }
+                  case 'top': {
+                    geo.y += (p - state.y) / s;
+
+                    break;
+                  }
+                  case 'middle': {
+                    geo.y += (p - state.y - state.height / 2) / s;
+
+                    break;
+                  }
+                  case 'bottom': {
+                    geo.y += (p - state.y - state.height) / s;
+
+                    break;
+                  }
+                  default: {
+                    geo.x += (p - state.x) / s;
+                  }
                 }
 
                 this.resizeCell(cell, geo);
@@ -945,7 +976,7 @@ export const CellsMixin: PartialType = {
     const { style } = state;
 
     if (!cell.isEdge()) {
-      const fontSize = style.fontSize || DEFAULT_FONTSIZE;
+      const fontSize = style.fontSize || StyleDefaultsConfig.fontSize;
       let dx = 0;
       let dy = 0;
 
@@ -953,11 +984,11 @@ export const CellsMixin: PartialType = {
       if (state.getImageSrc() || style.image) {
         if (style.shape === 'label') {
           if (style.verticalAlign === 'middle') {
-            dx += style.imageWidth || DEFAULT_IMAGESIZE;
+            dx += style.imageWidth || StyleDefaultsConfig.imageSize;
           }
 
           if (style.align !== 'center') {
-            dy += style.imageHeight || DEFAULT_IMAGESIZE;
+            dy += style.imageHeight || StyleDefaultsConfig.imageSize;
           }
         }
       }
@@ -2023,7 +2054,7 @@ export const CellsMixin: PartialType = {
                     geo.height
                   );
 
-                  if (cells.indexOf(parent) >= 0) {
+                  if (cells.includes(parent)) {
                     bbox.x += tmp.x;
                     bbox.y += tmp.y;
                   }
@@ -2032,7 +2063,7 @@ export const CellsMixin: PartialType = {
             } else {
               bbox = Rectangle.fromRectangle(geo);
 
-              if (parent && parent.isVertex() && cells.indexOf(parent) >= 0) {
+              if (parent && parent.isVertex() && cells.includes(parent)) {
                 tmp = this.getBoundingBoxFromGeometry([parent], false);
 
                 if (tmp) {

@@ -17,10 +17,10 @@ limitations under the License.
 import Rectangle from '../geometry/Rectangle.js';
 import { convertPoint } from '../../util/styleUtils.js';
 import { mod } from '../../util/mathUtils.js';
-import { DEFAULT_STARTSIZE } from '../../util/Constants.js';
 import { getClientX, getClientY } from '../../util/EventUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type { DirectionValue } from '../../types.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
@@ -128,7 +128,7 @@ export const SwimlaneMixin: PartialType = {
   getStartSize(swimlane, ignoreState = false) {
     const result = new Rectangle();
     const style = this.getCurrentCellStyle(swimlane, ignoreState);
-    const size = style.startSize ?? DEFAULT_STARTSIZE;
+    const size = style.startSize ?? StyleDefaultsConfig.startSize;
 
     if (style.horizontal ?? true) {
       result.height = size;
@@ -145,12 +145,23 @@ export const SwimlaneMixin: PartialType = {
     const h = style.horizontal ?? true;
     let n = h ? 0 : 3;
 
-    if (dir === 'north') {
-      n--;
-    } else if (dir === 'west') {
-      n += 2;
-    } else if (dir === 'south') {
-      n += 1;
+    switch (dir) {
+      case 'north': {
+        n--;
+
+        break;
+      }
+      case 'west': {
+        n += 2;
+
+        break;
+      }
+      case 'south': {
+        n += 1;
+
+        break;
+      }
+      // No default
     }
 
     const _mod = mod(n, 2);
@@ -171,17 +182,28 @@ export const SwimlaneMixin: PartialType = {
 
     if (this.isSwimlane(swimlane, ignoreState)) {
       const style = this.getCurrentCellStyle(swimlane, ignoreState);
-      const size = style.startSize ?? DEFAULT_STARTSIZE;
+      const size = style.startSize ?? StyleDefaultsConfig.startSize;
       const dir = this.getSwimlaneDirection(style);
 
-      if (dir === 'north') {
-        result.y = size;
-      } else if (dir === 'west') {
-        result.x = size;
-      } else if (dir === 'south') {
-        result.height = size;
-      } else {
-        result.width = size;
+      switch (dir) {
+        case 'north': {
+          result.y = size;
+
+          break;
+        }
+        case 'west': {
+          result.x = size;
+
+          break;
+        }
+        case 'south': {
+          result.height = size;
+
+          break;
+        }
+        default: {
+          result.width = size;
+        }
       }
     }
     return result;
@@ -244,7 +266,7 @@ export const SwimlaneMixin: PartialType = {
     // Checks if parent is dropped into child if not cloning
     let parentCell = cell;
     if (!clone) {
-      while (parentCell && cells.indexOf(parentCell) < 0) {
+      while (parentCell && !cells.includes(parentCell)) {
         parentCell = parentCell.getParent();
       }
     }

@@ -116,7 +116,7 @@ export default class Translations {
   static isLanguageSupported = (lan: string): boolean => {
     const languages = TranslationsConfig.getLanguages();
     if (languages) {
-      return languages.indexOf(lan) >= 0;
+      return languages.includes(lan);
     }
     return true;
   };
@@ -351,7 +351,7 @@ export default class Translations {
       if (c === '{') {
         index = '';
       } else if (index != null && c === '}') {
-        index = parseInt(index) - 1;
+        index = Number.parseInt(index) - 1;
 
         if (index >= 0 && index < params.length) {
           result.push(params[index]);

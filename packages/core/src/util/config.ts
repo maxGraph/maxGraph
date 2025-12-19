@@ -17,6 +17,16 @@ limitations under the License.
 import type { I18nProvider, Logger } from '../types.js';
 import { NoOpLogger } from './logger.js';
 import {
+  ARROW_SIZE,
+  ARROW_SPACING,
+  ARROW_WIDTH,
+  DEFAULT_FONTFAMILY,
+  DEFAULT_FONTSIZE,
+  DEFAULT_IMAGESIZE,
+  DEFAULT_MARKERSIZE,
+  DEFAULT_STARTSIZE,
+  LINE_ARCSIZE,
+  RECTANGLE_ROUNDING_FACTOR,
   SHADOW_OFFSET_X,
   SHADOW_OFFSET_Y,
   SHADOW_OPACITY,
@@ -81,6 +91,63 @@ export const GlobalConfig = {
  */
 export const StyleDefaultsConfig = {
   /**
+   * Defines the size (in px) of the arrowhead in the arrow shape.
+   * @default {@link ARROW_SIZE}
+   * @since 0.22.0
+   */
+  arrowSize: ARROW_SIZE,
+  /**
+   * Defines the spacing (in px) between the arrow shape and its terminals.
+   * @default {@link ARROW_SPACING}
+   * @since 0.22.0
+   */
+  arrowSpacing: ARROW_SPACING,
+  /**
+   * Defines the width (in px) of the arrow shape.
+   * @default {@link ARROW_WIDTH}
+   * @since 0.22.0
+   */
+  arrowWidth: ARROW_WIDTH,
+  /**
+   * Defines the default family for all fonts.
+   * @default {@link DEFAULT_FONTFAMILY}
+   * @since 0.22.0
+   */
+  fontFamily: DEFAULT_FONTFAMILY,
+  /**
+   * Defines the default size (in px).
+   * @default {@link DEFAULT_FONTSIZE}
+   * @since 0.22.0
+   */
+  fontSize: DEFAULT_FONTSIZE,
+  /**
+   * Defines the default width and height (in px) for images used in the label shape.
+   * @default {@link DEFAULT_IMAGESIZE}
+   * @since 0.22.0
+   */
+  imageSize: DEFAULT_IMAGESIZE,
+  /**
+   * Defines the default size (in px) of the arcs for the rounded edges.
+   * See {@link CellStateStyle.arcSize}.
+   * @default {@link LINE_ARCSIZE}
+   * @since 0.22.0
+   */
+  lineArcSize: LINE_ARCSIZE,
+  /**
+   * Defines the default size (in px) for all markers.
+   * @default {@link DEFAULT_MARKERSIZE}
+   * @since 0.22.0
+   */
+  markerSize: DEFAULT_MARKERSIZE,
+  /**
+   * Defines the default rounding factor for the rounded vertices in percent between `0` and `1`.
+   * Values should be smaller than `0.5`.
+   * See {@link CellStateStyle.arcSize}.
+   * @default {@link RECTANGLE_ROUNDING_FACTOR}
+   * @since 0.22.0
+   */
+  roundingFactor: RECTANGLE_ROUNDING_FACTOR,
+  /**
    * Defines the color to be used to draw shadows in shapes and windows.
    * @default {@link SHADOWCOLOR}
    */
@@ -100,6 +167,12 @@ export const StyleDefaultsConfig = {
    * @default {@link SHADOW_OPACITY}
    */
   shadowOpacity: SHADOW_OPACITY,
+  /**
+   * Defines the default start size (in px) for swimlanes.
+   * @default {@link DEFAULT_STARTSIZE}
+   * @since 0.22.0
+   */
+  startSize: DEFAULT_STARTSIZE,
 };
 
 const defaultStyleDefaultsConfig = { ...StyleDefaultsConfig };

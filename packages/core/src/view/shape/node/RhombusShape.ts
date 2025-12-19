@@ -41,7 +41,7 @@ class RhombusShape extends Shape {
    * Adds roundable support.
    */
   // isRoundable(): boolean;
-  isRoundable(): boolean {
+  override isRoundable(): boolean {
     return true;
   }
 
@@ -53,7 +53,13 @@ class RhombusShape extends Shape {
    * @param {number} w
    * @param {number} h
    */
-  paintVertexShape(c: AbstractCanvas2D, x: number, y: number, w: number, h: number) {
+  override paintVertexShape(
+    c: AbstractCanvas2D,
+    x: number,
+    y: number,
+    w: number,
+    h: number
+  ) {
     const hw = w / 2;
     const hh = h / 2;
 

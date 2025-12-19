@@ -46,7 +46,7 @@ class EdgeLabelLayout extends GraphLayout {
   /**
    * Implements {@link GraphLayout.execute}
    */
-  execute(parent: Cell): void {
+  override execute(parent: Cell): void {
     const { view } = this.graph;
     const model = this.graph.getDataModel();
 

@@ -22,8 +22,6 @@ import { getAlignmentAsPoint } from '../../util/styleUtils.js';
 import Client from '../../Client.js';
 import {
   ABSOLUTE_LINE_HEIGHT,
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
   FONT_STYLE_MASK,
   LINE_HEIGHT,
   NONE,
@@ -46,6 +44,7 @@ import {
   TextDirectionValue,
   VAlignValue,
 } from '../../types.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 
 // Activates workaround for gradient ID resolution if base tag is used.
 const useAbsoluteIds =
@@ -235,7 +234,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Default value for active pointer events.
    * @default all
    */
-  pointerEventsValue = 'all';
+  override pointerEventsValue = 'all';
 
   /**
    * Padding to be added for text that is not wrapped to account for differences in font metrics on different platforms in pixels.
@@ -346,8 +345,8 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Rounds all numbers to 2 decimal points.
    */
-  format(value: number) {
-    return parseFloat(value.toFixed(2));
+  override format(value: number) {
+    return Number.parseFloat(value.toFixed(2));
   }
 
   /**
@@ -370,7 +369,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Returns any offsets for rendering pixels.
    */
-  reset() {
+  override reset() {
     super.reset();
     this.gradients = {};
   }
@@ -387,7 +386,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     style.setAttribute('type', 'text/css');
     write(
       style,
-      `svg{font-family:${DEFAULT_FONTFAMILY};font-size:${DEFAULT_FONTSIZE};fill:none;stroke-miterlimit:10}`
+      `svg{font-family:${StyleDefaultsConfig.fontFamily};font-size:${StyleDefaultsConfig.fontSize};fill:none;stroke-miterlimit:10}`
     );
     return style;
   }
@@ -601,13 +600,25 @@ class SvgCanvas2D extends AbstractCanvas2D {
 
     if (direction == null || direction === 'south') {
       gradient.setAttribute('y2', '100%');
-    } else if (direction === 'east') {
-      gradient.setAttribute('x2', '100%');
-    } else if (direction === 'north') {
-      gradient.setAttribute('y1', '100%');
-    } else if (direction === 'west') {
-      gradient.setAttribute('x1', '100%');
-    }
+    } else
+      switch (direction) {
+        case 'east': {
+          gradient.setAttribute('x2', '100%');
+
+          break;
+        }
+        case 'north': {
+          gradient.setAttribute('y1', '100%');
+
+          break;
+        }
+        case 'west': {
+          gradient.setAttribute('x1', '100%');
+
+          break;
+        }
+        // No default
+      }
 
     let op = alpha1 < 1 ? `;stop-opacity:${alpha1}` : '';
 
@@ -832,7 +843,8 @@ class SvgCanvas2D extends AbstractCanvas2D {
    */
   createTolerance(node: SVGElement) {
     const tol = node.cloneNode(true) as SVGElement;
-    const sw = parseFloat(tol.getAttribute('stroke-width') || '1') + this.strokeTolerance;
+    const sw =
+      Number.parseFloat(tol.getAttribute('stroke-width') || '1') + this.strokeTolerance;
     tol.setAttribute('pointer-events', 'stroke');
     tol.setAttribute('visibility', 'hidden');
     tol.removeAttribute('stroke-dasharray');
@@ -879,7 +891,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Experimental implementation for hyperlinks.
    */
-  setLink(link: string) {
+  override setLink(link: string) {
     if (!link) {
       this.root = this.originalRoot;
     } else {
@@ -903,7 +915,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   /**
    * Sets the rotation of the canvas. Note that rotation cannot be concatenated.
    */
-  rotate(theta: number, flipH: boolean, flipV: boolean, cx: number, cy: number) {
+  override rotate(theta: number, flipH: boolean, flipV: boolean, cx: number, cy: number) {
     if (theta !== 0 || flipH || flipV) {
       const s = this.state;
       cx += s.dx;
@@ -948,9 +960,9 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Extends superclass to create path.
+   * Begins a new path.
    */
-  begin() {
+  override begin() {
     super.begin();
     this.node = this.createElement('path');
   }
@@ -1565,7 +1577,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       node.setAttribute('text-anchor', anchor);
     }
 
-    if (!this.styleEnabled || size !== DEFAULT_FONTSIZE) {
+    if (!this.styleEnabled || size !== StyleDefaultsConfig.fontSize) {
       node.setAttribute('font-size', `${size * s.scale}px`);
     }
 
@@ -1645,7 +1657,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
       node.setAttribute('fill', s.fontColor);
     }
 
-    if (!this.styleEnabled || s.fontFamily !== DEFAULT_FONTFAMILY) {
+    if (!this.styleEnabled || s.fontFamily !== StyleDefaultsConfig.fontFamily) {
       node.setAttribute('font-family', s.fontFamily);
     }
 

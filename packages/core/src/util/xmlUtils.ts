@@ -147,72 +147,89 @@ export const getPrettyXml = (
       }
     }
 
-    if (node.nodeType === NODE_TYPE.DOCUMENT) {
-      result.push(
-        getPrettyXml(
-          (<Document>(<unknown>node)).documentElement,
-          tab,
-          indent,
-          newline,
-          ns
-        )
-      );
-    } else if (node.nodeType === NODE_TYPE.DOCUMENT_FRAGMENT) {
-      let tmp = node.firstChild;
+    switch (node.nodeType) {
+      case NODE_TYPE.DOCUMENT: {
+        result.push(
+          getPrettyXml(
+            (<Document>(<unknown>node)).documentElement,
+            tab,
+            indent,
+            newline,
+            ns
+          )
+        );
 
-      if (tmp != null) {
-        while (tmp != null) {
-          result.push(getPrettyXml(<Element>tmp, tab, indent, newline, ns));
-          tmp = tmp.nextSibling;
-        }
+        break;
       }
-    } else if (node.nodeType === NODE_TYPE.COMMENT) {
-      const value = getTextContent(<Text>(<unknown>node));
+      case NODE_TYPE.DOCUMENT_FRAGMENT: {
+        let tmp = node.firstChild;
 
-      if (value.length > 0) {
-        result.push(`${indent}<!--${value}-->${newline}`);
-      }
-    } else if (node.nodeType === NODE_TYPE.TEXT) {
-      const value = trim(getTextContent(<Text>(<unknown>node)));
-
-      if (value && value.length > 0) {
-        result.push(indent + htmlEntities(value, false) + newline);
-      }
-    } else if (node.nodeType === NODE_TYPE.CDATA) {
-      const value = getTextContent(<Text>(<unknown>node));
-
-      if (value.length > 0) {
-        result.push(`${indent}<![CDATA[${value}]]${newline}`);
-      }
-    } else {
-      result.push(`${indent}<${node.nodeName}`);
-
-      // Creates the string with the node attributes
-      // and converts all HTML entities in the values
-      const attrs = node.attributes;
-
-      if (attrs != null) {
-        for (let i = 0; i < attrs.length; i += 1) {
-          const val = htmlEntities(attrs[i].value);
-          result.push(` ${attrs[i].nodeName}="${val}"`);
-        }
-      }
-
-      // Recursively creates the XML string for each child
-      // node and appends it here with an indentation
-      let tmp = node.firstChild;
-
-      if (tmp != null) {
-        result.push(`>${newline}`);
-
-        while (tmp != null) {
-          result.push(getPrettyXml(<Element>tmp, tab, indent + tab, newline, ns));
-          tmp = tmp.nextSibling;
+        if (tmp != null) {
+          while (tmp != null) {
+            result.push(getPrettyXml(<Element>tmp, tab, indent, newline, ns));
+            tmp = tmp.nextSibling;
+          }
         }
 
-        result.push(`${indent}</${node.nodeName}>${newline}`);
-      } else {
-        result.push(` />${newline}`);
+        break;
+      }
+      case NODE_TYPE.COMMENT: {
+        const value = getTextContent(<Text>(<unknown>node));
+
+        if (value.length > 0) {
+          result.push(`${indent}<!--${value}-->${newline}`);
+        }
+
+        break;
+      }
+      case NODE_TYPE.TEXT: {
+        const value = trim(getTextContent(<Text>(<unknown>node)));
+
+        if (value && value.length > 0) {
+          result.push(indent + htmlEntities(value, false) + newline);
+        }
+
+        break;
+      }
+      case NODE_TYPE.CDATA: {
+        const value = getTextContent(<Text>(<unknown>node));
+
+        if (value.length > 0) {
+          result.push(`${indent}<![CDATA[${value}]]${newline}`);
+        }
+
+        break;
+      }
+      default: {
+        result.push(`${indent}<${node.nodeName}`);
+
+        // Creates the string with the node attributes
+        // and converts all HTML entities in the values
+        const attrs = node.attributes;
+
+        if (attrs != null) {
+          for (let i = 0; i < attrs.length; i += 1) {
+            const val = htmlEntities(attrs[i].value);
+            result.push(` ${attrs[i].nodeName}="${val}"`);
+          }
+        }
+
+        // Recursively creates the XML string for each child
+        // node and appends it here with an indentation
+        let tmp = node.firstChild;
+
+        if (tmp != null) {
+          result.push(`>${newline}`);
+
+          while (tmp != null) {
+            result.push(getPrettyXml(<Element>tmp, tab, indent + tab, newline, ns));
+            tmp = tmp.nextSibling;
+          }
+
+          result.push(`${indent}</${node.nodeName}>${newline}`);
+        } else {
+          result.push(` />${newline}`);
+        }
       }
     }
   }

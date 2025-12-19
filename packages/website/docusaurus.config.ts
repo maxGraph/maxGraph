@@ -27,7 +27,12 @@ const config: Config = {
 
   onBrokenLinks: 'throw',
   onBrokenAnchors: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'throw',
+    },
+  },
 
   future: {
     // v3.8: `future.experimental_faster.ssgWorkerThreads` requires the future flag `future.v4.removeLegacyPostBuildHeadAttribute` to be turned on.
@@ -118,6 +123,9 @@ const config: Config = {
           className: 'header-github-link',
         },
       ],
+    },
+    colorMode: {
+      respectPrefersColorScheme: true, // Enable system theme mode
     },
     footer: {
       style: 'dark',

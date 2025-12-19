@@ -7,16 +7,14 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     permissions:
-      # required for "npm provenance"
-      id-token: write
+      id-token: write  # Required for OIDC: trusted publisher and "npm provenance"
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Build Setup
         uses: ./.github/actions/build-setup
         with:
           registry-url: 'https://registry.npmjs.org'
-      # scoped package requires "access=public"
+      # the scoped package requires "access=public"
+      # no token used, use trusted publisher setup instead (https://docs.npmjs.com/trusted-publishers)
       - run: npm publish -w packages/core --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

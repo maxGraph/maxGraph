@@ -17,12 +17,7 @@ limitations under the License.
 */
 
 import Client from '../Client.js';
-import {
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
-  FONT_STYLE_MASK,
-  LINE_HEIGHT,
-} from './Constants.js';
+import { FONT_STYLE_MASK, LINE_HEIGHT } from './Constants.js';
 import Point from '../view/geometry/Point.js';
 import CellPath from '../view/cell/CellPath.js';
 import Rectangle from '../view/geometry/Rectangle.js';
@@ -36,6 +31,7 @@ import type {
   VAlignValue,
 } from '../types.js';
 import { matchBinaryMask } from '../internal/utils.js';
+import { StyleDefaultsConfig } from './config.js';
 
 /**
  * Removes the cursors from the style of the given DOM node and its descendants.
@@ -73,15 +69,26 @@ export const getCurrentStyle = (element: HTMLElement) => {
  * Parses the given CSS numeric value adding handling for the values thin, medium and thick (2, 4 and 6).
  */
 export const parseCssNumber = (value: string) => {
-  if (value === 'thin') {
-    value = '2';
-  } else if (value === 'medium') {
-    value = '4';
-  } else if (value === 'thick') {
-    value = '6';
+  switch (value) {
+    case 'thin': {
+      value = '2';
+
+      break;
+    }
+    case 'medium': {
+      value = '4';
+
+      break;
+    }
+    case 'thick': {
+      value = '6';
+
+      break;
+    }
+    // No default
   }
 
-  let n = parseFloat(value);
+  let n = Number.parseFloat(value);
 
   if (Number.isNaN(n)) {
     n = 0;
@@ -434,15 +441,15 @@ export const setOpacity = (node: HTMLElement | SVGElement, value: number) => {
  * ```
  *
  * @param text String whose size should be returned.
- * @param fontSize Integer that specifies the font size in pixels. Default is {@link DEFAULT_FONTSIZE}.
- * @param fontFamily String that specifies the name of the font family. Default is {@link DEFAULT_FONTFAMILY}.
+ * @param fontSize Integer that specifies the font size in pixels. Default is {@link StyleDefaultsConfig.fontSize}.
+ * @param fontFamily String that specifies the name of the font family. Default is {@link StyleDefaultsConfig.fontFamily}.
  * @param textWidth Optional width for text wrapping.
  * @param fontStyle Optional font style, value generally taken from {@link CellStateStyle.fontStyle}.
  */
 export const getSizeForString = (
   text: string,
-  fontSize = DEFAULT_FONTSIZE,
-  fontFamily = DEFAULT_FONTFAMILY,
+  fontSize = StyleDefaultsConfig.fontSize,
+  fontFamily = StyleDefaultsConfig.fontFamily,
   textWidth: number | null = null,
   fontStyle: number | null = null
 ) => {

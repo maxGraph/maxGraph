@@ -221,12 +221,23 @@ export const ConnectionsMixin: PartialType = {
 
       // Bounds need to be rotated by 90 degrees for further computation
       if (vertex.style.anchorPointDirection) {
-        if (direction === 'north') {
-          r1 += 270;
-        } else if (direction === 'west') {
-          r1 += 180;
-        } else if (direction === 'south') {
-          r1 += 90;
+        switch (direction) {
+          case 'north': {
+            r1 += 270;
+
+            break;
+          }
+          case 'west': {
+            r1 += 180;
+
+            break;
+          }
+          case 'south': {
+            r1 += 90;
+
+            break;
+          }
+          // No default
         }
 
         // Bounds need to be rotated by 90 degrees for further computation
@@ -250,12 +261,23 @@ export const ConnectionsMixin: PartialType = {
           let cos = 0;
           let sin = 0;
 
-          if (r1 === 90) {
-            sin = 1;
-          } else if (r1 === 180) {
-            cos = -1;
-          } else if (r1 === 270) {
-            sin = -1;
+          switch (r1) {
+            case 90: {
+              sin = 1;
+
+              break;
+            }
+            case 180: {
+              cos = -1;
+
+              break;
+            }
+            case 270: {
+              sin = -1;
+
+              break;
+            }
+            // No default
           }
 
           point = <Point>getRotatedPoint(point, cos, sin, cx);

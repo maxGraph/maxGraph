@@ -20,13 +20,7 @@ import RectangleShape from '../shape/node/RectangleShape.js';
 import ConnectorShape from '../shape/edge/ConnectorShape.js';
 import ImageShape from '../shape/node/ImageShape.js';
 import TextShape from '../shape/node/TextShape.js';
-import {
-  DEFAULT_FONTFAMILY,
-  DEFAULT_FONTSIZE,
-  DEFAULT_FONTSTYLE,
-  DEFAULT_TEXT_DIRECTION,
-  NONE,
-} from '../../util/Constants.js';
+import { DEFAULT_FONTSTYLE, DEFAULT_TEXT_DIRECTION, NONE } from '../../util/Constants.js';
 import { getRotatedPoint, mod, toRadians } from '../../util/mathUtils.js';
 import { convertPoint } from '../../util/styleUtils.js';
 import { equalEntries, equalPoints } from '../../util/arrayUtils.js';
@@ -46,6 +40,7 @@ import { getClientX, getClientY, getSource } from '../../util/EventUtils.js';
 import { isNode } from '../../util/domUtils.js';
 import type { CellStateStyle, ShapeConstructor } from '../../types.js';
 import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
+import { StyleDefaultsConfig } from '../../util/config.js';
 
 const placeholderStyleValues = ['inherit', 'swimlane', 'indicated'];
 const placeholderStyleProperties: (keyof CellStateStyle)[] = [
@@ -885,7 +880,8 @@ class CellRenderer {
       ) {
         result =
           // @ts-ignore
-          parseFloat(String(shape[property])) - parseFloat(String(shape.spacing)) !==
+          Number.parseFloat(String(shape[property])) -
+            Number.parseFloat(String(shape.spacing)) !==
           (state.style[styleName] || defaultValue);
       } else {
         // @ts-ignore
@@ -897,8 +893,8 @@ class CellRenderer {
 
     return (
       check('fontStyle', 'fontStyle', DEFAULT_FONTSTYLE) ||
-      check('family', 'fontFamily', DEFAULT_FONTFAMILY) ||
-      check('size', 'fontSize', DEFAULT_FONTSIZE) ||
+      check('family', 'fontFamily', StyleDefaultsConfig.fontFamily) ||
+      check('size', 'fontSize', StyleDefaultsConfig.fontSize) ||
       check('color', 'fontColor', 'black') ||
       check('align', 'align', '') ||
       check('valign', 'verticalAlign', '') ||
