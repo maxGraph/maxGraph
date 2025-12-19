@@ -28,6 +28,7 @@ import { AlignValue, ColorValue, VAlignValue } from '../../../types.js';
 import { doEval, isElement, isNullish } from '../../../internal/utils.js';
 import { translate } from '../../../internal/i18n-utils.js';
 import { StyleDefaultsConfig } from '../../../util/config.js';
+import { shallowCopy } from '../../../internal/clone-utils.js';
 
 /**
  * Configure global settings for stencil shapes.
@@ -52,6 +53,18 @@ export const StencilShapeConfig = {
    * @default false
    */
   defaultLocalized: false,
+};
+
+const defaultStencilShapeConfig = { ...StencilShapeConfig };
+/**
+ * Resets {@link StencilShapeConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.23.0
+ * @category Configuration
+ */
+export const resetStencilShapeConfig = (): void => {
+  shallowCopy(defaultStencilShapeConfig, StencilShapeConfig);
 };
 
 // To manage the following attribute described in stencils.xsd
