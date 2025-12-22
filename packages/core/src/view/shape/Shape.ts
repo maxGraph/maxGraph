@@ -26,7 +26,7 @@ import SvgCanvas2D from '../canvas/SvgCanvas2D.js';
 import InternalEvent from '../event/InternalEvent.js';
 import Client from '../../Client.js';
 import type CellState from '../cell/CellState.js';
-import type StencilShape from './stencil/StencilShape.js';
+import type { StencilShape } from './stencil/StencilShape.js';
 import type CellOverlay from '../cell/CellOverlay.js';
 import type ImageBox from '../image/ImageBox.js';
 import type {

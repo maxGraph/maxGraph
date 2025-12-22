@@ -121,11 +121,7 @@ export * from './view/shape/ShapeRegistry.js';
 export * from './view/shape/register-shapes.js';
 
 export { unregisterAllStencilShapes } from './view/shape/stencil/register.js';
-export {
-  resetStencilShapeConfig,
-  default as StencilShape,
-  StencilShapeConfig,
-} from './view/shape/stencil/StencilShape.js';
+export * from './view/shape/stencil/StencilShape.js';
 export * from './view/shape/stencil/StencilShapeRegistry.js';
 
 export { default as Guide } from './view/other/Guide.js';

@@ -79,7 +79,7 @@ const toBoolean = (value: string | null) => value !== '0';
  *
  * @category Shape
  */
-class StencilShape extends Shape {
+export class StencilShape extends Shape {
   constructor(desc: Element) {
     super();
     this.desc = desc;
@@ -745,5 +745,3 @@ class StencilShape extends Shape {
     }
   }
 }
-
-export default StencilShape;
