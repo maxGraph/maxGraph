@@ -22,9 +22,11 @@ import {
   ObjectCodec,
   resetEdgeHandlerConfig,
   resetEntityRelationConnectorConfig,
+  resetGlobalConfig,
   resetHandleConfig,
   resetManhattanConnectorConfig,
   resetOrthogonalConnectorConfig,
+  resetStencilShapeConfig,
   resetStyleDefaultsConfig,
   resetTranslationsConfig,
   resetVertexHandlerConfig,
@@ -59,6 +61,7 @@ const originalAllowEvalConfig = {
 
 const resetMaxGraphConfigs = (): void => {
   // Global configuration
+  resetGlobalConfig();
   GlobalConfig.i18n = i18nProvider;
   GlobalConfig.logger = defaultLogger;
 
@@ -83,6 +86,7 @@ const resetMaxGraphConfigs = (): void => {
 
   // The following registries are filled by stories only
   unregisterAllStencilShapes();
+  resetStencilShapeConfig();
 };
 
 // This function is a workaround to destroy mxGraph elements that are not released by the previous story.
