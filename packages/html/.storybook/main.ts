@@ -27,6 +27,8 @@ const config: StorybookConfig = {
 
   core: {
     disableTelemetry: true,
+    disableWhatsNewNotifications: true,
+    enableCrashReports: false,
   },
 
   addons: [
