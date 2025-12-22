@@ -106,6 +106,10 @@ const preview: Preview = {
 
     docs: {
       codePanel: true,
+      source: {
+        type: 'code',
+        language: 'typescript',
+      },
     },
   },
   decorators: [
