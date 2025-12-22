@@ -26,6 +26,7 @@
     "eslint-plugin-import": "~2.32.0",
     "eslint-plugin-n": "~17.23.1",
     "eslint-plugin-prettier": "~5.5.4",
+    "eslint-plugin-storybook": "~10.1.10",
     "eslint-plugin-unicorn": "~62.0.0",
     "prettier": "~3.7.4",
     "typescript": "~5.9.2",
