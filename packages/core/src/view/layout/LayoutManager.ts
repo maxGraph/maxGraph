@@ -19,19 +19,19 @@ limitations under the License.
 import EventSource from '../event/EventSource.js';
 import InternalEvent from '../event/InternalEvent.js';
 import { convertPoint, sortCells } from '../../util/styleUtils.js';
-import RootChange from '../undoable_changes/RootChange.js';
-import ChildChange from '../undoable_changes/ChildChange.js';
-import TerminalChange from '../undoable_changes/TerminalChange.js';
-import GeometryChange from '../undoable_changes/GeometryChange.js';
-import VisibleChange from '../undoable_changes/VisibleChange.js';
-import StyleChange from '../undoable_changes/StyleChange.js';
+import RootChange from '../undoable-change/RootChange.js';
+import ChildChange from '../undoable-change/ChildChange.js';
+import TerminalChange from '../undoable-change/TerminalChange.js';
+import GeometryChange from '../undoable-change/GeometryChange.js';
+import VisibleChange from '../undoable-change/VisibleChange.js';
+import StyleChange from '../undoable-change/StyleChange.js';
 import EventObject from '../event/EventObject.js';
 import type Cell from '../cell/Cell.js';
 import Rectangle from '../geometry/Rectangle.js';
 import { getClientX, getClientY } from '../../util/EventUtils.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import GraphLayout from './GraphLayout.js';
-import UndoableEdit from '../undoable_changes/UndoableEdit.js';
+import UndoableEdit from '../undoable-change/UndoableEdit.js';
 
 /**
  * Implements a layout manager that runs a given layout after any changes to the graph:

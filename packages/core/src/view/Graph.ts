@@ -29,7 +29,7 @@ import {
   registerDefaultEdgeStyles,
   registerDefaultPerimeters,
 } from './style/register.js';
-import { getDefaultPlugins } from './plugins/index.js';
+import { getDefaultPlugins } from './plugin/index.js';
 
 /**
  * An implementation of {@link AbstractGraph} that automatically loads some default built-ins (plugins, style elements).

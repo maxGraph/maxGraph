@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import ObjectCodec from '../ObjectCodec.js';
-import TerminalChange from '../../view/undoable_changes/TerminalChange.js';
+import TerminalChange from '../../view/undoable-change/TerminalChange.js';
 import type Codec from '../Codec.js';
 
 /**

@@ -21,7 +21,7 @@ import Cell from '../cell/Cell.js';
 import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
-import type ConnectionHandler from '../plugins/ConnectionHandler.js';
+import type ConnectionHandler from '../plugin/ConnectionHandler.js';
 
 type PartialGraph = Pick<AbstractGraph, 'getView' | 'getDataModel' | 'isPortsEnabled'>;
 type PartialConnections = Pick<

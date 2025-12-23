@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
-import { convertStyleFromString } from '../../../../src/serialization/codecs/mxGraph/utils';
+import { convertStyleFromString } from '../../../../src/serialization/codec/mxGraph/utils';
 import type { CellStyle } from '../../../../src';
 
 describe('convertStyleFromString', () => {

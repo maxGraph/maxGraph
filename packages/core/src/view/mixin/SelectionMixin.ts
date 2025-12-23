@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import Cell from '../cell/Cell.js';
-import RootChange from '../undoable_changes/RootChange.js';
-import ChildChange from '../undoable_changes/ChildChange.js';
+import RootChange from '../undoable-change/RootChange.js';
+import ChildChange from '../undoable-change/ChildChange.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 
 type PartialGraph = Pick<

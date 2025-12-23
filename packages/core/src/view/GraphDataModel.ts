@@ -17,20 +17,20 @@ limitations under the License.
 */
 
 import EventSource from './event/EventSource.js';
-import UndoableEdit from './undoable_changes/UndoableEdit.js';
+import UndoableEdit from './undoable-change/UndoableEdit.js';
 import CellPath from './cell/CellPath.js';
 import Cell from './cell/Cell.js';
 import { isNumeric } from '../util/mathUtils.js';
 import EventObject from './event/EventObject.js';
 import InternalEvent from './event/InternalEvent.js';
-import ChildChange from './undoable_changes/ChildChange.js';
-import CollapseChange from './undoable_changes/CollapseChange.js';
-import GeometryChange from './undoable_changes/GeometryChange.js';
-import RootChange from './undoable_changes/RootChange.js';
-import StyleChange from './undoable_changes/StyleChange.js';
-import TerminalChange from './undoable_changes/TerminalChange.js';
-import ValueChange from './undoable_changes/ValueChange.js';
-import VisibleChange from './undoable_changes/VisibleChange.js';
+import ChildChange from './undoable-change/ChildChange.js';
+import CollapseChange from './undoable-change/CollapseChange.js';
+import GeometryChange from './undoable-change/GeometryChange.js';
+import RootChange from './undoable-change/RootChange.js';
+import StyleChange from './undoable-change/StyleChange.js';
+import TerminalChange from './undoable-change/TerminalChange.js';
+import ValueChange from './undoable-change/ValueChange.js';
+import VisibleChange from './undoable-change/VisibleChange.js';
 import Geometry from './geometry/Geometry.js';
 import type { CellStyle, FilterFunction } from '../types.js';
 

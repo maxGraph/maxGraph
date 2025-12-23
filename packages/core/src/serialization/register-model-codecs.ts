@@ -20,7 +20,7 @@ import {
   ModelCodec,
   mxCellCodec,
   mxGeometryCodec,
-} from './codecs/_model-codecs.js';
+} from './codec/_model-codecs.js';
 import Geometry from '../view/geometry/Geometry.js';
 import Point from '../view/geometry/Point.js';
 import {

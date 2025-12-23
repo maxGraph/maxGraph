@@ -35,8 +35,8 @@ import Shape from '../shape/Shape.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
 import EdgeHandler from './EdgeHandler.js';
 import EventSource from '../event/EventSource.js';
-import type SelectionHandler from '../plugins/SelectionHandler.js';
-import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
+import type SelectionHandler from '../plugin/SelectionHandler.js';
+import type SelectionCellsHandler from '../plugin/SelectionCellsHandler.js';
 import { HandleConfig, VertexHandlerConfig } from './config.js';
 import { isNullish } from '../../internal/utils.js';
 

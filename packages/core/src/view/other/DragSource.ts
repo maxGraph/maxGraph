@@ -42,7 +42,7 @@ import EventSource from '../event/EventSource.js';
 import EventObject from '../event/EventObject.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type Cell from '../cell/Cell.js';
-import type SelectionHandler from '../plugins/SelectionHandler.js';
+import type SelectionHandler from '../plugin/SelectionHandler.js';
 import type { DropHandler } from '../../types.js';
 
 /**

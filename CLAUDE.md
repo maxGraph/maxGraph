@@ -290,6 +290,24 @@ if (isI18nEnabled()) { ... }
 const message = GlobalConfig.i18n.get('key', params, 'default');
 ```
 
+### Source Folder Naming
+
+When creating new folders in `packages/core/src/`, follow these naming conventions:
+- Use **singular** form (e.g., `handler/` not `handlers/`)
+- Use **kebab-case** (e.g., `my-feature/` not `myFeature/` or `my_feature/`)
+
+```text
+# Good
+packages/core/src/view/handler/
+packages/core/src/view/cell/
+packages/core/src/view/some-feature/
+
+# Bad
+packages/core/src/view/handlers/      # plural
+packages/core/src/view/someFeature/   # camelCase
+packages/core/src/view/some_feature/  # snake_case
+```
+
 ## Important Patterns
 
 ### Using Graph vs BaseGraph

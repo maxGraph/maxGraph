@@ -34,15 +34,15 @@ import {
 } from '../../util/EventUtils.js';
 import CellState from '../cell/CellState.js';
 import Cell from '../cell/Cell.js';
-import type PanningHandler from '../plugins/PanningHandler.js';
-import type ConnectionHandler from '../plugins/ConnectionHandler.js';
+import type PanningHandler from '../plugin/PanningHandler.js';
+import type ConnectionHandler from '../plugin/ConnectionHandler.js';
 import Point from '../geometry/Point.js';
 import { convertPoint } from '../../util/styleUtils.js';
 import { NONE } from '../../util/Constants.js';
 import Client from '../../Client.js';
-import type CellEditorHandler from '../plugins/CellEditorHandler.js';
+import type CellEditorHandler from '../plugin/CellEditorHandler.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
-import type TooltipHandler from '../plugins/TooltipHandler.js';
+import type TooltipHandler from '../plugin/TooltipHandler.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

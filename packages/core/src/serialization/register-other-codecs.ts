@@ -28,15 +28,15 @@ import {
   RootChangeCodec,
   StylesheetCodec,
   TerminalChangeCodec,
-} from './codecs/_other-codecs.js';
+} from './codec/_other-codecs.js';
 import Rectangle from '../view/geometry/Rectangle.js';
 import ImageBox from '../view/image/ImageBox.js';
-import CellAttributeChange from '../view/undoable_changes/CellAttributeChange.js';
-import CollapseChange from '../view/undoable_changes/CollapseChange.js';
-import GeometryChange from '../view/undoable_changes/GeometryChange.js';
-import StyleChange from '../view/undoable_changes/StyleChange.js';
-import ValueChange from '../view/undoable_changes/ValueChange.js';
-import VisibleChange from '../view/undoable_changes/VisibleChange.js';
+import CellAttributeChange from '../view/undoable-change/CellAttributeChange.js';
+import CollapseChange from '../view/undoable-change/CollapseChange.js';
+import GeometryChange from '../view/undoable-change/GeometryChange.js';
+import StyleChange from '../view/undoable-change/StyleChange.js';
+import ValueChange from '../view/undoable-change/ValueChange.js';
+import VisibleChange from '../view/undoable-change/VisibleChange.js';
 import {
   CodecRegistrationStates,
   createObjectCodec,

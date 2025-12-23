@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import EditorPopupMenu from './EditorPopupMenu.js';
-import UndoManager from '../view/undoable_changes/UndoManager.js';
+import UndoManager from '../view/undoable-change/UndoManager.js';
 import EditorKeyHandler from './EditorKeyHandler.js';
 import EventSource from '../view/event/EventSource.js';
 import Client from '../Client.js';
@@ -38,29 +38,29 @@ import type { AbstractGraph } from '../view/AbstractGraph.js';
 import { Graph } from '../view/Graph.js';
 import SwimlaneManager from '../view/layout/SwimlaneManager.js';
 import LayoutManager from '../view/layout/LayoutManager.js';
-import RootChange from '../view/undoable_changes/RootChange.js';
-import ValueChange from '../view/undoable_changes/ValueChange.js';
-import CellAttributeChange from '../view/undoable_changes/CellAttributeChange.js';
+import RootChange from '../view/undoable-change/RootChange.js';
+import ValueChange from '../view/undoable-change/ValueChange.js';
+import CellAttributeChange from '../view/undoable-change/CellAttributeChange.js';
 import PrintPreview from '../view/other/PrintPreview.js';
 import Clipboard from '../util/Clipboard.js';
 import MaxLog from '../gui/MaxLog.js';
 import { isNode } from '../util/domUtils.js';
 import { getViewXml, getXml } from '../util/xmlUtils.js';
 import { load, post, submit } from '../util/requestUtils.js';
-import type PopupMenuHandler from '../view/plugins/PopupMenuHandler.js';
-import RubberBandHandler from '../view/plugins/RubberBandHandler.js';
+import type PopupMenuHandler from '../view/plugin/PopupMenuHandler.js';
+import RubberBandHandler from '../view/plugin/RubberBandHandler.js';
 import InternalEvent from '../view/event/InternalEvent.js';
 import InternalMouseEvent from '../view/event/InternalMouseEvent.js';
 import { CellStateStyle, MouseListenerSet } from '../types.js';
-import type ConnectionHandler from '../view/plugins/ConnectionHandler.js';
+import type ConnectionHandler from '../view/plugin/ConnectionHandler.js';
 import { show } from '../util/printUtils.js';
-import type PanningHandler from '../view/plugins/PanningHandler.js';
+import type PanningHandler from '../view/plugin/PanningHandler.js';
 import { cloneCell } from '../util/cellArrayUtils.js';
 import type MaxPopupMenu from '../gui/MaxPopupMenu.js';
 import { isNullish } from '../internal/utils.js';
 import { isI18nEnabled, translate } from '../internal/i18n-utils.js';
 import { error } from '../gui/guiUtils.js';
-import type { FitPlugin } from '../view/plugins/index.js';
+import type { FitPlugin } from '../view/plugin/index.js';
 
 /**
  * Extends {@link EventSource} to implement an application wrapper for a graph that
