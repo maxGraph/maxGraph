@@ -22,9 +22,6 @@ updates:
       - dependency-name: "typescript"
       # We must use a version that matches the version of node used to build. This is not the latest one, so manage this manually.
       - dependency-name: "@types/node"
-      # use storybook 9.x for now, bumping to a major version requires a migration
-      - dependency-name: "@storybook/*"
-      - dependency-name: "storybook"
 
     groups:
       docusaurus:

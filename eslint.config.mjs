@@ -18,6 +18,7 @@ import eslintJs from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import nodePlugin from 'eslint-plugin-n';
 import prettierRecommendedConfig from 'eslint-plugin-prettier/recommended';
+import storybook from 'eslint-plugin-storybook';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tsEslint from 'typescript-eslint';
 
@@ -109,5 +110,13 @@ export default tsEslint.config(
     },
   },
 
-  prettierRecommendedConfig // Enables eslint-plugin-prettier, eslint-config-prettier and prettier/prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration.
+  // Storybook rules - only apply to story files in packages/html
+  // See https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+  ...storybook.configs['flat/recommended'].map((config) => ({
+    ...config,
+    files: ['packages/html/stories/**/*.stories.@(ts|tsx|js|jsx|mjs|cjs)'],
+  })),
+
+  // Enables eslint-plugin-prettier, eslint-config-prettier and prettier/prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration.
+  prettierRecommendedConfig
 );
