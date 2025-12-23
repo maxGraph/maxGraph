@@ -15,11 +15,39 @@ limitations under the License.
 */
 
 import { expect, test } from '@jest/globals';
-import { resetStyleDefaultsConfig, StyleDefaultsConfig } from '../../src';
+import {
+  ConsoleLogger,
+  GlobalConfig,
+  resetGlobalConfig,
+  resetStyleDefaultsConfig,
+  StyleDefaultsConfig,
+  TranslationsAsI18n,
+} from '../../src';
+
+test('resetGlobalConfig', () => {
+  // Keep track of original default values
+  const originalConfig = { ...GlobalConfig };
+  const originalLogger = GlobalConfig.logger;
+  const originalI18n = GlobalConfig.i18n;
+
+  // Change some values
+  GlobalConfig.logger = new ConsoleLogger();
+  GlobalConfig.i18n = new TranslationsAsI18n();
+
+  expect(GlobalConfig.logger).not.toBe(originalLogger);
+  expect(GlobalConfig.i18n).not.toBe(originalI18n);
+
+  resetGlobalConfig();
+
+  // Ensure that the values are correctly reset
+  expect(GlobalConfig.logger).toBe(originalLogger);
+  expect(GlobalConfig.i18n).toBe(originalI18n);
+  expect(GlobalConfig).toStrictEqual(originalConfig);
+});
 
 test('resetStyleDefaultsConfig', () => {
   // Keep track of original default values
-  const originalStyleDefaultsConfig = { ...StyleDefaultsConfig };
+  const originalConfig = { ...StyleDefaultsConfig };
 
   // Change some values
   StyleDefaultsConfig.shadowColor = 'pink';
@@ -30,5 +58,5 @@ test('resetStyleDefaultsConfig', () => {
   // Ensure that the values are correctly reset
   expect(StyleDefaultsConfig.shadowColor).toBe('gray');
   expect(StyleDefaultsConfig.shadowOffsetX).toBe(2);
-  expect(StyleDefaultsConfig).toStrictEqual(originalStyleDefaultsConfig);
+  expect(StyleDefaultsConfig).toStrictEqual(originalConfig);
 });

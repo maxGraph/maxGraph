@@ -28,6 +28,7 @@ import { AlignValue, ColorValue, VAlignValue } from '../../../types.js';
 import { doEval, isElement, isNullish } from '../../../internal/utils.js';
 import { translate } from '../../../internal/i18n-utils.js';
 import { StyleDefaultsConfig } from '../../../util/config.js';
+import { shallowCopy } from '../../../internal/clone-utils.js';
 
 /**
  * Configure global settings for stencil shapes.
@@ -54,6 +55,18 @@ export const StencilShapeConfig = {
   defaultLocalized: false,
 };
 
+const defaultStencilShapeConfig = { ...StencilShapeConfig };
+/**
+ * Resets {@link StencilShapeConfig} to default values.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.23.0
+ * @category Configuration
+ */
+export const resetStencilShapeConfig = (): void => {
+  shallowCopy(defaultStencilShapeConfig, StencilShapeConfig);
+};
+
 // To manage the following attribute described in stencils.xsd
 // <xs:attribute name="large-arc-flag" use="required" type="xs:decimal"/>
 // <xs:attribute name="sweep-flag" use="required" type="xs:decimal"/>
@@ -66,7 +79,7 @@ const toBoolean = (value: string | null) => value !== '0';
  *
  * @category Shape
  */
-class StencilShape extends Shape {
+export class StencilShape extends Shape {
   constructor(desc: Element) {
     super();
     this.desc = desc;
@@ -732,5 +745,3 @@ class StencilShape extends Shape {
     }
   }
 }
-
-export default StencilShape;

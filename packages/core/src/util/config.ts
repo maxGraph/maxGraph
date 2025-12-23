@@ -82,6 +82,18 @@ export const GlobalConfig = {
   logger: new NoOpLogger() as Logger,
 };
 
+const defaultGlobalConfig = { ...GlobalConfig };
+/**
+ * Resets {@link GlobalConfig} to default values, restoring the original {@link NoOpI18n} and {@link NoOpLogger} instances.
+ *
+ * @experimental Subject to change or removal. maxGraph's global configuration may be modified in the future without prior notice.
+ * @since 0.23.0
+ * @category Configuration
+ */
+export const resetGlobalConfig = (): void => {
+  shallowCopy(defaultGlobalConfig, GlobalConfig);
+};
+
 /**
  * Configure style defaults for maxGraph.
  *

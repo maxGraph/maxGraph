@@ -28,7 +28,9 @@ The following objects can be used to configure `maxGraph` globally:
 Some functions are provided to reset the global configuration to the default values. For example:
 
   - `resetEdgeHandlerConfig` (since 0.14.0)
+  - `resetGlobalConfig` (since 0.23.0)
   - `resetHandleConfig` (since 0.14.0)
+  - `resetStencilShapeConfig` (since 0.23.0)
   - `resetStyleDefaultsConfig` (since 0.14.0)
   - `resetTranslationsConfig` (since 0.16.0)
   - `resetVertexHandlerConfig` (since 0.14.0)
@@ -42,7 +44,7 @@ Notice that the new global configuration elements introduced as version _0.11.0_
 :::
 
 :::info
-For former mxGraph users, the global configuration objects allow to set the default values previously defined in `mxConstants` and used everywhere in the code.
+For former mxGraph users, the global configuration objects allow you to set the default values previously defined in `mxConstants` and used everywhere in the code.
 Not all values are currently configurable yet, but the list is growing. 
 
 See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues/192).
@@ -58,7 +60,7 @@ See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues
 - `ShapeRegistry`: shapes (since 0.20.0, previously managed by `CellRenderer`)
 - `StencilShapeRegistry`: stencil shapes
 
-When instantiating a `Graph` object, the registries are filled with `maxGraph` default style configurations. There is no default stencil shapes registered by default.
+When instantiating a `Graph` object, the registries are filled with `maxGraph` default style configurations. There are no default stencil shapes registered by default.
 
 To manually register default style configurations, you can use the following functions:
 
@@ -83,7 +85,7 @@ unregisterAllStencilShapes();
 
 ## Codecs and Serialization
 
-`CodecRegistry` is used for serialization and deserialization of objects in XML object.
+`CodecRegistry` is used for serialization and deserialization of objects in XML objects.
 By default, no codec is registered. Some functions are provided to register codecs for specific objects.
 
 For more details about the codecs, see the Codec [documentation page](./codecs.md).
