@@ -26,7 +26,7 @@ import {
   isControlDown as _isControlDown,
   isShiftDown,
 } from '../../util/EventUtils.js';
-import type CellEditorHandler from '../plugins/CellEditorHandler.js';
+import type CellEditorHandler from '../plugin/CellEditorHandler.js';
 
 /**
  * Event handler that listens to keystroke events.

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import ObjectCodec from '../ObjectCodec.js';
-import RootChange from '../../view/undoable_changes/RootChange.js';
+import RootChange from '../../view/undoable-change/RootChange.js';
 import type Codec from '../Codec.js';
 import { isElement } from '../../internal/utils.js';
 

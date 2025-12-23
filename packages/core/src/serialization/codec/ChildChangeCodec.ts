@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import ObjectCodec from '../ObjectCodec.js';
-import ChildChange from '../../view/undoable_changes/ChildChange.js';
+import ChildChange from '../../view/undoable-change/ChildChange.js';
 import type Codec from '../Codec.js';
 import { isElement } from '../../internal/utils.js';
 

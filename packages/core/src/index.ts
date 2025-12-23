@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 // Contribution of Mixins to the Graph type (no side effects, types only)
-import './view/mixins/_graph-mixins-types.js';
+import './view/mixin/_graph-mixins-types.js';
 
 export { AbstractGraph } from './view/AbstractGraph.js';
 export { BaseGraph } from './view/BaseGraph.js';
 export { Graph } from './view/Graph.js';
-export * from './view/plugins/index.js';
+export * from './view/plugin/index.js';
 
 export { GraphDataModel } from './view/GraphDataModel.js';
 export { GraphView } from './view/GraphView.js';
@@ -30,17 +30,17 @@ export { default as PrintPreview } from './view/other/PrintPreview.js';
 export { default as SwimlaneManager } from './view/layout/SwimlaneManager.js';
 export { default as Client } from './Client.js';
 
-export { default as CellAttributeChange } from './view/undoable_changes/CellAttributeChange.js';
-export { ChildChange } from './view/undoable_changes/ChildChange.js';
-export { default as CollapseChange } from './view/undoable_changes/CollapseChange.js';
-export { default as CurrentRootChange } from './view/undoable_changes/CurrentRootChange.js';
-export { default as GeometryChange } from './view/undoable_changes/GeometryChange.js';
-export { RootChange } from './view/undoable_changes/RootChange.js';
-export { default as SelectionChange } from './view/undoable_changes/SelectionChange.js';
-export { default as StyleChange } from './view/undoable_changes/StyleChange.js';
-export { TerminalChange } from './view/undoable_changes/TerminalChange.js';
-export { default as ValueChange } from './view/undoable_changes/ValueChange.js';
-export { default as VisibleChange } from './view/undoable_changes/VisibleChange.js';
+export { default as CellAttributeChange } from './view/undoable-change/CellAttributeChange.js';
+export { ChildChange } from './view/undoable-change/ChildChange.js';
+export { default as CollapseChange } from './view/undoable-change/CollapseChange.js';
+export { default as CurrentRootChange } from './view/undoable-change/CurrentRootChange.js';
+export { default as GeometryChange } from './view/undoable-change/GeometryChange.js';
+export { RootChange } from './view/undoable-change/RootChange.js';
+export { default as SelectionChange } from './view/undoable-change/SelectionChange.js';
+export { default as StyleChange } from './view/undoable-change/StyleChange.js';
+export { TerminalChange } from './view/undoable-change/TerminalChange.js';
+export { default as ValueChange } from './view/undoable-change/ValueChange.js';
+export { default as VisibleChange } from './view/undoable-change/VisibleChange.js';
 
 export { EditorKeyHandler } from './editor/EditorKeyHandler.js';
 export { EditorPopupMenu } from './editor/EditorPopupMenu.js';
@@ -49,7 +49,7 @@ export { Editor } from './editor/Editor.js';
 
 export { default as CellHighlight } from './view/cell/CellHighlight.js';
 export { default as CellMarker } from './view/cell/CellMarker.js';
-export { ConnectionHandlerCellMarker } from './view/plugins/ConnectionHandler.js';
+export { ConnectionHandlerCellMarker } from './view/plugin/ConnectionHandler.js';
 export { default as CellTracker } from './view/cell/CellTracker.js';
 export { default as ConstraintHandler } from './view/handler/ConstraintHandler.js';
 export { default as EdgeHandler } from './view/handler/EdgeHandler.js';
@@ -91,8 +91,8 @@ export { default as Codec } from './serialization/Codec.js';
 export { default as CodecRegistry } from './serialization/CodecRegistry.js';
 export { default as ObjectCodec } from './serialization/ObjectCodec.js';
 export * from './serialization/ModelXmlSerializer.js';
-export * from './serialization/codecs/_model-codecs.js';
-export * from './serialization/codecs/_other-codecs.js';
+export * from './serialization/codec/_model-codecs.js';
+export * from './serialization/codec/_other-codecs.js';
 export * from './serialization/register-model-codecs.js';
 export * from './serialization/register-other-codecs.js';
 
@@ -239,8 +239,8 @@ export * as requestUtils from './util/requestUtils.js';
 export { default as AutoSaveManager } from './view/other/AutoSaveManager.js';
 export { default as Clipboard } from './util/Clipboard.js';
 
-export { default as UndoableEdit } from './view/undoable_changes/UndoableEdit.js';
-export { default as UndoManager } from './view/undoable_changes/UndoManager.js';
+export { default as UndoableEdit } from './view/undoable-change/UndoableEdit.js';
+export { default as UndoManager } from './view/undoable-change/UndoManager.js';
 
 export { Cell } from './view/cell/Cell.js';
 export { default as CellOverlay } from './view/cell/CellOverlay.js';

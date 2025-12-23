@@ -18,7 +18,7 @@ import { isMultiTouchEvent } from '../../util/EventUtils.js';
 import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
-import type CellEditorHandler from '../plugins/CellEditorHandler.js';
+import type CellEditorHandler from '../plugin/CellEditorHandler.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

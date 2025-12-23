@@ -22,7 +22,7 @@ import EventSource from './event/EventSource.js';
 import InternalEvent from './event/InternalEvent.js';
 import Rectangle from './geometry/Rectangle.js';
 import Client from '../Client.js';
-import type PanningHandler from './plugins/PanningHandler.js';
+import type PanningHandler from './plugin/PanningHandler.js';
 import GraphView from './GraphView.js';
 import CellRenderer from './cell/CellRenderer.js';
 import Point from './geometry/Point.js';
@@ -31,12 +31,12 @@ import Cell from './cell/Cell.js';
 import GraphDataModel from './GraphDataModel.js';
 import { Stylesheet } from './style/Stylesheet.js';
 import { PAGE_FORMAT_A4_PORTRAIT } from '../util/Constants.js';
-import ChildChange from './undoable_changes/ChildChange.js';
-import GeometryChange from './undoable_changes/GeometryChange.js';
-import RootChange from './undoable_changes/RootChange.js';
-import StyleChange from './undoable_changes/StyleChange.js';
-import TerminalChange from './undoable_changes/TerminalChange.js';
-import ValueChange from './undoable_changes/ValueChange.js';
+import ChildChange from './undoable-change/ChildChange.js';
+import GeometryChange from './undoable-change/GeometryChange.js';
+import RootChange from './undoable-change/RootChange.js';
+import StyleChange from './undoable-change/StyleChange.js';
+import TerminalChange from './undoable-change/TerminalChange.js';
+import ValueChange from './undoable-change/ValueChange.js';
 import CellState from './cell/CellState.js';
 import { isNode } from '../util/domUtils.js';
 import { EdgeStyle } from './style/builtin-style-elements.js';
@@ -58,10 +58,10 @@ import type {
 } from '../types.js';
 import Multiplicity from './other/Multiplicity.js';
 import type ImageBundle from './image/ImageBundle.js';
-import { applyGraphMixins } from './mixins/_graph-mixins-apply.js';
+import { applyGraphMixins } from './mixin/_graph-mixins-apply.js';
 import { isNullish } from '../internal/utils.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';
-import type TooltipHandler from './plugins/TooltipHandler.js';
+import type TooltipHandler from './plugin/TooltipHandler.js';
 
 /**
  * Extends {@link EventSource} to implement a graph component for the browser. This is the entry point class of the package.

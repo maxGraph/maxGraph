@@ -39,7 +39,7 @@ import CellOverlay from './CellOverlay.js';
 import { getClientX, getClientY, getSource } from '../../util/EventUtils.js';
 import { isNode } from '../../util/domUtils.js';
 import type { CellStateStyle, ShapeConstructor } from '../../types.js';
-import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
+import type SelectionCellsHandler from '../plugin/SelectionCellsHandler.js';
 import { StyleDefaultsConfig } from '../../util/config.js';
 
 const placeholderStyleValues = ['inherit', 'swimlane', 'indicated'];

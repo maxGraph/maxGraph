@@ -37,7 +37,7 @@ import { getSource, isMouseEvent } from '../../util/EventUtils.js';
 import EventSource from '../event/EventSource.js';
 import { hasScrollbars } from '../../util/styleUtils.js';
 import type { Listenable, MouseListenerSet } from '../../types.js';
-import { getDefaultPlugins } from '../plugins/index.js';
+import { getDefaultPlugins } from '../plugin/index.js';
 
 /**
  * Implements an outline (aka overview or minimap) for a `Graph`.

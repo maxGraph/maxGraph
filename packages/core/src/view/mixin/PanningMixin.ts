@@ -17,11 +17,11 @@ limitations under the License.
 import { hasScrollbars } from '../../util/styleUtils.js';
 import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
-import type PanningHandler from '../plugins/PanningHandler.js';
+import type PanningHandler from '../plugin/PanningHandler.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import Rectangle from '../geometry/Rectangle.js';
 import Point from '../geometry/Point.js';
-import type SelectionCellsHandler from '../plugins/SelectionCellsHandler.js';
+import type SelectionCellsHandler from '../plugin/SelectionCellsHandler.js';
 
 type PartialGraph = Pick<
   AbstractGraph,

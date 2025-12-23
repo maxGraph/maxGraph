@@ -19,8 +19,8 @@ limitations under the License.
 import EventSource from '../view/event/EventSource.js';
 import type { AbstractGraph } from './AbstractGraph.js';
 import type Cell from './cell/Cell.js';
-import SelectionChange from './undoable_changes/SelectionChange.js';
-import UndoableEdit from './undoable_changes/UndoableEdit.js';
+import SelectionChange from './undoable-change/SelectionChange.js';
+import UndoableEdit from './undoable-change/UndoableEdit.js';
 import EventObject from './event/EventObject.js';
 import InternalEvent from './event/InternalEvent.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';

@@ -32,22 +32,22 @@ import {
   toRadians,
 } from '../util/mathUtils.js';
 import CellState from './cell/CellState.js';
-import UndoableEdit from './undoable_changes/UndoableEdit.js';
+import UndoableEdit from './undoable-change/UndoableEdit.js';
 import ImageShape from './shape/node/ImageShape.js';
 import InternalMouseEvent from './event/InternalMouseEvent.js';
 import Cell from './cell/Cell.js';
 import Image from './image/ImageBox.js';
-import CurrentRootChange from './undoable_changes/CurrentRootChange.js';
+import CurrentRootChange from './undoable-change/CurrentRootChange.js';
 import Shape from './shape/Shape.js';
 import Geometry from './geometry/Geometry.js';
 import ConnectionConstraint from './other/ConnectionConstraint.js';
-import type PopupMenuHandler from './plugins/PopupMenuHandler.js';
+import type PopupMenuHandler from './plugin/PopupMenuHandler.js';
 import { getClientX, getClientY, getSource, isConsumed } from '../util/EventUtils.js';
 import { clone } from '../util/cloneUtils.js';
 import type { AbstractGraph } from './AbstractGraph.js';
 import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry.js';
 import { PerimeterRegistry } from './style/perimeter/PerimeterRegistry.js';
-import type TooltipHandler from './plugins/TooltipHandler.js';
+import type TooltipHandler from './plugin/TooltipHandler.js';
 import type { EdgeStyleFunction, MouseEventListener } from '../types.js';
 import { doEval, log } from '../internal/utils.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';

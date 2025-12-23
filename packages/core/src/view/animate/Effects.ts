@@ -17,11 +17,11 @@ limitations under the License.
 */
 
 import { setOpacity } from '../../util/styleUtils.js';
-import GeometryChange from '../undoable_changes/GeometryChange.js';
-import TerminalChange from '../undoable_changes/TerminalChange.js';
-import ValueChange from '../undoable_changes/ValueChange.js';
-import ChildChange from '../undoable_changes/ChildChange.js';
-import StyleChange from '../undoable_changes/StyleChange.js';
+import GeometryChange from '../undoable-change/GeometryChange.js';
+import TerminalChange from '../undoable-change/TerminalChange.js';
+import ValueChange from '../undoable-change/ValueChange.js';
+import ChildChange from '../undoable-change/ChildChange.js';
+import StyleChange from '../undoable-change/StyleChange.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import type Cell from '../../view/cell/Cell.js';
 import { UndoableChange } from '../../types.js';
