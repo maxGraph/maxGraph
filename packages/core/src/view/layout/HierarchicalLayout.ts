@@ -144,17 +144,17 @@ class HierarchicalLayout extends GraphLayout {
   model: GraphHierarchyModel | null = null;
 
   /**
-   * Maps each vertex to its computed list of incident edges considered by the layout.
+   * Maps each cell to its computed list of incident edges considered by the layout.
    */
   edgesCache: Map<Cell, Cell[]> = new Map();
 
   /**
-   * Maps each edge to its resolved visible source terminal vertex.
+   * Maps each edge to its resolved visible source terminal cell.
    */
   edgeSourceTermCache: Map<Cell, Cell> = new Map();
 
   /**
-   * Maps each edge to its resolved visible target terminal vertex.
+   * Maps each edge to its resolved visible target terminal cell.
    */
   edgesTargetTermCache: Map<Cell, Cell> = new Map();
 
