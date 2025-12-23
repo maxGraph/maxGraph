@@ -12,7 +12,7 @@
     "extra:copy-gen-resources": "node scripts/copy-generated-resources.mjs"
   },
   "dependencies": {
-    "@easyops-cn/docusaurus-search-local": "~0.52.1",
+    "@easyops-cn/docusaurus-search-local": "~0.52.2",
     "@docusaurus/core": "3.9.2",
     "@docusaurus/faster": "3.9.2",
     "@docusaurus/plugin-client-redirects": "3.9.2",
