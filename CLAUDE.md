@@ -296,7 +296,7 @@ When creating new folders in `packages/core/src/`, follow these naming conventio
 - Use **singular** form (e.g., `handler/` not `handlers/`)
 - Use **kebab-case** (e.g., `my-feature/` not `myFeature/` or `my_feature/`)
 
-```
+```text
 # Good
 packages/core/src/view/handler/
 packages/core/src/view/cell/
