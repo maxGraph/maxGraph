@@ -31,7 +31,6 @@ import {
   relativeCcw,
   toRadians,
 } from '../util/mathUtils.js';
-import { GlobalConfig } from '../util/config.js';
 import CellState from './cell/CellState.js';
 import UndoableEdit from './undoable_changes/UndoableEdit.js';
 import ImageShape from './shape/node/ImageShape.js';
@@ -50,7 +49,7 @@ import { EdgeStyleRegistry } from './style/edge/EdgeStyleRegistry.js';
 import { PerimeterRegistry } from './style/perimeter/PerimeterRegistry.js';
 import type TooltipHandler from './plugins/TooltipHandler.js';
 import type { EdgeStyleFunction, MouseEventListener } from '../types.js';
-import { doEval } from '../internal/utils.js';
+import { doEval, log } from '../internal/utils.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';
 
 /**
@@ -543,7 +542,7 @@ export class GraphView extends EventSource {
    * Default is {@link currentRoot} or the root of the model.
    */
   validate(cell: Cell | null = null) {
-    const t0 = GlobalConfig.logger.enter('GraphView.validate');
+    const t0 = log().enter('GraphView.validate');
 
     this.resetValidationState();
 
@@ -560,7 +559,7 @@ export class GraphView extends EventSource {
       this.resetValidationState();
     }
 
-    GlobalConfig.logger.leave('GraphView.validate', t0);
+    log().leave('GraphView.validate', t0);
   }
 
   /**

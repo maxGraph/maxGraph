@@ -19,10 +19,9 @@ limitations under the License.
 import CellPath from '../view/cell/CellPath.js';
 import CodecRegistry from './CodecRegistry.js';
 import Cell from '../view/cell/Cell.js';
-import { GlobalConfig } from '../util/config.js';
 import { getFunctionName } from '../util/StringUtils.js';
 import { importNode, isNode } from '../util/domUtils.js';
-import { isElement } from '../internal/utils.js';
+import { isElement, log } from '../internal/utils.js';
 import type ObjectCodec from './ObjectCodec.js';
 
 const createXmlDocument = () => {
@@ -335,9 +334,7 @@ class Codec {
       } else if (isNode(obj)) {
         node = importNode(this.document, obj, true);
       } else {
-        GlobalConfig.logger.warn(
-          `Codec.encode: No codec for ${getFunctionName(obj.constructor)}`
-        );
+        log().warn(`Codec.encode: No codec for ${getFunctionName(obj.constructor)}`);
       }
     }
     return node;
@@ -365,7 +362,7 @@ class Codec {
       if (dec != null) {
         obj = dec.decode(this, node, into);
       } else {
-        GlobalConfig.logger.warn(
+        log().warn(
           `Codec.decode: No codec found for node '${node.nodeName}', so the node won't be decoded, the original XML Element is returned instead.`
         );
         obj = <Element>node.cloneNode(true);
