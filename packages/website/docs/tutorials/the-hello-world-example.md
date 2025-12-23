@@ -20,7 +20,7 @@ Copyright (c) JGraph Ltd 2006-2017
 
 The _Hello, World!_ example of `maxGraph` ships in a Storybook story called `HelloWorld` which is available in the `HelloWorld` page of the [maxGraph demo](https://maxgraph.github.io/maxGraph/demo/?path=/story/basic-helloworld--default).
 
-The source of the example is available in [HelloWorld.stories.js](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/HelloWorld.stories.js).
+The source of the example is available in [HelloWorld.stories.ts](https://github.com/maxGraph/maxGraph/blob/main/packages/html/stories/HelloWorld.stories.ts).
 
 ![Screenshot of the Hello World example](./assets/hello-world-example.png)
 
