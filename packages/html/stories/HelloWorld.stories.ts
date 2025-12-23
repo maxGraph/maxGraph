@@ -15,7 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Graph, InternalEvent, RubberBandHandler } from '@maxgraph/core';
+import {
+  getDefaultPlugins,
+  Graph,
+  InternalEvent,
+  RubberBandHandler,
+} from '@maxgraph/core';
 import {
   contextMenuTypes,
   contextMenuValues,
@@ -42,21 +47,21 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
+const Template = ({ label, ...args }: Record<string, string>) => {
   const container = createGraphContainer(args);
 
   if (!args.contextMenu) InternalEvent.disableContextMenu(container);
 
-  const graph = new Graph(container);
+  // Enables rubberband selection
+  const plugins = getDefaultPlugins();
+  if (args.rubberBand) plugins.push(RubberBandHandler);
 
-  if (args.rubberBand) new RubberBandHandler(graph);
+  // Creates the graph inside the given container
+  const graph = new Graph(container, undefined, plugins);
 
-  const parent = graph.getDefaultParent();
-
+  // Add cells to the model in a single step
   graph.batchUpdate(() => {
-    // Add cells to the model in a single step
     const vertex1 = graph.insertVertex({
-      parent,
       value: 'Hello',
       position: [20, 20],
       size: [80, 30],
@@ -64,15 +69,13 @@ const Template = ({ label, ...args }) => {
     });
 
     const vertex2 = graph.insertVertex({
-      parent,
       value: 'World!',
       position: [200, 150],
       size: [80, 30],
       relative: false,
     });
 
-    const edge = graph.insertEdge({
-      parent,
+    graph.insertEdge({
       source: vertex1,
       target: vertex2,
     });
