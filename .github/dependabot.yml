@@ -41,6 +41,10 @@ updates:
         patterns:
           - "react"
           - "react-*"
+      storybook:
+        patterns:
+          - "@storybook/*"
+          - "storybook"
       test:
         patterns:
           - "@jest/*"
