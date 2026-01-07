@@ -16,7 +16,20 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { DIRECTION_MASK, FONT_STYLE_MASK } from '../../src/util/Constants';
-import { matchBinaryMask } from '../../src/internal/utils';
+import { isNullish, matchBinaryMask } from '../../src/internal/utils';
+
+describe('isNullish', () => {
+  test.each([null, undefined])('returns true for %s', (value) => {
+    expect(isNullish(value)).toBeTruthy();
+  });
+
+  test.each([0, false, '', NaN, {}, [], 12, 'hello', { property: 'value' }])(
+    'returns false for %s',
+    (value) => {
+      expect(isNullish(value)).toBeFalsy();
+    }
+  );
+});
 
 describe('matchBinaryMask', () => {
   test('match self', () => {
