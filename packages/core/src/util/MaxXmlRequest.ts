@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import { write } from './domUtils.js';
-import { parseXml } from './xmlUtils';
+import { parseXml } from './xmlUtils.js';
 
 /**
  * This class provides a cross-browser abstraction for Ajax requests. It is an XML HTTP request wrapper.
