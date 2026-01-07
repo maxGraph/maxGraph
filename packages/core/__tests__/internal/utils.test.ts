@@ -23,7 +23,7 @@ describe('isNullish', () => {
     expect(isNullish(value)).toBeTruthy();
   });
 
-  test.each([0, false, '', NaN, {}, [], 12, 'hello', { property: 'value' }])(
+  test.each([0, false, '', Number.NaN, {}, [], 12, 'hello', { property: 'value' }])(
     'returns false for %s',
     (value) => {
       expect(isNullish(value)).toBeFalsy();
