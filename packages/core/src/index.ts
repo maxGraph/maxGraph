@@ -180,6 +180,10 @@ export * as styleUtils from './util/styleUtils.js';
  * @category Utils
  */
 export * as xmlUtils from './util/xmlUtils.js';
+/**
+ * @category Utils
+ */
+export * as xmlViewUtils from './util/xmlViewUtils.js';
 
 export * from './util/config.js';
 export * from './util/logger.js';
