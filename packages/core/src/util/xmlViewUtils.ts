@@ -29,10 +29,10 @@ export const getViewXml = (
   cells: Cell[] | null = null,
   x0 = 0,
   y0 = 0
-) => {
+): Element | null => {
   if (cells == null) {
     const model = graph.getDataModel();
-    cells = [<Cell>model.getRoot()];
+    cells = [model.getRoot()!];
   }
 
   const view = graph.getView();

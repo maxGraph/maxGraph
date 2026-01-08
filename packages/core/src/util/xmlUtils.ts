@@ -25,7 +25,7 @@ import type { StyleValue } from '../types.js';
 /**
  * Returns a new, empty XML document.
  */
-export const createXmlDocument = () => {
+export const createXmlDocument = (): XMLDocument => {
   return document.implementation.createDocument('', '', null);
 };
 
