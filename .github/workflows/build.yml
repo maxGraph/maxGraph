@@ -34,7 +34,7 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     permissions:
-        contents: read
+      contents: read
     strategy:
       # we want to run the full build on all os: don't cancel running jobs even if one fails
       fail-fast: false
