@@ -42,8 +42,7 @@ export const isElement = (node?: Node | UserObject | null): node is Element =>
  *
  * @private not part of the public API, can be removed or changed without prior notice
  */
-export const isNullish = (v: unknown): v is null | undefined =>
-  v === null || v === undefined;
+export const isNullish = (v: unknown): v is null | undefined => v == undefined;
 
 /**
  * Returns the global logger.
