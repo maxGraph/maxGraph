@@ -17,15 +17,15 @@ limitations under the License.
 */
 
 import { NODE_TYPE, NS_SVG } from './Constants.js';
-import { htmlEntities, trim } from './StringUtils.js';
-import { getTextContent } from './domUtils.js';
-import { isElement } from '../internal/utils.js';
-import type { StyleValue } from '../types.js';
 import Point from '../view/geometry/Point.js';
 import type Cell from '../view/cell/Cell.js';
 import type { AbstractGraph } from '../view/AbstractGraph.js';
+import { htmlEntities, trim } from './StringUtils.js';
 import TemporaryCellStates from '../view/cell/TemporaryCellStates.js';
+import type { StyleValue } from '../types.js';
+import { getTextContent } from './domUtils.js';
 import Codec from '../serialization/Codec.js';
+import { isElement } from '../internal/utils.js';
 
 /**
  * Returns a new, empty XML document.
@@ -67,14 +67,14 @@ export const getViewXml = (
     view.drawPane = document.createElementNS(NS_SVG, 'g');
     view.canvas.appendChild(view.drawPane);
 
-    // Redirects cell overlays into a temporary container
+    // Redirects cell overlays into temporary container
     view.overlayPane = document.createElementNS(NS_SVG, 'g');
     view.canvas.appendChild(view.overlayPane);
   } else {
     view.drawPane = <SVGElement>view.drawPane.cloneNode(false);
     view.canvas.appendChild(view.drawPane);
 
-    // Redirects cell overlays into a temporary container
+    // Redirects cell overlays into temporary container
     view.overlayPane = <SVGElement>view.overlayPane.cloneNode(false);
     view.canvas.appendChild(view.overlayPane);
   }
