@@ -31,7 +31,7 @@ import {
 } from '../../util/Constants.js';
 import Rectangle from '../geometry/Rectangle.js';
 import AbstractCanvas2D from './AbstractCanvas2D.js';
-import { getXml } from '../../util/xmlUtils.js';
+import { getXml, parseXml } from '../../util/xmlUtils.js';
 import { isNode, write } from '../../util/domUtils.js';
 import { htmlEntities, trim } from '../../util/StringUtils.js';
 import {
@@ -58,25 +58,25 @@ const useAbsoluteIds =
  * This canvas writes all calls as SVG output to the given SVG root node.
  *
  * ```javascript
- * const svgDoc = mxUtils.createXmlDocument();
- * const root = (svgDoc.createElementNS != null) ?
- * 		svgDoc.createElementNS(mxConstants.NS_SVG, 'svg') : svgDoc.createElement('svg');
+ * const svgDoc = xmlUtils.createXmlDocument();
+ * const root = svgDoc.createElementNS ?
+ * 		svgDoc.createElementNS(constants.NS_SVG, 'svg') : svgDoc.createElement('svg');
  *
- * if (svgDoc.createElementNS == null) {
+ * if (!svgDoc.createElementNS) {
  *   root.setAttribute('xmlns', constants.NS_SVG);
  *   root.setAttribute('xmlns:xlink', constants.NS_XLINK);
  * } else {
  *   root.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', constants.NS_XLINK);
  * }
  *
- * var bounds = graph.getGraphBounds();
+ * const bounds = graph.getGraphBounds();
  * root.setAttribute('width', (bounds.x + bounds.width + 4) + 'px');
  * root.setAttribute('height', (bounds.y + bounds.height + 4) + 'px');
  * root.setAttribute('version', '1.1');
  *
  * svgDoc.appendChild(root);
  *
- * var svgCanvas = new mxSvgCanvas2D(root);
+ * const svgCanvas = new mxSvgCanvas2D(root);
  * ```
  *
  *
@@ -758,7 +758,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Transfers the stroke attributes from {@link mxAbstractCanvas2D.state} to {@link node}.
+   * Transfers the stroke attributes from {@link AbstractCanvas2D.state} to {@link node}.
    */
   updateStroke() {
     const s = this.state;
@@ -789,7 +789,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Transfers the stroke attributes from {@link mxAbstractCanvas2D.state} to {@link node}.
+   * Transfers the stroke attributes from {@link AbstractCanvas2D.state} to {@link node}.
    */
   updateStrokeAttributes() {
     const s = this.state;
@@ -1087,7 +1087,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Converts the given HTML string to XHTML.
    */
   convertHtml(val: string) {
-    const doc = new DOMParser().parseFromString(val, 'text/html');
+    const doc = parseXml(val);
 
     if (doc != null) {
       val = new XMLSerializer().serializeToString(doc.body);
@@ -1147,7 +1147,7 @@ class SvgCanvas2D extends AbstractCanvas2D {
     val = `<div xmlns="http://www.w3.org/1999/xhtml">${val}</div>`;
 
     // NOTE: FF 3.6 crashes if content CSS contains "height:100%"
-    return new DOMParser().parseFromString(val, 'text/xml').documentElement;
+    return parseXml(val).documentElement;
   }
 
   /**

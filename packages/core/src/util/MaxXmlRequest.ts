@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import { write } from './domUtils.js';
+import { parseXml } from './xmlUtils.js';
 
 /**
  * This class provides a cross-browser abstraction for Ajax requests. It is an XML HTTP request wrapper.
@@ -213,7 +214,7 @@ export default class MaxXmlRequest {
     // document. This happens in IE9 standards mode and with XML user
     // objects only, as they are used directly as values in cells.
     if (xml == null || xml.documentElement == null) {
-      xml = new DOMParser().parseFromString(this.request.responseText, 'text/xml');
+      xml = parseXml(this.request.responseText);
     }
     return xml;
   }

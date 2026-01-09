@@ -12,6 +12,7 @@ _**Note:** Yet to be released breaking changes appear here._
 **Breaking Changes**:
 - The `getTooltip` and `getTooltipForCell` methods have been moved from `AbstractGraph` to the `TooltipHandler` plugin.
   If you were overriding these methods in a `AbstractGraph` subclass, you should now extend `TooltipHandler` instead.
+- `xmlUtils.getViewXml` moved to `xmlViewUtils.getViewXml`. The impact should be limited as this function was not widely used (only in the Editor class in the maxGraph code).
 
 ## 0.22.0
 
