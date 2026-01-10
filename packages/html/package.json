@@ -14,8 +14,8 @@
     "@storybook/addon-docs": "~10.1.11",
     "@storybook/addon-links": "~10.1.11",
     "@storybook/html-vite": "~10.1.11",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "storybook": "~10.1.10",
     "vite": "~7.3.0"
   }
