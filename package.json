@@ -30,6 +30,6 @@
     "eslint-plugin-unicorn": "~62.0.0",
     "prettier": "~3.7.4",
     "typescript": "~5.9.2",
-    "typescript-eslint": "~8.51.0"
+    "typescript-eslint": "~8.53.0"
   }
 }
