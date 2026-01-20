@@ -79,9 +79,8 @@ jobs:
 
 # TODO check if we can run on various OS https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows#using-a-matrix-strategy-with-a-reusable-workflow
 #    runs-on: ubuntu-24.04
-#    permissions:
-#      contents: read
   build_examples:
+    needs: build
     permissions: {}
     uses: ./.github/workflows/_reusable_build_examples.yml
     with:
