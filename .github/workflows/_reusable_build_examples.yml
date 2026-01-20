@@ -1,4 +1,4 @@
-name: _reusable_build_examples.yml
+name: Build examples
 on:
   workflow_call:
     inputs:
