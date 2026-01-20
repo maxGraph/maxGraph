@@ -42,7 +42,8 @@ concurrency:
 
 jobs:
   build:
-    permissions: {}
+    permissions:
+      contents: read
     uses: ./.github/workflows/_reusable_generate_website.yml
     with:
       artifact-name: 'gh-pages'
