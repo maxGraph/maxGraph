@@ -1,0 +1,48 @@
+name: _reusable_generate_website.yml
+on:
+    workflow_call:
+      inputs:
+        artifact-name:
+          description: 'Set to gh-pages for a special gh-pages artifact'
+          required: true
+          type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build Setup
+        uses: ./.github/actions/build-setup
+
+      - name: Build @maxgraph/core API docs
+        run: npm run docs:api -w packages/core
+
+      - name: Build Storybook demo
+        run: npm run build -w packages/core -w packages/html
+
+      - name: Copy generated resources to the website
+        run: npm run extra:copy-gen-resources -w packages/website
+
+      - name: Build website
+        run: npm run build -w packages/website
+
+      - name: Upload website artifact for GitHub Pages
+        if: ${{ inputs['artifact-name'] == 'gh-pages' }}
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: packages/website/build/
+
+      - name: Upload website artifact for other environments
+        if: ${{ inputs['artifact-name'] != 'gh-pages' }}
+        uses: actions/upload-artifact@v6
+        with:
+          path: packages/website/build/
+          name: ${{ inputs['artifact-name'] }}
+
+      - name: Check types in website
+        run: npm run typecheck -w packages/website
