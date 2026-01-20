@@ -41,8 +41,8 @@ jobs:
         if: ${{ inputs['artifact-name'] != 'gh-pages' }}
         uses: actions/upload-artifact@v6
         with:
-          path: packages/website/build/
           name: ${{ inputs['artifact-name'] }}
+          path: packages/website/build/
 
       - name: Check types in website
         run: npm run typecheck -w packages/website
