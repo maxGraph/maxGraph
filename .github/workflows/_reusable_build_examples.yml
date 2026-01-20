@@ -1,0 +1,35 @@
+name: _reusable_build_examples.yml
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        description: 'Name of the output artifact containing the built examples'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build Setup
+        uses: ./.github/actions/build-setup
+
+      - name: Build @maxgraph/core
+        run: npm run build -w packages/core
+
+      - name: Build all examples
+        run: ./scripts/build-all-examples.bash
+
+      - name: Upload all examples as artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ inputs['artifact-name'] }}
+          path: |
+            packages/html/dist/
+            packages/js-example*/dist/
+            packages/ts-example*/dist/
