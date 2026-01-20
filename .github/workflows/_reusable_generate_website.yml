@@ -1,9 +1,9 @@
-name: _reusable_generate_website.yml
+name: Generate website
 on:
   workflow_call:
     inputs:
       artifact-name:
-        description: 'Set to gh-pages for a special gh-pages artifact'
+        description: 'Set to gh-pages for a special gh-pages artifact, otherwise the built website is zipped and uploaded as an artifact with this name'
         required: true
         type: string
 
