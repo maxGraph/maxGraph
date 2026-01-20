@@ -99,8 +99,8 @@ Attach the examples and the website to the release (in the "assets" location):
     - location: https://github.com/maxGraph/maxGraph/actions/workflows/build.yml
     - rename the file to: `maxgraph_<version>_examples.zip`
   - website:
-    - location: https://github.com/maxGraph/maxGraph/actions/workflows/generate-website.yml. The artifact is not available in the summary of the job. Open the log to get the URL of the artifact.
-    - rename the file to: `maxgraph_<version>_website.zip`
+    - location: https://github.com/maxGraph/maxGraph/actions/workflows/create-github-release.yml
+    - get the file: `maxgraph_<version>_website.zip`
 
 Before you publish the release, make sure that a discussion will be created in the `Announces` category when the release
 is published.

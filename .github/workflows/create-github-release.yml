@@ -6,8 +6,28 @@ on:
       - v*
 
 jobs:
+  # TODO how to get the version (in a dedicated step?) and reuse it in both jobs?
+  compute_environment_variables:
+    runs-on: ubuntu-24.04
+    permissions: {}
+    outputs:
+      version: ${{ steps.set_version.outputs.version }}
+    steps:
+      - name: Set version
+        id: set_version
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  generate_website:
+    needs: [compute_environment_variables]
+    uses: ./.github/workflows/_reusable_generate_website.yml
+    with:
+      artifact-name: 'maxgraph_${{ needs.compute_environment_variables.outputs.version }}_website.zip'
+
   create_release:
     runs-on: ubuntu-24.04
+#    needs: [compute_environment_variables, generate_website]
     permissions:
       contents: write # create the GH release
     steps:
