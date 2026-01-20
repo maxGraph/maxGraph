@@ -81,7 +81,8 @@ jobs:
 #    runs-on: ubuntu-24.04
   build_examples:
     needs: build
-    permissions: {}
+    permissions:
+      contents: read
     uses: ./.github/workflows/_reusable_build_examples.yml
     with:
      artifact-name: examples-ubuntu-24.04-${{ github.sha }}
