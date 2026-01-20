@@ -1,11 +1,11 @@
 name: _reusable_generate_website.yml
 on:
-    workflow_call:
-      inputs:
-        artifact-name:
-          description: 'Set to gh-pages for a special gh-pages artifact'
-          required: true
-          type: string
+  workflow_call:
+    inputs:
+      artifact-name:
+        description: 'Set to gh-pages for a special gh-pages artifact'
+        required: true
+        type: string
 
 jobs:
   build:
