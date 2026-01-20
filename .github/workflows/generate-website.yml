@@ -42,9 +42,7 @@ concurrency:
 
 jobs:
   build:
-#    TODO we should be able to remove permissions
-#    permissions:
-#      contents: read
+    permissions: {}
     uses: ./.github/workflows/_reusable_generate_website.yml
     with:
       artifact-name: 'gh-pages'
