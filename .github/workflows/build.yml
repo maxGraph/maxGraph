@@ -32,14 +32,14 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
     strategy:
-      # we want to run the full build on all os: don't cancel running jobs even if one fails
+      # we want to run the full build on all runners: don't cancel running jobs even if one fails
       fail-fast: false
       matrix:
-        os: ['ubuntu-24.04', 'macos-14', 'windows-2022']
+        runner: [ 'ubuntu-24.04', 'macos-14', 'windows-2022']
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -91,6 +91,10 @@ jobs:
     permissions:
       contents: read
     uses: ./.github/workflows/_reusable_build_examples.yml
+    strategy:
+      matrix:
+        runner: ['ubuntu-24.04', 'macos-14', 'windows-2022']
     with:
      artifact-name: examples-ubuntu-24.04-${{ github.sha }}
+     runner: ${{ matrix.runner }}
 #        artifact-name: 'examples-${{runner.os}}-${{github.sha}}'

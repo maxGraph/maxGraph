@@ -6,10 +6,15 @@ on:
         description: 'Name of the output artifact containing the built examples'
         required: true
         type: string
+      runner:
+        description: 'The runner to use for the build'
+        required: false
+        type: string
+        default: 'ubuntu-24.04'
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ inputs.runner }}
     permissions:
       contents: read
     steps:
