@@ -66,6 +66,13 @@ jobs:
       - name: Build Storybook mini-site
         run: npm run build -w packages/html
 
+      - name: Upload storybook mini-site as artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: storybook-${{runner.os}}-${{github.sha}}
+          path: |
+            packages/html/dist/
+
       - name: Ensure no circular dependencies in the @maxgraph/core produced JS files
         run: npm run check:circular-dependencies -w packages/core
 

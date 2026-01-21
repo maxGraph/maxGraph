@@ -46,6 +46,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/_reusable_generate_website.yml
     with:
+# TODO on PR, use a name to easily deploy it locally
       artifact-name: 'gh-pages'
 
   deploy:

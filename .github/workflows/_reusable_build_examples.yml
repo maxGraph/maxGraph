@@ -30,6 +30,5 @@ jobs:
         with:
           name: ${{ inputs['artifact-name'] }}
           path: |
-            packages/html/dist/
             packages/js-example*/dist/
             packages/ts-example*/dist/
