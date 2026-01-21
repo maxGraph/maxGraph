@@ -37,12 +37,18 @@ jobs:
         with:
           path: packages/website/build/
 
+      - name: Prepare website artifact with maxGraph subdirectory
+        if: ${{ inputs['artifact-name'] != 'gh-pages' }}
+        run: |
+          mkdir -p artifact-output/maxGraph
+          cp -r packages/website/build/* artifact-output/maxGraph/
+
       - name: Upload website artifact for other environments
         if: ${{ inputs['artifact-name'] != 'gh-pages' }}
         uses: actions/upload-artifact@v6
         with:
           name: ${{ inputs['artifact-name'] }}
-          path: packages/website/build/
+          path: artifact-output/
 
       - name: Check types in website
         run: npm run typecheck -w packages/website

@@ -25,7 +25,7 @@ The documentation hosted at https://maxgraph.github.io/maxGraph includes the lat
 To visualize the documentation for a specific version (and the corresponding demo):
 - First, download the archive of the website attached to the [related release](https://github.com/maxGraph/maxGraph/releases). Documentation archives are available as of version `0.10.3`.
 - Decompress the archive (it may include archives, in this case decompress them)
-- Rename the root folder to maxGraph (the case matters!)
+- For versions prior 0.23.0, rename the root folder to maxGraph (the case matters!)
 - From the parent of the root folder, start a webserver with a command like `npx http-server -c-1`
 - The website will be available at `http://localhost:8080/maxGraph/` (or something similar) 
 
