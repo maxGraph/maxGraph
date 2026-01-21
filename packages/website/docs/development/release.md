@@ -96,8 +96,8 @@ Pull Request and regenerate the list.
 Attach the examples and the website to the release (in the "assets" location):
   - Retrieve the artifacts built by GitHub Actions on the commit of the tag
   - examples:
-    - location: https://github.com/maxGraph/maxGraph/actions/workflows/build.yml
-    - rename the file to: `maxgraph_<version>_examples.zip`
+    - location: https://github.com/maxGraph/maxGraph/actions/workflows/create-github-release.yml
+    - get the file: `maxgraph_<version>_examples.zip`
   - website:
     - location: https://github.com/maxGraph/maxGraph/actions/workflows/create-github-release.yml
     - get the file: `maxgraph_<version>_website.zip`
