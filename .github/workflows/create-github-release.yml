@@ -24,7 +24,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/_reusable_build_examples.yml
     with:
-      artifact-name: maxgraph_${{ needs.compute_environment_variables.outputs.version }}_examples.zip
+      artifact-name: 'maxgraph_${{ needs.compute_environment_variables.outputs.version }}_examples.zip'
 
   generate_website:
     needs: compute_environment_variables
