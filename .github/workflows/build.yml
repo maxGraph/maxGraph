@@ -84,8 +84,6 @@ jobs:
         run: npm run check:npm-package -w packages/core
 
 
-# TODO check if we can run on various OS https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows#using-a-matrix-strategy-with-a-reusable-workflow
-#    runs-on: ubuntu-24.04
   build_examples:
     needs: build
     permissions:
@@ -95,6 +93,5 @@ jobs:
       matrix:
         runner: ['ubuntu-24.04', 'macos-14', 'windows-2022']
     with:
-     artifact-name: examples-ubuntu-24.04-${{ github.sha }}
+     artifact-name: examples-${{ matrix.runner }}-${{ github.sha }}
      runner: ${{ matrix.runner }}
-#        artifact-name: 'examples-${{runner.os}}-${{github.sha}}'
