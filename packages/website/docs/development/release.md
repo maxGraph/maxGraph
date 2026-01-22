@@ -93,14 +93,7 @@ The list of the major changes has been [automatically generated](https://docs.gi
   - If the list is incorrect (for example, an item is not in the correct category), update the label(s) or the associated
 Pull Request and regenerate the list.
 
-Attach the examples and the website to the release (in the "assets" location):
-  - Retrieve the artifacts built by GitHub Actions on the commit of the tag
-  - examples:
-    - location: https://github.com/maxGraph/maxGraph/actions/workflows/create-github-release.yml
-    - get the file: `maxgraph_<version>_examples.zip`
-  - website:
-    - location: https://github.com/maxGraph/maxGraph/actions/workflows/create-github-release.yml
-    - get the file: `maxgraph_<version>_website.zip`
+The examples and website zip files are automatically attached to the release as assets by the GitHub workflow.
 
 Before you publish the release, make sure that a discussion will be created in the `Announces` category when the release
 is published.
