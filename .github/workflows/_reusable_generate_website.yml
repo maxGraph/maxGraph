@@ -42,6 +42,19 @@ jobs:
         run: |
           mkdir -p artifact-output/maxGraph
           cp -r packages/website/build/* artifact-output/maxGraph/
+          cat > artifact-output/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="refresh" content="0; url=./maxGraph/index.html">
+            <title>Redirecting to maxGraph</title>
+          </head>
+          <body>
+            <p>Redirecting to <a href="./maxGraph/">maxGraph</a>...</p>
+          </body>
+          </html>
+          EOF
 
       - name: Upload website artifact for other environments
         if: ${{ inputs['artifact-name'] != 'gh-pages' }}
