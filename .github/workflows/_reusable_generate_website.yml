@@ -51,7 +51,7 @@ jobs:
             <title>Redirecting to maxGraph</title>
           </head>
           <body>
-            <p>Redirecting to <a href="./maxGraph/">maxGraph</a>...</p>
+            <p>Redirecting to <a href="./maxGraph/index.html">maxGraph</a>...</p>
           </body>
           </html>
           EOF
