@@ -36,13 +36,13 @@ jobs:
 
   create_release:
     runs-on: ubuntu-24.04
-    needs: [build_examples, generate_website]
+    needs: [compute_environment_variables, build_examples, generate_website]
     permissions:
       contents: write # create the GH release
     steps:
       - name: Set env
         run: |
-          echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+          echo "VERSION=${{ needs.compute_environment_variables.outputs.version }}" >> $GITHUB_ENV
           echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
       - name: Get milestone number
