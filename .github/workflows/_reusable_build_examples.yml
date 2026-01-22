@@ -25,9 +25,11 @@ jobs:
         uses: ./.github/actions/build-setup
 
       - name: Build @maxgraph/core
+        shell: bash
         run: npm run build -w packages/core
 
       - name: Build all examples
+        shell: bash
         run: ./scripts/build-all-examples.bash
 
       - name: Upload all examples as artifact
