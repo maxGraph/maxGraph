@@ -33,6 +33,7 @@ jobs:
     with:
       artifact-name: 'maxgraph_${{ needs.compute_environment_variables.outputs.version }}_website.zip'
 
+
   create_release:
     runs-on: ubuntu-24.04
     needs: [build_examples, generate_website]
@@ -43,6 +44,7 @@ jobs:
         run: |
           echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
           echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
       - name: Get milestone number
         env:
           GH_TOKEN: ${{ github.token }}
@@ -59,9 +61,31 @@ jobs:
           echo "Found milestone: ${MILESTONE_NUMBER}"
           echo "MILESTONE_NUMBER=${MILESTONE_NUMBER:-x}" >> $GITHUB_ENV
 
+      - name: Download examples artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: maxgraph_${{ env.VERSION }}_examples.zip
+          path: artifacts/examples
+
+      - name: Download website artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: maxgraph_${{ env.VERSION }}_website.zip
+          path: artifacts/website
+
+      - name: Create zip files for release
+        run: |
+          cd artifacts/examples
+          zip -r ../../maxgraph_${{ env.VERSION }}_examples.zip .
+          cd ../website
+          zip -r ../../maxgraph_${{ env.VERSION }}_website.zip .
+
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
+          artifacts: |
+            maxgraph_${{ env.VERSION }}_examples.zip
+            maxgraph_${{ env.VERSION }}_website.zip
           body: |
             _Version ${{ env.VERSION }} released on ${{ env.RELEASE_DATE }}._
             
