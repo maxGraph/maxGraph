@@ -28,7 +28,8 @@ jobs:
 
   generate_website:
     needs: compute_environment_variables
-    permissions: {}
+    permissions:
+      contents: read
     uses: ./.github/workflows/_reusable_generate_website.yml
     with:
       artifact-name: 'maxgraph_${{ needs.compute_environment_variables.outputs.version }}_website.zip'
