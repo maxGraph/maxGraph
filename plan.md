@@ -171,6 +171,49 @@ Uses `PR_PREVIEW_DOMAIN` or `ALIAS_DOMAINS` with variables:
 
 **Note:** To use predictable PR-based URLs, you need a wildcard domain configured in Vercel (e.g., `*.your-project.vercel.app`).
 
+### Limitation: PR Number in workflow_run Context
+
+**Important:** Neither action has an input parameter to manually specify the PR number. They both infer it automatically from GitHub's `pull_request` event context.
+
+In a `workflow_run` trigger (used for fork support):
+- `github.event.pull_request.number` is **not available**
+- Template variables like `{{PR_NUMBER}}` or `{PR}` **won't resolve**
+- Custom alias domains with PR numbers **won't work** with these actions
+
+#### Workarounds
+
+**Option 1: Use Default Random URLs (Simplest)**
+
+Accept Vercel's default random URLs and post the `preview-url` output in the PR comment. This is the recommended approach for simplicity.
+
+**Option 2: Use Vercel CLI Directly**
+
+Deploy with CLI and manually set the alias using the PR number from artifact:
+
+```yaml
+- name: Get PR number
+  id: pr
+  run: echo "number=$(cat pr_number.txt)" >> $GITHUB_OUTPUT
+
+- name: Install Vercel CLI
+  run: npm i -g vercel
+
+- name: Deploy to Vercel
+  id: deploy
+  env:
+    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  run: |
+    url=$(vercel deploy ./packages/html/storybook-static --token=${{ secrets.VERCEL_TOKEN }} --yes)
+    echo "preview-url=$url" >> $GITHUB_OUTPUT
+
+- name: Set Alias (optional, requires wildcard domain)
+  run: |
+    vercel alias ${{ steps.deploy.outputs.preview-url }} \
+      maxgraph-pr-${{ steps.pr.outputs.number }}.vercel.app \
+      --token=${{ secrets.VERCEL_TOKEN }}
+```
+
 ### Recommended Action
 
 **BetaHuhn/deploy-to-vercel-action** is recommended because:
@@ -261,6 +304,10 @@ jobs:
 
 **File:** `.github/workflows/pr-deploy.yml`
 
+**Note:** Since `workflow_run` doesn't have PR context, the actions' alias domain features (`{{PR_NUMBER}}`, `{PR}`) won't work. Use default random URLs or CLI with manual alias (see [Limitation section](#limitation-pr-number-in-workflow_run-context)).
+
+#### Option A: Using amondnet/vercel-action (random URL)
+
 ```yaml
 name: PR Deploy Preview
 
@@ -295,6 +342,7 @@ jobs:
           working-directory: packages/html/storybook-static
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-comment: false
+          # Note: alias-domains with {{PR_NUMBER}} won't work here
 
       - name: Comment on PR
         uses: actions/github-script@v7
@@ -304,7 +352,65 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ steps.pr.outputs.number }},
-              body: `## 🚀 Preview Deployment Ready!\n\n**Preview URL:** ${{ steps.vercel.outputs.preview-url }}\n\nThis preview was automatically deployed from commit ${{ github.event.workflow_run.head_sha }}.`
+              body: `## Preview Deployment Ready!\n\n**Preview URL:** ${{ steps.vercel.outputs.preview-url }}\n\nThis preview was automatically deployed from commit ${{ github.event.workflow_run.head_sha }}.`
+            })
+```
+
+#### Option B: Using Vercel CLI (predictable URL with manual alias)
+
+```yaml
+name: PR Deploy Preview
+
+on:
+  workflow_run:
+    workflows: ["PR Build"]
+    types: [completed]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-build
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get PR number
+        id: pr
+        run: echo "number=$(cat pr_number.txt)" >> $GITHUB_OUTPUT
+
+      - name: Install Vercel CLI
+        run: npm i -g vercel
+
+      - name: Deploy to Vercel
+        id: deploy
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          cd packages/html/storybook-static
+          url=$(vercel deploy --token=${{ secrets.VERCEL_TOKEN }} --yes)
+          echo "preview-url=$url" >> $GITHUB_OUTPUT
+
+      # Optional: Set predictable alias (requires wildcard domain in Vercel)
+      # - name: Set Alias
+      #   run: |
+      #     vercel alias ${{ steps.deploy.outputs.preview-url }} \
+      #       maxgraph-pr-${{ steps.pr.outputs.number }}.vercel.app \
+      #       --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.pr.outputs.number }},
+              body: `## Preview Deployment Ready!\n\n**Preview URL:** ${{ steps.deploy.outputs.preview-url }}\n\nThis preview was automatically deployed from commit ${{ github.event.workflow_run.head_sha }}.`
             })
 ```
 
@@ -317,7 +423,9 @@ jobs:
 
 ### Alternative: Using BetaHuhn Action with workflow_run
 
-The BetaHuhn action can also work in Stage 2, but requires manual PR comment handling:
+The BetaHuhn action can also work in Stage 2, but:
+- Requires manual PR comment handling
+- `PR_PREVIEW_DOMAIN` with `{PR}` variable **won't work** (no PR context)
 
 ```yaml
 - name: Deploy to Vercel
@@ -330,6 +438,7 @@ The BetaHuhn action can also work in Stage 2, but requires manual PR comment han
     PREBUILT: true
     WORKING_DIRECTORY: packages/html/storybook-static
     CREATE_COMMENT: false  # Handle manually since we're in workflow_run context
+    # Note: PR_PREVIEW_DOMAIN with {PR} won't work - use default random URL
 ```
 
 ## Recommendation
