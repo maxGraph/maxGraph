@@ -120,6 +120,57 @@ Several GitHub Actions exist for deploying pre-built assets to Vercel with autom
 | GitHub Deployments | Yes | Yes | No |
 | Maintenance | Active | Active | Less active |
 
+### Preview URL Patterns
+
+By default, Vercel generates preview URLs with a **random string pattern**:
+```
+project-name-randomString.vercel.app
+```
+
+Both actions support custom URL patterns with PR numbers for predictable URLs.
+
+#### amondnet/vercel-action
+
+Uses `alias-domains` input with template variables:
+- `{{PR_NUMBER}}` - PR number
+- `{{BRANCH}}` - branch name
+
+```yaml
+- uses: amondnet/vercel-action@v25
+  with:
+    vercel-token: ${{ secrets.VERCEL_TOKEN }}
+    vercel-org-id: ${{ secrets.ORG_ID }}
+    vercel-project-id: ${{ secrets.PROJECT_ID }}
+    alias-domains: |
+      pr-{{PR_NUMBER}}.your-project.vercel.app
+```
+
+#### BetaHuhn/deploy-to-vercel-action
+
+Uses `PR_PREVIEW_DOMAIN` or `ALIAS_DOMAINS` with variables:
+- `{PR}` - PR number
+- `{BRANCH}` - branch name
+- `{SHA}` - commit SHA
+- `{USER}` - repo owner
+- `{REPO}` - repo name
+
+```yaml
+- uses: BetaHuhn/deploy-to-vercel-action@v1
+  with:
+    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    PR_PREVIEW_DOMAIN: "{REPO}-pr-{PR}.vercel.app"
+```
+
+#### URL Pattern Comparison
+
+| Aspect | Default | With Custom Domain |
+|--------|---------|-------------------|
+| URL pattern | `project-randomString.vercel.app` | `project-pr-123.vercel.app` |
+| Predictable | No | Yes |
+| Requires wildcard domain | No | Yes (configured in Vercel) |
+
+**Note:** To use predictable PR-based URLs, you need a wildcard domain configured in Vercel (e.g., `*.your-project.vercel.app`).
+
 ### Recommended Action
 
 **BetaHuhn/deploy-to-vercel-action** is recommended because:
