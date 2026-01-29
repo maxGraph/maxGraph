@@ -2,236 +2,84 @@
 
 ## Overview
 
-This document outlines options for deploying PR previews using Vercel.
+This document outlines the approach for deploying PR previews to Vercel, with support for PRs from forks.
 
-## Deployment Options
+## Deployment Approaches
 
-### Option 1: Vercel Builds the Site (Traditional)
+### Vercel-Managed Builds
 
 - Connect the repository to Vercel
 - Vercel runs the build command on each PR automatically
 - Automatic preview deployments with zero CI configuration
 
-### Option 2: Pre-build and Deploy
+### Pre-built Deployment
 
-Build locally or in CI and deploy pre-built assets using the Vercel CLI.
+Build in CI and deploy pre-built assets using the Vercel CLI or a GitHub Action.
 
-**Simple deployment of static files:**
 ```bash
-# Deploy a directory of static files
-vercel deploy ./dist --prebuilt
-
-# Or without --prebuilt for simple static sites
-vercel deploy ./packages/html/storybook-static
+vercel deploy ./packages/html/storybook-static --token=$VERCEL_TOKEN --yes
 ```
 
-**GitHub Actions workflow for PR previews:** See [GitHub Actions for Vercel](#github-actions-for-vercel) section below.
+### Comparison
 
-## Comparison
+| Aspect | Vercel-Managed | Pre-built |
+|--------|----------------|-----------|
+| Build environment | Vercel's servers | GitHub Actions |
+| Build minutes | Vercel quota | GitHub Actions quota |
+| Control | Limited | Full control |
+| Setup complexity | Simple | Requires workflow setup |
+| Node.js version | Vercel's default | Controlled via `.nvmrc` |
 
-| Aspect | Vercel Builds | Pre-built |
-|--------|--------------|-----------|
-| Build environment | Vercel's servers | Your CI (GitHub Actions) |
-| Build minutes | Uses Vercel quota | Uses your CI minutes |
-| Control | Less | Full control over build |
-| Setup | Simpler | Requires CLI setup |
-| Node.js version | Vercel's default or configured | Controlled via .nvmrc |
+**Recommendation:** Use the pre-built approach for maxGraph because CI workflows already exist, and it provides full control over the build environment.
 
 ## GitHub Actions for Vercel
 
-Several GitHub Actions exist for deploying pre-built assets to Vercel with automatic PR comments.
+Several GitHub Actions can deploy to Vercel and post PR comments.
 
-### Option 1: amondnet/vercel-action (Most Popular - 739 stars)
+### Available Actions
 
-**Repository:** https://github.com/marketplace/actions/vercel-action
-
-**Features:**
-- Automated PR/commit comments with deployment status
-- Basic auth support for previews
-- Custom domain aliasing with dynamic templates
-- Team scope support
-
-**Prebuilt support:** Configure `vercel.json` with `@vercel/static`:
-```json
-{"builds": [{"src": "dist", "use": "@vercel/static"}]}
-```
-
-**Usage:**
-```yaml
-- uses: amondnet/vercel-action@v25
-  with:
-    vercel-token: ${{ secrets.VERCEL_TOKEN }}
-    vercel-org-id: ${{ secrets.ORG_ID }}
-    vercel-project-id: ${{ secrets.PROJECT_ID }}
-    github-token: ${{ secrets.GITHUB_TOKEN }}
-    github-comment: true
-```
-
-### Option 2: BetaHuhn/deploy-to-vercel-action (Recommended)
-
-**Repository:** https://github.com/BetaHuhn/deploy-to-vercel-action
-
-**Features:**
-- Explicit `PREBUILT` parameter for pre-built projects
-- GitHub Deployments integration
-- Dynamic domain assignment (`{BRANCH}`, `{PR}`, `{SHA}`)
-- Fork/Dependabot PR support
-
-**Prebuilt support:** Native via `PREBUILT: true` input
-
-**Usage:**
-```yaml
-- uses: BetaHuhn/deploy-to-vercel-action@v1
-  with:
-    GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-    PREBUILT: true
-    CREATE_COMMENT: true
-```
-
-### Option 3: ngduc/vercel-deploy-action
-
-**Repository:** https://github.com/marketplace/actions/vercel-deploy-action
-
-**Features:**
-- PR and commit comments
-- Basic auth for previews
-- Outputs: `preview-url`, `preview-url-host`, `preview-name`
-
-**Usage:**
-```yaml
-- uses: ngduc/vercel-deploy-action@master
-  with:
-    vercel-token: ${{ secrets.VERCEL_TOKEN }}
-    vercel-org-id: ${{ secrets.ORG_ID }}
-    vercel-project-id: ${{ secrets.PROJECT_ID }}
-    github-token: ${{ secrets.GITHUB_TOKEN }}
-```
-
-### GitHub Actions Comparison
-
-| Feature | amondnet/vercel-action | BetaHuhn/deploy-to-vercel-action | ngduc/vercel-deploy-action |
-|---------|------------------------|----------------------------------|---------------------------|
-| Stars | 739 | ~200 | ~50 |
-| Explicit prebuilt flag | No (via vercel.json) | **Yes** (`PREBUILT: true`) | No |
-| PR comments | Yes | Yes | Yes |
-| GitHub Deployments | Yes | Yes | No |
-| Maintenance | Active | Active | Less active |
+| Action | Stars | Prebuilt Support | PR Comments | GitHub Deployments |
+|--------|-------|------------------|-------------|-------------------|
+| [amondnet/vercel-action](https://github.com/marketplace/actions/vercel-action) | 739 | Via `vercel.json` | Yes | Yes |
+| [BetaHuhn/deploy-to-vercel-action](https://github.com/BetaHuhn/deploy-to-vercel-action) | ~200 | `PREBUILT: true` | Yes | Yes |
+| [ngduc/vercel-deploy-action](https://github.com/marketplace/actions/vercel-deploy-action) | ~50 | Via `vercel.json` | Yes | No |
 
 ### Preview URL Patterns
 
-By default, Vercel generates preview URLs with a **random string pattern**:
-```
-project-name-randomString.vercel.app
-```
+By default, Vercel generates URLs with a random string: `project-name-randomString.vercel.app`
 
-Both actions support custom URL patterns with PR numbers for predictable URLs.
+Both major actions support custom URL patterns with PR numbers:
 
-#### amondnet/vercel-action
+| Action | Input | Template Variables |
+|--------|-------|-------------------|
+| amondnet/vercel-action | `alias-domains` | `{{PR_NUMBER}}`, `{{BRANCH}}` |
+| BetaHuhn/deploy-to-vercel-action | `PR_PREVIEW_DOMAIN` | `{PR}`, `{BRANCH}`, `{SHA}`, `{USER}`, `{REPO}` |
 
-Uses `alias-domains` input with template variables:
-- `{{PR_NUMBER}}` - PR number
-- `{{BRANCH}}` - branch name
+**Note:** Custom PR-based URLs require a wildcard domain configured in Vercel (e.g., `*.your-project.vercel.app`).
 
-```yaml
-- uses: amondnet/vercel-action@v25
-  with:
-    vercel-token: ${{ secrets.VERCEL_TOKEN }}
-    vercel-org-id: ${{ secrets.ORG_ID }}
-    vercel-project-id: ${{ secrets.PROJECT_ID }}
-    alias-domains: |
-      pr-{{PR_NUMBER}}.your-project.vercel.app
-```
+### PR Number Limitation in workflow_run Context
 
-#### BetaHuhn/deploy-to-vercel-action
-
-Uses `PR_PREVIEW_DOMAIN` or `ALIAS_DOMAINS` with variables:
-- `{PR}` - PR number
-- `{BRANCH}` - branch name
-- `{SHA}` - commit SHA
-- `{USER}` - repo owner
-- `{REPO}` - repo name
-
-```yaml
-- uses: BetaHuhn/deploy-to-vercel-action@v1
-  with:
-    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    PR_PREVIEW_DOMAIN: "{REPO}-pr-{PR}.vercel.app"
-```
-
-#### URL Pattern Comparison
-
-| Aspect | Default | With Custom Domain |
-|--------|---------|-------------------|
-| URL pattern | `project-randomString.vercel.app` | `project-pr-123.vercel.app` |
-| Predictable | No | Yes |
-| Requires wildcard domain | No | Yes (configured in Vercel) |
-
-**Note:** To use predictable PR-based URLs, you need a wildcard domain configured in Vercel (e.g., `*.your-project.vercel.app`).
-
-### Limitation: PR Number in workflow_run Context
-
-**Important:** Neither action has an input parameter to manually specify the PR number. They both infer it automatically from GitHub's `pull_request` event context.
+Neither action accepts PR number as an input parameter. They infer it from GitHub's `pull_request` event context.
 
 In a `workflow_run` trigger (used for fork support):
-- `github.event.pull_request.number` is **not available**
-- Template variables like `{{PR_NUMBER}}` or `{PR}` **won't resolve**
-- Custom alias domains with PR numbers **won't work** with these actions
+- `github.event.pull_request.number` is not available
+- Template variables (`{{PR_NUMBER}}`, `{PR}`) do not resolve
+- Custom alias domains with PR numbers do not work
 
-#### Workarounds
-
-**Option 1: Use Default Random URLs (Simplest)**
-
-Accept Vercel's default random URLs and post the `preview-url` output in the PR comment. This is the recommended approach for simplicity.
-
-**Option 2: Use Vercel CLI Directly**
-
-Deploy with CLI and manually set the alias using the PR number from artifact:
-
-```yaml
-- name: Get PR number
-  id: pr
-  run: echo "number=$(cat pr_number.txt)" >> $GITHUB_OUTPUT
-
-- name: Install Vercel CLI
-  run: npm i -g vercel
-
-- name: Deploy to Vercel
-  id: deploy
-  env:
-    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  run: |
-    url=$(vercel deploy ./packages/html/storybook-static --token=${{ secrets.VERCEL_TOKEN }} --yes)
-    echo "preview-url=$url" >> $GITHUB_OUTPUT
-
-- name: Set Alias (optional, requires wildcard domain)
-  run: |
-    vercel alias ${{ steps.deploy.outputs.preview-url }} \
-      maxgraph-pr-${{ steps.pr.outputs.number }}.vercel.app \
-      --token=${{ secrets.VERCEL_TOKEN }}
-```
-
-### Recommended Action
-
-**BetaHuhn/deploy-to-vercel-action** is recommended because:
-1. Has explicit `PREBUILT` parameter (cleanest for pre-built deployments)
-2. Well-maintained with good documentation
-3. Built-in PR comment support
-4. GitHub Deployments integration
+**Workarounds:**
+1. **Use default random URLs** - Accept Vercel's random URLs (simplest approach)
+2. **Use Vercel CLI directly** - Deploy with CLI and manually set alias using PR number from artifact
 
 ## Two-Stage Workflow for Fork Support
 
-PRs from forks don't have access to repository secrets (GitHub security measure). To support fork PRs, use a two-stage workflow pattern:
+PRs from forks do not have access to repository secrets (GitHub security measure). A two-stage workflow pattern solves this.
 
 ### Why Two Stages?
 
 | Stage | Trigger | Context | Secrets Access |
 |-------|---------|---------|----------------|
-| Stage 1 (Build) | `pull_request` | Fork's context | ❌ No |
-| Stage 2 (Deploy) | `workflow_run` | Base repo context | ✅ Yes |
+| Build | `pull_request` | Fork's context | No |
+| Deploy | `workflow_run` | Base repo context | Yes |
 
 ### Architecture
 
@@ -304,9 +152,9 @@ jobs:
 
 **File:** `.github/workflows/pr-deploy.yml`
 
-**Note:** Since `workflow_run` doesn't have PR context, the actions' alias domain features (`{{PR_NUMBER}}`, `{PR}`) won't work. Use default random URLs or CLI with manual alias (see [Limitation section](#limitation-pr-number-in-workflow_run-context)).
+Two options are available for deployment. Both use random Vercel URLs since PR number context is not available (see [PR Number Limitation](#pr-number-limitation-in-workflow_run-context)).
 
-#### Option A: Using amondnet/vercel-action (random URL)
+#### Using amondnet/vercel-action
 
 ```yaml
 name: PR Deploy Preview
@@ -342,7 +190,6 @@ jobs:
           working-directory: packages/html/storybook-static
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-comment: false
-          # Note: alias-domains with {{PR_NUMBER}} won't work here
 
       - name: Comment on PR
         uses: actions/github-script@v7
@@ -352,11 +199,11 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ steps.pr.outputs.number }},
-              body: `## Preview Deployment Ready!\n\n**Preview URL:** ${{ steps.vercel.outputs.preview-url }}\n\nThis preview was automatically deployed from commit ${{ github.event.workflow_run.head_sha }}.`
+              body: `## Preview Deployment\n\n**URL:** ${{ steps.vercel.outputs.preview-url }}\n\nDeployed from commit ${{ github.event.workflow_run.head_sha }}.`
             })
 ```
 
-#### Option B: Using Vercel CLI (predictable URL with manual alias)
+#### Using Vercel CLI
 
 ```yaml
 name: PR Deploy Preview
@@ -410,54 +257,25 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ steps.pr.outputs.number }},
-              body: `## Preview Deployment Ready!\n\n**Preview URL:** ${{ steps.deploy.outputs.preview-url }}\n\nThis preview was automatically deployed from commit ${{ github.event.workflow_run.head_sha }}.`
+              body: `## Preview Deployment\n\n**URL:** ${{ steps.deploy.outputs.preview-url }}\n\nDeployed from commit ${{ github.event.workflow_run.head_sha }}.`
             })
 ```
 
 ### Key Points
 
-1. **Artifact passing:** The PR number and build assets are passed via `actions/upload-artifact` / `actions/download-artifact`
+1. **Artifact passing:** PR number and build assets are passed via `actions/upload-artifact` / `actions/download-artifact`
 2. **Security:** Secrets are only accessed in Stage 2, which runs in the base repo context
-3. **PR comment:** Must use `actions/github-script` with the PR number from artifact since `workflow_run` doesn't have direct PR context
+3. **PR comment:** Uses `actions/github-script` with the PR number from artifact since `workflow_run` lacks PR context
 4. **Conditional execution:** Stage 2 only runs if Stage 1 succeeds (`workflow_run.conclusion == 'success'`)
-
-### Alternative: Using BetaHuhn Action with workflow_run
-
-The BetaHuhn action can also work in Stage 2, but:
-- Requires manual PR comment handling
-- `PR_PREVIEW_DOMAIN` with `{PR}` variable **won't work** (no PR context)
-
-```yaml
-- name: Deploy to Vercel
-  uses: BetaHuhn/deploy-to-vercel-action@v1
-  with:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-    PREBUILT: true
-    WORKING_DIRECTORY: packages/html/storybook-static
-    CREATE_COMMENT: false  # Handle manually since we're in workflow_run context
-    # Note: PR_PREVIEW_DOMAIN with {PR} won't work - use default random URL
-```
-
-## Recommendation
-
-For maxGraph, the **pre-built approach** is recommended because:
-
-1. The project already has CI workflows in place
-2. Full control over the Node.js version (uses `.nvmrc`)
-3. Consistent build environment between CI tests and deployments
-4. GitHub Actions minutes are available
 
 ## Next Steps
 
 1. Create a Vercel project for the repository
-2. Generate a Vercel token and add it as a GitHub secret (`VERCEL_TOKEN`)
-3. Get the Vercel org ID and project ID (from `.vercel` directory after linking) and add as secrets:
+2. Generate a Vercel token and add as GitHub secret: `VERCEL_TOKEN`
+3. Get org and project IDs (from `.vercel` directory after linking) and add as secrets:
    - `VERCEL_ORG_ID`
    - `VERCEL_PROJECT_ID`
-4. Create two GitHub Actions workflows:
-   - `.github/workflows/pr-build.yml` - Build and upload artifact
-   - `.github/workflows/pr-deploy.yml` - Deploy to Vercel and comment on PR
-5. Test with a PR from a fork to verify secrets access works correctly
+4. Create the two GitHub Actions workflows:
+   - `.github/workflows/pr-build.yml`
+   - `.github/workflows/pr-deploy.yml`
+5. Test with a PR from a fork to verify the workflow
