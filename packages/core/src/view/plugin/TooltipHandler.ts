@@ -297,10 +297,10 @@ class TooltipHandler implements GraphPlugin, MouseListenerSet {
       this.div!.style.top = `${y + TOOLTIP_VERTICAL_OFFSET + origin.y}px`;
 
       if (!isNode(tip)) {
-        this.div!.innerHTML = (tip as string).replace(/\n/g, '<br>');
+        this.div!.innerHTML = tip.replace(/\n/g, '<br>');
       } else {
         this.div!.innerHTML = '';
-        this.div!.appendChild(tip as HTMLElement);
+        this.div!.appendChild(tip);
       }
 
       this.div!.style.visibility = '';

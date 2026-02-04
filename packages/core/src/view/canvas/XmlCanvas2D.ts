@@ -883,7 +883,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
   ): void {
     if (this.textEnabled && str != null) {
       if (isNode(str)) {
-        str = getOuterHtml(<HTMLElement>str);
+        str = getOuterHtml(str);
       }
 
       const elem = this.createElement('text');

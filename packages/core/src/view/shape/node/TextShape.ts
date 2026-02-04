@@ -258,7 +258,6 @@ class TextShape extends Shape {
       let val = this.value as string;
 
       if (!realHtml && fmt === 'html') {
-        // @ts-ignore
         val = htmlEntities(val, false);
       }
 
@@ -269,7 +268,7 @@ class TextShape extends Shape {
       // Handles trailing newlines to make sure they are visible in rendering output
       val =
         !isNode(this.value) && this.replaceLinefeeds && fmt === 'html'
-          ? (<string>val).replace(/\n/g, '<br/>')
+          ? val.replace(/\n/g, '<br/>')
           : val;
 
       let dir: TextDirectionValue = this.textDirection;
@@ -681,10 +680,7 @@ class TextShape extends Shape {
 
         node.setAttribute('style', flex);
 
-        const html = isNode(this.value)
-          ? // @ts-ignore
-            this.value.outerHTML
-          : this.getHtmlValue();
+        const html = isNode(this.value) ? this.value.outerHTML : this.getHtmlValue();
 
         if (!node.firstChild) {
           node.innerHTML = `<div><div>${html}</div></div>`;
@@ -703,7 +699,6 @@ class TextShape extends Shape {
    */
   updateInnerHtml(elt: HTMLElement) {
     if (isNode(this.value)) {
-      // @ts-ignore
       elt.innerHTML = this.value.outerHTML;
     } else {
       let val = this.value as string;
@@ -730,7 +725,7 @@ class TextShape extends Shape {
 
     if (isNode(this.value)) {
       node.innerHTML = '';
-      node.appendChild(<HTMLElement | SVGGElement>this.value);
+      node.appendChild(this.value);
     } else {
       let val = this.value as string;
 

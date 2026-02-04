@@ -53,18 +53,18 @@ declare module '../AbstractGraph' {
      *       }
      *     }
      *   }
-     *   return StringUtils.htmlEntities(label);
+     *   return stringUtils.htmlEntities(label);
      * }
      * ```
      *
      * A resize listener is needed in the graph to force a repaint of the label after a resize.
      *
      * ```javascript
-     * graph.addListener(mxEvent.RESIZE_CELLS, function(sender, evt) {
+     * graph.addListener(InternalEvent.RESIZE_CELLS, function(sender, evt) {
      *   const cells = evt.getProperty('cells');
      *
-     *   for (let i = 0; i < cells.length; i++) {
-     *     this.view.removeState(cells[i]);
+     *   for (const cell of cells) {
+     *     this.view.removeState(cell);
      *   }
      * });
      * ```
