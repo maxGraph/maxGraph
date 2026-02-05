@@ -891,7 +891,7 @@ class XmlCanvas2D extends AbstractCanvas2D {
       elem.setAttribute('y', String(this.format(y)));
       elem.setAttribute('w', String(this.format(w)));
       elem.setAttribute('h', String(this.format(h)));
-      elem.setAttribute('str', <string>str);
+      elem.setAttribute('str', str);
 
       if (align != null) {
         elem.setAttribute('align', align);
