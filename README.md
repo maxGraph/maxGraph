@@ -29,7 +29,7 @@ Active development ensures continuous bug fixes and new capabilities.
 - 🎯 **Event system** — React to any graph change (clicks, moves, adds, removes, style changes)
 - 🛠️ **Native TypeScript** — Complete type definitions, zero dependencies, tree-shakable architecture
 - 🔌 **Framework-agnostic** — Works with React, Vue, Angular, or vanilla JavaScript
-- 🎨 **Highly customizable** — 100+ style properties per cell, custom shapes, and plugin architecture
+- ⚙️ **Highly customizable** — 100+ style properties per cell, custom shapes, and plugin architecture
 
 [📚 View full feature list](https://maxgraph.github.io/maxGraph/docs/intro#features)
 
