@@ -22,20 +22,18 @@ import EventSource from '../event/EventSource.js';
 import UndoableEdit from './UndoableEdit.js';
 
 /**
- * @class UndoManager
- *
  * Implements a command history. When changing the graph model, an
- * {@link mxUndoableChange} object is created at the start of the transaction (when
+ * {@link UndoableChange} object is created at the start of the transaction (when
  * model.beginUpdate is called). All atomic changes are then added to this
  * object until the last model.endUpdate call, at which point the
- * {@link mxUndoableEdit} is dispatched in an event, and added to the history inside
+ * {@link UndoableEdit} is dispatched in an event, and added to the history inside
  * {@link UndoManager}. This is done by an event listener in
  * {@link Editor.installUndoHandler}.
  *
- * Each atomic change of the model is represented by an object (eg.
- * {@link mxRootChange}, {@link mxChildChange}, {@link mxTerminalChange} etc) which contains the
+ * Each atomic change of the model is represented by an object (e.g.
+ * {@link RootChange}, {@link ChildChange}, {@link TerminalChange}, etc.) which contains the
  * complete undo information. The {@link UndoManager} also listens to the
- * {@link mxGraphView} and stores it's changes to the current root as insignificant
+ * {@link GraphView} and stores it's changes to the current root as insignificant
  * undoable changes, so that drilling (step into, step up) is undone.
  *
  * This means when you execute an atomic change on the model, then change the
@@ -62,7 +60,7 @@ import UndoableEdit from './UndoableEdit.js';
  *
  * The code creates a function that informs the undoManager
  * of an undoable edit and binds it to the undo event of
- * {@link mxGraphModel} and {@link mxGraphView} using
+ * {@link GraphModel} and {@link GraphView} using
  * {@link EventSource.addListener}.
  *
  * ### Event: mxEvent.CLEAR
@@ -72,17 +70,17 @@ import UndoableEdit from './UndoableEdit.js';
  * ### Event: mxEvent.UNDO
  *
  * Fires afer a significant edit was undone in {@link undo}. The `edit`
- * property contains the {@link mxUndoableEdit} that was undone.
+ * property contains the {@link UndoableEdit} that was undone.
  *
  * ### Event: mxEvent.REDO
  *
  * Fires afer a significant edit was redone in {@link redo}. The `edit`
- * property contains the {@link mxUndoableEdit} that was redone.
+ * property contains the {@link UndoableEdit} that was redone.
  *
  * ### Event: mxEvent.ADD
  *
  * Fires after an undoable edit was added to the history. The `edit`
- * property contains the {@link mxUndoableEdit} that was added.
+ * property contains the {@link UndoableEdit} that was added.
  */
 class UndoManager extends EventSource {
   constructor(size = 100) {
