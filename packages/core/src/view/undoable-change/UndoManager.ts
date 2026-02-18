@@ -23,7 +23,7 @@ import UndoableEdit from './UndoableEdit.js';
 
 /**
  * Implements a command history. When changing the graph model, an
- * {@link UndoableChange} object is created at the start of the transaction (when
+ * {@link UndoableEdit} object is created at the start of the transaction (when
  * model.beginUpdate is called). All atomic changes are then added to this
  * object until the last model.endUpdate call, at which point the
  * {@link UndoableEdit} is dispatched in an event, and added to the history inside
