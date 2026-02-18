@@ -4,7 +4,6 @@
 [![build status](https://github.com/maxGraph/maxGraph/workflows/Build/badge.svg)](https://github.com/maxGraph/maxGraph/actions/workflows/build.yml)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/maxGraph/maxGraph)
 
-[//]: # (TODO apply to core/README.md and website/docs/intro.md)
 <!-- copied into packages/core/README.md and packages/website/docs/intro.md -->
 `maxGraph` is a TypeScript library for building interactive diagram applications. At its core, it manages:
 - **Vertices** — Nodes displayed as shapes (rectangles, ellipses, custom designs)
