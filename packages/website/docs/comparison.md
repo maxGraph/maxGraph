@@ -12,16 +12,16 @@ The JavaScript/TypeScript graph visualization ecosystem includes several librari
 
 ## Overview
 
-| Library | License | TypeScript | Framework | Dependencies | Bundle Size (minified + gzipped) |
-|---------|---------|------------|-----------|--------------|----------------------------------|
-| **maxGraph** | Apache 2.0 | Native | Framework-agnostic | Zero | ~307 KB minified (minimal build, v0.22.0) |
-| Cytoscape.js | MIT | Native (3.31.0+) | Framework-agnostic | Zero | ~112 KB |
-| GoJS | Commercial | Native | Framework-agnostic | Zero | From $3,995/developer |
-| JointJS (core) | MPL 2.0 | Supported | Framework-agnostic | Zero (since v4.0) | ~384 KB (minified only) |
-| JointJS+ | Commercial | Supported | Framework-agnostic | Zero (since v4.0) | From $2,930/developer |
-| mxGraph | Apache 2.0 | Via @types | Framework-agnostic | Zero | End of life (Nov 2020) |
-| React Flow | MIT | Native | React only | React 18+ | Not specified |
-| X6 (AntV) | MIT | Native | Framework-agnostic | Not specified | Not specified |
+| Library | License | TypeScript | Framework | Dependencies | Bundle Size (minified + gzipped) | Comment                                            |
+|---------|---------|------------|-----------|--------------|---------------------------------|----------------------------------------------------|
+| **maxGraph** | Apache 2.0 | Native | Framework-agnostic | Zero | ~307 KB minified (minimal build, v0.22.0) | -                                                  |
+| Cytoscape.js | MIT | Native (3.31.0+) | Framework-agnostic | Zero | ~112 KB | -                                                  |
+| GoJS | Commercial | Native | Framework-agnostic | Zero | Not specified | Include license fees                               |
+| JointJS (core) | MPL 2.0 | Supported | Framework-agnostic | Zero (since v4.0) | ~384 KB minified | Limited features, use JointJS+ to get all features |
+| JointJS+ | Commercial | Supported | Framework-agnostic | Zero (since v4.0) | Not specified | Include license fees                               |
+| mxGraph | Apache 2.0 | Via @types | Framework-agnostic | Zero | Not specified | End of life (Nov 2020)                             |
+| React Flow | MIT | Native | React only | React 18+ | Not specified | -                                                  |
+| X6 (AntV) | MIT | Native | Framework-agnostic | Not specified | Not specified | -                                                  |
 
 ## Detailed Comparison
 
