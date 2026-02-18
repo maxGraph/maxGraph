@@ -199,17 +199,13 @@ On 2020-11-12, a fork of the `mxGraph` was created with a call to Contributors.
 
 The project was then [renamed on 2021-06-02](https://github.com/maxGraph/maxGraph/discussions/47) into `maxGraph` due to [licensing issue](https://github.com/maxGraph/maxGraph/discussions/23).
 
-Starting from the `mxGraph` 4.2.2 release, we
-- moved code to ES9
-- removed Internet Explorer specific code
-- migrated to TypeScript, based on the work initiated in [typed-mxgraph](https://github.com/typed-mxgraph/typed-mxgraph)
-- migrated the examples to [Storybook](https://storybook.js.org/)
-- added new features and improvements
-- progressively improved the documentation and the examples
-- introduced tree-shaking with the `BaseGraph` and plugins architecture
-- to be continued...
+Starting from the `mxGraph` 4.2.2 release, the project has:
+- Moved the codebase to ES2018 and removed Internet Explorer support
+- Migrated to TypeScript, building on the work initiated in [typed-mxgraph](https://github.com/typed-mxgraph/typed-mxgraph)
+- Migrated the examples to [Storybook](https://storybook.js.org/)
+- Introduced tree-shaking with the `BaseGraph` and plugin architecture
+- Added new features, improved documentation, and expanded examples
 
-**TODO reword this paragraph + duplicate in website**
 
 ## Development
 
