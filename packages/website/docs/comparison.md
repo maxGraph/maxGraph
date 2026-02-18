@@ -87,7 +87,7 @@ The JavaScript/TypeScript graph visualization ecosystem includes several librari
 
 ### X6 (AntV)
 
-- **Best for**: Chinese-language projects or teams familiar with the Ant ecosystem
+- **Best for**: Teams already using the Ant Design / AntV ecosystem, or those comfortable navigating primarily Chinese-language documentation
 - **Key strengths**:
   - Native TypeScript with HTML and SVG rendering
   - MVC architecture for clean separation of concerns
