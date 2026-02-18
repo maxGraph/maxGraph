@@ -1,14 +1,16 @@
 # @maxgraph/core
 
 <!-- extract of ../../README.md -->
-`maxGraph` is a TypeScript library which can display and allow interaction with vector diagrams. At a high level, it provides:
-- **Nodes**, also known as **vertices** which are typically represented by shapes like rectangles.
-- **Edges** which can be lines and arrows which normally point between one node and another.
+`maxGraph` is a TypeScript library for building interactive diagram applications. At its core, it manages:
+- **Vertices** — Nodes displayed as shapes (rectangles, ellipses, custom designs)
+- **Edges** — Connections between vertices (lines, arrows, custom paths)
 
-It provides many of the diagramming features which would be expected by a piece of presentation software like Microsoft® PowerPoint™
-or LibreOffice® Impress such as being able to resize, move or rotate nodes, but has a stronger focus on automatic layout
-algorithms and applications of [Graph Theory](https://en.wikipedia.org/wiki/Graph_theory). It is suited towards software
-which requires finer-grained customization of functionality than off-the-shelf packages.
+Beyond basic diagram editing (resize, move, rotate), `maxGraph` provides automatic layout algorithms, graph theory operations, and deep API-level control.
+It's designed for developers building custom diagramming tools—flowchart editors, data lineage visualizers, network maps, process designers — where off-the-shelf solutions lack the flexibility or programmability you need.
+
+`maxGraph` continues the legacy of [mxGraph](https://github.com/jgraph/mxgraph) (archived in 2020) as its actively maintained successor.
+It preserves mxGraph's comprehensive features and XML compatibility while modernizing with native TypeScript, modular architecture, and smaller bundle sizes.
+Active development ensures continuous bug fixes and new capabilities.
 <!-- END OF 'extract of ../../README.md' -->
 
 
