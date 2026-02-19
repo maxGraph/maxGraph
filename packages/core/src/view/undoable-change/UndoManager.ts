@@ -50,7 +50,7 @@ import UndoableEdit from './UndoableEdit.js';
  *
  * ```javascript
  * const undoManager = new UndoManager();
- * const listener(sender, evt) {
+ * function listener(sender, evt) {
  *   undoManager.undoableEditHappened(evt.getProperty('edit'));
  * };
  * graph.getDataModel().addListener(InternalEvent.UNDO, listener);
