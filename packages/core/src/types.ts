@@ -440,7 +440,7 @@ export type CellStateStyle = {
   indicatorImage?: string;
   /**
    * The indicator shape used within an {@link LabelShape}.
-   * The possible values are all names of registered Shapes with {@link CellRenderer.registerShape}.
+   * The possible values are all names of registered Shapes with {@link ShapeRegistry.add}.
    * This includes {@link ShapeValue} values and custom names that have been registered.
    *
    * The `indicatorShape` property has precedence over the {@link indicatorImage} property.
@@ -681,13 +681,13 @@ export type CellStateStyle = {
    *
    * The actual implementation of the shape is determined by the {@link CellRenderer.createShape} method:
    * - first, it looks for a shape in {@link StencilShapeRegistry},
-   * - if not found, it looks for a shape in the {@link CellRenderer} registry.
+   * - if not found, it looks for a shape in the {@link ShapeRegistry}.
    *
    * If no shape is specified, the default shape is used:
    * - for edges, this is {@link CellRenderer.defaultEdgeShape}
    * - for vertices, this is {@link CellRenderer.defaultVertexShape}
    *
-   * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape} and {@link StencilShapeRegistry.addStencil}.
+   * The possible values are all names of the shapes registered with {@link ShapeRegistry.add} and {@link StencilShapeRegistry.add}.
    * This includes {@link ShapeValue} values and custom names that have been registered.
    */
   shape?: StyleShapeValue;
@@ -970,7 +970,7 @@ export type StyleArrowValue = ArrowValue | (string & {});
 export type StylePortConstraint = DirectionValue | DirectionValue[];
 
 /**
- * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
+ * Names used to register the shapes provided out-of-the-box by maxGraph with {@link ShapeRegistry.add}.
  * They can be used as a value for {@link CellStateStyle.shape}.
  *
  * @category Style

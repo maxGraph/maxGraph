@@ -22,7 +22,7 @@ import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 /**
  * Path-based actor vertex shape built on {@link AbstractPathShape}.
  *
- * This shape is registered under `actor` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `actor` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */
