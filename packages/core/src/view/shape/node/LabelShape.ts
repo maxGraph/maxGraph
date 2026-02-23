@@ -26,7 +26,7 @@ import { StyleDefaultsConfig } from '../../../util/config.js';
 /**
  * Extends {@link RectangleShape} to implement an image shape with a label.
  *
- * This shape is registered under `label` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `label` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */

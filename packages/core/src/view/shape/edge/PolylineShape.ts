@@ -26,7 +26,7 @@ import { ColorValue } from '../../../types.js';
  *
  * The shape is used to represent edges, not vertices.
  *
- * This shape is **NOT** registered in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is **NOT** registered in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Edge Shapes
  */

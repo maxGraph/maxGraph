@@ -36,7 +36,7 @@ import LabelShape from './node/LabelShape.js';
 let isDefaultElementsRegistered = false;
 
 /**
- * Register default builtin shapes into {@link CellRenderer}.
+ * Register default builtin shapes into {@link ShapeRegistry}.
  *
  * @category Configuration
  * @category Style

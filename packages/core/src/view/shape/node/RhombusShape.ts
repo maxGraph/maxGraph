@@ -24,7 +24,7 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 /**
  * Extends {@link Shape} to implement a rhombus (aka diamond) shape.
  *
- * This shape is registered under `rhombus` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `rhombus` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */

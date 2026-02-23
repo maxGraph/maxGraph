@@ -25,7 +25,7 @@ import { StyleDefaultsConfig } from '../../../util/config.js';
 /**
  * Extends {@link Shape} to implement a swimlane shape.
  *
- * This shape is registered under `swimlane` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `swimlane` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * Use:
  * - {@link CellStateStyle.startSize} to define the size of the title region,

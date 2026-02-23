@@ -53,7 +53,7 @@ import { StyleDefaultsConfig } from '../../../util/config.js';
 /**
  * Extends {@link Shape} to implement a text shape.
  *
- * This shape is **NOT** registered in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is **NOT** registered in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * To change vertical text from "bottom to top" to "top to bottom", the following code can be used:
  * ```javascript

@@ -43,7 +43,7 @@ import { StyleDefaultsConfig } from '../../util/config.js';
  * Base class for all shapes.
  * A shape in maxGraph is a separate implementation for SVG, VML and HTML.
  * Which implementation to use is controlled by the dialect property which
- * is assigned from within the CellRenderer when the shape is created.
+ * is assigned from within the {@link CellRenderer} when the shape is created.
  * The dialect must be assigned for a shape, and it does normally depend on
  * the browser and the configuration of the graph (see maxGraph rendering hint).
  *
