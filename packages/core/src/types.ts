@@ -1462,10 +1462,15 @@ export type GraphFoldingOptions = {
 };
 
 /**
+ * @since 0.23.0
+ */
+export type Constructor<T> = new (...args: any[]) => T;
+
+/**
  * @since 0.18.0
  * @category Shape
  */
-export type ShapeConstructor = new (...arguments_: any) => Shape;
+export type ShapeConstructor = Constructor<Shape>;
 
 /**
  * Options passed to the {@link AbstractGraph} constructor.

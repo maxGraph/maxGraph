@@ -59,6 +59,7 @@ import type {
   ColorValue,
   Listenable,
   MouseListenerSet,
+  ShapeConstructor,
 } from '../../types.js';
 import InternalMouseEvent from '../event/InternalMouseEvent.js';
 import Cell from '../cell/Cell.js';
@@ -457,7 +458,7 @@ class EdgeHandler implements MouseListenerSet {
    * Creates the shape used to draw the selection border.
    */
   createSelectionShape(points: (Point | null)[]) {
-    const c = this.state.shape!.constructor as new () => Shape;
+    const c = this.state.shape!.constructor as ShapeConstructor;
 
     const shape = new c();
     shape.outline = true;
