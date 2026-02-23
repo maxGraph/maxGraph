@@ -569,7 +569,7 @@ export type CellStateStyle = {
    * **WARNING**: explicitly set the value to null or undefined means to not use any perimeter.
    * To use the perimeter defined in the default vertex, do not set this property.
    */
-  perimeter?: PerimeterFunction | PerimeterValue | (string & {}) | null;
+  perimeter?: PerimeterFunction | PerimeterValue | (string & Record<never, never>) | null;
   /**
    * This is the distance between the connection point and the perimeter in pixels.
    * - When used in a vertex style, this applies to all incoming edges to floating ports
@@ -916,7 +916,7 @@ export type SpecialStyleColorValue =
   | 'inherit'
   | 'none'
   | 'swimlane'
-  | (string & {});
+  | (string & Record<never, never>);
 
 /** @category Style */
 export type DirectionValue = 'north' | 'south' | 'east' | 'west';
@@ -961,7 +961,7 @@ export type ArrowValue =
  * {@link ArrowValue} with support for extensions.
  * @category Style
  */
-export type StyleArrowValue = ArrowValue | (string & {});
+export type StyleArrowValue = ArrowValue | (string & Record<never, never>);
 
 /**
  * @category Style
@@ -1015,7 +1015,7 @@ export type ShapeValue =
  * @category Style
  * @category Shape
  */
-export type StyleShapeValue = ShapeValue | (string & {});
+export type StyleShapeValue = ShapeValue | (string & Record<never, never>);
 
 export type CanvasState = {
   alpha: number;
@@ -1331,7 +1331,7 @@ export type EdgeStyleValue =
 export type StyleEdgeStyleValue =
   | EdgeStyleFunction
   | EdgeStyleValue
-  | (string & {})
+  | (string & Record<never, never>)
   | null;
 
 /**
