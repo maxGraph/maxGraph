@@ -1462,10 +1462,17 @@ export type GraphFoldingOptions = {
 };
 
 /**
+ * Represents a constructor function for a class that produces instances of type `T`.
+ * @since 0.23.0
+ */
+export type Constructor<T> = new (...args: any[]) => T;
+
+/**
+ * Represents a constructor function for a class that produces instances of type `Shape`.
  * @since 0.18.0
  * @category Shape
  */
-export type ShapeConstructor = new (...arguments_: any) => Shape;
+export type ShapeConstructor = Constructor<Shape>;
 
 /**
  * Options passed to the {@link AbstractGraph} constructor.
