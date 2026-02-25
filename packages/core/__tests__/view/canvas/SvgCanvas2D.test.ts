@@ -15,16 +15,13 @@ limitations under the License.
 */
 
 import { describe, expect, test } from '@jest/globals';
+import { SvgCanvas2D, constants } from '../../../src';
 
-import SvgCanvas2D from '../../../src/view/canvas/SvgCanvas2D.js';
-import { NS_SVG } from '../../../src/util/Constants.js';
+function createSvgCanvas2D() {
+  return new SvgCanvas2D(document.createElementNS(constants.NS_SVG, 'svg'), true);
+}
 
 describe('SvgCanvas2D.convertHtml', () => {
-  // Helper to create a dummy SVG root
-  function createSvgCanvas2D() {
-    return new SvgCanvas2D(document.createElementNS(NS_SVG, 'svg'), true);
-  }
-
   test('returns plain text unchanged if not valid HTML', () => {
     const canvas = createSvgCanvas2D();
     const input = 'plain text';
