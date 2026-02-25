@@ -22,44 +22,24 @@ function createSvgCanvas2D() {
 }
 
 describe('SvgCanvas2D.convertHtml', () => {
-  test('returns plain text unchanged if not valid HTML', () => {
+  test.each([
+    ['plain text unchanged if not valid HTML', 'plain text', 'plain text'],
+    ['HTML with body tag', '<html><body><p>foo</p></body></html>', '<p>foo</p>'],
+    [
+      'HTML with attributes on body',
+      '<html><body style="color:red"><span>bar</span></body></html>',
+      '<span>bar</span>',
+    ],
+    ['empty string for empty input', '', ''],
+    [
+      'nested HTML',
+      '<div><div><span>deep</span></div></div>',
+      '<div><div><span>deep</span></div></div>',
+    ],
+    ['malformed HTML gracefully', '<div><b>broken', '<div><b>broken</b></div>'],
+    ['HTML with whitespace', '   <div> spaced </div>   ', '<div> spaced </div>'],
+  ])('%s', (_description, input, expected) => {
     const canvas = createSvgCanvas2D();
-    const input = 'plain text';
-    expect(canvas.convertHtml(input)).toBe('plain text');
-  });
-
-  test('handles HTML with body tag', () => {
-    const canvas = createSvgCanvas2D();
-    const input = '<html><body><p>foo</p></body></html>';
-    expect(canvas.convertHtml(input)).toBe('<p>foo</p>');
-  });
-
-  test('handles HTML with attributes on body', () => {
-    const canvas = createSvgCanvas2D();
-    const input = '<html><body style="color:red"><span>bar</span></body></html>';
-    expect(canvas.convertHtml(input)).toBe('<span>bar</span>');
-  });
-
-  test('returns empty string for empty input', () => {
-    const canvas = createSvgCanvas2D();
-    expect(canvas.convertHtml('')).toBe('');
-  });
-
-  test('handles nested HTML', () => {
-    const canvas = createSvgCanvas2D();
-    const input = '<div><div><span>deep</span></div></div>';
-    expect(canvas.convertHtml(input)).toBe('<div><div><span>deep</span></div></div>');
-  });
-
-  test('handles malformed HTML gracefully', () => {
-    const canvas = createSvgCanvas2D();
-    const input = '<div><b>broken';
-    expect(canvas.convertHtml(input)).toBe('<div><b>broken</b></div>');
-  });
-
-  test('handles HTML with whitespace', () => {
-    const canvas = createSvgCanvas2D();
-    const input = '   <div> spaced </div>   ';
-    expect(canvas.convertHtml(input).trim()).toBe('<div> spaced </div>');
+    expect(canvas.convertHtml(input).trim()).toBe(expected);
   });
 });

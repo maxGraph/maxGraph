@@ -352,6 +352,25 @@ Styles are defined as objects conforming to `CellStyle` type. See `packages/core
 - Tests are in `packages/core/__tests__/` mirroring `src/` structure
 - Use `@swc/jest` for fast TypeScript compilation
 - Import paths in tests should omit `.js` extension (handled by moduleNameMapper)
+- When multiple tests share the same structure and only differ by input/expected data, use `test.each` (or `it.each`) to avoid repetition and put focus on the tested use cases:
+
+```typescript
+// Good - data-driven tests with test.each
+test.each([
+  ['description of case 1', input1, expected1],
+  ['description of case 2', input2, expected2],
+])('%s', (_description, input, expected) => {
+  expect(myFunction(input)).toBe(expected);
+});
+
+// Bad - repetitive tests with identical structure
+test('case 1', () => {
+  expect(myFunction(input1)).toBe(expected1);
+});
+test('case 2', () => {
+  expect(myFunction(input2)).toBe(expected2);
+});
+```
 
 ## Commit Message Style
 
