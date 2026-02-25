@@ -37,9 +37,13 @@ describe('SvgCanvas2D.convertHtml', () => {
       '<div><div><span>deep</span></div></div>',
     ],
     ['malformed HTML gracefully', '<div><b>broken', '<div><b>broken</b></div>'],
-    ['HTML with whitespace', '   <div> spaced </div>   ', '<div> spaced </div>'],
+    [
+      'HTML with whitespace, trim only leading whitespace',
+      '   <div> spaced </div>   ',
+      '<div> spaced </div>   ',
+    ],
   ])('%s', (_description, input, expected) => {
     const canvas = createSvgCanvas2D();
-    expect(canvas.convertHtml(input).trim()).toBe(expected);
+    expect(canvas.convertHtml(input)).toBe(expected);
   });
 });
