@@ -23,7 +23,7 @@ import AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 /**
  * Extends {@link Shape} to implement a double ellipse shape.
  *
- * This shape is registered under `doubleEllipse` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `doubleEllipse` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * If a custom shape is needed to only fill the inner ellipse, then this shape's {@link paintVertexShape} method should be overridden
  * like in the following example:

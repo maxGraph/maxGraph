@@ -23,7 +23,7 @@ import Rectangle from '../../geometry/Rectangle.js';
 /**
  * Extends {@link Shape} to implement an ellipse shape.
  *
- * This shape is registered under `ellipse` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `ellipse` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */

@@ -22,7 +22,7 @@ import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 /**
  * Path-based cloud vertex shape built on {@link AbstractPathShape}.
  *
- * This shape is registered under `cloud` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `cloud` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */
