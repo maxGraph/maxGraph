@@ -1087,9 +1087,10 @@ class SvgCanvas2D extends AbstractCanvas2D {
    * Converts the given HTML string to XHTML.
    */
   convertHtml(val: string) {
-    const doc = parseXml(val);
+    const doc = new DOMParser().parseFromString(val, 'text/html');
 
-    if (doc != null) {
+    // the jsdoc of DOMParser.parseFromString says the returned value is never null, but keep the check (it comes from mxGraph) for now until we get more feedback on this
+    if (doc) {
       val = new XMLSerializer().serializeToString(doc.body);
 
       // Extracts body content from DOM
@@ -1383,10 +1384,11 @@ class SvgCanvas2D extends AbstractCanvas2D {
   }
 
   /**
-   * Paints the given text. Possible values for format are empty string for plain
-   * text and html for HTML markup. Note that HTML markup is only supported if
-   * foreignObject is supported and <foEnabled> is true. (This means IE9 and later
-   * does currently not support HTML text as part of shapes.)
+   * Paints the given text.
+   *
+   * Possible values for format are empty string for plain text and HTML for HTML markup.
+   *
+   * Note that HTML markup is only supported if `foreignObject` is supported and {@link foEnabled} is `true`.
    */
   text(
     x: number,
