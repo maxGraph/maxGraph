@@ -227,7 +227,7 @@ export const isNode = (
   nodeName: string | null = null,
   attributeName?: string | null,
   attributeValue?: string | null
-) => {
+): value is Element => {
   if (
     !isNullish(value) &&
     typeof value.nodeType === 'number' &&

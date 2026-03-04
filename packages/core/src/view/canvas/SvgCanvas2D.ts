@@ -1114,35 +1114,33 @@ class SvgCanvas2D extends AbstractCanvas2D {
     let val = str;
 
     if (!isNode(val)) {
-      val = `<div><div>${this.convertHtml(val as string)}</div></div>`;
+      val = `<div><div>${this.convertHtml(val)}</div></div>`;
     }
 
     if (document.createElementNS) {
       const div = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
 
       if (isNode(val)) {
-        const n = val as HTMLElement;
-
         const div2 = document.createElement('div');
         const div3 = div2.cloneNode(false);
 
         // Creates a copy for export
         if (this.root!.ownerDocument !== document) {
-          div2.appendChild(n.cloneNode(true));
+          div2.appendChild(val.cloneNode(true));
         } else {
-          div2.appendChild(n);
+          div2.appendChild(val);
         }
 
         div3.appendChild(div2);
         div.appendChild(div3);
       } else {
-        div.innerHTML = val as string;
+        div.innerHTML = val;
       }
 
       return div;
     }
     if (isNode(val)) {
-      val = `<div><div>${getXml(<Element>val)}</div></div>`;
+      val = `<div><div>${getXml(val)}</div></div>`;
     }
 
     val = `<div xmlns="http://www.w3.org/1999/xhtml">${val}</div>`;
