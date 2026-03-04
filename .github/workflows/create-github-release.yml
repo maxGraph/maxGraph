@@ -63,13 +63,13 @@ jobs:
           echo "MILESTONE_NUMBER=${MILESTONE_NUMBER:-x}" >> $GITHUB_ENV
 
       - name: Download examples artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: maxgraph_${{ env.VERSION }}_examples.zip
           path: artifacts/examples
 
       - name: Download website artifact
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: maxgraph_${{ env.VERSION }}_website.zip
           path: artifacts/website
