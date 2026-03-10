@@ -24,7 +24,7 @@ import { NONE } from '../../../util/Constants.js';
 /**
  * Extends {@link Shape} to implement a cylinder shape.
  *
- * This shape is registered under `cylinder` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `cylinder` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * If a custom shape with one filled area and an overlay path is needed, then this shape's {@link redrawPath} should be overridden.
  *

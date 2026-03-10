@@ -42,27 +42,11 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
     permissions:
       contents: read
-    steps:
-      - uses: actions/checkout@v6
-      - name: Build Setup
-        uses: ./.github/actions/build-setup
-      - name: Build @maxgraph/core API docs
-        run: npm run docs:api -w packages/core
-      - name: Build Storybook demo
-        run: npm run build -w packages/core -w packages/html
-      - name: Copy generated resources to the website
-        run: npm run extra:copy-gen-resources -w packages/website
-      - name: Build website
-        run: npm run build -w packages/website
-      - name: Upload website artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: packages/website/build/
-      - name: Check types in website
-        run: npm run typecheck -w packages/website
+    uses: ./.github/workflows/_reusable_generate_website.yml
+    with:
+      artifact-name: ${{ github.event_name == 'pull_request' && format('website-pr-{0}-{1}', github.event.pull_request.number, github.sha) || 'gh-pages' }}
 
   deploy:
     needs: build

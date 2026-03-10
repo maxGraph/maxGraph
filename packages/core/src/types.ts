@@ -440,7 +440,7 @@ export type CellStateStyle = {
   indicatorImage?: string;
   /**
    * The indicator shape used within an {@link LabelShape}.
-   * The possible values are all names of registered Shapes with {@link CellRenderer.registerShape}.
+   * The possible values are all names of registered Shapes with {@link ShapeRegistry.add}.
    * This includes {@link ShapeValue} values and custom names that have been registered.
    *
    * The `indicatorShape` property has precedence over the {@link indicatorImage} property.
@@ -569,7 +569,7 @@ export type CellStateStyle = {
    * **WARNING**: explicitly set the value to null or undefined means to not use any perimeter.
    * To use the perimeter defined in the default vertex, do not set this property.
    */
-  perimeter?: PerimeterFunction | PerimeterValue | (string & {}) | null;
+  perimeter?: PerimeterFunction | PerimeterValue | (string & Record<never, never>) | null;
   /**
    * This is the distance between the connection point and the perimeter in pixels.
    * - When used in a vertex style, this applies to all incoming edges to floating ports
@@ -681,13 +681,13 @@ export type CellStateStyle = {
    *
    * The actual implementation of the shape is determined by the {@link CellRenderer.createShape} method:
    * - first, it looks for a shape in {@link StencilShapeRegistry},
-   * - if not found, it looks for a shape in the {@link CellRenderer} registry.
+   * - if not found, it looks for a shape in the {@link ShapeRegistry}.
    *
    * If no shape is specified, the default shape is used:
    * - for edges, this is {@link CellRenderer.defaultEdgeShape}
    * - for vertices, this is {@link CellRenderer.defaultVertexShape}
    *
-   * The possible values are all names of the shapes registered with {@link CellRenderer.registerShape} and {@link StencilShapeRegistry.addStencil}.
+   * The possible values are all names of the shapes registered with {@link ShapeRegistry.add} and {@link StencilShapeRegistry.add}.
    * This includes {@link ShapeValue} values and custom names that have been registered.
    */
   shape?: StyleShapeValue;
@@ -916,7 +916,7 @@ export type SpecialStyleColorValue =
   | 'inherit'
   | 'none'
   | 'swimlane'
-  | (string & {});
+  | (string & Record<never, never>);
 
 /** @category Style */
 export type DirectionValue = 'north' | 'south' | 'east' | 'west';
@@ -961,7 +961,7 @@ export type ArrowValue =
  * {@link ArrowValue} with support for extensions.
  * @category Style
  */
-export type StyleArrowValue = ArrowValue | (string & {});
+export type StyleArrowValue = ArrowValue | (string & Record<never, never>);
 
 /**
  * @category Style
@@ -970,7 +970,7 @@ export type StyleArrowValue = ArrowValue | (string & {});
 export type StylePortConstraint = DirectionValue | DirectionValue[];
 
 /**
- * Names used to register the shapes provided out-of-the-box by maxGraph with {@link CellRenderer.registerShape}.
+ * Names used to register the shapes provided out-of-the-box by maxGraph with {@link ShapeRegistry.add}.
  * They can be used as a value for {@link CellStateStyle.shape}.
  *
  * @category Style
@@ -1015,7 +1015,7 @@ export type ShapeValue =
  * @category Style
  * @category Shape
  */
-export type StyleShapeValue = ShapeValue | (string & {});
+export type StyleShapeValue = ShapeValue | (string & Record<never, never>);
 
 export type CanvasState = {
   alpha: number;
@@ -1331,7 +1331,7 @@ export type EdgeStyleValue =
 export type StyleEdgeStyleValue =
   | EdgeStyleFunction
   | EdgeStyleValue
-  | (string & {})
+  | (string & Record<never, never>)
   | null;
 
 /**
@@ -1462,10 +1462,17 @@ export type GraphFoldingOptions = {
 };
 
 /**
+ * Represents a constructor function for a class that produces instances of type `T`.
+ * @since 0.23.0
+ */
+export type Constructor<T> = new (...args: any[]) => T;
+
+/**
+ * Represents a constructor function for a class that produces instances of type `Shape`.
  * @since 0.18.0
  * @category Shape
  */
-export type ShapeConstructor = new (...arguments_: any) => Shape;
+export type ShapeConstructor = Constructor<Shape>;
 
 /**
  * Options passed to the {@link AbstractGraph} constructor.

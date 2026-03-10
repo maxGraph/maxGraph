@@ -6,15 +6,46 @@ on:
       - v*
 
 jobs:
+  compute_environment_variables:
+    runs-on: ubuntu-24.04
+    permissions: {}
+    outputs:
+      version: ${{ steps.set_version.outputs.version }}
+    steps:
+      - name: Set version
+        id: set_version
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  build_examples:
+    needs: compute_environment_variables
+    permissions:
+      contents: read
+    uses: ./.github/workflows/_reusable_build_examples.yml
+    with:
+      artifact-name: 'maxgraph_${{ needs.compute_environment_variables.outputs.version }}_examples.zip'
+
+  generate_website:
+    needs: compute_environment_variables
+    permissions:
+      contents: read
+    uses: ./.github/workflows/_reusable_generate_website.yml
+    with:
+      artifact-name: 'maxgraph_${{ needs.compute_environment_variables.outputs.version }}_website.zip'
+
+
   create_release:
     runs-on: ubuntu-24.04
+    needs: [compute_environment_variables, build_examples, generate_website]
     permissions:
       contents: write # create the GH release
     steps:
       - name: Set env
         run: |
-          echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+          echo "VERSION=${{ needs.compute_environment_variables.outputs.version }}" >> $GITHUB_ENV
           echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
       - name: Get milestone number
         env:
           GH_TOKEN: ${{ github.token }}
@@ -31,9 +62,31 @@ jobs:
           echo "Found milestone: ${MILESTONE_NUMBER}"
           echo "MILESTONE_NUMBER=${MILESTONE_NUMBER:-x}" >> $GITHUB_ENV
 
+      - name: Download examples artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: maxgraph_${{ env.VERSION }}_examples.zip
+          path: artifacts/examples
+
+      - name: Download website artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: maxgraph_${{ env.VERSION }}_website.zip
+          path: artifacts/website
+
+      - name: Create zip files for release
+        run: |
+          cd artifacts/examples
+          zip -r ../../maxgraph_${{ env.VERSION }}_examples.zip .
+          cd ../website
+          zip -r ../../maxgraph_${{ env.VERSION }}_website.zip .
+
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
+          artifacts: |
+            maxgraph_${{ env.VERSION }}_examples.zip
+            maxgraph_${{ env.VERSION }}_website.zip
           body: |
             _Version ${{ env.VERSION }} released on ${{ env.RELEASE_DATE }}._
             

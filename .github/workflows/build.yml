@@ -32,47 +32,66 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
     strategy:
-      # we want to run the full build on all os: don't cancel running jobs even if one fails
+      # we want to run the full build on all runners: don't cancel running jobs even if one fails
       fail-fast: false
       matrix:
-        os: ['ubuntu-24.04', 'macos-14', 'windows-2022']
+        runner: [ 'ubuntu-24.04', 'macos-14', 'windows-2022']
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
+
       - name: Build Setup
         uses: ./.github/actions/build-setup
-      - name: Build @maxgraph/core - esm
+
+      - name: Build @maxgraph/core
         run: npm run build -w packages/core
+
       - name: Check TS compilation of the tests of @maxgraph/core
         run: npm run test-check -w packages/core
       - name: Test @maxgraph/core
         run: npm test -w packages/core -- --coverage
       - name: Upload test results as artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: test-coverage-${{runner.os}}-${{github.sha}}
           path: packages/core/coverage/lcov-report
       - name: Test TypeScript support
         run: npm test -w packages/ts-support
-      - name: Build all examples
-        run: ./scripts/build-all-examples.bash
+
+      # Already built in generate-website.yml, but here we want to ensure it can be built on all OSes
       - name: Build Storybook mini-site
         run: npm run build -w packages/html
-      - name: Upload all examples as artifact
-        uses: actions/upload-artifact@v6
+
+      - name: Upload storybook mini-site as artifact
+        uses: actions/upload-artifact@v7
         with:
-          name: examples-${{runner.os}}-${{github.sha}}
+          name: storybook-${{runner.os}}-${{github.sha}}
           path: |
             packages/html/dist/
-            packages/js-example*/dist/
-            packages/ts-example*/dist/
+
       - name: Ensure no circular dependencies in the @maxgraph/core produced JS files
         run: npm run check:circular-dependencies -w packages/core
+
       - name: Ensure no lint errors
         run: npm run lint
+
       # See https://github.com/arethetypeswrong/arethetypeswrong.github.io/tree/main/packages/cli
       - name: Check npm package
         run: npm run check:npm-package -w packages/core
+
+
+  build_examples:
+    needs: build
+    permissions:
+      contents: read
+    uses: ./.github/workflows/_reusable_build_examples.yml
+    strategy:
+      matrix:
+        runner: ['ubuntu-24.04', 'macos-14', 'windows-2022']
+    with:
+     artifact-name: examples-${{ matrix.runner }}-${{ github.sha }}
+     runner: ${{ matrix.runner }}

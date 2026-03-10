@@ -1,0 +1,41 @@
+name: Build examples
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        description: 'Name of the output artifact containing the built examples'
+        required: true
+        type: string
+      runner:
+        description: 'The runner to use for the build'
+        required: false
+        type: string
+        default: 'ubuntu-24.04'
+
+jobs:
+  build:
+    runs-on: ${{ inputs.runner }}
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build Setup
+        uses: ./.github/actions/build-setup
+
+      - name: Build @maxgraph/core
+        shell: bash
+        run: npm run build -w packages/core
+
+      - name: Build all examples
+        shell: bash
+        run: ./scripts/build-all-examples.bash
+
+      - name: Upload all examples as artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ inputs['artifact-name'] }}
+          path: |
+            packages/js-example*/dist/
+            packages/ts-example*/dist/

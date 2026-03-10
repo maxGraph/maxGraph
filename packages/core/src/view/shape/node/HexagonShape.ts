@@ -23,7 +23,7 @@ import type AbstractCanvas2D from '../../canvas/AbstractCanvas2D.js';
 /**
  * Implementation of the hexagon shape.
  *
- * This shape is registered under `hexagon` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `hexagon` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */

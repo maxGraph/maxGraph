@@ -25,7 +25,7 @@ import { ColorValue } from '../../../types.js';
 /**
  * Extends {@link Shape} to implement a rectangle shape.
  *
- * This shape is registered under `rectangle` in {@link CellRenderer} when using {@link Graph} or calling {@link registerDefaultShapes}.
+ * This shape is registered under `rectangle` in {@link ShapeRegistry} when using {@link Graph} or calling {@link registerDefaultShapes}.
  *
  * @category Vertex Shapes
  */
