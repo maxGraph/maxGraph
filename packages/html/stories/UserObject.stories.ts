@@ -142,7 +142,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
       const lastName = pos > 0 ? newValue.substring(pos + 1, newValue.length) : '';
 
       // Clones the value for correct undo/redo
-      const elt = cell.value.cloneNode(true);
+      const elt = cell.value.cloneNode(true) as Element;
 
       elt.setAttribute('firstName', firstName);
       elt.setAttribute('lastName', lastName);
