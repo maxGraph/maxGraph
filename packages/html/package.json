@@ -11,12 +11,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "~10.1.11",
-    "@storybook/addon-links": "~10.1.11",
-    "@storybook/html-vite": "~10.1.11",
+    "@storybook/addon-docs": "~10.2.17",
+    "@storybook/addon-links": "~10.2.17",
+    "@storybook/html-vite": "~10.2.17",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "storybook": "~10.1.10",
+    "storybook": "~10.2.17",
     "vite": "~7.3.0"
   }
 }
