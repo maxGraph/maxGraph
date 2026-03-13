@@ -169,3 +169,15 @@ describe('installDblClickHandler', () => {
     container.remove();
   });
 });
+
+describe('destroy', () => {
+  test('clears eventListeners', () => {
+    const editor = new Editor(null!);
+    editor.addListener('testEvent', () => {});
+    expect(editor.eventListeners.length).toBeGreaterThan(0);
+
+    editor.destroy();
+
+    expect(editor.eventListeners).toHaveLength(0);
+  });
+});

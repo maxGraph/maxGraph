@@ -363,8 +363,10 @@ class CellMarker extends EventSource {
   /**
    * Destroys the handler and all its resources and DOM nodes.
    */
-  destroy() {
+  override destroy() {
     this.highlight.destroy();
+
+    super.destroy();
   }
 }
 

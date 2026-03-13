@@ -63,33 +63,34 @@ class EventSource {
   eventsEnabled = true;
 
   /**
-   * Optional source for events. Default is null.
+   * Optional source for events.
+   * @default null
    */
   eventSource: EventTarget | null = null;
 
   /**
-   * Returns <eventsEnabled>.
+   * Returns {@link eventsEnabled}.
    */
   isEventsEnabled() {
     return this.eventsEnabled;
   }
 
   /**
-   * Sets <eventsEnabled>.
+   * Sets {@link eventsEnabled}.
    */
   setEventsEnabled(value: boolean) {
     this.eventsEnabled = value;
   }
 
   /**
-   * Returns <eventSource>.
+   * Returns {@link eventSource}.
    */
   getEventSource() {
     return this.eventSource;
   }
 
   /**
-   * Sets <eventSource>.
+   * Sets {@link eventSource}.
    */
   setEventSource(value: EventTarget | null) {
     this.eventSource = value;
@@ -106,7 +107,7 @@ class EventSource {
   }
 
   /**
-   * Removes all occurrences of the given listener from <eventListeners>.
+   * Removes all occurrences of the given listener from {@link eventListeners}.
    */
   removeListener(funct: Function) {
     let i = 0;
@@ -134,6 +135,7 @@ class EventSource {
    * @param evt {@link EventObject} that represents the event.
    * @param sender Optional sender to be passed to the listener. Default value is the return value of {@link getEventSource}.
    */
+
   fireEvent(evt: EventObject, sender: EventTarget | null = null) {
     if (this.isEventsEnabled()) {
       if (!evt) {
@@ -153,6 +155,16 @@ class EventSource {
         }
       }
     }
+  }
+
+  /**
+   * Clears all registered event listeners.
+   *
+   * Subclasses with a `destroy` method should call `super.destroy()` at the end
+   * of their own cleanup to ensure no stale listeners remain.
+   */
+  destroy() {
+    this.eventListeners.length = 0;
   }
 }
 

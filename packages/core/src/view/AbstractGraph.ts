@@ -1300,12 +1300,15 @@ export abstract class AbstractGraph extends EventSource {
 
   /**
    * Destroys the graph and all its resources.
+   * After calling this method, the Graph should not be used anymore.
+   *
+   * For example, call this method when unmounting/disposing a component using the Graph to avoid memory leaks.
    */
-  destroy() {
+  override destroy() {
     if (!this.destroyed) {
       this.destroyed = true;
 
-      Object.values(this.plugins).forEach((p) => p.onDestroy());
+      this.plugins.forEach((p) => p.onDestroy());
 
       this.view.destroy();
 
@@ -1313,6 +1316,11 @@ export abstract class AbstractGraph extends EventSource {
         this.getDataModel().removeListener(this.graphModelChangeListener);
         this.graphModelChangeListener = null;
       }
+
+      // @ts-expect-error Can be null when destroyed.
+      this.container = null;
+
+      super.destroy();
     }
   }
 }

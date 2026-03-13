@@ -390,8 +390,10 @@ class LayoutManager extends EventSource {
   /**
    * Removes all handlers from the {@link graph} and deletes the reference to it.
    */
-  destroy() {
+  override destroy() {
     this.setGraph(null);
+
+    super.destroy();
   }
 }
 
