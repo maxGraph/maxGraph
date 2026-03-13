@@ -164,8 +164,10 @@ class AutoSaveManager extends EventSource {
   /**
    * Removes all handlers from the {@link graph} and deletes the reference to it.
    */
-  destroy(): void {
+  override destroy(): void {
     this.setGraph(null);
+
+    super.destroy();
   }
 }
 

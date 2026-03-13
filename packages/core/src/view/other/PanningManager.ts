@@ -205,6 +205,7 @@ class PanningManager {
     };
 
     this.destroy = () => {
+      this.stop();
       graph.removeMouseListener(this.mouseListener);
       InternalEvent.removeListener(document, 'mouseup', this.mouseUpListener);
     };

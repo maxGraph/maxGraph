@@ -28,6 +28,9 @@ export const createGraphWithoutContainer = (): Graph => new Graph();
  */
 export const createGraphWithoutPlugins = (): Graph => new Graph(undefined, undefined, []);
 
+export const hasListener = (eventListeners: { funct: Function }[], listener: Function) =>
+  eventListeners.some((l) => l.funct === listener);
+
 export const createCellWithStyle = (style: CellStateStyle): Cell => {
   const cell = new Cell();
   cell.style = style;

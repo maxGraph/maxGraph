@@ -2585,7 +2585,7 @@ export class Editor extends EventSource {
    * normally need to be called, it is called automatically when the window
    * unloads.
    */
-  destroy(): void {
+  override destroy(): void {
     if (!this.destroyed) {
       this.destroyed = true;
 
@@ -2600,6 +2600,8 @@ export class Editor extends EventSource {
 
       this.status = null;
       this.templates = null;
+
+      super.destroy();
     }
   }
 }

@@ -936,7 +936,7 @@ export default class MaxWindow extends EventSource {
    * Destroys the window and removes all associated resources. Fires a
    * <destroy> event prior to destroying the window.
    */
-  destroy(): void {
+  override destroy(): void {
     this.fireEvent(new EventObject(InternalEvent.DESTROY));
 
     if (this.div != null) {
@@ -953,5 +953,7 @@ export default class MaxWindow extends EventSource {
     this.content = null;
     // @ts-ignore
     this.contentWrapper = null;
+
+    super.destroy();
   }
 }

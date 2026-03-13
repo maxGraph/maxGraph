@@ -116,6 +116,19 @@ describe('getEdgeStyle ', () => {
   });
 });
 
+describe('destroy', () => {
+  test('clears eventListeners', () => {
+    const graph = new BaseGraph();
+    const view = graph.getView();
+    view.addListener('testEvent', () => {});
+    expect(view.eventListeners.length).toBeGreaterThan(0);
+
+    view.destroy();
+
+    expect(view.eventListeners).toHaveLength(0);
+  });
+});
+
 describe('getPerimeterFunction', () => {
   // Prevents side effects between tests
   beforeEach(() => {

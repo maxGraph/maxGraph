@@ -392,6 +392,7 @@ class RubberBandHandler implements GraphPlugin, MouseListenerSet {
       this.graph.removeMouseListener(this);
       this.graph.removeListener(this.forceRubberbandHandler);
       this.graph.removeListener(this.panHandler);
+      this.graph.removeListener(this.gestureHandler);
       this.reset();
 
       if (this.sharedDiv) {

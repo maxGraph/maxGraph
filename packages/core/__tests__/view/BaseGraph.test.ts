@@ -26,6 +26,7 @@ import {
   type EdgeStyleFunction,
   EdgeStyleRegistry,
   ElbowEdgeHandler,
+  type GraphPlugin,
   ImageBundle,
   Multiplicity,
   Point,
@@ -262,6 +263,43 @@ function expectExactInstanceOfEdgeHandler(handler: EdgeHandler): void {
   expect(handler).not.toBeInstanceOf(EdgeSegmentHandler);
   expect(handler).not.toBeInstanceOf(ElbowEdgeHandler);
 }
+
+describe('destroy', () => {
+  test('calls onDestroy on registered plugins', () => {
+    const onDestroyMock = jest.fn();
+
+    class CustomPlugin implements GraphPlugin {
+      static pluginId = 'CustomPlugin';
+      onDestroy = onDestroyMock;
+    }
+
+    const graph = new BaseGraph({
+      plugins: [CustomPlugin],
+    });
+
+    graph.destroy();
+
+    expect(onDestroyMock).toHaveBeenCalledTimes(1);
+  });
+
+  test('nulls container reference', () => {
+    const graph = new BaseGraph({});
+
+    graph.destroy();
+
+    expect(graph.container).toBeNull();
+  });
+
+  test('clears eventListeners', () => {
+    const graph = new BaseGraph({});
+    graph.addListener('testEvent', () => {});
+    expect(graph.eventListeners.length).toBeGreaterThan(0);
+
+    graph.destroy();
+
+    expect(graph.eventListeners).toHaveLength(0);
+  });
+});
 
 // For "complex" properties, for example: arrays or object.
 describe('Expect no global state for properties coming from mixins', () => {
