@@ -269,7 +269,7 @@ describe('destroy', () => {
     const onDestroyMock = jest.fn();
 
     class CustomPlugin implements GraphPlugin {
-      static pluginId = 'CustomPlugin';
+      static readonly pluginId = 'CustomPlugin';
       onDestroy = onDestroyMock;
     }
 
