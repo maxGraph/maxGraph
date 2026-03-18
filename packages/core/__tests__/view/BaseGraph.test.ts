@@ -284,6 +284,7 @@ describe('destroy', () => {
 
   test('nulls container reference', () => {
     const graph = new BaseGraph({});
+    expect(graph.container).not.toBeNull();
 
     graph.destroy();
 
