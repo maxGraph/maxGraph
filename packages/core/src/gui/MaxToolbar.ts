@@ -477,6 +477,7 @@ class MaxToolbar extends EventSource {
 
     if (this.menu != null) {
       this.menu.destroy();
+      this.menu = null;
     }
 
     super.destroy();
