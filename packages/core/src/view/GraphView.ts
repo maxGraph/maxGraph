@@ -2360,7 +2360,7 @@ export class GraphView extends EventSource {
   /**
    * Destroys the view and all its resources.
    */
-  override destroy() {
+  override destroy(): void {
     let root: SVGElement | HTMLElement | null = null;
 
     if (this.canvas && this.canvas instanceof SVGElement) {

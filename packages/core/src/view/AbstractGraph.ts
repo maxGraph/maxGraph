@@ -1304,7 +1304,7 @@ export abstract class AbstractGraph extends EventSource {
    *
    * For example, call this method when unmounting/disposing a component using the Graph to avoid memory leaks.
    */
-  override destroy() {
+  override destroy(): void {
     if (!this.destroyed) {
       this.destroyed = true;
 

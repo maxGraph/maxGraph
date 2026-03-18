@@ -163,7 +163,7 @@ class EventSource {
    * Subclasses with a `destroy` method should call `super.destroy()` at the end
    * of their own cleanup to ensure no stale listeners remain.
    */
-  destroy() {
+  destroy(): void {
     this.eventListeners.length = 0;
   }
 }

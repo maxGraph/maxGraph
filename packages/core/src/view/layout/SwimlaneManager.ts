@@ -343,7 +343,7 @@ class SwimlaneManager extends EventSource {
   /**
    * Removes all handlers from the {@link graph} and deletes the reference to it.
    */
-  override destroy() {
+  override destroy(): void {
     this.setGraph(null);
 
     super.destroy();
