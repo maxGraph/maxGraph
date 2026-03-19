@@ -467,7 +467,7 @@ class MaxToolbar extends EventSource {
   /**
    * Removes the toolbar and all its associated resources.
    */
-  destroy(): void {
+  override destroy(): void {
     InternalEvent.release(this.container);
     // @ts-ignore
     this.container = null;
@@ -477,7 +477,10 @@ class MaxToolbar extends EventSource {
 
     if (this.menu != null) {
       this.menu.destroy();
+      this.menu = null;
     }
+
+    super.destroy();
   }
 }
 

@@ -2360,7 +2360,7 @@ export class GraphView extends EventSource {
   /**
    * Destroys the view and all its resources.
    */
-  destroy() {
+  override destroy(): void {
     let root: SVGElement | HTMLElement | null = null;
 
     if (this.canvas && this.canvas instanceof SVGElement) {
@@ -2395,6 +2395,8 @@ export class GraphView extends EventSource {
       this.overlayPane = null;
       // @ts-expect-error Can be null when destroyed.
       this.decoratorPane = null;
+
+      super.destroy();
     }
   }
 

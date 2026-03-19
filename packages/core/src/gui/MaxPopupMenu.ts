@@ -500,12 +500,14 @@ class MaxPopupMenu extends EventSource {
   /**
    * Destroys the handler and all its resources and DOM nodes.
    */
-  destroy(): void {
+  override destroy(): void {
     if (this.div) {
       InternalEvent.release(this.div);
 
       this.div.parentNode?.removeChild(this.div);
     }
+
+    super.destroy();
   }
 }
 

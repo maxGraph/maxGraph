@@ -277,9 +277,11 @@ class SelectionCellsHandler extends EventSource implements GraphPlugin, MouseLis
    */
   onDestroy() {
     this.graph.removeMouseListener(this);
-    this.graph.removeListener(this.refreshHandler);
+    this.graph.getSelectionModel().removeListener(this.refreshHandler);
     this.graph.getDataModel().removeListener(this.refreshHandler);
     this.graph.getView().removeListener(this.refreshHandler);
+
+    super.destroy();
   }
 }
 

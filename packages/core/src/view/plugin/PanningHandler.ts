@@ -458,6 +458,9 @@ class PanningHandler extends EventSource implements GraphPlugin, MouseListenerSe
     this.graph.removeListener(this.forcePanningHandler);
     this.graph.removeListener(this.gestureHandler);
     InternalEvent.removeListener(document, 'mouseup', this.mouseUpListener);
+    this.panningManager.destroy();
+
+    super.destroy();
   }
 }
 
