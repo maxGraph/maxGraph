@@ -340,12 +340,12 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
  * @param key Key of the style to be changed.
  * @param value New value for the given key.
  */
-export const setCellStyles = (
+export const setCellStyles = <K extends keyof CellStateStyle>(
   model: GraphDataModel,
   cells: Cell[],
-  key: keyof CellStateStyle,
-  value: any
-) => {
+  key: K,
+  value: CellStateStyle[K] | undefined | null
+): void => {
   if (cells.length > 0) {
     model.batchUpdate(() => {
       for (const cell of cells) {
