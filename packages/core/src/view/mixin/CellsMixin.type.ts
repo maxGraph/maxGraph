@@ -206,9 +206,9 @@ declare module '../AbstractGraph' {
      * @param value String representing the new value for the key.
      * @param cells Optional array of {@link Cell} to change the style for. Default is the selection cells.
      */
-    setCellStyles: (
-      key: keyof CellStateStyle,
-      value: CellStateStyle[keyof CellStateStyle],
+    setCellStyles: <K extends keyof CellStateStyle>(
+      key: K,
+      value: CellStateStyle[K] | null,
       cells?: Cell[]
     ) => void;
 
