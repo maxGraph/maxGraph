@@ -258,10 +258,14 @@ export type CellStateStyle = {
   entryPerimeter?: boolean;
   /**
    * The connection point in relative horizontal coordinates of an edge with its target terminal.
+   *
+   * Set values from 0 (left) to 1 (right). Use 0.5 for center.
    */
   entryX?: number;
   /**
    * The connection point in relative vertical coordinates of an edge with its target terminal.
+   *
+   * Set values from 0 (top) to 1 (bottom). Use 0.5 for center.
    */
   entryY?: number;
   /**
