@@ -12,7 +12,7 @@ Launch a **sub-agent** (Agent tool) to run the full CI sequence. This keeps verb
 
 Use the Agent tool with a timeout of 600000ms (10 min):
 
-```
+```text
 Run the full CI validation sequence from the project root, stopping at the first failure:
 
 1. npm run build -w packages/core

@@ -20,7 +20,7 @@ Use the Agent tool with a timeout of 180000ms:
 - `all` -> `npm run build -w packages/core && ./scripts/build-all-examples.bash && npm run build -w packages/html`
 - Other -> `npm run build -w packages/$ARGUMENTS`
 
-```
+```text
 Run the command from the project root.
 Wait for completion. Report ONLY:
 - SUCCESS or FAILURE

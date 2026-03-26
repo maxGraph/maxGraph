@@ -18,7 +18,7 @@ if echo "$COMMAND" | grep -qE '(--help|list|ls|outdated|--version|node --version
 fi
 
 # Warn on heavy build/test/lint commands
-if echo "$COMMAND" | grep -qE '^\s*npm\s+(run\s+build|test|run\s+lint|run\s+check)'; then
+if echo "$COMMAND" | grep -qE '^\s*npm\s+(run\s+(build|test|lint|check)|test)'; then
   echo "Build command detected in main agent context." >&2
   echo "Consider using dedicated sub-agent skills instead:" >&2
   echo "  /build  — Build core package" >&2
