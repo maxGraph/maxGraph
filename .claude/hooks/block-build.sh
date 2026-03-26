@@ -7,10 +7,10 @@ TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
 
 # Only check Bash commands
-[ "$TOOL_NAME" != "Bash" ] && exit 0
+[[ "$TOOL_NAME" != "Bash" ]] && exit 0
 
 # Skip if running in a sub-agent (sub-agents ARE the right place for builds)
-[ -n "$CLAUDE_AGENT_NAME" ] && exit 0
+[[ -n "$CLAUDE_AGENT_NAME" ]] && exit 0
 
 # Skip lightweight commands
 if echo "$COMMAND" | grep -qE '(--help|list|ls|outdated|--version|node --version)'; then
