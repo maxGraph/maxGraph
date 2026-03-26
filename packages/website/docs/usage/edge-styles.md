@@ -92,6 +92,10 @@ EdgeStyleRegistry.add('myEdgeStyle', MyStyle, edgeStyleMetadata);
 :::warning
 When registering the `EdgeStyle`, be sure to register it in the `EdgeStyleRegistry` with correct `EdgeStyleMetaData`.
 Some maxGraph features depend on the `EdgeStyleMetaData` to work correctly.
+
+In particular, the `isOrthogonal` property controls how the terminal points of edges are computed on the vertex perimeter.
+When set to `true`, the perimeter point is computed using an orthogonal projection instead of a segment intersection.
+For more details, see the [Orthogonal Projection on the Perimeter](perimeters.md#orthogonal-projection-on-the-perimeter) documentation.
 :::
 
 ### Using a Custom EdgeStyle
