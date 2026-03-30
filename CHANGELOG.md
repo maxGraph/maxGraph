@@ -9,10 +9,18 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+## 0.23.0
+
+Release date: `2026-03-30`
+
+For more details, see the [0.23.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.23.0) on the GitHub release page.
+
 **Breaking Changes**:
 - The `getTooltip` and `getTooltipForCell` methods have been moved from `AbstractGraph` to the `TooltipHandler` plugin.
   If you were overriding these methods in a `AbstractGraph` subclass, you should now extend `TooltipHandler` instead.
 - `xmlUtils.getViewXml` moved to `xmlViewUtils.getViewXml`. The impact should be limited as this function was not widely used (only in the Editor class in the maxGraph code).
+
+This new version improves modularity, fixes important memory leaks, and adds utilities for better configuration management.
 
 ## 0.22.0
 
