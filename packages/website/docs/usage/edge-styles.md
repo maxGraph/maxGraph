@@ -25,7 +25,7 @@ To check the list of registered EdgeStyles, refer to the `registerDefaultStyleEl
 :::info
 The `EdgeStyleRegistry` is a new registry introduced in version 0.20.0 to manage edge styles.
 
-Edge styles were previously managed by the `StyleRegistry`, which has then been removed.
+Edge styles were previously managed by the `StyleRegistry`, which has since been removed.
 :::
 
 ## How to Use a Specific EdgeStyle
