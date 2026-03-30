@@ -27,7 +27,7 @@ To check the list of registered perimeters, refer to the `registerDefaultStyleEl
 :::info
 The `PerimeterRegistry` is a new registry introduced in version 0.20.0 to manage perimeters.
 
-Perimeters were previously managed by the `StyleRegistry`, which has then been removed.
+Perimeters were previously managed by the `StyleRegistry`, which has since been removed.
 :::
 
 
