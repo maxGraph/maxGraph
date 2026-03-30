@@ -25,7 +25,7 @@ To check the list of registered perimeters, refer to the `registerDefaultStyleEl
 :::
 
 :::info
-The `PerimeterRegistry` is a new registry introduced in version 0.20.0 to manage edge styles.
+The `PerimeterRegistry` is a new registry introduced in version 0.20.0 to manage perimeters.
 
 Edge styles were previously managed by the `StyleRegistry`, which has then been removed.
 :::
