@@ -25,9 +25,9 @@ To check the list of registered perimeters, refer to the `registerDefaultStyleEl
 :::
 
 :::info
-The `PerimeterRegistry` is a new registry introduced in version 0.20.0 to manage edge styles.
+The `PerimeterRegistry` is a new registry introduced in version 0.20.0 to manage perimeters.
 
-Edge styles were previously managed by the `StyleRegistry`, which has then been removed.
+Perimeters were previously managed by the `StyleRegistry`, which has since been removed.
 :::
 
 
@@ -151,7 +151,7 @@ const CustomPerimeter: PerimeterFunction = (
 }
 ```
 
-The new perimeter can then be registered in the `PerimeterRegistry` as follows if you are intended to use it as a string in `CellStateStyle.perimeter`:
+The new perimeter can then be registered in the `PerimeterRegistry` as follows if you intend to use it as a string in `CellStateStyle.perimeter`:
 ```javascript
 PerimeterRegistry.add('customPerimeter', CustomPerimeter);
 ```
