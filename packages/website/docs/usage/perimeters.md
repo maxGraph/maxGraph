@@ -151,7 +151,7 @@ const CustomPerimeter: PerimeterFunction = (
 }
 ```
 
-The new perimeter can then be registered in the `PerimeterRegistry` as follows if you are intended to use it as a string in `CellStateStyle.perimeter`:
+The new perimeter can then be registered in the `PerimeterRegistry` as follows if you intend to use it as a string in `CellStateStyle.perimeter`:
 ```javascript
 PerimeterRegistry.add('customPerimeter', CustomPerimeter);
 ```
