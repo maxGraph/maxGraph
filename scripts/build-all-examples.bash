@@ -13,6 +13,7 @@ usage() {
   echo "Options:"
   echo "  --list-size-only  Skip building, only display bundle sizes from existing dist/ directories"
   echo "  --help            Show this help message"
+  return 0
 }
 
 LIST_SIZE_ONLY=false
@@ -24,13 +25,13 @@ if [[ $# -gt 0 ]]; then
   esac
 fi
 
-if [ "$LIST_SIZE_ONLY" = true ]; then
+if [[ "$LIST_SIZE_ONLY" = true ]]; then
   echo "Skip building examples."
 else
   echo "Building all examples..."
 
   for dir in packages/ts-example* packages/js-example*; do
-    if [ -d "$dir" ]; then
+    if [[ -d "$dir" ]]; then
       echo
       echo "##################################################"
       echo "Building $dir"
@@ -46,19 +47,19 @@ fi
 # Infer examples that produce JS bundles (frontend applications only)
 EXAMPLES_FOR_TABLE=()
 for dir in packages/js-example* packages/ts-example*; do
-  if [ -d "$dir/dist" ] && find "$dir/dist" -name "*.js" -type f -print -quit | grep -q .; then
+  if [[ -d "$dir/dist" ]] && find "$dir/dist" -name "*.js" -type f -print -quit | grep -q .; then
     EXAMPLES_FOR_TABLE+=("$(basename "$dir")")
   fi
 done
 
 for dir in packages/ts-example* packages/js-example*; do
-  if [ -d "$dir" ]; then
+  if [[ -d "$dir" ]]; then
     echo
     echo "##################################################"
     echo "Files in $dir/dist directory:"
     echo "##################################################"
 
-    if [ -d "$dir/dist" ]; then
+    if [[ -d "$dir/dist" ]]; then
       # Find all JS files and display sizes with 2 decimal places
       # Use 1000 to match Vite's size display
       find "$dir/dist" -name "*.js" -type f -exec ls -l {} \; | LC_NUMERIC=C awk '{
@@ -76,7 +77,7 @@ done
 declare -A BUNDLE_SIZES
 for example in "${EXAMPLES_FOR_TABLE[@]}"; do
   dir="packages/$example"
-  if [ -d "$dir/dist" ]; then
+  if [[ -d "$dir/dist" ]]; then
     BUNDLE_SIZES[$example]=$(find "$dir/dist" -name "*.js" -type f -exec ls -l {} \; | LC_NUMERIC=C awk '
       { if ($5 > max) max = $5 }
       END { printf "%.2f", max / 1000 }
@@ -94,7 +95,7 @@ echo "| Example | before | now |"
 echo "| --- | --- | --- |"
 for example in "${EXAMPLES_FOR_TABLE[@]}"; do
   size="${BUNDLE_SIZES[$example]:-}"
-  if [ -n "$size" ]; then
+  if [[ -n "$size" ]]; then
     echo "| $example | kB | $size kB |"
   else
     echo "| $example | kB | N/A |"
