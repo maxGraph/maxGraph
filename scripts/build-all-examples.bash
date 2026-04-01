@@ -5,10 +5,23 @@ set -euo pipefail
 # From the root of the repository, run " ./scripts/build-all-examples.bash"
 
 
-# Check for command line arguments
+usage() {
+  echo "Usage: $0 [OPTIONS]"
+  echo
+  echo "Build all examples and display bundle sizes."
+  echo
+  echo "Options:"
+  echo "  --list-size-only  Skip building, only display bundle sizes from existing dist/ directories"
+  echo "  --help            Show this help message"
+}
+
 LIST_SIZE_ONLY=false
-if [[ $# -gt 0 && "$1" == "--list-size-only" ]]; then
-  LIST_SIZE_ONLY=true
+if [[ $# -gt 0 ]]; then
+  case "$1" in
+    --help) usage; exit 0 ;;
+    --list-size-only) LIST_SIZE_ONLY=true ;;
+    *) echo "Unknown option: $1"; usage; exit 1 ;;
+  esac
 fi
 
 if [ "$LIST_SIZE_ONLY" = true ]; then
@@ -30,6 +43,14 @@ else
 fi
 
 
+# Infer examples that produce JS bundles (frontend applications only)
+EXAMPLES_FOR_TABLE=()
+for dir in packages/js-example* packages/ts-example*; do
+  if [ -d "$dir/dist" ] && find "$dir/dist" -name "*.js" -type f -print -quit | grep -q .; then
+    EXAMPLES_FOR_TABLE+=("$(basename "$dir")")
+  fi
+done
+
 for dir in packages/ts-example* packages/js-example*; do
   if [ -d "$dir" ]; then
     echo
@@ -50,4 +71,49 @@ for dir in packages/ts-example* packages/js-example*; do
     fi
   fi
 done
+
+# Collect bundle sizes (largest JS file per example = the one containing maxGraph)
+declare -A BUNDLE_SIZES
+for example in "${EXAMPLES_FOR_TABLE[@]}"; do
+  dir="packages/$example"
+  if [ -d "$dir/dist" ]; then
+    BUNDLE_SIZES[$example]=$(find "$dir/dist" -name "*.js" -type f -exec ls -l {} \; | LC_NUMERIC=C awk '
+      { if ($5 > max) max = $5 }
+      END { printf "%.2f", max / 1000 }
+    ')
+  fi
+done
+
+# Display markdown table
+echo
+echo "##################################################"
+echo "Markdown table of bundle sizes"
+echo "##################################################"
+echo
+echo "| Example | before | now |"
+echo "| --- | --- | --- |"
+for example in "${EXAMPLES_FOR_TABLE[@]}"; do
+  size="${BUNDLE_SIZES[$example]:-}"
+  if [ -n "$size" ]; then
+    echo "| $example | kB | $size kB |"
+  else
+    echo "| $example | kB | N/A |"
+  fi
+done
+
+# Display CSV format (header = example names, second line = sizes)
+echo
+echo "##################################################"
+echo "CSV of bundle sizes (kB)"
+echo "##################################################"
+echo
+csv_header=""
+csv_values=""
+for example in "${EXAMPLES_FOR_TABLE[@]}"; do
+  size="${BUNDLE_SIZES[$example]:-N/A}"
+  csv_header="${csv_header:+$csv_header,}$example"
+  csv_values="${csv_values:+$csv_values,}$size"
+done
+echo "$csv_header"
+echo "$csv_values"
 
