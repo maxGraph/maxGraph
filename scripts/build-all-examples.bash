@@ -74,14 +74,17 @@ for dir in packages/ts-example* packages/js-example*; do
 done
 
 # Collect bundle sizes (largest JS file per example = the one containing maxGraph)
-declare -A BUNDLE_SIZES
-for example in "${EXAMPLES_FOR_TABLE[@]}"; do
-  dir="packages/$example"
+# Use indexed array instead of associative array for bash 3.x compatibility (macOS)
+BUNDLE_SIZES=()
+for i in "${!EXAMPLES_FOR_TABLE[@]}"; do
+  dir="packages/${EXAMPLES_FOR_TABLE[$i]}"
   if [[ -d "$dir/dist" ]]; then
-    BUNDLE_SIZES[$example]=$(find "$dir/dist" -name "*.js" -type f -exec ls -l {} \; | LC_NUMERIC=C awk '
+    BUNDLE_SIZES[$i]=$(find "$dir/dist" -name "*.js" -type f -exec ls -l {} \; | LC_NUMERIC=C awk '
       { if ($5 > max) max = $5 }
       END { printf "%.2f", max / 1000 }
     ')
+  else
+    BUNDLE_SIZES[$i]=""
   fi
 done
 
@@ -93,12 +96,12 @@ echo "##################################################"
 echo
 echo "| Example | before | now |"
 echo "| --- | --- | --- |"
-for example in "${EXAMPLES_FOR_TABLE[@]}"; do
-  size="${BUNDLE_SIZES[$example]:-}"
+for i in "${!EXAMPLES_FOR_TABLE[@]}"; do
+  size="${BUNDLE_SIZES[$i]}"
   if [[ -n "$size" ]]; then
-    echo "| $example | kB | $size kB |"
+    echo "| ${EXAMPLES_FOR_TABLE[$i]} | kB | $size kB |"
   else
-    echo "| $example | kB | N/A |"
+    echo "| ${EXAMPLES_FOR_TABLE[$i]} | kB | N/A |"
   fi
 done
 
@@ -110,9 +113,9 @@ echo "##################################################"
 echo
 csv_header=""
 csv_values=""
-for example in "${EXAMPLES_FOR_TABLE[@]}"; do
-  size="${BUNDLE_SIZES[$example]:-N/A}"
-  csv_header="${csv_header:+$csv_header,}$example"
+for i in "${!EXAMPLES_FOR_TABLE[@]}"; do
+  size="${BUNDLE_SIZES[$i]:-N/A}"
+  csv_header="${csv_header:+$csv_header,}${EXAMPLES_FOR_TABLE[$i]}"
   csv_values="${csv_values:+$csv_values,}$size"
 done
 echo "$csv_header"
