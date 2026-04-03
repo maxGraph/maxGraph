@@ -18,7 +18,7 @@ docs, deps-dev, deps-gha, typescript, or component names (graph, layout, seriali
 
 ## Body
 
-- Wrap at 120 characters
+- Wrap at 72 characters
 - Explain "why" not "what"
 - Use bullet points for multiple items
 
