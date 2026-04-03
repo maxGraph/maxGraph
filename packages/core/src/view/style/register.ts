@@ -42,7 +42,11 @@ export const registerDefaultEdgeStyles = (): void => {
     const edgeStylesToRegister: [EdgeStyleValue, EdgeStyleFunction, EdgeStyleMetaData][] =
       [
         ['elbowEdgeStyle', EdgeStyle.ElbowConnector, { handlerKind: 'elbow' }],
-        ['entityRelationEdgeStyle', EdgeStyle.EntityRelation, {}],
+        [
+          'entityRelationEdgeStyle',
+          EdgeStyle.EntityRelation,
+          { allowIntermediateHandles: false },
+        ],
         ['loopEdgeStyle', EdgeStyle.Loop, { handlerKind: 'elbow', isOrthogonal: false }],
         ['manhattanEdgeStyle', EdgeStyle.ManhattanConnector, { handlerKind: 'segment' }],
         ['orthogonalEdgeStyle', EdgeStyle.OrthConnector, { handlerKind: 'segment' }],
@@ -53,7 +57,7 @@ export const registerDefaultEdgeStyles = (): void => {
     for (const [name, edgeStyle, metadata] of edgeStylesToRegister) {
       EdgeStyleRegistry.add(name, edgeStyle, {
         ...metadata,
-        // most edge styles registered here are orthogonal, so set to true by default to avoid to duplicate the configuration code
+        // most edge styles registered here are orthogonal, so set to true by default to avoid duplicating the configuration code
         isOrthogonal: metadata.isOrthogonal ?? true,
       });
     }

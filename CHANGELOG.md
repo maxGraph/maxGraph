@@ -9,18 +9,24 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 
 _**Note:** Yet to be released breaking changes appear here._
 
+**Breaking Changes**:
+- `EdgeHandler.isHandleVisible()` now uses `EdgeStyleRegistry.allowsIntermediateHandles()` instead of checking against the `EdgeStyle.EntityRelation` function reference.
+  If you register custom edge styles that should hide intermediate bend handles, you must now set `allowIntermediateHandles: false` in the `EdgeStyleMetaData` when calling `EdgeStyleRegistry.add()`.
+  In particular, if you register `EdgeStyle.EntityRelation` yourself (e.g. when using `BaseGraph`), you must include `{ allowIntermediateHandles: false }` in the metadata to preserve the previous behavior.
+- `EdgeStyleRegistryInterface` has a new `allowsIntermediateHandles` method. If you implement this interface directly, you must add this method.
+
 ## 0.23.0
 
 Release date: `2026-03-30`
 
 For more details, see the [0.23.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.23.0) on the GitHub release page.
 
+This new version improves modularity, fixes important memory leaks, and adds utilities for better configuration management.
+
 **Breaking Changes**:
 - The `getTooltip` and `getTooltipForCell` methods have been moved from `AbstractGraph` to the `TooltipHandler` plugin.
   If you were overriding these methods in a `AbstractGraph` subclass, you should now extend `TooltipHandler` instead.
 - `xmlUtils.getViewXml` moved to `xmlViewUtils.getViewXml`. The impact should be limited as this function was not widely used (only in the Editor class in the maxGraph code).
-
-This new version improves modularity, fixes important memory leaks, and adds utilities for better configuration management.
 
 ## 0.22.0
 
