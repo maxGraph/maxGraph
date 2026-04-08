@@ -43,7 +43,7 @@ import InternalEvent from '../event/InternalEvent.js';
 import ConstraintHandler from './ConstraintHandler.js';
 import Rectangle from '../geometry/Rectangle.js';
 import Client from '../../Client.js';
-import { EdgeStyle } from '../style/builtin-style-elements.js';
+import { EdgeStyleRegistry } from '../style/edge/EdgeStyleRegistry.js';
 import {
   getClientX,
   getClientY,
@@ -610,7 +610,7 @@ class EdgeHandler implements MouseListenerSet {
       : null;
 
     return (
-      edgeStyle !== EdgeStyle.EntityRelation ||
+      EdgeStyleRegistry.allowsIntermediateHandles(edgeStyle) ||
       index === 0 ||
       index === this.abspoints.length - 1
     );

@@ -1569,6 +1569,14 @@ export type EdgeStyleMetaData = {
    * Defines if the edge style is considered as orthogonal or not.
    * @default false */
   isOrthogonal?: boolean;
+  /**
+   * Defines if intermediate bend handles are visible when this edge style is used.
+   *
+   * When set to `false`, only the first and last handles are visible. This is useful for edge styles that do not support intermediate control points.
+   * @default true
+   * @since 0.24.0
+   */
+  allowIntermediateHandles?: boolean;
 };
 
 /**
@@ -1594,6 +1602,14 @@ export interface EdgeStyleRegistryInterface extends Registry<EdgeStyleFunction> 
    * If the `edgeStyle` is not registered or the `handlerKind` was not set during registration, this method returns  `'default'`.
    */
   getHandlerKind(edgeStyle?: EdgeStyleFunction | null): EdgeStyleHandlerKind;
+
+  /**
+   * Retrieves whether the specified `edgeStyle` allows intermediate bend handles.
+   *
+   * If the `edgeStyle` is not registered or the `allowIntermediateHandles` was not set during registration, this method returns `true`.
+   * @since 0.24.0
+   */
+  allowsIntermediateHandles(edgeStyle?: EdgeStyleFunction | null): boolean;
 }
 
 /**
