@@ -42,8 +42,12 @@ type ImageMap = {
  *   '<linearGradient id="gradient"><stop offset="10%" stop-color="#F00"/>' +
  *   '<stop offset="90%" stop-color="#fcc"/></linearGradient>' +
  *   '<rect fill="url(#gradient)" width="100%" height="100%"/></svg>'), fallback);
- * graph.addImageBundle(bundle);
+ * graph.getPlugin<ImageBundlePlugin>('image-bundle')?.addImageBundle(bundle);
  * ```;
+ *
+ * {@link ImageBundlePlugin} must be registered on the graph. It ships in {@link getDefaultPlugins}
+ * and is therefore loaded by {@link Graph} out of the box; {@link BaseGraph} users must add it
+ * explicitly via the `plugins` option.
  *
  * Alt is an optional boolean (default is false) that specifies if the value
  * or the fallback should be returned in <getImage>.

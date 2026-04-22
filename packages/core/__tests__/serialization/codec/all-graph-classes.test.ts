@@ -43,7 +43,6 @@ function buildXml(name: string): string {
   const xmlTemplate = `<@NAME@>
   <Object as="alternateEdgeStyle" />
   <Array as="cells" />
-  <Array as="imageBundles" />
   <Array as="mouseListeners">
     <Object />
     <Object />
