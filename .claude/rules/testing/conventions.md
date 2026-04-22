@@ -5,7 +5,7 @@ paths:
 ---
 # Testing Conventions
 
-- Tests use Jest with jsdom environment (configured in `jest.config.cjs`)
+- Tests use Jest with jsdom environment (configured in `packages/core/jest.config.cjs`)
 - Tests are in `packages/core/__tests__/` mirroring `src/` structure
 - Uses `@swc/jest` for fast TypeScript compilation
 - Import paths in tests: omit `.js` extension (handled by moduleNameMapper)
@@ -24,4 +24,4 @@ test.each([
 ## Troubleshooting
 
 - Build core package first: `npm run build -w packages/core`
-- Module resolution issues: check `moduleNameMapper` in `jest.config.cjs`
+- Module resolution issues: check `moduleNameMapper` in `packages/core/jest.config.cjs`
