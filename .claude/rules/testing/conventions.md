@@ -24,4 +24,4 @@ test.each([
 ## Troubleshooting
 
 - Build core package first: `npm run build -w packages/core`
-- Module resolution issues: check `moduleNameMapper` in `jest.config.cjs`
+- Module resolution issues: check `moduleNameMapper` in `packages/core/jest.config.cjs`
