@@ -5,7 +5,7 @@ paths:
 ---
 # Testing Conventions
 
-- Tests use Jest with jsdom environment (configured in `jest.config.cjs`)
+- Tests use Jest with jsdom environment (configured in `packages/core/jest.config.cjs`)
 - Tests are in `packages/core/__tests__/` mirroring `src/` structure
 - Uses `@swc/jest` for fast TypeScript compilation
 - Import paths in tests: omit `.js` extension (handled by moduleNameMapper)

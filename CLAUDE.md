@@ -43,9 +43,9 @@ Three-tier Graph class hierarchy:
 - **Graph** — full-featured with all defaults registered (good for prototyping, not production)
 
 Key patterns:
-- **Mixins** in `packages/core/src/view/mixins/` — each has `.ts` + `.type.ts` files
-- **Plugins** in `packages/core/src/view/plugins/` — loaded by `Graph` via `getDefaultPlugins()`
-- **Registries** for shapes, edge styles, perimeters in `packages/core/src/view/style/`
+- **Mixins** in `packages/core/src/view/mixin/` — each has `.ts` + `.type.ts` files
+- **Plugins** in `packages/core/src/view/plugin/` — loaded by `Graph` via `getDefaultPlugins()`. New plugins follow the `*Plugin.ts` naming; some legacy files still use `*Handler.ts` and will be renamed later
+- **Registries** for edge styles, markers, perimeters in `packages/core/src/view/style/`; shape registry in `packages/core/src/view/shape/`
 - **XML serialization** in `packages/core/src/serialization/` (mxGraph-compatible)
 - Always wrap multiple model changes in `batchUpdate()`
 
