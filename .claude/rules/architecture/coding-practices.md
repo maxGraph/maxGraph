@@ -40,6 +40,16 @@ Use `translate()` and `isI18nEnabled()` from `internal/i18n-utils.js`. NEVER acc
 - Use **singular** form: `handler/` not `handlers/`
 - Use **kebab-case**: `my-feature/` not `myFeature/`
 
+## Plugin ID Naming
+
+Applies to new plugins in `packages/core/src/view/plugin/` and the `BuiltinPluginId` union in `types.ts`.
+
+- Use **kebab-case** for multi-word ids: `'image-bundle'`, not `'imageBundle'` or `'ImageBundlePlugin'`.
+- Single-word ids stay lowercase: `'fit'`.
+- Do NOT suffix with `Plugin` or `Handler` — the id is not the class name. Class names use `PascalCase` and end in `Plugin`: `ImageBundlePlugin`, `FitPlugin`.
+- Prefer precise scope over generic names: `'image-bundle'` is better than `'image'` when the plugin only deals with image bundles, because it reserves the broader namespace for future plugins.
+- Legacy handler plugins (`'ConnectionHandler'`, `'PanningHandler'`, etc., defined in `BuiltinPluginId`) predate this convention and are kept for backwards compatibility; do NOT use them as a template.
+
 ## Key Lint Rules
 
 - `no-console: error` — use `log()` utility instead
