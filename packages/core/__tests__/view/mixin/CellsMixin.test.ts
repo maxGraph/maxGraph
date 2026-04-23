@@ -264,12 +264,12 @@ describe('isCellRotatable', () => {
   });
 });
 
-describe('isValidAncestor', () => {
-  function configureParentChild(parent: Cell, child: Cell) {
-    child.setParent(parent);
-    parent.children.push(child);
-  }
+function configureParentChild(parent: Cell, child: Cell) {
+  child.setParent(parent);
+  parent.children.push(child);
+}
 
+describe('isValidAncestor', () => {
   test('Parent is the direct parent of the Cell, recurse: false', () => {
     const parent = new Cell();
     const cell = new Cell();
