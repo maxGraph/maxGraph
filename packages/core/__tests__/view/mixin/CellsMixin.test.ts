@@ -347,7 +347,16 @@ describe('postProcessCellStyle', () => {
   });
 
   describe('bundle resolution without data-URI normalization', () => {
-    test('plain key, no bundle registered: style.image unchanged', () => {
+    test('plain key, plugin not registered on the graph: style.image unchanged', () => {
+      const graph = new BaseGraph();
+      const style: CellStateStyle = { image: 'myKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe('myKey');
+    });
+
+    test('plain key, plugin registered without bundles: style.image unchanged', () => {
       const graph = createGraph();
       const style: CellStateStyle = { image: 'myKey' };
 
