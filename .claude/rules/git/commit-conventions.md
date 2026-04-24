@@ -22,7 +22,7 @@ docs, deps-dev, deps-gha, typescript, or component names (graph, layout, seriali
 
 ## Breaking Changes
 
-Add `!` after the type/scope AND a `BREAKING CHANGES:` footer (uppercase) at the end of the message, listing each break as a bullet.
+Add `!` after the type/scope AND a `BREAKING CHANGE:` footer (uppercase) at the end of the message, listing each break as a bullet.
 
 Example:
 
