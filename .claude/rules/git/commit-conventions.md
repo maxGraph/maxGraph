@@ -32,7 +32,7 @@ refactor!: convert ImageMixin to ImageBundlePlugin
 Replace ImageMixin with a dedicated ImageBundlePlugin (id 'image-bundle'). Plugins are per-instance, opt-in on
 BaseGraph, and keep AbstractGraph lean.
 
-BREAKING CHANGES:
+BREAKING CHANGE:
 - AbstractGraph.addImageBundle, removeImageBundle, getImageFromBundles and the imageBundles property no longer
   exist on AbstractGraph, Graph, or BaseGraph. Migrate to
   graph.getPlugin<ImageBundlePlugin>('image-bundle')?.addImageBundle(bundle) and siblings.
