@@ -36,7 +36,8 @@ export class ImageBundlePlugin implements GraphPlugin {
   static readonly pluginId = 'image-bundle';
 
   /**
-   * The registered {@link ImageBundle} instances. Bundles are consulted in insertion order; first match wins.
+   * The registered {@link ImageBundle} instances. Bundles are consulted in insertion order; the first match wins.
+   * @default [] (empty array)
    */
   imageBundles: ImageBundle[] = [];
 
