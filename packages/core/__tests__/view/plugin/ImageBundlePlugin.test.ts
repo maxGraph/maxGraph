@@ -87,7 +87,7 @@ describe('ImageBundlePlugin', () => {
       expect(plugin.imageBundles).toEqual([first, last]);
     });
 
-    test('removes all occurrences of the same bundle (matching the pre-refactor behavior)', () => {
+    test('removes all occurrences of the same bundle', () => {
       const { plugin } = createGraphWithPlugin();
       const duplicated = bundleWith([]);
       plugin.addImageBundle(duplicated);
