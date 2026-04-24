@@ -26,7 +26,7 @@ Add `!` after the type/scope AND a `BREAKING CHANGES:` footer (uppercase) at the
 
 Example:
 
-```
+```text
 refactor!: convert ImageMixin to ImageBundlePlugin
 
 Replace ImageMixin with a dedicated ImageBundlePlugin (id 'image-bundle'). Plugins are per-instance, opt-in on
