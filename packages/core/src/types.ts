@@ -376,6 +376,11 @@ export type CellStateStyle = {
    * This is the path to the image that is to be displayed within the label of a vertex.
    * Data URLs should use the following format: `data:image/png,xyz` where xyz is the base64
    * encoded data (without the "base64"-prefix).
+   *
+   * The value may also be a key registered via an {@link ImageBundle}. When {@link ImageBundlePlugin}
+   * is registered on the graph, such keys are resolved to the underlying URL or data URI by
+   * {@link AbstractGraph.postProcessCellStyle}. When the plugin is not registered, or when no bundle
+   * contains the key, the raw value is used as the image path unchanged.
    */
   image?: string;
   /**
@@ -1155,6 +1160,7 @@ export type BuiltinPluginId =
   | 'CellEditorHandler'
   | 'ConnectionHandler'
   | 'fit'
+  | 'image-bundle'
   | 'PanningHandler'
   | 'PopupMenuHandler'
   | 'RubberBandHandler'

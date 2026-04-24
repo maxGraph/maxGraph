@@ -16,7 +16,14 @@ limitations under the License.
 
 import { describe, expect, test } from '@jest/globals';
 import { createCellWithStyle, createGraphWithoutPlugins } from '../../utils';
-import { Cell, type CellStyle } from '../../../src';
+import {
+  BaseGraph,
+  Cell,
+  type CellStateStyle,
+  type CellStyle,
+  ImageBundle,
+  ImageBundlePlugin,
+} from '../../../src';
 import { FONT_STYLE_MASK } from '../../../src/util/Constants';
 
 test('setCellStyles on vertex', () => {
@@ -257,12 +264,12 @@ describe('isCellRotatable', () => {
   });
 });
 
-describe('isValidAncestor', () => {
-  function configureParentChild(parent: Cell, child: Cell) {
-    child.setParent(parent);
-    parent.children.push(child);
-  }
+function configureParentChild(parent: Cell, child: Cell) {
+  child.setParent(parent);
+  parent.children.push(child);
+}
 
+describe('isValidAncestor', () => {
   test('Parent is the direct parent of the Cell, recurse: false', () => {
     const parent = new Cell();
     const cell = new Cell();
@@ -299,5 +306,165 @@ describe('isValidAncestor', () => {
     expect(
       createGraphWithoutPlugins().isValidAncestor(null, new Cell(), recurse)
     ).toBeFalsy();
+  });
+});
+
+describe('postProcessCellStyle', () => {
+  const createGraph = (): BaseGraph => new BaseGraph({ plugins: [ImageBundlePlugin] });
+
+  const registerBundle = (
+    graph: BaseGraph,
+    entries: Array<{ key: string; value: string; fallback?: string }>
+  ): ImageBundle => {
+    const bundle = new ImageBundle();
+    for (const { key, value, fallback } of entries) {
+      bundle.putImage(key, value, fallback ?? `${key}-fallback`);
+    }
+    graph.getPlugin<ImageBundlePlugin>('image-bundle')!.addImageBundle(bundle);
+    return bundle;
+  };
+
+  describe('early return when style.image is falsy', () => {
+    test('style.image is undefined: returns style untouched', () => {
+      const graph = createGraph();
+      const style: CellStateStyle = {};
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result).toBe(style);
+      expect(result.image).toBeUndefined();
+    });
+
+    test('style.image is an empty string: returns style untouched', () => {
+      const graph = createGraph();
+      const style: CellStateStyle = { image: '' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result).toBe(style);
+      expect(result.image).toBe('');
+    });
+  });
+
+  describe('bundle resolution without data-URI normalization', () => {
+    test('plain key, plugin not registered on the graph: style.image unchanged', () => {
+      const graph = new BaseGraph();
+      const style: CellStateStyle = { image: 'myKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe('myKey');
+    });
+
+    test('plain key, plugin registered without bundles: style.image unchanged', () => {
+      const graph = createGraph();
+      const style: CellStateStyle = { image: 'myKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe('myKey');
+    });
+
+    test('plain key, bundle registered but key does not match: style.image unchanged', () => {
+      const graph = createGraph();
+      registerBundle(graph, [{ key: 'otherKey', value: 'http://example.com/other.png' }]);
+      const style: CellStateStyle = { image: 'myKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe('myKey');
+    });
+
+    test('key matches a bundle returning a plain URL: style.image replaced', () => {
+      const graph = createGraph();
+      registerBundle(graph, [{ key: 'myKey', value: 'http://example.com/img.png' }]);
+      const style: CellStateStyle = { image: 'myKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe('http://example.com/img.png');
+    });
+  });
+
+  describe('data-URI normalization', () => {
+    test('bundle returns data:image/svg+xml with literal "<": body URL-encoded after position 19', () => {
+      const graph = createGraph();
+      const svgBody = '<svg xmlns="http://www.w3.org/2000/svg"><rect/></svg>';
+      const bundleValue = `data:image/svg+xml,${svgBody}`;
+      registerBundle(graph, [{ key: 'svgKey', value: bundleValue }]);
+      const style: CellStateStyle = { image: 'svgKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe(`data:image/svg+xml,${encodeURIComponent(svgBody)}`);
+    });
+
+    test('bundle returns already-encoded data:image/svg+xml,%3C...: unchanged', () => {
+      const graph = createGraph();
+      const encoded =
+        'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%2F%3E%3C%2Fsvg%3E';
+      registerBundle(graph, [{ key: 'svgKey', value: encoded }]);
+      const style: CellStateStyle = { image: 'svgKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe(encoded);
+    });
+
+    test('bundle returns data:image/png,xyz without ";base64,": infix injected', () => {
+      const graph = createGraph();
+      registerBundle(graph, [{ key: 'pngKey', value: 'data:image/png,xyz' }]);
+      const style: CellStateStyle = { image: 'pngKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe('data:image/png;base64,xyz');
+    });
+
+    test('bundle returns data:image/png;base64,xyz already base64: unchanged', () => {
+      const graph = createGraph();
+      const alreadyBase64 = 'data:image/png;base64,iVBORw0KGgo=';
+      registerBundle(graph, [{ key: 'pngKey', value: alreadyBase64 }]);
+      const style: CellStateStyle = { image: 'pngKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe(alreadyBase64);
+    });
+
+    test('style.image is itself a data URI without ";base64,", no bundle lookup match: transform still applies', () => {
+      const graph = createGraph();
+      const style: CellStateStyle = { image: 'data:image/gif,abc' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe('data:image/gif;base64,abc');
+    });
+
+    test('"data:image/" with no comma: unchanged (comma guard prevents injection)', () => {
+      const graph = createGraph();
+      const style: CellStateStyle = { image: 'data:image/' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe('data:image/');
+    });
+  });
+
+  describe('bundle ordering', () => {
+    test('two bundles both containing the key: first match wins', () => {
+      const graph = createGraph();
+      registerBundle(graph, [
+        { key: 'sharedKey', value: 'http://first.example/img.png' },
+      ]);
+      registerBundle(graph, [
+        { key: 'sharedKey', value: 'http://second.example/img.png' },
+      ]);
+      const style: CellStateStyle = { image: 'sharedKey' };
+
+      const result = graph.postProcessCellStyle(style);
+
+      expect(result.image).toBe('http://first.example/img.png');
+    });
   });
 });
