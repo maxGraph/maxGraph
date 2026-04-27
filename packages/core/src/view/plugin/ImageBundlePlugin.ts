@@ -39,7 +39,7 @@ export class ImageBundlePlugin implements GraphPlugin {
    * The registered {@link ImageBundle} instances. Bundles are consulted in insertion order; the first match wins.
    * @default [] (empty array)
    */
-  imageBundles: ImageBundle[] = [];
+  private imageBundles: ImageBundle[] = [];
 
   /**
    * Constructs the plugin that manages image bundles.

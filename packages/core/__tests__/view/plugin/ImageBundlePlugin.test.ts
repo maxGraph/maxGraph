@@ -26,6 +26,11 @@ const createGraphWithPlugin = (): {
   return { graph, plugin };
 };
 
+// Test-only escape hatch to inspect the private `imageBundles` field. Kept here (not in src) so
+// the property stays hidden from production code, stories, and downstream consumers.
+const internals = (plugin: ImageBundlePlugin) =>
+  plugin as unknown as { imageBundles: ImageBundle[] };
+
 const bundleWith = (entries: Array<[string, string]>): ImageBundle => {
   const bundle = new ImageBundle();
   for (const [key, value] of entries) {
@@ -45,8 +50,8 @@ describe('ImageBundlePlugin', () => {
 
     plugin1.addImageBundle(bundleWith([['key', 'value']]));
 
-    expect(plugin2.imageBundles).toStrictEqual([]);
-    expect(plugin1.imageBundles).not.toBe(plugin2.imageBundles);
+    expect(internals(plugin2).imageBundles).toStrictEqual([]);
+    expect(internals(plugin1).imageBundles).not.toBe(internals(plugin2).imageBundles);
   });
 
   describe('addImageBundle', () => {
@@ -56,8 +61,8 @@ describe('ImageBundlePlugin', () => {
 
       plugin.addImageBundle(bundle);
 
-      expect(plugin.imageBundles).toHaveLength(1);
-      expect(plugin.imageBundles[0]).toBe(bundle);
+      expect(internals(plugin).imageBundles).toHaveLength(1);
+      expect(internals(plugin).imageBundles[0]).toBe(bundle);
     });
 
     test('preserves insertion order across multiple calls', () => {
@@ -68,7 +73,7 @@ describe('ImageBundlePlugin', () => {
       plugin.addImageBundle(first);
       plugin.addImageBundle(second);
 
-      expect(plugin.imageBundles).toEqual([first, second]);
+      expect(internals(plugin).imageBundles).toEqual([first, second]);
     });
   });
 
@@ -84,7 +89,7 @@ describe('ImageBundlePlugin', () => {
 
       plugin.removeImageBundle(target);
 
-      expect(plugin.imageBundles).toEqual([first, last]);
+      expect(internals(plugin).imageBundles).toEqual([first, last]);
     });
 
     test('removes all occurrences of the same bundle', () => {
@@ -96,8 +101,8 @@ describe('ImageBundlePlugin', () => {
 
       plugin.removeImageBundle(duplicated);
 
-      expect(plugin.imageBundles).toHaveLength(1);
-      expect(plugin.imageBundles).not.toContain(duplicated);
+      expect(internals(plugin).imageBundles).toHaveLength(1);
+      expect(internals(plugin).imageBundles).not.toContain(duplicated);
     });
 
     test('is a no-op when the bundle is not registered', () => {
@@ -107,7 +112,7 @@ describe('ImageBundlePlugin', () => {
 
       plugin.removeImageBundle(bundleWith([]));
 
-      expect(plugin.imageBundles).toEqual([registered]);
+      expect(internals(plugin).imageBundles).toEqual([registered]);
     });
   });
 
@@ -148,6 +153,6 @@ describe('ImageBundlePlugin', () => {
 
     plugin.onDestroy();
 
-    expect(plugin.imageBundles).toStrictEqual([]);
+    expect(internals(plugin).imageBundles).toStrictEqual([]);
   });
 });
