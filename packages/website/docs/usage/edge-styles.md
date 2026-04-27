@@ -18,7 +18,9 @@ An `EdgeStyle` is configured within the style properties of the Cell that relate
 By default, an edge `EdgeStyle` is unset.
 
 :::note
-All EdgeStyles provided by `maxGraph` are automatically registered in the `EdgeStyleRegistry` when a `Graph` instance is created. For more details, see the [Global Configuration](global-configuration.md#styles) documentation.  
+All EdgeStyles provided by `maxGraph` are automatically registered in the `EdgeStyleRegistry` when a `Graph` instance is created, but not when instantiating [`BaseGraph`](./graph.md#basegraph).
+For more details, see the [`Graph`](./graph.md) reference page and the [Global Configuration](global-configuration.md#styles) documentation.
+
 To check the list of registered EdgeStyles, refer to the `registerDefaultStyleElements` function.
 :::
 

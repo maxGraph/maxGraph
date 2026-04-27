@@ -35,7 +35,7 @@ When the graph renders the cell, the key is replaced with the underlying URL or 
 
 ### With `Graph` (default)
 
-`ImageBundlePlugin` ships in `getDefaultPlugins()` and is loaded automatically when a `Graph` is created:
+`ImageBundlePlugin` ships in `getDefaultPlugins()` and is loaded automatically when a [`Graph`](./graph.md) is created:
 
 ```typescript
 import { Graph } from '@maxgraph/core';
@@ -45,7 +45,7 @@ const graph = new Graph(container); // ImageBundlePlugin already registered
 
 ### With `BaseGraph` (opt-in)
 
-`BaseGraph` does not register any plugins by default. To use image bundles, add `ImageBundlePlugin` to the `plugins` option:
+[`BaseGraph`](./graph.md#basegraph) does not register any plugins by default. To use image bundles, add `ImageBundlePlugin` to the `plugins` option:
 
 ```typescript
 import { BaseGraph, ImageBundlePlugin } from '@maxgraph/core';

@@ -58,8 +58,8 @@ _The logical group structure of the workflow example_
 
 The workflow action vertices are the yellow children and the swimlane group vertices are marked blue.
 
-Inserting cells into the group structure is achieved using the parent parameter of the `insertVertex` and `insertEdge` functions on the `Graph` class.
-These functions set the parent cell on the child accordingly and, importantly, informs the parent cell of its new child.
+Inserting cells into the group structure is achieved using the parent parameter of the `insertVertex` and `insertEdge` functions on the [`Graph`](../usage/graph.md) class.
+These functions set the parent cell on the child accordingly and, importantly, inform the parent cell of its new child.
 
 Altering the group structure is performed via the `Graph.groupCells()` and `Graph.ungroupCells()` functions.
 

@@ -7,7 +7,7 @@ description: Integrate CSS and Images assets required by maxGraph.
 
 ## CSS
 
-Some features of `maxGraph` create elements in the DOM to let interact with the `Graph`.
+Some features of `maxGraph` create elements in the DOM to let interact with the [`Graph`](./graph.md).
 
 For example, it happens when using _Editor_, _MaxPopupMenu_, _MaxWindow_, _Rubberband_, _Toolbar_ or _Tooltip_.
 

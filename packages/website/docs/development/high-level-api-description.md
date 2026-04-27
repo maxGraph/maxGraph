@@ -28,7 +28,7 @@ The *util* folder provides utility classes including
 - `EventUtils` and `Utils` for cross-browser event-handling and general purpose functions
 - `Resources` for internationalization
 
-The *view* folder implement the graph component, represented by `Graph`:
+The *view* folder implement the graph component, represented by [`Graph`](../usage/graph.md):
 - It refers to a `GraphDataModel` which contains `Cell`s and caches the state of the cells in a `GraphView`
 - These cells are painted using a `CellRenderer` based on the appearance defined in `Stylesheet`.
 - Undo history is implemented in `UndoManager`
