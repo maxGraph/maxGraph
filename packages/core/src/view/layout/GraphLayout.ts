@@ -241,14 +241,14 @@ class GraphLayout {
    * Disables or enables the edge style of the given edge.
    */
   setEdgeStyleEnabled(edge: Cell, value: any): void {
-    this.graph.setCellStyles('noEdgeStyle', value ? '0' : '1', [edge]);
+    this.graph.setCellStyles('noEdgeStyle', !value, [edge]);
   }
 
   /**
    * Disables or enables orthogonal end segments of the given edge.
    */
   setOrthogonalEdge(edge: Cell, value: any): void {
-    this.graph.setCellStyles('orthogonal', value ? '1' : '0', [edge]);
+    this.graph.setCellStyles('orthogonal', !!value, [edge]);
   }
 
   /**

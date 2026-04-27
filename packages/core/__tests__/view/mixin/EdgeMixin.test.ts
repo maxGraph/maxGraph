@@ -36,8 +36,8 @@ describe('insertEdge', () => {
     expect(cell.style).toStrictEqual({
       ...style,
       // added during insertion
-      sourcePort: null,
-      targetPort: null,
+      sourcePort: undefined,
+      targetPort: undefined,
     });
 
     const geometry = new Geometry();
@@ -77,8 +77,8 @@ describe('insertEdge', () => {
     expect(cell.style).toStrictEqual({
       ...style,
       // added during insertion
-      sourcePort: null,
-      targetPort: null,
+      sourcePort: undefined,
+      targetPort: undefined,
     });
 
     const geometry = new Geometry();

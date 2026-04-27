@@ -30,7 +30,7 @@ import type {
   NumericCellStateStyleKeys,
   VAlignValue,
 } from '../types.js';
-import { matchBinaryMask } from '../internal/utils.js';
+import { isNullish, matchBinaryMask } from '../internal/utils.js';
 import { StyleDefaultsConfig } from './config.js';
 
 /**
@@ -313,19 +313,19 @@ export const convertPoint = (container: HTMLElement, x: number, y: number) => {
 };
 
 /**
- * Assigns the value for the given key in the styles of the given cells, or removes the key from the styles if the value is `null`.
+ * Assigns the value for the given key in the styles of the given cells, or removes the key from the styles if the value is `nullish`.
  *
  * @param model {@link GraphDataModel} to execute the transaction in.
  * @param cells Array of {@link Cell}s to be updated.
  * @param key Key of the style to be changed.
  * @param value New value for the given key.
  */
-export const setCellStyles = (
+export const setCellStyles = <K extends keyof CellStateStyle>(
   model: GraphDataModel,
   cells: Cell[],
-  key: keyof CellStateStyle,
-  value: any
-) => {
+  key: K,
+  value: CellStateStyle[K] | undefined | null
+): void => {
   if (cells.length > 0) {
     model.batchUpdate(() => {
       for (let i = 0; i < cells.length; i += 1) {
@@ -334,7 +334,7 @@ export const setCellStyles = (
         if (cell) {
           // Currently, the style object must be cloned, otherwise model.setStyle does not trigger the change event and the cell state in the view is not updated
           const style = cell.getClonedStyle();
-          style[key] = value;
+          style[key] = isNullish(value) ? undefined : value;
 
           model.setStyle(cell, style);
         }
