@@ -1,11 +1,11 @@
 ---
-sidebar_position: 1
+sidebar_position: 5
 description: How-to configure maxGraph globally.
 ---
 
 # Global Configuration
 
-This guide explains how to configure `maxGraph` globally. This global configuration applies to all instances of `Graph`.
+This guide explains how to configure `maxGraph` globally. This global configuration applies to all instances of [`Graph`](./graph.md).
 
 
 ## General
@@ -60,9 +60,20 @@ See also discussions in [issue #192](https://github.com/maxGraph/maxGraph/issues
 - `ShapeRegistry`: shapes (since 0.20.0, previously managed by `CellRenderer`)
 - `StencilShapeRegistry`: stencil shapes
 
-When instantiating a `Graph` object, the registries are filled with `maxGraph` default style configurations. There are no default stencil shapes registered by default.
+The behavior depends on which Graph class you use (see the [Graph documentation page](./graph.md) for more details):
 
-To manually register default style configurations, you can use the following functions:
+- **`Graph`**: when instantiated, the registries are automatically filled with all `maxGraph` default style configurations.
+- **`BaseGraph`**: the registries are **not** filled automatically. You must register only the style elements your application needs, typically by overriding `registerDefaults()` in a subclass. This enables tree-shaking — unused shapes, edge styles, perimeters, and markers are not included in your bundle.
+
+There are no default stencil shapes registered by default with either class.
+
+If a style references a shape that is not registered, the fallback shape is used:
+- **Vertices**: `RectangleShape` by default (configurable via `CellRenderer.defaultVertexShape`). No need to register it.
+- **Edges**: `ConnectorShape` by default (configurable via `CellRenderer.defaultEdgeShape`). No need to register it.
+
+Missing edge styles, perimeters, or markers produce no rendering for the corresponding feature.
+
+To manually register all default style configurations (useful with `BaseGraph` if you want all defaults without subclassing), you can use the following functions:
 
 ```javascript
 registerDefaultEdgeMarkers();

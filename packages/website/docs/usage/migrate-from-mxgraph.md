@@ -268,7 +268,7 @@ format:(value: number) => number
 
 ### `mxGraph`
 
-The `mxGraph` class has been renamed to `Graph` in `maxGraph`.
+The `mxGraph` class has been renamed to [`Graph`](./graph.md) in `maxGraph`.
 There have also been some changes related to properties and methods.
 
 Some properties have been removed in favor of the usage of [Plugins](./plugins.md). Plugins are registered at the `Graph` initialization by passing

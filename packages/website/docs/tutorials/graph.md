@@ -23,7 +23,11 @@ Copyright (c) JGraph Ltd 2006-2017
 :::
 
 
-Instantiate [Graph](https://maxgraph.github.io/maxGraph/api-docs/classes/Graph.html) in order to create a graph. This is the central class in the API.
+:::tip
+For a reference-style overview of the Graph class hierarchy and the differences between `Graph` and `BaseGraph`, see the [Graph reference page](../usage/graph.md).
+:::
+
+Instantiate a [Graph](../usage/graph.md) clas to create a graph. This is the central class in the API.
 Everything else is auxiliary.
 
 ![The Graph class hierarchy](assets/graphs/graph.png)
