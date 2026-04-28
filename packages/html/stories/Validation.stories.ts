@@ -183,6 +183,12 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     graph.insertEdge({ source: v6, target: v4 });
   });
 
+  container.addEventListener('click', () => {
+    container.focus();
+  })
+
+  container.setAttribute('tabindex', '0');
+
   return div;
 };
 
