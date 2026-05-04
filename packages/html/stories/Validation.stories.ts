@@ -122,7 +122,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   );
 
   // Removes cells when [DELETE] is pressed
-  // TODO pressing the delete key has no effect in FF and Chrome (https://github.com/maxGraph/maxGraph/issues/910)
   const keyHandler = new KeyHandler(graph);
   keyHandler.bindKey(46, function () {
     if (graph.isEnabled()) {
