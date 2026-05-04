@@ -55,6 +55,8 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const div = createMainDiv(`
   This example demonstrates using multiplicities for automatically validating a graph. 
+  The graph is validated after each change and displays an error message if the graph is not valid.
+  <br>You can also remove cells by selecting them and pressing the [DELETE] key.
   `);
 
   const container = createGraphContainer(args);
@@ -76,7 +78,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setAllowDanglingEdges(false);
   graph.setMultigraph(false);
 
-  // Source nodes needs 1..2 connected Targets
+  // Source node needs 1..2 connected Targets
   graph.multiplicities.push(
     new Multiplicity(
       true,
