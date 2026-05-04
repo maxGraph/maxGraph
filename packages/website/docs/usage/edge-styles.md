@@ -25,7 +25,7 @@ To check the list of registered EdgeStyles, refer to the `registerDefaultStyleEl
 :::info
 The `EdgeStyleRegistry` is a new registry introduced in version 0.20.0 to manage edge styles.
 
-Edge styles were previously managed by the `StyleRegistry`, which has then been removed.
+Edge styles were previously managed by the `StyleRegistry`, which has since been removed.
 :::
 
 ## How to Use a Specific EdgeStyle
@@ -92,6 +92,13 @@ EdgeStyleRegistry.add('myEdgeStyle', MyStyle, edgeStyleMetadata);
 :::warning
 When registering the `EdgeStyle`, be sure to register it in the `EdgeStyleRegistry` with correct `EdgeStyleMetaData`.
 Some maxGraph features depend on the `EdgeStyleMetaData` to work correctly.
+
+In particular:
+- The `isOrthogonal` property controls how the terminal points of edges are computed on the vertex perimeter.
+When set to `true`, the perimeter point is computed using an orthogonal projection instead of a segment intersection.
+For more details, see the [Orthogonal Projection on the Perimeter](perimeters.md#orthogonal-projection-on-the-perimeter) documentation.
+- The `allowIntermediateHandles` property (available since 0.24.0) controls whether intermediate bend handles are visible when editing the edge. When set to `false`, only the first and last handles are shown. This is useful for edge styles like `EntityRelation` that do not support intermediate control points. Defaults to `true`.
+If you register `EdgeStyle.EntityRelation` yourself (e.g. when using `BaseGraph`), you must include `allowIntermediateHandles: false` in the metadata to preserve the expected behavior.
 :::
 
 ### Using a Custom EdgeStyle

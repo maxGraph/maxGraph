@@ -24,7 +24,6 @@ import './EditingMixin.type.js';
 import './EventsMixin.type.js';
 import './FoldingMixin.type.js';
 import './GroupingMixin.type.js';
-import './ImageMixin.type.js';
 import './LabelMixin.type.js';
 import './OverlaysMixin.type.js';
 import './OrderMixin.type.js';

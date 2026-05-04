@@ -25,9 +25,9 @@ To check the list of registered perimeters, refer to the `registerDefaultStyleEl
 :::
 
 :::info
-The `PerimeterRegistry` is a new registry introduced in version 0.20.0 to manage edge styles.
+The `PerimeterRegistry` is a new registry introduced in version 0.20.0 to manage perimeters.
 
-Edge styles were previously managed by the `StyleRegistry`, which has then been removed.
+Perimeters were previously managed by the `StyleRegistry`, which has since been removed.
 :::
 
 
@@ -86,8 +86,11 @@ By default, this is also applied when `style.orthogonal` is not explicitly set, 
 | ![perimeter computation context](assets/perimeters/perimeter-point-computation-01-context.png) | ![perimeter computation based on orthogonal projection](assets/perimeters/perimeter-point-computation-03-orthogonal_projection.png) |
 
 
-The list of `EdgeStyle` configurations considered orthogonal is defined in `Graph.isOrthogonal`.  
-This includes, for example, `SegmentConnector` and `EntityRelation`.
+An `EdgeStyle` is considered orthogonal when its `isOrthogonal` metadata property is set to `true` in the `EdgeStyleRegistry`.
+
+This is the case, for example, for `SegmentConnector` and `EntityRelation`.
+
+For more details about `EdgeStyle` metadata, see the [EdgeStyles](edge-styles.md#creating-a-custom-edgestyle) documentation.
 
 :::note  
 An example of orthogonal projection is available in the Storybook demo:
@@ -148,7 +151,7 @@ const CustomPerimeter: PerimeterFunction = (
 }
 ```
 
-The new perimeter can then be registered in the `PerimeterRegistry` as follows if you are intended to use it as a string in `CellStateStyle.perimeter`:
+The new perimeter can then be registered in the `PerimeterRegistry` as follows if you intend to use it as a string in `CellStateStyle.perimeter`:
 ```javascript
 PerimeterRegistry.add('customPerimeter', CustomPerimeter);
 ```

@@ -38,6 +38,7 @@ import { htmlEntities } from '../../util/StringUtils.js';
 import CellState from '../cell/CellState.js';
 import type { AbstractGraph } from '../AbstractGraph.js';
 import { cloneCells, getTopmostCells } from '../../util/cellArrayUtils.js';
+import type { ImageBundlePlugin } from '../plugin/ImageBundlePlugin.js';
 
 type PartialGraph = Pick<
   AbstractGraph,
@@ -54,7 +55,7 @@ type PartialGraph = Pick<
   | 'getMaximumGraphBounds'
   | 'isExportEnabled'
   | 'isImportEnabled'
-  | 'getImageFromBundles'
+  | 'getPlugin'
   | 'getSelectionCells'
   | 'getSelectionCell'
   | 'addAllEdges'
@@ -275,8 +276,9 @@ export const CellsMixin: PartialType = {
     if (!style.image) {
       return style;
     }
-    const key = <string>style.image;
-    let image = this.getImageFromBundles(key);
+    const key = style.image;
+    let image =
+      this.getPlugin<ImageBundlePlugin>('image-bundle')?.getImageFromBundles(key) ?? null;
 
     if (image) {
       style.image = image;

@@ -149,6 +149,11 @@ declare module '../AbstractGraph' {
      * Tries to resolve the value for the image style in the image bundles and
      * turns short data URIs as defined in {@link ImageBundle} to data URIs as
      * defined in RFC 2397 of the IETF.
+     *
+     * Bundle key resolution is delegated to {@link ImageBundlePlugin} (id `'image-bundle'`).
+     * When the plugin is not registered (for instance on a {@link BaseGraph} without explicit
+     * opt-in), the bundle lookup is skipped and the raw style key is used as the image path.
+     * The data-URI normalization still runs regardless of plugin registration.
      */
     postProcessCellStyle: (style: CellStateStyle) => CellStateStyle;
 

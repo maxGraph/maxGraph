@@ -32,6 +32,7 @@ class EdgeStyleRegistryImpl
 {
   private readonly handlerMapping = new Map<EdgeStyleFunction, EdgeStyleHandlerKind>();
   private readonly orthogonalStates = new Map<EdgeStyleFunction, boolean>();
+  private readonly intermediateHandlesStates = new Map<EdgeStyleFunction, boolean>();
 
   override add(
     name: string,
@@ -42,6 +43,8 @@ class EdgeStyleRegistryImpl
     metaData?.handlerKind && this.handlerMapping.set(edgeStyle, metaData.handlerKind);
     !isNullish(metaData?.isOrthogonal) &&
       this.orthogonalStates.set(edgeStyle, metaData.isOrthogonal);
+    !isNullish(metaData?.allowIntermediateHandles) &&
+      this.intermediateHandlesStates.set(edgeStyle, metaData.allowIntermediateHandles);
   }
 
   isOrthogonal(edgeStyle?: EdgeStyleFunction | null): boolean {
@@ -52,10 +55,15 @@ class EdgeStyleRegistryImpl
     return this.handlerMapping.get(edgeStyle!) ?? 'default';
   }
 
+  allowsIntermediateHandles(edgeStyle?: EdgeStyleFunction | null): boolean {
+    return this.intermediateHandlesStates.get(edgeStyle!) ?? true;
+  }
+
   override clear(): void {
     super.clear();
     this.handlerMapping.clear();
     this.orthogonalStates.clear();
+    this.intermediateHandlesStates.clear();
   }
 }
 

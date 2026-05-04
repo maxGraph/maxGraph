@@ -24,7 +24,6 @@ import { EditingMixin } from './EditingMixin.js';
 import { EventsMixin } from './EventsMixin.js';
 import { FoldingMixin } from './FoldingMixin.js';
 import { GroupingMixin } from './GroupingMixin.js';
-import { ImageMixin } from './ImageMixin.js';
 import { LabelMixin } from './LabelMixin.js';
 import { OrderMixin } from './OrderMixin.js';
 import { OverlaysMixin } from './OverlaysMixin.js';
@@ -53,7 +52,6 @@ export const applyGraphMixins = (target: typeof AbstractGraph) => {
     EventsMixin,
     FoldingMixin,
     GroupingMixin,
-    ImageMixin,
     LabelMixin,
     OrderMixin,
     PageBreaksMixin,

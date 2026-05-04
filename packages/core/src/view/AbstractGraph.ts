@@ -57,7 +57,6 @@ import type {
   PluginId,
 } from '../types.js';
 import Multiplicity from './other/Multiplicity.js';
-import type ImageBundle from './image/ImageBundle.js';
 import { applyGraphMixins } from './mixin/_graph-mixins-apply.js';
 import { isNullish } from '../internal/utils.js';
 import { isI18nEnabled } from '../internal/i18n-utils.js';
@@ -103,8 +102,6 @@ export abstract class AbstractGraph extends EventSource {
   alternateEdgeStyle: CellStyle = {};
 
   cells: Cell[] = [];
-
-  imageBundles: ImageBundle[] = [];
 
   /**
    * Holds the mouse event listeners. See {@link fireMouseEvent}.

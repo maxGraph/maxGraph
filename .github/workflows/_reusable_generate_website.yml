@@ -33,7 +33,7 @@ jobs:
 
       - name: Upload website artifact for GitHub Pages
         if: ${{ inputs['artifact-name'] == 'gh-pages' }}
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: packages/website/build/
 

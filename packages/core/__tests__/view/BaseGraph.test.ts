@@ -27,7 +27,6 @@ import {
   EdgeStyleRegistry,
   ElbowEdgeHandler,
   type GraphPlugin,
-  ImageBundle,
   Multiplicity,
   Point,
   Rectangle,
@@ -321,15 +320,6 @@ describe('Expect no global state for properties coming from mixins', () => {
     graph1.cells.push(new Cell());
     expect(graph2.cells).toStrictEqual([]);
     expect(graph1.cells).not.toBe(graph2.cells);
-  });
-
-  test('imageBundles', () => {
-    const graph1 = new BaseGraph();
-    const graph2 = new BaseGraph();
-
-    graph1.imageBundles.push(new ImageBundle());
-    expect(graph2.imageBundles).toStrictEqual([]);
-    expect(graph1.imageBundles).not.toBe(graph2.imageBundles);
   });
 
   test('mouseListeners', () => {

@@ -10,6 +10,25 @@ For more details on the contents of a release, see [the GitHub release page] (ht
 _**Note:** Yet to be released breaking changes appear here._
 
 **Breaking Changes**:
+- `EdgeHandler.isHandleVisible()` now uses `EdgeStyleRegistry.allowsIntermediateHandles()` instead of checking against the `EdgeStyle.EntityRelation` function reference.
+  If you register custom edge styles that should hide intermediate bend handles, you must now set `allowIntermediateHandles: false` in the `EdgeStyleMetaData` when calling `EdgeStyleRegistry.add()`.
+  In particular, if you register `EdgeStyle.EntityRelation` yourself (e.g. when using `BaseGraph`), you must include `{ allowIntermediateHandles: false }` in the metadata to preserve the previous behavior.
+- `EdgeStyleRegistryInterface` has a new `allowsIntermediateHandles` method. If you implement this interface directly, you must add this method.
+- `ImageMixin` has been converted to a new `ImageBundlePlugin` (id `'image-bundle'`). `AbstractGraph.addImageBundle`, `removeImageBundle`, `getImageFromBundles` and the `imageBundles` property no longer exist on `AbstractGraph`, `Graph`, or `BaseGraph`.
+  Migrate mutating call sites from `graph.addImageBundle(bundle)` (and siblings) to `graph.getPlugin<ImageBundlePlugin>('image-bundle')!.addImageBundle(bundle)`. The non-null assertion is deliberate: if the plugin is not registered, the call must fail fast rather than silently drop the bundle registration. For read-only access, `graph.getPlugin<ImageBundlePlugin>('image-bundle')?.imageBundles` is appropriate because returning `undefined` when the plugin is absent matches the "no bundle matched" path already relied on by `CellsMixin.postProcessCellStyle`.
+- `BaseGraph` no longer ships image-bundle support by default. Add `ImageBundlePlugin` to the `plugins` option to opt in. `Graph` continues to work unchanged because `ImageBundlePlugin` is part of `getDefaultPlugins()`.
+- XML serialization of `<Graph>` and `<BaseGraph>` no longer emits `<Array as="imageBundles" />`. Existing XML documents containing that element still decode without error but the field is silently ignored. Consumers that persist bundles as part of the graph XML must now serialize the plugin state separately.
+- `CellsMixin.postProcessCellStyle` silently skips bundle key resolution when `ImageBundlePlugin` is not registered — the raw `CellStateStyle.image` value is used as the image path. This matches the pre-existing "no bundle matched" behavior and is only relevant for `BaseGraph` consumers that do not add the plugin.
+
+## 0.23.0
+
+Release date: `2026-03-30`
+
+For more details, see the [0.23.0 Changelog](https://github.com/maxGraph/maxGraph/releases/tag/v0.23.0) on the GitHub release page.
+
+This new version improves modularity, fixes important memory leaks, and adds utilities for better configuration management.
+
+**Breaking Changes**:
 - The `getTooltip` and `getTooltipForCell` methods have been moved from `AbstractGraph` to the `TooltipHandler` plugin.
   If you were overriding these methods in a `AbstractGraph` subclass, you should now extend `TooltipHandler` instead.
 - `xmlUtils.getViewXml` moved to `xmlViewUtils.getViewXml`. The impact should be limited as this function was not widely used (only in the Editor class in the maxGraph code).

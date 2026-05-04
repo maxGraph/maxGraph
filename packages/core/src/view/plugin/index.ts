@@ -23,11 +23,13 @@ import ConnectionHandler from './ConnectionHandler.js';
 import SelectionHandler from './SelectionHandler.js';
 import PanningHandler from './PanningHandler.js';
 import { FitPlugin } from './FitPlugin.js';
+import { ImageBundlePlugin } from './ImageBundlePlugin.js';
 
 // Export all plugins and types to have them in the root barrel file
 export { default as CellEditorHandler } from './CellEditorHandler.js';
 export { default as ConnectionHandler } from './ConnectionHandler.js';
 export * from './FitPlugin.js';
+export * from './ImageBundlePlugin.js';
 export { default as PanningHandler } from './PanningHandler.js';
 export { default as PopupMenuHandler } from './PopupMenuHandler.js';
 export { default as RubberBandHandler } from './RubberBandHandler.js';
@@ -52,4 +54,5 @@ export const getDefaultPlugins = (): GraphPluginConstructor[] => [
   SelectionHandler,
   PanningHandler,
   FitPlugin,
+  ImageBundlePlugin,
 ];

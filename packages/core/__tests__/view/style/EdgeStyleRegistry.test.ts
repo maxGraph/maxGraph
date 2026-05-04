@@ -40,17 +40,20 @@ describe('registry', () => {
     EdgeStyleRegistry.add('custom', customEdgeStyle, {
       isOrthogonal: true,
       handlerKind: 'customHandler',
+      allowIntermediateHandles: false,
     });
 
     expect(EdgeStyleRegistry.get('custom')).toBe(customEdgeStyle);
     expect(EdgeStyleRegistry.getHandlerKind(customEdgeStyle)).toEqual('customHandler');
     expect(EdgeStyleRegistry.isOrthogonal(customEdgeStyle)).toBeTruthy();
+    expect(EdgeStyleRegistry.allowsIntermediateHandles(customEdgeStyle)).toBeFalsy();
   });
 
   test.each([null, undefined])('retrieve with nullish: %s', (value) => {
     expect(EdgeStyleRegistry.get(value)).toBeNull();
     expect(EdgeStyleRegistry.getHandlerKind(value)).toEqual('default');
     expect(EdgeStyleRegistry.isOrthogonal(value)).toBeFalsy();
+    expect(EdgeStyleRegistry.allowsIntermediateHandles(value)).toBeTruthy();
   });
 
   test('verify registration - no meta data', () => {
@@ -59,12 +62,14 @@ describe('registry', () => {
     expect(EdgeStyleRegistry.get('custom')).toBe(customEdgeStyle);
     expect(EdgeStyleRegistry.getHandlerKind(customEdgeStyle)).toEqual('default');
     expect(EdgeStyleRegistry.isOrthogonal(customEdgeStyle)).toBeFalsy();
+    expect(EdgeStyleRegistry.allowsIntermediateHandles(customEdgeStyle)).toBeTruthy();
   });
 
   test('clear', () => {
     EdgeStyleRegistry.add('custom', customEdgeStyle, {
       isOrthogonal: false,
       handlerKind: 'customHandler',
+      allowIntermediateHandles: false,
     });
     expect(EdgeStyleRegistry.get('custom')).toBeDefined();
 
@@ -74,6 +79,7 @@ describe('registry', () => {
     // the edge style function is no longer registered, so returns default values
     expect(EdgeStyleRegistry.getHandlerKind(customEdgeStyle)).toEqual('default');
     expect(EdgeStyleRegistry.isOrthogonal(customEdgeStyle)).toBeFalsy();
+    expect(EdgeStyleRegistry.allowsIntermediateHandles(customEdgeStyle)).toBeTruthy();
   });
 
   describe('getName', () => {

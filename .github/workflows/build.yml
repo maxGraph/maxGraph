@@ -12,6 +12,7 @@ on:
       - 'packages/**/*'
       - '!packages/**/*.md'
       - '!packages/website/**/*'
+      - 'scripts/build-all-examples.bash'
       - 'package.json'
       - 'package-lock.json'
       - 'tsconfig.json'
@@ -26,6 +27,7 @@ on:
       - 'packages/**/*'
       - '!packages/**/*.md'
       - '!packages/website/**/*'
+      - 'scripts/build-all-examples.bash'
       - 'package.json'
       - 'package-lock.json'
       - 'tsconfig.json'
@@ -90,6 +92,8 @@ jobs:
       contents: read
     uses: ./.github/workflows/_reusable_build_examples.yml
     strategy:
+      # we want to run the full build on all runners: don't cancel running jobs even if one fails
+      fail-fast: false
       matrix:
         runner: ['ubuntu-24.04', 'macos-14', 'windows-2022']
     with:
