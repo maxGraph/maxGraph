@@ -185,7 +185,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   container.addEventListener('click', () => {
     container.focus();
-  })
+  });
 
   container.setAttribute('tabindex', '0');
 
