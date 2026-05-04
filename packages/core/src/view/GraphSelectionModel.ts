@@ -31,7 +31,7 @@ import { isI18nEnabled } from '../internal/i18n-utils.js';
  * Here is a listener that handles all removed selection cells.
  *
  * ```javascript
- * graph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender, evt) {
+ * graph.getSelectionModel().addListener(InternalEvent.CHANGE, function(sender, evt) {
  *   const cells = evt.getProperty('added');
  *   for (const cell of cells) {
  *     // Handle cell...
@@ -39,19 +39,22 @@ import { isI18nEnabled } from '../internal/i18n-utils.js';
  * });
  * ```
  *
+ * ### Events
  *
- * Event: mxEvent.UNDO
+ * **{@link InternalEvent.UNDO}**
  *
- * Fires after the selection was changed in <changeSelection>. The
- * <code>edit</code> property contains the {@link UndoableEdit} which contains the
+ * Fires after the selection was changed in {@link changeSelection}. The
+ * `edit` property contains the {@link UndoableEdit} which contains the
  * {@link SelectionChange}.
  *
- * Event: mxEvent.CHANGE
+ * **{@link InternalEvent.CHANGE}**
  *
- * Fires after the selection changes by executing an {@link SelectionChange}. The
- * <code>added</code> and <code>removed</code> properties contain arrays of
- * cells that have been added to or removed from the selection, respectively.
- * The names are inverted due to historic reasons. This cannot be changed.
+ * Fires after the selection changes by executing an {@link SelectionChange}.
+ *
+ * **WARN**: the event's `added` and `removed` properties contain arrays of cells that have been added to or
+ * removed from the selection, respectively. The names are inverted due to historic reasons.
+ *
+ * See the {@link SelectionChange} class for more details.
  *
  */
 class GraphSelectionModel extends EventSource {
@@ -70,7 +73,7 @@ class GraphSelectionModel extends EventSource {
 
   /**
    * Specifies the resource key for the status message after a long operation.
-   * If the resource for this key does not exist then the value is used as
+   * If the resource for this key does not exist, then the value is used as
    * the status message.
    * @default 'done'
    */
@@ -78,7 +81,7 @@ class GraphSelectionModel extends EventSource {
 
   /**
    * Specifies the resource key for the status message while the selection is
-   * being updated. If the resource for this key does not exist then the
+   * being updated. If the resource for this key does not exist, then the
    * value is used as the status message.
    * @default 'updatingSelection'
    */
@@ -93,39 +96,37 @@ class GraphSelectionModel extends EventSource {
   /**
    * Returns {@link singleSelection} as a boolean.
    */
-  isSingleSelection() {
+  isSingleSelection(): boolean {
     return this.singleSelection;
   }
 
   /**
    * Sets the {@link singleSelection} flag.
    *
-   * @param {boolean} singleSelection Boolean that specifies the new value for
-   * {@link singleSelection}.
+   * @param singleSelection the new value for {@link singleSelection}.
    */
-  setSingleSelection(singleSelection: boolean) {
+  setSingleSelection(singleSelection: boolean): void {
     this.singleSelection = singleSelection;
   }
 
   /**
    * Returns true if the given {@link Cell} is selected.
    */
-  isSelected(cell: Cell) {
+  isSelected(cell: Cell): boolean {
     return this.cells.includes(cell);
   }
 
   /**
    * Returns true if no cells are currently selected.
    */
-  isEmpty() {
+  isEmpty(): boolean {
     return this.cells.length === 0;
   }
 
   /**
-   * Clears the selection and fires a {@link change} event if the selection was not
-   * empty.
+   * Clears the selection and fires a {@link InternalEvent.CHANGE} event if the selection was not empty.
    */
-  clear() {
+  clear(): void {
     this.changeSelection(null, this.cells);
   }
 
@@ -134,114 +135,97 @@ class GraphSelectionModel extends EventSource {
    *
    * @param cell {@link Cell} to be selected.
    */
-  setCell(cell: Cell) {
+  setCell(cell: Cell): void {
     this.setCells(cell ? [cell] : []);
   }
 
   /**
-   * Selects the given array of {@link Cell} and fires a {@link change} event.
+   * Selects the given array of {@link Cell} and fires a {@link InternalEvent.CHANGE} event.
    *
    * @param cells Array of {@link Cell} to be selected.
    */
-  setCells(cells: Cell[]) {
+  setCells(cells: Cell[]): void {
     if (this.singleSelection) {
-      cells = [<Cell>this.getFirstSelectableCell(cells)];
+      const firstSelectable = this.getFirstSelectableCell(cells);
+      this.changeSelection(firstSelectable ? [firstSelectable] : [], this.cells);
+      return;
     }
 
-    const tmp = [];
-    for (let i = 0; i < cells.length; i += 1) {
-      if (this.graph.isCellSelectable(cells[i])) {
-        tmp.push(cells[i]);
-      }
-    }
-    this.changeSelection(tmp, this.cells);
+    const selectable = cells.filter((cell) => this.graph.isCellSelectable(cell));
+    this.changeSelection(selectable, this.cells);
   }
 
   /**
    * Returns the first selectable cell in the given array of cells.
+   *
+   * @returns the first cell for which {@link AbstractGraph.isCellSelectable} returns `true`, or `null` if no
+   * such cell exists (including when `cells` is empty).
    */
-  getFirstSelectableCell(cells: Cell[]) {
-    for (let i = 0; i < cells.length; i += 1) {
-      if (this.graph.isCellSelectable(cells[i])) {
-        return cells[i];
-      }
-    }
-    return null;
+  getFirstSelectableCell(cells: Cell[]): Cell | null {
+    return cells.find((cell) => this.graph.isCellSelectable(cell)) ?? null;
   }
 
   /**
-   * Adds the given {@link Cell} to the selection and fires a {@link select} event.
+   * Adds the given {@link Cell} to the selection and fires a {@link InternalEvent.CHANGE} event.
    *
    * @param cell {@link Cell} to add to the selection.
    */
-  addCell(cell: Cell) {
+  addCell(cell: Cell): void {
     this.addCells([cell]);
   }
 
   /**
-   * Adds the given array of {@link Cell} to the selection and fires a {@link select}
-   * event.
+   * Adds the given array of {@link Cell} to the selection and fires a {@link InternalEvent.CHANGE} event.
    *
    * @param cells Array of {@link Cell} to add to the selection.
    */
-  addCells(cells: Cell[]) {
-    let remove = null;
+  addCells(cells: Cell[]): void {
     if (this.singleSelection) {
-      remove = this.cells;
-
-      const selectableCell = this.getFirstSelectableCell(cells);
-      cells = selectableCell ? [selectableCell] : [];
+      const firstSelectable = this.getFirstSelectableCell(cells);
+      const toAdd =
+        firstSelectable && !this.isSelected(firstSelectable) ? [firstSelectable] : [];
+      this.changeSelection(toAdd, this.cells);
+      return;
     }
 
-    const tmp = [];
-    for (let i = 0; i < cells.length; i += 1) {
-      if (!this.isSelected(cells[i]) && this.graph.isCellSelectable(cells[i])) {
-        tmp.push(cells[i]);
-      }
-    }
-
-    this.changeSelection(tmp, remove);
+    const toAdd = cells.filter(
+      (cell) => !this.isSelected(cell) && this.graph.isCellSelectable(cell)
+    );
+    this.changeSelection(toAdd, null);
   }
 
   /**
-   * Removes the specified {@link Cell} from the selection and fires a {@link select}
-   * event for the remaining cells.
+   * Removes the specified {@link Cell} from the selection and fires a {@link InternalEvent.CHANGE} event
+   * for the remaining cells.
    *
    * @param cell {@link Cell} to remove from the selection.
    */
-  removeCell(cell: Cell) {
+  removeCell(cell: Cell): void {
     this.removeCells([cell]);
   }
 
   /**
-   * Removes the specified {@link Cell} from the selection and fires a {@link select}
-   * event for the remaining cells.
+   * Removes the specified {@link Cell} from the selection and fires a {@link InternalEvent.CHANGE} event
+   * for the remaining cells.
    *
    * @param cells {@link Cell}s to remove from the selection.
    */
-  removeCells(cells: Cell[]) {
-    const tmp = [];
-
-    for (let i = 0; i < cells.length; i += 1) {
-      if (this.isSelected(cells[i])) {
-        tmp.push(cells[i]);
-      }
-    }
-    this.changeSelection(null, tmp);
+  removeCells(cells: Cell[]): void {
+    const toRemove = cells.filter((cell) => this.isSelected(cell));
+    this.changeSelection(null, toRemove);
   }
 
   /**
    * Adds/removes the specified arrays of {@link Cell} to/from the selection.
    *
    * @param added Array of {@link Cell} to add to the selection.
-   * @param remove Array of {@link Cell} to remove from the selection.
+   * @param removed Array of {@link Cell} to remove from the selection.
    */
-  changeSelection(added: Cell[] | null = null, removed: Cell[] | null = null) {
-    if (
-      (added && added.length > 0 && added[0]) ||
-      (removed && removed.length > 0 && removed[0])
-    ) {
-      const change = new SelectionChange(this.graph, added || [], removed || []);
+  changeSelection(added: Cell[] | null = null, removed: Cell[] | null = null): void {
+    const toAdd = (added ?? []).filter((cell): cell is Cell => cell != null);
+    const toRemove = (removed ?? []).filter((cell): cell is Cell => cell != null);
+    if (toAdd.length > 0 || toRemove.length > 0) {
+      const change = new SelectionChange(this.graph, toAdd, toRemove);
       change.execute();
       const edit = new UndoableEdit(this.graph, false);
       edit.add(change);
@@ -253,11 +237,9 @@ class GraphSelectionModel extends EventSource {
    * Inner callback to add the specified {@link Cell} to the selection. No event
    * is fired in this implementation.
    *
-   * Paramters:
-   *
    * @param cell {@link Cell} to add to the selection.
    */
-  cellAdded(cell: Cell) {
+  cellAdded(cell: Cell): void {
     if (!this.isSelected(cell)) {
       this.cells.push(cell);
     }
@@ -269,7 +251,7 @@ class GraphSelectionModel extends EventSource {
    *
    * @param cell {@link Cell} to remove from the selection.
    */
-  cellRemoved(cell: Cell) {
+  cellRemoved(cell: Cell): void {
     const index = this.cells.indexOf(cell);
     if (index >= 0) {
       this.cells.splice(index, 1);

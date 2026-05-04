@@ -18,11 +18,11 @@ import EventObject from '../event/EventObject.js';
 import InternalEvent from '../event/InternalEvent.js';
 
 import type { UndoableChange } from '../../types.js';
-import { AbstractGraph } from '../AbstractGraph.js';
-import Cell from '../cell/Cell.js';
+import type { AbstractGraph } from '../AbstractGraph.js';
+import type Cell from '../cell/Cell.js';
 
 /**
- * Action to change the current root in a view.
+ * Action to add and remove cells to/from the selection of a {@link GraphSelectionModel}.
  *
  * @category Change
  */
@@ -40,9 +40,16 @@ class SelectionChange implements UndoableChange {
   removed: Cell[];
 
   /**
-   * Changes the current root of the view.
+   * Applies the change to the selection model: calls {@link GraphSelectionModel.cellRemoved} for each cell
+   * in {@link removed}, then {@link GraphSelectionModel.cellAdded} for each cell in {@link added}. Swaps
+   * {@link added} and {@link removed} so a subsequent call undoes the change, then fires
+   * {@link InternalEvent.CHANGE} on the selection model.
+   *
+   * **WARN**: because of the swap, the `added` and `removed` properties of the fired event refer to the
+   * post-swap arrays — the event's `added` contains the cells just removed from the selection, and
+   * vice-versa. This naming is preserved for historical reasons.
    */
-  execute() {
+  execute(): void {
     const selectionModel = this.graph.getSelectionModel();
 
     for (const removed of this.removed) {
