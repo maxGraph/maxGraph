@@ -60,6 +60,10 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   `);
 
   const container = createGraphContainer(args);
+  container.addEventListener('click', () => {
+    container.focus();
+  });
+  container.setAttribute('tabindex', '0');
   div.appendChild(container);
 
   const xmlDocument = xmlUtils.createXmlDocument();
@@ -183,12 +187,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
     graph.insertEdge({ source: v1, target: v3 });
     graph.insertEdge({ source: v6, target: v4 });
   });
-
-  container.addEventListener('click', () => {
-    container.focus();
-  });
-
-  container.setAttribute('tabindex', '0');
 
   return div;
 };
