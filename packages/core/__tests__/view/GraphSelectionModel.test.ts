@@ -428,7 +428,7 @@ describe('changeSelection', () => {
     model.changeSelection([addedCell], null);
 
     expect(undo).toHaveLength(1);
-    const edit = undo[0]!.getProperty('edit') as UndoableEdit;
+    const edit = undo[0].getProperty('edit') as UndoableEdit;
     expect(edit).toBeInstanceOf(UndoableEdit);
     expect(edit.changes).toHaveLength(1);
     expect(edit.changes[0]).toBeInstanceOf(SelectionChange);
