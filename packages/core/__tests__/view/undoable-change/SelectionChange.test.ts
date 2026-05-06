@@ -122,7 +122,7 @@ describe('execute', () => {
     change.execute();
 
     expect(events).toHaveLength(1);
-    const evt = events[0]!;
+    const evt = events[0];
     expect(evt.getName()).toBe(InternalEvent.CHANGE);
     expect(evt.getProperty('added')).toEqual([removedCell]);
     expect(evt.getProperty('removed')).toEqual([addedCell]);
@@ -136,8 +136,8 @@ describe('execute', () => {
 
     expect(calls).toEqual([]);
     expect(events).toHaveLength(1);
-    expect(events[0]!.getName()).toBe(InternalEvent.CHANGE);
-    expect(events[0]!.getProperty('added')).toEqual([]);
-    expect(events[0]!.getProperty('removed')).toEqual([]);
+    expect(events[0].getName()).toBe(InternalEvent.CHANGE);
+    expect(events[0].getProperty('added')).toEqual([]);
+    expect(events[0].getProperty('removed')).toEqual([]);
   });
 });
