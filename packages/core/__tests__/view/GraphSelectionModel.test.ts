@@ -260,6 +260,35 @@ describe('addCell and addCells', () => {
     model.addCells([new Cell(), new Cell()]);
     expect(model.cells).toEqual([]);
   });
+
+  // BUG (PR #1055): in single-selection mode, addCells unexpectedly clears the selection when the first
+  // selectable candidate is the cell that is already selected. The expected behavior is a no-op (cells
+  // unchanged, no event). The assertions below capture the CURRENT buggy behavior so the suite stays green;
+  // they are regression sentinels and must be flipped when the follow-up fix lands.
+  // See https://github.com/maxGraph/maxGraph/pull/1055#pullrequestreview-4217110916
+  test.each([
+    [
+      'the already-selected cell is the only candidate',
+      (existing: Cell, _other: Cell) => [existing],
+    ],
+    [
+      'the already-selected cell is the first of multiple candidates',
+      (existing: Cell, other: Cell) => [existing, other],
+    ],
+  ])(
+    'BUG (#1055): single-selection mode clears the selection when %s',
+    (_desc, buildInput) => {
+      const existingCell = new Cell();
+      const otherSelectable = new Cell();
+      const { model } = createModel();
+      seedSelection(model, existingCell);
+      model.setSingleSelection(true);
+      const events = captureUndoEvents(model);
+      model.addCells(buildInput(existingCell, otherSelectable));
+      expect(model.cells).toEqual([]);
+      expect(events).toHaveLength(1);
+    }
+  );
 });
 
 describe('removeCell and removeCells', () => {
