@@ -37,12 +37,16 @@ const createModel = (isCellSelectable: (cell: Cell | null) => boolean = () => tr
   return { graph, model };
 };
 
-const captureUndoEvents = (model: GraphSelectionModel) => {
-  const events: EventObject[] = [];
+const captureSelectionEvents = (model: GraphSelectionModel) => {
+  const undo: EventObject[] = [];
+  const change: EventObject[] = [];
   model.addListener(InternalEvent.UNDO, (_sender: unknown, evt: EventObject) => {
-    events.push(evt);
+    undo.push(evt);
   });
-  return events;
+  model.addListener(InternalEvent.CHANGE, (_sender: unknown, evt: EventObject) => {
+    change.push(evt);
+  });
+  return { undo, change };
 };
 
 const seedSelection = (model: GraphSelectionModel, ...cells: Cell[]) => {
@@ -283,10 +287,11 @@ describe('addCell and addCells', () => {
       const { model } = createModel();
       seedSelection(model, existingCell);
       model.setSingleSelection(true);
-      const events = captureUndoEvents(model);
+      const { undo, change } = captureSelectionEvents(model);
       model.addCells(buildInput(existingCell, otherSelectable));
       expect(model.cells).toEqual([]);
-      expect(events).toHaveLength(1);
+      expect(undo).toHaveLength(1);
+      expect(change).toHaveLength(1);
     }
   );
 });
@@ -315,105 +320,115 @@ describe('removeCell and removeCells', () => {
 describe('clear', () => {
   test('does nothing and fires no event when the selection is already empty', () => {
     const { model } = createModel();
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.clear();
     expect(model.cells).toEqual([]);
-    expect(events).toHaveLength(0);
+    expect(undo).toHaveLength(0);
+    expect(change).toHaveLength(0);
   });
 
-  test('empties the selection and fires a single UNDO event when non-empty', () => {
+  test('empties the selection and fires UNDO + CHANGE when non-empty', () => {
     const { model } = createModel();
     seedSelection(model, new Cell(), new Cell());
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.clear();
     expect(model.cells).toEqual([]);
-    expect(events).toHaveLength(1);
+    expect(undo).toHaveLength(1);
+    expect(change).toHaveLength(1);
   });
 });
 
 describe('changeSelection', () => {
   test('is a no-op when both arguments are null', () => {
     const { model } = createModel();
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.changeSelection(null, null);
     expect(model.cells).toEqual([]);
-    expect(events).toHaveLength(0);
+    expect(undo).toHaveLength(0);
+    expect(change).toHaveLength(0);
   });
 
   test('is a no-op when called without arguments', () => {
     const { model } = createModel();
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.changeSelection();
     expect(model.cells).toEqual([]);
-    expect(events).toHaveLength(0);
+    expect(undo).toHaveLength(0);
+    expect(change).toHaveLength(0);
   });
 
   test('is a no-op when both arrays are empty', () => {
     const { model } = createModel();
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.changeSelection([], []);
-    expect(events).toHaveLength(0);
+    expect(undo).toHaveLength(0);
+    expect(change).toHaveLength(0);
   });
 
   test('is a no-op when arrays only contain null entries (callers that bypass typing)', () => {
     const { model } = createModel();
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.changeSelection(
       [null as unknown as Cell, null as unknown as Cell],
       [null as unknown as Cell]
     );
     expect(model.cells).toEqual([]);
-    expect(events).toHaveLength(0);
+    expect(undo).toHaveLength(0);
+    expect(change).toHaveLength(0);
   });
 
   test('drops null entries while applying the real cells', () => {
     const { model } = createModel();
     const realCell = new Cell();
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.changeSelection([realCell, null as unknown as Cell], null);
     expect(model.cells).toEqual([realCell]);
-    expect(events).toHaveLength(1);
+    expect(undo).toHaveLength(1);
+    expect(change).toHaveLength(1);
   });
 
-  test('adds the given cells and fires one UNDO event', () => {
+  test('adds the given cells and fires UNDO + CHANGE', () => {
     const { model } = createModel();
     const addedCell = new Cell();
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.changeSelection([addedCell], null);
     expect(model.cells).toEqual([addedCell]);
-    expect(events).toHaveLength(1);
+    expect(undo).toHaveLength(1);
+    expect(change).toHaveLength(1);
   });
 
-  test('removes the given cells and fires one UNDO event', () => {
+  test('removes the given cells and fires UNDO + CHANGE', () => {
     const { model } = createModel();
     const removedCell = new Cell();
     const remainingCell = new Cell();
     seedSelection(model, removedCell, remainingCell);
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.changeSelection(null, [removedCell]);
     expect(model.cells).toEqual([remainingCell]);
-    expect(events).toHaveLength(1);
+    expect(undo).toHaveLength(1);
+    expect(change).toHaveLength(1);
   });
 
-  test('applies both add and remove with a single UNDO event', () => {
+  test('applies both add and remove with a single UNDO + CHANGE pair', () => {
     const { model } = createModel();
     const removedCell = new Cell();
     const addedCell = new Cell();
     seedSelection(model, removedCell);
-    const events = captureUndoEvents(model);
+    const { undo, change } = captureSelectionEvents(model);
     model.changeSelection([addedCell], [removedCell]);
     expect(model.cells).toEqual([addedCell]);
-    expect(events).toHaveLength(1);
+    expect(undo).toHaveLength(1);
+    expect(change).toHaveLength(1);
   });
 
   test('UNDO event carries an UndoableEdit containing one SelectionChange', () => {
     const { model } = createModel();
     const addedCell = new Cell();
-    const events = captureUndoEvents(model);
+    const { undo } = captureSelectionEvents(model);
     model.changeSelection([addedCell], null);
 
-    expect(events).toHaveLength(1);
-    const edit = events[0].getProperty('edit') as UndoableEdit;
+    expect(undo).toHaveLength(1);
+    const edit = undo[0]!.getProperty('edit') as UndoableEdit;
     expect(edit).toBeInstanceOf(UndoableEdit);
     expect(edit.changes).toHaveLength(1);
     expect(edit.changes[0]).toBeInstanceOf(SelectionChange);
