@@ -9,13 +9,15 @@ description: Understanding the Graph class hierarchy — AbstractGraph, BaseGrap
 The examples in this page use `TypeScript`; adapt them if you write `JavaScript`.
 :::
 
+:::tip
+This page is a reference. For a step-by-step intro, see [Hello World](../tutorials/the-hello-world-example.md).
+:::
+
 ## Introduction
 
 The `Graph` class is the central component of maxGraph. It is the entry point for creating, displaying, and interacting with diagrams. It manages the rendering canvas, the data model, the stylesheet, and the user interactions (selection, editing, panning, etc.).
 
-maxGraph inherits this design from [mxGraph](https://github.com/jgraph/mxgraph), the library it succeeds. In mxGraph, the `mxGraph` class was a monolithic "God Object" of over 13,000 lines that bundled every feature. maxGraph progressively modularized this architecture by extracting features into [plugins](./plugins.md) and [registries](./global-configuration.md#styles), while preserving API compatibility.
-
-Today, maxGraph offers a **class hierarchy** that lets you trade convenience for control:
+maxGraph offers a **class hierarchy** that lets you trade convenience for control:
 
 ```
 EventSource
@@ -30,74 +32,18 @@ EventSource
 | `Graph` | Batteries-included — auto-registers all defaults (shapes, styles, plugins) |
 | `BaseGraph` | Production-optimized — registers nothing; you pick exactly what you need |
 
-## From mxGraph to maxGraph
+### Quick example
 
-In mxGraph, the `mxGraph` class was the only entry point. It loaded every handler, every shape, every style — unconditionally. When maxGraph forked from mxGraph 4.2.2 in 2020, the `mxGraph` class was renamed to `Graph` (along with the `mx` prefix removal from all classes: `mxCell` became `Cell`, `mxGraphModel` became `GraphDataModel`, etc.).
-
-Over subsequent releases, the codebase was modularized:
-- **Handlers** (cell editing, tooltips, panning, etc.) were extracted into **plugins** that can be loaded selectively.
-- **Shapes, edge styles, perimeters, and edge markers** were moved from monolithic registries (`StyleRegistry`, `CellRenderer`) into dedicated per-type registries (`ShapeRegistry`, `EdgeStyleRegistry`, `PerimeterRegistry`, `EdgeMarkerRegistry`) that can be populated selectively.
-- In version 0.18.0, the `Graph` class was split into `AbstractGraph`, `Graph`, and `BaseGraph` to enable tree-shaking at the class level.
-
-If you are migrating from mxGraph, `Graph` is the closest equivalent to the original `mxGraph` class. See the [migration guide](./migrate-from-mxgraph.md) for details.
-
-## AbstractGraph
-
-**Source:** `packages/core/src/view/AbstractGraph.ts`
-
-`AbstractGraph` is the abstract base class that holds all the core graph logic. It extends `EventSource` (the maxGraph event system) and provides the full graph API: cell management, editing, grouping, connections, validation, zooming, and more. Both `Graph` and `BaseGraph` inherit this same API — the choice between them does **not** affect the available methods, only which default configurations (shapes, styles, plugins) are loaded.
-
-It is **not meant to be instantiated directly**. Use `Graph` or `BaseGraph` instead, or create your own subclass.
-
-`AbstractGraph` defines two extension points for subclasses:
-
-- **`registerDefaults()`** — called during construction, before any rendering. Subclasses override this to register shapes, edge styles, perimeters, and edge markers into the global registries. The default implementation is a no-op.
-- **`initializeCollaborators()`** — called during construction to wire up the collaborator objects (`CellRenderer`, `GraphDataModel`, `GraphSelectionModel`, `Stylesheet`, `GraphView`). `Graph` builds them via factory methods; `BaseGraph` accepts them via the constructor `options` (dependency injection) and creates defaults only as fallback — this is the newer preferred pattern. This method is only required because of `Graph`'s factory-method approach: if `Graph` relied solely on the `options` object passed to the constructor, `initializeCollaborators()` would not be needed.
-
-The constructor runs the following sequence:
-
-1. `registerDefaults()` — register style elements into the global registries
-2. `initializeCollaborators()` — create the collaborator objects
-3. Plugin initialization — instantiate plugins from `options.plugins` and store them in an internal map, retrievable via `getPlugin()`
-4. View revalidation — render the initial state
-
-:::note[Future direction]
-Some methods and behaviors currently embedded in `AbstractGraph` are planned to be extracted into dedicated plugins. This will improve separation of concerns, tree-shaking, and modularity. See [issue #762](https://github.com/maxGraph/maxGraph/issues/762) for details.
-:::
-
-## Graph
-
-**Source:** `packages/core/src/view/Graph.ts`
-
-`Graph` is the ready-to-use, **batteries-included** implementation. It is the direct descendant of the original `mxGraph` class and is designed for rapid prototyping and evaluation. It wires a container, a default model and view, registers all built-in shapes and markers, and loads the default plugin set — so you can create a working diagram with minimal setup.
-
-When instantiated, `Graph` automatically:
-
-1. **Registers all built-in style elements** via `registerDefaults()` — shapes, [edge styles](./edge-styles.md), [perimeters](./perimeters.md), and edge markers. See [Global Configuration — Styles](./global-configuration.md#styles) for the full list of registries.
-
-2. **Loads all default [plugins](./plugins.md)** via `getDefaultPlugins()`.
-
-3. **Exposes factory methods** (`createCellRenderer()`, `createGraphDataModel()`, etc.) that subclasses can override to customize collaborators.
-
-### Minimal example with Graph
+The shortest setup uses `Graph` and lets it load all defaults automatically:
 
 ```typescript
 import '@maxgraph/core/css/common.css';
-import {
-  getDefaultPlugins,
-  Graph,
-  InternalEvent,
-  RubberBandHandler,
-} from '@maxgraph/core';
+import { Graph, InternalEvent } from '@maxgraph/core';
 
 const container = document.getElementById('graph-container')!;
 InternalEvent.disableContextMenu(container);
 
-// All shapes, styles, and default plugins are loaded automatically
-const graph = new Graph(container, undefined, [
-  ...getDefaultPlugins(),
-  RubberBandHandler, // add rubber band selection on top of the defaults
-]);
+const graph = new Graph(container);
 
 graph.batchUpdate(() => {
   const v1 = graph.insertVertex({
@@ -117,6 +63,80 @@ graph.batchUpdate(() => {
 });
 ```
 
+The sections below explain each class in detail. See [Graph](#graph) and [BaseGraph](#basegraph) for in-depth coverage.
+
+## From mxGraph to maxGraph
+
+maxGraph inherits its design from [mxGraph](https://github.com/jgraph/mxgraph), the library it succeeds. In mxGraph, the `mxGraph` class was a monolithic "God Object" of over 13,000 lines that bundled every feature — handlers, shapes, styles, and more — and loaded them unconditionally.
+
+When maxGraph forked from mxGraph 4.2.2 in 2020, the `mxGraph` class was renamed to `Graph` (along with the `mx` prefix removal from all classes: `mxCell` became `Cell`, `mxGraphModel` became `GraphDataModel`, etc.). Over subsequent releases, the codebase was progressively modularized while preserving API compatibility:
+
+- **Handlers** (cell editing, tooltips, panning, etc.) were extracted into **plugins** that can be loaded selectively.
+- **Shapes, edge styles, perimeters, and edge markers** were moved from monolithic registries (`StyleRegistry`, `CellRenderer`) into dedicated per-type registries (`ShapeRegistry`, `EdgeStyleRegistry`, `PerimeterRegistry`, `EdgeMarkerRegistry`) that can be populated selectively.
+- In version 0.18.0, the `Graph` class was split into `AbstractGraph`, `Graph`, and `BaseGraph` to enable tree-shaking at the class level.
+
+If you are migrating from mxGraph, `Graph` is the closest equivalent to the original `mxGraph` class. See the [migration guide](./migrate-from-mxgraph.md) for details.
+
+## AbstractGraph
+
+**Source:** `packages/core/src/view/AbstractGraph.ts`
+
+`AbstractGraph` is the abstract base class that holds all the core graph logic. It extends `EventSource` (the maxGraph event system) and provides the full graph API: cell management, editing, grouping, connections, validation, zooming, and more. Both `Graph` and `BaseGraph` inherit this same API — the choice between them does **not** affect the available methods, only which default configurations (shapes, styles, plugins) are loaded.
+
+It is **not meant to be instantiated directly**. Use `Graph` or `BaseGraph` instead, or create your own subclass.
+
+`AbstractGraph` defines two extension points for subclasses:
+
+- **`registerDefaults()`** — called during construction, before any rendering. Subclasses override this to register shapes, edge styles, perimeters, and edge markers into the global registries. The default implementation is a no-op.
+- **`initializeCollaborators()`** — called during construction to wire up the collaborator objects (`CellRenderer`, `GraphDataModel`, `GraphSelectionModel`, `Stylesheet`, `GraphView`). `Graph` builds them via factory methods that subclasses can override (`createCellRenderer()`, `createGraphDataModel()`, etc.); `BaseGraph` accepts them via the constructor `options` (dependency injection) and creates defaults only as fallback — this is the newer preferred pattern. The hook exists so the two subclasses can each pick the strategy that fits their usage.
+
+At a high level, the `AbstractGraph` constructor goes through the following phases:
+
+1. `registerDefaults()` — register style elements into the global registries
+2. Container setup — use `options.container` or fall back to a fresh `<div>`
+3. `initializeCollaborators()` — create or assign the collaborator objects
+4. `view.init()` — initialize the DOM via the view
+5. Plugin initialization — instantiate plugins from `options.plugins` and store them in an internal map, retrievable via `getPlugin()`
+6. `view.revalidate()` — render the initial state
+
+Plugin authors should keep in mind that plugins are constructed after `view.init()` but before the first `view.revalidate()`.
+
+:::note[Future direction]
+Some methods and behaviors currently embedded in `AbstractGraph` are planned to be extracted into dedicated plugins. This will improve separation of concerns, tree-shaking, and modularity. See [issue #762](https://github.com/maxGraph/maxGraph/issues/762) for details.
+:::
+
+## Graph
+
+**Source:** `packages/core/src/view/Graph.ts`
+
+`Graph` is the ready-to-use, **batteries-included** implementation. It is the direct descendant of the original `mxGraph` class and is designed for rapid prototyping and evaluation. It wires a container, a default model and view, registers all built-in shapes and markers, and loads the default plugin set — so you can create a working diagram with minimal setup.
+
+When instantiated, `Graph` automatically:
+
+1. **Registers all built-in style elements** via `registerDefaults()` — shapes, [edge styles](./edge-styles.md), [perimeters](./perimeters.md), and edge markers. See [Global Configuration — Styles](./global-configuration.md#styles) for the full list of registries.
+
+2. **Loads all default [plugins](./plugins.md)** via `getDefaultPlugins()`.
+
+3. **Exposes factory methods** (`createCellRenderer()`, `createGraphDataModel()`, etc.) that subclasses can override to customize collaborators.
+
+### Adding plugins on top of the defaults
+
+See the [Quick example](#quick-example) above for the minimal `new Graph(container)` setup that loads all defaults automatically. Passing any value to the `plugins` constructor argument **replaces** the default list — it does not extend it. To add a plugin while keeping the defaults, spread `getDefaultPlugins()` and append your own:
+
+```typescript
+import {
+  getDefaultPlugins,
+  Graph,
+  RubberBandHandler,
+} from '@maxgraph/core';
+
+const graph = new Graph(container, undefined, [
+  // getDefaultPlugins() is exposed so you can add to it without losing the defaults
+  ...getDefaultPlugins(),
+  RubberBandHandler, // add rubber band selection on top of the defaults
+]);
+```
+
 ## BaseGraph
 
 **Source:** `packages/core/src/view/BaseGraph.ts`
@@ -127,15 +147,19 @@ graph.batchUpdate(() => {
 
 1. **No `registerDefaults()` override** — the inherited no-op from `AbstractGraph` is used, so no built-in shapes, edge styles, perimeters, or markers are registered.
 2. **No default plugins** — you must pass the exact list of plugins you need via the `options.plugins` constructor parameter.
-3. **Collaborators via options** — instead of factory methods, `BaseGraph` accepts collaborators directly through the constructor options object (`cellRenderer`, `model`, `selectionModel`, `stylesheet`, `view`). This makes it more flexible for dependency injection but less suited for subclass overrides via factories.
+3. **Collaborators via options** — instead of factory methods, `BaseGraph` accepts all five collaborators directly through the constructor options object (`cellRenderer`, `model`, `selectionModel`, `stylesheet`, `view`). `Graph` only lets you override `model` and `stylesheet` (via positional parameters); customizing `cellRenderer`, `selectionModel`, or `view` with `Graph` requires subclassing and overriding the corresponding factory method. `BaseGraph` is therefore more flexible for dependency injection, while `Graph` is more convenient for subclass-based customization.
 
 ### Registering style elements with BaseGraph
 
 Since `BaseGraph` does not register any built-in style elements, you need to register them yourself. The following approaches are available.
 
+:::info
+Style registries (`ShapeRegistry`, `EdgeStyleRegistry`, `PerimeterRegistry`, `EdgeMarkerRegistry`) are **global** in both approaches — every `Graph` or `BaseGraph` instance in your application sees the same registrations. The choice between the two approaches is about where the registration code lives, not about scoping it to a specific instance.
+:::
+
 #### Approach 1: subclass BaseGraph
 
-Subclass `BaseGraph` and override `registerDefaults()`. This encapsulates the registration inside the class, which is useful when you want to hide the configuration details or reuse the same setup across multiple graph instances.
+Subclass `BaseGraph` and override `registerDefaults()`. This keeps the registration code **co-located with the class that depends on it**, so the configuration travels with the class definition.
 
 This is the approach used in the maxGraph example applications.
 
@@ -202,7 +226,7 @@ const graph = new CustomGraph({
 
 #### Approach 2: register at application startup
 
-Alternatively, you can register style elements directly at application startup, before creating any `BaseGraph` instance. Since registries are global, the registration only needs to happen once. This is simpler when you don't need a custom subclass.
+Alternatively, you can register style elements directly at application startup, before creating any `BaseGraph` instance. This keeps the registration code **at the application entry point**, separate from any class definition — simpler when you don't need a custom subclass.
 
 ```typescript
 import '@maxgraph/core/css/common.css';
@@ -295,6 +319,7 @@ With `Graph`, you often need `undefined` placeholders to reach a later parameter
 | Constructor signature | Positional parameters | Single options object |
 | Tree-shaking | Limited — all defaults are imported | Full — only imported code is bundled |
 | Setup effort | Minimal | Requires explicit configuration |
+| Familiarity for mxGraph users | Closest match — `Graph` is the renamed `mxGraph` class | New API — requires opting in to features mxGraph loaded by default |
 
 ### When to use Graph
 
@@ -307,26 +332,6 @@ With `Graph`, you often need `undefined` placeholders to reach a later parameter
 - **Production web applications** — where bundle size impacts loading time and user experience
 - **Applications using a limited set of features** — no need to ship code for shapes and plugins you never use
 - **Embedding maxGraph in a larger application** — control exactly what is included in your bundle
-
-### Pros and cons
-
-#### Graph
-
-| Pros | Cons |
-|---|---|
-| Zero configuration needed | Larger bundle size — all defaults are always imported |
-| All built-in features available immediately | No tree-shaking for unused shapes, styles, or plugins |
-| Familiar to mxGraph users | Positional constructor parameters require `undefined` placeholders |
-| Factory methods simplify subclassing | |
-
-#### BaseGraph
-
-| Pros | Cons |
-|---|---|
-| Optimal bundle size via tree-shaking | Requires explicit registration of shapes, styles, and markers |
-| Full control over loaded features | More boilerplate to set up |
-| Single options object constructor | No factory methods for collaborator overrides |
-| Production-ready by design | Must know which registrations your styles depend on |
 
 ## Examples and Demos
 

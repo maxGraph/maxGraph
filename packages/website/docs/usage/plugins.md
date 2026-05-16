@@ -40,6 +40,7 @@ Plugins marked as **default** are automatically loaded when using [`Graph`](./gr
 | `CellEditorHandler` | In-place cell label editing | ✔️  |
 | `ConnectionHandler` | Drawing new edges between cells | ✔️  |
 | `FitPlugin` | Fit-to-container utilities (`fit()`, `fitCenter()`) | ✔️  |
+| `ImageBundlePlugin` | Image bundle resolution for `style.image` keys (see [Image Bundles](./image-bundles.md)) | ✔️  |
 | `PanningHandler` | Mouse and touch panning | ✔️  |
 | `PopupMenuHandler` | Right-click context menus | ✔️  |
 | `RubberBandHandler` | Rubber band (lasso) selection. Requires [loading CSS](./css-and-images.md) | ❌ |
