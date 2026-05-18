@@ -22,7 +22,7 @@ The maxGraph plugins system aims to:
 - provide extension points
 
 Historically, the [Graph class](./graph.md) coming from `mxGraph` was a monolithic class that included all the features.
-In particular, it contained a large number of handler instances that were gradually phased out and turned into plugins.
+In particular, it contained many handler instances that were gradually phased out and turned into plugins.
 
 For more details about discussions and decisions, refer to the following discussions:
 - [initial proposal](https://github.com/maxGraph/maxGraph/discussions/51)
