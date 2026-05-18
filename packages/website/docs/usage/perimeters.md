@@ -20,7 +20,9 @@ When setting it up, ensure it aligns with the shape of the vertex. Otherwise, th
 By default, a vertex perimeter is a _rectangle_.
 
 :::note
-All perimeters provided by `maxGraph` are automatically registered in the `PerimeterRegistry` when a `Graph` instance is created. For more details, see the [Global Configuration](global-configuration.md#styles) documentation.  
+All perimeters provided by `maxGraph` are automatically registered in the `PerimeterRegistry` when a `Graph` instance is created, but not when instantiating [`BaseGraph`](./graph.md#basegraph).
+For more details, see the [`Graph`](./graph.md) reference page and the [Global Configuration](global-configuration.md#styles) documentation.
+
 To check the list of registered perimeters, refer to the `registerDefaultStyleElements` function.
 :::
 

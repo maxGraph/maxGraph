@@ -464,6 +464,15 @@ export abstract class AbstractGraph extends EventSource {
     // do nothing, it's the purpose of this class not to load defaults.
   }
 
+  /**
+   * Wires up the collaborator objects required by the graph: {@link CellRenderer}, {@link GraphDataModel},
+   * {@link GraphSelectionModel}, {@link Stylesheet}, and {@link GraphView}.
+   *
+   * Subclasses decide how to source each one — typically by reading values from `options` when provided,
+   * by delegating to a factory method, or by instantiating defaults directly. The collaborators must be
+   * assigned on `this` before this method returns, so the rest of the constructor (model listener wiring,
+   * `view.init()`, plugin setup) can use them.
+   */
   protected abstract initializeCollaborators(options?: GraphCollaboratorsOptions): void;
 
   constructor(options?: GraphOptions) {

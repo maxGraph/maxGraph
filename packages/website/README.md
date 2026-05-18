@@ -26,7 +26,7 @@ Run the following commands to copy the resources:
 npm run extra:copy-gen-resources
 ```
 
-In local development, not copying the resources let the server start but the links to the resources will be broken.
+In local development, not copying the resources lets the server start, but the links to the resources will be broken.
 
 When building, you must run this command at least once before building the website. Otherwise, the docusaurus will fail to build because of `Error: Docusaurus found broken links!`.
 

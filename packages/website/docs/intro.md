@@ -77,7 +77,7 @@ Active development ensures continuous bug fixes and new capabilities.
 ### Developer Experience
 - Written in TypeScript with complete type definitions. TypeScript integration requires **TypeScript 3.8** or higher
 - Zero third-party dependencies
-- Tree-shakable: use `BaseGraph` to import only what you need and reduce bundle size
+- Tree-shakable: use [`BaseGraph`](./usage/graph.md#basegraph) to import only what you need and reduce bundle size
 - Available as both ES Module and CommonJS. The JavaScript code conforms to the `ES2020` standard
 - Plugin architecture: add only the interaction handlers you need
 - Style system with 100+ configurable properties per cell
