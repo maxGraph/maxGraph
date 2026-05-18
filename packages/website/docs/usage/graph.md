@@ -19,7 +19,7 @@ The `Graph` class is the central component of maxGraph. It is the entry point fo
 
 maxGraph offers a **class hierarchy** that lets you trade convenience for control:
 
-```
+```text
 EventSource
     └── AbstractGraph  (abstract — core API, no defaults)
             ├── BaseGraph  (concrete — no built-ins registered)
@@ -62,8 +62,6 @@ graph.batchUpdate(() => {
   });
 });
 ```
-
-The sections below explain each class in detail. See [Graph](#graph) and [BaseGraph](#basegraph) for in-depth coverage.
 
 ## From mxGraph to maxGraph
 
