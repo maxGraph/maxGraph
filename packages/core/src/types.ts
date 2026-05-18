@@ -243,47 +243,117 @@ export type CellStateStyle = {
    */
   endSize?: number;
   /**
-   * The horizontal offset of the connection point of an edge with its target terminal.
+   * The horizontal offset in pixels applied to the connection point of an edge with its target terminal.
+   *
+   * This offset is applied after the connection point position is determined by {@link entryX} and {@link entryY}.
+   *
+   * @see {@link entryDy} for the vertical offset.
+   * @see {@link exitDx} for the equivalent on the source terminal.
    */
   entryDx?: number;
   /**
-   * The vertical offset of the connection point of an edge with its target terminal.
+   * The vertical offset in pixels applied to the connection point of an edge with its target terminal.
+   *
+   * This offset is applied after the connection point position is determined by {@link entryX} and {@link entryY}.
+   *
+   * @see {@link entryDx} for the horizontal offset.
+   * @see {@link exitDy} for the equivalent on the source terminal.
    */
   entryDy?: number;
   /**
-   * Defines if the perimeter should be used to find the exact entry point along the perimeter
-   * of the target.
+   * Defines if the perimeter should be used to find the exact entry point along the perimeter of the target.
+   *
+   * When `false`, the target behaves as if it has no {@link perimeter}: the connection point is located at the center of the terminal.
+   *
+   * Only applies when {@link entryX} and {@link entryY} are `undefined` (i.e. no fixed connection point is set).
+   *
    * @default true
+   * @see {@link perimeter} for how the perimeter is defined on a cell.
+   * @see {@link entryX} and {@link entryY} for fixed connection point coordinates.
+   * @see {@link exitPerimeter} for the equivalent on the source terminal.
    */
   entryPerimeter?: boolean;
   /**
-   * The connection point in relative horizontal coordinates of an edge with its target terminal.
+   * The x coordinate of the connection point in relative horizontal coordinates of an edge with its target terminal.
+   *
+   * **Note**: Only considered if {@link entryY} is set as well.
+   *
+   * Typical values are from 0 (left) to 1 (right). Use 0.5 for center.
+   *
+   * If `undefined`, the connection point is computed based on the perimeter settings. See {@link entryPerimeter}.
+   *
+   * @see {@link entryDx} for applying a pixel offset after the connection point is determined.
+   * @see {@link exitX} for the equivalent on the source terminal.
    */
   entryX?: number;
   /**
-   * The connection point in relative vertical coordinates of an edge with its target terminal.
+   * The y coordinate of the connection point in relative vertical coordinates of an edge with its target terminal.
+   *
+   * **Note**: Only considered if {@link entryX} is set as well.
+   *
+   * Typical values are from 0 (top) to 1 (bottom). Use 0.5 for center.
+   *
+   * If `undefined`, the connection point is computed based on the perimeter settings. See {@link entryPerimeter}.
+   *
+   * @see {@link entryDy} for applying a pixel offset after the connection point is determined.
+   * @see {@link exitY} for the equivalent on the source terminal.
    */
   entryY?: number;
   /**
-   * The horizontal offset of the connection point of an edge with its source terminal.
+   * The horizontal offset in pixels applied to the connection point of an edge with its source terminal.
+   *
+   * This offset is applied after the connection point position is determined by {@link exitX} and {@link exitY}.
+   *
+   * @see {@link exitDy} for the vertical offset.
+   * @see {@link entryDx} for the equivalent on the target terminal.
    */
   exitDx?: number;
   /**
-   * The vertical offset of the connection point of an edge with its source terminal.
+   * The vertical offset in pixels applied to the connection point of an edge with its source terminal.
+   *
+   * This offset is applied after the connection point position is determined by {@link exitX} and {@link exitY}.
+   *
+   * @see {@link exitDx} for the horizontal offset.
+   * @see {@link entryDy} for the equivalent on the target terminal.
    */
   exitDy?: number;
   /**
-   * Defines if the perimeter should be used to find the exact entry point along the perimeter
-   * of the source.
+   * Defines if the perimeter should be used to find the exact exit point along the perimeter of the source.
+   *
+   * When `false`, the source behaves as if it has no {@link perimeter}: the connection point is located at the center of the terminal.
+   *
+   * Only applies when {@link exitX} and {@link exitY} are `undefined` (i.e. no fixed connection point is set).
+   *
    * @default true
+   * @see {@link perimeter} for how the perimeter is defined on a cell.
+   * @see {@link exitX} and {@link exitY} for fixed connection point coordinates.
+   * @see {@link entryPerimeter} for the equivalent on the target terminal.
    */
   exitPerimeter?: boolean;
   /**
-   * The horizontal relative coordinate connection point of an edge with its source terminal.
+   * The x coordinate of the connection point in relative horizontal coordinates of an edge with its source terminal.
+   *
+   * **Note**: Only considered if {@link exitY} is set as well.
+   *
+   * Typical values are from 0 (left) to 1 (right). Use 0.5 for center.
+   *
+   * If `undefined`, the connection point is computed based on the perimeter settings. See {@link exitPerimeter}.
+   *
+   * @see {@link exitDx} for applying a pixel offset after the connection point is determined.
+   * @see {@link entryX} for the equivalent on the target terminal.
    */
   exitX?: number;
   /**
-   * The vertical relative coordinate connection point of an edge with its source terminal.
+   * The y coordinate of the connection point in relative vertical coordinates of an edge with its source terminal.
+   *
+   * **Note**: Only considered if {@link exitX} is set as well.
+   *
+   * Typical values are from 0 (top) to 1 (bottom). Use 0.5 for center.
+   *
+   * If `undefined`, the connection point is computed based on the perimeter settings. See {@link exitPerimeter}.
+   *
+   * @see {@link exitDy} for applying a pixel offset after the connection point is determined.
+   * @see {@link entryY} for the equivalent on the target terminal.
    */
   exitY?: number;
   /**
@@ -572,6 +642,7 @@ export type CellStateStyle = {
    * Remember that enabling this switch carries a possible security risk
    *
    * **WARNING**: explicitly set the value to null or undefined means to not use any perimeter.
+   * In that case, the connection point is located at the center of the cell.
    * To use the perimeter defined in the default vertex, do not set this property.
    */
   perimeter?: PerimeterFunction | PerimeterValue | (string & Record<never, never>) | null;
