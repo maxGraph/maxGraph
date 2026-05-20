@@ -55,9 +55,15 @@ const Template = ({ label, ...args }: Record<string, string>) => {
 
   const div = createMainDiv(`
   This example demonstrates using multiplicities for automatically validating a graph. 
+  The graph is validated after each change and displays an error message if the graph is not valid.
+  <br>You can also remove cells by selecting them and pressing the [DELETE] key.
   `);
 
   const container = createGraphContainer(args);
+  container.addEventListener('click', () => {
+    container.focus();
+  });
+  container.setAttribute('tabindex', '0');
   div.appendChild(container);
 
   const xmlDocument = xmlUtils.createXmlDocument();
@@ -76,7 +82,7 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   graph.setAllowDanglingEdges(false);
   graph.setMultigraph(false);
 
-  // Source nodes needs 1..2 connected Targets
+  // Source node needs 1..2 connected Targets
   graph.multiplicities.push(
     new Multiplicity(
       true,
@@ -122,7 +128,6 @@ const Template = ({ label, ...args }: Record<string, string>) => {
   );
 
   // Removes cells when [DELETE] is pressed
-  // TODO pressing the delete key has no effect in FF and Chrome (https://github.com/maxGraph/maxGraph/issues/910)
   const keyHandler = new KeyHandler(graph);
   keyHandler.bindKey(46, function () {
     if (graph.isEnabled()) {

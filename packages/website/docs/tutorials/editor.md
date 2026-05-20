@@ -90,7 +90,7 @@ The `Symbol`-child element is a custom (ie workflow) element, and can have any n
 The label attribute is a special one that is used for the textual representation of the cell in the graph.
 The `Cell` element is another special child node which contains the graphical information for the cell, namely, the cell-type, -style, -size and -position.
 
-See `Graph.convertValueToString` if you would like to use another attribute or a combination of attributes for the textual representation,
+See [`Graph`](../usage/graph.md)`.convertValueToString` if you would like to use another attribute or a combination of attributes for the textual representation,
 and `Cell.valueChanged` to handle in-place editing by storing the new text value in the respective attribute(s).
 
 

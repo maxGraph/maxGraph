@@ -189,9 +189,9 @@ Note that for a straight edge, the calculations are simple.
 For edges with multiple control points, the edge has to be traced along its segments (a segment being the line between end points and/or control points) to find the correct distance along the edge.
 The `y` value is the orthogonal offset from that segment.
 
-Switching relative positioning on for edge labels is a common preference for applications. Navigate to the `Graph.insertEdge()` function in `maxGraph`, you will see this calls `createEdge()`.
-In createEdge() the geometry is set relative for every edge created using this prototype.
-This is partly the reason for the amount of helper functions in `Graph`, they enable easy changing of the default behaviour. \
+Switching relative positioning on for edge labels is a common preference for applications. Navigate to the code of the `Graph.insertEdge()` method, you will see this calls `createEdge()`.
+In `createEdge()`, the geometry is set relative for every edge created using this prototype.
+This is partly the reason for the number of helper functions in [`Graph`](../usage/graph.md), they enable easy changing of the default behaviour. \
 You should try to use the `Graph` class API as much as possible to provide this benefit in your applications.
 
 

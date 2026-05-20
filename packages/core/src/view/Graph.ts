@@ -82,7 +82,9 @@ export class Graph extends AbstractGraph {
     registerDefaultShapes();
   }
 
-  // Use the create factory methods of the class instead of the collaborators because they cannot be passed in the constructor
+  // Build cellRenderer/selectionModel/view via the factory methods so subclasses can customize them
+  // by overriding. Only `model` and `stylesheet` are accepted from options because Graph's positional
+  // constructor doesn't expose the others.
   protected override initializeCollaborators(options?: GraphCollaboratorsOptions): void {
     this.cellRenderer = this.createCellRenderer();
     this.model = options?.model ?? this.createGraphDataModel();

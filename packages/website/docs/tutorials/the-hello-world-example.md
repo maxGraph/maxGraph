@@ -37,7 +37,7 @@ If you want the container to have scrollbars, use the `overflow:auto` CSS direct
 <a id="Graph"></a>
 ## Graph
 
-The code constructs an empty graph model and passes the container and the empty model to the graph constructor.
+The code constructs an empty graph model and passes the container and the empty model to the [`Graph`](../usage/graph.md) constructor.
 For this example, all default event handling is disabled in the last line.
 
 ```javascript
