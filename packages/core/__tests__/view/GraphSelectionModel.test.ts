@@ -171,7 +171,7 @@ describe('setCell', () => {
   test('clears the selection when given a falsy cell', () => {
     const { model } = createModel();
     seedSelection(model, new Cell());
-    model.setCell(null as unknown as Cell);
+    model.setCell(null!);
     expect(model.cells).toEqual([]);
   });
 });
@@ -368,10 +368,7 @@ describe('changeSelection', () => {
   test('is a no-op when arrays only contain null entries (callers that bypass typing)', () => {
     const { model } = createModel();
     const { undo, change } = captureSelectionEvents(model);
-    model.changeSelection(
-      [null as unknown as Cell, null as unknown as Cell],
-      [null as unknown as Cell]
-    );
+    model.changeSelection([null!, null!], [null!]);
     expect(model.cells).toEqual([]);
     expect(undo).toHaveLength(0);
     expect(change).toHaveLength(0);
@@ -381,7 +378,7 @@ describe('changeSelection', () => {
     const { model } = createModel();
     const realCell = new Cell();
     const { undo, change } = captureSelectionEvents(model);
-    model.changeSelection([realCell, null as unknown as Cell], null);
+    model.changeSelection([realCell, null!], null);
     expect(model.cells).toEqual([realCell]);
     expect(undo).toHaveLength(1);
     expect(change).toHaveLength(1);
