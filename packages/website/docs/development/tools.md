@@ -34,7 +34,7 @@ Run from the repository root:
 The script prints, for each example:
 
 - the size of every `*.js` file produced under `dist/`;
-- a markdown summary table with the bundle sizes of every example (with an empty "before" column intended to be filled in manually when comparing snapshots);
+- a Markdown summary table with the bundle sizes of every example (with an empty "before" column intended to be filled in manually when comparing snapshots);
 - a CSV summary (one header line listing example names, one value line listing sizes in kB) — convenient to copy into a spreadsheet.
 
 To skip the build step and only display the sizes from an existing `dist/` output:
@@ -54,7 +54,7 @@ It is also useful to:
 
 Two interchangeable entry points are provided:
 
-- a **Claude Code skill** named `compare-examples-size`, intended for users of Claude Code. It produces a markdown table comparing the size of the `maxGraph` chunk for all examples between two git revisions (commit SHAs, branch names, or tag names).
+- a **Claude Code skill** named `compare-examples-size`, intended for users of Claude Code. It produces a Markdown table comparing the size of the `maxGraph` chunk for all examples between two git revisions (commit SHAs, branch names, or tag names).
 - the underlying **bash script**, available for direct use at `.claude/skills/compare-examples-size/scripts/compare-examples-size.bash`. The skill is a thin wrapper around this script, so contributors who do not use Claude Code can still run the comparison from any shell.
 
 ### Usage
@@ -71,8 +71,8 @@ For example, to compare the current `main` branch against the `v0.23.0` release 
 .claude/skills/compare-examples-size/scripts/compare-examples-size.bash main v0.23.0
 ```
 
-For each of the two references, the script checks out the revision, runs `npm ci`, builds `@maxgraph/core`, and runs `scripts/build-all-examples.bash` to capture the bundle sizes. It then prints a markdown table to stdout — build logs go to stderr — with one row per example and the following columns: example name, bundle size at the older revision, bundle size at the newer revision, delta in kB, and delta in %.
+For each of the two references, the script checks out the revision, runs `npm ci`, builds `@maxgraph/core`, and runs `scripts/build-all-examples.bash` to capture the bundle sizes. It then prints a Markdown table to stdout — build logs go to stderr — with one row per example and the following columns: example name, bundle size at the older revision, bundle size at the newer revision, delta in kB, and delta in %.
 
-The column order is normalized by commit date so that the older revision is always in column 1 and the newer one in column 2, regardless of the argument order. The delta is therefore always `newer − older`: a positive delta means the bundle grew between the two revisions.
+The column order is normalized by the commit date so that the older revision is always in column 1 and the newer one in column 2, regardless of the argument order. The delta is therefore always `newer − older`: a positive delta means the bundle grew between the two revisions.
 
 The working tree must be clean before running. The original branch is restored automatically at the end of the run, including on Ctrl-C or build failure.
