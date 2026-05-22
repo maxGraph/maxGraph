@@ -806,19 +806,6 @@ class CellEditorHandler implements GraphPlugin {
   }
 
   /**
-  clearSelection() {
-    const selection = window.getSelection();
-
-    if (selection) {
-      if (selection.empty) {
-        selection.empty();
-      } else if (selection.removeAllRanges) {
-        selection.removeAllRanges();
-      }
-    }
-  }
-
-  /**
    * Stops the editor and applies the value if cancel is false.
    */
   stopEditing(cancel = false) {
