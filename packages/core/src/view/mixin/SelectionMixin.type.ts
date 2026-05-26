@@ -20,13 +20,11 @@ import type Rectangle from '../geometry/Rectangle.js';
 
 declare module '../AbstractGraph' {
   interface AbstractGraph {
-    cells: Cell[];
     doneResource: string;
     updatingSelectionResource: string;
     singleSelection: boolean;
 
-    /** @default null */
-    selectionModel: any | null;
+    selectionModel: GraphSelectionModel;
 
     /**
      * Returns the {@link GraphSelectionModel} that contains the selection.

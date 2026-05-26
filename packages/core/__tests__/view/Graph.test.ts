@@ -14,11 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test } from '@jest/globals';
+import { describe, test, expect } from '@jest/globals';
+import { Cell, Graph } from '../../src';
 import { createGraphWithoutPlugins } from '../utils';
 
 test('setTooltips - the "TooltipHandler" plugin is not available', () => {
   const graph = createGraphWithoutPlugins();
   // just validate there is no error in this case
   graph.setTooltips(true);
+});
+
+describe('Expect no global state for properties coming from mixins', () => {
+  // Even though SelectionMixin declares `selectionModel: null` on the prototype,
+  // the null value is harmless because Graph.initializeCollaborators calls
+  // this.setSelectionModel(this.createSelectionModel()). The assignment creates
+  // a per-instance property that shadows the prototype null, and GraphSelectionModel's
+  // constructor allocates its own `cells = []` array.
+  test('selectionModel', () => {
+    const graph1 = new Graph();
+    const graph2 = new Graph();
+
+    expect(graph1.getSelectionModel()).not.toBe(graph2.getSelectionModel());
+
+    graph1.getSelectionModel().cells.push(new Cell());
+    expect(graph2.getSelectionModel().cells).toStrictEqual([]);
+    expect(graph1.getSelectionModel().cells).not.toBe(graph2.getSelectionModel().cells);
+  });
 });
