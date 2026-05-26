@@ -22,14 +22,13 @@ import {
   constants,
   EdgeMarker,
   EdgeMarkerRegistry,
-  EdgeStyle,
-  EdgeStyleRegistry,
   EllipseShape,
   FitPlugin,
   InternalEvent,
   PanningHandler,
   Perimeter,
   PerimeterRegistry,
+  registerOrthogonalEdgeStyle,
   RubberBandHandler,
   SelectionCellsHandler,
   SelectionHandler,
@@ -48,10 +47,7 @@ class CustomGraph extends BaseGraph {
     // Register styles
     PerimeterRegistry.add('ellipsePerimeter', Perimeter.EllipsePerimeter);
     PerimeterRegistry.add('rectanglePerimeter', Perimeter.RectanglePerimeter); // declared in the default vertex style, so must be registered to be used
-    EdgeStyleRegistry.add('orthogonalEdgeStyle', EdgeStyle.OrthConnector, {
-      handlerKind: 'segment',
-      isOrthogonal: true,
-    });
+    registerOrthogonalEdgeStyle();
 
     const arrowFunction = EdgeMarker.createArrow(2);
     EdgeMarkerRegistry.add('classic', arrowFunction);

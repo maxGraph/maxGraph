@@ -20,13 +20,122 @@ import { EdgeMarkerRegistry } from './marker/EdgeMarkerRegistry.js';
 import { PerimeterRegistry } from './perimeter/PerimeterRegistry.js';
 import type {
   ArrowValue,
-  EdgeStyleFunction,
-  EdgeStyleMetaData,
-  EdgeStyleValue,
   MarkerFactoryFunction,
   PerimeterFunction,
   PerimeterValue,
 } from '../../types.js';
+
+/**
+ * Register the {@link ElbowConnector} with its metadata.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.24.0
+ */
+export const registerElbowEdgeStyle = (): void => {
+  EdgeStyleRegistry.add('elbowEdgeStyle', EdgeStyle.ElbowConnector, {
+    handlerKind: 'elbow',
+    isOrthogonal: true,
+  });
+};
+
+/**
+ * Register the {@link EntityRelation} edge style with its metadata.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.24.0
+ */
+export const registerEntityRelationEdgeStyle = (): void => {
+  EdgeStyleRegistry.add('entityRelationEdgeStyle', EdgeStyle.EntityRelation, {
+    allowIntermediateHandles: false,
+    isOrthogonal: true,
+  });
+};
+
+/**
+ * Register the {@link Loop} edge style with its metadata.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.24.0
+ */
+export const registerLoopEdgeStyle = (): void => {
+  EdgeStyleRegistry.add('loopEdgeStyle', EdgeStyle.Loop, {
+    handlerKind: 'elbow',
+    isOrthogonal: false,
+  });
+};
+
+/**
+ * Register the {@link ManhattanConnector} edge style with its metadata.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.24.0
+ */
+export const registerManhattanEdgeStyle = (): void => {
+  EdgeStyleRegistry.add('manhattanEdgeStyle', EdgeStyle.ManhattanConnector, {
+    handlerKind: 'segment',
+    isOrthogonal: true,
+  });
+};
+
+/**
+ * Register the {@link OrthConnector} edge style with its metadata.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.24.0
+ */
+export const registerOrthogonalEdgeStyle = (): void => {
+  EdgeStyleRegistry.add('orthogonalEdgeStyle', EdgeStyle.OrthConnector, {
+    handlerKind: 'segment',
+    isOrthogonal: true,
+  });
+};
+
+/**
+ * Register the {@link SegmentConnector} edge style with its metadata.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.24.0
+ */
+export const registerSegmentEdgeStyle = (): void => {
+  EdgeStyleRegistry.add('segmentEdgeStyle', EdgeStyle.SegmentConnector, {
+    handlerKind: 'segment',
+    isOrthogonal: true,
+  });
+};
+
+/**
+ * Register the {@link SideToSide} edge style with its metadata.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.24.0
+ */
+export const registerSideToSideEdgeStyle = (): void => {
+  EdgeStyleRegistry.add('sideToSideEdgeStyle', EdgeStyle.SideToSide, {
+    handlerKind: 'elbow',
+    isOrthogonal: true,
+  });
+};
+
+/**
+ * Register the {@link TopToBottom} edge style with its metadata.
+ *
+ * @category Configuration
+ * @category Style
+ * @since 0.24.0
+ */
+export const registerTopToBottomEdgeStyle = (): void => {
+  EdgeStyleRegistry.add('topToBottomEdgeStyle', EdgeStyle.TopToBottom, {
+    handlerKind: 'elbow',
+    isOrthogonal: true,
+  });
+};
 
 let isDefaultEdgeStylesRegistered = false;
 
@@ -39,28 +148,14 @@ let isDefaultEdgeStylesRegistered = false;
  */
 export const registerDefaultEdgeStyles = (): void => {
   if (!isDefaultEdgeStylesRegistered) {
-    const edgeStylesToRegister: [EdgeStyleValue, EdgeStyleFunction, EdgeStyleMetaData][] =
-      [
-        ['elbowEdgeStyle', EdgeStyle.ElbowConnector, { handlerKind: 'elbow' }],
-        [
-          'entityRelationEdgeStyle',
-          EdgeStyle.EntityRelation,
-          { allowIntermediateHandles: false },
-        ],
-        ['loopEdgeStyle', EdgeStyle.Loop, { handlerKind: 'elbow', isOrthogonal: false }],
-        ['manhattanEdgeStyle', EdgeStyle.ManhattanConnector, { handlerKind: 'segment' }],
-        ['orthogonalEdgeStyle', EdgeStyle.OrthConnector, { handlerKind: 'segment' }],
-        ['segmentEdgeStyle', EdgeStyle.SegmentConnector, { handlerKind: 'segment' }],
-        ['sideToSideEdgeStyle', EdgeStyle.SideToSide, { handlerKind: 'elbow' }],
-        ['topToBottomEdgeStyle', EdgeStyle.TopToBottom, { handlerKind: 'elbow' }],
-      ];
-    for (const [name, edgeStyle, metadata] of edgeStylesToRegister) {
-      EdgeStyleRegistry.add(name, edgeStyle, {
-        ...metadata,
-        // most edge styles registered here are orthogonal, so set to true by default to avoid duplicating the configuration code
-        isOrthogonal: metadata.isOrthogonal ?? true,
-      });
-    }
+    registerElbowEdgeStyle();
+    registerEntityRelationEdgeStyle();
+    registerLoopEdgeStyle();
+    registerManhattanEdgeStyle();
+    registerOrthogonalEdgeStyle();
+    registerSegmentEdgeStyle();
+    registerSideToSideEdgeStyle();
+    registerTopToBottomEdgeStyle();
 
     isDefaultEdgeStylesRegistered = true;
   }

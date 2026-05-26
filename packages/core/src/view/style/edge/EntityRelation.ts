@@ -37,6 +37,8 @@ import { EntityRelationConnectorConfig } from '../config.js';
  *
  * This EdgeStyle is registered under `entityRelationEdgeStyle` in {@link EdgeStyleRegistry} when using {@link Graph} or calling {@link registerDefaultEdgeStyles}.
  *
+ * To register it on its own (e.g. with {@link BaseGraph}), prefer the dedicated {@link registerEntityRelationEdgeStyle} helper, which sets the correct metadata for you.
+ *
  * **IMPORTANT**: When registering it manually in {@link EdgeStyleRegistry}, the following metadata must be used:
  * - allowIntermediateHandles: false
  * - handlerKind: 'default' or unset
