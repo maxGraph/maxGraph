@@ -25,7 +25,7 @@ const createContainer = (dimensions: {
 }) => {
   const container = document.createElement('div');
   for (const [name, value] of Object.entries(dimensions)) {
-    Object.defineProperty(container, name, { value, configurable: true });
+    value && Object.defineProperty(container, name, { value, configurable: true });
   }
   return container;
 };
